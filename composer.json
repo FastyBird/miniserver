@@ -1,0 +1,94 @@
+{
+  "name": "fastybird/miniserver-app",
+  "type": "project",
+  "description": "FastyBird IOT miniserver application",
+  "keywords": [
+    "fastybird",
+    "fb",
+    "miniserver",
+    "server",
+    "iot",
+    "internet of things"
+  ],
+
+  "homepage": "https://www.fastybird.com",
+
+  "license": "Apache-2.0",
+
+  "authors": [
+    {
+      "name": "FastyBird s.r.o.",
+      "email": "code@fastybird.com",
+      "homepage": "https://www.fastybird.com/"
+    },
+    {
+      "name": "Adam Kadlec",
+      "email": "adam.kadlec@fastybird.com"
+    }
+  ],
+
+  "prefer-stable": true,
+
+  "minimum-stability": "dev",
+
+  "require": {
+    "php": ">=7.4.0",
+    "cweagans/composer-patches": "^1.6",
+    "fastybird/auth-module": "@dev",
+    "fastybird/bootstrap": "@dev",
+    "fastybird/database": "@dev",
+    "fastybird/devices-module": "@dev",
+    "fastybird/modules-metadata": "@dev",
+    "fastybird/triggers-module": "@dev",
+    "fastybird/ui-module": "@dev"
+  },
+
+  "require-dev": {
+    "mockery/mockery": "^1.3",
+    "ninjify/nunjuck": "^0.3",
+    "ninjify/qa": "^0.10",
+    "pds/skeleton": "~1.0",
+    "phpstan/extension-installer": "^1.0",
+    "phpstan/phpstan": "^0.12",
+    "phpstan/phpstan-deprecation-rules": "^0.12",
+    "phpstan/phpstan-doctrine": "^0.12",
+    "phpstan/phpstan-nette": "^0.12",
+    "phpstan/phpstan-strict-rules" : "^0.12",
+    "tracy/tracy": "~2.4"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "FastyBird\\MiniServer\\": "src/"
+    }
+  },
+
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\Cases\\": "tests/cases",
+      "Tests\\Fixtures\\": "tests/fixtures",
+      "Tests\\Tools\\": "tests/tools"
+    }
+  },
+
+  "config": {
+    "sort-packages": true
+  },
+
+  "extra": {
+    "patches": {
+      "doctrine/orm": {
+        "Bug: Ramsey uuid not working": "patches/doctrine.orm.uuid.diff"
+      },
+      "ramsey/uuid-doctrine": {
+        "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
+      },
+      "nettrine/orm": {
+        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+      },
+      "nette/utils": {
+        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+diff --git a/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php b/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php
+index da809358d..260610f27 100644
+--- a/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php
++++ b/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php
+@@ -37,6 +37,7 @@ use Doctrine\ORM\Query;
+ use Doctrine\ORM\UnitOfWork;
+ use Doctrine\ORM\Utility\IdentifierFlattener;
+ use Doctrine\ORM\Utility\PersisterHelper;
++use Ramsey\Uuid\Uuid;
+ use function array_map;
+ use function array_merge;
+ use function assert;
+@@ -577,6 +578,15 @@ class BasicEntityPersister implements EntityPersister
+     {
+         $class      = $this->class;
+         $identifier = $this->em->getUnitOfWork()->getEntityIdentifier($entity);
++
++        foreach ($identifier as $key=>$value) {
++            if ($value instanceof Uuid) {
++                $identifier[$key] = $value->getBytes();
++            } else {
++                $identifier[$key] = $value;
++            }
++        }
++
+         $tableName  = $this->quoteStrategy->getTableName($class, $this->platform);
+         $idColumns  = $this->quoteStrategy->getIdentifierColumnNames($class, $this->platform);
+         $id         = array_combine($idColumns, $identifier);
+diff --git a/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php b/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php
+index 65e1b4efb..fabe49bb0 100644
+--- a/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php
++++ b/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php
+@@ -26,6 +26,7 @@ use Doctrine\DBAL\Types\Type;
+
+ use Doctrine\Common\Collections\Criteria;
+ use Doctrine\ORM\Utility\PersisterHelper;
++use Ramsey\Uuid\Uuid;
+
+ use function array_combine;
+
+@@ -273,6 +274,15 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
+     public function delete($entity)
+     {
+         $identifier = $this->em->getUnitOfWork()->getEntityIdentifier($entity);
++
++        foreach ($identifier as $key=>$value) {
++            if ($value instanceof Uuid) {
++                $identifier[$key] = $value->getBytes();
++            } else {
++                $identifier[$key] = $value;
++            }
++        }
++
+         $id         = array_combine($this->class->getIdentifierColumnNames(), $identifier);
+
+         $this->deleteJoinTableRecords($identifier);

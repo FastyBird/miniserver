@@ -1,0 +1,154 @@
+#
+# App DI configuration
+#
+# @license		More in license.md
+# @copyright	https://www.fastybird.com
+# @author		Adam Kadlec <adam.kadlec@fastybird.com>
+# @package		FastyBird:MiniServer!
+# @subpackage	config
+# @since		0.1.0
+#
+# @date			14.12.20
+
+#########################
+# Used Nette extensions #
+#########################
+
+extensions:
+	contributteTranslation				: Contributte\Translation\DI\TranslationExtension
+	nettrineAnnotations					: Nettrine\Annotations\DI\AnnotationsExtension
+	nettrineCache						: Nettrine\Cache\DI\CacheExtension
+	nettrineDbal						: Nettrine\DBAL\DI\DbalExtension
+	nettrineOrm							: Nettrine\ORM\DI\OrmExtension
+	nettrineOrmAnnotations				: Nettrine\ORM\DI\OrmAnnotationsExtension
+	nettrineOrmConsole					: Nettrine\ORM\DI\OrmConsoleExtension
+	nettrineOrmCache					: Nettrine\ORM\DI\OrmCacheExtension
+	fbDateTimeFactory					: FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
+	fbSimpleAuth						: FastyBird\SimpleAuth\DI\SimpleAuthExtension
+	fbDatabase							: FastyBird\Database\DI\DatabaseExtension
+	fbJsonApi							: FastyBird\JsonApi\DI\JsonApiExtension
+	fbModulesMetadata					: FastyBird\ModulesMetadata\DI\ModulesMetadataExtension
+	fbWebServer							: FastyBird\WebServer\DI\WebServerExtension
+	fbAuthModule						: FastyBird\AuthModule\DI\AuthModuleExtension
+	fbDevicesModule						: FastyBird\DevicesModule\DI\DevicesModuleExtension
+	fbTriggersModule					: FastyBird\TriggersModule\DI\TriggersModuleExtension
+	fbUiModule							: FastyBird\UIModule\DI\UIModuleExtension
+	ipubPhone							: IPub\Phone\DI\PhoneExtension
+	ipubDoctrinePhone					: IPub\DoctrinePhone\DI\DoctrinePhoneExtension
+	ipubDoctrineConsistence				: IPub\DoctrineConsistence\DI\DoctrineConsistenceExtension
+	ipubDoctrineCrud					: IPub\DoctrineCrud\DI\DoctrineCrudExtension
+	ipubDoctrineTimestampable			: IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
+	ipubDoctrineDynamicDiscriminatorMap	: IPub\DoctrineDynamicDiscriminatorMap\DI\DoctrineDynamicDiscriminatorMapExtension
+	ipubWebSocketsWAMP					: IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension
+	ipubWebSockets						: IPub\WebSockets\DI\WebSocketsExtension
+
+##################################
+# Nette extensions configuration #
+##################################
+
+# Simple authentication
+#######################
+fbSimpleAuth:
+	token:
+		issuer: %security.issuer%
+		signature: %security.signature%
+	enable:
+		middleware: true
+		doctrine:
+			models: true
+			mapping: true
+
+# Web server
+#################
+fbWebServer:
+	server:
+		address: %server.address%
+		port: %server.port%
+
+# WS server extension
+#####################
+ipubWebSockets:
+	server:
+		address: %server.address%
+		port: %ws.port%
+
+	mapping:
+		*: FastyBird\UIModule\Controllers\*Controller
+
+	routes:
+		'/io/exchange' : 'Exchange:'
+
+# Node translations
+###################
+contributteTranslation:
+	locales:
+		default: en_US
+		fallback: [en_US, en]
+	localeResolvers: []
+
+# Doctrine DBAL
+###############
+nettrineDbal:
+	connection:
+		serverVersion: %database.version%
+		host: %database.host%
+		port: %database.port%
+		driver: %database.driver%
+		memory: %database.memory%
+		dbname: %database.dbname%
+		user: %database.username%
+		password: %database.password%
+		charset: utf8
+
+		types:
+			uuid_binary:
+				class: Ramsey\Uuid\Doctrine\UuidBinaryType
+				commented: false
+			utcdatetime:
+				class: IPub\DoctrineTimestampable\Types\UTCDateTime
+				commented: false
+
+		typesMapping:
+			uuid_binary: binary
+
+# Doctrine ORM annoations
+#########################
+nettrineAnnotations:
+	debug: %debugMode%
+	ignore:
+		- writable
+		- validator
+		- module
+		- author
+		- subpackage
+		- package
+		- phpcsSuppress
+
+# Doctrine ORM
+##############
+nettrineOrm:
+	configuration:
+		proxyDir	: %tempDir%/cache/doctrine.proxies
+
+nettrineOrmAnnotations:
+	mapping: []
+
+############################
+# App services definitions #
+############################
+
+decorator:
+	FastyBird\WebServer\Commands\HttpServerCommand:
+		setup:
+			- '$onServerStart[]' = @FastyBird\MiniServer\Events\ServerStartHandler
+
+services:
+	# Console commands
+	##################
+
+	- {factory: FastyBird\MiniServer\Commands\InitializeCommand}
+
+	# App events
+	#############
+
+	- {factory: FastyBird\MiniServer\Events\ServerStartHandler}

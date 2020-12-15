@@ -1,0 +1,37 @@
+ src/UuidBinaryType.php | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/src/UuidBinaryType.php b/src/UuidBinaryType.php
+index e46cd2c..0951e75 100644
+--- a/src/UuidBinaryType.php
++++ b/src/UuidBinaryType.php
+@@ -68,7 +68,12 @@ class UuidBinaryType extends Type
+         try {
+             $uuid = Uuid::fromBytes($value);
+         } catch (InvalidArgumentException $e) {
+-            throw ConversionException::conversionFailed($value, static::NAME);
++            try {
++                $uuid = Uuid::fromString($value);
++
++            } catch (InvalidArgumentException $e) {
++                throw ConversionException::conversionFailed($value, static::NAME);
++            }
+         }
+
+         return $uuid;
+@@ -95,7 +100,14 @@ class UuidBinaryType extends Type
+                 return Uuid::fromString((string) $value)->getBytes();
+             }
+         } catch (InvalidArgumentException $e) {
+-            // Ignore the exception and pass through.
++            try {
++                $uuid = Uuid::fromBytes($value);
++
++                return $uuid->getBytes();
++
++            } catch (InvalidArgumentException $e) {
++                // Ignore the exception and pass through.
++            }
+         }
+
+         throw ConversionException::conversionFailed($value, static::NAME);
