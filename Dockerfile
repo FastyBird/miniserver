@@ -34,12 +34,17 @@ RUN apt-get update -yqq \
  unzip \
  zip \
  bzip2 \
+ zlib1g-dev \
+ libicu-dev \
+ g++ \
 ;
 
 RUN docker-php-ext-install \
  mysqli \
  pdo \
  pdo_mysql \
+ intl \
+ ctype \
 ;
 
 ###########################
