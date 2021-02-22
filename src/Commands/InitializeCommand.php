@@ -108,7 +108,7 @@ class InitializeCommand extends Console\Command\Command
 
 		$io->title('FB miniserver - initialization');
 
-		$io->note('This action will create or update node database structure, create initial data and initialize administrator account.');
+		$io->note('This action will create or update miniserver database structure, create initial data and initialize administrator account.');
 
 		/** @var bool $continue */
 		$continue = $io->ask('Would you like to continue?', 'n', function ($answer): bool {
@@ -123,7 +123,7 @@ class InitializeCommand extends Console\Command\Command
 			return 0;
 		}
 
-		$io->section('Preparing node database');
+		$io->section('Preparing miniserver database');
 
 		$databaseCmd = $symfonyApp->find('orm:schema-tool:update');
 

@@ -1,16 +1,16 @@
-# FastyBird miniserver app
+# FastyBird MiniServer app
 
-[![Build Status](https://img.shields.io/travis/com/FastyBird/miniserver-app.svg?style=flat-square)](https://travis-ci.com/FastyBird/miniserver-app)
-[![Code coverage](https://img.shields.io/coveralls/FastyBird/miniserver-app.svg?style=flat-square)](https://coveralls.io/r/FastyBird/miniserver-app)
-![PHP](https://img.shields.io/packagist/php-v/fastybird/miniserver-app?style=flat-square)
-[![Licence](https://img.shields.io/packagist/l/FastyBird/miniserver-app.svg?style=flat-square)](https://packagist.org/packages/FastyBird/miniserver-app)
-[![Downloads total](https://img.shields.io/packagist/dt/FastyBird/miniserver-app.svg?style=flat-square)](https://packagist.org/packages/FastyBird/miniserver-app)
-[![Latest stable](https://img.shields.io/packagist/v/FastyBird/miniserver-app.svg?style=flat-square)](https://packagist.org/packages/FastyBird/miniserver-app)
+[![Build Status](https://badgen.net/github/checks/FastyBird/application-events/master?cache=300&style=flast-square)](https://github.com/FastyBird/miniserver-app/actions)
+[![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/miniserver-app?cache=300&style=flast-square)](https://coveralls.io/r/FastyBird/miniserver-app)
+![PHP](https://badgen.net/packagist/php/FastyBird/miniserver-app?cache=300&style=flast-square)
+[![Licence](https://badgen.net/packagist/license/FastyBird/miniserver-app?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver-app)
+[![Downloads total](https://badgen.net/packagist/dt/FastyBird/miniserver-app?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver-app)
+[![Latest stable](https://badgen.net/packagist/v/FastyBird/miniserver-app/latest?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver-app)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
 
-## What is FastyBird miniserver app?
+## What is FastyBird MiniServer app?
 
-Miniserver app is combined application for accounts, devices, triggers, etc.
+MiniServer app is combined application for accounts, devices, triggers, etc.
 
 FastyBird miniserver app is an Apache2 licensed distributed application, developed in PHP with [Nette framework](https://nette.org).
 
