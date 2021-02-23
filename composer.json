@@ -44,7 +44,9 @@
     "fastybird/modules-metadata": "@dev",
     "fastybird/redisdb-storage-plugin": "@dev",
     "fastybird/triggers-module": "@dev",
-    "fastybird/ui-module": "@dev"
+    "fastybird/ui-module": "@dev",
+    "sunrise/http-server-request": "^1.1",
+    "vlucas/phpdotenv": "^5.3"
   },
 
   "require-dev": {

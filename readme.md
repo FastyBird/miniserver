@@ -10,13 +10,13 @@
 
 ## What is FastyBird MiniServer app?
 
-MiniServer app is combined application for accounts, devices, triggers, etc.
+MiniServer app is main management application for configuring devices, triggers, etc.
 
-FastyBird miniserver app is an Apache2 licensed distributed application, developed in PHP with [Nette framework](https://nette.org).
+FastyBird MiniServer app is an Apache2 licensed distributed application, developed in PHP with [Nette framework](https://nette.org).
 
 ## Requirements
 
-FastyBird miniserver app is tested against PHP 7.4 and [ReactPHP http](https://github.com/reactphp/http) 0.8 event-driven, streaming plaintext HTTP server
+FastyBird MiniServer app is tested against PHP 7.4 and [ReactPHP http](https://github.com/reactphp/http) 0.8 event-driven, streaming plaintext HTTP server
 
 ## Getting started
 
@@ -65,7 +65,7 @@ $ docker run -d -it --name miniserver-app miniserver-app
 
 ## Configuration
 
-This microservice is preconfigured for default connections, but your infrastructure could be different.
+This application is preconfigured for default connections, but your infrastructure could be different.
 
 Configuration could be made via environment variables:
 
@@ -74,9 +74,14 @@ Configuration could be made via environment variables:
 | `FB_APP_PARAMETER__DATABASE_VERSION=5.7` | MySQL server version |
 | `FB_APP_PARAMETER__DATABASE_HOST=127.0.0.1` | MySQL host address |
 | `FB_APP_PARAMETER__DATABASE_PORT=3306` | MySQL access port |
-| `FB_APP_PARAMETER__DATABASE_DBNAME=devices_node` | MySQL database name |
+| `FB_APP_PARAMETER__DATABASE_DBNAME=miniserver` | MySQL database name |
 | `FB_APP_PARAMETER__DATABASE_USERNAME=root` | Username |
 | `FB_APP_PARAMETER__DATABASE_PASSWORD=` | Password |
+| | |
+| `FB_APP_PARAMETER__REDIS_HOST=127.0.0.1` | Redis server host address |
+| `FB_APP_PARAMETER__REDIS_PORT=6379` | Redis server access port |
+| `FB_APP_PARAMETER__REDIS_USERNAME=` | Redis server username |
+| `FB_APP_PARAMETER__REDIS_PASSWORD=` | Redis server password |
 | | |
 | `FB_APP_PARAMETER__SERVER_ADDRESS=0.0.0.0` | HTTP server host address |
 | `FB_APP_PARAMETER__SERVER_PORT=8000` | HTTP server access port |

@@ -140,6 +140,11 @@ services:
 
 	- {factory: FastyBird\MiniServer\Commands\InitializeCommand}
 
+	# HTTP application
+	##################
+
+	- {factory: FastyBird\MiniServer\Application\Application}
+
 	# State storage
 	###############
 
@@ -152,11 +157,14 @@ services:
 	- {factory: FastyBird\MiniServer\Subscribers\PropertyConditionSubscriber}
 	- {factory: FastyBird\MiniServer\Subscribers\PropertyActionSubscriber}
 
-	# Redis
-	#######
+	# System data exchange
+	######################
 
-	- {factory: FastyBird\MiniServer\Redis\Subscribers\InitializeSubscriber}
-	- {factory: FastyBird\MiniServer\Redis\Connections\Connection}
-	- {factory: FastyBird\MiniServer\Redis\Client\ExchangeClient}
-	- {factory: FastyBird\MiniServer\Redis\Exchange}
-	- {factory: FastyBird\MiniServer\Redis\Consumer\BusConsumer}
+	-
+		factory: FastyBird\MiniServer\Publisher\RedisPublisher
+		arguments: [
+			host: %redis.host%
+			port: %redis.port%
+			username: %redis.username%
+			password: %redis.password%
+		]

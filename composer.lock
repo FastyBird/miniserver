@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71de757bb70437457f6994cf0d1446a8",
+    "content-hash": "731aaf99b0d208cba0821fb428ab7046",
     "packages": [
         {
             "name": "clue/redis-protocol",
@@ -2604,12 +2604,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-storage-plugin.git",
-                "reference": "22e601f74e4a9ea66565a4dfd5ec9f02ea6e066e"
+                "reference": "43c40a0de74256f292cb82430b65a976967d6d01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-storage-plugin/zipball/22e601f74e4a9ea66565a4dfd5ec9f02ea6e066e",
-                "reference": "22e601f74e4a9ea66565a4dfd5ec9f02ea6e066e",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-storage-plugin/zipball/43c40a0de74256f292cb82430b65a976967d6d01",
+                "reference": "43c40a0de74256f292cb82430b65a976967d6d01",
                 "shasum": ""
             },
             "require": {
@@ -2681,7 +2681,7 @@
                 "issues": "https://github.com/FastyBird/redisdb-storage-plugin/issues",
                 "source": "https://github.com/FastyBird/redisdb-storage-plugin/tree/master"
             },
-            "time": "2021-02-22T22:38:50+00:00"
+            "time": "2021-02-23T21:54:40+00:00"
         },
         {
             "name": "fastybird/simple-auth",
@@ -3208,6 +3208,72 @@
                 "source": "https://github.com/giggsey/Locale/tree/master"
             },
             "time": "2020-07-07T11:16:24+00:00"
+        },
+        {
+            "name": "graham-campbell/result-type",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Result-Type.git",
+                "reference": "7e279d2cd5d7fbb156ce46daada972355cea27bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/7e279d2cd5d7fbb156ce46daada972355cea27bb",
+                "reference": "7e279d2cd5d7fbb156ce46daada972355cea27bb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0",
+                "phpoption/phpoption": "^1.7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5|^7.5|^8.5|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\ResultType\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                }
+            ],
+            "description": "An Implementation Of The Result Type",
+            "keywords": [
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Result Type",
+                "Result-Type",
+                "result"
+            ],
+            "support": {
+                "issues": "https://github.com/GrahamCampbell/Result-Type/issues",
+                "source": "https://github.com/GrahamCampbell/Result-Type/tree/v1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/graham-campbell/result-type",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-04-13T13:17:36+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -6294,6 +6360,75 @@
             "time": "2020-09-17T18:55:26+00:00"
         },
         {
+            "name": "phpoption/phpoption",
+            "version": "1.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/php-option.git",
+                "reference": "994ecccd8f3283ecf5ac33254543eb0ac946d525"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/994ecccd8f3283ecf5ac33254543eb0ac946d525",
+                "reference": "994ecccd8f3283ecf5ac33254543eb0ac946d525",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
+                "phpunit/phpunit": "^4.8.35 || ^5.7.27 || ^6.5.6 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpOption\\": "src/PhpOption/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                },
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                }
+            ],
+            "description": "Option Type for PHP",
+            "keywords": [
+                "language",
+                "option",
+                "php",
+                "type"
+            ],
+            "support": {
+                "issues": "https://github.com/schmittjoh/php-option/issues",
+                "source": "https://github.com/schmittjoh/php-option/tree/1.7.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpoption/phpoption",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-07-20T17:29:33+00:00"
+        },
+        {
             "name": "predis/predis",
             "version": "v1.1.6",
             "source": {
@@ -7802,6 +7937,398 @@
                 }
             ],
             "time": "2021-02-02T08:58:09+00:00"
+        },
+        {
+            "name": "sunrise/http-header",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/http-header.git",
+                "reference": "0095b3ccc6766aca473d24dce3bad2342f638d77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/http-header/zipball/0095b3ccc6766aca473d24dce3bad2342f638d77",
+                "reference": "0095b3ccc6766aca473d24dce3bad2342f638d77",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.5.20|9.5.0",
+                "sunrise/coding-standard": "1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sunrise\\Http\\Header\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoly Fenric",
+                    "email": "anatoly@fenric.ru",
+                    "homepage": "https://anatoly.fenric.ru/"
+                }
+            ],
+            "description": "Sunrise HTTP header interface for PHP 7.1+ based on PSR-7",
+            "homepage": "https://github.com/sunrise-php/http-header",
+            "keywords": [
+                "HTTP-header",
+                "fenric",
+                "http",
+                "psr-7",
+                "sunrise"
+            ],
+            "support": {
+                "issues": "https://github.com/sunrise-php/http-header/issues",
+                "source": "https://github.com/sunrise-php/http-header/tree/v1.1.0"
+            },
+            "time": "2020-12-25T06:32:55+00:00"
+        },
+        {
+            "name": "sunrise/http-header-collection",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/http-header-collection.git",
+                "reference": "f678194920b9b7f0886b336e9b1766927642fe23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/http-header-collection/zipball/f678194920b9b7f0886b336e9b1766927642fe23",
+                "reference": "f678194920b9b7f0886b336e9b1766927642fe23",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0",
+                "psr/http-message": "^1.0",
+                "sunrise/http-header": "^1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.5.20|9.5.0",
+                "sunrise/coding-standard": "1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sunrise\\Http\\Header\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoly Fenric",
+                    "email": "anatoly@fenric.ru",
+                    "homepage": "https://anatoly.fenric.ru/"
+                }
+            ],
+            "description": "Sunrise HTTP header collection for PHP 7.1+ based on PSR-7",
+            "homepage": "https://github.com/sunrise-php/http-header-collection",
+            "keywords": [
+                "HTTP-header",
+                "PHP7",
+                "collection",
+                "fenric",
+                "header",
+                "http",
+                "http-header-collection",
+                "php8",
+                "psr-7",
+                "sunrise"
+            ],
+            "support": {
+                "issues": "https://github.com/sunrise-php/http-header-collection/issues",
+                "source": "https://github.com/sunrise-php/http-header-collection/tree/v1.1.0"
+            },
+            "time": "2020-12-25T23:20:27+00:00"
+        },
+        {
+            "name": "sunrise/http-message",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/http-message.git",
+                "reference": "e71162d18efe039bf34f12cb4bc357d908370fbd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/http-message/zipball/e71162d18efe039bf34f12cb4bc357d908370fbd",
+                "reference": "e71162d18efe039bf34f12cb4bc357d908370fbd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0",
+                "sunrise/http-header": "^1.1",
+                "sunrise/http-header-collection": "^1.1",
+                "sunrise/stream": "^1.2",
+                "sunrise/uri": "^1.2"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.5.20|9.5.0",
+                "sunrise/coding-standard": "1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "data/phrases.php"
+                ],
+                "psr-4": {
+                    "Sunrise\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoly Fenric",
+                    "email": "anatoly@fenric.ru",
+                    "homepage": "https://anatoly.fenric.ru/"
+                }
+            ],
+            "description": "Sunrise HTTP message wrapper for PHP 7.1+ based on RFC-7230, PSR-7 & PSR-17",
+            "homepage": "https://github.com/sunrise-php/http-message",
+            "keywords": [
+                "fenric",
+                "http",
+                "http-message",
+                "psr-17",
+                "psr-7",
+                "rfc-7230",
+                "sunrise"
+            ],
+            "support": {
+                "issues": "https://github.com/sunrise-php/http-message/issues",
+                "source": "https://github.com/sunrise-php/http-message/tree/v1.4.0"
+            },
+            "time": "2020-12-26T06:03:28+00:00"
+        },
+        {
+            "name": "sunrise/http-server-request",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/http-server-request.git",
+                "reference": "03db82a084477b6de9d8bcc7419a7fc1106af56b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/http-server-request/zipball/03db82a084477b6de9d8bcc7419a7fc1106af56b",
+                "reference": "03db82a084477b6de9d8bcc7419a7fc1106af56b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0",
+                "sunrise/http-message": "^1.4",
+                "sunrise/stream": "^1.2",
+                "sunrise/uri": "^1.2"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.5.20|9.5.0",
+                "sunrise/coding-standard": "1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sunrise\\Http\\ServerRequest\\": "src/"
+                },
+                "files": [
+                    "functions/request_body.php",
+                    "functions/request_files.php",
+                    "functions/request_headers.php",
+                    "functions/request_http_version.php",
+                    "functions/request_method.php",
+                    "functions/request_uri.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoly Fenric",
+                    "email": "anatoly@fenric.ru",
+                    "homepage": "https://anatoly.fenric.ru/"
+                },
+                {
+                    "name": "李昀陞 (Peter)",
+                    "email": "peter279k@gmail.com",
+                    "homepage": "https://github.com/peter279k"
+                }
+            ],
+            "description": "Sunrise HTTP server request wrapper for PHP 7.1+ based on PSR-7 & PSR-17",
+            "homepage": "https://github.com/sunrise-php/http-server-request",
+            "keywords": [
+                "PHP7",
+                "fenric",
+                "http",
+                "http-server-request",
+                "php8",
+                "psr-17",
+                "psr-7",
+                "sunrise"
+            ],
+            "support": {
+                "issues": "https://github.com/sunrise-php/http-server-request/issues",
+                "source": "https://github.com/sunrise-php/http-server-request/tree/v1.1.0"
+            },
+            "time": "2020-12-26T07:07:15+00:00"
+        },
+        {
+            "name": "sunrise/stream",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/stream.git",
+                "reference": "8ff45372c752fdf7e1b53d724ab188b894af6209"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/stream/zipball/8ff45372c752fdf7e1b53d724ab188b894af6209",
+                "reference": "8ff45372c752fdf7e1b53d724ab188b894af6209",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.5.20|9.5.0",
+                "sunrise/coding-standard": "1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sunrise\\Stream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoly Fenric",
+                    "email": "anatoly@fenric.ru",
+                    "homepage": "https://anatoly.fenric.ru/"
+                },
+                {
+                    "name": "李昀陞 (Peter)",
+                    "email": "peter279k@gmail.com",
+                    "homepage": "https://github.com/peter279k"
+                }
+            ],
+            "description": "Simple Stream wrapper for PHP 7.1+ based on PSR-7 & PSR-17",
+            "homepage": "https://github.com/sunrise-php/stream",
+            "keywords": [
+                "PHP7",
+                "fenric",
+                "http",
+                "php8",
+                "psr-17",
+                "psr-7",
+                "stream",
+                "sunrise"
+            ],
+            "support": {
+                "issues": "https://github.com/sunrise-php/stream/issues",
+                "source": "https://github.com/sunrise-php/stream/tree/v1.2.1"
+            },
+            "time": "2020-12-25T06:13:21+00:00"
+        },
+        {
+            "name": "sunrise/uri",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/uri.git",
+                "reference": "9c450a784ca8145f4a097df03c29b35b23a12210"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/uri/zipball/9c450a784ca8145f4a097df03c29b35b23a12210",
+                "reference": "9c450a784ca8145f4a097df03c29b35b23a12210",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.5.20|9.5.0",
+                "sunrise/coding-standard": "1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sunrise\\Uri\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoly Fenric",
+                    "email": "anatoly@fenric.ru",
+                    "homepage": "https://anatoly.fenric.ru/"
+                },
+                {
+                    "name": "李昀陞 (Peter)",
+                    "email": "peter279k@gmail.com",
+                    "homepage": "https://github.com/peter279k"
+                }
+            ],
+            "description": "Simple URI wrapper for PHP 7.1+ based on RFC-3986, PSR-7 & PSR-17",
+            "homepage": "https://github.com/sunrise-php/uri",
+            "keywords": [
+                "PHP7",
+                "fenric",
+                "http",
+                "parser",
+                "php8",
+                "psr-17",
+                "psr-7",
+                "rfc-3986",
+                "sunrise",
+                "uri"
+            ],
+            "support": {
+                "issues": "https://github.com/sunrise-php/uri/issues",
+                "source": "https://github.com/sunrise-php/uri/tree/v1.2.0"
+            },
+            "time": "2020-12-25T04:36:40+00:00"
         },
         {
             "name": "symfony/config",
@@ -9476,6 +10003,86 @@
                 "source": "https://github.com/nette/tracy/tree/v2.8.3"
             },
             "time": "2021-01-31T23:07:09+00:00"
+        },
+        {
+            "name": "vlucas/phpdotenv",
+            "version": "v5.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vlucas/phpdotenv.git",
+                "reference": "b3eac5c7ac896e52deab4a99068e3f4ab12d9e56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/b3eac5c7ac896e52deab4a99068e3f4ab12d9e56",
+                "reference": "b3eac5c7ac896e52deab4a99068e3f4ab12d9e56",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "graham-campbell/result-type": "^1.0.1",
+                "php": "^7.1.3 || ^8.0",
+                "phpoption/phpoption": "^1.7.4",
+                "symfony/polyfill-ctype": "^1.17",
+                "symfony/polyfill-mbstring": "^1.17",
+                "symfony/polyfill-php80": "^1.17"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
+                "ext-filter": "*",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.14 || ^9.5.1"
+            },
+            "suggest": {
+                "ext-filter": "Required to use the boolean validator."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dotenv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com",
+                    "homepage": "https://gjcampbell.co.uk/"
+                },
+                {
+                    "name": "Vance Lucas",
+                    "email": "vance@vancelucas.com",
+                    "homepage": "https://vancelucas.com/"
+                }
+            ],
+            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+            "keywords": [
+                "dotenv",
+                "env",
+                "environment"
+            ],
+            "support": {
+                "issues": "https://github.com/vlucas/phpdotenv/issues",
+                "source": "https://github.com/vlucas/phpdotenv/tree/v5.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/vlucas/phpdotenv",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-01-20T15:23:13+00:00"
         },
         {
             "name": "webmozart/assert",

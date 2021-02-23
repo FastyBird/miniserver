@@ -142,7 +142,6 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	public static function getUpdateFields(): array
 	{
 		return [
-			0          => 'id',
 			'value'    => null,
 			'expected' => null,
 			'pending'  => false,
