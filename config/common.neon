@@ -151,17 +151,16 @@ services:
 	- {factory: FastyBird\MiniServer\Models\PropertiesManager}
 	- {factory: FastyBird\MiniServer\Models\PropertyRepository}
 
-	# Entity subscribers
-	####################
+	# Entities
+	##########
 
-	- {factory: FastyBird\MiniServer\Subscribers\PropertyConditionSubscriber}
-	- {factory: FastyBird\MiniServer\Subscribers\PropertyActionSubscriber}
+	- {factory: FastyBird\MiniServer\Subscribers\EntitiesSubscriber}
 
-	# System data exchange
+	# Modules data exchange
 	######################
 
 	-
-		factory: FastyBird\MiniServer\Publisher\RedisPublisher
+		factory: FastyBird\MiniServer\Exchange\RedisPublisher
 		arguments: [
 			host: %redis.host%
 			port: %redis.port%

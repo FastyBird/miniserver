@@ -13,7 +13,7 @@
  * @date           23.02.21
  */
 
-namespace FastyBird\MiniServer\Publisher;
+namespace FastyBird\MiniServer\Exchange;
 
 use FastyBird\ApplicationExchange;
 use FastyBird\MiniServer;
@@ -70,7 +70,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 	/**
 	 * {@inheritDoc}
 	 */
-	public function publish(string $routingKey, array $data): void
+	public function publish(string $origin, string $routingKey, array $data): void
 	{
 		try {
 			// Compose message
@@ -81,7 +81,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 			]);
 
 		} catch (Utils\JsonException $ex) {
-			$this->logger->error('[FB:MINISERVER:REDIS] Data could not be converted to message', [
+			$this->logger->error('[FB:MINISERVER:EXCHANGE] Data could not be converted to message', [
 				'message'   => [
 					'routingKey' => $routingKey,
 					'origin'     => MiniServer\Constants::APP_ORIGIN,
@@ -98,7 +98,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 		$result = $this->redis->executeRaw(['PUBLISH', MiniServer\Constants::PUB_SUB_EXCHANGE_CHANNEL, $message]);
 
 		if (is_numeric($result)) {
-			$this->logger->info('[FB:MINISERVER:REDIS] Received message was pushed into data exchange', [
+			$this->logger->info('[FB:MINISERVER:EXCHANGE] Received message was pushed into data exchange', [
 				'message' => [
 					'routingKey' => $routingKey,
 					'origin'     => MiniServer\Constants::APP_ORIGIN,
@@ -107,7 +107,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 			]);
 
 		} else {
-			$this->logger->error('[FB:MINISERVER:REDIS] Received message could not be pushed into data exchange', [
+			$this->logger->error('[FB:MINISERVER:EXCHANGE] Received message could not be pushed into data exchange', [
 				'message' => [
 					'routingKey' => $routingKey,
 					'origin'     => MiniServer\Constants::APP_ORIGIN,

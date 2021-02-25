@@ -33,7 +33,6 @@
 
   "require": {
     "php": ">=7.4.0",
-    "clue/redis-react": "^2.4",
     "cweagans/composer-patches": "^1.6",
     "fastybird/application-events": "@dev",
     "fastybird/application-exchange": "@dev",

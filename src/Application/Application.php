@@ -21,6 +21,14 @@ use Psr\Http\Message\ResponseInterface;
 use Sunrise\Http\ServerRequest\ServerRequestFactory;
 use Throwable;
 
+/**
+ * Base application service
+ *
+ * @package        FastyBird:MiniServer!
+ * @subpackage     Application
+ *
+ * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ */
 class Application implements IApplication
 {
 
@@ -43,6 +51,8 @@ class Application implements IApplication
 	 * Dispatch application in middleware cycle!
 	 *
 	 * @return string|int|bool|void|ResponseInterface|null
+	 *
+	 * @throws Throwable
 	 */
 	public function run()
 	{
@@ -62,6 +72,11 @@ class Application implements IApplication
 		return $response;
 	}
 
+	/**
+	 * @param ResponseInterface $response
+	 *
+	 * @return void
+	 */
 	protected function sendStatus(ResponseInterface $response): void
 	{
 		$version = $response->getProtocolVersion();
@@ -71,6 +86,11 @@ class Application implements IApplication
 		header(sprintf('HTTP/%s %s %s', $version, $status, $phrase));
 	}
 
+	/**
+	 * @param ResponseInterface $response
+	 *
+	 * @return void
+	 */
 	protected function sendHeaders(ResponseInterface $response): void
 	{
 		foreach ($response->getHeaders() as $name => $values) {
@@ -80,12 +100,15 @@ class Application implements IApplication
 
 	/**
 	 * @param string[] $values
+	 *
+	 * @return void
 	 */
 	protected function sendHeader(string $name, array $values): void
 	{
 		$name = str_replace('-', ' ', $name);
 		$name = ucwords($name);
 		$name = str_replace(' ', '-', $name);
+
 		$replace = in_array(strtolower($name), self::UNIQUE_HEADERS, true);
 
 		foreach ($values as $value) {
@@ -93,6 +116,11 @@ class Application implements IApplication
 		}
 	}
 
+	/**
+	 * @param ResponseInterface $response
+	 *
+	 * @return void
+	 */
 	protected function sendBody(ResponseInterface $response): void
 	{
 		$stream = $response->getBody();

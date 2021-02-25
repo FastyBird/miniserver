@@ -17,6 +17,14 @@ namespace FastyBird\MiniServer\Application;
 
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Base application interface
+ *
+ * @package        FastyBird:MiniServer!
+ * @subpackage     Application
+ *
+ * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ */
 interface IApplication
 {
 

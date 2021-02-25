@@ -10,7 +10,7 @@ parameters:
 		memory: false
 		dbname: miniserver_app
 		username: root
-		password: root
+		password:
 
 	redis:
 		host: 51.91.109.122

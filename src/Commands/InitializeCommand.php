@@ -31,7 +31,7 @@ use Symfony\Component\Console\Style;
 use Throwable;
 
 /**
- * Node initialize command
+ * Application initialize command
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     Commands
@@ -42,19 +42,19 @@ class InitializeCommand extends Console\Command\Command
 {
 
 	/** @var AuthModuleModels\Accounts\IAccountRepository */
-	private $accountRepository;
+	private AuthModuleModels\Accounts\IAccountRepository $accountRepository;
 
 	/** @var AuthModuleModels\Roles\IRoleRepository */
-	private $roleRepository;
+	private AuthModuleModels\Roles\IRoleRepository $roleRepository;
 
 	/** @var AuthModuleModels\Roles\IRolesManager */
-	private $rolesManager;
+	private AuthModuleModels\Roles\IRolesManager $rolesManager;
 
 	/** @var Common\Persistence\ManagerRegistry */
-	private $managerRegistry;
+	private Common\Persistence\ManagerRegistry $managerRegistry;
 
 	/** @var Monolog\Logger */
-	private $logger;
+	private Monolog\Logger $logger;
 
 	public function __construct(
 		AuthModuleModels\Accounts\IAccountRepository $accountRepository,
