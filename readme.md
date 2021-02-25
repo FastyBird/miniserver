@@ -32,15 +32,27 @@ $ cd path/to/install
 
 Everything required will be then installed in the provided folder `path/to/install`
 
-This microservice has several console command.
+This application has several console command.
 
-##### HTTP server
+### Running app
+
+You have two options how to run this app
+
+#### Running a app via ReactPHP http server
+
+All what you need is just run one console command:
 
 ```sh
 $ vendor/bin/fb-console fb:web-server:start
 ```
 
-This command is to start build in web server which is listening for incoming http api request messages from clients and is listening for new data from exchange bus from other microservices. 
+This command will start build in web server which is listening for incoming http api request messages from clients. 
+
+#### Running a app via Apache or Nginx
+
+You have to configure you web server running on [Apache](http://www.apache.org) or [Nginx](https://www.nginx.com) to server content from `www` folder.
+
+In this folder is main entry point for api and also static files for web interface.
 
 ## Install with docker
 
