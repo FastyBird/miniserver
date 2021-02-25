@@ -10,11 +10,9 @@ use FastyBird\DateTimeFactory;
 use InvalidArgumentException;
 use Mockery;
 use Nette\DI;
-use Nettrine\DBAL as NettrineDBAL;
 use Nettrine\ORM as NettrineORM;
 use Ninjify\Nunjuck\TestCase\BaseMockeryTestCase;
 use RuntimeException;
-use Tests\Tools;
 
 abstract class DbTestCase extends BaseMockeryTestCase
 {
