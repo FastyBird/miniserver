@@ -76,7 +76,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 			// Compose message
 			$message = Utils\Json::encode([
 				'routing_key' => $routingKey,
-				'origin'      => MiniServer\Constants::APP_ORIGIN,
+				'origin'      => $origin,
 				'data'        => $data,
 			]);
 
@@ -84,7 +84,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 			$this->logger->error('[FB:MINISERVER:EXCHANGE] Data could not be converted to message', [
 				'message'   => [
 					'routingKey' => $routingKey,
-					'origin'     => MiniServer\Constants::APP_ORIGIN,
+					'origin'     => $origin,
 				],
 				'exception' => [
 					'message' => $ex->getMessage(),
@@ -101,7 +101,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 			$this->logger->info('[FB:MINISERVER:EXCHANGE] Received message was pushed into data exchange', [
 				'message' => [
 					'routingKey' => $routingKey,
-					'origin'     => MiniServer\Constants::APP_ORIGIN,
+					'origin'     => $origin,
 					'content'    => $data,
 				],
 			]);
@@ -110,7 +110,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 			$this->logger->error('[FB:MINISERVER:EXCHANGE] Received message could not be pushed into data exchange', [
 				'message' => [
 					'routingKey' => $routingKey,
-					'origin'     => MiniServer\Constants::APP_ORIGIN,
+					'origin'     => $origin,
 					'content'    => $data,
 				],
 			]);

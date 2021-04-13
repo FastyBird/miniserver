@@ -20,6 +20,4 @@ final class Constants
 
 	public const PUB_SUB_EXCHANGE_CHANNEL = 'fb_exchange';
 
-	public const APP_ORIGIN = 'com.fastybird.miniserver';
-
 }
