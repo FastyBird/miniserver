@@ -1959,12 +1959,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/auth-module.git",
-                "reference": "0256618a6109f43a5065e8a680dab4bbc5e29127"
+                "reference": "787738dfe90db1614095801e8df8583958436140"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/auth-module/zipball/0256618a6109f43a5065e8a680dab4bbc5e29127",
-                "reference": "0256618a6109f43a5065e8a680dab4bbc5e29127",
+                "url": "https://api.github.com/repos/FastyBird/auth-module/zipball/787738dfe90db1614095801e8df8583958436140",
+                "reference": "787738dfe90db1614095801e8df8583958436140",
                 "shasum": ""
             },
             "require": {
@@ -2044,7 +2044,7 @@
                 "issues": "https://github.com/FastyBird/auth-module/issues",
                 "source": "https://github.com/FastyBird/auth-module/tree/master"
             },
-            "time": "2021-04-13T20:28:14+00:00"
+            "time": "2021-04-13T20:57:56+00:00"
         },
         {
             "name": "fastybird/bootstrap",
