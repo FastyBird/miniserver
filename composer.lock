@@ -1245,26 +1245,26 @@
         },
         {
             "name": "doctrine/inflector",
-            "version": "1.4.3",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "4650c8b30c753a76bf44fb2ed00117d6f367490c"
+                "reference": "4bd5c1cdfcd00e9e2d8c484f79150f67e5d355d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/4650c8b30c753a76bf44fb2ed00117d6f367490c",
-                "reference": "4650c8b30c753a76bf44fb2ed00117d6f367490c",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/4bd5c1cdfcd00e9e2d8c484f79150f67e5d355d9",
+                "reference": "4bd5c1cdfcd00e9e2d8c484f79150f67e5d355d9",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2 || ^8.0"
+                "php": "^7.1 || ^8.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^7.0",
-                "phpstan/phpstan": "^0.11",
-                "phpstan/phpstan-phpunit": "^0.11",
-                "phpstan/phpstan-strict-rules": "^0.11",
+                "doctrine/coding-standard": "^8.0",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
                 "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
             },
             "type": "library",
@@ -1321,7 +1321,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/inflector/issues",
-                "source": "https://github.com/doctrine/inflector/tree/1.4.x"
+                "source": "https://github.com/doctrine/inflector/tree/1.4.4"
             },
             "funding": [
                 {
@@ -1337,7 +1337,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-29T07:19:59+00:00"
+            "time": "2021-04-16T17:34:40+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -2282,12 +2282,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "987db5eec64d4cf08aa240307cb856e7916cf9e7"
+                "reference": "18d6e0cfb8fcc6a4f2abcbc304ff3a0929715fab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/987db5eec64d4cf08aa240307cb856e7916cf9e7",
-                "reference": "987db5eec64d4cf08aa240307cb856e7916cf9e7",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/18d6e0cfb8fcc6a4f2abcbc304ff3a0929715fab",
+                "reference": "18d6e0cfb8fcc6a4f2abcbc304ff3a0929715fab",
                 "shasum": ""
             },
             "require": {
@@ -2367,7 +2367,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module/tree/master"
             },
-            "time": "2021-04-13T20:02:21+00:00"
+            "time": "2021-04-17T11:20:58+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2455,12 +2455,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modules-metadata.git",
-                "reference": "8f8d3efd7a3630fe3f2042df7c3a62b8ec6f0ae2"
+                "reference": "4ef95e919b60767bbc7d042281b0902d3fdac597"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/8f8d3efd7a3630fe3f2042df7c3a62b8ec6f0ae2",
-                "reference": "8f8d3efd7a3630fe3f2042df7c3a62b8ec6f0ae2",
+                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/4ef95e919b60767bbc7d042281b0902d3fdac597",
+                "reference": "4ef95e919b60767bbc7d042281b0902d3fdac597",
                 "shasum": ""
             },
             "require": {
@@ -2518,7 +2518,7 @@
                 "issues": "https://github.com/FastyBird/modules-metadata/issues",
                 "source": "https://github.com/FastyBird/modules-metadata/tree/master"
             },
-            "time": "2021-04-13T20:11:14+00:00"
+            "time": "2021-04-17T10:52:49+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -5560,16 +5560,16 @@
         },
         {
             "name": "opis/json-schema",
-            "version": "1.0.19",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/json-schema.git",
-                "reference": "1bcb3582881d0692d002537a4472964280f71313"
+                "reference": "39d8072be8657a329a284339994401066406c43b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/json-schema/zipball/1bcb3582881d0692d002537a4472964280f71313",
-                "reference": "1bcb3582881d0692d002537a4472964280f71313",
+                "url": "https://api.github.com/repos/opis/json-schema/zipball/39d8072be8657a329a284339994401066406c43b",
+                "reference": "39d8072be8657a329a284339994401066406c43b",
                 "shasum": ""
             },
             "require": {
@@ -5581,7 +5581,7 @@
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "opis/string": "^1.4",
-                "phpunit/phpunit": "^6.5 || ^7.0"
+                "phpunit/phpunit": "^6.5 || ^7.0 || ^9.4"
             },
             "suggest": {
                 "opis/string": "A standalone library for manipulating multibyte strings"
@@ -5621,9 +5621,9 @@
             ],
             "support": {
                 "issues": "https://github.com/opis/json-schema/issues",
-                "source": "https://github.com/opis/json-schema/tree/master"
+                "source": "https://github.com/opis/json-schema/tree/1.1.0"
             },
-            "time": "2020-06-07T20:56:25+00:00"
+            "time": "2021-04-14T20:02:50+00:00"
         },
         {
             "name": "paragonie/random_compat",
