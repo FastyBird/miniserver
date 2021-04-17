@@ -2282,12 +2282,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "18d6e0cfb8fcc6a4f2abcbc304ff3a0929715fab"
+                "reference": "9d31ae0e034fa57a760f9a2997d02bc6cc8a6677"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/18d6e0cfb8fcc6a4f2abcbc304ff3a0929715fab",
-                "reference": "18d6e0cfb8fcc6a4f2abcbc304ff3a0929715fab",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/9d31ae0e034fa57a760f9a2997d02bc6cc8a6677",
+                "reference": "9d31ae0e034fa57a760f9a2997d02bc6cc8a6677",
                 "shasum": ""
             },
             "require": {
@@ -2367,7 +2367,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module/tree/master"
             },
-            "time": "2021-04-17T11:20:58+00:00"
+            "time": "2021-04-17T19:17:15+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2455,12 +2455,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modules-metadata.git",
-                "reference": "4ef95e919b60767bbc7d042281b0902d3fdac597"
+                "reference": "cb87eb9f5cde6e0694851e00bc600e109a105f82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/4ef95e919b60767bbc7d042281b0902d3fdac597",
-                "reference": "4ef95e919b60767bbc7d042281b0902d3fdac597",
+                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/cb87eb9f5cde6e0694851e00bc600e109a105f82",
+                "reference": "cb87eb9f5cde6e0694851e00bc600e109a105f82",
                 "shasum": ""
             },
             "require": {
@@ -2518,7 +2518,7 @@
                 "issues": "https://github.com/FastyBird/modules-metadata/issues",
                 "source": "https://github.com/FastyBird/modules-metadata/tree/master"
             },
-            "time": "2021-04-17T10:52:49+00:00"
+            "time": "2021-04-17T15:03:50+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
