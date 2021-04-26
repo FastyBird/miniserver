@@ -5,6 +5,7 @@ namespace Tests\Cases;
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\DevicesModule\Queries as DevicesModuleQueries;
 use FastyBird\MiniServer\Exchange;
+use FastyBird\MiniServer\Models;
 use FastyBird\TriggersModule\Entities as TriggersModuleEntities;
 use FastyBird\TriggersModule\Models as TriggersModuleModels;
 use FastyBird\TriggersModule\Queries as TriggersModuleQueries;
@@ -31,6 +32,16 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$this->mockContainerService(
 			Exchange\RedisPublisher::class,
 			$redisPublisher
+		);
+
+		$propertyRepository = Mockery::mock(Models\PropertyRepository::class);
+		$propertyRepository
+			->shouldReceive('findOne')
+			->andReturn(null);
+
+		$this->mockContainerService(
+			Models\PropertyRepository::class,
+			$propertyRepository
 		);
 	}
 
