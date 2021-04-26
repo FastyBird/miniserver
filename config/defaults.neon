@@ -13,8 +13,8 @@ parameters:
 		password:
 
 	redis:
-		host: 51.91.109.122
-		port: 5432
+		host: 127.0.0.1
+		port: 6379
 		username:
 		password:
 

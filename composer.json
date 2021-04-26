@@ -34,11 +34,10 @@
   "require": {
     "php": ">=7.4.0",
     "cweagans/composer-patches": "^1.6",
+    "fastybird/accounts-module": "@dev",
     "fastybird/application-events": "@dev",
     "fastybird/application-exchange": "@dev",
-    "fastybird/auth-module": "@dev",
     "fastybird/bootstrap": "@dev",
-    "fastybird/database": "@dev",
     "fastybird/devices-module": "@dev",
     "fastybird/modules-metadata": "@dev",
     "fastybird/redisdb-storage-plugin": "@dev",

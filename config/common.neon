@@ -32,7 +32,7 @@ extensions:
 	fbModulesMetadata					: FastyBird\ModulesMetadata\DI\ModulesMetadataExtension
 	fbWebServer							: FastyBird\WebServer\DI\WebServerExtension
 	fbRedisDbStoragePlugin				: FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
-	fbAuthModule						: FastyBird\AuthModule\DI\AuthModuleExtension
+	fbAccountsModule					: FastyBird\AccountsModule\DI\AccountsModuleExtension
 	fbDevicesModule						: FastyBird\DevicesModule\DI\DevicesModuleExtension
 	fbTriggersModule					: FastyBird\TriggersModule\DI\TriggersModuleExtension
 	fbUiModule							: FastyBird\UIModule\DI\UIModuleExtension
@@ -148,7 +148,6 @@ services:
 	# State storage
 	###############
 
-	- {factory: FastyBird\MiniServer\Models\PropertiesManager}
 	- {factory: FastyBird\MiniServer\Models\PropertyRepository}
 
 	# Entities

@@ -17,8 +17,8 @@ namespace FastyBird\MiniServer\Commands;
 
 use Doctrine\Common;
 use Doctrine\DBAL\Connection;
-use FastyBird\AuthModule\Models as AuthModuleModels;
-use FastyBird\AuthModule\Queries as AuthModuleQueries;
+use FastyBird\AccountsModule\Models as AccountsModuleModels;
+use FastyBird\AccountsModule\Queries as AccountsModuleQueries;
 use FastyBird\MiniServer\Exceptions;
 use FastyBird\SimpleAuth;
 use Monolog;
@@ -41,14 +41,14 @@ use Throwable;
 class InitializeCommand extends Console\Command\Command
 {
 
-	/** @var AuthModuleModels\Accounts\IAccountRepository */
-	private AuthModuleModels\Accounts\IAccountRepository $accountRepository;
+	/** @var AccountsModuleModels\Accounts\IAccountRepository */
+	private AccountsModuleModels\Accounts\IAccountRepository $accountRepository;
 
-	/** @var AuthModuleModels\Roles\IRoleRepository */
-	private AuthModuleModels\Roles\IRoleRepository $roleRepository;
+	/** @var AccountsModuleModels\Roles\IRoleRepository */
+	private AccountsModuleModels\Roles\IRoleRepository $roleRepository;
 
-	/** @var AuthModuleModels\Roles\IRolesManager */
-	private AuthModuleModels\Roles\IRolesManager $rolesManager;
+	/** @var AccountsModuleModels\Roles\IRolesManager */
+	private AccountsModuleModels\Roles\IRolesManager $rolesManager;
 
 	/** @var Common\Persistence\ManagerRegistry */
 	private Common\Persistence\ManagerRegistry $managerRegistry;
@@ -57,9 +57,9 @@ class InitializeCommand extends Console\Command\Command
 	private Monolog\Logger $logger;
 
 	public function __construct(
-		AuthModuleModels\Accounts\IAccountRepository $accountRepository,
-		AuthModuleModels\Roles\IRoleRepository $roleRepository,
-		AuthModuleModels\Roles\IRolesManager $rolesManager,
+		AccountsModuleModels\Accounts\IAccountRepository $accountRepository,
+		AccountsModuleModels\Roles\IRoleRepository $roleRepository,
+		AccountsModuleModels\Roles\IRolesManager $rolesManager,
 		Common\Persistence\ManagerRegistry $managerRegistry,
 		Monolog\Logger $logger,
 		?string $name = null
@@ -169,7 +169,7 @@ class InitializeCommand extends Console\Command\Command
 
 			// Roles initialization
 			foreach ($allRoles as $roleName) {
-				$findRole = new AuthModuleQueries\FindRolesQuery();
+				$findRole = new AccountsModuleQueries\FindRolesQuery();
 				$findRole->byName($roleName);
 
 				$role = $this->roleRepository->findOneBy($findRole);
@@ -206,13 +206,13 @@ class InitializeCommand extends Console\Command\Command
 
 		$io->section('Checking for administrator account');
 
-		$findRole = new AuthModuleQueries\FindRolesQuery();
+		$findRole = new AccountsModuleQueries\FindRolesQuery();
 		$findRole->byName(SimpleAuth\Constants::ROLE_ADMINISTRATOR);
 
 		$administratorRole = $this->roleRepository->findOneBy($findRole);
 
 		if ($administratorRole !== null) {
-			$findAccounts = new AuthModuleQueries\FindAccountsQuery();
+			$findAccounts = new AccountsModuleQueries\FindAccountsQuery();
 			$findAccounts->inRole($administratorRole);
 
 			$accounts = $this->accountRepository->findAllBy($findAccounts);
