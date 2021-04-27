@@ -17,6 +17,7 @@ namespace FastyBird\MiniServer\Exchange;
 
 use FastyBird\ApplicationExchange;
 use FastyBird\MiniServer;
+use FastyBird\ModulesMetadata;
 use Nette;
 use Nette\Utils;
 use Predis;
@@ -95,7 +96,7 @@ class RedisPublisher implements ApplicationExchange\Publisher\IPublisher
 			return;
 		}
 
-		$result = $this->redis->executeRaw(['PUBLISH', MiniServer\Constants::PUB_SUB_EXCHANGE_CHANNEL, $message]);
+		$result = $this->redis->executeRaw(['PUBLISH', ModulesMetadata\Constants::EXCHANGE_CHANNEL_NAME, $message]);
 
 		if (is_numeric($result)) {
 			$this->logger->info('[FB:MINISERVER:EXCHANGE] Received message was pushed into data exchange', [

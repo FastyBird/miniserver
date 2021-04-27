@@ -75,6 +75,26 @@ fbRedisDbStoragePlugin:
 		username: %redis.username%
 		password: %redis.password%
 
+# Accounts module
+#################
+fbAccountsModule:
+    apiPrefix: true
+
+# Devices module
+################
+fbDevicesModule:
+    apiPrefix: true
+
+# Triggers module
+#################
+fbTriggersModule:
+    apiPrefix: true
+
+# UI module
+###########
+fbUiModule:
+    apiPrefix: true
+
 # Node translations
 ###################
 contributteTranslation:

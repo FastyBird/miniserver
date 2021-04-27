@@ -1818,12 +1818,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "cb38a4f0e3edae729a1271e8c2a974f25f472a80"
+                "reference": "c8bd668577d66d50d99f9cf83ce72bfd3e34ae08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/cb38a4f0e3edae729a1271e8c2a974f25f472a80",
-                "reference": "cb38a4f0e3edae729a1271e8c2a974f25f472a80",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/c8bd668577d66d50d99f9cf83ce72bfd3e34ae08",
+                "reference": "c8bd668577d66d50d99f9cf83ce72bfd3e34ae08",
                 "shasum": ""
             },
             "require": {
@@ -1888,7 +1888,7 @@
                     "email": "adam.kadlec@fastybird.com"
                 }
             ],
-            "description": "FastyBird IoT accounts module for user storage & basic control logic",
+            "description": "FastyBird IoT accounts module for accounts management",
             "homepage": "https://www.fastybird.com",
             "keywords": [
                 "Authentication",
@@ -1897,6 +1897,7 @@
                 "authorization",
                 "fastybird",
                 "fb",
+                "iot",
                 "profiles",
                 "service"
             ],
@@ -1904,7 +1905,7 @@
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
                 "source": "https://github.com/FastyBird/accounts-module/tree/master"
             },
-            "time": "2021-04-25T18:10:47+00:00"
+            "time": "2021-04-27T09:58:18+00:00"
         },
         {
             "name": "fastybird/application-events",
@@ -2053,12 +2054,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/bootstrap.git",
-                "reference": "3536d492339abf7659ab415460037f9b6f6cb6da"
+                "reference": "0dbc5540738ef9d5fb5ac10df97b624c6b0b52a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/bootstrap/zipball/3536d492339abf7659ab415460037f9b6f6cb6da",
-                "reference": "3536d492339abf7659ab415460037f9b6f6cb6da",
+                "url": "https://api.github.com/repos/FastyBird/bootstrap/zipball/0dbc5540738ef9d5fb5ac10df97b624c6b0b52a1",
+                "reference": "0dbc5540738ef9d5fb5ac10df97b624c6b0b52a1",
                 "shasum": ""
             },
             "require": {
@@ -2125,7 +2126,7 @@
                 "issues": "https://github.com/FastyBird/bootstrap/issues",
                 "source": "https://github.com/FastyBird/bootstrap/tree/master"
             },
-            "time": "2021-02-25T22:09:10+00:00"
+            "time": "2021-04-26T21:46:15+00:00"
         },
         {
             "name": "fastybird/database",
@@ -2283,12 +2284,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "2f3884d592cfccebe7ea65ad85eb7e0ff9a7c0da"
+                "reference": "103799d04ac761d3e9ff564629f8389c081ceecb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/2f3884d592cfccebe7ea65ad85eb7e0ff9a7c0da",
-                "reference": "2f3884d592cfccebe7ea65ad85eb7e0ff9a7c0da",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/103799d04ac761d3e9ff564629f8389c081ceecb",
+                "reference": "103799d04ac761d3e9ff564629f8389c081ceecb",
                 "shasum": ""
             },
             "require": {
@@ -2354,20 +2355,21 @@
                     "email": "adam.kadlec@fastybird.com"
                 }
             ],
-            "description": "FastyBird IoT devices module for devices storage & basic control logic",
+            "description": "FastyBird IoT devices module for devices management & basic control logic",
             "homepage": "https://www.fastybird.com",
             "keywords": [
                 "Devices",
                 "channels",
                 "fastybird",
                 "fb",
+                "iot",
                 "service"
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module/tree/master"
             },
-            "time": "2021-04-24T21:37:26+00:00"
+            "time": "2021-04-27T19:30:33+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2455,12 +2457,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modules-metadata.git",
-                "reference": "8f179b03cc3c76a1762b0fddbf9b79cdfa365bec"
+                "reference": "853c196c650e7068c790a2dd03192f819f613ff7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/8f179b03cc3c76a1762b0fddbf9b79cdfa365bec",
-                "reference": "8f179b03cc3c76a1762b0fddbf9b79cdfa365bec",
+                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/853c196c650e7068c790a2dd03192f819f613ff7",
+                "reference": "853c196c650e7068c790a2dd03192f819f613ff7",
                 "shasum": ""
             },
             "require": {
@@ -2519,7 +2521,7 @@
                 "issues": "https://github.com/FastyBird/modules-metadata/issues",
                 "source": "https://github.com/FastyBird/modules-metadata/tree/master"
             },
-            "time": "2021-04-25T20:09:18+00:00"
+            "time": "2021-04-27T20:05:19+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -2696,12 +2698,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "d8d7d8cd75ed0fe414b58395e082cdffad9cd022"
+                "reference": "cb85cb91e79e13e9960f251890e249359d2297f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/d8d7d8cd75ed0fe414b58395e082cdffad9cd022",
-                "reference": "d8d7d8cd75ed0fe414b58395e082cdffad9cd022",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/cb85cb91e79e13e9960f251890e249359d2297f3",
+                "reference": "cb85cb91e79e13e9960f251890e249359d2297f3",
                 "shasum": ""
             },
             "require": {
@@ -2768,13 +2770,14 @@
                     "email": "adam.kadlec@fastybird.com"
                 }
             ],
-            "description": "FastyBird IoT triggers module for triggers storage & basic automation logic",
+            "description": "FastyBird IoT module for triggers management & basic automation logic",
             "homepage": "https://www.fastybird.com",
             "keywords": [
                 "automation",
                 "controlling",
                 "fastybird",
                 "fb",
+                "iot",
                 "service",
                 "triggers"
             ],
@@ -2782,7 +2785,7 @@
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
                 "source": "https://github.com/FastyBird/triggers-module/tree/master"
             },
-            "time": "2021-04-25T20:41:09+00:00"
+            "time": "2021-04-27T19:29:18+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -2790,12 +2793,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ui-module.git",
-                "reference": "ac6e2db4e603827fec0f1ab2233f8b52cec59d48"
+                "reference": "e6ef78ffb0b949438e897fa6f45df94c21ab83b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/ac6e2db4e603827fec0f1ab2233f8b52cec59d48",
-                "reference": "ac6e2db4e603827fec0f1ab2233f8b52cec59d48",
+                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/e6ef78ffb0b949438e897fa6f45df94c21ab83b5",
+                "reference": "e6ef78ffb0b949438e897fa6f45df94c21ab83b5",
                 "shasum": ""
             },
             "require": {
@@ -2860,7 +2863,7 @@
                     "email": "adam.kadlec@fastybird.com"
                 }
             ],
-            "description": "FastyBird IoT user interface module for visual components & basic control logic",
+            "description": "FastyBird IoT module for managing visual components",
             "homepage": "https://www.fastybird.com",
             "keywords": [
                 "fastybird",
@@ -2873,7 +2876,7 @@
                 "issues": "https://github.com/FastyBird/ui-module/issues",
                 "source": "https://github.com/FastyBird/ui-module/tree/master"
             },
-            "time": "2021-02-25T21:55:38+00:00"
+            "time": "2021-04-27T19:53:01+00:00"
         },
         {
             "name": "fastybird/web-server",
@@ -3255,16 +3258,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.8.1",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "35ea11d335fd638b5882ff1725228b3d35496ab1"
+                "reference": "dc960a912984efb74d0a90222870c72c87f10c91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/35ea11d335fd638b5882ff1725228b3d35496ab1",
-                "reference": "35ea11d335fd638b5882ff1725228b3d35496ab1",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/dc960a912984efb74d0a90222870c72c87f10c91",
+                "reference": "dc960a912984efb74d0a90222870c72c87f10c91",
                 "shasum": ""
             },
             "require": {
@@ -3324,9 +3327,9 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/1.8.1"
+                "source": "https://github.com/guzzle/psr7/tree/1.8.2"
             },
-            "time": "2021-03-21T16:25:00+00:00"
+            "time": "2021-04-26T09:17:50+00:00"
         },
         {
             "name": "http-interop/http-factory-guzzle",
@@ -10702,16 +10705,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.84",
+            "version": "0.12.85",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "9c43f15da8798c8f30a4b099e6a94530a558cfd5"
+                "reference": "20e6333c0067875ad7697cd8acdf245c6ef69d03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9c43f15da8798c8f30a4b099e6a94530a558cfd5",
-                "reference": "9c43f15da8798c8f30a4b099e6a94530a558cfd5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/20e6333c0067875ad7697cd8acdf245c6ef69d03",
+                "reference": "20e6333c0067875ad7697cd8acdf245c6ef69d03",
                 "shasum": ""
             },
             "require": {
@@ -10742,7 +10745,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.84"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.85"
             },
             "funding": [
                 {
@@ -10758,7 +10761,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-19T17:10:54+00:00"
+            "time": "2021-04-27T14:13:16+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

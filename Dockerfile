@@ -45,6 +45,9 @@ RUN docker-php-ext-install \
  pdo_mysql \
  intl \
  ctype \
+ json \
+ bcmath \
+ openssl \
 ;
 
 ###########################
@@ -56,9 +59,9 @@ RUN apt-get update -yqq && apt-get install -yqq supervisor
 
 COPY ./resources/supervisor/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 
-##############################
-# IO SERVER APP INSTALLATION #
-##############################
+######################################
+# MINISERVER SERVER APP INSTALLATION #
+######################################
 
 ADD ./config ${APP_CODE_PATH}/config
 ADD ./patches ${APP_CODE_PATH}/patches

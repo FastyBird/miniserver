@@ -1,4 +1,4 @@
-# FastyBird MiniServer app
+# FastyBird Iot MiniServer app
 
 [![Build Status](https://badgen.net/github/checks/FastyBird/application-events/master?cache=300&style=flast-square)](https://github.com/FastyBird/miniserver-app/actions)
 [![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/miniserver-app?cache=300&style=flast-square)](https://coveralls.io/r/FastyBird/miniserver-app)
@@ -8,15 +8,15 @@
 [![Latest stable](https://badgen.net/packagist/v/FastyBird/miniserver-app/latest?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver-app)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
 
-## What is FastyBird MiniServer app?
+## What is FastyBird IoT MiniServer app?
 
-MiniServer app is main management application for configuring devices, triggers, etc.
+MiniServer app management part of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer application.
 
-FastyBird MiniServer app is an Apache2 licensed distributed application, developed in PHP with [Nette framework](https://nette.org).
+[FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer app is an Apache2 licensed distributed application, developed in PHP with [Nette framework](https://nette.org).
 
 ## Requirements
 
-FastyBird MiniServer app is tested against PHP 7.4 and [ReactPHP http](https://github.com/reactphp/http) 0.8 event-driven, streaming plaintext HTTP server
+[FastyBird](https://www.fastybird.com) MiniServer app is tested against [PHP](https://www.php.net) 7.4, [Redis](https://redis.io) 6.2.2 in-memory data store, [MySQL](https://www.mysql.com) relational database management system, [ReactPHP http](https://github.com/reactphp/http) 0.8 event-driven, streaming plaintext HTTP server and [Nette framework](https://nette.org/en/) 3.0 PHP framework for real programmers.
 
 ## Getting started
 
@@ -32,13 +32,11 @@ $ cd path/to/install
 
 Everything required will be then installed in the provided folder `path/to/install`
 
-This application has several console command.
-
 ### Running app
 
 You have two options how to run this app
 
-#### Running a app via ReactPHP http server
+#### Running an app via ReactPHP http server
 
 All what you need is just run one console command:
 
@@ -48,11 +46,11 @@ $ vendor/bin/fb-console fb:web-server:start
 
 This command will start build in web server which is listening for incoming http api request messages from clients. 
 
-#### Running a app via Apache or Nginx
+#### Running an app via Apache or Nginx
 
 You have to configure you web server running on [Apache](http://www.apache.org) or [Nginx](https://www.nginx.com) to server content from `www` folder.
 
-In this folder is main entry point for api and also static files for web interface.
+In this folder is main entry point for accessing application api.
 
 ## Install with docker
 
@@ -100,7 +98,7 @@ Configuration could be made via environment variables:
 | | |
 | `FB_APP_PARAMETER__SECURITY_SIGNATURE=` | Security token signature string |
 
-> **NOTE:** In case you are not using docker image or you are not able to configure environment variables, you could edit configuration file `./config/default.neon`
+> **NOTE:** In case you are not using docker image, or you are not able to configure environment variables, you could create configuration file `./config/local.neon` and put your settings here.
 
 ## Initialization
 
