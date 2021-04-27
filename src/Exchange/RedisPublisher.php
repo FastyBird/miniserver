@@ -16,7 +16,6 @@
 namespace FastyBird\MiniServer\Exchange;
 
 use FastyBird\ApplicationExchange;
-use FastyBird\MiniServer;
 use FastyBird\ModulesMetadata;
 use Nette;
 use Nette\Utils;

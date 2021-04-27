@@ -39,9 +39,9 @@ interface IProperty
 	public function getCreated(): ?DateTimeInterface;
 
 	/**
-	 * @param string|null $created
+	 * @param string|null $updated
 	 */
-	public function setUpdated(?string $created): void;
+	public function setUpdated(?string $updated): void;
 
 	/**
 	 * @return DateTimeInterface|null
