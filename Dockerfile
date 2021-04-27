@@ -47,7 +47,6 @@ RUN docker-php-ext-install \
  ctype \
  json \
  bcmath \
- openssl \
 ;
 
 ###########################
