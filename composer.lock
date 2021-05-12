@@ -1818,12 +1818,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "c8bd668577d66d50d99f9cf83ce72bfd3e34ae08"
+                "reference": "3f7baa7009ca6331981440526f99ac2dd8217c2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/c8bd668577d66d50d99f9cf83ce72bfd3e34ae08",
-                "reference": "c8bd668577d66d50d99f9cf83ce72bfd3e34ae08",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/3f7baa7009ca6331981440526f99ac2dd8217c2c",
+                "reference": "3f7baa7009ca6331981440526f99ac2dd8217c2c",
                 "shasum": ""
             },
             "require": {
@@ -1905,7 +1905,7 @@
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
                 "source": "https://github.com/FastyBird/accounts-module/tree/master"
             },
-            "time": "2021-04-27T09:58:18+00:00"
+            "time": "2021-05-12T21:53:51+00:00"
         },
         {
             "name": "fastybird/application-events",
@@ -1913,12 +1913,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/application-events.git",
-                "reference": "21bcf041ab26d1dfdb783b0e86a4f9cee0cb1ec0"
+                "reference": "8a580f0c9507e0cd1776d6f9df9071cda2da2603"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/application-events/zipball/21bcf041ab26d1dfdb783b0e86a4f9cee0cb1ec0",
-                "reference": "21bcf041ab26d1dfdb783b0e86a4f9cee0cb1ec0",
+                "url": "https://api.github.com/repos/FastyBird/application-events/zipball/8a580f0c9507e0cd1776d6f9df9071cda2da2603",
+                "reference": "8a580f0c9507e0cd1776d6f9df9071cda2da2603",
                 "shasum": ""
             },
             "require": {
@@ -1974,7 +1974,7 @@
                 "issues": "https://github.com/FastyBird/application-events/issues",
                 "source": "https://github.com/FastyBird/application-events/tree/master"
             },
-            "time": "2021-02-25T22:07:45+00:00"
+            "time": "2021-05-12T21:04:12+00:00"
         },
         {
             "name": "fastybird/application-exchange",
@@ -1982,12 +1982,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/application-exchange.git",
-                "reference": "35a485971d2ebf3351136b0cc2be3944b5b4fcb7"
+                "reference": "946125bb77f817c6d198884fc5b661a28469ba7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/application-exchange/zipball/35a485971d2ebf3351136b0cc2be3944b5b4fcb7",
-                "reference": "35a485971d2ebf3351136b0cc2be3944b5b4fcb7",
+                "url": "https://api.github.com/repos/FastyBird/application-exchange/zipball/946125bb77f817c6d198884fc5b661a28469ba7d",
+                "reference": "946125bb77f817c6d198884fc5b661a28469ba7d",
                 "shasum": ""
             },
             "require": {
@@ -2046,7 +2046,7 @@
                 "issues": "https://github.com/FastyBird/application-exchange/issues",
                 "source": "https://github.com/FastyBird/application-exchange/tree/master"
             },
-            "time": "2021-02-25T22:08:37+00:00"
+            "time": "2021-05-12T21:05:52+00:00"
         },
         {
             "name": "fastybird/bootstrap",
@@ -2054,12 +2054,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/bootstrap.git",
-                "reference": "7ecd9a58b4abd495cf8c36b3d642044002def541"
+                "reference": "1a7a654adeb74c91fbbab5c4807db57511a676e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/bootstrap/zipball/7ecd9a58b4abd495cf8c36b3d642044002def541",
-                "reference": "7ecd9a58b4abd495cf8c36b3d642044002def541",
+                "url": "https://api.github.com/repos/FastyBird/bootstrap/zipball/1a7a654adeb74c91fbbab5c4807db57511a676e6",
+                "reference": "1a7a654adeb74c91fbbab5c4807db57511a676e6",
                 "shasum": ""
             },
             "require": {
@@ -2070,7 +2070,8 @@
                 "nette/di": "^3.0",
                 "nette/utils": "^3.0",
                 "php": ">=7.4.0",
-                "sentry/sdk": "^2.1"
+                "sentry/sdk": "^2.1",
+                "vlucas/phpdotenv": "^5.3"
             },
             "require-dev": {
                 "mockery/mockery": "^1.3",
@@ -2126,7 +2127,7 @@
                 "issues": "https://github.com/FastyBird/bootstrap/issues",
                 "source": "https://github.com/FastyBird/bootstrap/tree/master"
             },
-            "time": "2021-05-02T11:18:04+00:00"
+            "time": "2021-05-12T20:56:40+00:00"
         },
         {
             "name": "fastybird/database",
@@ -2134,12 +2135,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/database.git",
-                "reference": "fc89967ba271d9c46e1e013b68109a7e7bd3e22f"
+                "reference": "c774065e2cae62be3b444786b8c8633127b03f08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/database/zipball/fc89967ba271d9c46e1e013b68109a7e7bd3e22f",
-                "reference": "fc89967ba271d9c46e1e013b68109a7e7bd3e22f",
+                "url": "https://api.github.com/repos/FastyBird/database/zipball/c774065e2cae62be3b444786b8c8633127b03f08",
+                "reference": "c774065e2cae62be3b444786b8c8633127b03f08",
                 "shasum": ""
             },
             "require": {
@@ -2207,7 +2208,7 @@
                 "issues": "https://github.com/FastyBird/database/issues",
                 "source": "https://github.com/FastyBird/database/tree/master"
             },
-            "time": "2021-02-25T22:09:53+00:00"
+            "time": "2021-05-12T21:12:24+00:00"
         },
         {
             "name": "fastybird/datetime-factory",
@@ -2284,12 +2285,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "103799d04ac761d3e9ff564629f8389c081ceecb"
+                "reference": "81d2920c476719f6ad2db89701e314ade6d401f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/103799d04ac761d3e9ff564629f8389c081ceecb",
-                "reference": "103799d04ac761d3e9ff564629f8389c081ceecb",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/81d2920c476719f6ad2db89701e314ade6d401f2",
+                "reference": "81d2920c476719f6ad2db89701e314ade6d401f2",
                 "shasum": ""
             },
             "require": {
@@ -2369,7 +2370,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module/tree/master"
             },
-            "time": "2021-04-27T19:30:33+00:00"
+            "time": "2021-05-12T21:54:03+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2377,12 +2378,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/json-api.git",
-                "reference": "d6e7414abe4d9d58376b045114965f43176adcd0"
+                "reference": "f352bed19368e46dd60e63c26c2131767c9d8a1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/json-api/zipball/d6e7414abe4d9d58376b045114965f43176adcd0",
-                "reference": "d6e7414abe4d9d58376b045114965f43176adcd0",
+                "url": "https://api.github.com/repos/FastyBird/json-api/zipball/f352bed19368e46dd60e63c26c2131767c9d8a1e",
+                "reference": "f352bed19368e46dd60e63c26c2131767c9d8a1e",
                 "shasum": ""
             },
             "require": {
@@ -2449,7 +2450,7 @@
                 "issues": "https://github.com/FastyBird/json-api/issues",
                 "source": "https://github.com/FastyBird/json-api/tree/master"
             },
-            "time": "2021-02-25T22:11:13+00:00"
+            "time": "2021-05-12T21:15:17+00:00"
         },
         {
             "name": "fastybird/modules-metadata",
@@ -2457,12 +2458,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modules-metadata.git",
-                "reference": "e85927f52d80236fc6c22d7b3e37247260c4c2d4"
+                "reference": "3d4c6003f78f3958f0d7bfe3091d9536936563e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/e85927f52d80236fc6c22d7b3e37247260c4c2d4",
-                "reference": "e85927f52d80236fc6c22d7b3e37247260c4c2d4",
+                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/3d4c6003f78f3958f0d7bfe3091d9536936563e3",
+                "reference": "3d4c6003f78f3958f0d7bfe3091d9536936563e3",
                 "shasum": ""
             },
             "require": {
@@ -2521,7 +2522,7 @@
                 "issues": "https://github.com/FastyBird/modules-metadata/issues",
                 "source": "https://github.com/FastyBird/modules-metadata/tree/master"
             },
-            "time": "2021-04-29T22:58:47+00:00"
+            "time": "2021-05-12T21:17:04+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -2614,12 +2615,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/simple-auth.git",
-                "reference": "67a28f2900c9ae011defb7c9e5152110adba6711"
+                "reference": "4dab45f7c9ca3c99d2f2d62a794e77880dd721f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/67a28f2900c9ae011defb7c9e5152110adba6711",
-                "reference": "67a28f2900c9ae011defb7c9e5152110adba6711",
+                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/4dab45f7c9ca3c99d2f2d62a794e77880dd721f2",
+                "reference": "4dab45f7c9ca3c99d2f2d62a794e77880dd721f2",
                 "shasum": ""
             },
             "require": {
@@ -2690,7 +2691,7 @@
                 "issues": "https://github.com/FastyBird/simple-auth/issues",
                 "source": "https://github.com/FastyBird/simple-auth/tree/master"
             },
-            "time": "2021-02-25T22:12:51+00:00"
+            "time": "2021-05-12T21:23:28+00:00"
         },
         {
             "name": "fastybird/triggers-module",
@@ -2698,12 +2699,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "cb85cb91e79e13e9960f251890e249359d2297f3"
+                "reference": "0f173ff90df4c60e08717ddd82df4f06b4d5e95f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/cb85cb91e79e13e9960f251890e249359d2297f3",
-                "reference": "cb85cb91e79e13e9960f251890e249359d2297f3",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/0f173ff90df4c60e08717ddd82df4f06b4d5e95f",
+                "reference": "0f173ff90df4c60e08717ddd82df4f06b4d5e95f",
                 "shasum": ""
             },
             "require": {
@@ -2785,7 +2786,7 @@
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
                 "source": "https://github.com/FastyBird/triggers-module/tree/master"
             },
-            "time": "2021-04-27T19:29:18+00:00"
+            "time": "2021-05-12T21:54:18+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -2793,12 +2794,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ui-module.git",
-                "reference": "e6ef78ffb0b949438e897fa6f45df94c21ab83b5"
+                "reference": "e0ede842fe293e371672d430ff3864c662d1a6ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/e6ef78ffb0b949438e897fa6f45df94c21ab83b5",
-                "reference": "e6ef78ffb0b949438e897fa6f45df94c21ab83b5",
+                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/e0ede842fe293e371672d430ff3864c662d1a6ee",
+                "reference": "e0ede842fe293e371672d430ff3864c662d1a6ee",
                 "shasum": ""
             },
             "require": {
@@ -2876,7 +2877,7 @@
                 "issues": "https://github.com/FastyBird/ui-module/issues",
                 "source": "https://github.com/FastyBird/ui-module/tree/master"
             },
-            "time": "2021-04-27T19:53:01+00:00"
+            "time": "2021-05-12T21:55:59+00:00"
         },
         {
             "name": "fastybird/web-server",
@@ -2884,12 +2885,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/web-server.git",
-                "reference": "6cee988aec00ab95db5b263db9cb76e19bfd8c0d"
+                "reference": "c41726eb34754efabaac15839b66b1f9d85de596"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/web-server/zipball/6cee988aec00ab95db5b263db9cb76e19bfd8c0d",
-                "reference": "6cee988aec00ab95db5b263db9cb76e19bfd8c0d",
+                "url": "https://api.github.com/repos/FastyBird/web-server/zipball/c41726eb34754efabaac15839b66b1f9d85de596",
+                "reference": "c41726eb34754efabaac15839b66b1f9d85de596",
                 "shasum": ""
             },
             "require": {
@@ -2937,7 +2938,7 @@
                     "email": "adam.kadlec@fastybird.com"
                 }
             ],
-            "description": "FastyBird simple web server",
+            "description": "FastyBird simple web server library",
             "homepage": "https://www.fastybird.com",
             "keywords": [
                 "fastybird",
@@ -2952,7 +2953,7 @@
                 "issues": "https://github.com/FastyBird/web-server/issues",
                 "source": "https://github.com/FastyBird/web-server/tree/master"
             },
-            "time": "2021-05-08T20:03:48+00:00"
+            "time": "2021-05-12T20:26:33+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -3012,16 +3013,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.12.22",
+            "version": "8.12.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "dc9992c35e52235c36241ebb5ddc280ceebe3c09"
+                "reference": "a6ff019e6d6f25f39c0797e678b342547045fb20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/dc9992c35e52235c36241ebb5ddc280ceebe3c09",
-                "reference": "dc9992c35e52235c36241ebb5ddc280ceebe3c09",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/a6ff019e6d6f25f39c0797e678b342547045fb20",
+                "reference": "a6ff019e6d6f25f39c0797e678b342547045fb20",
                 "shasum": ""
             },
             "require": {
@@ -3081,7 +3082,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2021-04-29T07:34:59+00:00"
+            "time": "2021-05-11T13:57:55+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -8298,16 +8299,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v5.2.7",
+            "version": "v5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "3817662ada105c8c4d1afdb4ec003003efd1d8d8"
+                "reference": "8dfa5f8adea9cd5155920069224beb04f11d6b7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/3817662ada105c8c4d1afdb4ec003003efd1d8d8",
-                "reference": "3817662ada105c8c4d1afdb4ec003003efd1d8d8",
+                "url": "https://api.github.com/repos/symfony/config/zipball/8dfa5f8adea9cd5155920069224beb04f11d6b7e",
+                "reference": "8dfa5f8adea9cd5155920069224beb04f11d6b7e",
                 "shasum": ""
             },
             "require": {
@@ -8356,7 +8357,7 @@
             "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v5.2.7"
+                "source": "https://github.com/symfony/config/tree/v5.2.8"
             },
             "funding": [
                 {
@@ -8372,20 +8373,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-07T16:07:52+00:00"
+            "time": "2021-05-07T13:41:16+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v5.2.7",
+            "version": "v5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "90374b8ed059325b49a29b55b3f8bb4062c87629"
+                "reference": "864568fdc0208b3eba3638b6000b69d2386e6768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/90374b8ed059325b49a29b55b3f8bb4062c87629",
-                "reference": "90374b8ed059325b49a29b55b3f8bb4062c87629",
+                "url": "https://api.github.com/repos/symfony/console/zipball/864568fdc0208b3eba3638b6000b69d2386e6768",
+                "reference": "864568fdc0208b3eba3638b6000b69d2386e6768",
                 "shasum": ""
             },
             "require": {
@@ -8453,7 +8454,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.2.7"
+                "source": "https://github.com/symfony/console/tree/v5.2.8"
             },
             "funding": [
                 {
@@ -8469,7 +8470,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-19T14:07:32+00:00"
+            "time": "2021-05-11T15:45:21+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -8766,16 +8767,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v5.2.7",
+            "version": "v5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "cdaf3df771d3ea9b05696c9e91281ffd056aff66"
+                "reference": "a2baf9c3c5b25e04740cece0e429f0a0013002f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/cdaf3df771d3ea9b05696c9e91281ffd056aff66",
-                "reference": "cdaf3df771d3ea9b05696c9e91281ffd056aff66",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/a2baf9c3c5b25e04740cece0e429f0a0013002f2",
+                "reference": "a2baf9c3c5b25e04740cece0e429f0a0013002f2",
                 "shasum": ""
             },
             "require": {
@@ -8832,7 +8833,7 @@
             "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v5.2.7"
+                "source": "https://github.com/symfony/http-client/tree/v5.2.8"
             },
             "funding": [
                 {
@@ -8848,7 +8849,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-07T16:27:53+00:00"
+            "time": "2021-05-10T14:39:23+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -9643,16 +9644,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v5.2.6",
+            "version": "v5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "ad0bd91bce2054103f5eaa18ebeba8d3bc2a0572"
+                "reference": "01b35eb64cac8467c3f94cd0ce2d0d376bb7d1db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/ad0bd91bce2054103f5eaa18ebeba8d3bc2a0572",
-                "reference": "ad0bd91bce2054103f5eaa18ebeba8d3bc2a0572",
+                "url": "https://api.github.com/repos/symfony/string/zipball/01b35eb64cac8467c3f94cd0ce2d0d376bb7d1db",
+                "reference": "01b35eb64cac8467c3f94cd0ce2d0d376bb7d1db",
                 "shasum": ""
             },
             "require": {
@@ -9706,7 +9707,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v5.2.6"
+                "source": "https://github.com/symfony/string/tree/v5.2.8"
             },
             "funding": [
                 {
@@ -9722,20 +9723,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-17T17:12:15+00:00"
+            "time": "2021-05-10T14:56:10+00:00"
         },
         {
             "name": "symfony/translation",
-            "version": "v5.2.7",
+            "version": "v5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "e37ece5242564bceea54d709eafc948377ec9749"
+                "reference": "445caa74a5986f1cc9dd91a2975ef68fa7cb2068"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/e37ece5242564bceea54d709eafc948377ec9749",
-                "reference": "e37ece5242564bceea54d709eafc948377ec9749",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/445caa74a5986f1cc9dd91a2975ef68fa7cb2068",
+                "reference": "445caa74a5986f1cc9dd91a2975ef68fa7cb2068",
                 "shasum": ""
             },
             "require": {
@@ -9799,7 +9800,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.2.7"
+                "source": "https://github.com/symfony/translation/tree/v5.2.8"
             },
             "funding": [
                 {
@@ -9815,7 +9816,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-01T08:15:21+00:00"
+            "time": "2021-05-07T13:41:16+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -10764,16 +10765,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.86",
+            "version": "0.12.87",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a84fdc53ecca7643dbc89ef8880d8b393a6c155a"
+                "reference": "d464e00776afb711f419faffa96826dc02e4d145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a84fdc53ecca7643dbc89ef8880d8b393a6c155a",
-                "reference": "a84fdc53ecca7643dbc89ef8880d8b393a6c155a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d464e00776afb711f419faffa96826dc02e4d145",
+                "reference": "d464e00776afb711f419faffa96826dc02e4d145",
                 "shasum": ""
             },
             "require": {
@@ -10804,7 +10805,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.86"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.87"
             },
             "funding": [
                 {
@@ -10820,7 +10821,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-08T11:29:01+00:00"
+            "time": "2021-05-12T15:17:52+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
