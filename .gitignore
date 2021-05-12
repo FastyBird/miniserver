@@ -1,4 +1,5 @@
 .idea
+/config/local.neon
 /dist
 /vendor
 tests/*/output
