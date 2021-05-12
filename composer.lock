@@ -2884,18 +2884,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/web-server.git",
-                "reference": "0d65921c00ea9a3c9c99d4250d090329b95e9be2"
+                "reference": "6cee988aec00ab95db5b263db9cb76e19bfd8c0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/web-server/zipball/0d65921c00ea9a3c9c99d4250d090329b95e9be2",
-                "reference": "0d65921c00ea9a3c9c99d4250d090329b95e9be2",
+                "url": "https://api.github.com/repos/FastyBird/web-server/zipball/6cee988aec00ab95db5b263db9cb76e19bfd8c0d",
+                "reference": "6cee988aec00ab95db5b263db9cb76e19bfd8c0d",
                 "shasum": ""
             },
             "require": {
                 "contributte/console": "^0.8",
                 "fastybird/application-events": "@dev",
                 "ipub/slim-router": "^0.1",
+                "narrowspark/mimetypes": "^1.6",
                 "nette/bootstrap": "^3.0",
                 "nette/di": "^3.0",
                 "php": ">=7.4.0",
@@ -2951,7 +2952,7 @@
                 "issues": "https://github.com/FastyBird/web-server/issues",
                 "source": "https://github.com/FastyBird/web-server/tree/master"
             },
-            "time": "2021-02-25T22:13:41+00:00"
+            "time": "2021-05-08T20:03:48+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -4407,6 +4408,64 @@
                 }
             ],
             "time": "2020-12-14T12:56:38+00:00"
+        },
+        {
+            "name": "narrowspark/mimetypes",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/narrowspark/mimetypes.git",
+                "reference": "990cced3a92d4ffd348838338da44d547ee0c0fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/narrowspark/mimetypes/zipball/990cced3a92d4ffd348838338da44d547ee0c0fd",
+                "reference": "990cced3a92d4ffd348838338da44d547ee0c0fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "ext-fileinfo": "*",
+                "ext-json": "*",
+                "mindscreen/yarnlock": "^1.0.1",
+                "narrowspark/coding-standard": "^3.0.0",
+                "phpunit/phpunit": "^8.3.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Narrowspark\\MimeType\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Bannert",
+                    "email": "d.bannert@anolilab.de",
+                    "homepage": "http://www.anolilab.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP MIME Types Guesser and extension mapping.",
+            "keywords": [
+                "guesser",
+                "mimetype",
+                "mimetypes",
+                "narrowspark"
+            ],
+            "support": {
+                "issues": "https://github.com/narrowspark/mimetypes/issues",
+                "source": "https://github.com/narrowspark/mimetypes"
+            },
+            "time": "2020-01-06T20:43:25+00:00"
         },
         {
             "name": "neomerx/json-api",
@@ -10705,16 +10764,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.85",
+            "version": "0.12.86",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "20e6333c0067875ad7697cd8acdf245c6ef69d03"
+                "reference": "a84fdc53ecca7643dbc89ef8880d8b393a6c155a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/20e6333c0067875ad7697cd8acdf245c6ef69d03",
-                "reference": "20e6333c0067875ad7697cd8acdf245c6ef69d03",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a84fdc53ecca7643dbc89ef8880d8b393a6c155a",
+                "reference": "a84fdc53ecca7643dbc89ef8880d8b393a6c155a",
                 "shasum": ""
             },
             "require": {
@@ -10745,7 +10804,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.85"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.86"
             },
             "funding": [
                 {
@@ -10761,7 +10820,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-27T14:13:16+00:00"
+            "time": "2021-05-08T11:29:01+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -10884,21 +10943,21 @@
         },
         {
             "name": "phpstan/phpstan-nette",
-            "version": "0.12.17",
+            "version": "0.12.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-nette.git",
-                "reference": "4930ff18725dd27bf2e15bb2b6ac1ef581d53514"
+                "reference": "9feb3cafff0f1d3bba38f0e8680085089deceb62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-nette/zipball/4930ff18725dd27bf2e15bb2b6ac1ef581d53514",
-                "reference": "4930ff18725dd27bf2e15bb2b6ac1ef581d53514",
+                "url": "https://api.github.com/repos/phpstan/phpstan-nette/zipball/9feb3cafff0f1d3bba38f0e8680085089deceb62",
+                "reference": "9feb3cafff0f1d3bba38f0e8680085089deceb62",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.60"
+                "phpstan/phpstan": "^0.12.86"
             },
             "conflict": {
                 "nette/application": "<2.3.0",
@@ -10942,9 +11001,9 @@
             "description": "Nette Framework class reflection extension for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-nette/issues",
-                "source": "https://github.com/phpstan/phpstan-nette/tree/0.12.17"
+                "source": "https://github.com/phpstan/phpstan-nette/tree/0.12.18"
             },
-            "time": "2021-04-11T16:57:55+00:00"
+            "time": "2021-04-30T11:16:08+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
