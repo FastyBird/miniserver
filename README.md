@@ -1,6 +1,6 @@
 # FastyBird Iot MiniServer manager
 
-[![Build Status](https://badgen.net/github/checks/FastyBird/miniserver-manager?cache=300&style=flast-square)](https://github.com/FastyBird/miniserver-manager/actions)
+[![Build Status](https://badgen.net/github/checks/FastyBird/miniserver-manager/master?cache=300&style=flast-square)](https://github.com/FastyBird/miniserver-manager/actions)
 [![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/miniserver-manager?cache=300&style=flast-square)](https://coveralls.io/r/FastyBird/miniserver-manager)
 ![PHP](https://badgen.net/packagist/php/FastyBird/miniserver-manager?cache=300&style=flast-square)
 [![Licence](https://badgen.net/packagist/license/FastyBird/miniserver-manager?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver-manager)
