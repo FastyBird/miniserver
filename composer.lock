@@ -2378,12 +2378,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/json-api.git",
-                "reference": "f352bed19368e46dd60e63c26c2131767c9d8a1e"
+                "reference": "d2f7c21d84dfdc34cd1030918942e555447e6ad3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/json-api/zipball/f352bed19368e46dd60e63c26c2131767c9d8a1e",
-                "reference": "f352bed19368e46dd60e63c26c2131767c9d8a1e",
+                "url": "https://api.github.com/repos/FastyBird/json-api/zipball/d2f7c21d84dfdc34cd1030918942e555447e6ad3",
+                "reference": "d2f7c21d84dfdc34cd1030918942e555447e6ad3",
                 "shasum": ""
             },
             "require": {
@@ -2450,7 +2450,7 @@
                 "issues": "https://github.com/FastyBird/json-api/issues",
                 "source": "https://github.com/FastyBird/json-api/tree/master"
             },
-            "time": "2021-05-12T21:15:17+00:00"
+            "time": "2021-05-12T22:13:51+00:00"
         },
         {
             "name": "fastybird/modules-metadata",
@@ -2615,12 +2615,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/simple-auth.git",
-                "reference": "4dab45f7c9ca3c99d2f2d62a794e77880dd721f2"
+                "reference": "239c7578681f9f97338bd3d233c9fae77dcc033b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/4dab45f7c9ca3c99d2f2d62a794e77880dd721f2",
-                "reference": "4dab45f7c9ca3c99d2f2d62a794e77880dd721f2",
+                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/239c7578681f9f97338bd3d233c9fae77dcc033b",
+                "reference": "239c7578681f9f97338bd3d233c9fae77dcc033b",
                 "shasum": ""
             },
             "require": {
@@ -2691,7 +2691,7 @@
                 "issues": "https://github.com/FastyBird/simple-auth/issues",
                 "source": "https://github.com/FastyBird/simple-auth/tree/master"
             },
-            "time": "2021-05-12T21:23:28+00:00"
+            "time": "2021-05-12T22:18:48+00:00"
         },
         {
             "name": "fastybird/triggers-module",
