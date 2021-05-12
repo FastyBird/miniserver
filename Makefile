@@ -25,3 +25,6 @@ tests: vendor
 
 coverage: vendor
 	vendor/bin/tester -s -p php --colors 1 -C --coverage ./coverage.xml --coverage-src ./src tests/cases
+
+build: bin
+	sh bin/make_deb.sh clean

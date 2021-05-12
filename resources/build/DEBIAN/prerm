@@ -1,0 +1,29 @@
+#!/bin/sh
+#     Copyright 2021. FastyBird s.r.o.
+#
+#     Licensed under the Apache License, Version 2.0 (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#     Unless required by applicable law or agreed to in writing, software
+#     distributed under the License is distributed on an "AS IS" BASIS,
+#     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#     See the License for the specific language governing permissions and
+#     limitations under the License.
+
+set -e
+
+echo "Daemon stopping..."
+sudo pidof systemd && sudo systemctl stop fb-miniserver-manager || echo
+
+echo "Disabling daemon..."
+sudo pidof systemd && sudo systemctl disable fb-miniserver-manager || echo "Systemctl not found"
+
+echo "Removing folders"
+sudo rm -rf /etc/miniserver-manager -R || echo
+sudo rm -rf /usr/lib/miniserver-manager -R || echo
+sudo rm -rf /var/log/miniserver-manager -R || echo
+sudo rm -rf /var/tmp/miniserver-manager -R || echo
+sudo rm -rf /var/lib/miniserver_manager -R || echo

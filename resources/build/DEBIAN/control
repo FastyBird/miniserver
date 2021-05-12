@@ -1,0 +1,10 @@
+Package: fb-miniserver-manager
+Source: miniserver-manager
+Version: 0.1.0-1
+Architecture: all
+Maintainer: FastyBird <code@fastybird.com>
+Depends: php7.4-common, php7.4-cli, php7.4-bcmath, php7.4-cli, php7.4-curl, php7.4-gd, php7.4-intl, php7.4-json, php7.4-mbstring, php7.4-mysql, php7.4-opcache, php7.4-sqlite3
+Section: php
+Priority: optional
+Homepage: https://github.com/FastyBird/miniserver-manager
+Description: FastyBird MiniServer Manager for IoT devices.

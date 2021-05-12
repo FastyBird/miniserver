@@ -1,0 +1,23 @@
+[Unit]
+Description=FastyBird MiniServer Manager
+After=multi-user.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=miniserver_manager
+Group=miniserver_manager
+
+Environment="FB_CONFIG_DIR=/etc/miniserver-manager/config"
+Environment="FB_LOGS_DIR=/var/log/miniserver-manager"
+Environment="FB_TEMP_DIR=/var/tmp/miniserver-manager"
+
+ExecStart=/usr/bin/php7.4 /usr/lib/miniserver-manager/vendor/bin/fb-console fb:web-server:start
+ExecStop=/bin/kill -INT $MAINPID
+ExecReload=/bin/kill -TERM $MAINPID
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
