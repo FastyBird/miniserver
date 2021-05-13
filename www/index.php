@@ -6,16 +6,16 @@ use Dotenv\Dotenv;
 use FastyBird\Bootstrap\Boot;
 use FastyBird\MiniServer\Application;
 
-if (getenv('FB_APP_DIR') !== FALSE) {
-	$vendorDir = realpath(getenv('FB_APP_DIR') . '/vendor');
-	$envDir = realpath(getenv('FB_APP_DIR') . '/env');
+if (isset($_ENV['FB_APP_DIR'])) {
+	$vendorDir = realpath($_ENV['FB_APP_DIR'] . DIRECTORY_SEPARATOR . 'vendor');
+	$envDir = realpath($_ENV['FB_APP_DIR'] . DIRECTORY_SEPARATOR . 'env');
 
 } else {
-	$vendorDir = realpath(__DIR__ . '/../vendor');
-	$envDir = realpath(__DIR__ . '/../env');
+	$vendorDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor');
+	$envDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'env');
 }
 
-$autoload = $vendorDir . '/autoload.php';
+$autoload = $vendorDir . DIRECTORY_SEPARATOR . 'autoload.php';
 
 if (file_exists($autoload)) {
 	require $autoload;

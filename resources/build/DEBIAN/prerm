@@ -27,3 +27,5 @@ sudo rm -rf /usr/lib/miniserver-manager -R || echo
 sudo rm -rf /var/log/miniserver-manager -R || echo
 sudo rm -rf /var/tmp/miniserver-manager -R || echo
 sudo rm -rf /var/lib/miniserver_manager -R || echo
+
+sudo rm /usr/bin/fb-miniserver-manager || echo

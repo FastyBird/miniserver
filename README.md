@@ -84,9 +84,9 @@ Configuration could be made via environment variables:
 | `FB_APP_PARAMETER__DATABASE_VERSION=5.7` | MySQL server version |
 | `FB_APP_PARAMETER__DATABASE_HOST=127.0.0.1` | MySQL host address |
 | `FB_APP_PARAMETER__DATABASE_PORT=3306` | MySQL access port |
-| `FB_APP_PARAMETER__DATABASE_DBNAME=miniserver` | MySQL database name |
-| `FB_APP_PARAMETER__DATABASE_USERNAME=root` | Username |
-| `FB_APP_PARAMETER__DATABASE_PASSWORD=` | Password |
+| `FB_APP_PARAMETER__DATABASE_DBNAME=fb_miniserver` | MySQL database name |
+| `FB_APP_PARAMETER__DATABASE_USERNAME=miniserver` | Username |
+| `FB_APP_PARAMETER__DATABASE_PASSWORD=miniserver` | Password |
 | | |
 | `FB_APP_PARAMETER__REDIS_HOST=127.0.0.1` | Redis server host address |
 | `FB_APP_PARAMETER__REDIS_PORT=6379` | Redis server access port |

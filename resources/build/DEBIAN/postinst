@@ -22,7 +22,7 @@ sudo chown miniserver_manager:miniserver_manager /usr/lib/miniserver-manager/ -R
 sudo chown miniserver_manager:miniserver_manager /var/log/miniserver-manager/ -R
 sudo chown miniserver_manager:miniserver_manager /var/tmp/miniserver-manager/ -R
 sudo chown miniserver_manager:miniserver_manager /var/lib/miniserver_manager/ -R
-
+sudo ln -s /usr/lib/miniserver-manager/vendor/fastybird/bootstrap/bin/fb-console /usr/bin/fb-miniserver-manager
 echo "Installation completed"
 
 echo "Enabling daemon..."

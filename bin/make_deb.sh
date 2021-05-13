@@ -34,7 +34,6 @@ if [ "$1" != "only_clean" ] ; then
   sudo cp -r src dist/usr/lib/miniserver-manager/
   sudo cp -r public dist/usr/lib/miniserver-manager/
   sudo cp -r vendor dist/usr/lib/miniserver-manager/
-  sudo cp -r www dist/usr/lib/miniserver-manager/
   sudo cp -r config dist/etc/miniserver-manager/
   sudo chmod +x dist/etc/ -R
   sudo chmod +x dist/usr/ -R

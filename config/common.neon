@@ -153,6 +153,16 @@ nettrineOrm:
 nettrineOrmAnnotations:
 	mapping: []
 
+# Symfony console support extension
+###################################
+contributteConsole:
+	name: "FastyBird:MiniServer!"
+	version: "0.1.0"
+	catchExceptions: true
+	autoExit: true
+	url: https://www.fastybird.com
+	lazy: false
+
 ############################
 # App services definitions #
 ############################

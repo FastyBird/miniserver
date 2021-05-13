@@ -1,6 +1,6 @@
 parameters:
 	logger:
-		level: 100
+		level: Monolog\Logger::WARNING
 
 	database:
 		version: 5.7
@@ -8,9 +8,9 @@ parameters:
 		port: 3306
 		driver: pdo_mysql
 		memory: false
-		dbname: miniserver
-		username: root
-		password:
+		dbname: fb_miniserver
+		username: miniserver
+		password: miniserver
 
 	redis:
 		host: 127.0.0.1
