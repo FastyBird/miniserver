@@ -7,6 +7,8 @@ on:
   push:
     branches:
       - "master"
+    tags:
+      - v*
   schedule:
     - cron: "0 8 * * 1" # At 08:00 on Monday
 
@@ -16,6 +18,7 @@ env:
   composer-version: "v1"
   composer-install: "composer update --no-interaction --no-progress --no-suggest --prefer-dist --prefer-stable"
   coverage: "none"
+  image-name: "miniserver-manager"
 
 jobs:
   qa:
@@ -280,3 +283,70 @@ jobs:
         run: |
           wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
           php php-coveralls.phar --verbose --config tests/.coveralls.yml
+
+  test-docker-image:
+    name : "Tests build docker image"
+    runs-on: "ubuntu-latest"
+    needs: ["qa", "test"]
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Try to create docker image"
+        run: "docker build . --file Dockerfile"
+
+  build-docker-image:
+    name : "Build docker image"
+    runs-on : "ubuntu-latest"
+    # Ensure docker test job passes before pushing image.
+    needs: "test-docker-image"
+
+    if: github.event_name == 'push'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Build image"
+        run: 'docker build . --file Dockerfile --tag $image-name'
+
+      - name: "Log into registry"
+        run: 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin'
+
+      - name: "Push image"
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$image-name
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker tag $image-name $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+  build-debian-package:
+    name : "Build debian package"
+    runs-on: "ubuntu-latest"
+    needs: ["qa", "test"]
+
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
