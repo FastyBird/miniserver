@@ -407,7 +407,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          file: "${GITHUB_WORKSPACE}/fb-miniserver-manager.deb"
+          file: "./fb-miniserver-manager.deb"
           asset_name: "fb-miniserver-manager"
           body: "Debian based os installable package"
           overwrite: true
