@@ -287,7 +287,7 @@ jobs:
   test-docker-image:
     name : "Tests build docker image"
     runs-on: "ubuntu-latest"
-    needs: ["qa", "tests"]
+    needs: ["qa", "static-analysis", "tests"]
 
     steps:
       - name: "Checkout"
@@ -313,14 +313,14 @@ jobs:
         uses: "actions/checkout@v2"
 
       - name: "Build image"
-        run: 'docker build . --file Dockerfile --tag $image-name'
+        run: 'docker build . --file Dockerfile --tag {{ env.image-name }}'
 
       - name: "Log into registry"
         run: 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin'
 
       - name: "Push image"
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$image-name
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/{{ env.image-name }}
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
@@ -337,13 +337,13 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag $image-name $IMAGE_ID:$VERSION
+          docker tag {{ env.image-name }} $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
 
   build-debian-package:
     name : "Build debian package"
     runs-on: "ubuntu-latest"
-    needs: ["qa", "tests"]
+    needs: ["qa", "static-analysis", "tests"]
 
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
 
