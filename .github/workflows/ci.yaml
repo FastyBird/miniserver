@@ -287,7 +287,7 @@ jobs:
   test-docker-image:
     name : "Tests build docker image"
     runs-on: "ubuntu-latest"
-    needs: ["qa", "test"]
+    needs: ["qa", "tests"]
 
     steps:
       - name: "Checkout"
@@ -343,7 +343,7 @@ jobs:
   build-debian-package:
     name : "Build debian package"
     runs-on: "ubuntu-latest"
-    needs: ["qa", "test"]
+    needs: ["qa", "tests"]
 
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
 
