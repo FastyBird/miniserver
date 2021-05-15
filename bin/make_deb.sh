@@ -42,14 +42,9 @@ if [ "$1" != "only_clean" ] ; then
 
   echo "Adding permissions in the package..."
   sudo chown root:root dist/ -R
-  sudo chmod +x dist/DEBIAN/preinst
-  sudo chmod +x dist/DEBIAN/postinst
-  sudo chmod +x dist/DEBIAN/prerm
-  sudo chmod +x dist/DEBIAN/postrm
-  sudo chown root:root dist/DEBIAN/preinst
-  sudo chown root:root dist/DEBIAN/postinst
-  sudo chown root:root dist/DEBIAN/prerm
-  sudo chown root:root dist/DEBIAN/postrm
+  # sudo chmod 0775 dist/DEBIAN/config
+  sudo chmod 0775 dist/DEBIAN/postinst
+  sudo chmod 0775 dist/DEBIAN/prerm
 
   echo "Building DEB package..."
   dpkg-deb -b dist fb-miniserver-manager.deb

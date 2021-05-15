@@ -8,7 +8,7 @@ Type=simple
 User=miniserver_manager
 Group=miniserver_manager
 
-ExecStart=/usr/bin/fb-miniserver-manager fb:web-server:start
+ExecStart=/usr/bin/php7.4 /usr/lib/miniserver-manager/vendor/bin/fb-console fb:web-server:start
 ExecStop=/bin/kill -INT $MAINPID
 ExecReload=/bin/kill -TERM $MAINPID
 

@@ -65,6 +65,7 @@ fbWebServer:
 	server:
 		address: %server.address%
 		port: %server.port%
+		certificate: %server.certificate%
 	static:
 		webroot: %appDir%/public/
 		enabled: true

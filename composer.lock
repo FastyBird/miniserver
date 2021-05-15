@@ -2887,12 +2887,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/web-server.git",
-                "reference": "c41726eb34754efabaac15839b66b1f9d85de596"
+                "reference": "19be741de6d966fd3ae9ccfcac6717bd76c0f30f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/web-server/zipball/c41726eb34754efabaac15839b66b1f9d85de596",
-                "reference": "c41726eb34754efabaac15839b66b1f9d85de596",
+                "url": "https://api.github.com/repos/FastyBird/web-server/zipball/19be741de6d966fd3ae9ccfcac6717bd76c0f30f",
+                "reference": "19be741de6d966fd3ae9ccfcac6717bd76c0f30f",
                 "shasum": ""
             },
             "require": {
@@ -2955,7 +2955,7 @@
                 "issues": "https://github.com/FastyBird/web-server/issues",
                 "source": "https://github.com/FastyBird/web-server/tree/master"
             },
-            "time": "2021-05-12T20:26:33+00:00"
+            "time": "2021-05-14T09:45:34+00:00"
         },
         {
             "name": "fig/http-message-util",

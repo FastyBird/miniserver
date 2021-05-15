@@ -20,12 +20,3 @@ sudo pidof systemd && sudo systemctl stop fb-miniserver-manager || echo
 
 echo "Disabling daemon..."
 sudo pidof systemd && sudo systemctl disable fb-miniserver-manager || echo "Systemctl not found"
-
-echo "Removing folders"
-sudo rm -rf /etc/miniserver-manager -R || echo
-sudo rm -rf /usr/lib/miniserver-manager -R || echo
-sudo rm -rf /var/log/miniserver-manager -R || echo
-sudo rm -rf /var/tmp/miniserver-manager -R || echo
-sudo rm -rf /var/lib/miniserver_manager -R || echo
-
-sudo rm /usr/bin/fb-miniserver-manager || echo
