@@ -408,6 +408,4 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
           file: "./fb-miniserver-manager.deb"
-          asset_name: "fb-miniserver-manager"
-          body: "Debian based os installable package"
           overwrite: true
