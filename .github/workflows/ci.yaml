@@ -286,8 +286,12 @@ jobs:
 
   test-docker-image:
     name : "Tests build docker image"
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ matrix.operating-system }}"
     needs: ["qa", "static-analysis", "tests"]
+
+    strategy:
+      matrix:
+        operating-system: ["ubuntu-latest"]
 
     steps:
       - name: "Checkout"
@@ -298,9 +302,12 @@ jobs:
 
   build-docker-image:
     name : "Build docker image"
-    runs-on : "ubuntu-latest"
-    # Ensure docker test job passes before pushing image.
+    runs-on: "${{ matrix.operating-system }}"
     needs: "test-docker-image"
+
+    strategy:
+      matrix:
+        operating-system: ["ubuntu-latest"]
 
     if: github.event_name == 'push'
 
