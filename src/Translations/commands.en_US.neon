@@ -1,0 +1,25 @@
+#
+# Service translations - commands
+#
+# @language		en_US
+#
+# @license		More in LICENSE.md
+# @copyright	https://www.fastybird.com
+# @author		Adam Kadlec <adam.kadlec@fastybird.com>
+# @package		FastyBird:MiniServer!
+# @subpackage	Translations
+# @since		0.1.0
+#
+# @date			16.05.21
+#
+
+apiKeyCreate:
+	inputs:
+		name:
+			title	: "Key name"
+
+	validation:
+		key:
+			wasNotCreated	: "Key could not be created. Please try again later."
+
+	success	: "API key with name '%name%' and value '%key%' was successfully created"
