@@ -29,17 +29,16 @@
 
   "prefer-stable": true,
 
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
 
   "require": {
     "php": ">=7.4.0",
-    "cweagans/composer-patches": "^1.6",
+    "cweagans/composer-patches": "^1.7",
     "fastybird/accounts-module": "@dev",
-    "fastybird/application-events": "@dev",
-    "fastybird/application-exchange": "@dev",
-    "fastybird/bootstrap": "@dev",
+    "fastybird/application-exchange": "^0.1",
+    "fastybird/bootstrap": "^0.1",
     "fastybird/devices-module": "@dev",
-    "fastybird/modules-metadata": "@dev",
+    "fastybird/modules-metadata": "^0.1",
     "fastybird/redisdb-storage-plugin": "@dev",
     "fastybird/triggers-module": "@dev",
     "fastybird/ui-module": "@dev",
@@ -48,17 +47,17 @@
   },
 
   "require-dev": {
-    "mockery/mockery": "^1.3",
+    "mockery/mockery": "^1.4",
     "ninjify/nunjuck": "^0.3",
-    "ninjify/qa": "^0.10",
+    "ninjify/qa": "^0.12",
     "pds/skeleton": "~1.0",
-    "phpstan/extension-installer": "^1.0",
+    "phpstan/extension-installer": "^1.1",
     "phpstan/phpstan": "^0.12",
     "phpstan/phpstan-deprecation-rules": "^0.12",
     "phpstan/phpstan-doctrine": "^0.12",
     "phpstan/phpstan-nette": "^0.12",
     "phpstan/phpstan-strict-rules" : "^0.12",
-    "tracy/tracy": "~2.4"
+    "tracy/tracy": "^2.8"
   },
 
   "autoload": {

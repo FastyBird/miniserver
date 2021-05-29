@@ -3,4 +3,5 @@
 /dist
 /vendor
 tests/*/output
+tests/tmp
 fb-miniserver-manager.deb

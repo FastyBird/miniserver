@@ -15,9 +15,10 @@
 
 namespace FastyBird\MiniServer\Models\ApiKeys;
 
-use Doctrine\Common;
+use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\MiniServer\Entities;
+use FastyBird\MiniServer\Exceptions;
 use Nette;
 
 /**
@@ -33,13 +34,17 @@ final class KeyRepository implements IKeyRepository
 
 	use Nette\SmartObject;
 
-	/** @var Common\Persistence\ManagerRegistry */
-	private Common\Persistence\ManagerRegistry $managerRegistry;
-
-	/** @var Persistence\ObjectRepository<Entities\ApiKeys\Key>|null */
+	/**
+	 * @var ORM\EntityRepository|null
+	 *
+	 * @phpstan-var ORM\EntityRepository<Entities\ApiKeys\IKey>|null
+	 */
 	private ?Persistence\ObjectRepository $repository = null;
 
-	public function __construct(Common\Persistence\ManagerRegistry $managerRegistry)
+	/** @var Persistence\ManagerRegistry */
+	private Persistence\ManagerRegistry $managerRegistry;
+
+	public function __construct(Persistence\ManagerRegistry $managerRegistry)
 	{
 		$this->managerRegistry = $managerRegistry;
 	}
@@ -67,12 +72,24 @@ final class KeyRepository implements IKeyRepository
 	}
 
 	/**
-	 * @return Persistence\ObjectRepository<Entities\ApiKeys\Key>
+	 * @param string $type
+	 *
+	 * @return ORM\EntityRepository
+	 *
+	 * @phpstan-param class-string $type
+	 *
+	 * @phpstan-return ORM\EntityRepository<Entities\ApiKeys\IKey>
 	 */
-	private function getRepository(): Persistence\ObjectRepository
+	private function getRepository(string $type = Entities\ApiKeys\Key::class): ORM\EntityRepository
 	{
 		if ($this->repository === null) {
-			$this->repository = $this->managerRegistry->getRepository(Entities\ApiKeys\Key::class);
+			$repository = $this->managerRegistry->getRepository($type);
+
+			if (!$repository instanceof ORM\EntityRepository) {
+				throw new Exceptions\InvalidStateException('Entity repository could not be loaded');
+			}
+
+			$this->repository = $repository;
 		}
 
 		return $this->repository;

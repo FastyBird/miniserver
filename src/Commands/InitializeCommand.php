@@ -15,8 +15,8 @@
 
 namespace FastyBird\MiniServer\Commands;
 
-use Doctrine\Common;
 use Doctrine\DBAL\Connection;
+use Doctrine\Persistence;
 use FastyBird\AccountsModule\Models as AccountsModuleModels;
 use FastyBird\AccountsModule\Queries as AccountsModuleQueries;
 use FastyBird\MiniServer\Exceptions;
@@ -50,8 +50,8 @@ class InitializeCommand extends Console\Command\Command
 	/** @var AccountsModuleModels\Roles\IRolesManager */
 	private AccountsModuleModels\Roles\IRolesManager $rolesManager;
 
-	/** @var Common\Persistence\ManagerRegistry */
-	private Common\Persistence\ManagerRegistry $managerRegistry;
+	/** @var Persistence\ManagerRegistry */
+	private Persistence\ManagerRegistry $managerRegistry;
 
 	/** @var Monolog\Logger */
 	private Monolog\Logger $logger;
@@ -60,7 +60,7 @@ class InitializeCommand extends Console\Command\Command
 		AccountsModuleModels\Accounts\IAccountRepository $accountRepository,
 		AccountsModuleModels\Roles\IRoleRepository $roleRepository,
 		AccountsModuleModels\Roles\IRolesManager $rolesManager,
-		Common\Persistence\ManagerRegistry $managerRegistry,
+		Persistence\ManagerRegistry $managerRegistry,
 		Monolog\Logger $logger,
 		?string $name = null
 	) {
