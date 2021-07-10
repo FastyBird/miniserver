@@ -5,8 +5,6 @@ parameters:
 	stubFiles:
 		- tests/PHPStan/stubs/Doctrine/ORM/Query.php
 		- tests/PHPStan/stubs/Doctrine/ORM/QueryBuilder.php
-		- tests/PHPStan/stubs/IPub/DoctrineOrmQuery/QueryObject.php
-		- tests/PHPStan/stubs/FastyBird/WebServer/JsonApi/ISchema.php
 		- tests/PHPStan/stubs/Neomerx/JsonApi/Contracts/Schema/ContextInterface.php
 		- tests/PHPStan/stubs/Neomerx/JsonApi/Contracts/Schema/LinkInterface.php
 		- tests/PHPStan/stubs/Neomerx/JsonApi/Contracts/Schema/SchemaInterface.php
