@@ -29,7 +29,8 @@ if [ "$1" != "only_clean" ] ; then
   sudo yarn install --network-timeout 1000000
   sudo yarn generate
   cd ..
-  sudo cp -r web-ui/dist public
+  sudo mkdir public || echo
+  sudo cp -r web-ui/dist/. public/
 
   echo "Adding the files & folders, scripts in the package..."
   sudo mkdir dist || echo

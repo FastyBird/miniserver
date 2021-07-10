@@ -406,6 +406,11 @@ jobs:
       - name: "Install dependencies"
         run: "${{ env.composer-install }}"
 
+      - name: "Setup node"
+        uses: "actions/setup-node@v1"
+        with:
+          node-version: "12"
+
       - name: "Build package"
         run: "make build"
 
