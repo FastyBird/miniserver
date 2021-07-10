@@ -21,6 +21,16 @@ if [ "$1" != "only_clean" ] ; then
   echo "Installing libraries for building deb package..."
   sudo apt-get install fakeroot -y
 
+  echo "Building web ui..."
+  git submodule init
+  git submodule update
+  cd web-ui
+  sudo yarn cache clean
+  sudo yarn install --network-timeout 1000000
+  sudo yarn generate
+  cd ..
+  sudo cp -r web-ui/dist public
+
   echo "Adding the files & folders, scripts in the package..."
   sudo mkdir dist || echo
   sudo cp -r resources/build/etc dist
