@@ -34,13 +34,13 @@
   "require": {
     "php": ">=7.4.0",
     "cweagans/composer-patches": "^1.7",
-    "fastybird/accounts-module": "@dev",
+    "fastybird/accounts-module": "^0.1",
     "fastybird/application-exchange": "^0.1",
     "fastybird/bootstrap": "^0.1",
-    "fastybird/devices-module": "@dev",
-    "fastybird/modules-metadata": "^0.1",
+    "fastybird/devices-module": "^0.2",
+    "fastybird/modules-metadata": "^0.2",
     "fastybird/redisdb-storage-plugin": "@dev",
-    "fastybird/triggers-module": "@dev",
+    "fastybird/triggers-module": "^0.1",
     "fastybird/ui-module": "@dev",
     "sunrise/http-server-request": "^1.1",
     "vlucas/phpdotenv": "^5.3"
