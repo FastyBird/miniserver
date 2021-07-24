@@ -195,7 +195,7 @@ services:
     # Http middlewares
     ##################
 
-    - {factory: FastyBird\MiniServer\Middleware\ApiKeyValidatorMiddleware, tags: [middleware: {priority: 30}]}
+    # - {factory: FastyBird\MiniServer\Middleware\ApiKeyValidatorMiddleware, tags: [middleware: {priority: 30}]}
 
     # HTTP application
     ##################
