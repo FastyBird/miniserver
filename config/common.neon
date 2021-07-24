@@ -15,6 +15,7 @@
 #########################
 
 extensions:
+    contributteConsole                  : Contributte\Console\DI\ConsoleExtension(%consoleMode%)
     contributteTranslation              : Contributte\Translation\DI\TranslationExtension
     contributteEvents                   : Contributte\EventDispatcher\DI\EventDispatcherExtension
     nettrineAnnotations                 : Nettrine\Annotations\DI\AnnotationsExtension
@@ -30,7 +31,7 @@ extensions:
     fbDatabase                          : FastyBird\Database\DI\DatabaseExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
     fbModulesMetadata                   : FastyBird\ModulesMetadata\DI\ModulesMetadataExtension
-    fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension
+    fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension(%consoleMode%)
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
