@@ -110,8 +110,18 @@ fbTriggersModule:
 fbUiModule:
     apiPrefix: true
 
-# Node translations
-###################
+# Symfony console support extension
+###################################
+contributteConsole:
+    name: "FastyBird:MiniServer!"
+    version: "0.1.0"
+    catchExceptions: true
+    autoExit: true
+    url: https://www.fastybird.com
+    lazy: false
+
+# Application translations
+##########################
 contributteTranslation:
     locales:
         default: en_US
@@ -162,22 +172,12 @@ nettrineAnnotations:
 ##############
 nettrineOrm:
     configuration:
-        proxyDir	: %tempDir%/cache/doctrine.proxies
+        proxyDir: %tempDir%/cache/doctrine.proxies
 
 nettrineOrmAnnotations:
     mapping: [
         FastyBird\MiniServer\Entities: %appDir%/src/Entities
     ]
-
-# Symfony console support extension
-###################################
-contributteConsole:
-    name: "FastyBird:MiniServer!"
-    version: "0.1.0"
-    catchExceptions: true
-    autoExit: true
-    url: https://www.fastybird.com
-    lazy: false
 
 ############################
 # App services definitions #

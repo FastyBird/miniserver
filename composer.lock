@@ -3682,16 +3682,16 @@
         },
         {
             "name": "ipub/doctrine-timestampable",
-            "version": "v1.5.1",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ipublikuj/doctrine-timestampable.git",
-                "reference": "b71cdcbd78c2fb18ad80a8d9417258f3ccf46f91"
+                "reference": "47cffd17e65f194e07808e1a83a0c11d0d7525a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/doctrine-timestampable/zipball/b71cdcbd78c2fb18ad80a8d9417258f3ccf46f91",
-                "reference": "b71cdcbd78c2fb18ad80a8d9417258f3ccf46f91",
+                "url": "https://api.github.com/repos/ipublikuj/doctrine-timestampable/zipball/47cffd17e65f194e07808e1a83a0c11d0d7525a9",
+                "reference": "47cffd17e65f194e07808e1a83a0c11d0d7525a9",
                 "shasum": ""
             },
             "require": {
@@ -3755,9 +3755,9 @@
             "support": {
                 "email": "support@ipublikuj.eu",
                 "issues": "https://github.com/iPublikuj/doctrine-timestampable/issues",
-                "source": "https://github.com/ipublikuj/doctrine-timestampable/tree/v1.5.1"
+                "source": "https://github.com/ipublikuj/doctrine-timestampable/tree/v1.5.2"
             },
-            "time": "2021-06-01T19:31:39+00:00"
+            "time": "2021-07-24T17:12:19+00:00"
         },
         {
             "name": "ipub/json-api-document",
