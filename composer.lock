@@ -1772,16 +1772,16 @@
         },
         {
             "name": "fastybird/accounts-module",
-            "version": "v0.1.5",
+            "version": "v0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "4788fe1ea4906c8e78cd46001395a22389568c98"
+                "reference": "4de4647077bbfb70eec3d6c0a4cfe6cbbbe72f55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/4788fe1ea4906c8e78cd46001395a22389568c98",
-                "reference": "4788fe1ea4906c8e78cd46001395a22389568c98",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/4de4647077bbfb70eec3d6c0a4cfe6cbbbe72f55",
+                "reference": "4de4647077bbfb70eec3d6c0a4cfe6cbbbe72f55",
                 "shasum": ""
             },
             "require": {
@@ -1862,9 +1862,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
-                "source": "https://github.com/FastyBird/accounts-module/tree/v0.1.5"
+                "source": "https://github.com/FastyBird/accounts-module/tree/v0.1.6"
             },
-            "time": "2021-07-17T09:05:23+00:00"
+            "time": "2021-07-24T20:18:20+00:00"
         },
         {
             "name": "fastybird/application-exchange",
@@ -2165,16 +2165,16 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.2.2",
+            "version": "v0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "6600da737359dff75291470202c0b70fbcf24fcc"
+                "reference": "09e0e377d5a2f1d34c4c378651d0835107a92a22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/6600da737359dff75291470202c0b70fbcf24fcc",
-                "reference": "6600da737359dff75291470202c0b70fbcf24fcc",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/09e0e377d5a2f1d34c4c378651d0835107a92a22",
+                "reference": "09e0e377d5a2f1d34c4c378651d0835107a92a22",
                 "shasum": ""
             },
             "require": {
@@ -2252,9 +2252,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/devices-module/issues",
-                "source": "https://github.com/FastyBird/devices-module/tree/v0.2.2"
+                "source": "https://github.com/FastyBird/devices-module/tree/v0.2.3"
             },
-            "time": "2021-07-24T10:51:41+00:00"
+            "time": "2021-07-24T20:17:35+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2580,16 +2580,16 @@
         },
         {
             "name": "fastybird/triggers-module",
-            "version": "v0.1.7",
+            "version": "v0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "4502214248a07f930097da54967dea7b7e02f619"
+                "reference": "be91f616fe85a9cabf756c80ccdd6e9245aeaeef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/4502214248a07f930097da54967dea7b7e02f619",
-                "reference": "4502214248a07f930097da54967dea7b7e02f619",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/be91f616fe85a9cabf756c80ccdd6e9245aeaeef",
+                "reference": "be91f616fe85a9cabf756c80ccdd6e9245aeaeef",
                 "shasum": ""
             },
             "require": {
@@ -2668,9 +2668,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
-                "source": "https://github.com/FastyBird/triggers-module/tree/v0.1.7"
+                "source": "https://github.com/FastyBird/triggers-module/tree/v0.1.8"
             },
-            "time": "2021-07-17T09:05:57+00:00"
+            "time": "2021-07-24T20:18:55+00:00"
         },
         {
             "name": "fastybird/ui-module",

@@ -42,4 +42,4 @@ nettrineDbal:
 
 nettrineOrm:
 	configuration:
-		proxyDir	: %tempDir%/cache/doctrine.proxies
+		proxyDir: %tempDir%/cache/doctrine.proxies
