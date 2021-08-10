@@ -230,11 +230,9 @@ class InitializeCommand extends Console\Command\Command
 
 					return 1;
 				}
-
 			} else {
 				$io->success('There is existing administrator account.');
 			}
-
 		} else {
 			$io->error('Something went wrong, administrator role could not be found.');
 

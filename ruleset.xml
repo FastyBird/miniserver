@@ -5,14 +5,8 @@
         <!-- we want brace on same line for multi-line definitions, checked by Squiz.Functions.MultiLineFunctionDeclaration -->
         <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
 
-        <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing.IncorrectLinesCountAfterLastControlStructure"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.AssignmentInCondition.assignmentInCondition"/>
-
         <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden"/>
-        <exclude
-                name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectLinesCountBetweenDifferentAnnotationsTypes"/>
+        <exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectLinesCountBetweenDifferentAnnotationsTypes"/>
 
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment"/>
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessParameterAnnotation"/>

@@ -187,11 +187,9 @@ abstract class DbTestCase extends BaseMockeryTestCase
 						$db->query($sql);
 						$sql = '';
 						$count++;
-
 					} catch (DBAL\DBALException $ex) {
 						// File could not be loaded
 					}
-
 				} else {
 					$sql .= $s . "\n";
 				}

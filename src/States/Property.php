@@ -32,7 +32,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 {
 
 	/** @var string|null */
-	private ?string $value = null;
+	private ?string $actual = null;
 
 	/** @var string|null */
 	private ?string $expected = null;
@@ -81,23 +81,23 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getValue(): ?string
+	public function getActualValue(): ?string
 	{
-		return $this->value;
+		return $this->actual;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setValue(?string $value): void
+	public function setActualValue(?string $actual): void
 	{
-		$this->value = $value;
+		$this->actual = $actual;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getExpected(): ?string
+	public function getExpectedValue(): ?string
 	{
 		return $this->expected;
 	}
@@ -105,7 +105,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setExpected($expected): void
+	public function setExpectedValue($expected): void
 	{
 		$this->expected = $expected !== null ? (string) $expected : null;
 	}
@@ -133,7 +133,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	{
 		return [
 			0          => 'id',
-			'value'    => null,
+			'actual'   => null,
 			'expected' => null,
 			'pending'  => false,
 		];
@@ -145,7 +145,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	public static function getUpdateFields(): array
 	{
 		return [
-			'value',
+			'actual',
 			'expected',
 			'pending',
 		];
@@ -157,8 +157,8 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	public function toArray(): array
 	{
 		return array_merge([
-			'value'    => $this->getValue(),
-			'expected' => $this->getExpected(),
+			'actual'   => $this->getActualValue(),
+			'expected' => $this->getExpectedValue(),
 			'pending'  => $this->isPending(),
 		], parent::toArray());
 	}
