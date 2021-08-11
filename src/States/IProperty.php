@@ -27,6 +27,7 @@ use DateTimeInterface;
  */
 interface IProperty
 {
+
 	/**
 	 * @param string|null $actual
 	 *

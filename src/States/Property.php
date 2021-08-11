@@ -113,9 +113,9 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setExpectedValue($expected): void
+	public function setExpectedValue(?string $expected): void
 	{
-		$this->expected = $expected !== null ? (string) $expected : null;
+		$this->expected = $expected;
 	}
 
 	/**
