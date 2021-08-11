@@ -27,9 +27,24 @@ use DateTimeInterface;
  */
 interface IProperty
 {
+	/**
+	 * @param string|null $actual
+	 *
+	 * @return void
+	 */
+	public function setActual(?string $actual): void;
+
+	/**
+	 * @param string|null $expected
+	 *
+	 * @return void
+	 */
+	public function setExpected(?string $expected): void;
 
 	/**
 	 * @param string|null $created
+	 *
+	 * @return void
 	 */
 	public function setCreated(?string $created): void;
 
@@ -40,6 +55,8 @@ interface IProperty
 
 	/**
 	 * @param string|null $updated
+	 *
+	 * @return void
 	 */
 	public function setUpdated(?string $updated): void;
 

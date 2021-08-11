@@ -97,6 +97,14 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	/**
 	 * {@inheritDoc}
 	 */
+	public function setActual(?string $actual): void
+	{
+		$this->setActualValue($actual);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getExpectedValue(): ?string
 	{
 		return $this->expected;
@@ -108,6 +116,14 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty, De
 	public function setExpectedValue($expected): void
 	{
 		$this->expected = $expected !== null ? (string) $expected : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setExpected(?string $expected): void
+	{
+		$this->setExpectedValue($expected);
 	}
 
 	/**
