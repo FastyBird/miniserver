@@ -1,5 +1,5 @@
 INSERT IGNORE INTO `fb_connectors` (`connector_id`, `connector_name`, `connector_type`, `created_at`, `updated_at`)
-VALUES (_binary 0x17C59DFA2EDD438E8C49FAA4E38E5A5E, 'FB MQTT v1', 'fb_mqtt_v1', '2020-03-20 09:18:20', '2020-03-20 09:18:20');
+VALUES (_binary 0x17C59DFA2EDD438E8C49FAA4E38E5A5E, 'FB MQTT v1', 'fb-mqtt-v1', '2020-03-20 09:18:20', '2020-03-20 09:18:20');
 
 INSERT IGNORE INTO `fb_devices` (`device_id`, `parent_id`, `device_identifier`, `device_key`, `device_name`, `device_comment`, `device_enabled`, `device_hardware_manufacturer`, `device_hardware_model`, `device_hardware_version`, `device_mac_address`, `device_firmware_manufacturer`, `device_firmware_version`, `params`, `created_at`, `updated_at`, `owner`)
 VALUES (_binary 0x69786D15FD0C4D9F937833287C2009FA, NULL, 'first-device', 'bLikkz', 'First device', NULL, 1, 'itead', 'sonoff_basic', 'rev1', '807d3a3dbe6d', 'fastybird', NULL, '[]', '2020-03-19 14:03:48', '2020-03-22 20:12:07', '455354e8-96bd-4c29-84e7-9f10e1d4db4b'),
@@ -56,7 +56,7 @@ INSERT IGNORE INTO `fb_triggers` (`trigger_id`, `trigger_type`, `trigger_name`, 
 VALUES (_binary 0x0B48DFBCFAC2429288DC7981A121602D, 'automatic', 'Environment', NULL, 1, '2020-01-27 20:49:53', '2020-01-27 20:49:53', '[]');
 
 INSERT IGNORE INTO `fb_conditions` (`condition_id`, `trigger_id`, `created_at`, `updated_at`, `condition_type`, `condition_time`, `condition_days`, `condition_device`, `condition_channel`, `condition_channel_property`, `condition_operator`, `condition_operand`)
-VALUES (_binary 0x167900E919F34712AA4D00B160FF06D5, _binary 0x0B48DFBCFAC2429288DC7981A121602D, '2020-01-27 20:49:53', '2020-01-27 20:49:53', 'channel_property', null, null, 'bLikkz', 'bLikxq', 'bLikxE', 'below', '20');
+VALUES (_binary 0x167900E919F34712AA4D00B160FF06D5, _binary 0x0B48DFBCFAC2429288DC7981A121602D, '2020-01-27 20:49:53', '2020-01-27 20:49:53', 'channel-property', null, null, _binary 0x69786d15fd0c4d9f937833287c2009fa, _binary 0x6821f8e9ae694d5c9b7cd2b213f1ae0a, _binary 0x28bc0d382f7c4a71aa7427b102f8df4c, 'below', '20');
 
 INSERT IGNORE INTO `fb_actions` (`action_id`, `trigger_id`, `action_type`, `created_at`, `updated_at`, `action_device`, `action_channel`, `action_channel_property`, `action_value`)
-VALUES (_binary 0x21D13F148BE0462587644D5B1F3B4D1E, _binary 0x0B48DFBCFAC2429288DC7981A121602D, 'channel_property', '2020-01-28 18:39:35', '2020-01-28 18:39:35', 'bLikkz', 'bLikxh', 'bLikx4', 'on');
+VALUES (_binary 0x21D13F148BE0462587644D5B1F3B4D1E, _binary 0x0B48DFBCFAC2429288DC7981A121602D, 'channel-property', '2020-01-28 18:39:35', '2020-01-28 18:39:35', _binary 0x69786d15fd0c4d9f937833287c2009fa, _binary 0x17c59dfa2edd438e8c49faa4e38e5a5e, _binary 0xbbcccf8c33ab431ba795d7bb38b6b6db, 'on');

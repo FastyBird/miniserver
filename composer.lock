@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c51f38c1dd46937fa3273bf39db8ded5",
+    "content-hash": "4abf8e676ddcb1440ac659623b2a8f42",
     "packages": [
         {
             "name": "brick/math",
@@ -134,16 +134,16 @@
         },
         {
             "name": "composer/package-versions-deprecated",
-            "version": "1.11.99.3",
+            "version": "1.11.99.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "fff576ac850c045158a250e7e27666e146e78d18"
+                "reference": "b174585d1fe49ceed21928a945138948cb394600"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/fff576ac850c045158a250e7e27666e146e78d18",
-                "reference": "fff576ac850c045158a250e7e27666e146e78d18",
+                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/b174585d1fe49ceed21928a945138948cb394600",
+                "reference": "b174585d1fe49ceed21928a945138948cb394600",
                 "shasum": ""
             },
             "require": {
@@ -187,7 +187,7 @@
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
             "support": {
                 "issues": "https://github.com/composer/package-versions-deprecated/issues",
-                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.3"
+                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.4"
             },
             "funding": [
                 {
@@ -203,7 +203,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-17T13:49:14+00:00"
+            "time": "2021-09-13T08:41:34+00:00"
         },
         {
             "name": "consistence/consistence",
@@ -1061,16 +1061,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "2.13.2",
+            "version": "2.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "8dd39d2ead4409ce652fd4f02621060f009ea5e4"
+                "reference": "0d7adf4cadfee6f70850e5b163e6cdd706417838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/8dd39d2ead4409ce652fd4f02621060f009ea5e4",
-                "reference": "8dd39d2ead4409ce652fd4f02621060f009ea5e4",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/0d7adf4cadfee6f70850e5b163e6cdd706417838",
+                "reference": "0d7adf4cadfee6f70850e5b163e6cdd706417838",
                 "shasum": ""
             },
             "require": {
@@ -1082,13 +1082,14 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "9.0.0",
-                "jetbrains/phpstorm-stubs": "2020.2",
-                "phpstan/phpstan": "0.12.81",
+                "jetbrains/phpstorm-stubs": "2021.1",
+                "phpstan/phpstan": "0.12.96",
                 "phpunit/phpunit": "^7.5.20|^8.5|9.5.5",
+                "psalm/plugin-phpunit": "0.16.1",
                 "squizlabs/php_codesniffer": "3.6.0",
                 "symfony/cache": "^4.4",
                 "symfony/console": "^2.0.5|^3.0|^4.0|^5.0",
-                "vimeo/psalm": "4.6.4"
+                "vimeo/psalm": "4.10.0"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -1149,7 +1150,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/2.13.2"
+                "source": "https://github.com/doctrine/dbal/tree/2.13.3"
             },
             "funding": [
                 {
@@ -1165,7 +1166,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-18T21:48:39+00:00"
+            "time": "2021-09-12T19:11:48+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -2171,16 +2172,16 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.2.32",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "581b72f7e9f1b04de175453f12807d2f3d209070"
+                "reference": "b7616aedd4022c25ad23e9c4b2955354a70fb19b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/581b72f7e9f1b04de175453f12807d2f3d209070",
-                "reference": "581b72f7e9f1b04de175453f12807d2f3d209070",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/b7616aedd4022c25ad23e9c4b2955354a70fb19b",
+                "reference": "b7616aedd4022c25ad23e9c4b2955354a70fb19b",
                 "shasum": ""
             },
             "require": {
@@ -2258,9 +2259,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/devices-module/issues",
-                "source": "https://github.com/FastyBird/devices-module/tree/v0.2.32"
+                "source": "https://github.com/FastyBird/devices-module/tree/v0.3.0"
             },
-            "time": "2021-09-02T19:55:28+00:00"
+            "time": "2021-09-14T19:05:28+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2347,16 +2348,16 @@
         },
         {
             "name": "fastybird/modules-metadata",
-            "version": "v0.5.1",
+            "version": "v0.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modules-metadata.git",
-                "reference": "9f76d3c602dd1a550ae25488fdc1bae48bf0a418"
+                "reference": "53ae2e6f3bc57182251bcd82d19ecdb4d0f91e07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/9f76d3c602dd1a550ae25488fdc1bae48bf0a418",
-                "reference": "9f76d3c602dd1a550ae25488fdc1bae48bf0a418",
+                "url": "https://api.github.com/repos/FastyBird/modules-metadata/zipball/53ae2e6f3bc57182251bcd82d19ecdb4d0f91e07",
+                "reference": "53ae2e6f3bc57182251bcd82d19ecdb4d0f91e07",
                 "shasum": ""
             },
             "require": {
@@ -2412,9 +2413,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/modules-metadata/issues",
-                "source": "https://github.com/FastyBird/modules-metadata/tree/v0.5.1"
+                "source": "https://github.com/FastyBird/modules-metadata/tree/v0.5.5"
             },
-            "time": "2021-09-01T20:22:40+00:00"
+            "time": "2021-09-14T15:36:37+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -2585,16 +2586,16 @@
         },
         {
             "name": "fastybird/triggers-module",
-            "version": "v0.2.0",
+            "version": "v0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "400e3ec60178027f663e3792cdc3459a10e9043b"
+                "reference": "aadb9f0a109699b247b7a524a2e77b2845340dd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/400e3ec60178027f663e3792cdc3459a10e9043b",
-                "reference": "400e3ec60178027f663e3792cdc3459a10e9043b",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/aadb9f0a109699b247b7a524a2e77b2845340dd8",
+                "reference": "aadb9f0a109699b247b7a524a2e77b2845340dd8",
                 "shasum": ""
             },
             "require": {
@@ -2673,9 +2674,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
-                "source": "https://github.com/FastyBird/triggers-module/tree/v0.2.0"
+                "source": "https://github.com/FastyBird/triggers-module/tree/v0.3.3"
             },
-            "time": "2021-09-03T20:22:59+00:00"
+            "time": "2021-09-14T18:35:17+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -2911,16 +2912,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.12.31",
+            "version": "8.12.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "2d79a2443df5a693286510a24a308a0625a8132c"
+                "reference": "b13fcfd3ebfef44486fc0bd1f830737047205ae3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/2d79a2443df5a693286510a24a308a0625a8132c",
-                "reference": "2d79a2443df5a693286510a24a308a0625a8132c",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/b13fcfd3ebfef44486fc0bd1f830737047205ae3",
+                "reference": "b13fcfd3ebfef44486fc0bd1f830737047205ae3",
                 "shasum": ""
             },
             "require": {
@@ -2980,7 +2981,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2021-08-24T07:02:46+00:00"
+            "time": "2021-09-10T14:29:11+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -4267,24 +4268,24 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "71312564759a7db5b789296369c1a264efc43aad"
+                "reference": "3962ebfe206ac7ce6c754c79e2fee0c64bf1818d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/71312564759a7db5b789296369c1a264efc43aad",
-                "reference": "71312564759a7db5b789296369c1a264efc43aad",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/3962ebfe206ac7ce6c754c79e2fee0c64bf1818d",
+                "reference": "3962ebfe206ac7ce6c754c79e2fee0c64bf1818d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2",
-                "psr/log": "^1.0.1"
+                "psr/log": "^1.0.1 || ^2.0"
             },
             "provide": {
-                "psr/log-implementation": "1.0.0"
+                "psr/log-implementation": "1.0.0 || 2.0.0"
             },
             "require-dev": {
                 "aws/aws-sdk-php": "^2.4.9 || ^3.0",
@@ -4298,8 +4299,7 @@
                 "phpstan/phpstan": "^0.12.91",
                 "phpunit/phpunit": "^8.5",
                 "predis/predis": "^1.1",
-                "rollbar/rollbar": "^1.3",
-                "ruflin/elastica": ">=0.90 <7.0.1",
+                "ruflin/elastica": ">=0.90@dev",
                 "swiftmailer/swiftmailer": "^5.3|^6.0"
             },
             "suggest": {
@@ -4307,8 +4307,11 @@
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
                 "elasticsearch/elasticsearch": "Allow sending log messages to an Elasticsearch server via official client",
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+                "ext-curl": "Required to send log messages using the IFTTTHandler, the LogglyHandler, the SendGridHandler, the SlackWebhookHandler or the TelegramBotHandler",
                 "ext-mbstring": "Allow to work properly with unicode symbols",
                 "ext-mongodb": "Allow sending log messages to a MongoDB server (via driver)",
+                "ext-openssl": "Required to send log messages using SSL",
+                "ext-sockets": "Allow sending log messages to a Syslog server (via UDP driver)",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
                 "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
@@ -4347,7 +4350,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.3.2"
+                "source": "https://github.com/Seldaek/monolog/tree/2.3.3"
             },
             "funding": [
                 {
@@ -4359,7 +4362,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-23T07:42:52+00:00"
+            "time": "2021-09-14T18:40:13+00:00"
         },
         {
             "name": "narrowspark/mimetypes",
@@ -4847,21 +4850,21 @@
         },
         {
             "name": "nette/php-generator",
-            "version": "v3.5.4",
+            "version": "v3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/php-generator.git",
-                "reference": "59bb35ed6e8da95854fbf7b7d47dce6156b42915"
+                "reference": "2f28a34203ea2e730371d913fc06ae45b6e9baaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/php-generator/zipball/59bb35ed6e8da95854fbf7b7d47dce6156b42915",
-                "reference": "59bb35ed6e8da95854fbf7b7d47dce6156b42915",
+                "url": "https://api.github.com/repos/nette/php-generator/zipball/2f28a34203ea2e730371d913fc06ae45b6e9baaa",
+                "reference": "2f28a34203ea2e730371d913fc06ae45b6e9baaa",
                 "shasum": ""
             },
             "require": {
                 "nette/utils": "^3.1.2",
-                "php": ">=7.1"
+                "php": ">=7.2 <8.2"
             },
             "require-dev": {
                 "nette/tester": "^2.0",
@@ -4875,7 +4878,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.5-dev"
+                    "dev-master": "3.6-dev"
                 }
             },
             "autoload": {
@@ -4899,7 +4902,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🐘 Nette PHP Generator: generates neat PHP code for you. Supports new PHP 8.0 features.",
+            "description": "🐘 Nette PHP Generator: generates neat PHP code for you. Supports new PHP 8.1 features.",
             "homepage": "https://nette.org",
             "keywords": [
                 "code",
@@ -4909,9 +4912,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/php-generator/issues",
-                "source": "https://github.com/nette/php-generator/tree/v3.5.4"
+                "source": "https://github.com/nette/php-generator/tree/v3.6.0"
             },
-            "time": "2021-07-05T12:02:42+00:00"
+            "time": "2021-08-29T15:43:46+00:00"
         },
         {
             "name": "nette/robot-loader",
@@ -5392,16 +5395,16 @@
         },
         {
             "name": "nettrine/orm",
-            "version": "v0.8.1",
+            "version": "v0.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nettrine/orm.git",
-                "reference": "a86e9ec690cf4b7659a25767fd493935c1d3e34a"
+                "reference": "fc84bccce8665255519266351bb6b746d1d58650"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nettrine/orm/zipball/a86e9ec690cf4b7659a25767fd493935c1d3e34a",
-                "reference": "a86e9ec690cf4b7659a25767fd493935c1d3e34a",
+                "url": "https://api.github.com/repos/nettrine/orm/zipball/fc84bccce8665255519266351bb6b746d1d58650",
+                "reference": "fc84bccce8665255519266351bb6b746d1d58650",
                 "shasum": ""
             },
             "require": {
@@ -5458,19 +5461,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nettrine/orm/issues",
-                "source": "https://github.com/nettrine/orm/tree/v0.8.1"
+                "source": "https://github.com/nettrine/orm/tree/v0.8.2"
             },
-            "funding": [
-                {
-                    "url": "https://contributte.org/partners.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/f3l1x",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-01-01T14:51:15+00:00"
+            "time": "2021-08-13T12:31:10+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -10464,16 +10457,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.4.3",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "d1339f64479af1bee0e82a0413813fe5345a54ea"
+                "reference": "e01123a0e847d52d186c5eb4b9bf58b0c6d00346"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/d1339f64479af1bee0e82a0413813fe5345a54ea",
-                "reference": "d1339f64479af1bee0e82a0413813fe5345a54ea",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/e01123a0e847d52d186c5eb4b9bf58b0c6d00346",
+                "reference": "e01123a0e847d52d186c5eb4b9bf58b0c6d00346",
                 "shasum": ""
             },
             "require": {
@@ -10530,9 +10523,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mockery/mockery/issues",
-                "source": "https://github.com/mockery/mockery/tree/1.4.3"
+                "source": "https://github.com/mockery/mockery/tree/1.4.4"
             },
-            "time": "2021-02-24T09:51:49+00:00"
+            "time": "2021-09-13T15:28:59+00:00"
         },
         {
             "name": "nette/tester",
@@ -10997,16 +10990,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.98",
+            "version": "0.12.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3bb7cc246c057405dd5e290c3ecc62ab51d57e00"
+                "reference": "b4d40f1d759942f523be267a1bab6884f46ca3f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3bb7cc246c057405dd5e290c3ecc62ab51d57e00",
-                "reference": "3bb7cc246c057405dd5e290c3ecc62ab51d57e00",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b4d40f1d759942f523be267a1bab6884f46ca3f7",
+                "reference": "b4d40f1d759942f523be267a1bab6884f46ca3f7",
                 "shasum": ""
             },
             "require": {
@@ -11037,7 +11030,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.98"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.99"
             },
             "funding": [
                 {
@@ -11057,7 +11050,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-02T12:33:01+00:00"
+            "time": "2021-09-12T20:09:55+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

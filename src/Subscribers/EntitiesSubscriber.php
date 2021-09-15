@@ -107,7 +107,7 @@ class EntitiesSubscriber implements Common\EventSubscriber
 	private function clearDevices(DevicesModuleEntities\Devices\IDevice $device): void
 	{
 		$findQuery = new TriggersModuleQueries\FindActionsQuery();
-		$findQuery->forDevice($device->getKey());
+		$findQuery->forDevice($device->getId());
 
 		$actions = $this->actionRepository->findAllBy(
 			$findQuery,
@@ -119,7 +119,7 @@ class EntitiesSubscriber implements Common\EventSubscriber
 		}
 
 		$findQuery = new TriggersModuleQueries\FindConditionsQuery();
-		$findQuery->forDevice($device->getKey());
+		$findQuery->forDevice($device->getId());
 
 		$conditions = $this->conditionRepository->findAllBy(
 			$findQuery,
@@ -131,7 +131,7 @@ class EntitiesSubscriber implements Common\EventSubscriber
 		}
 
 		$findQuery = new TriggersModuleQueries\FindConditionsQuery();
-		$findQuery->forDevice($device->getKey());
+		$findQuery->forDevice($device->getId());
 
 		$conditions = $this->conditionRepository->findAllBy(
 			$findQuery,
@@ -153,7 +153,8 @@ class EntitiesSubscriber implements Common\EventSubscriber
 	private function clearDeviceProperties(DevicesModuleEntities\Devices\Properties\IProperty $property): void
 	{
 		$findQuery = new TriggersModuleQueries\FindConditionsQuery();
-		$findQuery->forProperty($property->getKey());
+		$findQuery->forProperty($property->getId());
+		$findQuery->forDevice($property->getDevice()->getId());
 
 		$conditions = $this->conditionRepository->findAllBy(
 			$findQuery,
@@ -175,7 +176,7 @@ class EntitiesSubscriber implements Common\EventSubscriber
 	private function clearChannels(DevicesModuleEntities\Channels\IChannel $channel): void
 	{
 		$findQuery = new TriggersModuleQueries\FindActionsQuery();
-		$findQuery->forChannel($channel->getKey());
+		$findQuery->forChannel($channel->getId());
 
 		$actions = $this->actionRepository->findAllBy(
 			$findQuery,
@@ -187,7 +188,7 @@ class EntitiesSubscriber implements Common\EventSubscriber
 		}
 
 		$findQuery = new TriggersModuleQueries\FindConditionsQuery();
-		$findQuery->forChannel($channel->getKey());
+		$findQuery->forChannel($channel->getId());
 
 		$conditions = $this->conditionRepository->findAllBy(
 			$findQuery,
@@ -209,7 +210,8 @@ class EntitiesSubscriber implements Common\EventSubscriber
 	private function clearChannelProperties(DevicesModuleEntities\Channels\Properties\IProperty $property): void
 	{
 		$findQuery = new TriggersModuleQueries\FindActionsQuery();
-		$findQuery->forChannelProperty($property->getKey());
+		$findQuery->forProperty($property->getId());
+		$findQuery->forChannel($property->getChannel()->getId());
 
 		$actions = $this->actionRepository->findAllBy(
 			$findQuery,
@@ -221,7 +223,8 @@ class EntitiesSubscriber implements Common\EventSubscriber
 		}
 
 		$findQuery = new TriggersModuleQueries\FindConditionsQuery();
-		$findQuery->forProperty($property->getKey());
+		$findQuery->forProperty($property->getId());
+		$findQuery->forChannel($property->getChannel()->getId());
 
 		$conditions = $this->conditionRepository->findAllBy(
 			$findQuery,

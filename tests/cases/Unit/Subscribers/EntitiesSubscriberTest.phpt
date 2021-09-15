@@ -64,9 +64,9 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionRepository::class);
 
 		$findCondition = new TriggersModuleQueries\FindConditionsQuery();
-		$findCondition->forDevice('bLikkz');
-		$findCondition->forChannel('bLikxq');
-		$findCondition->forProperty('bLikxE');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$condition = $conditionRepository->findOneBy(
 			$findCondition,
@@ -88,9 +88,9 @@ final class EntitiesSubscriberTest extends DbTestCase
 		Assert::null($property);
 
 		$findCondition = new TriggersModuleQueries\FindConditionsQuery();
-		$findCondition->forDevice('bLikkz');
-		$findCondition->forChannel('bLikxq');
-		$findCondition->forProperty('bLikxE');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$condition = $conditionRepository->findOneBy(
 			$findCondition,
@@ -99,10 +99,15 @@ final class EntitiesSubscriberTest extends DbTestCase
 
 		Assert::null($condition);
 
+		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
+		$findProperty->byKey('bLikx4');
+
+		$property = $propertyRepository->findOneBy($findProperty);
+
 		$findAction = new TriggersModuleQueries\FindActionsQuery();
-		$findAction->forDevice('bLikkz');
-		$findAction->forChannel('bLikxh');
-		$findAction->forChannelProperty('bLikx4');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$action = $actionRepository->findOneBy(
 			$findAction,
@@ -131,9 +136,9 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionRepository::class);
 
 		$findCondition = new TriggersModuleQueries\FindConditionsQuery();
-		$findCondition->forDevice('bLikkz');
-		$findCondition->forChannel('bLikxq');
-		$findCondition->forProperty('bLikxE');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$condition = $conditionRepository->findOneBy(
 			$findCondition,
@@ -155,9 +160,9 @@ final class EntitiesSubscriberTest extends DbTestCase
 		Assert::null($property);
 
 		$findCondition = new TriggersModuleQueries\FindConditionsQuery();
-		$findCondition->forDevice('bLikkz');
-		$findCondition->forChannel('bLikxq');
-		$findCondition->forProperty('bLikxE');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$condition = $conditionRepository->findOneBy(
 			$findCondition,
@@ -166,10 +171,15 @@ final class EntitiesSubscriberTest extends DbTestCase
 
 		Assert::null($condition);
 
+		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
+		$findProperty->byKey('bLikx4');
+
+		$property = $propertyRepository->findOneBy($findProperty);
+
 		$findAction = new TriggersModuleQueries\FindActionsQuery();
-		$findAction->forDevice('bLikkz');
-		$findAction->forChannel('bLikxh');
-		$findAction->forChannelProperty('bLikx4');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$action = $actionRepository->findOneBy(
 			$findAction,
@@ -198,9 +208,9 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionRepository::class);
 
 		$findCondition = new TriggersModuleQueries\FindConditionsQuery();
-		$findCondition->forDevice('bLikkz');
-		$findCondition->forChannel('bLikxq');
-		$findCondition->forProperty('bLikxE');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$condition = $conditionRepository->findOneBy(
 			$findCondition,
@@ -222,9 +232,9 @@ final class EntitiesSubscriberTest extends DbTestCase
 		Assert::null($property);
 
 		$findCondition = new TriggersModuleQueries\FindConditionsQuery();
-		$findCondition->forDevice('bLikkz');
-		$findCondition->forChannel('bLikxq');
-		$findCondition->forProperty('bLikxE');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$condition = $conditionRepository->findOneBy(
 			$findCondition,
@@ -233,10 +243,15 @@ final class EntitiesSubscriberTest extends DbTestCase
 
 		Assert::null($condition);
 
+		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
+		$findProperty->byKey('bLikx4');
+
+		$property = $propertyRepository->findOneBy($findProperty);
+
 		$findAction = new TriggersModuleQueries\FindActionsQuery();
-		$findAction->forDevice('bLikkz');
-		$findAction->forChannel('bLikxh');
-		$findAction->forChannelProperty('bLikx4');
+		$findCondition->forDevice($property->getChannel()->getDevice()->getId());
+		$findCondition->forChannel($property->getChannel()->getId());
+		$findCondition->forProperty($property->getId());
 
 		$action = $actionRepository->findOneBy(
 			$findAction,
