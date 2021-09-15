@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Property.php
+ * TriggerItem.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,7 +10,7 @@
  * @subpackage     States
  * @since          0.1.0
  *
- * @date           03.03.20
+ * @date           15.09.21
  */
 
 namespace FastyBird\MiniServer\States;
@@ -20,24 +20,18 @@ use DateTimeInterface;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
 
 /**
- * Property state
+ * Trigger item state
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     States
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Property extends RedisDbStoragePluginStates\State implements IProperty
+class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerItem
 {
 
-	/** @var string|null */
-	private ?string $actual = null;
-
-	/** @var string|null */
-	private ?string $expected = null;
-
 	/** @var bool */
-	private bool $pending = false;
+	private bool $validationResult = false;
 
 	/** @var string|null */
 	private ?string $created = null;
@@ -80,65 +74,17 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getActualValue(): ?string
+	public function getValidationResult(): bool
 	{
-		return $this->actual;
+		return $this->validationResult;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setActualValue(?string $actual): void
+	public function setValidationResult(bool $result): void
 	{
-		$this->actual = $actual;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setActual(?string $actual): void
-	{
-		$this->setActualValue($actual);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getExpectedValue(): ?string
-	{
-		return $this->expected;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setExpectedValue(?string $expected): void
-	{
-		$this->expected = $expected;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setExpected(?string $expected): void
-	{
-		$this->setExpectedValue($expected);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isPending(): bool
-	{
-		return $this->pending;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setPending(bool $pending): void
-	{
-		$this->pending = $pending;
+		$this->validationResult = $result;
 	}
 
 	/**
@@ -147,12 +93,10 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	public static function getCreateFields(): array
 	{
 		return [
-			0            => 'id',
-			'actual'     => null,
-			'expected'   => null,
-			'pending'    => false,
-			'created_at' => null,
-			'updated_at' => null,
+			0                   => 'id',
+			'validation_result' => false,
+			'created_at'        => null,
+			'updated_at'        => null,
 		];
 	}
 
@@ -162,9 +106,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	public static function getUpdateFields(): array
 	{
 		return [
-			'actual',
-			'expected',
-			'pending',
+			'validation_result',
 			'updated_at',
 		];
 	}
@@ -175,11 +117,9 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	public function toArray(): array
 	{
 		return array_merge([
-			'actual'     => $this->getActualValue(),
-			'expected'   => $this->getExpectedValue(),
-			'pending'    => $this->isPending(),
-			'created_at' => $this->getCreated() !== null ? $this->getCreated()->format(DateTimeInterface::ATOM) : null,
-			'updated_at' => $this->getUpdated() !== null ? $this->getUpdated()->format(DateTimeInterface::ATOM) : null,
+			'validation_result' => $this->getValidationResult(),
+			'created_at'        => $this->getCreated() !== null ? $this->getCreated()->format(DateTimeInterface::ATOM) : null,
+			'updated_at'        => $this->getUpdated() !== null ? $this->getUpdated()->format(DateTimeInterface::ATOM) : null,
 		], parent::toArray());
 	}
 

@@ -86,10 +86,17 @@ fbJsonApi:
 #####################
 fbRedisDbStoragePlugin:
     connection:
-        host: %redis.host%
-        port: %redis.port%
-        username: %redis.username%
-        password: %redis.password%
+        properties:
+            host: %redis.host%
+            port: %redis.port%
+            username: %redis.username%
+            password: %redis.password%
+        triggers:
+            host: %redis.host%
+            port: %redis.port%
+            username: %redis.username%
+            password: %redis.password%
+            database: 1
 
 # Accounts module
 #################
@@ -205,7 +212,17 @@ services:
     # State storage
     ###############
 
-    - {factory: FastyBird\MiniServer\Models\PropertyRepository}
+    -
+        factory: FastyBird\MiniServer\Models\PropertyRepository
+        arguments: [
+            stateRepositoryFactory: @fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory
+        ]
+
+    -
+        factory: FastyBird\MiniServer\Models\TriggerItemRepository
+        arguments: [
+            stateRepositoryFactory: @fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory
+        ]
 
     # Entities
     ##########

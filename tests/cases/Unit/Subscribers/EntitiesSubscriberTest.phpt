@@ -43,6 +43,16 @@ final class EntitiesSubscriberTest extends DbTestCase
 			Models\PropertyRepository::class,
 			$propertyRepository
 		);
+
+		$triggerItemRepository = Mockery::mock(Models\TriggerItemRepository::class);
+		$triggerItemRepository
+			->shouldReceive('findOne')
+			->andReturn(null);
+
+		$this->mockContainerService(
+			Models\TriggerItemRepository::class,
+			$triggerItemRepository
+		);
 	}
 
 	public function testDeleteDevice(): void

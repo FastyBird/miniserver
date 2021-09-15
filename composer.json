@@ -39,7 +39,7 @@
     "fastybird/bootstrap": "^0.1",
     "fastybird/devices-module": "^0.3",
     "fastybird/modules-metadata": "^0.5",
-    "fastybird/redisdb-storage-plugin": "^0.0.5",
+    "fastybird/redisdb-storage-plugin": "^0.0.11",
     "fastybird/triggers-module": "^0.3",
     "fastybird/ui-module": "@dev",
     "sunrise/http-server-request": "^1.1",
