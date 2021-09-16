@@ -18,6 +18,7 @@ namespace FastyBird\MiniServer\States;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
+use Nette\Utils;
 
 /**
  * Trigger item state
@@ -76,7 +77,14 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 	 */
 	public function getValidationResult(): bool
 	{
-		return $this->validationResult;
+		try {
+			$decoded = Utils\ArrayHash::from(Utils\Json::decode($this->getRaw(), Utils\Json::FORCE_ARRAY));
+
+			return $decoded->offsetExists('validation_result') ? (bool) $decoded->offsetGet('validation_result') : false;
+
+		} catch (Utils\JsonException $ex) {
+			return false;
+		}
 	}
 
 	/**
