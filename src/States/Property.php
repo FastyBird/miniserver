@@ -40,41 +40,41 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	private bool $pending = false;
 
 	/** @var string|null */
-	private ?string $created = null;
+	private ?string $createdAt = null;
 
 	/** @var string|null */
-	private ?string $updated = null;
+	private ?string $updatedAt = null;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getCreated(): ?DateTimeInterface
+	public function getCreatedAt(): ?DateTimeInterface
 	{
-		return $this->created !== null ? new DateTimeImmutable($this->created) : null;
+		return $this->createdAt !== null ? new DateTimeImmutable($this->createdAt) : null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setCreated(?string $created): void
+	public function setCreatedAt(?string $createdAt): void
 	{
-		$this->created = $created;
+		$this->createdAt = $createdAt;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getUpdated(): ?DateTimeInterface
+	public function getUpdatedAt(): ?DateTimeInterface
 	{
-		return $this->updated !== null ? new DateTimeImmutable($this->updated) : null;
+		return $this->updatedAt !== null ? new DateTimeImmutable($this->updatedAt) : null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setUpdated(?string $updated): void
+	public function setUpdatedAt(?string $updatedAt): void
 	{
-		$this->updated = $updated;
+		$this->updatedAt = $updatedAt;
 	}
 
 	/**
@@ -147,12 +147,12 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	public static function getCreateFields(): array
 	{
 		return [
-			0            => 'id',
-			'actual'     => null,
-			'expected'   => null,
-			'pending'    => false,
-			'created_at' => null,
-			'updated_at' => null,
+			0           => 'id',
+			'actual'    => null,
+			'expected'  => null,
+			'pending'   => false,
+			'createdAt' => null,
+			'updatedAt' => null,
 		];
 	}
 
@@ -165,7 +165,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 			'actual',
 			'expected',
 			'pending',
-			'updated_at',
+			'updatedAt',
 		];
 	}
 
@@ -178,8 +178,8 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 			'actual'     => $this->getActualValue(),
 			'expected'   => $this->getExpectedValue(),
 			'pending'    => $this->isPending(),
-			'created_at' => $this->getCreated() !== null ? $this->getCreated()->format(DateTimeInterface::ATOM) : null,
-			'updated_at' => $this->getUpdated() !== null ? $this->getUpdated()->format(DateTimeInterface::ATOM) : null,
+			'created_at' => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
+			'updated_at' => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
 		], parent::toArray());
 	}
 

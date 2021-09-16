@@ -18,7 +18,6 @@ namespace FastyBird\MiniServer\States;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
-use Nette\Utils;
 
 /**
  * Trigger item state
@@ -35,41 +34,41 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 	private bool $validationResult = false;
 
 	/** @var string|null */
-	private ?string $created = null;
+	private ?string $createdAt = null;
 
 	/** @var string|null */
-	private ?string $updated = null;
+	private ?string $updatedAt = null;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getCreated(): ?DateTimeInterface
+	public function getCreatedAt(): ?DateTimeInterface
 	{
-		return $this->created !== null ? new DateTimeImmutable($this->created) : null;
+		return $this->createdAt !== null ? new DateTimeImmutable($this->createdAt) : null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setCreated(?string $created): void
+	public function setCreatedAt(?string $createdAt): void
 	{
-		$this->created = $created;
+		$this->createdAt = $createdAt;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getUpdated(): ?DateTimeInterface
+	public function getUpdatedAt(): ?DateTimeInterface
 	{
-		return $this->updated !== null ? new DateTimeImmutable($this->updated) : null;
+		return $this->updatedAt !== null ? new DateTimeImmutable($this->updatedAt) : null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setUpdated(?string $updated): void
+	public function setUpdatedAt(?string $updatedAt): void
 	{
-		$this->updated = $updated;
+		$this->updatedAt = $updatedAt;
 	}
 
 	/**
@@ -77,14 +76,7 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 	 */
 	public function getValidationResult(): bool
 	{
-		try {
-			$decoded = Utils\ArrayHash::from(Utils\Json::decode($this->getRaw(), Utils\Json::FORCE_ARRAY));
-
-			return $decoded->offsetExists('validation_result') ? (bool) $decoded->offsetGet('validation_result') : false;
-
-		} catch (Utils\JsonException $ex) {
-			return false;
-		}
+		return $this->validationResult;
 	}
 
 	/**
@@ -101,10 +93,10 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 	public static function getCreateFields(): array
 	{
 		return [
-			0                   => 'id',
-			'validation_result' => false,
-			'created_at'        => null,
-			'updated_at'        => null,
+			0                  => 'id',
+			'validationResult' => false,
+			'createdAt'        => null,
+			'updatedAt'        => null,
 		];
 	}
 
@@ -114,8 +106,8 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 	public static function getUpdateFields(): array
 	{
 		return [
-			'validation_result',
-			'updated_at',
+			'validationResult',
+			'updatedAt',
 		];
 	}
 
@@ -126,8 +118,8 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 	{
 		return array_merge([
 			'validation_result' => $this->getValidationResult(),
-			'created_at'        => $this->getCreated() !== null ? $this->getCreated()->format(DateTimeInterface::ATOM) : null,
-			'updated_at'        => $this->getUpdated() !== null ? $this->getUpdated()->format(DateTimeInterface::ATOM) : null,
+			'created_at'        => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
+			'updated_at'        => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
 		], parent::toArray());
 	}
 

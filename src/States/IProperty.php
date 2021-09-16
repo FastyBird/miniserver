@@ -30,27 +30,27 @@ interface IProperty extends DevicesModuleStates\IProperty
 {
 
 	/**
-	 * @param string|null $created
+	 * @param string|null $createdAt
 	 *
 	 * @return void
 	 */
-	public function setCreated(?string $created): void;
+	public function setCreatedAt(?string $createdAt): void;
 
 	/**
 	 * @return DateTimeInterface|null
 	 */
-	public function getCreated(): ?DateTimeInterface;
+	public function getCreatedAt(): ?DateTimeInterface;
 
 	/**
-	 * @param string|null $updated
+	 * @param string|null $updatedAt
 	 *
 	 * @return void
 	 */
-	public function setUpdated(?string $updated): void;
+	public function setUpdatedAt(?string $updatedAt): void;
 
 	/**
 	 * @return DateTimeInterface|null
 	 */
-	public function getUpdated(): ?DateTimeInterface;
+	public function getUpdatedAt(): ?DateTimeInterface;
 
 }

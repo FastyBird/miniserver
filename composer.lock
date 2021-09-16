@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b0f2b56eb39cfa0b9738ca842d7e4c1",
+    "content-hash": "ecec891813056fbaa9c3ea13941e699f",
     "packages": [
         {
             "name": "brick/math",
@@ -2419,16 +2419,16 @@
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
-            "version": "v0.0.11",
+            "version": "v0.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-storage-plugin.git",
-                "reference": "a56d315313c8e1e3c6d3aa00b9dcd9d8bbe75879"
+                "reference": "900906af837c23b62d7b2446de6bd2e88240162e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-storage-plugin/zipball/a56d315313c8e1e3c6d3aa00b9dcd9d8bbe75879",
-                "reference": "a56d315313c8e1e3c6d3aa00b9dcd9d8bbe75879",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-storage-plugin/zipball/900906af837c23b62d7b2446de6bd2e88240162e",
+                "reference": "900906af837c23b62d7b2446de6bd2e88240162e",
                 "shasum": ""
             },
             "require": {
@@ -2497,9 +2497,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/redisdb-storage-plugin/issues",
-                "source": "https://github.com/FastyBird/redisdb-storage-plugin/tree/v0.0.11"
+                "source": "https://github.com/FastyBird/redisdb-storage-plugin/tree/v0.0.12"
             },
-            "time": "2021-09-15T22:06:58+00:00"
+            "time": "2021-09-16T10:52:22+00:00"
         },
         {
             "name": "fastybird/simple-auth",
