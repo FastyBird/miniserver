@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24aefb48ad1685d859e2d73ea37dd243",
+    "content-hash": "88403a7a12bb1d78973760c5136e2113",
     "packages": [
         {
             "name": "brick/math",
@@ -2535,16 +2535,16 @@
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
-            "version": "v0.0.3",
+            "version": "v0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
-                "reference": "26ddb7e9383b5efd0fad40688a351d9a3edb63ab"
+                "reference": "f78f47ceabf46f97270e9b25991db2528fccb94b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/26ddb7e9383b5efd0fad40688a351d9a3edb63ab",
-                "reference": "26ddb7e9383b5efd0fad40688a351d9a3edb63ab",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/f78f47ceabf46f97270e9b25991db2528fccb94b",
+                "reference": "f78f47ceabf46f97270e9b25991db2528fccb94b",
                 "shasum": ""
             },
             "require": {
@@ -2609,9 +2609,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
-                "source": "https://github.com/FastyBird/redisdb-exchange-plugin/tree/v0.0.3"
+                "source": "https://github.com/FastyBird/redisdb-exchange-plugin/tree/v0.0.4"
             },
-            "time": "2021-09-19T16:53:13+00:00"
+            "time": "2021-09-19T18:42:02+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
