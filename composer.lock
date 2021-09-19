@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ecec891813056fbaa9c3ea13941e699f",
+    "content-hash": "24aefb48ad1685d859e2d73ea37dd243",
     "packages": [
         {
             "name": "brick/math",
@@ -65,6 +65,122 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "clue/redis-protocol",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clue/php-redis-protocol.git",
+                "reference": "271b8009887209d930f613ad3b9518f94bd6b51c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clue/php-redis-protocol/zipball/271b8009887209d930f613ad3b9518f94bd6b51c",
+                "reference": "271b8009887209d930f613ad3b9518f94bd6b51c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Clue\\Redis\\Protocol": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@lueck.tv"
+                }
+            ],
+            "description": "A streaming redis wire protocol parser and serializer implementation in PHP",
+            "homepage": "https://github.com/clue/php-redis-protocol",
+            "keywords": [
+                "parser",
+                "protocol",
+                "redis",
+                "serializer",
+                "streaming"
+            ],
+            "support": {
+                "issues": "https://github.com/clue/php-redis-protocol/issues",
+                "source": "https://github.com/clue/php-redis-protocol/tree/v0.3.1"
+            },
+            "time": "2017-06-06T16:07:10+00:00"
+        },
+        {
+            "name": "clue/redis-react",
+            "version": "v2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clue/reactphp-redis.git",
+                "reference": "61a979ff491d9e2492d65a3f65638905e2a49dec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clue/reactphp-redis/zipball/61a979ff491d9e2492d65a3f65638905e2a49dec",
+                "reference": "61a979ff491d9e2492d65a3f65638905e2a49dec",
+                "shasum": ""
+            },
+            "require": {
+                "clue/redis-protocol": "0.3.*",
+                "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
+                "php": ">=5.3",
+                "react/event-loop": "^1.2",
+                "react/promise": "^2.0 || ^1.1",
+                "react/promise-timer": "^1.5",
+                "react/socket": "^1.9"
+            },
+            "require-dev": {
+                "clue/block-react": "^1.1",
+                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Clue\\React\\Redis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering"
+                }
+            ],
+            "description": "Async Redis client implementation, built on top of ReactPHP.",
+            "homepage": "https://github.com/clue/reactphp-redis",
+            "keywords": [
+                "async",
+                "client",
+                "database",
+                "reactphp",
+                "redis"
+            ],
+            "support": {
+                "issues": "https://github.com/clue/reactphp-redis/issues",
+                "source": "https://github.com/clue/reactphp-redis/tree/v2.5.0"
+            },
+            "funding": [
+                {
+                    "url": "https://clue.engineering/support",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/clue",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-08-31T08:39:31+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -2416,6 +2532,86 @@
                 "source": "https://github.com/FastyBird/modules-metadata/tree/v0.5.5"
             },
             "time": "2021-09-14T15:36:37+00:00"
+        },
+        {
+            "name": "fastybird/redisdb-exchange-plugin",
+            "version": "v0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
+                "reference": "26ddb7e9383b5efd0fad40688a351d9a3edb63ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/26ddb7e9383b5efd0fad40688a351d9a3edb63ab",
+                "reference": "26ddb7e9383b5efd0fad40688a351d9a3edb63ab",
+                "shasum": ""
+            },
+            "require": {
+                "clue/redis-react": "^2.5",
+                "contributte/console": "^0.9",
+                "fastybird/application-exchange": "^0.1",
+                "fastybird/datetime-factory": "^0.2",
+                "fastybird/modules-metadata": "^0.5",
+                "fastybird/web-server": "^0.1",
+                "nette/bootstrap": "^3.0",
+                "nette/di": "^3.0",
+                "nette/utils": "^3.2",
+                "php": ">=7.4.0",
+                "predis/predis": "^1.1",
+                "psr/log": "^1.1",
+                "ramsey/uuid": "^3.5 || ^4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "ninjify/nunjuck": "^0.3",
+                "ninjify/qa": "^0.12",
+                "pds/skeleton": "~1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-nette": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
+                "tracy/tracy": "^2.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\RedisDbExchangePlugin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird Redis DB data exchange plugin",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "exchange",
+                "fastybird",
+                "fb",
+                "library",
+                "libs",
+                "messages",
+                "queue",
+                "redis"
+            ],
+            "support": {
+                "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
+                "source": "https://github.com/FastyBird/redisdb-exchange-plugin/tree/v0.0.3"
+            },
+            "time": "2021-09-19T16:53:13+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",

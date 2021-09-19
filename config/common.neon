@@ -32,6 +32,7 @@ extensions:
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
     fbModulesMetadata                   : FastyBird\ModulesMetadata\DI\ModulesMetadataExtension
     fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension(%consoleMode%)
+    fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
@@ -81,6 +82,18 @@ fbWebServer:
 fbJsonApi:
     meta:
         copyright: FastyBird s.r.o
+
+# Redis exchange
+################
+fbRedisDbExchangePlugin:
+    enableClassic: true
+    enableAsync: true
+    connection:
+        default:
+            host: %redis.host%
+            port: %redis.port%
+            username: %redis.username%
+            password: %redis.password%
 
 # Redis state storage
 #####################
@@ -238,15 +251,3 @@ services:
     ###################
 
     - {factory: FastyBird\MiniServer\Models\ApiKeys\KeysManager(@ipubDoctrineCrud.crud::create(FastyBird\MiniServer\Entities\ApiKeys\Key))}
-
-    # Modules data exchange
-    ######################
-
-    -
-        factory: FastyBird\MiniServer\Exchange\RedisPublisher
-        arguments: [
-            host: %redis.host%
-            port: %redis.port%
-            username: %redis.username%
-            password: %redis.password%
-        ]
