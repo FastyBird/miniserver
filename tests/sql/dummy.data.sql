@@ -1,7 +1,7 @@
 INSERT IGNORE INTO `fb_connectors` (`connector_id`, `connector_name`, `connector_type`, `created_at`, `updated_at`)
-VALUES (_binary 0x17C59DFA2EDD438E8C49FAA4E38E5A5E, 'FB MQTT v1', 'fb-mqtt-v1', '2020-03-20 09:18:20', '2020-03-20 09:18:20');
+VALUES (_binary 0x17C59DFA2EDD438E8C49FAA4E38E5A5E, 'FB MQTT', 'fb-mqtt', '2020-03-20 09:18:20', '2020-03-20 09:18:20');
 
-INSERT IGNORE INTO `fb_devices` (`device_id`, `parent_id`, `device_identifier`, `device_key`, `device_name`, `device_comment`, `device_enabled`, `device_hardware_manufacturer`, `device_hardware_model`, `device_hardware_version`, `device_mac_address`, `device_firmware_manufacturer`, `device_firmware_version`, `params`, `created_at`, `updated_at`, `owner`)
+INSERT IGNORE INTO `fb_devices` (`device_id`, `parent_id`, `device_identifier`, `device_key`, `device_name`, `device_comment`, `device_enabled`, `device_hardware_manufacturer`, `device_hardware_model`, `device_hardware_version`, `device_hardware_mac_address`, `device_firmware_manufacturer`, `device_firmware_version`, `params`, `created_at`, `updated_at`, `owner`)
 VALUES (_binary 0x69786D15FD0C4D9F937833287C2009FA, NULL, 'first-device', 'bLikkz', 'First device', NULL, 1, 'itead', 'sonoff_basic', 'rev1', '807d3a3dbe6d', 'fastybird', NULL, '[]', '2020-03-19 14:03:48', '2020-03-22 20:12:07', '455354e8-96bd-4c29-84e7-9f10e1d4db4b'),
        (_binary 0xBF4CD8702AAC45F0A85EE1CEFD2D6D9A, NULL, 'second-device', 'bLijjH', NULL, NULL, 1, 'generic', 'custom', NULL, NULL, 'generic', NULL, '[]', '2020-03-20 21:54:32', '2020-03-20 21:54:32', '455354e8-96bd-4c29-84e7-9f10e1d4db4b'),
        (_binary 0xE36A27881EF84CDFAB094735F191A509, NULL, 'third-device', 'bLijlz', 'Third device', 'Custom comment', 1, 'fastybird', 'fastybird_wifi_gw', 'rev1', '807d3a3dbe6d', 'fastybird', NULL, '[]', '2020-03-20 21:56:41', '2020-03-20 21:56:41', '455354e8-96bd-4c29-84e7-9f10e1d4db4b'),
