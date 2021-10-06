@@ -25,19 +25,20 @@ extensions:
     nettrineOrmAnnotations              : Nettrine\ORM\DI\OrmAnnotationsExtension
     nettrineOrmConsole                  : Nettrine\ORM\DI\OrmConsoleExtension
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
-    fbApplicationExchange               : FastyBird\ApplicationExchange\DI\ApplicationExchangeExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
-    fbDatabase                          : FastyBird\Database\DI\DatabaseExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
     fbModulesMetadata                   : FastyBird\ModulesMetadata\DI\ModulesMetadataExtension
+    fbSocketServerFactory               : FastyBird\SocketServerFactory\DI\SocketServerFactoryExtension
     fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension(%consoleMode%)
-    fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
-    fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
     fbTriggersModule                    : FastyBird\TriggersModule\DI\TriggersModuleExtension
     fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
+    fbDatabasePlugin                    : FastyBird\DatabasePlugin\DI\DatabasePluginExtension
+    fbExchangePlugin                    : FastyBird\ExchangePlugin\DI\ExchangePluginExtension
+    fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
+    fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     ipubDoctrinePhone                   : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubDoctrineConsistence             : IPub\DoctrineConsistence\DI\DoctrineConsistenceExtension
@@ -61,13 +62,17 @@ fbSimpleAuth:
             models: true
             mapping: true
 
-# Web server
-############
-fbWebServer:
+# Socket server factory
+#######################
+fbSocketServerFactory:
     server:
         address: %server.address%
         port: %server.port%
         certificate: %server.certificate%
+
+# Web server
+############
+fbWebServer:
     static:
         webroot: %appDir%/public/
         enabled: true
@@ -79,6 +84,8 @@ fbWebServer:
                 - X-Requested-With
                 - X-Api-Key
 
+# JSON:Api support
+##################
 fbJsonApi:
     meta:
         copyright: FastyBird s.r.o
