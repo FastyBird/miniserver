@@ -28,7 +28,7 @@ extensions:
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
-    fbModulesMetadata                   : FastyBird\ModulesMetadata\DI\ModulesMetadataExtension
+    fbMetadata                          : FastyBird\ModulesMetadata\DI\MetadataExtension
     fbSocketServerFactory               : FastyBird\SocketServerFactory\DI\SocketServerFactoryExtension
     fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension(%consoleMode%)
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
