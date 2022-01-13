@@ -42,6 +42,7 @@
     "contributte/event-dispatcher": "^0.8.0",
     "contributte/translation": "^0.9",
     "cweagans/composer-patches": "^1.7",
+    "doctrine/orm" : "2.10.5",
     "fastybird/accounts-module": "^0.2",
     "fastybird/bootstrap": "^0.3",
     "fastybird/devices-module": "^0.10",
