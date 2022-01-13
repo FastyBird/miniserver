@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * ITriggerItem.php
+ * ITriggerAction.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,7 +10,7 @@
  * @subpackage     States
  * @since          0.1.0
  *
- * @date           15.09.21
+ * @date           12.01.22
  */
 
 namespace FastyBird\MiniServer\States;
@@ -19,14 +19,14 @@ use DateTimeInterface;
 use FastyBird\TriggersModule\States as TriggersModuleStates;
 
 /**
- * Trigger item state entity interface
+ * Trigger action state entity interface
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     States
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface ITriggerItem extends TriggersModuleStates\ITriggerItem
+interface ITriggerAction extends TriggersModuleStates\IAction
 {
 
 	/**

@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TriggerItem.php
+ * TriggerCondition.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,7 +10,7 @@
  * @subpackage     States
  * @since          0.1.0
  *
- * @date           15.09.21
+ * @date           12.01.22
  */
 
 namespace FastyBird\MiniServer\States;
@@ -20,14 +20,14 @@ use DateTimeInterface;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
 
 /**
- * Trigger item state
+ * Trigger condition state
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     States
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerItem
+class TriggerCondition extends RedisDbStoragePluginStates\State implements ITriggerCondition
 {
 
 	/** @var bool */
@@ -38,6 +38,22 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 
 	/** @var string|null */
 	private ?string $updatedAt = null;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function isFulfilled(): bool
+	{
+		return $this->validationResult;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setFulfilled(bool $result): void
+	{
+		$this->validationResult = $result;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -74,22 +90,6 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getValidationResult(): bool
-	{
-		return $this->validationResult;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setValidationResult(bool $result): void
-	{
-		$this->validationResult = $result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public static function getCreateFields(): array
 	{
 		return [
@@ -117,7 +117,7 @@ class TriggerItem extends RedisDbStoragePluginStates\State implements ITriggerIt
 	public function toArray(): array
 	{
 		return array_merge([
-			'validation_result' => $this->getValidationResult(),
+			'validation_result' => $this->isFulfilled(),
 			'created_at'        => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
 			'updated_at'        => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
 		], parent::toArray());

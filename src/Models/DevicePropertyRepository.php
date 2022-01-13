@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TriggerItemRepository.php
+ * DevicePropertyRepository.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,48 +10,47 @@
  * @subpackage     Models
  * @since          0.1.0
  *
- * @date           15.09.21
+ * @date           12.01.22
  */
 
 namespace FastyBird\MiniServer\Models;
 
+use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
+use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\MiniServer\States;
 use FastyBird\RedisDbStoragePlugin\Models as RedisDbStoragePluginModels;
-use FastyBird\TriggersModule\Models as TriggersModuleModels;
-use FastyBird\TriggersModule\States as TriggersModuleStates;
 use Nette;
-use Ramsey\Uuid;
 
 /**
- * Trigger item state repository
+ * Device property state repository
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     Models
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class TriggerItemRepository implements TriggersModuleModels\States\ITriggerItemRepository
+class DevicePropertyRepository implements DevicesModuleModels\States\IDevicePropertyRepository
 {
 
 	use Nette\SmartObject;
 
 	/** @var RedisDbStoragePluginModels\IStateRepository */
-	private RedisDbStoragePluginModels\IStateRepository $stateRepository;
+	protected RedisDbStoragePluginModels\IStateRepository $stateRepository;
 
 	public function __construct(
 		RedisDbStoragePluginModels\StateRepositoryFactory $stateRepositoryFactory
 	) {
-		$this->stateRepository = $stateRepositoryFactory->create(States\TriggerItem::class);
+		$this->stateRepository = $stateRepositoryFactory->create(States\DeviceProperty::class);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function findOne(
-		Uuid\UuidInterface $id
-	): ?TriggersModuleStates\ITriggerItem {
-		/** @var TriggersModuleStates\ITriggerItem $state */
-		$state = $this->stateRepository->findOne($id);
+		DevicesModuleEntities\Devices\Properties\IProperty $property
+	): ?States\IDeviceProperty {
+		/** @var States\IDeviceProperty $state */
+		$state = $this->stateRepository->findOne($property->getId());
 
 		return $state;
 	}

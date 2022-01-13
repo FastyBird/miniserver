@@ -19,7 +19,7 @@
     {
       "name": "FastyBird s.r.o.",
       "email": "code@fastybird.com",
-      "homepage": "https://www.fastybird.com/"
+      "homepage": "https://www.fastybird.com"
     },
     {
       "name": "Adam Kadlec",
@@ -27,38 +27,46 @@
     }
   ],
 
+  "support" : {
+    "email" : "code@fastybird.com",
+    "issues" : "https://github.com/FastyBird/miniserver-manager/issues",
+    "source" : "https://github.com/FastyBird/miniserver-manager"
+  },
+
   "prefer-stable": true,
 
   "minimum-stability": "stable",
 
   "require": {
     "php": ">=7.4.0",
+    "contributte/event-dispatcher": "^0.8.0",
+    "contributte/translation": "^0.9",
     "cweagans/composer-patches": "^1.7",
-    "fastybird/accounts-module": "^0.1",
-    "fastybird/bootstrap": "^0.1",
-    "fastybird/devices-module": "^0.7",
-    "fastybird/exchange-plugin": "^0.4",
-    "fastybird/modules-metadata": "^0.12",
-    "fastybird/redisdb-exchange-plugin": "^0.2",
-    "fastybird/redisdb-storage-plugin": "^0.1",
-    "fastybird/triggers-module": "^0.5",
+    "fastybird/accounts-module": "^0.2",
+    "fastybird/bootstrap": "^0.3",
+    "fastybird/devices-module": "^0.10",
+    "fastybird/metadata": "^0.25",
+    "fastybird/redisdb-exchange-plugin": "^0.7",
+    "fastybird/redisdb-storage-plugin": "^0.3",
+    "fastybird/triggers-module": "^0.6",
     "fastybird/ui-module": "@dev",
-    "sunrise/http-server-request": "^1.1",
-    "vlucas/phpdotenv": "^5.3"
+    "fastybird/ws-server-plugin": "^0.9.0",
+    "sunrise/http-server-request": "^2.0",
+    "vlucas/phpdotenv": "^5.4"
   },
 
   "require-dev": {
-    "mockery/mockery": "^1.4",
-    "ninjify/nunjuck": "^0.3",
-    "ninjify/qa": "^0.12",
-    "pds/skeleton": "~1.0",
-    "phpstan/extension-installer": "^1.1",
-    "phpstan/phpstan": "^0.12",
-    "phpstan/phpstan-deprecation-rules": "^0.12",
-    "phpstan/phpstan-doctrine": "^0.12",
-    "phpstan/phpstan-nette": "^0.12",
+    "mockery/mockery" : "^1.4",
+    "ninjify/nunjuck" : "^0.3",
+    "ninjify/qa" : "^0.12",
+    "pds/skeleton" : "^1.0",
+    "phpstan/extension-installer" : "^1.1",
+    "phpstan/phpstan" : "^0.12",
+    "phpstan/phpstan-deprecation-rules" : "^0.12",
+    "phpstan/phpstan-doctrine" : "^0.12",
+    "phpstan/phpstan-nette" : "^0.12",
     "phpstan/phpstan-strict-rules" : "^0.12",
-    "tracy/tracy": "^2.8"
+    "tracy/tracy": "^2.9"
   },
 
   "autoload": {

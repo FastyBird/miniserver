@@ -1,14 +1,14 @@
 #
-# App DI configuration
+# MiniServer DI configuration
 #
-# @license		More in LICENSE.md
-# @copyright	https://www.fastybird.com
-# @author		Adam Kadlec <adam.kadlec@fastybird.com>
-# @package		FastyBird:MiniServer!
-# @subpackage	config
-# @since		0.1.0
+# @license      More in LICENSE.md
+# @copyright    https://www.fastybird.com
+# @author       Adam Kadlec <adam.kadlec@fastybird.com>
+# @package      FastyBird:MiniServer!
+# @subpackage   config
+# @since        0.1.0
 #
-# @date			14.12.20
+# @date         14.12.20
 
 #########################
 # Used Nette extensions #
@@ -35,10 +35,9 @@ extensions:
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
     fbTriggersModule                    : FastyBird\TriggersModule\DI\TriggersModuleExtension
     fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
-    fbDatabasePlugin                    : FastyBird\DatabasePlugin\DI\DatabasePluginExtension
-    fbExchangePlugin                    : FastyBird\ExchangePlugin\DI\ExchangePluginExtension
     fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
+    fbWsServerPlugin                    : FastyBird\WsServerPlugin\DI\WsServerPluginExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     ipubDoctrinePhone                   : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubDoctrineConsistence             : IPub\DoctrineConsistence\DI\DoctrineConsistenceExtension
@@ -157,6 +156,11 @@ contributteTranslation:
     localeResolvers: []
     dirs:
         - %appDir%/src/Translations
+        - %appDir%/vendor/fastybird/accounts-module/src/Translations
+        - %appDir%/vendor/fastybird/devices-module/src/Translations
+        - %appDir%/vendor/fastybird/triggers-module/src/Translations
+        - %appDir%/vendor/fastybird/ui-module/src/Translations
+        - %appDir%/vendor/fastybird/json-api/src/Translations
 
 # Doctrine DBAL
 ###############
@@ -233,13 +237,25 @@ services:
     ###############
 
     -
-        factory: FastyBird\MiniServer\Models\PropertyRepository
+        factory: FastyBird\MiniServer\Models\DevicePropertyRepository
         arguments: [
             stateRepositoryFactory: @fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory
         ]
 
     -
-        factory: FastyBird\MiniServer\Models\TriggerItemRepository
+        factory: FastyBird\MiniServer\Models\ChannelPropertyRepository
+        arguments: [
+            stateRepositoryFactory: @fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory
+        ]
+
+    -
+        factory: FastyBird\MiniServer\Models\TriggerActionRepository
+        arguments: [
+            stateRepositoryFactory: @fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory
+        ]
+
+    -
+        factory: FastyBird\MiniServer\Models\TriggerConditionRepository
         arguments: [
             stateRepositoryFactory: @fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory
         ]

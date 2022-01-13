@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * PropertyRepository.php
+ * TriggerActionRepository.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,27 +10,26 @@
  * @subpackage     Models
  * @since          0.1.0
  *
- * @date           02.03.20
+ * @date           12.01.22
  */
 
 namespace FastyBird\MiniServer\Models;
 
-use FastyBird\DevicesModule\Models as DevicesModuleModels;
-use FastyBird\DevicesModule\States as DevicesModuleStates;
 use FastyBird\MiniServer\States;
 use FastyBird\RedisDbStoragePlugin\Models as RedisDbStoragePluginModels;
+use FastyBird\TriggersModule\Entities as TriggersModuleEntities;
+use FastyBird\TriggersModule\Models as TriggersModuleModels;
 use Nette;
-use Ramsey\Uuid;
 
 /**
- * Property state repository
+ * Trigger action state repository
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     Models
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class PropertyRepository implements DevicesModuleModels\States\IPropertyRepository
+class TriggerActionRepository implements TriggersModuleModels\States\IActionRepository
 {
 
 	use Nette\SmartObject;
@@ -41,17 +40,17 @@ class PropertyRepository implements DevicesModuleModels\States\IPropertyReposito
 	public function __construct(
 		RedisDbStoragePluginModels\StateRepositoryFactory $stateRepositoryFactory
 	) {
-		$this->stateRepository = $stateRepositoryFactory->create(States\Property::class);
+		$this->stateRepository = $stateRepositoryFactory->create(States\TriggerAction::class);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function findOne(
-		Uuid\UuidInterface $id
-	): ?DevicesModuleStates\IProperty {
-		/** @var DevicesModuleStates\IProperty $state */
-		$state = $this->stateRepository->findOne($id);
+		TriggersModuleEntities\Actions\IAction $action
+	): ?States\ITriggerAction {
+		/** @var States\ITriggerAction $state */
+		$state = $this->stateRepository->findOne($action->getId());
 
 		return $state;
 	}

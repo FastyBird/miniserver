@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * IProperty.php
+ * ITriggerCondition.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,22 +10,23 @@
  * @subpackage     States
  * @since          0.1.0
  *
- * @date           03.03.20
+ * @date           12.01.22
  */
 
 namespace FastyBird\MiniServer\States;
 
 use DateTimeInterface;
+use FastyBird\TriggersModule\States as TriggersModuleStates;
 
 /**
- * Property state entity interface
+ * Trigger condition state entity interface
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     States
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface IProperty
+interface ITriggerCondition extends TriggersModuleStates\ICondition
 {
 
 	/**
