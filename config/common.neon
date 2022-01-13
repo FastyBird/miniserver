@@ -37,7 +37,6 @@ extensions:
     fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
     fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
-    fbWsServerPlugin                    : FastyBird\WsServerPlugin\DI\WsServerPluginExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     ipubDoctrinePhone                   : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubDoctrineConsistence             : IPub\DoctrineConsistence\DI\DoctrineConsistenceExtension
