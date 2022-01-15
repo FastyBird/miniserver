@@ -1,22 +1,49 @@
+diff --git a/vendor/doctrine/orm/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php b/vendor/doctrine/orm/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php
+--- a/vendor/doctrine/orm/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php
++++ b/vendor/doctrine/orm/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php	(date 1642182008613)
+@@ -11,6 +11,7 @@
+ use Doctrine\ORM\Internal\SQLResultCasing;
+ use Doctrine\ORM\Mapping\ClassMetadata;
+ use Doctrine\ORM\Utility\PersisterHelper;
++use Ramsey\Uuid\UuidInterface;
+
+ use function array_combine;
+ use function implode;
+@@ -244,6 +245,15 @@
+     public function delete($entity)
+     {
+         $identifier = $this->em->getUnitOfWork()->getEntityIdentifier($entity);
++
++        foreach ($identifier as $key=>$value) {
++            if ($value instanceof UuidInterface) {
++                $identifier[$key] = $value->getBytes();
++            } else {
++                $identifier[$key] = $value;
++            }
++        }
++
+         $id         = array_combine($this->class->getIdentifierColumnNames(), $identifier);
+         $types      = $this->getClassIdentifiersTypes($this->class);
+
 diff --git a/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php b/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php
 index 098d1a4cd..05791510c 100644
 --- a/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php
 +++ b/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php
-@@ -42,6 +42,7 @@ use Doctrine\ORM\Query\QueryException;
- use Doctrine\ORM\UnitOfWork;
+@@ -31,6 +31,7 @@
  use Doctrine\ORM\Utility\IdentifierFlattener;
  use Doctrine\ORM\Utility\PersisterHelper;
-+use Ramsey\Uuid\Uuid;
+ use LengthException;
++use Ramsey\Uuid\UuidInterface;
 
  use function array_combine;
- use function array_map;
-@@ -582,6 +583,15 @@ class BasicEntityPersister implements EntityPersister
+ use function array_keys;
+@@ -590,6 +591,15 @@
      {
          $class      = $this->class;
          $identifier = $this->em->getUnitOfWork()->getEntityIdentifier($entity);
 +
 +        foreach ($identifier as $key=>$value) {
-+            if ($value instanceof Uuid) {
++            if ($value instanceof UuidInterface) {
 +                $identifier[$key] = $value->getBytes();
 +            } else {
 +                $identifier[$key] = $value;
@@ -26,31 +53,4 @@ index 098d1a4cd..05791510c 100644
          $tableName  = $this->quoteStrategy->getTableName($class, $this->platform);
          $idColumns  = $this->quoteStrategy->getIdentifierColumnNames($class, $this->platform);
          $id         = array_combine($idColumns, $identifier);
-diff --git a/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php b/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php
-index 1f5026bb6..606fd14eb 100644
---- a/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php
-+++ b/lib/Doctrine/ORM/Persisters/Entity/JoinedSubclassPersister.php
-@@ -25,6 +25,7 @@ use Doctrine\DBAL\LockMode;
- use Doctrine\DBAL\Types\Type;
- use Doctrine\ORM\Mapping\ClassMetadata;
- use Doctrine\ORM\Utility\PersisterHelper;
-+use Ramsey\Uuid\Uuid;
-
- use function array_combine;
- use function implode;
-@@ -266,6 +267,15 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
-     public function delete($entity)
-     {
-         $identifier = $this->em->getUnitOfWork()->getEntityIdentifier($entity);
-+
-+        foreach ($identifier as $key=>$value) {
-+            if ($value instanceof Uuid) {
-+                $identifier[$key] = $value->getBytes();
-+            } else {
-+                $identifier[$key] = $value;
-+            }
-+        }
-+
-         $id         = array_combine($this->class->getIdentifierColumnNames(), $identifier);
-         $types      = $this->getClassIdentifiersTypes($this->class);
 

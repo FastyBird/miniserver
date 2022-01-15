@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57c8ffd3dc3b17762929059fc18af9ac",
+    "content-hash": "a12fc8d3440f33e59cac6ca6abe0a75f",
     "packages": [
         {
             "name": "brick/math",
@@ -247,79 +247,6 @@
                 }
             ],
             "time": "2020-10-02T12:38:20+00:00"
-        },
-        {
-            "name": "composer/package-versions-deprecated",
-            "version": "1.11.99.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "b174585d1fe49ceed21928a945138948cb394600"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/b174585d1fe49ceed21928a945138948cb394600",
-                "reference": "b174585d1fe49ceed21928a945138948cb394600",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1.0 || ^2.0",
-                "php": "^7 || ^8"
-            },
-            "replace": {
-                "ocramius/package-versions": "1.11.99"
-            },
-            "require-dev": {
-                "composer/composer": "^1.9.3 || ^2.0@dev",
-                "ext-zip": "^1.13",
-                "phpunit/phpunit": "^6.5 || ^7"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "PackageVersions\\Installer",
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PackageVersions\\": "src/PackageVersions"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com"
-                },
-                {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be"
-                }
-            ],
-            "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "support": {
-                "issues": "https://github.com/composer/package-versions-deprecated/issues",
-                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.4"
-            },
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-09-13T08:41:34+00:00"
         },
         {
             "name": "consistence-community/consistence",
@@ -1675,24 +1602,24 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.10.4",
+            "version": "2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "cccb2e2fdfed2969afb3d65c5ea82bafdefbe1a7"
+                "reference": "bfed8cb6ed448f4ab1ea3fff06e4d6c44439e4ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/cccb2e2fdfed2969afb3d65c5ea82bafdefbe1a7",
-                "reference": "cccb2e2fdfed2969afb3d65c5ea82bafdefbe1a7",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/bfed8cb6ed448f4ab1ea3fff06e4d6c44439e4ef",
+                "reference": "bfed8cb6ed448f4ab1ea3fff06e4d6c44439e4ef",
                 "shasum": ""
             },
             "require": {
-                "composer/package-versions-deprecated": "^1.8",
+                "composer-runtime-api": "^2",
                 "doctrine/cache": "^1.12.1 || ^2.1.1",
                 "doctrine/collections": "^1.5",
                 "doctrine/common": "^3.0.3",
-                "doctrine/dbal": "^2.13.1 || ^3.1.1",
+                "doctrine/dbal": "^2.13.1 || ^3.2",
                 "doctrine/deprecations": "^0.5.3",
                 "doctrine/event-manager": "^1.1",
                 "doctrine/inflector": "^1.4 || ^2.0",
@@ -1701,7 +1628,7 @@
                 "doctrine/persistence": "^2.2",
                 "ext-ctype": "*",
                 "ext-pdo": "*",
-                "php": "^7.1 ||^8.0",
+                "php": "^7.1 || ^8.0",
                 "psr/cache": "^1 || ^2 || ^3",
                 "symfony/console": "^3.0 || ^4.0 || ^5.0 || ^6.0",
                 "symfony/polyfill-php72": "^1.23",
@@ -1714,12 +1641,12 @@
                 "doctrine/annotations": "^1.13",
                 "doctrine/coding-standard": "^9.0",
                 "phpbench/phpbench": "^0.16.10 || ^1.0",
-                "phpstan/phpstan": "1.2.0",
+                "phpstan/phpstan": "1.3.3",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.4",
                 "squizlabs/php_codesniffer": "3.6.2",
-                "symfony/cache": "^4.4 || ^5.2",
+                "symfony/cache": "^4.4 || ^5.4 || ^6.0",
                 "symfony/yaml": "^3.4 || ^4.0 || ^5.0 || ^6.0",
-                "vimeo/psalm": "4.15.0"
+                "vimeo/psalm": "4.18.1"
             },
             "suggest": {
                 "symfony/cache": "Provides cache support for Setup Tool with doctrine/cache 2.0",
@@ -1768,9 +1695,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.10.4"
+                "source": "https://github.com/doctrine/orm/tree/2.11.0"
             },
-            "time": "2021-12-20T21:23:47+00:00"
+            "time": "2022-01-12T13:20:33+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -2171,22 +2098,22 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.9.0",
+            "version": "v0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "9836ef4b2c84bf43b11536fb9a4a069d5e5f495a"
+                "reference": "28595625c69bf91c859e8e156a72606a5db3dad2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/9836ef4b2c84bf43b11536fb9a4a069d5e5f495a",
-                "reference": "9836ef4b2c84bf43b11536fb9a4a069d5e5f495a",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/28595625c69bf91c859e8e156a72606a5db3dad2",
+                "reference": "28595625c69bf91c859e8e156a72606a5db3dad2",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
-                "fastybird/json-api": "^0.8",
+                "fastybird/json-api": "^0.",
                 "fastybird/metadata": "^0.25",
                 "fastybird/simple-auth": "^0.2",
                 "fastybird/web-server": "^0.7",
@@ -2198,8 +2125,8 @@
                 "contributte/translation": "^0.9",
                 "mockery/mockery": "^1.4",
                 "ninjify/nunjuck": "^0.3",
-                "ninjify/qa": "^0.12",
-                "pds/skeleton": "~1.0",
+                "ninjify/qa": "^0.13",
+                "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-deprecation-rules": "^0.12",
@@ -2259,7 +2186,87 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-01-12T09:37:48+00:00"
+            "time": "2022-01-14T09:31:09+00:00"
+        },
+        {
+            "name": "fastybird/exchange",
+            "version": "v0.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FastyBird/exchange.git",
+                "reference": "ad2bdb7bc2c5257bdf7a34f1115626ecbbd671cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FastyBird/exchange/zipball/ad2bdb7bc2c5257bdf7a34f1115626ecbbd671cf",
+                "reference": "ad2bdb7bc2c5257bdf7a34f1115626ecbbd671cf",
+                "shasum": ""
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/metadata": "^0.25",
+                "nette/bootstrap": "^3.1",
+                "nette/di": "^3.0",
+                "nette/utils": "^3.2",
+                "php": ">=7.4.0|>=8.0.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "ninjify/nunjuck": "^0.3",
+                "ninjify/qa": "^0.13",
+                "pds/skeleton": "^1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.3",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-nette": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "tracy/tracy": "^2.9"
+            },
+            "type": "library",
+            "extra": {
+                "patches": {
+                    "nette/utils": {
+                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Exchange\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird application exchange interface",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "bus",
+                "exchange",
+                "fastybird",
+                "fb",
+                "library",
+                "libs",
+                "messages"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/exchange/issues",
+                "source": "https://github.com/FastyBird/exchange"
+            },
+            "time": "2022-01-14T13:42:24+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2608,16 +2615,16 @@
         },
         {
             "name": "fastybird/simple-auth",
-            "version": "v0.2.0",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/simple-auth.git",
-                "reference": "a29ae02b52a47863c045d7c77c4d5d2dbbccfc75"
+                "reference": "857f485081919803446388239935e881de853113"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/a29ae02b52a47863c045d7c77c4d5d2dbbccfc75",
-                "reference": "a29ae02b52a47863c045d7c77c4d5d2dbbccfc75",
+                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/857f485081919803446388239935e881de853113",
+                "reference": "857f485081919803446388239935e881de853113",
                 "shasum": ""
             },
             "require": {
@@ -2650,7 +2657,7 @@
                 "phpstan/phpstan-doctrine": "^1.0",
                 "phpstan/phpstan-nette": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
-                "symfony/console": "^4.2|^5.0",
+                "symfony/console": "^5.0|^6.0",
                 "tracy/tracy": "^2.9"
             },
             "type": "library",
@@ -2696,7 +2703,7 @@
                 "issues": "https://github.com/FastyBird/simple-auth/issues",
                 "source": "https://github.com/FastyBird/simple-auth"
             },
-            "time": "2022-01-10T19:45:41+00:00"
+            "time": "2022-01-14T17:24:58+00:00"
         },
         {
             "name": "fastybird/socket-server-factory",
@@ -3050,89 +3057,6 @@
                 "source": "https://github.com/FastyBird/web-server"
             },
             "time": "2022-01-12T08:42:17+00:00"
-        },
-        {
-            "name": "fastybird/ws-server-plugin",
-            "version": "v0.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FastyBird/ws-server-plugin.git",
-                "reference": "26f935e0520cfffb4aefecea43c9dea07f0bc79e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ws-server-plugin/zipball/26f935e0520cfffb4aefecea43c9dea07f0bc79e",
-                "reference": "26f935e0520cfffb4aefecea43c9dea07f0bc79e",
-                "shasum": ""
-            },
-            "require": {
-                "cweagans/composer-patches": "^1.7",
-                "fastybird/metadata": "^0.25",
-                "fastybird/socket-server-factory": "^0.4",
-                "ipub/websockets-wamp": "^1.3",
-                "nette/bootstrap": "^3.1",
-                "nette/di": "^3.0",
-                "php": ">=7.4.0|>=8.0.0",
-                "psr/event-dispatcher": "^1.0",
-                "psr/log": "^1.1|^3.0",
-                "symfony/event-dispatcher": "^5.4"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4",
-                "ninjify/nunjuck": "^0.3",
-                "ninjify/qa": "^0.13",
-                "pds/skeleton": "^1.0",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.3",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-nette": "^1.0",
-                "phpstan/phpstan-strict-rules": "^1.1",
-                "tracy/tracy": "^2.9"
-            },
-            "type": "library",
-            "extra": {
-                "patches": {
-                    "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "FastyBird\\WsServerPlugin\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "FastyBird s.r.o.",
-                    "email": "code@fastybird.com",
-                    "homepage": "https://www.fastybird.com"
-                },
-                {
-                    "name": "Adam Kadlec",
-                    "email": "adam.kadlec@fastybird.com"
-                }
-            ],
-            "description": "FastyBird WS server plugin",
-            "homepage": "https://www.fastybird.com",
-            "keywords": [
-                "fastybird",
-                "fb",
-                "library",
-                "libs",
-                "realtime",
-                "ws"
-            ],
-            "support": {
-                "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/ws-server-plugin/issues",
-                "source": "https://github.com/FastyBird/ws-server-plugin"
-            },
-            "time": "2022-01-12T11:21:51+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -6149,16 +6073,16 @@
         },
         {
             "name": "opis/string",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/string.git",
-                "reference": "5a82da2c29279087abf1c62088fa4d05ca728109"
+                "reference": "9ebf1a1f873f502f6859d11210b25a4bf5d141e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/string/zipball/5a82da2c29279087abf1c62088fa4d05ca728109",
-                "reference": "5a82da2c29279087abf1c62088fa4d05ca728109",
+                "url": "https://api.github.com/repos/opis/string/zipball/9ebf1a1f873f502f6859d11210b25a4bf5d141e7",
+                "reference": "9ebf1a1f873f502f6859d11210b25a4bf5d141e7",
                 "shasum": ""
             },
             "require": {
@@ -6205,9 +6129,9 @@
             ],
             "support": {
                 "issues": "https://github.com/opis/string/issues",
-                "source": "https://github.com/opis/string/tree/2.0.0"
+                "source": "https://github.com/opis/string/tree/2.0.1"
             },
-            "time": "2021-04-13T18:48:54+00:00"
+            "time": "2022-01-14T15:42:23+00:00"
         },
         {
             "name": "opis/uri",
@@ -8328,16 +8252,16 @@
         },
         {
             "name": "react/socket",
-            "version": "v1.10.0",
+            "version": "v1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/socket.git",
-                "reference": "d132fde589ea97f4165f2d94b5296499eac125ec"
+                "reference": "f474156aaab4f09041144fa8b57c7d70aed32a1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/socket/zipball/d132fde589ea97f4165f2d94b5296499eac125ec",
-                "reference": "d132fde589ea97f4165f2d94b5296499eac125ec",
+                "url": "https://api.github.com/repos/reactphp/socket/zipball/f474156aaab4f09041144fa8b57c7d70aed32a1c",
+                "reference": "f474156aaab4f09041144fa8b57c7d70aed32a1c",
                 "shasum": ""
             },
             "require": {
@@ -8346,11 +8270,11 @@
                 "react/dns": "^1.8",
                 "react/event-loop": "^1.2",
                 "react/promise": "^2.6.0 || ^1.2.1",
-                "react/promise-timer": "^1.4.0",
+                "react/promise-timer": "^1.8",
                 "react/stream": "^1.2"
             },
             "require-dev": {
-                "clue/block-react": "^1.2",
+                "clue/block-react": "^1.5",
                 "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.35",
                 "react/promise-stream": "^1.2"
             },
@@ -8396,7 +8320,7 @@
             ],
             "support": {
                 "issues": "https://github.com/reactphp/socket/issues",
-                "source": "https://github.com/reactphp/socket/tree/v1.10.0"
+                "source": "https://github.com/reactphp/socket/tree/v1.11.0"
             },
             "funding": [
                 {
@@ -8408,7 +8332,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-29T10:08:24+00:00"
+            "time": "2022-01-14T10:14:32+00:00"
         },
         {
             "name": "react/stream",
@@ -8611,16 +8535,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "3.3.5",
+            "version": "3.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "c186c44c32899ad0cf5b4e942d71035f01b87b64"
+                "reference": "1b1c35a3f5afe5c7c17d572205a7733b33ab5c87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/c186c44c32899ad0cf5b4e942d71035f01b87b64",
-                "reference": "c186c44c32899ad0cf5b4e942d71035f01b87b64",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/1b1c35a3f5afe5c7c17d572205a7733b33ab5c87",
+                "reference": "1b1c35a3f5afe5c7c17d572205a7733b33ab5c87",
                 "shasum": ""
             },
             "require": {
@@ -8647,17 +8571,18 @@
                 "raven/raven": "*"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.17",
+                "friendsofphp/php-cs-fixer": "^2.19|3.4.*",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "monolog/monolog": "^1.3|^2.0",
                 "nikic/php-parser": "^4.10.3",
                 "php-http/mock-client": "^1.3",
+                "phpbench/phpbench": "^1.0",
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan": "^1.3",
+                "phpstan/phpstan-phpunit": "^1.0",
                 "phpunit/phpunit": "^8.5.14|^9.4",
                 "symfony/phpunit-bridge": "^5.2|^6.0",
-                "vimeo/psalm": "^4.2"
+                "vimeo/psalm": "^4.17"
             },
             "suggest": {
                 "monolog/monolog": "Allow sending log messages to Sentry by using the included Monolog handler."
@@ -8699,7 +8624,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.3.5"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.3.6"
             },
             "funding": [
                 {
@@ -8711,7 +8636,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-12-27T12:31:24+00:00"
+            "time": "2022-01-14T09:05:19+00:00"
         },
         {
             "name": "sunrise/http-header",

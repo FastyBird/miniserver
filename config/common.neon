@@ -25,6 +25,14 @@ extensions:
     nettrineOrmAnnotations              : Nettrine\ORM\DI\OrmAnnotationsExtension
     nettrineOrmConsole                  : Nettrine\ORM\DI\OrmConsoleExtension
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
+    ipubPhone                           : IPub\Phone\DI\PhoneExtension
+    ipubDoctrinePhone                   : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
+    ipubDoctrineConsistence             : IPub\DoctrineConsistence\DI\DoctrineConsistenceExtension
+    ipubDoctrineCrud                    : IPub\DoctrineCrud\DI\DoctrineCrudExtension
+    ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
+    ipubDoctrineDynamicDiscriminatorMap : IPub\DoctrineDynamicDiscriminatorMap\DI\DoctrineDynamicDiscriminatorMapExtension
+    ipubWebsockets                      : IPub\Websockets\DI\WebsocketsExtension
+    ipubWebsocketsWamp                  : IPub\WebsocketsWamp\DI\WebsocketsWampExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
@@ -37,12 +45,7 @@ extensions:
     fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
     fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
-    ipubPhone                           : IPub\Phone\DI\PhoneExtension
-    ipubDoctrinePhone                   : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
-    ipubDoctrineConsistence             : IPub\DoctrineConsistence\DI\DoctrineConsistenceExtension
-    ipubDoctrineCrud                    : IPub\DoctrineCrud\DI\DoctrineCrudExtension
-    ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    ipubDoctrineDynamicDiscriminatorMap : IPub\DoctrineDynamicDiscriminatorMap\DI\DoctrineDynamicDiscriminatorMapExtension
+    fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension
 
 ##################################
 # Nette extensions configuration #
@@ -109,6 +112,7 @@ fbRedisDbStoragePlugin:
             port: %redis.port%
             username: %redis.username%
             password: %redis.password%
+            database: 0
         triggers:
             host: %redis.host%
             port: %redis.port%
@@ -204,72 +208,3 @@ nettrineAnnotations:
 nettrineOrm:
     configuration:
         proxyDir: %tempDir%/cache/doctrine.proxies
-
-nettrineOrmAnnotations:
-    mapping: [
-        FastyBird\MiniServer\Entities: %appDir%/src/Entities
-    ]
-
-############################
-# App services definitions #
-############################
-
-services:
-    # Console commands
-    ##################
-
-    - {factory: FastyBird\MiniServer\Commands\InitializeCommand}
-
-    - {factory: FastyBird\MiniServer\Commands\ApiKeys\CreateCommand}
-
-    # Http middlewares
-    ##################
-
-    # - {factory: FastyBird\MiniServer\Middleware\ApiKeyValidatorMiddleware, tags: [middleware: {priority: 30}]}
-
-    # HTTP application
-    ##################
-
-    - {factory: FastyBird\MiniServer\Application\Application}
-
-    # State storage
-    ###############
-
-    -
-        factory: FastyBird\MiniServer\Models\DevicePropertyRepository
-        arguments: [
-            stateRepositoryFactory: @fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory
-        ]
-
-    -
-        factory: FastyBird\MiniServer\Models\ChannelPropertyRepository
-        arguments: [
-            stateRepositoryFactory: @fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory
-        ]
-
-    -
-        factory: FastyBird\MiniServer\Models\TriggerActionRepository
-        arguments: [
-            stateRepositoryFactory: @fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory
-        ]
-
-    -
-        factory: FastyBird\MiniServer\Models\TriggerConditionRepository
-        arguments: [
-            stateRepositoryFactory: @fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory
-        ]
-
-    # Entities
-    ##########
-
-    - {factory: FastyBird\MiniServer\Subscribers\EntitiesSubscriber}
-
-    # Database repositories
-    #######################
-
-    - {factory: FastyBird\MiniServer\Models\ApiKeys\KeyRepository}
-
-    # Database managers
-    ###################
-
-    - {factory: FastyBird\MiniServer\Models\ApiKeys\KeysManager(@ipubDoctrineCrud.crud::create(FastyBird\MiniServer\Entities\ApiKeys\Key))}
