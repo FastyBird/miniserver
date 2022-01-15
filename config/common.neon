@@ -31,8 +31,8 @@ extensions:
     ipubDoctrineCrud                    : IPub\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     ipubDoctrineDynamicDiscriminatorMap : IPub\DoctrineDynamicDiscriminatorMap\DI\DoctrineDynamicDiscriminatorMapExtension
-    ipubWebsockets                      : IPub\Websockets\DI\WebsocketsExtension
-    ipubWebsocketsWamp                  : IPub\WebsocketsWamp\DI\WebsocketsWampExtension
+    ipubWebsockets                      : IPub\WebSockets\DI\WebSocketsExtension
+    ipubWebsocketsWamp                  : IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
@@ -70,6 +70,7 @@ fbSocketServerFactory:
         address: %server.address%
         port: %server.port%
         certificate: %server.certificate%
+    eventLoop: false
 
 # Web server
 ############
@@ -208,3 +209,6 @@ nettrineAnnotations:
 nettrineOrm:
     configuration:
         proxyDir: %tempDir%/cache/doctrine.proxies
+
+nettrineOrmAnnotations:
+    mapping: []

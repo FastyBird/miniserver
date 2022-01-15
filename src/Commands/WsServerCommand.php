@@ -39,6 +39,12 @@ class WsServerCommand extends Console\Command\Command
 
 	use Nette\SmartObject;
 
+	/** @var string */
+	private string $serverAddress;
+
+	/** @var int */
+	private int $serverPort;
+
 	/** @var WebSockets\Server\Handlers */
 	private WebSockets\Server\Handlers $handlers;
 
@@ -63,6 +69,8 @@ class WsServerCommand extends Console\Command\Command
 	 * @param string|null $name
 	 */
 	public function __construct(
+		string $serverAddress,
+		int $serverPort,
 		WebSockets\Server\Handlers $handlers,
 		WebSockets\Server\Configuration $configuration,
 		SocketServerFactory\SocketServerFactory $socketServerFactory,
@@ -71,6 +79,9 @@ class WsServerCommand extends Console\Command\Command
 		?string $name = null
 	) {
 		parent::__construct($name);
+
+		$this->serverAddress = $serverAddress;
+		$this->serverPort = $serverPort;
 
 		$this->handlers = $handlers;
 		$this->configuration = $configuration;
@@ -109,7 +120,7 @@ class WsServerCommand extends Console\Command\Command
 			]
 		);
 
-		$socketServer = $this->socketServerFactory->create();
+		$socketServer = $this->socketServerFactory->create($this->eventLoop, $this->serverAddress, $this->serverPort);
 
 		try {
 			$socketServer->on('connection', function (Socket\ConnectionInterface $connection): void {

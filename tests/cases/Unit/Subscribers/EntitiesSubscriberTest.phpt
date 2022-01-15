@@ -4,7 +4,7 @@ namespace Tests\Cases;
 
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\DevicesModule\Queries as DevicesModuleQueries;
-use FastyBird\ExchangePlugin\Publisher as ExchangePluginPublisher;
+use FastyBird\Exchange\Publisher as ExchangePublisher;
 use FastyBird\MiniServer\Models;
 use FastyBird\TriggersModule\Entities as TriggersModuleEntities;
 use FastyBird\TriggersModule\Models as TriggersModuleModels;
@@ -25,33 +25,53 @@ final class EntitiesSubscriberTest extends DbTestCase
 	{
 		parent::setUp();
 
-		$redisPublisher = Mockery::mock(ExchangePluginPublisher\PublisherProxy::class);
+		$redisPublisher = Mockery::mock(ExchangePublisher\Publisher::class);
 		$redisPublisher
 			->shouldReceive('publish');
 
 		$this->mockContainerService(
-			ExchangePluginPublisher\PublisherProxy::class,
+			ExchangePublisher\Publisher::class,
 			$redisPublisher
 		);
 
-		$propertyRepository = Mockery::mock(Models\PropertyRepository::class);
-		$propertyRepository
+		$devicePropertyRepository = Mockery::mock(Models\DevicePropertyRepository::class);
+		$devicePropertyRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
-			Models\PropertyRepository::class,
-			$propertyRepository
+			Models\DevicePropertyRepository::class,
+			$devicePropertyRepository
 		);
 
-		$triggerItemRepository = Mockery::mock(Models\TriggerItemRepository::class);
-		$triggerItemRepository
+		$channelPropertyRepository = Mockery::mock(Models\ChannelPropertyRepository::class);
+		$channelPropertyRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
-			Models\TriggerItemRepository::class,
-			$triggerItemRepository
+			Models\ChannelPropertyRepository::class,
+			$channelPropertyRepository
+		);
+
+		$triggerActionRepository = Mockery::mock(Models\TriggerActionRepository::class);
+		$triggerActionRepository
+			->shouldReceive('findOne')
+			->andReturn(null);
+
+		$this->mockContainerService(
+			Models\TriggerActionRepository::class,
+			$triggerActionRepository
+		);
+
+		$triggerConditionRepository = Mockery::mock(Models\TriggerConditionRepository::class);
+		$triggerConditionRepository
+			->shouldReceive('findOne')
+			->andReturn(null);
+
+		$this->mockContainerService(
+			Models\TriggerConditionRepository::class,
+			$triggerConditionRepository
 		);
 	}
 
