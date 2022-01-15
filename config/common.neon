@@ -45,7 +45,7 @@ extensions:
     fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
     fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
-    fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension
+    fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension(%consoleMode%)
 
 ##################################
 # Nette extensions configuration #

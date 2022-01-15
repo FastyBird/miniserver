@@ -44,6 +44,18 @@ use stdClass;
 class MiniServerExtension extends DI\CompilerExtension
 {
 
+	/** @var bool */
+	private bool $cliMode;
+
+	public function __construct(bool $cliMode = false)
+	{
+		if (func_num_args() <= 0) {
+			throw new Exceptions\InvalidArgumentException(sprintf('Provide CLI mode, e.q. %s(%%consoleMode%%).', self::class));
+		}
+
+		$this->cliMode = $cliMode;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -123,8 +135,10 @@ class MiniServerExtension extends DI\CompilerExtension
 			->addTag('nette.inject');
 
 		// Application
-		$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
-			->setType(Application\Application::class);
+		if ($this->cliMode === false) {
+			$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
+				->setType(Application\Application::class);
+		}
 
 		// Subscribers
 		$builder->addDefinition($this->prefix('subscribers.application'), new DI\Definitions\ServiceDefinition())
