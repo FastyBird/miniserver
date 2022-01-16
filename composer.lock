@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bcf617d51fb66a7665c06a75bd4d3e57",
+    "content-hash": "ab049093b8adec2ef3bee682a82570ca",
     "packages": [
         {
             "name": "brick/math",
@@ -2445,22 +2445,23 @@
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
-            "version": "v0.7.0",
+            "version": "v0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
-                "reference": "43d71c840806884856150115972eb6a3710795d2"
+                "reference": "0dae14f0e258dcf00fdf9af06ba1b8af75ed5ff2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/43d71c840806884856150115972eb6a3710795d2",
-                "reference": "43d71c840806884856150115972eb6a3710795d2",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/0dae14f0e258dcf00fdf9af06ba1b8af75ed5ff2",
+                "reference": "0dae14f0e258dcf00fdf9af06ba1b8af75ed5ff2",
                 "shasum": ""
             },
             "require": {
                 "clue/redis-react": "^2.5",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/datetime-factory": "^0.3",
+                "fastybird/exchange": "^0.7",
                 "fastybird/metadata": "^0.25",
                 "fastybird/socket-server-factory": "^0.4",
                 "nette/bootstrap": "^3.0",
@@ -2485,7 +2486,7 @@
                 "phpstan/phpstan-strict-rules": "^1.1",
                 "tracy/tracy": "^2.9"
             },
-            "type": "library",
+            "type": "plugin",
             "extra": {
                 "patches": {
                     "nette/utils": {
@@ -2530,7 +2531,7 @@
                 "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
                 "source": "https://github.com/FastyBird/redisdb-exchange-plugin"
             },
-            "time": "2022-01-12T09:18:30+00:00"
+            "time": "2022-01-14T19:31:24+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -4251,12 +4252,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ipublikuj/websockets.git",
-                "reference": "38eb86b3d0ae8eb5fc8cc15516d5fc85aac36fc5"
+                "reference": "4d19efd1876fb8a97613b1da476f171517b52180"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/websockets/zipball/38eb86b3d0ae8eb5fc8cc15516d5fc85aac36fc5",
-                "reference": "38eb86b3d0ae8eb5fc8cc15516d5fc85aac36fc5",
+                "url": "https://api.github.com/repos/ipublikuj/websockets/zipball/4d19efd1876fb8a97613b1da476f171517b52180",
+                "reference": "4d19efd1876fb8a97613b1da476f171517b52180",
                 "shasum": ""
             },
             "require": {
@@ -4338,7 +4339,7 @@
                 "issues": "https://github.com/iPublikuj/websockets/issues",
                 "source": "https://github.com/ipublikuj/websockets/tree/v1.5.0"
             },
-            "time": "2022-01-15T21:47:14+00:00"
+            "time": "2022-01-16T16:28:05+00:00"
         },
         {
             "name": "ipub/websockets-wamp",
