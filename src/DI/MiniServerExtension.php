@@ -136,7 +136,7 @@ class MiniServerExtension extends DI\CompilerExtension
 
 		// Application
 		if ($this->cliMode === false) {
-			$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('application.application'), new DI\Definitions\ServiceDefinition())
 				->setType(Application\Application::class);
 		}
 

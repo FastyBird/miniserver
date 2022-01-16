@@ -141,6 +141,14 @@ fbTriggersModule:
 fbUiModule:
     apiPrefix: true
 
+# WS
+####
+ipubWebsockets:
+    routes:
+        /io/exchange: Exchange:
+    mapping:
+        *: FastyBird\MiniServer\Controllers\*Controller
+
 # Symfony console support extension
 ###################################
 contributteConsole:

@@ -67,20 +67,18 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 	 * @return void
 	 */
 	public function clientConnected(
-		WebSockets\Entities\Clients\IClient $client,
-		WebSockets\Http\IRequest $httpRequest
+		Events\WsClientConnectedEvent $event
 	): void {
-		$this->checkSecurity($client, $httpRequest, $this->wsKeys, $this->allowedOrigins);
+		$this->checkSecurity($event->getClient(), $event->getHttpRequest(), $this->wsKeys, $this->allowedOrigins);
 	}
 
 	/**
 	 * @return void
 	 */
 	public function incomingMessage(
-		WebSockets\Entities\Clients\IClient $client,
-		WebSockets\Http\IRequest $httpRequest
+		Events\WsIncomingMessage $event
 	): void {
-		$this->checkSecurity($client, $httpRequest, $this->wsKeys, $this->allowedOrigins);
+		$this->checkSecurity($event->getClient(), $event->getHttpRequest(), $this->wsKeys, $this->allowedOrigins);
 	}
 
 	/**

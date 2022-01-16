@@ -15,7 +15,39 @@
 
 namespace FastyBird\MiniServer\Events;
 
+use IPub\WebSockets;
+
 class WsIncomingMessage
 {
+
+	/** @var WebSockets\Entities\Clients\IClient */
+	private WebSockets\Entities\Clients\IClient $client;
+
+	/** @var WebSockets\Http\IRequest */
+	private WebSockets\Http\IRequest $httpRequest;
+
+	public function __construct(
+		WebSockets\Entities\Clients\IClient $client,
+		WebSockets\Http\IRequest $httpRequest
+	) {
+		$this->client = $client;
+		$this->httpRequest = $httpRequest;
+	}
+
+	/**
+	 * @return WebSockets\Entities\Clients\IClient
+	 */
+	public function getClient(): WebSockets\Entities\Clients\IClient
+	{
+		return $this->client;
+	}
+
+	/**
+	 * @return WebSockets\Http\IRequest
+	 */
+	public function getHttpRequest(): WebSockets\Http\IRequest
+	{
+		return $this->httpRequest;
+	}
 
 }
