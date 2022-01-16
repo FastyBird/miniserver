@@ -43,7 +43,7 @@
     "contributte/translation": "^0.9",
     "fastybird/accounts-module": "^0.2",
     "fastybird/bootstrap": "^0.3",
-    "fastybird/devices-module": "^0.10",
+    "fastybird/devices-module": "^0.12",
     "fastybird/exchange": "^0.7.1",
     "fastybird/metadata": "^0.25",
     "fastybird/redisdb-exchange-plugin": "^0.7",
@@ -90,8 +90,9 @@
 
   "extra": {
     "patches": {
-      "doctrine/orm": {
-        "Bug: Ramsey uuid not working": "patches/doctrine.orm.uuid.diff"
+      "doctrine/orm" : {
+        "Bug: Ramsey uuid not working - Part 1" : "patches/doctrine.orm.uuid.1.diff",
+        "Bug: Ramsey uuid not working - Part 2" : "patches/doctrine.orm.uuid.2.diff"
       },
       "ramsey/uuid-doctrine": {
         "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"

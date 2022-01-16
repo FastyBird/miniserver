@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc8890b7b029d83332930507530ee196",
+    "content-hash": "bcf617d51fb66a7665c06a75bd4d3e57",
     "packages": [
         {
             "name": "brick/math",
@@ -1836,16 +1836,16 @@
         },
         {
             "name": "fastybird/accounts-module",
-            "version": "v0.2.0",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "92ab872988a45dbe1c94d82abd5b751ddaac8c4a"
+                "reference": "05b766264027d20915295b0b8f885b51e73d282d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/92ab872988a45dbe1c94d82abd5b751ddaac8c4a",
-                "reference": "92ab872988a45dbe1c94d82abd5b751ddaac8c4a",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/05b766264027d20915295b0b8f885b51e73d282d",
+                "reference": "05b766264027d20915295b0b8f885b51e73d282d",
                 "shasum": ""
             },
             "require": {
@@ -1876,7 +1876,8 @@
             "extra": {
                 "patches": {
                     "doctrine/orm": {
-                        "Bug: Ramsey uuid not working": "patches/doctrine.orm.uuid.diff"
+                        "Bug: Ramsey uuid not working - Part 1": "patches/doctrine.orm.uuid.1.diff",
+                        "Bug: Ramsey uuid not working - Part 2": "patches/doctrine.orm.uuid.2.diff"
                     },
                     "ramsey/uuid-doctrine": {
                         "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
@@ -1927,20 +1928,20 @@
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
                 "source": "https://github.com/FastyBird/accounts-module"
             },
-            "time": "2022-01-12T09:53:07+00:00"
+            "time": "2022-01-16T09:06:41+00:00"
         },
         {
             "name": "fastybird/bootstrap",
-            "version": "v0.3.0",
+            "version": "v0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/bootstrap.git",
-                "reference": "07bf8257a91e526329c03851cf3a0c46bacc3b07"
+                "reference": "411d2f8238ea4e0c96ecce19282d8077b7836d78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/bootstrap/zipball/07bf8257a91e526329c03851cf3a0c46bacc3b07",
-                "reference": "07bf8257a91e526329c03851cf3a0c46bacc3b07",
+                "url": "https://api.github.com/repos/FastyBird/bootstrap/zipball/411d2f8238ea4e0c96ecce19282d8077b7836d78",
+                "reference": "411d2f8238ea4e0c96ecce19282d8077b7836d78",
                 "shasum": ""
             },
             "require": {
@@ -2017,7 +2018,7 @@
                 "issues": "https://github.com/FastyBird/bootstrap/issues",
                 "source": "https://github.com/FastyBird/bootstrap"
             },
-            "time": "2022-01-11T11:50:27+00:00"
+            "time": "2022-01-15T23:52:10+00:00"
         },
         {
             "name": "fastybird/datetime-factory",
@@ -2098,25 +2099,27 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.10.2",
+            "version": "v0.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "28595625c69bf91c859e8e156a72606a5db3dad2"
+                "reference": "b8c8709ef4aa92cf384e5d246efb2964397a4e99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/28595625c69bf91c859e8e156a72606a5db3dad2",
-                "reference": "28595625c69bf91c859e8e156a72606a5db3dad2",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/b8c8709ef4aa92cf384e5d246efb2964397a4e99",
+                "reference": "b8c8709ef4aa92cf384e5d246efb2964397a4e99",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
+                "fastybird/exchange": "^0.7",
                 "fastybird/json-api": "^0.",
                 "fastybird/metadata": "^0.25",
                 "fastybird/simple-auth": "^0.2",
                 "fastybird/web-server": "^0.7",
+                "ipub/doctrine-dynamic-discriminator-map": "^1.4",
                 "ipub/doctrine-timestampable": "^1.5",
                 "nettrine/orm": "^0.8",
                 "php": ">=7.4.0|>=8.0.0"
@@ -2138,7 +2141,8 @@
             "extra": {
                 "patches": {
                     "doctrine/orm": {
-                        "Bug: Ramsey uuid not working": "patches/doctrine.orm.uuid.diff"
+                        "Bug: Ramsey uuid not working - Part 1": "patches/doctrine.orm.uuid.1.diff",
+                        "Bug: Ramsey uuid not working - Part 2": "patches/doctrine.orm.uuid.2.diff"
                     },
                     "ramsey/uuid-doctrine": {
                         "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
@@ -2186,7 +2190,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-01-14T09:31:09+00:00"
+            "time": "2022-01-16T09:01:30+00:00"
         },
         {
             "name": "fastybird/exchange",
@@ -2781,16 +2785,16 @@
         },
         {
             "name": "fastybird/triggers-module",
-            "version": "v0.6.0",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "100675302944aa4726ddb4b651f1d415a1bb9576"
+                "reference": "d70b5685fea210bfeec8216ab5f9ee641d669ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/100675302944aa4726ddb4b651f1d415a1bb9576",
-                "reference": "100675302944aa4726ddb4b651f1d415a1bb9576",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/d70b5685fea210bfeec8216ab5f9ee641d669ad0",
+                "reference": "d70b5685fea210bfeec8216ab5f9ee641d669ad0",
                 "shasum": ""
             },
             "require": {
@@ -2821,7 +2825,8 @@
             "extra": {
                 "patches": {
                     "doctrine/orm": {
-                        "Bug: Ramsey uuid not working": "patches/doctrine.orm.uuid.diff"
+                        "Bug: Ramsey uuid not working - Part 1": "patches/doctrine.orm.uuid.1.diff",
+                        "Bug: Ramsey uuid not working - Part 2": "patches/doctrine.orm.uuid.2.diff"
                     },
                     "ramsey/uuid-doctrine": {
                         "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
@@ -2870,7 +2875,7 @@
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
                 "source": "https://github.com/FastyBird/triggers-module"
             },
-            "time": "2022-01-12T09:52:58+00:00"
+            "time": "2022-01-16T09:05:24+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -2878,12 +2883,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ui-module.git",
-                "reference": "060a2de1bf919acdd17474a3281ee5bf2a22ed89"
+                "reference": "2ed48f8eb5fe33f05ec952111d8f7e1f3d963330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/060a2de1bf919acdd17474a3281ee5bf2a22ed89",
-                "reference": "060a2de1bf919acdd17474a3281ee5bf2a22ed89",
+                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/2ed48f8eb5fe33f05ec952111d8f7e1f3d963330",
+                "reference": "2ed48f8eb5fe33f05ec952111d8f7e1f3d963330",
                 "shasum": ""
             },
             "require": {
@@ -2916,7 +2921,8 @@
             "extra": {
                 "patches": {
                     "doctrine/orm": {
-                        "Bug: Ramsey uuid not working": "patches/doctrine.orm.uuid.diff"
+                        "Bug: Ramsey uuid not working - Part 1": "patches/doctrine.orm.uuid.1.diff",
+                        "Bug: Ramsey uuid not working - Part 2": "patches/doctrine.orm.uuid.2.diff"
                     },
                     "ramsey/uuid-doctrine": {
                         "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
@@ -2963,7 +2969,7 @@
                 "issues": "https://github.com/FastyBird/ui-module/issues",
                 "source": "https://github.com/FastyBird/ui-module"
             },
-            "time": "2022-01-12T10:54:27+00:00"
+            "time": "2022-01-16T09:10:23+00:00"
         },
         {
             "name": "fastybird/web-server",
@@ -7659,16 +7665,16 @@
         },
         {
             "name": "ramsey/uuid-doctrine",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid-doctrine.git",
-                "reference": "135fadb32d91a2d7c0ee12bfd21631d2035cfa0c"
+                "reference": "1a6f235ba3faf1cd9ba18daf5b54d8dc9d3bc7d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid-doctrine/zipball/135fadb32d91a2d7c0ee12bfd21631d2035cfa0c",
-                "reference": "135fadb32d91a2d7c0ee12bfd21631d2035cfa0c",
+                "url": "https://api.github.com/repos/ramsey/uuid-doctrine/zipball/1a6f235ba3faf1cd9ba18daf5b54d8dc9d3bc7d0",
+                "reference": "1a6f235ba3faf1cd9ba18daf5b54d8dc9d3bc7d0",
                 "shasum": ""
             },
             "require": {
@@ -7710,7 +7716,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/uuid-doctrine/issues",
-                "source": "https://github.com/ramsey/uuid-doctrine/tree/1.8.0"
+                "source": "https://github.com/ramsey/uuid-doctrine/tree/1.8.1"
             },
             "funding": [
                 {
@@ -7722,7 +7728,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-08T03:04:18+00:00"
+            "time": "2022-01-15T23:54:44+00:00"
         },
         {
             "name": "react/cache",
