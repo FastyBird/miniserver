@@ -3,7 +3,6 @@
 namespace Tests\Cases;
 
 use FastyBird\Bootstrap\Boot;
-use FastyBird\MiniServer\Application;
 use FastyBird\MiniServer\Commands;
 use FastyBird\MiniServer\Models;
 use FastyBird\MiniServer\Subscribers;
