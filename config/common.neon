@@ -39,6 +39,7 @@ extensions:
     fbMetadata                          : FastyBird\Metadata\DI\MetadataExtension
     fbSocketServerFactory               : FastyBird\SocketServerFactory\DI\SocketServerFactoryExtension
     fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension(%consoleMode%)
+    fbExchange                          : FastyBird\Exchange\DI\ExchangeExtension
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
     fbTriggersModule                    : FastyBird\TriggersModule\DI\TriggersModuleExtension

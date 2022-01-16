@@ -18,6 +18,7 @@ namespace FastyBird\MiniServer\DI;
 use Doctrine\Persistence;
 use FastyBird\MiniServer\Application;
 use FastyBird\MiniServer\Commands;
+use FastyBird\MiniServer\Consumers;
 use FastyBird\MiniServer\Controllers;
 use FastyBird\MiniServer\Entities;
 use FastyBird\MiniServer\Events;
@@ -149,6 +150,10 @@ class MiniServerExtension extends DI\CompilerExtension
 
 		$builder->addDefinition($this->prefix('subscribers.ws'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\WsSubscriber::class);
+
+		// Exchange
+		$builder->addDefinition($this->prefix('exchange.consumer'), new DI\Definitions\ServiceDefinition())
+			->setType(Consumers\Consumer::class);
 	}
 
 	/**

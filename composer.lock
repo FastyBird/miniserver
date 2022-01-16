@@ -2445,16 +2445,16 @@
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
-            "version": "v0.10.0",
+            "version": "v0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
-                "reference": "0dae14f0e258dcf00fdf9af06ba1b8af75ed5ff2"
+                "reference": "31c96403595cae4c6b9979436fbda3cb659795ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/0dae14f0e258dcf00fdf9af06ba1b8af75ed5ff2",
-                "reference": "0dae14f0e258dcf00fdf9af06ba1b8af75ed5ff2",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/31c96403595cae4c6b9979436fbda3cb659795ea",
+                "reference": "31c96403595cae4c6b9979436fbda3cb659795ea",
                 "shasum": ""
             },
             "require": {
@@ -2531,7 +2531,7 @@
                 "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
                 "source": "https://github.com/FastyBird/redisdb-exchange-plugin"
             },
-            "time": "2022-01-14T19:31:24+00:00"
+            "time": "2022-01-16T18:39:30+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
