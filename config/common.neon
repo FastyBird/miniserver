@@ -151,11 +151,12 @@ fbTriggersModule:
 fbUiModule:
     apiPrefix: true
 
-# WS
-####
+# WS server
+###########
 ipubWebsockets:
     routes:
-        /io/exchange: Exchange:
+        /io/exchange: 'Exchange:'
+
     mapping:
         *: FastyBird\MiniServer\Controllers\*Controller
 
