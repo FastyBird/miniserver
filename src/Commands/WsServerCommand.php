@@ -139,6 +139,7 @@ class WsServerCommand extends Console\Command\Command
 			});
 
 			$this->eventLoop->run();
+
 		} catch (WebSockets\Exceptions\TerminateException $ex) {
 			// Log error action reason
 			$this->logger->error(

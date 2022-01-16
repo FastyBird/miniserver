@@ -51,6 +51,16 @@ extensions:
 # Nette extensions configuration #
 ##################################
 
+fbMiniServer:
+    server:
+        web:
+           address: %server.address%
+           port: %server.port%
+
+        sockets:
+           address: %sockets.address%
+           port: %sockets.port%
+
 # Simple authentication
 #######################
 fbSimpleAuth:
