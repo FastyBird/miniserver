@@ -8,9 +8,9 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
  * @subpackage     common
- * @since          0.1.0
+ * @since          0.2.0
  *
- * @date           09.03.20
+ * @date           15.01.22
  */
 
 namespace FastyBird\MiniServer;

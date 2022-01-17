@@ -8,9 +8,9 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
  * @subpackage     Controllers
- * @since          0.1.0
+ * @since          0.2.0
  *
- * @date           01.05.20
+ * @date           15.01.22
  */
 
 namespace FastyBird\MiniServer\Controllers;
@@ -29,6 +29,7 @@ use IPub\WebSockets;
 use IPub\WebSocketsWAMP;
 use Nette\Utils;
 use Psr\Log;
+use Ramsey\Uuid;
 use Throwable;
 
 /**
@@ -54,6 +55,12 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	/** @var DevicesModuleModels\States\IChannelPropertyRepository */
 	private DevicesModuleModels\States\IChannelPropertyRepository $channelPropertiesStatesRepository;
 
+	/** @var DevicesModuleModels\States\IDevicePropertiesManager */
+	private DevicesModuleModels\States\IDevicePropertiesManager $devicePropertiesStatesManager;
+
+	/** @var DevicesModuleModels\States\IChannelPropertiesManager */
+	private DevicesModuleModels\States\IChannelPropertiesManager $channelPropertiesStatesManager;
+
 	/** @var ExchangePublisher\IPublisher|null */
 	private ?ExchangePublisher\IPublisher $publisher;
 
@@ -71,6 +78,8 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		DevicesModuleModels\Channels\Properties\IPropertyRepository $channelPropertiesRepository,
 		DevicesModuleModels\States\IDevicePropertyRepository $devicePropertiesStatesRepository,
 		DevicesModuleModels\States\IChannelPropertyRepository $channelPropertiesStatesRepository,
+		DevicesModuleModels\States\IDevicePropertiesManager $devicePropertiesStatesManager,
+		DevicesModuleModels\States\IChannelPropertiesManager $channelPropertiesStatesManager,
 		MetadataLoaders\ISchemaLoader $schemaLoader,
 		MetadataSchemas\IValidator $jsonValidator,
 		?ExchangePublisher\IPublisher $publisher = null,
@@ -82,6 +91,8 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		$this->channelPropertiesRepository = $channelPropertiesRepository;
 		$this->devicePropertiesStatesRepository = $devicePropertiesStatesRepository;
 		$this->channelPropertiesStatesRepository = $channelPropertiesStatesRepository;
+		$this->devicePropertiesStatesManager = $devicePropertiesStatesManager;
+		$this->channelPropertiesStatesManager = $channelPropertiesStatesManager;
 
 		$this->schemaLoader = $schemaLoader;
 		$this->publisher = $publisher;
@@ -147,6 +158,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
 
 				if ($channelPropertyState !== null) {
+					var_dump($channelPropertyState->toArray());
 					$dynamicPropertyData = [
 						'actual_value'   => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()) : $channelPropertyState->getActualValue(),
 						'expected_value' => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()) : $channelPropertyState->getExpectedValue(),
@@ -178,7 +190,9 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	 * @throws Exceptions\InvalidArgumentException
 	 */
 	public function actionCall(
-		array $args
+		array $args,
+		WebSocketsWAMP\Entities\Clients\IClient $client,
+		WebSocketsWAMP\Entities\Topics\ITopic $topic
 	): void {
 		if (!array_key_exists('routing_key', $args) || !array_key_exists('origin', $args)) {
 			throw new Exceptions\InvalidArgumentException('Provided message has invalid format');
@@ -195,6 +209,93 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 			case Metadata\Constants::MESSAGE_BUS_TRIGGER_ACTION_ROUTING_KEY:
 				$schema = $this->schemaLoader->loadByRoutingKey(Metadata\Types\RoutingKeyType::get($args['routing_key']));
 				$data = isset($args['data']) ? $this->parseData($args['data'], $schema) : null;
+
+				if ($data->offsetGet('action') === Metadata\Types\PropertyActionType::ACTION_SET) {
+					if ($args['routing_key'] === Metadata\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY) {
+						$findDeviceProperty = new DevicesModuleQueries\FindDevicePropertiesQuery();
+						$findDeviceProperty->byId(Uuid\Uuid::fromString($data->offsetGet('property')));
+
+						$deviceProperty = $this->devicePropertiesRepository->findOneBy($findDeviceProperty);
+
+						if ($deviceProperty === null) {
+							throw new Exceptions\InvalidArgumentException('Property could not be found in database');
+						}
+
+						$devicePropertyState = $this->devicePropertiesStatesRepository->findOne($deviceProperty);
+
+						if ($devicePropertyState === null) {
+							$devicePropertyState = $this->devicePropertiesStatesManager->create($deviceProperty, Utils\ArrayHash::from([
+								'expectedValue' => $data->offsetGet('expected_value'),
+								'pending'       => true,
+							]));
+
+						} else {
+							$devicePropertyState = $this->devicePropertiesStatesManager->update($deviceProperty, $devicePropertyState, Utils\ArrayHash::from([
+								'expectedValue' => $data->offsetGet('expected_value'),
+								'pending'       => true,
+							]));
+						}
+
+						$client->send(Utils\Json::encode([
+							WebSocketsWAMP\Application\Application::MSG_EVENT,
+							$topic->getId(),
+							Utils\Json::encode([
+								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICES_PROPERTY_ENTITY_UPDATED,
+								'origin'      => Metadata\Types\ModuleOriginType::ORIGIN_MODULE_DEVICES,
+								'data'        => array_merge(
+									$deviceProperty->toArray(),
+									[
+										'actual_value'   => $deviceProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat()) : $devicePropertyState->getActualValue(),
+										'expected_value' => $deviceProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat()) : $devicePropertyState->getExpectedValue(),
+										'pending'        => $devicePropertyState->isPending(),
+									],
+								),
+							]),
+						]));
+
+					} elseif ($args['routing_key'] === Metadata\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY) {
+						$findChannelProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
+						$findChannelProperty->byId(Uuid\Uuid::fromString($data->offsetGet('property')));
+
+						$channelProperty = $this->channelPropertiesRepository->findOneBy($findChannelProperty);
+
+						if ($channelProperty === null) {
+							throw new Exceptions\InvalidArgumentException('Property could not be found in database');
+						}
+
+						$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
+
+						if ($channelPropertyState === null) {
+							$channelPropertyState = $this->channelPropertiesStatesManager->create($channelProperty, Utils\ArrayHash::from([
+								'expectedValue' => $data->offsetGet('expected_value'),
+								'pending'       => true,
+							]));
+
+						} else {
+							$channelPropertyState = $this->channelPropertiesStatesManager->update($channelProperty, $channelPropertyState, Utils\ArrayHash::from([
+								'expectedValue' => $data->offsetGet('expected_value'),
+								'pending'       => true,
+							]));
+						}
+
+						$client->send(Utils\Json::encode([
+							WebSocketsWAMP\Application\Application::MSG_EVENT,
+							$topic->getId(),
+							Utils\Json::encode([
+								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNELS_PROPERTY_ENTITY_UPDATED,
+								'origin'      => Metadata\Types\ModuleOriginType::ORIGIN_MODULE_DEVICES,
+								'data'        => array_merge(
+									$channelProperty->toArray(),
+									[
+										'actual_value'   => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()) : $channelPropertyState->getActualValue(),
+										'expected_value' => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()) : $channelPropertyState->getExpectedValue(),
+										'pending'        => $channelPropertyState->isPending(),
+									],
+								),
+							]),
+						]));
+					}
+				}
 
 				if ($this->publisher !== null) {
 					$this->publisher->publish(

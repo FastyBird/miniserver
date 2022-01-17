@@ -7,10 +7,10 @@
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
- * @subpackage     Publishers
+ * @subpackage     Consumer
  * @since          0.2.0
  *
- * @date           08.10.21
+ * @date           15.01.22
  */
 
 namespace FastyBird\MiniServer\Consumers;
@@ -28,7 +28,7 @@ use Throwable;
  * Websockets exchange publisher
  *
  * @package        FastyBird:MiniServer!
- * @subpackage     Publishers
+ * @subpackage     Consumer
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
@@ -141,8 +141,8 @@ final class Consumer implements ExchangeConsumer\IConsumer
 
 		} catch (Throwable $ex) {
 			$this->logger->error('Data could not be broadcasts to clients', [
-				'source'  => 'ws-server-plugin-publisher',
-				'type'    => 'broadcast',
+				'source'    => 'ws-server-plugin-publisher',
+				'type'      => 'broadcast',
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),

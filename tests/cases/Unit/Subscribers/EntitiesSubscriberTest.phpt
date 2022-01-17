@@ -34,43 +34,43 @@ final class EntitiesSubscriberTest extends DbTestCase
 			$redisPublisher
 		);
 
-		$devicePropertyRepository = Mockery::mock(Models\DevicePropertyRepository::class);
+		$devicePropertyRepository = Mockery::mock(Models\States\DevicePropertyRepository::class);
 		$devicePropertyRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
-			Models\DevicePropertyRepository::class,
+			Models\States\DevicePropertyRepository::class,
 			$devicePropertyRepository
 		);
 
-		$channelPropertyRepository = Mockery::mock(Models\ChannelPropertyRepository::class);
+		$channelPropertyRepository = Mockery::mock(Models\States\ChannelPropertyRepository::class);
 		$channelPropertyRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
-			Models\ChannelPropertyRepository::class,
+			Models\States\ChannelPropertyRepository::class,
 			$channelPropertyRepository
 		);
 
-		$triggerActionRepository = Mockery::mock(Models\TriggerActionRepository::class);
+		$triggerActionRepository = Mockery::mock(Models\States\TriggerActionRepository::class);
 		$triggerActionRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
-			Models\TriggerActionRepository::class,
+			Models\States\TriggerActionRepository::class,
 			$triggerActionRepository
 		);
 
-		$triggerConditionRepository = Mockery::mock(Models\TriggerConditionRepository::class);
+		$triggerConditionRepository = Mockery::mock(Models\States\TriggerConditionRepository::class);
 		$triggerConditionRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
-			Models\TriggerConditionRepository::class,
+			Models\States\TriggerConditionRepository::class,
 			$triggerConditionRepository
 		);
 	}

@@ -8,7 +8,7 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
  * @subpackage     Events
- * @since          0.1.0
+ * @since          0.2.0
  *
  * @date           15.01.22
  */
@@ -17,6 +17,14 @@ namespace FastyBird\MiniServer\Events;
 
 use IPub\WebSockets;
 
+/**
+ * WS client connected to server event
+ *
+ * @package        FastyBird:MiniServer!
+ * @subpackage     Events
+ *
+ * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ */
 class WsClientConnectedEvent
 {
 

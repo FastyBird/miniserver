@@ -8,9 +8,9 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
  * @subpackage     DI
- * @since          0.1.0
+ * @since          0.2.0
  *
- * @date           22.02.21
+ * @date           15.01.22
  */
 
 namespace FastyBird\MiniServer\DI;
@@ -23,7 +23,6 @@ use FastyBird\MiniServer\Controllers;
 use FastyBird\MiniServer\Entities;
 use FastyBird\MiniServer\Events;
 use FastyBird\MiniServer\Exceptions;
-//use FastyBird\MiniServer\Middleware;
 use FastyBird\MiniServer\Models;
 use FastyBird\MiniServer\Subscribers;
 use IPub\DoctrineCrud;
@@ -34,8 +33,10 @@ use Nette\Schema;
 use Psr\EventDispatcher;
 use stdClass;
 
+//use FastyBird\MiniServer\Middleware;
+
 /**
- * WS server plugin
+ * MiniServer application
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     DI
@@ -115,20 +116,28 @@ class MiniServerExtension extends DI\CompilerExtension
 
 		// States management
 		$builder->addDefinition($this->prefix('states.devicePropertyRepository'), new DI\Definitions\ServiceDefinition())
-			->setType(Models\DevicePropertyRepository::class)
+			->setType(Models\States\DevicePropertyRepository::class)
 			->setArgument('stateRepositoryFactory', '@fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory');
 
 		$builder->addDefinition($this->prefix('states.channelPropertyRepository'), new DI\Definitions\ServiceDefinition())
-			->setType(Models\ChannelPropertyRepository::class)
+			->setType(Models\States\ChannelPropertyRepository::class)
 			->setArgument('stateRepositoryFactory', '@fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory');
 
 		$builder->addDefinition($this->prefix('states.triggerActionRepository'), new DI\Definitions\ServiceDefinition())
-			->setType(Models\TriggerActionRepository::class)
+			->setType(Models\States\TriggerActionRepository::class)
 			->setArgument('stateRepositoryFactory', '@fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory');
 
 		$builder->addDefinition($this->prefix('states.triggerConditionRepository'), new DI\Definitions\ServiceDefinition())
-			->setType(Models\TriggerConditionRepository::class)
+			->setType(Models\States\TriggerConditionRepository::class)
 			->setArgument('stateRepositoryFactory', '@fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory');
+
+		$builder->addDefinition($this->prefix('states.devicePropertiesManager'), new DI\Definitions\ServiceDefinition())
+			->setType(Models\States\DevicePropertiesManager::class)
+			->setArgument('statesManagerFactory', '@fbRedisDbStoragePlugin.model.properties.statesManagerFactory');
+
+		$builder->addDefinition($this->prefix('states.channelPropertiesManager'), new DI\Definitions\ServiceDefinition())
+			->setType(Models\States\ChannelPropertiesManager::class)
+			->setArgument('statesManagerFactory', '@fbRedisDbStoragePlugin.model.properties.statesManagerFactory');
 
 		// Controllers
 		$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())

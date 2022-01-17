@@ -8,7 +8,7 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
  * @subpackage     States
- * @since          0.1.0
+ * @since          0.2.0
  *
  * @date           03.03.20
  */

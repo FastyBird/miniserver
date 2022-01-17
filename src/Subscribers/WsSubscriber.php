@@ -8,9 +8,9 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
  * @subpackage     Subscribers
- * @since          0.1.0
+ * @since          0.2.0
  *
- * @date           15.04.20
+ * @date           15.01.22
  */
 
 namespace FastyBird\MiniServer\Subscribers;
@@ -47,8 +47,8 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			Events\WsClientConnectedEvent::class  => 'clientConnected',
-			Events\WsIncomingMessage::class  => 'incomingMessage',
+			Events\WsClientConnectedEvent::class => 'clientConnected',
+			Events\WsIncomingMessage::class      => 'incomingMessage',
 		];
 	}
 

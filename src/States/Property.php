@@ -8,13 +8,14 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
  * @subpackage     States
- * @since          0.1.0
+ * @since          0.2.0
  *
  * @date           03.03.20
  */
 
 namespace FastyBird\MiniServer\States;
 
+use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
@@ -31,10 +32,10 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 {
 
 	/** @var string|null */
-	private ?string $actual = null;
+	private ?string $actualValue = null;
 
 	/** @var string|null */
-	private ?string $expected = null;
+	private ?string $expectedValue = null;
 
 	/** @var bool */
 	private bool $pending = false;
@@ -50,7 +51,9 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function getCreatedAt(): ?DateTimeInterface
 	{
-		return $this->createdAt !== null ? new DateTimeImmutable($this->createdAt) : null;
+		var_dump($this->createdAt);
+		var_dump((new DateTimeImmutable())->format(DateTimeInterface::ATOM));
+		return $this->createdAt !== null ? new DateTime($this->createdAt) : null;
 	}
 
 	/**
@@ -82,15 +85,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function getActualValue(): ?string
 	{
-		return $this->actual;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setActualValue(?string $actual): void
-	{
-		$this->actual = $actual;
+		return $this->actualValue;
 	}
 
 	/**
@@ -98,7 +93,15 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function setActual(?string $actual): void
 	{
-		$this->setActualValue($actual);
+		$this->actualValue = $actual;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setActualValue(?string $actual): void
+	{
+		$this->setActual($actual);
 	}
 
 	/**
@@ -106,15 +109,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function getExpectedValue(): ?string
 	{
-		return $this->expected;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setExpectedValue(?string $expected): void
-	{
-		$this->expected = $expected;
+		return $this->expectedValue;
 	}
 
 	/**
@@ -122,7 +117,15 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function setExpected(?string $expected): void
 	{
-		$this->setExpectedValue($expected);
+		$this->expectedValue = $expected;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setExpectedValue(?string $expected): void
+	{
+		$this->setExpected($expected);
 	}
 
 	/**
@@ -147,12 +150,12 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	public static function getCreateFields(): array
 	{
 		return [
-			0           => 'id',
-			'actual'    => null,
-			'expected'  => null,
-			'pending'   => false,
-			'createdAt' => null,
-			'updatedAt' => null,
+			0               => 'id',
+			'actualValue'   => null,
+			'expectedValue' => null,
+			'pending'       => false,
+			'createdAt'     => null,
+			'updatedAt'     => null,
 		];
 	}
 
@@ -162,8 +165,8 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	public static function getUpdateFields(): array
 	{
 		return [
-			'actual',
-			'expected',
+			'actualValue',
+			'expectedValue',
 			'pending',
 			'updatedAt',
 		];
@@ -175,11 +178,11 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	public function toArray(): array
 	{
 		return array_merge([
-			'actual'     => $this->getActualValue(),
-			'expected'   => $this->getExpectedValue(),
-			'pending'    => $this->isPending(),
-			'created_at' => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
-			'updated_at' => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
+			'actualValue'   => $this->getActualValue(),
+			'expectedValue' => $this->getExpectedValue(),
+			'pending'       => $this->isPending(),
+			'createdAt'     => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
+			'updatedAt'     => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
 		], parent::toArray());
 	}
 

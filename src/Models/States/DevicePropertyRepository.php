@@ -8,12 +8,12 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:MiniServer!
  * @subpackage     Models
- * @since          0.1.0
+ * @since          0.2.0
  *
  * @date           12.01.22
  */
 
-namespace FastyBird\MiniServer\Models;
+namespace FastyBird\MiniServer\Models\States;
 
 use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
