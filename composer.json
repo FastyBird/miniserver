@@ -46,7 +46,7 @@
     "fastybird/devices-module": "^0.12",
     "fastybird/exchange": "^0.7",
     "fastybird/metadata": "^0.25",
-    "fastybird/redisdb-exchange-plugin": "^0.10",
+    "fastybird/redisdb-exchange-plugin": "^0.11",
     "fastybird/redisdb-storage-plugin": "^0.3",
     "fastybird/socket-server-factory": "^0.4.0",
     "fastybird/triggers-module": "^0.6",

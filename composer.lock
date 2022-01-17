@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab049093b8adec2ef3bee682a82570ca",
+    "content-hash": "22b99bac5d872c11f016091f34ecb9e3",
     "packages": [
         {
             "name": "brick/math",
@@ -113,74 +113,6 @@
                 "source": "https://github.com/clue/php-redis-protocol/tree/v0.3.1"
             },
             "time": "2017-06-06T16:07:10+00:00"
-        },
-        {
-            "name": "clue/redis-react",
-            "version": "v2.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/clue/reactphp-redis.git",
-                "reference": "61a979ff491d9e2492d65a3f65638905e2a49dec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/clue/reactphp-redis/zipball/61a979ff491d9e2492d65a3f65638905e2a49dec",
-                "reference": "61a979ff491d9e2492d65a3f65638905e2a49dec",
-                "shasum": ""
-            },
-            "require": {
-                "clue/redis-protocol": "0.3.*",
-                "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
-                "php": ">=5.3",
-                "react/event-loop": "^1.2",
-                "react/promise": "^2.0 || ^1.1",
-                "react/promise-timer": "^1.5",
-                "react/socket": "^1.9"
-            },
-            "require-dev": {
-                "clue/block-react": "^1.1",
-                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.35"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Clue\\React\\Redis\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christian Lück",
-                    "email": "christian@clue.engineering"
-                }
-            ],
-            "description": "Async Redis client implementation, built on top of ReactPHP.",
-            "homepage": "https://github.com/clue/reactphp-redis",
-            "keywords": [
-                "async",
-                "client",
-                "database",
-                "reactphp",
-                "redis"
-            ],
-            "support": {
-                "issues": "https://github.com/clue/reactphp-redis/issues",
-                "source": "https://github.com/clue/reactphp-redis/tree/v2.5.0"
-            },
-            "funding": [
-                {
-                    "url": "https://clue.engineering/support",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/clue",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-08-31T08:39:31+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -1836,16 +1768,16 @@
         },
         {
             "name": "fastybird/accounts-module",
-            "version": "v0.2.1",
+            "version": "v0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "05b766264027d20915295b0b8f885b51e73d282d"
+                "reference": "8e7985d5c3bdb4c08272d9e5bd692d6662a29549"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/05b766264027d20915295b0b8f885b51e73d282d",
-                "reference": "05b766264027d20915295b0b8f885b51e73d282d",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/8e7985d5c3bdb4c08272d9e5bd692d6662a29549",
+                "reference": "8e7985d5c3bdb4c08272d9e5bd692d6662a29549",
                 "shasum": ""
             },
             "require": {
@@ -1928,7 +1860,7 @@
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
                 "source": "https://github.com/FastyBird/accounts-module"
             },
-            "time": "2022-01-16T09:06:41+00:00"
+            "time": "2022-01-17T09:25:15+00:00"
         },
         {
             "name": "fastybird/bootstrap",
@@ -2099,16 +2031,16 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.12.1",
+            "version": "v0.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "b8c8709ef4aa92cf384e5d246efb2964397a4e99"
+                "reference": "c9e396c133ae7ed1519881b165b4945b44cf2507"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/b8c8709ef4aa92cf384e5d246efb2964397a4e99",
-                "reference": "b8c8709ef4aa92cf384e5d246efb2964397a4e99",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/c9e396c133ae7ed1519881b165b4945b44cf2507",
+                "reference": "c9e396c133ae7ed1519881b165b4945b44cf2507",
                 "shasum": ""
             },
             "require": {
@@ -2190,7 +2122,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-01-16T09:01:30+00:00"
+            "time": "2022-01-17T09:36:09+00:00"
         },
         {
             "name": "fastybird/exchange",
@@ -2445,20 +2377,20 @@
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
-            "version": "v0.10.2",
+            "version": "v0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
-                "reference": "31c96403595cae4c6b9979436fbda3cb659795ea"
+                "reference": "917ae5333ec66ccf4681bfbe2fd1302d0d327956"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/31c96403595cae4c6b9979436fbda3cb659795ea",
-                "reference": "31c96403595cae4c6b9979436fbda3cb659795ea",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/917ae5333ec66ccf4681bfbe2fd1302d0d327956",
+                "reference": "917ae5333ec66ccf4681bfbe2fd1302d0d327956",
                 "shasum": ""
             },
             "require": {
-                "clue/redis-react": "^2.5",
+                "clue/redis-protocol": "^0.3",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/datetime-factory": "^0.3",
                 "fastybird/exchange": "^0.7",
@@ -2531,7 +2463,7 @@
                 "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
                 "source": "https://github.com/FastyBird/redisdb-exchange-plugin"
             },
-            "time": "2022-01-16T18:39:30+00:00"
+            "time": "2022-01-17T13:12:31+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -2786,16 +2718,16 @@
         },
         {
             "name": "fastybird/triggers-module",
-            "version": "v0.6.1",
+            "version": "v0.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "d70b5685fea210bfeec8216ab5f9ee641d669ad0"
+                "reference": "1f34cdcb5a276a358faa9b946720a09be91a4ba0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/d70b5685fea210bfeec8216ab5f9ee641d669ad0",
-                "reference": "d70b5685fea210bfeec8216ab5f9ee641d669ad0",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/1f34cdcb5a276a358faa9b946720a09be91a4ba0",
+                "reference": "1f34cdcb5a276a358faa9b946720a09be91a4ba0",
                 "shasum": ""
             },
             "require": {
@@ -2876,7 +2808,7 @@
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
                 "source": "https://github.com/FastyBird/triggers-module"
             },
-            "time": "2022-01-16T09:05:24+00:00"
+            "time": "2022-01-17T09:27:11+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -4248,16 +4180,16 @@
         },
         {
             "name": "ipub/websockets",
-            "version": "v1.5.0",
+            "version": "v1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ipublikuj/websockets.git",
-                "reference": "4d19efd1876fb8a97613b1da476f171517b52180"
+                "reference": "5dc43d2cd0a092c212a8c2be80303ae64ec86935"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/websockets/zipball/4d19efd1876fb8a97613b1da476f171517b52180",
-                "reference": "4d19efd1876fb8a97613b1da476f171517b52180",
+                "url": "https://api.github.com/repos/ipublikuj/websockets/zipball/5dc43d2cd0a092c212a8c2be80303ae64ec86935",
+                "reference": "5dc43d2cd0a092c212a8c2be80303ae64ec86935",
                 "shasum": ""
             },
             "require": {
@@ -4337,9 +4269,9 @@
             "support": {
                 "email": "support@ipublikuj.eu",
                 "issues": "https://github.com/iPublikuj/websockets/issues",
-                "source": "https://github.com/ipublikuj/websockets/tree/v1.5.0"
+                "source": "https://github.com/ipublikuj/websockets/tree/v1.5.1"
             },
-            "time": "2022-01-16T16:28:05+00:00"
+            "time": "2022-01-16T20:16:50+00:00"
         },
         {
             "name": "ipub/websockets-wamp",
