@@ -158,7 +158,6 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
 
 				if ($channelPropertyState !== null) {
-					var_dump($channelPropertyState->toArray());
 					$dynamicPropertyData = [
 						'actual_value'   => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()) : $channelPropertyState->getActualValue(),
 						'expected_value' => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()) : $channelPropertyState->getExpectedValue(),

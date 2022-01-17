@@ -43,7 +43,7 @@
     "contributte/translation": "^0.9",
     "fastybird/accounts-module": "^0.2",
     "fastybird/bootstrap": "^0.3",
-    "fastybird/devices-module": "^0.12",
+    "fastybird/devices-module": "^0.13",
     "fastybird/exchange": "^0.7",
     "fastybird/metadata": "^0.27",
     "fastybird/redisdb-exchange-plugin": "^0.11",

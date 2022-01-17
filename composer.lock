@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "56c2476ff71456dafd5b58c3e90536b1",
+    "content-hash": "7db3c56f26925505d8e7379fb79d98af",
     "packages": [
         {
             "name": "brick/math",
@@ -2031,16 +2031,16 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.12.4",
+            "version": "v0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "290a40f32f0c9df8435d24e3ee21b0a150937607"
+                "reference": "e0de6d4d2deebec0cf51cbb7ad90db74393fb386"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/290a40f32f0c9df8435d24e3ee21b0a150937607",
-                "reference": "290a40f32f0c9df8435d24e3ee21b0a150937607",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/e0de6d4d2deebec0cf51cbb7ad90db74393fb386",
+                "reference": "e0de6d4d2deebec0cf51cbb7ad90db74393fb386",
                 "shasum": ""
             },
             "require": {
@@ -2122,7 +2122,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-01-17T21:44:42+00:00"
+            "time": "2022-01-17T22:33:16+00:00"
         },
         {
             "name": "fastybird/exchange",
