@@ -18,20 +18,20 @@ set -e
 echo "Finalizing configuration"
 sudo adduser --system --gecos "FastyBird-MiniServer-Manager Service" --disabled-password --group --home /var/lib/miniserver_manager miniserver_manager || echo "User exists"
 sudo usermod -a -G miniserver_manager miniserver_manager
-sudo chown miniserver_manager:miniserver_manager /etc/miniserver-manager/ -R
-sudo chown miniserver_manager:miniserver_manager /usr/lib/miniserver-manager/ -R
-sudo chown miniserver_manager:miniserver_manager /var/log/miniserver-manager/ -R
-sudo chown miniserver_manager:miniserver_manager /var/tmp/miniserver-manager/ -R
+sudo chown miniserver_manager:miniserver_manager /etc/miniserver/ -R
+sudo chown miniserver_manager:miniserver_manager /usr/lib/miniserver/ -R
+sudo chown miniserver_manager:miniserver_manager /var/log/miniserver/ -R
+sudo chown miniserver_manager:miniserver_manager /var/tmp/miniserver/ -R
 sudo chown miniserver_manager:miniserver_manager /var/lib/miniserver_manager/ -R
-sudo chmod 0644 /var/log/miniserver-manager/*
-sudo chmod 0777 /var/log/miniserver-manager
-sudo ln -s /usr/lib/miniserver-manager/vendor/fastybird/bootstrap/bin/fb-console /usr/bin/fb-miniserver-manager
+sudo chmod 0644 /var/log/miniserver/*
+sudo chmod 0777 /var/log/miniserver
+sudo ln -s /usr/lib/miniserver/vendor/fastybird/bootstrap/bin/fb-console /usr/bin/fb-miniserver
 echo "Installation completed"
 
 echo "Enabling daemon..."
-sudo pidof systemd && sudo systemctl enable fb-miniserver-manager || echo "Systemctl not found"
+sudo pidof systemd && sudo systemctl enable fb-miniserver || echo "Systemctl not found"
 
 echo "Daemon starting..."
-sudo pidof systemd && sudo systemctl start fb-miniserver-manager || echo
+sudo pidof systemd && sudo systemctl start fb-miniserver || echo
 
-echo -e "\e[96mFastyBird MiniServer Gateway \e[92mhas been installed. Have a nice day \e[93m\e[5m:)\e[25m\e[39m"
+echo -e "\e[96mFastyBird MiniServer \e[92mhas been installed. Have a nice day \e[93m\e[5m:)\e[25m\e[39m"

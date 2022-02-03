@@ -102,7 +102,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 
 	/**
 	 * @param WebSocketsWAMP\Entities\Clients\IClient $client
-	 * @param WebSocketsWAMP\Entities\Topics\ITopic $topic
+	 * @param WebSocketsWAMP\Entities\Topics\ITopic<mixed> $topic
 	 *
 	 * @return void
 	 *
@@ -125,8 +125,8 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 
 				if ($devicePropertyState !== null) {
 					$dynamicPropertyData = [
-						'actual_value'   => $deviceProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat()) : $devicePropertyState->getActualValue(),
-						'expected_value' => $deviceProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat()) : $devicePropertyState->getExpectedValue(),
+						'actual_value'   => MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat()),
+						'expected_value' => MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat()),
 						'pending'        => $devicePropertyState->isPending(),
 					];
 				}
@@ -159,8 +159,8 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 
 				if ($channelPropertyState !== null) {
 					$dynamicPropertyData = [
-						'actual_value'   => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()) : $channelPropertyState->getActualValue(),
-						'expected_value' => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()) : $channelPropertyState->getExpectedValue(),
+						'actual_value'   => MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()),
+						'expected_value' => MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()),
 						'pending'        => $channelPropertyState->isPending(),
 					];
 				}
@@ -183,6 +183,8 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 
 	/**
 	 * @param mixed[] $args
+	 * @param WebSocketsWAMP\Entities\Clients\IClient $client
+	 * @param WebSocketsWAMP\Entities\Topics\ITopic<mixed> $topic
 	 *
 	 * @return void
 	 *
@@ -201,15 +203,13 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 			case Metadata\Constants::MESSAGE_BUS_CONNECTOR_ACTION_ROUTING_KEY:
 			case Metadata\Constants::MESSAGE_BUS_DEVICE_ACTION_ROUTING_KEY:
 			case Metadata\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY:
-			case Metadata\Constants::MESSAGE_BUS_DEVICE_CONFIGURATION_ACTION_ROUTING_KEY:
 			case Metadata\Constants::MESSAGE_BUS_CHANNEL_ACTION_ROUTING_KEY:
 			case Metadata\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY:
-			case Metadata\Constants::MESSAGE_BUS_CHANNEL_CONFIGURATION_ACTION_ROUTING_KEY:
 			case Metadata\Constants::MESSAGE_BUS_TRIGGER_ACTION_ROUTING_KEY:
 				$schema = $this->schemaLoader->loadByRoutingKey(Metadata\Types\RoutingKeyType::get($args['routing_key']));
 				$data = isset($args['data']) ? $this->parseData($args['data'], $schema) : null;
 
-				if ($data->offsetGet('action') === Metadata\Types\PropertyActionType::ACTION_SET) {
+				if ($data !== null && $data->offsetGet('action') === Metadata\Types\PropertyActionType::ACTION_SET) {
 					if ($args['routing_key'] === Metadata\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY) {
 						$findDeviceProperty = new DevicesModuleQueries\FindDevicePropertiesQuery();
 						$findDeviceProperty->byId(Uuid\Uuid::fromString($data->offsetGet('property')));
@@ -244,8 +244,8 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 								'data'        => array_merge(
 									$deviceProperty->toArray(),
 									[
-										'actual_value'   => $deviceProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat()) : $devicePropertyState->getActualValue(),
-										'expected_value' => $deviceProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat()) : $devicePropertyState->getExpectedValue(),
+										'actual_value'   => MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat()),
+										'expected_value' => MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat()),
 										'pending'        => $devicePropertyState->isPending(),
 									],
 								),
@@ -286,8 +286,8 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 								'data'        => array_merge(
 									$channelProperty->toArray(),
 									[
-										'actual_value'   => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()) : $channelPropertyState->getActualValue(),
-										'expected_value' => $channelProperty->getDataType() !== null ? MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()) : $channelPropertyState->getExpectedValue(),
+										'actual_value'   => MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()),
+										'expected_value' => MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()),
 										'pending'        => $channelPropertyState->isPending(),
 									],
 								),

@@ -41,15 +41,15 @@ if [ "$1" != "only_clean" ] ; then
   sudo find dist/ -name "*.gitignore" -exec rm -f {} \;
 
   echo "Creating sources for DEB package..."
-  sudo mkdir -p dist/usr/lib/miniserver-manager || echo
-  sudo cp -r src dist/usr/lib/miniserver-manager/
-  sudo cp -r public dist/usr/lib/miniserver-manager/
-  sudo cp -r vendor dist/usr/lib/miniserver-manager/
-  sudo cp -r config dist/etc/miniserver-manager/
+  sudo mkdir -p dist/usr/lib/miniserver || echo
+  sudo cp -r src dist/usr/lib/miniserver/
+  sudo cp -r public dist/usr/lib/miniserver/
+  sudo cp -r vendor dist/usr/lib/miniserver/
+  sudo cp -r config dist/etc/miniserver/
   sudo chmod +x dist/etc/ -R
   sudo chmod +x dist/usr/ -R
   sudo chmod +x dist/var/ -R
-  sudo rm dist/etc/miniserver-manager/config/local.neon || echo
+  sudo rm dist/etc/miniserver/config/local.neon || echo
 
   echo "Adding permissions in the package..."
   sudo chown root:root dist/ -R
@@ -58,7 +58,7 @@ if [ "$1" != "only_clean" ] ; then
   sudo chmod 0775 dist/DEBIAN/prerm
 
   echo "Building DEB package..."
-  dpkg-deb -b dist fb-miniserver-manager.deb
+  dpkg-deb -b dist fb-miniserver.deb
 
   echo "Application package was created"
 fi
@@ -68,5 +68,5 @@ if [ "$1" = "clean" ] || [ "$1" = "only_clean" ] ; then
 fi
 
 if [ "$1" = "only_clean" ] ; then
-  sudo rm fb-miniserver-manager.deb
+  sudo rm fb-miniserver.deb
 fi

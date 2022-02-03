@@ -16,6 +16,7 @@
 namespace FastyBird\MiniServer\States;
 
 use DateTimeInterface;
+use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
 
 /**
  * Property state entity interface
@@ -25,7 +26,7 @@ use DateTimeInterface;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface IProperty
+interface IProperty extends RedisDbStoragePluginStates\IState
 {
 
 	/**

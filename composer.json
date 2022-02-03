@@ -1,7 +1,7 @@
 {
-  "name": "fastybird/miniserver-manager",
+  "name": "fastybird/miniserver",
   "type": "project",
-  "description": "FastyBird IoT MiniServer manager application",
+  "description": "FastyBird IoT MiniServer application",
   "keywords": [
     "fastybird",
     "fb",
@@ -29,8 +29,8 @@
 
   "support" : {
     "email" : "code@fastybird.com",
-    "issues" : "https://github.com/FastyBird/miniserver-manager/issues",
-    "source" : "https://github.com/FastyBird/miniserver-manager"
+    "issues" : "https://github.com/FastyBird/miniserver/issues",
+    "source" : "https://github.com/FastyBird/miniserver"
   },
 
   "prefer-stable": true,
@@ -43,13 +43,13 @@
     "contributte/translation": "^0.9",
     "fastybird/accounts-module": "^0.3",
     "fastybird/bootstrap": "^0.3",
-    "fastybird/devices-module": "^0.14",
-    "fastybird/exchange": "^0.8",
-    "fastybird/metadata": "^0.27",
-    "fastybird/redisdb-exchange-plugin": "^0.12",
-    "fastybird/redisdb-storage-plugin": "^0.5",
+    "fastybird/devices-module": "^0.29",
+    "fastybird/exchange": "^0.18",
+    "fastybird/metadata": "^0.38",
+    "fastybird/redisdb-exchange-plugin": "^0.21",
+    "fastybird/redisdb-storage-plugin": "^0.7",
     "fastybird/socket-server-factory": "^0.4",
-    "fastybird/triggers-module": "^0.7",
+    "fastybird/triggers-module": "^0.15",
     "fastybird/ui-module": "@dev",
     "ipub/websockets-wamp": "^1.4",
     "sunrise/http-server-request": "^2.0",

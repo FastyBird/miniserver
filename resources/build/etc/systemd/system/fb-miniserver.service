@@ -1,14 +1,14 @@
 [Unit]
-Description=FastyBird MiniServer Manager
+Description=FastyBird MiniServer
 After=multi-user.target
 StartLimitIntervalSec=0
 
 [Service]
 Type=simple
-User=miniserver_manager
-Group=miniserver_manager
+User=miniserver
+Group=miniserver
 
-ExecStart=/usr/bin/php7.4 /usr/lib/miniserver-manager/vendor/bin/fb-console fb:web-server:start
+ExecStart=/usr/bin/php8.0 /usr/lib/miniserver/vendor/bin/fb-console fb:web-server:start
 ExecStop=/bin/kill -INT $MAINPID
 ExecReload=/bin/kill -TERM $MAINPID
 

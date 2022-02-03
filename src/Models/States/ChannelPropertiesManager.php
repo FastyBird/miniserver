@@ -18,6 +18,7 @@ namespace FastyBird\MiniServer\Models\States;
 use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\DevicesModule\States as DevicesModuleStates;
+use FastyBird\MiniServer\Exceptions;
 use FastyBird\MiniServer\States;
 use FastyBird\RedisDbStoragePlugin\Models as RedisDbStoragePluginModels;
 use Nette;
@@ -63,6 +64,10 @@ class ChannelPropertiesManager implements DevicesModuleModels\States\IChannelPro
 		DevicesModuleStates\IChannelProperty $state,
 		Utils\ArrayHash $values
 	): States\IChannelProperty {
+		if (!$state instanceof States\IDeviceProperty) {
+			throw new Exceptions\InvalidArgumentException('Provided state entity is not valid instance');
+		}
+
 		/** @var States\IChannelProperty $updatedState */
 		$updatedState = $this->statesManager->update(
 			$state,
@@ -76,6 +81,10 @@ class ChannelPropertiesManager implements DevicesModuleModels\States\IChannelPro
 		DevicesModuleEntities\Channels\Properties\IProperty $property,
 		DevicesModuleStates\IChannelProperty $state
 	): bool {
+		if (!$state instanceof States\IChannelProperty) {
+			return false;
+		}
+
 		return $this->statesManager->delete($state);
 	}
 

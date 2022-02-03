@@ -16,7 +16,7 @@
 set -e
 
 echo "Daemon stopping..."
-sudo pidof systemd && sudo systemctl stop fb-miniserver-manager || echo
+sudo pidof systemd && sudo systemctl stop fb-miniserver || echo
 
 echo "Disabling daemon..."
-sudo pidof systemd && sudo systemctl disable fb-miniserver-manager || echo "Systemctl not found"
+sudo pidof systemd && sudo systemctl disable fb-miniserver || echo "Systemctl not found"
