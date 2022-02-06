@@ -58,7 +58,10 @@ setup(
     include_package_data=True,
     python_requires=">=3.7",
     packages=find_packages(),
-    package_data={"fastybird_miniserver": ["py.typed"]},
+    package_data={
+        "fastybird_miniserver": ["py.typed"],
+        "*": ["config/*"]
+    },
     install_requires=[
         "asyncio",
         "click",
@@ -79,7 +82,6 @@ setup(
             "miniserver = fastybird_miniserver.worker:daemon"
         ]},
     package_data={
-        "*": ["config/*"]
     },
     classifiers=[
         "Development Status :: 4 - Beta",
