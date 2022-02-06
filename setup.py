@@ -81,8 +81,6 @@ setup(
         "console_scripts": [
             "miniserver = fastybird_miniserver.worker:daemon"
         ]},
-    package_data={
-    },
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
