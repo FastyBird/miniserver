@@ -1,12 +1,19 @@
 # FastyBird Iot MiniServer
 
-[![Build Status](https://badgen.net/github/checks/FastyBird/miniserver/master?cache=300&style=flast-square)](https://github.com/FastyBird/miniserver/actions)
-[![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/miniserver?cache=300&style=flast-square)](https://coveralls.io/r/FastyBird/miniserver)
-![PHP](https://badgen.net/packagist/php/FastyBird/miniserver?cache=300&style=flast-square)
-[![Licence](https://badgen.net/packagist/license/FastyBird/miniserver?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver)
-[![Downloads total](https://badgen.net/packagist/dt/FastyBird/miniserver?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver)
-[![Latest stable](https://badgen.net/packagist/v/FastyBird/miniserver/latest?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver)
-[![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+[![Build Status](https://badgen.net/github/checks/FastyBird/miniserver/master?cache=300&style=flat-square)](https://github.com/FastyBird/miniserver/actions)
+[![Licence](https://badgen.net/github/license/FastyBird/miniserver?cache=300&style=flat-square)](https://github.com/FastyBird/miniserver/blob/master/LICENSE.md)
+[![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/miniserver?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/miniserver)
+
+![PHP](https://badgen.net/packagist/php/FastyBird/miniserver?cache=300&style=flat-square)
+[![PHP latest stable](https://badgen.net/packagist/v/FastyBird/miniserver/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/miniserver)
+[![PHP downloads total](https://badgen.net/packagist/dt/FastyBird/miniserver?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/miniserver)
+[![PHPStan](https://img.shields.io/badge/phpstan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+
+![Python](https://badgen.net/pypi/python/fastybird-miniserver?cache=300&style=flat-square)
+[![Python latest stable](https://badgen.net/pypi/v/fastybird-miniserver?cache=300&style=flat-square)](https://pypi.org/project/fastybird-miniserver/)
+[![Python downloads month](https://img.shields.io/pypi/dm/fastybird-miniserver?cache=300&style=flat-square)](https://pypi.org/project/fastybird-miniserver/)
+[![Black](https://img.shields.io/badge/black-enabled-brightgreen.svg?style=flat-square)](https://github.com/psf/black)
+[![MyPy](https://img.shields.io/badge/mypy-enabled-brightgreen.svg?style=flat-square)](http://mypy-lang.org)
 
 ## What is FastyBird IoT MiniServer?
 
@@ -26,8 +33,11 @@ The best way to install **fastybird/miniserver** is using [Composer](https://get
 Then use command:
 
 ```sh
-$ composer create-project --no-dev fastybird/miniserver path/to/install
-$ cd path/to/install
+composer create-project --no-dev fastybird/miniserver path/to/install
+```
+
+```sh
+cd path/to/install
 ```
 
 Everything required will be then installed in the provided folder `path/to/install`
@@ -41,7 +51,7 @@ You have two options how to run this app
 All what you need is just run one console command:
 
 ```sh
-$ vendor/bin/fb-console fb:web-server:start
+vendor/bin/fb-console fb:web-server:start
 ```
 
 This command will start build in web server which is listening for incoming http api request messages from clients. 
@@ -63,14 +73,17 @@ Docker image: [fastybird/miniserver](https://hub.docker.com/r/fastybird/miniserv
 ### Use docker hub image
 
 ```bash
-$ docker run -d -it --name devices fastybird/miniserver:latest
+docker run -d -it --name devices fastybird/miniserver:latest
 ```
 
 ### Generate local image
 
 ```bash
-$ docker build --tag=miniserver .
-$ docker run -d -it --name miniserver miniserver
+docker build --tag=miniserver .
+```
+
+```sh
+docker run -d -it --name miniserver miniserver
 ```
 
 ## Configuration
@@ -105,7 +118,7 @@ Configuration could be made via environment variables:
 This application is using database, and need some initial data to be inserted into it. This could be done via shell command:
 
 ```sh
-$ vendor/bin/fb-console fb:initialize
+vendor/bin/fb-console fb:initialize
 ```
 
 This console command is interactive and will ask for all required information.
