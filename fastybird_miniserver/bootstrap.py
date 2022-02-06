@@ -48,14 +48,14 @@ from whistle import EventDispatcher
 from yaml import safe_load
 
 # Worker libs
-from miniserver_gateway.logger import get_logger
-from miniserver_gateway.state.managers import (
+from fastybird_miniserver.logger import get_logger
+from fastybird_miniserver.state.managers import (
     ActionsStatesManager,
     ChannelPropertiesStatesManager,
     ConditionsStatesManager,
     DevicePropertiesStatesManager,
 )
-from miniserver_gateway.state.repositories import (
+from fastybird_miniserver.state.repositories import (
     ActionStatesRepository,
     ChannelPropertiesStatesRepository,
     ConditionStatesRepository,

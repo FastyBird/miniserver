@@ -38,7 +38,7 @@ from fastybird_triggers_module.repositories.state import (
 from kink import inject
 
 # App libs
-from miniserver_gateway.state.entities import (
+from fastybird_miniserver.state.entities import (
     ActionState,
     ChannelPropertyState,
     ConditionState,

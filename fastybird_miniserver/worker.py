@@ -26,10 +26,10 @@ from os import path
 import click
 
 # Worker libs
-from miniserver_gateway.workers.automator import (
+from fastybird_miniserver.workers.automator import (
     create_worker as create_automator_worker,
 )
-from miniserver_gateway.workers.connector import (
+from fastybird_miniserver.workers.connector import (
     create_worker as create_connector_worker,
 )
 

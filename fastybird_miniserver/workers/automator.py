@@ -29,8 +29,8 @@ from fastybird_triggers_module.automation.automation import Automator
 from kink import di, inject
 
 # Worker libs
-from miniserver_gateway.bootstrap import register_services
-from miniserver_gateway.workers.worker import Worker
+from fastybird_miniserver.bootstrap import register_services
+from fastybird_miniserver.workers.worker import Worker
 
 
 @inject
