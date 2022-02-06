@@ -1,0 +1,15 @@
+asyncio>=3.4
+click>=8.0
+fastybird-devices-module>=0.31
+fastybird-exchange>=0.18
+fastybird-fb-bus-connector>=0.14
+fastybird-metadata>=0.38
+fastybird-modbus-connector>=0.3
+fastybird-redisdb-exchange-plugin>=0.21
+fastybird-redisdb-storage-plugin>=0.7
+fastybird-shelly-connector>=0.10
+fastybird-triggers-module>=0.16
+kink>=0.6
+PyYAML>=5.3
+setuptools>=57.4
+types-PyYAML>=6.0

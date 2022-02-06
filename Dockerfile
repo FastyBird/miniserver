@@ -23,7 +23,7 @@ RUN apt-get update -yqq \
  wget \
 ;
 
-RUN git clone https://github.com/FastyBird/miniserver-manager.git ${APP_CODE_PATH}
+RUN git clone https://github.com/FastyBird/miniserver.git ${APP_CODE_PATH}
 
 RUN cd ${APP_CODE_PATH} \
  && git submodule init \

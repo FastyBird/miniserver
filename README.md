@@ -1,32 +1,32 @@
-# FastyBird Iot MiniServer manager
+# FastyBird Iot MiniServer
 
-[![Build Status](https://badgen.net/github/checks/FastyBird/miniserver-manager/master?cache=300&style=flast-square)](https://github.com/FastyBird/miniserver-manager/actions)
-[![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/miniserver-manager?cache=300&style=flast-square)](https://coveralls.io/r/FastyBird/miniserver-manager)
-![PHP](https://badgen.net/packagist/php/FastyBird/miniserver-manager?cache=300&style=flast-square)
-[![Licence](https://badgen.net/packagist/license/FastyBird/miniserver-manager?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver-manager)
-[![Downloads total](https://badgen.net/packagist/dt/FastyBird/miniserver-manager?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver-manager)
-[![Latest stable](https://badgen.net/packagist/v/FastyBird/miniserver-manager/latest?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver-manager)
+[![Build Status](https://badgen.net/github/checks/FastyBird/miniserver/master?cache=300&style=flast-square)](https://github.com/FastyBird/miniserver/actions)
+[![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/miniserver?cache=300&style=flast-square)](https://coveralls.io/r/FastyBird/miniserver)
+![PHP](https://badgen.net/packagist/php/FastyBird/miniserver?cache=300&style=flast-square)
+[![Licence](https://badgen.net/packagist/license/FastyBird/miniserver?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver)
+[![Downloads total](https://badgen.net/packagist/dt/FastyBird/miniserver?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver)
+[![Latest stable](https://badgen.net/packagist/v/FastyBird/miniserver/latest?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/miniserver)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
 
-## What is FastyBird IoT MiniServer manager?
+## What is FastyBird IoT MiniServer?
 
-MiniServer manager management part of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer manager application.
+MiniServer is part of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer application.
 
-[FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer manager is an Apache2 licensed distributed application, developed in PHP with [Nette framework](https://nette.org).
+[FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer is an Apache2 licensed distributed application, developed in PHP with [Nette framework](https://nette.org).
 
 ## Requirements
 
-[FastyBird](https://www.fastybird.com) MiniServer manager is tested against [PHP](https://www.php.net) 7.4, [Redis](https://redis.io) 6.2.2 in-memory data store, [MySQL](https://www.mysql.com) relational database management system, [ReactPHP http](https://github.com/reactphp/http) 0.8 event-driven, streaming plaintext HTTP server and [Nette framework](https://nette.org/en/) 3.0 PHP framework for real programmers.
+[FastyBird](https://www.fastybird.com) MiniServer is tested against [PHP](https://www.php.net) 7.4, [Redis](https://redis.io) 6.2.2 in-memory data store, [MySQL](https://www.mysql.com) relational database management system, [ReactPHP http](https://github.com/reactphp/http) 0.8 event-driven, streaming plaintext HTTP server and [Nette framework](https://nette.org/en/) 3.0 PHP framework for real programmers.
 
 ## Getting started
 
 > **NOTE:** If you don't want to install it manually, try [docker image](#install-with-docker)
 
-The best way to install **fastybird/miniserver-manager** is using [Composer](https://getcomposer.org/). If you don't have Composer yet, [download it](https://getcomposer.org/download/) following the instructions.
+The best way to install **fastybird/miniserver** is using [Composer](https://getcomposer.org/). If you don't have Composer yet, [download it](https://getcomposer.org/download/) following the instructions.
 Then use command:
 
 ```sh
-$ composer create-project --no-dev fastybird/miniserver-manager path/to/install
+$ composer create-project --no-dev fastybird/miniserver path/to/install
 $ cd path/to/install
 ```
 
@@ -54,23 +54,23 @@ In this folder is main entry point for accessing application api.
 
 ## Install with docker
 
-![Docker Image Version (latest by date)](https://img.shields.io/docker/v/fastybird/miniserver-manager?style=flat-square)
-![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/fastybird/miniserver-manager?style=flat-square)
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/fastybird/miniserver-manager?style=flat-square)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/fastybird/miniserver?style=flat-square)
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/fastybird/miniserver?style=flat-square)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/fastybird/miniserver?style=flat-square)
 
-Docker image: [fastybird/miniserver-manager](https://hub.docker.com/r/fastybird/miniserver-manager/)
+Docker image: [fastybird/miniserver](https://hub.docker.com/r/fastybird/miniserver/)
 
 ### Use docker hub image
 
 ```bash
-$ docker run -d -it --name devices fastybird/miniserver-manager:latest
+$ docker run -d -it --name devices fastybird/miniserver:latest
 ```
 
 ### Generate local image
 
 ```bash
-$ docker build --tag=miniserver-manager .
-$ docker run -d -it --name miniserver-manager miniserver-manager
+$ docker build --tag=miniserver .
+$ docker run -d -it --name miniserver miniserver
 ```
 
 ## Configuration
@@ -114,13 +114,13 @@ After this steps, application could be started with [server command](#http-serve
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/miniserver-manager/issues) for bugs or [mail](mailto:code@fastybird.com) or [Tweet](https://twitter.com/fastybird) us for any idea that can improve the project.
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs or [mail](mailto:code@fastybird.com) or [Tweet](https://twitter.com/fastybird) us for any idea that can improve the project.
 
 Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/miniserver-manager/releases)
+For release info check [release page](https://github.com/FastyBird/miniserver/releases)
 
 ## Maintainers
 
@@ -139,4 +139,4 @@ For release info check [release page](https://github.com/FastyBird/miniserver-ma
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and repository [https://github.com/fastybird/miniserver-manager](https://github.com/fastybird/miniserver-manager).
+Homepage [https://www.fastybird.com](https://www.fastybird.com) and repository [https://github.com/fastybird/miniserver](https://github.com/fastybird/miniserver).

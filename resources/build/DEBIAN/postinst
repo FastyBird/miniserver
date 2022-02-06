@@ -16,13 +16,13 @@
 set -e
 
 echo "Finalizing configuration"
-sudo adduser --system --gecos "FastyBird-MiniServer-Manager Service" --disabled-password --group --home /var/lib/miniserver_manager miniserver_manager || echo "User exists"
-sudo usermod -a -G miniserver_manager miniserver_manager
-sudo chown miniserver_manager:miniserver_manager /etc/miniserver/ -R
-sudo chown miniserver_manager:miniserver_manager /usr/lib/miniserver/ -R
-sudo chown miniserver_manager:miniserver_manager /var/log/miniserver/ -R
-sudo chown miniserver_manager:miniserver_manager /var/tmp/miniserver/ -R
-sudo chown miniserver_manager:miniserver_manager /var/lib/miniserver_manager/ -R
+sudo adduser --system --gecos "FastyBird-MiniServer Service" --disabled-password --group --home /var/lib/miniserver miniserver || echo "User exists"
+sudo usermod -a -G miniserver miniserver
+sudo chown miniserver:miniserver /etc/miniserver/ -R
+sudo chown miniserver:miniserver /usr/lib/miniserver/ -R
+sudo chown miniserver:miniserver /var/log/miniserver/ -R
+sudo chown miniserver:miniserver /var/tmp/miniserver/ -R
+sudo chown miniserver:miniserver /var/lib/miniserver/ -R
 sudo chmod 0644 /var/log/miniserver/*
 sudo chmod 0777 /var/log/miniserver
 sudo ln -s /usr/lib/miniserver/vendor/fastybird/bootstrap/bin/fb-console /usr/bin/fb-miniserver

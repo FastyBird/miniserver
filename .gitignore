@@ -4,4 +4,6 @@
 /vendor
 tests/*/output
 tests/tmp
-fb-miniserver-manager.deb
+fb-miniserver.deb
+__pycache__
+

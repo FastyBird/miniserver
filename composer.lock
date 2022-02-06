@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aacd54b57d352b8ddeee00b885d1404e",
+    "content-hash": "8c2d7ec298b1328f4d211ecae50b6d02",
     "packages": [
         {
             "name": "brick/math",
@@ -1768,16 +1768,16 @@
         },
         {
             "name": "fastybird/accounts-module",
-            "version": "v0.3.2",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "3e49d3fba1490e9cc8247f5e61d5f728b69b1766"
+                "reference": "d713045355de843855b3a6015e0dd54f23d796d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/3e49d3fba1490e9cc8247f5e61d5f728b69b1766",
-                "reference": "3e49d3fba1490e9cc8247f5e61d5f728b69b1766",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/d713045355de843855b3a6015e0dd54f23d796d2",
+                "reference": "d713045355de843855b3a6015e0dd54f23d796d2",
                 "shasum": ""
             },
             "require": {
@@ -1861,7 +1861,7 @@
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
                 "source": "https://github.com/FastyBird/accounts-module"
             },
-            "time": "2022-02-03T20:03:34+00:00"
+            "time": "2022-02-06T13:07:21+00:00"
         },
         {
             "name": "fastybird/bootstrap",
@@ -2032,16 +2032,16 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.29.0",
+            "version": "v0.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "3968975e47519e8fd22896bfee5aeaa747dc59e4"
+                "reference": "ff85bde18c6c5237b9e4cf70a2901e1d48da1990"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/3968975e47519e8fd22896bfee5aeaa747dc59e4",
-                "reference": "3968975e47519e8fd22896bfee5aeaa747dc59e4",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/ff85bde18c6c5237b9e4cf70a2901e1d48da1990",
+                "reference": "ff85bde18c6c5237b9e4cf70a2901e1d48da1990",
                 "shasum": ""
             },
             "require": {
@@ -2123,7 +2123,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-02-03T19:53:40+00:00"
+            "time": "2022-02-06T11:15:00+00:00"
         },
         {
             "name": "fastybird/exchange",
@@ -2719,16 +2719,16 @@
         },
         {
             "name": "fastybird/triggers-module",
-            "version": "v0.15.0",
+            "version": "v0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "5eb703066d9fc468ab6ac633ed619bde198b4dbf"
+                "reference": "f56bd837ae01660193f0d305c81ae5af7570cc47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/5eb703066d9fc468ab6ac633ed619bde198b4dbf",
-                "reference": "5eb703066d9fc468ab6ac633ed619bde198b4dbf",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/f56bd837ae01660193f0d305c81ae5af7570cc47",
+                "reference": "f56bd837ae01660193f0d305c81ae5af7570cc47",
                 "shasum": ""
             },
             "require": {
@@ -2810,7 +2810,7 @@
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
                 "source": "https://github.com/FastyBird/triggers-module"
             },
-            "time": "2022-02-03T19:55:16+00:00"
+            "time": "2022-02-06T12:44:34+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -2818,12 +2818,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ui-module.git",
-                "reference": "d0defd3c0da7499f28cef618d56ac27acd9d9926"
+                "reference": "8a827d321509cf1f4531a84ffad34994e1f4f22a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/d0defd3c0da7499f28cef618d56ac27acd9d9926",
-                "reference": "d0defd3c0da7499f28cef618d56ac27acd9d9926",
+                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/8a827d321509cf1f4531a84ffad34994e1f4f22a",
+                "reference": "8a827d321509cf1f4531a84ffad34994e1f4f22a",
                 "shasum": ""
             },
             "require": {
@@ -2906,7 +2906,7 @@
                 "issues": "https://github.com/FastyBird/ui-module/issues",
                 "source": "https://github.com/FastyBird/ui-module"
             },
-            "time": "2022-02-03T20:03:47+00:00"
+            "time": "2022-02-06T12:55:42+00:00"
         },
         {
             "name": "fastybird/web-server",
@@ -4845,12 +4845,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Neomerx\\JsonApi\\": "src/"
-                },
                 "files": [
                     "src/I18n/format.php"
-                ]
+                ],
+                "psr-4": {
+                    "Neomerx\\JsonApi\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5886,12 +5886,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "FastRoute\\": "src/"
-                },
                 "files": [
                     "src/functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "FastRoute\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -8018,12 +8018,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "React\\Promise\\": "src/"
-                },
                 "files": [
                     "src/functions_include.php"
-                ]
+                ],
+                "psr-4": {
+                    "React\\Promise\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -8156,12 +8156,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "React\\Promise\\Timer\\": "src/"
-                },
                 "files": [
                     "src/functions_include.php"
-                ]
+                ],
+                "psr-4": {
+                    "React\\Promise\\Timer\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -9750,12 +9750,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Intl\\Grapheme\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Grapheme\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -9831,12 +9831,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -9995,12 +9995,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php72\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php72\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -10071,12 +10071,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php73\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php73\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -10150,12 +10150,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php80\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php80\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -10233,12 +10233,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php81\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php81\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -10318,12 +10318,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Uuid\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Uuid\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -11025,27 +11025,27 @@
     "packages-dev": [
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v0.7.1",
+            "version": "v0.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "fe390591e0241955f22eb9ba327d137e501c771c"
+                "reference": "1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/fe390591e0241955f22eb9ba327d137e501c771c",
-                "reference": "fe390591e0241955f22eb9ba327d137e501c771c",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db",
+                "reference": "1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
                 "php": ">=5.3",
-                "squizlabs/php_codesniffer": "^2.0 || ^3.0 || ^4.0"
+                "squizlabs/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "*",
-                "phpcompatibility/php-compatibility": "^9.0",
-                "sensiolabs/security-checker": "^4.1.0"
+                "php-parallel-lint/php-parallel-lint": "^1.3.1",
+                "phpcompatibility/php-compatibility": "^9.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -11066,6 +11066,10 @@
                     "email": "franck.nijhof@dealerdirect.com",
                     "homepage": "http://www.frenck.nl",
                     "role": "Developer / IT Manager"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors"
                 }
             ],
             "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
@@ -11077,6 +11081,7 @@
                 "codesniffer",
                 "composer",
                 "installer",
+                "phpcbf",
                 "phpcs",
                 "plugin",
                 "qa",
@@ -11091,7 +11096,7 @@
                 "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
                 "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
             },
-            "time": "2020-12-07T18:04:37+00:00"
+            "time": "2022-02-04T12:51:07+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
