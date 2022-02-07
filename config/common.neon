@@ -40,12 +40,20 @@ extensions:
     fbSocketServerFactory               : FastyBird\SocketServerFactory\DI\SocketServerFactoryExtension
     fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension(%consoleMode%)
     fbExchange                          : FastyBird\Exchange\DI\ExchangeExtension
+    # Plugins
+    fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
+    fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
+    # Modules
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
     fbTriggersModule                    : FastyBird\TriggersModule\DI\TriggersModuleExtension
     fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
-    fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
-    fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
+    # Connctors
+    fbFbBusConnector                    : FastyBird\FbBusConnector\DI\FbBusConnectorExtension
+    fbFbMqttConnector                   : FastyBird\FbMqttConnector\DI\FbMqttConnectorExtension
+    fbShellyConnector                   : FastyBird\ShellyConnector\DI\ShellyConnectorExtension
+    fbModbusConnector                   : FastyBird\ModbusConnector\DI\ModbusConnectorExtension
+
     fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension(%consoleMode%)
 
 ##################################

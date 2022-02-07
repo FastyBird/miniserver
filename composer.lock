@@ -4,8 +4,67 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c2d7ec298b1328f4d211ecae50b6d02",
+    "content-hash": "42ea8b828a95e613a781ffa9214d012f",
     "packages": [
+        {
+            "name": "binsoul/net-mqtt",
+            "version": "0.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/binsoul/net-mqtt.git",
+                "reference": "c46c1aff5253ba0a0f750b1120dad0f707221316"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/binsoul/net-mqtt/zipball/c46c1aff5253ba0a0f750b1120dad0f707221316",
+                "reference": "c46c1aff5253ba0a0f750b1120dad0f707221316",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-mbstring": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BinSoul\\Net\\Mqtt\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Mößler",
+                    "email": "code@binsoul.de",
+                    "homepage": "https://github.com/binsoul",
+                    "role": "Developer"
+                }
+            ],
+            "description": "MQTT protocol implementation",
+            "homepage": "https://github.com/binsoul/net-mqtt",
+            "keywords": [
+                "mqtt",
+                "net"
+            ],
+            "support": {
+                "issues": "https://github.com/binsoul/net-mqtt/issues",
+                "source": "https://github.com/binsoul/net-mqtt/tree/0.8.1"
+            },
+            "time": "2021-04-12T16:51:06+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.9.3",
@@ -2206,6 +2265,171 @@
             "time": "2022-02-03T18:09:39+00:00"
         },
         {
+            "name": "fastybird/fb-bus-connector",
+            "version": "v0.16.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FastyBird/fb-bus-connector.git",
+                "reference": "1e0eceb4b5e2c66fb76beea87a465cb251e1f8ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/1e0eceb4b5e2c66fb76beea87a465cb251e1f8ef",
+                "reference": "1e0eceb4b5e2c66fb76beea87a465cb251e1f8ef",
+                "shasum": ""
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/devices-module": "^0.31",
+                "fastybird/json-api": "^0.8",
+                "php": ">=7.4.0|>=8.0.0"
+            },
+            "require-dev": {
+                "contributte/translation": "^0.9",
+                "mockery/mockery": "^1.4",
+                "ninjify/nunjuck": "^0.3",
+                "ninjify/qa": "^0.13",
+                "pds/skeleton": "^1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-nette": "^0.12",
+                "tracy/tracy": "^2.9"
+            },
+            "type": "connector",
+            "extra": {
+                "patches": {
+                    "nettrine/orm": {
+                        "Enable connection overrides": "patches/nettrine.orm.mangerRegistry.diff"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\FbBusConnector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for FB BUS devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "FIB",
+                "bus",
+                "connector",
+                "fastybird",
+                "fb",
+                "iot"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fb-bus-connector/issues",
+                "source": "https://github.com/FastyBird/fb-bus-connector"
+            },
+            "time": "2022-02-06T13:18:40+00:00"
+        },
+        {
+            "name": "fastybird/fb-mqtt-connector",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FastyBird/fb-mqtt-connector.git",
+                "reference": "c9ff191416743e9a54288be675cf2a90b8de5e34"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FastyBird/fb-mqtt-connector/zipball/c9ff191416743e9a54288be675cf2a90b8de5e34",
+                "reference": "c9ff191416743e9a54288be675cf2a90b8de5e34",
+                "shasum": ""
+            },
+            "require": {
+                "binsoul/net-mqtt": "^0.8",
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/devices-module": "^0.31",
+                "fastybird/json-api": "^0.8",
+                "fastybird/metadata": "^0.38",
+                "nette/bootstrap": "^3.1",
+                "nette/di": "^3.0",
+                "php": ">=7.4.0|>=8.0.0",
+                "psr/log": "^1.1",
+                "ramsey/uuid": "^4.2",
+                "react/socket": "^1.9"
+            },
+            "require-dev": {
+                "contributte/translation": "^0.9",
+                "mockery/mockery": "^1.4",
+                "ninjify/nunjuck": "^0.3",
+                "ninjify/qa": "^0.13",
+                "pds/skeleton": "^1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-nette": "^0.12",
+                "tracy/tracy": "^2.9"
+            },
+            "type": "connector",
+            "extra": {
+                "patches": {
+                    "nettrine/orm": {
+                        "Enable connection overrides": "patches/nettrine.orm.mangerRegistry.diff"
+                    },
+                    "nette/utils": {
+                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\FbMqttConnector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for FB MQTT devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "mqtt"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fb-mqtt-connector/issues",
+                "source": "https://github.com/FastyBird/fb-mqtt-connector"
+            },
+            "time": "2022-02-06T13:18:48+00:00"
+        },
+        {
             "name": "fastybird/json-api",
             "version": "v0.8.0",
             "source": {
@@ -2375,6 +2599,83 @@
                 "source": "https://github.com/FastyBird/metadata"
             },
             "time": "2022-02-03T17:45:15+00:00"
+        },
+        {
+            "name": "fastybird/modbus-connector",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FastyBird/modbus-connector.git",
+                "reference": "0e8d4b64c3da9ecbcdf3e31fb3afeb658288746c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/0e8d4b64c3da9ecbcdf3e31fb3afeb658288746c",
+                "reference": "0e8d4b64c3da9ecbcdf3e31fb3afeb658288746c",
+                "shasum": ""
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/devices-module": "^0.31",
+                "fastybird/json-api": "^0.8",
+                "php": ">=7.4.0|>=8.0.0"
+            },
+            "require-dev": {
+                "contributte/translation": "^0.9",
+                "mockery/mockery": "^1.4",
+                "ninjify/nunjuck": "^0.3",
+                "ninjify/qa": "^0.13",
+                "pds/skeleton": "^1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-nette": "^0.12",
+                "tracy/tracy": "^2.9"
+            },
+            "type": "connector",
+            "extra": {
+                "patches": {
+                    "nettrine/orm": {
+                        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\ModbusConnector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Modbus devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "modbus"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/modbus-connector/issues",
+                "source": "https://github.com/FastyBird/modbus-connector"
+            },
+            "time": "2022-02-06T18:52:25+00:00"
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
@@ -2550,6 +2851,83 @@
                 "source": "https://github.com/FastyBird/redisdb-storage-plugin"
             },
             "time": "2022-01-23T13:21:37+00:00"
+        },
+        {
+            "name": "fastybird/shelly-connector",
+            "version": "v0.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FastyBird/shelly-connector.git",
+                "reference": "f3703605dcc55b4ac2fc4ce6e31a5f8fb488cacf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FastyBird/shelly-connector/zipball/f3703605dcc55b4ac2fc4ce6e31a5f8fb488cacf",
+                "reference": "f3703605dcc55b4ac2fc4ce6e31a5f8fb488cacf",
+                "shasum": ""
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/devices-module": "^0.31",
+                "fastybird/json-api": "^0.8",
+                "php": ">=7.4.0|>=8.0.0"
+            },
+            "require-dev": {
+                "contributte/translation": "^0.9",
+                "mockery/mockery": "^1.4",
+                "ninjify/nunjuck": "^0.3",
+                "ninjify/qa": "^0.13",
+                "pds/skeleton": "^1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-nette": "^0.12",
+                "tracy/tracy": "^2.9"
+            },
+            "type": "connector",
+            "extra": {
+                "patches": {
+                    "nettrine/orm": {
+                        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\ShellyConnector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Shelly devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "shelly"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/shelly-connector/issues",
+                "source": "https://github.com/FastyBird/shelly-connector"
+            },
+            "time": "2022-02-06T13:19:05+00:00"
         },
         {
             "name": "fastybird/simple-auth",
