@@ -46,7 +46,7 @@ def connector() -> None:
         configuration_file=path.dirname(path.abspath(__file__)) + "/../config/fb_gateway.yaml".replace("/", path.sep),
         #  connector_id=uuid.UUID("17c59dfa-2edd-438e-8c49-faa4e38e5a5e")  # fb-bus
         #  connector_id=uuid.UUID("20fba951-e76d-4d6b-a572-dec02c6d8de8")  # shelly
-        connector_id=uuid.UUID("bbcccf8c-33ab-431b-a795-d7bb38b6b6db")  # modbus
+        connector_id=uuid.UUID("bbcccf8c-33ab-431b-a795-d7bb38b6b6db"),  # modbus
     )
 
 
