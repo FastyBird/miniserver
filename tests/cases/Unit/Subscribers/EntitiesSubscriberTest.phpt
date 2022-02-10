@@ -34,57 +34,57 @@ final class EntitiesSubscriberTest extends DbTestCase
 			$redisPublisher
 		);
 
-		$devicePropertyRepository = Mockery::mock(Models\States\DevicePropertiesRepository::class);
-		$devicePropertyRepository
+		$devicePropertiesRepository = Mockery::mock(Models\States\DevicePropertiesRepository::class);
+		$devicePropertiesRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
 			Models\States\DevicePropertiesRepository::class,
-			$devicePropertyRepository
+			$devicePropertiesRepository
 		);
 
-		$channelPropertyRepository = Mockery::mock(Models\States\ChannelPropertiesRepository::class);
-		$channelPropertyRepository
+		$channelPropertiesRepository = Mockery::mock(Models\States\ChannelPropertiesRepository::class);
+		$channelPropertiesRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
 			Models\States\ChannelPropertiesRepository::class,
-			$channelPropertyRepository
+			$channelPropertiesRepository
 		);
 
-		$triggerActionRepository = Mockery::mock(Models\States\TriggerActionsRepository::class);
-		$triggerActionRepository
+		$triggerActionsRepository = Mockery::mock(Models\States\TriggerActionsRepository::class);
+		$triggerActionsRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
 			Models\States\TriggerActionsRepository::class,
-			$triggerActionRepository
+			$triggerActionsRepository
 		);
 
-		$triggerConditionRepository = Mockery::mock(Models\States\TriggerConditionsRepository::class);
-		$triggerConditionRepository
+		$triggerConditionsRepository = Mockery::mock(Models\States\TriggerConditionsRepository::class);
+		$triggerConditionsRepository
 			->shouldReceive('findOne')
 			->andReturn(null);
 
 		$this->mockContainerService(
 			Models\States\TriggerConditionsRepository::class,
-			$triggerConditionRepository
+			$triggerConditionsRepository
 		);
 	}
 
 	public function testDeleteDevice(): void
 	{
-		/** @var DevicesModuleModels\Channels\Properties\PropertyRepository $propertyRepository */
-		$propertyRepository = $this->getContainer()->getByType(DevicesModuleModels\Channels\Properties\PropertyRepository::class);
+		/** @var DevicesModuleModels\Channels\Properties\PropertiesRepository $propertyRepository */
+		$propertyRepository = $this->getContainer()->getByType(DevicesModuleModels\Channels\Properties\PropertiesRepository::class);
 
-		/** @var TriggersModuleModels\Conditions\ConditionRepository $conditionRepository */
-		$conditionRepository = $this->getContainer()->getByType(TriggersModuleModels\Conditions\ConditionRepository::class);
+		/** @var TriggersModuleModels\Conditions\ConditionsRepository $conditionRepository */
+		$conditionRepository = $this->getContainer()->getByType(TriggersModuleModels\Conditions\ConditionsRepository::class);
 
-		/** @var TriggersModuleModels\Actions\ActionRepository $actionRepository */
-		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionRepository::class);
+		/** @var TriggersModuleModels\Actions\ActionsRepository $actionRepository */
+		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionsRepository::class);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
 		$findProperty->byKey('bLikxE');
@@ -163,14 +163,14 @@ final class EntitiesSubscriberTest extends DbTestCase
 
 	public function testDeleteChannel(): void
 	{
-		/** @var DevicesModuleModels\Channels\Properties\PropertyRepository $propertyRepository */
-		$propertyRepository = $this->getContainer()->getByType(DevicesModuleModels\Channels\Properties\PropertyRepository::class);
+		/** @var DevicesModuleModels\Channels\Properties\PropertiesRepository $propertyRepository */
+		$propertyRepository = $this->getContainer()->getByType(DevicesModuleModels\Channels\Properties\PropertiesRepository::class);
 
-		/** @var TriggersModuleModels\Conditions\ConditionRepository $conditionRepository */
-		$conditionRepository = $this->getContainer()->getByType(TriggersModuleModels\Conditions\ConditionRepository::class);
+		/** @var TriggersModuleModels\Conditions\ConditionsRepository $conditionRepository */
+		$conditionRepository = $this->getContainer()->getByType(TriggersModuleModels\Conditions\ConditionsRepository::class);
 
-		/** @var TriggersModuleModels\Actions\ActionRepository $actionRepository */
-		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionRepository::class);
+		/** @var TriggersModuleModels\Actions\ActionsRepository $actionRepository */
+		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionsRepository::class);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
 		$findProperty->byKey('bLikxE');
@@ -249,14 +249,14 @@ final class EntitiesSubscriberTest extends DbTestCase
 
 	public function testDeleteChannelProperty(): void
 	{
-		/** @var DevicesModuleModels\Channels\Properties\PropertyRepository $propertyRepository */
-		$propertyRepository = $this->getContainer()->getByType(DevicesModuleModels\Channels\Properties\PropertyRepository::class);
+		/** @var DevicesModuleModels\Channels\Properties\PropertiesRepository $propertyRepository */
+		$propertyRepository = $this->getContainer()->getByType(DevicesModuleModels\Channels\Properties\PropertiesRepository::class);
 
-		/** @var TriggersModuleModels\Conditions\ConditionRepository $conditionRepository */
-		$conditionRepository = $this->getContainer()->getByType(TriggersModuleModels\Conditions\ConditionRepository::class);
+		/** @var TriggersModuleModels\Conditions\ConditionsRepository $conditionRepository */
+		$conditionRepository = $this->getContainer()->getByType(TriggersModuleModels\Conditions\ConditionsRepository::class);
 
-		/** @var TriggersModuleModels\Actions\ActionRepository $actionRepository */
-		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionRepository::class);
+		/** @var TriggersModuleModels\Actions\ActionsRepository $actionRepository */
+		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionsRepository::class);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
 		$findProperty->byKey('bLikxE');
