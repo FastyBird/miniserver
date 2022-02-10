@@ -10,6 +10,7 @@ use FastyBird\TriggersModule\Entities as TriggersModuleEntities;
 use FastyBird\TriggersModule\Models as TriggersModuleModels;
 use FastyBird\TriggersModule\Queries as TriggersModuleQueries;
 use Mockery;
+use Ramsey\Uuid;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../../bootstrap.php';
@@ -87,14 +88,14 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionsRepository::class);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikxE');
+		$findProperty->byId(Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'));
 
 		$firstProperty = $propertyRepository->findOneBy($findProperty);
 
 		Assert::notNull($firstProperty);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikx4');
+		$findProperty->byId(Uuid\Uuid::fromString('bbcccf8c-33ab-431b-a795-d7bb38b6b6db'));
 
 		$secondProperty = $propertyRepository->findOneBy($findProperty);
 
@@ -130,7 +131,7 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$devicesManager->delete($firstProperty->getChannel()->getDevice());
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikxE');
+		$findProperty->byId(Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'));
 
 		$deletedProperty = $propertyRepository->findOneBy($findProperty);
 
@@ -173,14 +174,14 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionsRepository::class);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikxE');
+		$findProperty->byId(Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'));
 
 		$firstProperty = $propertyRepository->findOneBy($findProperty);
 
 		Assert::notNull($firstProperty);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikx4');
+		$findProperty->byId(Uuid\Uuid::fromString('bbcccf8c-33ab-431b-a795-d7bb38b6b6db'));
 
 		$secondProperty = $propertyRepository->findOneBy($findProperty);
 
@@ -216,7 +217,7 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$channelsManager->delete($firstProperty->getChannel());
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikxE');
+		$findProperty->byId(Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'));
 
 		$deletedProperty = $propertyRepository->findOneBy($findProperty);
 
@@ -259,14 +260,14 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$actionRepository = $this->getContainer()->getByType(TriggersModuleModels\Actions\ActionsRepository::class);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikxE');
+		$findProperty->byId(Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'));
 
 		$firstProperty = $propertyRepository->findOneBy($findProperty);
 
 		Assert::notNull($firstProperty);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikx4');
+		$findProperty->byId(Uuid\Uuid::fromString('bbcccf8c-33ab-431b-a795-d7bb38b6b6db'));
 
 		$secondProperty = $propertyRepository->findOneBy($findProperty);
 
@@ -302,7 +303,7 @@ final class EntitiesSubscriberTest extends DbTestCase
 		$propertiesManager->delete($firstProperty);
 
 		$findProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-		$findProperty->byKey('bLikxE');
+		$findProperty->byId(Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'));
 
 		$deletedProperty = $propertyRepository->findOneBy($findProperty);
 
