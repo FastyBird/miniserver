@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f3d49d725c446ac89eed3b29dfe2172",
+    "content-hash": "86f76a680c735610758a2876848da179",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -2275,16 +2275,16 @@
         },
         {
             "name": "fastybird/fb-bus-connector",
-            "version": "v0.19.0",
+            "version": "v0.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-bus-connector.git",
-                "reference": "94470a30036622ebde70434484670e5141638f5f"
+                "reference": "bf058604e0a03784ac030ed861b516b31639d3e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/94470a30036622ebde70434484670e5141638f5f",
-                "reference": "94470a30036622ebde70434484670e5141638f5f",
+                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/bf058604e0a03784ac030ed861b516b31639d3e9",
+                "reference": "bf058604e0a03784ac030ed861b516b31639d3e9",
                 "shasum": ""
             },
             "require": {
@@ -2350,7 +2350,7 @@
                 "issues": "https://github.com/FastyBird/fb-bus-connector/issues",
                 "source": "https://github.com/FastyBird/fb-bus-connector"
             },
-            "time": "2022-02-10T19:25:02+00:00"
+            "time": "2022-02-10T20:44:47+00:00"
         },
         {
             "name": "fastybird/fb-mqtt-connector",

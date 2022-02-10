@@ -45,7 +45,7 @@
     "fastybird/bootstrap": "^0.3",
     "fastybird/devices-module": "^0.35",
     "fastybird/exchange": "^0.22",
-    "fastybird/fb-bus-connector": "^0.19",
+    "fastybird/fb-bus-connector": "^0.20",
     "fastybird/fb-mqtt-connector": "^0.6",
     "fastybird/metadata": "^0.43",
     "fastybird/modbus-connector": "^0.8",
