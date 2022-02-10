@@ -142,7 +142,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICES_PROPERTY_ENTITY_REPORTED,
-					'origin'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
+					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 					'data'        => array_merge(
 						$deviceProperty->toArray(),
 						$dynamicPropertyData,
@@ -179,7 +179,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNELS_PROPERTY_ENTITY_REPORTED,
-					'origin'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
+					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 					'data'        => array_merge(
 						$channelProperty->toArray(),
 						$dynamicPropertyData,
@@ -203,7 +203,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		WebSocketsWAMP\Entities\Clients\IClient $client,
 		WebSocketsWAMP\Entities\Topics\ITopic $topic
 	): void {
-		if (!array_key_exists('routing_key', $args) || !array_key_exists('origin', $args)) {
+		if (!array_key_exists('routing_key', $args) || !array_key_exists('source', $args)) {
 			throw new Exceptions\InvalidArgumentException('Provided message has invalid format');
 		}
 
@@ -251,7 +251,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICES_PROPERTY_ENTITY_UPDATED,
-								'origin'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
+								'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 								'data'        => array_merge(
 									$deviceProperty->toArray(),
 									[
@@ -296,7 +296,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNELS_PROPERTY_ENTITY_UPDATED,
-								'origin'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
+								'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 								'data'        => array_merge(
 									$channelProperty->toArray(),
 									[
@@ -312,7 +312,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 
 				if ($this->publisher !== null) {
 					$this->publisher->publish(
-						Metadata\Types\ModuleSourceType::get($args['origin']),
+						Metadata\Types\ModuleSourceType::get($args['source']),
 						Metadata\Types\RoutingKeyType::get($args['routing_key']),
 						$data,
 					);

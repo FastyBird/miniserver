@@ -27,7 +27,7 @@ use Throwable;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *     name="fb_api_keys",
+ *     name="fb_miniserver_api_keys",
  *     options={
  *       "collate"="utf8mb4_general_ci",
  *       "charset"="utf8mb4",

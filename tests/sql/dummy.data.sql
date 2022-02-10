@@ -42,3 +42,8 @@ VALUES (_binary 0x167900E919F34712AA4D00B160FF06D5, _binary 0x0B48DFBCFAC2429288
 
 INSERT IGNORE INTO `fb_triggers_module_actions` (`action_id`, `trigger_id`, `action_type`, `created_at`, `updated_at`, `action_device`, `action_channel`, `action_channel_property`, `action_value`)
 VALUES (_binary 0x21D13F148BE0462587644D5B1F3B4D1E, _binary 0x0B48DFBCFAC2429288DC7981A121602D, 'channel-property', '2020-01-28 18:39:35', '2020-01-28 18:39:35', _binary 0x69786D15FD0C4D9F937833287C2009FA, _binary 0x17C59DFA2EDD438E8C49FAA4E38E5A5E, _binary 0xBBCCCF8C33AB431BA795D7BB38B6B6DB, 'on');
+
+
+
+INSERT IGNORE INTO `fb_devices_module_connectors_properties` (`property_id`, `connector_id`, `property_type`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_number_of_decimals`, `property_value`, `created_at`, `updated_at`)
+VALUES (_binary 0x30FC232AEC9F4C56A9C20568E1696657, _binary 0xBBCCCF8C33AB431BA795D7BB38B6B6DB, 'static', 'interface', 'interface', 1, 1, 'enum', NULL, 'on,off,toggle', NULL, NULL, NULL, '2019-12-09 23:19:45', '2019-12-09 23:19:49');

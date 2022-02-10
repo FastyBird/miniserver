@@ -66,7 +66,7 @@ final class Consumer implements ExchangeConsumer\IConsumer
 	 * {@inheritDoc}
 	 */
 	public function consume(
-		$origin,
+		$source,
 		MetadataTypes\RoutingKeyType $routingKey,
 		?Utils\ArrayHash $data
 	): void {
@@ -74,7 +74,7 @@ final class Consumer implements ExchangeConsumer\IConsumer
 			'Exchange:',
 			[
 				'routing_key' => $routingKey->getValue(),
-				'origin'      => $origin->getValue(),
+				'source'      => $source->getValue(),
 				'data'        => $data !== null ? $this->dataToArray($data) : null,
 			]
 		);
@@ -85,7 +85,7 @@ final class Consumer implements ExchangeConsumer\IConsumer
 				'type'    => 'publish',
 				'message' => [
 					'routing_key' => $routingKey->getValue(),
-					'origin'      => $origin->getValue(),
+					'source'      => $source->getValue(),
 					'data'        => $data !== null ? $this->dataToArray($data) : null,
 				],
 			]);
@@ -96,7 +96,7 @@ final class Consumer implements ExchangeConsumer\IConsumer
 				'type'    => 'publish',
 				'message' => [
 					'routing_key' => $routingKey->getValue(),
-					'origin'      => $origin->getValue(),
+					'source'      => $source->getValue(),
 					'data'        => $data !== null ? $this->dataToArray($data) : null,
 				],
 			]);
