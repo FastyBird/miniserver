@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TriggerConditionRepository.php
+ * DevicePropertiesRepository.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -15,42 +15,42 @@
 
 namespace FastyBird\MiniServer\Models\States;
 
+use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
+use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\MiniServer\States;
 use FastyBird\RedisDbStoragePlugin\Models as RedisDbStoragePluginModels;
-use FastyBird\TriggersModule\Entities as TriggersModuleEntities;
-use FastyBird\TriggersModule\Models as TriggersModuleModels;
 use Nette;
 
 /**
- * Trigger condition state repository
+ * Device property state repository
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     Models
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class TriggerConditionRepository implements TriggersModuleModels\States\IConditionRepository
+class DevicePropertiesRepository implements DevicesModuleModels\States\IDevicePropertiesRepository
 {
 
 	use Nette\SmartObject;
 
 	/** @var RedisDbStoragePluginModels\IStateRepository */
-	private RedisDbStoragePluginModels\IStateRepository $stateRepository;
+	protected RedisDbStoragePluginModels\IStateRepository $stateRepository;
 
 	public function __construct(
 		RedisDbStoragePluginModels\StateRepositoryFactory $stateRepositoryFactory
 	) {
-		$this->stateRepository = $stateRepositoryFactory->create(States\TriggerCondition::class);
+		$this->stateRepository = $stateRepositoryFactory->create(States\DeviceProperty::class);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function findOne(
-		TriggersModuleEntities\Conditions\ICondition $condition
-	): ?States\ITriggerCondition {
-		/** @var States\ITriggerCondition $state */
-		$state = $this->stateRepository->findOne($condition->getId());
+		DevicesModuleEntities\Devices\Properties\IProperty $property
+	): ?States\IDeviceProperty {
+		/** @var States\IDeviceProperty $state */
+		$state = $this->stateRepository->findOne($property->getId());
 
 		return $state;
 	}

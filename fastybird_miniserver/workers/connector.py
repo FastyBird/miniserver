@@ -52,6 +52,7 @@ def create_worker(
 @inject(
     bind={
         "connector": Connector,
+        "exchange_clients": List[IClient],
     }
 )
 class ConnectorWorker(Worker):

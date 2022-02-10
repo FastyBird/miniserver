@@ -51,8 +51,6 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function getCreatedAt(): ?DateTimeInterface
 	{
-		var_dump($this->createdAt);
-		var_dump((new DateTimeImmutable())->format(DateTimeInterface::ATOM));
 		return $this->createdAt !== null ? new DateTime($this->createdAt) : null;
 	}
 

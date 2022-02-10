@@ -34,8 +34,8 @@ use Psr\Log;
 class EntitiesSubscriber implements Common\EventSubscriber
 {
 
-	/** @var TriggersModuleModels\Actions\IActionRepository */
-	private TriggersModuleModels\Actions\IActionRepository $actionRepository;
+	/** @var TriggersModuleModels\Actions\IActionsRepository */
+	private TriggersModuleModels\Actions\IActionsRepository $actionRepository;
 
 	/** @var TriggersModuleModels\Actions\IActionsManager */
 	private TriggersModuleModels\Actions\IActionsManager $actionsManager;
@@ -62,7 +62,7 @@ class EntitiesSubscriber implements Common\EventSubscriber
 	}
 
 	public function __construct(
-		TriggersModuleModels\Actions\IActionRepository $actionRepository,
+		TriggersModuleModels\Actions\IActionsRepository $actionRepository,
 		TriggersModuleModels\Actions\IActionsManager $actionsManager,
 		TriggersModuleModels\Conditions\IConditionRepository $conditionRepository,
 		TriggersModuleModels\Conditions\IConditionsManager $conditionsManager,

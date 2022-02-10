@@ -32,10 +32,10 @@ final class ServicesTest extends BaseTestCase
 
 		Assert::notNull($container->getByType(Commands\InitializeCommand::class));
 
-		Assert::notNull($container->getByType(Models\States\DevicePropertyRepository::class));
-		Assert::notNull($container->getByType(Models\States\ChannelPropertyRepository::class));
-		Assert::notNull($container->getByType(Models\States\TriggerConditionRepository::class));
-		Assert::notNull($container->getByType(Models\States\TriggerActionRepository::class));
+		Assert::notNull($container->getByType(Models\States\DevicePropertiesRepository::class));
+		Assert::notNull($container->getByType(Models\States\ChannelPropertiesRepository::class));
+		Assert::notNull($container->getByType(Models\States\TriggerConditionsRepository::class));
+		Assert::notNull($container->getByType(Models\States\TriggerActionsRepository::class));
 
 		Assert::notNull($container->getByType(Subscribers\EntitiesSubscriber::class));
 	}

@@ -24,16 +24,16 @@ from typing import Optional
 
 # App dependencies
 from fastybird_devices_module.repositories.state import (
-    IChannelPropertyStateRepository,
-    IDevicePropertyStateRepository,
+    IChannelPropertiesStatesRepository,
+    IDevicePropertiesStatesRepository,
 )
 from fastybird_redisdb_storage_plugin.repository import (
     StorageRepository,
     StorageRepositoryFactory,
 )
 from fastybird_triggers_module.repositories.state import (
-    IActionStateRepository,
-    IConditionStateRepository,
+    IActionsStatesRepository,
+    IConditionsStatesRepository,
 )
 from kink import inject
 
@@ -46,8 +46,8 @@ from fastybird_miniserver.state.entities import (
 )
 
 
-@inject(alias=IDevicePropertyStateRepository)
-class DevicePropertiesStatesRepository(IDevicePropertyStateRepository):  # pylint: disable=too-few-public-methods
+@inject(alias=IDevicePropertiesStatesRepository)
+class DevicePropertiesStatesRepository(IDevicePropertiesStatesRepository):  # pylint: disable=too-few-public-methods
     """
     Device properties states repository
 
@@ -91,8 +91,8 @@ class DevicePropertiesStatesRepository(IDevicePropertyStateRepository):  # pylin
         raise Exception("")
 
 
-@inject(alias=IChannelPropertyStateRepository)
-class ChannelPropertiesStatesRepository(IChannelPropertyStateRepository):  # pylint: disable=too-few-public-methods
+@inject(alias=IChannelPropertiesStatesRepository)
+class ChannelPropertiesStatesRepository(IChannelPropertiesStatesRepository):  # pylint: disable=too-few-public-methods
     """
     Channel properties states repository
 
@@ -136,8 +136,8 @@ class ChannelPropertiesStatesRepository(IChannelPropertyStateRepository):  # pyl
         raise Exception("")
 
 
-@inject(alias=IActionStateRepository)
-class ActionStatesRepository(IActionStateRepository):  # pylint: disable=too-few-public-methods
+@inject(alias=IActionsStatesRepository)
+class ActionStatesRepository(IActionsStatesRepository):  # pylint: disable=too-few-public-methods
     """
     Actions states repository
 
@@ -181,8 +181,8 @@ class ActionStatesRepository(IActionStateRepository):  # pylint: disable=too-few
         raise Exception("")
 
 
-@inject(alias=IConditionStateRepository)
-class ConditionStatesRepository(IConditionStateRepository):  # pylint: disable=too-few-public-methods
+@inject(alias=IConditionsStatesRepository)
+class ConditionStatesRepository(IConditionsStatesRepository):  # pylint: disable=too-few-public-methods
     """
     Conditions states repository
 

@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * DevicePropertyRepository.php
+ * ChannelPropertiesRepository.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -22,14 +22,14 @@ use FastyBird\RedisDbStoragePlugin\Models as RedisDbStoragePluginModels;
 use Nette;
 
 /**
- * Device property state repository
+ * Channel property state repository
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     Models
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DevicePropertyRepository implements DevicesModuleModels\States\IDevicePropertyRepository
+class ChannelPropertiesRepository implements DevicesModuleModels\States\IChannelPropertiesRepository
 {
 
 	use Nette\SmartObject;
@@ -40,16 +40,16 @@ class DevicePropertyRepository implements DevicesModuleModels\States\IDeviceProp
 	public function __construct(
 		RedisDbStoragePluginModels\StateRepositoryFactory $stateRepositoryFactory
 	) {
-		$this->stateRepository = $stateRepositoryFactory->create(States\DeviceProperty::class);
+		$this->stateRepository = $stateRepositoryFactory->create(States\ChannelProperty::class);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function findOne(
-		DevicesModuleEntities\Devices\Properties\IProperty $property
-	): ?States\IDeviceProperty {
-		/** @var States\IDeviceProperty $state */
+		DevicesModuleEntities\Channels\Properties\IProperty $property
+	): ?States\IChannelProperty {
+		/** @var States\IChannelProperty $state */
 		$state = $this->stateRepository->findOne($property->getId());
 
 		return $state;

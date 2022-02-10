@@ -43,17 +43,17 @@ use Throwable;
 final class ExchangeController extends WebSockets\Application\Controller\Controller
 {
 
-	/** @var DevicesModuleModels\Devices\Properties\IPropertyRepository */
-	private DevicesModuleModels\Devices\Properties\IPropertyRepository $devicePropertiesRepository;
+	/** @var DevicesModuleModels\Devices\Properties\IPropertiesRepository */
+	private DevicesModuleModels\Devices\Properties\IPropertiesRepository $devicePropertiesRepository;
 
-	/** @var DevicesModuleModels\Channels\Properties\IPropertyRepository */
-	private DevicesModuleModels\Channels\Properties\IPropertyRepository $channelPropertiesRepository;
+	/** @var DevicesModuleModels\Channels\Properties\IPropertiesRepository */
+	private DevicesModuleModels\Channels\Properties\IPropertiesRepository $channelPropertiesRepository;
 
-	/** @var DevicesModuleModels\States\IDevicePropertyRepository */
-	private DevicesModuleModels\States\IDevicePropertyRepository $devicePropertiesStatesRepository;
+	/** @var DevicesModuleModels\States\IDevicePropertiesRepository */
+	private DevicesModuleModels\States\IDevicePropertiesRepository $devicePropertiesStatesRepository;
 
-	/** @var DevicesModuleModels\States\IChannelPropertyRepository */
-	private DevicesModuleModels\States\IChannelPropertyRepository $channelPropertiesStatesRepository;
+	/** @var DevicesModuleModels\States\IChannelPropertiesRepository */
+	private DevicesModuleModels\States\IChannelPropertiesRepository $channelPropertiesStatesRepository;
 
 	/** @var DevicesModuleModels\States\IDevicePropertiesManager */
 	private DevicesModuleModels\States\IDevicePropertiesManager $devicePropertiesStatesManager;
@@ -74,10 +74,10 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	private Log\LoggerInterface $logger;
 
 	public function __construct(
-		DevicesModuleModels\Devices\Properties\IPropertyRepository $devicePropertiesRepository,
-		DevicesModuleModels\Channels\Properties\IPropertyRepository $channelPropertiesRepository,
-		DevicesModuleModels\States\IDevicePropertyRepository $devicePropertiesStatesRepository,
-		DevicesModuleModels\States\IChannelPropertyRepository $channelPropertiesStatesRepository,
+		DevicesModuleModels\Devices\Properties\IPropertiesRepository $devicePropertiesRepository,
+		DevicesModuleModels\Channels\Properties\IPropertiesRepository $channelPropertiesRepository,
+		DevicesModuleModels\States\IDevicePropertiesRepository $devicePropertiesStatesRepository,
+		DevicesModuleModels\States\IChannelPropertiesRepository $channelPropertiesStatesRepository,
 		DevicesModuleModels\States\IDevicePropertiesManager $devicePropertiesStatesManager,
 		DevicesModuleModels\States\IChannelPropertiesManager $channelPropertiesStatesManager,
 		MetadataLoaders\ISchemaLoader $schemaLoader,
@@ -89,6 +89,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 
 		$this->devicePropertiesRepository = $devicePropertiesRepository;
 		$this->channelPropertiesRepository = $channelPropertiesRepository;
+
 		$this->devicePropertiesStatesRepository = $devicePropertiesStatesRepository;
 		$this->channelPropertiesStatesRepository = $channelPropertiesStatesRepository;
 		$this->devicePropertiesStatesManager = $devicePropertiesStatesManager;
@@ -97,6 +98,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		$this->schemaLoader = $schemaLoader;
 		$this->publisher = $publisher;
 		$this->jsonValidator = $jsonValidator;
+
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
@@ -124,9 +126,12 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				$devicePropertyState = $this->devicePropertiesStatesRepository->findOne($deviceProperty);
 
 				if ($devicePropertyState !== null) {
+					$actualValue = MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat());
+					$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat());
+
 					$dynamicPropertyData = [
-						'actual_value'   => MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat()),
-						'expected_value' => MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat()),
+						'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+						'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
 						'pending'        => $devicePropertyState->isPending(),
 					];
 				}
@@ -137,7 +142,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICES_PROPERTY_ENTITY_REPORTED,
-					'origin'      => Metadata\Types\ModuleOriginType::ORIGIN_MODULE_DEVICES,
+					'origin'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 					'data'        => array_merge(
 						$deviceProperty->toArray(),
 						$dynamicPropertyData,
@@ -158,9 +163,12 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
 
 				if ($channelPropertyState !== null) {
+					$actualValue = MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat());
+					$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat());
+
 					$dynamicPropertyData = [
-						'actual_value'   => MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()),
-						'expected_value' => MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()),
+						'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+						'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
 						'pending'        => $channelPropertyState->isPending(),
 					];
 				}
@@ -171,7 +179,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNELS_PROPERTY_ENTITY_REPORTED,
-					'origin'      => Metadata\Types\ModuleOriginType::ORIGIN_MODULE_DEVICES,
+					'origin'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 					'data'        => array_merge(
 						$channelProperty->toArray(),
 						$dynamicPropertyData,
@@ -235,17 +243,20 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 							]));
 						}
 
+						$actualValue = MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat());
+						$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat());
+
 						$client->send(Utils\Json::encode([
 							WebSocketsWAMP\Application\Application::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICES_PROPERTY_ENTITY_UPDATED,
-								'origin'      => Metadata\Types\ModuleOriginType::ORIGIN_MODULE_DEVICES,
+								'origin'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 								'data'        => array_merge(
 									$deviceProperty->toArray(),
 									[
-										'actual_value'   => MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat()),
-										'expected_value' => MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat()),
+										'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+										'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
 										'pending'        => $devicePropertyState->isPending(),
 									],
 								),
@@ -277,17 +288,20 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 							]));
 						}
 
+						$actualValue = MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat());
+						$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat());
+
 						$client->send(Utils\Json::encode([
 							WebSocketsWAMP\Application\Application::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNELS_PROPERTY_ENTITY_UPDATED,
-								'origin'      => Metadata\Types\ModuleOriginType::ORIGIN_MODULE_DEVICES,
+								'origin'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 								'data'        => array_merge(
 									$channelProperty->toArray(),
 									[
-										'actual_value'   => MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat()),
-										'expected_value' => MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat()),
+										'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+										'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
 										'pending'        => $channelPropertyState->isPending(),
 									],
 								),
@@ -298,7 +312,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 
 				if ($this->publisher !== null) {
 					$this->publisher->publish(
-						Metadata\Types\ModuleOriginType::get($args['origin']),
+						Metadata\Types\ModuleSourceType::get($args['origin']),
 						Metadata\Types\RoutingKeyType::get($args['routing_key']),
 						$data,
 					);

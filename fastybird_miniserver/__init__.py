@@ -15,7 +15,7 @@
 #     limitations under the License.
 
 """
-FastyBird MiniServer services
+FastyBird services worker
 """
 
 __version__ = "0.2.0"

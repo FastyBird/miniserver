@@ -15,6 +15,7 @@
 
 namespace FastyBird\MiniServer\Subscribers;
 
+use FastyBird\Bootstrap\Helpers as BootstrapHelpers;
 use FastyBird\MiniServer;
 use FastyBird\MiniServer\Events;
 use IPub\WebSockets;
@@ -41,6 +42,9 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 	/** @var string[] */
 	private array $allowedOrigins;
 
+	/** @var BootstrapHelpers\Database */
+	private BootstrapHelpers\Database $database;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -53,6 +57,7 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 	}
 
 	public function __construct(
+		BootstrapHelpers\Database $database,
 		?Log\LoggerInterface $logger,
 		?string $wsKeys = null,
 		?string $allowedOrigins = null
@@ -60,6 +65,7 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 		$this->wsKeys = $wsKeys !== null ? explode(',', $wsKeys) : [];
 		$this->allowedOrigins = $allowedOrigins !== null ? explode(',', $allowedOrigins) : [];
 
+		$this->database = $database;
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
@@ -78,6 +84,12 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 	public function incomingMessage(
 		Events\WsIncomingMessage $event
 	): void {
+		if (!$this->database->ping()) {
+			$this->database->reconnect();
+		}
+
+		$this->database->clear();
+
 		$this->checkSecurity($event->getClient(), $event->getHttpRequest(), $this->wsKeys, $this->allowedOrigins);
 	}
 

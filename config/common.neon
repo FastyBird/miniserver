@@ -48,12 +48,12 @@ extensions:
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
     fbTriggersModule                    : FastyBird\TriggersModule\DI\TriggersModuleExtension
     fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
-    # Connctors
+    # Connectors
     fbFbBusConnector                    : FastyBird\FbBusConnector\DI\FbBusConnectorExtension
     fbFbMqttConnector                   : FastyBird\FbMqttConnector\DI\FbMqttConnectorExtension
     fbShellyConnector                   : FastyBird\ShellyConnector\DI\ShellyConnectorExtension
     fbModbusConnector                   : FastyBird\ModbusConnector\DI\ModbusConnectorExtension
-
+    # Application
     fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension(%consoleMode%)
 
 ##################################

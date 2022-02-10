@@ -116,19 +116,19 @@ class MiniServerExtension extends DI\CompilerExtension
 
 		// States management
 		$builder->addDefinition($this->prefix('states.devicePropertyRepository'), new DI\Definitions\ServiceDefinition())
-			->setType(Models\States\DevicePropertyRepository::class)
+			->setType(Models\States\DevicePropertiesRepository::class)
 			->setArgument('stateRepositoryFactory', '@fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory');
 
 		$builder->addDefinition($this->prefix('states.channelPropertyRepository'), new DI\Definitions\ServiceDefinition())
-			->setType(Models\States\ChannelPropertyRepository::class)
+			->setType(Models\States\ChannelPropertiesRepository::class)
 			->setArgument('stateRepositoryFactory', '@fbRedisDbStoragePlugin.model.properties.stateRepositoryFactory');
 
 		$builder->addDefinition($this->prefix('states.triggerActionRepository'), new DI\Definitions\ServiceDefinition())
-			->setType(Models\States\TriggerActionRepository::class)
+			->setType(Models\States\TriggerActionsRepository::class)
 			->setArgument('stateRepositoryFactory', '@fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory');
 
 		$builder->addDefinition($this->prefix('states.triggerConditionRepository'), new DI\Definitions\ServiceDefinition())
-			->setType(Models\States\TriggerConditionRepository::class)
+			->setType(Models\States\TriggerConditionsRepository::class)
 			->setArgument('stateRepositoryFactory', '@fbRedisDbStoragePlugin.model.triggers.stateRepositoryFactory');
 
 		$builder->addDefinition($this->prefix('states.devicePropertiesManager'), new DI\Definitions\ServiceDefinition())

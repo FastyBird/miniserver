@@ -27,7 +27,7 @@ from typing import Dict, List, Optional, Union
 # App dependencies
 from fastybird_exchange.publisher import IPublisher, IQueue
 from fastybird_metadata.routing import RoutingKey
-from fastybird_metadata.types import ConnectorOrigin, ModuleOrigin, PluginOrigin
+from fastybird_metadata.types import ConnectorSource, ModuleSource, PluginSource
 from kink import inject
 
 
@@ -65,7 +65,7 @@ class ExchangeQueue(IQueue):
 
     def append(
         self,
-        origin: Union[ModuleOrigin, PluginOrigin, ConnectorOrigin],
+        source: Union[ModuleSource, PluginSource, ConnectorSource],
         routing_key: RoutingKey,
         data: Optional[Dict],
     ) -> None:
@@ -73,7 +73,7 @@ class ExchangeQueue(IQueue):
         try:
             self.__queue.put(
                 item={
-                    "origin": origin,
+                    "source": source,
                     "routing_key": routing_key,
                     "data": data,
                 }
@@ -90,23 +90,23 @@ class ExchangeQueue(IQueue):
             item = self.__queue.get()
 
             if isinstance(item, dict):
-                origin: Union[ModuleOrigin, PluginOrigin, ConnectorOrigin, None] = None
+                source: Union[ModuleSource, PluginSource, ConnectorSource, None] = None
 
-                if ModuleOrigin.has_value(str(item.get("origin"))):
-                    origin = ModuleOrigin(str(item.get("origin")))
+                if ModuleSource.has_value(str(item.get("source"))):
+                    source = ModuleSource(str(item.get("source")))
 
-                elif PluginOrigin.has_value(str(item.get("origin"))):
-                    origin = PluginOrigin(str(item.get("origin")))
+                elif PluginSource.has_value(str(item.get("source"))):
+                    source = PluginSource(str(item.get("source")))
 
-                elif ConnectorOrigin.has_value(str(item.get("origin"))):
-                    origin = ConnectorOrigin(str(item.get("origin")))
+                elif ConnectorSource.has_value(str(item.get("source"))):
+                    source = ConnectorSource(str(item.get("source")))
 
-                if origin is None:
+                if source is None:
                     return
 
                 for publisher in self.__publishers:
                     publisher.publish(
-                        origin=origin,
+                        source=source,
                         routing_key=RoutingKey(item.get("routing_key")),
                         data=item.get("data"),
                     )

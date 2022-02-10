@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TriggerActionRepository.php
+ * TriggerConditionsRepository.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -22,14 +22,14 @@ use FastyBird\TriggersModule\Models as TriggersModuleModels;
 use Nette;
 
 /**
- * Trigger action state repository
+ * Trigger condition state repository
  *
  * @package        FastyBird:MiniServer!
  * @subpackage     Models
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class TriggerActionRepository implements TriggersModuleModels\States\IActionRepository
+class TriggerConditionsRepository implements TriggersModuleModels\States\IConditionsRepository
 {
 
 	use Nette\SmartObject;
@@ -40,17 +40,17 @@ class TriggerActionRepository implements TriggersModuleModels\States\IActionRepo
 	public function __construct(
 		RedisDbStoragePluginModels\StateRepositoryFactory $stateRepositoryFactory
 	) {
-		$this->stateRepository = $stateRepositoryFactory->create(States\TriggerAction::class);
+		$this->stateRepository = $stateRepositoryFactory->create(States\TriggerCondition::class);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function findOne(
-		TriggersModuleEntities\Actions\IAction $action
-	): ?States\ITriggerAction {
-		/** @var States\ITriggerAction $state */
-		$state = $this->stateRepository->findOne($action->getId());
+		TriggersModuleEntities\Conditions\ICondition $condition
+	): ?States\ITriggerCondition {
+		/** @var States\ITriggerCondition $state */
+		$state = $this->stateRepository->findOne($condition->getId());
 
 		return $state;
 	}

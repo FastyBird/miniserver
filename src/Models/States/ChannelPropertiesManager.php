@@ -64,7 +64,7 @@ class ChannelPropertiesManager implements DevicesModuleModels\States\IChannelPro
 		DevicesModuleStates\IChannelProperty $state,
 		Utils\ArrayHash $values
 	): States\IChannelProperty {
-		if (!$state instanceof States\IDeviceProperty) {
+		if (!$state instanceof States\IChannelProperty) {
 			throw new Exceptions\InvalidArgumentException('Provided state entity is not valid instance');
 		}
 
