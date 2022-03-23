@@ -146,14 +146,18 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 		$authToken = $httpRequest->getHeader(MiniServer\Constants::WS_HEADER_AUTHORIZATION);
 
 		if ($authToken === null) {
-			$this->logger->warning('Client access token is missing', [
-				'source' => 'ws-server-plugin-security',
-				'type'   => 'validate',
-			]);
+			$cookieToken = $httpRequest->getCookie('token');
 
-			$this->closeSession($client);
+			if ($cookieToken === null) {
+				$this->logger->warning('Client access token is missing', [
+					'source' => 'ws-server-plugin-security',
+					'type'   => 'validate',
+				]);
 
-			return false;
+				$this->closeSession($client);
+
+				return false;
+			}
 		}
 
 		return true;

@@ -141,7 +141,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				WebSocketsWAMP\Application\Application::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
-					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICES_PROPERTY_ENTITY_REPORTED,
+					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICE_PROPERTY_ENTITY_REPORTED,
 					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 					'data'        => array_merge(
 						$deviceProperty->toArray(),
@@ -178,7 +178,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				WebSocketsWAMP\Application\Application::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
-					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNELS_PROPERTY_ENTITY_REPORTED,
+					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNEL_PROPERTY_ENTITY_REPORTED,
 					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 					'data'        => array_merge(
 						$channelProperty->toArray(),
@@ -250,7 +250,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 							WebSocketsWAMP\Application\Application::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
-								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICES_PROPERTY_ENTITY_UPDATED,
+								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICE_PROPERTY_ENTITY_UPDATED,
 								'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 								'data'        => array_merge(
 									$deviceProperty->toArray(),
@@ -295,7 +295,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 							WebSocketsWAMP\Application\Application::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
-								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNELS_PROPERTY_ENTITY_UPDATED,
+								'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNEL_PROPERTY_ENTITY_UPDATED,
 								'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 								'data'        => array_merge(
 									$channelProperty->toArray(),

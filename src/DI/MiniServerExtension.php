@@ -210,13 +210,13 @@ class MiniServerExtension extends DI\CompilerExtension
 		$socketWrapperService->addSetup('?->onClientConnected[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 			'@self',
 			$dispatcher,
-			new PhpGenerator\PhpLiteral(Events\WsClientConnectedEvent::class),
+			new PhpGenerator\Literal(Events\WsClientConnectedEvent::class),
 		]);
 
 		$socketWrapperService->addSetup('?->onIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 			'@self',
 			$dispatcher,
-			new PhpGenerator\PhpLiteral(Events\WsIncomingMessage::class),
+			new PhpGenerator\Literal(Events\WsIncomingMessage::class),
 		]);
 	}
 
