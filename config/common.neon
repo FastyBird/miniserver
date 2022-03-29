@@ -53,7 +53,7 @@ extensions:
     fbFbMqttConnector                   : FastyBird\FbMqttConnector\DI\FbMqttConnectorExtension
     fbShellyConnector                   : FastyBird\ShellyConnector\DI\ShellyConnectorExtension
     fbModbusConnector                   : FastyBird\ModbusConnector\DI\ModbusConnectorExtension
-    fbHomeKitConnector                  : FastyBird\HomekitConnector\DI\HomekitConnectorExtension
+    fbHomeKitConnector                  : FastyBird\HomeKitConnector\DI\HomeKitConnectorExtension
     # Application
     fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension(%consoleMode%)
 
