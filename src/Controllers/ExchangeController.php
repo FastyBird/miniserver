@@ -43,11 +43,17 @@ use Throwable;
 final class ExchangeController extends WebSockets\Application\Controller\Controller
 {
 
+	/** @var DevicesModuleModels\Connectors\Properties\IPropertiesRepository */
+	private DevicesModuleModels\Connectors\Properties\IPropertiesRepository $connectorPropertiesRepository;
+
 	/** @var DevicesModuleModels\Devices\Properties\IPropertiesRepository */
 	private DevicesModuleModels\Devices\Properties\IPropertiesRepository $devicePropertiesRepository;
 
 	/** @var DevicesModuleModels\Channels\Properties\IPropertiesRepository */
 	private DevicesModuleModels\Channels\Properties\IPropertiesRepository $channelPropertiesRepository;
+
+	/** @var DevicesModuleModels\States\IConnectorPropertiesRepository */
+	private DevicesModuleModels\States\IConnectorPropertiesRepository $connectorPropertiesStatesRepository;
 
 	/** @var DevicesModuleModels\States\IDevicePropertiesRepository */
 	private DevicesModuleModels\States\IDevicePropertiesRepository $devicePropertiesStatesRepository;
@@ -74,8 +80,10 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	private Log\LoggerInterface $logger;
 
 	public function __construct(
+		DevicesModuleModels\Connectors\Properties\IPropertiesRepository $connectorPropertiesRepository,
 		DevicesModuleModels\Devices\Properties\IPropertiesRepository $devicePropertiesRepository,
 		DevicesModuleModels\Channels\Properties\IPropertiesRepository $channelPropertiesRepository,
+		DevicesModuleModels\States\IConnectorPropertiesRepository $connectorPropertiesStatesRepository,
 		DevicesModuleModels\States\IDevicePropertiesRepository $devicePropertiesStatesRepository,
 		DevicesModuleModels\States\IChannelPropertiesRepository $channelPropertiesStatesRepository,
 		DevicesModuleModels\States\IDevicePropertiesManager $devicePropertiesStatesManager,
@@ -87,9 +95,11 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	) {
 		parent::__construct();
 
+		$this->connectorPropertiesRepository = $connectorPropertiesRepository;
 		$this->devicePropertiesRepository = $devicePropertiesRepository;
 		$this->channelPropertiesRepository = $channelPropertiesRepository;
 
+		$this->connectorPropertiesStatesRepository = $connectorPropertiesStatesRepository;
 		$this->devicePropertiesStatesRepository = $devicePropertiesStatesRepository;
 		$this->channelPropertiesStatesRepository = $channelPropertiesStatesRepository;
 		$this->devicePropertiesStatesManager = $devicePropertiesStatesManager;
@@ -182,6 +192,43 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
 					'data'        => array_merge(
 						$channelProperty->toArray(),
+						$dynamicPropertyData,
+					),
+				]),
+			]));
+		}
+
+		$findConnectorsProperties = new DevicesModuleQueries\FindConnectorPropertiesQuery();
+
+		$connectorsProperties = $this->connectorPropertiesRepository->getResultSet($findConnectorsProperties);
+
+		/** @var DevicesModuleEntities\Connectors\Properties\Property $connectorProperty */
+		foreach ($connectorsProperties as $connectorProperty) {
+			$dynamicPropertyData = [];
+
+			if ($connectorProperty instanceof DevicesModuleEntities\Connectors\Properties\IDynamicProperty) {
+				$connectorPropertyState = $this->connectorPropertiesStatesRepository->findOne($connectorProperty);
+
+				if ($connectorPropertyState !== null) {
+					$actualValue = MetadataHelpers\ValueHelper::normalizeValue($connectorProperty->getDataType(), $connectorPropertyState->getActualValue(), $connectorProperty->getFormat());
+					$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($connectorProperty->getDataType(), $connectorPropertyState->getExpectedValue(), $connectorProperty->getFormat());
+
+					$dynamicPropertyData = [
+						'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+						'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
+						'pending'        => $connectorPropertyState->isPending(),
+					];
+				}
+			}
+
+			$client->send(Utils\Json::encode([
+				WebSocketsWAMP\Application\Application::MSG_EVENT,
+				$topic->getId(),
+				Utils\Json::encode([
+					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CONNECTOR_PROPERTY_ENTITY_REPORTED,
+					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
+					'data'        => array_merge(
+						$connectorProperty->toArray(),
 						$dynamicPropertyData,
 					),
 				]),
