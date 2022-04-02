@@ -124,115 +124,126 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		WebSocketsWAMP\Entities\Clients\IClient $client,
 		WebSocketsWAMP\Entities\Topics\ITopic $topic
 	): void {
-		$findDevicesProperties = new DevicesModuleQueries\FindDevicePropertiesQuery();
+		try {
+			$findDevicesProperties = new DevicesModuleQueries\FindDevicePropertiesQuery();
 
-		$devicesProperties = $this->devicePropertiesRepository->getResultSet($findDevicesProperties);
+			$devicesProperties = $this->devicePropertiesRepository->getResultSet($findDevicesProperties);
 
-		/** @var DevicesModuleEntities\Devices\Properties\Property $deviceProperty */
-		foreach ($devicesProperties as $deviceProperty) {
-			$dynamicPropertyData = [];
+			/** @var DevicesModuleEntities\Devices\Properties\Property $deviceProperty */
+			foreach ($devicesProperties as $deviceProperty) {
+				$dynamicPropertyData = [];
 
-			if ($deviceProperty instanceof DevicesModuleEntities\Devices\Properties\IDynamicProperty) {
-				$devicePropertyState = $this->devicePropertiesStatesRepository->findOne($deviceProperty);
+				if ($deviceProperty instanceof DevicesModuleEntities\Devices\Properties\IDynamicProperty) {
+					$devicePropertyState = $this->devicePropertiesStatesRepository->findOne($deviceProperty);
 
-				if ($devicePropertyState !== null) {
-					$actualValue = MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat());
-					$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat());
+					if ($devicePropertyState !== null) {
+						$actualValue = MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getActualValue(), $deviceProperty->getFormat());
+						$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($deviceProperty->getDataType(), $devicePropertyState->getExpectedValue(), $deviceProperty->getFormat());
 
-					$dynamicPropertyData = [
-						'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
-						'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
-						'pending'        => $devicePropertyState->isPending(),
-					];
+						$dynamicPropertyData = [
+							'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+							'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
+							'pending'        => $devicePropertyState->isPending(),
+						];
+					}
 				}
+
+				$client->send(Utils\Json::encode([
+					WebSocketsWAMP\Application\Application::MSG_EVENT,
+					$topic->getId(),
+					Utils\Json::encode([
+						'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICE_PROPERTY_ENTITY_REPORTED,
+						'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
+						'data'        => array_merge(
+							$deviceProperty->toArray(),
+							$dynamicPropertyData,
+						),
+					]),
+				]));
 			}
 
-			$client->send(Utils\Json::encode([
-				WebSocketsWAMP\Application\Application::MSG_EVENT,
-				$topic->getId(),
-				Utils\Json::encode([
-					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICE_PROPERTY_ENTITY_REPORTED,
-					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
-					'data'        => array_merge(
-						$deviceProperty->toArray(),
-						$dynamicPropertyData,
-					),
-				]),
-			]));
-		}
+			$findChannelsProperties = new DevicesModuleQueries\FindChannelPropertiesQuery();
 
-		$findChannelsProperties = new DevicesModuleQueries\FindChannelPropertiesQuery();
+			$channelsProperties = $this->channelPropertiesRepository->getResultSet($findChannelsProperties);
 
-		$channelsProperties = $this->channelPropertiesRepository->getResultSet($findChannelsProperties);
+			/** @var DevicesModuleEntities\Channels\Properties\Property $channelProperty */
+			foreach ($channelsProperties as $channelProperty) {
+				$dynamicPropertyData = [];
 
-		/** @var DevicesModuleEntities\Channels\Properties\Property $channelProperty */
-		foreach ($channelsProperties as $channelProperty) {
-			$dynamicPropertyData = [];
+				if ($channelProperty instanceof DevicesModuleEntities\Channels\Properties\IDynamicProperty) {
+					$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
 
-			if ($channelProperty instanceof DevicesModuleEntities\Channels\Properties\IDynamicProperty) {
-				$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
+					if ($channelPropertyState !== null) {
+						$actualValue = MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat());
+						$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat());
 
-				if ($channelPropertyState !== null) {
-					$actualValue = MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getActualValue(), $channelProperty->getFormat());
-					$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($channelProperty->getDataType(), $channelPropertyState->getExpectedValue(), $channelProperty->getFormat());
-
-					$dynamicPropertyData = [
-						'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
-						'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
-						'pending'        => $channelPropertyState->isPending(),
-					];
+						$dynamicPropertyData = [
+							'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+							'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
+							'pending'        => $channelPropertyState->isPending(),
+						];
+					}
 				}
+
+				$client->send(Utils\Json::encode([
+					WebSocketsWAMP\Application\Application::MSG_EVENT,
+					$topic->getId(),
+					Utils\Json::encode([
+						'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNEL_PROPERTY_ENTITY_REPORTED,
+						'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
+						'data'        => array_merge(
+							$channelProperty->toArray(),
+							$dynamicPropertyData,
+						),
+					]),
+				]));
 			}
 
-			$client->send(Utils\Json::encode([
-				WebSocketsWAMP\Application\Application::MSG_EVENT,
-				$topic->getId(),
-				Utils\Json::encode([
-					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNEL_PROPERTY_ENTITY_REPORTED,
-					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
-					'data'        => array_merge(
-						$channelProperty->toArray(),
-						$dynamicPropertyData,
-					),
-				]),
-			]));
-		}
+			$findConnectorsProperties = new DevicesModuleQueries\FindConnectorPropertiesQuery();
 
-		$findConnectorsProperties = new DevicesModuleQueries\FindConnectorPropertiesQuery();
+			$connectorsProperties = $this->connectorPropertiesRepository->getResultSet($findConnectorsProperties);
 
-		$connectorsProperties = $this->connectorPropertiesRepository->getResultSet($findConnectorsProperties);
+			/** @var DevicesModuleEntities\Connectors\Properties\Property $connectorProperty */
+			foreach ($connectorsProperties as $connectorProperty) {
+				$dynamicPropertyData = [];
 
-		/** @var DevicesModuleEntities\Connectors\Properties\Property $connectorProperty */
-		foreach ($connectorsProperties as $connectorProperty) {
-			$dynamicPropertyData = [];
+				if ($connectorProperty instanceof DevicesModuleEntities\Connectors\Properties\IDynamicProperty) {
+					$connectorPropertyState = $this->connectorPropertiesStatesRepository->findOne($connectorProperty);
 
-			if ($connectorProperty instanceof DevicesModuleEntities\Connectors\Properties\IDynamicProperty) {
-				$connectorPropertyState = $this->connectorPropertiesStatesRepository->findOne($connectorProperty);
+					if ($connectorPropertyState !== null) {
+						$actualValue = MetadataHelpers\ValueHelper::normalizeValue($connectorProperty->getDataType(), $connectorPropertyState->getActualValue(), $connectorProperty->getFormat());
+						$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($connectorProperty->getDataType(), $connectorPropertyState->getExpectedValue(), $connectorProperty->getFormat());
 
-				if ($connectorPropertyState !== null) {
-					$actualValue = MetadataHelpers\ValueHelper::normalizeValue($connectorProperty->getDataType(), $connectorPropertyState->getActualValue(), $connectorProperty->getFormat());
-					$expectedValue = MetadataHelpers\ValueHelper::normalizeValue($connectorProperty->getDataType(), $connectorPropertyState->getExpectedValue(), $connectorProperty->getFormat());
-
-					$dynamicPropertyData = [
-						'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
-						'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
-						'pending'        => $connectorPropertyState->isPending(),
-					];
+						$dynamicPropertyData = [
+							'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+							'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
+							'pending'        => $connectorPropertyState->isPending(),
+						];
+					}
 				}
-			}
 
-			$client->send(Utils\Json::encode([
-				WebSocketsWAMP\Application\Application::MSG_EVENT,
-				$topic->getId(),
-				Utils\Json::encode([
-					'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CONNECTOR_PROPERTY_ENTITY_REPORTED,
-					'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
-					'data'        => array_merge(
-						$connectorProperty->toArray(),
-						$dynamicPropertyData,
-					),
-				]),
-			]));
+				$client->send(Utils\Json::encode([
+					WebSocketsWAMP\Application\Application::MSG_EVENT,
+					$topic->getId(),
+					Utils\Json::encode([
+						'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CONNECTOR_PROPERTY_ENTITY_REPORTED,
+						'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
+						'data'        => array_merge(
+							$connectorProperty->toArray(),
+							$dynamicPropertyData,
+						),
+					]),
+				]));
+			}
+		} catch (Throwable $ex) {
+			$this->logger->error('State couldn\'t be sent to subscriber', [
+				'source'    => 'ws-server-plugin-controller',
+				'type'      => 'subscribe',
+				'exception' => [
+					'message' => $ex->getMessage(),
+					'code'    => $ex->getCode(),
+				],
+			]);
 		}
 	}
 
