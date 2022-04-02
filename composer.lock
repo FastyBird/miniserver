@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0b11a15e319b80cc692f61a170ce6f3",
+    "content-hash": "21102f0570bb5b6d3f269f6f0fc9db75",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -1833,25 +1833,25 @@
         },
         {
             "name": "fastybird/accounts-module",
-            "version": "v0.9.0",
+            "version": "v0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "826610fff6e346fc6fca3fb68c9a6f54b668447c"
+                "reference": "ef584a3448cc18fd88bdb688f9aebaad137d1fe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/826610fff6e346fc6fca3fb68c9a6f54b668447c",
-                "reference": "826610fff6e346fc6fca3fb68c9a6f54b668447c",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/ef584a3448cc18fd88bdb688f9aebaad137d1fe9",
+                "reference": "ef584a3448cc18fd88bdb688f9aebaad137d1fe9",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/exchange": "^0.27",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
-                "fastybird/simple-auth": "^0.2",
-                "fastybird/web-server": "^0.7",
+                "fastybird/exchange": "^0.29",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
+                "fastybird/simple-auth": "^0.3",
+                "fastybird/web-server": "^0.8",
                 "ipub/doctrine-consistence": "^0.4",
                 "ipub/doctrine-timestampable": "^1.5",
                 "nettrine/orm": "^0.8",
@@ -1874,17 +1874,17 @@
             "extra": {
                 "patches": {
                     "doctrine/orm": {
-                        "Bug: Ramsey uuid not working - Part 1": "patches/doctrine.orm.uuid.1.diff",
-                        "Bug: Ramsey uuid not working - Part 2": "patches/doctrine.orm.uuid.2.diff"
+                        "Bug: Ramsey uuid not working - Part 1": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.1.diff",
+                        "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.2.diff"
                     },
                     "ramsey/uuid-doctrine": {
-                        "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
+                        "Bug: Ramsey uuid conversion fallback": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/ramsey.uuid.doctrine.diff"
                     },
                     "nettrine/orm": {
-                        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
                     },
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -1926,20 +1926,20 @@
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
                 "source": "https://github.com/FastyBird/accounts-module"
             },
-            "time": "2022-03-29T08:27:19+00:00"
+            "time": "2022-04-02T11:05:31+00:00"
         },
         {
             "name": "fastybird/bootstrap",
-            "version": "v0.4.0",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/bootstrap.git",
-                "reference": "1ecd0f56d1a2f886c61da64bcf4085df6dd8c316"
+                "reference": "9233252e0186c025296b56d3f350b186cf1af5a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/bootstrap/zipball/1ecd0f56d1a2f886c61da64bcf4085df6dd8c316",
-                "reference": "1ecd0f56d1a2f886c61da64bcf4085df6dd8c316",
+                "url": "https://api.github.com/repos/FastyBird/bootstrap/zipball/9233252e0186c025296b56d3f350b186cf1af5a7",
+                "reference": "9233252e0186c025296b56d3f350b186cf1af5a7",
                 "shasum": ""
             },
             "require": {
@@ -1977,7 +1977,7 @@
             "extra": {
                 "patches": {
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -2016,20 +2016,20 @@
                 "issues": "https://github.com/FastyBird/bootstrap/issues",
                 "source": "https://github.com/FastyBird/bootstrap"
             },
-            "time": "2022-03-21T20:40:25+00:00"
+            "time": "2022-03-31T15:19:06+00:00"
         },
         {
             "name": "fastybird/datetime-factory",
-            "version": "v0.3.0",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/datetime-factory.git",
-                "reference": "d8bbf10d6a4515fe707c1cc37bef1a42d2cdbed0"
+                "reference": "8732004f6a87b09be2f2e5f17b4c66158d1ebe63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/datetime-factory/zipball/d8bbf10d6a4515fe707c1cc37bef1a42d2cdbed0",
-                "reference": "d8bbf10d6a4515fe707c1cc37bef1a42d2cdbed0",
+                "url": "https://api.github.com/repos/FastyBird/datetime-factory/zipball/8732004f6a87b09be2f2e5f17b4c66158d1ebe63",
+                "reference": "8732004f6a87b09be2f2e5f17b4c66158d1ebe63",
                 "shasum": ""
             },
             "require": {
@@ -2054,7 +2054,7 @@
             "extra": {
                 "patches": {
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -2078,7 +2078,7 @@
                     "email": "adam.kadlec@fastybird.com"
                 }
             ],
-            "description": "FastyBird date & time helpers with support timezones",
+            "description": "Date & time service factory with timezones support",
             "homepage": "https://www.fastybird.com",
             "keywords": [
                 "date",
@@ -2093,30 +2093,30 @@
                 "issues": "https://github.com/FastyBird/datetime-factory/issues",
                 "source": "https://github.com/FastyBird/datetime-factory"
             },
-            "time": "2022-01-10T17:55:15+00:00"
+            "time": "2022-03-31T15:26:29+00:00"
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.44.0",
+            "version": "v0.48.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "2b7df4f4ab8980ecdc5f34b46f29b7d9da4295aa"
+                "reference": "83b317ac529286a4b43c3e6e97d1b83278e751c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/2b7df4f4ab8980ecdc5f34b46f29b7d9da4295aa",
-                "reference": "2b7df4f4ab8980ecdc5f34b46f29b7d9da4295aa",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/83b317ac529286a4b43c3e6e97d1b83278e751c1",
+                "reference": "83b317ac529286a4b43c3e6e97d1b83278e751c1",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
-                "fastybird/exchange": "^0.27",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
-                "fastybird/simple-auth": "^0.2",
-                "fastybird/web-server": "^0.7",
+                "fastybird/exchange": "^0.29",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
+                "fastybird/simple-auth": "^0.3",
+                "fastybird/web-server": "^0.8",
                 "ipub/doctrine-dynamic-discriminator-map": "^1.4",
                 "ipub/doctrine-timestampable": "^1.5",
                 "nettrine/orm": "^0.8",
@@ -2139,17 +2139,17 @@
             "extra": {
                 "patches": {
                     "doctrine/orm": {
-                        "Bug: Ramsey uuid not working - Part 1": "patches/doctrine.orm.uuid.1.diff",
-                        "Bug: Ramsey uuid not working - Part 2": "patches/doctrine.orm.uuid.2.diff"
+                        "Bug: Ramsey uuid not working - Part 1": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.1.diff",
+                        "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.2.diff"
                     },
                     "ramsey/uuid-doctrine": {
-                        "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
+                        "Bug: Ramsey uuid conversion fallback": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/ramsey.uuid.doctrine.diff"
                     },
                     "nettrine/orm": {
-                        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
                     },
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -2188,25 +2188,25 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-03-29T08:30:54+00:00"
+            "time": "2022-04-02T11:45:50+00:00"
         },
         {
             "name": "fastybird/exchange",
-            "version": "v0.27.0",
+            "version": "v0.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/exchange.git",
-                "reference": "af98710de5a15e3c9abce8228e0885e4697b60a8"
+                "reference": "2d186c055f6ab01526ae2565ed85d687dd574b50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/exchange/zipball/af98710de5a15e3c9abce8228e0885e4697b60a8",
-                "reference": "af98710de5a15e3c9abce8228e0885e4697b60a8",
+                "url": "https://api.github.com/repos/FastyBird/exchange/zipball/2d186c055f6ab01526ae2565ed85d687dd574b50",
+                "reference": "2d186c055f6ab01526ae2565ed85d687dd574b50",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/metadata": "^0.49",
+                "fastybird/metadata": "^0.50",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
                 "nette/utils": "^3.2",
@@ -2228,7 +2228,7 @@
             "extra": {
                 "patches": {
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -2268,27 +2268,27 @@
                 "issues": "https://github.com/FastyBird/exchange/issues",
                 "source": "https://github.com/FastyBird/exchange"
             },
-            "time": "2022-03-29T08:14:56+00:00"
+            "time": "2022-04-02T09:32:08+00:00"
         },
         {
             "name": "fastybird/fb-bus-connector",
-            "version": "v0.32.0",
+            "version": "v0.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-bus-connector.git",
-                "reference": "bed57a3ed59a0af584ea1be7cbcc78d4604166bf"
+                "reference": "d1ccb3557e8bd0f791504f52fb137087459f6890"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/bed57a3ed59a0af584ea1be7cbcc78d4604166bf",
-                "reference": "bed57a3ed59a0af584ea1be7cbcc78d4604166bf",
+                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/d1ccb3557e8bd0f791504f52fb137087459f6890",
+                "reference": "d1ccb3557e8bd0f791504f52fb137087459f6890",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.44",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
+                "fastybird/devices-module": "^0.48",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
                 "php": ">=7.4.0|>=8.0.0"
             },
             "require-dev": {
@@ -2308,7 +2308,7 @@
             "extra": {
                 "patches": {
                     "nettrine/orm": {
-                        "Enable connection overrides": "patches/nettrine.orm.mangerRegistry.diff"
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
                     }
                 }
             },
@@ -2347,28 +2347,28 @@
                 "issues": "https://github.com/FastyBird/fb-bus-connector/issues",
                 "source": "https://github.com/FastyBird/fb-bus-connector"
             },
-            "time": "2022-03-29T08:57:28+00:00"
+            "time": "2022-04-02T12:07:54+00:00"
         },
         {
             "name": "fastybird/fb-mqtt-connector",
-            "version": "v0.10.0",
+            "version": "v0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-mqtt-connector.git",
-                "reference": "187ae0d17c377166f3dc5fd93b5b22bdfc0954ef"
+                "reference": "948abf46e2aee3e2abc7cce9628151b3662e19e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fb-mqtt-connector/zipball/187ae0d17c377166f3dc5fd93b5b22bdfc0954ef",
-                "reference": "187ae0d17c377166f3dc5fd93b5b22bdfc0954ef",
+                "url": "https://api.github.com/repos/FastyBird/fb-mqtt-connector/zipball/948abf46e2aee3e2abc7cce9628151b3662e19e9",
+                "reference": "948abf46e2aee3e2abc7cce9628151b3662e19e9",
                 "shasum": ""
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.44",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
+                "fastybird/devices-module": "^0.48",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
                 "php": ">=7.4.0|>=8.0.0",
@@ -2393,10 +2393,10 @@
             "extra": {
                 "patches": {
                     "nettrine/orm": {
-                        "Enable connection overrides": "patches/nettrine.orm.mangerRegistry.diff"
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
                     },
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -2434,27 +2434,27 @@
                 "issues": "https://github.com/FastyBird/fb-mqtt-connector/issues",
                 "source": "https://github.com/FastyBird/fb-mqtt-connector"
             },
-            "time": "2022-03-29T08:51:55+00:00"
+            "time": "2022-04-02T12:08:33+00:00"
         },
         {
             "name": "fastybird/homekit-connector",
-            "version": "v0.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/homekit-connector.git",
-                "reference": "cec86f80b65f5959cde86d9913a2105a3ebdb718"
+                "reference": "724d2fcb9b2abf70cd009618017763b071916433"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/homekit-connector/zipball/cec86f80b65f5959cde86d9913a2105a3ebdb718",
-                "reference": "cec86f80b65f5959cde86d9913a2105a3ebdb718",
+                "url": "https://api.github.com/repos/FastyBird/homekit-connector/zipball/724d2fcb9b2abf70cd009618017763b071916433",
+                "reference": "724d2fcb9b2abf70cd009618017763b071916433",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.44",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
+                "fastybird/devices-module": "^0.48",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
                 "php": ">=7.4.0|>=8.0.0"
             },
             "require-dev": {
@@ -2470,6 +2470,7 @@
                 "phpstan/phpstan-nette": "^0.12",
                 "tracy/tracy": "^2.9"
             },
+            "default-branch": true,
             "type": "connector",
             "extra": {
                 "patches": {
@@ -2513,20 +2514,20 @@
                 "issues": "https://github.com/FastyBird/homekit-connector/issues",
                 "source": "https://github.com/FastyBird/homekit-connector"
             },
-            "time": "2022-03-29T09:34:20+00:00"
+            "time": "2022-04-02T12:10:51+00:00"
         },
         {
             "name": "fastybird/json-api",
-            "version": "v0.9.0",
+            "version": "v0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/json-api.git",
-                "reference": "f7a51cb6cfeebf9d74ed2d009fb4d3143ea5d11e"
+                "reference": "eeedbd2a44bfbf9baebb076002b584e0674d7e87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/json-api/zipball/f7a51cb6cfeebf9d74ed2d009fb4d3143ea5d11e",
-                "reference": "f7a51cb6cfeebf9d74ed2d009fb4d3143ea5d11e",
+                "url": "https://api.github.com/repos/FastyBird/json-api/zipball/eeedbd2a44bfbf9baebb076002b584e0674d7e87",
+                "reference": "eeedbd2a44bfbf9baebb076002b584e0674d7e87",
                 "shasum": ""
             },
             "require": {
@@ -2551,7 +2552,7 @@
             },
             "require-dev": {
                 "contributte/translation": "^0.9",
-                "fastybird/web-server": "^0.6",
+                "fastybird/web-server": "^0.8",
                 "mockery/mockery": "^1.4",
                 "ninjify/nunjuck": "^0.3",
                 "ninjify/qa": "^0.13",
@@ -2571,7 +2572,7 @@
             "extra": {
                 "patches": {
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -2610,20 +2611,20 @@
                 "issues": "https://github.com/FastyBird/json-api/issues",
                 "source": "https://github.com/FastyBird/json-api"
             },
-            "time": "2022-03-17T10:01:30+00:00"
+            "time": "2022-03-31T15:42:55+00:00"
         },
         {
             "name": "fastybird/metadata",
-            "version": "v0.49.0",
+            "version": "v0.50.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/metadata.git",
-                "reference": "fb153136de78044bcc587041c190c870dfdae5e0"
+                "reference": "cc84847500ad32fe2b59d79bff2a801247823c6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/metadata/zipball/fb153136de78044bcc587041c190c870dfdae5e0",
-                "reference": "fb153136de78044bcc587041c190c870dfdae5e0",
+                "url": "https://api.github.com/repos/FastyBird/metadata/zipball/cc84847500ad32fe2b59d79bff2a801247823c6b",
+                "reference": "cc84847500ad32fe2b59d79bff2a801247823c6b",
                 "shasum": ""
             },
             "require": {
@@ -2684,27 +2685,27 @@
                 "issues": "https://github.com/FastyBird/metadata/issues",
                 "source": "https://github.com/FastyBird/metadata"
             },
-            "time": "2022-03-29T08:04:37+00:00"
+            "time": "2022-04-02T09:24:42+00:00"
         },
         {
             "name": "fastybird/modbus-connector",
-            "version": "v0.12.0",
+            "version": "v0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modbus-connector.git",
-                "reference": "9e61d151253a293f47122a77d7cca967976e9f2b"
+                "reference": "638984de8cd2f2621857d6f05b936aa74efec108"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/9e61d151253a293f47122a77d7cca967976e9f2b",
-                "reference": "9e61d151253a293f47122a77d7cca967976e9f2b",
+                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/638984de8cd2f2621857d6f05b936aa74efec108",
+                "reference": "638984de8cd2f2621857d6f05b936aa74efec108",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.44",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
+                "fastybird/devices-module": "^0.48",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
                 "php": ">=7.4.0|>=8.0.0"
             },
             "require-dev": {
@@ -2722,9 +2723,10 @@
             },
             "type": "connector",
             "extra": {
+                "enable-patching": false,
                 "patches": {
                     "nettrine/orm": {
-                        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
                     }
                 }
             },
@@ -2762,28 +2764,28 @@
                 "issues": "https://github.com/FastyBird/modbus-connector/issues",
                 "source": "https://github.com/FastyBird/modbus-connector"
             },
-            "time": "2022-03-29T08:52:19+00:00"
+            "time": "2022-04-02T12:07:02+00:00"
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
-            "version": "v0.30.0",
+            "version": "v0.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
-                "reference": "9abbbf331580fcbf3056b51568115c6643adaf6f"
+                "reference": "d2e93286d6bc15ed051066369d97613d155b8197"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/9abbbf331580fcbf3056b51568115c6643adaf6f",
-                "reference": "9abbbf331580fcbf3056b51568115c6643adaf6f",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/d2e93286d6bc15ed051066369d97613d155b8197",
+                "reference": "d2e93286d6bc15ed051066369d97613d155b8197",
                 "shasum": ""
             },
             "require": {
                 "clue/redis-protocol": "^0.3",
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/datetime-factory": "^0.3",
-                "fastybird/exchange": "^0.27",
-                "fastybird/metadata": "^0.49",
+                "fastybird/datetime-factory": "^0.4",
+                "fastybird/exchange": "^0.29",
+                "fastybird/metadata": "^0.50",
                 "fastybird/socket-server-factory": "^0.4",
                 "nette/bootstrap": "^3.0",
                 "nette/di": "^3.0",
@@ -2811,7 +2813,7 @@
             "extra": {
                 "patches": {
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -2852,7 +2854,7 @@
                 "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
                 "source": "https://github.com/FastyBird/redisdb-exchange-plugin"
             },
-            "time": "2022-03-29T08:23:52+00:00"
+            "time": "2022-04-02T09:41:11+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -2941,23 +2943,23 @@
         },
         {
             "name": "fastybird/shelly-connector",
-            "version": "v0.17.0",
+            "version": "v0.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/shelly-connector.git",
-                "reference": "31b8b364bf9d371212d95078df7714a1c9e18dff"
+                "reference": "cadc1a1c002fd63274c1c1c380001a5d8f0719c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/shelly-connector/zipball/31b8b364bf9d371212d95078df7714a1c9e18dff",
-                "reference": "31b8b364bf9d371212d95078df7714a1c9e18dff",
+                "url": "https://api.github.com/repos/FastyBird/shelly-connector/zipball/cadc1a1c002fd63274c1c1c380001a5d8f0719c1",
+                "reference": "cadc1a1c002fd63274c1c1c380001a5d8f0719c1",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.44",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
+                "fastybird/devices-module": "^0.48",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
                 "php": ">=7.4.0|>=8.0.0"
             },
             "require-dev": {
@@ -2977,7 +2979,7 @@
             "extra": {
                 "patches": {
                     "nettrine/orm": {
-                        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
                     }
                 }
             },
@@ -3015,26 +3017,26 @@
                 "issues": "https://github.com/FastyBird/shelly-connector/issues",
                 "source": "https://github.com/FastyBird/shelly-connector"
             },
-            "time": "2022-03-29T08:52:32+00:00"
+            "time": "2022-04-02T12:09:14+00:00"
         },
         {
             "name": "fastybird/simple-auth",
-            "version": "v0.2.1",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/simple-auth.git",
-                "reference": "857f485081919803446388239935e881de853113"
+                "reference": "b976e360896c0120ff8f6d7452bdc1e8c0edbeb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/857f485081919803446388239935e881de853113",
-                "reference": "857f485081919803446388239935e881de853113",
+                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/b976e360896c0120ff8f6d7452bdc1e8c0edbeb8",
+                "reference": "b976e360896c0120ff8f6d7452bdc1e8c0edbeb8",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "ext-openssl": "*",
-                "fastybird/datetime-factory": "^0.3",
+                "fastybird/datetime-factory": "^0.4",
                 "ipub/doctrine-consistence": "^0.4",
                 "ipub/doctrine-crud": "^3.0",
                 "ipub/doctrine-dynamic-discriminator-map": "^1.4",
@@ -3048,7 +3050,7 @@
                 "ramsey/uuid-doctrine": "^1.8"
             },
             "require-dev": {
-                "fastybird/web-server": "^0.5",
+                "fastybird/web-server": "^0.8",
                 "mockery/mockery": "^1.4",
                 "nettrine/cache": "^0.3",
                 "nettrine/orm": "^0.8",
@@ -3068,7 +3070,7 @@
             "extra": {
                 "patches": {
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -3107,7 +3109,7 @@
                 "issues": "https://github.com/FastyBird/simple-auth/issues",
                 "source": "https://github.com/FastyBird/simple-auth"
             },
-            "time": "2022-01-14T17:24:58+00:00"
+            "time": "2022-03-31T15:48:09+00:00"
         },
         {
             "name": "fastybird/socket-server-factory",
@@ -3185,25 +3187,25 @@
         },
         {
             "name": "fastybird/triggers-module",
-            "version": "v0.25.0",
+            "version": "v0.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "ac81f79cd13549d68a6804b740bd682b38aaa1b8"
+                "reference": "9400df58fe2fbf9d854f374df05d2273006afdf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/ac81f79cd13549d68a6804b740bd682b38aaa1b8",
-                "reference": "ac81f79cd13549d68a6804b740bd682b38aaa1b8",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/9400df58fe2fbf9d854f374df05d2273006afdf3",
+                "reference": "9400df58fe2fbf9d854f374df05d2273006afdf3",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/exchange": "^0.27",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
-                "fastybird/simple-auth": "^0.2",
-                "fastybird/web-server": "^0.7",
+                "fastybird/exchange": "^0.29",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
+                "fastybird/simple-auth": "^0.3",
+                "fastybird/web-server": "^0.8",
                 "ipub/doctrine-phone": "^1.6",
                 "ipub/doctrine-timestampable": "^1.5",
                 "nettrine/orm": "^0.8",
@@ -3226,17 +3228,17 @@
             "extra": {
                 "patches": {
                     "doctrine/orm": {
-                        "Bug: Ramsey uuid not working - Part 1": "patches/doctrine.orm.uuid.1.diff",
-                        "Bug: Ramsey uuid not working - Part 2": "patches/doctrine.orm.uuid.2.diff"
+                        "Bug: Ramsey uuid not working - Part 1": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.1.diff",
+                        "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.2.diff"
                     },
                     "ramsey/uuid-doctrine": {
-                        "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
+                        "Bug: Ramsey uuid conversion fallback": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/ramsey.uuid.doctrine.diff"
                     },
                     "nettrine/orm": {
-                        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
                     },
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -3276,7 +3278,7 @@
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
                 "source": "https://github.com/FastyBird/triggers-module"
             },
-            "time": "2022-03-29T08:29:29+00:00"
+            "time": "2022-04-02T11:40:30+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -3284,22 +3286,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ui-module.git",
-                "reference": "bcdb9e3150591fc79bee35765b89e6aac5467398"
+                "reference": "821948cfb1e9f21b18db076a8fae8d727880e8d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/bcdb9e3150591fc79bee35765b89e6aac5467398",
-                "reference": "bcdb9e3150591fc79bee35765b89e6aac5467398",
+                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/821948cfb1e9f21b18db076a8fae8d727880e8d6",
+                "reference": "821948cfb1e9f21b18db076a8fae8d727880e8d6",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
-                "fastybird/exchange": "^0.27",
-                "fastybird/json-api": "^0.9",
-                "fastybird/metadata": "^0.49",
-                "fastybird/simple-auth": "^0.2",
-                "fastybird/web-server": "^0.7",
+                "fastybird/exchange": "^0.29",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.50",
+                "fastybird/simple-auth": "^0.3",
+                "fastybird/web-server": "^0.8",
                 "ipub/doctrine-consistence": "^0.4",
                 "ipub/doctrine-dynamic-discriminator-map": "^1.4",
                 "ipub/doctrine-timestampable": "^1.5",
@@ -3324,17 +3326,17 @@
             "extra": {
                 "patches": {
                     "doctrine/orm": {
-                        "Bug: Ramsey uuid not working - Part 1": "patches/doctrine.orm.uuid.1.diff",
-                        "Bug: Ramsey uuid not working - Part 2": "patches/doctrine.orm.uuid.2.diff"
+                        "Bug: Ramsey uuid not working - Part 1": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.1.diff",
+                        "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.2.diff"
                     },
                     "ramsey/uuid-doctrine": {
-                        "Bug: Ramsey uuid conversion fallback": "patches/ramsey.uuid.doctrine.diff"
+                        "Bug: Ramsey uuid conversion fallback": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/ramsey.uuid.doctrine.diff"
                     },
                     "nettrine/orm": {
-                        "Enable connection overides": "patches/nettrine.orm.mangerRegistry.diff"
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
                     },
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -3372,20 +3374,20 @@
                 "issues": "https://github.com/FastyBird/ui-module/issues",
                 "source": "https://github.com/FastyBird/ui-module"
             },
-            "time": "2022-03-29T08:31:36+00:00"
+            "time": "2022-04-02T11:46:22+00:00"
         },
         {
             "name": "fastybird/web-server",
-            "version": "v0.7.0",
+            "version": "v0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/web-server.git",
-                "reference": "1b810e67ad8bc54f734e3482ad0c16a17287ddd4"
+                "reference": "0e41598858d9d11367981c14707d92605180a8ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/web-server/zipball/1b810e67ad8bc54f734e3482ad0c16a17287ddd4",
-                "reference": "1b810e67ad8bc54f734e3482ad0c16a17287ddd4",
+                "url": "https://api.github.com/repos/FastyBird/web-server/zipball/0e41598858d9d11367981c14707d92605180a8ce",
+                "reference": "0e41598858d9d11367981c14707d92605180a8ce",
                 "shasum": ""
             },
             "require": {
@@ -3425,7 +3427,7 @@
             "extra": {
                 "patches": {
                     "nette/utils": {
-                        "Bug: Offset check with null support": "patches/nette.array.offsetCheck.diff"
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
                     }
                 }
             },
@@ -3465,7 +3467,7 @@
                 "issues": "https://github.com/FastyBird/web-server/issues",
                 "source": "https://github.com/FastyBird/web-server"
             },
-            "time": "2022-01-12T08:42:17+00:00"
+            "time": "2022-03-31T15:40:43+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -3525,16 +3527,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.12.45",
+            "version": "8.12.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "7f494fd3b87c7d83472e8b6126eedc6b72dd3f3e"
+                "reference": "d0a5e2637b650db38e0cce9b85897df1b9809984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/7f494fd3b87c7d83472e8b6126eedc6b72dd3f3e",
-                "reference": "7f494fd3b87c7d83472e8b6126eedc6b72dd3f3e",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/d0a5e2637b650db38e0cce9b85897df1b9809984",
+                "reference": "d0a5e2637b650db38e0cce9b85897df1b9809984",
                 "shasum": ""
             },
             "require": {
@@ -3594,7 +3596,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2022-03-10T10:28:34+00:00"
+            "time": "2022-03-31T08:27:57+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -7184,16 +7186,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "93ebd0014cab80c4ea9f5e297ea48672f1b87706"
+                "reference": "77a32518733312af16a44300404e945338981de3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/93ebd0014cab80c4ea9f5e297ea48672f1b87706",
-                "reference": "93ebd0014cab80c4ea9f5e297ea48672f1b87706",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/77a32518733312af16a44300404e945338981de3",
+                "reference": "77a32518733312af16a44300404e945338981de3",
                 "shasum": ""
             },
             "require": {
@@ -7228,9 +7230,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.6.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.6.1"
             },
-            "time": "2022-01-04T19:58:01+00:00"
+            "time": "2022-03-15T21:29:03+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -9426,16 +9428,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v5.4.3",
+            "version": "v5.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "d65e1bd990c740e31feb07d2b0927b8d4df9956f"
+                "reference": "05624c386afa1b4ccc1357463d830fade8d9d404"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/d65e1bd990c740e31feb07d2b0927b8d4df9956f",
-                "reference": "d65e1bd990c740e31feb07d2b0927b8d4df9956f",
+                "url": "https://api.github.com/repos/symfony/config/zipball/05624c386afa1b4ccc1357463d830fade8d9d404",
+                "reference": "05624c386afa1b4ccc1357463d830fade8d9d404",
                 "shasum": ""
             },
             "require": {
@@ -9485,7 +9487,7 @@
             "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v5.4.3"
+                "source": "https://github.com/symfony/config/tree/v5.4.7"
             },
             "funding": [
                 {
@@ -9501,20 +9503,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-03T09:50:52+00:00"
+            "time": "2022-03-21T13:42:03+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.5",
+            "version": "v5.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "d8111acc99876953f52fe16d4c50eb60940d49ad"
+                "reference": "900275254f0a1a2afff1ab0e11abd5587a10e1d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/d8111acc99876953f52fe16d4c50eb60940d49ad",
-                "reference": "d8111acc99876953f52fe16d4c50eb60940d49ad",
+                "url": "https://api.github.com/repos/symfony/console/zipball/900275254f0a1a2afff1ab0e11abd5587a10e1d6",
+                "reference": "900275254f0a1a2afff1ab0e11abd5587a10e1d6",
                 "shasum": ""
             },
             "require": {
@@ -9584,7 +9586,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.5"
+                "source": "https://github.com/symfony/console/tree/v5.4.7"
             },
             "funding": [
                 {
@@ -9600,7 +9602,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-24T12:45:35+00:00"
+            "time": "2022-03-31T17:09:19+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -9835,16 +9837,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v6.0.6",
+            "version": "v6.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "52b888523545b0b4049ab9ce48766802484d7046"
+                "reference": "6c9e4c41f2c51dfde3db298594ed9cba55dbf5ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/52b888523545b0b4049ab9ce48766802484d7046",
-                "reference": "52b888523545b0b4049ab9ce48766802484d7046",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/6c9e4c41f2c51dfde3db298594ed9cba55dbf5ff",
+                "reference": "6c9e4c41f2c51dfde3db298594ed9cba55dbf5ff",
                 "shasum": ""
             },
             "require": {
@@ -9878,7 +9880,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v6.0.6"
+                "source": "https://github.com/symfony/filesystem/tree/v6.0.7"
             },
             "funding": [
                 {
@@ -9894,20 +9896,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-02T12:58:14+00:00"
+            "time": "2022-04-01T12:54:51+00:00"
         },
         {
             "name": "symfony/http-client",
-            "version": "v6.0.5",
+            "version": "v6.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "a8f87328930932c455cffd048f965d1223d91915"
+                "reference": "a7930c47248b9b57e9d0b8da100ffc1e031536dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/a8f87328930932c455cffd048f965d1223d91915",
-                "reference": "a8f87328930932c455cffd048f965d1223d91915",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/a7930c47248b9b57e9d0b8da100ffc1e031536dc",
+                "reference": "a7930c47248b9b57e9d0b8da100ffc1e031536dc",
                 "shasum": ""
             },
             "require": {
@@ -9962,7 +9964,7 @@
             "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v6.0.5"
+                "source": "https://github.com/symfony/http-client/tree/v6.0.7"
             },
             "funding": [
                 {
@@ -9978,7 +9980,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-27T08:47:28+00:00"
+            "time": "2022-04-01T12:27:43+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -10856,16 +10858,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v6.0.6",
+            "version": "v6.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "ba979f0e66df001e2c30e98d9249eb9994d3589c"
+                "reference": "384208d97ba09fdeeb49096bf3b3db4c2c48dcef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/ba979f0e66df001e2c30e98d9249eb9994d3589c",
-                "reference": "ba979f0e66df001e2c30e98d9249eb9994d3589c",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/384208d97ba09fdeeb49096bf3b3db4c2c48dcef",
+                "reference": "384208d97ba09fdeeb49096bf3b3db4c2c48dcef",
                 "shasum": ""
             },
             "require": {
@@ -10937,7 +10939,7 @@
             "description": "Handles serializing and deserializing data structures, including object graphs, into array structures or other formats like XML and JSON.",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/serializer/tree/v6.0.6"
+                "source": "https://github.com/symfony/serializer/tree/v6.0.7"
             },
             "funding": [
                 {
@@ -10953,7 +10955,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-02T12:58:14+00:00"
+            "time": "2022-03-24T18:04:39+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -11124,16 +11126,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.4.6",
+            "version": "v5.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "a7ca9fdfffb0174209440c2ffa1dee228e15d95b"
+                "reference": "e1eb790575202ee3ac2659f55b93b05853726f8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/a7ca9fdfffb0174209440c2ffa1dee228e15d95b",
-                "reference": "a7ca9fdfffb0174209440c2ffa1dee228e15d95b",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/e1eb790575202ee3ac2659f55b93b05853726f8e",
+                "reference": "e1eb790575202ee3ac2659f55b93b05853726f8e",
                 "shasum": ""
             },
             "require": {
@@ -11201,7 +11203,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.4.6"
+                "source": "https://github.com/symfony/translation/tree/v5.4.7"
             },
             "funding": [
                 {
@@ -11217,7 +11219,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-02T12:56:28+00:00"
+            "time": "2022-03-24T17:09:09+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -12587,6 +12589,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "fastybird/homekit-connector": 20,
         "fastybird/ui-module": 20
     },
     "prefer-stable": true,
