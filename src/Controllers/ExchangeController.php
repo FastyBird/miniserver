@@ -276,11 +276,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 							throw new Exceptions\InvalidArgumentException('Property could not be found in database');
 						}
 
-						$child = null;
-
 						if ($deviceProperty->getParent() !== null) {
-							$child = $deviceProperty;
-
 							$deviceProperty = $deviceProperty->getParent();
 						}
 
@@ -296,38 +292,10 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 						]);
 
 						if ($devicePropertyState === null) {
-							$devicePropertyState = $this->devicePropertiesStatesManager->create($deviceProperty, $stateData);
+							$this->devicePropertiesStatesManager->create($deviceProperty, $stateData);
 
 						} else {
-							$devicePropertyState = $this->devicePropertiesStatesManager->update($deviceProperty, $devicePropertyState, $stateData);
-						}
-
-						if ($devicePropertyState instanceof States\IProperty) {
-							$publishData = [];
-
-							if ($child !== null) {
-								$publishData[] = array_merge(
-									$child->toArray(),
-									$devicePropertyState->toExchange($child),
-								);
-							}
-
-							$publishData[] = array_merge(
-								$deviceProperty->toArray(),
-								$devicePropertyState->toExchange($deviceProperty),
-							);
-
-							foreach ($publishData as $row) {
-								$client->send(Utils\Json::encode([
-									WebSocketsWAMP\Application\Application::MSG_EVENT,
-									$topic->getId(),
-									Utils\Json::encode([
-										'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_DEVICE_PROPERTY_ENTITY_UPDATED,
-										'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
-										'data'        => $row,
-									]),
-								]));
-							}
+							$this->devicePropertiesStatesManager->update($deviceProperty, $devicePropertyState, $stateData);
 						}
 					} elseif ($args['routing_key'] === Metadata\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY) {
 						$findChannelProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
@@ -339,11 +307,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 							throw new Exceptions\InvalidArgumentException('Property could not be found in database');
 						}
 
-						$child = null;
-
 						if ($channelProperty->getParent() !== null) {
-							$child = $channelProperty;
-
 							$channelProperty = $channelProperty->getParent();
 						}
 
@@ -359,38 +323,10 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 						]);
 
 						if ($channelPropertyState === null) {
-							$channelPropertyState = $this->channelPropertiesStatesManager->create($channelProperty, $stateData);
+							$this->channelPropertiesStatesManager->create($channelProperty, $stateData);
 
 						} else {
-							$channelPropertyState = $this->channelPropertiesStatesManager->update($channelProperty, $channelPropertyState, $stateData);
-						}
-
-						if ($channelPropertyState instanceof States\IProperty) {
-							$publishData = [];
-
-							if ($child !== null) {
-								$publishData[] = array_merge(
-									$child->toArray(),
-									$channelPropertyState->toExchange($child),
-								);
-							}
-
-							$publishData[] = array_merge(
-								$channelProperty->toArray(),
-								$channelPropertyState->toExchange($channelProperty),
-							);
-
-							foreach ($publishData as $row) {
-								$client->send(Utils\Json::encode([
-									WebSocketsWAMP\Application\Application::MSG_EVENT,
-									$topic->getId(),
-									Utils\Json::encode([
-										'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CHANNEL_PROPERTY_ENTITY_UPDATED,
-										'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
-										'data'        => $row,
-									]),
-								]));
-							}
+							$this->channelPropertiesStatesManager->update($channelProperty, $channelPropertyState, $stateData);
 						}
 					} elseif ($args['routing_key'] === Metadata\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY) {
 						$findConnectorProperty = new DevicesModuleQueries\FindConnectorPropertiesQuery();
@@ -414,25 +350,10 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 						]);
 
 						if ($connectorPropertyState === null) {
-							$connectorPropertyState = $this->connectorPropertiesStatesManager->create($connectorProperty, $stateData);
+							$this->connectorPropertiesStatesManager->create($connectorProperty, $stateData);
 
 						} else {
-							$connectorPropertyState = $this->connectorPropertiesStatesManager->update($connectorProperty, $connectorPropertyState, $stateData);
-						}
-
-						if ($connectorPropertyState instanceof States\IProperty) {
-							$client->send(Utils\Json::encode([
-								WebSocketsWAMP\Application\Application::MSG_EVENT,
-								$topic->getId(),
-								Utils\Json::encode([
-									'routing_key' => Metadata\Types\RoutingKeyType::ROUTE_CONNECTOR_PROPERTY_ENTITY_UPDATED,
-									'source'      => Metadata\Types\ModuleSourceType::SOURCE_MODULE_DEVICES,
-									'data'        => array_merge(
-										$connectorProperty->toArray(),
-										$connectorPropertyState->toExchange($connectorProperty),
-									),
-								]),
-							]));
+							$this->connectorPropertiesStatesManager->update($connectorProperty, $connectorPropertyState, $stateData);
 						}
 					}
 				}

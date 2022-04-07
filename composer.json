@@ -1,8 +1,8 @@
 {
-  "name": "fastybird/miniserver",
-  "type": "project",
-  "description": "FastyBird IoT MiniServer application",
-  "keywords": [
+  "name" : "fastybird/miniserver",
+  "type" : "project",
+  "description" : "FastyBird IoT MiniServer application",
+  "keywords" : [
     "fastybird",
     "fb",
     "miniserver",
@@ -11,19 +11,19 @@
     "internet of things"
   ],
 
-  "homepage": "https://www.fastybird.com",
+  "homepage" : "https://www.fastybird.com",
 
-  "license": "Apache-2.0",
+  "license" : "Apache-2.0",
 
-  "authors": [
+  "authors" : [
     {
-      "name": "FastyBird s.r.o.",
-      "email": "code@fastybird.com",
-      "homepage": "https://www.fastybird.com"
+      "name" : "FastyBird s.r.o.",
+      "email" : "code@fastybird.com",
+      "homepage" : "https://www.fastybird.com"
     },
     {
-      "name": "Adam Kadlec",
-      "email": "adam.kadlec@fastybird.com"
+      "name" : "Adam Kadlec",
+      "email" : "adam.kadlec@fastybird.com"
     }
   ],
 
@@ -33,35 +33,35 @@
     "source" : "https://github.com/FastyBird/miniserver"
   },
 
-  "prefer-stable": true,
+  "prefer-stable" : true,
 
-  "minimum-stability": "stable",
+  "minimum-stability" : "stable",
 
-  "require": {
-    "php": ">=7.4.0",
-    "contributte/event-dispatcher": "^0.8",
-    "contributte/translation": "^0.9",
-    "fastybird/accounts-module": "^0.15",
-    "fastybird/bootstrap": "^0.5",
-    "fastybird/devices-module": "^0.52",
-    "fastybird/exchange": "^0.36",
-    "fastybird/fb-bus-connector": "^0.38",
-    "fastybird/fb-mqtt-connector": "^0.16",
-    "fastybird/homekit-connector": "^0.3",
-    "fastybird/metadata": "^0.53",
-    "fastybird/modbus-connector": "^0.20",
-    "fastybird/redisdb-exchange-plugin": "^0.39",
-    "fastybird/redisdb-storage-plugin": "^0.7",
-    "fastybird/shelly-connector": "^0.23",
-    "fastybird/socket-server-factory": "^0.4",
-    "fastybird/triggers-module": "^0.32",
-    "fastybird/ui-module": "@dev",
-    "ipub/websockets-wamp": "^1.4",
-    "sunrise/http-server-request": "^2.0",
-    "vlucas/phpdotenv": "^5.4"
+  "require" : {
+    "php" : ">=7.4.0",
+    "contributte/event-dispatcher" : "^0.8",
+    "contributte/translation" : "^0.9",
+    "fastybird/accounts-module" : "^0.15",
+    "fastybird/bootstrap" : "^0.5",
+    "fastybird/devices-module" : "^0.53",
+    "fastybird/exchange" : "^0.36",
+    "fastybird/fb-bus-connector" : "^0.39",
+    "fastybird/fb-mqtt-connector" : "^0.17",
+    "fastybird/homekit-connector" : "^0.4",
+    "fastybird/metadata" : "^0.53",
+    "fastybird/modbus-connector" : "^0.21",
+    "fastybird/redisdb-exchange-plugin" : "^0.39",
+    "fastybird/redisdb-storage-plugin" : "^0.7",
+    "fastybird/shelly-connector" : "^0.24",
+    "fastybird/socket-server-factory" : "^0.4",
+    "fastybird/triggers-module" : "^0.32",
+    "fastybird/ui-module" : "@dev",
+    "ipub/websockets-wamp" : "^1.4",
+    "sunrise/http-server-request" : "^2.0",
+    "vlucas/phpdotenv" : "^5.4"
   },
 
-  "require-dev": {
+  "require-dev" : {
     "mockery/mockery" : "^1.4",
     "ninjify/nunjuck" : "^0.3",
     "ninjify/qa" : "^0.12",
@@ -72,29 +72,29 @@
     "phpstan/phpstan-doctrine" : "^0.12",
     "phpstan/phpstan-nette" : "^0.12",
     "phpstan/phpstan-strict-rules" : "^0.12",
-    "tracy/tracy": "^2.9"
+    "tracy/tracy" : "^2.9"
   },
 
-  "autoload": {
-    "psr-4": {
-      "FastyBird\\MiniServer\\": "src/"
+  "autoload" : {
+    "psr-4" : {
+      "FastyBird\\MiniServer\\" : "src/"
     }
   },
 
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\Cases\\": "tests/cases",
-      "Tests\\Fixtures\\": "tests/fixtures",
-      "Tests\\Tools\\": "tests/tools"
+  "autoload-dev" : {
+    "psr-4" : {
+      "Tests\\Cases\\" : "tests/cases",
+      "Tests\\Fixtures\\" : "tests/fixtures",
+      "Tests\\Tools\\" : "tests/tools"
     }
   },
 
-  "config": {
-    "sort-packages": true
+  "config" : {
+    "sort-packages" : true
   },
 
-  "extra": {
-    "patches": {
+  "extra" : {
+    "patches" : {
       "doctrine/orm" : {
         "Bug: Ramsey uuid not working - Part 1" : "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.1.diff",
         "Bug: Ramsey uuid not working - Part 2" : "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.2.diff"
