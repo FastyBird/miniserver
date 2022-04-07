@@ -36,7 +36,7 @@ from kink import di
 from fastybird_miniserver.exchange.queue import ConsumerQueue, PublisherQueue
 
 
-class Worker(ABC):
+class Worker(ABC):  # pylint: disable=too-many-instance-attributes
     """
     Worker service
 
@@ -133,6 +133,9 @@ class Worker(ABC):
 
     def exchange_client_loop(self) -> None:
         """Data exchange client coroutine"""
+        if self.__exchange_client is None:
+            return
+
         try:
             self.__exchange_client.start()
 
@@ -219,8 +222,9 @@ class Worker(ABC):
         self.__stopped = True
 
         try:
-            # Terminate all exchange services
-            self.__exchange_client.stop()
+            if self.__exchange_client is not None:
+                # Terminate all exchange services
+                self.__exchange_client.stop()
 
         except Exception as ex:  # pylint: disable=broad-except
             self._logger.error(

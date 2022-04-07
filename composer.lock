@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ec929a25aee056e1dd18d660b483269",
+    "content-hash": "1dbeca4b05b05ae0ea7594242a054215",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -2097,16 +2097,16 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.53.0",
+            "version": "v0.54.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "0070091887336326141df2bb8678bfe03e3a04b6"
+                "reference": "aec36284cf765272c0b7fe1343b0ced0bd0cff94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/0070091887336326141df2bb8678bfe03e3a04b6",
-                "reference": "0070091887336326141df2bb8678bfe03e3a04b6",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/aec36284cf765272c0b7fe1343b0ced0bd0cff94",
+                "reference": "aec36284cf765272c0b7fe1343b0ced0bd0cff94",
                 "shasum": ""
             },
             "require": {
@@ -2188,7 +2188,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-04-07T08:45:01+00:00"
+            "time": "2022-04-07T20:49:52+00:00"
         },
         {
             "name": "fastybird/exchange",
@@ -2272,21 +2272,21 @@
         },
         {
             "name": "fastybird/fb-bus-connector",
-            "version": "v0.39.0",
+            "version": "v0.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-bus-connector.git",
-                "reference": "152840ec8d2505a391cec0c7446a56a38ae2e9f0"
+                "reference": "31e60278e33269f9d0e63381d3b14d0d4f52a292"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/152840ec8d2505a391cec0c7446a56a38ae2e9f0",
-                "reference": "152840ec8d2505a391cec0c7446a56a38ae2e9f0",
+                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/31e60278e33269f9d0e63381d3b14d0d4f52a292",
+                "reference": "31e60278e33269f9d0e63381d3b14d0d4f52a292",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.53",
+                "fastybird/devices-module": "^0.54",
                 "fastybird/json-api": "^0.10",
                 "fastybird/metadata": "^0.53",
                 "php": ">=7.4.0|>=8.0.0"
@@ -2347,26 +2347,26 @@
                 "issues": "https://github.com/FastyBird/fb-bus-connector/issues",
                 "source": "https://github.com/FastyBird/fb-bus-connector"
             },
-            "time": "2022-04-07T09:02:14+00:00"
+            "time": "2022-04-07T21:04:55+00:00"
         },
         {
             "name": "fastybird/fb-mqtt-connector",
-            "version": "v0.17.0",
+            "version": "v0.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-mqtt-connector.git",
-                "reference": "6c3d8dcd5ce717b4eea182b9f8af4e3ecac79ece"
+                "reference": "d6ab0a65beaa381a4c022d0472bd27cfd25f7538"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fb-mqtt-connector/zipball/6c3d8dcd5ce717b4eea182b9f8af4e3ecac79ece",
-                "reference": "6c3d8dcd5ce717b4eea182b9f8af4e3ecac79ece",
+                "url": "https://api.github.com/repos/FastyBird/fb-mqtt-connector/zipball/d6ab0a65beaa381a4c022d0472bd27cfd25f7538",
+                "reference": "d6ab0a65beaa381a4c022d0472bd27cfd25f7538",
                 "shasum": ""
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.53",
+                "fastybird/devices-module": "^0.54",
                 "fastybird/json-api": "^0.10",
                 "fastybird/metadata": "^0.53",
                 "nette/bootstrap": "^3.1",
@@ -2434,25 +2434,25 @@
                 "issues": "https://github.com/FastyBird/fb-mqtt-connector/issues",
                 "source": "https://github.com/FastyBird/fb-mqtt-connector"
             },
-            "time": "2022-04-07T09:02:23+00:00"
+            "time": "2022-04-07T21:06:08+00:00"
         },
         {
             "name": "fastybird/homekit-connector",
-            "version": "v0.4.0",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/homekit-connector.git",
-                "reference": "7311ddac22d6e42de22bf4b7317a881ef3cf8eeb"
+                "reference": "31109c2932fcd8dbc7888497f07d75a173c1d3d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/homekit-connector/zipball/7311ddac22d6e42de22bf4b7317a881ef3cf8eeb",
-                "reference": "7311ddac22d6e42de22bf4b7317a881ef3cf8eeb",
+                "url": "https://api.github.com/repos/FastyBird/homekit-connector/zipball/31109c2932fcd8dbc7888497f07d75a173c1d3d4",
+                "reference": "31109c2932fcd8dbc7888497f07d75a173c1d3d4",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.53",
+                "fastybird/devices-module": "^0.54",
                 "fastybird/json-api": "^0.10",
                 "fastybird/metadata": "^0.53",
                 "php": ">=7.4.0|>=8.0.0"
@@ -2513,7 +2513,7 @@
                 "issues": "https://github.com/FastyBird/homekit-connector/issues",
                 "source": "https://github.com/FastyBird/homekit-connector"
             },
-            "time": "2022-04-07T09:02:31+00:00"
+            "time": "2022-04-07T21:06:44+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2688,21 +2688,21 @@
         },
         {
             "name": "fastybird/modbus-connector",
-            "version": "v0.21.0",
+            "version": "v0.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modbus-connector.git",
-                "reference": "1aefbf2aff068bd6b9eb9de23a778e7c91862a0a"
+                "reference": "24c076c5eca4c6bd50f212b4c3c7d47bd3cd63af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/1aefbf2aff068bd6b9eb9de23a778e7c91862a0a",
-                "reference": "1aefbf2aff068bd6b9eb9de23a778e7c91862a0a",
+                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/24c076c5eca4c6bd50f212b4c3c7d47bd3cd63af",
+                "reference": "24c076c5eca4c6bd50f212b4c3c7d47bd3cd63af",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.53",
+                "fastybird/devices-module": "^0.54",
                 "fastybird/json-api": "^0.10",
                 "fastybird/metadata": "^0.53",
                 "php": ">=7.4.0|>=8.0.0"
@@ -2763,7 +2763,7 @@
                 "issues": "https://github.com/FastyBird/modbus-connector/issues",
                 "source": "https://github.com/FastyBird/modbus-connector"
             },
-            "time": "2022-04-07T08:58:58+00:00"
+            "time": "2022-04-07T21:10:34+00:00"
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
@@ -2942,21 +2942,21 @@
         },
         {
             "name": "fastybird/shelly-connector",
-            "version": "v0.24.0",
+            "version": "v0.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/shelly-connector.git",
-                "reference": "5901164fe8381d71606d0b1841d37708d8514b3f"
+                "reference": "8e89ea0bbd41fad540c061f1547d6f6c0eab6c2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/shelly-connector/zipball/5901164fe8381d71606d0b1841d37708d8514b3f",
-                "reference": "5901164fe8381d71606d0b1841d37708d8514b3f",
+                "url": "https://api.github.com/repos/FastyBird/shelly-connector/zipball/8e89ea0bbd41fad540c061f1547d6f6c0eab6c2a",
+                "reference": "8e89ea0bbd41fad540c061f1547d6f6c0eab6c2a",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.53",
+                "fastybird/devices-module": "^0.54",
                 "fastybird/json-api": "^0.10",
                 "fastybird/metadata": "^0.53",
                 "php": ">=7.4.0|>=8.0.0"
@@ -3016,7 +3016,7 @@
                 "issues": "https://github.com/FastyBird/shelly-connector/issues",
                 "source": "https://github.com/FastyBird/shelly-connector"
             },
-            "time": "2022-04-07T09:02:41+00:00"
+            "time": "2022-04-07T21:03:50+00:00"
         },
         {
             "name": "fastybird/simple-auth",
@@ -4891,16 +4891,16 @@
         },
         {
             "name": "latte/latte",
-            "version": "v2.11.0",
+            "version": "v2.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "a815687bfadaf3af51ae99f92edb4ea310c43426"
+                "reference": "21316b42fb0a4e43df01f73c55d52bd531823fda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/a815687bfadaf3af51ae99f92edb4ea310c43426",
-                "reference": "a815687bfadaf3af51ae99f92edb4ea310c43426",
+                "url": "https://api.github.com/repos/nette/latte/zipball/21316b42fb0a4e43df01f73c55d52bd531823fda",
+                "reference": "21316b42fb0a4e43df01f73c55d52bd531823fda",
                 "shasum": ""
             },
             "require": {
@@ -4969,9 +4969,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/latte/issues",
-                "source": "https://github.com/nette/latte/tree/v2.11.0"
+                "source": "https://github.com/nette/latte/tree/v2.11.1"
             },
-            "time": "2022-02-22T18:39:58+00:00"
+            "time": "2022-04-07T13:21:53+00:00"
         },
         {
             "name": "lcobucci/clock",

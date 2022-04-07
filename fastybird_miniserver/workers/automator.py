@@ -39,7 +39,9 @@ def create_worker(configuration_file: str, logger: logging.Logger = logging.getL
     """Create worker instance"""
     register_services(configuration_file=configuration_file)
 
-    di[AutomatorWorker] = AutomatorWorker(logger=logger)
+    di[AutomatorWorker] = AutomatorWorker(  # type: ignore[call-arg]  # pylint: disable=no-value-for-parameter
+        logger=logger,
+    )
 
 
 @inject(
@@ -64,7 +66,7 @@ class AutomatorWorker(Worker):
 
     # -----------------------------------------------------------------------------
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
         self,
         logger: logging.Logger,
         consumer_queue: ConsumerQueue,

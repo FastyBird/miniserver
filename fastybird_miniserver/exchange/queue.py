@@ -93,12 +93,19 @@ class PublisherQueue(IPublisherQueue):
             item = self.__queue.get()
 
             if isinstance(item, dict):
-                for publisher in self.__publishers:
-                    publisher.publish(
-                        source=item.get("source"),
-                        routing_key=item.get("routing_key"),
-                        data=item.get("data"),
-                    )
+                source = item.get("source")
+                routing_key = item.get("routing_key")
+
+                if (
+                    isinstance(source, (ModuleSource, PluginSource, ConnectorSource))
+                    and isinstance(routing_key, RoutingKey)
+                ):
+                    for publisher in self.__publishers:
+                        publisher.publish(
+                            source=source,
+                            routing_key=routing_key,
+                            data=item.get("data"),
+                        )
 
     # -----------------------------------------------------------------------------
 
@@ -166,12 +173,19 @@ class ConsumerQueue(IConsumerQueue):
             item = self.__queue.get()
 
             if isinstance(item, dict):
-                for consumer in self.__consumers:
-                    consumer.consume(
-                        source=item.get("source"),
-                        routing_key=item.get("routing_key"),
-                        data=item.get("data"),
-                    )
+                source = item.get("source")
+                routing_key = item.get("routing_key")
+
+                if (
+                    isinstance(source, (ModuleSource, PluginSource, ConnectorSource))
+                    and isinstance(routing_key, RoutingKey)
+                ):
+                    for consumer in self.__consumers:
+                        consumer.consume(
+                            source=source,
+                            routing_key=routing_key,
+                            data=item.get("data"),
+                        )
 
     # -----------------------------------------------------------------------------
 
