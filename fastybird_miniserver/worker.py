@@ -41,7 +41,7 @@ def cli() -> None:
 
 @click.command(name="fb:connector:start")
 @click.option("--connector", prompt="Connector ID", help="Connector uuid identifier")
-def connector(connector: str) -> None:
+def run_connector(connector: str) -> None:
     """Run connector worker as stand-alone instance"""
     connector_id = uuid.UUID(connector, version=4)
 
@@ -57,15 +57,15 @@ def connector(connector: str) -> None:
 
 
 @click.command(name="fb:automator:start")
-def automator() -> None:
+def run_automator() -> None:
     """Run automator worker as stand-alone instance"""
     create_automator_worker(
         configuration_file=path.dirname(path.abspath(__file__)) + "/../config/fb_gateway.yaml".replace("/", path.sep),
     )
 
 
-cli.add_command(connector)
-cli.add_command(automator)
+cli.add_command(run_connector)
+cli.add_command(run_automator)
 
 
 if __name__ == "__main__":
