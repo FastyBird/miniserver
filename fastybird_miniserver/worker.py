@@ -40,13 +40,19 @@ def cli() -> None:
 
 
 @click.command(name="fb:connector:start")
-def connector() -> None:
+@click.option("--connector", prompt="Connector ID", help="Connector uuid identifier")
+def connector(connector: str) -> None:
     """Run connector worker as stand-alone instance"""
+    connector_id = uuid.UUID(connector, version=4)
+
     create_connector_worker(
         configuration_file=path.dirname(path.abspath(__file__)) + "/../config/fb_gateway.yaml".replace("/", path.sep),
-        #  connector_id=uuid.UUID("17c59dfa-2edd-438e-8c49-faa4e38e5a5e")  # fb-bus
-        #  connector_id=uuid.UUID("20fba951-e76d-4d6b-a572-dec02c6d8de8")  # shelly
-        connector_id=uuid.UUID("bbcccf8c-33ab-431b-a795-d7bb38b6b6db"),  # modbus
+        connector_id=connector_id,
+        #  connector_id=uuid.UUID("17c59dfa-2edd-438e-8c49-faa4e38e5a5e")   # fb-bus
+        #  connector_id=uuid.UUID("20fba951-e76d-4d6b-a572-dec02c6d8de8")   # shelly
+        #  connector_id=uuid.UUID("bbcccf8c-33ab-431b-a795-d7bb38b6b6db"),  # modbus
+        #  connector_id=uuid.UUID("69786d15-fd0c-4d9f-9378-33287c2009fa"),  # fb-mqtt
+        #  connector_id=uuid.UUID("0387933d-35d3-4550-bc91-e4c953c288a6"),  # homekit
     )
 
 

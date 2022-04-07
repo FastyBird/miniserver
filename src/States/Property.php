@@ -18,6 +18,8 @@ namespace FastyBird\MiniServer\States;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
+use FastyBird\DevicesModule\Utilities as DevicesModuleUtilities;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
 
 /**
@@ -39,6 +41,9 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 
 	/** @var bool */
 	private bool $pending = false;
+
+	/** @var bool */
+	private bool $valid = false;
 
 	/** @var string|null */
 	private ?string $createdAt = null;
@@ -145,6 +150,22 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
+	public function isValid(): bool
+	{
+		return $this->valid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setValid(bool $valid): void
+	{
+		$this->valid = $valid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public static function getCreateFields(): array
 	{
 		return [
@@ -152,6 +173,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 			'actualValue'   => null,
 			'expectedValue' => null,
 			'pending'       => false,
+			'valid'         => false,
 			'createdAt'     => null,
 			'updatedAt'     => null,
 		];
@@ -166,6 +188,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 			'actualValue',
 			'expectedValue',
 			'pending',
+			'valid',
 			'updatedAt',
 		];
 	}
@@ -179,9 +202,24 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 			'actualValue'   => $this->getActualValue(),
 			'expectedValue' => $this->getExpectedValue(),
 			'pending'       => $this->isPending(),
+			'valid'         => $this->isValid(),
 			'createdAt'     => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
 			'updatedAt'     => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
 		], parent::toArray());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function toExchange(DevicesModuleEntities\IProperty $property): array
+	{
+		$actualValue = DevicesModuleUtilities\ValueHelper::normalizeValue($property->getDataType(), $this->getActualValue(), $property->getFormat(), $property->getInvalid());
+		$expectedValue = DevicesModuleUtilities\ValueHelper::normalizeValue($property->getDataType(), $this->getExpectedValue(), $property->getFormat(), $property->getInvalid());
+
+		return array_merge([
+			'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
+			'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
+		], $this->toArray());
 	}
 
 }

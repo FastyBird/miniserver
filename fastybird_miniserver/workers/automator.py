@@ -21,7 +21,7 @@ FastyBird automator worker
 # Python base dependencies
 import asyncio
 import logging
-from typing import List, Optional
+from typing import Optional
 
 # Worker dependencies
 from fastybird_exchange.client import IClient
@@ -30,6 +30,7 @@ from kink import di, inject
 
 # Worker libs
 from fastybird_miniserver.bootstrap import register_services
+from fastybird_miniserver.exchange.queue import ConsumerQueue, PublisherQueue
 from fastybird_miniserver.workers.worker import Worker
 
 
@@ -44,6 +45,9 @@ def create_worker(configuration_file: str, logger: logging.Logger = logging.getL
 @inject(
     bind={
         "automator": Automator,
+        "exchange_client": IClient,
+        "consumer_queue": ConsumerQueue,
+        "publisher_queue": PublisherQueue,
     }
 )
 class AutomatorWorker(Worker):
@@ -63,15 +67,22 @@ class AutomatorWorker(Worker):
     def __init__(
         self,
         logger: logging.Logger,
+        consumer_queue: ConsumerQueue,
+        publisher_queue: PublisherQueue,
         automator: Optional[Automator] = None,
-        exchange_clients: Optional[List[IClient]] = None,
+        exchange_client: Optional[IClient] = None,
     ) -> None:
         if automator is None:
             raise Exception("Automator service is not registered")
 
         self.__automator = automator
 
-        super().__init__(exchange_clients=exchange_clients, logger=logger)
+        super().__init__(
+            exchange_client=exchange_client,
+            consumer_queue=consumer_queue,
+            publisher_queue=publisher_queue,
+            logger=logger,
+        )
 
     # -----------------------------------------------------------------------------
 

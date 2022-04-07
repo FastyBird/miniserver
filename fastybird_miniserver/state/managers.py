@@ -24,13 +24,16 @@ from typing import Dict, Optional, Union
 
 # App dependencies
 from fastybird_devices_module.entities.channel import ChannelPropertyEntity
+from fastybird_devices_module.entities.connector import ConnectorPropertyEntity
 from fastybird_devices_module.entities.device import DevicePropertyEntity
 from fastybird_devices_module.managers.state import (
     IChannelPropertiesStatesManager,
+    IConnectorPropertiesStatesManager,
     IDevicePropertiesStatesManager,
 )
 from fastybird_devices_module.state.property import (
     IChannelPropertyState,
+    IConnectorPropertyState,
     IDevicePropertyState,
 )
 from fastybird_metadata.types import ButtonPayload, SwitchPayload
@@ -53,6 +56,7 @@ from fastybird_miniserver.state.entities import (
     ActionState,
     ChannelPropertyState,
     ConditionState,
+    ConnectorPropertyState,
     DevicePropertyState,
     PropertyState,
 )
@@ -71,6 +75,90 @@ def normalize_state_values(data: Dict) -> Dict[str, Union[str, bool, None]]:
             normalized_data[data_key] = str(data_value)
 
     return normalized_data
+
+
+@inject(alias=IConnectorPropertiesStatesManager)
+class ConnectorPropertiesStatesManager(IConnectorPropertiesStatesManager):
+    """
+    Connector properties states manager
+
+    @package        FastyBird:MiniServer!
+    @module         state/managers
+
+    @author         Adam Kadlec <adam.kadlec@fastybird.com>
+    """
+
+    __storage_manager: StorageManager
+
+    # -----------------------------------------------------------------------------
+
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
+        storage_manager_factory: StorageManagerFactory,
+        host: str = "127.0.0.1",
+        port: int = 6379,
+        username: Optional[str] = None,
+        password: Optional[str] = None,
+        database: int = 0,
+    ) -> None:
+        self.__storage_manager = storage_manager_factory.create(
+            host=host,
+            port=port,
+            database=database,
+            username=username,
+            password=password,
+            entity=ConnectorPropertyState,
+        )
+
+    # -----------------------------------------------------------------------------
+
+    def create(
+        self,
+        connector_property: ConnectorPropertyEntity,
+        data: Dict[str, Union[str, int, float, bool, datetime, ButtonPayload, SwitchPayload, None]],
+    ) -> ConnectorPropertyState:
+        """Create new connector property state"""
+        created_state = self.__storage_manager.create(
+            item_id=connector_property.id,
+            values=normalize_state_values(data=data),
+        )
+
+        if not isinstance(created_state, ConnectorPropertyState):
+            raise Exception("")
+
+        return created_state
+
+    # -----------------------------------------------------------------------------
+
+    def update(
+        self,
+        connector_property: ConnectorPropertyEntity,
+        state: IConnectorPropertyState,
+        data: Dict[str, Union[str, int, float, bool, datetime, ButtonPayload, SwitchPayload, None]],
+    ) -> ConnectorPropertyState:
+        """Update existing connector property state"""
+        if not isinstance(state, PropertyState):
+            raise AttributeError("Provided state entity is not valid instance")
+
+        updated_state = self.__storage_manager.update(state=state, values=normalize_state_values(data=data))
+
+        if not isinstance(updated_state, ConnectorPropertyState):
+            raise ValueError("Returned updated state is not expected state instance")
+
+        return updated_state
+
+    # -----------------------------------------------------------------------------
+
+    def delete(
+        self,
+        connector_property: ConnectorPropertyEntity,
+        state: IConnectorPropertyState,
+    ) -> bool:
+        """Delete existing connector property state"""
+        if not isinstance(state, PropertyState):
+            return False
+
+        return self.__storage_manager.delete(state=state)
 
 
 @inject(alias=IDevicePropertiesStatesManager)

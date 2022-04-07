@@ -23,14 +23,17 @@ import asyncio
 import logging
 import signal
 import time
-from abc import ABC, abstractmethod
+from abc import ABC
 from threading import Thread
 from types import FrameType
-from typing import List, Optional
+from typing import Optional
 
 # Worker dependencies
 from fastybird_exchange.client import IClient
 from kink import di
+
+# Worker libs
+from fastybird_miniserver.exchange.queue import ConsumerQueue, PublisherQueue
 
 
 class Worker(ABC):
@@ -45,25 +48,47 @@ class Worker(ABC):
 
     __stopped: bool = False
 
-    __exchange_clients: List[IClient] = []
+    __consumer_queue: ConsumerQueue
+    __publisher_queue: PublisherQueue
+    __exchange_client: Optional[IClient] = None
+
+    __exchange_consumer_thread: Thread
+    __exchange_publisher_thread: Thread
+    __exchange_client_thread: Thread
 
     _logger: logging.Logger
+
+    __SHUTDOWN_WAITING_DELAY: float = 3.0
 
     # -----------------------------------------------------------------------------
 
     def __init__(
         self,
-        exchange_clients: Optional[List[IClient]] = None,
+        consumer_queue: ConsumerQueue,
+        publisher_queue: PublisherQueue,
+        exchange_client: Optional[IClient] = None,
         logger: logging.Logger = logging.getLogger("dummy"),
     ) -> None:
-        # Exchange clients are injected from DI
-        if exchange_clients is None:
-            self.__exchange_clients = []
-        else:
-            self.__exchange_clients = exchange_clients
+        self.__publisher_queue = publisher_queue
+        self.__consumer_queue = consumer_queue
+        self.__exchange_client = exchange_client
 
         # self.__connector_thread = Thread(name="Connector thread", daemon=True, target=self.connector_loop)
-        self.__exchange_thread = Thread(name="Exchange thread", daemon=True, target=self.exchange_loop)
+        self.__exchange_client_thread = Thread(
+            name="Exchange client thread",
+            daemon=True,
+            target=self.exchange_client_loop,
+        )
+        self.__exchange_consumer_thread = Thread(
+            name="Exchange consumer thread",
+            daemon=True,
+            target=self.exchange_consumer_loop,
+        )
+        self.__exchange_publisher_thread = Thread(
+            name="Exchange publisher thread",
+            daemon=True,
+            target=self.exchange_publisher_loop,
+        )
 
         # Configure signal handlers
         signal.signal(signal.SIGINT, self.sigterm_handler)
@@ -77,11 +102,13 @@ class Worker(ABC):
         di["loop"] = asyncio.get_event_loop()
 
         # Register worker coroutines
-        # asyncio.ensure_future(self.exchange_loop())
+        # asyncio.ensure_future(self.exchange_client_loop())
         asyncio.ensure_future(self.worker_loop())
 
         # self.__connector_thread.start()
-        self.__exchange_thread.start()
+        self.__exchange_client_thread.start()
+        self.__exchange_consumer_thread.start()
+        self.__exchange_publisher_thread.start()
 
         # while not self.__stopped:
         #     # Just to keep worker running
@@ -99,28 +126,81 @@ class Worker(ABC):
 
     # -----------------------------------------------------------------------------
 
-    @abstractmethod
     async def worker_loop(self) -> None:
         """Connector coroutine"""
 
     # -----------------------------------------------------------------------------
 
-    def exchange_loop(self) -> None:
-        """Data exchange coroutine"""
+    def exchange_client_loop(self) -> None:
+        """Data exchange client coroutine"""
         try:
-            for client in self.__exchange_clients:
-                client.start()
+            self.__exchange_client.start()
 
             while not self.__stopped:
-                for client in self.__exchange_clients:
-                    client.handle()
+                self.__exchange_client.handle()
 
                 # await asyncio.sleep(0.001)
                 time.sleep(0.001)
 
         except Exception as ex:  # pylint: disable=broad-except
             self._logger.error(
-                "The exchange worker has been unexpectedly stopped.",
+                "The exchange client worker has been unexpectedly stopped.",
+                extra={
+                    "exception": {
+                        "message": str(ex),
+                        "code": type(ex).__name__,
+                    },
+                },
+            )
+
+            self.stop()
+
+    # -----------------------------------------------------------------------------
+
+    def exchange_consumer_loop(self) -> None:
+        """Data exchange consumer coroutine"""
+        try:
+            while True:
+                self.__consumer_queue.handle()
+
+                # All records have to be processed before thread is closed
+                if self.__stopped and not self.__consumer_queue.has_unfinished_items():
+                    break
+
+                # await asyncio.sleep(0.001)
+                time.sleep(0.001)
+
+        except Exception as ex:  # pylint: disable=broad-except
+            self._logger.error(
+                "The exchange consumer worker has been unexpectedly stopped.",
+                extra={
+                    "exception": {
+                        "message": str(ex),
+                        "code": type(ex).__name__,
+                    },
+                },
+            )
+
+            self.stop()
+
+    # -----------------------------------------------------------------------------
+
+    def exchange_publisher_loop(self) -> None:
+        """Data exchange publisher coroutine"""
+        try:
+            while True:
+                self.__publisher_queue.handle()
+
+                # All records have to be processed before thread is closed
+                if self.__stopped and not self.__publisher_queue.has_unfinished_items():
+                    break
+
+                # await asyncio.sleep(0.001)
+                time.sleep(0.001)
+
+        except Exception as ex:  # pylint: disable=broad-except
+            self._logger.error(
+                "The exchange publisher worker has been unexpectedly stopped.",
                 extra={
                     "exception": {
                         "message": str(ex),
@@ -140,12 +220,39 @@ class Worker(ABC):
 
         try:
             # Terminate all exchange services
-            for exchange_client in self.__exchange_clients:
-                exchange_client.stop()
+            self.__exchange_client.stop()
 
         except Exception as ex:  # pylint: disable=broad-except
             self._logger.error(
-                "Unexpected exception was thrown during stopping process",
+                "Unexpected exception was thrown during stopping exchange client process",
+                extra={
+                    "exception": {
+                        "message": str(ex),
+                        "code": type(ex).__name__,
+                    },
+                },
+            )
+
+        try:
+            self.__wait_for_thread_to_close(thread_service=self.__exchange_consumer_thread)
+
+        except Exception as ex:  # pylint: disable=broad-except
+            self._logger.error(
+                "Unexpected exception was thrown during stopping exchange consumer process",
+                extra={
+                    "exception": {
+                        "message": str(ex),
+                        "code": type(ex).__name__,
+                    },
+                },
+            )
+
+        try:
+            self.__wait_for_thread_to_close(thread_service=self.__exchange_publisher_thread)
+
+        except Exception as ex:  # pylint: disable=broad-except
+            self._logger.error(
+                "Unexpected exception was thrown during stopping exchange publisher process",
                 extra={
                     "exception": {
                         "message": str(ex),
@@ -169,3 +276,15 @@ class Worker(ABC):
     ) -> None:
         """Handle termination request"""
         self.stop()
+
+    # -----------------------------------------------------------------------------
+
+    def __wait_for_thread_to_close(self, thread_service: Thread) -> None:
+        now = time.time()
+
+        waiting_for_closing = True
+
+        # Wait until thread is fully terminated
+        while waiting_for_closing and time.time() - now < self.__SHUTDOWN_WAITING_DELAY:
+            if not thread_service.is_alive():
+                waiting_for_closing = False

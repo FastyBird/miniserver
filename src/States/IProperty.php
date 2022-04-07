@@ -16,6 +16,8 @@
 namespace FastyBird\MiniServer\States;
 
 use DateTimeInterface;
+use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
+use FastyBird\DevicesModule\States as DevicesModuleStates;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
 
 /**
@@ -26,7 +28,7 @@ use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface IProperty extends RedisDbStoragePluginStates\IState
+interface IProperty extends RedisDbStoragePluginStates\IState, DevicesModuleStates\IProperty
 {
 
 	/**
@@ -52,5 +54,12 @@ interface IProperty extends RedisDbStoragePluginStates\IState
 	 * @return DateTimeInterface|null
 	 */
 	public function getUpdatedAt(): ?DateTimeInterface;
+
+	/**
+	 * @param DevicesModuleEntities\IProperty $property
+	 *
+	 * @return mixed[]
+	 */
+	public function toExchange(DevicesModuleEntities\IProperty $property): array;
 
 }

@@ -25,6 +25,7 @@ from typing import Optional
 # App dependencies
 from fastybird_devices_module.repositories.state import (
     IChannelPropertiesStatesRepository,
+    IConnectorPropertiesStatesRepository,
     IDevicePropertiesStatesRepository,
 )
 from fastybird_redisdb_storage_plugin.repository import (
@@ -42,8 +43,56 @@ from fastybird_miniserver.state.entities import (
     ActionState,
     ChannelPropertyState,
     ConditionState,
+    ConnectorPropertyState,
     DevicePropertyState,
 )
+
+
+@inject(alias=IConnectorPropertiesStatesRepository)
+class ConnectorPropertiesStatesRepository(
+    IConnectorPropertiesStatesRepository
+):  # pylint: disable=too-few-public-methods
+    """
+    Connector properties states repository
+
+    @package        FastyBird:MiniServer!
+    @module         state/repositories
+
+    @author         Adam Kadlec <adam.kadlec@fastybird.com>
+    """
+
+    __storage_repository: StorageRepository
+
+    # -----------------------------------------------------------------------------
+
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
+        storage_repository_factory: StorageRepositoryFactory,
+        host: str = "127.0.0.1",
+        port: int = 6379,
+        username: Optional[str] = None,
+        password: Optional[str] = None,
+        database: int = 0,
+    ) -> None:
+        self.__storage_repository = storage_repository_factory.create(
+            host=host,
+            port=port,
+            database=database,
+            username=username,
+            password=password,
+            entity=ConnectorPropertyState,
+        )
+
+    # -----------------------------------------------------------------------------
+
+    def get_by_id(self, property_id: uuid.UUID) -> Optional[ConnectorPropertyState]:
+        """Load connector state from storage"""
+        property_state = self.__storage_repository.find_one(item_id=property_id)
+
+        if isinstance(property_state, ConnectorPropertyState) or property_state is None:
+            return property_state
+
+        raise Exception("")
 
 
 @inject(alias=IDevicePropertiesStatesRepository)

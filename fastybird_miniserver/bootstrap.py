@@ -48,17 +48,20 @@ from whistle import EventDispatcher
 from yaml import safe_load
 
 # Worker libs
+from fastybird_miniserver.exchange.queue import ConsumerQueue, PublisherQueue
 from fastybird_miniserver.logger import get_logger
 from fastybird_miniserver.state.managers import (
     ActionsStatesManager,
     ChannelPropertiesStatesManager,
     ConditionsStatesManager,
+    ConnectorPropertiesStatesManager,
     DevicePropertiesStatesManager,
 )
 from fastybird_miniserver.state.repositories import (
     ActionStatesRepository,
     ChannelPropertiesStatesRepository,
     ConditionStatesRepository,
+    ConnectorPropertiesStatesRepository,
     DevicePropertiesStatesRepository,
 )
 
@@ -106,6 +109,11 @@ def register_services(configuration_file: str) -> None:
     if redis_configuration.get("password", None) is not None:
         di["redis_password"] = str(redis_configuration.get("password", None))
 
+    # WORKER SERVICES
+
+    di[ConsumerQueue] = ConsumerQueue(logger=get_logger(channel="exchange"))
+    di[PublisherQueue] = PublisherQueue(logger=get_logger(channel="exchange"))
+
     # INITIALIZE PLUGINS
 
     register_services_exchange()
@@ -123,6 +131,20 @@ def register_services(configuration_file: str) -> None:
     # INITIALIZE STATES SERVICES
 
     # DEVICES MODULE
+    di[ConnectorPropertiesStatesManager] = ConnectorPropertiesStatesManager(  # type: ignore[call-arg]
+        host=di["redis_host"],
+        port=di["redis_port"],
+        username=di["redis_username"] if "redis_username" in di else None,
+        password=di["redis_password"] if "redis_password" in di else None,
+        database=int(str(redis_configuration.get("database", 0))),
+    )
+    di[ConnectorPropertiesStatesRepository] = ConnectorPropertiesStatesRepository(  # type: ignore[call-arg]
+        host=di["redis_host"],
+        port=di["redis_port"],
+        username=di["redis_username"] if "redis_username" in di else None,
+        password=di["redis_password"] if "redis_password" in di else None,
+        database=int(str(redis_configuration.get("database", 0))),
+    )
     di[DevicePropertiesStatesManager] = DevicePropertiesStatesManager(  # type: ignore[call-arg]
         host=di["redis_host"],
         port=di["redis_port"],

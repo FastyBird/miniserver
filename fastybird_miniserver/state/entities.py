@@ -25,6 +25,7 @@ from typing import Dict, List, Optional, Union
 # App dependencies
 from fastybird_devices_module.state.property import (
     IChannelPropertyState,
+    IConnectorPropertyState,
     IDevicePropertyState,
     IPropertyState,
 )
@@ -80,6 +81,16 @@ class PropertyState(IPropertyState, StorageItem):
 
     # -----------------------------------------------------------------------------
 
+    @property
+    def valid(self) -> bool:
+        """Flag informing that property value is valid"""
+        if "valid" in self._raw:
+            return bool(self._raw.get("valid", False))
+
+        return False
+
+    # -----------------------------------------------------------------------------
+
     @staticmethod
     def create_fields() -> Dict[Union[str, int], Union[str, int, float, bool, None]]:
         """Storage entity fields used during entity creation"""
@@ -88,6 +99,7 @@ class PropertyState(IPropertyState, StorageItem):
             "actual_value": None,
             "expected_value": None,
             "pending": False,
+            "valid": False,
             "created_at": None,
             "updated_at": None,
         }
@@ -101,6 +113,7 @@ class PropertyState(IPropertyState, StorageItem):
             "actual_value",
             "expected_value",
             "pending",
+            "valid",
             "updated_at",
         ]
 
@@ -113,12 +126,36 @@ class PropertyState(IPropertyState, StorageItem):
             "actual_value": self.actual_value,
             "expected_value": self.expected_value,
             "pending": self.pending,
+            "valid": self.valid,
         }
 
     # -----------------------------------------------------------------------------
 
     def __copy__(self) -> object:
         return type(self)(item_id=self.id, raw=self.raw)
+
+
+class ConnectorPropertyState(IConnectorPropertyState, PropertyState):
+    """
+    Connector property state
+
+    @package        FastyBird:MiniServer!
+    @module         state/entities
+
+    @author         Adam Kadlec <adam.kadlec@fastybird.com>
+    """
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ConnectorPropertyState):
+            raise Exception("")
+
+        return (
+            self.id == other.id
+            and self.actual_value == other.actual_value
+            and self.expected_value == other.expected_value
+            and self.pending == other.pending
+            and self.valid == other.valid
+        )
 
 
 class DevicePropertyState(IDevicePropertyState, PropertyState):
@@ -140,6 +177,7 @@ class DevicePropertyState(IDevicePropertyState, PropertyState):
             and self.actual_value == other.actual_value
             and self.expected_value == other.expected_value
             and self.pending == other.pending
+            and self.valid == other.valid
         )
 
 
@@ -162,6 +200,7 @@ class ChannelPropertyState(IChannelPropertyState, PropertyState):
             and self.actual_value == other.actual_value
             and self.expected_value == other.expected_value
             and self.pending == other.pending
+            and self.valid == other.valid
         )
 
 

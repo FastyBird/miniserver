@@ -22,7 +22,7 @@ FastyBird connector worker
 import asyncio
 import logging
 import uuid
-from typing import List, Optional
+from typing import Optional
 
 # Worker dependencies
 from fastybird_devices_module.connectors.connector import Connector
@@ -31,6 +31,7 @@ from kink import di, inject
 
 # Worker libs
 from fastybird_miniserver.bootstrap import register_services
+from fastybird_miniserver.exchange.queue import ConsumerQueue, PublisherQueue
 from fastybird_miniserver.workers.worker import Worker
 
 
@@ -52,7 +53,9 @@ def create_worker(
 @inject(
     bind={
         "connector": Connector,
-        "exchange_clients": List[IClient],
+        "exchange_client": IClient,
+        "consumer_queue": ConsumerQueue,
+        "publisher_queue": PublisherQueue,
     }
 )
 class ConnectorWorker(Worker):
@@ -76,8 +79,10 @@ class ConnectorWorker(Worker):
         self,
         connector_id: uuid.UUID,
         logger: logging.Logger,
+        consumer_queue: ConsumerQueue,
+        publisher_queue: PublisherQueue,
         connector: Optional[Connector] = None,
-        exchange_clients: Optional[List[IClient]] = None,
+        exchange_client: Optional[IClient] = None,
     ) -> None:
         if connector is None:
             raise Exception("Connector service is not registered")
@@ -86,7 +91,12 @@ class ConnectorWorker(Worker):
 
         self.__connector_id = connector_id
 
-        super().__init__(exchange_clients=exchange_clients, logger=logger)
+        super().__init__(
+            exchange_client=exchange_client,
+            consumer_queue=consumer_queue,
+            publisher_queue=publisher_queue,
+            logger=logger,
+        )
 
     # -----------------------------------------------------------------------------
 
@@ -130,6 +140,8 @@ class ConnectorWorker(Worker):
 
         try:
             while not self.is_stopped:
+                await super().worker_loop()
+
                 self.__connector.handle()
 
                 await asyncio.sleep(0.001)
