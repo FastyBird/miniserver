@@ -216,10 +216,12 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 		$actualValue = DevicesModuleUtilities\ValueHelper::normalizeValue($property->getDataType(), $this->getActualValue(), $property->getFormat(), $property->getInvalid());
 		$expectedValue = DevicesModuleUtilities\ValueHelper::normalizeValue($property->getDataType(), $this->getExpectedValue(), $property->getFormat(), $property->getInvalid());
 
-		return array_merge([
+		return [
 			'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
 			'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
-		], $this->toArray());
+			'pending'       => $this->isPending(),
+			'valid'         => $this->isValid(),
+		];
 	}
 
 }
