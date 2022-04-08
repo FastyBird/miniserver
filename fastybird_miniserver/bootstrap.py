@@ -48,7 +48,7 @@ from whistle import EventDispatcher
 from yaml import safe_load
 
 # Worker libs
-from fastybird_miniserver.exchange.queue import ConsumerQueue, PublisherQueue
+from fastybird_miniserver.exchange.queue import ConsumerQueue  # , PublisherQueue
 from fastybird_miniserver.logger import get_logger
 from fastybird_miniserver.state.managers import (
     ActionsStatesManager,

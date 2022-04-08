@@ -44,7 +44,7 @@ def create_worker(
     """Create worker instance"""
     register_services(configuration_file=configuration_file)
 
-    di[ConnectorWorker] = ConnectorWorker(  # type: ignore[call-arg]  # pylint: disable=no-value-for-parameter
+    di[ConnectorWorker] = ConnectorWorker(
         connector_id=connector_id,
         logger=logger,
     )

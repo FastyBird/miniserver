@@ -39,7 +39,7 @@ def create_worker(configuration_file: str, logger: logging.Logger = logging.getL
     """Create worker instance"""
     register_services(configuration_file=configuration_file)
 
-    di[AutomatorWorker] = AutomatorWorker(  # type: ignore[call-arg]  # pylint: disable=no-value-for-parameter
+    di[AutomatorWorker] = AutomatorWorker(
         logger=logger,
     )
 

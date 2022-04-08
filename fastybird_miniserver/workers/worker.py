@@ -174,6 +174,9 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
 
     def exchange_consumer_loop(self) -> None:
         """Data exchange consumer coroutine"""
+        if self.__consumer_queue is None:
+            return
+
         try:
             while True:
                 self.__consumer_queue.handle()
@@ -203,6 +206,9 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
 
     def exchange_publisher_loop(self) -> None:
         """Data exchange publisher coroutine"""
+        if self.__publisher_queue is None:
+            return
+
         try:
             while True:
                 self.__publisher_queue.handle()

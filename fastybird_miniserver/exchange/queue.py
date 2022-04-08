@@ -96,9 +96,8 @@ class PublisherQueue(IPublisherQueue):
                 source = item.get("source")
                 routing_key = item.get("routing_key")
 
-                if (
-                    isinstance(source, (ModuleSource, PluginSource, ConnectorSource))
-                    and isinstance(routing_key, RoutingKey)
+                if isinstance(source, (ModuleSource, PluginSource, ConnectorSource)) and isinstance(
+                    routing_key, RoutingKey
                 ):
                     for publisher in self.__publishers:
                         publisher.publish(
@@ -176,9 +175,8 @@ class ConsumerQueue(IConsumerQueue):
                 source = item.get("source")
                 routing_key = item.get("routing_key")
 
-                if (
-                    isinstance(source, (ModuleSource, PluginSource, ConnectorSource))
-                    and isinstance(routing_key, RoutingKey)
+                if isinstance(source, (ModuleSource, PluginSource, ConnectorSource)) and isinstance(
+                    routing_key, RoutingKey
                 ):
                     for consumer in self.__consumers:
                         consumer.consume(
