@@ -79,8 +79,8 @@ class ConnectorWorker(Worker):
         self,
         connector_id: uuid.UUID,
         logger: logging.Logger,
-        consumer_queue: ConsumerQueue,
-        publisher_queue: PublisherQueue,
+        consumer_queue: Optional[ConsumerQueue] = None,
+        publisher_queue: Optional[PublisherQueue] = None,
         connector: Optional[Connector] = None,
         exchange_client: Optional[IClient] = None,
     ) -> None:

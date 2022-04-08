@@ -111,8 +111,10 @@ def register_services(configuration_file: str) -> None:
 
     # WORKER SERVICES
 
-    di[ConsumerQueue] = ConsumerQueue(logger=get_logger(channel="exchange"))
-    di[PublisherQueue] = PublisherQueue(logger=get_logger(channel="exchange"))
+    exchange_logger = get_logger(channel="exchange")
+
+    di[ConsumerQueue] = ConsumerQueue(logger=exchange_logger)
+    # di[PublisherQueue] = PublisherQueue(logger=exchange_logger)
 
     # INITIALIZE PLUGINS
 
@@ -125,7 +127,7 @@ def register_services(configuration_file: str) -> None:
             "username": di["redis_username"] if "redis_username" in di else None,
             "password": di["redis_password"] if "redis_password" in di else None,
         },
-        logger=get_logger(channel="exchange"),
+        logger=exchange_logger,
     )
 
     # INITIALIZE STATES SERVICES

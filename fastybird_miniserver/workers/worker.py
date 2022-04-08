@@ -48,13 +48,13 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
 
     __stopped: bool = False
 
-    __consumer_queue: ConsumerQueue
-    __publisher_queue: PublisherQueue
+    __consumer_queue: Optional[ConsumerQueue] = None
+    __publisher_queue: Optional[PublisherQueue] = None
     __exchange_client: Optional[IClient] = None
 
-    __exchange_consumer_thread: Thread
-    __exchange_publisher_thread: Thread
-    __exchange_client_thread: Thread
+    __exchange_consumer_thread: Optional[Thread] = None
+    __exchange_publisher_thread: Optional[Thread] = None
+    __exchange_client_thread: Optional[Thread] = None
 
     _logger: logging.Logger
 
@@ -64,8 +64,8 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
 
     def __init__(
         self,
-        consumer_queue: ConsumerQueue,
-        publisher_queue: PublisherQueue,
+        consumer_queue: Optional[ConsumerQueue] = None,
+        publisher_queue: Optional[PublisherQueue] = None,
         exchange_client: Optional[IClient] = None,
         logger: logging.Logger = logging.getLogger("dummy"),
     ) -> None:
@@ -74,21 +74,26 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
         self.__exchange_client = exchange_client
 
         # self.__connector_thread = Thread(name="Connector thread", daemon=True, target=self.connector_loop)
-        self.__exchange_client_thread = Thread(
-            name="Exchange client thread",
-            daemon=True,
-            target=self.exchange_client_loop,
-        )
-        self.__exchange_consumer_thread = Thread(
-            name="Exchange consumer thread",
-            daemon=True,
-            target=self.exchange_consumer_loop,
-        )
-        self.__exchange_publisher_thread = Thread(
-            name="Exchange publisher thread",
-            daemon=True,
-            target=self.exchange_publisher_loop,
-        )
+        if self.__exchange_client is not None:
+            self.__exchange_client_thread = Thread(
+                name="Exchange client thread",
+                daemon=True,
+                target=self.exchange_client_loop,
+            )
+
+        if self.__consumer_queue is not None:
+            self.__exchange_consumer_thread = Thread(
+                name="Exchange consumer thread",
+                daemon=True,
+                target=self.exchange_consumer_loop,
+            )
+
+        if self.__publisher_queue is not None:
+            self.__exchange_publisher_thread = Thread(
+                name="Exchange publisher thread",
+                daemon=True,
+                target=self.exchange_publisher_loop,
+            )
 
         # Configure signal handlers
         signal.signal(signal.SIGINT, self.sigterm_handler)
@@ -106,9 +111,12 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
         asyncio.ensure_future(self.worker_loop())
 
         # self.__connector_thread.start()
-        self.__exchange_client_thread.start()
-        self.__exchange_consumer_thread.start()
-        self.__exchange_publisher_thread.start()
+        if self.__exchange_client_thread is not None:
+            self.__exchange_client_thread.start()
+        if self.__exchange_consumer_thread is not None:
+            self.__exchange_consumer_thread.start()
+        if self.__exchange_publisher_thread is not None:
+            self.__exchange_publisher_thread.start()
 
         # while not self.__stopped:
         #     # Just to keep worker running
@@ -139,13 +147,17 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
         try:
             self.__exchange_client.start()
 
-            while not self.__stopped:
+            while True:
+                if self.__stopped:
+                    break
+
                 self.__exchange_client.handle()
 
                 # await asyncio.sleep(0.001)
                 time.sleep(0.001)
 
         except Exception as ex:  # pylint: disable=broad-except
+            self._logger.exception(ex)
             self._logger.error(
                 "The exchange client worker has been unexpectedly stopped.",
                 extra={
@@ -174,6 +186,7 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
                 time.sleep(0.001)
 
         except Exception as ex:  # pylint: disable=broad-except
+            self._logger.exception(ex)
             self._logger.error(
                 "The exchange consumer worker has been unexpectedly stopped.",
                 extra={
@@ -202,6 +215,7 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
                 time.sleep(0.001)
 
         except Exception as ex:  # pylint: disable=broad-except
+            self._logger.exception(ex)
             self._logger.error(
                 "The exchange publisher worker has been unexpectedly stopped.",
                 extra={
@@ -218,6 +232,9 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
 
     def stop(self) -> None:
         """Worker stop handler"""
+        if self.__stopped:
+            return
+
         # Mark worker as stopped
         self.__stopped = True
 
@@ -226,7 +243,11 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
                 # Terminate all exchange services
                 self.__exchange_client.stop()
 
+            if self.__exchange_client_thread is not None:
+                self.__wait_for_thread_to_close(thread_service=self.__exchange_client_thread)
+
         except Exception as ex:  # pylint: disable=broad-except
+            self._logger.exception(ex)
             self._logger.error(
                 "Unexpected exception was thrown during stopping exchange client process",
                 extra={
@@ -238,9 +259,11 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
             )
 
         try:
-            self.__wait_for_thread_to_close(thread_service=self.__exchange_consumer_thread)
+            if self.__exchange_consumer_thread is not None:
+                self.__wait_for_thread_to_close(thread_service=self.__exchange_consumer_thread)
 
         except Exception as ex:  # pylint: disable=broad-except
+            self._logger.exception(ex)
             self._logger.error(
                 "Unexpected exception was thrown during stopping exchange consumer process",
                 extra={
@@ -252,9 +275,11 @@ class Worker(ABC):  # pylint: disable=too-many-instance-attributes
             )
 
         try:
-            self.__wait_for_thread_to_close(thread_service=self.__exchange_publisher_thread)
+            if self.__exchange_publisher_thread is not None:
+                self.__wait_for_thread_to_close(thread_service=self.__exchange_publisher_thread)
 
         except Exception as ex:  # pylint: disable=broad-except
+            self._logger.exception(ex)
             self._logger.error(
                 "Unexpected exception was thrown during stopping exchange publisher process",
                 extra={

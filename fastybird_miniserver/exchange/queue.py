@@ -34,7 +34,7 @@ from fastybird_metadata.types import ConnectorSource, ModuleSource, PluginSource
 from kink import inject
 
 
-@inject(alias=IPublisherQueue)
+# @inject(alias=IPublisherQueue)
 class PublisherQueue(IPublisherQueue):
     """
     Data exchange publisher queue

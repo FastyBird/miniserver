@@ -69,8 +69,8 @@ class AutomatorWorker(Worker):
     def __init__(  # pylint: disable=too-many-arguments
         self,
         logger: logging.Logger,
-        consumer_queue: ConsumerQueue,
-        publisher_queue: PublisherQueue,
+        consumer_queue: Optional[ConsumerQueue] = None,
+        publisher_queue: Optional[PublisherQueue] = None,
         automator: Optional[Automator] = None,
         exchange_client: Optional[IClient] = None,
     ) -> None:

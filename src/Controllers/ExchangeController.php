@@ -61,15 +61,6 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	/** @var DevicesModuleModels\States\ChannelPropertiesRepository */
 	private DevicesModuleModels\States\ChannelPropertiesRepository $channelPropertiesStatesRepository;
 
-	/** @var DevicesModuleModels\States\DevicePropertiesManager */
-	private DevicesModuleModels\States\DevicePropertiesManager $devicePropertiesStatesManager;
-
-	/** @var DevicesModuleModels\States\ChannelPropertiesManager */
-	private DevicesModuleModels\States\ChannelPropertiesManager $channelPropertiesStatesManager;
-
-	/** @var DevicesModuleModels\States\ConnectorPropertiesManager */
-	private DevicesModuleModels\States\ConnectorPropertiesManager $connectorPropertiesStatesManager;
-
 	/** @var ExchangePublisher\IPublisher|null */
 	private ?ExchangePublisher\IPublisher $publisher;
 
@@ -89,9 +80,6 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		DevicesModuleModels\States\ConnectorPropertiesRepository $connectorPropertiesStatesRepository,
 		DevicesModuleModels\States\DevicePropertiesRepository $devicePropertiesStatesRepository,
 		DevicesModuleModels\States\ChannelPropertiesRepository $channelPropertiesStatesRepository,
-		DevicesModuleModels\States\DevicePropertiesManager $devicePropertiesStatesManager,
-		DevicesModuleModels\States\ChannelPropertiesManager $channelPropertiesStatesManager,
-		DevicesModuleModels\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
 		MetadataLoaders\ISchemaLoader $schemaLoader,
 		MetadataSchemas\IValidator $jsonValidator,
 		?ExchangePublisher\IPublisher $publisher = null,
@@ -106,9 +94,6 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		$this->connectorPropertiesStatesRepository = $connectorPropertiesStatesRepository;
 		$this->devicePropertiesStatesRepository = $devicePropertiesStatesRepository;
 		$this->channelPropertiesStatesRepository = $channelPropertiesStatesRepository;
-		$this->devicePropertiesStatesManager = $devicePropertiesStatesManager;
-		$this->channelPropertiesStatesManager = $channelPropertiesStatesManager;
-		$this->connectorPropertiesStatesManager = $connectorPropertiesStatesManager;
 
 		$this->schemaLoader = $schemaLoader;
 		$this->publisher = $publisher;
@@ -264,99 +249,6 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 			case Metadata\Constants::MESSAGE_BUS_TRIGGER_ACTION_ROUTING_KEY:
 				$schema = $this->schemaLoader->loadByRoutingKey(Metadata\Types\RoutingKeyType::get($args['routing_key']));
 				$data = isset($args['data']) ? $this->parseData($args['data'], $schema) : null;
-
-				if ($data !== null && $data->offsetGet('action') === Metadata\Types\PropertyActionType::ACTION_SET) {
-					if ($args['routing_key'] === Metadata\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY) {
-						$findDeviceProperty = new DevicesModuleQueries\FindDevicePropertiesQuery();
-						$findDeviceProperty->byId(Uuid\Uuid::fromString($data->offsetGet('property')));
-
-						$deviceProperty = $this->devicePropertiesRepository->findOneBy($findDeviceProperty);
-
-						if ($deviceProperty === null) {
-							throw new Exceptions\InvalidArgumentException('Property could not be found in database');
-						}
-
-						if ($deviceProperty->getParent() !== null) {
-							$deviceProperty = $deviceProperty->getParent();
-						}
-
-						if (!$deviceProperty instanceof DevicesModuleEntities\Devices\Properties\IDynamicProperty) {
-							throw new Exceptions\InvalidArgumentException('Only dynamic properties could be controlled');
-						}
-
-						$devicePropertyState = $this->devicePropertiesStatesRepository->findOne($deviceProperty);
-
-						$stateData = Utils\ArrayHash::from([
-							'expectedValue' => $data->offsetGet('expected_value'),
-							'pending'       => true,
-						]);
-
-						if ($devicePropertyState === null) {
-							$this->devicePropertiesStatesManager->create($deviceProperty, $stateData);
-
-						} else {
-							$this->devicePropertiesStatesManager->update($deviceProperty, $devicePropertyState, $stateData);
-						}
-					} elseif ($args['routing_key'] === Metadata\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY) {
-						$findChannelProperty = new DevicesModuleQueries\FindChannelPropertiesQuery();
-						$findChannelProperty->byId(Uuid\Uuid::fromString($data->offsetGet('property')));
-
-						$channelProperty = $this->channelPropertiesRepository->findOneBy($findChannelProperty);
-
-						if ($channelProperty === null) {
-							throw new Exceptions\InvalidArgumentException('Property could not be found in database');
-						}
-
-						if ($channelProperty->getParent() !== null) {
-							$channelProperty = $channelProperty->getParent();
-						}
-
-						if (!$channelProperty instanceof DevicesModuleEntities\Channels\Properties\IDynamicProperty) {
-							throw new Exceptions\InvalidArgumentException('Only dynamic properties could be controlled');
-						}
-
-						$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
-
-						$stateData = Utils\ArrayHash::from([
-							'expectedValue' => $data->offsetGet('expected_value'),
-							'pending'       => true,
-						]);
-
-						if ($channelPropertyState === null) {
-							$this->channelPropertiesStatesManager->create($channelProperty, $stateData);
-
-						} else {
-							$this->channelPropertiesStatesManager->update($channelProperty, $channelPropertyState, $stateData);
-						}
-					} elseif ($args['routing_key'] === Metadata\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY) {
-						$findConnectorProperty = new DevicesModuleQueries\FindConnectorPropertiesQuery();
-						$findConnectorProperty->byId(Uuid\Uuid::fromString($data->offsetGet('property')));
-
-						$connectorProperty = $this->connectorPropertiesRepository->findOneBy($findConnectorProperty);
-
-						if ($connectorProperty === null) {
-							throw new Exceptions\InvalidArgumentException('Property could not be found in database');
-						}
-
-						if (!$connectorProperty instanceof DevicesModuleEntities\Connectors\Properties\IDynamicProperty) {
-							throw new Exceptions\InvalidArgumentException('Only dynamic properties could be controlled');
-						}
-
-						$connectorPropertyState = $this->connectorPropertiesStatesRepository->findOne($connectorProperty);
-
-						$stateData = Utils\ArrayHash::from([
-							'expectedValue' => $data->offsetGet('expected_value'),
-							'pending'       => true,
-						]);
-
-						if ($connectorPropertyState === null) {
-							$this->connectorPropertiesStatesManager->create($connectorProperty, $stateData);
-
-						} else {
-							$this->connectorPropertiesStatesManager->update($connectorProperty, $connectorPropertyState, $stateData);
-						}
-					}
-				}
 
 				if ($this->publisher !== null) {
 					$this->publisher->publish(
