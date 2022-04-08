@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1dbeca4b05b05ae0ea7594242a054215",
+    "content-hash": "553b8471dd8f789ae98f1054714426a2",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -2767,16 +2767,16 @@
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
-            "version": "v0.39.0",
+            "version": "v0.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
-                "reference": "5b3c832f020c7bac82de0c74908066dcd8532c48"
+                "reference": "e0500dd69889e13571d9461ddb42bd9e57c4018d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/5b3c832f020c7bac82de0c74908066dcd8532c48",
-                "reference": "5b3c832f020c7bac82de0c74908066dcd8532c48",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/e0500dd69889e13571d9461ddb42bd9e57c4018d",
+                "reference": "e0500dd69889e13571d9461ddb42bd9e57c4018d",
                 "shasum": ""
             },
             "require": {
@@ -2853,7 +2853,7 @@
                 "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
                 "source": "https://github.com/FastyBird/redisdb-exchange-plugin"
             },
-            "time": "2022-04-06T18:42:40+00:00"
+            "time": "2022-04-07T23:11:43+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
