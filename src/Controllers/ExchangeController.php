@@ -29,7 +29,6 @@ use IPub\WebSockets;
 use IPub\WebSocketsWAMP;
 use Nette\Utils;
 use Psr\Log;
-use Ramsey\Uuid;
 use Throwable;
 
 /**
