@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "553b8471dd8f789ae98f1054714426a2",
+    "content-hash": "38f08ab8c8e6ce999613885ce5f38111",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -365,32 +365,32 @@
         },
         {
             "name": "contributte/console",
-            "version": "v0.9.1",
+            "version": "v0.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contributte/console.git",
-                "reference": "549893573ba3cb81f476785763f48178b5166322"
+                "reference": "2ef14843453414f74b21f9f9b3d66e8f185f62ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contributte/console/zipball/549893573ba3cb81f476785763f48178b5166322",
-                "reference": "549893573ba3cb81f476785763f48178b5166322",
+                "url": "https://api.github.com/repos/contributte/console/zipball/2ef14843453414f74b21f9f9b3d66e8f185f62ab",
+                "reference": "2ef14843453414f74b21f9f9b3d66e8f185f62ab",
                 "shasum": ""
             },
             "require": {
                 "contributte/di": "^0.5.1",
                 "php": ">=7.2",
-                "symfony/console": "^4.2.9|^5.0.0"
+                "symfony/console": "^4.2.9|^5.0.0|^6.0.0"
             },
             "require-dev": {
                 "nette/http": "~3.0.1",
                 "ninjify/nunjuck": "^0.4",
                 "ninjify/qa": "^0.12",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
-                "symfony/event-dispatcher": "^4.3.0 || ^5.0.0"
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-nette": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.0",
+                "symfony/event-dispatcher": "^4.3 || ^5.0 || ^6.0"
             },
             "type": "library",
             "extra": {
@@ -422,7 +422,7 @@
             ],
             "support": {
                 "issues": "https://github.com/contributte/console/issues",
-                "source": "https://github.com/contributte/console/tree/v0.9.1"
+                "source": "https://github.com/contributte/console/tree/v0.9.2"
             },
             "funding": [
                 {
@@ -434,7 +434,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-20T12:35:56+00:00"
+            "time": "2022-02-09T12:46:08+00:00"
         },
         {
             "name": "contributte/di",
@@ -1027,20 +1027,20 @@
         },
         {
             "name": "doctrine/common",
-            "version": "3.2.2",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "295082d3750987065912816a9d536c2df735f637"
+                "reference": "c824e95d4c83b7102d8bc60595445a6f7d540f96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/295082d3750987065912816a9d536c2df735f637",
-                "reference": "295082d3750987065912816a9d536c2df735f637",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/c824e95d4c83b7102d8bc60595445a6f7d540f96",
+                "reference": "c824e95d4c83b7102d8bc60595445a6f7d540f96",
                 "shasum": ""
             },
             "require": {
-                "doctrine/persistence": "^2.0",
+                "doctrine/persistence": "^2.0 || ^3.0",
                 "php": "^7.1 || ^8.0"
             },
             "require-dev": {
@@ -1097,7 +1097,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/common/issues",
-                "source": "https://github.com/doctrine/common/tree/3.2.2"
+                "source": "https://github.com/doctrine/common/tree/3.3.0"
             },
             "funding": [
                 {
@@ -1113,7 +1113,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-02T09:15:57+00:00"
+            "time": "2022-02-05T18:28:51+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -1600,16 +1600,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.11.2",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "9c351e044478135aec1755e2c0c0493a4b6309db"
+                "reference": "2e4a8722721b934149ff53b191522a6829b6d73b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/9c351e044478135aec1755e2c0c0493a4b6309db",
-                "reference": "9c351e044478135aec1755e2c0c0493a4b6309db",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/2e4a8722721b934149ff53b191522a6829b6d73b",
+                "reference": "2e4a8722721b934149ff53b191522a6829b6d73b",
                 "shasum": ""
             },
             "require": {
@@ -1622,14 +1622,14 @@
                 "doctrine/event-manager": "^1.1",
                 "doctrine/inflector": "^1.4 || ^2.0",
                 "doctrine/instantiator": "^1.3",
-                "doctrine/lexer": "^1.0",
-                "doctrine/persistence": "^2.2",
+                "doctrine/lexer": "^1.2.3",
+                "doctrine/persistence": "^2.4 || ^3",
                 "ext-ctype": "*",
                 "php": "^7.1 || ^8.0",
                 "psr/cache": "^1 || ^2 || ^3",
                 "symfony/console": "^3.0 || ^4.0 || ^5.0 || ^6.0",
                 "symfony/polyfill-php72": "^1.23",
-                "symfony/polyfill-php80": "^1.15"
+                "symfony/polyfill-php80": "^1.16"
             },
             "conflict": {
                 "doctrine/annotations": "<1.13 || >= 2.0"
@@ -1638,8 +1638,9 @@
                 "doctrine/annotations": "^1.13",
                 "doctrine/coding-standard": "^9.0",
                 "phpbench/phpbench": "^0.16.10 || ^1.0",
-                "phpstan/phpstan": "1.4.6",
+                "phpstan/phpstan": "~1.4.10 || 1.5.0",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.4",
+                "psr/log": "^1 || ^2 || ^3",
                 "squizlabs/php_codesniffer": "3.6.2",
                 "symfony/cache": "^4.4 || ^5.4 || ^6.0",
                 "symfony/yaml": "^3.4 || ^4.0 || ^5.0 || ^6.0",
@@ -1692,50 +1693,49 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.11.2"
+                "source": "https://github.com/doctrine/orm/tree/2.12.1"
             },
-            "time": "2022-03-09T15:23:58+00:00"
+            "time": "2022-04-22T17:46:03+00:00"
         },
         {
             "name": "doctrine/persistence",
-            "version": "2.4.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "092a52b71410ac1795287bb5135704ef07d18dd0"
+                "reference": "e6103cb9e0982a4312e05ad94bb7be3f8e2d5869"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/092a52b71410ac1795287bb5135704ef07d18dd0",
-                "reference": "092a52b71410ac1795287bb5135704ef07d18dd0",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/e6103cb9e0982a4312e05ad94bb7be3f8e2d5869",
+                "reference": "e6103cb9e0982a4312e05ad94bb7be3f8e2d5869",
                 "shasum": ""
             },
             "require": {
-                "doctrine/cache": "^1.11 || ^2.0",
                 "doctrine/collections": "^1.0",
-                "doctrine/deprecations": "^0.5.3",
                 "doctrine/event-manager": "^1.0",
-                "php": "^7.1 || ^8.0",
+                "php": "^7.2 || ^8.0",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0"
             },
             "conflict": {
-                "doctrine/annotations": "<1.0 || >=2.0",
+                "doctrine/annotations": "<1.7 || >=2.0",
                 "doctrine/common": "<2.10"
             },
             "require-dev": {
                 "composer/package-versions-deprecated": "^1.11",
-                "doctrine/annotations": "^1.0",
+                "doctrine/annotations": "^1.7",
                 "doctrine/coding-standard": "^9.0",
                 "doctrine/common": "^3.0",
-                "phpstan/phpstan": "1.4.6",
-                "phpunit/phpunit": "^7.5.20 || ^8.5 || ^9.5",
+                "phpstan/phpstan": "1.5.0",
+                "phpstan/phpstan-phpunit": "^1",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "phpunit/phpunit": "^8.5 || ^9.5",
                 "symfony/cache": "^4.4 || ^5.4 || ^6.0",
-                "vimeo/psalm": "4.21.0"
+                "vimeo/psalm": "4.22.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Doctrine\\Common\\": "src/Common",
                     "Doctrine\\Persistence\\": "src/Persistence"
                 }
             },
@@ -1770,7 +1770,7 @@
                 }
             ],
             "description": "The Doctrine Persistence project is a set of shared interfaces and functionality that the different Doctrine object mappers share.",
-            "homepage": "https://doctrine-project.org/projects/persistence.html",
+            "homepage": "https://www.doctrine-project.org/projects/persistence.html",
             "keywords": [
                 "mapper",
                 "object",
@@ -1780,9 +1780,23 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/2.4.1"
+                "source": "https://github.com/doctrine/persistence/tree/3.0.0"
             },
-            "time": "2022-03-22T06:44:40+00:00"
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fpersistence",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-04-15T10:39:55+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -1833,23 +1847,23 @@
         },
         {
             "name": "fastybird/accounts-module",
-            "version": "v0.15.0",
+            "version": "v0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "1fdc9331764f3bc69dc92204de876381398d351f"
+                "reference": "85d8d677eccbdddbece752d29c8fdb412d7f5f0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/1fdc9331764f3bc69dc92204de876381398d351f",
-                "reference": "1fdc9331764f3bc69dc92204de876381398d351f",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/85d8d677eccbdddbece752d29c8fdb412d7f5f0b",
+                "reference": "85d8d677eccbdddbece752d29c8fdb412d7f5f0b",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/exchange": "^0.36",
+                "fastybird/exchange": "^0.39",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "fastybird/simple-auth": "^0.3",
                 "fastybird/web-server": "^0.8",
                 "ipub/doctrine-consistence": "^0.4",
@@ -1926,7 +1940,7 @@
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
                 "source": "https://github.com/FastyBird/accounts-module"
             },
-            "time": "2022-04-06T22:10:32+00:00"
+            "time": "2022-04-24T07:30:27+00:00"
         },
         {
             "name": "fastybird/bootstrap",
@@ -2097,24 +2111,24 @@
         },
         {
             "name": "fastybird/devices-module",
-            "version": "v0.54.0",
+            "version": "v0.58.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "aec36284cf765272c0b7fe1343b0ced0bd0cff94"
+                "reference": "3e8c41e06e19f681beea4ceb9f976d2e7e816aea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/aec36284cf765272c0b7fe1343b0ced0bd0cff94",
-                "reference": "aec36284cf765272c0b7fe1343b0ced0bd0cff94",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/3e8c41e06e19f681beea4ceb9f976d2e7e816aea",
+                "reference": "3e8c41e06e19f681beea4ceb9f976d2e7e816aea",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
-                "fastybird/exchange": "^0.36",
+                "fastybird/exchange": "^0.39",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "fastybird/simple-auth": "^0.3",
                 "fastybird/web-server": "^0.8",
                 "ipub/doctrine-dynamic-discriminator-map": "^1.4",
@@ -2188,25 +2202,25 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-04-07T20:49:52+00:00"
+            "time": "2022-04-22T22:06:49+00:00"
         },
         {
             "name": "fastybird/exchange",
-            "version": "v0.36.0",
+            "version": "v0.39.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/exchange.git",
-                "reference": "7200ea047fa6ab3becc5681233b4b177e3a22ef7"
+                "reference": "a88b622eb987c82fc32ee0969537a6eb9545f9d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/exchange/zipball/7200ea047fa6ab3becc5681233b4b177e3a22ef7",
-                "reference": "7200ea047fa6ab3becc5681233b4b177e3a22ef7",
+                "url": "https://api.github.com/repos/FastyBird/exchange/zipball/a88b622eb987c82fc32ee0969537a6eb9545f9d1",
+                "reference": "a88b622eb987c82fc32ee0969537a6eb9545f9d1",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
                 "nette/utils": "^3.2",
@@ -2268,27 +2282,27 @@
                 "issues": "https://github.com/FastyBird/exchange/issues",
                 "source": "https://github.com/FastyBird/exchange"
             },
-            "time": "2022-04-06T18:16:46+00:00"
+            "time": "2022-04-22T11:41:22+00:00"
         },
         {
             "name": "fastybird/fb-bus-connector",
-            "version": "v0.40.0",
+            "version": "v0.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-bus-connector.git",
-                "reference": "31e60278e33269f9d0e63381d3b14d0d4f52a292"
+                "reference": "71568874243578a37a01bd3f0cbb3306c331d11f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/31e60278e33269f9d0e63381d3b14d0d4f52a292",
-                "reference": "31e60278e33269f9d0e63381d3b14d0d4f52a292",
+                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/71568874243578a37a01bd3f0cbb3306c331d11f",
+                "reference": "71568874243578a37a01bd3f0cbb3306c331d11f",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.54",
+                "fastybird/devices-module": "^0.58",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "php": ">=7.4.0|>=8.0.0"
             },
             "require-dev": {
@@ -2347,28 +2361,28 @@
                 "issues": "https://github.com/FastyBird/fb-bus-connector/issues",
                 "source": "https://github.com/FastyBird/fb-bus-connector"
             },
-            "time": "2022-04-07T21:04:55+00:00"
+            "time": "2022-04-23T12:36:22+00:00"
         },
         {
             "name": "fastybird/fb-mqtt-connector",
-            "version": "v0.18.0",
+            "version": "v0.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-mqtt-connector.git",
-                "reference": "d6ab0a65beaa381a4c022d0472bd27cfd25f7538"
+                "reference": "8edb0315e32746c8bab1c8fb28f6201c377130f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fb-mqtt-connector/zipball/d6ab0a65beaa381a4c022d0472bd27cfd25f7538",
-                "reference": "d6ab0a65beaa381a4c022d0472bd27cfd25f7538",
+                "url": "https://api.github.com/repos/FastyBird/fb-mqtt-connector/zipball/8edb0315e32746c8bab1c8fb28f6201c377130f2",
+                "reference": "8edb0315e32746c8bab1c8fb28f6201c377130f2",
                 "shasum": ""
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.54",
+                "fastybird/devices-module": "^0.58",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
                 "php": ">=7.4.0|>=8.0.0",
@@ -2434,27 +2448,27 @@
                 "issues": "https://github.com/FastyBird/fb-mqtt-connector/issues",
                 "source": "https://github.com/FastyBird/fb-mqtt-connector"
             },
-            "time": "2022-04-07T21:06:08+00:00"
+            "time": "2022-04-23T12:36:08+00:00"
         },
         {
             "name": "fastybird/homekit-connector",
-            "version": "v0.5.0",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/homekit-connector.git",
-                "reference": "31109c2932fcd8dbc7888497f07d75a173c1d3d4"
+                "reference": "70acbc06f8bf2bb2e93d79b49c36c08f8eaba23c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/homekit-connector/zipball/31109c2932fcd8dbc7888497f07d75a173c1d3d4",
-                "reference": "31109c2932fcd8dbc7888497f07d75a173c1d3d4",
+                "url": "https://api.github.com/repos/FastyBird/homekit-connector/zipball/70acbc06f8bf2bb2e93d79b49c36c08f8eaba23c",
+                "reference": "70acbc06f8bf2bb2e93d79b49c36c08f8eaba23c",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.54",
+                "fastybird/devices-module": "^0.58",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "php": ">=7.4.0|>=8.0.0"
             },
             "require-dev": {
@@ -2513,7 +2527,7 @@
                 "issues": "https://github.com/FastyBird/homekit-connector/issues",
                 "source": "https://github.com/FastyBird/homekit-connector"
             },
-            "time": "2022-04-07T21:06:44+00:00"
+            "time": "2022-04-24T07:08:59+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2614,16 +2628,16 @@
         },
         {
             "name": "fastybird/metadata",
-            "version": "v0.53.0",
+            "version": "v0.56.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/metadata.git",
-                "reference": "933bffcb90f7f66354d78a102dc24ddf3cbdb950"
+                "reference": "a907832013bbb0617c99462c847c5c5809d123fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/metadata/zipball/933bffcb90f7f66354d78a102dc24ddf3cbdb950",
-                "reference": "933bffcb90f7f66354d78a102dc24ddf3cbdb950",
+                "url": "https://api.github.com/repos/FastyBird/metadata/zipball/a907832013bbb0617c99462c847c5c5809d123fd",
+                "reference": "a907832013bbb0617c99462c847c5c5809d123fd",
                 "shasum": ""
             },
             "require": {
@@ -2684,27 +2698,27 @@
                 "issues": "https://github.com/FastyBird/metadata/issues",
                 "source": "https://github.com/FastyBird/metadata"
             },
-            "time": "2022-04-05T17:48:39+00:00"
+            "time": "2022-04-22T11:34:05+00:00"
         },
         {
             "name": "fastybird/modbus-connector",
-            "version": "v0.22.0",
+            "version": "v0.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modbus-connector.git",
-                "reference": "24c076c5eca4c6bd50f212b4c3c7d47bd3cd63af"
+                "reference": "17f66064f48685dc5cf52fa87523d93eceed1fc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/24c076c5eca4c6bd50f212b4c3c7d47bd3cd63af",
-                "reference": "24c076c5eca4c6bd50f212b4c3c7d47bd3cd63af",
+                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/17f66064f48685dc5cf52fa87523d93eceed1fc3",
+                "reference": "17f66064f48685dc5cf52fa87523d93eceed1fc3",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.54",
+                "fastybird/devices-module": "^0.58",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "php": ">=7.4.0|>=8.0.0"
             },
             "require-dev": {
@@ -2763,28 +2777,28 @@
                 "issues": "https://github.com/FastyBird/modbus-connector/issues",
                 "source": "https://github.com/FastyBird/modbus-connector"
             },
-            "time": "2022-04-07T21:10:34+00:00"
+            "time": "2022-04-23T09:58:40+00:00"
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
-            "version": "v0.40.0",
+            "version": "v0.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
-                "reference": "e0500dd69889e13571d9461ddb42bd9e57c4018d"
+                "reference": "b476c323f96a00c7e88ff17910c8e34cb2ec22e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/e0500dd69889e13571d9461ddb42bd9e57c4018d",
-                "reference": "e0500dd69889e13571d9461ddb42bd9e57c4018d",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/b476c323f96a00c7e88ff17910c8e34cb2ec22e7",
+                "reference": "b476c323f96a00c7e88ff17910c8e34cb2ec22e7",
                 "shasum": ""
             },
             "require": {
                 "clue/redis-protocol": "^0.3",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/datetime-factory": "^0.4",
-                "fastybird/exchange": "^0.36",
-                "fastybird/metadata": "^0.53",
+                "fastybird/exchange": "^0.39",
+                "fastybird/metadata": "^0.56",
                 "fastybird/socket-server-factory": "^0.4",
                 "nette/bootstrap": "^3.0",
                 "nette/di": "^3.0",
@@ -2853,7 +2867,7 @@
                 "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
                 "source": "https://github.com/FastyBird/redisdb-exchange-plugin"
             },
-            "time": "2022-04-07T23:11:43+00:00"
+            "time": "2022-04-22T12:20:02+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -2942,23 +2956,23 @@
         },
         {
             "name": "fastybird/shelly-connector",
-            "version": "v0.25.0",
+            "version": "v0.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/shelly-connector.git",
-                "reference": "8e89ea0bbd41fad540c061f1547d6f6c0eab6c2a"
+                "reference": "adfc7a0aea4fea3f7427389a7d43e762e6395714"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/shelly-connector/zipball/8e89ea0bbd41fad540c061f1547d6f6c0eab6c2a",
-                "reference": "8e89ea0bbd41fad540c061f1547d6f6c0eab6c2a",
+                "url": "https://api.github.com/repos/FastyBird/shelly-connector/zipball/adfc7a0aea4fea3f7427389a7d43e762e6395714",
+                "reference": "adfc7a0aea4fea3f7427389a7d43e762e6395714",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.54",
+                "fastybird/devices-module": "^0.58",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "php": ">=7.4.0|>=8.0.0"
             },
             "require-dev": {
@@ -3016,7 +3030,7 @@
                 "issues": "https://github.com/FastyBird/shelly-connector/issues",
                 "source": "https://github.com/FastyBird/shelly-connector"
             },
-            "time": "2022-04-07T21:03:50+00:00"
+            "time": "2022-04-23T09:44:04+00:00"
         },
         {
             "name": "fastybird/simple-auth",
@@ -3186,23 +3200,23 @@
         },
         {
             "name": "fastybird/triggers-module",
-            "version": "v0.32.0",
+            "version": "v0.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "a88968063094e1617872a8c223f51a74146873f2"
+                "reference": "5ed4b85ca27b5900c1dcfeb0a8d08bf721609201"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/a88968063094e1617872a8c223f51a74146873f2",
-                "reference": "a88968063094e1617872a8c223f51a74146873f2",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/5ed4b85ca27b5900c1dcfeb0a8d08bf721609201",
+                "reference": "5ed4b85ca27b5900c1dcfeb0a8d08bf721609201",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/exchange": "^0.36",
+                "fastybird/exchange": "^0.39",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "fastybird/simple-auth": "^0.3",
                 "fastybird/web-server": "^0.8",
                 "ipub/doctrine-phone": "^1.6",
@@ -3277,7 +3291,7 @@
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
                 "source": "https://github.com/FastyBird/triggers-module"
             },
-            "time": "2022-04-06T22:10:40+00:00"
+            "time": "2022-04-24T08:01:37+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -3285,20 +3299,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ui-module.git",
-                "reference": "05da58539b6a10fc9b1f1228c0cf136f42e918f4"
+                "reference": "9bda4536ad477773606f32bbddfab99defd9ad99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/05da58539b6a10fc9b1f1228c0cf136f42e918f4",
-                "reference": "05da58539b6a10fc9b1f1228c0cf136f42e918f4",
+                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/9bda4536ad477773606f32bbddfab99defd9ad99",
+                "reference": "9bda4536ad477773606f32bbddfab99defd9ad99",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
-                "fastybird/exchange": "^0.36",
+                "fastybird/exchange": "^0.39",
                 "fastybird/json-api": "^0.10",
-                "fastybird/metadata": "^0.53",
+                "fastybird/metadata": "^0.56",
                 "fastybird/simple-auth": "^0.3",
                 "fastybird/web-server": "^0.8",
                 "ipub/doctrine-consistence": "^0.4",
@@ -3373,7 +3387,7 @@
                 "issues": "https://github.com/FastyBird/ui-module/issues",
                 "source": "https://github.com/FastyBird/ui-module"
             },
-            "time": "2022-04-06T22:10:20+00:00"
+            "time": "2022-04-24T07:30:48+00:00"
         },
         {
             "name": "fastybird/web-server",
@@ -3526,16 +3540,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.12.46",
+            "version": "8.12.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "d0a5e2637b650db38e0cce9b85897df1b9809984"
+                "reference": "e931ce8e68b6ca45a30743181fbdf0b24c1b611e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/d0a5e2637b650db38e0cce9b85897df1b9809984",
-                "reference": "d0a5e2637b650db38e0cce9b85897df1b9809984",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/e931ce8e68b6ca45a30743181fbdf0b24c1b611e",
+                "reference": "e931ce8e68b6ca45a30743181fbdf0b24c1b611e",
                 "shasum": ""
             },
             "require": {
@@ -3595,7 +3609,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2022-03-31T08:27:57+00:00"
+            "time": "2022-04-19T12:45:49+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -4891,16 +4905,16 @@
         },
         {
             "name": "latte/latte",
-            "version": "v2.11.1",
+            "version": "v2.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "21316b42fb0a4e43df01f73c55d52bd531823fda"
+                "reference": "2e21dbadb2ceae296a51d59d2f336f722b52caf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/21316b42fb0a4e43df01f73c55d52bd531823fda",
-                "reference": "21316b42fb0a4e43df01f73c55d52bd531823fda",
+                "url": "https://api.github.com/repos/nette/latte/zipball/2e21dbadb2ceae296a51d59d2f336f722b52caf7",
+                "reference": "2e21dbadb2ceae296a51d59d2f336f722b52caf7",
                 "shasum": ""
             },
             "require": {
@@ -4913,9 +4927,9 @@
             },
             "require-dev": {
                 "nette/php-generator": "^3.3.4",
-                "nette/tester": "~2.0",
+                "nette/tester": "^2.0",
                 "nette/utils": "^3.0",
-                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan": "^1",
                 "tracy/tracy": "^2.3"
             },
             "suggest": {
@@ -4969,29 +4983,30 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/latte/issues",
-                "source": "https://github.com/nette/latte/tree/v2.11.1"
+                "source": "https://github.com/nette/latte/tree/v2.11.2"
             },
-            "time": "2022-04-07T13:21:53+00:00"
+            "time": "2022-04-20T00:12:51+00:00"
         },
         {
             "name": "lcobucci/clock",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/clock.git",
-                "reference": "903513d28e85376a33385ebc601afd2ee69e5653"
+                "reference": "fb533e093fd61321bfcbac08b131ce805fe183d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/clock/zipball/903513d28e85376a33385ebc601afd2ee69e5653",
-                "reference": "903513d28e85376a33385ebc601afd2ee69e5653",
+                "url": "https://api.github.com/repos/lcobucci/clock/zipball/fb533e093fd61321bfcbac08b131ce805fe183d3",
+                "reference": "fb533e093fd61321bfcbac08b131ce805fe183d3",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": "^8.0",
+                "stella-maris/clock": "^0.1.4"
             },
             "require-dev": {
-                "infection/infection": "^0.25",
+                "infection/infection": "^0.26",
                 "lcobucci/coding-standard": "^8.0",
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan": "^0.12",
@@ -5019,7 +5034,7 @@
             "description": "Yet another clock abstraction",
             "support": {
                 "issues": "https://github.com/lcobucci/clock/issues",
-                "source": "https://github.com/lcobucci/clock/tree/2.1.0"
+                "source": "https://github.com/lcobucci/clock/tree/2.2.0"
             },
             "funding": [
                 {
@@ -5031,7 +5046,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-10-31T21:32:07+00:00"
+            "time": "2022-04-19T19:34:17+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -5188,16 +5203,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.4.0",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "d7fd7450628561ba697b7097d86db72662f54aef"
+                "reference": "4192345e260f1d51b365536199744b987e160edc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d7fd7450628561ba697b7097d86db72662f54aef",
-                "reference": "d7fd7450628561ba697b7097d86db72662f54aef",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/4192345e260f1d51b365536199744b987e160edc",
+                "reference": "4192345e260f1d51b365536199744b987e160edc",
                 "shasum": ""
             },
             "require": {
@@ -5271,7 +5286,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.4.0"
+                "source": "https://github.com/Seldaek/monolog/tree/2.5.0"
             },
             "funding": [
                 {
@@ -5283,7 +5298,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-14T12:44:37+00:00"
+            "time": "2022-04-08T15:43:54+00:00"
         },
         {
             "name": "neomerx/json-api",
@@ -5851,16 +5866,16 @@
         },
         {
             "name": "nette/routing",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/routing.git",
-                "reference": "5532e7e3612e13def357f089c1a5c25793a16843"
+                "reference": "5e02bdde257029db0223d3291c281d913abd587f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/routing/zipball/5532e7e3612e13def357f089c1a5c25793a16843",
-                "reference": "5532e7e3612e13def357f089c1a5c25793a16843",
+                "url": "https://api.github.com/repos/nette/routing/zipball/5e02bdde257029db0223d3291c281d913abd587f",
+                "reference": "5e02bdde257029db0223d3291c281d913abd587f",
                 "shasum": ""
             },
             "require": {
@@ -5870,7 +5885,7 @@
             },
             "require-dev": {
                 "nette/tester": "^2.0",
-                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan": "^1",
                 "tracy/tracy": "^2.3"
             },
             "type": "library",
@@ -5907,9 +5922,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/routing/issues",
-                "source": "https://github.com/nette/routing/tree/v3.0.2"
+                "source": "https://github.com/nette/routing/tree/v3.0.3"
             },
-            "time": "2021-02-06T04:08:30+00:00"
+            "time": "2022-04-16T23:08:16+00:00"
         },
         {
             "name": "nette/schema",
@@ -6191,35 +6206,39 @@
         },
         {
             "name": "nettrine/dbal",
-            "version": "v0.7.0",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nettrine/dbal.git",
-                "reference": "26a63ef21d229aa35b42b2d7798581bdb88ee912"
+                "reference": "9d6f2dc0979ff4665c51ccfdc8b0b6a3ddc369fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nettrine/dbal/zipball/26a63ef21d229aa35b42b2d7798581bdb88ee912",
-                "reference": "26a63ef21d229aa35b42b2d7798581bdb88ee912",
+                "url": "https://api.github.com/repos/nettrine/dbal/zipball/9d6f2dc0979ff4665c51ccfdc8b0b6a3ddc369fb",
+                "reference": "9d6f2dc0979ff4665c51ccfdc8b0b6a3ddc369fb",
                 "shasum": ""
             },
             "require": {
                 "contributte/di": "^0.5.0",
                 "doctrine/dbal": "^2.9.2",
                 "nettrine/cache": "^0.3.0",
-                "php": ">=7.2"
+                "php": ">=7.2 <8.2"
+            },
+            "conflict": {
+                "nette/di": "<3.0.6",
+                "nette/schema": "<1.1.0"
             },
             "require-dev": {
-                "contributte/console": "^0.5.0",
-                "mockery/mockery": "^1.3.3",
+                "contributte/console": "^0.9.1",
+                "mockery/mockery": "^1.3.5",
                 "ninjify/nunjuck": "^0.4",
-                "ninjify/qa": "^0.9.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
-                "psr/log": "^1.1",
-                "tracy/tracy": "~2.6.2"
+                "ninjify/qa": "^0.12",
+                "phpstan/phpstan": "^1.2.0",
+                "phpstan/phpstan-deprecation-rules": "^1.0.0",
+                "phpstan/phpstan-nette": "^1.0.0",
+                "phpstan/phpstan-strict-rules": "^1.1.0",
+                "psr/log": "^1.1 || ^2.0 || ^3.0",
+                "tracy/tracy": "^2.6.2"
             },
             "type": "library",
             "extra": {
@@ -6255,9 +6274,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nettrine/dbal/issues",
-                "source": "https://github.com/nettrine/dbal/tree/v0.7.0"
+                "source": "https://github.com/nettrine/dbal/tree/v0.7.1"
             },
-            "time": "2020-12-11T15:36:41+00:00"
+            "time": "2022-04-12T14:52:00+00:00"
         },
         {
             "name": "nettrine/orm",
@@ -9093,17 +9112,64 @@
             "time": "2022-03-13T12:38:01+00:00"
         },
         {
-            "name": "sunrise/http-header",
-            "version": "v2.0.0",
+            "name": "stella-maris/clock",
+            "version": "0.1.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sunrise-php/http-header.git",
-                "reference": "db01d69c408939edea4be96492375a921bb39cbd"
+                "url": "https://gitlab.com/stella-maris/clock.git",
+                "reference": "8a0a967896df4c63417385dc69328a0aec84d9cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunrise-php/http-header/zipball/db01d69c408939edea4be96492375a921bb39cbd",
-                "reference": "db01d69c408939edea4be96492375a921bb39cbd",
+                "url": "https://gitlab.com/api/v4/projects/stella-maris%2Fclock/repository/archive.zip?sha=8a0a967896df4c63417385dc69328a0aec84d9cf",
+                "reference": "8a0a967896df4c63417385dc69328a0aec84d9cf",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "StellaMaris\\Clock\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Heigl",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A pre-release of the proposed PSR-20 Clock-Interface",
+            "homepage": "https://gitlab.com/stella-maris/clock",
+            "keywords": [
+                "clock",
+                "datetime",
+                "point in time",
+                "psr20"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/stella-maris/clock/-/issues",
+                "source": "https://gitlab.com/stella-maris/clock/-/tree/0.1.4"
+            },
+            "time": "2022-04-17T14:12:26+00:00"
+        },
+        {
+            "name": "sunrise/http-header",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/http-header.git",
+                "reference": "b291196b4f0b041e6f546d1eed91cbcdb1e773b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/http-header/zipball/b291196b4f0b041e6f546d1eed91cbcdb1e773b8",
+                "reference": "b291196b4f0b041e6f546d1eed91cbcdb1e773b8",
                 "shasum": ""
             },
             "require": {
@@ -9125,36 +9191,36 @@
             "authors": [
                 {
                     "name": "Anatoly Fenric",
-                    "email": "anatoly@fenric.ru",
-                    "homepage": "https://anatoly.fenric.ru/"
+                    "email": "afenric@gmail.com",
+                    "homepage": "https://github.com/fenric"
                 }
             ],
-            "description": "Sunrise // HTTP header interface",
+            "description": "HTTP header interface",
             "homepage": "https://github.com/sunrise-php/http-header",
             "keywords": [
-                "HTTP-header",
                 "fenric",
+                "header",
                 "http",
                 "sunrise"
             ],
             "support": {
                 "issues": "https://github.com/sunrise-php/http-header/issues",
-                "source": "https://github.com/sunrise-php/http-header/tree/v2.0.0"
+                "source": "https://github.com/sunrise-php/http-header/tree/v2.0.2"
             },
-            "time": "2021-10-22T14:52:39+00:00"
+            "time": "2022-04-18T23:18:22+00:00"
         },
         {
             "name": "sunrise/http-message",
-            "version": "v2.1.1",
+            "version": "v2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunrise-php/http-message.git",
-                "reference": "140918dd80352caedb4cf91be4f6e4bdd7a8768c"
+                "reference": "cd6ebddf984ff2169c30c315a5d87ae88aa930da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunrise-php/http-message/zipball/140918dd80352caedb4cf91be4f6e4bdd7a8768c",
-                "reference": "140918dd80352caedb4cf91be4f6e4bdd7a8768c",
+                "url": "https://api.github.com/repos/sunrise-php/http-message/zipball/cd6ebddf984ff2169c30c315a5d87ae88aa930da",
+                "reference": "cd6ebddf984ff2169c30c315a5d87ae88aa930da",
                 "shasum": ""
             },
             "require": {
@@ -9189,43 +9255,43 @@
             "authors": [
                 {
                     "name": "Anatoly Fenric",
-                    "email": "anatoly@fenric.ru",
-                    "homepage": "https://anatoly.fenric.ru/"
+                    "email": "afenric@gmail.com",
+                    "homepage": "https://github.com/fenric"
                 }
             ],
-            "description": "Sunrise // HTTP message wrapper for PHP 7.1+ based on RFC-7230, PSR-7 and PSR-17",
+            "description": "HTTP message wrapper for PHP 7.1+ based on RFC-7230, PSR-7 and PSR-17",
             "homepage": "https://github.com/sunrise-php/http-message",
             "keywords": [
                 "fenric",
                 "http",
-                "http-message",
-                "http-request",
-                "http-response",
+                "message",
                 "php-7",
                 "php-8",
                 "psr-17",
                 "psr-7",
+                "request",
+                "response",
                 "rfc-7230",
                 "sunrise"
             ],
             "support": {
                 "issues": "https://github.com/sunrise-php/http-message/issues",
-                "source": "https://github.com/sunrise-php/http-message/tree/v2.1.1"
+                "source": "https://github.com/sunrise-php/http-message/tree/v2.1.3"
             },
-            "time": "2021-11-30T09:44:27+00:00"
+            "time": "2022-04-19T19:10:25+00:00"
         },
         {
             "name": "sunrise/http-server-request",
-            "version": "v2.0.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunrise-php/http-server-request.git",
-                "reference": "69f9c75a223a6d66a3cff81ee9fdc78824aa44c0"
+                "reference": "4dac07ef30b90db92bc475a2f1c825957cba75ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunrise-php/http-server-request/zipball/69f9c75a223a6d66a3cff81ee9fdc78824aa44c0",
-                "reference": "69f9c75a223a6d66a3cff81ee9fdc78824aa44c0",
+                "url": "https://api.github.com/repos/sunrise-php/http-server-request/zipball/4dac07ef30b90db92bc475a2f1c825957cba75ac",
+                "reference": "4dac07ef30b90db92bc475a2f1c825957cba75ac",
                 "shasum": ""
             },
             "require": {
@@ -9246,6 +9312,7 @@
             "type": "library",
             "autoload": {
                 "files": [
+                    "constants/UPLOAD_ERRORS.php",
                     "functions/request_body.php",
                     "functions/request_files.php",
                     "functions/request_headers.php",
@@ -9264,8 +9331,8 @@
             "authors": [
                 {
                     "name": "Anatoly Fenric",
-                    "email": "anatoly@fenric.ru",
-                    "homepage": "https://anatoly.fenric.ru/"
+                    "email": "afenric@gmail.com",
+                    "homepage": "https://github.com/fenric"
                 },
                 {
                     "name": "李昀陞 (Peter)",
@@ -9273,36 +9340,37 @@
                     "homepage": "https://github.com/peter279k"
                 }
             ],
-            "description": "Sunrise // HTTP server request wrapper for PHP 7.1+ based on PSR-7 and PSR-17",
+            "description": "HTTP server request wrapper for PHP 7.1+ based on PSR-7 and PSR-17",
             "homepage": "https://github.com/sunrise-php/http-server-request",
             "keywords": [
                 "PHP7",
                 "fenric",
                 "http",
-                "http-server-request",
                 "php8",
                 "psr-17",
                 "psr-7",
+                "request",
+                "server",
                 "sunrise"
             ],
             "support": {
                 "issues": "https://github.com/sunrise-php/http-server-request/issues",
-                "source": "https://github.com/sunrise-php/http-server-request/tree/v2.0.0"
+                "source": "https://github.com/sunrise-php/http-server-request/tree/v2.2.1"
             },
-            "time": "2021-10-26T00:12:50+00:00"
+            "time": "2022-04-19T19:10:51+00:00"
         },
         {
             "name": "sunrise/stream",
-            "version": "v1.3.1",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunrise-php/stream.git",
-                "reference": "4ce9d9c657a333d545a21e95909d33688c8cd704"
+                "reference": "fe84a491be280c1a3c528a12c75a1c9f66974650"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunrise-php/stream/zipball/4ce9d9c657a333d545a21e95909d33688c8cd704",
-                "reference": "4ce9d9c657a333d545a21e95909d33688c8cd704",
+                "url": "https://api.github.com/repos/sunrise-php/stream/zipball/fe84a491be280c1a3c528a12c75a1c9f66974650",
+                "reference": "fe84a491be280c1a3c528a12c75a1c9f66974650",
                 "shasum": ""
             },
             "require": {
@@ -9330,8 +9398,8 @@
             "authors": [
                 {
                     "name": "Anatoly Fenric",
-                    "email": "anatoly@fenric.ru",
-                    "homepage": "https://anatoly.fenric.ru/"
+                    "email": "afenric@gmail.com",
+                    "homepage": "https://github.com/fenric"
                 },
                 {
                     "name": "李昀陞 (Peter)",
@@ -9339,7 +9407,7 @@
                     "homepage": "https://github.com/peter279k"
                 }
             ],
-            "description": "Simple Stream wrapper for PHP 7.1+ based on PSR-7 & PSR-17",
+            "description": "Stream wrapper for PHP 7.1+ based on PSR-7 and PSR-17",
             "homepage": "https://github.com/sunrise-php/stream",
             "keywords": [
                 "PHP7",
@@ -9353,22 +9421,22 @@
             ],
             "support": {
                 "issues": "https://github.com/sunrise-php/stream/issues",
-                "source": "https://github.com/sunrise-php/stream/tree/v1.3.1"
+                "source": "https://github.com/sunrise-php/stream/tree/v1.3.3"
             },
-            "time": "2021-11-30T10:05:45+00:00"
+            "time": "2022-04-19T19:11:07+00:00"
         },
         {
             "name": "sunrise/uri",
-            "version": "v1.2.1",
+            "version": "v1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunrise-php/uri.git",
-                "reference": "d068f41e5b8dc4f26da0daae2b9ff9ed965ba58d"
+                "reference": "2ea4d97b741b91b13cfb32c75afe9a0492717a59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunrise-php/uri/zipball/d068f41e5b8dc4f26da0daae2b9ff9ed965ba58d",
-                "reference": "d068f41e5b8dc4f26da0daae2b9ff9ed965ba58d",
+                "url": "https://api.github.com/repos/sunrise-php/uri/zipball/2ea4d97b741b91b13cfb32c75afe9a0492717a59",
+                "reference": "2ea4d97b741b91b13cfb32c75afe9a0492717a59",
                 "shasum": ""
             },
             "require": {
@@ -9396,8 +9464,8 @@
             "authors": [
                 {
                     "name": "Anatoly Fenric",
-                    "email": "anatoly@fenric.ru",
-                    "homepage": "https://anatoly.fenric.ru/"
+                    "email": "afenric@gmail.com",
+                    "homepage": "https://github.com/fenric"
                 },
                 {
                     "name": "李昀陞 (Peter)",
@@ -9405,7 +9473,7 @@
                     "homepage": "https://github.com/peter279k"
                 }
             ],
-            "description": "Simple URI wrapper for PHP 7.1+ based on RFC-3986, PSR-7 & PSR-17",
+            "description": "URI wrapper for PHP 7.1+ based on RFC-3986, PSR-7 and PSR-17",
             "homepage": "https://github.com/sunrise-php/uri",
             "keywords": [
                 "PHP7",
@@ -9421,9 +9489,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sunrise-php/uri/issues",
-                "source": "https://github.com/sunrise-php/uri/tree/v1.2.1"
+                "source": "https://github.com/sunrise-php/uri/tree/v1.2.4"
             },
-            "time": "2021-11-30T09:51:05+00:00"
+            "time": "2022-04-19T19:11:14+00:00"
         },
         {
             "name": "symfony/config",
@@ -9506,46 +9574,42 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.7",
+            "version": "v6.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "900275254f0a1a2afff1ab0e11abd5587a10e1d6"
+                "reference": "70dcf7b2ca2ea08ad6ebcc475f104a024fb5632e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/900275254f0a1a2afff1ab0e11abd5587a10e1d6",
-                "reference": "900275254f0a1a2afff1ab0e11abd5587a10e1d6",
+                "url": "https://api.github.com/repos/symfony/console/zipball/70dcf7b2ca2ea08ad6ebcc475f104a024fb5632e",
+                "reference": "70dcf7b2ca2ea08ad6ebcc475f104a024fb5632e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
+                "php": ">=8.0.2",
                 "symfony/polyfill-mbstring": "~1.0",
-                "symfony/polyfill-php73": "^1.9",
-                "symfony/polyfill-php80": "^1.16",
                 "symfony/service-contracts": "^1.1|^2|^3",
-                "symfony/string": "^5.1|^6.0"
+                "symfony/string": "^5.4|^6.0"
             },
             "conflict": {
-                "psr/log": ">=3",
-                "symfony/dependency-injection": "<4.4",
-                "symfony/dotenv": "<5.1",
-                "symfony/event-dispatcher": "<4.4",
-                "symfony/lock": "<4.4",
-                "symfony/process": "<4.4"
+                "symfony/dependency-injection": "<5.4",
+                "symfony/dotenv": "<5.4",
+                "symfony/event-dispatcher": "<5.4",
+                "symfony/lock": "<5.4",
+                "symfony/process": "<5.4"
             },
             "provide": {
-                "psr/log-implementation": "1.0|2.0"
+                "psr/log-implementation": "1.0|2.0|3.0"
             },
             "require-dev": {
-                "psr/log": "^1|^2",
-                "symfony/config": "^4.4|^5.0|^6.0",
-                "symfony/dependency-injection": "^4.4|^5.0|^6.0",
-                "symfony/event-dispatcher": "^4.4|^5.0|^6.0",
-                "symfony/lock": "^4.4|^5.0|^6.0",
-                "symfony/process": "^4.4|^5.0|^6.0",
-                "symfony/var-dumper": "^4.4|^5.0|^6.0"
+                "psr/log": "^1|^2|^3",
+                "symfony/config": "^5.4|^6.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/event-dispatcher": "^5.4|^6.0",
+                "symfony/lock": "^5.4|^6.0",
+                "symfony/process": "^5.4|^6.0",
+                "symfony/var-dumper": "^5.4|^6.0"
             },
             "suggest": {
                 "psr/log": "For using the console logger",
@@ -9585,7 +9649,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.7"
+                "source": "https://github.com/symfony/console/tree/v6.0.7"
             },
             "funding": [
                 {
@@ -9601,7 +9665,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-31T17:09:19+00:00"
+            "time": "2022-03-31T17:18:25+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -10531,85 +10595,6 @@
                 }
             ],
             "time": "2021-05-27T09:17:38+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php73",
-            "version": "v1.25.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "cc5db0e22b3cb4111010e48785a97f670b350ca5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/cc5db0e22b3cb4111010e48785a97f670b350ca5",
-                "reference": "cc5db0e22b3cb4111010e48785a97f670b350ca5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.23-dev"
-                },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php73\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.25.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-06-05T21:20:04+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -12596,5 +12581,5 @@
         "php": ">=7.4.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
