@@ -55,7 +55,9 @@
     "fastybird/shelly-connector": "^0.28",
     "fastybird/socket-server-factory": "^0.4",
     "fastybird/triggers-module": "^0.33",
+    "fastybird/tuya-connector": "^0.1",
     "fastybird/ui-module": "@dev",
+    "fastybird/virtual-connector": "^0.1",
     "ipub/websockets-wamp": "^1.4",
     "sunrise/http-server-request": "^2.0",
     "vlucas/phpdotenv": "^5.4"

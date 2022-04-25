@@ -54,6 +54,8 @@ extensions:
     fbShellyConnector                   : FastyBird\ShellyConnector\DI\ShellyConnectorExtension
     fbModbusConnector                   : FastyBird\ModbusConnector\DI\ModbusConnectorExtension
     fbHomeKitConnector                  : FastyBird\HomeKitConnector\DI\HomeKitConnectorExtension
+    fbVirtualConnector                  : FastyBird\VirtualConnector\DI\VirtualConnectorExtension
+    fbTuyaConnector                     : FastyBird\TuyaConnector\DI\TuyaConnectorExtension
     # Application
     fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension(%consoleMode%)
 

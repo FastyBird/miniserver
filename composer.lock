@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38f08ab8c8e6ce999613885ce5f38111",
+    "content-hash": "7dc4aacf65b850649c16581d2151f7c1",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -3294,6 +3294,92 @@
             "time": "2022-04-24T08:01:37+00:00"
         },
         {
+            "name": "fastybird/tuya-connector",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FastyBird/tuya-connector.git",
+                "reference": "d30d8c96d0e530fc49284b9873fb752d7f240029"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FastyBird/tuya-connector/zipball/d30d8c96d0e530fc49284b9873fb752d7f240029",
+                "reference": "d30d8c96d0e530fc49284b9873fb752d7f240029",
+                "shasum": ""
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/devices-module": "^0.58",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.56",
+                "nette/bootstrap": "^3.1",
+                "nette/di": "^3.0",
+                "php": ">=7.4.0|>=8.0.0",
+                "psr/log": "^1.1",
+                "ramsey/uuid": "^4.2",
+                "react/socket": "^1.9"
+            },
+            "require-dev": {
+                "contributte/translation": "^0.9",
+                "mockery/mockery": "^1.4",
+                "ninjify/nunjuck": "^0.3",
+                "ninjify/qa": "^0.13",
+                "pds/skeleton": "^1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-nette": "^0.12",
+                "tracy/tracy": "^2.9"
+            },
+            "type": "connector",
+            "extra": {
+                "patches": {
+                    "nettrine/orm": {
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
+                    },
+                    "nette/utils": {
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\TuyaConnector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Tuya devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "Tuya",
+                "connector",
+                "fastybird",
+                "fb",
+                "iot"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/tuya-connector/issues",
+                "source": "https://github.com/FastyBird/tuya-connector"
+            },
+            "time": "2022-04-25T08:36:53+00:00"
+        },
+        {
             "name": "fastybird/ui-module",
             "version": "dev-master",
             "source": {
@@ -3388,6 +3474,92 @@
                 "source": "https://github.com/FastyBird/ui-module"
             },
             "time": "2022-04-24T07:30:48+00:00"
+        },
+        {
+            "name": "fastybird/virtual-connector",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FastyBird/virtual-connector.git",
+                "reference": "c0b62a5f1b44551378ead391e824bf1ff8dad0ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FastyBird/virtual-connector/zipball/c0b62a5f1b44551378ead391e824bf1ff8dad0ce",
+                "reference": "c0b62a5f1b44551378ead391e824bf1ff8dad0ce",
+                "shasum": ""
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/devices-module": "^0.58",
+                "fastybird/json-api": "^0.10",
+                "fastybird/metadata": "^0.56",
+                "nette/bootstrap": "^3.1",
+                "nette/di": "^3.0",
+                "php": ">=7.4.0|>=8.0.0",
+                "psr/log": "^1.1",
+                "ramsey/uuid": "^4.2",
+                "react/socket": "^1.9"
+            },
+            "require-dev": {
+                "contributte/translation": "^0.9",
+                "mockery/mockery": "^1.4",
+                "ninjify/nunjuck": "^0.3",
+                "ninjify/qa": "^0.13",
+                "pds/skeleton": "^1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-nette": "^0.12",
+                "tracy/tracy": "^2.9"
+            },
+            "type": "connector",
+            "extra": {
+                "patches": {
+                    "nettrine/orm": {
+                        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
+                    },
+                    "nette/utils": {
+                        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\VirtualConnector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for virtual devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "virtual"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/virtual-connector/issues",
+                "source": "https://github.com/FastyBird/virtual-connector"
+            },
+            "time": "2022-04-25T08:37:02+00:00"
         },
         {
             "name": "fastybird/web-server",
