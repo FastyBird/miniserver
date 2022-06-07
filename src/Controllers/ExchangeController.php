@@ -20,6 +20,7 @@ use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\DevicesModule\Queries as DevicesModuleQueries;
 use FastyBird\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Metadata;
+use FastyBird\Metadata\Entities as MetadataEntities;
 use FastyBird\Metadata\Exceptions as MetadataExceptions;
 use FastyBird\Metadata\Loaders as MetadataLoaders;
 use FastyBird\Metadata\Schemas as MetadataSchemas;
@@ -69,6 +70,9 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	/** @var MetadataSchemas\IValidator */
 	private MetadataSchemas\IValidator $jsonValidator;
 
+	/** @var MetadataEntities\GlobalEntityFactory */
+	private MetadataEntities\GlobalEntityFactory $entityFactory;
+
 	/** @var Log\LoggerInterface */
 	private Log\LoggerInterface $logger;
 
@@ -81,6 +85,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		DevicesModuleModels\States\ChannelPropertiesRepository $channelPropertiesStatesRepository,
 		MetadataLoaders\ISchemaLoader $schemaLoader,
 		MetadataSchemas\IValidator $jsonValidator,
+		MetadataEntities\GlobalEntityFactory $entityFactory,
 		?ExchangePublisher\IPublisher $publisher = null,
 		?Log\LoggerInterface $logger = null
 	) {
@@ -97,6 +102,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		$this->schemaLoader = $schemaLoader;
 		$this->publisher = $publisher;
 		$this->jsonValidator = $jsonValidator;
+		$this->entityFactory = $entityFactory;
 
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
@@ -253,7 +259,10 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 					$this->publisher->publish(
 						Metadata\Types\ModuleSourceType::get($args['source']),
 						Metadata\Types\RoutingKeyType::get($args['routing_key']),
-						$data,
+						$this->entityFactory->create(
+							Utils\Json::encode($data),
+							Metadata\Types\RoutingKeyType::get($args['routing_key'])
+						),
 					);
 				}
 

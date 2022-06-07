@@ -16,11 +16,11 @@
 namespace FastyBird\MiniServer\Consumers;
 
 use FastyBird\Exchange\Consumer as ExchangeConsumer;
+use FastyBird\Metadata\Entities as MetadataEntities;
 use FastyBird\Metadata\Types as MetadataTypes;
 use IPub\WebSockets;
 use IPub\WebSocketsWAMP;
 use Nette;
-use Nette\Utils;
 use Psr\Log;
 use Throwable;
 
@@ -68,14 +68,14 @@ final class Consumer implements ExchangeConsumer\IConsumer
 	public function consume(
 		$source,
 		MetadataTypes\RoutingKeyType $routingKey,
-		?Utils\ArrayHash $data
+		?MetadataEntities\IEntity $entity
 	): void {
 		$result = $this->sendMessage(
 			'Exchange:',
 			[
 				'routing_key' => $routingKey->getValue(),
 				'source'      => $source->getValue(),
-				'data'        => $data !== null ? $this->dataToArray($data) : null,
+				'data'        => $entity !== null ? $entity->toArray() : null,
 			]
 		);
 
@@ -86,7 +86,7 @@ final class Consumer implements ExchangeConsumer\IConsumer
 				'message' => [
 					'routing_key' => $routingKey->getValue(),
 					'source'      => $source->getValue(),
-					'data'        => $data !== null ? $this->dataToArray($data) : null,
+					'data'        => $entity !== null ? $entity->toArray() : null,
 				],
 			]);
 
@@ -97,7 +97,7 @@ final class Consumer implements ExchangeConsumer\IConsumer
 				'message' => [
 					'routing_key' => $routingKey->getValue(),
 					'source'      => $source->getValue(),
-					'data'        => $data !== null ? $this->dataToArray($data) : null,
+					'data'        => $entity !== null ? $entity->toArray() : null,
 				],
 			]);
 		}
@@ -151,24 +151,6 @@ final class Consumer implements ExchangeConsumer\IConsumer
 		}
 
 		return false;
-	}
-
-	/**
-	 * @param Utils\ArrayHash $data
-	 *
-	 * @return mixed[]
-	 */
-	private function dataToArray(Utils\ArrayHash $data): array
-	{
-		$transformed = (array) $data;
-
-		foreach ($transformed as $key => $value) {
-			if ($value instanceof Utils\ArrayHash) {
-				$transformed[$key] = $this->dataToArray($value);
-			}
-		}
-
-		return $transformed;
 	}
 
 }
