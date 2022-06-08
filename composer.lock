@@ -4937,16 +4937,16 @@
         },
         {
             "name": "ipub/websockets-wamp",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ipublikuj/websockets-wamp.git",
-                "reference": "0ecdffa051424e49c0f6533062cfb0767ce767a7"
+                "reference": "3255f2e4933daa4b24b661a5eb9bd88d390f1c4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/websockets-wamp/zipball/0ecdffa051424e49c0f6533062cfb0767ce767a7",
-                "reference": "0ecdffa051424e49c0f6533062cfb0767ce767a7",
+                "url": "https://api.github.com/repos/ipublikuj/websockets-wamp/zipball/3255f2e4933daa4b24b661a5eb9bd88d390f1c4e",
+                "reference": "3255f2e4933daa4b24b661a5eb9bd88d390f1c4e",
                 "shasum": ""
             },
             "require": {
@@ -5017,9 +5017,9 @@
             "support": {
                 "email": "support@ipublikuj.eu",
                 "issues": "https://github.com/iPublikuj/websockets-wamp/issues",
-                "source": "https://github.com/ipublikuj/websockets-wamp/tree/v1.4.0"
+                "source": "https://github.com/ipublikuj/websockets-wamp/tree/v1.4.1"
             },
-            "time": "2022-01-15T23:19:59+00:00"
+            "time": "2022-06-08T09:20:15+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
