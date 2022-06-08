@@ -50,7 +50,7 @@
     "fastybird/homekit-connector": "^0.9",
     "fastybird/metadata": "^0.60",
     "fastybird/modbus-connector": "^0.27",
-    "fastybird/redisdb-exchange-plugin": "^0.45",
+    "fastybird/redisdb-exchange-plugin": "^0.46",
     "fastybird/redisdb-storage-plugin": "^0.8",
     "fastybird/shelly-connector": "^0.30",
     "fastybird/socket-server-factory": "^0.4",
