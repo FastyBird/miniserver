@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "369a1b68ebae1f0325ee6b2db45456a5",
+    "content-hash": "234dc98e8aec369fc3be65a367463f85",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -3661,16 +3661,16 @@
         },
         {
             "name": "fastybird/ws-server-plugin",
-            "version": "v0.11.0",
+            "version": "v0.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ws-server-plugin.git",
-                "reference": "a8045adf06b8addebc715480d5c01dac36a0a1eb"
+                "reference": "672e3668306465d93fdd1a932d4acbff72f6a3a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ws-server-plugin/zipball/a8045adf06b8addebc715480d5c01dac36a0a1eb",
-                "reference": "a8045adf06b8addebc715480d5c01dac36a0a1eb",
+                "url": "https://api.github.com/repos/FastyBird/ws-server-plugin/zipball/672e3668306465d93fdd1a932d4acbff72f6a3a9",
+                "reference": "672e3668306465d93fdd1a932d4acbff72f6a3a9",
                 "shasum": ""
             },
             "require": {
@@ -3741,7 +3741,7 @@
                 "issues": "https://github.com/FastyBird/ws-server-plugin/issues",
                 "source": "https://github.com/FastyBird/ws-server-plugin"
             },
-            "time": "2022-06-08T09:46:09+00:00"
+            "time": "2022-06-08T22:09:42+00:00"
         },
         {
             "name": "fig/http-message-util",

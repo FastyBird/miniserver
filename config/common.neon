@@ -167,11 +167,14 @@ fbUiModule:
 # WS server
 ###########
 ipubWebsockets:
+    server:
+        address: %sockets.address%
+        port: %sockets.port%
     routes:
         /io/exchange: 'Exchange:'
 
     mapping:
-        *: FastyBird\MiniServer\Controllers\*Controller
+        *: FastyBird\WsServerPlugin\Controllers\*Controller
 
 # Symfony console support extension
 ###################################
