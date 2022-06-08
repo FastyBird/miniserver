@@ -18,11 +18,9 @@ namespace FastyBird\MiniServer\Consumers;
 use FastyBird\Exchange\Consumer as ExchangeConsumer;
 use FastyBird\Metadata\Entities as MetadataEntities;
 use FastyBird\Metadata\Types as MetadataTypes;
-use IPub\WebSockets;
-use IPub\WebSocketsWAMP;
+use FastyBird\WsServerPlugin\Publishers as WsServerPluginPublishers;
 use Nette;
 use Psr\Log;
-use Throwable;
 
 /**
  * Websockets exchange publisher
@@ -37,27 +35,17 @@ final class Consumer implements ExchangeConsumer\IConsumer
 
 	use Nette\SmartObject;
 
-	/** @var WebSockets\Router\LinkGenerator */
-	private WebSockets\Router\LinkGenerator $linkGenerator;
-
-	/** @var WebSocketsWAMP\Topics\IStorage<WebSocketsWAMP\Entities\Topics\Topic> */
-	private WebSocketsWAMP\Topics\IStorage $topicsStorage;
+	/** @var WsServerPluginPublishers\IPublisher */
+	private WsServerPluginPublishers\IPublisher $publisher;
 
 	/** @var Log\LoggerInterface */
 	private Log\LoggerInterface $logger;
 
-	/**
-	 * @param WebSockets\Router\LinkGenerator $linkGenerator
-	 * @param WebSocketsWAMP\Topics\IStorage<WebSocketsWAMP\Entities\Topics\Topic> $topicsStorage
-	 * @param Log\LoggerInterface|null $logger
-	 */
 	public function __construct(
-		WebSockets\Router\LinkGenerator $linkGenerator,
-		WebSocketsWAMP\Topics\IStorage $topicsStorage,
+		WsServerPluginPublishers\IPublisher $publisher,
 		?Log\LoggerInterface $logger
 	) {
-		$this->linkGenerator = $linkGenerator;
-		$this->topicsStorage = $topicsStorage;
+		$this->publisher = $publisher;
 
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
@@ -68,89 +56,13 @@ final class Consumer implements ExchangeConsumer\IConsumer
 	public function consume(
 		$source,
 		MetadataTypes\RoutingKeyType $routingKey,
-		?MetadataEntities\IEntity $entity
+		?MetadataEntities\IEntity $data
 	): void {
-		$result = $this->sendMessage(
-			'Exchange:',
-			[
-				'routing_key' => $routingKey->getValue(),
-				'source'      => $source->getValue(),
-				'data'        => $entity !== null ? $entity->toArray() : null,
-			]
+		$this->publisher->publish(
+			$source,
+			$routingKey,
+			$data
 		);
-
-		if ($result) {
-			$this->logger->debug('Successfully published message', [
-				'source'  => 'ws-server-plugin-publisher',
-				'type'    => 'publish',
-				'message' => [
-					'routing_key' => $routingKey->getValue(),
-					'source'      => $source->getValue(),
-					'data'        => $entity !== null ? $entity->toArray() : null,
-				],
-			]);
-
-		} else {
-			$this->logger->error('Message could not be published to exchange', [
-				'source'  => 'ws-server-plugin-publisher',
-				'type'    => 'publish',
-				'message' => [
-					'routing_key' => $routingKey->getValue(),
-					'source'      => $source->getValue(),
-					'data'        => $entity !== null ? $entity->toArray() : null,
-				],
-			]);
-		}
-	}
-
-	/**
-	 * @param string $destination
-	 * @param mixed[] $data
-	 *
-	 * @return bool
-	 */
-	private function sendMessage(
-		string $destination,
-		array $data
-	): bool {
-		try {
-			$link = $this->linkGenerator->link($destination);
-
-			if ($this->topicsStorage->hasTopic($link)) {
-				$topic = $this->topicsStorage->getTopic($link);
-
-				$this->logger->debug('Broadcasting message to topic', [
-					'source' => 'ws-server-plugin-publisher',
-					'type'   => 'broadcast',
-					'link'   => $link,
-				]);
-
-				$topic->broadcast(Nette\Utils\Json::encode($data));
-			}
-
-			return true;
-		} catch (Nette\Utils\JsonException $ex) {
-			$this->logger->error('Data could not be converted to message', [
-				'source'    => 'ws-server-plugin-publisher',
-				'type'      => 'broadcast',
-				'exception' => [
-					'message' => $ex->getMessage(),
-					'code'    => $ex->getCode(),
-				],
-			]);
-
-		} catch (Throwable $ex) {
-			$this->logger->error('Data could not be broadcasts to clients', [
-				'source'    => 'ws-server-plugin-publisher',
-				'type'      => 'broadcast',
-				'exception' => [
-					'message' => $ex->getMessage(),
-					'code'    => $ex->getCode(),
-				],
-			]);
-		}
-
-		return false;
 	}
 
 }

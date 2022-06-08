@@ -16,10 +16,17 @@
 namespace FastyBird\MiniServer\Subscribers;
 
 use FastyBird\Bootstrap\Helpers as BootstrapHelpers;
-use FastyBird\MiniServer;
-use FastyBird\MiniServer\Events;
+use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
+use FastyBird\DevicesModule\Models as DevicesModuleModels;
+use FastyBird\DevicesModule\Queries as DevicesModuleQueries;
+use FastyBird\Metadata\Types as MetadataTypes;
+use FastyBird\MiniServer\States;
+use FastyBird\WsServerPlugin\Events as WsServerPluginEvents;
 use IPub\WebSockets;
+use IPub\WebSocketsWAMP;
+use Nette\Utils;
 use Psr\Log;
+use Throwable;
 use Symfony\Component\EventDispatcher;
 
 /**
@@ -33,14 +40,26 @@ use Symfony\Component\EventDispatcher;
 class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 {
 
+	/** @var DevicesModuleModels\Connectors\Properties\IPropertiesRepository */
+	private DevicesModuleModels\Connectors\Properties\IPropertiesRepository $connectorPropertiesRepository;
+
+	/** @var DevicesModuleModels\Devices\Properties\IPropertiesRepository */
+	private DevicesModuleModels\Devices\Properties\IPropertiesRepository $devicePropertiesRepository;
+
+	/** @var DevicesModuleModels\Channels\Properties\IPropertiesRepository */
+	private DevicesModuleModels\Channels\Properties\IPropertiesRepository $channelPropertiesRepository;
+
+	/** @var DevicesModuleModels\States\ConnectorPropertiesRepository */
+	private DevicesModuleModels\States\ConnectorPropertiesRepository $connectorPropertiesStatesRepository;
+
+	/** @var DevicesModuleModels\States\DevicePropertiesRepository */
+	private DevicesModuleModels\States\DevicePropertiesRepository $devicePropertiesStatesRepository;
+
+	/** @var DevicesModuleModels\States\ChannelPropertiesRepository */
+	private DevicesModuleModels\States\ChannelPropertiesRepository $channelPropertiesStatesRepository;
+
 	/** @var Log\LoggerInterface */
 	protected Log\LoggerInterface $logger;
-
-	/** @var string[] */
-	private array $wsKeys;
-
-	/** @var string[] */
-	private array $allowedOrigins;
 
 	/** @var BootstrapHelpers\Database */
 	private BootstrapHelpers\Database $database;
@@ -51,133 +70,165 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			Events\WsClientConnectedEvent::class => 'clientConnected',
-			Events\WsIncomingMessage::class      => 'incomingMessage',
+			WsServerPluginEvents\ClientSubscribedEvent::class => 'clientSubscribed',
+			WsServerPluginEvents\IncomingMessage::class => 'incomingMessage',
 		];
 	}
 
 	public function __construct(
+		DevicesModuleModels\Connectors\Properties\IPropertiesRepository $connectorPropertiesRepository,
+		DevicesModuleModels\Devices\Properties\IPropertiesRepository $devicePropertiesRepository,
+		DevicesModuleModels\Channels\Properties\IPropertiesRepository $channelPropertiesRepository,
+		DevicesModuleModels\States\ConnectorPropertiesRepository $connectorPropertiesStatesRepository,
+		DevicesModuleModels\States\DevicePropertiesRepository $devicePropertiesStatesRepository,
+		DevicesModuleModels\States\ChannelPropertiesRepository $channelPropertiesStatesRepository,
 		BootstrapHelpers\Database $database,
-		?Log\LoggerInterface $logger,
-		?string $wsKeys = null,
-		?string $allowedOrigins = null
+		?Log\LoggerInterface $logger
 	) {
-		$this->wsKeys = $wsKeys !== null ? explode(',', $wsKeys) : [];
-		$this->allowedOrigins = $allowedOrigins !== null ? explode(',', $allowedOrigins) : [];
+
+		$this->connectorPropertiesRepository = $connectorPropertiesRepository;
+		$this->devicePropertiesRepository = $devicePropertiesRepository;
+		$this->channelPropertiesRepository = $channelPropertiesRepository;
+
+		$this->connectorPropertiesStatesRepository = $connectorPropertiesStatesRepository;
+		$this->devicePropertiesStatesRepository = $devicePropertiesStatesRepository;
+		$this->channelPropertiesStatesRepository = $channelPropertiesStatesRepository;
 
 		$this->database = $database;
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
 	/**
+	 * @param WsServerPluginEvents\ClientSubscribedEvent $event
+	 *
 	 * @return void
 	 */
-	public function clientConnected(
-		Events\WsClientConnectedEvent $event
+	public function clientSubscribed(
+		WsServerPluginEvents\ClientSubscribedEvent $event
 	): void {
-		$this->checkSecurity($event->getClient(), $event->getHttpRequest(), $this->wsKeys, $this->allowedOrigins);
+		try {
+			$findDevicesProperties = new DevicesModuleQueries\FindDevicePropertiesQuery();
+
+			$devicesProperties = $this->devicePropertiesRepository->getResultSet($findDevicesProperties);
+
+			/** @var DevicesModuleEntities\Devices\Properties\Property $deviceProperty */
+			foreach ($devicesProperties as $deviceProperty) {
+				$dynamicPropertyData = [];
+
+				if (
+					$deviceProperty instanceof DevicesModuleEntities\Devices\Properties\IDynamicProperty
+					|| (
+						$deviceProperty->getParent() !== null
+						&& $deviceProperty->getParent() instanceof DevicesModuleEntities\Devices\Properties\IDynamicProperty
+					)
+				) {
+					$devicePropertyState = $this->devicePropertiesStatesRepository->findOne($deviceProperty);
+
+					if ($devicePropertyState instanceof States\IProperty) {
+						$dynamicPropertyData = $devicePropertyState->toExchange($deviceProperty);
+					}
+				}
+
+				$event->getClient()->send(Utils\Json::encode([
+					WebSocketsWAMP\Application\Application::MSG_EVENT,
+					$event->getTopic()->getId(),
+					Utils\Json::encode([
+						'routing_key' => MetadataTypes\RoutingKeyType::ROUTE_DEVICE_PROPERTY_ENTITY_REPORTED,
+						'source'      => MetadataTypes\ModuleSourceType::SOURCE_MODULE_DEVICES,
+						'data'        => array_merge(
+							$deviceProperty->toArray(),
+							$dynamicPropertyData,
+						),
+					]),
+				]));
+			}
+
+			$findChannelsProperties = new DevicesModuleQueries\FindChannelPropertiesQuery();
+
+			$channelsProperties = $this->channelPropertiesRepository->getResultSet($findChannelsProperties);
+
+			/** @var DevicesModuleEntities\Channels\Properties\Property $channelProperty */
+			foreach ($channelsProperties as $channelProperty) {
+				$dynamicPropertyData = [];
+
+				if ($channelProperty instanceof DevicesModuleEntities\Channels\Properties\IDynamicProperty) {
+					$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
+
+					if ($channelPropertyState instanceof States\IProperty) {
+						$dynamicPropertyData = $channelPropertyState->toExchange($channelProperty);
+					}
+				}
+
+				$event->getClient()->send(Utils\Json::encode([
+					WebSocketsWAMP\Application\Application::MSG_EVENT,
+					$event->getTopic()->getId(),
+					Utils\Json::encode([
+						'routing_key' => MetadataTypes\RoutingKeyType::ROUTE_CHANNEL_PROPERTY_ENTITY_REPORTED,
+						'source'      => MetadataTypes\ModuleSourceType::SOURCE_MODULE_DEVICES,
+						'data'        => array_merge(
+							$channelProperty->toArray(),
+							$dynamicPropertyData,
+						),
+					]),
+				]));
+			}
+
+			$findConnectorsProperties = new DevicesModuleQueries\FindConnectorPropertiesQuery();
+
+			$connectorsProperties = $this->connectorPropertiesRepository->getResultSet($findConnectorsProperties);
+
+			/** @var DevicesModuleEntities\Connectors\Properties\Property $connectorProperty */
+			foreach ($connectorsProperties as $connectorProperty) {
+				$dynamicPropertyData = [];
+
+				if ($connectorProperty instanceof DevicesModuleEntities\Connectors\Properties\IDynamicProperty) {
+					$connectorPropertyState = $this->connectorPropertiesStatesRepository->findOne($connectorProperty);
+
+					if ($connectorPropertyState instanceof States\IProperty) {
+						$dynamicPropertyData = $connectorPropertyState->toExchange($connectorProperty);
+					}
+				}
+
+				$event->getClient()->send(Utils\Json::encode([
+					WebSocketsWAMP\Application\Application::MSG_EVENT,
+					$event->getTopic()->getId(),
+					Utils\Json::encode([
+						'routing_key' => MetadataTypes\RoutingKeyType::ROUTE_CONNECTOR_PROPERTY_ENTITY_REPORTED,
+						'source'      => MetadataTypes\ModuleSourceType::SOURCE_MODULE_DEVICES,
+						'data'        => array_merge(
+							$connectorProperty->toArray(),
+							$dynamicPropertyData,
+						),
+					]),
+				]));
+			}
+		} catch (Throwable $ex) {
+			$this->logger->error('State couldn\'t be sent to subscriber', [
+				'source'    => 'ws-server-plugin-controller',
+				'type'      => 'subscribe',
+				'exception' => [
+					'message' => $ex->getMessage(),
+					'code'    => $ex->getCode(),
+				],
+			]);
+		}
 	}
 
 	/**
+	 * @param WsServerPluginEvents\IncomingMessage $event
+	 *
 	 * @return void
+	 *
+	 * @throws Throwable
 	 */
 	public function incomingMessage(
-		Events\WsIncomingMessage $event
+		WsServerPluginEvents\IncomingMessage $event
 	): void {
 		if (!$this->database->ping()) {
 			$this->database->reconnect();
 		}
 
 		$this->database->clear();
-
-		$this->checkSecurity($event->getClient(), $event->getHttpRequest(), $this->wsKeys, $this->allowedOrigins);
-	}
-
-	/**
-	 * @param WebSockets\Entities\Clients\IClient $client
-	 * @param WebSockets\Http\IRequest $httpRequest
-	 * @param string[] $allowedWsKeys
-	 * @param string[] $allowedOrigins
-	 *
-	 * @return bool
-	 *
-	 * @throws WebSockets\Exceptions\InvalidArgumentException
-	 */
-	public function checkSecurity(
-		WebSockets\Entities\Clients\IClient $client,
-		WebSockets\Http\IRequest $httpRequest,
-		array $allowedWsKeys,
-		array $allowedOrigins
-	): bool {
-		$wsKey = $httpRequest->getHeader(MiniServer\Constants::WS_HEADER_WS_KEY);
-
-		if (
-			($wsKey === null && $allowedWsKeys !== [])
-			|| (!in_array($wsKey, $allowedWsKeys, true) && $allowedWsKeys !== [])
-		) {
-			$this->closeSession($client);
-
-			$this->logger->warning('Client used invalid WS key', [
-				'source' => 'ws-server-plugin-security',
-				'type'   => 'validate',
-				'ws_key' => $wsKey,
-			]);
-
-			return false;
-		}
-
-		$origin = $httpRequest->getHeader(MiniServer\Constants::WS_HEADER_ORIGIN);
-
-		if (
-			($origin === null && $allowedOrigins !== [])
-			|| (!in_array($origin, $allowedOrigins, true) && $allowedOrigins !== [])
-		) {
-			$this->closeSession($client);
-
-			$this->logger->warning('Client is connecting from not allowed origin', [
-				'source' => 'ws-server-plugin-security',
-				'type'   => 'validate',
-				'origin' => $origin,
-			]);
-
-			return false;
-		}
-
-		$authToken = $httpRequest->getHeader(MiniServer\Constants::WS_HEADER_AUTHORIZATION);
-
-		if ($authToken === null) {
-			$cookieToken = $httpRequest->getCookie('token');
-
-			if ($cookieToken === null) {
-				$this->logger->warning('Client access token is missing', [
-					'source' => 'ws-server-plugin-security',
-					'type'   => 'validate',
-				]);
-
-				$this->closeSession($client);
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param WebSockets\Entities\Clients\IClient $client
-	 *
-	 * @throws WebSockets\Exceptions\InvalidArgumentException
-	 */
-	private function closeSession(WebSockets\Entities\Clients\IClient $client): void
-	{
-		$headers = [
-			'X-Powered-By' => WebSockets\Server\Server::VERSION,
-		];
-
-		$response = new WebSockets\Application\Responses\ErrorResponse(401, $headers);
-
-		$client->send($response);
-		$client->close();
 	}
 
 }

@@ -58,6 +58,7 @@
     "fastybird/tuya-connector": "^0.3",
     "fastybird/ui-module": "@dev",
     "fastybird/virtual-connector": "^0.2",
+    "fastybird/ws-server-plugin": "^0.11.0",
     "ipub/websockets-wamp": "^1.4",
     "sunrise/http-server-request": "^2.0",
     "vlucas/phpdotenv": "^5.4"

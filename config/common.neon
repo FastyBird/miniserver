@@ -43,6 +43,7 @@ extensions:
     # Plugins
     fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
+    fbWsServerPlugin                    : FastyBird\WsServerPlugin\DI\WsServerPluginExtension
     # Modules
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension

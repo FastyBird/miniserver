@@ -20,7 +20,6 @@ use IPub\WebSockets;
 use Nette;
 use Psr\Log;
 use React\EventLoop;
-use React\Socket;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
@@ -120,24 +119,9 @@ class WsServerCommand extends Console\Command\Command
 			]
 		);
 
-		$socketServer = $this->socketServerFactory->create($this->eventLoop, $this->serverAddress, $this->serverPort);
+		$this->socketServerFactory->create($this->eventLoop, $this->serverAddress, $this->serverPort);
 
 		try {
-			$socketServer->on('connection', function (Socket\ConnectionInterface $connection): void {
-				$this->handlers->handleConnect($connection);
-			});
-
-			$socketServer->on('error', function (Throwable $ex): void {
-				$this->logger->error('Could not establish connection', [
-					'source'    => 'ws-server-plugin-server',
-					'type'      => 'start',
-					'exception' => [
-						'message' => $ex->getMessage(),
-						'code'    => $ex->getCode(),
-					],
-				]);
-			});
-
 			$this->eventLoop->run();
 
 		} catch (WebSockets\Exceptions\TerminateException $ex) {

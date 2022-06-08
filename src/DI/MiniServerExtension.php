@@ -19,7 +19,6 @@ use Doctrine\Persistence;
 use FastyBird\MiniServer\Application;
 use FastyBird\MiniServer\Commands;
 use FastyBird\MiniServer\Consumers;
-use FastyBird\MiniServer\Controllers;
 use FastyBird\MiniServer\Entities;
 use FastyBird\MiniServer\Events;
 use FastyBird\MiniServer\Exceptions;
@@ -147,11 +146,6 @@ class MiniServerExtension extends DI\CompilerExtension
 			->setType(Models\States\ChannelPropertiesManager::class)
 			->setArgument('statesManagerFactory', '@fbRedisDbStoragePlugin.model.properties.statesManagerFactory');
 
-		// Controllers
-		$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\ExchangeController::class)
-			->addTag('nette.inject');
-
 		// Application
 		if ($this->cliMode === false) {
 			$builder->addDefinition($this->prefix('application.application'), new DI\Definitions\ServiceDefinition())
@@ -198,34 +192,6 @@ class MiniServerExtension extends DI\CompilerExtension
 				'FastyBird\MiniServer\Entities',
 			]);
 		}
-
-		/**
-		 * Events bridges
-		 */
-
-		if ($builder->getByType(EventDispatcher\EventDispatcherInterface::class) === null) {
-			throw new Exceptions\LogicException(sprintf('Service of type "%s" is needed. Please register it.', EventDispatcher\EventDispatcherInterface::class));
-		}
-
-		$dispatcher = $builder->getDefinition($builder->getByType(EventDispatcher\EventDispatcherInterface::class));
-
-		$socketWrapperServiceName = $builder->getByType(WebSockets\Server\Wrapper::class);
-		assert(is_string($socketWrapperServiceName));
-
-		$socketWrapperService = $builder->getDefinition($socketWrapperServiceName);
-		assert($socketWrapperService instanceof DI\Definitions\ServiceDefinition);
-
-		$socketWrapperService->addSetup('?->onClientConnected[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-			'@self',
-			$dispatcher,
-			new PhpGenerator\Literal(Events\WsClientConnectedEvent::class),
-		]);
-
-		$socketWrapperService->addSetup('?->onIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-			'@self',
-			$dispatcher,
-			new PhpGenerator\Literal(Events\WsIncomingMessage::class),
-		]);
 	}
 
 	/**
