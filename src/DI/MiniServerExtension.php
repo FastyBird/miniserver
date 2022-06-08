@@ -20,16 +20,13 @@ use FastyBird\MiniServer\Application;
 use FastyBird\MiniServer\Commands;
 use FastyBird\MiniServer\Consumers;
 use FastyBird\MiniServer\Entities;
-use FastyBird\MiniServer\Events;
 use FastyBird\MiniServer\Exceptions;
 use FastyBird\MiniServer\Models;
 use FastyBird\MiniServer\Subscribers;
 use IPub\DoctrineCrud;
-use IPub\WebSockets;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
-use Psr\EventDispatcher;
 use stdClass;
 
 //use FastyBird\MiniServer\Middleware;

@@ -22,12 +22,11 @@ use FastyBird\DevicesModule\Queries as DevicesModuleQueries;
 use FastyBird\Metadata\Types as MetadataTypes;
 use FastyBird\MiniServer\States;
 use FastyBird\WsServerPlugin\Events as WsServerPluginEvents;
-use IPub\WebSockets;
 use IPub\WebSocketsWAMP;
 use Nette\Utils;
 use Psr\Log;
-use Throwable;
 use Symfony\Component\EventDispatcher;
+use Throwable;
 
 /**
  * WS events subscriber
@@ -85,7 +84,6 @@ class WsSubscriber implements EventDispatcher\EventSubscriberInterface
 		BootstrapHelpers\Database $database,
 		?Log\LoggerInterface $logger
 	) {
-
 		$this->connectorPropertiesRepository = $connectorPropertiesRepository;
 		$this->devicePropertiesRepository = $devicePropertiesRepository;
 		$this->channelPropertiesRepository = $channelPropertiesRepository;
