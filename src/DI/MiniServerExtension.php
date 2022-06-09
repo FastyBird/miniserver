@@ -27,7 +27,6 @@ use IPub\DoctrineCrud;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
-use stdClass;
 
 //use FastyBird\MiniServer\Middleware;
 
@@ -65,10 +64,6 @@ class MiniServerExtension extends DI\CompilerExtension
 					'address' => Schema\Expect::string('0.0.0.0'),
 					'port'    => Schema\Expect::int(80),
 				]),
-				'sockets' => Schema\Expect::structure([
-					'address' => Schema\Expect::string('0.0.0.0'),
-					'port'    => Schema\Expect::int(8080),
-				]),
 			]),
 		]);
 	}
@@ -79,8 +74,6 @@ class MiniServerExtension extends DI\CompilerExtension
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
-		/** @var stdClass $configuration */
-		$configuration = $this->getConfig();
 
 		// Console commands
 		$builder->addDefinition($this->prefix('command.initialize'), new DI\Definitions\ServiceDefinition())
@@ -88,13 +81,6 @@ class MiniServerExtension extends DI\CompilerExtension
 
 		$builder->addDefinition($this->prefix('command.createApiKey'), new DI\Definitions\ServiceDefinition())
 			->setType(Commands\ApiKeys\CreateCommand::class);
-
-		$builder->addDefinition($this->prefix('command.wsServer'), new DI\Definitions\ServiceDefinition())
-			->setType(Commands\WsServerCommand::class)
-			->setArguments([
-				'serverAddress' => $configuration->server->sockets->address,
-				'serverPort'    => $configuration->server->sockets->port,
-			]);
 
 		// HTTP server
 		// $builder->addDefinition($this->prefix('middleware.apiKeyValidator'), new DI\Definitions\ServiceDefinition())

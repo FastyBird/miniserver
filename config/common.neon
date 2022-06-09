@@ -33,6 +33,7 @@ extensions:
     ipubDoctrineDynamicDiscriminatorMap : IPub\DoctrineDynamicDiscriminatorMap\DI\DoctrineDynamicDiscriminatorMapExtension
     ipubWebsockets                      : IPub\WebSockets\DI\WebSocketsExtension
     ipubWebsocketsWamp                  : IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension
+    # FastyBird libs
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
@@ -40,16 +41,16 @@ extensions:
     fbSocketServerFactory               : FastyBird\SocketServerFactory\DI\SocketServerFactoryExtension
     fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension(%consoleMode%)
     fbExchange                          : FastyBird\Exchange\DI\ExchangeExtension
-    # Plugins
+    # FastyBird plugins
     fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
     fbWsServerPlugin                    : FastyBird\WsServerPlugin\DI\WsServerPluginExtension
-    # Modules
+    # FastyBird modules
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
     fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
     fbTriggersModule                    : FastyBird\TriggersModule\DI\TriggersModuleExtension
     fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
-    # Connectors
+    # FastyBird connectors
     fbFbBusConnector                    : FastyBird\FbBusConnector\DI\FbBusConnectorExtension
     fbFbMqttConnector                   : FastyBird\FbMqttConnector\DI\FbMqttConnectorExtension
     fbShellyConnector                   : FastyBird\ShellyConnector\DI\ShellyConnectorExtension
@@ -57,7 +58,7 @@ extensions:
     fbHomeKitConnector                  : FastyBird\HomeKitConnector\DI\HomeKitConnectorExtension
     fbVirtualConnector                  : FastyBird\VirtualConnector\DI\VirtualConnectorExtension
     fbTuyaConnector                     : FastyBird\TuyaConnector\DI\TuyaConnectorExtension
-    # Application
+    # FastyBird application
     fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension(%consoleMode%)
 
 ##################################
@@ -69,10 +70,6 @@ fbMiniServer:
         web:
            address: %server.address%
            port: %server.port%
-
-        sockets:
-           address: %sockets.address%
-           port: %sockets.port%
 
 # Simple authentication
 #######################
@@ -176,8 +173,9 @@ ipubWebsockets:
     mapping:
         *: FastyBird\WsServerPlugin\Controllers\*Controller
 
-# Symfony console support extension
-###################################
+# Application
+#############
+
 contributteConsole:
     name: "FastyBird:MiniServer!"
     version: "0.1.0"
@@ -186,8 +184,6 @@ contributteConsole:
     url: https://www.fastybird.com
     lazy: false
 
-# Application translations
-##########################
 contributteTranslation:
     locales:
         default: en_US
@@ -201,8 +197,9 @@ contributteTranslation:
         - %appDir%/vendor/fastybird/ui-module/src/Translations
         - %appDir%/vendor/fastybird/json-api/src/Translations
 
-# Doctrine DBAL
-###############
+# Doctrine
+##########
+
 nettrineDbal:
     connection:
         serverVersion: %database.version%
@@ -226,8 +223,6 @@ nettrineDbal:
         typesMapping:
             uuid_binary: binary
 
-# Doctrine ORM annoations
-#########################
 nettrineAnnotations:
     debug: %debugMode%
     ignore:
@@ -239,8 +234,6 @@ nettrineAnnotations:
         - package
         - phpcsSuppress
 
-# Doctrine ORM
-##############
 nettrineOrm:
     configuration:
         proxyDir: %tempDir%/cache/doctrine.proxies
