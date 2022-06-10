@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * WsSubscriber.php
+ * WsServerSubscriber.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -36,7 +36,7 @@ use Throwable;
  *
  * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class WsSubscriber implements EventDispatcher\EventSubscriberInterface
+class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 {
 
 	/** @var DevicesModuleModels\Connectors\Properties\IPropertiesRepository */

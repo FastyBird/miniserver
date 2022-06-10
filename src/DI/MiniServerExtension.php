@@ -26,7 +26,6 @@ use FastyBird\MiniServer\Subscribers;
 use IPub\DoctrineCrud;
 use Nette\DI;
 use Nette\PhpGenerator;
-use Nette\Schema;
 
 //use FastyBird\MiniServer\Middleware;
 
@@ -51,21 +50,6 @@ class MiniServerExtension extends DI\CompilerExtension
 		}
 
 		$this->cliMode = $cliMode;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getConfigSchema(): Schema\Schema
-	{
-		return Schema\Expect::structure([
-			'server' => Schema\Expect::structure([
-				'web'     => Schema\Expect::structure([
-					'address' => Schema\Expect::string('0.0.0.0'),
-					'port'    => Schema\Expect::int(80),
-				]),
-			]),
-		]);
 	}
 
 	/**
@@ -136,14 +120,14 @@ class MiniServerExtension extends DI\CompilerExtension
 		}
 
 		// Subscribers
-		$builder->addDefinition($this->prefix('subscribers.application'), new DI\Definitions\ServiceDefinition())
-			->setType(Subscribers\ApplicationSubscriber::class);
+		$builder->addDefinition($this->prefix('subscribers.server.web'), new DI\Definitions\ServiceDefinition())
+			->setType(Subscribers\WebServerSubscriber::class);
+
+		$builder->addDefinition($this->prefix('subscribers.server.ws'), new DI\Definitions\ServiceDefinition())
+			->setType(Subscribers\WsServerSubscriber::class);
 
 		$builder->addDefinition($this->prefix('subscribers.entities'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\EntitiesSubscriber::class);
-
-		$builder->addDefinition($this->prefix('subscribers.ws'), new DI\Definitions\ServiceDefinition())
-			->setType(Subscribers\WsSubscriber::class);
 
 		// Exchange
 		$builder->addDefinition($this->prefix('exchange.consumer'), new DI\Definitions\ServiceDefinition())

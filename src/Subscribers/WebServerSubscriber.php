@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * ApplicationSubscriber.php
+ * WebServerSubscriber.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -17,8 +17,9 @@ namespace FastyBird\MiniServer\Subscribers;
 
 use FastyBird\Bootstrap\Helpers as BootstrapHelpers;
 use FastyBird\MiniServer\Exceptions;
-use FastyBird\WebServer\Events as WebServerEvents;
+use FastyBird\WebServerPlugin\Events as WebServerPluginEvents;
 use Symfony\Component\EventDispatcher;
+use Throwable;
 
 /**
  * Database check subscriber
@@ -28,7 +29,7 @@ use Symfony\Component\EventDispatcher;
  *
  * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ApplicationSubscriber implements EventDispatcher\EventSubscriberInterface
+class WebServerSubscriber implements EventDispatcher\EventSubscriberInterface
 {
 
 	/** @var BootstrapHelpers\Database */
@@ -40,9 +41,9 @@ class ApplicationSubscriber implements EventDispatcher\EventSubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			WebServerEvents\StartupEvent::class  => 'check',
-			WebServerEvents\RequestEvent::class  => 'request',
-			WebServerEvents\ResponseEvent::class => 'response',
+			WebServerPluginEvents\StartupEvent::class  => 'check',
+			WebServerPluginEvents\RequestEvent::class  => 'request',
+			WebServerPluginEvents\ResponseEvent::class => 'response',
 		];
 	}
 
@@ -54,6 +55,8 @@ class ApplicationSubscriber implements EventDispatcher\EventSubscriberInterface
 
 	/**
 	 * @return void
+	 *
+	 * @throws Throwable
 	 */
 	public function check(): void
 	{
@@ -71,6 +74,8 @@ class ApplicationSubscriber implements EventDispatcher\EventSubscriberInterface
 
 	/**
 	 * @return void
+	 *
+	 * @throws Throwable
 	 */
 	public function request(): void
 	{

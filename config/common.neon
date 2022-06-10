@@ -39,11 +39,11 @@ extensions:
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
     fbMetadata                          : FastyBird\Metadata\DI\MetadataExtension
     fbSocketServerFactory               : FastyBird\SocketServerFactory\DI\SocketServerFactoryExtension
-    fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension(%consoleMode%)
     fbExchange                          : FastyBird\Exchange\DI\ExchangeExtension
     # FastyBird plugins
     fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
     fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
+    fbWebServerPlugin                   : FastyBird\WebServerPlugin\DI\WebServerPluginExtension(%consoleMode%)
     fbWsServerPlugin                    : FastyBird\WsServerPlugin\DI\WsServerPluginExtension
     # FastyBird modules
     fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
@@ -64,12 +64,6 @@ extensions:
 ##################################
 # Nette extensions configuration #
 ##################################
-
-fbMiniServer:
-    server:
-        web:
-           address: %server.address%
-           port: %server.port%
 
 # Simple authentication
 #######################
