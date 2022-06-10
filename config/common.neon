@@ -86,20 +86,6 @@ fbSocketServerFactory:
         certificate: %server.certificate%
     eventLoop: false
 
-# Web server
-############
-fbWebServer:
-    static:
-        webroot: %appDir%/public/
-        enabled: true
-    cors:
-        allow:
-            headers:
-                - Content-Type
-                - Authorization
-                - X-Requested-With
-                - X-Api-Key
-
 # JSON:Api support
 ##################
 fbJsonApi:
@@ -134,6 +120,20 @@ fbRedisDbStoragePlugin:
             username: %redis.username%
             password: %redis.password%
             database: 1
+
+# Web server plugin
+###################
+fbWebServerPlugin:
+    static:
+        webroot: %appDir%/public/
+        enabled: true
+    cors:
+        allow:
+            headers:
+                - Content-Type
+                - Authorization
+                - X-Requested-With
+                - X-Api-Key
 
 # Accounts module
 #################
