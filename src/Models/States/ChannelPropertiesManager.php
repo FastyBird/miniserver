@@ -15,7 +15,6 @@
 
 namespace FastyBird\MiniServer\Models\States;
 
-use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\DevicesModule\States as DevicesModuleStates;
 use FastyBird\MiniServer\Exceptions;
@@ -46,8 +45,11 @@ class ChannelPropertiesManager implements DevicesModuleModels\States\IChannelPro
 		$this->statesManager = $statesManagerFactory->create(States\ChannelProperty::class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function create(
-		DevicesModuleEntities\Channels\Properties\IProperty $property,
+		$property,
 		Utils\ArrayHash $values
 	): States\IChannelProperty {
 		/** @var States\IChannelProperty $createdState */
@@ -59,8 +61,11 @@ class ChannelPropertiesManager implements DevicesModuleModels\States\IChannelPro
 		return $createdState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function update(
-		DevicesModuleEntities\Channels\Properties\IProperty $property,
+		$property,
 		DevicesModuleStates\IChannelProperty $state,
 		Utils\ArrayHash $values
 	): States\IChannelProperty {
@@ -77,8 +82,11 @@ class ChannelPropertiesManager implements DevicesModuleModels\States\IChannelPro
 		return $updatedState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function delete(
-		DevicesModuleEntities\Channels\Properties\IProperty $property,
+		$property,
 		DevicesModuleStates\IChannelProperty $state
 	): bool {
 		if (!$state instanceof States\IChannelProperty) {

@@ -15,11 +15,11 @@
 
 namespace FastyBird\MiniServer\Models\States;
 
-use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\MiniServer\States;
 use FastyBird\RedisDbStoragePlugin\Models as RedisDbStoragePluginModels;
 use Nette;
+use Ramsey\Uuid;
 
 /**
  * Connector property state repository
@@ -47,10 +47,22 @@ class ConnectorPropertiesRepository implements DevicesModuleModels\States\IConne
 	 * {@inheritDoc}
 	 */
 	public function findOne(
-		DevicesModuleEntities\Connectors\Properties\IProperty $property
+		$property
 	): ?States\IConnectorProperty {
 		/** @var States\IConnectorProperty $state */
 		$state = $this->stateRepository->findOne($property->getId());
+
+		return $state;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function findOneById(
+		Uuid\UuidInterface $id
+	): ?States\IConnectorProperty {
+		/** @var States\IConnectorProperty $state */
+		$state = $this->stateRepository->findOne($id);
 
 		return $state;
 	}

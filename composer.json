@@ -35,31 +35,38 @@
 
   "prefer-stable": true,
 
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
+
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/FastyBird/fb-mqtt-connector"
+    }
+  ],
 
   "require": {
     "php": ">=7.4.0",
     "contributte/event-dispatcher": "^0.8",
     "contributte/translation": "^0.9",
-    "fastybird/accounts-module": "^0.19",
-    "fastybird/bootstrap": "^0.5",
-    "fastybird/devices-module": "^0.61",
-    "fastybird/exchange": "^0.43",
-    "fastybird/fb-bus-connector": "^0.46",
-    "fastybird/fb-mqtt-connector": "^0.24",
-    "fastybird/homekit-connector": "^0.10",
-    "fastybird/metadata": "^0.61",
-    "fastybird/modbus-connector": "^0.28",
-    "fastybird/redisdb-exchange-plugin": "^0.47",
-    "fastybird/redisdb-storage-plugin": "^0.8",
-    "fastybird/shelly-connector": "^0.31",
-    "fastybird/socket-server-factory": "^0.4",
-    "fastybird/triggers-module": "^0.36",
-    "fastybird/tuya-connector": "^0.4",
+    "fastybird/accounts-module": "^0.23",
+    "fastybird/bootstrap": "^0.6",
+    "fastybird/devices-module": "dev-master as 0.69.0",
+    "fastybird/exchange": "^0.49",
+    "fastybird/fb-bus-connector": "^0.48",
+    "fastybird/fb-mqtt-connector": "dev-feature/php-worker as 0.27.0",
+    "fastybird/homekit-connector": "^0.12",
+    "fastybird/metadata": "^0.67",
+    "fastybird/modbus-connector": "^0.30",
+    "fastybird/redisdb-exchange-plugin": "^0.49",
+    "fastybird/redisdb-storage-plugin": "^0.9",
+    "fastybird/shelly-connector": "^0.33",
+    "fastybird/socket-server-factory": "^0.5",
+    "fastybird/triggers-module": "^0.39",
+    "fastybird/tuya-connector": "^0.6",
     "fastybird/ui-module": "@dev",
-    "fastybird/virtual-connector": "^0.3",
-    "fastybird/web-server-plugin": "^0.9",
-    "fastybird/ws-server-plugin": "^0.15",
+    "fastybird/virtual-connector": "^0.5",
+    "fastybird/web-server-plugin": "^0.10",
+    "fastybird/ws-server-plugin": "^0.17",
     "ipub/websockets-wamp": "^1.4",
     "sunrise/http-server-request": "^2.0",
     "vlucas/phpdotenv": "^5.4"

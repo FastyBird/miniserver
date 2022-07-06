@@ -123,7 +123,7 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 					$devicePropertyState = $this->devicePropertiesStatesRepository->findOne($deviceProperty);
 
 					if ($devicePropertyState instanceof States\IProperty) {
-						$dynamicPropertyData = $devicePropertyState->toExchange($deviceProperty);
+						$dynamicPropertyData = $devicePropertyState->toArray();
 					}
 				}
 
@@ -153,7 +153,7 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 					$channelPropertyState = $this->channelPropertiesStatesRepository->findOne($channelProperty);
 
 					if ($channelPropertyState instanceof States\IProperty) {
-						$dynamicPropertyData = $channelPropertyState->toExchange($channelProperty);
+						$dynamicPropertyData = $channelPropertyState->toArray();
 					}
 				}
 
@@ -183,7 +183,7 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 					$connectorPropertyState = $this->connectorPropertiesStatesRepository->findOne($connectorProperty);
 
 					if ($connectorPropertyState instanceof States\IProperty) {
-						$dynamicPropertyData = $connectorPropertyState->toExchange($connectorProperty);
+						$dynamicPropertyData = $connectorPropertyState->toArray();
 					}
 				}
 

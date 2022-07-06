@@ -48,9 +48,7 @@ class Application implements IApplication
 	}
 
 	/**
-	 * Dispatch application in middleware cycle!
-	 *
-	 * @return string|int|bool|void|ResponseInterface|null
+	 * {@inheritDoc}
 	 *
 	 * @throws Throwable
 	 */
@@ -58,12 +56,7 @@ class Application implements IApplication
 	{
 		$request = ServerRequestFactory::fromGlobals();
 
-		try {
-			$response = $this->router->handle($request);
-
-		} catch (Throwable $e) {
-			throw $e;
-		}
+		$response = $this->router->handle($request);
 
 		$this->sendStatus($response);
 		$this->sendHeaders($response);
@@ -99,6 +92,7 @@ class Application implements IApplication
 	}
 
 	/**
+	 * @param string $name
 	 * @param string[] $values
 	 *
 	 * @return void

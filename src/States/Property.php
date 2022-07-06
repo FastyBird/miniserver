@@ -18,8 +18,7 @@ namespace FastyBird\MiniServer\States;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
-use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
-use FastyBird\DevicesModule\Utilities as DevicesModuleUtilities;
+use Exception;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
 
 /**
@@ -33,11 +32,11 @@ use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
 class Property extends RedisDbStoragePluginStates\State implements IProperty
 {
 
-	/** @var string|null */
-	private ?string $actualValue = null;
+	/** @var bool|float|int|string|null */
+	private $actualValue = null;
 
-	/** @var string|null */
-	private ?string $expectedValue = null;
+	/** @var bool|float|int|string|null */
+	private $expectedValue = null;
 
 	/** @var bool */
 	private bool $pending = false;
@@ -53,6 +52,8 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exception
 	 */
 	public function getCreatedAt(): ?DateTimeInterface
 	{
@@ -69,6 +70,8 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exception
 	 */
 	public function getUpdatedAt(): ?DateTimeInterface
 	{
@@ -86,7 +89,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getActualValue(): ?string
+	public function getActualValue()
 	{
 		return $this->actualValue;
 	}
@@ -94,7 +97,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setActual(?string $actual): void
+	public function setActualValue($actual): void
 	{
 		$this->actualValue = $actual;
 	}
@@ -102,15 +105,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setActualValue(?string $actual): void
-	{
-		$this->setActual($actual);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getExpectedValue(): ?string
+	public function getExpectedValue()
 	{
 		return $this->expectedValue;
 	}
@@ -118,17 +113,9 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setExpected(?string $expected): void
+	public function setExpectedValue($expected): void
 	{
 		$this->expectedValue = $expected;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setExpectedValue(?string $expected): void
-	{
-		$this->setExpected($expected);
 	}
 
 	/**
@@ -199,29 +186,13 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	public function toArray(): array
 	{
 		return array_merge([
-			'actualValue'   => $this->getActualValue(),
-			'expectedValue' => $this->getExpectedValue(),
-			'pending'       => $this->isPending(),
-			'valid'         => $this->isValid(),
-			'createdAt'     => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
-			'updatedAt'     => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
+			'actual_value'   => $this->getActualValue(),
+			'expected_Value' => $this->getExpectedValue(),
+			'pending'        => $this->isPending(),
+			'valid'          => $this->isValid(),
+			'created_at'     => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
+			'updated_at'     => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
 		], parent::toArray());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function toExchange(DevicesModuleEntities\IProperty $property): array
-	{
-		$actualValue = DevicesModuleUtilities\ValueHelper::normalizeValue($property->getDataType(), $this->getActualValue(), $property->getFormat(), $property->getInvalid());
-		$expectedValue = DevicesModuleUtilities\ValueHelper::normalizeValue($property->getDataType(), $this->getExpectedValue(), $property->getFormat(), $property->getInvalid());
-
-		return [
-			'actual_value'   => is_scalar($actualValue) || $actualValue === null ? $actualValue : strval($actualValue),
-			'expected_value' => is_scalar($expectedValue) || $expectedValue === null ? $expectedValue : strval($expectedValue),
-			'pending'       => $this->isPending(),
-			'valid'         => $this->isValid(),
-		];
 	}
 
 }

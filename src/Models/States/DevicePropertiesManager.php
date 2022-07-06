@@ -15,7 +15,6 @@
 
 namespace FastyBird\MiniServer\Models\States;
 
-use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\DevicesModule\States as DevicesModuleStates;
 use FastyBird\MiniServer\Exceptions;
@@ -46,8 +45,11 @@ class DevicePropertiesManager implements DevicesModuleModels\States\IDevicePrope
 		$this->statesManager = $statesManagerFactory->create(States\DeviceProperty::class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function create(
-		DevicesModuleEntities\Devices\Properties\IProperty $property,
+		$property,
 		Utils\ArrayHash $values
 	): States\IDeviceProperty {
 		/** @var States\IDeviceProperty $createdState */
@@ -59,8 +61,11 @@ class DevicePropertiesManager implements DevicesModuleModels\States\IDevicePrope
 		return $createdState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function update(
-		DevicesModuleEntities\Devices\Properties\IProperty $property,
+		$property,
 		DevicesModuleStates\IDeviceProperty $state,
 		Utils\ArrayHash $values
 	): States\IDeviceProperty {
@@ -77,8 +82,11 @@ class DevicePropertiesManager implements DevicesModuleModels\States\IDevicePrope
 		return $updatedState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function delete(
-		DevicesModuleEntities\Devices\Properties\IProperty $property,
+		$property,
 		DevicesModuleStates\IDeviceProperty $state
 	): bool {
 		if (!$state instanceof States\IDeviceProperty) {

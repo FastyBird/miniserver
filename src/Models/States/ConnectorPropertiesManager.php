@@ -15,7 +15,6 @@
 
 namespace FastyBird\MiniServer\Models\States;
 
-use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\DevicesModule\States as DevicesModuleStates;
 use FastyBird\MiniServer\Exceptions;
@@ -46,8 +45,11 @@ class ConnectorPropertiesManager implements DevicesModuleModels\States\IConnecto
 		$this->statesManager = $statesManagerFactory->create(States\ConnectorProperty::class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function create(
-		DevicesModuleEntities\Connectors\Properties\IProperty $property,
+		$property,
 		Utils\ArrayHash $values
 	): States\IConnectorProperty {
 		/** @var States\IConnectorProperty $createdState */
@@ -59,8 +61,11 @@ class ConnectorPropertiesManager implements DevicesModuleModels\States\IConnecto
 		return $createdState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function update(
-		DevicesModuleEntities\Connectors\Properties\IProperty $property,
+		$property,
 		DevicesModuleStates\IConnectorProperty $state,
 		Utils\ArrayHash $values
 	): States\IConnectorProperty {
@@ -77,8 +82,11 @@ class ConnectorPropertiesManager implements DevicesModuleModels\States\IConnecto
 		return $updatedState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function delete(
-		DevicesModuleEntities\Connectors\Properties\IProperty $property,
+		$property,
 		DevicesModuleStates\IConnectorProperty $state
 	): bool {
 		if (!$state instanceof States\IConnectorProperty) {
