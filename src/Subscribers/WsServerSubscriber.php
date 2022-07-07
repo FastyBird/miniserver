@@ -16,13 +16,16 @@
 namespace FastyBird\MiniServer\Subscribers;
 
 use FastyBird\Bootstrap\Helpers as BootstrapHelpers;
+use FastyBird\DevicesModule\DataStorage as DevicesModuleDataStorage;
 use FastyBird\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\DevicesModule\Models as DevicesModuleModels;
 use FastyBird\DevicesModule\Queries as DevicesModuleQueries;
 use FastyBird\Metadata\Types as MetadataTypes;
 use FastyBird\MiniServer\States;
+use FastyBird\SocketServerFactory\Events as SocketServerFactoryEvents;
 use FastyBird\WsServerPlugin\Events as WsServerPluginEvents;
 use IPub\WebSocketsWAMP;
+use League\Flysystem;
 use Nette\Utils;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
@@ -57,6 +60,9 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 	/** @var DevicesModuleModels\States\ChannelPropertiesRepository */
 	private DevicesModuleModels\States\ChannelPropertiesRepository $channelPropertiesStatesRepository;
 
+	/** @var DevicesModuleDataStorage\Reader */
+	private DevicesModuleDataStorage\Reader $dataConfigurationReader;
+
 	/** @var Log\LoggerInterface */
 	protected Log\LoggerInterface $logger;
 
@@ -71,6 +77,7 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 		return [
 			WsServerPluginEvents\ClientSubscribedEvent::class => 'clientSubscribed',
 			WsServerPluginEvents\IncomingMessage::class => 'incomingMessage',
+			SocketServerFactoryEvents\InitializeEvent::class => 'initialize',
 		];
 	}
 
@@ -81,6 +88,7 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 		DevicesModuleModels\States\ConnectorPropertiesRepository $connectorPropertiesStatesRepository,
 		DevicesModuleModels\States\DevicePropertiesRepository $devicePropertiesStatesRepository,
 		DevicesModuleModels\States\ChannelPropertiesRepository $channelPropertiesStatesRepository,
+		DevicesModuleDataStorage\Reader $dataConfigurationReader,
 		BootstrapHelpers\Database $database,
 		?Log\LoggerInterface $logger
 	) {
@@ -91,6 +99,8 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 		$this->connectorPropertiesStatesRepository = $connectorPropertiesStatesRepository;
 		$this->devicePropertiesStatesRepository = $devicePropertiesStatesRepository;
 		$this->channelPropertiesStatesRepository = $channelPropertiesStatesRepository;
+
+		$this->dataConfigurationReader = $dataConfigurationReader;
 
 		$this->database = $database;
 		$this->logger = $logger ?? new Log\NullLogger();
@@ -227,6 +237,19 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 		}
 
 		$this->database->clear();
+	}
+
+	/**
+	 * @param SocketServerFactoryEvents\InitializeEvent $event
+	 *
+	 * @return void
+	 *
+	 * @throws Utils\JsonException
+	 * @throws Flysystem\FilesystemException
+	 */
+	public function initialize(SocketServerFactoryEvents\InitializeEvent $event): void
+	{
+		$this->dataConfigurationReader->read();
 	}
 
 }
