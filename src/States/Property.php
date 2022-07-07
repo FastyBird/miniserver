@@ -33,16 +33,16 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 {
 
 	/** @var bool|float|int|string|null */
-	private $actualValue = null;
+	private float|bool|int|string|null $actualValue = null;
 
 	/** @var bool|float|int|string|null */
-	private $expectedValue = null;
+	private float|bool|int|string|null $expectedValue = null;
 
 	/** @var bool */
-	private bool $pending = false;
+	private bool|string|null $pending = null;
 
 	/** @var bool */
-	private bool $valid = false;
+	private bool|null $valid = null;
 
 	/** @var string|null */
 	private ?string $createdAt = null;
@@ -89,7 +89,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getActualValue()
+	public function getActualValue(): float|bool|int|string|null
 	{
 		return $this->actualValue;
 	}
@@ -97,7 +97,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setActualValue($actual): void
+	public function setActualValue(float|bool|int|string|null $actual): void
 	{
 		$this->actualValue = $actual;
 	}
@@ -105,7 +105,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getExpectedValue()
+	public function getExpectedValue(): float|bool|int|string|null
 	{
 		return $this->expectedValue;
 	}
@@ -113,7 +113,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setExpectedValue($expected): void
+	public function setExpectedValue(float|bool|int|string|null $expected): void
 	{
 		$this->expectedValue = $expected;
 	}
@@ -123,13 +123,21 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function isPending(): bool
 	{
+		return $this->pending !== null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getPending(): bool|string|null
+	{
 		return $this->pending;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setPending(bool $pending): void
+	public function setPending(bool|string|null $pending): void
 	{
 		$this->pending = $pending;
 	}
@@ -182,6 +190,8 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exception
 	 */
 	public function toArray(): array
 	{

@@ -17,6 +17,7 @@ namespace FastyBird\MiniServer\States;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use Exception;
 use FastyBird\RedisDbStoragePlugin\States as RedisDbStoragePluginStates;
 
 /**
@@ -57,6 +58,8 @@ class TriggerAction extends RedisDbStoragePluginStates\State implements ITrigger
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exception
 	 */
 	public function getCreatedAt(): ?DateTimeInterface
 	{
@@ -73,6 +76,8 @@ class TriggerAction extends RedisDbStoragePluginStates\State implements ITrigger
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exception
 	 */
 	public function getUpdatedAt(): ?DateTimeInterface
 	{
@@ -113,6 +118,8 @@ class TriggerAction extends RedisDbStoragePluginStates\State implements ITrigger
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exception
 	 */
 	public function toArray(): array
 	{
