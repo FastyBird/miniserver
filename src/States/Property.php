@@ -123,7 +123,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function isPending(): bool
 	{
-		return $this->pending !== null;
+		return $this->valid !== null ? is_bool($this->valid) ? $this->valid : true : false;
 	}
 
 	/**
@@ -147,7 +147,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function isValid(): bool
 	{
-		return $this->valid;
+		return $this->valid !== null ? $this->valid : false;
 	}
 
 	/**
