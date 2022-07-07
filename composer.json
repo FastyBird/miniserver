@@ -45,7 +45,7 @@
   ],
 
   "require": {
-    "php": ">=7.4.0",
+    "php": ">=8.0.0|>=8.1.0",
     "contributte/event-dispatcher": "^0.8",
     "contributte/translation": "^0.9",
     "fastybird/accounts-module": "^0.23",

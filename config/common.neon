@@ -18,6 +18,7 @@ extensions:
     contributteConsole                  : Contributte\Console\DI\ConsoleExtension(%consoleMode%)
     contributteTranslation              : Contributte\Translation\DI\TranslationExtension
     contributteEvents                   : Contributte\EventDispatcher\DI\EventDispatcherExtension
+    contributeFlysystem                 : Contributte\Flysystem\DI\FlysystemExtension
     nettrineAnnotations                 : Nettrine\Annotations\DI\AnnotationsExtension
     nettrineCache                       : Nettrine\Cache\DI\CacheExtension
     nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
@@ -190,6 +191,12 @@ contributteTranslation:
         - %appDir%/vendor/fastybird/triggers-module/src/Translations
         - %appDir%/vendor/fastybird/ui-module/src/Translations
         - %appDir%/vendor/fastybird/json-api/src/Translations
+
+contributeFlysystem:
+	filesystem:
+		default:
+			adapter: League\Flysystem\Local\LocalFilesystemAdapter(%appDir%/var)
+			autowired: true
 
 # Doctrine
 ##########
