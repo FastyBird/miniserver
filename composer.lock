@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f40995abdf665e13c04a5917b54276ca",
+    "content-hash": "cbec71756da2c75089cd8e9e3441d907",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -2204,12 +2204,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "3ebf20aea5ed28c9bf49ae364239a247eabd2319"
+                "reference": "0ccf7186ed402c2d51e69d2506ec7b81eb43d5e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/3ebf20aea5ed28c9bf49ae364239a247eabd2319",
-                "reference": "3ebf20aea5ed28c9bf49ae364239a247eabd2319",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/0ccf7186ed402c2d51e69d2506ec7b81eb43d5e3",
+                "reference": "0ccf7186ed402c2d51e69d2506ec7b81eb43d5e3",
                 "shasum": ""
             },
             "require": {
@@ -2297,7 +2297,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-07-06T20:03:53+00:00"
+            "time": "2022-07-07T13:23:51+00:00"
         },
         {
             "name": "fastybird/exchange",
@@ -2466,7 +2466,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-mqtt-connector",
-                "reference": "fbd6b1508a2607417cdb2bd0c3de225f29e58819"
+                "reference": "4b3aedf8e17bf515ee51083568129f15b49ddca4"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -2545,7 +2545,7 @@
                 "issues": "https://github.com/FastyBird/fb-mqtt-connector/issues",
                 "source": "https://github.com/FastyBird/fb-mqtt-connector"
             },
-            "time": "2022-07-06T19:21:31+00:00"
+            "time": "2022-07-07T08:42:31+00:00"
         },
         {
             "name": "fastybird/homekit-connector",
@@ -13194,7 +13194,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4.0"
+        "php": ">=8.0.0|>=8.1.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
