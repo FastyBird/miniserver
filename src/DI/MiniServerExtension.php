@@ -130,8 +130,8 @@ class MiniServerExtension extends DI\CompilerExtension
 			->setType(Subscribers\EntitiesSubscriber::class);
 
 		// Exchange
-		$builder->addDefinition($this->prefix('exchange.consumer'), new DI\Definitions\ServiceDefinition())
-			->setType(Consumers\Consumer::class);
+		// $builder->addDefinition($this->prefix('exchange.consumer'), new DI\Definitions\ServiceDefinition())
+		//	->setType(Consumers\Consumer::class);
 	}
 
 	/**
