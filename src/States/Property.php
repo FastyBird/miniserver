@@ -147,7 +147,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	 */
 	public function isValid(): bool
 	{
-		return $this->valid !== null ? $this->valid : false;
+		return $this->valid ?? false;
 	}
 
 	/**
