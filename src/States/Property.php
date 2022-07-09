@@ -189,7 +189,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return Array<string, mixed>
 	 *
 	 * @throws Exception
 	 */
@@ -197,7 +197,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	{
 		return array_merge([
 			'actual_value'   => $this->getActualValue(),
-			'expected_Value' => $this->getExpectedValue(),
+			'expected_value' => $this->getExpectedValue(),
 			'pending'        => $this->isPending(),
 			'valid'          => $this->isValid(),
 			'created_at'     => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
