@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6559e05fa913a4492d8c16b7a8ef57e",
+    "content-hash": "9d8812c065ecbbccc1ffa440876a02fd",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -2204,12 +2204,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "8b02190eff92f902c401613e2102357eca90dbd4"
+                "reference": "506dd1c49f45e5df5c3794875fa9fd856a60aeb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/8b02190eff92f902c401613e2102357eca90dbd4",
-                "reference": "8b02190eff92f902c401613e2102357eca90dbd4",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/506dd1c49f45e5df5c3794875fa9fd856a60aeb6",
+                "reference": "506dd1c49f45e5df5c3794875fa9fd856a60aeb6",
                 "shasum": ""
             },
             "require": {
@@ -2297,7 +2297,7 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-07-10T19:56:03+00:00"
+            "time": "2022-07-14T19:14:06+00:00"
         },
         {
             "name": "fastybird/exchange",
@@ -3057,24 +3057,24 @@
         },
         {
             "name": "fastybird/shelly-connector",
-            "version": "v0.36.0",
+            "version": "dev-feature/php-worker",
             "source": {
                 "type": "git",
-                "url": "https://github.com/FastyBird/shelly-connector.git",
-                "reference": "f8cce753c4900bfd0fc93c8f1760e3b1bc3bf4e6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/shelly-connector/zipball/f8cce753c4900bfd0fc93c8f1760e3b1bc3bf4e6",
-                "reference": "f8cce753c4900bfd0fc93c8f1760e3b1bc3bf4e6",
-                "shasum": ""
+                "url": "https://github.com/FastyBird/shelly-connector",
+                "reference": "0b9bb03f3bb5e8d4a1b32d1d3c7e549f28b0cb90"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.72",
+                "fastybird/devices-module": "dev-master as 0.72.0",
                 "fastybird/json-api": "^0.11",
                 "fastybird/metadata": "^0.69",
-                "php": ">=8.0.0|>=8.1.0"
+                "fastybird/socket-server-factory": "^0.5",
+                "nette/bootstrap": "^3.1",
+                "nette/di": "^3.0",
+                "php": ">=8.0.0|>=8.1.0",
+                "psr/log": "^1.1",
+                "ramsey/uuid": "^4.2",
+                "react/datagram": "^1.8"
             },
             "require-dev": {
                 "contributte/translation": "^0.9",
@@ -3102,7 +3102,13 @@
                     "FastyBird\\ShellyConnector\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\Cases\\": "tests/cases",
+                    "Tests\\Fixtures\\": "tests/fixtures",
+                    "Tests\\Tools\\": "tests/tools"
+                }
+            },
             "license": [
                 "Apache-2.0"
             ],
@@ -3131,7 +3137,7 @@
                 "issues": "https://github.com/FastyBird/shelly-connector/issues",
                 "source": "https://github.com/FastyBird/shelly-connector"
             },
-            "time": "2022-07-10T20:24:27+00:00"
+            "time": "2022-07-14T21:14:34+00:00"
         },
         {
             "name": "fastybird/simple-auth",
@@ -8737,6 +8743,91 @@
             "time": "2021-02-02T06:47:52+00:00"
         },
         {
+            "name": "react/datagram",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/datagram.git",
+                "reference": "40f2c39f83541367018605a73b57c99186f7145c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/datagram/zipball/40f2c39f83541367018605a73b57c99186f7145c",
+                "reference": "40f2c39f83541367018605a73b57c99186f7145c",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
+                "php": ">=5.3",
+                "react/dns": "^1.7",
+                "react/event-loop": "^1.2",
+                "react/promise": "~2.1|~1.2"
+            },
+            "require-dev": {
+                "clue/block-react": "~1.0",
+                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Datagram\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "Event-driven UDP datagram socket client and server for ReactPHP",
+            "homepage": "https://github.com/reactphp/datagram",
+            "keywords": [
+                "Socket",
+                "async",
+                "client",
+                "datagram",
+                "dgram",
+                "reactphp",
+                "server",
+                "udp"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/datagram/issues",
+                "source": "https://github.com/reactphp/datagram/tree/v1.8.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/WyriHaximus",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/clue",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-07-11T13:06:40+00:00"
+        },
+        {
             "name": "react/dns",
             "version": "v1.9.0",
             "source": {
@@ -13175,12 +13266,19 @@
             "version": "dev-feature/php-worker",
             "alias": "0.27.0",
             "alias_normalized": "0.27.0.0"
+        },
+        {
+            "package": "fastybird/shelly-connector",
+            "version": "dev-feature/php-worker",
+            "alias": "0.37.0",
+            "alias_normalized": "0.37.0.0"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
         "fastybird/devices-module": 20,
         "fastybird/fb-mqtt-connector": 20,
+        "fastybird/shelly-connector": 20,
         "fastybird/ui-module": 20
     },
     "prefer-stable": true,

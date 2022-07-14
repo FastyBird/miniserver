@@ -115,10 +115,7 @@ class WsServerSubscriber implements EventDispatcher\EventSubscriberInterface
 
 				if (
 					$deviceProperty instanceof DevicesModuleEntities\Devices\Properties\IDynamicProperty
-					|| (
-						$deviceProperty->getParent() !== null
-						&& $deviceProperty->getParent() instanceof DevicesModuleEntities\Devices\Properties\IDynamicProperty
-					)
+					|| $deviceProperty instanceof DevicesModuleEntities\Devices\Properties\IMappedProperty
 				) {
 					$devicePropertyState = $this->devicePropertiesStatesRepository->findOne($deviceProperty);
 

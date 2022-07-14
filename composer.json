@@ -41,6 +41,10 @@
     {
       "type": "git",
       "url": "https://github.com/FastyBird/fb-mqtt-connector"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/FastyBird/shelly-connector"
     }
   ],
 
@@ -59,7 +63,7 @@
     "fastybird/modbus-connector": "^0.33",
     "fastybird/redisdb-exchange-plugin": "^0.52",
     "fastybird/redisdb-storage-plugin": "^0.9",
-    "fastybird/shelly-connector": "^0.36",
+    "fastybird/shelly-connector": "dev-feature/php-worker as 0.37.0",
     "fastybird/socket-server-factory": "^0.5",
     "fastybird/triggers-module": "^0.42",
     "fastybird/tuya-connector": "^0.9",

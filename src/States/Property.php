@@ -38,7 +38,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 	/** @var bool|float|int|string|null */
 	private float|bool|int|string|null $expectedValue = null;
 
-	/** @var bool */
+	/** @var bool|string|null */
 	private bool|string|null $pending = null;
 
 	/** @var bool */
@@ -198,7 +198,7 @@ class Property extends RedisDbStoragePluginStates\State implements IProperty
 		return array_merge([
 			'actual_value'   => $this->getActualValue(),
 			'expected_value' => $this->getExpectedValue(),
-			'pending'        => $this->isPending(),
+			'pending'        => $this->getPending(),
 			'valid'          => $this->isValid(),
 			'created_at'     => $this->getCreatedAt() !== null ? $this->getCreatedAt()->format(DateTimeInterface::ATOM) : null,
 			'updated_at'     => $this->getUpdatedAt() !== null ? $this->getUpdatedAt()->format(DateTimeInterface::ATOM) : null,
