@@ -16,6 +16,7 @@
 namespace FastyBird\MiniServer\DI;
 
 use Doctrine\Persistence;
+use FastyBird\JsonApi\Middleware as JsonApiMiddleware;
 use FastyBird\MiniServer\Application;
 use FastyBird\MiniServer\Commands;
 use FastyBird\MiniServer\Entities;
@@ -23,6 +24,7 @@ use FastyBird\MiniServer\Exceptions;
 use FastyBird\MiniServer\Models;
 use FastyBird\MiniServer\Subscribers;
 use IPub\DoctrineCrud;
+use IPub\SlimRouter\Routing as SlimRouterRouting;
 use Nette\DI;
 use Nette\PhpGenerator;
 
@@ -152,6 +154,18 @@ class MiniServerExtension extends DI\CompilerExtension
 			$ormAnnotationDriverChainService->addSetup('addDriver', [
 				$ormAnnotationDriverService,
 				'FastyBird\MiniServer\Entities',
+			]);
+		}
+
+		/**
+		 * Router middlewares
+		 */
+		$routerService = $builder->getDefinitionByType(SlimRouterRouting\Router::class);
+
+		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
+			$routerService->addSetup('?->addMiddleware(?)', [
+				$routerService,
+				$builder->getDefinitionByType(JsonApiMiddleware\JsonApiMiddleware::class),
 			]);
 		}
 	}

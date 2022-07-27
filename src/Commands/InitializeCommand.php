@@ -177,7 +177,7 @@ class InitializeCommand extends Console\Command\Command
 				if ($role === null) {
 					$create = new Utils\ArrayHash();
 					$create->offsetSet('name', $roleName);
-					$create->offsetSet('description', $roleName);
+					$create->offsetSet('comment', $roleName);
 					$create->offsetSet('parent', $parent);
 
 					$parent = $this->rolesManager->create($create);
