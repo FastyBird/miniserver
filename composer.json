@@ -60,7 +60,7 @@
     "fastybird/fb-mqtt-connector": "dev-feature/php-worker as 0.27.0",
     "fastybird/homekit-connector": "^0.15",
     "fastybird/metadata": "^0.69",
-    "fastybird/modbus-connector": "^0.33",
+    "fastybird/modbus-connector": "dev-feature/php-worker as 0.34.0",
     "fastybird/redisdb-exchange-plugin": "^0.52",
     "fastybird/redisdb-storage-plugin": "^0.9",
     "fastybird/shelly-connector": "dev-feature/php-worker as 0.37.0",
