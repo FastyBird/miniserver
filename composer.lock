@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "066482c955fc2a9326eb184dac403a90",
+    "content-hash": "f337df72fe03004c7eb51afad9091b32",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -67,26 +67,26 @@
         },
         {
             "name": "brick/math",
-            "version": "0.9.3",
+            "version": "0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "ca57d18f028f84f777b2168cd1911b0dee2343ae"
+                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/ca57d18f028f84f777b2168cd1911b0dee2343ae",
-                "reference": "ca57d18f028f84f777b2168cd1911b0dee2343ae",
+                "url": "https://api.github.com/repos/brick/math/zipball/459f2781e1a08d52ee56b0b1444086e038561e3f",
+                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.1 || ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
                 "php-coveralls/php-coveralls": "^2.2",
-                "phpunit/phpunit": "^7.5.15 || ^8.5 || ^9.0",
-                "vimeo/psalm": "4.9.2"
+                "phpunit/phpunit": "^9.0",
+                "vimeo/psalm": "4.25.0"
             },
             "type": "library",
             "autoload": {
@@ -111,19 +111,15 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.9.3"
+                "source": "https://github.com/brick/math/tree/0.10.2"
             },
             "funding": [
                 {
                     "url": "https://github.com/BenMorel",
                     "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/brick/math",
-                    "type": "tidelift"
                 }
             ],
-            "time": "2021-08-15T20:50:18+00:00"
+            "time": "2022-08-10T22:54:19+00:00"
         },
         {
             "name": "clue/multicast-react",
@@ -1269,16 +1265,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.3.7",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "9f79d4650430b582f4598fe0954ef4d52fbc0a8a"
+                "reference": "118a360e9437e88d49024f36283c8bcbd76105f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/9f79d4650430b582f4598fe0954ef4d52fbc0a8a",
-                "reference": "9f79d4650430b582f4598fe0954ef4d52fbc0a8a",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/118a360e9437e88d49024f36283c8bcbd76105f5",
+                "reference": "118a360e9437e88d49024f36283c8bcbd76105f5",
                 "shasum": ""
             },
             "require": {
@@ -1286,21 +1282,21 @@
                 "doctrine/cache": "^1.11|^2.0",
                 "doctrine/deprecations": "^0.5.3|^1",
                 "doctrine/event-manager": "^1.0",
-                "php": "^7.3 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "psr/cache": "^1|^2|^3",
                 "psr/log": "^1|^2|^3"
             },
             "require-dev": {
                 "doctrine/coding-standard": "9.0.0",
                 "jetbrains/phpstorm-stubs": "2022.1",
-                "phpstan/phpstan": "1.7.13",
-                "phpstan/phpstan-strict-rules": "^1.2",
-                "phpunit/phpunit": "9.5.20",
-                "psalm/plugin-phpunit": "0.16.1",
-                "squizlabs/php_codesniffer": "3.7.0",
-                "symfony/cache": "^5.2|^6.0",
-                "symfony/console": "^2.7|^3.0|^4.0|^5.0|^6.0",
-                "vimeo/psalm": "4.23.0"
+                "phpstan/phpstan": "1.8.2",
+                "phpstan/phpstan-strict-rules": "^1.3",
+                "phpunit/phpunit": "9.5.21",
+                "psalm/plugin-phpunit": "0.17.0",
+                "squizlabs/php_codesniffer": "3.7.1",
+                "symfony/cache": "^5.4|^6.0",
+                "symfony/console": "^4.4|^5.4|^6.0",
+                "vimeo/psalm": "4.24.0"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -1360,7 +1356,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.3.7"
+                "source": "https://github.com/doctrine/dbal/tree/3.4.0"
             },
             "funding": [
                 {
@@ -1376,7 +1372,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-13T21:43:03+00:00"
+            "time": "2022-08-06T20:35:57+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -1751,16 +1747,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.12.3",
+            "version": "2.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "c05e1709e9ffb9abe8d37260a78975cc816ee385"
+                "reference": "35c44a56677adb3ce796138b6e4934ce93ec6811"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/c05e1709e9ffb9abe8d37260a78975cc816ee385",
-                "reference": "c05e1709e9ffb9abe8d37260a78975cc816ee385",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/35c44a56677adb3ce796138b6e4934ce93ec6811",
+                "reference": "35c44a56677adb3ce796138b6e4934ce93ec6811",
                 "shasum": ""
             },
             "require": {
@@ -1789,15 +1785,16 @@
                 "doctrine/annotations": "^1.13",
                 "doctrine/coding-standard": "^9.0",
                 "phpbench/phpbench": "^0.16.10 || ^1.0",
-                "phpstan/phpstan": "~1.4.10 || 1.7.13",
+                "phpstan/phpstan": "~1.4.10 || 1.8.2",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
                 "psr/log": "^1 || ^2 || ^3",
-                "squizlabs/php_codesniffer": "3.7.0",
+                "squizlabs/php_codesniffer": "3.7.1",
                 "symfony/cache": "^4.4 || ^5.4 || ^6.0",
                 "symfony/yaml": "^3.4 || ^4.0 || ^5.0 || ^6.0",
-                "vimeo/psalm": "4.23.0"
+                "vimeo/psalm": "4.26.0"
             },
             "suggest": {
+                "ext-dom": "Provides support for XSD validation for XML mapping files",
                 "symfony/cache": "Provides cache support for Setup Tool with doctrine/cache 2.0",
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
@@ -1844,26 +1841,25 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.12.3"
+                "source": "https://github.com/doctrine/orm/tree/2.13.1"
             },
-            "time": "2022-06-16T13:42:23+00:00"
+            "time": "2022-08-08T09:00:16+00:00"
         },
         {
             "name": "doctrine/persistence",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "25ec98a8cbd1f850e60fdb62c0ef77c162da8704"
+                "reference": "ac6fce61f037d7e54dbb2435f5b5648d86548e23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/25ec98a8cbd1f850e60fdb62c0ef77c162da8704",
-                "reference": "25ec98a8cbd1f850e60fdb62c0ef77c162da8704",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/ac6fce61f037d7e54dbb2435f5b5648d86548e23",
+                "reference": "ac6fce61f037d7e54dbb2435f5b5648d86548e23",
                 "shasum": ""
             },
             "require": {
-                "doctrine/collections": "^1.0",
                 "doctrine/event-manager": "^1.0",
                 "php": "^7.2 || ^8.0",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0"
@@ -1931,7 +1927,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/3.0.2"
+                "source": "https://github.com/doctrine/persistence/tree/3.0.3"
             },
             "funding": [
                 {
@@ -1947,7 +1943,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-06T06:10:05+00:00"
+            "time": "2022-08-04T21:14:21+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -1998,23 +1994,23 @@
         },
         {
             "name": "fastybird/accounts-module",
-            "version": "v0.26.0",
+            "version": "v0.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/accounts-module.git",
-                "reference": "fb8934ad81709e8c1e8dcde67f94b108400313ab"
+                "reference": "e4c13612365ba65dfa25e24b84f2dd2ae733812b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/fb8934ad81709e8c1e8dcde67f94b108400313ab",
-                "reference": "fb8934ad81709e8c1e8dcde67f94b108400313ab",
+                "url": "https://api.github.com/repos/FastyBird/accounts-module/zipball/e4c13612365ba65dfa25e24b84f2dd2ae733812b",
+                "reference": "e4c13612365ba65dfa25e24b84f2dd2ae733812b",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/exchange": "^0.52",
+                "fastybird/exchange": "^0.56",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "fastybird/simple-auth": "^0.4",
                 "ipub/doctrine-consistence": "^0.4",
                 "ipub/doctrine-timestampable": "^1.5",
@@ -2093,7 +2089,7 @@
                 "issues": "https://github.com/FastyBird/accounts-module/issues",
                 "source": "https://github.com/FastyBird/accounts-module"
             },
-            "time": "2022-07-10T19:54:48+00:00"
+            "time": "2022-08-10T08:16:58+00:00"
         },
         {
             "name": "fastybird/bootstrap",
@@ -2268,12 +2264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/devices-module.git",
-                "reference": "20bf3329f29cdb0ec5b554244ca5e784641a29ef"
+                "reference": "a1eb11d60901adbedf5872577556e1a36775499a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/20bf3329f29cdb0ec5b554244ca5e784641a29ef",
-                "reference": "20bf3329f29cdb0ec5b554244ca5e784641a29ef",
+                "url": "https://api.github.com/repos/FastyBird/devices-module/zipball/a1eb11d60901adbedf5872577556e1a36775499a",
+                "reference": "a1eb11d60901adbedf5872577556e1a36775499a",
                 "shasum": ""
             },
             "require": {
@@ -2281,9 +2277,9 @@
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
                 "ext-pcntl": "*",
-                "fastybird/exchange": "^0.52",
+                "fastybird/exchange": "^0.56",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "fastybird/simple-auth": "^0.4",
                 "ipub/doctrine-dynamic-discriminator-map": "^1.4",
                 "ipub/doctrine-timestampable": "^1.5",
@@ -2300,10 +2296,10 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-doctrine": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-doctrine": "^1.3",
+                "phpstan/phpstan-nette": "^1.0",
                 "react/http": "^1.6",
                 "tracy/tracy": "^2.9"
             },
@@ -2361,25 +2357,25 @@
                 "issues": "https://github.com/FastyBird/devices-module/issues",
                 "source": "https://github.com/FastyBird/devices-module"
             },
-            "time": "2022-07-31T09:03:12+00:00"
+            "time": "2022-08-13T07:33:48+00:00"
         },
         {
             "name": "fastybird/exchange",
-            "version": "v0.52.0",
+            "version": "v0.56.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/exchange.git",
-                "reference": "fd45de7630114414dbc603a521146de10541822e"
+                "reference": "57064f1f5a7f7233138ec93eaf79d36a55031b82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/exchange/zipball/fd45de7630114414dbc603a521146de10541822e",
-                "reference": "fd45de7630114414dbc603a521146de10541822e",
+                "url": "https://api.github.com/repos/FastyBird/exchange/zipball/57064f1f5a7f7233138ec93eaf79d36a55031b82",
+                "reference": "57064f1f5a7f7233138ec93eaf79d36a55031b82",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
                 "nette/utils": "^3.2",
@@ -2393,7 +2389,7 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.3",
+                "phpstan/phpstan": "^1.8",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-nette": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
@@ -2443,27 +2439,27 @@
                 "issues": "https://github.com/FastyBird/exchange/issues",
                 "source": "https://github.com/FastyBird/exchange"
             },
-            "time": "2022-07-10T15:28:16+00:00"
+            "time": "2022-08-10T07:45:39+00:00"
         },
         {
             "name": "fastybird/fb-bus-connector",
-            "version": "v0.51.0",
+            "version": "v0.52.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-bus-connector.git",
-                "reference": "463a8f97b935fa6cdd494c9f412847d19b2a61c3"
+                "reference": "1919bff6d35c3bf62f2ad81d7cf10094baca6dce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/463a8f97b935fa6cdd494c9f412847d19b2a61c3",
-                "reference": "463a8f97b935fa6cdd494c9f412847d19b2a61c3",
+                "url": "https://api.github.com/repos/FastyBird/fb-bus-connector/zipball/1919bff6d35c3bf62f2ad81d7cf10094baca6dce",
+                "reference": "1919bff6d35c3bf62f2ad81d7cf10094baca6dce",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.72",
+                "fastybird/devices-module": "^0.73",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "php": ">=8.0.0|>=8.1.0"
             },
             "require-dev": {
@@ -2522,7 +2518,7 @@
                 "issues": "https://github.com/FastyBird/fb-bus-connector/issues",
                 "source": "https://github.com/FastyBird/fb-bus-connector"
             },
-            "time": "2022-07-10T20:24:01+00:00"
+            "time": "2022-08-14T11:59:37+00:00"
         },
         {
             "name": "fastybird/fb-mqtt-connector",
@@ -2530,14 +2526,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fb-mqtt-connector",
-                "reference": "de8eaae601eb20f404fef1107a8d016f15c55cd3"
+                "reference": "1928aacfae8f520a4998647473f3ff9eec703dee"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "dev-master as 0.72.0",
+                "fastybird/devices-module": "dev-master as 0.73.0",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "fastybird/socket-server-factory": "^0.5",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
@@ -2552,10 +2548,10 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-doctrine": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-doctrine": "^1.3",
+                "phpstan/phpstan-nette": "^1.0",
                 "tracy/tracy": "^2.9"
             },
             "type": "connector",
@@ -2609,27 +2605,27 @@
                 "issues": "https://github.com/FastyBird/fb-mqtt-connector/issues",
                 "source": "https://github.com/FastyBird/fb-mqtt-connector"
             },
-            "time": "2022-07-26T15:14:19+00:00"
+            "time": "2022-08-15T07:23:23+00:00"
         },
         {
             "name": "fastybird/homekit-connector",
-            "version": "v0.15.0",
+            "version": "v0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/homekit-connector.git",
-                "reference": "9f0d8f5efaaf828124fc8f9894ae56ad057c5f79"
+                "reference": "46e823ace132e59a96de1d448ca3fe5d7f860573"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/homekit-connector/zipball/9f0d8f5efaaf828124fc8f9894ae56ad057c5f79",
-                "reference": "9f0d8f5efaaf828124fc8f9894ae56ad057c5f79",
+                "url": "https://api.github.com/repos/FastyBird/homekit-connector/zipball/46e823ace132e59a96de1d448ca3fe5d7f860573",
+                "reference": "46e823ace132e59a96de1d448ca3fe5d7f860573",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.72",
+                "fastybird/devices-module": "^0.73",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "php": ">=8.0.0|>=8.1.0"
             },
             "require-dev": {
@@ -2688,7 +2684,7 @@
                 "issues": "https://github.com/FastyBird/homekit-connector/issues",
                 "source": "https://github.com/FastyBird/homekit-connector"
             },
-            "time": "2022-07-10T20:24:10+00:00"
+            "time": "2022-08-14T10:03:47+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -2789,16 +2785,16 @@
         },
         {
             "name": "fastybird/metadata",
-            "version": "v0.69.0",
+            "version": "v0.73.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/metadata.git",
-                "reference": "5f5fd6b84fc76d375b8fedb113253ea56e771053"
+                "reference": "c849fd99257871c66ecdab1138f94c477e2563f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/metadata/zipball/5f5fd6b84fc76d375b8fedb113253ea56e771053",
-                "reference": "5f5fd6b84fc76d375b8fedb113253ea56e771053",
+                "url": "https://api.github.com/repos/FastyBird/metadata/zipball/c849fd99257871c66ecdab1138f94c477e2563f5",
+                "reference": "c849fd99257871c66ecdab1138f94c477e2563f5",
                 "shasum": ""
             },
             "require": {
@@ -2819,7 +2815,7 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.3",
+                "phpstan/phpstan": "^1.8",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-nette": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
@@ -2863,7 +2859,7 @@
                 "issues": "https://github.com/FastyBird/metadata/issues",
                 "source": "https://github.com/FastyBird/metadata"
             },
-            "time": "2022-07-09T17:38:18+00:00"
+            "time": "2022-08-05T22:02:18+00:00"
         },
         {
             "name": "fastybird/modbus-connector",
@@ -2871,20 +2867,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/modbus-connector.git",
-                "reference": "f43f6f5969371ba53940132301db662fa99cdfa0"
+                "reference": "17ab2f6c491ea3ff740399bb5db4e7ebb42b6b44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/f43f6f5969371ba53940132301db662fa99cdfa0",
-                "reference": "f43f6f5969371ba53940132301db662fa99cdfa0",
+                "url": "https://api.github.com/repos/FastyBird/modbus-connector/zipball/17ab2f6c491ea3ff740399bb5db4e7ebb42b6b44",
+                "reference": "17ab2f6c491ea3ff740399bb5db4e7ebb42b6b44",
                 "shasum": ""
             },
             "require": {
+                "clue/multicast-react": "^1.1",
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.72",
+                "fastybird/devices-module": "dev-master as 0.73.0",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
-                "php": ">=8.0.0|>=8.1.0"
+                "fastybird/metadata": "^0.73",
+                "fastybird/socket-server-factory": "^0.5",
+                "nette/bootstrap": "^3.1",
+                "nette/di": "^3.0",
+                "php": ">=8.0.0|>=8.1.0",
+                "psr/log": "^1.1",
+                "react/http": "^1.6"
             },
             "require-dev": {
                 "contributte/translation": "^0.9",
@@ -2893,11 +2895,14 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-doctrine": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-doctrine": "^1.3",
+                "phpstan/phpstan-nette": "^1.0",
                 "tracy/tracy": "^2.9"
+            },
+            "suggest": {
+                "ext-dio": "To use integrated serial interface"
             },
             "type": "connector",
             "extra": {
@@ -2942,28 +2947,28 @@
                 "issues": "https://github.com/FastyBird/modbus-connector/issues",
                 "source": "https://github.com/FastyBird/modbus-connector"
             },
-            "time": "2022-07-31T11:33:51+00:00"
+            "time": "2022-08-15T07:23:45+00:00"
         },
         {
             "name": "fastybird/redisdb-exchange-plugin",
-            "version": "v0.52.0",
+            "version": "v0.56.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/redisdb-exchange-plugin.git",
-                "reference": "7544471822a69f9ff79ea18621e297f86f5d7a99"
+                "reference": "050dc26670cf30800e0b2882c3e300ed6bc14022"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/7544471822a69f9ff79ea18621e297f86f5d7a99",
-                "reference": "7544471822a69f9ff79ea18621e297f86f5d7a99",
+                "url": "https://api.github.com/repos/FastyBird/redisdb-exchange-plugin/zipball/050dc26670cf30800e0b2882c3e300ed6bc14022",
+                "reference": "050dc26670cf30800e0b2882c3e300ed6bc14022",
                 "shasum": ""
             },
             "require": {
                 "clue/redis-protocol": "^0.3",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/datetime-factory": "^0.5",
-                "fastybird/exchange": "^0.52",
-                "fastybird/metadata": "^0.69",
+                "fastybird/exchange": "^0.56",
+                "fastybird/metadata": "^0.73",
                 "fastybird/socket-server-factory": "^0.5",
                 "nette/bootstrap": "^3.0",
                 "nette/di": "^3.0",
@@ -2981,7 +2986,7 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.3",
+                "phpstan/phpstan": "^1.8",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-nette": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
@@ -3032,7 +3037,7 @@
                 "issues": "https://github.com/FastyBird/redisdb-exchange-plugin/issues",
                 "source": "https://github.com/FastyBird/redisdb-exchange-plugin"
             },
-            "time": "2022-07-10T19:51:00+00:00"
+            "time": "2022-08-10T07:49:46+00:00"
         },
         {
             "name": "fastybird/redisdb-storage-plugin",
@@ -3125,15 +3130,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/shelly-connector",
-                "reference": "7d7bc19a513f9c0b2ba6c02bc43a7dcc3b2383ed"
+                "reference": "2373d2cc2425d4fc627ff379723e0fb8e5c9bb77"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
                 "cweagans/composer-patches": "^1.7",
                 "ext-pcntl": "*",
-                "fastybird/devices-module": "dev-master as 0.72.0",
+                "fastybird/devices-module": "dev-master as 0.73.0",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "fastybird/socket-server-factory": "^0.5",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
@@ -3148,10 +3153,10 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-doctrine": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-doctrine": "^1.3",
+                "phpstan/phpstan-nette": "^1.0",
                 "tracy/tracy": "^2.9"
             },
             "type": "connector",
@@ -3202,20 +3207,20 @@
                 "issues": "https://github.com/FastyBird/shelly-connector/issues",
                 "source": "https://github.com/FastyBird/shelly-connector"
             },
-            "time": "2022-07-31T11:21:44+00:00"
+            "time": "2022-08-15T07:23:55+00:00"
         },
         {
             "name": "fastybird/simple-auth",
-            "version": "v0.4.0",
+            "version": "v0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/simple-auth.git",
-                "reference": "c44a111098ca99b0f8009c4775a5600a9cae0119"
+                "reference": "3177a2a517059f5a204b6c3937be6162c1c0d431"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/c44a111098ca99b0f8009c4775a5600a9cae0119",
-                "reference": "c44a111098ca99b0f8009c4775a5600a9cae0119",
+                "url": "https://api.github.com/repos/FastyBird/simple-auth/zipball/3177a2a517059f5a204b6c3937be6162c1c0d431",
+                "reference": "3177a2a517059f5a204b6c3937be6162c1c0d431",
                 "shasum": ""
             },
             "require": {
@@ -3243,9 +3248,9 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.3",
+                "phpstan/phpstan": "^1.8",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-doctrine": "^1.0",
+                "phpstan/phpstan-doctrine": "^1.3",
                 "phpstan/phpstan-nette": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
                 "symfony/console": "^5.0|^6.0",
@@ -3294,7 +3299,7 @@
                 "issues": "https://github.com/FastyBird/simple-auth/issues",
                 "source": "https://github.com/FastyBird/simple-auth"
             },
-            "time": "2022-07-06T19:54:40+00:00"
+            "time": "2022-08-09T07:13:15+00:00"
         },
         {
             "name": "fastybird/socket-server-factory",
@@ -3372,23 +3377,23 @@
         },
         {
             "name": "fastybird/triggers-module",
-            "version": "v0.42.0",
+            "version": "v0.44.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/triggers-module.git",
-                "reference": "d98db9b46b7aa05357092c115591187703c9985a"
+                "reference": "ff2c97fad7edb111062ac13808b2896effb7faa9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/d98db9b46b7aa05357092c115591187703c9985a",
-                "reference": "d98db9b46b7aa05357092c115591187703c9985a",
+                "url": "https://api.github.com/repos/FastyBird/triggers-module/zipball/ff2c97fad7edb111062ac13808b2896effb7faa9",
+                "reference": "ff2c97fad7edb111062ac13808b2896effb7faa9",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/exchange": "^0.52",
+                "fastybird/exchange": "^0.56",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "fastybird/simple-auth": "^0.4",
                 "ipub/doctrine-phone": "^1.6",
                 "ipub/doctrine-timestampable": "^1.5",
@@ -3465,27 +3470,27 @@
                 "issues": "https://github.com/FastyBird/triggers-module/issues",
                 "source": "https://github.com/FastyBird/triggers-module"
             },
-            "time": "2022-07-10T19:54:57+00:00"
+            "time": "2022-08-10T19:20:34+00:00"
         },
         {
             "name": "fastybird/tuya-connector",
-            "version": "v0.9.0",
+            "version": "v0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/tuya-connector.git",
-                "reference": "0a1d763a724d9cf60174d89c86a94b004565e1bd"
+                "reference": "5c9dca109575ff2bced87d319e634f7e40e2c674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/tuya-connector/zipball/0a1d763a724d9cf60174d89c86a94b004565e1bd",
-                "reference": "0a1d763a724d9cf60174d89c86a94b004565e1bd",
+                "url": "https://api.github.com/repos/FastyBird/tuya-connector/zipball/5c9dca109575ff2bced87d319e634f7e40e2c674",
+                "reference": "5c9dca109575ff2bced87d319e634f7e40e2c674",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.72",
+                "fastybird/devices-module": "^0.73",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
                 "php": ">=8.0.0|>=8.1.0",
@@ -3550,7 +3555,7 @@
                 "issues": "https://github.com/FastyBird/tuya-connector/issues",
                 "source": "https://github.com/FastyBird/tuya-connector"
             },
-            "time": "2022-07-10T20:24:42+00:00"
+            "time": "2022-08-14T10:05:39+00:00"
         },
         {
             "name": "fastybird/ui-module",
@@ -3558,20 +3563,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ui-module.git",
-                "reference": "3766c36ff04880b9a9f5e66483c796b70c8adecb"
+                "reference": "9cd1cf821cf546222d4662dcb57a97883cfcf444"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/3766c36ff04880b9a9f5e66483c796b70c8adecb",
-                "reference": "3766c36ff04880b9a9f5e66483c796b70c8adecb",
+                "url": "https://api.github.com/repos/FastyBird/ui-module/zipball/9cd1cf821cf546222d4662dcb57a97883cfcf444",
+                "reference": "9cd1cf821cf546222d4662dcb57a97883cfcf444",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
-                "fastybird/exchange": "^0.52",
+                "fastybird/exchange": "^0.56",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "fastybird/simple-auth": "^0.4",
                 "ipub/doctrine-consistence": "^0.4",
                 "ipub/doctrine-dynamic-discriminator-map": "^1.4",
@@ -3648,27 +3653,27 @@
                 "issues": "https://github.com/FastyBird/ui-module/issues",
                 "source": "https://github.com/FastyBird/ui-module"
             },
-            "time": "2022-07-10T19:55:05+00:00"
+            "time": "2022-08-10T08:18:08+00:00"
         },
         {
             "name": "fastybird/virtual-connector",
-            "version": "v0.8.0",
+            "version": "v0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/virtual-connector.git",
-                "reference": "ee9817d3063e0d9ffad97bb499356be7e9fd8b9c"
+                "reference": "23dc8c906533bd16f34518b2b240e2fee9a85195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/virtual-connector/zipball/ee9817d3063e0d9ffad97bb499356be7e9fd8b9c",
-                "reference": "ee9817d3063e0d9ffad97bb499356be7e9fd8b9c",
+                "url": "https://api.github.com/repos/FastyBird/virtual-connector/zipball/23dc8c906533bd16f34518b2b240e2fee9a85195",
+                "reference": "23dc8c906533bd16f34518b2b240e2fee9a85195",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/devices-module": "^0.72",
+                "fastybird/devices-module": "^0.73",
                 "fastybird/json-api": "^0.11",
-                "fastybird/metadata": "^0.69",
+                "fastybird/metadata": "^0.73",
                 "nette/bootstrap": "^3.1",
                 "nette/di": "^3.0",
                 "php": ">=8.0.0|>=8.1.0",
@@ -3734,20 +3739,20 @@
                 "issues": "https://github.com/FastyBird/virtual-connector/issues",
                 "source": "https://github.com/FastyBird/virtual-connector"
             },
-            "time": "2022-07-10T20:24:52+00:00"
+            "time": "2022-08-14T10:02:01+00:00"
         },
         {
             "name": "fastybird/web-server-plugin",
-            "version": "v0.10.0",
+            "version": "v0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/web-server-plugin.git",
-                "reference": "6d96997459579c9c3e83a6b1ae088527184fbb57"
+                "reference": "6e2242a6d56f972c1b7ffdd7bd1bfa54bb6d71c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/web-server-plugin/zipball/6d96997459579c9c3e83a6b1ae088527184fbb57",
-                "reference": "6d96997459579c9c3e83a6b1ae088527184fbb57",
+                "url": "https://api.github.com/repos/FastyBird/web-server-plugin/zipball/6e2242a6d56f972c1b7ffdd7bd1bfa54bb6d71c6",
+                "reference": "6e2242a6d56f972c1b7ffdd7bd1bfa54bb6d71c6",
                 "shasum": ""
             },
             "require": {
@@ -3773,7 +3778,7 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.3",
+                "phpstan/phpstan": "^1.8",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-nette": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
@@ -3827,26 +3832,26 @@
                 "issues": "https://github.com/FastyBird/web-server-plugin/issues",
                 "source": "https://github.com/FastyBird/web-server-plugin"
             },
-            "time": "2022-07-06T17:22:02+00:00"
+            "time": "2022-08-04T21:26:41+00:00"
         },
         {
             "name": "fastybird/ws-server-plugin",
-            "version": "v0.20.0",
+            "version": "v0.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/ws-server-plugin.git",
-                "reference": "6d59ce5dcf687228674f54755eb0986548e1da18"
+                "reference": "801f483c5f91e778f3203a9a06d910a18f5d8309"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/ws-server-plugin/zipball/6d59ce5dcf687228674f54755eb0986548e1da18",
-                "reference": "6d59ce5dcf687228674f54755eb0986548e1da18",
+                "url": "https://api.github.com/repos/FastyBird/ws-server-plugin/zipball/801f483c5f91e778f3203a9a06d910a18f5d8309",
+                "reference": "801f483c5f91e778f3203a9a06d910a18f5d8309",
                 "shasum": ""
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
-                "fastybird/exchange": "^0.52",
-                "fastybird/metadata": "^0.69",
+                "fastybird/exchange": "^0.56",
+                "fastybird/metadata": "^0.73",
                 "fastybird/socket-server-factory": "^0.5",
                 "ipub/websockets-wamp": "^1.4",
                 "nette/bootstrap": "^3.1",
@@ -3864,9 +3869,10 @@
                 "ninjify/qa": "^0.13",
                 "pds/skeleton": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-nette": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.1",
                 "tracy/tracy": "^2.9"
             },
             "type": "plugin",
@@ -3912,7 +3918,7 @@
                 "issues": "https://github.com/FastyBird/ws-server-plugin/issues",
                 "source": "https://github.com/FastyBird/ws-server-plugin"
             },
-            "time": "2022-07-10T19:50:45+00:00"
+            "time": "2022-08-10T07:47:45+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -3972,16 +3978,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.12.52",
+            "version": "8.12.53",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "9a5269012e21d5a357f93d413fcc7a854a36b69d"
+                "reference": "2e39201ca4b88c1ec0594cd78128d21e94929d04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/9a5269012e21d5a357f93d413fcc7a854a36b69d",
-                "reference": "9a5269012e21d5a357f93d413fcc7a854a36b69d",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/2e39201ca4b88c1ec0594cd78128d21e94929d04",
+                "reference": "2e39201ca4b88c1ec0594cd78128d21e94929d04",
                 "shasum": ""
             },
             "require": {
@@ -4041,7 +4047,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2022-07-20T12:38:47+00:00"
+            "time": "2022-08-08T06:53:30+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -5556,16 +5562,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "ed0ecc7f9b5c2f4a9872185846974a808a3b052a"
+                "reference": "81aea9e5217084c7850cd36e1587ee4aad721c6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/ed0ecc7f9b5c2f4a9872185846974a808a3b052a",
-                "reference": "ed0ecc7f9b5c2f4a9872185846974a808a3b052a",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/81aea9e5217084c7850cd36e1587ee4aad721c6b",
+                "reference": "81aea9e5217084c7850cd36e1587ee4aad721c6b",
                 "shasum": ""
             },
             "require": {
@@ -5626,7 +5632,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.2.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.2.1"
             },
             "funding": [
                 {
@@ -5642,7 +5648,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-26T07:26:36+00:00"
+            "time": "2022-08-14T20:48:34+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -8574,20 +8580,20 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "4.3.1",
+            "version": "4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "8505afd4fea63b81a85d3b7b53ac3cb8dc347c28"
+                "reference": "373f7bacfcf3de038778ff27dcce5672ddbf4c8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/8505afd4fea63b81a85d3b7b53ac3cb8dc347c28",
-                "reference": "8505afd4fea63b81a85d3b7b53ac3cb8dc347c28",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/373f7bacfcf3de038778ff27dcce5672ddbf4c8a",
+                "reference": "373f7bacfcf3de038778ff27dcce5672ddbf4c8a",
                 "shasum": ""
             },
             "require": {
-                "brick/math": "^0.8 || ^0.9",
+                "brick/math": "^0.8 || ^0.9 || ^0.10",
                 "ext-ctype": "*",
                 "ext-json": "*",
                 "php": "^8.0",
@@ -8603,7 +8609,6 @@
                 "doctrine/annotations": "^1.8",
                 "ergebnis/composer-normalize": "^2.15",
                 "mockery/mockery": "^1.3",
-                "moontoast/math": "^1.1",
                 "paragonie/random-lib": "^2",
                 "php-mock/php-mock": "^2.2",
                 "php-mock/php-mock-mockery": "^1.3",
@@ -8652,7 +8657,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/uuid/issues",
-                "source": "https://github.com/ramsey/uuid/tree/4.3.1"
+                "source": "https://github.com/ramsey/uuid/tree/4.4.0"
             },
             "funding": [
                 {
@@ -8664,7 +8669,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-27T21:42:02+00:00"
+            "time": "2022-08-05T17:58:37+00:00"
         },
         {
             "name": "ramsey/uuid-doctrine",
@@ -9783,16 +9788,16 @@
         },
         {
             "name": "stella-maris/clock",
-            "version": "0.1.4",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.com/stella-maris/clock.git",
-                "reference": "8a0a967896df4c63417385dc69328a0aec84d9cf"
+                "url": "git@gitlab.com:stella-maris/clock.git",
+                "reference": "447879c53ca0b2a762cdbfba5e76ccf4deca9158"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/stella-maris%2Fclock/repository/archive.zip?sha=8a0a967896df4c63417385dc69328a0aec84d9cf",
-                "reference": "8a0a967896df4c63417385dc69328a0aec84d9cf",
+                "url": "https://gitlab.com/api/v4/projects/stella-maris%2Fclock/repository/archive.zip?sha=447879c53ca0b2a762cdbfba5e76ccf4deca9158",
+                "reference": "447879c53ca0b2a762cdbfba5e76ccf4deca9158",
                 "shasum": ""
             },
             "require": {
@@ -9822,11 +9827,7 @@
                 "point in time",
                 "psr20"
             ],
-            "support": {
-                "issues": "https://gitlab.com/stella-maris/clock/-/issues",
-                "source": "https://gitlab.com/stella-maris/clock/-/tree/0.1.4"
-            },
-            "time": "2022-04-17T14:12:26+00:00"
+            "time": "2022-08-05T07:21:25+00:00"
         },
         {
             "name": "sunrise/http-header",
@@ -12864,16 +12865,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.6.4",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "135607f9ccc297d6923d49c2bcf309f509413215"
+                "reference": "367a8d9d5f7da2a0136422d27ce8840583926955"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/135607f9ccc297d6923d49c2bcf309f509413215",
-                "reference": "135607f9ccc297d6923d49c2bcf309f509413215",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/367a8d9d5f7da2a0136422d27ce8840583926955",
+                "reference": "367a8d9d5f7da2a0136422d27ce8840583926955",
                 "shasum": ""
             },
             "require": {
@@ -12903,9 +12904,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.6.4"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.7.0"
             },
-            "time": "2022-06-26T13:09:08+00:00"
+            "time": "2022-08-09T12:23:23+00:00"
         },
         {
             "name": "phpstan/phpstan",
@@ -13325,8 +13326,8 @@
         {
             "package": "fastybird/devices-module",
             "version": "9999999-dev",
-            "alias": "0.72.0",
-            "alias_normalized": "0.72.0.0"
+            "alias": "0.73.0",
+            "alias_normalized": "0.73.0.0"
         },
         {
             "package": "fastybird/fb-mqtt-connector",
