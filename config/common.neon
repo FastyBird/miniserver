@@ -26,6 +26,7 @@ extensions:
     nettrineOrmAnnotations              : Nettrine\ORM\DI\OrmAnnotationsExtension
     nettrineOrmConsole                  : Nettrine\ORM\DI\OrmConsoleExtension
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
+    nettrineFixtures                    : Nettrine\Fixtures\DI\FixturesExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     ipubDoctrinePhone                   : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubDoctrineConsistence             : IPub\DoctrineConsistence\DI\DoctrineConsistenceExtension
@@ -241,3 +242,7 @@ nettrineOrm:
 
 nettrineOrmAnnotations:
     mapping: []
+
+nettrineFixtures:
+    paths:
+        - %appDir%/Fixtures
