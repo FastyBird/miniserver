@@ -66,7 +66,7 @@
     "fastybird/shelly-connector": "dev-feature/php-worker as 0.37.0",
     "fastybird/socket-server-factory": "^0.5",
     "fastybird/triggers-module": "^0.46",
-    "fastybird/tuya-connector": "^0.12",
+    "fastybird/tuya-connector": "dev-feature/php-worker as 0.13.0",
     "fastybird/ui-module": "@dev",
     "fastybird/virtual-connector": "^0.11",
     "fastybird/web-server-plugin": "^0.11",
