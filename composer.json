@@ -54,7 +54,7 @@
     "contributte/translation": "^0.9",
     "fastybird/accounts-module": "^0.30",
     "fastybird/bootstrap": "^0.6",
-    "fastybird/devices-module": "dev-master as 0.75.0",
+    "fastybird/devices-module": "dev-main as 0.75.0",
     "fastybird/exchange": "^0.59",
     "fastybird/fb-bus-connector": "^0.54",
     "fastybird/fb-mqtt-connector": "dev-feature/php-worker as 0.27.0",
