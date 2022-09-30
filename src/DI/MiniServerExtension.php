@@ -27,6 +27,7 @@ use IPub\DoctrineCrud;
 use IPub\SlimRouter\Routing as SlimRouterRouting;
 use Nette\DI;
 use Nette\PhpGenerator;
+use Symfony\Bridge\Monolog as SymfonyMonolog;
 
 //use FastyBird\MiniServer\Middleware;
 
@@ -120,6 +121,10 @@ class MiniServerExtension extends DI\CompilerExtension
 				->setType(Application\Application::class);
 		}
 
+		// Logging
+		$builder->addDefinition($this->prefix('logging.handlers.console'), new DI\Definitions\ServiceDefinition())
+			->setType(SymfonyMonolog\Handler\ConsoleHandler::class);
+
 		// Subscribers
 		$builder->addDefinition($this->prefix('subscribers.server.web'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\WebServerSubscriber::class);
@@ -129,6 +134,9 @@ class MiniServerExtension extends DI\CompilerExtension
 
 		$builder->addDefinition($this->prefix('subscribers.entities'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\EntitiesSubscriber::class);
+
+		$builder->addDefinition($this->prefix('subscribers.console'), new DI\Definitions\ServiceDefinition())
+			->setType(Subscribers\ConsoleSubscriber::class);
 	}
 
 	/**

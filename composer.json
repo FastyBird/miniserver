@@ -1,8 +1,8 @@
 {
-  "name": "fastybird/miniserver",
-  "type": "project",
-  "description": "FastyBird IoT MiniServer application",
-  "keywords": [
+  "name" : "fastybird/miniserver",
+  "type" : "project",
+  "description" : "FastyBird IoT MiniServer application",
+  "keywords" : [
     "fastybird",
     "fb",
     "miniserver",
@@ -11,123 +11,124 @@
     "internet of things"
   ],
 
-  "homepage": "https://www.fastybird.com",
+  "homepage" : "https://www.fastybird.com",
 
-  "license": "Apache-2.0",
+  "license" : "Apache-2.0",
 
-  "authors": [
+  "authors" : [
     {
-      "name": "FastyBird s.r.o.",
-      "email": "code@fastybird.com",
-      "homepage": "https://www.fastybird.com"
+      "name" : "FastyBird s.r.o.",
+      "email" : "code@fastybird.com",
+      "homepage" : "https://www.fastybird.com"
     },
     {
-      "name": "Adam Kadlec",
-      "email": "adam.kadlec@fastybird.com"
+      "name" : "Adam Kadlec",
+      "email" : "adam.kadlec@fastybird.com"
     }
   ],
 
-  "support": {
-    "email": "code@fastybird.com",
-    "issues": "https://github.com/FastyBird/miniserver/issues",
-    "source": "https://github.com/FastyBird/miniserver"
+  "support" : {
+    "email" : "code@fastybird.com",
+    "issues" : "https://github.com/FastyBird/miniserver/issues",
+    "source" : "https://github.com/FastyBird/miniserver"
   },
 
-  "prefer-stable": true,
+  "prefer-stable" : true,
 
-  "minimum-stability": "dev",
+  "minimum-stability" : "dev",
 
-  "repositories": [
+  "repositories" : [
     {
-      "type": "git",
-      "url": "https://github.com/FastyBird/fb-mqtt-connector"
+      "type" : "git",
+      "url" : "https://github.com/FastyBird/fb-mqtt-connector"
     },
     {
-      "type": "git",
-      "url": "https://github.com/FastyBird/shelly-connector"
+      "type" : "git",
+      "url" : "https://github.com/FastyBird/shelly-connector"
     }
   ],
 
-  "require": {
-    "php": ">=8.0.0|>=8.1.0",
-    "contributte/event-dispatcher": "^0.8",
-    "contributte/translation": "^0.9",
-    "fastybird/accounts-module": "^0.30",
-    "fastybird/bootstrap": "^0.6",
-    "fastybird/devices-module": "dev-main as 0.75.0",
-    "fastybird/exchange": "^0.59",
-    "fastybird/fb-bus-connector": "^0.54",
-    "fastybird/fb-mqtt-connector": "dev-feature/php-worker as 0.27.0",
-    "fastybird/homekit-connector": "dev-feature/php-worker as 0.19.0",
-    "fastybird/metadata": "^0.76",
-    "fastybird/modbus-connector": "dev-feature/php-worker as 0.34.0",
-    "fastybird/redisdb-exchange-plugin": "^0.59",
-    "fastybird/redisdb-storage-plugin": "^0.10",
-    "fastybird/shelly-connector": "dev-feature/php-worker as 0.37.0",
-    "fastybird/socket-server-factory": "^0.5",
-    "fastybird/triggers-module": "^0.46",
-    "fastybird/tuya-connector": "dev-feature/php-worker as 0.13.0",
-    "fastybird/ui-module": "@dev",
-    "fastybird/virtual-connector": "^0.11",
-    "fastybird/web-server-plugin": "^0.11",
-    "fastybird/ws-server-plugin": "^0.26",
-    "ipub/websockets-wamp": "^1.4",
-    "nettrine/fixtures": "^0.6.3",
-    "sunrise/http-server-request": "^2.0",
-    "vlucas/phpdotenv": "^5.4"
+  "require" : {
+    "php" : ">=8.0.0|>=8.1.0",
+    "contributte/event-dispatcher" : "^0.8",
+    "contributte/translation" : "^0.9",
+    "fastybird/accounts-module" : "^0.30",
+    "fastybird/bootstrap" : "^0.6",
+    "fastybird/devices-module" : "dev-main as 0.75.0",
+    "fastybird/exchange" : "^0.59",
+    "fastybird/fb-bus-connector" : "^0.54",
+    "fastybird/fb-mqtt-connector" : "dev-feature/php-worker as 0.27.0",
+    "fastybird/homekit-connector" : "dev-feature/php-worker as 0.19.0",
+    "fastybird/metadata" : "^0.76",
+    "fastybird/modbus-connector" : "dev-feature/php-worker as 0.34.0",
+    "fastybird/redisdb-exchange-plugin" : "^0.59",
+    "fastybird/redisdb-storage-plugin" : "^0.10",
+    "fastybird/shelly-connector" : "dev-feature/php-worker as 0.37.0",
+    "fastybird/socket-server-factory" : "^0.5",
+    "fastybird/triggers-module" : "^0.46",
+    "fastybird/tuya-connector" : "dev-feature/php-worker as 0.13.0",
+    "fastybird/ui-module" : "@dev",
+    "fastybird/virtual-connector" : "^0.11",
+    "fastybird/web-server-plugin" : "^0.11",
+    "fastybird/ws-server-plugin" : "^0.26",
+    "ipub/websockets-wamp" : "^1.4",
+    "nettrine/fixtures" : "^0.6.3",
+    "sunrise/http-server-request" : "^2.0",
+    "symfony/monolog-bridge" : "^6.1",
+    "vlucas/phpdotenv" : "^5.4"
   },
 
-  "require-dev": {
-    "mockery/mockery": "^1.4",
-    "ninjify/nunjuck": "^0.3",
-    "ninjify/qa": "^0.13",
-    "pds/skeleton": "^1.0",
-    "phpstan/extension-installer": "^1.1",
-    "phpstan/phpstan": "^0.12",
-    "phpstan/phpstan-deprecation-rules": "^0.12",
-    "phpstan/phpstan-doctrine": "^0.12",
-    "phpstan/phpstan-nette": "^0.12",
-    "phpstan/phpstan-strict-rules": "^0.12",
-    "tracy/tracy": "^2.9"
+  "require-dev" : {
+    "mockery/mockery" : "^1.4",
+    "ninjify/nunjuck" : "^0.3",
+    "ninjify/qa" : "^0.13",
+    "pds/skeleton" : "^1.0",
+    "phpstan/extension-installer" : "^1.1",
+    "phpstan/phpstan" : "^0.12",
+    "phpstan/phpstan-deprecation-rules" : "^0.12",
+    "phpstan/phpstan-doctrine" : "^0.12",
+    "phpstan/phpstan-nette" : "^0.12",
+    "phpstan/phpstan-strict-rules" : "^0.12",
+    "tracy/tracy" : "^2.9"
   },
 
-  "autoload": {
-    "psr-4": {
-      "FastyBird\\MiniServer\\": "src/"
+  "autoload" : {
+    "psr-4" : {
+      "FastyBird\\MiniServer\\" : "src/"
     }
   },
 
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\Cases\\": "tests/cases",
-      "Tests\\Fixtures\\": "tests/fixtures",
-      "Tests\\Tools\\": "tests/tools"
+  "autoload-dev" : {
+    "psr-4" : {
+      "Tests\\Cases\\" : "tests/cases",
+      "Tests\\Fixtures\\" : "tests/fixtures",
+      "Tests\\Tools\\" : "tests/tools"
     }
   },
 
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "cweagans/composer-patches": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true,
-      "phpstan/extension-installer": true
+  "config" : {
+    "sort-packages" : true,
+    "allow-plugins" : {
+      "cweagans/composer-patches" : true,
+      "dealerdirect/phpcodesniffer-composer-installer" : true,
+      "phpstan/extension-installer" : true
     }
   },
 
-  "extra": {
-    "patches": {
-      "doctrine/orm": {
-        "Bug: Ramsey uuid not working - Part 1": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.1.diff",
-        "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.2.diff"
+  "extra" : {
+    "patches" : {
+      "doctrine/orm" : {
+        "Bug: Ramsey uuid not working - Part 1" : "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.1.diff",
+        "Bug: Ramsey uuid not working - Part 2" : "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.2.diff"
       },
-      "ramsey/uuid-doctrine": {
-        "Bug: Ramsey uuid conversion fallback": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/ramsey.uuid.doctrine.diff"
+      "ramsey/uuid-doctrine" : {
+        "Bug: Ramsey uuid conversion fallback" : "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/ramsey.uuid.doctrine.diff"
       },
-      "nettrine/orm": {
-        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
+      "nettrine/orm" : {
+        "Enable connection overrides" : "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
       },
-      "nette/utils": {
-        "Bug: Offset check with null support": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
+      "nette/utils" : {
+        "Bug: Offset check with null support" : "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nette.array.offsetCheck.diff"
       }
     }
   }

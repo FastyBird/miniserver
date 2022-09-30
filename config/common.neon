@@ -194,10 +194,10 @@ contributteTranslation:
         - %appDir%/vendor/fastybird/json-api/src/Translations
 
 contributeFlysystem:
-	filesystem:
-		default:
-			adapter: League\Flysystem\Local\LocalFilesystemAdapter(%appDir%/var)
-			autowired: true
+    filesystem:
+        default:
+            adapter: League\Flysystem\Local\LocalFilesystemAdapter(%appDir%/var)
+            autowired: true
 
 # Doctrine
 ##########
