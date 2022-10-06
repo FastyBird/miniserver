@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * ConsoleSubscriber.php
+ * ConsoleLogger.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,17 +10,18 @@
  * @subpackage     Subscribers
  * @since          0.1.0
  *
- * @date           30.09.22
+ * @date           06.10.22
  */
 
 namespace FastyBird\MiniServer\Subscribers;
 
+use Monolog;
 use Symfony\Bridge\Monolog as SymfonyMonolog;
 use Symfony\Component\Console;
 use Symfony\Component\EventDispatcher;
 
 /**
- * Console commands subscriber
+ * Console subscriber
  *
  * @package         FastyBird:MiniServer!
  * @subpackage      Subscribers
@@ -30,36 +31,34 @@ use Symfony\Component\EventDispatcher;
 class ConsoleSubscriber implements EventDispatcher\EventSubscriberInterface
 {
 
-	/** @var SymfonyMonolog\Handler\ConsoleHandler */
-	private SymfonyMonolog\Handler\ConsoleHandler $consoleHandler;
+	/** @var Monolog\Handler\AbstractProcessingHandler[]  */
+	private array $loggerHandlers;
 
 	/**
-	 * {@inheritDoc}
+	 * @param Monolog\Handler\AbstractProcessingHandler[] $loggerHandlers
 	 */
+	public function __construct(
+		array $loggerHandlers,
+	) {
+		$this->loggerHandlers = $loggerHandlers;
+	}
+
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			Console\ConsoleEvents::COMMAND  => 'command',
+			Console\ConsoleEvents::COMMAND => 'command',
 		];
 	}
 
-	/**
-	 * @param SymfonyMonolog\Handler\ConsoleHandler $consoleHandler
-	 */
-	public function __construct(
-		SymfonyMonolog\Handler\ConsoleHandler $consoleHandler
-	) {
-		$this->consoleHandler = $consoleHandler;
-	}
-
-	/**
-	 * @param Console\Event\ConsoleCommandEvent $event
-	 *
-	 * @return void
-	 */
 	public function command(Console\Event\ConsoleCommandEvent $event): void
 	{
-		$this->consoleHandler->setOutput($event->getOutput());
+		foreach ($this->loggerHandlers as $handler) {
+			if (!$handler instanceof SymfonyMonolog\Handler\ConsoleHandler) {
+				if ($handler->getLevel() < Monolog\Logger::INFO) {
+					$handler->setLevel(Monolog\Logger::INFO);
+				}
+			}
+		}
 	}
 
 }

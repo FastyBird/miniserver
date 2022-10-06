@@ -25,6 +25,7 @@ use FastyBird\MiniServer\Models;
 use FastyBird\MiniServer\Subscribers;
 use IPub\DoctrineCrud;
 use IPub\SlimRouter\Routing as SlimRouterRouting;
+use Monolog;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Symfony\Bridge\Monolog as SymfonyMonolog;
@@ -122,7 +123,7 @@ class MiniServerExtension extends DI\CompilerExtension
 		}
 
 		// Logging
-		$builder->addDefinition($this->prefix('logging.handlers.console'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('logging.console'), new DI\Definitions\ServiceDefinition())
 			->setType(SymfonyMonolog\Handler\ConsoleHandler::class);
 
 		// Subscribers
@@ -176,6 +177,20 @@ class MiniServerExtension extends DI\CompilerExtension
 				$builder->getDefinitionByType(JsonApiMiddleware\JsonApiMiddleware::class),
 			]);
 		}
+
+		/**
+		 * Logger
+		 */
+
+		/** @var string $monologLoggerServiceName */
+		$monologLoggerServiceName = $builder->getByType(Monolog\Logger::class);
+
+		/** @var DI\Definitions\ServiceDefinition $monologLoggerService */
+		$monologLoggerService = $builder->getDefinition($monologLoggerServiceName);
+
+		$consoleLoggerHandler = $builder->getDefinition($this->prefix('logging.console'));
+
+		$monologLoggerService->addSetup('?->pushHandler(?)', ['@self', $consoleLoggerHandler]);
 	}
 
 	/**

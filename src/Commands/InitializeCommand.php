@@ -73,13 +73,6 @@ class InitializeCommand extends Console\Command\Command
 		$this->logger = $logger;
 
 		parent::__construct($name);
-
-		// Override loggers to not log debug events into console
-		foreach ($logger->getHandlers() as $handler) {
-			if ($handler instanceof Monolog\Handler\StreamHandler) {
-				$handler->setLevel(Monolog\Logger::WARNING);
-			}
-		}
 	}
 
 	/**
