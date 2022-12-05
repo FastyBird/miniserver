@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\MiniServer\Tests\Cases\Unit;
+namespace FastyBird\MiniServer\Tests\Cases\unit;
 
 use DateTimeImmutable;
 use Doctrine\DBAL;
