@@ -7,7 +7,7 @@ use Doctrine\DBAL;
 use Doctrine\ORM;
 use FastyBird\DateTimeFactory;
 use FastyBird\Library\Bootstrap\Boot as BootstrapBoot;
-use FastyBird\MiniServer\DI;
+use FastyBird\Library\Bootstrap\Exceptions as BootstrapExceptions;
 use FastyBird\MiniServer\Exceptions;
 use Nette;
 use Nettrine\ORM as NettrineORM;
@@ -15,20 +15,16 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use function array_reverse;
 use function assert;
-use function constant;
-use function defined;
 use function fclose;
 use function feof;
 use function fgets;
 use function fopen;
 use function in_array;
-use function md5;
 use function rtrim;
 use function set_time_limit;
 use function sprintf;
 use function strlen;
 use function substr;
-use function time;
 use function trim;
 
 abstract class DbTestCase extends TestCase
@@ -45,6 +41,7 @@ abstract class DbTestCase extends TestCase
 	private array $neonFiles = [];
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -74,6 +71,7 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -92,6 +90,7 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -106,39 +105,27 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
-	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 */
 	private function createContainer(): Nette\DI\Container
 	{
-		$rootDir = __DIR__ . '/../..';
-		$vendorDir = defined('FB_VENDOR_DIR') ? constant('FB_VENDOR_DIR') : $rootDir . '/../vendor';
+		$configurator = BootstrapBoot\Bootstrap::boot();
 
-		$config = new BootstrapBoot\Configurator();
-		$config->setTempDirectory(FB_TEMP_DIR);
+		$configurator->addConfig(__DIR__ . '/../../common.neon');
 
-		$config->addParameters(['container' => ['class' => 'SystemContainer_' . md5((string) time())]]);
-		$config->addParameters(['appDir' => $rootDir, 'wwwDir' => $rootDir, 'vendorDir' => $vendorDir]);
-
-		$config->addConfig(__DIR__ . '/../../common.neon');
-
-		foreach ($this->neonFiles as $neonFile) {
-			$config->addConfig($neonFile);
-		}
-
-		DI\MiniServerExtension::register($config);
-
-		$this->container = $config->createContainer();
+		$this->container = $configurator->createContainer();
 
 		$this->setupDatabase();
 
-		assert($this->container instanceof Nette\DI\Container);
+		assert($this->container !== null);
 
 		return $this->container;
 	}
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -171,6 +158,7 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -181,6 +169,7 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -241,6 +230,7 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -261,6 +251,7 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
+	 * @throws BootstrapExceptions\InvalidArgument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
 	 */

@@ -27,6 +27,7 @@
     "build:dev": "vue-tsc --noEmit && vite build --watch --mode development",
     "build:prod": "vue-tsc --noEmit && vite build",
     "preview": "vue-tsc --noEmit && vite build && vite preview --host",
+    "types": "vue-tsc --noEmit",
     "lint:js": "eslint --ext .js,.ts,.vue --ignore-path .gitignore assets",
     "lint:js:fix": "eslint --ext .js,.ts,.vue --ignore-path .gitignore assets --fix",
     "lint:styles": "stylelint 'assets/**/*.scss'",

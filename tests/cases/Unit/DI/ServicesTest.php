@@ -3,15 +3,18 @@
 namespace FastyBird\MiniServer\Tests\Cases\Unit\DI;
 
 use FastyBird\Library\Bootstrap as LibraryBootstrap;
+use FastyBird\Library\Bootstrap\Exceptions as BootstrapExceptions;
 use FastyBird\MiniServer\Commands;
 use FastyBird\MiniServer\Tests\Cases\Unit\DbTestCase;
+use Nette;
 
-/**
- * @testCase
- */
 final class ServicesTest extends DbTestCase
 {
 
+	/**
+	 * @throws BootstrapExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 */
 	public function testServicesRegistration(): void
 	{
 		$configurator = LibraryBootstrap\Boot\Bootstrap::boot();
@@ -23,7 +26,7 @@ final class ServicesTest extends DbTestCase
 
 		$container = $configurator->createContainer();
 
-		self::assertNotNull($container->getByType(Commands\Initialize::class));
+		self::assertNotNull($container->getByType(Commands\Initialize::class, false));
 	}
 
 }
