@@ -22,10 +22,12 @@ extensions:
     nettrineAnnotations                 : Nettrine\Annotations\DI\AnnotationsExtension
     nettrineCache                       : Nettrine\Cache\DI\CacheExtension
     nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
+    nettrineDbalConsole                 : Nettrine\DBAL\DI\DbalConsoleExtension
     nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
     nettrineOrmAnnotations              : Nettrine\ORM\DI\OrmAnnotationsExtension
     nettrineOrmConsole                  : Nettrine\ORM\DI\OrmConsoleExtension
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
+    nettrineMigrations                  : Nettrine\Migrations\DI\MigrationsExtension
     nettrineFixtures                    : Nettrine\Fixtures\DI\FixturesExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     ipubDoctrinePhone                   : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
@@ -39,29 +41,31 @@ extensions:
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
-    fbMetadata                          : FastyBird\Metadata\DI\MetadataExtension
-    fbSocketServerFactory               : FastyBird\SocketServerFactory\DI\SocketServerFactoryExtension
-    fbExchange                          : FastyBird\Exchange\DI\ExchangeExtension
+    # FastyBird app libs
+    fbBootstrapLibrary                  : FastyBird\Library\Bootstrap\DI\BootstrapExtension
+    fbMetadataLibrary                   : FastyBird\Library\Metadata\DI\MetadataExtension
+    fbExchangeLibrary                   : FastyBird\Library\Exchange\DI\ExchangeExtension
     # FastyBird plugins
-    fbRedisDbExchangePlugin             : FastyBird\RedisDbExchangePlugin\DI\RedisDbExchangePluginExtension
-    fbRedisDbStoragePlugin              : FastyBird\RedisDbStoragePlugin\DI\RedisDbStoragePluginExtension
-    fbWebServerPlugin                   : FastyBird\WebServerPlugin\DI\WebServerPluginExtension(%consoleMode%)
-    fbWsServerPlugin                    : FastyBird\WsServerPlugin\DI\WsServerPluginExtension
+    fbRedisDbPlugin                     : FastyBird\Plugin\RedisDb\DI\RedisDbExtension
+    fbWebServerPlugin                   : FastyBird\Plugin\WebServer\DI\WebServerExtension(%consoleMode%)
+    fbWsExchangePlugin                  : FastyBird\Plugin\WsExchange\DI\WsExchangeExtension
     # FastyBird modules
-    fbAccountsModule                    : FastyBird\AccountsModule\DI\AccountsModuleExtension
-    fbDevicesModule                     : FastyBird\DevicesModule\DI\DevicesModuleExtension
-    fbTriggersModule                    : FastyBird\TriggersModule\DI\TriggersModuleExtension
-    fbUiModule                          : FastyBird\UIModule\DI\UIModuleExtension
+    fbAccountsModule                    : FastyBird\Module\Accounts\DI\AccountsExtension
+    fbDevicesModule                     : FastyBird\Module\Devices\DI\DevicesExtension
+    fbTriggersModule                    : FastyBird\Module\Triggers\DI\TriggersExtension
     # FastyBird connectors
-    fbFbBusConnector                    : FastyBird\FbBusConnector\DI\FbBusConnectorExtension
-    fbFbMqttConnector                   : FastyBird\FbMqttConnector\DI\FbMqttConnectorExtension
-    fbShellyConnector                   : FastyBird\ShellyConnector\DI\ShellyConnectorExtension
-    fbModbusConnector                   : FastyBird\ModbusConnector\DI\ModbusConnectorExtension
-    fbHomeKitConnector                  : FastyBird\HomeKitConnector\DI\HomeKitConnectorExtension
-    fbVirtualConnector                  : FastyBird\VirtualConnector\DI\VirtualConnectorExtension
-    fbTuyaConnector                     : FastyBird\TuyaConnector\DI\TuyaConnectorExtension
-    # FastyBird application
-    fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension(%consoleMode%)
+    fbFbMqttConnector                   : FastyBird\Connector\FbMqtt\DI\FbMqttExtension
+    fbShellyConnector                   : FastyBird\Connector\Shelly\DI\ShellyExtension
+    fbModbusConnector                   : FastyBird\Connector\Modbus\DI\ModbusExtension
+    fbHomeKitConnector                  : FastyBird\Connector\HomeKit\DI\HomeKitExtension
+    fbTuyaConnector                     : FastyBird\Connector\Tuya\DI\TuyaExtension
+
+
+decorator:
+    FastyBird\Plugin\WebServer\Router\Router:
+        setup:
+            - addMiddleware(@fbJsonApi.middlewares.jsonapi)
+            - addMiddleware(@fbAccountsModule.middlewares.urlFormat)
 
 ##################################
 # Nette extensions configuration #
@@ -79,15 +83,6 @@ fbSimpleAuth:
             models: true
             mapping: true
 
-# Socket server factory
-#######################
-fbSocketServerFactory:
-    server:
-        address: %server.address%
-        port: %server.port%
-        certificate: %server.certificate%
-    eventLoop: false
-
 # JSON:Api support
 ##################
 fbJsonApi:
@@ -96,38 +91,18 @@ fbJsonApi:
 
 # Redis exchange
 ################
-fbRedisDbExchangePlugin:
-    enableClassic: true
-    enableAsync: true
-    connection:
-        default:
-            host: %redis.host%
-            port: %redis.port%
-            username: %redis.username%
-            password: %redis.password%
-
-# Redis state storage
-#####################
-fbRedisDbStoragePlugin:
-    connection:
-        properties:
-            host: %redis.host%
-            port: %redis.port%
-            username: %redis.username%
-            password: %redis.password%
-            database: 0
-        triggers:
-            host: %redis.host%
-            port: %redis.port%
-            username: %redis.username%
-            password: %redis.password%
-            database: 1
+fbRedisDbPlugin:
+    client:
+        host: %redis.host%
+        port: %redis.port%
+        username: %redis.username%
+        password: %redis.password%
 
 # Web server plugin
 ###################
 fbWebServerPlugin:
     static:
-        webroot: %appDir%/public/
+        publicRoot: %appDir%/public/dist/
         enabled: true
     cors:
         allow:
@@ -136,26 +111,25 @@ fbWebServerPlugin:
                 - Authorization
                 - X-Requested-With
                 - X-Api-Key
+    server:
+        address: %server.address%
+        port: %server.port%
+        certificate: %server.certificate%
 
 # Accounts module
 #################
 fbAccountsModule:
-    apiPrefix: true
+    apiPrefix: %api.prefixed.modules%
 
 # Devices module
 ################
 fbDevicesModule:
-    apiPrefix: true
+    apiPrefix: %api.prefixed.modules%
 
 # Triggers module
 #################
 fbTriggersModule:
-    apiPrefix: true
-
-# UI module
-###########
-fbUiModule:
-    apiPrefix: true
+    apiPrefix: %api.prefixed.modules%
 
 # WS server
 ###########
@@ -165,7 +139,6 @@ ipubWebsockets:
         port: %sockets.port%
     routes:
         /io/exchange: 'Exchange:'
-
     mapping:
         *: FastyBird\WsServerPlugin\Controllers\*Controller
 
@@ -186,18 +159,10 @@ contributteTranslation:
         fallback: [en_US, en]
     localeResolvers: []
     dirs:
-        - %appDir%/src/Translations
-        - %appDir%/vendor/fastybird/accounts-module/src/Translations
-        - %appDir%/vendor/fastybird/devices-module/src/Translations
-        - %appDir%/vendor/fastybird/triggers-module/src/Translations
-        - %appDir%/vendor/fastybird/ui-module/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Accounts/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Devices/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Triggers/src/Translations
         - %appDir%/vendor/fastybird/json-api/src/Translations
-
-contributeFlysystem:
-    filesystem:
-        default:
-            adapter: League\Flysystem\Local\LocalFilesystemAdapter(%appDir%/var)
-            autowired: true
 
 # Doctrine
 ##########
@@ -243,6 +208,9 @@ nettrineOrm:
 nettrineOrmAnnotations:
     mapping: []
 
+nettrineMigrations:
+    directory: %appDir%/migrations
+
 nettrineFixtures:
     paths:
-        - %appDir%/Fixtures
+        - %appDir%/fixtures

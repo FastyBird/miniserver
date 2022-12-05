@@ -1,140 +1,109 @@
 # Define PHP version
-ARG TARGET_PHP_VERSION=7.4
-ARG TARGET_NODE_VERSION=12
+ARG PHP_VERSION=8.1
+ARG NODE_VERSION=16
 
-# Define NodeJS docker image
-FROM node:${TARGET_NODE_VERSION} AS builder
+FROM node:${NODE_VERSION} as fastybird_node
 
-MAINTAINER Adam Kadlec <adam.kadlec@fastybird.com>
+# App folder
+ARG APP_PATH=/app
 
-################################
-# CONTAINER REQUIRED ARGUMENTS #
-################################
+WORKDIR ${APP_PATH}
 
-# App instalation folder
-ARG APP_CODE_PATH=/usr/src/app
+# Install basic tools
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    curl \
+    make \
+    netcat \
+    git \
+    unzip \
+    zip \
+    bzip2
 
-RUN apt-get update -yqq \
- && apt-get install -yqq \
- build-essential \
- autoconf \
- curl \
- git \
- wget \
-;
+# Cleanup
+RUN apt-get remove --purge -y software-properties-common curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /usr/share/man/*
 
-RUN git clone https://github.com/FastyBird/miniserver.git ${APP_CODE_PATH}
+WORKDIR ${APP_PATH}
 
-RUN cd ${APP_CODE_PATH} \
- && git submodule init \
- && git submodule update
+# Install app
+COPY assets assets/
+COPY env env/
+COPY .browserslistrc ./
+COPY .eslintignore ./
+COPY .eslintrc ./
+COPY .prettierrc ./
+COPY babel.config.js ./
+COPY index.html ./
+COPY package.json ./
+COPY tsconfig.json ./
+COPY vite.config.ts ./
+COPY yarn.lock ./
 
-# Install web app
-RUN cd ${APP_CODE_PATH}/web-ui \
- && yarn cache clean \
- && yarn install --network-timeout 1000000 \
- && yarn generate \
-;
+# Install & build user interface
+RUN yarn cache clean \
+    && yarn install --network-timeout 1000000 \
+    && yarn build:prod
 
-# Define PHP docker image
-FROM php:${TARGET_PHP_VERSION}-cli
+FROM fastybird/standard:1.0-headless
 
-MAINTAINER Adam Kadlec <adam.kadlec@fastybird.com>
-
-################################
-# CONTAINER REQUIRED ARGUMENTS #
-################################
-
-# App instalation folder
-ARG APP_CODE_PATH=/usr/src/app
+# Docker file path
+ARG SERVICE_DIR=./.docker/image
+# App folder
+ARG APP_PATH=/app
 # Container default timezone
 ARG APP_TZ=UTC
+# Backend url prefix configuration
+ARG BACKEND_PREFIX=/api
 
-###########################
-# CONTAINER CONFIGURATION #
-###########################
+# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Set server timezone
-RUN ln -snf /usr/share/zoneinfo/${APP_TZ} /etc/localtime && echo ${APP_TZ} > /etc/timezone
+# Set container workdir path
+WORKDIR ${APP_PATH}
 
-RUN apt-get update -yqq \
- && apt-get install -yqq \
- build-essential \
- autoconf \
- curl \
- dnsutils \
- git \
- wget \
- nano \
- unzip \
- zip \
- bzip2 \
- zlib1g-dev \
- libicu-dev \
- g++ \
-;
+# Expose application data dirs
+VOLUME ${APP_PATH}/config
+VOLUME ${APP_PATH}/var
 
-RUN docker-php-ext-install \
- mysqli \
- pdo \
- pdo_mysql \
- intl \
- ctype \
- json \
- bcmath \
-;
+ENV APP_ENV=prod
 
-###########################
-# SUPERVISOR INSTALLATION #
-###########################
+# Copy only specifically what we need
+COPY bin bin/
+COPY config config/
+COPY env env/
+COPY migrations migrations/
+COPY public public/
+COPY resources resources/
+COPY src src/
+COPY composer.* ./
 
-# Install supervisor
-RUN apt-get update -yqq && apt-get install -yqq supervisor
+# Install backend
+RUN set -eux; \
+    mkdir -p var/cache var/logs; \
+    composer install --prefer-dist --no-autoloader --no-interaction --no-scripts --no-progress --no-dev; \
+    composer clear-cache; \
+    composer dump-autoload --classmap-authoritative;
 
-COPY ./resources/supervisor/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
+COPY --from=fastybird_node ${APP_PATH}/public/dist ${APP_CODE_PATH}/public/dist
 
-######################################
-# MINISERVER SERVER APP INSTALLATION #
-######################################
+RUN chown www-data:www-data ${APP_PATH} -R
 
-RUN mkdir ${APP_CODE_PATH}
+# Configure server
+COPY ${SERVICE_DIR}/nginx/nginx.conf                /etc/nginx/nginx.conf
+COPY ${SERVICE_DIR}/supervisor/supervisord.conf     /etc/supervisor/supervisord.conf
+COPY ${SERVICE_DIR}/php/php.ini                     /etc/php/${PHP_VERSION}/fpm/php.ini
+COPY ${SERVICE_DIR}/php/php.ini                     /etc/php/${PHP_VERSION}/cli/php.ini
+COPY ${SERVICE_DIR}/php/opcache.ini                 /etc/php/${PHP_VERSION}/fpm/conf.d/opcache.ini
+COPY ${SERVICE_DIR}/php/opcache.ini                 /etc/php/${PHP_VERSION}/cli/conf.d/opcache.ini
 
-ADD ./config ${APP_CODE_PATH}/config
-ADD ./resources ${APP_CODE_PATH}/resources
-ADD ./src ${APP_CODE_PATH}/src
-ADD ./var ${APP_CODE_PATH}/var
-COPY ./composer.json ${APP_CODE_PATH}/
+# Modify location based on configuration
+RUN sed -i -e "s#__API_PREFIX#${BACKEND_PREFIX}#" "/etc/nginx/nginx.conf"
 
-COPY --from=builder ${APP_CODE_PATH}/web-ui/dist ${APP_CODE_PATH}/public
+COPY ${SERVICE_DIR}/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
 
-# Install composer installer
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+ENTRYPOINT ["docker-entrypoint"]
 
-# Checkout & install server app
-RUN cd ${APP_CODE_PATH} \
- && composer clearcache \
- && composer install --no-dev \
-;
-
-#####################################
-# FINISHING CONTAINER CONFIGURATION #
-#####################################
-
-WORKDIR "${APP_CODE_PATH}"
-
-####################
-# SERVICES WAITING #
-####################
-
-ENV WAIT_VERSION=2.7.3
-
-## Add the wait script to the image
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/${WAIT_VERSION}/wait /wait
-RUN chmod +x /wait
-
-################
-# MAIN COMMAND #
-################
-
-# Supervisord run command
-CMD /wait && /usr/bin/supervisord
+EXPOSE 9001

@@ -1,10 +1,6 @@
 .idea
 /config/local.neon
 /dist
-/vendor
-/venv
 /node_modules
-tests/*/output
-tests/tmp
+/vendor
 fb-miniserver.deb
-__pycache__

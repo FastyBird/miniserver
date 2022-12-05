@@ -1,0 +1,19 @@
+@import '@fastybird/web-ui-library/src/assets/variables/colors';
+@import '@fastybird/web-ui-library/src/assets/variables/layout';
+@import '@fastybird/web-ui-library/src/assets/mixins/utilities';
+
+.fb-application-layout-default {
+	&__offline-info {
+		text-align: center;
+
+		h3 {
+			color: $color-danger;
+		}
+
+		&-icon {
+			color: $color-danger;
+			font-size: 8rem;
+			margin: $margin-lg 0 $margin-md 0;
+		}
+	}
+}

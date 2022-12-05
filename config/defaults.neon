@@ -1,6 +1,7 @@
 parameters:
     logger:
         level: 300
+        rotatingFile: app.log
 
     database:
         version: 5.7
@@ -30,3 +31,7 @@ parameters:
     security:
         issuer: com.fastybird.miniserver
         signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
+
+    api:
+        prefixed:
+            modules: true

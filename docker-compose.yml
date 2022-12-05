@@ -1,0 +1,255 @@
+version: '3.7'
+
+services:
+  # REQUESTS PROXY
+  proxy:
+    container_name: miniserver-dev-nginx
+    build:
+      context: .
+      dockerfile: .docker/dev/Dockerfile
+      args:
+        BACKEND_PREFIX: ${API_PREFIX:-/api}
+      target: fastybird_nginx
+    depends_on:
+      - backend
+      - frontend
+    environment:
+      # Container specific environment variables
+      TZ: ${APP_TZ:-UTC}
+    volumes:
+      - ./public:/srv/fastybird/public:ro
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    networks:
+      - fastybird
+
+  # APPLICATION BACKEND
+  backend:
+    container_name: miniserver-dev-backend
+    build:
+      context: .
+      dockerfile: .docker/dev/Dockerfile
+      target: fastybird_php
+    depends_on:
+      - migrations
+    environment:
+      # Container specific environment variables
+      TZ: ${APP_TZ:-UTC}
+      PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}
+      # Application specific environment variables
+      FB_APP_PARAMETER__DATABASE_HOST: database
+      FB_APP_PARAMETER__DATABASE_PORT: 3306
+      FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
+      FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-fastybird}
+      FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-fastybird}
+      FB_APP_PARAMETER__REDIS_HOST: redis
+      FB_APP_PARAMETER__REDIS_PORT: 6379
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
+      FB_APP_PARAMETER__API_PREFIX: ${API_PREFIX:-/api}
+      FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
+      FB_APP_PARAMETER__API_KEY: ${API_KEY:-}
+    volumes:
+      - .:/srv/fastybird:rw,cached
+      - ./config:/srv/fastybird/config:rw
+      - ./var:/srv/fastybird/var:rw
+      - ./public:/srv/fastybird/public:rw,delegated
+    networks:
+      - fastybird
+
+  # APPLICATION BACKEND DATABASE MIGRATIONS
+  migrations:
+    container_name: miniserver-dev-migrations
+    build:
+      context: .
+      dockerfile: .docker/dev/Dockerfile
+      target: fastybird_migrations
+    depends_on:
+      - database
+    environment:
+      # Container specific environment variables
+      TZ: ${APP_TZ:-UTC}
+      PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}
+      LOAD_FIXTURES: 1
+      # Application specific environment variables
+      FB_APP_PARAMETER__DATABASE_HOST: database
+      FB_APP_PARAMETER__DATABASE_PORT: 3306
+      FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
+      FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-fastybird}
+      FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-fastybird}
+      FB_APP_PARAMETER__REDIS_HOST: redis
+      FB_APP_PARAMETER__REDIS_PORT: 6379
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
+      FB_APP_PARAMETER__API_PREFIX: ${API_PREFIX:-/api}
+      FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
+      FB_APP_PARAMETER__API_KEY: ${API_KEY:-}
+    volumes:
+      - .:/srv/fastybird:rw,cached
+      - ./config:/srv/fastybird/config:rw
+      - ./var:/srv/fastybird/var:rw
+    networks:
+      - fastybird
+
+  # APPLICATION WORKER
+  worker:
+    container_name: miniserver-dev-worker
+    build:
+      context: .
+      dockerfile: .docker/dev/Dockerfile
+      target: fastybird_worker
+    depends_on:
+      - database
+    environment:
+      # Container specific environment variables
+      TZ: ${APP_TZ:-UTC}
+      PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}
+      # Application specific environment variables
+      FB_APP_PARAMETER__DATABASE_HOST: database
+      FB_APP_PARAMETER__DATABASE_PORT: 3306
+      FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
+      FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-fastybird}
+      FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-fastybird}
+      FB_APP_PARAMETER__REDIS_HOST: redis
+      FB_APP_PARAMETER__REDIS_PORT: 6379
+    volumes:
+      - .:/srv/fastybird:rw,cached
+      - ./config:/srv/fastybird/config:rw
+      - ./var:/srv/fastybird/var:rw
+    ports:
+      - "${WORKER_STATUS_PORT:-9001}:9001"
+    networks:
+      - fastybird
+
+  # APPLICATION FRONTEND
+  frontend:
+    container_name: miniserver-dev-frontend
+    build:
+      context: .
+      dockerfile: .docker/dev/Dockerfile
+      target: fastybird_node
+    command: ["yarn", "build:dev"]
+    depends_on:
+      - backend
+    environment:
+      # Container specific environment variables
+      TZ: ${APP_TZ:-UTC}
+      BACKEND_HOST: backend
+      BACKEND_PORT: 9000
+      # Application specific environment variables
+      FB_APP_PARAMETER__API_PREFIX: ${API_PREFIX:-/api}
+      FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
+      FB_APP_PARAMETER__API_KEY: ${API_KEY:-}
+    volumes:
+      - .:/srv/fastybird:rw,cached
+      - ./public:/srv/fastybird/public:rw,delegated
+    networks:
+      - fastybird
+
+  # MYSQL DATABASE STORAGE
+  database:
+    container_name: miniserver-dev-database
+    image: mariadb
+    platform: linux/amd64
+    environment:
+      # Container specific environment variables
+      TZ: ${APP_TZ:-UTC}
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD:-root}
+      MYSQL_USER: ${DATABASE_USERNAME:-fastybird}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-fastybird}
+      MYSQL_DATABASE: ${DATABASE_DBNAME:-fastybird}
+    volumes:
+      - mysql-dev-data:/var/lib/mysql:rw
+      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/mysql/data:/var/lib/mysql:rw,delegated
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    networks:
+      - fastybird
+
+  # REDIS STORAGE
+  redis:
+    container_name: miniserver-dev-redis
+    image: redis
+    volumes:
+      - redis-dev-other:/var/lib/redis:rw
+      - redis-dev-data:/data:rw
+      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/redis/other:/var/lib/redis:rw,delegated
+      # - ./docker/redis/data:/data:rw,delegated
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      - fastybird
+
+  redis-commander:
+    container_name: miniserver-dev-redis-client
+    image: rediscommander/redis-commander
+    restart: always
+    environment:
+      # Container specific environment variables
+      REDIS_HOSTS: local:redis:6379
+    ports:
+      - "${REDIS_ADMIN_PORT:-8081}:8081"
+    networks:
+      - fastybird
+
+  # COUCH DB STORAGE
+  couchdb:
+    container_name: miniserver-dev-couchdb
+    image: couchdb
+    environment:
+      # Container specific environment variables
+      COUCHDB_USER: ${COUCHDB_USERNAME:-admin}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-admin}
+    volumes:
+      - couchdb-dev-data:/opt/couchdb/data:rw
+      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/couchdb/data:/opt/couchdb/data:rw,delegated
+    ports:
+      - "${COUCHDB_PORT:-5984}:5984"
+    networks:
+      - fastybird
+
+  # RABBIT MQ EXCHANGE
+  rabbitmq:
+    container_name: miniserver-dev-rabbitmq
+    image: rabbitmq:management
+    environment:
+      # Container specific environment variables
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME:-admin}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-admin}
+    volumes:
+      - rabbitmq-dev-data:/var/lib/rabbitmq:rw
+      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/rabbitmq/data:/var/lib/rabbitmq:rw,delegated
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+    networks:
+      - fastybird
+
+  # MQTT
+  mqtt:
+    container_name: miniserver-dev-mqtt
+    image: eclipse-mosquitto
+    volumes:
+      - mqtt-dev-data:/mosquitto/data:rw
+      - mqtt-dev-log:/mosquitto/log:rw
+      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/mqtt/data:/mosquitto/data:rw,delegated
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+    networks:
+      - fastybird
+
+networks:
+  fastybird:
+    driver: bridge
+
+volumes:
+  mysql-dev-data:
+  redis-dev-other:
+  redis-dev-data:
+  couchdb-dev-data:
+  mqtt-dev-data:
+  mqtt-dev-log:
+  rabbitmq-dev-data:

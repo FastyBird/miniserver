@@ -6,596 +6,33 @@ on:
       - ".docs/**"
   push:
     branches:
-      - "master"
+      - "main"
     tags:
       - v*
   schedule:
     - cron: "0 8 * * 1" # At 08:00 on Monday
 
 env:
-  extensions: "json"
+  extensions: "json, intl"
   cache-version: "1"
   composer-version: "v2"
   composer-install: "composer update --no-interaction --no-progress --no-suggest --prefer-dist --prefer-stable"
-  coverage: "none"
-  image-name: "miniserver"
 
 jobs:
-  php-qa :
-    name : "Quality assurance for PHP code"
-    runs-on : "${{ matrix.operating-system }}"
-
-    strategy :
-      fail-fast : false
-      matrix :
-        php-version : [ "8.0", "8.1" ]
-        operating-system : [ "ubuntu-latest" ]
-
-    steps :
-      - name : "Checkout"
-        uses : "actions/checkout@v2"
-
-      - name : "Setup PHP cache environment"
-        id : "extcache"
-        uses : "shivammathur/cache-extensions@v1"
-        with :
-          php-version : "${{ matrix.php-version }}"
-          extensions : "${{ env.extensions }}"
-          key : "${{ env.cache-version }}"
-
-      - name : "Cache PHP extensions"
-        uses : "actions/cache@v2"
-        with :
-          path : "${{ steps.extcache.outputs.dir }}"
-          key : "${{ steps.extcache.outputs.key }}"
-          restore-keys : "${{ steps.extcache.outputs.key }}"
-
-      - name : "Install PHP"
-        uses : "shivammathur/setup-php@v2"
-        with :
-          php-version : "${{ matrix.php-version }}"
-          extensions : "${{ env.extensions }}"
-          tools : "composer:${{ env.composer-version }}, cs2pr"
-          coverage : "${{ env.coverage }}"
-
-      - name : "Setup problem matchers for PHP"
-        run : 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
-
-      - name : "Get Composer cache directory"
-        id : "composercache"
-        run : 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
-
-      - name : "Cache PHP dependencies"
-        uses : "actions/cache@v2"
-        with :
-          path : "${{ steps.composercache.outputs.dir }}"
-          key : "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
-          restore-keys : "${{ runner.os }}-composer-"
-
-      - name : "Validate Composer"
-        run : "composer validate"
-
-      - name : "Install dependencies"
-        run : "${{ env.composer-install }}"
-
-      - name : "Coding Standard"
-        run : "make php_cs"
-
-  php-static-analysis :
-    name : "Static analysis for PHP code"
-    runs-on : "${{ matrix.operating-system }}"
-
-    strategy :
-      fail-fast : false
-      matrix :
-        php-version : [ "8.0", "8.1" ]
-        operating-system : [ "ubuntu-latest" ]
-
-    steps :
-      - name : "Checkout"
-        uses : "actions/checkout@v2"
-
-      - name : "Setup PHP cache environment"
-        id : "extcache"
-        uses : "shivammathur/cache-extensions@v1"
-        with :
-          php-version : "${{ matrix.php-version }}"
-          extensions : "${{ env.extensions }}"
-          key : "${{ env.cache-version }}"
-
-      - name : "Cache PHP extensions"
-        uses : "actions/cache@v2"
-        with :
-          path : "${{ steps.extcache.outputs.dir }}"
-          key : "${{ steps.extcache.outputs.key }}"
-          restore-keys : "${{ steps.extcache.outputs.key }}"
-
-      - name : "Install PHP"
-        uses : "shivammathur/setup-php@v2"
-        with :
-          php-version : "${{ matrix.php-version }}"
-          extensions : "${{ env.extensions }}"
-          tools : "composer:${{ env.composer-version }}"
-          coverage : "${{ env.coverage }}"
-
-      - name : "Setup problem matchers for PHP"
-        run : 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
-
-      - name : "Get Composer cache directory"
-        id : "composercache"
-        run : 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
-
-      - name : "Cache PHP dependencies"
-        uses : "actions/cache@v2"
-        with :
-          path : "${{ steps.composercache.outputs.dir }}"
-          key : "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
-          restore-keys : "${{ runner.os }}-composer-"
-
-      - name : "Install dependencies"
-        run : "${{ env.composer-install }}"
-
-      - name : "PHPStan"
-        run : "make phpstan"
-
-  php-tests :
-    name : "Tests for PHP code"
-    runs-on : "${{ matrix.operating-system }}"
-    needs : [ "php-qa", "php-static-analysis" ]
-
-    strategy :
-      fail-fast : false
-      matrix :
-        php-version : [ "8.0", "8.1" ]
-        operating-system : [ "ubuntu-latest" ]
-
-    steps :
-      - name : "Checkout"
-        uses : "actions/checkout@v2"
-
-      - name : "Setup MySQL"
-        uses : "mirromutth/mysql-action@v1.1"
-        with :
-          mysql version : "5.7"
-          mysql database : "testdb"
-          mysql root password : "root"
-
-      - name : "Setup PHP cache environment"
-        id : "extcache"
-        uses : "shivammathur/cache-extensions@v1"
-        with :
-          php-version : "${{ matrix.php-version }}"
-          extensions : "${{ env.extensions }}"
-          key : "${{ env.cache-version }}"
-
-      - name : "Cache PHP extensions"
-        uses : "actions/cache@v2"
-        with :
-          path : "${{ steps.extcache.outputs.dir }}"
-          key : "${{ steps.extcache.outputs.key }}"
-          restore-keys : "${{ steps.extcache.outputs.key }}"
-
-      - name : "Install PHP"
-        uses : "shivammathur/setup-php@v2"
-        with :
-          php-version : "${{ matrix.php-version }}"
-          extensions : "${{ env.extensions }}"
-          tools : "composer:${{ env.composer-version }}"
-          coverage : "${{ env.coverage }}"
-
-      - name : "Setup problem matchers for PHP"
-        run : 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
-
-      - name : "Get Composer cache directory"
-        id : "composercache"
-        run : 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
-
-      - name : "Cache PHP dependencies"
-        uses : "actions/cache@v2"
-        with :
-          path : "${{ steps.composercache.outputs.dir }}"
-          key : "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
-          restore-keys : "${{ runner.os }}-composer-"
-
-      - name : "Install dependencies"
-        run : "${{ env.composer-install }} ${{ matrix.composer-args }}"
-
-      - name : "Tests"
-        run : "make php_tests"
-
-      - name : "Upload test output"
-        if : ${{ failure() }}
-        uses : "actions/upload-artifact@v2"
-        with :
-          name : output
-          path : tests/**/output
-
-  php-tests-code-coverage :
-    name : "Tests for PHP code with code coverage"
-    runs-on : "${{ matrix.operating-system }}"
-    needs : [ "php-tests" ]
-
-    strategy :
-      matrix :
-        php-version : [ "8.1" ]
-        operating-system : [ "ubuntu-latest" ]
-      fail-fast : false
-
-    if : "github.event_name == 'push'"
-
-    steps :
-      - name : "Checkout"
-        uses : "actions/checkout@v2"
-
-      - name : "Setup MySQL"
-        uses : "mirromutth/mysql-action@v1.1"
-        with :
-          mysql version : "5.7"
-          mysql database : "testdb"
-          mysql root password : "root"
-
-      - name : "Setup PHP cache environment"
-        id : "extcache"
-        uses : "shivammathur/cache-extensions@v1"
-        with :
-          php-version : "${{ matrix.php-version }}"
-          extensions : "${{ env.extensions }}"
-          key : "${{ env.cache-version }}"
-
-      - name : "Cache PHP extensions"
-        uses : "actions/cache@v2"
-        with :
-          path : "${{ steps.extcache.outputs.dir }}"
-          key : "${{ steps.extcache.outputs.key }}"
-          restore-keys : "${{ steps.extcache.outputs.key }}"
-
-      - name : "Install PHP"
-        uses : "shivammathur/setup-php@v2"
-        with :
-          php-version : "${{ matrix.php-version }}"
-          extensions : "${{ env.extensions }}"
-          tools : "composer:${{ env.composer-version }}"
-          coverage : "pcov"
-
-      - name : "Setup problem matchers for PHP"
-        run : 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
-
-      - name : "Get Composer cache directory"
-        id : "composercache"
-        run : 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
-
-      - name : "Cache PHP dependencies"
-        uses : "actions/cache@v2"
-        with :
-          path : "${{ steps.composercache.outputs.dir }}"
-          key : "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
-          restore-keys : "${{ runner.os }}-composer-"
-
-      - name : "Install dependencies"
-        run : "${{ env.composer-install }} ${{ matrix.composer-args }}"
-
-      - name : "Tests"
-        run : "make php_coverage"
-
-      - name : "Coveralls.io"
-        env :
-          CI_NAME : github
-          CI : true
-          COVERALLS_REPO_TOKEN : "${{ secrets.GITHUB_TOKEN }}"
-        run : |
-          wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
-          php php-coveralls.phar --verbose --config tests/.coveralls.yml
-
-  build-python :
-    name : "Build Python distribution"
-    runs-on : "${{ matrix.operating-system }}"
-
-    strategy :
-      matrix :
-        python : [ "3.9" ]
-        operating-system : [ "ubuntu-latest" ]
-
-    steps :
-      - name : "Checkout"
-        uses : "actions/checkout@v2"
-
-      - name : "Set up Python ${{ matrix.python }}"
-        uses : "actions/setup-python@v1"
-        with :
-          python-version : ${{ matrix.python }}
-
-      - name : "Extract version"
-        uses : "battila7/get-version-action@v2"
-        id : "get_version"
-
-      - name : "Install dependencies"
-        run : |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name : "Install build dependencies"
-        run : "python -m pip install wheel --user"
-
-      - name : "Build a binary wheel and a source tarball"
-        run : "python setup.py sdist bdist_wheel"
-
-      - name : "Upload build result"
-        uses : "actions/upload-artifact@v1"
-        with :
-          name : python-dist
-          path : dist
-
-  python-qa :
-    name : "Quality assurance for Python code"
-    runs-on : "${{ matrix.operating-system }}"
-    needs : "build-python"
-
-    strategy :
-      matrix :
-        python : [ "3.9" ]
-        operating-system : [ "ubuntu-latest" ]
-
-    steps :
-      - name : "Checkout"
-        uses : "actions/checkout@v2"
-
-      - name : "Set up Python ${{ matrix.python }}"
-        uses : "actions/setup-python@v1"
-        with :
-          python-version : ${{ matrix.python }}
-
-      - name : "Install dependencies"
-        run : |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name : "Run code check"
-        run : "make py_qa"
-
-  python-tests :
-    name : "Tests for Python code"
-    runs-on : "${{ matrix.operating-system }}"
-    needs : [ "python-qa" ]
-
-    strategy :
-      matrix :
-        python : [ "3.9" ]
-        operating-system : [ "ubuntu-latest" ]
-
-    steps :
-      - name : "Checkout"
-        uses : "actions/checkout@v2"
-
-      - name : "Setup MySQL"
-        uses : "mirromutth/mysql-action@v1.1"
-        with :
-          mysql version : "5.7"
-          mysql database : "testdb"
-          mysql root password : "root"
-
-      - name : "Wait for MySQL"
-        run : |
-          while ! mysqladmin ping --host=127.0.0.1 --password=root --silent; do
-            sleep 1
-          done
-
-      - name : "Set up Python ${{ matrix.python }}"
-        uses : "actions/setup-python@v1"
-        with :
-          python-version : ${{ matrix.python }}
-
-      - name : "Install dependencies"
-        run : |
-          python -m pip install --upgrade pip
-          pip install mysqlclient
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name : "Run tests"
-        run : "make py_tests"
-
-  python-tests-code-coverage :
-    name : "Tests for Python code with code coverage"
-    runs-on : "${{ matrix.operating-system }}"
-    needs : [ "python-tests" ]
-
-    strategy :
-      matrix :
-        python : [ "3.9" ]
-        operating-system : [ "ubuntu-latest" ]
-
-    steps :
-      - name : "Checkout"
-        uses : "actions/checkout@v2"
-
-      - name : "Setup MySQL"
-        uses : "mirromutth/mysql-action@v1.1"
-        with :
-          mysql version : "5.7"
-          mysql database : "testdb"
-          mysql root password : "root"
-
-      - name : "Wait for MySQL"
-        run : |
-          while ! mysqladmin ping --host=127.0.0.1 --password=root --silent; do
-            sleep 1
-          done
-
-      - name : "Set up Python ${{ matrix.python }}"
-        uses : "actions/setup-python@v1"
-        with :
-          python-version : ${{ matrix.python }}
-
-      - name : "Install dependencies"
-        run : |
-          python -m pip install --upgrade pip
-          pip install mysqlclient
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name : "Install code coverage"
-        run : "pip install coverage"
-
-      - name : "Run code coverage"
-        run : "make py_coverage"
-
-      - name : "Report code coverage"
-        run : "coverage report"
-
-  test-install-python :
-    name : "Test installation of Python distribution"
-    runs-on : "${{ matrix.operating-system }}"
-    needs : "build-python"
-
-    strategy :
-      matrix :
-        python : [ "3.7", "3.8", "3.9", "3.10" ]
-        operating-system : [ "ubuntu-latest" ]
-        installable : [ "wheel", "sdist" ]
-
-    steps :
-      - name : "Download build result"
-        uses : "actions/download-artifact@v1"
-        with :
-          name : python-dist
-          path : dist
-
-      - name : "Set up Python ${{ matrix.python }}"
-        uses : "actions/setup-python@v1"
-        with :
-          python-version : ${{ matrix.python }}
-
-      - name : "Install wheel"
-        if : matrix.installable == 'wheel'
-        run : "pip install dist/fastybird_miniserver-*-py3-none-any.whl"
-
-      - name : "Install source tarball"
-        if : matrix.installable == 'sdist'
-        run : "pip install dist/fastybird-miniserver-*.tar.gz"
-
-  publish-on-testpypi :
-    name : "Publish Python distribution on Test PyPI"
-    runs-on : "${{ matrix.operating-system }}"
-    needs : [ "test-install-python", "python-tests" ]
-
-    strategy :
-      matrix :
-        operating-system : [ "ubuntu-latest" ]
-
-    if : github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-
-    steps :
-      - name : "Download build result"
-        uses : "actions/download-artifact@v1"
-        with :
-          name : python-dist
-          path : dist
-
-      - name : "Publish to index"
-        uses : "pypa/gh-action-pypi-publish@master"
-        with :
-          password : ${{ secrets.testpypi_password }}
-          repository_url : "https://test.pypi.org/legacy/"
-
-  publish-on-pypi :
-    name : "Publish Python distribution to PyPI"
-    runs-on : "${{ matrix.operating-system }}"
-    needs : "publish-on-testpypi"
-
-    strategy :
-      matrix :
-        operating-system : [ "ubuntu-latest" ]
-
-    if : github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-
-    steps :
-      - name : "Download build result"
-        uses : "actions/download-artifact@v1"
-        with :
-          name : python-dist
-          path : dist
-
-      - name : "Publish to index"
-        uses : "pypa/gh-action-pypi-publish@master"
-        with :
-          password : ${{ secrets.pypi_password }}
-
-  test-docker-image:
-    name : "Tests build docker image"
+  qa:
+    name: "Code quality assurance"
     runs-on: "${{ matrix.operating-system }}"
-    needs: ["php-qa", "php-static-analysis", "php-tests"]
 
     strategy:
+      fail-fast: false
       matrix:
-        operating-system: ["ubuntu-latest"]
+        php-version: [ "8.1" ]
+        node-version: [ "16" ]
+        operating-system: [ "ubuntu-latest" ]
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
-
-      - name: "Try to create docker image"
-        run: "docker build . --file Dockerfile"
-
-  build-docker-image:
-    name : "Build docker image"
-    runs-on: "${{ matrix.operating-system }}"
-    needs: "test-docker-image"
-
-    strategy:
-      matrix:
-        operating-system: ["ubuntu-latest"]
-
-    if: github.event_name == 'push'
-
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v2"
-
-      - name: "Build image"
-        run: 'docker build . --file Dockerfile --tag ${{ env.image-name }}'
-
-      - name: "Log into registry"
-        run: 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin'
-
-      - name: "Push image"
-        run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/${{ env.image-name }}
-
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-
-          docker tag ${{ env.image-name }} $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
-
-  build-debian-package:
-    name : "Build debian package"
-    runs-on: "${{ matrix.operating-system }}"
-    needs: ["php-qa", "php-static-analysis", "php-tests"]
-
-    strategy:
-      matrix:
-        php-version: ["7.4"]
-        operating-system: ["ubuntu-latest"]
-
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
 
       - name: "Setup PHP cache environment"
         id: "extcache"
@@ -606,7 +43,7 @@ jobs:
           key: "${{ env.cache-version }}"
 
       - name: "Cache PHP extensions"
-        uses: "actions/cache@v2"
+        uses: "actions/cache@v3"
         with:
           path: "${{ steps.extcache.outputs.dir }}"
           key: "${{ steps.extcache.outputs.key }}"
@@ -618,19 +55,19 @@ jobs:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.extensions }}"
           tools: "composer:${{ env.composer-version }}, cs2pr"
-          coverage: "${{ env.coverage }}"
+          coverage: "none"
 
       - name: "Setup problem matchers for PHP"
         run: 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
 
       - name: "Get Composer cache directory"
-        id: "composercache"
+        id: "composer-cache"
         run: 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
 
       - name: "Cache PHP dependencies"
-        uses: "actions/cache@v2"
+        uses: "actions/cache@v3"
         with:
-          path: "${{ steps.composercache.outputs.dir }}"
+          path: "${{ steps.composer-cache.outputs.dir }}"
           key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
           restore-keys: "${{ runner.os }}-composer-"
 
@@ -641,17 +78,454 @@ jobs:
         run: "${{ env.composer-install }}"
 
       - name: "Setup node"
-        uses: "actions/setup-node@v1"
+        uses: "actions/setup-node@v3"
         with:
-          node-version: "12"
+          node-version: "${{ matrix.node-version }}"
 
-      - name: "Build package"
-        run: "make build"
+      - name: "Get Yarn cache directory"
+        id: "yarn-cache-dir-path"
+        run: 'echo "::set-output name=dir::$(yarn cache dir)"'
 
-      - name: "Upload package to release"
-        uses: "svenstaro/upload-release-action@v2"
+      - name: "Cache JS dependencies"
+        uses: "actions/cache@v3"
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref }}
-          file: "./fb-miniserver.deb"
-          overwrite: true
+          path: "${{ steps.yarn-cache-dir-path.outputs.dir }}"
+          key: "${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}"
+          restore-keys: "${{ runner.os }}-node-modules-"
+
+      - name: "Install dependencies"
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: "yarn install"
+
+      - name: "Check Prettier with eslint"
+        run: "yarn pretty:check"
+
+      - name: "Coding Standard"
+        run: "make cs"
+
+  static-analysis:
+    name: "Code static analysis"
+    runs-on: "${{ matrix.operating-system }}"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [ "8.1" ]
+        node-version: [ "16" ]
+        operating-system: [ "ubuntu-latest" ]
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Setup PHP cache environment"
+        id: "extcache"
+        uses: "shivammathur/cache-extensions@v1"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          key: "${{ env.cache-version }}"
+
+      - name: "Cache PHP extensions"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.extcache.outputs.dir }}"
+          key: "${{ steps.extcache.outputs.key }}"
+          restore-keys: "${{ steps.extcache.outputs.key }}"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          tools: "composer:${{ env.composer-version }}"
+          coverage: "none"
+
+      - name: "Setup problem matchers for PHP"
+        run: 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
+
+      - name: "Get Composer cache directory"
+        id: "composer-cache"
+        run: 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
+
+      - name: "Cache PHP dependencies"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.composer-cache.outputs.dir }}"
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-composer-"
+
+      - name: "Install dependencies"
+        run: "${{ env.composer-install }}"
+
+      - name: "Setup node"
+        uses: "actions/setup-node@v3"
+        with:
+          node-version: "${{ matrix.node-version }}"
+
+      - name: "Get Yarn cache directory"
+        id: "yarn-cache-dir-path"
+        run: 'echo "::set-output name=dir::$(yarn cache dir)"'
+
+      - name: "Cache JS dependencies"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.yarn-cache-dir-path.outputs.dir }}"
+          key: "${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}"
+          restore-keys: "${{ runner.os }}-node-modules-"
+
+      - name: "Install dependencies"
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: "yarn install"
+
+      - name: "Initialize lerna"
+        run: "yarn bootstrap"
+
+      - name: "Link JS dependencies"
+        run: "yarn lerna link"
+
+      - name: "Build JS dependencies"
+        run: "yarn build"
+
+      - name: "Link JS dependencies"
+        run: "yarn link"
+
+      - name: "Build JS dependencies"
+        run: "yarn build"
+
+      - name: "PHPStan"
+        run: "make phpstan"
+
+      - name: "Check typescript"
+        run: "yarn types"
+
+  tests:
+    name: "Code tests"
+    runs-on: "${{ matrix.operating-system }}"
+    needs: [ "qa", "static-analysis" ]
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [ "8.1" ]
+        operating-system: [ "ubuntu-latest" ]
+        include:
+          - operating-system: "ubuntu-latest"
+            php-version: "8.1"
+            composer-flags: "--prefer-lowest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name : "Setup MySQL"
+        uses : "mirromutth/mysql-action@v1.1"
+        with :
+          mysql version : "5.7"
+          mysql database : "testdb"
+          mysql root password : "root"
+
+      - name: "Setup PHP cache environment"
+        id: "extcache"
+        uses: "shivammathur/cache-extensions@v1"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          key: "${{ env.cache-version }}"
+
+      - name: "Cache PHP extensions"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.extcache.outputs.dir }}"
+          key: "${{ steps.extcache.outputs.key }}"
+          restore-keys: "${{ steps.extcache.outputs.key }}"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          tools: "composer:${{ env.composer-version }}"
+          coverage: "none"
+
+      - name: "Setup problem matchers for PHP"
+        run: 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
+
+      - name: "Get Composer cache directory"
+        id: "composer-cache"
+        run: 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
+
+      - name: "Cache PHP dependencies"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.composer-cache.outputs.dir }}"
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-composer-"
+
+      - name: "Install dependencies"
+        run: "${{ env.composer-install }} ${{ matrix.composer-args }}"
+
+      - name: "Tests"
+        run: "make tests"
+
+      - name: "Upload logs"
+        uses: "actions/upload-artifact@v2"
+        with:
+          name: "Logs - Tests (${{ matrix.operating-system }}, ${{ matrix.php-version }}, ${{ matrix.composer-flags }})"
+          path: "var/log"
+          if-no-files-found: "ignore"
+
+  tests-code-coverage:
+    name: "Code tests with code coverage"
+    runs-on: "${{ matrix.operating-system }}"
+    needs: [ "tests" ]
+
+    strategy:
+      matrix:
+        php-version: [ "8.1" ]
+        operating-system: [ "ubuntu-latest" ]
+      fail-fast: false
+
+    if: "github.event_name == 'push'"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name : "Setup MySQL"
+        uses : "mirromutth/mysql-action@v1.1"
+        with :
+          mysql version : "5.7"
+          mysql database : "testdb"
+          mysql root password : "root"
+
+      - name: "Setup PHP cache environment"
+        id: "extcache"
+        uses: "shivammathur/cache-extensions@v1"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          key: "${{ env.cache-version }}"
+
+      - name: "Cache PHP extensions"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.extcache.outputs.dir }}"
+          key: "${{ steps.extcache.outputs.key }}"
+          restore-keys: "${{ steps.extcache.outputs.key }}"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          tools: "composer:${{ env.composer-version }}"
+          coverage: "pcov"
+
+      - name: "Setup problem matchers for PHP"
+        run: 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
+
+      - name: "Get Composer cache directory"
+        id: "composer-cache"
+        run: 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
+
+      - name: "Cache PHP dependencies"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.composer-cache.outputs.dir }}"
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-composer-"
+
+      - name: "Install dependencies"
+        run: "${{ env.composer-install }} ${{ matrix.composer-args }}"
+
+      - name: "Tests"
+        run: "make coverage-clover"
+
+      - name: "Coveralls.io"
+        env:
+          CI_NAME: github
+          CI: true
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+          php php-coveralls.phar --verbose --config tools/.coveralls.yml
+
+  tests-mutations:
+    name: "Test for mutants"
+    runs-on: "${{ matrix.operating-system }}"
+
+    strategy:
+      matrix:
+        php-version: [ "8.1" ]
+        operating-system: [ "ubuntu-latest" ]
+      fail-fast: false
+
+    if: "github.event_name == 'push'"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name : "Setup MySQL"
+        uses : "mirromutth/mysql-action@v1.1"
+        with :
+          mysql version : "5.7"
+          mysql database : "testdb"
+          mysql root password : "root"
+
+      - name: "Setup PHP cache environment"
+        id: "extcache"
+        uses: "shivammathur/cache-extensions@v1"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          key: "${{ env.cache-version }}"
+
+      - name: "Cache PHP extensions"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.extcache.outputs.dir }}"
+          key: "${{ steps.extcache.outputs.key }}"
+          restore-keys: "${{ steps.extcache.outputs.key }}"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          tools: "composer:${{ env.composer-version }}"
+          coverage: "pcov"
+
+      - name: "Setup problem matchers for PHP"
+        run: 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
+
+      - name: "Get Composer cache directory"
+        id: "composer-cache"
+        run: 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
+
+      - name: "Cache PHP dependencies"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.composer-cache.outputs.dir }}"
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-composer-"
+
+      - name: "Install dependencies"
+        run: "${{ env.composer-install }} ${{ matrix.composer-args }}"
+
+      - name: "Mutation tests"
+        run: "make mutations-tests"
+
+      - name: "Cache Infection data"
+        uses: "actions/cache@v3"
+        with:
+          path: "var/tools/Infection"
+          key: "php-infection-${{ runner.os }}"
+          restore-keys: "php-infection-${{ runner.os }}"
+
+      - name: "Mutation tests with report"
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        shell: "bash"
+        run: "make mutations-infection ARGS='--logger-github'"
+
+      - name: "Upload logs"
+        uses: "actions/upload-artifact@v2"
+        with:
+          name: "Logs - Mutations"
+          path: "var/coverage/mutations/infection.log"
+          if-no-files-found: "ignore"
+
+  lint:
+    name: "Code linting"
+    runs-on: "${{ matrix.operating-system }}"
+
+    strategy:
+      matrix:
+        php-version: [ "8.1" ]
+        node-version: [ "16" ]
+        operating-system: [ "ubuntu-latest" ]
+      fail-fast: false
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Setup PHP cache environment"
+        id: "extcache"
+        uses: "shivammathur/cache-extensions@v1"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          key: "${{ env.cache-version }}"
+
+      - name: "Cache PHP extensions"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.extcache.outputs.dir }}"
+          key: "${{ steps.extcache.outputs.key }}"
+          restore-keys: "${{ steps.extcache.outputs.key }}"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          tools: "composer:${{ env.composer-version }}"
+          coverage: "none"
+
+      - name: "Setup problem matchers for PHP"
+        run: 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
+
+      - name: "Get Composer cache directory"
+        id: "composer-cache"
+        run: 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
+
+      - name: "Cache PHP dependencies"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.composer-cache.outputs.dir }}"
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-composer-"
+
+      - name: "Install dependencies"
+        run: "${{ env.composer-install }}"
+
+      - name: "Setup node"
+        uses: "actions/setup-node@v3"
+        with:
+          node-version: "${{ matrix.node-version }}"
+
+      - name: "Get Yarn cache directory"
+        id: "yarn-cache-dir-path"
+        run: 'echo "::set-output name=dir::$(yarn cache dir)"'
+
+      - name: "Cache JS dependencies"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.yarn-cache-dir-path.outputs.dir }}"
+          key: "${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}"
+          restore-keys: "${{ runner.os }}-node-modules-"
+
+      - name: "Install dependencies"
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: "yarn install"
+
+      - name: "Initialize lerna"
+        run: "yarn bootstrap"
+
+      - name: "Link JS dependencies"
+        run: "yarn lerna link"
+
+      - name: "Build JS dependencies"
+        run: "yarn build"
+
+      - name: "Check js linter"
+        run: "yarn lint:js"
+
+      - name: "Check styles linter"
+        run: "yarn lint:styles"
+
+      - name: "Check php linter"
+        run: "make lint"

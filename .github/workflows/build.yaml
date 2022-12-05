@@ -1,0 +1,156 @@
+name: "application"
+
+on:
+  pull_request:
+    paths-ignore:
+      - ".docs/**"
+  push:
+    branches:
+      - "main"
+    tags:
+      - v*
+
+env:
+  extensions: "json, intl"
+  cache-version: "1"
+  composer-version: "v2"
+  composer-install: "composer update --no-interaction --no-progress --no-suggest --prefer-dist --prefer-stable"
+  image-name: "miniserver"
+
+jobs:
+  test-docker-image:
+    name : "Tests build docker image"
+    runs-on: "${{ matrix.operating-system }}"
+
+    strategy:
+      matrix:
+        operating-system: ["ubuntu-latest"]
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Try to create docker image"
+        run: "docker build . --file Dockerfile"
+
+  build-docker-image:
+    name : "Build docker image"
+    runs-on: "${{ matrix.operating-system }}"
+    needs: [ "test-docker-image" ]
+
+    strategy:
+      matrix:
+        operating-system: ["ubuntu-latest"]
+
+    if: github.event_name == 'push'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Build image"
+        run: 'docker build . --file Dockerfile --tag ${{ env.image-name }}'
+
+      - name: "Log into registry"
+        run: 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin'
+
+      - name: "Push image"
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/${{ env.image-name }}
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "main" ] && VERSION=latest
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker tag ${{ env.image-name }} $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+  build-debian-package:
+    name : "Build debian package"
+    runs-on: "${{ matrix.operating-system }}"
+
+    strategy:
+      matrix:
+        php-version: ["8.1"]
+        node-version: [ "16" ]
+        operating-system: ["ubuntu-latest"]
+
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Setup PHP cache environment"
+        id: "extcache"
+        uses: "shivammathur/cache-extensions@v1"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          key: "${{ env.cache-version }}"
+
+      - name: "Cache PHP extensions"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.extcache.outputs.dir }}"
+          key: "${{ steps.extcache.outputs.key }}"
+          restore-keys: "${{ steps.extcache.outputs.key }}"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.extensions }}"
+          tools: "composer:${{ env.composer-version }}, cs2pr"
+          coverage: "none"
+
+      - name: "Setup problem matchers for PHP"
+        run: 'echo "::add-matcher::${{ runner.tool_cache }}/php.json"'
+
+      - name: "Get Composer cache directory"
+        id: "composer-cache"
+        run: 'echo "::set-output name=dir::$(composer config cache-files-dir)"'
+
+      - name: "Cache PHP dependencies"
+        uses: "actions/cache@v3"
+        with:
+          path: "${{ steps.composer-cache.outputs.dir }}"
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-composer-"
+
+      - name: "Validate Composer"
+        run: "composer validate"
+
+      - name: "Install dependencies"
+        run: "${{ env.composer-install }}"
+
+      - name: "Setup node"
+        uses: "actions/setup-node@v3"
+        with:
+          node-version: "${{ matrix.node-version }}"
+
+      - name: "Build package"
+        run: "make build"
+
+      - name: "Upload package to release"
+        uses: "svenstaro/upload-release-action@v2"
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: "./fb-miniserver.deb"
+          overwrite: true

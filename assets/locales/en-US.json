@@ -1,0 +1,22 @@
+{
+	"application": {
+		"menu": {
+			"root": "MiniServer",
+			"dashboard": "Dashboard",
+			"devices": "Devices",
+			"connectors": "Connectors",
+			"triggers": "Triggers",
+			"administration": "Administration",
+			"users": "Users",
+			"access": "Access rights",
+			"roles": "Roles",
+			"permissions": "Permissions",
+			"user": "Your account"
+		},
+		"userMenu": {
+			"accountSettings": "Account settings",
+			"passwordChange": "Password change",
+			"signOut": "Sign out"
+		}
+	}
+}

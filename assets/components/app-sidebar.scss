@@ -1,0 +1,36 @@
+@import '@fastybird/web-ui-library/src/assets/variables/colors';
+@import '@fastybird/web-ui-library/src/assets/variables/layout';
+@import '@fastybird/web-ui-library/src/assets/variables/screen';
+@import '@fastybird/web-ui-library/src/assets/mixins/utilities';
+
+.fb-app-component-application-sidebar {
+	&__logo {
+		text-align: center;
+		padding: $padding-sm 0;
+		height: 5rem;
+		display: block;
+
+		@media (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
+			padding: 0.875rem 0;
+		}
+
+		> svg {
+			display: inline-block;
+			width: auto;
+			height: 3rem;
+			fill: $white;
+		}
+	}
+
+	&__user-navigation {
+		@media (min-width: $screen-sm-min) {
+			display: none;
+		}
+	}
+
+	&__user-menu {
+		@media (max-width: $screen-xs-max) {
+			display: none;
+		}
+	}
+}

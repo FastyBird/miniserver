@@ -1,59 +1,124 @@
-.PHONY: php_qa php_lint php_cs php_csf phpstan php_tests php_coverage py_qa py_tests py_coverage
+_: list
 
-all:
-	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$' | xargs
+# Config
 
-vendor: composer.json composer.lock
-	composer install
+PHPCS_CONFIG=tools/phpcs.xml
+PHPSTAN_SRC_CONFIG=tools/phpstan.src.neon
+PHPSTAN_TESTS_CONFIG=tools/phpstan.tests.neon
+PHPUNIT_CONFIG=tools/phpunit.xml
+INFECTION_CONFIG=tools/infection.json
 
-php_qa: php_lint phpstan php_cs
+# QA
 
-php_lint: vendor
-	vendor/bin/linter src tests
+qa: ## Check code quality - coding style and static analysis
+	make cs & make phpstan
 
-php_cs: vendor
-	vendor/bin/codesniffer src tests
+cs: ## Check PHP files coding style
+	mkdir -p var/tools/PHP_CodeSniffer
+	$(PRE_PHP) "vendor/bin/phpcs" src tests --standard=$(PHPCS_CONFIG) --parallel=$(LOGICAL_CORES) $(ARGS)
 
-php_csf: vendor
-	vendor/bin/codefixer src tests
+csf: ## Fix PHP files coding style
+	mkdir -p var/tools/PHP_CodeSniffer
+	$(PRE_PHP) "vendor/bin/phpcbf" src tests --standard=$(PHPCS_CONFIG) --parallel=$(LOGICAL_CORES) $(ARGS)
 
-phpstan: vendor
-	vendor/bin/phpstan analyse -c phpstan.neon src
+lint:
+	$(PRE_PHP) "vendor/bin/parallel-lint" src tests --exclude .git --exclude vendor
 
-php_tests: vendor
-	vendor/bin/tester -s -p php --colors 1 -C tests/cases
+phpstan: ## Analyse code with PHPStan
+	mkdir -p var/tools
+	$(PRE_PHP) "vendor/bin/phpstan" analyse src -c $(PHPSTAN_SRC_CONFIG) $(ARGS)
+	$(PRE_PHP) "vendor/bin/phpstan" analyse tests/cases -c $(PHPSTAN_TESTS_CONFIG) $(ARGS)
 
-php_coverage: vendor
-	vendor/bin/tester -s -p php --colors 1 -C --coverage ./coverage.xml --coverage-src ./src tests/cases
+# Tests
 
-pylint:
-	python -m pip install pylint
+.PHONY: tests
+tests: ## Run all tests
+	$(PRE_PHP) $(PHPUNIT_COMMAND) $(ARGS)
 
-mypy:
-	python -m pip install mypy
+coverage-clover: ## Generate code coverage in XML format
+	$(PRE_PHP) $(PHPUNIT_COVERAGE) --coverage-clover=var/coverage/clover.xml $(ARGS)
 
-black:
-	python -m pip install black
+coverage-html: ## Generate code coverage in HTML format
+	$(PRE_PHP) $(PHPUNIT_COVERAGE) --coverage-html=var/coverage/html $(ARGS)
 
-isort:
-	python -m pip install isort
+mutations: ## Check code for mutants
+	make mutations-tests
+	make mutations-infection
 
-py_qa: py_cs py_types py_isort py_black
+mutations-tests:
+	mkdir -p var/coverage
+	$(PRE_PHP) $(PHPUNIT_COVERAGE) --coverage-xml=var/coverage/xml --log-junit=var/coverage/junit.xml
 
-py_cs: pylint
-	pylint **/*.py
+mutations-infection:
+	$(PRE_PHP) vendor/bin/infection \
+		--configuration=$(INFECTION_CONFIG) \
+		--threads=$(LOGICAL_CORES) \
+		--coverage=../var/coverage \
+		--skip-initial-tests \
+		$(ARGS)
 
-py_types: mypy
-	mypy **/*.py
+# Docker
 
-py_isort: isort
-	isort **/*.py --check
+##@ [Docker] Build / Infrastructure
+.docker/.env:
+	cp $(DOCKER_COMPOSE_DIR)/.env.example $(DOCKER_COMPOSE_DIR)/.env
 
-py_black: black
-	black **/*.py --check
+.PHONY: docker-clean
+docker-clean: ## Remove the .env file for docker
+	rm -f $(DOCKER_COMPOSE_DIR)/.env
 
-py_tests:
-	python -m unittest
+.PHONY: docker-init
+docker-init: .docker/.env ## Make sure the .env file exists for docker
 
-py_coverage:
-	coverage run --source=fastybird_miniserver -m unittest
+## Build all docker images from scratch, without cache etc.
+## Build a specific image by providing the service name via: make docker-build-from-scratch CONTAINER=<service>
+.PHONY: docker-build-from-scratch
+docker-build-from-scratch: docker-init
+	docker-compose rm -fs $(CONTAINER) && \
+	docker-compose build --pull --no-cache --parallel $(CONTAINER) && \
+	docker-compose up -d --force-recreate $(CONTAINER)
+
+## Run the infrastructure tests for the docker setup
+.PHONY: docker-test
+docker-test: docker-init docker-up
+	sh $(DOCKER_COMPOSE_DIR)/docker-test.sh
+
+## Build all docker images.
+## Build a specific image by providing the service name via: make docker-build CONTAINER=<service>
+.PHONY: docker-build
+docker-build: docker-init
+	docker-compose build --parallel $(CONTAINER) && \
+	docker-compose up -d --force-recreate $(CONTAINER)
+
+## Remove unused docker resources via 'docker system prune -a -f --volumes'
+.PHONY: docker-prune
+docker-prune:
+	docker system prune -a -f --volumes
+
+## Start all docker containers.
+## To only start one container, use CONTAINER=<service>
+.PHONY: docker-up
+docker-up: docker-init
+	docker-compose up -d $(CONTAINER)
+
+## Stop all docker containers.
+## To only stop one container, use CONTAINER=<service>
+.PHONY: docker-down
+docker-down: docker-init
+	docker-compose down $(CONTAINER)
+
+# Utilities
+
+.SILENT: $(shell grep -h -E '^[a-zA-Z_-]+:.*?$$' $(MAKEFILE_LIST) | sort -u | awk 'BEGIN {FS = ":.*?"}; {printf "%s ", $$1}')
+
+LIST_PAD=20
+list:
+	awk 'BEGIN {FS = ":.*##"; printf "Usage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"}'
+	grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort -u | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-$(LIST_PAD)s\033[0m %s\n", $$1, $$2}'
+
+PRE_PHP=XDEBUG_MODE=off
+
+PHPUNIT_COMMAND="vendor/bin/paratest" -c $(PHPUNIT_CONFIG) --runner=WrapperRunner -p$(LOGICAL_CORES)
+PHPUNIT_COVERAGE=php -d pcov.enabled=1 -d pcov.directory=./src $(PHPUNIT_COMMAND)
+
+LOGICAL_CORES=$(shell nproc || sysctl -n hw.logicalcpu || echo 4)

@@ -1,33 +1,35 @@
-# FastyBird Iot MiniServer
+![FastyBird MiniServer](docs/assets/fastybird_miniserver_readme.png)
 
-[![Build Status](https://badgen.net/github/checks/FastyBird/miniserver/master?cache=300&style=flat-square)](https://github.com/FastyBird/miniserver/actions)
-[![Licence](https://badgen.net/github/license/FastyBird/miniserver?cache=300&style=flat-square)](https://github.com/FastyBird/miniserver/blob/master/LICENSE.md)
-[![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/miniserver?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/miniserver)
+<h1 align="center">FastyBird MiniServer Edition</h1>
 
-![PHP](https://badgen.net/packagist/php/FastyBird/miniserver?cache=300&style=flat-square)
-[![PHP latest stable](https://badgen.net/packagist/v/FastyBird/miniserver/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/miniserver)
-[![PHP downloads total](https://badgen.net/packagist/dt/FastyBird/miniserver?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/miniserver)
-[![PHPStan](https://img.shields.io/badge/phpstan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
-
-![Python](https://badgen.net/pypi/python/fastybird-miniserver?cache=300&style=flat-square)
-[![Python latest stable](https://badgen.net/pypi/v/fastybird-miniserver?cache=300&style=flat-square)](https://pypi.org/project/fastybird-miniserver/)
-[![Python downloads month](https://img.shields.io/pypi/dm/fastybird-miniserver?cache=300&style=flat-square)](https://pypi.org/project/fastybird-miniserver/)
-[![Black](https://img.shields.io/badge/black-enabled-brightgreen.svg?style=flat-square)](https://github.com/psf/black)
-[![MyPy](https://img.shields.io/badge/mypy-enabled-brightgreen.svg?style=flat-square)](http://mypy-lang.org)
+<p align="center">This is FastyBird MiniServer Edition repository for starting new projects.</p>
 
 ## What is FastyBird IoT MiniServer?
 
-MiniServer is part of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer application.
+MiniServer is standalone application based on [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) software.
+The highest quality of code and strong testing culture, make it best solution for build smart controller application.
 
-[FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer is an Apache2 licensed distributed application, developed in PHP with [Nette framework](https://nette.org).
+[FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) MiniServer is an Apache2 licensed distributed application,
+developed on top of the [Nette framework](https://nette.org) and [Symfony framework](https://symfony.com).
+
+### Features:
+
+- Devices & connectors management
+- User & access control management
+- [{JSON:API}](https://jsonapi.org/) strong api for application management
+- Responsive user interface
+- Third party devices integration like [Shelly](https://www.shelly.cloud/en-cz), [Tuya](https://www.tuya.com) and other
+- Full HomeKit with HAP protocol integration
 
 ## Requirements
 
-[FastyBird](https://www.fastybird.com) MiniServer is tested against [PHP](https://www.php.net) 7.4, [Redis](https://redis.io) 6.2.2 in-memory data store, [MySQL](https://www.mysql.com) relational database management system, [ReactPHP http](https://github.com/reactphp/http) 0.8 event-driven, streaming plaintext HTTP server and [Nette framework](https://nette.org/en/) 3.0 PHP framework for real programmers.
+[FastyBird](https://www.fastybird.com) MiniServer is tested against [PHP](https://www.php.net) 8.1, [Redis](https://redis.io) 6.2 in-memory data store, [MySQL](https://www.mysql.com) relational database management system, [ReactPHP http](https://github.com/reactphp/http) 0.8 event-driven, streaming plaintext HTTP server and [Nette framework](https://nette.org/en/) 3.0 PHP framework for real programmers.
 
 ## Getting started
 
 > **NOTE:** If you don't want to install it manually, try [docker image](#install-with-docker)
+
+### Traditional installation
 
 The best way to install **fastybird/miniserver** is using [Composer](https://getcomposer.org/). If you don't have Composer yet, [download it](https://getcomposer.org/download/) following the instructions.
 Then use command:
@@ -42,11 +44,11 @@ cd path/to/install
 
 Everything required will be then installed in the provided folder `path/to/install`
 
-### Running app
+#### Running app
 
 You have two options how to run this app
 
-#### Running an app via ReactPHP http server
+##### Running an app via ReactPHP http server
 
 All what you need is just run one console command:
 
@@ -56,13 +58,13 @@ vendor/bin/fb-console fb:web-server:start
 
 This command will start build in web server which is listening for incoming http api request messages from clients. 
 
-#### Running an app via Apache or Nginx
+##### Running an app via Apache or Nginx
 
-You have to configure you web server running on [Apache](http://www.apache.org) or [Nginx](https://www.nginx.com) to server content from `www` folder.
+You have to configure you web server running on [Apache](http://www.apache.org) or [Nginx](https://www.nginx.com) to server content from `public` folder.
 
 In this folder is main entry point for accessing application api.
 
-## Install with docker
+### Install with docker
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/fastybird/miniserver?style=flat-square)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/fastybird/miniserver?style=flat-square)
@@ -70,13 +72,13 @@ In this folder is main entry point for accessing application api.
 
 Docker image: [fastybird/miniserver](https://hub.docker.com/r/fastybird/miniserver/)
 
-### Use docker hub image
+#### Use docker hub image
 
 ```bash
 docker run -d -it --name devices fastybird/miniserver:latest
 ```
 
-### Generate local image
+#### Generate local image
 
 ```bash
 docker build --tag=miniserver .
@@ -85,33 +87,6 @@ docker build --tag=miniserver .
 ```sh
 docker run -d -it --name miniserver miniserver
 ```
-
-## Configuration
-
-This application is preconfigured for default connections, but your infrastructure could be different.
-
-Configuration could be made via environment variables:
-
-| Environment Variable | Description |
-| ---------------------- | ---------------------------- |
-| `FB_APP_PARAMETER__DATABASE_VERSION=5.7` | MySQL server version |
-| `FB_APP_PARAMETER__DATABASE_HOST=127.0.0.1` | MySQL host address |
-| `FB_APP_PARAMETER__DATABASE_PORT=3306` | MySQL access port |
-| `FB_APP_PARAMETER__DATABASE_DBNAME=fb_miniserver` | MySQL database name |
-| `FB_APP_PARAMETER__DATABASE_USERNAME=miniserver` | Username |
-| `FB_APP_PARAMETER__DATABASE_PASSWORD=miniserver` | Password |
-| | |
-| `FB_APP_PARAMETER__REDIS_HOST=127.0.0.1` | Redis server host address |
-| `FB_APP_PARAMETER__REDIS_PORT=6379` | Redis server access port |
-| `FB_APP_PARAMETER__REDIS_USERNAME=` | Redis server username |
-| `FB_APP_PARAMETER__REDIS_PASSWORD=` | Redis server password |
-| | |
-| `FB_APP_PARAMETER__SERVER_ADDRESS=0.0.0.0` | HTTP server host address |
-| `FB_APP_PARAMETER__SERVER_PORT=8000` | HTTP server access port |
-| | |
-| `FB_APP_PARAMETER__SECURITY_SIGNATURE=` | Security token signature string |
-
-> **NOTE:** In case you are not using docker image, or you are not able to configure environment variables, you could create configuration file `./config/local.neon` and put your settings here.
 
 ## Initialization
 
