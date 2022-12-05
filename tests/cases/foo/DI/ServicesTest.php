@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\MiniServer\Tests\Cases\unit\DI;
+namespace FastyBird\MiniServer\Tests\Cases\fobar\DI;
 
 use FastyBird\Library\Bootstrap as LibraryBootstrap;
 use FastyBird\Library\Bootstrap\Exceptions as BootstrapExceptions;
 use FastyBird\MiniServer\Commands;
-use FastyBird\MiniServer\Tests\Cases\unit\DbTestCase;
+use FastyBird\MiniServer\Tests\Cases\fobar\DbTestCase;
 use Nette;
 
 final class ServicesTest extends DbTestCase
