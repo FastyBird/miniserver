@@ -1,24 +1,20 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\Cases;
+namespace FastyBird\MiniServer\Tests\Cases\Unit\DI;
 
-use FastyBird\Bootstrap\Boot;
+use FastyBird\Library\Bootstrap as LibraryBootstrap;
 use FastyBird\MiniServer\Commands;
-use FastyBird\MiniServer\Subscribers;
-use Ninjify\Nunjuck\TestCase\BaseTestCase;
-use Tester\Assert;
-
-require_once __DIR__ . '/../../../bootstrap.php';
+use FastyBird\MiniServer\Tests\Cases\Unit\DbTestCase;
 
 /**
  * @testCase
  */
-final class ServicesTest extends BaseTestCase
+final class ServicesTest extends DbTestCase
 {
 
 	public function testServicesRegistration(): void
 	{
-		$configurator = Boot\Bootstrap::boot();
+		$configurator = LibraryBootstrap\Boot\Bootstrap::boot();
 		$configurator->addParameters([
 			'database' => [
 				'driver' => 'pdo_sqlite',
@@ -27,12 +23,7 @@ final class ServicesTest extends BaseTestCase
 
 		$container = $configurator->createContainer();
 
-		Assert::notNull($container->getByType(Commands\InitializeCommand::class));
-
-		Assert::notNull($container->getByType(Subscribers\EntitiesSubscriber::class));
+		self::assertNotNull($container->getByType(Commands\Initialize::class));
 	}
 
 }
-
-$test_case = new ServicesTest();
-$test_case->run();

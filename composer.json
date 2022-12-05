@@ -53,11 +53,10 @@
       "FastyBird\\MiniServer\\" : "src/"
     }
   },
-  "autoload-dev" : {
-    "psr-4" : {
-      "Tests\\Cases\\" : "tests/cases",
-      "Tests\\Fixtures\\" : "tests/fixtures",
-      "Tests\\Tools\\" : "tests/tools"
+  "autoload-dev": {
+    "psr-4": {
+      "FastyBird\\MiniServer\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+      "FastyBird\\MiniServer\\Tests\\Tools\\": "tests/tools"
     }
   },
   "config" : {

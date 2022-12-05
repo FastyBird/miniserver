@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * IException.php
+ * Runtime.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -15,9 +15,9 @@
 
 namespace FastyBird\MiniServer\Exceptions;
 
-use Throwable;
+use RuntimeException as PHPRuntimeException;
 
-interface IException extends Throwable
+class Runtime extends PHPRuntimeException implements Exception
 {
 
 }

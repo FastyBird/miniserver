@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * RuntimeException.php
+ * InvalidArgument.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,14 +10,14 @@
  * @subpackage     Exceptions
  * @since          0.1.0
  *
- * @date           14.12.20
+ * @date           23.02.20
  */
 
 namespace FastyBird\MiniServer\Exceptions;
 
-use RuntimeException as PHPRuntimeException;
+use InvalidArgumentException as PHPInvalidArgumentException;
 
-class RuntimeException extends PHPRuntimeException implements IException
+class InvalidArgument extends PHPInvalidArgumentException implements Exception
 {
 
 }

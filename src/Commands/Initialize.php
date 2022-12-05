@@ -15,12 +15,15 @@
 
 namespace FastyBird\MiniServer\Commands;
 
+use Doctrine\DBAL;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
-use FastyBird\AccountsModule\Models as AccountsModuleModels;
-use FastyBird\AccountsModule\Queries as AccountsModuleQueries;
+use Exception;
 use FastyBird\MiniServer\Exceptions;
+use FastyBird\Module\Accounts\Models as AccountsModuleModels;
+use FastyBird\Module\Accounts\Queries as AccountsModuleQueries;
 use FastyBird\SimpleAuth;
+use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Monolog;
 use Nette\Utils;
 use RuntimeException;
@@ -29,6 +32,10 @@ use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
 use Symfony\Component\Console\Style;
 use Throwable;
+use function assert;
+use function count;
+use function in_array;
+use function is_bool;
 
 /**
  * Application initialize command
@@ -38,56 +45,41 @@ use Throwable;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class InitializeCommand extends Console\Command\Command
+class Initialize extends Console\Command\Command
 {
 
-	/** @var AccountsModuleModels\Accounts\IAccountRepository */
-	private AccountsModuleModels\Accounts\IAccountRepository $accountRepository;
-
-	/** @var AccountsModuleModels\Roles\IRoleRepository */
-	private AccountsModuleModels\Roles\IRoleRepository $roleRepository;
-
-	/** @var AccountsModuleModels\Roles\IRolesManager */
-	private AccountsModuleModels\Roles\IRolesManager $rolesManager;
-
-	/** @var Persistence\ManagerRegistry */
-	private Persistence\ManagerRegistry $managerRegistry;
-
-	/** @var Monolog\Logger */
-	private Monolog\Logger $logger;
+	public const NAME = 'fb:miniserver:initialize';
 
 	public function __construct(
-		AccountsModuleModels\Accounts\IAccountRepository $accountRepository,
-		AccountsModuleModels\Roles\IRoleRepository $roleRepository,
-		AccountsModuleModels\Roles\IRolesManager $rolesManager,
-		Persistence\ManagerRegistry $managerRegistry,
-		Monolog\Logger $logger,
-		?string $name = null
-	) {
-		$this->accountRepository = $accountRepository;
-		$this->roleRepository = $roleRepository;
-		$this->rolesManager = $rolesManager;
-
-		$this->managerRegistry = $managerRegistry;
-
-		$this->logger = $logger;
-
+		private readonly AccountsModuleModels\Accounts\AccountsRepository $accountsRepository,
+		private readonly AccountsModuleModels\Roles\RolesRepository $rolesRepository,
+		private readonly AccountsModuleModels\Roles\RolesManager $rolesManager,
+		private readonly Persistence\ManagerRegistry $managerRegistry,
+		private readonly Monolog\Logger $logger,
+		string|null $name = null,
+	)
+	{
 		parent::__construct($name);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @throws Console\Exception\InvalidArgumentException
 	 */
 	protected function configure(): void
 	{
 		$this
-			->setName('fb:initialize')
+			->setName(self::NAME)
 			->addOption('noconfirm', null, Input\InputOption::VALUE_NONE, 'do not ask for any confirmation')
 			->setDescription('Initialize application.');
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @throws Console\Exception\ExceptionInterface
+	 * @throws DBAL\Exception
+	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
+	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws Exception
+	 * @throws Exceptions\Runtime
 	 */
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output)
 	{
@@ -99,24 +91,26 @@ class InitializeCommand extends Console\Command\Command
 
 		$io = new Style\SymfonyStyle($input, $output);
 
-		$io->title('FB miniserver - initialization');
+		$io->title('FB MiniServer - initialization');
 
-		$io->note('This action will create or update miniserver database structure, create initial data and initialize administrator account.');
+		$io->note(
+			'This action will create or update MiniServer database structure, create initial data and initialize administrator account.',
+		);
 
-		/** @var bool $continue */
-		$continue = $io->ask('Would you like to continue?', 'n', function ($answer): bool {
+		$continue = $io->ask('Would you like to continue?', 'n', static function ($answer): bool {
 			if (!in_array($answer, ['y', 'Y', 'n', 'N'], true)) {
 				throw new RuntimeException('You must type Y or N');
 			}
 
 			return in_array($answer, ['y', 'Y'], true);
 		});
+		assert(is_bool($continue));
 
 		if (!$continue) {
 			return 0;
 		}
 
-		$io->section('Preparing miniserver database');
+		$io->section('Preparing MiniServer database');
 
 		$databaseCmd = $symfonyApp->find('orm:schema-tool:update');
 
@@ -162,10 +156,10 @@ class InitializeCommand extends Console\Command\Command
 
 			// Roles initialization
 			foreach ($allRoles as $roleName) {
-				$findRole = new AccountsModuleQueries\FindRolesQuery();
+				$findRole = new AccountsModuleQueries\FindRoles();
 				$findRole->byName($roleName);
 
-				$role = $this->roleRepository->findOneBy($findRole);
+				$role = $this->rolesRepository->findOneBy($findRole);
 
 				if ($role === null) {
 					$create = new Utils\ArrayHash();
@@ -199,22 +193,22 @@ class InitializeCommand extends Console\Command\Command
 
 		$io->section('Checking for administrator account');
 
-		$findRole = new AccountsModuleQueries\FindRolesQuery();
+		$findRole = new AccountsModuleQueries\FindRoles();
 		$findRole->byName(SimpleAuth\Constants::ROLE_ADMINISTRATOR);
 
-		$administratorRole = $this->roleRepository->findOneBy($findRole);
+		$administratorRole = $this->rolesRepository->findOneBy($findRole);
 
 		if ($administratorRole !== null) {
-			$findAccounts = new AccountsModuleQueries\FindAccountsQuery();
+			$findAccounts = new AccountsModuleQueries\FindAccounts();
 			$findAccounts->inRole($administratorRole);
 
-			$accounts = $this->accountRepository->findAllBy($findAccounts);
+			$accounts = $this->accountsRepository->findAllBy($findAccounts);
 
 			if (count($accounts) === 0) {
 				$accountCmd = $symfonyApp->find('fb:accounts-module:create:account');
 
 				$result = $accountCmd->run(new Input\ArrayInput([
-					'role'       => SimpleAuth\Constants::ROLE_ADMINISTRATOR,
+					'role' => SimpleAuth\Constants::ROLE_ADMINISTRATOR,
 					'--injected' => true,
 				]), $output);
 
@@ -234,13 +228,13 @@ class InitializeCommand extends Console\Command\Command
 
 		$io->newLine(3);
 
-		$io->success('This miniserver has been successfully initialized and can be now started.');
+		$io->success('This MiniServer has been successfully initialized and can be now started.');
 
 		return 0;
 	}
 
 	/**
-	 * @return Connection
+	 * @throws Exceptions\Runtime
 	 */
 	protected function getOrmConnection(): Connection
 	{
@@ -250,7 +244,7 @@ class InitializeCommand extends Console\Command\Command
 			return $connection;
 		}
 
-		throw new Exceptions\RuntimeException('Entity manager could not be loaded');
+		throw new Exceptions\Runtime('Entity manager could not be loaded');
 	}
 
 }

@@ -1,51 +1,71 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\Cases;
+namespace FastyBird\MiniServer\Tests\Cases\Unit;
 
 use DateTimeImmutable;
 use Doctrine\DBAL;
 use Doctrine\ORM;
-use FastyBird\Bootstrap\Boot;
 use FastyBird\DateTimeFactory;
-use InvalidArgumentException;
-use Mockery;
-use Nette\DI;
+use FastyBird\Library\Bootstrap\Boot as BootstrapBoot;
+use FastyBird\MiniServer\DI;
+use FastyBird\MiniServer\Exceptions;
+use Nette;
 use Nettrine\ORM as NettrineORM;
-use Ninjify\Nunjuck\TestCase\BaseMockeryTestCase;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use function array_reverse;
+use function assert;
+use function constant;
+use function defined;
+use function fclose;
+use function feof;
+use function fgets;
+use function fopen;
+use function in_array;
+use function md5;
+use function rtrim;
+use function set_time_limit;
+use function sprintf;
+use function strlen;
+use function substr;
+use function time;
+use function trim;
 
-abstract class DbTestCase extends BaseMockeryTestCase
+abstract class DbTestCase extends TestCase
 {
 
-	/** @var DI\Container|null */
-	private $container;
+	private Nette\DI\Container|null $container = null;
 
-	/** @var bool */
-	private $isDatabaseSetUp = false;
+	private bool $isDatabaseSetUp = false;
 
-	/** @var string[] */
-	private $sqlFiles = [];
+	/** @var Array<string> */
+	private array $sqlFiles = [];
 
+	/** @var Array<string> */
+	private array $neonFiles = [];
+
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 */
 	public function setUp(): void
 	{
 		$this->registerDatabaseSchemaFile(__DIR__ . '/../../sql/dummy.data.sql');
 
 		parent::setUp();
 
-		$dateTimeFactory = Mockery::mock(DateTimeFactory\DateTimeFactory::class);
+		$dateTimeFactory = $this->createMock(DateTimeFactory\Factory::class);
 		$dateTimeFactory
-			->shouldReceive('getNow')
-			->andReturn(new DateTimeImmutable('2020-04-01T12:00:00+00:00'));
+			->method('getNow')
+			->willReturn(new DateTimeImmutable('2020-04-01T12:00:00+00:00'));
 
 		$this->mockContainerService(
-			DateTimeFactory\DateTimeFactory::class,
-			$dateTimeFactory
+			DateTimeFactory\Factory::class,
+			$dateTimeFactory,
 		);
 	}
 
-	/**
-	 * @param string $file
-	 */
 	protected function registerDatabaseSchemaFile(string $file): void
 	{
 		if (!in_array($file, $this->sqlFiles, true)) {
@@ -54,15 +74,15 @@ abstract class DbTestCase extends BaseMockeryTestCase
 	}
 
 	/**
-	 * @param string $serviceType
-	 * @param object $serviceMock
-	 *
-	 * @return void
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
 	 */
 	protected function mockContainerService(
 		string $serviceType,
-		object $serviceMock
-	): void {
+		object $serviceMock,
+	): void
+	{
 		$container = $this->getContainer();
 		$foundServiceNames = $container->findByType($serviceType);
 
@@ -72,9 +92,11 @@ abstract class DbTestCase extends BaseMockeryTestCase
 	}
 
 	/**
-	 * @return DI\Container
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
 	 */
-	protected function getContainer(): DI\Container
+	protected function getContainer(): Nette\DI\Container
 	{
 		if ($this->container === null) {
 			$this->container = $this->createContainer();
@@ -84,29 +106,49 @@ abstract class DbTestCase extends BaseMockeryTestCase
 	}
 
 	/**
-	 * @return DI\Container
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
 	 */
-	private function createContainer(): DI\Container
+	private function createContainer(): Nette\DI\Container
 	{
-		$configurator = Boot\Bootstrap::boot();
+		$rootDir = __DIR__ . '/../..';
+		$vendorDir = defined('FB_VENDOR_DIR') ? constant('FB_VENDOR_DIR') : $rootDir . '/../vendor';
 
-		$configurator->addConfig(__DIR__ . '/../../common.neon');
+		$config = new BootstrapBoot\Configurator();
+		$config->setTempDirectory(FB_TEMP_DIR);
 
-		$this->container = $configurator->createContainer();
+		$config->addParameters(['container' => ['class' => 'SystemContainer_' . md5((string) time())]]);
+		$config->addParameters(['appDir' => $rootDir, 'wwwDir' => $rootDir, 'vendorDir' => $vendorDir]);
+
+		$config->addConfig(__DIR__ . '/../../common.neon');
+
+		foreach ($this->neonFiles as $neonFile) {
+			$config->addConfig($neonFile);
+		}
+
+		DI\MiniServerExtension::register($config);
+
+		$this->container = $config->createContainer();
 
 		$this->setupDatabase();
+
+		assert($this->container instanceof Nette\DI\Container);
 
 		return $this->container;
 	}
 
 	/**
-	 * @return void
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
 	 */
 	private function setupDatabase(): void
 	{
 		if (!$this->isDatabaseSetUp) {
 			$db = $this->getDb();
 
+			/** @var list<ORM\Mapping\ClassMetadata> $metadatas */
 			$metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
 			$schemaTool = new ORM\Tools\SchemaTool($this->getEntityManager());
 
@@ -114,9 +156,8 @@ abstract class DbTestCase extends BaseMockeryTestCase
 
 			foreach ($schemas as $sql) {
 				try {
-					$db->exec($sql);
-
-				} catch (DBAL\DBALException $ex) {
+					$db->executeStatement($sql);
+				} catch (DBAL\Exception) {
 					throw new RuntimeException('Database schema could not be created');
 				}
 			}
@@ -130,44 +171,38 @@ abstract class DbTestCase extends BaseMockeryTestCase
 	}
 
 	/**
-	 * @return DBAL\Connection
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
 	 */
 	protected function getDb(): DBAL\Connection
 	{
-		/** @var DBAL\Connection $service */
-		$service = $this->getContainer()->getByType(DBAL\Connection::class);
-
-		return $service;
+		return $this->getContainer()->getByType(DBAL\Connection::class);
 	}
 
 	/**
-	 * @return NettrineORM\EntityManagerDecorator
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
 	 */
 	protected function getEntityManager(): NettrineORM\EntityManagerDecorator
 	{
-		/** @var NettrineORM\EntityManagerDecorator $service */
-		$service = $this->getContainer()->getByType(NettrineORM\EntityManagerDecorator::class);
-
-		return $service;
+		return $this->getContainer()->getByType(NettrineORM\EntityManagerDecorator::class);
 	}
 
 	/**
-	 * @param DBAL\Connection $db
-	 * @param string $file
-	 *
-	 * @return int
+	 * @throws Exceptions\InvalidArgument
 	 */
-	private function loadFromFile(DBAL\Connection $db, string $file): int
+	private function loadFromFile(DBAL\Connection $db, string $file): void
 	{
 		@set_time_limit(0); // intentionally @
 
 		$handle = @fopen($file, 'r'); // intentionally @
 
 		if ($handle === false) {
-			throw new InvalidArgumentException(sprintf('Cannot open file "%s".', $file));
+			throw new Exceptions\InvalidArgument(sprintf('Cannot open file "%s".', $file));
 		}
 
-		$count = 0;
 		$delimiter = ';';
 		$sql = '';
 
@@ -179,15 +214,13 @@ abstract class DbTestCase extends BaseMockeryTestCase
 
 				if (substr($s, 0, 10) === 'DELIMITER ') {
 					$delimiter = substr($s, 10);
-
 				} elseif (substr($s, -strlen($delimiter)) === $delimiter) {
 					$sql .= substr($s, 0, -strlen($delimiter));
 
 					try {
-						$db->query($sql);
+						$db->executeQuery($sql);
 						$sql = '';
-						$count++;
-					} catch (DBAL\DBALException $ex) {
+					} catch (DBAL\Exception) {
 						// File could not be loaded
 					}
 				} else {
@@ -198,24 +231,19 @@ abstract class DbTestCase extends BaseMockeryTestCase
 
 		if (trim($sql) !== '') {
 			try {
-				$db->query($sql);
-				$count++;
-
-			} catch (DBAL\DBALException $ex) {
+				$db->executeQuery($sql);
+			} catch (DBAL\Exception) {
 				// File could not be loaded
 			}
 		}
 
 		fclose($handle);
-
-		return $count;
 	}
 
 	/**
-	 * @param string $serviceName
-	 * @param object $service
-	 *
-	 * @return void
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
 	 */
 	private function replaceContainerService(string $serviceName, object $service): void
 	{
@@ -225,17 +253,25 @@ abstract class DbTestCase extends BaseMockeryTestCase
 		$container->addService($serviceName, $service);
 	}
 
+	protected function registerNeonConfigurationFile(string $file): void
+	{
+		if (!in_array($file, $this->neonFiles, true)) {
+			$this->neonFiles[] = $file;
+		}
+	}
+
 	/**
-	 * @return void
+	 * @throws Exceptions\InvalidArgument
+	 * @throws RuntimeException
 	 */
 	protected function tearDown(): void
 	{
+		$this->getDb()->close();
+
 		$this->container = null; // Fatal error: Cannot redeclare class SystemContainer
 		$this->isDatabaseSetUp = false;
 
 		parent::tearDown();
-
-		Mockery::close();
 	}
 
 }

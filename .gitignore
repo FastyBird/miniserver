@@ -3,4 +3,5 @@
 /dist
 /node_modules
 /vendor
+/var/tools
 fb-miniserver.deb

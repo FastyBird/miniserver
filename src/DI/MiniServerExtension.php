@@ -15,7 +15,9 @@
 
 namespace FastyBird\MiniServer\DI;
 
+use FastyBird\Library\Bootstrap\Boot as BootstrapBoot;
 use FastyBird\MiniServer\Commands;
+use Nette;
 use Nette\DI;
 
 /**
@@ -29,15 +31,27 @@ use Nette\DI;
 class MiniServerExtension extends DI\CompilerExtension
 {
 
-	/**
-	 * {@inheritDoc}
-	 */
+	public const NAME = 'fbFbMiniServer';
+
+	public static function register(
+		Nette\Configurator|BootstrapBoot\Configurator $config,
+		string $extensionName = self::NAME,
+	): void
+	{
+		$config->onCompile[] = static function (
+			Nette\Configurator|BootstrapBoot\Configurator $config,
+			DI\Compiler $compiler,
+		) use ($extensionName): void {
+			$compiler->addExtension($extensionName, new MiniServerExtension());
+		};
+	}
+
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('command.initialize'), new DI\Definitions\ServiceDefinition())
-			->setType(Commands\InitializeCommand::class);
+			->setType(Commands\Initialize::class);
 	}
 
 }
