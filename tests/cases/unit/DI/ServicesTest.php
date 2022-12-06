@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\MiniServer\Tests\Cases\fobar\DI;
+namespace FastyBird\MiniServer\Tests\Cases\Unit\DI;
 
 use FastyBird\Library\Bootstrap as LibraryBootstrap;
 use FastyBird\Library\Bootstrap\Exceptions as BootstrapExceptions;
