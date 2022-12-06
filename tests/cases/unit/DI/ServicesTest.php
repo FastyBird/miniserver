@@ -5,7 +5,7 @@ namespace FastyBird\MiniServer\Tests\Cases\Unit\DI;
 use FastyBird\Library\Bootstrap as LibraryBootstrap;
 use FastyBird\Library\Bootstrap\Exceptions as BootstrapExceptions;
 use FastyBird\MiniServer\Commands;
-use FastyBird\MiniServer\Tests\Cases\fobar\DbTestCase;
+use FastyBird\MiniServer\Tests\Cases\Unit\DbTestCase;
 use Nette;
 
 final class ServicesTest extends DbTestCase
