@@ -47,7 +47,7 @@ extensions:
     fbExchangeLibrary                   : FastyBird\Library\Exchange\DI\ExchangeExtension
     # FastyBird plugins
     fbRedisDbPlugin                     : FastyBird\Plugin\RedisDb\DI\RedisDbExtension
-    fbWebServerPlugin                   : FastyBird\Plugin\WebServer\DI\WebServerExtension(%consoleMode%)
+    fbWebServerPlugin                   : FastyBird\Plugin\WebServer\DI\WebServerExtension
     fbWsExchangePlugin                  : FastyBird\Plugin\WsExchange\DI\WsExchangeExtension
     # FastyBird modules
     fbAccountsModule                    : FastyBird\Module\Accounts\DI\AccountsExtension
@@ -59,7 +59,8 @@ extensions:
     fbModbusConnector                   : FastyBird\Connector\Modbus\DI\ModbusExtension
     fbHomeKitConnector                  : FastyBird\Connector\HomeKit\DI\HomeKitExtension
     fbTuyaConnector                     : FastyBird\Connector\Tuya\DI\TuyaExtension
-
+    # FastyBird MiniServer
+    fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension
 
 decorator:
     FastyBird\Plugin\WebServer\Router\Router:

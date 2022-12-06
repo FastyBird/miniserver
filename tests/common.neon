@@ -27,7 +27,7 @@ nettrineDbal:
         user: root
         password: root
         charset: utf8
-        wrapperClass: \Tests\Tools\ConnectionWrapper
+        wrapperClass: \FastyBird\MiniServer\Tests\Tools\ConnectionWrapper
 
         types:
             uuid_binary:

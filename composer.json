@@ -59,6 +59,21 @@
       "FastyBird\\MiniServer\\Tests\\Tools\\": "tests/tools"
     }
   },
+  "extra": {
+    "enable-patching": false,
+    "patches": {
+      "nettrine/orm": {
+        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine.orm.mangerRegistry.diff"
+      },
+      "doctrine/orm": {
+        "Bug: Ramsey uuid not working - Part 1": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.1.diff",
+        "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine.orm.uuid.2.diff"
+      },
+      "ramsey/uuid-doctrine": {
+        "Bug: Ramsey uuid conversion fallback": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/ramsey.uuid.doctrine.diff"
+      }
+    }
+  },
   "config" : {
     "sort-packages" : true,
     "allow-plugins" : {
