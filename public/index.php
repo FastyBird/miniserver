@@ -15,7 +15,7 @@ if (isset($_ENV['FB_APP_DIR'])) {
 	$envDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'env');
 
 	define('FB_APP_DIR', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..'));
-	define('FB_WWW_DIR', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public'));
+	define('FB_PUBLIC_DIR', realpath(__DIR__));
 }
 
 $autoload = $vendorDir . DIRECTORY_SEPARATOR . 'autoload.php';

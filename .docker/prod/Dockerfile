@@ -4,8 +4,6 @@ FROM fastybird/standard:1.0-traditional as fastybird_application
 ARG SERVICE_DIR=./.docker/prod
 # App folder
 ARG APP_PATH=/app
-# Container default timezone
-ARG APP_TZ=UTC
 # Backend url prefix configuration
 ARG BACKEND_PREFIX
 
@@ -29,7 +27,6 @@ COPY env env/
 COPY migrations migrations/
 COPY public public/
 COPY resources resources/
-COPY src src/
 COPY composer.* ./
 COPY .browserslistrc ./
 COPY .eslintignore ./

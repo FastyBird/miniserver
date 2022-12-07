@@ -80,7 +80,6 @@ COPY env env/
 COPY migrations migrations/
 COPY public public/
 COPY resources resources/
-COPY src src/
 COPY composer.* ./
 
 # Configure PHP

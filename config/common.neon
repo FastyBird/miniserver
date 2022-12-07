@@ -59,8 +59,6 @@ extensions:
     fbModbusConnector                   : FastyBird\Connector\Modbus\DI\ModbusExtension
     fbHomeKitConnector                  : FastyBird\Connector\HomeKit\DI\HomeKitExtension
     fbTuyaConnector                     : FastyBird\Connector\Tuya\DI\TuyaExtension
-    # FastyBird MiniServer
-    fbMiniServer                        : FastyBird\MiniServer\DI\MiniServerExtension
 
 decorator:
     FastyBird\Plugin\WebServer\Router\Router:
