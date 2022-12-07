@@ -2344,12 +2344,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fastybird.git",
-                "reference": "02d34c0a3ea2325c54f51836c02f90dacd53fa19"
+                "reference": "6a56999a7f470ab8a5a324ff76e81e40d6ecd56a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fastybird/zipball/02d34c0a3ea2325c54f51836c02f90dacd53fa19",
-                "reference": "02d34c0a3ea2325c54f51836c02f90dacd53fa19",
+                "url": "https://api.github.com/repos/FastyBird/fastybird/zipball/6a56999a7f470ab8a5a324ff76e81e40d6ecd56a",
+                "reference": "6a56999a7f470ab8a5a324ff76e81e40d6ecd56a",
                 "shasum": ""
             },
             "require": {
@@ -2540,7 +2540,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-06T22:40:01+00:00"
+            "time": "2022-12-07T22:17:35+00:00"
         },
         {
             "name": "fastybird/json-api",
