@@ -59,6 +59,11 @@ extensions:
     fbModbusConnector                   : FastyBird\Connector\Modbus\DI\ModbusExtension
     fbHomeKitConnector                  : FastyBird\Connector\HomeKit\DI\HomeKitExtension
     fbTuyaConnector                     : FastyBird\Connector\Tuya\DI\TuyaExtension
+    # FastyBird bridges
+    fbRedisDbDevicesModuleBridge        : FastyBird\Bridge\RedisDbDevicesModule\DI\RedisDbDevicesModuleExtension
+    fbRedisDbTriggersModuleBridge       : FastyBird\Bridge\RedisDbTriggersModule\DI\RedisDbTriggersModuleExtension
+    fbRedisDbWsExchangeBridge           : FastyBird\Bridge\RedisDbWsExchange\DI\RedisDbWsExchangeExtension
+    fbWsExchangeDevicesModuleBridge     : FastyBird\Bridge\WsExchangeDevicesModule\DI\WsExchangeDevicesModuleExtension
 
 decorator:
     FastyBird\Plugin\WebServer\Router\Router:
