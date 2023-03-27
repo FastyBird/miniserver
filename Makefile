@@ -107,6 +107,12 @@ docker-up: docker-init
 docker-down: docker-init
 	docker-compose down $(CONTAINER)
 
+# Build
+
+.PHONY: build
+build: bin
+	sh bin/make_deb.sh clean
+
 # Utilities
 
 .SILENT: $(shell grep -h -E '^[a-zA-Z_-]+:.*?$$' $(MAKEFILE_LIST) | sort -u | awk 'BEGIN {FS = ":.*?"}; {printf "%s ", $$1}')

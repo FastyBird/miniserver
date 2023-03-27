@@ -19,18 +19,12 @@ cd ..
 
 if [ "$1" != "only_clean" ] ; then
   echo "Installing libraries for building deb package..."
-  sudo apt-get install python3-stdeb fakeroot python-all dh-python -y
+  sudo apt-get install fakeroot -y
 
   echo "Building web ui..."
-  git submodule init
-  git submodule update
-  cd web-ui
   sudo yarn cache clean
   sudo yarn install --network-timeout 1000000
-  sudo yarn generate
-  cd ..
-  sudo mkdir public || echo
-  sudo cp -r web-ui/dist/. public/
+  sudo yarn build:prod
 
   echo "Adding the files & folders, scripts in the package..."
   sudo rm -rf dist/
@@ -39,20 +33,10 @@ if [ "$1" != "only_clean" ] ; then
   sudo cp -r resources/build/usr dist
   sudo cp -r resources/build/var dist
   sudo cp -r -a resources/build/DEBIAN dist
-  sudo cp -r deb_dist/miniserver-$CURRENT_VERSION/debian/python3-miniserver/DEBIAN dist
-  sudo cp -r deb_dist/miniserver-$CURRENT_VERSION/debian/python3-miniserver/usr dist
-  sudo mv dist/usr/bin/miniserver dist/usr/bin/fb-miniserver
-  sudo cp -r miniserver/config resources/build/etc/miniserver
-  sudo sed -i 's/\.\/logs/\/var\/log\/miniserver/g' resources/build/etc/miniserver/config/logs.conf >> resources/build/etc/miniserver/config/logs.conf
-  sudo cp -r miniserver/logs/. resources/build/var/log/miniserver/
   sudo find dist/ -name "*.gitignore" -exec rm -f {} \;
 
   echo "Creating sources for DEB package..."
-  sudo find miniserver/ -name "*.pyc" -exec rm -f {} \;
-  python3 setup.py --command-packages=stdeb.command bdist_deb
-  sudo find miniserver/ -name "*.pyc" -exec rm -f {} \;
   sudo mkdir -p dist/usr/lib/miniserver || echo
-  sudo cp -r src dist/usr/lib/miniserver/
   sudo cp -r public dist/usr/lib/miniserver/
   sudo cp -r vendor dist/usr/lib/miniserver/
   sudo cp -r config dist/etc/miniserver/
@@ -74,11 +58,7 @@ if [ "$1" != "only_clean" ] ; then
 fi
 
 if [ "$1" = "clean" ] || [ "$1" = "only_clean" ] ; then
-  sudo rm -rf deb_dist/
   sudo rm -rf dist/
-  sudo rm -rf miniserver.egg-info/
-  sudo rm -rf miniserver-$CURRENT_VERSION.tar.gz
-  sudo find miniserver/ -name "*.pyc" -exec rm -f {} \;
 fi
 
 if [ "$1" = "only_clean" ] ; then
