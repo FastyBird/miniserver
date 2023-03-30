@@ -2594,12 +2594,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FastyBird/fastybird.git",
-                "reference": "11d346114c1174466205a465f35fa9d009485945"
+                "reference": "23153f46667620f653aab438473061266f7aa6d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FastyBird/fastybird/zipball/11d346114c1174466205a465f35fa9d009485945",
-                "reference": "11d346114c1174466205a465f35fa9d009485945",
+                "url": "https://api.github.com/repos/FastyBird/fastybird/zipball/23153f46667620f653aab438473061266f7aa6d3",
+                "reference": "23153f46667620f653aab438473061266f7aa6d3",
                 "shasum": ""
             },
             "require": {
@@ -2772,10 +2772,7 @@
                     "FastyBird\\Automator\\DevicesModule\\": "src/FastyBird/Automator/DevicesModule/src/",
                     "FastyBird\\Bridge\\RedisDbDevicesModule\\": "src/FastyBird/Bridge/RedisDbDevicesModule/src/",
                     "FastyBird\\Bridge\\RedisDbTriggersModule\\": "src/FastyBird/Bridge/RedisDbTriggersModule/src/",
-                    "FastyBird\\Bridge\\RedisExchangeWsExchange\\": "src/FastyBird/Bridge/RedisExchangeWsExchange/src/",
-                    "FastyBird\\Bridge\\WsExchangeDevicesModule\\": "src/FastyBird/Bridge/WsExchangeDevicesModule/src/",
-                    "FastyBird\\Bridge\\RedisExchangeDevicesModule\\": "src/FastyBird/Bridge/RedisExchangeDevicesModule/src/",
-                    "FastyBird\\Bridge\\RedisExchangeTriggersModule\\": "src/FastyBird/Bridge/RedisExchangeTriggersModule/src/"
+                    "FastyBird\\Bridge\\WsExchangeDevicesModule\\": "src/FastyBird/Bridge/WsExchangeDevicesModule/src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2805,7 +2802,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-27T18:00:45+00:00"
+            "time": "2023-03-29T20:00:01+00:00"
         },
         {
             "name": "fastybird/json-api",
@@ -7398,16 +7395,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "1534aea9bde19a5c85c5d1e1f834ab63f4c5dcf5"
+                "reference": "dfc078e8af9c99210337325ff5aa152872c98714"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/1534aea9bde19a5c85c5d1e1f834ab63f4c5dcf5",
-                "reference": "1534aea9bde19a5c85c5d1e1f834ab63f4c5dcf5",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/dfc078e8af9c99210337325ff5aa152872c98714",
+                "reference": "dfc078e8af9c99210337325ff5aa152872c98714",
                 "shasum": ""
             },
             "require": {
@@ -7450,9 +7447,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.7.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.7.1"
             },
-            "time": "2023-03-12T10:13:29+00:00"
+            "time": "2023-03-27T19:02:04+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -12406,16 +12403,16 @@
         },
         {
             "name": "tracy/tracy",
-            "version": "v2.10.0",
+            "version": "v2.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tracy.git",
-                "reference": "e580b9578858403762fceb2a8664550515167530"
+                "reference": "882fee7cf4258a602ad4a37461e837ed2ca1406b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/e580b9578858403762fceb2a8664550515167530",
-                "reference": "e580b9578858403762fceb2a8664550515167530",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/882fee7cf4258a602ad4a37461e837ed2ca1406b",
+                "reference": "882fee7cf4258a602ad4a37461e837ed2ca1406b",
                 "shasum": ""
             },
             "require": {
@@ -12474,9 +12471,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/tracy/issues",
-                "source": "https://github.com/nette/tracy/tree/v2.10.0"
+                "source": "https://github.com/nette/tracy/tree/v2.10.2"
             },
-            "time": "2023-03-09T00:37:06+00:00"
+            "time": "2023-03-29T12:34:53+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -13648,22 +13645,22 @@
         },
         {
             "name": "orisai/coding-standard",
-            "version": "3.3.5",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orisai/coding-standard-php.git",
-                "reference": "3c05b98b3f0d787a22c7b9224220faefd668f4c7"
+                "reference": "0c9ce0f924d1158509a88bd00df89c6dec72bf6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orisai/coding-standard-php/zipball/3c05b98b3f0d787a22c7b9224220faefd668f4c7",
-                "reference": "3c05b98b3f0d787a22c7b9224220faefd668f4c7",
+                "url": "https://api.github.com/repos/orisai/coding-standard-php/zipball/0c9ce0f924d1158509a88bd00df89c6dec72bf6a",
+                "reference": "0c9ce0f924d1158509a88bd00df89c6dec72bf6a",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7 || ^1.0",
                 "php": ">=7.2.0 <8.3.0",
-                "slevomat/coding-standard": "^8.6.0",
+                "slevomat/coding-standard": "^8.9.0",
                 "squizlabs/php_codesniffer": "^3.7.0"
             },
             "type": "library",
@@ -13687,9 +13684,9 @@
             ],
             "support": {
                 "issues": "https://github.com/orisai/coding-standard-php/issues",
-                "source": "https://github.com/orisai/coding-standard-php/tree/3.3.5"
+                "source": "https://github.com/orisai/coding-standard-php/tree/3.4.0"
             },
-            "time": "2023-02-07T15:57:35+00:00"
+            "time": "2023-03-28T09:55:10+00:00"
         },
         {
             "name": "pds/skeleton",
@@ -14233,16 +14230,16 @@
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "b7dd96a5503919a43b3cd06a2dced9d4252492f2"
+                "reference": "b21c03d4f6f3a446e4311155f4be9d65048218e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/b7dd96a5503919a43b3cd06a2dced9d4252492f2",
-                "reference": "b7dd96a5503919a43b3cd06a2dced9d4252492f2",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/b21c03d4f6f3a446e4311155f4be9d65048218e6",
+                "reference": "b21c03d4f6f3a446e4311155f4be9d65048218e6",
                 "shasum": ""
             },
             "require": {
@@ -14276,9 +14273,9 @@
             "description": "Extra strict and opinionated rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
-                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/1.5.0"
+                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/1.5.1"
             },
-            "time": "2023-02-21T10:17:10+00:00"
+            "time": "2023-03-29T14:47:40+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

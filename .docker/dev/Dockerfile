@@ -33,7 +33,9 @@ RUN apt-get update -yqq && apt-get install -yqq \
     zlib1g-dev \
     libicu-dev \
     libgmp-dev \
-    g++
+    g++ \
+    wget \
+    iputils-ping
 
 COPY --from=php_extension_installer /usr/bin/install-php-extensions /usr/local/bin/
 

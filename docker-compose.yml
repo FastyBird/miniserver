@@ -48,6 +48,8 @@ services:
       FB_APP_PARAMETER__API_PREFIX: ${API_PREFIX:-/api}
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
       FB_APP_PARAMETER__API_KEY: ${API_KEY:-}
+      FB_APP_PARAMETER__SOCKETS_PORT: 8080
+      FB_TEMP_DIR: /srv/fastybird/var/temp/backend
     volumes:
       - .:/srv/fastybird:rw,cached
       - ./config:/srv/fastybird/config:rw
@@ -82,6 +84,8 @@ services:
       FB_APP_PARAMETER__API_PREFIX: ${API_PREFIX:-/api}
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
       FB_APP_PARAMETER__API_KEY: ${API_KEY:-}
+      FB_APP_PARAMETER__SOCKETS_PORT: 8080
+      FB_TEMP_DIR: /srv/fastybird/var/temp/migrations
     volumes:
       - .:/srv/fastybird:rw,cached
       - ./config:/srv/fastybird/config:rw
@@ -110,11 +114,14 @@ services:
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-fastybird}
       FB_APP_PARAMETER__REDIS_HOST: redis
       FB_APP_PARAMETER__REDIS_PORT: 6379
+      FB_APP_PARAMETER__SOCKETS_PORT: 8080
+      FB_TEMP_DIR: /srv/fastybird/var/temp/worker
     volumes:
       - .:/srv/fastybird:rw,cached
       - ./config:/srv/fastybird/config:rw
       - ./var:/srv/fastybird/var:rw
     ports:
+      - "${WS_EXCHANGE_PORT:-8080}:8080"
       - "${WORKER_STATUS_PORT:-9001}:9001"
     networks:
       - fastybird
@@ -139,7 +146,7 @@ services:
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
       FB_APP_PARAMETER__API_KEY: ${API_KEY:-}
     volumes:
-      - .:/srv/fastybird:rw,cached
+      - ./assets:/srv/fastybird/assets:rw,cached
       - ./public:/srv/fastybird/public:rw,delegated
     networks:
       - fastybird
@@ -243,7 +250,11 @@ services:
 
 networks:
   fastybird:
-    driver: bridge
+    driver: macvlan
+    ipam:
+      config:
+        - subnet: "10.10.0.0/24"
+          gateway: "10.10.0.1"
 
 volumes:
   mysql-dev-data:

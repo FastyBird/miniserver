@@ -62,7 +62,6 @@ extensions:
     # FastyBird bridges
     fbRedisDbDevicesModuleBridge        : FastyBird\Bridge\RedisDbDevicesModule\DI\RedisDbDevicesModuleExtension
     fbRedisDbTriggersModuleBridge       : FastyBird\Bridge\RedisDbTriggersModule\DI\RedisDbTriggersModuleExtension
-    fbRedisDbWsExchangeBridge           : FastyBird\Bridge\RedisDbWsExchange\DI\RedisDbWsExchangeExtension
     fbWsExchangeDevicesModuleBridge     : FastyBird\Bridge\WsExchangeDevicesModule\DI\WsExchangeDevicesModuleExtension
 
 decorator:
@@ -144,7 +143,7 @@ ipubWebsockets:
     routes:
         /io/exchange: 'Exchange:'
     mapping:
-        *: FastyBird\WsServerPlugin\Controllers\*Controller
+        *: FastyBird\Plugin\WsExchange\Controllers\*
 
 # Application
 #############

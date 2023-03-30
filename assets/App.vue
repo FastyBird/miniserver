@@ -89,7 +89,6 @@ import {
 	useConnectorControls,
 	useConnectorProperties,
 	useConnectors,
-	useDeviceAttributes,
 	useDeviceControls,
 	useDeviceProperties,
 	useDevices,
@@ -144,7 +143,6 @@ export default {
 				useConnectorControls(),
 				useConnectorProperties(),
 				useDevices(),
-				useDeviceAttributes(),
 				useDeviceControls(),
 				useDeviceProperties(),
 			];

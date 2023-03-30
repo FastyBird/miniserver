@@ -26,7 +26,7 @@ export default defineConfig({
 				theme: 'dark',
 			},
 		}),
-		eslintPlugin(),
+		//eslintPlugin(),
 		svgLoader(),
 	],
 	resolve: {
@@ -34,6 +34,7 @@ export default defineConfig({
 			'@fastybird': resolve(__dirname, './node_modules/@fastybird'),
 			'@': resolve(__dirname, './assets'),
 		},
+		dedupe: ['vue', 'pinia', 'vue-router', 'vee-validate', 'vue-i18n', 'vue-meta', 'nprogress', '@vueuse/core'],
 	},
 	css: {
 		modules: {
@@ -41,27 +42,22 @@ export default defineConfig({
 		},
 	},
 	optimizeDeps: {
-		include: ['vue', 'pinia', 'vue-router', 'nprogress', '@vueuse/core', 'vue-i18n'],
+		include: ['vue', 'pinia', 'vue-router', 'vee-validate', 'vue-i18n', 'vue-meta', 'nprogress', '@vueuse/core'],
 	},
 	build: {
-		outDir: 'public/dist'
+		outDir: 'public/dist',
 	},
 	server: {
 		proxy: {
 			'/api': {
-				target: 'http://10.10.10.116',
-				rewrite: (path): string => {
-					const apiPrefix: string = '/api';
-
-					return path.replace(new RegExp(`^${apiPrefix}`, 'g'), ''); // Remove base path
-				},
+				target: 'http://localhost',
 				secure: true,
 				changeOrigin: true,
 			},
 			'/ws-exchange': {
-				target: 'ws://10.10.10.116:9000',
+				target: 'ws://localhost:8080',
 				rewrite: (path: string): string => {
-					const wsPrefix: string = '/ws-exchange';
+					const wsPrefix = '/ws-exchange';
 
 					return path.replace(new RegExp(`^${wsPrefix}`, 'g'), ''); // Remove base path
 				},
@@ -79,6 +75,6 @@ export default defineConfig({
 		port: 3000,
 	},
 	preview: {
-		port: 3000
-	}
+		port: 3000,
+	},
 });
