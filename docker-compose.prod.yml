@@ -38,7 +38,6 @@ services:
   database:
     container_name: miniserver-database
     image: mariadb
-    platform: linux/amd64
     environment:
       # Container specific environment variables
       TZ: ${APP_TZ:-UTC}
@@ -63,18 +62,6 @@ services:
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/redis/other:/var/lib/redis:rw,delegated
       # - ./docker/redis/data:/data:rw,delegated
-    networks:
-      - fastybird
-
-  redis-commander:
-    container_name: miniserver-redis-client
-    image: rediscommander/redis-commander
-    restart: always
-    environment:
-      # Container specific environment variables
-      REDIS_HOSTS: local:redis:6379
-    ports:
-      - "${REDIS_ADMIN_PORT:-8081}:8081"
     networks:
       - fastybird
 

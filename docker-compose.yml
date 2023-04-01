@@ -56,7 +56,9 @@ services:
       - ./var:/srv/fastybird/var:rw
       - ./public:/srv/fastybird/public:rw,delegated
     networks:
-      - fastybird
+      fastybird:
+      local_network:
+        ipv4_address: ${LOCAL_NETWORK_BACKEND_IP_ADDRESS:-192.168.0.10}
 
   # APPLICATION BACKEND DATABASE MIGRATIONS
   migrations:
@@ -124,7 +126,9 @@ services:
       - "${WS_EXCHANGE_PORT:-8080}:8080"
       - "${WORKER_STATUS_PORT:-9001}:9001"
     networks:
-      - fastybird
+      fastybird:
+      local_network:
+        ipv4_address: ${LOCAL_NETWORK_WORKER_IP_ADDRESS:-192.168.0.20}
 
   # APPLICATION FRONTEND
   frontend:
@@ -155,7 +159,6 @@ services:
   database:
     container_name: miniserver-dev-database
     image: mariadb
-    platform: linux/amd64
     environment:
       # Container specific environment variables
       TZ: ${APP_TZ:-UTC}
@@ -184,18 +187,6 @@ services:
       # - ./docker/redis/data:/data:rw,delegated
     ports:
       - "${REDIS_PORT:-6379}:6379"
-    networks:
-      - fastybird
-
-  redis-commander:
-    container_name: miniserver-dev-redis-client
-    image: rediscommander/redis-commander
-    restart: always
-    environment:
-      # Container specific environment variables
-      REDIS_HOSTS: local:redis:6379
-    ports:
-      - "${REDIS_ADMIN_PORT:-8081}:8081"
     networks:
       - fastybird
 
@@ -250,11 +241,18 @@ services:
 
 networks:
   fastybird:
+    driver: bridge
+
+  local_network:
+    name: local_network
     driver: macvlan
+    driver_opts:
+      parent: ${LOCAL_NETWORK_DRIVER:-eth0}
     ipam:
       config:
-        - subnet: "10.10.0.0/24"
-          gateway: "10.10.0.1"
+        - subnet: ${LOCAL_NETWORK_SUBNET:-192.168.0.0/24}
+          gateway: ${LOCAL_NETWORK_GATEWAY:-192.168.0.1}
+          ip_range: ${LOCAL_NETWORK_IP_RANGE:-192.168.0.6/24}
 
 volumes:
   mysql-dev-data:
