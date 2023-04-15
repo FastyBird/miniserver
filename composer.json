@@ -77,6 +77,12 @@
       }
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/mathsolver/mathsolver.git"
+    }
+  ],
   "config" : {
     "sort-packages" : true,
     "allow-plugins" : {

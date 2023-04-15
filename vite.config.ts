@@ -50,12 +50,17 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: 'http://localhost',
+				target: 'http://miniserver.local',
+				rewrite: (path: string): string => {
+					const apiPrefix = '/api';
+
+					return path.replace(new RegExp(`^${apiPrefix}`, 'g'), ''); // Remove base path
+				},
 				secure: true,
 				changeOrigin: true,
 			},
 			'/ws-exchange': {
-				target: 'ws://localhost:8080',
+				target: 'ws://miniserver.local:8080',
 				rewrite: (path: string): string => {
 					const wsPrefix = '/ws-exchange';
 

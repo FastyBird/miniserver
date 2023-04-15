@@ -16,9 +16,9 @@ services:
       # Application specific environment variables
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: 3306
-      FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
-      FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-fastybird}
-      FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-fastybird}
+      FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
+      FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-miniserver}
+      FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-fb_miniserver}
       FB_APP_PARAMETER__REDIS_HOST: redis
       FB_APP_PARAMETER__REDIS_PORT: 6379
       FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
@@ -42,9 +42,9 @@ services:
       # Container specific environment variables
       TZ: ${APP_TZ:-UTC}
       MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD:-root}
-      MYSQL_USER: ${DATABASE_USERNAME:-fastybird}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-fastybird}
-      MYSQL_DATABASE: ${DATABASE_DBNAME:-fastybird}
+      MYSQL_USER: ${DATABASE_USERNAME:-miniserver}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-miniserver}
+      MYSQL_DATABASE: ${DATABASE_DBNAME:-fb_miniserver}
     volumes:
       - mysql-data:/var/lib/mysql:rw
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!

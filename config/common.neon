@@ -165,6 +165,7 @@ contributteTranslation:
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Accounts/src/Translations
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Devices/src/Translations
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Triggers/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/HomeKit/src/Translations
         - %appDir%/vendor/fastybird/json-api/src/Translations
 
 # Doctrine
