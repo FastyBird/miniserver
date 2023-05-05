@@ -1,7 +1,8 @@
 parameters:
     logger:
-        level: 300
-        rotatingFile: app.log
+        rotatingFile:
+            enabled: true
+            level: 300
 
     database:
         version: 5.7
