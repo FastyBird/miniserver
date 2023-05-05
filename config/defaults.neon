@@ -1,12 +1,4 @@
 parameters:
-    logger:
-        rotatingFile:
-            enabled: true
-            level: 300
-        stdOut:
-            enabled: false
-            level: 300
-
     database:
         version: 5.7
         host: 127.0.0.1
