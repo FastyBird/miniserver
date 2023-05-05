@@ -3,6 +3,9 @@ parameters:
         rotatingFile:
             enabled: true
             level: 300
+        stdOut:
+            enabled: false
+            level: 300
 
     database:
         version: 5.7

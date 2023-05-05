@@ -48,7 +48,7 @@ extensions:
     # FastyBird plugins
     fbRedisDbPlugin                     : FastyBird\Plugin\RedisDb\DI\RedisDbExtension
     fbWebServerPlugin                   : FastyBird\Plugin\WebServer\DI\WebServerExtension
-    fbWsExchangePlugin                  : FastyBird\Plugin\WsExchange\DI\WsExchangeExtension
+    fbWsServerPlugin                    : FastyBird\Plugin\WsServer\DI\WsServerExtension
     # FastyBird modules
     fbAccountsModule                    : FastyBird\Module\Accounts\DI\AccountsExtension
     fbDevicesModule                     : FastyBird\Module\Devices\DI\DevicesExtension
@@ -62,7 +62,6 @@ extensions:
     # FastyBird bridges
     fbRedisDbDevicesModuleBridge        : FastyBird\Bridge\RedisDbDevicesModule\DI\RedisDbDevicesModuleExtension
     fbRedisDbTriggersModuleBridge       : FastyBird\Bridge\RedisDbTriggersModule\DI\RedisDbTriggersModuleExtension
-    fbWsExchangeDevicesModuleBridge     : FastyBird\Bridge\WsExchangeDevicesModule\DI\WsExchangeDevicesModuleExtension
 
 decorator:
     FastyBird\Plugin\WebServer\Router\Router:
