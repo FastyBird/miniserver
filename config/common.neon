@@ -55,10 +55,12 @@ extensions:
     fbTriggersModule                    : FastyBird\Module\Triggers\DI\TriggersExtension
     # FastyBird connectors
     fbFbMqttConnector                   : FastyBird\Connector\FbMqtt\DI\FbMqttExtension
-    fbShellyConnector                   : FastyBird\Connector\Shelly\DI\ShellyExtension
     fbModbusConnector                   : FastyBird\Connector\Modbus\DI\ModbusExtension
     fbHomeKitConnector                  : FastyBird\Connector\HomeKit\DI\HomeKitExtension
+    fbShellyConnector                   : FastyBird\Connector\Shelly\DI\ShellyExtension
+    fbSonoffConnector                   : FastyBird\Connector\Sonoff\DI\SonoffExtension
     fbTuyaConnector                     : FastyBird\Connector\Tuya\DI\TuyaExtension
+    fbVieraConnector                    : FastyBird\Connector\Viera\DI\VieraExtension
     # FastyBird bridges
     fbRedisDbDevicesModuleBridge        : FastyBird\Bridge\RedisDbDevicesModule\DI\RedisDbDevicesModuleExtension
     fbRedisDbTriggersModuleBridge       : FastyBird\Bridge\RedisDbTriggersModule\DI\RedisDbTriggersModuleExtension
