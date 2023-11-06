@@ -31,3 +31,6 @@ parameters:
     api:
         prefixed:
             modules: true
+
+    connectors:
+        writers: periodic # Allowed values: periodic|exchange|event
