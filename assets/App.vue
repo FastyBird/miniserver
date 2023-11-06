@@ -64,35 +64,14 @@
 </template>
 
 <script lang="ts">
-import { computed, inject, onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { inject, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMeta } from 'vue-meta';
-import get from 'lodash/get';
 
 import { FbSizeTypes, FbUiLoadingBox } from '@fastybird/web-ui-library';
-import { useWsExchangeClient } from '@fastybird/ws-exchange-plugin';
+import { useWampV1Client } from '@fastybird/vue-wamp-v1';
 
-import {
-	useSession,
-	SettingsAccountModal,
-	SettingsPasswordModal,
-	useEmails,
-	useIdentities,
-	useRoles,
-	useAccount,
-	useAccounts,
-} from '@fastybird/accounts-module';
-import {
-	useChannelControls,
-	useChannelProperties,
-	useChannels,
-	useConnectorControls,
-	useConnectorProperties,
-	useConnectors,
-	useDeviceControls,
-	useDeviceProperties,
-	useDevices,
-} from '@fastybird/devices-module';
+import { useSession, SettingsAccountModal, SettingsPasswordModal } from '@fastybird/accounts-module';
 
 import { AppSidebar } from '@/components';
 import { eventBusInjectionKey } from '@/plugins';
@@ -118,35 +97,13 @@ export default {
 	setup(): any {
 		const router = useRouter();
 		const sessionStore = useSession();
-		const wampV1Client = useWsExchangeClient();
+		const wampV1Client = useWampV1Client();
 
 		const eventBus = inject(eventBusInjectionKey);
 
 		const loadingOverlay = ref<boolean>(false);
 		const activeView = ref<ViewTypes>(ViewTypes.NONE);
 		const menuCollapsed = ref<boolean>(true);
-
-		const stores = computed<any[]>(() => {
-			return [
-				// Accounts module
-				useSession(),
-				useAccount(),
-				useAccounts(),
-				useEmails(),
-				useIdentities(),
-				useRoles(),
-				// Devices module
-				useChannels(),
-				useChannelControls(),
-				useChannelProperties(),
-				useConnectors(),
-				useConnectorControls(),
-				useConnectorProperties(),
-				useDevices(),
-				useDeviceControls(),
-				useDeviceProperties(),
-			];
-		});
 
 		// Processing timer
 		let overlayTimer: number;
@@ -197,26 +154,6 @@ export default {
 			menuCollapsed.value = !menuCollapsed.value;
 		};
 
-		const onWsMessage = (data: string): void => {
-			const body = JSON.parse(data);
-
-			if (
-				Object.prototype.hasOwnProperty.call(body, 'routing_key') &&
-				Object.prototype.hasOwnProperty.call(body, 'source') &&
-				Object.prototype.hasOwnProperty.call(body, 'data')
-			) {
-				stores.value.forEach((store) => {
-					if (Object.prototype.hasOwnProperty.call(store, 'socketData')) {
-						store.socketData({
-							source: get(body, 'source'),
-							routingKey: get(body, 'routing_key'),
-							data: JSON.stringify(get(body, 'data')),
-						});
-					}
-				});
-			}
-		};
-
 		onBeforeMount((): void => {
 			eventBus?.on('loadingOverlay', overlayLoadingListener);
 			eventBus?.on('userSigned', userSignStatusListener);
@@ -232,17 +169,6 @@ export default {
 			eventBus?.off('loadingOverlay', overlayLoadingListener);
 			eventBus?.off('userSigned', userSignStatusListener);
 		});
-
-		watch(
-			(): boolean => wampV1Client.status.value,
-			(status): void => {
-				if (status) {
-					wampV1Client.client.subscribe('/io/exchange', onWsMessage);
-				} else {
-					wampV1Client.client.unsubscribe('/io/exchange', onWsMessage);
-				}
-			}
-		);
 
 		useMeta({
 			title: 'IoT control',
@@ -283,8 +209,6 @@ export default {
 
 			sizeTypes: FbSizeTypes,
 			viewTypes: ViewTypes,
-
-			stores,
 		};
 	},
 };

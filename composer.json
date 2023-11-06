@@ -62,18 +62,21 @@
   "extra": {
     "enable-patching": false,
     "patches": {
-      "nettrine/orm": {
-        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine-orm-src-managerregistry-php.patch"
-      },
-      "react/event-loop": {
-        "Bug: Use native return type": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/react-event-loop-src-loop-php.patch"
+      "dg/bypass-finals": {
+        "Bug: mkdir check": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/dg-bypass-finals-src-nativewrapper-php.patch"
       },
       "doctrine/orm": {
         "Bug: Ramsey uuid not working - Part 1": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine-orm-lib-doctrine-orm-persisters-entity-basicentitypersister-php.patch",
         "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine-orm-lib-doctrine-orm-persisters-entity-joinedsubclasspersister-php.patch"
       },
+      "nettrine/orm": {
+        "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine-orm-src-managerregistry-php.patch"
+      },
       "ramsey/uuid-doctrine": {
         "Bug: Ramsey uuid conversion fallback": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/ramsey-uuid-doctrine-src-uuidbinarytype-php.patch"
+      },
+      "react/event-loop": {
+        "Bug: Use native return type": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/react-event-loop-src-loop-php.patch"
       }
     }
   },

@@ -3,7 +3,7 @@ import { createPinia } from 'pinia';
 import { createMetaManager, plugin as metaPlugin } from 'vue-meta';
 import toast from 'vue-toastification';
 import get from 'lodash/get';
-import { createWsExchangeClient } from '@fastybird/ws-exchange-plugin';
+import { createWampV1Client } from '@fastybird/vue-wamp-v1';
 
 import { version } from './../package.json';
 
@@ -30,8 +30,8 @@ app.use(createMetaManager());
 app.use(metaPlugin);
 app.use(createPinia());
 app.use(toast);
-app.use(createWsExchangeClient(), {
-	wsuri: 'ws://localhost:3000/ws-exchange',
+app.use(createWampV1Client(), {
+	host: 'ws://localhost:3000/ws-exchange',
 	debug: true,
 });
 

@@ -93,6 +93,13 @@ fbJsonApi:
     meta:
         copyright: FastyBird s.r.o
 
+# WS server
+###########
+ipubWebsockets:
+    server:
+        address: %sockets.address%
+        port: %sockets.port%
+
 # Redis exchange
 ################
 fbRedisDbPlugin:
@@ -120,31 +127,45 @@ fbWebServerPlugin:
         port: %server.port%
         certificate: %server.certificate%
 
-# Accounts module
-#################
+# Modules
+#########
 fbAccountsModule:
     apiPrefix: %api.prefixed.modules%
 
-# Devices module
-################
 fbDevicesModule:
     apiPrefix: %api.prefixed.modules%
 
-# Triggers module
-#################
 fbTriggersModule:
     apiPrefix: %api.prefixed.modules%
 
-# WS server
-###########
-ipubWebsockets:
-    server:
-        address: %sockets.address%
-        port: %sockets.port%
-    routes:
-        /io/exchange: 'Exchange:'
-    mapping:
-        *: FastyBird\Plugin\WsExchange\Controllers\*
+# Connectors
+############
+fbFbMqttConnector:
+    writer: %connectors.writers%
+
+fbHomeKitConnector:
+    writer: %connectors.writers%
+
+fbModbusConnector:
+    writer: %connectors.writers%
+
+fbNsPanelConnector:
+    writer: %connectors.writers%
+
+fbShellyConnector:
+    writer: %connectors.writers%
+
+fbSonoffConnector:
+    writer: %connectors.writers%
+
+fbTuyaConnector:
+    writer: %connectors.writers%
+
+fbVieraConnector:
+    writer: %connectors.writers%
+
+fbVirtualConnector:
+    writer: %connectors.writers%
 
 # Application
 #############
@@ -163,10 +184,19 @@ contributteTranslation:
         fallback: [en_US, en]
     localeResolvers: []
     dirs:
+        # MODULES
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Accounts/src/Translations
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Devices/src/Translations
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Triggers/src/Translations
+        # CONNECTORS
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/HomeKit/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/NsPanel/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Shelly/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Sonoff/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Tuya/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Viera/src/Translations
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Virtual/src/Translations
+        # OTHER LIBRARIES
         - %appDir%/vendor/fastybird/json-api/src/Translations
 
 # Doctrine
@@ -213,9 +243,9 @@ nettrineOrm:
 nettrineOrmAnnotations:
     mapping: []
 
-nettrineMigrations:
-    directory: %appDir%/migrations
-
 nettrineFixtures:
     paths:
         - %appDir%/fixtures
+
+nettrineMigrations:
+    directory: %appDir%/migrations

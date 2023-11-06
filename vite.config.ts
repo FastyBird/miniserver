@@ -60,7 +60,7 @@ export default defineConfig({
 				changeOrigin: true,
 			},
 			'/ws-exchange': {
-				target: 'ws://miniserver.local:8080',
+				target: 'ws://localhost:8888',
 				rewrite: (path: string): string => {
 					const wsPrefix = '/ws-exchange';
 
