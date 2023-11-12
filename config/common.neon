@@ -18,7 +18,6 @@ extensions:
     contributteConsole                  : Contributte\Console\DI\ConsoleExtension(%consoleMode%)
     contributteTranslation              : Contributte\Translation\DI\TranslationExtension
     contributteEvents                   : Contributte\EventDispatcher\DI\EventDispatcherExtension
-    contributeFlysystem                 : Contributte\Flysystem\DI\FlysystemExtension
     nettrineAnnotations                 : Nettrine\Annotations\DI\AnnotationsExtension
     nettrineCache                       : Nettrine\Cache\DI\CacheExtension
     nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
