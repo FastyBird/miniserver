@@ -33,4 +33,4 @@ parameters:
             modules: true
 
     connectors:
-        writers: periodic # Allowed values: periodic|exchange|event
+        writers: exchange # Allowed values: exchange|event

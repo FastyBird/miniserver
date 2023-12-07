@@ -190,6 +190,7 @@ contributteTranslation:
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Devices/src/Translations
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Triggers/src/Translations
         # CONNECTORS
+        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/FbMqtt/src/Translations
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/HomeKit/src/Translations
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/NsPanel/src/Translations
         - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Shelly/src/Translations
