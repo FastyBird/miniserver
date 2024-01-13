@@ -62,9 +62,12 @@ extensions:
     fbTuyaConnector                     : FastyBird\Connector\Tuya\DI\TuyaExtension
     fbVieraConnector                    : FastyBird\Connector\Viera\DI\VieraExtension
     fbVirtualConnector                  : FastyBird\Connector\Virtual\DI\VirtualExtension
+    fbZigbee2MqttConnector              : FastyBird\Connector\Zigbee2Mqtt\DI\Zigbee2MqttExtension
     # FastyBird bridges
     fbRedisDbDevicesModuleBridge        : FastyBird\Bridge\RedisDbDevicesModule\DI\RedisDbDevicesModuleExtension
     fbRedisDbTriggersModuleBridge       : FastyBird\Bridge\RedisDbTriggersModule\DI\RedisDbTriggersModuleExtension
+    # FastyBird addons
+    fbThermostatDeviceAddon             : FastyBird\Addon\ThermostatDevice\DI\ThermostatDeviceExtension
 
 decorator:
     FastyBird\Plugin\WebServer\Router\Router:
@@ -168,6 +171,9 @@ fbVieraConnector:
 fbVirtualConnector:
     writer: %connectors.writers%
 
+fbZigbee2MqttConnector:
+    writer: %connectors.writers%
+
 # Application
 #############
 
@@ -185,20 +191,6 @@ contributteTranslation:
         fallback: [en_US, en]
     localeResolvers: []
     dirs:
-        # MODULES
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Accounts/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Devices/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Module/Triggers/src/Translations
-        # CONNECTORS
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/FbMqtt/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/HomeKit/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/NsPanel/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Shelly/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Sonoff/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Tuya/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Viera/src/Translations
-        - %appDir%/vendor/fastybird/fastybird/src/FastyBird/Connector/Virtual/src/Translations
-        # OTHER LIBRARIES
         - %appDir%/vendor/fastybird/json-api/src/Translations
 
 # Doctrine
