@@ -136,6 +136,7 @@ fbAccountsModule:
 
 fbDevicesModule:
     apiPrefix: %api.prefixed.modules%
+    exchange: %modules.exchange%
 
 fbTriggersModule:
     apiPrefix: %api.prefixed.modules%

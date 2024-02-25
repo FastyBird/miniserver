@@ -31,3 +31,6 @@ parameters:
     api:
         prefixed:
             modules: true
+
+    modules:
+        exchange: false
