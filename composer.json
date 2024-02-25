@@ -21,7 +21,7 @@
     "source" : "https://github.com/FastyBird/miniserver"
   },
   "require" : {
-    "php" : ">=8.1.0",
+    "php" : ">=8.2.0",
     "contributte/event-dispatcher" : "^0.8",
     "contributte/translation" : "^2.0",
     "fastybird/fastybird" : "dev-main",
@@ -62,12 +62,19 @@
   "extra": {
     "enable-patching": false,
     "patches": {
+      "contributte/monolog": {
+        "Bug: invalid callback definition": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/contributte-monolog-src-loggerholder-php.patch"
+      },
       "dg/bypass-finals": {
         "Bug: mkdir check": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/dg-bypass-finals-src-nativewrapper-php.patch"
       },
       "doctrine/orm": {
         "Bug: Ramsey uuid not working - Part 1": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine-orm-lib-doctrine-orm-persisters-entity-basicentitypersister-php.patch",
-        "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine-orm-lib-doctrine-orm-persisters-entity-joinedsubclasspersister-php.patch"
+        "Bug: Ramsey uuid not working - Part 2": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine-orm-lib-doctrine-orm-persisters-entity-joinedsubclasspersister-php.patch",
+        "Feature: Dynamic discriminator map": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine-orm-lib-doctrine-orm-mapping-classmetadatafactory-php.patch"
+      },
+      "doctrine/dbal": {
+        "Bug: PDO:Quote null patch": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/doctrine-dbal-src-connection-php.patch"
       },
       "nettrine/orm": {
         "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine-orm-src-managerregistry-php.patch"
@@ -77,6 +84,9 @@
       },
       "react/event-loop": {
         "Bug: Use native return type": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/react-event-loop-src-loop-php.patch"
+      },
+      "softcreatr/jsonpath": {
+        "Feature: enable extended queries": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/softcreatr-jsonpath-src-filters-querymatchfilter-php.patch"
       }
     }
   },

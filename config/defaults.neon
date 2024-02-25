@@ -31,6 +31,3 @@ parameters:
     api:
         prefixed:
             modules: true
-
-    connectors:
-        writers: exchange # Allowed values: exchange|event
