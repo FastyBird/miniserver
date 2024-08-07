@@ -37,6 +37,10 @@ extensions:
     fbDateTimeFactory                               : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                                    : FastyBird\SimpleAuth\DI\SimpleAuthExtension
     fbJsonApi                                       : FastyBird\JsonApi\DI\JsonApiExtension
+    # FastyBird libs
+    fbDateTimeFactory                               : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
+    fbSimpleAuth                                    : FastyBird\SimpleAuth\DI\SimpleAuthExtension
+    fbJsonApi                                       : FastyBird\JsonApi\DI\JsonApiExtension
     # FastyBird app libs
     fbApplicationLibrary                            : FastyBird\Library\Application\DI\ApplicationExtension
     fbMetadataLibrary                               : FastyBird\Library\Metadata\DI\MetadataExtension
@@ -49,6 +53,7 @@ extensions:
     fbAccountsModule                                : FastyBird\Module\Accounts\DI\AccountsExtension
     fbDevicesModule                                 : FastyBird\Module\Devices\DI\DevicesExtension
     fbTriggersModule                                : FastyBird\Module\Triggers\DI\TriggersExtension
+    fbUiModule                                      : FastyBird\Module\Ui\DI\UiExtension
     # FastyBird connectors
     fbFbMqttConnector                               : FastyBird\Connector\FbMqtt\DI\FbMqttExtension
     fbHomeKitConnector                              : FastyBird\Connector\HomeKit\DI\HomeKitExtension
@@ -61,6 +66,7 @@ extensions:
     fbVirtualConnector                              : FastyBird\Connector\Virtual\DI\VirtualExtension
     fbZigbee2MqttConnector                          : FastyBird\Connector\Zigbee2Mqtt\DI\Zigbee2MqttExtension
     # FastyBird bridges
+    fbDevicesModuleUiModuleBridge                   : FastyBird\Bridge\DevicesModuleUiModule\DI\RedisDbPluginDevicesModuleExtension
     fbRedisDbPluginDevicesModuleBridge              : FastyBird\Bridge\RedisDbPluginDevicesModule\DI\RedisDbPluginDevicesModuleExtension
     fbRedisDbPluginTriggersModuleBridge             : FastyBird\Bridge\RedisDbPluginTriggersModule\DI\RedisDbPluginTriggersModuleExtension
     fbVirtualThermostatAddonHomeKitConnectorBridge  : FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension
@@ -88,6 +94,13 @@ fbSimpleAuth:
         doctrine:
             models: true
             mapping: true
+        casbin:
+            database: true
+        nette:
+            application: true
+    application:
+        signInUrl: Accounts:Sign:in
+        homeUrl: App:Default:default
 
 # JSON:Api support
 ##################
