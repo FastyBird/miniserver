@@ -62,7 +62,7 @@ extensions:
     fbVirtualConnector                              : FastyBird\Connector\Virtual\DI\VirtualExtension
     fbZigbee2MqttConnector                          : FastyBird\Connector\Zigbee2Mqtt\DI\Zigbee2MqttExtension
     # FastyBird bridges
-    fbDevicesModuleUiModuleBridge                   : FastyBird\Bridge\DevicesModuleUiModule\DI\RedisDbPluginDevicesModuleExtension
+    fbDevicesModuleUiModuleBridge                   : FastyBird\Bridge\DevicesModuleUiModule\DI\DevicesModuleUiModuleExtension
     fbRedisDbPluginDevicesModuleBridge              : FastyBird\Bridge\RedisDbPluginDevicesModule\DI\RedisDbPluginDevicesModuleExtension
     fbRedisDbPluginTriggersModuleBridge             : FastyBird\Bridge\RedisDbPluginTriggersModule\DI\RedisDbPluginTriggersModuleExtension
     fbVirtualThermostatAddonHomeKitConnectorBridge  : FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension
