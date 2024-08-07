@@ -22,7 +22,7 @@
   },
   "require" : {
     "php" : ">=8.2.0",
-    "contributte/event-dispatcher" : "^0.8",
+    "contributte/event-dispatcher" : "^0.9",
     "contributte/translation" : "^2.0",
     "fastybird/fastybird" : "dev-main",
     "nettrine/fixtures" : "^0.6.3",
