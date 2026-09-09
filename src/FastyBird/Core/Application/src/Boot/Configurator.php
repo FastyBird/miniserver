@@ -66,13 +66,13 @@ class Configurator extends Bootstrap\Configurator
 			boolval($this->staticParameters['debugMode']),
 		);
 
-		// @phpstan-ignore-next-line argument.type (PHPStan cannot see through Nette's own array<string> normalisation of $configFiles)
+		// @phpstan-ignore-next-line argument.type (Nette Bootstrap\Configurator's real @var list<string|array<string, mixed>> for $configs is wider than this method's own array<string|array<string>> $configFiles declaration)
 		$containerKey = $this->getContainerKey($this->configs);
 
 		$this->reloadContainerOnDemand($loader, $containerKey, $buildDir);
 
 		$containerClass = $loader->load(
-			// @phpstan-ignore-next-line argument.type (ContainerLoader::load() callback is void by contract in this Nette version; PHPStan's stub still expects a return value)
+			// @phpstan-ignore-next-line argument.type (Nette\DI\ContainerLoader::load()'s real PHPDoc expects callable(Compiler): ?string, but the parent Configurator::generateContainer() called here returns void)
 			fn (Compiler $compiler) => $this->generateContainer($compiler),
 			$containerKey,
 		);
