@@ -203,5 +203,4 @@ nettrineOrmAttributes:
     mapping: []
 
 nettrineFixtures:
-    paths:
-        - %appDir%/fixtures
+    paths: []
