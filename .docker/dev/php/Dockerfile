@@ -14,6 +14,8 @@ RUN apt-get install -y  \
     libgmp-dev \
     libzip-dev \
     libpng-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     libonig-dev \
     libxml2-dev \
     zip \
@@ -35,7 +37,8 @@ RUN apt-get install -y  \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-configure intl \
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-configure intl \
     && docker-php-ext-install \
     bcmath \
     calendar \
@@ -44,6 +47,7 @@ RUN docker-php-ext-configure intl \
     dom \
     exif \
     fileinfo \
+    gd \
     gmp \
     intl \
     mbstring \
