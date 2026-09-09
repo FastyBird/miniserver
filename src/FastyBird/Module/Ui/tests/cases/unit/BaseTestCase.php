@@ -27,6 +27,7 @@ abstract class BaseTestCase extends TestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Error
+	 * @param class-string $serviceType
 	 */
 	protected function mockContainerService(
 		string $serviceType,

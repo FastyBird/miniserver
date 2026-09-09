@@ -23,6 +23,7 @@ abstract class BaseTestCase extends TestCase
 
 	/**
 	 * @throws Error
+	 * @param class-string $serviceType
 	 */
 	protected function mockContainerService(
 		string $serviceType,

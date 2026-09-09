@@ -53,6 +53,9 @@ abstract class BaseTestCase extends TestCase
 		return $config->createContainer();
 	}
 
+	/**
+	 * @param class-string $serviceType
+	 */
 	protected function mockContainerService(
 		string $serviceType,
 		object $serviceMock,

@@ -66,6 +66,7 @@ abstract class DbTestCase extends TestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @param class-string $serviceType
 	 */
 	protected function mockContainerService(
 		string $serviceType,
