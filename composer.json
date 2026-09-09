@@ -336,9 +336,6 @@
                 "Bug: Ramsey uuid not working - Part 2": "tools/patches/doctrine-orm-lib-doctrine-orm-persisters-entity-joinedsubclasspersister-php.patch",
                 "Feature: Dynamic discriminator map": "tools/patches/doctrine-orm-lib-doctrine-orm-mapping-classmetadatafactory-php.patch"
             },
-            "nette/utils": {
-                "Bug: Offset check with null support": "tools/patches/nette-utils-array-offsetcheck.diff"
-            },
             "nettrine/orm": {
                 "Enable connection overrides": "tools/patches/nettrine-orm-src-managerregistry-php.patch"
             },
