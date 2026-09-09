@@ -322,7 +322,7 @@ Deleted 90+ days ago are final; GitHub restores a deleted organization repositor
 ## Repositories kept
 
 - FastyBird/.github: kept, organization profile and README assets that several READMEs still reference.
-- FastyBird/libraries-patches: eligible for deletion once Phase 0 is merged (the 10 patch files are vendored into `tools/patches/` by Phase 0); deletion is optional and not tracked as a numbered task in this plan.
+- FastyBird/libraries-patches: **must NOT be deleted.** Vendoring the root manifest's 10 patch files into `tools/patches/` in Phase 0 does *not* make the project independent of this repository. Established empirically during Phase 1 on 2026-09-10: `fastybird/json-api` and `fastybird/datetime-factory` each declare their own `extra.patches` entry for `nette/utils` pointing at a raw URL here, and `fastybird/simple-auth` declares two, for `nette/utils` and `nettrine/orm`. Those dependency-declared patches are fetched at install time even though the root sets `extra.enable-patching: false`, and a dependency's URL takes precedence over a root entry carrying the same description key. Deleting this repository would therefore break `composer install` on every future checkout. It becomes eligible for deletion only after Phase 6 updates or absorbs those three external libraries and a clean `composer install` shows no remaining reference to it. Verify with: `grep -rl "libraries-patches" vendor/*/*/composer.json` returning nothing.
 ```
 
 Save this content to `docs/cleanup-log.md`, replacing the `deleted:` placeholders with the actual date as each Task 4-8 checkbox below is completed.
