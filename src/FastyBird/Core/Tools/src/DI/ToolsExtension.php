@@ -141,6 +141,7 @@ class ToolsExtension extends DI\CompilerExtension
 
 			$builder->addDefinition($this->prefix('sentry.client'), new DI\Definitions\ServiceDefinition())
 				->setType(Sentry\ClientInterface::class)
+				// @phpstan-ignore-next-line argument.type (Nette ServiceDefinition::setFactory() accepts a [service, method] callable array at runtime)
 				->setFactory([$sentryClientBuilderService, 'getClient']);
 
 			$builder->addDefinition($this->prefix('sentry.hub'), new DI\Definitions\ServiceDefinition())

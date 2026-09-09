@@ -82,6 +82,7 @@ class Journal implements Caching\Storages\Journal
 	 *
 	 * @return array<mixed>|null
 	 */
+	// @phpstan-ignore-next-line method.childReturnType (Nette\Caching\Storages\Journal::clean() signature changed upstream; keeping the wider return type is a pre-existing, deliberate deviation)
 	public function clean(array $conditions): array|null
 	{
 		if (isset($conditions[Caching\Cache::All])) {

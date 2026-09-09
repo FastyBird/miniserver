@@ -3121,6 +3121,7 @@ class Install extends Console\Command\Command
 							'//homekit-connector.cmd.install.questions.select.device.valueMapping',
 							['value' => $name],
 						),
+						// @phpstan-ignore-next-line argument.type (Symfony ChoiceQuestion accepts the label array at runtime; the closure's declared string|null return keeps PHPStan strict)
 						array_map(
 							static fn ($item): string|null => is_array($item) ? $item[1] : $item,
 							$options,

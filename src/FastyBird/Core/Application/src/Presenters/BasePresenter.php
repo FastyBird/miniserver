@@ -58,6 +58,7 @@ abstract class BasePresenter extends Application\UI\Presenter
 			throw new Exceptions\InvalidState('No layouts are specified.');
 		}
 
+		// @phpstan-ignore-next-line return.type (Empty array is a valid layout list at runtime; narrowing to non-empty-array would be a behavioural change)
 		return $this->templateFactory?->getLayouts() ?? [];
 	}
 

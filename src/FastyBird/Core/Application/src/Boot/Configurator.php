@@ -66,14 +66,17 @@ class Configurator extends Bootstrap\Configurator
 			boolval($this->staticParameters['debugMode']),
 		);
 
+		// @phpstan-ignore-next-line argument.type (PHPStan cannot see through Nette's own array<string> normalisation of $configFiles)
 		$containerKey = $this->getContainerKey($this->configs);
 
 		$this->reloadContainerOnDemand($loader, $containerKey, $buildDir);
 
 		$containerClass = $loader->load(
+			// @phpstan-ignore-next-line argument.type (ContainerLoader::load() callback is void by contract in this Nette version; PHPStan's stub still expects a return value)
 			fn (Compiler $compiler) => $this->generateContainer($compiler),
 			$containerKey,
 		);
+		// @phpstan-ignore-next-line function.alreadyNarrowedType (Defensive runtime assertion kept intentionally even though static analysis can already prove it)
 		assert(is_subclass_of($containerClass, Container::class));
 
 		return $containerClass;

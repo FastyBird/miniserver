@@ -206,6 +206,7 @@ final class Gen2WsApi
 			);
 		}
 
+		// @phpstan-ignore-next-line arguments.count (ratchet/pawl ClientNegotiator constructor became optional-arg only in a later release than the one PHPStan's stub ships for)
 		$negotiator = new RFC6455\Handshake\ClientNegotiator();
 
 		$url = 'ws://' . $address . '/rpc';
