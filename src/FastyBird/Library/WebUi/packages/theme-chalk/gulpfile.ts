@@ -6,7 +6,7 @@ import gulpSass from 'gulp-sass';
 import dartSass from 'sass';
 import autoprefixer from 'gulp-autoprefixer';
 import cleanCSS from 'gulp-clean-css';
-import consola from 'consola';
+import { consola } from 'consola';
 
 const webUiLibraryOutput = resolve(__dirname, '..', '..', 'web-ui-library', 'dist');
 

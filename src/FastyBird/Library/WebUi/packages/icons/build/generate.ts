@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { readFile, writeFile } from 'node:fs/promises';
 import { emptyDir, ensureDir } from 'fs-extra';
-import consola from 'consola';
+import { consola } from 'consola';
 import camelcase from 'camelcase';
 import glob from 'fast-glob';
 import { type BuiltInParserName, format } from 'prettier';

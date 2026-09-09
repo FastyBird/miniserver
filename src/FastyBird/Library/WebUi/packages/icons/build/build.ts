@@ -1,5 +1,5 @@
 import path from 'node:path';
-import consola from 'consola';
+import { consola } from 'consola';
 import chalk from 'chalk';
 import { type BuildOptions, type Format, build } from 'esbuild';
 import GlobalsPlugin from 'esbuild-plugin-globals';

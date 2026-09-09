@@ -280,7 +280,7 @@ const onPaginatePage = (page: number): void => {
 	emit('update:paginatePage', page);
 };
 
-const onSortData = ({ order }: { order: 'ascending' | 'descending' }): void => {
+const onSortData = ({ order }: { order: 'ascending' | 'descending' | null }): void => {
 	emit('update:sortDir', order === 'descending' ? 'desc' : 'asc');
 };
 </script>
