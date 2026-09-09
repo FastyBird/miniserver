@@ -304,10 +304,10 @@
         }
     },
     "bin": [
-        "src/FastyBird/Library/Application/bin/fb-console",
-        "src/FastyBird/Library/Application/bin/fb-console.php",
-        "src/FastyBird/Library/Application/bin/fb-supervisor",
-        "src/FastyBird/Library/Application/bin/fb-supervisor.php"
+        "src/FastyBird/Core/Application/bin/fb-console",
+        "src/FastyBird/Core/Application/bin/fb-console.php",
+        "src/FastyBird/Core/Application/bin/fb-supervisor",
+        "src/FastyBird/Core/Application/bin/fb-supervisor.php"
     ],
     "config": {
         "sort-packages": true,
