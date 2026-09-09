@@ -37,6 +37,7 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testCreate(): void
 	{
@@ -88,6 +89,7 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testDelete(): void
 	{

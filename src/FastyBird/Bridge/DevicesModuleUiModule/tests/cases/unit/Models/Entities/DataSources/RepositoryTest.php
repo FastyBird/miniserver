@@ -28,6 +28,7 @@ final class RepositoryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testRead(): void
 	{

@@ -53,6 +53,7 @@ final class AccessoriesTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function setUp(): void
 	{

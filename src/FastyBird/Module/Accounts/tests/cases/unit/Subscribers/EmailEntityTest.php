@@ -32,6 +32,7 @@ final class EmailEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function testChangeDefault(): void
 	{

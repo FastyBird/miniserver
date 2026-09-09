@@ -26,6 +26,7 @@ final class DashboardTabsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testReadOne(): void
 	{
@@ -87,6 +88,7 @@ final class DashboardTabsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testReadAllByDashboard(): void
 	{

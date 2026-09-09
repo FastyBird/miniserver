@@ -121,6 +121,9 @@ final class StatesManagerTest extends TestCase
 		self::assertEquals($expected, $state->toArray());
 	}
 
+	/**
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
 	public function testDeleteEntity(): void
 	{
 		$id = Uuid\Uuid::uuid4();

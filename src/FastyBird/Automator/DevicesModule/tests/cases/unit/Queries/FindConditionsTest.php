@@ -27,6 +27,7 @@ final class FindConditionsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testFindById(): void
 	{
@@ -48,6 +49,7 @@ final class FindConditionsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testFindForDevice(): void
 	{
@@ -69,6 +71,7 @@ final class FindConditionsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testFindForChannel(): void
 	{
@@ -90,6 +93,7 @@ final class FindConditionsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testFindForChannelProperty(): void
 	{
@@ -111,6 +115,7 @@ final class FindConditionsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testFindForCombination(): void
 	{

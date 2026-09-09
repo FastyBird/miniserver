@@ -141,6 +141,7 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 
 	/**
 	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function readStates(): array
 	{
@@ -648,6 +649,7 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 
 	/**
 	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function getStates(): array
 	{

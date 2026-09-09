@@ -26,6 +26,7 @@ final class DevicesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testFindOne(): void
 	{
@@ -44,6 +45,7 @@ final class DevicesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testReadOne(): void
 	{

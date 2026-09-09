@@ -26,6 +26,7 @@ final class ConnectorsPropertiesRepositoryTest extends Tests\Cases\Unit\DbTestCa
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testReadOne(): void
 	{
@@ -142,6 +143,7 @@ final class ConnectorsPropertiesRepositoryTest extends Tests\Cases\Unit\DbTestCa
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testReadAllByConnector(): void
 	{

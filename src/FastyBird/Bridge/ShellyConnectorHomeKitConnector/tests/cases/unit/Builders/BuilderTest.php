@@ -41,6 +41,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ToolsExceptions\InvalidArgument
 	 *
 	 * @dataProvider builder
+	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function testBuild(
 		string $shellyIdentifier,

@@ -254,6 +254,7 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 
 	/**
 	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|Utils\ArrayHash|string|null>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function writeStates(): array
 	{
@@ -680,6 +681,7 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 
 	/**
 	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|Utils\ArrayHash|string|null>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function setStates(): array
 	{

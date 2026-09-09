@@ -34,6 +34,7 @@ final class ApiV1ParserTest extends TestCase
 
 	/**
 	 * @return array<string, array<int, array<string, bool|Uuid\UuidInterface|string>|Uuid\UuidInterface|string>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function parseDeviceAttributesProvider(): array
 	{
@@ -112,6 +113,7 @@ final class ApiV1ParserTest extends TestCase
 
 	/**
 	 * @return array<string, array<int, array<string, bool|Uuid\UuidInterface|string>|Uuid\UuidInterface|string>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function parseDeviceHardwareInfoProvider(): array
 	{
@@ -194,6 +196,7 @@ final class ApiV1ParserTest extends TestCase
 
 	/**
 	 * @return array<string, array<int, array<string, bool|Uuid\UuidInterface|string>|Uuid\UuidInterface|string>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function parseDeviceFirmwareInfoProvider(): array
 	{
@@ -250,6 +253,7 @@ final class ApiV1ParserTest extends TestCase
 
 	/**
 	 * @return array<string, array<int, array<string, bool|Uuid\UuidInterface|string>|Uuid\UuidInterface|string>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function parseDevicePropertiesProvider(): array
 	{
@@ -292,6 +296,7 @@ final class ApiV1ParserTest extends TestCase
 
 	/**
 	 * @return array<string, array<int, array<string, array<int, array<string, string>>|bool|Uuid\UuidInterface|string>|Uuid\UuidInterface|string>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function parseDevicePropertiesAttributesProvider(): array
 	{
@@ -358,6 +363,7 @@ final class ApiV1ParserTest extends TestCase
 	 * @throws Exceptions\ParseMessage
 	 *
 	 * @dataProvider parseDeviceAttributesInvalidProvider
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testParseDeviceAttributeNotValid(
 		string $topic,
@@ -395,6 +401,7 @@ final class ApiV1ParserTest extends TestCase
 	 * @throws Exceptions\ParseMessage
 	 *
 	 * @dataProvider parseDeviceHardwareInfoInvalidProvider
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testParseDeviceHardwareInfoNotValid(
 		string $topic,
@@ -432,6 +439,7 @@ final class ApiV1ParserTest extends TestCase
 	 * @throws Exceptions\ParseMessage
 	 *
 	 * @dataProvider parseDeviceFirmwareInfoInvalidProvider
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testParseDeviceFirmwareInfoNotValid(
 		string $topic,
@@ -484,6 +492,7 @@ final class ApiV1ParserTest extends TestCase
 
 	/**
 	 * @return array<string, array<int, array<string, bool|Uuid\UuidInterface|string>|Uuid\UuidInterface|string>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function parseChannelAttributesProvider(): array
 	{
@@ -553,6 +562,7 @@ final class ApiV1ParserTest extends TestCase
 
 	/**
 	 * @return array<string, array<int, array<string, bool|Uuid\UuidInterface|string>|Uuid\UuidInterface|string>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function parseChannelPropertiesProvider(): array
 	{
@@ -596,6 +606,7 @@ final class ApiV1ParserTest extends TestCase
 
 	/**
 	 * @return array<string, array<int, array<string, array<int, array<string, bool|string>>|bool|Uuid\UuidInterface|string>|Uuid\UuidInterface|string>>
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function parseChannelPropertiesAttributesProvider(): array
 	{
@@ -665,6 +676,7 @@ final class ApiV1ParserTest extends TestCase
 	 * @throws Exceptions\ParseMessage
 	 *
 	 * @dataProvider parseChannelAttributesInvalidProvider
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function testParseChannelAttributeNotValid(
 		string $topic,
