@@ -2,7 +2,7 @@
 
 - **Date:** 2026-09-09
 - **Status:** agreed with Adam Kadlec, all decisions closed
-- **Implementation plans:** `docs/superpowers/plans/2026-09-09-phase-*.md` (one plan per phase; the Phase 6 plan is written after Phase 5 completes)
+- **Implementation plans:** `docs/superpowers/plans/2026-09-09-phase-*.md`, six documents covering Phases 0 to 5 and 7, totalling 95 tasks. The Phase 6 modernization plan is deliberately written only after Phase 5 completes, because the exact versions and breakages are not knowable before then.
 
 ## 1. Goal
 
@@ -220,7 +220,8 @@ Each phase is one or more pull requests against `main` of the fastybird reposito
 
 ### Phase 0, prepare
 
-- Copy all 10 patch files from `https://github.com/FastyBird/libraries-patches` into `tools/patches/` and point the 8 `extra.patches` target entries at the relative paths. All 10 were reachable on 2026-09-09.
+- Copy the referenced patch files from `https://github.com/FastyBird/libraries-patches` into `tools/patches/` and point the 8 `extra.patches` target entries at the relative paths. All were reachable on 2026-09-09. The repository holds 15 patch and diff files; 10 are referenced by the root manifest, one more (`nette.array.offsetCheck.diff`) is declared by the external dependency `fastybird/json-api` v0.19.0 for `nette/utils`, and the remaining four are superseded variants that are not vendored.
+- The `nette/utils` patch is added as a ninth root target only if it is already being applied today. `extra.enable-patching` is `false`, which should make dependency-declared patches inert, so adding it unconditionally could newly apply a patch and break the unchanged-baseline guarantee. The Phase 0 plan carries the empirical check that decides this.
 - Record the frozen toolchain: `.nvmrc` with `20`, and PHP 8.2 stated in `README.md` once it exists (Phase 4) and in `CLAUDE.md`.
 - Bring up the PHP 8.2 toolchain container described in 4.10 and confirm `composer --version` reports 2.x inside it, since the host has no Composer.
 - Deliverable: `composer validate` passes inside the container and every patch applies from the local file rather than a URL.
