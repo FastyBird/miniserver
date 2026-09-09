@@ -27,6 +27,7 @@ use function is_resource;
 use function mb_convert_encoding;
 use function sprintf;
 use function stream_set_blocking;
+use function vsprintf;
 
 /**
  * Serial interface using Windows file stream
@@ -93,7 +94,7 @@ final class SerialWindows extends Serial
 		}
 
 		$command = 'mode %s baud=%s data=%s stop=%s parity=%s xon=%s';
-		$command = sprintf($command, ...array_values($params));
+		$command = vsprintf($command, array_values($params));
 
 		$message = exec($command, $output, $resultCode);
 

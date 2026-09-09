@@ -26,6 +26,7 @@ use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Schemas;
 use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
 use function strval;
@@ -66,7 +67,7 @@ abstract class Property extends JsonApiSchemas\JsonApi
 	 * @throws ValueError
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function getAttributes(
 		$resource,

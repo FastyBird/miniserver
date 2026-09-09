@@ -280,7 +280,7 @@ final class Cloud extends ClientProcess implements Client
 
 					$deferred->resolve(true);
 			})
-				->catch(function (Throwable $ex) use ($deferred, $device): void {
+			->catch(function (Throwable $ex) use ($deferred, $device): void {
 					$this->logger->error(
 						'Could not call cloud openapi',
 						[
@@ -296,34 +296,34 @@ final class Cloud extends ClientProcess implements Client
 						],
 					);
 
-					if ($ex instanceof Exceptions\CloudApiError) {
-						$this->queue->append(
-							$this->entityHelper->create(
-								Queue\Messages\StoreDeviceConnectionState::class,
-								[
-									'connector' => $device->getConnector(),
-									'identifier' => $device->getIdentifier(),
-									'state' => DevicesTypes\ConnectionState::ALERT,
-								],
-							),
-						);
-					}
+				if ($ex instanceof Exceptions\CloudApiError) {
+					$this->queue->append(
+						$this->entityHelper->create(
+							Queue\Messages\StoreDeviceConnectionState::class,
+							[
+								'connector' => $device->getConnector(),
+								'identifier' => $device->getIdentifier(),
+								'state' => DevicesTypes\ConnectionState::ALERT,
+							],
+						),
+					);
+				}
 
-					if (
+				if (
 						!$ex instanceof Exceptions\CloudApiCall
 						&& !$ex instanceof Exceptions\CloudApiError
 					) {
-						$this->dispatcher?->dispatch(
-							new DevicesEvents\TerminateConnector(
-								MetadataTypes\Sources\Connector::SONOFF,
-								'Could not call eWelink api',
-								$ex,
-							),
-						);
-					}
+					$this->dispatcher?->dispatch(
+						new DevicesEvents\TerminateConnector(
+							MetadataTypes\Sources\Connector::SONOFF,
+							'Could not call eWelink api',
+							$ex,
+						),
+					);
+				}
 
 					$deferred->reject($ex);
-				});
+			});
 
 		return $deferred->promise();
 	}
@@ -360,7 +360,7 @@ final class Cloud extends ClientProcess implements Client
 
 						$deferred->resolve(true);
 				})
-					->catch(function () use ($deferred, $device): void {
+				->catch(function () use ($deferred, $device): void {
 						$this->connectionManager
 							->getCloudApiConnection($this->connector)
 							->getThingState(
@@ -371,7 +371,7 @@ final class Cloud extends ClientProcess implements Client
 
 									$deferred->resolve(true);
 							})
-								->catch(function (Throwable $ex) use ($deferred, $device): void {
+							->catch(function (Throwable $ex) use ($deferred, $device): void {
 									$this->logger->error(
 										'Calling eWelink cloud failed',
 										[
@@ -387,35 +387,35 @@ final class Cloud extends ClientProcess implements Client
 										],
 									);
 
-									if ($ex instanceof Exceptions\CloudApiError) {
-										$this->queue->append(
-											$this->entityHelper->create(
-												Queue\Messages\StoreDeviceConnectionState::class,
-												[
-													'connector' => $device->getConnector(),
-													'identifier' => $device->getIdentifier(),
-													'state' => DevicesTypes\ConnectionState::ALERT,
-												],
-											),
-										);
-									}
+								if ($ex instanceof Exceptions\CloudApiError) {
+									$this->queue->append(
+										$this->entityHelper->create(
+											Queue\Messages\StoreDeviceConnectionState::class,
+											[
+												'connector' => $device->getConnector(),
+												'identifier' => $device->getIdentifier(),
+												'state' => DevicesTypes\ConnectionState::ALERT,
+											],
+										),
+									);
+								}
 
-									if (
+								if (
 										!$ex instanceof Exceptions\CloudApiCall
 										&& !$ex instanceof Exceptions\CloudApiError
 									) {
-										$this->dispatcher?->dispatch(
-											new DevicesEvents\TerminateConnector(
-												MetadataTypes\Sources\Connector::SONOFF,
-												'Could not call eWelink api',
-												$ex,
-											),
-										);
-									}
+									$this->dispatcher?->dispatch(
+										new DevicesEvents\TerminateConnector(
+											MetadataTypes\Sources\Connector::SONOFF,
+											'Could not call eWelink api',
+											$ex,
+										),
+									);
+								}
 
 									$deferred->reject($ex);
-								});
-					});
+							});
+				});
 		} else {
 			$this->connectionManager
 				->getCloudApiConnection($this->connector)
@@ -425,7 +425,7 @@ final class Cloud extends ClientProcess implements Client
 
 						$deferred->resolve(true);
 				})
-					->catch(function (Throwable $ex) use ($deferred, $device): void {
+				->catch(function (Throwable $ex) use ($deferred, $device): void {
 						$this->logger->error(
 							'Calling eWelink cloud failed',
 							[
@@ -441,18 +441,18 @@ final class Cloud extends ClientProcess implements Client
 							],
 						);
 
-						if (!$ex instanceof Exceptions\CloudApiCall) {
-							$this->dispatcher?->dispatch(
-								new DevicesEvents\TerminateConnector(
-									MetadataTypes\Sources\Connector::SONOFF,
-									'Could not call eWelink api',
-									$ex,
-								),
-							);
-						}
+					if (!$ex instanceof Exceptions\CloudApiCall) {
+						$this->dispatcher?->dispatch(
+							new DevicesEvents\TerminateConnector(
+								MetadataTypes\Sources\Connector::SONOFF,
+								'Could not call eWelink api',
+								$ex,
+							),
+						);
+					}
 
 						$deferred->reject($ex);
-					});
+				});
 		}
 
 		return $deferred->promise();

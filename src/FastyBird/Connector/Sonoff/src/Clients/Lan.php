@@ -236,77 +236,77 @@ final class Lan extends ClientProcess implements Client
 
 					$deferred->resolve(true);
 			})
-				->catch(function (Throwable $ex) use ($deferred, $device): void {
-					if ($ex instanceof Exceptions\LanApiError) {
-						$this->queue->append(
-							$this->entityHelper->create(
-								Queue\Messages\StoreDeviceConnectionState::class,
-								[
-									'connector' => $device->getConnector(),
-									'identifier' => $device->getIdentifier(),
-									'state' => DevicesTypes\ConnectionState::ALERT,
-								],
-							),
-						);
-
-						$this->logger->warning(
-							'Calling device lan api for reading state failed',
+			->catch(function (Throwable $ex) use ($deferred, $device): void {
+				if ($ex instanceof Exceptions\LanApiError) {
+					$this->queue->append(
+						$this->entityHelper->create(
+							Queue\Messages\StoreDeviceConnectionState::class,
 							[
-								'source' => MetadataTypes\Sources\Connector::SONOFF->value,
-								'type' => 'lan-client',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
-								'connector' => [
-									'id' => $this->connector->getId()->toString(),
-								],
-								'device' => [
-									'id' => $device->getId()->toString(),
-								],
+								'connector' => $device->getConnector(),
+								'identifier' => $device->getIdentifier(),
+								'state' => DevicesTypes\ConnectionState::ALERT,
 							],
-						);
-					} elseif ($ex instanceof Exceptions\LanApiCall) {
-						$this->checkError($ex, $device);
+						),
+					);
 
-						$this->logger->warning(
-							'Calling device lan api for reading state failed',
-							[
-								'source' => MetadataTypes\Sources\Connector::SONOFF->value,
-								'type' => 'lan-client',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
-								'connector' => [
-									'id' => $this->connector->getId()->toString(),
-								],
-								'device' => [
-									'id' => $device->getId()->toString(),
-								],
+					$this->logger->warning(
+						'Calling device lan api for reading state failed',
+						[
+							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'type' => 'lan-client',
+							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'connector' => [
+								'id' => $this->connector->getId()->toString(),
 							],
-						);
-					} else {
-						$this->logger->error(
+							'device' => [
+								'id' => $device->getId()->toString(),
+							],
+						],
+					);
+				} elseif ($ex instanceof Exceptions\LanApiCall) {
+					$this->checkError($ex, $device);
+
+					$this->logger->warning(
+						'Calling device lan api for reading state failed',
+						[
+							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'type' => 'lan-client',
+							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'connector' => [
+								'id' => $this->connector->getId()->toString(),
+							],
+							'device' => [
+								'id' => $device->getId()->toString(),
+							],
+						],
+					);
+				} else {
+					$this->logger->error(
+						'Could not call device lan api',
+						[
+							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'type' => 'lan-client',
+							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'connector' => [
+								'id' => $this->connector->getId()->toString(),
+							],
+							'device' => [
+								'id' => $device->getId()->toString(),
+							],
+						],
+					);
+
+					$this->dispatcher?->dispatch(
+						new DevicesEvents\TerminateConnector(
+							MetadataTypes\Sources\Connector::SONOFF,
 							'Could not call device lan api',
-							[
-								'source' => MetadataTypes\Sources\Connector::SONOFF->value,
-								'type' => 'lan-client',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
-								'connector' => [
-									'id' => $this->connector->getId()->toString(),
-								],
-								'device' => [
-									'id' => $device->getId()->toString(),
-								],
-							],
-						);
-
-						$this->dispatcher?->dispatch(
-							new DevicesEvents\TerminateConnector(
-								MetadataTypes\Sources\Connector::SONOFF,
-								'Could not call device lan api',
-								$ex,
-							),
-						);
-					}
+							$ex,
+						),
+					);
+				}
 
 					$deferred->reject($ex);
-				});
+			});
 
 		return $deferred->promise();
 	}

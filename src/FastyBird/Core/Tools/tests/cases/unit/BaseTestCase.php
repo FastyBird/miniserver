@@ -22,8 +22,8 @@ abstract class BaseTestCase extends TestCase
 	protected array $neonFiles = [];
 
 	/**
-	 * @throws Error
 	 * @param class-string $serviceType
+	 * @throws Error
 	 */
 	protected function mockContainerService(
 		string $serviceType,

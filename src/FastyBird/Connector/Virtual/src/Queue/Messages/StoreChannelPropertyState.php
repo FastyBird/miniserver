@@ -100,6 +100,7 @@ final readonly class StoreChannelPropertyState implements Message
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function toArray(): array

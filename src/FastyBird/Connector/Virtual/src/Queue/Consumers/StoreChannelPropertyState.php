@@ -31,6 +31,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -75,7 +76,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 	 * @throws ToolsExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

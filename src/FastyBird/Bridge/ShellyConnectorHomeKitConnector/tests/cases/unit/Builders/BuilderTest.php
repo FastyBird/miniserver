@@ -16,6 +16,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Nette\DI;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 use RuntimeException;
 
 /**
@@ -41,7 +42,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ToolsExceptions\InvalidArgument
 	 *
 	 * @dataProvider builder
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function testBuild(
 		string $shellyIdentifier,

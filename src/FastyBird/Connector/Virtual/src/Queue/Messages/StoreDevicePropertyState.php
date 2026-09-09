@@ -93,6 +93,7 @@ final readonly class StoreDevicePropertyState implements Message
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function toArray(): array

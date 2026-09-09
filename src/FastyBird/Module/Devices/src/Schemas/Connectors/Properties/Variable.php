@@ -23,6 +23,7 @@ use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Schemas;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -67,7 +68,7 @@ final class Variable extends Property
 	 * @throws ValueError
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function getAttributes(
 		$resource,

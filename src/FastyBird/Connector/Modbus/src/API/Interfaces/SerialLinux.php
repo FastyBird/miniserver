@@ -27,6 +27,7 @@ use function is_resource;
 use function mb_convert_encoding;
 use function sprintf;
 use function stream_set_blocking;
+use function vsprintf;
 
 /**
  * Serial interface using Linux file stream
@@ -94,7 +95,7 @@ final class SerialLinux extends Serial
 		}
 
 		$command = 'stty -F %s %s cs%s %s %s %s';
-		$command = sprintf($command, ...array_values($params));
+		$command = vsprintf($command, array_values($params));
 
 		$message = exec($command, $output, $resultCode);
 

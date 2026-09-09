@@ -13,6 +13,7 @@ use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
 use Nette\Utils;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 use RuntimeException;
 
 /**
@@ -32,7 +33,7 @@ final class EmailEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function testChangeDefault(): void
 	{

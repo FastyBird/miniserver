@@ -25,6 +25,7 @@ use FastyBird\SimpleAuth\Exceptions as SimpleAuthExceptions;
 use FastyBird\SimpleAuth\Models as SimpleAuthModels;
 use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Psr\Http\Message;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 
 /**
  * Role children API controller
@@ -52,7 +53,7 @@ final class RoleChildrenV1 extends BaseV1
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws SimpleAuthExceptions\InvalidState
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,

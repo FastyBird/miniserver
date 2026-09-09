@@ -22,6 +22,7 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Types;
 use Flow\JSONPath;
 use Nette\Caching as NetteCaching;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -86,7 +87,7 @@ final class Builder
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	private function build(Types\ConfigurationType $type): array
 	{

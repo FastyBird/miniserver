@@ -244,6 +244,7 @@ class Account implements Entities\Entity,
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function toArray(): array

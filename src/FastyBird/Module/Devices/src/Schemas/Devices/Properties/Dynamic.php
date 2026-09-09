@@ -30,6 +30,7 @@ use FastyBird\Module\Devices\Types;
 use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -86,7 +87,7 @@ final class Dynamic extends Property
 	 * @throws ValueError
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function getAttributes(
 		$resource,

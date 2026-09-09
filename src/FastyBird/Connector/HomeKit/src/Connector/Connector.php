@@ -31,6 +31,7 @@ use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
+use Ramsey\Uuid\Exception\InvalidArgumentException;
 use React\EventLoop;
 use React\Promise;
 use TypeError;
@@ -102,7 +103,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws ToolsExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
-	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
