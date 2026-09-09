@@ -203,21 +203,33 @@ stderr_logfile = /data/logs/%(program_name)s-error.log
 | System paths for later packaging | `/etc/miniserver`, `/var/lib/miniserver`, `/var/log/miniserver` |
 | Homepage | `https://www.fastybird.com` |
 
+### 4.10 Development and verification environment
+
+Verified on the development host on 2026-09-09: PHP 8.5.6, no Composer installed, Node 24.15.0, yarn 1.22.22, Docker 29.7.2 reachable, no `php@8.2` formula available. The project froze against PHP 8.2 and Node 20, and `>=8.2.0` in the root manifest is satisfied by 8.5 numerically while a two-year-old dependency set is not. A baseline taken on the host would therefore not be the baseline this project needs.
+
+- Every verification command in Phases 1 to 5 runs inside a container, not on the host. Plans state commands in the container form, for example `docker compose exec -T application make phpstan`.
+- Until Phase 2 replaces it, the PHP toolchain is the existing `.docker/dev/php/Dockerfile`, which is `php:8.2-fpm` with Composer 2.4 and every required extension already installed, reached through the existing root `docker-compose.yml` service `application`, which mounts the repository at `/app`. No new image is needed for Phase 1.
+- `.docker/dev/node/Dockerfile` is defective and is repaired in Phase 1 as a structural fix: it is based on the unpinned `node:lts-alpine`, which now resolves well past Node 20; it runs `yarn install` with no `package.json` present in the image; and it runs `yarn global add @rollup/rollup-linux-arm64-musl`, which is specific to arm64 musl and wrong on other architectures. Pin it to `node:20-alpine` and delete both `RUN` lines, since dependencies install from the mounted volume at run time.
+- Phase 2 supersedes both images with `docker/dev/`, after which the same rule points at the new compose file.
+
+Also verified on 2026-09-09: all 10 patch files and the `FastyBird/libraries-patches` repository return HTTP 200, and the `mathsolver/mathsolver` VCS repository is reachable, so Phase 0 and Composer resolution are not blocked by a missing upstream.
+
 ## 5. Phases
 
 Each phase is one or more pull requests against `main` of the fastybird repository, each green in CI before the next starts (D11). Commit messages use the conventional format `<type>(<scope>): <subject>` with the scope list from 4.8 from Phase 1 onward, even though enforcement arrives in Phase 4.
 
 ### Phase 0, prepare
 
-- Copy all 10 patch files from `https://github.com/FastyBird/libraries-patches` into `tools/patches/` and point the 8 `extra.patches` target entries at the relative paths.
+- Copy all 10 patch files from `https://github.com/FastyBird/libraries-patches` into `tools/patches/` and point the 8 `extra.patches` target entries at the relative paths. All 10 were reachable on 2026-09-09.
 - Record the frozen toolchain: `.nvmrc` with `20`, and PHP 8.2 stated in `README.md` once it exists (Phase 4) and in `CLAUDE.md`.
-- Deliverable: `composer validate` passes and the patches apply from the local files.
+- Bring up the PHP 8.2 toolchain container described in 4.10 and confirm `composer --version` reports 2.x inside it, since the host has no Composer.
+- Deliverable: `composer validate` passes inside the container and every patch applies from the local file rather than a URL.
 
 ### Phase 1, baseline green
 
 Three pull requests, in order, so that D11 holds:
 
-1. **Structural fixes.** Point the root `bin` entries at `src/FastyBird/Core/Application/bin/*` and replace `nettrineFixtures.paths` with an empty list. No dependency changes.
+1. **Structural fixes.** Point the root `bin` entries at `src/FastyBird/Core/Application/bin/*`, replace `nettrineFixtures.paths` with an empty list, and repair `.docker/dev/node/Dockerfile` as described in 4.10. No dependency changes.
 2. **Resolution.** Install on PHP 8.2, Node 20 and yarn 1. If the frozen set no longer resolves, bump only what blocks installation, and list every bump in the pull request body under the heading `Forced exceptions` with the error that forced it (D10). Commit `composer.lock` and `yarn.lock` and drop both from `.gitignore`. No moves or renames.
 3. **Green.** Fix whatever `make lint`, `make cs`, `make phpstan`, `make tests` against MariaDB and Redis, and `yarn build` still report. If a fix requires a dependency change, it belongs in a follow-up bump-only pull request instead.
 
@@ -277,7 +289,8 @@ One repository `FastyBird/miniserver` on `main` with green CI, `docker build -f 
 
 | Risk | Mitigation |
 |---|---|
-| The frozen dependency set no longer resolves (dev-branch constraints, VCS package, raw-URL patches) | Phase 0 vendors the patches; Phase 1 allows forced-exception bumps and logs them |
+| The frozen dependency set no longer resolves (dev-branch constraints, VCS package, raw-URL patches) | Phase 0 vendors the patches; Phase 1 allows forced-exception bumps and logs them. Upstream availability was confirmed on 2026-09-09, so the residual risk is constraint drift in the three dev-branch requirements, not a missing source |
+| The host toolchain does not match the frozen one, so a host baseline would be misleading | All verification runs in the PHP 8.2 container per 4.10 |
 | Doctrine ORM 3 conflicts with the three ORM patches | Phase 6 evaluates each patch before upgrading and treats Doctrine as the last upgrade |
 | PHPStan 2 produces a large number of new findings across 355k lines | Own pull request, baseline file allowed temporarily, burned down afterwards |
 | Symlinked path packages confuse a tool | `COMPOSER_MIRROR_PATH_REPOS=1` in CI and Docker; tools point at `src/` real paths |
