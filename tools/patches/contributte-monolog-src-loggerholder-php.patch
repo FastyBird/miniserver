@@ -1,0 +1,30 @@
+--- /dev/null
++++ ../src/LoggerHolder.php
+@@ -4,6 +4,7 @@
+ 
+ use Contributte\Monolog\Exception\Logic\InvalidStateException;
+ use Monolog\Logger;
++use Monolog\LogRecord;
+ use Nette\DI\Container;
+ use Psr\Log\LoggerInterface;
+ 
+@@ -60,8 +61,17 @@
+ 		$logger = clone $this->instLogger;
+ 
+ 		// Write in log which class used LoggerHolder
+-		$logger->pushProcessor(function (array $record) use ($calledBy): array {
+-			$record['extra']['calledBy'] = $calledBy;
++		$logger->pushProcessor(function (array|LogRecord $record) use ($calledBy): array|LogRecord {
++			if ($record instanceof LogRecord) {
++				$extra = $record->offsetGet('extra');
++				assert(is_array($extra));
++
++				$extra['calledBy'] = $calledBy;
++
++				$record->offsetSet('extra', $extra);
++			} else {
++				$record['extra']['calledBy'] = $calledBy;
++			}
+ 
+ 			return $record;
+ 		});

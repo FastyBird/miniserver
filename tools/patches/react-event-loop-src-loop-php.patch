@@ -1,0 +1,11 @@
+--- /dev/null
++++ ../src/Loop.php
+@@ -27,7 +27,7 @@
+      *
+      * @return LoopInterface
+      */
+-    public static function get()
++    public static function get(): LoopInterface
+     {
+         if (self::$instance instanceof LoopInterface) {
+             return self::$instance;

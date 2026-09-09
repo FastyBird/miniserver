@@ -1,0 +1,32 @@
+--- /dev/null
++++ ../src/UuidBinaryType.php
+@@ -72,7 +72,12 @@
+         try {
+             $uuid = Uuid::fromBytes($value);
+         } catch (InvalidArgumentException $e) {
+-            throw ConversionException::conversionFailed($value, static::NAME);
++            try {
++                $uuid = Uuid::fromString($value);
++
++            } catch (InvalidArgumentException $e) {
++                throw ConversionException::conversionFailed($value, static::NAME);
++            }
+         }
+ 
+         return $uuid;
+@@ -103,7 +108,14 @@
+                 return Uuid::fromString((string) $value)->getBytes();
+             }
+         } catch (InvalidArgumentException $e) {
+-            // Ignore the exception and pass through.
++            try {
++                $uuid = Uuid::fromBytes($value);
++
++                return $uuid->getBytes();
++
++            } catch (InvalidArgumentException $e) {
++                // Ignore the exception and pass through.
++            }
+         }
+ 
+         throw ConversionException::conversionFailed($value, static::NAME);

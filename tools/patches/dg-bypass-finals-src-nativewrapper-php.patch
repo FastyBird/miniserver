@@ -1,0 +1,18 @@
+--- /dev/null
++++ ../src/NativeWrapper.php
+@@ -203,7 +203,14 @@
+ 	{
+ 		stream_wrapper_restore(self::PROTOCOL);
+ 		try {
+-			return $func(...array_slice(func_get_args(), 1));
++			if ($func === 'mkdir') {
++				if (!is_dir(...array_slice(func_get_args(), 1, 1))) {
++					return @$func(...array_slice(func_get_args(), 1));
++				}
++				return true;
++			} else {
++				return $func(...array_slice(func_get_args(), 1));
++			}
+ 		} finally {
+ 			stream_wrapper_unregister(self::PROTOCOL);
+ 			stream_wrapper_register(self::PROTOCOL, self::$outerWrapper);

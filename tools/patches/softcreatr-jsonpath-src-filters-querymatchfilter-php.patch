@@ -1,0 +1,126 @@
+--- /dev/null
++++ ../src/Filters/QueryMatchFilter.php
+@@ -66,15 +66,37 @@
+                     $return[] = $value;
+                 }
+
+-                /** @noinspection TypeUnsafeComparisonInspection */
+-                // phpcs:ignore -- This is a loose comparison by design.
+-                if (($operator === '=' || $operator === '==') && $value1 == $comparisonValue) {
++                if (
++                    ($operator === '=' || $operator === '==')
++                    && (
++                        (
++                            \is_array($value1)
++                            && \count($value1) === \intval($comparisonValue)
++                        )
++                        || (
++                            !\is_array($value1)
++                            // phpcs:ignore -- This is a loose comparison by design.
++                            && $value1 == $comparisonValue
++                        )
++                    )
++                ) {
+                     $return[] = $value;
+                 }
+
+-                /** @noinspection TypeUnsafeComparisonInspection */
+-                // phpcs:ignore -- This is a loose comparison by design.
+-                if (($operator === '!=' || $operator === '!==' || $operator === '<>') && $value1 != $comparisonValue) {
++                if (
++                    ($operator === '!=' || $operator === '!==' || $operator === '<>')
++                    && (
++                        (
++                            \is_array($value1)
++                            && \count($value1) !== \intval($comparisonValue)
++                        )
++                        || (
++                            !\is_array($value1)
++                            // phpcs:ignore -- This is a loose comparison by design.
++                            && $value1 != $comparisonValue
++                        )
++                    )
++                ) {
+                     $return[] = $value;
+                 }
+
+@@ -82,23 +104,75 @@
+                     $return[] = $value;
+                 }
+
+-                if ($operator === '>' && $value1 > $comparisonValue) {
++                if (
++                    $operator === '>'
++                    && (
++                        (
++                            \is_array($value1)
++                            && \count($value1) > \intval($comparisonValue)
++                        )
++                        || (
++                            !\is_array($value1)
++                            && $value1 > $comparisonValue
++                        )
++                    )
++                ) {
+                     $return[] = $value;
+                 }
+
+-                if ($operator === '>=' && $value1 >= $comparisonValue) {
++                if (
++                    $operator === '>='
++                    && (
++                        (
++                            \is_array($value1)
++                            && \count($value1) >= \intval($comparisonValue)
++                        )
++                        || (
++                            !\is_array($value1)
++                            && $value1 >= $comparisonValue
++                        )
++                    )
++                ) {
+                     $return[] = $value;
+                 }
+
+-                if ($operator === '<' && $value1 < $comparisonValue) {
++                if (
++                    $operator === '<'
++                    && (
++                        (
++                            \is_array($value1)
++                            && \count($value1) < \intval($comparisonValue)
++                        )
++                        || (
++                            !\is_array($value1)
++                            && $value1 < $comparisonValue
++                        )
++                    )
++                ) {
+                     $return[] = $value;
+                 }
+
+-                if ($operator === '<=' && $value1 <= $comparisonValue) {
++                if (
++                    $operator === '<='
++                    && (
++                        (
++                            \is_array($value1)
++                            && \count($value1) <= \intval($comparisonValue)
++                        )
++                        || (
++                            !\is_array($value1)
++                            && $value1 <= $comparisonValue
++                        )
++                    )
++                ) {
+                     $return[] = $value;
+                 }
+
+                 if ($operator === 'in' && \is_array($comparisonValue) && \in_array($value1, $comparisonValue, false)) {
++                    $return[] = $value;
++                }
++
++                if ($operator === 'in' && \is_array($value1) && \in_array($comparisonValue, $value1, false)) {
+                     $return[] = $value;
+                 }
+

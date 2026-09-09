@@ -1,0 +1,13 @@
+--- /dev/null
++++ ../src/Connection.php
+@@ -1857,6 +1857,10 @@
+             $bindingType = $type ?? ParameterType::STRING;
+         }
+ 
++        if ($bindingType === ParameterType::STRING) {
++            $value = strval($value);
++        }
++
+         return [$value, $bindingType];
+     }
+ 

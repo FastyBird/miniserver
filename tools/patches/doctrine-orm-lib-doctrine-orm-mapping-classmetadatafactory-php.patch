@@ -1,0 +1,23 @@
+--- /dev/null
++++ ../lib/Doctrine/ORM/Mapping/ClassMetadataFactory.php
+@@ -228,16 +228,15 @@
+ 
+         $class->setParentClasses($nonSuperclassParents);
+ 
+-        if ($class->isRootEntity() && ! $class->isInheritanceTypeNone() && ! $class->discriminatorMap) {
+-            $this->addDefaultDiscriminatorMap($class);
+-        }
+-
+         // During the following event, there may also be updates to the discriminator map as per GH-1257/GH-8402.
+         // So, we must not discover the missing subclasses before that.
+-
+         if ($this->evm->hasListeners(Events::loadClassMetadata)) {
+             $eventArgs = new LoadClassMetadataEventArgs($class, $this->em);
+             $this->evm->dispatchEvent(Events::loadClassMetadata, $eventArgs);
++        }
++
++        if ($class->isRootEntity() && ! $class->isInheritanceTypeNone() && ! $class->discriminatorMap) {
++            $this->addDefaultDiscriminatorMap($class);
+         }
+ 
+         $this->findAbstractEntityClassesNotListedInDiscriminatorMap($class);

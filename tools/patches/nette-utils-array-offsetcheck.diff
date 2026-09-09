@@ -1,0 +1,14 @@
+ src/Utils/ArrayHash.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Utils/ArrayHash.php b/src/Utils/ArrayHash.php
+index 55237a4..4e9b17d 100644
+--- a/src/Utils/ArrayHash.php
++++ b/src/Utils/ArrayHash.php
+@@ -80,7 +80,7 @@ class ArrayHash extends \stdClass implements \ArrayAccess, \Countable, \Iterator
+ 	 */
+ 	public function offsetExists($key): bool
+ 	{
+-		return isset($this->$key);
++		return array_key_exists($key, (array) $this);
+ 	}
