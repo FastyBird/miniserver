@@ -68,6 +68,9 @@ class VieraExtension extends DI\CompilerExtension implements Translation\DI\Tran
 		};
 	}
 
+	/**
+	 * @throws DI\NotAllowedDuringResolvingException
+	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();

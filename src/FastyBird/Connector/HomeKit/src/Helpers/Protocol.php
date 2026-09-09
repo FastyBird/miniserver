@@ -79,6 +79,7 @@ final class Protocol
 
 	/**
 	 * Convert a HAP type to a UUID
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function hapTypeToUuid(string $type): Uuid\UuidInterface
 	{

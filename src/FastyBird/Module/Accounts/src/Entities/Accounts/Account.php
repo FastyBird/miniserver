@@ -191,6 +191,9 @@ class Account implements Entities\Entity,
 		return $this->emails->toArray();
 	}
 
+	/**
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
 	public function getEmail(string|null $id = null): Entities\Emails\Email|null
 	{
 		$email = $this->emails
@@ -241,6 +244,7 @@ class Account implements Entities\Entity,
 
 	/**
 	 * {@inheritDoc}
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function toArray(): array
 	{
@@ -260,6 +264,7 @@ class Account implements Entities\Entity,
 
 	/**
 	 * @throws Utils\JsonException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function __toString(): string
 	{

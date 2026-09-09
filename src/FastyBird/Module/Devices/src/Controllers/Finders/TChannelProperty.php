@@ -34,6 +34,7 @@ trait TChannelProperty
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function findProperty(
 		string $id,

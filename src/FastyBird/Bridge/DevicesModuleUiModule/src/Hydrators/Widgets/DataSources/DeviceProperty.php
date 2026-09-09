@@ -67,6 +67,7 @@ final class DeviceProperty extends UiHydrators\Widgets\DataSources\DataSource
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,

@@ -59,6 +59,7 @@ final class TriggerControlsV1 extends BaseV1
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,

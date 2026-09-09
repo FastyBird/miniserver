@@ -591,6 +591,7 @@ abstract class Property implements Entity,
 
 	/**
 	 * @throws Exceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function getValueTransformer(): Uuid\UuidInterface|string|null
 	{
@@ -685,6 +686,7 @@ abstract class Property implements Entity,
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function toArray(): array
 	{

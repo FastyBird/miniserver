@@ -126,6 +126,7 @@ class Loader
 	 * @throws ToolsExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function load(Documents\Connectors\Connector $connector): void
 	{
@@ -440,6 +441,7 @@ class Loader
 	 * @throws ToolsExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildAccessory(
 		Documents\Connectors\Connector|Documents\Devices\Device $owner,
@@ -715,6 +717,7 @@ class Loader
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Nette\IOException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildService(
 		Types\ServiceType $type,
@@ -786,6 +789,7 @@ class Loader
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildCharacteristic(
 		Types\ChannelPropertyIdentifier $identifier,

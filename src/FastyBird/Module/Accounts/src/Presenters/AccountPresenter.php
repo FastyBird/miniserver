@@ -53,6 +53,7 @@ class AccountPresenter extends BasePresenter
 	 * @throws Exceptions\InvalidState
 	 * @throws Utils\JsonException
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionDefault(): void
 	{
@@ -65,6 +66,7 @@ class AccountPresenter extends BasePresenter
 	 * @throws Exceptions\InvalidState
 	 * @throws Utils\JsonException
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionProfile(): void
 	{
@@ -77,6 +79,7 @@ class AccountPresenter extends BasePresenter
 	 * @throws Exceptions\InvalidState
 	 * @throws Utils\JsonException
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionPassword(): void
 	{
@@ -88,6 +91,7 @@ class AccountPresenter extends BasePresenter
 	 * @throws Application\BadRequestException
 	 * @throws Utils\JsonException
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function loadAccount(): void
 	{

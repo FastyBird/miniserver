@@ -70,6 +70,9 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		]);
 	}
 
+	/**
+	 * @throws DI\NotAllowedDuringResolvingException
+	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();

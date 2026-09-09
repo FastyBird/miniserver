@@ -102,6 +102,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws ToolsExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{

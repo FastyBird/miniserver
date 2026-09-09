@@ -35,6 +35,7 @@ trait TChannel
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findChannel(
 		string $id,

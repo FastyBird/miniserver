@@ -69,6 +69,9 @@ class WsServerExtension extends DI\CompilerExtension
 		]);
 	}
 
+	/**
+	 * @throws Nette\DI\NotAllowedDuringResolvingException
+	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -90,6 +93,7 @@ class WsServerExtension extends DI\CompilerExtension
 	/**
 	 * @throws Exceptions\Logic
 	 * @throws Nette\DI\MissingServiceException
+	 * @throws Nette\DI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{

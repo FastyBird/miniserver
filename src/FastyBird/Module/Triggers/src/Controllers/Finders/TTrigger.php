@@ -35,6 +35,7 @@ trait TTrigger
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findTrigger(string $id): Entities\Triggers\Trigger
 	{

@@ -108,6 +108,7 @@ class Discover extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{

@@ -35,6 +35,7 @@ trait TDashboard
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findDashboard(string $id): Entities\Dashboards\Dashboard
 	{

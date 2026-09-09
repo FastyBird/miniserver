@@ -67,6 +67,7 @@ class ChannelsPresenter extends BasePresenter
 	 * @throws ValueError
 	 *
 	 * @Secured\Role(manager,administrator)
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionAdd(string $id): void
 	{
@@ -95,6 +96,7 @@ class ChannelsPresenter extends BasePresenter
 	 * @throws ValueError
 	 *
 	 * @Secured\Role(manager,administrator)
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionEdit(string $id, string $channelId): void
 	{

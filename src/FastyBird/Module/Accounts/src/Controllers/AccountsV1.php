@@ -455,6 +455,7 @@ final class AccountsV1 extends BaseV1
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function findAccount(
 		Message\ServerRequestInterface $request,
@@ -490,6 +491,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws DoctrineOrmQueryExceptions\QueryException
 	 * @throws Exceptions\AccountRoleInvalid
 	 * @throws SimpleAuthExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function assignAccountToRoles(JsonAPIDocument\IDocument $document, Entities\Accounts\Account $account): void
 	{

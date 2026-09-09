@@ -235,6 +235,7 @@ class Mapped extends Property
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function toArray(): array
 	{

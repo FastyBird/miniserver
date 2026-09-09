@@ -38,6 +38,7 @@ trait TRole
 	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
 	 * @throws DoctrineOrmQueryExceptions\QueryException
 	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findRole(
 		Message\ServerRequestInterface $request,

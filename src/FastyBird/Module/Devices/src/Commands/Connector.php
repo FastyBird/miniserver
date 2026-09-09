@@ -229,6 +229,7 @@ class Connector extends Console\Command\Command
 	 * @throws Exceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function prepare(
 		Style\SymfonyStyle $io,
@@ -545,6 +546,7 @@ class Connector extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws Exceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function whichConnector(
 		Style\SymfonyStyle $io,

@@ -35,6 +35,7 @@ trait TWidget
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findWidget(string $id): Entities\Widgets\Widget
 	{

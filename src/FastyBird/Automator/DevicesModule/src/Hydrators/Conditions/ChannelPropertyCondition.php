@@ -52,6 +52,7 @@ final class ChannelPropertyCondition extends PropertyCondition
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateChannelAttribute(
 		JsonAPIDocument\Objects\IStandardObject $attributes,

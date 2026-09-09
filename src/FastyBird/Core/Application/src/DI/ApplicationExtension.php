@@ -242,6 +242,7 @@ class ApplicationExtension extends DI\CompilerExtension
 
 	/**
 	 * @throws Nette\DI\MissingServiceException
+	 * @throws Nette\DI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{

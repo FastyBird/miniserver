@@ -37,6 +37,7 @@ trait TIdentity
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function findIdentity(
 		Message\ServerRequestInterface $request,

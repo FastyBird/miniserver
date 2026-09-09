@@ -66,6 +66,7 @@ abstract class Property extends JsonApiSchemas\JsonApi
 	 * @throws ValueError
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function getAttributes(
 		$resource,

@@ -39,6 +39,7 @@ trait TAccount
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findAccount(
 		Message\ServerRequestInterface $request,

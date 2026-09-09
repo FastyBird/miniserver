@@ -53,6 +53,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceAttribute(
 		JsonAPIDocument\Objects\IStandardObject $attributes,
@@ -79,6 +80,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyAttribute(
 		JsonAPIDocument\Objects\IStandardObject $attributes,

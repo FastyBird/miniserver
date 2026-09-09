@@ -68,6 +68,7 @@ final class DirectiveController extends BaseController
 	 * @throws Exceptions\ServerRequestError
 	 * @throws ExchangeExceptions\InvalidState
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function process(
 		Message\ServerRequestInterface $request,

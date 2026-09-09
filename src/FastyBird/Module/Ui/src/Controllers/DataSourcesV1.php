@@ -390,6 +390,7 @@ final class DataSourcesV1 extends BaseV1
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findDataSource(
 		string $id,

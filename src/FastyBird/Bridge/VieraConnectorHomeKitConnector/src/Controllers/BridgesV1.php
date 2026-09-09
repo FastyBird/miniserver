@@ -460,6 +460,7 @@ class BridgesV1 extends BaseV1
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findDevice(string $id): Entities\Devices\Viera
 	{

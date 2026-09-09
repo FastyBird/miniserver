@@ -67,6 +67,9 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 		};
 	}
 
+	/**
+	 * @throws DI\NotAllowedDuringResolvingException
+	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();

@@ -34,6 +34,7 @@ trait TConnector
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findConnector(string $id): Entities\Connectors\Connector
 	{

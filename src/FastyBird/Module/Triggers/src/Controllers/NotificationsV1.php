@@ -72,6 +72,7 @@ final class NotificationsV1 extends BaseV1
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -440,6 +441,7 @@ final class NotificationsV1 extends BaseV1
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findNotification(
 		string $id,

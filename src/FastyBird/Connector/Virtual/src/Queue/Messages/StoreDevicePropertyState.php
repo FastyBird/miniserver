@@ -69,6 +69,9 @@ final readonly class StoreDevicePropertyState implements Message
 		return $this->device;
 	}
 
+	/**
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
 	public function getProperty(): Uuid\UuidInterface|string
 	{
 		if (is_string($this->property) && Uuid\Uuid::isValid($this->property)) {
@@ -90,6 +93,7 @@ final readonly class StoreDevicePropertyState implements Message
 
 	/**
 	 * {@inheritDoc}
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function toArray(): array
 	{

@@ -88,6 +88,9 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		]);
 	}
 
+	/**
+	 * @throws DI\NotAllowedDuringResolvingException
+	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -935,6 +938,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 	/**
 	 * @throws DI\MissingServiceException
+	 * @throws DI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{

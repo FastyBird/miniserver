@@ -59,6 +59,7 @@ final class Generic extends Device
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,

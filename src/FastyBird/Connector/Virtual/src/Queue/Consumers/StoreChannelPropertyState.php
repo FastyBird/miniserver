@@ -75,6 +75,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 	 * @throws ToolsExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

@@ -221,6 +221,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 
 	/**
 	 * @throws DI\MissingServiceException
+	 * @throws DI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{

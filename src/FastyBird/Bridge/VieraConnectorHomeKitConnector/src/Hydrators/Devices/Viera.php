@@ -76,6 +76,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,
@@ -117,6 +118,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationships,

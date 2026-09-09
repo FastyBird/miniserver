@@ -39,6 +39,7 @@ final class UuidRule implements ObjectMapper\Rules\Rule
 	 * @param UuidArgs $args
 	 *
 	 * @throws ObjectMapper\Exception\ValueDoesNotMatch
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function processValue(
 		mixed $value,

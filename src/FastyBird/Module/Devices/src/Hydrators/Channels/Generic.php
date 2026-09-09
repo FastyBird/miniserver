@@ -59,6 +59,7 @@ final class Generic extends Channel
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,

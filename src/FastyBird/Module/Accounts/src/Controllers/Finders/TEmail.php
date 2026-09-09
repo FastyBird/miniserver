@@ -37,6 +37,7 @@ trait TEmail
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function findEmail(
 		Message\ServerRequestInterface $request,

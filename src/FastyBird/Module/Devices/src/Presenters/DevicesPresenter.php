@@ -65,6 +65,7 @@ class DevicesPresenter extends BasePresenter
 	 * @throws Utils\JsonException
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionDefault(string|null $id): void
 	{
@@ -99,6 +100,7 @@ class DevicesPresenter extends BasePresenter
 	 * @throws ValueError
 	 *
 	 * @Secured\Role(manager,administrator)
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionSetting(string $id): void
 	{

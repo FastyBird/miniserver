@@ -51,6 +51,7 @@ final class ChannelPropertyAction extends PropertyAction
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateChannelAttribute(
 		JsonAPIDocument\Objects\IStandardObject $attributes,

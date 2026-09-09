@@ -65,6 +65,7 @@ class ConnectorsPresenter extends BasePresenter
 	 * @throws Utils\JsonException
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionDefault(string|null $id): void
 	{
@@ -97,6 +98,7 @@ class ConnectorsPresenter extends BasePresenter
 	 * @throws ValueError
 	 *
 	 * @Secured\Role(manager,administrator)
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionSetting(string $id, string|null $deviceId = null, string|null $channelId = null): void
 	{

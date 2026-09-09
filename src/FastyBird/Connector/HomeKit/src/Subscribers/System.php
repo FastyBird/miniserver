@@ -113,6 +113,7 @@ final class System implements Common\EventSubscriber
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function postFlush(): void
 	{

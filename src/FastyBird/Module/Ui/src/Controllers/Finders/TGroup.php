@@ -34,6 +34,7 @@ trait TGroup
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findGroup(string $id): Entities\Groups\Group
 	{

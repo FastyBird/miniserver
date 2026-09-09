@@ -177,6 +177,7 @@ abstract class Property extends Entities\Property
 	 * @throws Utils\JsonException
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function __toString(): string
 	{

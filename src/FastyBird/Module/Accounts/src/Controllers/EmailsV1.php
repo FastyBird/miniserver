@@ -77,6 +77,7 @@ final class EmailsV1 extends BaseV1
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,

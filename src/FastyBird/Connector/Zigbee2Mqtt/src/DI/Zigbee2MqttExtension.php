@@ -68,6 +68,9 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 		};
 	}
 
+	/**
+	 * @throws DI\NotAllowedDuringResolvingException
+	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();

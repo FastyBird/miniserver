@@ -68,6 +68,9 @@ class TuyaExtension extends DI\CompilerExtension implements Translation\DI\Trans
 		};
 	}
 
+	/**
+	 * @throws DI\NotAllowedDuringResolvingException
+	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();

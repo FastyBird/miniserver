@@ -86,6 +86,7 @@ final class Builder
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	private function build(Types\ConfigurationType $type): array
 	{

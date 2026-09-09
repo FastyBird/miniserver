@@ -60,6 +60,7 @@ final class Channel extends DevicesHydrators\Channels\Channel
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,

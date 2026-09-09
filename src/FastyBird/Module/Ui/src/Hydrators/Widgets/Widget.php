@@ -103,6 +103,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDisplayRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,
@@ -129,6 +130,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildDisplay(
 		string $type,
@@ -274,6 +276,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @throws DI\MissingServiceException
 	 * @throws JsonApiExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDataSourcesRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,
@@ -333,6 +336,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateTabsRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,
@@ -377,6 +381,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateGroupsRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationship,

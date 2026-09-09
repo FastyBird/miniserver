@@ -63,6 +63,7 @@ final class SubDevice extends Device
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws ToolsExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
 		JsonAPIDocument\Objects\IRelationshipObject $relationships,

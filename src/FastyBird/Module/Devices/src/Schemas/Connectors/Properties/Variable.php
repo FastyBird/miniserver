@@ -67,6 +67,7 @@ final class Variable extends Property
 	 * @throws ValueError
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function getAttributes(
 		$resource,

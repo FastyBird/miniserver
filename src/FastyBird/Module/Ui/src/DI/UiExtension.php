@@ -80,6 +80,9 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		]);
 	}
 
+	/**
+	 * @throws DI\NotAllowedDuringResolvingException
+	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
