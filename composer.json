@@ -1,5 +1,5 @@
 {
-    "name": "fastybird/fastybird",
+    "name": "fastybird/miniserver",
     "description": "Repository for FastyBird packages development",
     "license": "Apache-2.0",
     "type": "project",

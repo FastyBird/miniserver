@@ -1,7 +1,7 @@
 {
-  "name": "@fastybird/fastybird",
+  "name": "@fastybird/miniserver",
   "private": true,
-  "version": "1.0.0-dev.24",
+  "version": "1.0.0-alpha.1",
   "description": "Repository for FastyBird packages development",
   "keywords": [
     "fastybird",
@@ -11,7 +11,7 @@
     "vue"
   ],
   "homepage": "https://www.fastybird.com",
-  "bugs": "https://github.com/FastyBird/fastybird/issues",
+  "bugs": "https://github.com/FastyBird/miniserver/issues",
   "license": "Apache-2.0",
   "author": {
     "name": "FastyBird s.r.o.",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FastyBird/fastybird.git"
+    "url": "https://github.com/FastyBird/miniserver.git"
   },
   "workspaces": [
     "src/FastyBird/Addon/**/*",
