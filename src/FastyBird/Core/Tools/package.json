@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FastyBird/tools.git"
+    "url": "https://github.com/FastyBird/miniserver.git"
   },
   "main": "dist/tools.umd.js",
   "module": "dist/tools.es.js",

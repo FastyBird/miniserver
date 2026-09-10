@@ -24,8 +24,8 @@
   ],
   "support": {
     "email": "code@fastybird.com",
-    "issues": "https://github.com/FastyBird/fastybird/issues",
-    "source": "https://github.com/FastyBird/redisdb-plugin-devices-module-bridge"
+    "issues": "https://github.com/FastyBird/miniserver/issues",
+    "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
     "php": ">=8.2.0",

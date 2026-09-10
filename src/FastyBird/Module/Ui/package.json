@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FastyBird/ui-module.git"
+    "url": "https://github.com/FastyBird/miniserver.git"
   },
   "main": "dist/ui-module.umd.js",
   "module": "dist/ui-module.es.js",

@@ -32,8 +32,8 @@
   ],
   "support": {
     "email": "code@fastybird.com",
-    "issues": "https://github.com/FastyBird/fastybird/issues",
-    "source": "https://github.com/FastyBird/accounts-module"
+    "issues": "https://github.com/FastyBird/miniserver/issues",
+    "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
     "php": ">=8.2.0",
