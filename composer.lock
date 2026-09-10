@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca99851f1ee3774fd6fbe5e6451ed240",
+    "content-hash": "d7d5563d592e57515153e8debe8f453d",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2677,7 +2677,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Accounts",
-                "reference": "e96c679be752b183662c3b81fdf55b30f9521033"
+                "reference": "7637b3fb3fe4d305f95b3cb53352eda1a7cae724"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -2746,8 +2746,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/accounts-module"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -2759,7 +2759,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/ApiKey",
-                "reference": "ba9b5ce6491c31d4bb944835947e385702c45c13"
+                "reference": "7c33569b17abd048519fc64a1e586069000570e6"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -2819,8 +2819,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/apikey-plugin"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -2832,7 +2832,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Application",
-                "reference": "be515d029136cc5a3f5ca77690c90321038aecc6"
+                "reference": "0e735cf810c0aac240eddede8a1bafc1de81bab5"
             },
             "require": {
                 "contributte/cache": "^0.6",
@@ -2909,8 +2909,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/application"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -2922,7 +2922,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/CouchDb",
-                "reference": "8c0076a0de964783bacbbddebe50740f459c3420"
+                "reference": "a43be46ef4944b327555fd288f59392d43d463fc"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -2982,8 +2982,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/couchdb-plugin"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -2995,7 +2995,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Automator/DateTime",
-                "reference": "edcc32cd6acc39d832617067fe57b7fe07e46747"
+                "reference": "9fd8f41f08471462ab55933017d94688d5af5d2e"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -3053,8 +3053,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/date-time-automator"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3144,7 +3144,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Devices",
-                "reference": "1a704d18293e7a4ed317af3d16a8edac3478f983"
+                "reference": "9742fe2c0421a746c6f4005a923c3b4e78614197"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -3220,8 +3220,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/devices-module"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3233,7 +3233,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Automator/DevicesModule",
-                "reference": "286c203560d6d353a24b48201439f2ec70791555"
+                "reference": "8bb133257e2d9ec140df279a43ac42025e9a418e"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -3291,8 +3291,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/devices-module-automator"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3304,7 +3304,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/DevicesModuleUiModule",
-                "reference": "ee528314ae1a21e57add53e0127d2c8b3ba78a88"
+                "reference": "e21214c6506a5c92c2ff37707aeff392413da46e"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -3358,8 +3358,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/devices-module-ui-module-bridge"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3371,7 +3371,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Exchange",
-                "reference": "de3fb6be600acd07da83d24d1b0c6c342b7b4f95"
+                "reference": "6a082ff53669600a4a82ccd9c0e069b56bb57c86"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -3424,8 +3424,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/exchange"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3437,7 +3437,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/FbMqtt",
-                "reference": "22b499b7cd2b7d9a18f74511ae401e95b8dccd3d"
+                "reference": "713960131a0f7fc3cf2c1d3ea5368d3b6d634b6d"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -3500,8 +3500,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/fb-mqtt-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3513,7 +3513,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/HomeKit",
-                "reference": "2819f708b43d024475617e4f193fd1244ef33cae"
+                "reference": "32712db034f6ae2541f4c9ea272a6b09555cabb3"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -3591,8 +3591,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/homekit-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3703,7 +3703,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Library/Metadata",
-                "reference": "28b1c296094dca428a172efa7740db02876416e2"
+                "reference": "d760c48fea269c82db54fd5f32aa3fa5d238c3c3"
             },
             "require": {
                 "php": ">=8.2.0"
@@ -3747,8 +3747,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/metadata-library"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3760,7 +3760,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Modbus",
-                "reference": "75d85ff557b4067d7d0c9c780c13719190e61571"
+                "reference": "ab5fdfc4f3ce9a0a68e2ebd5d2e71e7edd9c09a3"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -3824,8 +3824,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/modbus-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3837,7 +3837,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/NsPanel",
-                "reference": "36d345d688c8a5d5edba04bf61cead3bf31b6338"
+                "reference": "dac65c7177bd219826b58b15e02e7ed223aca832"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -3908,8 +3908,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/ns-panel-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3921,7 +3921,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/RabbitMq",
-                "reference": "a8636fc445314c94914945cfe8d6ebd9a815298a"
+                "reference": "77fef2d7a36e4e4bf898df442b316dbde1878d79"
             },
             "require": {
                 "bunny/bunny": "0.6.x-dev",
@@ -3979,8 +3979,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/rabbitmq-plugin"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -3992,7 +3992,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/RedisDbCache",
-                "reference": "a23d87e205b2f6d4ec2b32259d13e1daf8af96d5"
+                "reference": "a183309fe543a675679db6c7c31c3373bd809159"
             },
             "require": {
                 "clue/redis-react": "^3@dev",
@@ -4048,8 +4048,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/redisdb-cache-plugin"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4061,7 +4061,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/RedisDb",
-                "reference": "a17267c93547e32b0357fb67b1eefd239d0cc89f"
+                "reference": "b19158ec4b13164f8405a53412543886d2b29a68"
             },
             "require": {
                 "clue/redis-react": "^3@dev",
@@ -4130,8 +4130,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/redisdb-plugin"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4143,7 +4143,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/RedisDbPluginDevicesModule",
-                "reference": "6d96528bd1d5373ea7de6ccd7b1b9f410ca7e084"
+                "reference": "40db8ea5924ae5ca70f0e852a3b2b380498a0b1c"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -4195,8 +4195,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/redisdb-plugin-devices-module-bridge"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4208,7 +4208,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/RedisDbPluginTriggersModule",
-                "reference": "9d70bc803e53948d85d9dde80d5da7df3ecf3545"
+                "reference": "8fa47e68519b2260725e5fa8e32f2e21b1760a0c"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -4260,8 +4260,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/redisdb-plugin-triggers-module-bridge"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4273,7 +4273,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Shelly",
-                "reference": "701b7cdb006ea7d631a2c1daea71e35c653e568b"
+                "reference": "a9e3ea54d875e96b2c49ba038e0ea29de6af798f"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -4341,8 +4341,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/shelly-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4354,7 +4354,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/ShellyConnectorHomeKitConnector",
-                "reference": "999809af441ae5e123d6901f69c55748d97f92e4"
+                "reference": "e3d026d49c2d0aea29cb9ab0a2e0f5a207a02744"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4411,8 +4411,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/shelly-connector-homekit-connector-bridge"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4526,7 +4526,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Sonoff",
-                "reference": "861c3a95864e05bc9c7b80d26578dfc93a7d323a"
+                "reference": "37f24fdd3389da3a52395bd2e7119ed1c9abc780"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -4596,8 +4596,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/sonoff-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4609,7 +4609,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Tools",
-                "reference": "5e98a598456bd40ea691b96e5c5db2eeef7dea26"
+                "reference": "ebda45f422e2fe33802eaa24b3e8b669a599c105"
             },
             "require": {
                 "contributte/monolog": "^0.5",
@@ -4667,8 +4667,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/tools"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4680,7 +4680,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Triggers",
-                "reference": "bc3f9848bf2d5e09fc62d43ca631e0e97fe3c6b4"
+                "reference": "f9492f3f50476b8cecd37dd4ad0e65d3ed6cbe99"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4751,8 +4751,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/triggers-module"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4764,7 +4764,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Tuya",
-                "reference": "8f62c6c25e9dbe7d34139c22e287b4289eefe65a"
+                "reference": "c463a95f7eb0c525aa6000c0310a230905b8f65a"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -4838,8 +4838,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/tuya-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4851,7 +4851,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Ui",
-                "reference": "927ec7898320076c3ca2fcb385accce4aea77eb1"
+                "reference": "5a999437f2bec14d03aaa2f913ea2c2ef24fbfe5"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4927,8 +4927,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/ui-module"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -4940,7 +4940,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Viera",
-                "reference": "43b101251eb71df4ff42e90dcfe9a64e4d5baa23"
+                "reference": "dcc0761a8ac1bde214ac10dc58ba781e0e910a6a"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -5015,8 +5015,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/viera-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -5028,7 +5028,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/VieraConnectorHomeKitConnector",
-                "reference": "ee2b55634e9e6224d2b1a198638054a0d69310cb"
+                "reference": "871bdc565e13eaca7a3164fad8f91a95b03fd603"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -5085,8 +5085,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/viera-connector-homekit-connector-bridge"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -5098,7 +5098,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Virtual",
-                "reference": "e47d4f59ceaea65b700dd1a6d8f8c18d1a81db9c"
+                "reference": "0d161ff25593d97bc7457f818ec8b73590fd109c"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -5162,8 +5162,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/virtual-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -5175,7 +5175,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Addon/VirtualThermostat",
-                "reference": "597b47de05cdf9dd4f691748db8091d078af2a24"
+                "reference": "abfa571e0af7e687f3afcc425cbf3e5ba00c72f8"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -5241,8 +5241,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/virtual-thermostat-addon"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -5254,7 +5254,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector",
-                "reference": "29f516a6efe11dd141384a445e980de8c07063df"
+                "reference": "9b9a2d773f065151d0b1de609b0d1eb28f533c45"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -5312,8 +5312,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/virtual-thermostat-addon-homekit-connector-bridge"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -5325,7 +5325,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/WebServer",
-                "reference": "b3654d86d55f6727f6e2481263e40e7c82f7cdc9"
+                "reference": "76236ebc948ddc21f5e99906088a2ac7147f3f59"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -5394,8 +5394,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/web-server-plugin"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -5407,7 +5407,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/WsServer",
-                "reference": "2d2fdbee7ca6dedcc0906886b67f676e479f601c"
+                "reference": "ad5949ca0201df556bab5ed6c279d10885d2ef76"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -5467,8 +5467,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/ws-server-plugin"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -5480,7 +5480,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Zigbee2Mqtt",
-                "reference": "84e01559dd7f4f9f097ab19c506ffb9cfca8781a"
+                "reference": "b687069020b089b798cac65ac3d99cadace666c7"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -5544,8 +5544,8 @@
             ],
             "support": {
                 "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/fastybird/issues",
-                "source": "https://github.com/FastyBird/zigbee2mqtt-connector"
+                "issues": "https://github.com/FastyBird/miniserver/issues",
+                "source": "https://github.com/FastyBird/miniserver"
             },
             "transport-options": {
                 "relative": true
@@ -17661,28 +17661,32 @@
         },
         {
             "name": "ninjify/nunjuck",
-            "version": "v0.3.0",
+            "version": "v0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ninjify/nunjuck.git",
-                "reference": "24c3fc3dcfed14ba2655e1c05460e0802efe2182"
+                "reference": "004828ee6d3084a1fe1cf3ac3513c24ef4828fe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ninjify/nunjuck/zipball/24c3fc3dcfed14ba2655e1c05460e0802efe2182",
-                "reference": "24c3fc3dcfed14ba2655e1c05460e0802efe2182",
+                "url": "https://api.github.com/repos/ninjify/nunjuck/zipball/004828ee6d3084a1fe1cf3ac3513c24ef4828fe4",
+                "reference": "004828ee6d3084a1fe1cf3ac3513c24ef4828fe4",
                 "shasum": ""
             },
             "require": {
-                "nette/tester": "^2.3",
-                "php": ">=7.1"
+                "nette/tester": "^2.4.3",
+                "php": ">=7.2"
             },
             "require-dev": {
                 "janmarek/mockista": "^1.1.0",
                 "mockery/mockery": "^1.2.2",
-                "nette/di": "~2.4.15",
-                "nette/robot-loader": "~3.2.0",
-                "ninjify/qa": "^0.10"
+                "nette/di": "~3.0.0",
+                "nette/robot-loader": "~3.2",
+                "ninjify/qa": "^0.12",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-nette": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12"
             },
             "suggest": {
                 "janmarek/mockista": "to use BaseMockistaTestCase",
@@ -17696,7 +17700,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.3.x-dev"
+                    "dev-master": "0.5.x-dev"
                 }
             },
             "autoload": {
@@ -17726,9 +17730,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ninjify/nunjuck/issues",
-                "source": "https://github.com/ninjify/nunjuck/tree/master"
+                "source": "https://github.com/ninjify/nunjuck/tree/v0.4.1"
             },
-            "time": "2019-10-02T10:58:18+00:00"
+            "time": "2025-03-17T12:09:19+00:00"
         },
         {
             "name": "ondram/ci-detector",
@@ -20530,6 +20534,6 @@
         "ext-xml": "*",
         "ext-zip": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }
