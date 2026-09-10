@@ -52,7 +52,7 @@
     "lodash.defaultsdeep": "^4.6",
     "lodash.get": "^4.4",
     "lodash.isequal": "^4.5",
-    "uuid": "^9.0"
+    "uuid": "^14.0"
   },
   "peerDependencies": {
     "element-plus": "^2.7",
