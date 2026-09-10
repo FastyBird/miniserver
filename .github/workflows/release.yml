@@ -27,12 +27,31 @@ jobs:
           username: "${{ github.actor }}"
           password: "${{ secrets.GITHUB_TOKEN }}"
 
+      # "latest" must not follow a pre-release. GitHub fires this workflow for
+      # every published release, pre-release included, so tagging latest
+      # unconditionally would point the tag operators pull by default at a beta
+      # the moment one is published. The version tag is always applied; latest is
+      # applied only for a full release.
+      - name: "Compute image tags"
+        id: "tags"
+        env:
+          TAG_NAME: "${{ github.event.release.tag_name }}"
+          IS_PRERELEASE: "${{ github.event.release.prerelease }}"
+        run: |
+          {
+            echo "value<<EOF"
+            echo "ghcr.io/fastybird/miniserver:${TAG_NAME}"
+            if [ "$IS_PRERELEASE" != "true" ]; then
+              echo "ghcr.io/fastybird/miniserver:latest"
+            fi
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "prerelease=$IS_PRERELEASE"
+
       - name: "Build and push"
         uses: "docker/build-push-action@v7"
         with:
           context: "."
           file: "docker/prod/Dockerfile"
           push: true
-          tags: |
-            ghcr.io/fastybird/miniserver:${{ github.event.release.tag_name }}
-            ghcr.io/fastybird/miniserver:latest
+          tags: "${{ steps.tags.outputs.value }}"

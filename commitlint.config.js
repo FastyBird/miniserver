@@ -49,6 +49,7 @@ module.exports = {
 				'infra',
 				'ci',
 				'deps',
+				'deps-dev',
 				'docs',
 				'cross',
 			],

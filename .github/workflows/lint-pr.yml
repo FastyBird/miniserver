@@ -41,6 +41,7 @@ jobs:
             infra
             ci
             deps
+            deps-dev
             docs
             cross
           requireScope: true
