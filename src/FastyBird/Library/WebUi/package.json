@@ -23,32 +23,6 @@
     "type": "git",
     "url": "https://github.com/FastyBird/miniserver.git"
   },
-  "workspaces": [
-    "docs",
-    "packages/**/*",
-    "web-ui-library"
-  ],
-  "scripts": {
-    "dev": "lerna run dev --stream",
-    "build": "lerna run build --stream",
-    "build:dev": "lerna run build:dev --stream",
-    "clean": "lerna clean && rm -rf node_modules",
-    "bootstrap": "lerna bootstrap",
-    "fix": "lerna run fix",
-    "graph": "nx graph",
-    "types": "lerna run types --stream",
-    "lint:js": "lerna run lint:js --stream",
-    "lint:js:fix": "lerna run lint:js:fix --stream",
-    "lint:styles": "lerna run lint:styles --stream",
-    "playground": "lerna run dev --scope=@fastybird/web-ui-docs",
-    "pretty": "yarn pretty:write && yarn pretty:check",
-    "pretty:check": "lerna run pretty:check",
-    "pretty:write": "lerna run pretty:write",
-    "test": "yarn jest --coverage"
-  },
-  "devDependencies": {
-    "lerna": "^8.1"
-  },
   "engines": {
     "node": ">=20"
   }
