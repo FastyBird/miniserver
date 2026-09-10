@@ -1,0 +1,9 @@
+#
+# FastyBird MiniServer - Development Docker Compose (convenience wrapper)
+#
+# This file includes the dev compose from docker/dev/.
+# You can also run directly: docker compose -f docker/dev/docker-compose.yml up -d
+#
+
+include:
+  - docker/dev/docker-compose.yml
