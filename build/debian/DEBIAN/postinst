@@ -1,0 +1,41 @@
+#!/bin/sh
+#     Copyright 2021. FastyBird s.r.o.
+#
+#     Licensed under the Apache License, Version 2.0 (the "License");
+#     you may not use this file except in compliance with the License.
+#     You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#     Unless required by applicable law or agreed to in writing, software
+#     distributed under the License is distributed on an "AS IS" BASIS,
+#     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#     See the License for the specific language governing permissions and
+#     limitations under the License.
+
+set -e
+
+echo "Finalizing configuration"
+sudo adduser --system --gecos "FastyBird-MiniServer Service" --disabled-password --group --home /var/lib/miniserver miniserver || echo "User exists"
+sudo usermod -a -G miniserver miniserver
+sudo chown miniserver:miniserver /etc/miniserver/ -R
+sudo chown miniserver:miniserver /usr/lib/miniserver/ -R
+sudo chown miniserver:miniserver /var/log/miniserver/ -R
+sudo chown miniserver:miniserver /var/tmp/miniserver/ -R
+sudo chown miniserver:miniserver /var/lib/miniserver/ -R
+sudo chmod 0644 /var/log/miniserver/*
+sudo chmod 0777 /var/log/miniserver
+sudo ln -s /usr/lib/miniserver/bin/fb-console.php /usr/bin/fb-miniserver
+# NOTE (2026-09-10): the original line pointed at vendor/fastybird/bootstrap/bin/fb-console,
+# a package that no longer exists. vendor/bin/fb-console does not exist either: Composer does
+# not link a root package's own bin entries into vendor/bin, confirmed by a cold install. The
+# only console entry point that exists is the repository's own bin/fb-console.php.
+echo "Installation completed"
+
+echo "Enabling daemon..."
+sudo pidof systemd && sudo systemctl enable fb-miniserver || echo "Systemctl not found"
+
+echo "Daemon starting..."
+sudo pidof systemd && sudo systemctl start fb-miniserver || echo
+
+echo -e "\e[96mFastyBird MiniServer \e[92mhas been installed. Have a nice day \e[93m\e[5m:)\e[25m\e[39m"
