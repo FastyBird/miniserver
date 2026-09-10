@@ -184,15 +184,25 @@ services and every supervisor program already use. Two extension documents still
 readers to run `vendor/bin/fb-console`; that is correct only when the extension is
 installed as a dependency of some other application, not here.
 
-**The JavaScript half is NOT yet proven.** Docker Desktop stopped during the yarn run,
-before it installed anything. `node_modules/` was restored from a backup rather than
-rebuilt, so `yarn install --frozen-lockfile` from a clean tree remains unverified. Run it
-before relying on the JavaScript side:
+**The JavaScript half is proven too.** `node_modules/` removed from the root and from all
+nine workspace packages, then `yarn install --ignore-engines --frozen-lockfile`.
 
-```bash
-rm -rf node_modules src/FastyBird/*/*/node_modules
-docker compose run --rm --no-deps ui-server sh -lc "yarn install --ignore-engines --frozen-lockfile"
-```
+| Check | Result |
+|---|---|
+| Install | exit 0, 160 seconds |
+| Lock file | unchanged, so the lock fully determines the tree |
+| Root packages | 1174 entries, identical to the pre-wipe count |
+| Workspace packages | 9 of 9 restored, every `@fastybird/*` symlink resolving into `src/` |
+| Hard errors | none |
+
+Two notes for whoever runs this next. Run the container **detached**. An attached
+`docker run` dies with `grpc: the client connection is closing` the moment the invoking
+shell is cleaned up, which silently kills the install part-way through. And expect a
+warning about `vue-component-type-helpers`: the lockfile pins that one package under both
+`^3.3.9` and the floating `latest` tag, the only such entry in the file. Yarn resolves it
+to a single version and warns, so it is currently harmless, but a lockfile containing
+`latest` is not fully deterministic and should be cleaned up when dependencies are next
+touched.
 
 ## Open items for later phases
 
