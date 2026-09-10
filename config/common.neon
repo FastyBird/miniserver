@@ -27,6 +27,7 @@ extensions:
     nettrineOrmConsole                              : Nettrine\ORM\DI\OrmConsoleExtension
     nettrineOrmCache                                : Nettrine\ORM\DI\OrmCacheExtension
     nettrineFixtures                                : Nettrine\Fixtures\DI\FixturesExtension
+    nettrineMigrations                              : Nettrine\Migrations\DI\MigrationsExtension
     ipubPhone                                       : IPub\Phone\DI\PhoneExtension
     ipubDoctrinePhone                               : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubDoctrineCrud                                : IPub\DoctrineCrud\DI\DoctrineCrudExtension
@@ -204,3 +205,6 @@ nettrineOrmAttributes:
 
 nettrineFixtures:
     paths: []
+
+nettrineMigrations:
+    directory: %appDir%/migrations
