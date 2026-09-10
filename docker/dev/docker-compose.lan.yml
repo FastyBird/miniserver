@@ -1,0 +1,35 @@
+#
+# FastyBird MiniServer - Local network override
+#
+# Attaches selected services to a macvlan network so LAN-only device
+# discovery and control protocols (SSDP, mDNS, native UDP/TCP) can reach
+# devices directly, bypassing Docker's default bridge NAT.
+#
+# Usage:
+#   docker compose -f docker/dev/docker-compose.yml -f docker/dev/docker-compose.lan.yml up -d
+#
+
+services:
+  application:
+    networks:
+      fastybird:
+      local_network:
+        ipv4_address: ${LOCAL_NETWORK_APPLICATION_IP_ADDRESS:-192.168.0.10}
+
+  devices-module:
+    networks:
+      fastybird:
+      local_network:
+        ipv4_address: ${LOCAL_NETWORK_DEVICES_MODULE_IP_ADDRESS:-192.168.0.20}
+
+networks:
+  local_network:
+    name: local_network
+    driver: macvlan
+    driver_opts:
+      parent: ${LOCAL_NETWORK_DRIVER:-eth0}
+    ipam:
+      config:
+        - subnet: ${LOCAL_NETWORK_SUBNET:-192.168.0.0/24}
+          gateway: ${LOCAL_NETWORK_GATEWAY:-192.168.0.1}
+          ip_range: ${LOCAL_NETWORK_IP_RANGE:-192.168.0.6/24}
