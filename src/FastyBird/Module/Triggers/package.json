@@ -1,6 +1,7 @@
 {
   "name": "@fastybird/triggers-module",
-  "version": "1.0.0-dev.24",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "description": "FastyBird IoT module for triggers management & basic automation logic",
   "keywords": [
@@ -19,7 +20,7 @@
     "pinia"
   ],
   "homepage": "https://www.fastybird.com",
-  "bugs": "https://github.com/FastyBird/fastybird/issues",
+  "bugs": "https://github.com/FastyBird/miniserver/issues",
   "license": "Apache-2.0",
   "author": {
     "name": "FastyBird s.r.o.",
@@ -30,102 +31,18 @@
     "type": "git",
     "url": "https://github.com/FastyBird/miniserver.git"
   },
-  "main": "dist/triggers-module.umd.js",
-  "module": "dist/triggers-module.es.js",
-  "types": "dist/triggers-module.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/triggers-module.es.js",
-      "require": "./dist/triggers-module.umd.js"
-    }
+    ".": "./assets/entry.ts"
   },
-  "files": [
-    "dist/*",
-    "assets/components/**/*.scss"
-  ],
-  "scripts": {
-    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo"
-  },
-  "dependencies": {
-    "@fastybird/metadata-library": "1.0.0-dev.24",
-    "@fastybird/web-ui-library": "1.0.0-dev.24",
-    "ajv": "^8.12",
-    "ajv-formats": "^3.0",
-    "axios": "^1.6",
-    "date-fns": "^3.3",
-    "jsona": "~1.12.0",
-    "lodash.capitalize": "^4.2",
-    "lodash.get": "^4.4",
-    "natural-orderby": "^3.0",
-    "uuid": "^9.0",
-    "yup": "^1.3"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.23",
-    "@babel/plugin-proposal-class-properties": "^7.18",
-    "@babel/preset-env": "^7.23",
-    "@babel/preset-typescript": "^7.23",
-    "@commitlint/cli": "^19.0",
-    "@commitlint/config-conventional": "^19.0",
-    "@intlify/unplugin-vue-i18n": "^2.0",
-    "@nabla/vite-plugin-eslint": "^2.0",
-    "@types/lodash.capitalize": "^4.2",
-    "@types/lodash.get": "^4.4",
-    "@types/node": "^18.19",
-    "@types/uuid": "^9.0",
-    "@typescript-eslint/eslint-plugin": "^7.1",
-    "@typescript-eslint/parser": "^7.1",
-    "@vitejs/plugin-vue": "^5.2",
-    "@vue/eslint-config-prettier": "^9.0",
-    "@vue/eslint-config-typescript": "^12.0",
-    "babel-loader": "^9.1",
-    "cross-env": "^7.0",
-    "eslint": "^8.57",
-    "eslint-config-prettier": "^9.1",
-    "eslint-plugin-json": "^3.1",
-    "eslint-plugin-markdown": "^3.0",
-    "eslint-plugin-prettier": "^5.1",
-    "eslint-plugin-vue": "^9.22",
-    "minimist": "^1.2",
-    "pinia": "^2.1",
-    "postcss": "^8.4",
-    "postcss-scss": "^4.0",
-    "prettier": "^3.2",
-    "rimraf": "^5.0",
-    "rollup-plugin-delete": "^2.0",
-    "sass": "^1.71",
-    "sass-loader": "^14.1",
-    "stylelint": "^16.2",
-    "stylelint-config-prettier": "^9.0",
-    "stylelint-config-recommended-vue": "^1.5",
-    "stylelint-config-standard": "^36.0",
-    "stylelint-config-standard-scss": "^13.0",
-    "stylelint-order": "^6.0",
-    "stylelint-prettier": "^5.0",
-    "typescript": "5.6.2",
-    "vee-validate": "^4.12",
-    "vite": "^5.1",
-    "vite-plugin-dts": "4.1.1",
-    "vite-plugin-vue-type-imports": "^0.2",
-    "vite-svg-loader": "^5.1",
-    "vue": "^3.4",
-    "vue-i18n": "^9.9",
-    "vue-loader": "^17.4",
-    "vue-meta": "^3.0.0-alpha.10",
-    "vue-router": "^4.3",
-    "vue-toastification": "^2.0.0-rc.5",
-    "vue-tsc": "^2.0"
-  },
+  "types": "./assets/entry.ts",
+  "sideEffects": true,
   "peerDependencies": {
+    "element-plus": "^2.8",
     "pinia": "^2.1",
-    "vee-validate": "^4.12",
+    "unocss": "^0.64",
     "vue": "^3.4",
     "vue-i18n": "^9.9",
     "vue-meta": "^3.0.0-alpha.10",
-    "vue-router": "^4.3",
-    "vue-toastification": "^2.0.0-rc.5"
-  },
-  "engines": {
-    "node": ">=20"
+    "vue-router": "^4.3"
   }
 }
