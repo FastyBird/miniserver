@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f085888a646b7b643655ee6196fb464a",
+    "content-hash": "b6ac020888828c7a39fcd2307121b5dc",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2253,6 +2253,109 @@
             "time": "2024-02-05T11:35:39+00:00"
         },
         {
+            "name": "doctrine/migrations",
+            "version": "3.9.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/migrations.git",
+                "reference": "96cb2a89b56c9efb0bac38e606dc0b0f13e650ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/96cb2a89b56c9efb0bac38e606dc0b0f13e650ec",
+                "reference": "96cb2a89b56c9efb0bac38e606dc0b0f13e650ec",
+                "shasum": ""
+            },
+            "require": {
+                "composer-runtime-api": "^2",
+                "doctrine/dbal": "^3.6 || ^4",
+                "doctrine/deprecations": "^0.5.3 || ^1",
+                "doctrine/event-manager": "^1.2 || ^2.0",
+                "php": "^8.1",
+                "psr/log": "^1.1.3 || ^2 || ^3",
+                "symfony/console": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+                "symfony/stopwatch": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+                "symfony/var-exporter": "^6.2 || ^7.0 || ^8.0"
+            },
+            "conflict": {
+                "doctrine/orm": "<2.12 || >=4"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^14",
+                "doctrine/orm": "^2.13 || ^3",
+                "doctrine/persistence": "^2 || ^3 || ^4",
+                "doctrine/sql-formatter": "^1.0",
+                "ext-pdo_sqlite": "*",
+                "fig/log-test": "^1",
+                "phpstan/phpstan": "^2",
+                "phpstan/phpstan-deprecation-rules": "^2",
+                "phpstan/phpstan-phpunit": "^2",
+                "phpstan/phpstan-strict-rules": "^2",
+                "phpstan/phpstan-symfony": "^2",
+                "phpunit/phpunit": "^10.3 || ^11.0 || ^12.0",
+                "symfony/cache": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+                "symfony/process": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+                "symfony/yaml": "^5.4 || ^6.0 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "doctrine/sql-formatter": "Allows to generate formatted SQL with the diff command.",
+                "symfony/yaml": "Allows the use of yaml for migration configuration files."
+            },
+            "bin": [
+                "bin/doctrine-migrations"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Migrations\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Michael Simonson",
+                    "email": "contact@mikesimonson.com"
+                }
+            ],
+            "description": "PHP Doctrine Migrations project offer additional functionality on top of the database abstraction layer (DBAL) for versioning your database schema and easily deploying changes to it. It is a very easy to use and a powerful tool.",
+            "homepage": "https://www.doctrine-project.org/projects/migrations.html",
+            "keywords": [
+                "database",
+                "dbal",
+                "migrations"
+            ],
+            "support": {
+                "issues": "https://github.com/doctrine/migrations/issues",
+                "source": "https://github.com/doctrine/migrations/tree/3.9.7"
+            },
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fmigrations",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-04-23T19:33:20+00:00"
+        },
+        {
             "name": "doctrine/orm",
             "version": "2.15.5",
             "source": {
@@ -2569,6 +2672,395 @@
             "time": "2023-08-08T05:53:35+00:00"
         },
         {
+            "name": "fastybird/accounts-module",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Module/Accounts",
+                "reference": "e96c679be752b183662c3b81fdf55b30f9521033"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/json-api": "^0.19",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/simple-auth": "^0.14",
+                "fastybird/tools": "@dev",
+                "ipub/slim-router": "^0.2",
+                "nettrine/dbal": "^0.8",
+                "nettrine/orm": "^0.8",
+                "php": ">=8.2.0",
+                "react/promise": "^3",
+                "symfony/console": "^6.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Module\\Accounts\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Module\\Accounts\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Module\\Accounts\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Module\\Accounts\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT accounts module for application accounts & access management",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "access",
+                "accounts",
+                "api",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "pinia",
+                "roles",
+                "security",
+                "vue",
+                "vue3",
+                "vuejs"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/accounts-module"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/apikey-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Plugin/ApiKey",
+                "reference": "ba9b5ce6491c31d4bb944835947e385702c45c13"
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/json-api": "^0.19",
+                "fastybird/tools": "@dev",
+                "fig/http-message-util": "^1.1",
+                "ipub/doctrine-crud": "^5.1",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "php": ">=8.2.0",
+                "psr/http-message": "^1.0",
+                "psr/http-server-middleware": "^1.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/promise": "^3",
+                "symfony/console": "^6.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\ApiKey\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\ApiKey\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Plugin\\ApiKey\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT api keys management plugin",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "access",
+                "api",
+                "api-key",
+                "fastybird",
+                "fb",
+                "library",
+                "libs",
+                "middleware"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/apikey-plugin"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/application",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Core/Application",
+                "reference": "be515d029136cc5a3f5ca77690c90321038aecc6"
+            },
+            "require": {
+                "contributte/cache": "^0.6",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "contributte/vite": "^0.2",
+                "cweagans/composer-patches": "^1.7",
+                "doctrine/orm": "2.15.*",
+                "fastybird/simple-auth": "^0.14",
+                "ipub/doctrine-crud": "^5.1",
+                "ipub/doctrine-timestampable": "^2.0",
+                "ipub/slim-router": "^0.2",
+                "nette/application": "^3.1",
+                "nette/bootstrap": "^3.2",
+                "nette/caching": "^3.3",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "nettrine/dbal": "^0.8",
+                "nettrine/orm": "^0.8",
+                "orisai/nette-object-mapper": "^0.1",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "ramsey/uuid": "^4.7",
+                "react/event-loop": "^1.3",
+                "symfony/event-dispatcher-contracts": "^3.5",
+                "symfony/monolog-bridge": "^6.1",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Core\\Application\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Core\\Application\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Core\\Application\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Core\\Application\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Core\\Application\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT application",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "api",
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "pinia",
+                "typescript",
+                "vue",
+                "vue3",
+                "vuejs"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/application"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/couchdb-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Plugin/CouchDb",
+                "reference": "8c0076a0de964783bacbbddebe50740f459c3420"
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "nette/bootstrap": "^3.2",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "php-on-couch/php-on-couch": "^4.0",
+                "phpdocumentor/reflection": "^5.3",
+                "phpdocumentor/reflection-common": "^2.2",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\CouchDb\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\CouchDb\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Plugin\\CouchDb\\Tests\\Fixtures\\": "tests/fixtures"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT data storage plugin for Couch database",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "couch",
+                "couch-client",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "plugin",
+                "state",
+                "state-management"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/couchdb-plugin"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/date-time-automator",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Automator/DateTime",
+                "reference": "edcc32cd6acc39d832617067fe57b7fe07e46747"
+            },
+            "require": {
+                "binsoul/net-mqtt": "^0.8",
+                "cweagans/composer-patches": "^1.7",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/triggers-module": "@dev",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Automator\\DateTime\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Automator\\DateTime\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Automator\\DateTime\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT automator for date&time",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "automation",
+                "automator",
+                "date",
+                "fastybird",
+                "fb",
+                "iot",
+                "time"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/date-time-automator"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "fastybird/datetime-factory",
             "version": "v0.7.1",
             "source": {
@@ -2645,6 +3137,466 @@
                 "source": "https://github.com/FastyBird/datetime-factory"
             },
             "time": "2024-08-29T15:20:53+00:00"
+        },
+        {
+            "name": "fastybird/devices-module",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Module/Devices",
+                "reference": "1a704d18293e7a4ed317af3d16a8edac3478f983"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "ext-bcmath": "*",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/json-api": "^0.19",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/simple-auth": "^0.14",
+                "fastybird/tools": "@dev",
+                "ipub/slim-router": "^0.2",
+                "nettrine/dbal": "^0.8",
+                "nettrine/orm": "^0.8",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "react/async": "^4.0",
+                "react/event-loop": "^1.3",
+                "react/promise": "^3",
+                "softcreatr/jsonpath": "^0.8",
+                "symfony/console": "^6.0",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Module\\Devices\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Module\\Devices\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Module\\Devices\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Module\\Devices\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Module\\Devices\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT devices module for connectors & devices management & basic control logic",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "api",
+                "connector",
+                "controls",
+                "devices",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "pinia",
+                "typescript",
+                "vue",
+                "vue3",
+                "vuejs"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/devices-module"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/devices-module-automator",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Automator/DevicesModule",
+                "reference": "286c203560d6d353a24b48201439f2ec70791555"
+            },
+            "require": {
+                "binsoul/net-mqtt": "^0.8",
+                "cweagans/composer-patches": "^1.7",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/triggers-module": "@dev",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Automator\\DevicesModule\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Automator\\DevicesModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Automator\\DevicesModule\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT automator for Devices module",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "automation",
+                "automator",
+                "devices",
+                "fastybird",
+                "fb",
+                "iot"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/devices-module-automator"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/devices-module-ui-module-bridge",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Bridge/DevicesModuleUiModule",
+                "reference": "ee528314ae1a21e57add53e0127d2c8b3ba78a88"
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/ui-module": "@dev",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\DevicesModuleUiModule\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT Devices module bridge for UI module",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "data-source",
+                "datasource",
+                "devices",
+                "fastybird",
+                "fb",
+                "iot"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/devices-module-ui-module-bridge"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/exchange",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Core/Exchange",
+                "reference": "de3fb6be600acd07da83d24d1b0c6c342b7b4f95"
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "react/promise": "^3",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Core\\Exchange\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Core\\Exchange\\Tests\\Cases\\Unit\\": "tests/cases/unit"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT application exchange services",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "events",
+                "exchange",
+                "fastybird",
+                "fb",
+                "iot",
+                "library",
+                "nette",
+                "php"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/exchange"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/fb-mqtt-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/FbMqtt",
+                "reference": "22b499b7cd2b7d9a18f74511ae401e95b8dccd3d"
+            },
+            "require": {
+                "binsoul/net-mqtt": "^0.8",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\FbMqtt\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\FbMqtt\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\FbMqtt\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for FB MQTT devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "mqtt",
+                "mqtt-client",
+                "nette",
+                "php"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/fb-mqtt-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/homekit-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/HomeKit",
+                "reference": "2819f708b43d024475617e4f193fd1244ef33cae"
+            },
+            "require": {
+                "brick/math": "^0.10",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "endroid/qr-code": "4.5",
+                "evenement/evenement": "^3.0",
+                "ext-gmp": "*",
+                "ext-pcntl": "*",
+                "ext-sockets": "*",
+                "ext-sodium": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "hashids/hashids": "^4.1",
+                "ipub/slim-router": "^0.2",
+                "leigh/curve25519": "^0.1",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^3.0",
+                "react/async": "^4.0",
+                "react/datagram": "^1.8",
+                "react/dns": "^1.10",
+                "react/http": "^1.7",
+                "react/promise": "^3",
+                "simplito/elliptic-php": "^1.0",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2",
+                "z4kn4fein/php-semver": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\HomeKit\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\HomeKit\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\HomeKit\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for HomeKit Accessory Protocol",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "hap-python",
+                "homekit",
+                "iot",
+                "nette",
+                "php",
+                "reactphp"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/homekit-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "fastybird/json-api",
@@ -2744,6 +3696,727 @@
                 "source": "https://github.com/FastyBird/json-api"
             },
             "time": "2024-08-22T08:53:08+00:00"
+        },
+        {
+            "name": "fastybird/metadata-library",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Library/Metadata",
+                "reference": "28b1c296094dca428a172efa7740db02876416e2"
+            },
+            "require": {
+                "php": ">=8.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Library\\Metadata\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Library\\Metadata\\Tests\\Cases\\Unit\\": "tests/cases/unit"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT metadata reader & validator",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "constants",
+                "enums",
+                "fastybird",
+                "fb",
+                "json-schema",
+                "metadata",
+                "php",
+                "typescript"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/metadata-library"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/modbus-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/Modbus",
+                "reference": "75d85ff557b4067d7d0c9c780c13719190e61571"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "nette/di": "^3.2",
+                "nettrine/fixtures": "^0.6",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "react/async": "^4.0",
+                "react/event-loop": "^1.3",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Modbus\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Modbus\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\Modbus\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Modbus devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "modbus",
+                "modbus-rtu",
+                "modbus-tcp",
+                "nette",
+                "php"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/modbus-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/ns-panel-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/NsPanel",
+                "reference": "36d345d688c8a5d5edba04bf61cead3bf31b6338"
+            },
+            "require": {
+                "brick/math": "^0.10",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "doctrine/orm": "2.15.*",
+                "ext-iconv": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "fig/http-message-util": "^1.1",
+                "guzzlehttp/guzzle": "^7.5",
+                "ipub/doctrine-crud": "^5.1",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/event-loop": "^1.3",
+                "react/http": "^1.7",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "ringcentral/psr7": "^1.3",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\NsPanel\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\NsPanel\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\NsPanel\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Sonoff NS Panel Pro devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "hmi",
+                "iot",
+                "nette",
+                "nspanel",
+                "php",
+                "sonoff"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/ns-panel-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/rabbitmq-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Plugin/RabbitMq",
+                "reference": "a8636fc445314c94914945cfe8d6ebd9a815298a"
+            },
+            "require": {
+                "bunny/bunny": "0.6.x-dev",
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\RabbitMq\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\RabbitMq\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Plugin\\RabbitMq\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Plugin\\RabbitMq\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT exchange plugin for RabbitMQ",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "exchange",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "plugin",
+                "pubsub",
+                "rabbitmq",
+                "rabbitmq-client"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/rabbitmq-plugin"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/redisdb-cache-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Plugin/RedisDbCache",
+                "reference": "a23d87e205b2f6d4ec2b32259d13e1daf8af96d5"
+            },
+            "require": {
+                "clue/redis-react": "^3@dev",
+                "cweagans/composer-patches": "^1.7",
+                "nette/caching": "^3.3",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "php": ">=8.2.0",
+                "predis/predis": "^1.1",
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^3.0",
+                "react/async": "^4.0",
+                "react/event-loop": "^1.3",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\RedisDbCache\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\RedisDbCache\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Plugin\\RedisDbCache\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT Redis DB cache",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "cache",
+                "fastybird",
+                "fb",
+                "iot",
+                "redisdb"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/redisdb-cache-plugin"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/redisdb-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Plugin/RedisDb",
+                "reference": "a17267c93547e32b0357fb67b1eefd239d0cc89f"
+            },
+            "require": {
+                "clue/redis-react": "^3@dev",
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "predis/predis": "^1.1",
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/event-loop": "^1.3",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\RedisDb\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\RedisDb\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Plugin\\RedisDb\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Plugin\\RedisDb\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT application data storage & exchange plugin for Redis database",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "exchange",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "plugin",
+                "pubsub",
+                "redis",
+                "redis-client",
+                "state",
+                "state-management"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/redisdb-plugin"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/redisdb-plugin-devices-module-bridge",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Bridge/RedisDbPluginDevicesModule",
+                "reference": "6d96528bd1d5373ea7de6ccd7b1b9f410ca7e084"
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/redisdb-plugin": "@dev",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT Redis DB bridge for Devices module",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "fastybird",
+                "fb",
+                "iot",
+                "redisdb",
+                "states",
+                "storage"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/redisdb-plugin-devices-module-bridge"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/redisdb-plugin-triggers-module-bridge",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Bridge/RedisDbPluginTriggersModule",
+                "reference": "9d70bc803e53948d85d9dde80d5da7df3ecf3545"
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/redisdb-plugin": "@dev",
+                "fastybird/triggers-module": "@dev",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT Redis DB bridge for Triggers module",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "fastybird",
+                "fb",
+                "iot",
+                "redisdb",
+                "states",
+                "storage"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/redisdb-plugin-triggers-module-bridge"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/shelly-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/Shelly",
+                "reference": "701b7cdb006ea7d631a2c1daea71e35c653e568b"
+            },
+            "require": {
+                "clue/multicast-react": "^1.1",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "guzzlehttp/guzzle": "^7.5",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ratchet/pawl": "^0.4",
+                "react/async": "^4.0",
+                "react/datagram": "^1.8",
+                "react/http": "^1.7",
+                "react/promise": "^3",
+                "ringcentral/psr7": "^1.3",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Shelly\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Shelly\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\Shelly\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Shelly devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "coap",
+                "connector",
+                "fastybird",
+                "fb",
+                "http",
+                "iot",
+                "mdns",
+                "nette",
+                "php",
+                "shelly"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/shelly-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/shelly-connector-homekit-connector-bridge",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Bridge/ShellyConnectorHomeKitConnector",
+                "reference": "999809af441ae5e123d6901f69c55748d97f92e4"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/homekit-connector": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/shelly-connector": "@dev",
+                "nette/di": "^3.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT Shelly connector bridge for HomeKit connector",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "bridge",
+                "fastybird",
+                "fb",
+                "homekit",
+                "iot",
+                "shelly"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/shelly-connector-homekit-connector-bridge"
+            },
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "fastybird/simple-auth",
@@ -2846,6 +4519,1037 @@
                 "source": "https://github.com/FastyBird/simple-auth"
             },
             "time": "2024-08-29T19:21:07+00:00"
+        },
+        {
+            "name": "fastybird/sonoff-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/Sonoff",
+                "reference": "861c3a95864e05bc9c7b80d26578dfc93a7d323a"
+            },
+            "require": {
+                "clue/multicast-react": "^1.1",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "guzzlehttp/guzzle": "^7.5",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ratchet/pawl": "^0.4",
+                "react/async": "^4.0",
+                "react/datagram": "^1.8",
+                "react/http": "^1.7",
+                "react/promise": "^3",
+                "ringcentral/psr7": "^1.3",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Sonoff\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Sonoff\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\Sonoff\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Sonoff devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "coap",
+                "connector",
+                "ewelink",
+                "fastybird",
+                "fb",
+                "http",
+                "iot",
+                "itead",
+                "mdns",
+                "nette",
+                "php",
+                "sonoff"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/sonoff-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/tools",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Core/Tools",
+                "reference": "5e98a598456bd40ea691b96e5c5db2eeef7dea26"
+            },
+            "require": {
+                "contributte/monolog": "^0.5",
+                "doctrine/orm": "2.15.*",
+                "doctrine/persistence": "^2.5 || ^3.4",
+                "fastybird/datetime-factory": "^0.7.1",
+                "fastybird/metadata-library": "@dev",
+                "ipub/doctrine-timestampable": "^2.0",
+                "mathsolver/mathsolver": "@dev",
+                "nette/bootstrap": "^3.2",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "opis/json-schema": "^2.3",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "sentry/sdk": "^3.1",
+                "symfony/event-dispatcher-contracts": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Core\\Tools\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Core\\Tools\\Tests\\Cases\\Unit\\": "tests/cases/unit"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT application tools & utilities",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "fastybird",
+                "fb",
+                "iot",
+                "library",
+                "nette",
+                "php",
+                "tools",
+                "utilities"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/tools"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/triggers-module",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Module/Triggers",
+                "reference": "bc3f9848bf2d5e09fc62d43ca631e0e97fe3c6b4"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/json-api": "^0.19",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/simple-auth": "^0.14",
+                "ipub/doctrine-phone": "^1.6",
+                "ipub/phone": "^2.3",
+                "ipub/slim-router": "^0.2",
+                "nettrine/dbal": "^0.8",
+                "nettrine/orm": "^0.8",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "react/promise": "^3",
+                "symfony/console": "^6.0",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Module\\Triggers\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Module\\Triggers\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Module\\Triggers\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Module\\Triggers\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Module\\Triggers\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT module for triggers management & basic automation logic",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "api",
+                "automation",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "pinia",
+                "scenes triggers",
+                "typescript",
+                "vue",
+                "vue3",
+                "vuejs"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/triggers-module"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/tuya-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/Tuya",
+                "reference": "8f62c6c25e9dbe7d34139c22e287b4289eefe65a"
+            },
+            "require": {
+                "brick/math": "^0.10",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "doctrine/orm": "2.15.*",
+                "ext-openssl": "*",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "fig/http-message-util": "^1.1",
+                "guzzlehttp/guzzle": "^7.5",
+                "ipub/doctrine-crud": "^5.1",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "ratchet/pawl": "^0.4",
+                "react/async": "^4.0",
+                "react/datagram": "^1.8",
+                "react/event-loop": "^1.3",
+                "react/http": "^1.7",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "ringcentral/psr7": "^1.3",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Tuya\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Tuya\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\Tuya\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Tuya devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "tuya",
+                "tuya-cloud",
+                "tuya-local"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/tuya-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/ui-module",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Module/Ui",
+                "reference": "927ec7898320076c3ca2fcb385accce4aea77eb1"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "ext-bcmath": "*",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/json-api": "^0.19",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/simple-auth": "^0.14",
+                "fastybird/tools": "@dev",
+                "ipub/slim-router": "^0.2",
+                "nettrine/dbal": "^0.8",
+                "nettrine/orm": "^0.8",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "react/async": "^4.0",
+                "react/event-loop": "^1.3",
+                "react/promise": "^3",
+                "softcreatr/jsonpath": "^0.8",
+                "symfony/console": "^6.0",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Module\\Ui\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Module\\Ui\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Module\\Ui\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Module\\Ui\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Module\\Ui\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT module for managing visual components",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "api",
+                "controls",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "pinia",
+                "typescript",
+                "ui",
+                "user interface",
+                "vue",
+                "vue3",
+                "vuejs"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/ui-module"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/viera-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/Viera",
+                "reference": "43b101251eb71df4ff42e90dcfe9a64e4d5baa23"
+            },
+            "require": {
+                "clue/multicast-react": "^1.1",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "doctrine/orm": "2.15.*",
+                "ext-iconv": "*",
+                "ext-openssl": "*",
+                "ext-simplexml": "*",
+                "ext-sockets": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "fig/http-message-util": "^1.1",
+                "guzzlehttp/guzzle": "^7.5",
+                "ipub/doctrine-crud": "^5.1",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/datagram": "^1.8",
+                "react/event-loop": "^1.3",
+                "react/http": "^1.7",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "ringcentral/psr7": "^1.3",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Viera\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Viera\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\Viera\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Panasonic Viera televisions",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "panasonic",
+                "php",
+                "television",
+                "viera"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/viera-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/viera-connector-homekit-connector-bridge",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Bridge/VieraConnectorHomeKitConnector",
+                "reference": "ee2b55634e9e6224d2b1a198638054a0d69310cb"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/homekit-connector": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/viera-connector": "@dev",
+                "nette/di": "^3.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT Viera connector bridge for HomeKit connector",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "bridge",
+                "fastybird",
+                "fb",
+                "homekit",
+                "iot",
+                "viera"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/viera-connector-homekit-connector-bridge"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/virtual-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/Virtual",
+                "reference": "e47d4f59ceaea65b700dd1a6d8f8c18d1a81db9c"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "doctrine/orm": "2.15.*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "ipub/doctrine-crud": "^5.1",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/event-loop": "^1.3",
+                "react/promise": "^3",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Virtual\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Virtual\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\Virtual\\Tests\\Tools\\": "tests/tools",
+                    "FastyBird\\Connector\\Virtual\\Tests\\Fixtures\\": "tests/fixtures"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for virtual devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "devices",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "virtual"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/virtual-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/virtual-thermostat-addon",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Addon/VirtualThermostat",
+                "reference": "597b47de05cdf9dd4f691748db8091d078af2a24"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "doctrine/orm": "2.15.*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "fastybird/virtual-connector": "@dev",
+                "ipub/doctrine-crud": "^5.1",
+                "nette/di": "^3.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/event-loop": "^1.3",
+                "react/promise": "^3",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Addon\\VirtualThermostat\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Addon\\VirtualThermostat\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Addon\\VirtualThermostat\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Addon\\VirtualThermostat\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Addon\\VirtualThermostat\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT virtual thermostat device addon",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "Shelly",
+                "addon",
+                "device",
+                "fastybird",
+                "fb",
+                "iot",
+                "nette",
+                "php",
+                "virtual"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/virtual-thermostat-addon"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/virtual-thermostat-addon-homekit-connector-bridge",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector",
+                "reference": "29f516a6efe11dd141384a445e980de8c07063df"
+            },
+            "require": {
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/homekit-connector": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/virtual-connector": "@dev",
+                "fastybird/virtual-thermostat-addon": "@dev",
+                "nette/di": "^3.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Fixtures\\": "tests/fixtures",
+                    "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+                    "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT Virtual Thermostat bridge for HomeKit connector",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "Shelly",
+                "bridge",
+                "fastybird",
+                "fb",
+                "homekit",
+                "iot"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/virtual-thermostat-addon-homekit-connector-bridge"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/web-server-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Plugin/WebServer",
+                "reference": "b3654d86d55f6727f6e2481263e40e7c82f7cdc9"
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "fig/http-message-util": "^1.1",
+                "ipub/slim-router": "^0.2",
+                "nette/bootstrap": "^3.2",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/http-message": "^1.0",
+                "psr/log": "^3.0",
+                "react/event-loop": "^1.3",
+                "react/http": "^1.7",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "sunrise/http-message": "^3.0",
+                "symfony/console": "^6.0",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\WebServer\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\WebServer\\Tests\\Cases\\Unit\\": "tests/cases/unit"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT simple web server plugin with ReactPHP & Apache or Nginx support",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "fastybird",
+                "fb",
+                "http",
+                "middleware",
+                "nette",
+                "php",
+                "plugin",
+                "psr-7",
+                "reactphp",
+                "reactphp-http",
+                "routing",
+                "ssl",
+                "webserver"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/web-server-plugin"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/ws-server-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Plugin/WsServer",
+                "reference": "2d2fdbee7ca6dedcc0906886b67f676e479f601c"
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "fastybird/application": "@dev",
+                "fastybird/exchange": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "ipub/websockets-wamp": "^1.4",
+                "nette/di": "^3.2",
+                "nette/utils": "^4.0",
+                "php": ">=8.2.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^3.0",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "symfony/console": "^6.0",
+                "symfony/event-dispatcher": "^7.0",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\WsServer\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Plugin\\WsServer\\Tests\\Cases\\Unit\\": "tests/cases/unit"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT web sockets server plugin for handling real-time communication",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "fastybird",
+                "fb",
+                "ipublikuj",
+                "nette",
+                "php",
+                "plugin",
+                "wamp",
+                "wamp-server",
+                "ws"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/ws-server-plugin"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/zigbee2mqtt-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Connector/Zigbee2Mqtt",
+                "reference": "84e01559dd7f4f9f097ab19c506ffb9cfca8781a"
+            },
+            "require": {
+                "binsoul/net-mqtt": "^0.8",
+                "contributte/console": "^0.9",
+                "contributte/monolog": "^0.5",
+                "contributte/translation": "^2.0",
+                "cweagans/composer-patches": "^1.7",
+                "ext-pcntl": "*",
+                "fastybird/application": "@dev",
+                "fastybird/devices-module": "@dev",
+                "fastybird/metadata-library": "@dev",
+                "fastybird/tools": "@dev",
+                "nette/di": "^3.2",
+                "orisai/object-mapper": "^0.2",
+                "php": ">=8.2.0",
+                "psr/log": "^3.0",
+                "ramsey/uuid": "^4.7",
+                "react/async": "^4.0",
+                "react/promise": "^3",
+                "react/socket": "^1.12",
+                "symplify/vendor-patches": "^11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Zigbee2Mqtt\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "FastyBird\\Connector\\Zigbee2Mqtt\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+                    "FastyBird\\Connector\\Zigbee2Mqtt\\Tests\\Tools\\": "tests/tools"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FastyBird s.r.o.",
+                    "email": "code@fastybird.com",
+                    "homepage": "https://www.fastybird.com/"
+                },
+                {
+                    "name": "Adam Kadlec",
+                    "email": "adam.kadlec@fastybird.com"
+                }
+            ],
+            "description": "FastyBird IoT connector for Zigbee2MQTT devices",
+            "homepage": "https://www.fastybird.com",
+            "keywords": [
+                "connector",
+                "fastybird",
+                "fb",
+                "iot",
+                "mqtt",
+                "nette",
+                "php",
+                "zigbee",
+                "zigbee2mqtt"
+            ],
+            "support": {
+                "email": "code@fastybird.com",
+                "issues": "https://github.com/FastyBird/fastybird/issues",
+                "source": "https://github.com/FastyBird/zigbee2mqtt-connector"
+            },
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "fig/http-message-util",
@@ -4874,85 +7578,6 @@
             "time": "2015-12-21T17:00:44+00:00"
         },
         {
-            "name": "mangoweb/clock",
-            "version": "v0.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mangoweb-backend/clock.git",
-                "reference": "044610ebda90e9f0b8f03f95ecfb0ea6ed924d29"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mangoweb-backend/clock/zipball/044610ebda90e9f0b8f03f95ecfb0ea6ed924d29",
-                "reference": "044610ebda90e9f0b8f03f95ecfb0ea6ed924d29",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~7.1 || ~8.0"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "~0.12"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Mangoweb\\Clock\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Clock class",
-            "support": {
-                "issues": "https://github.com/mangoweb-backend/clock/issues",
-                "source": "https://github.com/mangoweb-backend/clock/tree/v0.2.2"
-            },
-            "time": "2020-11-08T10:06:46+00:00"
-        },
-        {
-            "name": "mangoweb/monolog-tracy-handler",
-            "version": "v1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mangoweb-backend/monolog-tracy-handler.git",
-                "reference": "132e7564f97ce097ff29ca073ab2e474a027ca6d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mangoweb-backend/monolog-tracy-handler/zipball/132e7564f97ce097ff29ca073ab2e474a027ca6d",
-                "reference": "132e7564f97ce097ff29ca073ab2e474a027ca6d",
-                "shasum": ""
-            },
-            "require": {
-                "mangoweb/clock": "~0.2.0",
-                "monolog/monolog": "~3.0",
-                "php": "~8.1",
-                "tracy/tracy": "~2.6"
-            },
-            "require-dev": {
-                "mockery/mockery": "~1.5",
-                "nette/tester": "~2.4",
-                "phpstan/phpstan": "~1.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Mangoweb\\MonologTracyHandler\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Integrates Tracy into Monolog, supports uploading Tracy bluescreens to AWS S3",
-            "support": {
-                "issues": "https://github.com/mangoweb-backend/monolog-tracy-handler/issues",
-                "source": "https://github.com/mangoweb-backend/monolog-tracy-handler/tree/v1.2.0"
-            },
-            "time": "2024-08-05T20:21:48+00:00"
-        },
-        {
             "name": "mathsolver/mathsolver",
             "version": "dev-main",
             "source": {
@@ -6590,6 +9215,84 @@
                 }
             ],
             "time": "2022-12-13T20:52:19+00:00"
+        },
+        {
+            "name": "nettrine/migrations",
+            "version": "v0.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contributte/doctrine-migrations.git",
+                "reference": "198eebdbcfb26db2135ea053175e17fde708eb08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contributte/doctrine-migrations/zipball/198eebdbcfb26db2135ea053175e17fde708eb08",
+                "reference": "198eebdbcfb26db2135ea053175e17fde708eb08",
+                "shasum": ""
+            },
+            "require": {
+                "contributte/di": "^0.5.0",
+                "doctrine/migrations": "^3.1.0",
+                "php": ">=7.2",
+                "symfony/console": "^4.2.5|^5.0.0|^6.0.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.6",
+                "mockery/mockery": "^1.3.0",
+                "ninjify/nunjuck": "^0.4",
+                "ninjify/qa": "^0.13",
+                "phpstan/phpstan": "^1.4.0",
+                "phpstan/phpstan-deprecation-rules": "^1.0.0",
+                "phpstan/phpstan-nette": "^1.0.0",
+                "phpstan/phpstan-strict-rules": "^1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nettrine\\Migrations\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                },
+                {
+                    "name": "Josef Benjac",
+                    "homepage": "http://josefbenjac.com"
+                }
+            ],
+            "description": "Doctrine Migrations for Nette Framework",
+            "homepage": "https://github.com/contributte/doctrine-migrations",
+            "keywords": [
+                "doctrine",
+                "migrations",
+                "nette"
+            ],
+            "support": {
+                "issues": "https://github.com/contributte/doctrine-migrations/issues",
+                "source": "https://github.com/contributte/doctrine-migrations/tree/v0.8.1"
+            },
+            "funding": [
+                {
+                    "url": "https://contributte.org/partners.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/f3l1x",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-12-27T18:27:17+00:00"
         },
         {
             "name": "nettrine/orm",
@@ -10146,140 +12849,6 @@
             "time": "2022-08-17T14:28:59+00:00"
         },
         {
-            "name": "sabre/uri",
-            "version": "3.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sabre-io/uri.git",
-                "reference": "a926c749dddfb289b8a9b5218d16ac06affdc631"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/uri/zipball/a926c749dddfb289b8a9b5218d16ac06affdc631",
-                "reference": "a926c749dddfb289b8a9b5218d16ac06affdc631",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.95",
-                "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "^2.1",
-                "phpstan/phpstan-phpunit": "^2.0",
-                "phpstan/phpstan-strict-rules": "^2.0",
-                "phpunit/phpunit": "^10.5",
-                "rector/rector": "^2.4"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/functions.php"
-                ],
-                "psr-4": {
-                    "Sabre\\Uri\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Evert Pot",
-                    "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Functions for making sense out of URIs.",
-            "homepage": "http://sabre.io/uri/",
-            "keywords": [
-                "rfc3986",
-                "uri",
-                "url"
-            ],
-            "support": {
-                "forum": "https://groups.google.com/group/sabredav-discuss",
-                "issues": "https://github.com/sabre-io/uri/issues",
-                "source": "https://github.com/fruux/sabre-uri"
-            },
-            "time": "2026-04-26T04:19:03+00:00"
-        },
-        {
-            "name": "sabre/xml",
-            "version": "4.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sabre-io/xml.git",
-                "reference": "bec83cbe2f4e1e1ca4254ed8d7caa7e32cc74b05"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/xml/zipball/bec83cbe2f4e1e1ca4254ed8d7caa7e32cc74b05",
-                "reference": "bec83cbe2f4e1e1ca4254ed8d7caa7e32cc74b05",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-xmlreader": "*",
-                "ext-xmlwriter": "*",
-                "lib-libxml": ">=2.6.20",
-                "php": "^8.2",
-                "sabre/uri": ">=2.0,<4.0.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.95",
-                "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "^2.1",
-                "phpstan/phpstan-phpunit": "^2.0",
-                "phpstan/phpstan-strict-rules": "^2.0",
-                "phpunit/phpunit": "^10.5",
-                "rector/rector": "^2.4"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/Deserializer/functions.php",
-                    "lib/Serializer/functions.php"
-                ],
-                "psr-4": {
-                    "Sabre\\Xml\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Evert Pot",
-                    "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Markus Staab",
-                    "email": "markus.staab@redaxo.de",
-                    "role": "Developer"
-                }
-            ],
-            "description": "sabre/xml is an XML library that you may not hate.",
-            "homepage": "https://sabre.io/xml/",
-            "keywords": [
-                "XMLReader",
-                "XMLWriter",
-                "dom",
-                "xml"
-            ],
-            "support": {
-                "forum": "https://groups.google.com/group/sabredav-discuss",
-                "issues": "https://github.com/sabre-io/xml/issues",
-                "source": "https://github.com/fruux/sabre-xml"
-            },
-            "time": "2026-04-27T10:56:01+00:00"
-        },
-        {
             "name": "sentry/sdk",
             "version": "3.6.0",
             "source": {
@@ -12999,6 +15568,72 @@
                 }
             ],
             "time": "2026-07-27T15:39:01+00:00"
+        },
+        {
+            "name": "symfony/stopwatch",
+            "version": "v7.4.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/stopwatch.git",
+                "reference": "70a852d72fec4d51efb1f48dcd968efcaf5ccb89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/70a852d72fec4d51efb1f48dcd968efcaf5ccb89",
+                "reference": "70a852d72fec4d51efb1f48dcd968efcaf5ccb89",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/service-contracts": "^2.5|^3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Stopwatch\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides a way to profile code",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/stopwatch/tree/v7.4.8"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-03-24T13:12:05+00:00"
         },
         {
             "name": "symfony/string",
@@ -17645,58 +20280,6 @@
             "time": "2026-08-21T17:40:08+00:00"
         },
         {
-            "name": "symplify/monorepo-builder",
-            "version": "11.2.23",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/monorepo-builder.git",
-                "reference": "cd0faf050efe72b1348e8432e9b85620b476c678"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/monorepo-builder/zipball/cd0faf050efe72b1348e8432e9b85620b476c678",
-                "reference": "cd0faf050efe72b1348e8432e9b85620b476c678",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "bin": [
-                "bin/monorepo-builder"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "10.3-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Prefixed version of Not only Composer tools to build a Monorepo.",
-            "support": {
-                "issues": "https://github.com/symplify/monorepo-builder/issues",
-                "source": "https://github.com/symplify/monorepo-builder/tree/11.2.23"
-            },
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/rectorphp",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/tomasvotruba",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-07-11T02:50:53+00:00"
-        },
-        {
             "name": "thecodingmachine/safe",
             "version": "v2.5.0",
             "source": {
@@ -17887,13 +20470,44 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "bunny/bunny": 20,
-        "clue/redis-react": 20,
-        "mathsolver/mathsolver": 20
+        "fastybird/accounts-module": 20,
+        "fastybird/apikey-plugin": 20,
+        "fastybird/application": 20,
+        "fastybird/couchdb-plugin": 20,
+        "fastybird/date-time-automator": 20,
+        "fastybird/devices-module": 20,
+        "fastybird/devices-module-automator": 20,
+        "fastybird/devices-module-ui-module-bridge": 20,
+        "fastybird/exchange": 20,
+        "fastybird/fb-mqtt-connector": 20,
+        "fastybird/homekit-connector": 20,
+        "fastybird/metadata-library": 20,
+        "fastybird/modbus-connector": 20,
+        "fastybird/ns-panel-connector": 20,
+        "fastybird/rabbitmq-plugin": 20,
+        "fastybird/redisdb-cache-plugin": 20,
+        "fastybird/redisdb-plugin": 20,
+        "fastybird/redisdb-plugin-devices-module-bridge": 20,
+        "fastybird/redisdb-plugin-triggers-module-bridge": 20,
+        "fastybird/shelly-connector": 20,
+        "fastybird/shelly-connector-homekit-connector-bridge": 20,
+        "fastybird/sonoff-connector": 20,
+        "fastybird/tools": 20,
+        "fastybird/triggers-module": 20,
+        "fastybird/tuya-connector": 20,
+        "fastybird/ui-module": 20,
+        "fastybird/viera-connector": 20,
+        "fastybird/viera-connector-homekit-connector-bridge": 20,
+        "fastybird/virtual-connector": 20,
+        "fastybird/virtual-thermostat-addon": 20,
+        "fastybird/virtual-thermostat-addon-homekit-connector-bridge": 20,
+        "fastybird/web-server-plugin": 20,
+        "fastybird/ws-server-plugin": 20,
+        "fastybird/zigbee2mqtt-connector": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.2.0",
