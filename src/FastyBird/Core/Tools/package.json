@@ -1,6 +1,7 @@
 {
   "name": "@fastybird/tools",
-  "version": "1.0.0-dev.24",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "description": "FastyBird IoT useful tools",
   "keywords": [
@@ -12,7 +13,7 @@
     "composables"
   ],
   "homepage": "https://www.fastybird.com",
-  "bugs": "https://github.com/FastyBird/fastybird/issues",
+  "bugs": "https://github.com/FastyBird/miniserver/issues",
   "license": "Apache-2.0",
   "author": {
     "name": "FastyBird s.r.o.",
@@ -23,75 +24,25 @@
     "type": "git",
     "url": "https://github.com/FastyBird/miniserver.git"
   },
-  "main": "dist/tools.umd.js",
-  "module": "dist/tools.es.js",
-  "types": "dist/tools.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/tools.es.js",
-      "require": "./dist/tools.umd.js"
-    }
+    ".": "./assets/entry.ts"
   },
-  "files": [
-    "dist/*",
-    "resources/*"
-  ],
-  "scripts": {
-    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
-    "build": "yarn clean && vue-tsc --noEmit --composite false && vite build",
-    "build:dev": "vue-tsc --noEmit --composite false && vite build --watch --mode development",
-    "build:only": "yarn clean && vite build",
-    "types": "vue-tsc --noEmit --composite false",
-    "lint:js": "eslint assets",
-    "lint:js:fix": "eslint assets --fix",
-    "pretty": "yarn pretty:write && yarn pretty:check",
-    "pretty:check": "prettier assets --check",
-    "pretty:write": "prettier assets --write"
-  },
+  "types": "./assets/entry.ts",
+  "sideEffects": true,
   "dependencies": {
-    "@fastybird/metadata-library": "1.0.0-dev.24",
+    "@fastybird/metadata-library": "0.0.0",
     "@vueuse/core": "^11.2",
     "axios": "^1.6",
-    "element-plus": "^2.8",
     "lodash.get": "^4.4",
     "mitt": "^3.0"
   },
-  "devDependencies": {
-    "@commitlint/cli": "^19.6",
-    "@commitlint/config-conventional": "^19.6",
-    "@nabla/vite-plugin-eslint": "^2.0",
-    "@trivago/prettier-plugin-sort-imports": "^4.3",
-    "@types/lodash.get": "^4.4",
-    "@types/node": "^20.17",
-    "@typescript-eslint/eslint-plugin": "^8.15",
-    "@typescript-eslint/parser": "^8.15",
-    "@vitejs/plugin-vue": "^5.2",
-    "@vue/eslint-config-prettier": "^10.1",
-    "@vue/eslint-config-typescript": "^14.1",
-    "eslint": "^9.15",
-    "eslint-config-prettier": "^9.1",
-    "eslint-plugin-prettier": "^5.2",
-    "eslint-plugin-vue": "^9.31",
-    "pinia": "^2.2",
-    "prettier": "^3.3",
-    "rimraf": "^6.0",
-    "rollup-plugin-delete": "^2.1",
-    "typescript": "5.6.2",
-    "vite": "^5.4",
-    "vite-plugin-dts": "4.1.1",
-    "vue": "^3.5",
-    "vue-i18n": "^10.0",
-    "vue-loader": "^17.4",
-    "vue-router": "^4.4",
-    "vue-tsc": "^2.1"
-  },
-  "engines": {
-    "node": ">=20"
-  },
   "peerDependencies": {
+    "element-plus": "^2.8",
     "pinia": "^2.2",
+    "unocss": "^0.64",
     "vue": "^3.5",
     "vue-i18n": "^10.0",
+    "vue-meta": "^3.0.0-alpha.10",
     "vue-router": "^4.4"
   }
 }
