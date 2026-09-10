@@ -56,7 +56,7 @@
     "@fastybird/web-ui-theme-chalk": "1.0.0-dev.24",
     "@nabla/vite-plugin-eslint": "^2.0",
     "@types/lodash": "^4.17",
-    "@types/node": "^20.17",
+    "@types/node": "^26.5",
     "@typescript-eslint/eslint-plugin": "^8.16",
     "@typescript-eslint/parser": "^8.16",
     "@vitejs/plugin-vue": "^5.2",
