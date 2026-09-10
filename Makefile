@@ -3,7 +3,7 @@ _: list
 # Config
 
 PHPCS_CONFIG=tools/phpcs.xml
-PHPSTAN_SRC_CONFIG=tools/phpstan.src.neon
+PHPSTAN_SRC_CONFIG=tools/phpstan.neon
 PHPSTAN_TESTS_CONFIG=tools/phpstan.tests.neon
 PHPUNIT_CONFIG=tools/phpunit.xml
 INFECTION_CONFIG=tools/infection.json
