@@ -181,40 +181,6 @@
     <exclude-pattern>^vendor/*</exclude-pattern>
     <exclude-pattern>^tools/*</exclude-pattern>
     <exclude-pattern>^tests/stubs/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Automator/DateTime/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Automator/DevicesModule/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Bridge/DevicesModuleUiModule/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Bridge/RedisDbPluginDevicesModule/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Bridge/RedisDbPluginTriggersModule/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/FbMqtt/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/HomeKit/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/Modbus/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/NsPanel/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/Shelly/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/Sonoff/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/Tuya/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/Viera/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/Virtual/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Connector/Zigbee2Mqtt/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Core/Application/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Core/Exchange/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Core/Tools/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Library/Metadata/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Module/Accounts/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Module/Devices/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Module/Triggers/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Module/Ui/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Plugin/ApiKey/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Plugin/CouchDb/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Plugin/RabbitMq/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Plugin/RedisDb/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Plugin/RedisDbCache/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Plugin/WebServer/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Plugin/WsServer/tools/*</exclude-pattern>
-    <exclude-pattern>src/FastyBird/Addon/VirtualThermostat/tools/*</exclude-pattern>
 
     <!--Exclude rules/files -->
     <rule ref="SlevomatCodingStandard.Files.LineLength.LineTooLong">
