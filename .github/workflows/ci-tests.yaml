@@ -190,6 +190,16 @@ jobs:
       - name: "Yarn install"
         run: "yarn install --frozen-lockfile --ignore-engines"
 
+      # vue-tsc needs the Library/WebUi packages built first. tsconfig.json's
+      # `types` array lists @fastybird/web-ui-library, whose package.json points
+      # `types` at dist/web-ui-library.d.ts -- a build artifact that does not
+      # exist in a clean checkout. Without this step the job fails with
+      # "TS2688: Cannot find type definition file for '@fastybird/web-ui-library'".
+      # `yarn build` does not have this problem because it runs build:ui itself;
+      # only this job runs vue-tsc in isolation.
+      - name: "Build the Library/WebUi packages (vue-tsc needs their .d.ts)"
+        run: "yarn build:ui"
+
       - name: "yarn types"
         run: "yarn types"
 
