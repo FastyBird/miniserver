@@ -7,8 +7,10 @@ on:
   push:
     branches:
       - "main"
-    tags:
-      - v*
+  # No `tags: v*` trigger: this workflow never logs in or pushes
+  # (build-push-action runs with push: false), so tagging a release would
+  # spend ~8 minutes and publish nothing. A later phase adds registry login
+  # and push, at which point a tag trigger can come back.
   schedule:
     - cron: "0 8 * * 1" # At 08:00 on Monday
 
@@ -46,6 +48,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: "Check platform requirements against the runtime image"
+        run: docker run --rm --entrypoint composer fastybird/miniserver:ci check-platform-reqs
+
       - name: "Start production container"
         run: |
           docker run -d --name miniserver \
@@ -55,6 +60,7 @@ jobs:
             -e FB_APP_PARAMETER__DATABASE_USERNAME=fastybird \
             -e FB_APP_PARAMETER__DATABASE_PASSWORD=fastybird \
             -e FB_APP_PARAMETER__DATABASE_DBNAME=fastybird_dev \
+            -e FB_APP_PARAMETER__SECURITY_SIGNATURE=ci-smoke-test-signature-not-for-production \
             fastybird/miniserver:ci
 
       - name: "Wait for HTTP 200 on GET /favicon.ico (nginx serving public/)"
