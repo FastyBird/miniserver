@@ -1,6 +1,5 @@
 {
   "name": "fastybird/exchange",
-  "type": "fastybird",
   "description": "FastyBird IoT application exchange services",
   "keywords": [
     "exchange",
@@ -33,31 +32,14 @@
   "require": {
     "php": ">=8.2.0",
     "cweagans/composer-patches": "^1.7",
-    "fastybird/application": "dev-main",
-    "fastybird/metadata-library": "dev-main",
+    "fastybird/application": "@dev",
+    "fastybird/metadata-library": "@dev",
     "nette/di": "^3.2",
     "nette/utils": "^4.0",
     "psr/event-dispatcher": "^1.0",
     "react/promise": "^3",
     "symfony/event-dispatcher": "^7.0",
     "symplify/vendor-patches": "^11.2"
-  },
-  "require-dev": {
-    "brianium/paratest": "^7.3",
-    "dg/bypass-finals": "^1.4",
-    "infection/infection": "^0.27",
-    "orisai/coding-standard": "^3.2",
-    "pds/skeleton": "^1.0",
-    "php-parallel-lint/php-parallel-lint": "^1.3",
-    "phpstan/extension-installer": "^1.1",
-    "phpstan/phpstan": "^1.10",
-    "phpstan/phpstan-deprecation-rules": "^1.0",
-    "phpstan/phpstan-nette": "^1.1",
-    "phpstan/phpstan-phpunit": "^1.1",
-    "phpstan/phpstan-strict-rules": "^1.4",
-    "phpunit/phpunit": "^10.0",
-    "staabm/annotate-pull-request-from-checkstyle": "^1.8",
-    "tracy/tracy": "^2.9"
   },
   "autoload": {
     "psr-4": {
@@ -67,26 +49,6 @@
   "autoload-dev": {
     "psr-4": {
       "FastyBird\\Core\\Exchange\\Tests\\Cases\\Unit\\": "tests/cases/unit"
-    }
-  },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "cweagans/composer-patches": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true,
-      "phpstan/extension-installer": true,
-      "infection/extension-installer": true,
-      "php-http/discovery": false
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-main": "1.0-dev"
-    },
-    "patches": {
-      "dg/bypass-finals": {
-        "Bug: mkdir check": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/dg-bypass-finals-src-nativewrapper-php.patch"
-      }
     }
   },
   "minimum-stability": "dev",
