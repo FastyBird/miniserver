@@ -94,6 +94,17 @@ COPY src src/
 COPY --from=vendor /app/vendor vendor/
 COPY --from=ui /app/public public/
 
+# composer.json/composer.lock and the composer binary itself (borrowed from
+# the vendor stage's composer:2 base) are copied in so CI can run
+# `composer check-platform-reqs` against *this* runtime image's actual PHP
+# and installed extensions -- the same check that caught the extension
+# class of defects this phase fixed. The vendor stage above installs with
+# --ignore-platform-reqs against its own bundled composer PHP, which is not
+# the runtime PHP, so this is the only place the real platform gets
+# verified.
+COPY composer.json composer.lock ./
+COPY --from=vendor /usr/bin/composer /usr/local/bin/composer
+
 RUN chmod +x bin/fb-console bin/fb-console.php bin/fb-supervisor bin/fb-supervisor.php \
     && mkdir -p var/logs var/temp \
     && chown -R www-data:www-data ${APP_PATH}
@@ -109,13 +120,19 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 ENV APP_ENV=prod \
     FB_CONFIG_DIR=/app/var/config \
     FB_LOGS_DIR=/app/var/logs \
-    FB_TEMP_DIR=/app/var/temp
+    FB_TEMP_DIR=/app/var/temp \
+    PHP_DATE_TIMEZONE=UTC
 
 VOLUME ${APP_PATH}/var
 
 EXPOSE 80 8888
 
+# "/" cannot be used here: the Nette application has no router registered
+# (see spec section 7.1 / progress.md Ruling 8), so it 404s on every
+# request and `curl -f` would exit non-zero forever, leaving the container
+# permanently "unhealthy". /favicon.ico is served directly by nginx from
+# public/ and genuinely returns 200.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost/ || exit 1
+    CMD curl -f http://localhost/favicon.ico || exit 1
 
 ENTRYPOINT ["docker-entrypoint"]
