@@ -81,6 +81,26 @@ jobs:
     name: "PHP Tests"
     runs-on: "ubuntu-latest"
 
+    # The test suite ignores almost everything configured below, and that is
+    # deliberate -- do not "align" it without reading this first.
+    #
+    # 25 per-package tests/common.neon files hardcode host 127.0.0.1, port
+    # 3306, user root, password root and dbname testdb, and a NEON file beats
+    # any FB_APP_PARAMETER__* environment variable. So the env block below
+    # does NOT configure the tests; it is kept only because the application
+    # bootstrap reads it outside the test connection.
+    #
+    # The dbname is inert too. Core/Application/tests/tools/ConnectionWrapper
+    # calls unset($params['dbname']) and then CREATEs a fresh per-process
+    # database named fb_test_<pid><hash>, dropping it on shutdown. MARIADB_DATABASE
+    # is therefore never touched by the suite.
+    #
+    # What the suite genuinely requires is exactly two things: MariaDB and Redis
+    # reachable on the job's own 127.0.0.1 (GitHub service containers are, which
+    # is why this works here while docker-compose hostnames do not), and root
+    # credentials, because creating and dropping databases needs them. Changing
+    # MARIADB_ROOT_PASSWORD away from "root" will break every database-backed test.
+
     services:
       mariadb:
         image: "mariadb:10.11"
@@ -201,10 +221,10 @@ jobs:
       database:
         image: "mariadb:10.11"
         env:
-          MYSQL_ROOT_PASSWORD: "root"
-          MYSQL_USER: "fastybird"
-          MYSQL_PASSWORD: "fastybird"
-          MYSQL_DATABASE: "fastybird_dev"
+          MARIADB_ROOT_PASSWORD: "root"
+          MARIADB_USER: "miniserver"
+          MARIADB_PASSWORD: "miniserver"
+          MARIADB_DATABASE: "miniserver"
         ports:
           - "3306:3306"
 
@@ -235,9 +255,9 @@ jobs:
             --network host \
             -e FB_APP_PARAMETER__DATABASE_HOST=127.0.0.1 \
             -e FB_APP_PARAMETER__DATABASE_PORT=3306 \
-            -e FB_APP_PARAMETER__DATABASE_USERNAME=fastybird \
-            -e FB_APP_PARAMETER__DATABASE_PASSWORD=fastybird \
-            -e FB_APP_PARAMETER__DATABASE_DBNAME=fastybird_dev \
+            -e FB_APP_PARAMETER__DATABASE_USERNAME=miniserver \
+            -e FB_APP_PARAMETER__DATABASE_PASSWORD=miniserver \
+            -e FB_APP_PARAMETER__DATABASE_DBNAME=miniserver \
             -e FB_APP_PARAMETER__SECURITY_SIGNATURE=ci-smoke-test-signature-not-for-production \
             fastybird/miniserver:ci
 
