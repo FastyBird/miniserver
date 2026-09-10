@@ -338,7 +338,7 @@ Expected: all checks (`lint.yaml`, `qa.yaml`, `static-analysis.yaml`, `tests.yam
 
 **Interfaces:**
 - Consumes: PR0 merged.
-- Produces: correct `vendor/bin/fb-console` etc. symlinks once Task 10 runs `composer install`.
+- Produces: a root manifest whose `bin` entries point at files that exist. Note what this does NOT produce: Composer does not link a ROOT package's own `bin` entries into `vendor/bin/`, so there is no `vendor/bin/fb-console` and there never will be while this package is the root. Verified by a cold install on 2026-09-10 — `vendor/bin/` contains only third-party binaries. The console is invoked through the repository's own `bin/fb-console.php`, which is what `docker-compose.yml` and every supervisor program already use. The fix still matters, because the previous entries pointed into a directory that does not exist at all.
 
 Verified: `src/FastyBird/Library/Application/` does not exist; `src/FastyBird/Core/Application/bin/{fb-console,fb-console.php,fb-supervisor,fb-supervisor.php}` do exist. Current block:
 

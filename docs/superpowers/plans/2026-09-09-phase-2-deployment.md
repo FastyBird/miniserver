@@ -1239,7 +1239,11 @@ sudo chown miniserver:miniserver /var/tmp/miniserver/ -R
 sudo chown miniserver:miniserver /var/lib/miniserver/ -R
 sudo chmod 0644 /var/log/miniserver/*
 sudo chmod 0777 /var/log/miniserver
-sudo ln -s /usr/lib/miniserver/vendor/fastybird/bootstrap/bin/fb-console /usr/bin/fb-miniserver
+sudo ln -s /usr/lib/miniserver/bin/fb-console.php /usr/bin/fb-miniserver
+# NOTE (2026-09-10): the original line pointed at vendor/fastybird/bootstrap/bin/fb-console,
+# a package that no longer exists. vendor/bin/fb-console does not exist either: Composer does
+# not link a root package's own bin entries into vendor/bin, confirmed by a cold install. The
+# only console entry point that exists is the repository's own bin/fb-console.php.
 echo "Installation completed"
 
 echo "Enabling daemon..."
@@ -1293,7 +1297,7 @@ Type=simple
 User=miniserver
 Group=miniserver
 
-ExecStart=/usr/bin/php8.1 /usr/lib/miniserver/vendor/bin/fb-console fb:web-server:start
+ExecStart=/usr/bin/php8.1 /usr/lib/miniserver/bin/fb-console.php fb:web-server:start
 ExecStop=/bin/kill -INT $MAINPID
 ExecReload=/bin/kill -TERM $MAINPID
 
@@ -1409,9 +1413,12 @@ merged repository.
 
 Known issues carried over from the old repository, left unfixed here:
 
-- `DEBIAN/postinst` symlinks `/usr/lib/miniserver/vendor/fastybird/bootstrap/bin/fb-console`,
-  which does not exist. There is no `fastybird/bootstrap` package in this
-  repository; the console entry point is `bin/fb-console`.
+- `DEBIAN/postinst` originally symlinked
+  `/usr/lib/miniserver/vendor/fastybird/bootstrap/bin/fb-console`, a package that does
+  not exist in this repository. Repointed at `bin/fb-console.php`, the only console
+  entry point there is. Do not "correct" it to `vendor/bin/fb-console`: a cold install
+  on 2026-09-10 confirmed that path is never created, because Composer does not link a
+  root package's own `bin` entries into `vendor/bin/`.
 - `etc/systemd/system/fb-miniserver.service` and `DEBIAN/control` depend on
   `php8.1`. This repository requires PHP 8.2.
 

@@ -130,11 +130,23 @@ client raises an argument-count error if executed, and a presenter returns an em
 where its parent declares a non-empty list. Both are suppressed with truthful comments at
 the call site and must be resolved before the affected features are relied upon.
 
-**`FastyBird/libraries-patches` cannot be deleted.** Vendoring the root manifest's patches
-into `tools/patches/` did not make this project independent of that repository. Three
-external libraries declare their own patches pointing at raw URLs there, and those are
-fetched at install time regardless of the setting meant to disable them. Deleting it
-would break `composer install` on every future checkout.
+**`FastyBird/libraries-patches` cannot be deleted, and vendoring did not fully take
+effect.** A cold install on 2026-09-10 showed exactly which patches come from where.
+Nine of the eleven applied patches resolve from `tools/patches/`. Two are still fetched
+over the network from that repository:
+
+- `nette/utils` — the root never declared it. `fastybird/json-api`,
+  `fastybird/datetime-factory` and `fastybird/simple-auth` each declare it by raw URL.
+- `nettrine/orm` — **the root does declare this one locally, and is overridden.**
+  `fastybird/simple-auth` declares the same patch by raw URL, and a dependency's
+  declaration wins over a root entry sharing its description key. The vendored file sits
+  unused.
+
+So the project still needs that repository reachable at install time, and one vendored
+file is dead weight until the external libraries stop declaring it. Deleting the
+repository would break `composer install` on every future checkout. It becomes
+removable only once Phase 6 updates or absorbs those three libraries. Verify with
+`grep -rl libraries-patches vendor/*/*/composer.json` returning nothing.
 
 **Coverage configuration is wrong.** In `tools/phpunit.xml`, the `<source><include>`
 block lists test directories rather than source directories, so coverage and mutation
@@ -145,6 +157,42 @@ meaningless until corrected.
 nothing.** That is deliberate. An experiment added a ninth patch target for it, evidence
 showed the entry was inert because a dependency's own declaration wins, and the entry was
 reverted. The file is kept for a later phase; it is not live.
+
+## Cold reinstall, verified 2026-09-10
+
+The PHP half was proven from scratch: `vendor/` removed entirely, then
+`composer install` from the committed lock file.
+
+| Check | Result |
+|---|---|
+| Install | exit 0, 77 seconds |
+| Packages | 253 installs, 0 updates, 0 removals |
+| Lock file | unchanged |
+| Versions | identical to the lock, including all three dev-branch commits |
+| Patches | 9 applied from `tools/patches/`, 2 fetched over the network, 1 known failure |
+
+The three dependencies pinned to branch commits all resolved, so upstream has not
+garbage-collected them: `bunny/bunny` at 376626f, `clue/redis-react` at e928901,
+`mathsolver/mathsolver` at 84f6f1c. That was the standing reproducibility risk and it is
+now retired, though it can return at any time since those are branch references.
+
+**A cold install does not produce `vendor/bin/fb-console`,** and nothing is wrong when
+you notice that. Composer does not link a root package's own `bin` entries into
+`vendor/bin/`, so that path will never exist while this package is the root. The console
+is invoked through the repository's own `bin/fb-console.php`, which is what the compose
+services and every supervisor program already use. Two extension documents still tell
+readers to run `vendor/bin/fb-console`; that is correct only when the extension is
+installed as a dependency of some other application, not here.
+
+**The JavaScript half is NOT yet proven.** Docker Desktop stopped during the yarn run,
+before it installed anything. `node_modules/` was restored from a backup rather than
+rebuilt, so `yarn install --frozen-lockfile` from a clean tree remains unverified. Run it
+before relying on the JavaScript side:
+
+```bash
+rm -rf node_modules src/FastyBird/*/*/node_modules
+docker compose run --rm --no-deps ui-server sh -lc "yarn install --ignore-engines --frozen-lockfile"
+```
 
 ## Open items for later phases
 
