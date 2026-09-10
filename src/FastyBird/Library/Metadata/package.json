@@ -1,6 +1,7 @@
 {
   "name": "@fastybird/metadata-library",
-  "version": "1.0.0-dev.24",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "description": "FastyBird IoT metadata reader & validator",
   "keywords": [
@@ -14,7 +15,7 @@
     "connectors"
   ],
   "homepage": "https://www.fastybird.com",
-  "bugs": "https://github.com/FastyBird/fastybird/issues",
+  "bugs": "https://github.com/FastyBird/miniserver/issues",
   "license": "Apache-2.0",
   "author": {
     "name": "FastyBird s.r.o.",
@@ -25,53 +26,18 @@
     "type": "git",
     "url": "https://github.com/FastyBird/miniserver.git"
   },
-  "main": "dist/metadata-library.umd.js",
-  "module": "dist/metadata-library.es.js",
-  "types": "dist/metadata-library.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/metadata-library.es.js",
-      "require": "./dist/metadata-library.umd.js"
-    }
+    ".": "./assets/entry.ts"
   },
-  "files": [
-    "dist/*",
-    "resources/*"
-  ],
-  "scripts": {
-    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
-    "build": "yarn clean && vue-tsc --noEmit --composite false && vite build",
-    "build:dev": "vue-tsc --noEmit --composite false && vite build --watch --mode development",
-    "build:only": "yarn clean && vite build",
-    "types": "vue-tsc --noEmit --composite false",
-    "lint:js": "eslint assets",
-    "lint:js:fix": "eslint assets --fix",
-    "pretty": "yarn pretty:write && yarn pretty:check",
-    "pretty:check": "prettier assets --check",
-    "pretty:write": "prettier assets --write"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^19.6",
-    "@commitlint/config-conventional": "^19.6",
-    "@eslint/js": "^9.15",
-    "@nabla/vite-plugin-eslint": "^2.0",
-    "@trivago/prettier-plugin-sort-imports": "^4.3",
-    "@types/node": "^20.17",
-    "@typescript-eslint/eslint-plugin": "^8.15",
-    "@typescript-eslint/parser": "^8.15",
-    "eslint": "^9.15",
-    "eslint-config-prettier": "^9.1",
-    "eslint-plugin-prettier": "^5.2",
-    "prettier": "^3.3",
-    "rimraf": "^6.0",
-    "rollup-plugin-delete": "^2.1",
-    "typescript": "5.6.2",
-    "typescript-eslint": "^8.15",
-    "vite": "^5.4",
-    "vite-plugin-dts": "4.1.1",
-    "vue-tsc": "^2.1"
-  },
-  "engines": {
-    "node": ">=20"
+  "types": "./assets/entry.ts",
+  "sideEffects": true,
+  "peerDependencies": {
+    "element-plus": "^2.8",
+    "pinia": "^2.2",
+    "unocss": "^0.64",
+    "vue": "^3.5",
+    "vue-i18n": "^10.0",
+    "vue-meta": "^3.0.0-alpha.10",
+    "vue-router": "^4.4"
   }
 }
