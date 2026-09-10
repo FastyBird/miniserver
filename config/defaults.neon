@@ -16,9 +16,9 @@ parameters:
         port: 3306
         driver: pdo_mysql
         memory: false
-        dbname: fastybird
-        username: fastybird
-        password: fastybird
+        dbname: miniserver
+        username: miniserver
+        password: miniserver
 
     redis:
         host: 127.0.0.1
@@ -36,7 +36,7 @@ parameters:
         port: 8888
 
     security:
-        issuer: com.fastybird.iot
+        issuer: com.fastybird.miniserver
         signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
 
     api:

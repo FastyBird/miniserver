@@ -147,7 +147,7 @@ fbUiModule:
 # Application
 #############
 contributteConsole:
-    name: "FastyBird:IoTServer!"
+    name: "FastyBird:MiniServer!"
     version: "1.0.0"
     catchExceptions: true
     autoExit: true
