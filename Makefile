@@ -60,6 +60,18 @@ mutations-infection:
 		--skip-initial-tests \
 		$(ARGS)
 
+composer-validate: ## Validate the root and every extension composer manifest
+	# Deliberately NOT --strict, at either level. --strict promotes constraint-style
+	# warnings to a non-zero exit, and three manifests carry such constraints that the
+	# merge is forbidden to change: the root and Core/Tools declare mathsolver/mathsolver
+	# as unbound (@dev), and the root and Connector/HomeKit pin endroid/qr-code to the
+	# exact version 4.5. With --strict this target would be red from birth. Revisit in
+	# Phase 6, when dependency changes are permitted.
+	composer validate
+	for manifest in src/FastyBird/*/*/composer.json; do \
+		composer validate --no-check-lock "$$manifest" || exit 1; \
+	done
+
 # DOCKER
 
 up:
