@@ -1,7 +1,0 @@
-src
-.editorconfig
-.eslintrc
-.gitattributes
-.gitignore
-.npmignore export-ignore
-Makefile export-ignore
