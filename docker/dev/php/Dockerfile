@@ -77,7 +77,7 @@ RUN pecl install xdebug \
 # Install Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-COPY .docker/dev/php/conf/php.ini            /usr/local/etc/php/php.ini
+COPY docker/dev/php/conf/php.ini            /usr/local/etc/php/php.ini
 
 # Set the working directory
 WORKDIR /app
