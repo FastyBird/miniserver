@@ -87,6 +87,11 @@ WORKDIR ${APP_PATH}
 
 COPY bin bin/
 COPY config config/
+# config/common.neon sets doctrine's migrations directory to %appDir%/migrations,
+# so the runtime image needs it or every console invocation dies with
+# 'Cannot load migrations from "/app/migrations" because it is not a valid dir'.
+# Phase 3 added migrations/ after Phase 2 wrote this stage's COPY list.
+COPY migrations migrations/
 COPY src src/
 COPY --from=vendor /app/vendor vendor/
 COPY --from=ui /app/public public/
