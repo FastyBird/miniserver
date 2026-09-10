@@ -3,7 +3,20 @@
 /.github export-ignore
 /docs export-ignore
 /tests export-ignore
-/tools export-ignore
+# tools/ is excluded file by file rather than as a directory, because git does not
+# descend into an export-ignored directory and so cannot re-include a subdirectory.
+# tools/patches/ MUST ship: extra.patches points at those files, and a tarball
+# without them makes the patcher print "Could not apply patch! Skipping" and produce
+# a silently unpatched vendor tree. When adding a QA config here, add it below too.
+/tools/.coveralls.yml export-ignore
+/tools/infection.json export-ignore
+/tools/phpcs.xml export-ignore
+/tools/phpstan-bootstrap.php export-ignore
+/tools/phpstan.base.neon export-ignore
+/tools/phpstan.src.neon export-ignore
+/tools/phpstan.tests.neon export-ignore
+/tools/phpunit-bootstrap.php export-ignore
+/tools/phpunit.xml export-ignore
 /var export-ignore
 .editorconfig export-ignore
 .gitattributes export-ignore
