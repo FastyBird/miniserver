@@ -334,6 +334,56 @@ git add docs/cleanup-log.md
 git commit -m "docs(cross): add phase 7 github and registry cleanup log"
 ```
 
+### Task 3b: Retire the unused GitHub Pages deployment
+
+**Added 2026-09-10**, after the repository rename made the live Pages site visible. The
+maintainer confirmed `docs.fastybird.com` "is something we wanted to use for documentation but
+was never used" and asked that any deploy to GitHub Pages be removed.
+
+**Files:**
+- None in this repository. `docs/CNAME` was already deleted in Phase 4 Task 15, and the 54
+  documentation links were repointed at `https://miniserver.fastybird.com/docs` in
+  `docs(cross): point documentation links at miniserver.fastybird.com/docs`.
+
+**State at the time of writing:**
+- Pages served `http://docs.fastybird.com/` from `main` at path `/docs`, status `built`. The
+  repository rename triggered a successful rebuild, which is how this was noticed.
+- There is **no Pages workflow** on either `main` or the merge branch. This is the legacy
+  branch-based Pages deployment, driven entirely by repository settings plus `docs/CNAME`.
+  Searching for `deploy-pages`, `gh-pages`, `peaceiris` and `upload-pages-artifact` returns
+  nothing, so disabling it is a settings change only.
+- The repository's `homepageUrl` was already `http://miniserver.fastybird.com/`.
+
+- [ ] **Step 1: Confirm nothing has started depending on the Pages site**
+
+```bash
+gh api repos/FastyBird/miniserver/pages
+grep -rn 'docs\.fastybird\.com' --include='*.md' . | grep -v node_modules | grep -v docs/superpowers
+```
+
+Expected: the second command returns nothing. If it returns hits, a later commit reintroduced
+the dead domain and must be fixed before disabling Pages.
+
+- [ ] **Step 2: Disable Pages**
+
+```bash
+gh api -X DELETE repos/FastyBird/miniserver/pages
+gh api repos/FastyBird/miniserver/pages   # expect 404
+```
+
+- [ ] **Step 3: Release the DNS record**
+
+`docs.fastybird.com` becomes unused. Removing the DNS record is the operator's call and is not
+scriptable from here.
+
+**Open question for the maintainer, deliberately not resolved here.** The stated model,
+`FastyBird/smart-panel`, *does* use GitHub Pages — it serves `https://fastybird.github.io/smart-panel/`
+from `main` at path `/`, with no `CNAME` file, and reaches `smart-panel.fastybird.com` through
+DNS configured outside the repository. So if `miniserver.fastybird.com/docs` is eventually to be
+served the same way, Pages is the likely vehicle and this task should *reconfigure* it (source
+`main:/`, no CNAME) rather than delete it. Disabling now is reversible either way; re-enabling is
+a settings change. Confirm the intent before running Step 2.
+
 ### Task 4: Delete FastyBird/miniserver-old
 
 **Files:**
