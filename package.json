@@ -46,9 +46,13 @@
     "pretty": "yarn pretty:write && yarn pretty:check --ignore '@fastybird/web-ui'",
     "pretty:check": "lerna run pretty:check --ignore '@fastybird/web-ui'",
     "pretty:write": "lerna run pretty:write --ignore '@fastybird/web-ui'",
-    "test": "lerna run test --stream --ignore '@fastybird/web-ui'"
+    "test": "lerna run test --stream --ignore '@fastybird/web-ui'",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5",
+    "@commitlint/config-conventional": "^19.5",
+    "husky": "^9.1",
     "lerna": "^8.1"
   },
   "engines": {

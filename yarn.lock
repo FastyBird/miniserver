@@ -969,7 +969,7 @@
     react-confetti "^6.1.0"
     strip-ansi "^7.1.0"
 
-"@commitlint/cli@^19.0", "@commitlint/cli@^19.3", "@commitlint/cli@^19.6":
+"@commitlint/cli@^19.0", "@commitlint/cli@^19.3", "@commitlint/cli@^19.5", "@commitlint/cli@^19.6":
   version "19.8.1"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-19.8.1.tgz#85f7d9f331344e1f0a2b9d8b24fd3695466e1158"
   integrity sha512-LXUdNIkspyxrlV6VDHWBmCZRtkEVRpBKxi2Gtw3J54cGWhLCTouVD/Q6ZSaSvd2YaDObWK8mDjrz3TIKtaQMAA==
@@ -982,7 +982,7 @@
     tinyexec "^1.0.0"
     yargs "^17.0.0"
 
-"@commitlint/config-conventional@^19.0", "@commitlint/config-conventional@^19.2", "@commitlint/config-conventional@^19.6":
+"@commitlint/config-conventional@^19.0", "@commitlint/config-conventional@^19.2", "@commitlint/config-conventional@^19.5", "@commitlint/config-conventional@^19.6":
   version "19.8.1"
   resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-19.8.1.tgz#eab42df58cda44f18410ae0cbd6785ece00f214b"
   integrity sha512-/AZHJL6F6B/G959CsMAzrPKKZjeEiAVifRyEwXxcT6qtqbPwGw+iQxmNS+Bu+i09OCtdNRW6pNpBvgPrtMr9EQ==
@@ -9019,6 +9019,11 @@ human-signals@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
+
+husky@^9.1:
+  version "9.1.7"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-9.1.7.tgz#d46a38035d101b46a70456a850ff4201344c0b2d"
+  integrity sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==
 
 iconv-lite@^0.6.2:
   version "0.6.3"
