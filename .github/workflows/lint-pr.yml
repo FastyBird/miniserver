@@ -1,0 +1,61 @@
+name: "Lint PR"
+
+on:
+  pull_request_target:
+    types: [ "opened", "reopened", "edited", "synchronize" ]
+
+jobs:
+  validate:
+    name: "Validate PR title"
+    runs-on: "ubuntu-latest"
+    permissions:
+      pull-requests: read
+
+    steps:
+      - uses: "amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50" # v6.1.1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            test
+            chore
+            perf
+            ci
+            build
+            revert
+          scopes: |
+            core
+            module
+            connector
+            plugin
+            bridge
+            addon
+            automator
+            library
+            ui
+            infra
+            ci
+            deps
+            docs
+            cross
+          requireScope: true
+
+      - name: "Validate PR title subject"
+        env:
+          PR_TITLE: "${{ github.event.pull_request.title }}"
+        run: |
+          SUBJECT=$(printf '%s' "$PR_TITLE" | sed -E 's/^[a-z]+\([a-z]+\): //')
+          FIRST_CHAR=$(printf '%s' "$SUBJECT" | cut -c1)
+          if [ "$FIRST_CHAR" != "$(printf '%s' "$FIRST_CHAR" | tr '[:upper:]' '[:lower:]')" ]; then
+            echo "PR title subject must not start with an uppercase letter: $SUBJECT"
+            exit 1
+          fi
+          if printf '%s' "$SUBJECT" | grep -qE '\.$'; then
+            echo "PR title subject must not end with a period: $SUBJECT"
+            exit 1
+          fi

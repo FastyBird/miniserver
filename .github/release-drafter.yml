@@ -1,0 +1,48 @@
+name-template: v$RESOLVED_VERSION
+tag-template: v$RESOLVED_VERSION
+
+categories:
+  - title: Breaking Changes
+    labels:
+      - breaking change
+  - title: Featured Changes
+    labels:
+      - feature
+      - enhancement
+  - title: Bug Fixes
+    labels:
+      - fix
+      - bugfix
+      - bug
+  - title: Documentation Updates
+    labels:
+      - documentation
+  - title: Maintenance
+    labels:
+      - chore
+      - dependencies
+
+autolabeler:
+  - label: fix
+    branch:
+      - '/fix\/.+/'
+    title:
+      - /fix/i
+  - label: feature
+    branch:
+      - '/feature\/.+/'
+  - label: documentation
+    branch:
+      - '/docs?\//'
+    title:
+      - /docs?/i
+  - label: chore
+    branch:
+      - '/chore\//'
+
+change-template: '- $TITLE @$AUTHOR [#$NUMBER]'
+
+template: |
+  ## What's Changed
+
+  $CHANGES
