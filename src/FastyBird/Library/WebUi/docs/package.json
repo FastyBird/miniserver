@@ -62,7 +62,7 @@
     "storybook": "^8.4",
     "storybook-dark-mode": "^4.0",
     "typescript": "5.6.2",
-    "typescript-eslint": "^8.15",
+    "typescript-eslint": "^8.70",
     "vite": "^5.4",
     "vue-component-meta": "^2.1",
     "vue-tsc": "^2.1",
