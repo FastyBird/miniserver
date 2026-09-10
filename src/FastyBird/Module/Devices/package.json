@@ -71,7 +71,7 @@
     "date-fns": "^3.6",
     "element-plus": "^2.8",
     "idb": "^8.0",
-    "jsona": "^1.12",
+    "jsona": "~1.12.0",
     "lodash.get": "^4.4",
     "lodash.capitalize": "^4.2",
     "lodash.defaultsdeep": "^4.6",
