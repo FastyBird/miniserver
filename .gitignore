@@ -2,3 +2,5 @@
 /node_modules
 /vendor
 .DS_Store
+/config/local.neon
+/config/supervisor/*.local.conf
