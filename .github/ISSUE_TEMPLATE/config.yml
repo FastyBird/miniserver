@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ❓ Ask a Question
+    url: https://discord.gg/H7pHN3hbqq
+    about: Have a question? Start a discussion on Discord instead.
+  - name: 📖 Documentation
+    url: https://miniserver.fastybird.com/docs
+    about: Configuration, deployment and architecture documentation.
