@@ -1837,14 +1837,12 @@
     "@sentry/browser" "8.55.2"
     "@sentry/core" "8.55.2"
 
-"@storybook/addon-a11y@^8.4":
-  version "8.6.18"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-8.6.18.tgz#46e0bbb6b9dac0205a12c216e2aa66922f8741b1"
-  integrity sha512-LFvudttdIfDTNWprA8/N1vbiWbJRrNscyt2OP9Qwi85E1d3LKLy+e8AWiqY08gpy2OUYujK7AjxfpKtNeddrxw==
+"@storybook/addon-a11y@^10.6":
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-10.6.0.tgz#b343dcc9afb434ef01e9ae728409e2fa7f05ed7c"
+  integrity sha512-Z/CZor/F8H74/+IoeLroEQXQoVxvmjVtUgATJ95KPBolHxMaHLXLsYU0wosIiiORxmfRCnpen5pQl1n4+pBWQw==
   dependencies:
-    "@storybook/addon-highlight" "8.6.18"
     "@storybook/global" "^5.0.0"
-    "@storybook/test" "8.6.18"
     axe-core "^4.2.0"
 
 "@storybook/addon-actions@8.6.14":
@@ -1933,13 +1931,6 @@
   version "8.6.14"
   resolved "https://registry.yarnpkg.com/@storybook/addon-highlight/-/addon-highlight-8.6.14.tgz#f5fb86bfae8b485cd49e8e2732eb05e049cd60cb"
   integrity sha512-4H19OJlapkofiE9tM6K/vsepf4ir9jMm9T+zw5L85blJZxhKZIbJ6FO0TCG9PDc4iPt3L6+aq5B0X29s9zicNQ==
-  dependencies:
-    "@storybook/global" "^5.0.0"
-
-"@storybook/addon-highlight@8.6.18":
-  version "8.6.18"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-highlight/-/addon-highlight-8.6.18.tgz#cf429c1ec64553fb293be660fa37b67fdf1da590"
-  integrity sha512-wTFJ1DPM0C8gK6nGTJxH75byayQj7BPAz02fME4AOmT6clrBpVl1zSTFTkXaSr+k4xOfeMR/xNUfVskaXz6T9w==
   dependencies:
     "@storybook/global" "^5.0.0"
 
@@ -2087,14 +2078,6 @@
     "@storybook/global" "^5.0.0"
     "@vitest/utils" "^2.1.1"
 
-"@storybook/instrumenter@8.6.18":
-  version "8.6.18"
-  resolved "https://registry.yarnpkg.com/@storybook/instrumenter/-/instrumenter-8.6.18.tgz#054305b98ea0a5999ed2235697ec89cd2741fe3a"
-  integrity sha512-viEC1BGlYyjAzi1Tv3LZjByh7Y3Oh04u6QKsujxdeUbr5rUOH4pa/wCKmxXmY6yWrD4WjcNtojmUvQZN/66FXQ==
-  dependencies:
-    "@storybook/global" "^5.0.0"
-    "@vitest/utils" "^2.1.1"
-
 "@storybook/manager-api@8.6.18":
   version "8.6.18"
   resolved "https://registry.yarnpkg.com/@storybook/manager-api/-/manager-api-8.6.18.tgz#f87705d42c33abbc423356dde5ea3a727745065d"
@@ -2138,19 +2121,6 @@
   dependencies:
     "@storybook/global" "^5.0.0"
     "@storybook/instrumenter" "8.6.14"
-    "@testing-library/dom" "10.4.0"
-    "@testing-library/jest-dom" "6.5.0"
-    "@testing-library/user-event" "14.5.2"
-    "@vitest/expect" "2.0.5"
-    "@vitest/spy" "2.0.5"
-
-"@storybook/test@8.6.18":
-  version "8.6.18"
-  resolved "https://registry.yarnpkg.com/@storybook/test/-/test-8.6.18.tgz#cd8720f82c9b1c575fba75fbc6146ddcb8434d34"
-  integrity sha512-u/RwfWMyHcH0N2hqfMTw2CoZ58IXdeED3b8NmcHc8bmERB3byI5vVAkwYbcD7+WeRHIiym38ZHi0SRn+IpkO3Q==
-  dependencies:
-    "@storybook/global" "^5.0.0"
-    "@storybook/instrumenter" "8.6.18"
     "@testing-library/dom" "10.4.0"
     "@testing-library/jest-dom" "6.5.0"
     "@testing-library/user-event" "14.5.2"
