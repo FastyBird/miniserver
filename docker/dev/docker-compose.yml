@@ -1,10 +1,24 @@
+#
+# FastyBird MiniServer - Development Docker Compose
+#
+# NOTE: FB_CONFIG_DIR still points at var/config because the config
+# directory has not moved yet (Phase 3 moves it to config/ and updates
+# this file and the Dockerfiles it drives).
+#
+# Usage:
+#   docker compose -f docker/dev/docker-compose.yml up -d
+#
+# With the storage services that are not wired by default:
+#   docker compose -f docker/dev/docker-compose.yml --profile redis --profile couchdb --profile rabbitmq --profile mqtt up -d
+#
+
 services:
   # WEB SERVER
   web-server:
     container_name: fastybird-web-server
     build:
-      context: .
-      dockerfile: .docker/dev/nginx/Dockerfile
+      context: ../..
+      dockerfile: docker/dev/nginx/Dockerfile
     depends_on:
       - application
     environment:
@@ -14,8 +28,8 @@ services:
       APP_ENV: "dev"
       FB_CONFIG_DIR: /app/var/config
     volumes:
-      - ./:/app:delegated
-      - ./.docker/dev/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:delegated
+      - ../../:/app:delegated
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:delegated
     ports:
       - "${WEB_SERVER_PORT:-80}:80"
     networks:
@@ -25,8 +39,8 @@ services:
   application:
     container_name: fastybird-application
     build:
-      context: .
-      dockerfile: .docker/dev/php/Dockerfile
+      context: ../..
+      dockerfile: docker/dev/php/Dockerfile
     depends_on:
       - database
     environment:
@@ -47,7 +61,7 @@ services:
       FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
     volumes:
-      - ./:/app:delegated
+      - ../../:/app:delegated
     command: php-fpm
     networks:
       - fastybird
@@ -58,8 +72,8 @@ services:
   ui-server:
     container_name: fastybird-ui-server
     build:
-      context: .
-      dockerfile: .docker/dev/node/Dockerfile
+      context: ../..
+      dockerfile: docker/dev/node/Dockerfile
     environment:
       # Container specific environment variables
       TZ: ${APP_TZ:-UTC}
@@ -69,7 +83,7 @@ services:
       FB_APP_PARAMETER__APPLICATION_TARGET: http://web-server:80
       FB_APP_PARAMETER__WEBSOCKETS_TARGET: ws://ws-server:8888
     volumes:
-      - ./:/app:delegated
+      - ../../:/app:delegated
     ports:
       - "${UI_PORT:-3000}:3000"
       - "${UI_DOC_PORT:-6006}:6006"
@@ -80,8 +94,8 @@ services:
   ws-server:
     container_name: fastybird-ws-server
     build:
-      context: .
-      dockerfile: .docker/dev/php/Dockerfile
+      context: ../..
+      dockerfile: docker/dev/php/Dockerfile
     depends_on:
       - database
     environment:
@@ -102,7 +116,7 @@ services:
       FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
     volumes:
-      - ./:/app:delegated
+      - ../../:/app:delegated
     ports:
       - "${WS_PORT:-8888}:8888"
     command: php /app/bin/fb-console.php fb:ws-server:start
@@ -113,8 +127,8 @@ services:
   devices-module:
     container_name: fastybird-devices-module
     build:
-      context: .
-      dockerfile: .docker/dev/php/Dockerfile
+      context: ../..
+      dockerfile: docker/dev/php/Dockerfile
     depends_on:
       - database
     environment:
@@ -135,8 +149,35 @@ services:
       FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
     volumes:
-      - ./:/app:delegated
+      - ../../:/app:delegated
     command: php /app/bin/fb-console.php fb:devices-module:exchange -n
+    networks:
+      - fastybird
+
+  # DATABASE SCHEMA (schema creation is a manual step until Phase 3 adds migrations)
+  migrations:
+    container_name: fastybird-migrations
+    build:
+      context: ../..
+      dockerfile: docker/dev/php/Dockerfile
+    depends_on:
+      - database
+    environment:
+      # Container specific environment variables
+      TZ: ${APP_TZ:-UTC}
+      PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}
+      # Application specific environment variables
+      APP_ENV: "dev"
+      FB_CONFIG_DIR: /app/var/config
+      FB_APP_PARAMETER__DATABASE_HOST: database
+      FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
+      FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
+      FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-fastybird}
+      FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-fastybird_dev}
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
+    volumes:
+      - ../../:/app:delegated
+    entrypoint: ["/bin/sh", "/app/docker/dev/migrations/docker-entrypoint.sh"]
     networks:
       - fastybird
 
@@ -160,10 +201,12 @@ services:
     networks:
       - fastybird
 
-  # REDIS STORAGE
+  # REDIS STORAGE (not wired by default; see docs/configuration.md once it exists in Phase 4)
   redis:
     container_name: fastybird-redis
     image: redis
+    profiles:
+      - redis
     volumes:
       - redis-dev-other:/var/lib/redis:rw
       - redis-dev-data:/data:rw
@@ -175,10 +218,12 @@ services:
     networks:
       - fastybird
 
-  # COUCH DB STORAGE
+  # COUCH DB STORAGE (not wired by default)
   couchdb:
     container_name: fastybird-couchdb
     image: couchdb
+    profiles:
+      - couchdb
     environment:
       # Container specific environment variables
       COUCHDB_USER: ${COUCHDB_USERNAME:-admin}
@@ -192,10 +237,12 @@ services:
     networks:
       - fastybird
 
-  # RABBIT MQ EXCHANGE
+  # RABBIT MQ EXCHANGE (not wired by default)
   rabbitmq:
     container_name: fastybird-rabbitmq
     image: rabbitmq:management
+    profiles:
+      - rabbitmq
     environment:
       # Container specific environment variables
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME:-admin}
@@ -210,10 +257,12 @@ services:
     networks:
       - fastybird
 
-  # MQTT
+  # MQTT (not wired by default)
   mqtt:
     container_name: fastybird-mqtt
     image: eclipse-mosquitto
+    profiles:
+      - mqtt
     volumes:
       - mqtt-dev-data:/mosquitto/data:rw
       - mqtt-dev-log:/mosquitto/log:rw
