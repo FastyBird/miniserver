@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "composite": true,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -13,7 +12,10 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": "assets",
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["./config/*"]
+    },
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "types": [
@@ -38,10 +40,11 @@
     ]
   },
   "include": [
-    "assets/**/*.ts",
-    "assets/**/*.d.ts",
-    "assets/**/*.vue",
-    "assets/**/*.json",
+    "src/FastyBird/*/*/assets/**/*.ts",
+    "src/FastyBird/*/*/assets/**/*.d.ts",
+    "src/FastyBird/*/*/assets/**/*.vue",
+    "src/FastyBird/*/*/assets/**/*.json",
+    "config/**/*.ts",
     "package.json"
   ],
   "exclude": [

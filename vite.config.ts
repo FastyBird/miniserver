@@ -8,18 +8,24 @@ import vueI18n from '@intlify/unplugin-vue-i18n/vite';
 import eslint from '@nabla/vite-plugin-eslint';
 import vue from '@vitejs/plugin-vue';
 
+import pkg from './package.json';
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	envPrefix: 'FB_APP_PARAMETER__',
 	publicDir: false,
+	define: {
+		__APP_VERSION__: JSON.stringify(pkg.version),
+		__APP_DESCRIPTION__: JSON.stringify(pkg.description),
+	},
 	plugins: [
 		vue(),
 		vueI18n({
-			include: [resolve(__dirname, './assets/locales/**.json')],
+			include: [resolve(__dirname, './src/FastyBird/Core/Application/assets/locales/**.json')],
 		}),
 		eslint(),
 		viteVConsole({
-			entry: resolve('assets/main.ts'), // entry file
+			entry: resolve(__dirname, './src/FastyBird/Core/Application/assets/main.ts'), // entry file
 			localEnabled: true, // dev environment
 			enabled: false, // build production
 			config: {
@@ -32,12 +38,7 @@ export default defineConfig({
 	resolve: {
 		dedupe: ['pinia', 'vue', 'vue-router', 'vue-i18n', 'vue-meta', 'nprogress', 'element-plus'],
 		alias: {
-			'@fastybird/accounts-module':
-				process.env.NODE_ENV === 'production' ? '@fastybird/accounts-module' : resolve(__dirname, '../../Module/Accounts/assets/entry.ts'),
-			'@fastybird/devices-module':
-				process.env.NODE_ENV === 'production' ? '@fastybird/devices-module' : resolve(__dirname, '../../Module/Devices/assets/entry.ts'),
-			'@fastybird/homekit-connector':
-				process.env.NODE_ENV === 'production' ? '@fastybird/homekit-connector' : resolve(__dirname, '../../Connector/HomeKit/assets/entry.ts'),
+			'@config': resolve(__dirname, './config'),
 		},
 	},
 	css: {
@@ -50,7 +51,7 @@ export default defineConfig({
 	},
 	build: {
 		manifest: true,
-		outDir: resolve(__dirname, './../../../../public'),
+		outDir: resolve(__dirname, './public'),
 	},
 	server: {
 		watch: {
