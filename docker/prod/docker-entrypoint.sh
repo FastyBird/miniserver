@@ -5,6 +5,7 @@
 set -e
 
 mkdir -p "${FB_LOGS_DIR:-/app/var/logs}" "${FB_TEMP_DIR:-/app/var/temp}"
+chown -R www-data:www-data "${FB_LOGS_DIR:-/app/var/logs}" "${FB_TEMP_DIR:-/app/var/temp}"
 
 attempt_left=20
 
