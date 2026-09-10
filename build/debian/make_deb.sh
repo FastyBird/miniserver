@@ -39,7 +39,7 @@ if [ "$1" != "only_clean" ] ; then
   sudo mkdir -p dist/usr/lib/miniserver || echo
   sudo cp -r public dist/usr/lib/miniserver/
   sudo cp -r vendor dist/usr/lib/miniserver/
-  sudo cp -r var/config dist/etc/miniserver/config
+  sudo cp -r config dist/etc/miniserver/config
   sudo chmod +x dist/etc/ -R
   sudo chmod +x dist/usr/ -R
   sudo chmod +x dist/var/ -R

@@ -12,7 +12,7 @@ set -e
 # clean and the exception log stays empty. That failure mode is silent and
 # indistinguishable from a healthy container, which is worse than refusing
 # to boot. A signing key must never have a built-in default (in particular
-# never the value tracked in this repository's .env / var/config/
+# never the value tracked in this repository's .env / config/
 # defaults.neon, which is published and public), so this is a hard stop,
 # not a fallback.
 check_security_signature() {
@@ -40,19 +40,19 @@ EOF
 check_security_signature
 
 prepare_dirs() {
-	mkdir -p "${FB_LOGS_DIR:-/app/var/logs}" "${FB_TEMP_DIR:-/app/var/temp}"
+	mkdir -p "${FB_LOGS_DIR:-/data/logs}" "${FB_TEMP_DIR:-/data/temp}"
 
-	# The compiled DI container lives under var/temp/cache with auto-rebuild
+	# The compiled DI container lives under temp/cache with auto-rebuild
 	# disabled in production, and its cache key does not cover config file
-	# *contents*. /app/var is a volume that survives upgrades, so on a
+	# *contents*. /data is a volume that survives upgrades, so on a
 	# code-only redeploy the previous release's compiled container would
 	# otherwise be reloaded against the new code. Purging it on every start
 	# is deliberate and cheap (Nette just recompiles on first request) — do
 	# not "optimise" this away to save a rebuild.
-	rm -rf "${FB_TEMP_DIR:-/app/var/temp}/cache"
+	rm -rf "${FB_TEMP_DIR:-/data/temp}/cache"
 
-	mkdir -p "${FB_TEMP_DIR:-/app/var/temp}"
-	chown -R www-data:www-data "${FB_LOGS_DIR:-/app/var/logs}" "${FB_TEMP_DIR:-/app/var/temp}"
+	mkdir -p "${FB_TEMP_DIR:-/data/temp}"
+	chown -R www-data:www-data "${FB_LOGS_DIR:-/data/logs}" "${FB_TEMP_DIR:-/data/temp}"
 }
 
 # Before the wait loop, so the (root-run) console below can write to a
@@ -80,7 +80,7 @@ echo "Schema creation is a manual step until Phase 3 adds migrations:"
 echo "  docker exec <container> php bin/fb-console.php orm:schema-tool:create"
 
 # Again, because the wait loop's console just ran as root and re-created
-# var/temp/cache/* (and supervisord will create var/logs/*.log) owned by
+# /data/temp/cache/* (and supervisord will create /data/logs/*.log) owned by
 # root; this second pass is the one that actually sticks before php-fpm
 # and the www-data-run supervisor programs start.
 prepare_dirs

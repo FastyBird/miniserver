@@ -4,10 +4,6 @@
 # Three stages: ui (Vite/Vue frontend), vendor (PHP dependencies), runtime
 # (nginx + php-fpm + supervisord serving the application).
 #
-# NOTE: config still lives at var/config/ at this phase (Phase 3 moves it to
-# config/ and switches FB_CONFIG_DIR/FB_LOGS_DIR/FB_TEMP_DIR and the volume
-# below to the /data layout).
-#
 # Build:
 #   docker build -t fastybird/miniserver -f docker/prod/Dockerfile .
 #
@@ -90,7 +86,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR ${APP_PATH}
 
 COPY bin bin/
-COPY var/config var/config/
+COPY config config/
 COPY src src/
 COPY --from=vendor /app/vendor vendor/
 COPY --from=ui /app/public public/
@@ -107,8 +103,8 @@ COPY composer.json composer.lock ./
 COPY --from=vendor /usr/bin/composer /usr/local/bin/composer
 
 RUN chmod +x bin/fb-console bin/fb-console.php bin/fb-supervisor bin/fb-supervisor.php \
-    && mkdir -p var/logs var/temp \
-    && chown -R www-data:www-data ${APP_PATH}
+    && mkdir -p /data/config /data/logs /data/temp \
+    && chown -R www-data:www-data ${APP_PATH} /data
 
 COPY docker/prod/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY docker/prod/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
@@ -119,12 +115,12 @@ COPY docker/prod/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENV APP_ENV=prod \
-    FB_CONFIG_DIR=/app/var/config \
-    FB_LOGS_DIR=/app/var/logs \
-    FB_TEMP_DIR=/app/var/temp \
+    FB_CONFIG_DIR=/data/config \
+    FB_LOGS_DIR=/data/logs \
+    FB_TEMP_DIR=/data/temp \
     PHP_DATE_TIMEZONE=UTC
 
-VOLUME ${APP_PATH}/var
+VOLUME /data
 
 EXPOSE 80 8888
 

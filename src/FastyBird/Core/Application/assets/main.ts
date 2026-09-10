@@ -11,7 +11,7 @@ import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, st
 import { createWampV1Client } from '@fastybird/vue-wamp-v1';
 import '@fastybird/web-ui-theme-chalk/src/index.scss';
 
-import { extensions } from '../../../../../var/config/extensions';
+import { extensions } from '../../../../../config/extensions';
 
 import { version } from './../package.json';
 import App from './App.vue';

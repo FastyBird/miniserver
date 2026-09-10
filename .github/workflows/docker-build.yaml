@@ -82,7 +82,7 @@ jobs:
       # (Core/Application/src/Router/AppRouter.php) defines a route for "/",
       # but nothing registers it: there is no `services: router:` entry and
       # no `application: mapping:` in any config (checked both
-      # Core/Application/config/*.neon and var/config/*.neon; `git log
+      # Core/Application/config/*.neon and config/*.neon; `git log
       # -S'AppRouter'` over those paths returns nothing). The Nette
       # application therefore has no routes and correctly 404s every
       # non-API request. This is pre-existing frozen-repository behaviour,
@@ -119,7 +119,7 @@ jobs:
           fi
 
       - name: "Exception log is empty or absent"
-        run: docker exec miniserver sh -c '[ ! -s /app/var/logs/exception.log ]'
+        run: docker exec miniserver sh -c '[ ! -s /data/logs/exception.log ]'
 
       - name: "Dump container logs on failure"
         if: failure()

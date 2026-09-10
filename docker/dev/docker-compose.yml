@@ -1,10 +1,6 @@
 #
 # FastyBird MiniServer - Development Docker Compose
 #
-# NOTE: FB_CONFIG_DIR still points at var/config because the config
-# directory has not moved yet (Phase 3 moves it to config/ and updates
-# this file and the Dockerfiles it drives).
-#
 # Usage:
 #   docker compose -f docker/dev/docker-compose.yml up -d
 #
@@ -26,7 +22,7 @@ services:
       TZ: ${APP_TZ:-UTC}
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/var/config
+      FB_CONFIG_DIR: /app/config
     volumes:
       - ../../:/app:delegated
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:delegated
@@ -50,7 +46,7 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/var/config
+      FB_CONFIG_DIR: /app/config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
@@ -79,7 +75,7 @@ services:
       TZ: ${APP_TZ:-UTC}
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/var/config
+      FB_CONFIG_DIR: /app/config
       FB_APP_PARAMETER__APPLICATION_TARGET: http://web-server:80
       FB_APP_PARAMETER__WEBSOCKETS_TARGET: ws://ws-server:8888
     volumes:
@@ -105,7 +101,7 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/var/config
+      FB_CONFIG_DIR: /app/config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
@@ -138,7 +134,7 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/var/config
+      FB_CONFIG_DIR: /app/config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
@@ -168,7 +164,7 @@ services:
       PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/var/config
+      FB_CONFIG_DIR: /app/config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}

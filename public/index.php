@@ -20,8 +20,6 @@ if (isset($_ENV['FB_APP_DIR'])) {
 	define('FB_PUBLIC_DIR', realpath(__DIR__));
 }
 
-define('FB_CONFIG_DIR', realpath(FB_APP_DIR . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'config'));
-
 $autoload = $vendorDir . DIRECTORY_SEPARATOR . 'autoload.php';
 
 if (file_exists($autoload)) {

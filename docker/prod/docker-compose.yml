@@ -7,9 +7,6 @@
 # With Redis (only useful once the RedisDb plugin is wired in local.neon):
 #   docker compose -f docker/prod/docker-compose.yml --profile redis up -d
 #
-# NOTE: config still lives at var/config/ at this phase; Phase 3 moves it to
-# config/ and switches FB_CONFIG_DIR to the /data layout.
-#
 
 services:
   application:
@@ -38,7 +35,7 @@ services:
       FB_APP_PARAMETER__REDIS_HOST: redis
       FB_APP_PARAMETER__REDIS_PORT: 6379
       # Required, no default on purpose: this is the JWT signing key. The
-      # repository's tracked .env / var/config/defaults.neon value is
+      # repository's tracked .env / config/defaults.neon value is
       # published in a public repo and must never be used in production —
       # the entrypoint refuses to start rather than fall back to it. The
       # operator must supply SECURITY_SIGNATURE in the environment, e.g.
@@ -48,7 +45,7 @@ services:
       - "${HTTP_PORT:-80}:80"
       - "${WS_PORT:-8888}:8888"
     volumes:
-      - miniserver-var:/app/var
+      - miniserver-data:/data
     healthcheck:
       # "/" is not routed (see docker/prod/Dockerfile HEALTHCHECK comment
       # and spec section 7.1); /favicon.ico is served by nginx and returns
@@ -82,6 +79,6 @@ services:
       - miniserver-redis:/data
 
 volumes:
-  miniserver-var:
+  miniserver-data:
   miniserver-database:
   miniserver-redis:
