@@ -359,13 +359,15 @@ Insert immediately before the `# DOCKER` comment line in `Makefile`:
 
 ```make
 composer-validate: ## Validate the root and every extension composer manifest
-	# NOT --strict: it exits non-zero on two pre-existing constraint-style warnings that
-	# the merge is forbidden to change (endroid/qr-code uses an exact constraint,
-	# mathsolver/mathsolver is unbound). With --strict this target would be red from
-	# birth. Revisit in Phase 6, when dependency changes are permitted.
+	# Deliberately NOT --strict, at either level. --strict promotes constraint-style
+	# warnings to a non-zero exit, and three manifests carry such constraints that the
+	# merge is forbidden to change: the root and Core/Tools declare mathsolver/mathsolver
+	# as unbound (@dev), and the root and Connector/HomeKit pin endroid/qr-code to the
+	# exact version 4.5. With --strict this target would be red from birth. Revisit in
+	# Phase 6, when dependency changes are permitted.
 	composer validate
 	for manifest in src/FastyBird/*/*/composer.json; do \
-		composer validate --strict --no-check-lock "$$manifest" || exit 1; \
+		composer validate --no-check-lock "$$manifest" || exit 1; \
 	done
 
 ```
@@ -378,7 +380,7 @@ Expected: one line, `composer-validate      Validate the root and every extensio
 - [ ] **Step 3: Verify it passes against the current manifests**
 
 Run: `docker compose exec -T application make composer-validate`
-Expected: `./composer.json is valid` for the root followed by 34 further `is valid` lines, exit status 0. No extension manifest declares a package in both `require` and `require-dev`, and none carries a `version` field, so `--strict` has nothing to report.
+Expected: `./composer.json is valid` for the root followed by 34 further `is valid` lines, exit status 0. Some manifests additionally print constraint-style warnings — `Connector/HomeKit` pins `endroid/qr-code` to the exact version `4.5`, and `Core/Tools` leaves `mathsolver/mathsolver` unbound at `@dev` — which is why neither call uses `--strict`. Without it those warnings are reported but do not fail the command, so the exit status is still 0. Verified against the real manifests on 2026-09-10.
 
 - [ ] **Step 4: Commit**
 
