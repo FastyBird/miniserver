@@ -3,12 +3,7 @@
 /node_modules
 /vendor
 /var
-.editorconfig
 .DS_Store
-.gitattributes
-.gitignore
-.npmignore
 composer.lock
 yarn.lock
 tsconfig.tsbuildinfo
-Makefile
