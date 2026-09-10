@@ -2,8 +2,8 @@
 
 // phpcs:ignoreFile
 
-define('FB_APP_DIR', realpath(__DIR__ . '/..'));
-define('FB_CONFIG_DIR', realpath(__DIR__ . '/../config'));
+define('FB_APP_DIR', realpath(__DIR__ . '/../tests'));
+define('FB_CONFIG_DIR', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'config');
 define('FB_VENDOR_DIR', realpath(__DIR__ . '/../vendor'));
 is_string(getenv('TEST_TOKEN'))
 	? define('FB_TEMP_DIR', __DIR__ . '/../var/tools/PHPUnit/tmp/' . getmypid() . '-' . md5((string) time()) . '-' . getenv('TEST_TOKEN') ?? '')
