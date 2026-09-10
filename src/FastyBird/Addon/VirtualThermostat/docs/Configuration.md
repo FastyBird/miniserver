@@ -315,4 +315,4 @@ if you prefer not to use thermostat presets, simply choose **None**, and your th
 ## Configuring the Thermostat with the FastyBird User Interface
 
 You can also configure the Thermostat devices using the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) user interface. For more information
-on how to do this, please refer to the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [documentation](https://docs.fastybird.com).
+on how to do this, please refer to the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [documentation](https://miniserver.fastybird.com/docs).

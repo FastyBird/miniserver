@@ -108,7 +108,7 @@ And that's it! One bridge is ready to by executed, it will handle all hardware d
 ## Configuring the Connector with the FastyBird User Interface
 
 You can also configure the [Zigbee2MQTT](https://www.zigbee2mqtt.io) connector using the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) user interface. For more information
-on how to do this, please refer to the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [documentation](https://docs.fastybird.com).
+on how to do this, please refer to the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [documentation](https://miniserver.fastybird.com/docs).
 
 # Configuring Zigbee2MQTT Service
 

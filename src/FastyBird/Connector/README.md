@@ -18,7 +18,7 @@ FastyBird is an Open Source IOT solution built from decoupled components with po
 
 ## Documentation
 
-:book: Documentation is available on [docs.fastybird.com](https://docs.fastybird.com).
+:book: Documentation is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs).
 
 ## Contributing
 

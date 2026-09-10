@@ -4,7 +4,7 @@
 
 > [!IMPORTANT]
 This documentation is meant to be used by developers or users which has basic programming skills. If you are regular user
-please use FastyBird IoT documentation which is available on [docs.fastybird.com](https://docs.fastybird.com).
+please use FastyBird IoT documentation which is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs).
 
 This extension plays a vital role in the [FastyBird](https://www.fastybird.com) application by orchestrating the establishment of essential core services.
 In addition to its primary function, it incorporates default extensions that contribute to the overall enhancement of the application's functionality,

@@ -4,7 +4,7 @@
 
 > [!IMPORTANT]
 This documentation is meant to be used by developers or users which has basic programming skills. If you are regular user
-please use FastyBird IoT documentation which is available on [docs.fastybird.com](https://docs.fastybird.com).
+please use FastyBird IoT documentation which is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs).
 
 The [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) Shelly Connector is an extension for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem that enables seamless integration
 with [Shelly](https://shelly.cloud) devices. It allows users to easily connect and control [Shelly](https://shelly.cloud) devices from within the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem,

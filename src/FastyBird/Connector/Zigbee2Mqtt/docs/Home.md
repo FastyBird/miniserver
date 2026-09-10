@@ -4,7 +4,7 @@
 
 > [!IMPORTANT]
 This documentation is meant to be used by developers or users which has basic programming skills. If you are regular user
-please use FastyBird IoT documentation which is available on [docs.fastybird.com](https://docs.fastybird.com). 
+please use FastyBird IoT documentation which is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs). 
 
 The Zigbee2MQTT Connector is an addition to the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem that facilitates integration with
 devices using the [Zigbee](https://en.wikipedia.org/wiki/Zigbee) wireless network through the [Zigbee2MQTT](https://www.zigbee2mqtt.io) service. This connector enables users to
