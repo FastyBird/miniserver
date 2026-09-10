@@ -23,6 +23,7 @@ services:
       - database
     environment:
       TZ: ${APP_TZ:-UTC}
+      PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: 3306
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-fastybird}
