@@ -82,7 +82,6 @@ import { injectAccountManager, useBreakpoints, useEventBus } from '@fastybird/to
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
 import { FbAppBar } from '@fastybird/web-ui-library';
 
-import { description } from './../package.json';
 import Logo from './assets/images/fb_row.svg?component';
 import { AppNavigation, AppSidebar, AppTopbar } from './components';
 
@@ -172,7 +171,7 @@ useMeta({
 		{
 			hid: 'description',
 			name: 'description',
-			content: description ?? '',
+			content: __APP_DESCRIPTION__ ?? '',
 		},
 	],
 	link: [
