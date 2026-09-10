@@ -37,7 +37,7 @@ parameters:
 
     security:
         issuer: com.fastybird.miniserver
-        signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
+        signature:                                # set via FB_APP_PARAMETER__SECURITY_SIGNATURE or config/local.neon, see docs/configuration.md
 
     api:
         prefixed:

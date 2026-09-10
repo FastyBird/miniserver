@@ -4,3 +4,4 @@
 .DS_Store
 /config/local.neon
 /config/supervisor/*.local.conf
+/.env
