@@ -66,16 +66,21 @@ class Configurator extends Bootstrap\Configurator
 			boolval($this->staticParameters['debugMode']),
 		);
 
-		// @phpstan-ignore-next-line argument.type (Nette Bootstrap\Configurator's real @var list<string|array<string, mixed>> for $configs is wider than this method's own array<string|array<string>> $configFiles declaration)
+		// @phpstan-ignore argument.type (Nette Bootstrap\Configurator's real @var list<string|array<string, mixed>> for $configs is wider than this method's own array<string|array<string>> $configFiles declaration)
 		$containerKey = $this->getContainerKey($this->configs);
 
 		$this->reloadContainerOnDemand($loader, $containerKey, $buildDir);
 
 		$containerClass = $loader->load(
-			// @phpstan-ignore-next-line argument.type (Nette\DI\ContainerLoader::load()'s real PHPDoc expects callable(Compiler): ?string, but the parent Configurator::generateContainer() called here returns void)
+			// @phpstan-ignore argument.type (Nette\DI\ContainerLoader::load()'s real PHPDoc expects callable(Compiler): ?string, but the parent Configurator::generateContainer() called here returns void)
 			fn (Compiler $compiler) => $this->generateContainer($compiler),
 			$containerKey,
 		);
+		// This one must stay a blanket next-line ignore. The identifier-scoped directive form
+		// does not match this error, which PHPStan raises from treating a PHPDoc type as
+		// certain; verified 2026-09-10, the scoped form leaves it unsuppressed. Do not write
+		// the directive name in prose near a real directive: PHPStan parses any occurrence
+		// and fails with ignore.parseError on whatever follows it.
 		// @phpstan-ignore-next-line function.alreadyNarrowedType (Defensive runtime assertion kept intentionally even though static analysis can already prove it)
 		assert(is_subclass_of($containerClass, Container::class));
 

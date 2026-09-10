@@ -212,7 +212,7 @@ final class Gen2WsApi
 		// ratchet/pawl permits ^0.3.1 || ^0.4.0 and no lock file was committed until now, so a
 		// fresh resolve selected 0.4.1. Not fixed here: this phase must not change behaviour or
 		// dependency constraints.
-		// @phpstan-ignore-next-line arguments.count (see the note above)
+		// @phpstan-ignore arguments.count (see the note above)
 		$negotiator = new RFC6455\Handshake\ClientNegotiator();
 
 		$url = 'ws://' . $address . '/rpc';
