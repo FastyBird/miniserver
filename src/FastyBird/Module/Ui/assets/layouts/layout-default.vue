@@ -4,9 +4,10 @@
 
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+
 import get from 'lodash.get';
 
-import { useDashboards, useGroups, useWidgets, useWidgetDataSources, useWidgetDisplay } from '../models';
+import { useDashboards, useGroups, useWidgetDataSources, useWidgetDisplay, useWidgets } from '../models';
 import { DashboardDocument, GroupDocument, WidgetDataSourceDocument, WidgetDisplayDocument, WidgetDocument } from '../types';
 
 defineOptions({

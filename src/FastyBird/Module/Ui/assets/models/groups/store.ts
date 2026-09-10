@@ -1,20 +1,21 @@
-import { ModulePrefix } from '@fastybird/metadata-library';
+import { Pinia, Store, defineStore } from 'pinia';
+
 import addFormats from 'ajv-formats';
 import Ajv from 'ajv/dist/2020';
 import axios from 'axios';
 import { Jsona } from 'jsona';
 import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
-import { defineStore, Pinia, Store } from 'pinia';
 import { v4 as uuid } from 'uuid';
 
-import exchangeDocumentSchema from '../../../resources/schemas/document.group.json';
+import { ModulePrefix } from '@fastybird/metadata-library';
 
+import exchangeDocumentSchema from '../../../resources/schemas/document.group.json';
 import { ApiError } from '../../errors';
 import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { IGroupDatabaseRecord, IGroupMeta, IGroupsInsertDataActionPayload, IGroupsLoadRecordActionPayload, IPlainRelation } from '../../models/types';
 import { GroupDocument, RoutingKeys } from '../../types';
-import { addRecord, getAllRecords, getRecord, removeRecord, DB_TABLE_GROUPS } from '../../utilities/database';
+import { DB_TABLE_GROUPS, addRecord, getAllRecords, getRecord, removeRecord } from '../../utilities/database';
 
 import {
 	IGroup,

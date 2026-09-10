@@ -1,8 +1,8 @@
 import { App } from 'vue';
 
+import { configurationKey, metaKey } from './configuration';
 import moduleRouter from './router';
 import { ITriggersModuleOptions, InstallFunction } from './types';
-import { configurationKey, metaKey } from './configuration';
 
 export function createTriggersModule(): InstallFunction {
 	const plugin: InstallFunction = {

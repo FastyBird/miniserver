@@ -1,7 +1,8 @@
-import { TJsonaModel, TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships } from 'jsona/lib/JsonaTypes';
 import { _GettersTree } from 'pinia';
 
-import { IWidgetResponseData, IWidgetResponseModel, IEntityMeta, IPlainRelation } from '../../models/types';
+import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships, TJsonaModel } from 'jsona/lib/JsonaTypes';
+
+import { IEntityMeta, IPlainRelation, IWidgetResponseData, IWidgetResponseModel } from '../../models/types';
 import { GroupDocument } from '../../types';
 
 export interface IGroupMeta extends IEntityMeta {

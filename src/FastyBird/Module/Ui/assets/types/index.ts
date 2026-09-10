@@ -1,7 +1,9 @@
-import { Pinia } from 'pinia';
 import { Plugin } from 'vue';
 import { I18n } from 'vue-i18n';
 import { Router } from 'vue-router';
+
+import { Pinia } from 'pinia';
+
 import { Client } from '@fastybird/vue-wamp-v1';
 
 export * from './exchange';

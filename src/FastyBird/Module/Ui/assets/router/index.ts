@@ -1,4 +1,4 @@
-import { Router, RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw, Router } from 'vue-router';
 
 import { useRoutesNames } from '../composables';
 

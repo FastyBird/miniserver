@@ -1,16 +1,17 @@
-import { TJsonaModel, TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships } from 'jsona/lib/JsonaTypes';
 import { _GettersTree } from 'pinia';
 
+import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships, TJsonaModel } from 'jsona/lib/JsonaTypes';
+
 import {
-	IWidgetDataSourceResponseModel,
-	ITabResponseModel,
-	IGroupResponseModel,
-	IWidgetDisplayResponseModel,
 	IEntityMeta,
+	IGroupResponseModel,
 	IPlainRelation,
-	IWidgetDataSourceResponseData,
 	ITabResponseData,
+	ITabResponseModel,
+	IWidgetDataSourceResponseData,
+	IWidgetDataSourceResponseModel,
 	IWidgetDisplayResponseData,
+	IWidgetDisplayResponseModel,
 } from '../../models/types';
 import { WidgetDocument } from '../../types';
 

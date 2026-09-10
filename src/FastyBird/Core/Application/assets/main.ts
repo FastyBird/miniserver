@@ -7,11 +7,10 @@ import get from 'lodash.get';
 import 'nprogress/nprogress.css';
 import 'virtual:uno.css';
 
+import { extensions } from '@config/extensions';
 import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, storesPlugin } from '@fastybird/tools';
 import { createWampV1Client } from '@fastybird/vue-wamp-v1';
 import '@fastybird/web-ui-theme-chalk/src/index.scss';
-
-import { extensions } from '@config/extensions';
 
 import App from './App.vue';
 import i18n from './locales';

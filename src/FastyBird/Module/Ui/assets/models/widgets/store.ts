@@ -1,29 +1,30 @@
-import { ModulePrefix, ModuleSource } from '@fastybird/metadata-library';
+import { Pinia, Store, defineStore } from 'pinia';
+
 import addFormats from 'ajv-formats';
 import Ajv from 'ajv/dist/2020';
 import axios from 'axios';
 import { Jsona } from 'jsona';
 import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
-import { defineStore, Pinia, Store } from 'pinia';
 import { v4 as uuid } from 'uuid';
 
-import exchangeDocumentSchema from '../../../resources/schemas/document.widget.json';
+import { ModulePrefix, ModuleSource } from '@fastybird/metadata-library';
 
+import exchangeDocumentSchema from '../../../resources/schemas/document.widget.json';
 import { ApiError } from '../../errors';
 import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { useWidgetDataSources, useWidgetDisplay } from '../../models';
 import {
+	IPlainRelation,
+	IWidgetDataSourceResponseModel,
 	IWidgetDatabaseRecord,
+	IWidgetDisplayResponseModel,
 	IWidgetMeta,
 	IWidgetsInsertDataActionPayload,
 	IWidgetsLoadRecordActionPayload,
-	IPlainRelation,
-	IWidgetDataSourceResponseModel,
-	IWidgetDisplayResponseModel,
 } from '../../models/types';
 import { RoutingKeys, WidgetDocument } from '../../types';
-import { addRecord, getAllRecords, getRecord, removeRecord, DB_TABLE_WIDGETS } from '../../utilities/database';
+import { DB_TABLE_WIDGETS, addRecord, getAllRecords, getRecord, removeRecord } from '../../utilities/database';
 
 import {
 	IWidget,

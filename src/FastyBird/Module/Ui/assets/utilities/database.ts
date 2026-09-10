@@ -1,6 +1,7 @@
 import { DBSchema, IDBPDatabase, openDB } from 'idb';
-import { IGroupDatabaseRecord } from '../models/groups/types';
+
 import { IDashboardDatabaseRecord } from '../models/dashboards/types';
+import { IGroupDatabaseRecord } from '../models/groups/types';
 import { ITabDatabaseRecord } from '../models/tabs/types';
 import { IWidgetDataSourceDatabaseRecord } from '../models/widgets-data-sources/types';
 import { IWidgetDisplayDatabaseRecord } from '../models/widgets-display/types';

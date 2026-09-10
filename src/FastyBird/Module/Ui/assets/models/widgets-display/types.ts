@@ -1,7 +1,8 @@
-import { TJsonaModel, TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships } from 'jsona/lib/JsonaTypes';
 import { _GettersTree } from 'pinia';
 
-import { IWidget, IWidgetResponseData, IPlainRelation, IWidgetResponseModel, IEntityMeta } from '../../models/types';
+import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships, TJsonaModel } from 'jsona/lib/JsonaTypes';
+
+import { IEntityMeta, IPlainRelation, IWidget, IWidgetResponseData, IWidgetResponseModel } from '../../models/types';
 import { WidgetDisplayDocument } from '../../types';
 
 export interface IWidgetDisplayMeta extends IEntityMeta {

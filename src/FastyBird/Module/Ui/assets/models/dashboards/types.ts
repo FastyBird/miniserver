@@ -1,7 +1,8 @@
-import { TJsonaModel, TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships } from 'jsona/lib/JsonaTypes';
 import { _GettersTree } from 'pinia';
 
-import { ITabResponseData, ITabResponseModel, IEntityMeta, IPlainRelation } from '../../models/types';
+import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships, TJsonaModel } from 'jsona/lib/JsonaTypes';
+
+import { IEntityMeta, IPlainRelation, ITabResponseData, ITabResponseModel } from '../../models/types';
 import { DashboardDocument } from '../../types';
 
 export interface IDashboardMeta extends IEntityMeta {

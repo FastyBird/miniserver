@@ -1,24 +1,24 @@
 import { App } from 'vue';
-import get from 'lodash.get';
-import defaultsDeep from 'lodash.defaultsdeep';
 
-import { wampClient } from '@fastybird/vue-wamp-v1';
+import defaultsDeep from 'lodash.defaultsdeep';
+import get from 'lodash.get';
+import 'virtual:uno.css';
+
 import { ModulePrefix } from '@fastybird/metadata-library';
+import { wampClient } from '@fastybird/vue-wamp-v1';
+
+import { useFlashMessage } from './composables';
+import { configurationKey, metaKey } from './configuration';
+import locales from './locales';
+import { useDashboards, useGroups, useWidgetDataSources, useWidgetDisplay, useWidgets } from './models';
 import { registerDashboardsStore } from './models/dashboards';
 import { registerGroupsStore } from './models/groups';
 import { registerTabsStore } from './models/tabs';
 import { registerWidgetsStore } from './models/widgets';
 import { registerWidgetDataSourcesStore } from './models/widgets-data-sources';
 import { registerWidgetDisplayStore } from './models/widgets-display';
-
 import moduleRouter from './router';
 import { IUiModuleOptions, InstallFunction } from './types';
-import { configurationKey, metaKey } from './configuration';
-import { useDashboards, useGroups, useWidgets, useWidgetDataSources, useWidgetDisplay } from './models';
-import { useFlashMessage } from './composables';
-import locales from './locales';
-
-import 'virtual:uno.css';
 
 export default function createDevicesModule(): InstallFunction {
 	return {
