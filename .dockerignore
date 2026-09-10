@@ -1,0 +1,9 @@
+.git
+node_modules
+vendor
+var/logs
+var/temp
+var/tools
+env
+.idea
+docs
