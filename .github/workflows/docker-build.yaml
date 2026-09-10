@@ -1,0 +1,80 @@
+name: "Docker build"
+
+on:
+  pull_request:
+    paths-ignore:
+      - "docs/**"
+  push:
+    branches:
+      - "main"
+    tags:
+      - v*
+  schedule:
+    - cron: "0 8 * * 1" # At 08:00 on Monday
+
+jobs:
+  build-and-smoke-test:
+    name: "Build production image and run smoke test"
+    runs-on: "ubuntu-latest"
+
+    services:
+      database:
+        image: mariadb:10.11
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_USER: fastybird
+          MYSQL_PASSWORD: fastybird
+          MYSQL_DATABASE: fastybird_dev
+        ports:
+          - "3306:3306"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Set up Docker Buildx"
+        uses: "docker/setup-buildx-action@v4"
+
+      - name: "Build production image"
+        uses: "docker/build-push-action@v7"
+        with:
+          context: .
+          file: docker/prod/Dockerfile
+          push: false
+          load: true
+          tags: fastybird/miniserver:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: "Start production container"
+        run: |
+          docker run -d --name miniserver \
+            --network host \
+            -e FB_APP_PARAMETER__DATABASE_HOST=127.0.0.1 \
+            -e FB_APP_PARAMETER__DATABASE_PORT=3306 \
+            -e FB_APP_PARAMETER__DATABASE_USERNAME=fastybird \
+            -e FB_APP_PARAMETER__DATABASE_PASSWORD=fastybird \
+            -e FB_APP_PARAMETER__DATABASE_DBNAME=fastybird_dev \
+            fastybird/miniserver:ci
+
+      - name: "Wait for HTTP 200 on GET /"
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:80/ || echo 000)
+            if [ "$code" = "200" ]; then
+              echo "Got HTTP 200"
+              exit 0
+            fi
+            echo "Waiting for the application (last status: $code)..."
+            sleep 5
+          done
+          echo "Application did not become ready in time"
+          docker logs miniserver
+          exit 1
+
+      - name: "Run bin/fb-console.php list inside the container"
+        run: docker exec miniserver php bin/fb-console.php list
+
+      - name: "Dump container logs on failure"
+        if: failure()
+        run: docker logs miniserver
