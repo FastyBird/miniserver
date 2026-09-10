@@ -13,6 +13,12 @@
 
 services:
   application:
+    # NOTE: this image is not yet published anywhere. The CI workflow builds
+    # it (push: false) but does not log in or push; a later phase adds
+    # publishing. Until then `docker compose pull` for this service will
+    # fail — build locally instead (`docker compose -f
+    # docker/prod/docker-compose.yml build`), which the `build:` block below
+    # supports.
     image: ghcr.io/fastybird/miniserver:latest
     build:
       context: ../..
@@ -31,6 +37,12 @@ services:
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-fastybird}
       FB_APP_PARAMETER__REDIS_HOST: redis
       FB_APP_PARAMETER__REDIS_PORT: 6379
+      # Required, no default on purpose: this is the JWT signing key. The
+      # repository's tracked .env / var/config/defaults.neon value is
+      # published in a public repo and must never be used in production —
+      # the entrypoint refuses to start rather than fall back to it. The
+      # operator must supply SECURITY_SIGNATURE in the environment, e.g.
+      # via a `docker/prod/.env` file: `openssl rand -base64 32`.
       FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
     ports:
       - "${HTTP_PORT:-80}:80"
@@ -38,7 +50,10 @@ services:
     volumes:
       - miniserver-var:/app/var
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/"]
+      # "/" is not routed (see docker/prod/Dockerfile HEALTHCHECK comment
+      # and spec section 7.1); /favicon.ico is served by nginx and returns
+      # 200.
+      test: ["CMD", "curl", "-f", "http://localhost/favicon.ico"]
       interval: 30s
       timeout: 5s
       start_period: 30s
