@@ -293,12 +293,6 @@ One repository `FastyBird/miniserver` on `main` with green CI, `docker build -f 
 | The frozen dependency set no longer resolves (dev-branch constraints, VCS package, raw-URL patches) | Phase 0 vendors the patches; Phase 1 allows forced-exception bumps and logs them. Upstream availability was confirmed on 2026-09-09, so the residual risk is constraint drift in the three dev-branch requirements, not a missing source |
 | The host toolchain does not match the frozen one, so a host baseline would be misleading | All verification runs in the PHP 8.2 container per 4.10 |
 | "Frozen" was never actually frozen for transitive dependencies | Neither lock file was committed before Phase 1, so version ranges re-resolved at install time in 2026 rather than staying at their 2024 values. Phase 1 commits both lock files, which freezes the set from that point on, but the set it freezes is a 2026 resolution of 2024 constraints. Any behaviour that depends on a transitive version may already differ from what the authors tested. See the known defect below. |
-
-### 7.1 Known baseline defects
-
-Defects discovered while establishing the baseline that are deliberately NOT fixed during the merge, because the merge must not change behaviour. Each is suppressed with a truthful comment at the call site and must be fixed before the affected feature is relied upon.
-
-- **Shelly Gen2 WebSocket client crashes on connect.** `src/FastyBird/Connector/Shelly/src/API/Gen2WsApi.php` calls `new RFC6455\Handshake\ClientNegotiator()` with no arguments. The resolved `ratchet/rfc6455` v0.4.1 requires a `RequestFactoryInterface` as its first constructor argument, so the call raises `ArgumentCountError` at runtime. The path is reachable through `Clients/Local.php`, `ConnectionManager` and `Gen2WsApiFactory`. Cause: `ratchet/pawl` permits `^0.3.1 || ^0.4.0`; the code was written against 0.3.x, where the constructor took no required argument, and the first-ever lock file resolved 0.4.1. Two candidate fixes, both out of scope here: pass a request factory at the call site, or constrain `ratchet/rfc6455` to `^0.3`. Decide during Phase 6, when dependency changes are permitted.
 | Doctrine ORM 3 conflicts with the three ORM patches | Phase 6 evaluates each patch before upgrading and treats Doctrine as the last upgrade |
 | PHPStan 2 produces a large number of new findings across 355k lines | Own pull request, baseline file allowed temporarily, burned down afterwards |
 | Symlinked path packages confuse a tool | `COMPOSER_MIRROR_PATH_REPOS=1` in CI and Docker; tools point at `src/` real paths |
@@ -306,6 +300,21 @@ Defects discovered while establishing the baseline that are deliberately NOT fix
 | External base images `fastybird/standard` no longer exist | Production image is rebuilt from official `php`, `node` and `composer` images |
 | Deleting repositories is irreversible after 90 days | Packagist abandonment and npm deprecation first, deletion last, after verification |
 | No running installation exists to compare behaviour against | Phase 1 establishes the only baseline; every later phase is validated against it |
+
+### 7.1 Known baseline defects
+
+Defects discovered while establishing the baseline that are deliberately NOT fixed during the merge, because the merge must not change behaviour. Each is suppressed with a truthful comment at the call site and must be fixed before the affected feature is relied upon.
+
+- **Shelly Gen2 WebSocket client crashes on connect.** `src/FastyBird/Connector/Shelly/src/API/Gen2WsApi.php` calls `new RFC6455\Handshake\ClientNegotiator()` with no arguments. The resolved `ratchet/rfc6455` v0.4.1 requires a `RequestFactoryInterface` as its first constructor argument, so the call raises `ArgumentCountError` at runtime. The path is reachable through `Clients/Local.php`, `ConnectionManager` and `Gen2WsApiFactory`. Cause: `ratchet/pawl` permits `^0.3.1 || ^0.4.0`; the code was written against 0.3.x, where the constructor took no required argument, and the first-ever lock file resolved 0.4.1. Two candidate fixes, both out of scope here: pass a request factory at the call site, or constrain `ratchet/rfc6455` to `^0.3`. Decide during Phase 6, when dependency changes are permitted.
+
+- **A presenter returns an empty array where its parent declares a non-empty list.** `src/FastyBird/Core/Application/src/Presenters/BasePresenter.php` around line 61 short-circuits when the template factory is null and returns `[]`, while the parent Nette presenter declares `non-empty-list<string>`. The suppression there asserts Nette tolerates this. **That assumption is untested.** Verify it before relying on the affected presenter, and fix the return type or the guard if it does not hold.
+
+- **`tools/patches/nette-utils-array-offsetcheck.diff` is vendored but referenced by nothing.** Deliberate, not an oversight. A ninth root patch target was added for it during Phase 1 and reverted once evidence showed a dependency's own raw-URL declaration takes precedence over a root entry sharing its description key, making the root entry inert. The file is kept for a later phase. Do not assume it is live.
+
+- **Coverage and mutation testing measure the wrong files.** In `tools/phpunit.xml`, the `<source><include>` block lists `tests/cases/` directories rather than the extension source directories, so coverage reports and Infection analyse the test suite itself. Pre-existing and out of scope for the merge, but it makes any coverage or mutation gate meaningless until corrected. The phase that consolidates QA configuration should fix it.
+
+- **Suppression directives are identifier-scoped except one.** Eight of the nine inline PHPStan suppressions added in Phase 1 use the identifier-scoped directive form, which silences only the named error. One, in `Core/Application/src/Boot/Configurator.php`, must remain a blanket next-line ignore because the scoped form does not match an error PHPStan raises from treating a PHPDoc type as certain. Note also that writing the directive's name in ordinary prose near a real directive causes PHPStan to parse it and fail with `ignore.parseError`.
+
 
 ## 8. Out of scope
 

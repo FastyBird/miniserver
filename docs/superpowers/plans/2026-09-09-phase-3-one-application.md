@@ -359,7 +359,11 @@ Insert immediately before the `# DOCKER` comment line in `Makefile`:
 
 ```make
 composer-validate: ## Validate the root and every extension composer manifest
-	composer validate --strict
+	# NOT --strict: it exits non-zero on two pre-existing constraint-style warnings that
+	# the merge is forbidden to change (endroid/qr-code uses an exact constraint,
+	# mathsolver/mathsolver is unbound). With --strict this target would be red from
+	# birth. Revisit in Phase 6, when dependency changes are permitted.
+	composer validate
 	for manifest in src/FastyBird/*/*/composer.json; do \
 		composer validate --strict --no-check-lock "$$manifest" || exit 1; \
 	done
