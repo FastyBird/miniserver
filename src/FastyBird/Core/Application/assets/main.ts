@@ -11,9 +11,8 @@ import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, st
 import { createWampV1Client } from '@fastybird/vue-wamp-v1';
 import '@fastybird/web-ui-theme-chalk/src/index.scss';
 
-import { extensions } from '../../../../../config/extensions';
+import { extensions } from '@config/extensions';
 
-import { version } from './../package.json';
 import App from './App.vue';
 import i18n from './locales';
 import router from './router';
@@ -54,7 +53,7 @@ app.use(extensionsPlugin, {
 		meta: {
 			author: 'FastyBird s.r.o.',
 			website: 'https://www.fastybird.com',
-			version: version,
+			version: __APP_VERSION__,
 		},
 		store: pinia,
 		i18n,
