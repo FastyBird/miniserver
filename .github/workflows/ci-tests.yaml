@@ -1,0 +1,304 @@
+name: "CI Tests"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "v*"
+  schedule:
+    - cron: "0 8 * * 1" # At 08:00 on Monday
+
+env:
+  COMPOSER_MIRROR_PATH_REPOS: 1
+
+jobs:
+  php-lint:
+    name: "PHP Lint"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.2"
+          extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
+          tools: "composer:v2"
+
+      - name: "Composer install"
+        run: "composer install --no-interaction --no-progress --prefer-dist"
+
+      - name: "make lint"
+        run: "make lint"
+
+  php-cs:
+    name: "PHP Coding Standard"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.2"
+          extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
+          tools: "composer:v2"
+
+      - name: "Composer install"
+        run: "composer install --no-interaction --no-progress --prefer-dist"
+
+      - name: "make cs"
+        run: "make cs"
+
+  php-phpstan:
+    name: "PHP Static Analysis"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.2"
+          extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
+          tools: "composer:v2"
+
+      - name: "Composer install"
+        run: "composer install --no-interaction --no-progress --prefer-dist"
+
+      - name: "make phpstan"
+        run: "make phpstan"
+
+  php-tests:
+    name: "PHP Tests"
+    runs-on: "ubuntu-latest"
+
+    services:
+      mariadb:
+        image: "mariadb:10.11"
+        env:
+          MARIADB_ROOT_PASSWORD: "root"
+          MARIADB_DATABASE: "miniserver_test"
+          MARIADB_USER: "miniserver"
+          MARIADB_PASSWORD: "miniserver"
+        ports:
+          - "3306:3306"
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      redis:
+        image: "redis:7"
+        ports:
+          - "6379:6379"
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      FB_APP_PARAMETER__DATABASE_HOST: "127.0.0.1"
+      FB_APP_PARAMETER__DATABASE_PORT: "3306"
+      FB_APP_PARAMETER__DATABASE_USERNAME: "miniserver"
+      FB_APP_PARAMETER__DATABASE_PASSWORD: "miniserver"
+      FB_APP_PARAMETER__DATABASE_DBNAME: "miniserver_test"
+      FB_APP_PARAMETER__REDIS_HOST: "127.0.0.1"
+      FB_APP_PARAMETER__REDIS_PORT: "6379"
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: "ci-test-signature-not-used-in-production"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.2"
+          extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
+          tools: "composer:v2"
+
+      - name: "Composer install"
+        run: "composer install --no-interaction --no-progress --prefer-dist"
+
+      - name: "make tests"
+        run: "make tests"
+
+  js-lint:
+    name: "JS Lint"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup Node"
+        uses: "actions/setup-node@v4"
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: "Yarn install"
+        run: "yarn install --frozen-lockfile --ignore-engines"
+
+      - name: "yarn lint:js"
+        run: "yarn lint:js"
+
+  js-types:
+    name: "JS Types"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup Node"
+        uses: "actions/setup-node@v4"
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: "Yarn install"
+        run: "yarn install --frozen-lockfile --ignore-engines"
+
+      - name: "yarn types"
+        run: "yarn types"
+
+  js-build:
+    name: "JS Build"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup Node"
+        uses: "actions/setup-node@v4"
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: "Yarn install"
+        run: "yarn install --frozen-lockfile --ignore-engines"
+
+      - name: "yarn build"
+        run: "yarn build"
+
+  docker-build:
+    name: "Docker Build"
+    runs-on: "ubuntu-latest"
+
+    services:
+      database:
+        image: "mariadb:10.11"
+        env:
+          MYSQL_ROOT_PASSWORD: "root"
+          MYSQL_USER: "fastybird"
+          MYSQL_PASSWORD: "fastybird"
+          MYSQL_DATABASE: "fastybird_dev"
+        ports:
+          - "3306:3306"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Set up Docker Buildx"
+        uses: "docker/setup-buildx-action@v4"
+
+      - name: "Build production image"
+        uses: "docker/build-push-action@v7"
+        with:
+          context: "."
+          file: "docker/prod/Dockerfile"
+          push: false
+          load: true
+          tags: "fastybird/miniserver:ci"
+          cache-from: "type=gha"
+          cache-to: "type=gha,mode=max"
+
+      - name: "Check platform requirements against the runtime image"
+        run: "docker run --rm --entrypoint composer fastybird/miniserver:ci check-platform-reqs"
+
+      - name: "Start production container"
+        run: |
+          docker run -d --name miniserver \
+            --network host \
+            -e FB_APP_PARAMETER__DATABASE_HOST=127.0.0.1 \
+            -e FB_APP_PARAMETER__DATABASE_PORT=3306 \
+            -e FB_APP_PARAMETER__DATABASE_USERNAME=fastybird \
+            -e FB_APP_PARAMETER__DATABASE_PASSWORD=fastybird \
+            -e FB_APP_PARAMETER__DATABASE_DBNAME=fastybird_dev \
+            -e FB_APP_PARAMETER__SECURITY_SIGNATURE=ci-smoke-test-signature-not-for-production \
+            fastybird/miniserver:ci
+
+      - name: "Wait for HTTP 200 on GET /favicon.ico (nginx serving public/)"
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:80/favicon.ico || echo 000)
+            if [ "$code" = "200" ]; then
+              echo "Got HTTP 200 on /favicon.ico"
+              exit 0
+            fi
+            echo "Waiting for the application (last status: $code)..."
+            sleep 5
+          done
+          echo "Application did not become ready in time"
+          docker logs miniserver
+          exit 1
+
+      # GET / is not asserted to return 200. AppRouter::createRouter
+      # (Core/Application/src/Router/AppRouter.php) defines a route for "/",
+      # but nothing registers it: there is no `services: router:` entry and
+      # no `application: mapping:` in any config (checked both
+      # Core/Application/config/*.neon and config/*.neon; `git log
+      # -S'AppRouter'` over those paths returns nothing). The Nette
+      # application therefore has no routes and correctly 404s every
+      # non-API request. This is pre-existing frozen-repository behaviour,
+      # not something this phase introduced, and wiring the router would be
+      # a behavioural change the merge forbids. Do not "fix" this assertion
+      # to expect 200 — it cannot happen without a router config change
+      # that is out of scope here. What we can and do assert is that the
+      # request reached and was handled by the Nette application.
+      - name: "GET / is handled by the Nette application (any status)"
+        run: |
+          headers=$(curl -s -D - -o /dev/null http://127.0.0.1:80/)
+          echo "$headers"
+          echo "$headers" | grep -qi "^X-Powered-By: Nette Framework 3" \
+            || { echo "Missing X-Powered-By: Nette Framework 3 header"; exit 1; }
+
+      - name: "GET /api/v1 dispatches to the API stack (any status)"
+        run: |
+          headers=$(curl -s -D - -o /dev/null http://127.0.0.1:80/api/v1)
+          echo "$headers"
+          echo "$headers" | grep -qi "^Content-Type: application/vnd.api+json" \
+            || { echo "Missing Content-Type: application/vnd.api+json header"; exit 1; }
+
+      - name: "Run bin/fb-console.php list inside the container"
+        run: "docker exec miniserver php bin/fb-console.php list"
+
+      - name: "All five supervisor programs are RUNNING"
+        run: |
+          status=$(docker exec miniserver supervisorctl -c /etc/supervisor/supervisord.conf status)
+          echo "$status"
+          count=$(echo "$status" | grep -c "RUNNING")
+          if [ "$count" != "5" ]; then
+            echo "Expected 5 RUNNING programs, got $count"
+            exit 1
+          fi
+
+      - name: "Exception log is empty or absent"
+        run: "docker exec miniserver sh -c '[ ! -s /data/logs/exception.log ]'"
+
+      - name: "Dump container logs on failure"
+        if: "failure()"
+        run: "docker logs miniserver"
