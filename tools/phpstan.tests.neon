@@ -1,52 +1,178 @@
 includes:
-    - phpstan.base.neon
-
-    - ../src/FastyBird/Automator/DateTime/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Automator/DevicesModule/tools/phpstan.config.tests.neon
-
-    - ../src/FastyBird/Bridge/DevicesModuleUiModule/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Bridge/RedisDbPluginDevicesModule/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Bridge/RedisDbPluginTriggersModule/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tools/phpstan.config.tests.neon
-
-    - ../src/FastyBird/Connector/FbMqtt/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/HomeKit/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/Modbus/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/NsPanel/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/Shelly/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/Sonoff/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/Tuya/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/Viera/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/Virtual/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Connector/Zigbee2Mqtt/tools/phpstan.config.tests.neon
-
-    - ../src/FastyBird/Core/Application/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Core/Exchange/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Core/Tools/tools/phpstan.config.tests.neon
-
-    - ../src/FastyBird/Library/Metadata/tools/phpstan.config.tests.neon
-
-    - ../src/FastyBird/Module/Accounts/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Module/Devices/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Module/Triggers/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Module/Ui/tools/phpstan.config.tests.neon
-
-    - ../src/FastyBird/Plugin/ApiKey/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Plugin/CouchDb/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Plugin/RabbitMq/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Plugin/RedisDb/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Plugin/RedisDbCache/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Plugin/WebServer/tools/phpstan.config.tests.neon
-    - ../src/FastyBird/Plugin/WsServer/tools/phpstan.config.tests.neon
-
-    - ../src/FastyBird/Addon/VirtualThermostat/tools/phpstan.config.tests.neon
+    - ../tests/PHPStan/conditional.config.php
 
 parameters:
     level: max
 
+    tmpDir: ../var/tools/PHPStan
     resultCachePath: %currentWorkingDirectory%/var/tools/PHPStan/resultCache.tests.php
+
+    exceptions:
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+
+    checkMissingCallableSignature: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkInternalClassCaseSensitivity: true
 
     bootstrapFiles:
         - phpstan-bootstrap.php
+
+    paths:
+        - ../src/FastyBird/Addon/VirtualThermostat/tests/cases
+        - ../src/FastyBird/Automator/DateTime/tests/cases
+        - ../src/FastyBird/Automator/DevicesModule/tests/cases
+        - ../src/FastyBird/Bridge/DevicesModuleUiModule/tests/cases
+        - ../src/FastyBird/Bridge/RedisDbPluginDevicesModule/tests/cases
+        - ../src/FastyBird/Bridge/RedisDbPluginTriggersModule/tests/cases
+        - ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/cases
+        - ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/cases
+        - ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/cases
+        - ../src/FastyBird/Connector/FbMqtt/tests/cases
+        - ../src/FastyBird/Connector/HomeKit/tests/cases
+        - ../src/FastyBird/Connector/Modbus/tests/cases
+        - ../src/FastyBird/Connector/NsPanel/tests/cases
+        - ../src/FastyBird/Connector/Shelly/tests/cases
+        - ../src/FastyBird/Connector/Sonoff/tests/cases
+        - ../src/FastyBird/Connector/Tuya/tests/cases
+        - ../src/FastyBird/Connector/Viera/tests/cases
+        - ../src/FastyBird/Connector/Virtual/tests/cases
+        - ../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases
+        - ../src/FastyBird/Core/Application/tests/cases
+        - ../src/FastyBird/Core/Exchange/tests/cases
+        - ../src/FastyBird/Core/Tools/tests/cases
+        - ../src/FastyBird/Library/Metadata/tests/cases
+        - ../src/FastyBird/Module/Accounts/tests/cases
+        - ../src/FastyBird/Module/Devices/tests/cases
+        - ../src/FastyBird/Module/Triggers/tests/cases
+        - ../src/FastyBird/Module/Ui/tests/cases
+        - ../src/FastyBird/Plugin/ApiKey/tests/cases
+        - ../src/FastyBird/Plugin/CouchDb/tests/cases
+        - ../src/FastyBird/Plugin/RabbitMq/tests/cases
+        - ../src/FastyBird/Plugin/RedisDb/tests/cases
+        - ../src/FastyBird/Plugin/RedisDbCache/tests/cases
+        - ../src/FastyBird/Plugin/WebServer/tests/cases
+        - ../src/FastyBird/Plugin/WsServer/tests/cases
+
+    scanDirectories:
+        - ../src/FastyBird/Addon/VirtualThermostat/src
+        - ../src/FastyBird/Automator/DateTime/src
+        - ../src/FastyBird/Automator/DevicesModule/src
+        - ../src/FastyBird/Bridge/DevicesModuleUiModule/src
+        - ../src/FastyBird/Bridge/RedisDbPluginDevicesModule/src
+        - ../src/FastyBird/Bridge/RedisDbPluginTriggersModule/src
+        - ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src
+        - ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src
+        - ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/src
+        - ../src/FastyBird/Connector/FbMqtt/src
+        - ../src/FastyBird/Connector/HomeKit/src
+        - ../src/FastyBird/Connector/Modbus/src
+        - ../src/FastyBird/Connector/NsPanel/src
+        - ../src/FastyBird/Connector/Shelly/src
+        - ../src/FastyBird/Connector/Sonoff/src
+        - ../src/FastyBird/Connector/Tuya/src
+        - ../src/FastyBird/Connector/Viera/src
+        - ../src/FastyBird/Connector/Virtual/src
+        - ../src/FastyBird/Connector/Zigbee2Mqtt/src
+        - ../src/FastyBird/Core/Application/src
+        - ../src/FastyBird/Core/Exchange/src
+        - ../src/FastyBird/Core/Tools/src
+        - ../src/FastyBird/Library/Metadata/src
+        - ../src/FastyBird/Module/Accounts/src
+        - ../src/FastyBird/Module/Devices/src
+        - ../src/FastyBird/Module/Triggers/src
+        - ../src/FastyBird/Module/Ui/src
+        - ../src/FastyBird/Plugin/ApiKey/src
+        - ../src/FastyBird/Plugin/CouchDb/src
+        - ../src/FastyBird/Plugin/RabbitMq/src
+        - ../src/FastyBird/Plugin/RedisDb/src
+        - ../src/FastyBird/Plugin/RedisDbCache/src
+        - ../src/FastyBird/Plugin/WebServer/src
+        - ../src/FastyBird/Plugin/WsServer/src
+
+    ignoreErrors:
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Addon/VirtualThermostat/tests/cases/unit/Drivers/ThermostatTest.php
+            count: 2
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/NsPanel/tests/cases/unit/Clients/DiscoveryTest.php
+            count: 1
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/NsPanel/tests/cases/unit/API/LanApiTest.php
+            count: 8
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/Clients/DiscoveryTest.php
+            count: 4
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/API/Gen2HttpApiTest.php
+            count: 4
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/API/Gen1HttpApiTest.php
+            count: 4
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Sonoff/tests/cases/unit/API/CloudApiTest.php
+            count: 4
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Tuya/tests/cases/unit/Clients/DiscoveryTest.php
+            count: 4
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Tuya/tests/cases/unit/API/OpenApiTest.php
+            count: 13
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Viera/tests/cases/unit/Clients/DiscoveryTest.php
+            count: 4
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Viera/tests/cases/unit/API/TelevisionApiTest.php
+            count: 9
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/Clients/DiscoveryTest.php
+            count: 2
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Module/Devices/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+            count: 32
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesWritingTest.php
+            count: 6
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesReadingTest.php
+            count: 4
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Module/Triggers/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+            count: 11
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Plugin/CouchDb/tests/cases/unit/Models/StatesRepositoryTest.php
+            count: 1
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Plugin/CouchDb/tests/cases/unit/Models/StatesManagerTest.php
+            count: 3
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Plugin/RabbitMq/tests/cases/unit/Publishers/PublisherTest.php
+            count: 1
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Plugin/RedisDb/tests/cases/unit/Publishers/PublisherTest.php
+            count: 1
+        -
+            message: '#^Return type of call to method PHPUnit\\Framework\\TestCase::createMock\(\) contains unresolvable type.#'
+            path: ../src/FastyBird/Plugin/WebServer/tests/cases/unit/Commands/HttpServerCommandTest.php
+            count: 3
