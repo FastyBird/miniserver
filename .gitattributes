@@ -1,7 +1,11 @@
 # Not archived
+#
+# /.docker still exists (one leftover file, .docker/test/php.ini, predating the
+# docker/ restructure) and stays excluded for that reason; monorepo-builder.php
+# is genuinely gone (Phase 3 deleted it) and /docs now carries real, worth-keeping
+# documentation instead of a stub, so both of those are dropped below.
 /.docker export-ignore
 /.github export-ignore
-/docs export-ignore
 /tests export-ignore
 # tools/ is excluded file by file rather than as a directory, because git does not
 # descend into an export-ignored directory and so cannot re-include a subdirectory.
@@ -12,8 +16,7 @@
 /tools/infection.json export-ignore
 /tools/phpcs.xml export-ignore
 /tools/phpstan-bootstrap.php export-ignore
-/tools/phpstan.base.neon export-ignore
-/tools/phpstan.src.neon export-ignore
+/tools/phpstan.neon export-ignore
 /tools/phpstan.tests.neon export-ignore
 /tools/phpunit-bootstrap.php export-ignore
 /tools/phpunit.xml export-ignore
@@ -23,4 +26,3 @@
 .gitignore export-ignore
 docker-compose.yml export-ignore
 Makefile export-ignore
-monorepo-builder export-ignore
