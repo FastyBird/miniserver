@@ -4,16 +4,6 @@
 
 # FastyBird exchange library
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/exchange-library/main?cache=300&style=flat-square)](https://github.com/FastyBird/exchange-library/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/exchange-library?cache=300&style=flat-square)](https://github.com/FastyBird/exchange-library/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/exchange-library?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/exchange-library)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fexchange-library%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/exchange-library/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/exchange-library?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/exchange-library/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/exchange-library)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/exchange-library?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/exchange-library)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is FastyBird exchange?
@@ -42,10 +32,6 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 ```sh
 composer require fastybird/exchange
 ```
-
-## Documentation
-
-:book: Learn how to consume & publish messages in [documentation](https://github.com/FastyBird/exchange-library/wiki).
 
 # FastyBird
 
@@ -92,5 +78,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/FastyBird/exchange-library](https://github.com/FastyBird/exchange-library).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

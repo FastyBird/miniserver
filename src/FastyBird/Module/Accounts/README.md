@@ -4,21 +4,6 @@
 
 # FastyBird IoT accounts module
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/accounts-module/main?cache=300&style=flat-square)](https://github.com/FastyBird/accounts-module/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/accounts-module?cache=300&style=flat-square)](https://github.com/FastyBird/accounts-module/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/accounts-module?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/accounts-module)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Faccounts-module%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/accounts-module/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/accounts-module?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/accounts-module/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/accounts-module)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/accounts-module?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/accounts-module)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
-![JS](https://flat.badgen.net/static/js/es6/blue?cache=300&style=flat-square)
-[![JS latest stable](https://flat.badgen.net/npm/v/@fastybird/accounts-module?cache=300&style=flat-square)](https://www.npmjs.com/package/@fastybird/accounts-module)
-[![JS downloads total](https://flat.badgen.net/npm/dt/@fastybird/accounts-module?cache=300&style=flat-square)](https://www.npmjs.com/package/@fastybird/accounts-module)
-![Types](https://flat.badgen.net/npm/types/@fastybird/accounts-module?cache=300&style=flat-square)
-
 ***
 
 ## What is FastyBird IoT accounts module?
@@ -116,5 +101,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/accounts-module](https://github.com/fastybird/accounts-module).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

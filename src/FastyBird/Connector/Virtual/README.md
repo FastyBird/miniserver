@@ -4,16 +4,6 @@
 
 # FastyBird IoT Virtual connector
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/virtual-connector/main?cache=300&style=flat-square)](https://github.com/FastyBird/virtual-connector/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/virtual-connector?cache=300&style=flat-square)](https://github.com/FastyBird/virtual-connector/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/virtual-connector?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/virtual-connector)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fvirtual-connector%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/virtual-connector/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/virtual-connector?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/virtual-connector/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/virtual-connector)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/virtual-connector?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/virtual-connector)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is FastyBird Virtual connector?
@@ -46,11 +36,6 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 ```sh
 composer require fastybird/virtual-connector
 ```
-
-## Documentation
-
-:book: Learn how to configure FastyBird virtual devices and manage them with [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) system
-in [documentation](https://github.com/FastyBird/virtual-connector/wiki).
 
 # FastyBird
 
@@ -97,5 +82,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/virtual-connector](https://github.com/fastybird/virtual-connector).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

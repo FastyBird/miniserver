@@ -4,16 +4,6 @@
 
 # FastyBird IoT Panasonic Viera connector
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/viera-connector/main?cache=300&style=flat-square)](https://github.com/FastyBird/viera-connector/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/viera-connector?cache=300&style=flat-square)](https://github.com/FastyBird/viera-connector/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/viera-connector?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/viera-connector)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fviera-connector%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/viera-connector/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/viera-connector?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/viera-connector/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/viera-connector)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/viera-connector?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/viera-connector)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is Panasonic Viera connector?
@@ -33,7 +23,6 @@ which is integrating [Panasonic Viera](https://www.panasonic.com) televisions.
 Panasonic Viera Connector is a distributed extension that is developed in [PHP](https://www.php.net), built on the [Nette](https://nette.org) and [Symfony](https://symfony.com) frameworks,
 and is licensed under [Apache2](http://www.apache.org/licenses/LICENSE-2.0).
 
-
 ## Requirements
 
 Panasonic Viera connector is tested against PHP 8.2 and require installed [Process Control](https://www.php.net/manual/en/book.pcntl.php),
@@ -48,11 +37,6 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 ```sh
 composer require fastybird/viera-connector
 ```
-
-## Documentation
-
-:book: Learn how to connect Panasonic Viera televisions and manage them with [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) system
-in [documentation](https://github.com/FastyBird/viera-connector/wiki).
 
 # FastyBird
 
@@ -99,5 +83,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/viera-connector](https://github.com/fastybird/viera-connector).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

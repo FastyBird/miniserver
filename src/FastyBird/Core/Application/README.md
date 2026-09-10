@@ -4,16 +4,6 @@
 
 # FastyBird IoT application
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/application/main?cache=300&style=flat-square)](https://github.com/FastyBird/application/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/application?cache=300&style=flat-square)](https://github.com/FastyBird/application/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/application?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/application)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fapplication%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/application/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/application?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/application/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/application)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/application?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/application)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is FastyBird application?
@@ -43,11 +33,6 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 ```sh
 composer require fastybird/application
 ```
-
-## Documentation
-
-:book: Learn how to configure FastyBird thermostat devices and manage them with [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) system
-in [documentation](https://github.com/FastyBird/application/wiki).
 
 # FastyBird
 
@@ -94,5 +79,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/application](https://github.com/fastybird/application).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

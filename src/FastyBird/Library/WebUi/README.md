@@ -1,13 +1,5 @@
 # FastyBird Web UI library
 
-[![Build Status](https://badgen.net/github/checks/FastyBird/web-ui-library/main?cache=300&style=flat-square)](https://github.com/FastyBird/web-ui-library/actions)
-[![Licence](https://badgen.net/github/license/FastyBird/web-ui-library?cache=300&style=flat-square)](https://github.com/FastyBird/web-ui-library/blob/main/LICENSE.md)
-
-![JS](https://img.shields.io/badge/js-es6-blue.svg?style=flat-square)
-[![JS latest stable](https://badgen.net/npm/v/@fastybird/web-ui-library?cache=300&style=flat-square)](https://www.npmjs.com/package/@fastybird/web-ui-library)
-[![JS downloads total](https://badgen.net/npm/dt/@fastybird/web-ui-library?cache=300&style=flat-square)](https://www.npmjs.com/package/@fastybird/web-ui-library)
-![Types](https://badgen.net/npm/types/@fastybird/web-ui-library?cache=300&style=flat-square)
-
 ## What is FastyBird Web UI library?
 
 This library is a collection of [Vue 3](https://vuejs.org) framework components used for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) web applications user interfaces.

@@ -4,16 +4,6 @@
 
 # FastyBird IoT Tuya connector
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/tuya-connector/main?cache=300&style=flat-square)](https://github.com/FastyBird/tuya-connector/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/tuya-connector?cache=300&style=flat-square)](https://github.com/FastyBird/tuya-connector/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/tuya-connector?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/tuya-connector)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Ftuya-connector%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/tuya-connector/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/tuya-connector?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/tuya-connector/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/tuya-connector)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/tuya-connector?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/tuya-connector)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is Tuya connector?
@@ -46,11 +36,6 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 ```sh
 composer require fastybird/tuya-connector
 ```
-
-## Documentation
-
-:book: Learn how to connect Tuya devices and manage them with [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) system
-in [documentation](https://github.com/FastyBird/tuya-connector/wiki).
 
 # FastyBird
 
@@ -97,5 +82,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/tuya-connector](https://github.com/fastybird/tuya-connector).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

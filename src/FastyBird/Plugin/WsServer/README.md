@@ -4,16 +4,6 @@
 
 # FastyBird WS server plugin
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/ws-server-plugin/main?cache=300&style=flat-square)](https://github.com/FastyBird/ws-server-plugin/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/ws-server-plugin?cache=300&style=flat-square)](https://github.com/FastyBird/ws-server-plugin/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/ws-server-plugin?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/ws-server-plugin)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fws-server-plugin%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/ws-server-plugin/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/ws-server-plugin?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/ws-server-plugin/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/ws-server-plugin)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/ws-server-plugin?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/ws-server-plugin)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is WS server plugin?
@@ -36,10 +26,6 @@ The best way to install **fastybird/ws-server-plugin** is using [Composer](http:
 ```sh
 composer require fastybird/ws-server-plugin
 ```
-
-## Documentation
-
-:book: Learn how to start server, consume & call RPC messages in [documentation](https://github.com/FastyBird/ws-server-plugin/wiki).
 
 # FastyBird
 
@@ -86,5 +72,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/FastyBird/ws-server-plugin](https://github.com/FastyBird/ws-server-plugin).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

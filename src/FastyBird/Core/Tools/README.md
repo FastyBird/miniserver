@@ -4,16 +4,6 @@
 
 # FastyBird tools library
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/tools-library/main?cache=300&style=flat-square)](https://github.com/FastyBird/tools-library/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/tools-library?cache=300&style=flat-square)](https://github.com/FastyBird/tools-library/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/tools-library?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/tools-library)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Ftools-library%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/tools-library/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/tools-library?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/tools-library/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/tools-library)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/tools-library?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/tools-library)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is FastyBird tools?
@@ -48,10 +38,6 @@ or if you prefer npm:
 ```sh
 npm install @fastybird/tools
 ```
-
-## Documentation
-
-:book: Learn how to use tools & other helpers in [documentation](https://github.com/FastyBird/tools-library/wiki).
 
 # FastyBird
 
@@ -98,5 +84,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/FastyBird/tools-library](https://github.com/FastyBird/tools-library).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

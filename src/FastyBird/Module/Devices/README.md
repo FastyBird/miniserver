@@ -4,21 +4,6 @@
 
 # FastyBird IoT devices module
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/devices-module/main?cache=300&style=flat-square)](https://github.com/FastyBird/devices-module/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/devices-module?cache=300&style=flat-square)](https://github.com/FastyBird/devices-module/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/devices-module?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/devices-module)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fdevices-module%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/devices-module/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/devices-module?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/devices-module/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/devices-module)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/devices-module?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/devices-module)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
-![JS](https://flat.badgen.net/static/js/es6/blue?cache=300&style=flat-square)
-[![JS latest stable](https://flat.badgen.net/npm/v/@fastybird/devices-module?cache=300&style=flat-square)](https://www.npmjs.com/package/@fastybird/devices-module)
-[![JS downloads total](https://flat.badgen.net/npm/dt/@fastybird/devices-module?cache=300&style=flat-square)](https://www.npmjs.com/package/@fastybird/devices-module)
-![Types](https://flat.badgen.net/npm/types/@fastybird/devices-module?cache=300&style=flat-square)
-
 ***
 
 ## What is FastyBird IoT devices module?
@@ -69,11 +54,6 @@ or if you prefer npm:
 npm install @fastybird/devices-module
 ```
 
-## Documentation
-
-:book: Learn how to configure and use devices module and manage your connectors & devices
-in [documentation](https://github.com/FastyBird/devices-module/wiki).
-
 # FastyBird
 
 <p align="center">
@@ -119,5 +99,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/devices-module](https://github.com/fastybird/devices-module).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

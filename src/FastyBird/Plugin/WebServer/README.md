@@ -4,16 +4,6 @@
 
 # FastyBird web server plugin
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/web-server-plugin/main?cache=300&style=flat-square)](https://github.com/FastyBird/web-server-plugin/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/web-server-plugin?cache=300&style=flat-square)](https://github.com/FastyBird/web-server-plugin/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/web-server-plugin?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/web-server-plugin)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fweb-server-plugin%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/web-server-plugin/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/web-server-plugin?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/web-server-plugin/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/web-server-plugin)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/web-server-plugin?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/web-server-plugin)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is web server plugin?
@@ -38,10 +28,6 @@ The best way to install **fastybird/web-server-plugin** is using [Composer](http
 ```sh
 composer require fastybird/web-server-plugin
 ```
-
-## Documentation
-
-:book: Learn how to build and handle http api requests in [documentation](https://github.com/FastyBird/web-server-plugin/wiki).
 
 # FastyBird
 
@@ -88,5 +74,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/FastyBird/web-server-plugin](https://github.com/FastyBird/web-server-plugin).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

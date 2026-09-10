@@ -4,16 +4,6 @@
 
 # FastyBird IoT Redis DB & Triggers module bridge
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/redisdb-plugin-triggers-module-bridge/main?cache=300&style=flat-square)](https://github.com/FastyBird/redisdb-plugin-triggers-module-bridge/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/redisdb-plugin-triggers-module-bridge?cache=300&style=flat-square)](https://github.com/FastyBird/redisdb-plugin-triggers-module-bridge/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/redisdb-plugin-triggers-module-bridge?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/redisdb-plugin-triggers-module-bridge)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fredisdb-plugin-triggers-module-bridge%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/redisdb-plugin-triggers-module-bridge/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/redisdb-plugin-triggers-module-bridge?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/redisdb-plugin-triggers-module-bridge/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/redisdb-plugin-triggers-module-bridge)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/redisdb-plugin-triggers-module-bridge?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/redisdb-plugin-triggers-module-bridge)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is Redis DB & Triggers module bridge?
@@ -92,5 +82,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/redisdb-plugin-triggers-module-bridge](https://github.com/fastybird/redisdb-plugin-triggers-module-bridge).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

@@ -4,21 +4,6 @@
 
 # FastyBird IoT triggers module
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/triggers-module/main?cache=300&style=flat-square)](https://github.com/FastyBird/triggers-module/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/triggers-module?cache=300&style=flat-square)](https://github.com/FastyBird/triggers-module/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/triggers-module?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/triggers-module)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Ftriggers-module%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/triggers-module/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/triggers-module?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/triggers-module/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/triggers-module)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/triggers-module?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/triggers-module)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
-![JS](https://flat.badgen.net/static/js/es6/blue?cache=300&style=flat-square)
-[![JS latest stable](https://flat.badgen.net/npm/v/@fastybird/triggers-module?cache=300&style=flat-square)](https://www.npmjs.com/package/@fastybird/triggers-module)
-[![JS downloads total](https://flat.badgen.net/npm/dt/@fastybird/triggers-module?cache=300&style=flat-square)](https://www.npmjs.com/package/@fastybird/triggers-module)
-![Types](https://flat.badgen.net/npm/types/@fastybird/triggers-module?cache=300&style=flat-square)
-
 ***
 
 ## What is FastyBird IoT triggers module?
@@ -116,5 +101,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/triggers-module](https://github.com/fastybird/triggers-module).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).

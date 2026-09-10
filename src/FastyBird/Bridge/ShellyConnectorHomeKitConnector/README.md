@@ -4,16 +4,6 @@
 
 # FastyBird IoT Shelly connector & HomeKit connector bridge
 
-[![Build Status](https://flat.badgen.net/github/checks/FastyBird/shelly-connector-homekit-connector-bridge/main?cache=300&style=flat-square)](https://github.com/FastyBird/shelly-connector-homekit-connector-bridge/actions)
-[![Licence](https://flat.badgen.net/github/license/FastyBird/shelly-connector-homekit-connector-bridge?cache=300&style=flat-square)](https://github.com/FastyBird/shelly-connector-homekit-connector-bridge/blob/main/LICENSE.md)
-[![Code coverage](https://flat.badgen.net/coveralls/c/github/FastyBird/shelly-connector-homekit-connector-bridge?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/shelly-connector-homekit-connector-bridge)
-[![Mutation testing](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FFastyBird%2Fshelly-connector-homekit-connector-bridge%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/FastyBird/shelly-connector-homekit-connector-bridge/main)
-
-![PHP](https://flat.badgen.net/packagist/php/FastyBird/shelly-connector-homekit-connector-bridge?cache=300&style=flat-square)
-[![Latest stable](https://flat.badgen.net/packagist/v/FastyBird/shelly-connector-homekit-connector-bridge/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/shelly-connector-homekit-connector-bridge)
-[![Downloads total](https://flat.badgen.net/packagist/dt/FastyBird/shelly-connector-homekit-connector-bridge?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/shelly-connector-homekit-connector-bridge)
-[![PHPStan](https://flat.badgen.net/static/PHPStan/enabled/green?cache=300&style=flat-square)](https://github.com/phpstan/phpstan)
-
 ***
 
 ## What is Shelly connector & HomeKit connector bridge?
@@ -43,10 +33,6 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 ```sh
 composer require fastybird/shelly-connector-homekit-connector-bridge
 ```
-
-## Documentation
-
-:book: Learn how to build bridge between Shelly connector and HomeKit connector in [documentation](https://github.com/FastyBird/shelly-connector-homekit-connector-bridge/wiki).
 
 # FastyBird
 
@@ -93,5 +79,4 @@ For release info check [release page](https://github.com/FastyBird/fastybird/rel
 </table>
 
 ***
-Homepage [https://www.fastybird.com](https://www.fastybird.com) and
-repository [https://github.com/fastybird/shelly-connector-homekit-connector-bridge](https://github.com/fastybird/shelly-connector-homekit-connector-bridge).
+Homepage [https://www.fastybird.com](https://www.fastybird.com).
