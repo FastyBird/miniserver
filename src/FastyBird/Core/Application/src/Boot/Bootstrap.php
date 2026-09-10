@@ -84,23 +84,53 @@ class Bootstrap
 			$config->enableTracy(FB_LOGS_DIR);
 		}
 
-		// Default extension config
-		$config->addConfig(__DIR__ . DS . '..' . DS . '..' . DS . 'config' . DS . 'common.neon');
-		$config->addConfig(__DIR__ . DS . '..' . DS . '..' . DS . 'config' . DS . 'defaults.neon');
+		// Shipped extension defaults, then the application wiring, then the operator overrides
+		$configFiles = self::resolveConfigFiles([
+			[__DIR__ . DS . '..' . DS . '..' . DS . 'config', ['common.neon', 'defaults.neon']],
+			[strval(FB_APP_DIR) . DS . 'config', ['common.neon', 'defaults.neon']],
+			[strval(FB_CONFIG_DIR), ['common.neon', 'defaults.neon', 'local.neon']],
+		]);
 
-		if (file_exists(FB_CONFIG_DIR . DS . 'common.neon')) {
-			$config->addConfig(FB_CONFIG_DIR . DS . 'common.neon');
-		}
-
-		if (file_exists(FB_CONFIG_DIR . DS . 'defaults.neon')) {
-			$config->addConfig(FB_CONFIG_DIR . DS . 'defaults.neon');
-		}
-
-		if (file_exists(FB_CONFIG_DIR . DS . 'local.neon')) {
-			$config->addConfig(FB_CONFIG_DIR . DS . 'local.neon');
+		foreach ($configFiles as $configFile) {
+			$config->addConfig($configFile);
 		}
 
 		return $config;
+	}
+
+	/**
+	 * Builds the ordered list of configuration files to load. Files that do not exist are skipped
+	 * and any file whose resolved absolute path was already collected is skipped as well, so that
+	 * pointing FB_CONFIG_DIR at the application configuration directory, or at a symlink to it,
+	 * loads those files exactly once.
+	 *
+	 * @param array<array{string, array<string>}> $sources
+	 *
+	 * @return array<string>
+	 */
+	public static function resolveConfigFiles(array $sources): array
+	{
+		$files = [];
+
+		foreach ($sources as [$directory, $names]) {
+			foreach ($names as $name) {
+				$path = $directory . DS . $name;
+
+				if (!file_exists($path)) {
+					continue;
+				}
+
+				$realPath = realpath($path);
+
+				if ($realPath === false || in_array($realPath, $files, true)) {
+					continue;
+				}
+
+				$files[] = $realPath;
+			}
+		}
+
+		return $files;
 	}
 
 	private static function initConstants(): void
@@ -190,11 +220,7 @@ class Bootstrap
 			define('FB_CONFIG_DIR', realpath(getenv('FB_CONFIG_DIR')));
 
 		} elseif (!defined('FB_CONFIG_DIR')) {
-			if (realpath(FB_APP_DIR . DS . 'config') !== false) {
-				define('FB_CONFIG_DIR', realpath(FB_APP_DIR . DS . 'config'));
-			} else {
-				define('FB_CONFIG_DIR', realpath(FB_APP_DIR . DS . 'var' . DS . 'config'));
-			}
+			define('FB_CONFIG_DIR', realpath(FB_APP_DIR . DS . 'config'));
 		}
 	}
 
