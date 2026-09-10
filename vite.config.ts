@@ -52,6 +52,13 @@ export default defineConfig({
 	build: {
 		manifest: true,
 		outDir: resolve(__dirname, './public'),
+		// public/ is the PHP web root, not a Vite-owned output directory: it holds
+		// index.php, .htaccess, favicon.ico, icon.png and robots.txt, all tracked.
+		// Before this config was lifted to the repository root, outDir sat outside
+		// the Vite root and Vite refused to empty it. At the root it is inside, so
+		// the default would wipe the web root and the production image -- which
+		// COPYs public/ wholesale -- would ship with no PHP entry point at all.
+		emptyOutDir: false,
 	},
 	server: {
 		watch: {

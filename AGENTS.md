@@ -21,7 +21,7 @@ yarn lint:js && yarn types && yarn build              # JS quality gate
 
 ## Conventions
 
-Conventional commits, required scope, enforced by commitlint (`commitlint.config.js`) and `lint-pr.yml`. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+Conventional commits, required scope, enforced by commitlint (`commitlint.config.cjs`) and `lint-pr.yml`. See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Do not
 

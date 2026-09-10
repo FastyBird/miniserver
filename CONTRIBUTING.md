@@ -12,7 +12,7 @@ Conventional commits, one logical change per commit:
 <type>(<scope>): <subject>
 ```
 
-The scope is required on both local commit messages and PR titles. `commitlint` enforces this on every commit via the husky `commit-msg` hook (see [`commitlint.config.js`](./commitlint.config.js)), and [`lint-pr.yml`](./.github/workflows/lint-pr.yml) enforces it again on the PR title.
+The scope is required on both local commit messages and PR titles. `commitlint` enforces this on every commit via the husky `commit-msg` hook (see [`commitlint.config.cjs`](./commitlint.config.cjs)), and [`lint-pr.yml`](./.github/workflows/lint-pr.yml) enforces it again on the PR title.
 
 ### Types
 
@@ -52,7 +52,7 @@ The scope is the surface you changed, mirroring the extension type directories u
 | `docs` | `docs/**` and root `*.md` |
 | `cross` | Genuinely cross-cutting changes that do not fit a single row above |
 
-Adding a scope means editing three files together: [`commitlint.config.js`](./commitlint.config.js), [`.github/workflows/lint-pr.yml`](./.github/workflows/lint-pr.yml), and this table.
+Adding a scope means editing three files together: [`commitlint.config.cjs`](./commitlint.config.cjs), [`.github/workflows/lint-pr.yml`](./.github/workflows/lint-pr.yml), and this table.
 
 ### Subject
 

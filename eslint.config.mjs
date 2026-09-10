@@ -21,6 +21,12 @@ export default [
 			globals: {
 				GlobalEventHandlers: 'readonly',
 				ScrollToOptions: 'readonly',
+				// Compile-time constants from vite.config.ts's `define` block. They are
+				// declared for TypeScript in Core/Application/assets/vite-env.d.ts, but
+				// eslint's no-undef does not read .d.ts files and stays active for .vue
+				// files, so App.vue fails without these.
+				__APP_VERSION__: 'readonly',
+				__APP_DESCRIPTION__: 'readonly',
 			},
 		},
 		rules: {

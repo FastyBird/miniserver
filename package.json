@@ -1,5 +1,6 @@
 {
   "name": "@fastybird/miniserver",
+  "type": "module",
   "private": true,
   "version": "1.0.0-alpha.1",
   "description": "Repository for FastyBird packages development",
@@ -68,7 +69,11 @@
     "@intlify/unplugin-vue-i18n": "^6.0",
     "@nabla/vite-plugin-eslint": "^2.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3",
+    "@types/lodash.capitalize": "^4.2",
+    "@types/lodash.defaultsdeep": "^4.6",
     "@types/lodash.get": "^4.4",
+    "@types/lodash.isequal": "^4.5",
+    "@types/lodash.omit": "^4.5",
     "@types/md5": "^2.3",
     "@types/node": "^20.17",
     "@types/nprogress": "^0.2",
