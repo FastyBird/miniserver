@@ -62,12 +62,6 @@ jobs:
   composer-audit:
     name: "Composer Audit"
     runs-on: "ubuntu-latest"
-    # Advisory only, deliberately non-blocking. Composer 2.4 has no
-    # --ignore-severity (added 2.8.0) and no audit.ignore config (added 2.9.2),
-    # so the command is all-or-nothing with no allowlist: a single unfixable
-    # advisory in a transitive dependency would make this red forever. It
-    # becomes a hard gate when Task 26 raises the Composer version.
-    continue-on-error: true
 
     steps:
       - name: "Checkout"
@@ -79,8 +73,23 @@ jobs:
           php-version: "8.2"
           tools: "composer:v2"
 
+      # --abandoned=report is what makes this a real gate instead of a
+      # permanently red one, and the reason it is safe to run without
+      # continue-on-error.
+      #
+      # `tools: composer:v2` installs the latest 2.x -- 2.10.3, NOT the 2.4 the
+      # dev container pins -- and since 2.7 a plain `composer audit` exits 1
+      # when any dependency is abandoned, whether or not a single advisory
+      # exists. This lock has zero advisories and six abandoned packages
+      # (doctrine/annotations, doctrine/cache, leigh/curve25519, nette/safe,
+      # nettrine/cache, php-http/message-factory), so the plain form is red for
+      # a reason that is not a vulnerability. `report` still prints them; only
+      # a genuine advisory fails the job.
+      #
+      # Note this flag needs Composer >= 2.6, so it cannot be run in the dev
+      # container, which is on 2.4 until Task 26.
       - name: "composer audit --locked"
-        run: "composer audit --locked"
+        run: "composer audit --locked --abandoned=report"
 
   php-cs:
     name: "PHP Coding Standard"
