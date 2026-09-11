@@ -23,11 +23,12 @@
 			<Icon icon="fa6-solid:check" />
 		</el-icon>
 
-		<fb-spinner
+		<el-icon
 			v-show="property.command === PropertyCommandState.SENDING"
-			type="primary"
-			size="small"
-		/>
+			class="is-loading"
+		>
+			<Icon icon="fa6-solid:spinner" />
+		</el-icon>
 	</div>
 </template>
 
@@ -41,7 +42,6 @@ import get from 'lodash.get';
 import { DataType, ModulePrefix, SwitchPayload } from '@fastybird/metadata-library';
 import { useFlashMessage } from '@fastybird/tools';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import { FbSpinner } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { useDeviceState, useNormalizeValue } from '../../composables';

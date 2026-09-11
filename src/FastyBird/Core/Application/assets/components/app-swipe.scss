@@ -1,0 +1,46 @@
+@use 'element-plus/theme-chalk/src/mixins/mixins' as *;
+
+@include b(swipe) {
+	display: flex;
+	flex-direction: column;
+
+	@include e(item) {
+		flex: 1;
+	}
+}
+
+@include b(swipe-item) {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+
+	@include e(left) {
+		position: absolute;
+		height: 100%;
+		display: flex;
+		z-index: 1;
+		left: 0;
+		transform: translateX(-100%);
+	}
+
+	@include e(right) {
+		position: absolute;
+		height: 100%;
+		display: flex;
+		z-index: 1;
+		right: 0;
+		transform: translateX(100%);
+	}
+
+	@include e(content) {
+		transition: transform 0.2s;
+		will-change: transform;
+		width: 100%;
+	}
+
+	@include m(no-transition) {
+		.#{$namespace}-swipe-item__content {
+			transition: none !important;
+		}
+	}
+}

@@ -17,4 +17,6 @@ export { default as AppListItem } from './app-list-item.vue';
 export * from './app-list-item.types';
 export { default as AppNavigation } from './app-navigation.vue';
 export { default as AppSidebar } from './app-sidebar.vue';
+export { default as AppSwipe } from './app-swipe.vue';
+export * from './app-swipe.types';
 export { default as AppTopbar } from './app-topbar.vue';
