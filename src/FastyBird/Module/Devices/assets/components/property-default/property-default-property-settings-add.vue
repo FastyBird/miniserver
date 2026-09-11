@@ -90,13 +90,13 @@
 			/>
 
 			<template v-if="activeView === PropertyDefaultPropertySettingsAddViewTypes.SELECT_CONNECTOR">
-				<fb-list>
+				<app-list>
 					<template #title>
 						{{ t('devicesModule.headings.properties.connectorSelect') }}
 					</template>
 
 					<div class="py-2">
-						<fb-list-item
+						<app-list-item
 							v-for="connectorItem in connectors"
 							:key="connectorItem.id"
 							:disabled="connectorItem.disabled"
@@ -123,7 +123,7 @@
 									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
-						</fb-list-item>
+						</app-list-item>
 					</div>
 
 					<el-result v-if="!connectors.length">
@@ -139,17 +139,17 @@
 							{{ t('devicesModule.texts.misc.noConnectors') }}
 						</template>
 					</el-result>
-				</fb-list>
+				</app-list>
 			</template>
 
 			<template v-if="activeView === PropertyDefaultPropertySettingsAddViewTypes.SELECT_DEVICE">
-				<fb-list>
+				<app-list>
 					<template #title>
 						{{ t('devicesModule.headings.properties.deviceSelect') }}
 					</template>
 
 					<div class="py-2">
-						<fb-list-item
+						<app-list-item
 							v-for="deviceItem in devices"
 							:key="deviceItem.id"
 							:disabled="deviceItem.disabled"
@@ -176,7 +176,7 @@
 									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
-						</fb-list-item>
+						</app-list-item>
 					</div>
 
 					<el-result v-if="!devices.length">
@@ -192,17 +192,17 @@
 							{{ t('devicesModule.texts.misc.noDevices') }}
 						</template>
 					</el-result>
-				</fb-list>
+				</app-list>
 			</template>
 
 			<template v-if="activeView === PropertyDefaultPropertySettingsAddViewTypes.SELECT_CHANNEL">
-				<fb-list>
+				<app-list>
 					<template #title>
 						{{ t('devicesModule.headings.properties.channelSelect') }}
 					</template>
 
 					<div class="py-2">
-						<fb-list-item
+						<app-list-item
 							v-for="channelItem in channels"
 							:key="channelItem.id"
 							:disabled="channelItem.disabled"
@@ -229,7 +229,7 @@
 									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
-						</fb-list-item>
+						</app-list-item>
 					</div>
 
 					<el-result v-if="!channels.length">
@@ -245,17 +245,17 @@
 							{{ t('devicesModule.texts.devices.noChannels') }}
 						</template>
 					</el-result>
-				</fb-list>
+				</app-list>
 			</template>
 
 			<template v-if="activeView === PropertyDefaultPropertySettingsAddViewTypes.SELECT_PARENT">
-				<fb-list>
+				<app-list>
 					<template #title>
 						{{ t('devicesModule.headings.properties.parentSelect') }}
 					</template>
 
 					<div class="py-2">
-						<fb-list-item
+						<app-list-item
 							v-for="propertyItem in properties"
 							:key="propertyItem.id"
 							:variant="ListItemVariantTypes.DEFAULT"
@@ -274,7 +274,7 @@
 									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
-						</fb-list-item>
+						</app-list-item>
 					</div>
 
 					<el-result v-if="!properties.length">
@@ -296,7 +296,7 @@
 							</template>
 						</template>
 					</el-result>
-				</fb-list>
+				</app-list>
 			</template>
 		</template>
 
@@ -419,8 +419,9 @@ import { useI18n } from 'vue-i18n';
 import { ElAlert, ElButton, ElDialog, ElIcon, ElResult } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
+import { AppList, AppListItem, ListItemVariantTypes } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import { FbDialogFooter, FbDialogHeader, FbList, FbListItem, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { FbDialogFooter, FbDialogHeader } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import {

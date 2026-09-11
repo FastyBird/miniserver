@@ -25,7 +25,7 @@
 	<el-scrollbar v-else>
 		<fb-swipe :items="plugins">
 			<template #default="{ item }">
-				<fb-list-item
+				<app-list-item
 					:variant="ListItemVariantTypes.LIST"
 					class="b-r b-r-solid cursor-pointer mr-[-1px]"
 					@click="emit('detail', item.type, $event)"
@@ -45,7 +45,7 @@
 					<template #subtitle>
 						{{ item.description }}
 					</template>
-				</fb-list-item>
+				</app-list-item>
 			</template>
 
 			<template #right="{ item, close }">
@@ -73,8 +73,8 @@ import { useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElIcon, ElResult, ElScrollbar, useNamespace } from 'element-plus';
 
-import { AppIconWithChild } from '@fastybird/application';
-import { FbListItem, FbSwipe, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { AppIconWithChild, AppListItem, ListItemVariantTypes } from '@fastybird/application';
+import { FbSwipe } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { IConnectorPlugin } from '../../types';

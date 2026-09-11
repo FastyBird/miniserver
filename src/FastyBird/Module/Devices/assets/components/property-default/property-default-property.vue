@@ -1,5 +1,5 @@
 <template>
-	<fb-list-item :variant="isXSDevice ? ListItemVariantTypes.LIST : ListItemVariantTypes.DEFAULT">
+	<app-list-item :variant="isXSDevice ? ListItemVariantTypes.LIST : ListItemVariantTypes.DEFAULT">
 		<template #icon>
 			<properties-property-icon :property="props.property" />
 		</template>
@@ -48,17 +48,17 @@
 				</span>
 			</template>
 		</template>
-	</fb-list-item>
+	</app-list-item>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { AppListItem, ListItemVariantTypes } from '@fastybird/application';
 import { DataType } from '@fastybird/metadata-library';
 import { useBreakpoints } from '@fastybird/tools';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import { FbListItem, ListItemVariantTypes } from '@fastybird/web-ui-library';
 
 import { useConnectorState, useDeviceState } from '../../composables';
 import { PropertyType } from '../../types';

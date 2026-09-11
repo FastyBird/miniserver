@@ -1,5 +1,5 @@
 <template>
-	<fb-list class="flex-grow h-full w-full overflow-hidden">
+	<app-list class="flex-grow h-full w-full overflow-hidden">
 		<template #title>
 			{{ t('devicesModule.headings.connectors.devices') }}
 		</template>
@@ -94,7 +94,7 @@
 				@remove="emit('remove', deviceData.device.id, $event)"
 			/>
 		</el-scrollbar>
-	</fb-list>
+	</app-list>
 </template>
 
 <script setup lang="ts">
@@ -105,8 +105,7 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElResult, ElScrollbar, ElSkeleton, ElSkeletonItem, ElText } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
-import { AppIconWithChild } from '@fastybird/application';
-import { FbList } from '@fastybird/web-ui-library';
+import { AppIconWithChild, AppList } from '@fastybird/application';
 import { Icon } from '@iconify/vue';
 
 import { IConnectorDevicesEmits, IConnectorDevicesProps, IDeviceData } from '../../types';

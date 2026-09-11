@@ -1,0 +1,23 @@
+@use 'sass:map';
+
+@use 'element-plus/theme-chalk/src/mixins/function.scss' as *;
+
+// List
+// css3 var in packages/theme-chalk/src/el-list.scss
+$list: () !default;
+$list: map.merge(
+	(
+		'list-margin': 1.25rem 0 0 0,
+		'header-size': 3.125rem,
+		'header-border': 1px solid getCssVar('border', 'color'),
+		'header-font-size': 1rem,
+		'header-line-height': 1.5rem,
+		'header-subtitle-color': getCssVar('text', 'color', 'secondary'),
+		'header-padding': 0 0.5rem,
+		'item-background': getCssVar('fill', 'color', 'lighter'),
+		'item-height': 3.5rem,
+		'item-border': 1px solid getCssVar('border', 'color'),
+		'item-padding': 0.5rem,
+	),
+	$list
+);

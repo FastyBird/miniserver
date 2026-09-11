@@ -26,7 +26,7 @@
 		</div>
 	</el-form>
 
-	<fb-list>
+	<app-list>
 		<template #title>
 			{{ t('devicesModule.headings.channels.variableProperties') }}
 		</template>
@@ -69,9 +69,9 @@
 			@edit="emit('editProperty', property.id, $event)"
 			@remove="emit('removeProperty', property.id, $event)"
 		/>
-	</fb-list>
+	</app-list>
 
-	<fb-list>
+	<app-list>
 		<template #title>
 			{{ t('devicesModule.headings.channels.dynamicProperties') }}
 		</template>
@@ -114,7 +114,7 @@
 			@edit="emit('editProperty', property.id, $event)"
 			@remove="emit('removeProperty', property.id, $event)"
 		/>
-	</fb-list>
+	</app-list>
 </template>
 
 <script setup lang="ts">
@@ -125,8 +125,8 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElForm, FormInstance } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppList } from '@fastybird/application';
 import { flattenValue } from '@fastybird/tools';
-import { FbList } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { useChannelForm } from '../../composables';
