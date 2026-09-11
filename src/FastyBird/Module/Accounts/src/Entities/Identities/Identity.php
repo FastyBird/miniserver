@@ -100,7 +100,6 @@ class Identity implements Entities\Entity,
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
-		// @phpstan-ignore-next-line
 		$this->id = $id ?? Uuid\Uuid::uuid4();
 
 		$this->account = $account;
@@ -234,7 +233,6 @@ class Identity implements Entities\Entity,
 	 */
 	public function __clone()
 	{
-		// @phpstan-ignore-next-line
 		$this->id = Uuid\Uuid::uuid4();
 		$this->createdAt = new Utils\DateTime();
 		$this->state = Types\IdentityState::ACTIVE;
