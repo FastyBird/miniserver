@@ -22,26 +22,41 @@
         <directory>../src/FastyBird/Plugin/**/tests/cases/</directory>
     </testsuite>
     <coverage cacheDirectory="../var/tools/PHPUnit/coverage"/>
+    <!--
+        The coverage filter must list the SOURCE, not the tests. Until this was
+        fixed it listed the tests/cases directories, so `make coverage-clover`
+        reported on 232 test classes and zero source files, and
+        `make mutations-infection` (which runs with the skip-initial-tests flag
+        over infection.json's `src/FastyBird/*/*/src`) found no coverage data
+        for a single mutated file and classified every mutant uncovered.
+        Mutation testing was dead and said nothing about it.
+
+        `*/src` rather than `**`: PHP's glob() has no globstar, so `**`
+        collapses to exactly one level. `src/FastyBird/*/*/src` resolves to the
+        34 source directories (2801 files), the same 34 PHPStan analyses, and
+        byte for byte the glob tools/infection.json already uses, so the
+        coverage filter and the mutation source set now agree by construction.
+
+        There is deliberately no exclude element. The old one listed `./src/`,
+        which PHPUnit resolves against this file's own directory, i.e.
+        `tools/src/FastyBird/`, which does not exist, so realpath() returned
+        false and the exclude list was empty anyway. With include pointing at
+        /src there is nothing left to exclude: fixtures and dummies live in
+        tests/, and frontend assets are .ts and are filtered by suffix=".php".
+        Repairing it to `../` would be actively harmful: it would exclude
+        `tests`, and under the old include that was a parent of the included
+        directories, which would have zeroed the filter entirely.
+    -->
     <source>
         <include>
-            <directory suffix=".php">../src/FastyBird/Addon/**/tests/cases/</directory>
-            <directory suffix=".php">../src/FastyBird/Automator/**/tests/cases/</directory>
-            <directory suffix=".php">../src/FastyBird/Bridge/**/tests/cases/</directory>
-            <directory suffix=".php">../src/FastyBird/Connector/**/tests/cases/</directory>
-            <directory suffix=".php">../src/FastyBird/Core/**/tests/cases/</directory>
-            <directory suffix=".php">../src/FastyBird/Library/**/tests/cases/</directory>
-            <directory suffix=".php">../src/FastyBird/Module/**/tests/cases/</directory>
-            <directory suffix=".php">../src/FastyBird/Plugin/**/tests/cases/</directory>
+            <directory suffix=".php">../src/FastyBird/Addon/*/src</directory>
+            <directory suffix=".php">../src/FastyBird/Automator/*/src</directory>
+            <directory suffix=".php">../src/FastyBird/Bridge/*/src</directory>
+            <directory suffix=".php">../src/FastyBird/Connector/*/src</directory>
+            <directory suffix=".php">../src/FastyBird/Core/*/src</directory>
+            <directory suffix=".php">../src/FastyBird/Library/*/src</directory>
+            <directory suffix=".php">../src/FastyBird/Module/*/src</directory>
+            <directory suffix=".php">../src/FastyBird/Plugin/*/src</directory>
         </include>
-        <exclude>
-            <directory>./src/FastyBird/Addon/**/tests</directory>
-            <directory>./src/FastyBird/Automator/**/tests</directory>
-            <directory>./src/FastyBird/Bridge/**/tests</directory>
-            <directory>./src/FastyBird/Connector/**/tests</directory>
-            <directory>./src/FastyBird/Core/**/tests</directory>
-            <directory>./src/FastyBird/Library/**/tests</directory>
-            <directory>./src/FastyBird/Module/**/tests</directory>
-            <directory>./src/FastyBird/Plugin/**/tests</directory>
-        </exclude>
     </source>
 </phpunit>
