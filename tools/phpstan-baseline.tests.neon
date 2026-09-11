@@ -1,0 +1,469 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot call method method\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Addon/VirtualThermostat/tests/cases/unit/Drivers/ThermostatTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Addon/VirtualThermostat/tests/cases/unit/Drivers/ThermostatTest.php
+
+		-
+			message: '#^Cannot call method with\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Addon/VirtualThermostat/tests/cases/unit/Drivers/ThermostatTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 2
+			path: ../src/FastyBird/Addon/VirtualThermostat/tests/cases/unit/Drivers/ThermostatTest.php
+
+		-
+			message: '#^Method FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Cases\\Unit\\Builders\\BuilderTest\:\:builder\(\) should return array\<string, array\<array\<mixed\>\|int\|string\|null\>\> but returns array\<string, list\<array\<string, array\<string, array\<string, bool\|float\|int\|list\<float\|list\<list\<bool\|int\|string\>\>\>\|string\|null\>\|string\|null\>\>\|FastyBird\\Connector\\HomeKit\\Types\\AccessoryCategory\:\:LIGHT_BULB\|FastyBird\\Connector\\HomeKit\\Types\\AccessoryCategory\:\:OUTLET\|FastyBird\\Connector\\HomeKit\\Types\\AccessoryCategory\:\:SWITCH\|FastyBird\\Connector\\HomeKit\\Types\\AccessoryCategory\:\:WINDOW_COVERING\|int\|string\>\>\.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/cases/unit/Builders/BuilderTest.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/cases/unit/Controllers/BridgesV1Test.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/cases/unit/Controllers/BridgesV1Test.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/cases/unit/Controllers/BridgesV1Test.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/cases/unit/Controllers/BridgesV1Test.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/cases/unit/Controllers/BridgesV1Test.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/cases/unit/Controllers/BridgesV1Test.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/cases/unit/Controllers/BridgesV1Test.php
+
+		-
+			message: '#^Method FastyBird\\Connector\\HomeKit\\Tests\\Cases\\Unit\\Protocol\\SrpTest\:\:hex2ByteArray\(\) should return array\<int\> but returns array\.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/FastyBird/Connector/HomeKit/tests/cases/unit/Protocol/SrpTest.php
+
+		-
+			message: '#^Parameter \#1 \$bytes of method FastyBird\\Connector\\Modbus\\API\\Transformer\:\:unpackFloat\(\) expects array\<int\>, array given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Connector/Modbus/tests/cases/unit/API/TransformerTest.php
+
+		-
+			message: '#^Parameter \#1 \$bytes of method FastyBird\\Connector\\Modbus\\API\\Transformer\:\:unpackSignedInt\(\) expects array\<int\>, array given\.$#'
+			identifier: argument.type
+			count: 16
+			path: ../src/FastyBird/Connector/Modbus/tests/cases/unit/API/TransformerTest.php
+
+		-
+			message: '#^Parameter \#1 \$bytes of method FastyBird\\Connector\\Modbus\\API\\Transformer\:\:unpackUnsignedInt\(\) expects array\<int\>, array given\.$#'
+			identifier: argument.type
+			count: 19
+			path: ../src/FastyBird/Connector/Modbus/tests/cases/unit/API/TransformerTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 8
+			path: ../src/FastyBird/Connector/NsPanel/tests/cases/unit/API/LanApiTest.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: ../src/FastyBird/Connector/NsPanel/tests/cases/unit/API/LanApiTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 8
+			path: ../src/FastyBird/Connector/NsPanel/tests/cases/unit/API/LanApiTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Connector/NsPanel/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: ../src/FastyBird/Connector/NsPanel/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/API/Gen1HttpApiTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/API/Gen1HttpApiTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/API/Gen2HttpApiTest.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/API/Gen2HttpApiTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/API/Gen2HttpApiTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: ../src/FastyBird/Connector/Shelly/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: ../src/FastyBird/Connector/Sonoff/tests/cases/unit/API/CloudApiTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: ../src/FastyBird/Connector/Sonoff/tests/cases/unit/API/CloudApiTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 13
+			path: ../src/FastyBird/Connector/Tuya/tests/cases/unit/API/OpenApiTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 13
+			path: ../src/FastyBird/Connector/Tuya/tests/cases/unit/API/OpenApiTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Connector/Tuya/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: ../src/FastyBird/Connector/Tuya/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: ../src/FastyBird/Connector/Tuya/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 9
+			path: ../src/FastyBird/Connector/Viera/tests/cases/unit/API/TelevisionApiTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 9
+			path: ../src/FastyBird/Connector/Viera/tests/cases/unit/API/TelevisionApiTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: ../src/FastyBird/Connector/Viera/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Cannot call method willReturnCallback\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Connector/Viera/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Cannot call method with\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Connector/Viera/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: ../src/FastyBird/Connector/Viera/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: ../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Parameter \#1 \$callbacks of static method Nette\\Utils\\Arrays\:\:invoke\(\) expects iterable\<callable\(\)\: mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertCount\(\) expects Countable\|iterable, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 2
+			path: ../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/Clients/DiscoveryTest.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Module/Accounts/tests/cases/unit/Controllers/AccountsV1Test.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 6
+			path: ../src/FastyBird/Module/Accounts/tests/cases/unit/Controllers/SessionV1Test.php
+
+		-
+			message: '#^Cannot call method method\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesReadingTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesReadingTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesReadingTest.php
+
+		-
+			message: '#^Cannot call method method\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 8
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesWritingTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesWritingTest.php
+
+		-
+			message: '#^Cannot call method with\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesWritingTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 6
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesWritingTest.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+
+		-
+			message: '#^Cannot call method toArray\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 15
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 32
+			path: ../src/FastyBird/Module/Devices/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Module/Triggers/tests/cases/unit/Controllers/TriggersV1Test.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: ../src/FastyBird/Module/Triggers/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+
+		-
+			message: '#^Cannot call method toArray\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: ../src/FastyBird/Module/Triggers/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 6
+			path: ../src/FastyBird/Module/Triggers/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 11
+			path: ../src/FastyBird/Module/Triggers/tests/cases/unit/Subscribers/ModuleEntitiesTest.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/FastyBird/Module/Ui/tests/cases/unit/Controllers/DashboardsV1Test.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Module/Ui/tests/cases/unit/Controllers/DashboardsV1Test.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: ../src/FastyBird/Plugin/CouchDb/tests/cases/unit/Models/StatesManagerTest.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 3
+			path: ../src/FastyBird/Plugin/CouchDb/tests/cases/unit/Models/StatesManagerTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 3
+			path: ../src/FastyBird/Plugin/CouchDb/tests/cases/unit/Models/StatesManagerTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Plugin/CouchDb/tests/cases/unit/Models/StatesRepositoryTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: ../src/FastyBird/Plugin/CouchDb/tests/cases/unit/Models/StatesRepositoryTest.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 2
+			path: ../src/FastyBird/Plugin/CouchDb/tests/cases/unit/States/FactoryTest.php
+
+		-
+			message: '#^Cannot call method method\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Plugin/RabbitMq/tests/cases/unit/Publishers/PublisherTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Plugin/RabbitMq/tests/cases/unit/Publishers/PublisherTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: ../src/FastyBird/Plugin/RabbitMq/tests/cases/unit/Publishers/PublisherTest.php
+
+		-
+			message: '#^Cannot call method method\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Plugin/RedisDb/tests/cases/unit/Publishers/PublisherTest.php
+
+		-
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Plugin/RedisDb/tests/cases/unit/Publishers/PublisherTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: ../src/FastyBird/Plugin/RedisDb/tests/cases/unit/Publishers/PublisherTest.php
+
+		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 3
+			path: ../src/FastyBird/Plugin/WebServer/tests/cases/unit/Commands/HttpServerCommandTest.php

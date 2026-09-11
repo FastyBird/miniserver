@@ -3,18 +3,30 @@
 namespace Clue\React\Redis;
 
 use Evenement\EventEmitterInterface;
-use React\Promise;
 
 /**
- * @method Promise\PromiseInterface select(int $database)
- * @method Promise\PromiseInterface get(string $key)
- * @method Promise\PromiseInterface set(string $key, string $data)
- * @method Promise\PromiseInterface sadd(string $key, array $members)
- * @method Promise\PromiseInterface del(string $key)
- * @method Promise\PromiseInterface smembers(string $key)
- * @method Promise\PromiseInterface flushdb()
- * @method Promise\PromiseInterface publish(string $channel, string $payload)
- * @method Promise\PromiseInterface subscribe(string $channel)
+ * Stub for clue/reactphp-redis, which is not installed -- Plugin/RedisDb
+ * references Clue\React\Redis but the package is not a dependency.
+ *
+ * The @method return types are `mixed` rather than React\Promise\PromiseInterface
+ * on purpose. PHPStan 2 validates stub files in a scope where autoloaded vendor
+ * classes are not visible (which is why EventEmitterInterface is stubbed too,
+ * despite evenement being installed), and `class.notFound` in a stub is
+ * non-ignorable, so it cannot be baselined. Stubbing PromiseInterface instead
+ * would shadow the real generic interface for the five places src uses it.
+ *
+ * Restore the precise return type if clue/reactphp-redis is ever installed, or
+ * delete this stub with Plugin/RedisDb.
+ *
+ * @method mixed select(int $database)
+ * @method mixed get(string $key)
+ * @method mixed set(string $key, string $data)
+ * @method mixed sadd(string $key, array<int, string> $members)
+ * @method mixed del(string $key)
+ * @method mixed smembers(string $key)
+ * @method mixed flushdb()
+ * @method mixed publish(string $channel, string $payload)
+ * @method mixed subscribe(string $channel)
  */
 interface RedisClient extends EventEmitterInterface
 {

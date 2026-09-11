@@ -76,7 +76,6 @@ class Details implements Entities\Entity,
 		string $lastName,
 	)
 	{
-		// @phpstan-ignore-next-line
 		$this->id = Uuid\Uuid::uuid4();
 
 		$this->account = $account;
