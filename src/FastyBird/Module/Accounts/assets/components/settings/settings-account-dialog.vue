@@ -74,7 +74,10 @@
 		/>
 
 		<template #footer>
-			<footer :class="footerNs.b()">
+			<footer
+				v-if="!isXSDevice"
+				:class="footerNs.b()"
+			>
 				<div :class="footerNs.e('left-button')">
 					<el-button
 						type="default"
