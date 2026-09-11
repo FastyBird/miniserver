@@ -21,7 +21,6 @@
     "types": [
       "@fastybird/tools",
       "@fastybird/metadata-library",
-      "@fastybird/web-ui-library",
       "@intlify/unplugin-vue-i18n/messages",
       "@types/lodash",
       "@types/md5",

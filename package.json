@@ -24,15 +24,11 @@
     "url": "https://github.com/FastyBird/miniserver.git"
   },
   "workspaces": [
-    "src/FastyBird/*/*",
-    "src/FastyBird/Library/WebUi/packages/*",
-    "src/FastyBird/Library/WebUi/web-ui-library",
-    "src/FastyBird/Library/WebUi/docs"
+    "src/FastyBird/*/*"
   ],
   "scripts": {
     "dev": "vite --host",
-    "build:ui": "yarn workspace @fastybird/web-ui-utils build && yarn workspace @fastybird/web-ui-icons build && yarn workspace @fastybird/web-ui-theme-chalk build && yarn workspace @fastybird/web-ui-components build && yarn workspace @fastybird/web-ui-library build",
-    "build": "yarn build:ui && vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "types": "vue-tsc --noEmit",
     "lint:js": "eslint src/FastyBird/*/*/assets",
     "lint:js:fix": "eslint src/FastyBird/*/*/assets --fix",
@@ -40,15 +36,12 @@
     "pretty": "yarn pretty:write && yarn pretty:check",
     "pretty:check": "prettier src/FastyBird/*/*/assets --check",
     "pretty:write": "prettier src/FastyBird/*/*/assets --write",
-    "storybook": "yarn workspace @fastybird/web-ui-docs dev",
     "prepare": "husky"
   },
   "dependencies": {
     "@fastybird/metadata-library": "0.0.0",
     "@fastybird/tools": "0.0.0",
     "@fastybird/vue-wamp-v1": "^1.2",
-    "@fastybird/web-ui-icons": "1.0.0-dev.24",
-    "@fastybird/web-ui-library": "1.0.0-dev.24",
     "@iconify/iconify": "^3.1",
     "@iconify/vue": "^5",
     "element-plus": "^2.8",
@@ -96,7 +89,6 @@
     "postcss": "^8.4",
     "postcss-scss": "^4.0",
     "prettier": "^3.3",
-    "rimraf": "^6.0",
     "sass": "^1.81",
     "sass-loader": "^16.0",
     "stylelint": "^16.10",

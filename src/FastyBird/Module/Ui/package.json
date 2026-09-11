@@ -41,8 +41,6 @@
   "dependencies": {
     "@fastybird/metadata-library": "0.0.0",
     "@fastybird/vue-wamp-v1": "^1.2",
-    "@fastybird/web-ui-icons": "1.0.0-dev.24",
-    "@fastybird/web-ui-library": "1.0.0-dev.24",
     "@vueuse/core": "^11.2",
     "ajv": "^8.12",
     "ajv-formats": "^3.0",
