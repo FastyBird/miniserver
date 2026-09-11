@@ -1,5 +1,9 @@
 {
   "name": "@fastybird/application",
+  "exports": {
+    ".": "./assets/entry.ts"
+  },
+  "types": "./assets/entry.ts",
   "private": true,
   "version": "0.0.0",
   "type": "module",
