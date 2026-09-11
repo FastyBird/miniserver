@@ -1,4 +1,18 @@
+export { default as AppBar } from './app-bar.vue';
+export * from './app-bar.types';
+export * from './app-breadcrumbs.constants';
+export { default as AppBarButton } from './app-bar-button.vue';
+export * from './app-bar-button.types';
+export { default as AppBarHeading } from './app-bar-heading.vue';
+export * from './app-bar-heading.types';
 export { default as AppGravatar } from './app-gravatar.vue';
+export { default as AppIconWithChild } from './app-icon-with-child.vue';
+export * from './app-icon-with-child.types';
+export { default as AppList } from './app-list.vue';
+export { default as AppListItem } from './app-list-item.vue';
+export * from './app-list-item.types';
 export { default as AppNavigation } from './app-navigation.vue';
 export { default as AppSidebar } from './app-sidebar.vue';
+export { default as AppSwipe } from './app-swipe.vue';
+export * from './app-swipe.types';
 export { default as AppTopbar } from './app-topbar.vue';

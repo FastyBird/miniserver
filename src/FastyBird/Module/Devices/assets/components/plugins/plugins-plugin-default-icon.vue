@@ -1,13 +1,13 @@
 <template>
 	<el-icon :size="props.size">
-		<fas-plug-circle-bolt />
+		<Icon icon="fa6-solid:plug-circle-bolt" />
 	</el-icon>
 </template>
 
 <script setup lang="ts">
 import { ElIcon } from 'element-plus';
 
-import { FasPlugCircleBolt } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import { IPluginsPluginDefaultIconProps } from './plugins-plugin-default-icon.types';
 

@@ -12,7 +12,7 @@
 				@blur="onFilterSearch"
 			>
 				<template #suffix>
-					<el-icon><fas-magnifying-glass /></el-icon>
+					<el-icon><Icon icon="fa6-solid:magnifying-glass" /></el-icon>
 				</template>
 			</el-input>
 
@@ -58,17 +58,17 @@
 				>
 					<el-result class="h-full w-full">
 						<template #icon>
-							<fb-icon-with-child
+							<app-icon-with-child
 								type="primary"
 								:size="50"
 							>
 								<template #primary>
-									<fas-plug />
+									<Icon icon="fa6-solid:plug" />
 								</template>
 								<template #secondary>
-									<fas-info />
+									<Icon icon="fa6-solid:info" />
 								</template>
-							</fb-icon-with-child>
+							</app-icon-with-child>
 						</template>
 
 						<template #title>
@@ -83,17 +83,17 @@
 				>
 					<el-result class="h-full w-full">
 						<template #icon>
-							<fb-icon-with-child
+							<app-icon-with-child
 								type="primary"
 								:size="50"
 							>
 								<template #primary>
-									<fas-plug />
+									<Icon icon="fa6-solid:plug" />
 								</template>
 								<template #secondary>
-									<fas-filter />
+									<Icon icon="fa6-solid:filter" />
 								</template>
-							</fb-icon-with-child>
+							</app-icon-with-child>
 						</template>
 
 						<template #title>
@@ -202,7 +202,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, h, reactive, ref } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import {
@@ -222,14 +223,17 @@ import {
 	useNamespace,
 } from 'element-plus';
 
-import { FasFilter, FasFilterCircleXmark, FasInfo, FasMagnifyingGlass, FasPlug, FasSliders } from '@fastybird/web-ui-icons';
-import { FbIconWithChild } from '@fastybird/web-ui-library';
+import { AppIconWithChild } from '@fastybird/application';
+import { Icon } from '@iconify/vue';
 
 import { DevicesFilter } from '../../types';
 import ConnectorsConnectorIcon from '../connectors/connectors-connector-icon.vue';
 import DevicesListDevicesColumnState from '../devices/devices-list-devices-column-state.vue';
 
 import { IDevicesListDevicesProps } from './devices-list-devices.types';
+
+const FasFilterCircleXmark = (): VNode => h(Icon, { icon: 'fa6-solid:filter-circle-xmark' });
+const FasSliders = (): VNode => h(Icon, { icon: 'fa6-solid:sliders' });
 
 defineOptions({
 	name: 'DevicesListDevices',

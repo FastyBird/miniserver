@@ -6,19 +6,68 @@
 		@closed="onClosed"
 	>
 		<template #header>
-			<fb-dialog-header
-				:layout="isMDDevice ? 'default' : isSMDevice ? 'tablet' : 'phone'"
-				:left-btn-label="t('devicesModule.buttons.close.title')"
-				:right-btn-label="isDraft ? t('devicesModule.buttons.add.title') : t('devicesModule.buttons.save.title')"
-				:icon="FasPlus"
-				@left-click="onClose"
-				@right-click="onSubmit"
-				@close="onClose"
-			>
-				<template #title>
-					{{ t('devicesModule.headings.properties.add') }}
-				</template>
-			</fb-dialog-header>
+			<div :class="[headerNs.b(), headerNs.m('type-primary'), headerNs.m('layout-' + (isMDDevice ? 'default' : isSMDevice ? 'tablet' : 'phone'))]">
+				<div :class="headerNs.e('inner')">
+					<template v-if="!isMDDevice">
+						<div :class="headerNs.e('heading')">
+							<div
+								:class="headerNs.e('title')"
+								role="heading"
+							>
+								{{ t('devicesModule.headings.properties.add') }}
+							</div>
+						</div>
+
+						<div :class="headerNs.e('left-button')">
+							<el-button
+								type="default"
+								size="default"
+								text
+								@click.prevent="onClose"
+							>
+								{{ t('devicesModule.buttons.close.title') }}
+							</el-button>
+						</div>
+
+						<div :class="headerNs.e('right-button')">
+							<el-button
+								type="default"
+								size="default"
+								text
+								@click.prevent="onSubmit"
+							>
+								{{ isDraft ? t('devicesModule.buttons.add.title') : t('devicesModule.buttons.save.title') }}
+							</el-button>
+						</div>
+					</template>
+
+					<template v-else>
+						<div :class="headerNs.e('heading')">
+							<el-icon :class="headerNs.e('icon')">
+								<component :is="FasPlus" />
+							</el-icon>
+
+							<div
+								:class="headerNs.e('title')"
+								role="heading"
+							>
+								{{ t('devicesModule.headings.properties.add') }}
+							</div>
+						</div>
+
+						<button
+							:aria-label="t('devicesModule.buttons.close.title')"
+							:class="headerNs.e('close')"
+							type="button"
+							@click.prevent="onClose"
+						>
+							<el-icon>
+								<Icon icon="fa6-solid:xmark" />
+							</el-icon>
+						</button>
+					</template>
+				</div>
+			</div>
 		</template>
 
 		<property-default-property-settings-form
@@ -90,13 +139,13 @@
 			/>
 
 			<template v-if="activeView === PropertyDefaultPropertySettingsAddViewTypes.SELECT_CONNECTOR">
-				<fb-list>
+				<app-list>
 					<template #title>
 						{{ t('devicesModule.headings.properties.connectorSelect') }}
 					</template>
 
 					<div class="py-2">
-						<fb-list-item
+						<app-list-item
 							v-for="connectorItem in connectors"
 							:key="connectorItem.id"
 							:disabled="connectorItem.disabled"
@@ -120,36 +169,36 @@
 
 							<template #button>
 								<el-icon>
-									<fas-chevron-right />
+									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
-						</fb-list-item>
+						</app-list-item>
 					</div>
 
 					<el-result v-if="!connectors.length">
 						<template #primary>
-							<fas-ethernet />
+							<Icon icon="fa6-solid:ethernet" />
 						</template>
 
 						<template #secondary>
-							<fas-exclamation />
+							<Icon icon="fa6-solid:exclamation" />
 						</template>
 
 						<template #title>
 							{{ t('devicesModule.texts.misc.noConnectors') }}
 						</template>
 					</el-result>
-				</fb-list>
+				</app-list>
 			</template>
 
 			<template v-if="activeView === PropertyDefaultPropertySettingsAddViewTypes.SELECT_DEVICE">
-				<fb-list>
+				<app-list>
 					<template #title>
 						{{ t('devicesModule.headings.properties.deviceSelect') }}
 					</template>
 
 					<div class="py-2">
-						<fb-list-item
+						<app-list-item
 							v-for="deviceItem in devices"
 							:key="deviceItem.id"
 							:disabled="deviceItem.disabled"
@@ -173,36 +222,36 @@
 
 							<template #button>
 								<el-icon>
-									<fas-chevron-right />
+									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
-						</fb-list-item>
+						</app-list-item>
 					</div>
 
 					<el-result v-if="!devices.length">
 						<template #primary>
-							<fas-plug />
+							<Icon icon="fa6-solid:plug" />
 						</template>
 
 						<template #secondary>
-							<fas-exclamation />
+							<Icon icon="fa6-solid:exclamation" />
 						</template>
 
 						<template #title>
 							{{ t('devicesModule.texts.misc.noDevices') }}
 						</template>
 					</el-result>
-				</fb-list>
+				</app-list>
 			</template>
 
 			<template v-if="activeView === PropertyDefaultPropertySettingsAddViewTypes.SELECT_CHANNEL">
-				<fb-list>
+				<app-list>
 					<template #title>
 						{{ t('devicesModule.headings.properties.channelSelect') }}
 					</template>
 
 					<div class="py-2">
-						<fb-list-item
+						<app-list-item
 							v-for="channelItem in channels"
 							:key="channelItem.id"
 							:disabled="channelItem.disabled"
@@ -210,7 +259,7 @@
 							@click="onSelectChannel(channelItem)"
 						>
 							<template #icon>
-								<fas-cube />
+								<Icon icon="fa6-solid:cube" />
 							</template>
 
 							<template #title>
@@ -226,36 +275,36 @@
 
 							<template #button>
 								<el-icon>
-									<fas-chevron-right />
+									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
-						</fb-list-item>
+						</app-list-item>
 					</div>
 
 					<el-result v-if="!channels.length">
 						<template #primary>
-							<fas-cube />
+							<Icon icon="fa6-solid:cube" />
 						</template>
 
 						<template #secondary>
-							<fas-exclamation />
+							<Icon icon="fa6-solid:exclamation" />
 						</template>
 
 						<template #title>
 							{{ t('devicesModule.texts.devices.noChannels') }}
 						</template>
 					</el-result>
-				</fb-list>
+				</app-list>
 			</template>
 
 			<template v-if="activeView === PropertyDefaultPropertySettingsAddViewTypes.SELECT_PARENT">
-				<fb-list>
+				<app-list>
 					<template #title>
 						{{ t('devicesModule.headings.properties.parentSelect') }}
 					</template>
 
 					<div class="py-2">
-						<fb-list-item
+						<app-list-item
 							v-for="propertyItem in properties"
 							:key="propertyItem.id"
 							:variant="ListItemVariantTypes.DEFAULT"
@@ -271,19 +320,19 @@
 
 							<template #button>
 								<el-icon>
-									<fas-chevron-right />
+									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
-						</fb-list-item>
+						</app-list-item>
 					</div>
 
 					<el-result v-if="!properties.length">
 						<template #primary>
-							<fas-cube />
+							<Icon icon="fa6-solid:cube" />
 						</template>
 
 						<template #secondary>
-							<fas-exclamation />
+							<Icon icon="fa6-solid:exclamation" />
 						</template>
 
 						<template #title>
@@ -296,18 +345,13 @@
 							</template>
 						</template>
 					</el-result>
-				</fb-list>
+				</app-list>
 			</template>
 		</template>
 
 		<template #footer>
-			<fb-dialog-footer
-				:left-btn-label="t('devicesModule.buttons.close.title')"
-				:right-btn-label="isDraft ? t('devicesModule.buttons.add.title') : t('devicesModule.buttons.save.title')"
-				@left-click="onClose"
-				@right-click="onSubmit"
-			>
-				<template #left-button>
+			<footer :class="footerNs.b()">
+				<div :class="footerNs.e('left-button')">
 					<el-button
 						v-if="
 							!isConnectorProperty &&
@@ -334,9 +378,9 @@
 					>
 						{{ t('devicesModule.buttons.close.title') }}
 					</el-button>
-				</template>
+				</div>
 
-				<template #right-button>
+				<div :class="footerNs.e('right-button')">
 					<el-button
 						v-if="isConnectorProperty || props.property.type.type === PropertyType.VARIABLE"
 						:loading="remoteFormResult === FormResultTypes.WORKING"
@@ -405,33 +449,23 @@
 							</el-button>
 						</template>
 					</template>
-				</template>
-			</fb-dialog-footer>
+				</div>
+			</footer>
 		</template>
 	</el-dialog>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, h, inject, ref } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { ElAlert, ElButton, ElDialog, ElIcon, ElResult } from 'element-plus';
+import { ElAlert, ElButton, ElDialog, ElIcon, ElResult, useNamespace } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
+import { AppList, AppListItem, ListItemVariantTypes } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import {
-	FarCircleCheck,
-	FarCircleXmark,
-	FasChevronRight,
-	FasClone,
-	FasCube,
-	FasEthernet,
-	FasExclamation,
-	FasFile,
-	FasPlug,
-	FasPlus,
-} from '@fastybird/web-ui-icons';
-import { FbDialogFooter, FbDialogHeader, FbList, FbListItem, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import {
 	channelPropertiesStoreKey,
@@ -466,6 +500,12 @@ import {
 	PropertyDefaultPropertySettingsAddViewTypes,
 } from './property-default-property-settings-add.types';
 
+const FarCircleCheck = (): VNode => h(Icon, { icon: 'fa6-regular:circle-check' });
+const FarCircleXmark = (): VNode => h(Icon, { icon: 'fa6-regular:circle-xmark' });
+const FasClone = (): VNode => h(Icon, { icon: 'fa6-solid:clone' });
+const FasFile = (): VNode => h(Icon, { icon: 'fa6-solid:file' });
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
+
 defineOptions({
 	name: 'PropertyDefaultPropertySettingsAdd',
 });
@@ -478,6 +518,9 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 const { isSMDevice, isMDDevice } = useBreakpoints();
+
+const headerNs = useNamespace('dialog-header');
+const footerNs = useNamespace('dialog-footer');
 
 const connectorsStore = inject(connectorsStoreKey);
 const connectorPropertiesStore = inject(connectorPropertiesStoreKey);

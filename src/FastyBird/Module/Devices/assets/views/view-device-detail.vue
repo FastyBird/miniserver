@@ -1,5 +1,5 @@
 <template>
-	<fb-app-bar-heading
+	<app-bar-heading
 		v-if="isDetailRoute"
 		teleport
 	>
@@ -27,9 +27,9 @@
 		>
 			{{ deviceData?.connector?.title }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isDetailRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -38,12 +38,12 @@
 	>
 		<template #icon>
 			<el-icon>
-				<fas-angle-left />
+				<Icon icon="fa6-solid:angle-left" />
 			</el-icon>
 		</template>
-	</fb-app-bar-button>
+	</app-bar-button>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isDetailRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.RIGHT"
@@ -51,9 +51,9 @@
 		@click="onDeviceEdit"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.edit.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="isMDDevice && isDetailRoute && isConnectorRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.BACK"
@@ -61,9 +61,9 @@
 		@click="onBack"
 	>
 		<el-icon>
-			<fas-angle-left />
+			<Icon icon="fa6-solid:angle-left" />
 		</el-icon>
-	</fb-app-bar-button>
+	</app-bar-button>
 
 	<div
 		v-loading="isLoading || connectorsPlugin === null || deviceData === null"
@@ -87,66 +87,70 @@
 					@remove="onDeviceRemove"
 				/>
 
-				<fb-expandable-box
-					:show="!isSettingsRoute"
-					class="flex flex-col"
-				>
+				<el-collapse-transition>
 					<div
-						v-loading="isLoading"
-						:element-loading-text="t('devicesModule.texts.misc.loadingDevice')"
+						v-if="!isSettingsRoute"
+						class="flex flex-col"
 					>
-						<component
-							:is="connectorsPlugin.components.deviceDetail"
-							v-if="typeof connectorsPlugin.components.deviceDetail !== 'undefined'"
-							:loading="isLoading"
-							:device-data="deviceData"
-							:alerts="[]"
-							:bridges="[]"
-						/>
+						<div
+							v-loading="isLoading"
+							:element-loading-text="t('devicesModule.texts.misc.loadingDevice')"
+						>
+							<component
+								:is="connectorsPlugin.components.deviceDetail"
+								v-if="typeof connectorsPlugin.components.deviceDetail !== 'undefined'"
+								:loading="isLoading"
+								:device-data="deviceData"
+								:alerts="[]"
+								:bridges="[]"
+							/>
 
-						<device-default-device-detail
-							:loading="isLoading"
-							:device-data="deviceData"
-							:alerts="[]"
-							:bridges="[]"
-						/>
-					</div>
-
-					<div
-						v-loading="channelsLoading"
-						:element-loading-text="t('devicesModule.texts.misc.loadingChannels')"
-						class="flex-grow overflow-hidden"
-					>
-						<component
-							:is="connectorsPlugin.components.deviceChannels"
-							v-if="typeof connectorsPlugin.components.deviceChannels !== 'undefined'"
-							:loading="channelsLoading"
-							:device-data="deviceData"
-							@detail="onChannelOpen"
-							@add="onChannelCreate"
-						/>
-
-						<device-default-device-channels
-							v-else
-							:loading="channelsLoading"
-							:device-data="deviceData"
-							@detail="onChannelOpen"
-							@edit="onChannelEdit"
-							@remove="onChannelRemove"
-							@add="onChannelCreate"
-						/>
-					</div>
-				</fb-expandable-box>
-
-				<fb-expandable-box :show="isSettingsRoute">
-					<suspense>
-						<div class="flex-grow overflow-hidden h-full">
-							<view-error :type="'device'">
-								<router-view />
-							</view-error>
+							<device-default-device-detail
+								:loading="isLoading"
+								:device-data="deviceData"
+								:alerts="[]"
+								:bridges="[]"
+							/>
 						</div>
-					</suspense>
-				</fb-expandable-box>
+
+						<div
+							v-loading="channelsLoading"
+							:element-loading-text="t('devicesModule.texts.misc.loadingChannels')"
+							class="flex-grow overflow-hidden"
+						>
+							<component
+								:is="connectorsPlugin.components.deviceChannels"
+								v-if="typeof connectorsPlugin.components.deviceChannels !== 'undefined'"
+								:loading="channelsLoading"
+								:device-data="deviceData"
+								@detail="onChannelOpen"
+								@add="onChannelCreate"
+							/>
+
+							<device-default-device-channels
+								v-else
+								:loading="channelsLoading"
+								:device-data="deviceData"
+								@detail="onChannelOpen"
+								@edit="onChannelEdit"
+								@remove="onChannelRemove"
+								@add="onChannelCreate"
+							/>
+						</div>
+					</div>
+				</el-collapse-transition>
+
+				<el-collapse-transition>
+					<div v-if="isSettingsRoute">
+						<suspense>
+							<div class="flex-grow overflow-hidden h-full">
+								<view-error :type="'device'">
+									<router-view />
+								</view-error>
+							</div>
+						</suspense>
+					</div>
+				</el-collapse-transition>
 			</template>
 		</template>
 	</div>
@@ -158,12 +162,12 @@ import { useI18n } from 'vue-i18n';
 import { useMeta } from 'vue-meta';
 import { useRoute, useRouter } from 'vue-router';
 
-import { ElIcon, vLoading } from 'element-plus';
+import { ElCollapseTransition, ElIcon, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import { FasAngleLeft } from '@fastybird/web-ui-icons';
-import { AppBarButtonAlignTypes, FbAppBarButton, FbAppBarHeading, FbExpandableBox } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { DeviceDefaultDeviceChannels, DeviceDefaultDeviceDetail, DevicesDeviceControl, DevicesDeviceIcon, ViewError } from '../components';
 import {

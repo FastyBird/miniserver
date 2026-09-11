@@ -11,7 +11,7 @@
 				@click="onToggleMenu"
 			>
 				<template #icon>
-					<fas-bars />
+					<Icon icon="fa6-solid:bars" />
 				</template>
 			</el-button>
 
@@ -25,10 +25,16 @@
 					:before-change="beforeThemeChange"
 				>
 					<template #active-action>
-						<fas-moon class="dark-icon h-[14px]" />
+						<Icon
+							icon="fa6-solid:moon"
+							class="dark-icon h-[14px]"
+						/>
 					</template>
 					<template #inactive-action>
-						<fas-sun class="light-icon h-[14px]" />
+						<Icon
+							icon="fa6-solid:sun"
+							class="light-icon h-[14px]"
+						/>
 					</template>
 				</el-switch>
 			</div>
@@ -73,10 +79,9 @@ import { ElButton, ElDropdown, ElDropdownItem, ElDropdownMenu, ElHeader, ElSwitc
 
 import { IAccountManager } from '@fastybird/tools';
 import { IAccountDetails, injectAccountManager, useDarkMode } from '@fastybird/tools';
-import { FasBars, FasMoon, FasSun } from '@fastybird/web-ui-icons';
-import { FB_BREADCRUMBS_TARGET } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
-import { AppGravatar } from '../components';
+import { AppGravatar, FB_BREADCRUMBS_TARGET } from '../components';
 
 import { IAppTopbarProps } from './app-topbar.types';
 

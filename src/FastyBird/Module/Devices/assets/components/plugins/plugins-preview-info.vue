@@ -1,103 +1,105 @@
 <template>
 	<div class="flex flex-col justify-center h-full">
-		<fb-media-item class="my-5">
-			<template #left>
+		<div class="my-5 flex flex-row">
+			<div class="flex-none w-20 text-center">
 				<el-icon :size="32">
-					<fas-plug-circle-bolt />
+					<Icon icon="fa6-solid:plug-circle-bolt" />
 				</el-icon>
-			</template>
+			</div>
 
-			<template #heading>
-				{{ t('devicesModule.headings.plugins.allPlugins') }}
-			</template>
+			<div class="flex-auto">
+				<h3 class="font-light">
+					{{ t('devicesModule.headings.plugins.allPlugins') }}
+				</h3>
 
-			<template #description>
-				{{ t('devicesModule.subHeadings.plugins.allPlugins', items.length) }}
-			</template>
-		</fb-media-item>
+				<p>{{ t('devicesModule.subHeadings.plugins.allPlugins', items.length) }}</p>
+			</div>
+		</div>
 
-		<fb-media-item class="my-5">
-			<template #left>
+		<div class="my-5 flex flex-row">
+			<div class="flex-none w-20 text-center">
 				<el-icon :size="32">
-					<fas-ethernet />
+					<Icon icon="fa6-solid:ethernet" />
 				</el-icon>
-			</template>
+			</div>
 
-			<template #heading>
-				{{ t('devicesModule.headings.connectors.allConnectors') }}
-			</template>
+			<div class="flex-auto">
+				<h3 class="font-light">
+					{{ t('devicesModule.headings.connectors.allConnectors') }}
+				</h3>
 
-			<template #description>
-				{{ t('devicesModule.subHeadings.connectors.allConnectors', connectors) }}
-			</template>
-		</fb-media-item>
+				<p>{{ t('devicesModule.subHeadings.connectors.allConnectors', connectors) }}</p>
+			</div>
+		</div>
 
-		<fb-media-item class="my-5">
-			<template #left>
+		<div class="my-5 flex flex-row">
+			<div class="flex-none w-20 text-center">
 				<el-icon :size="32">
 					<fas-plus />
 				</el-icon>
-			</template>
+			</div>
 
-			<template #heading>
-				{{ t('devicesModule.headings.connectors.new') }}
-			</template>
+			<div class="flex-auto">
+				<h3 class="font-light">
+					{{ t('devicesModule.headings.connectors.new') }}
+				</h3>
 
-			<template #description>
-				{{ t('devicesModule.subHeadings.connectors.new') }}
-			</template>
+				<p>{{ t('devicesModule.subHeadings.connectors.new') }}</p>
 
-			<template #action>
-				<el-button
-					:icon="FasPlus"
-					type="primary"
-					plain
-					@click="emit('addConnector', $event)"
-				>
-					{{ t('devicesModule.buttons.addInstance.title') }}
-				</el-button>
-			</template>
-		</fb-media-item>
+				<p>
+					<el-button
+						:icon="FasPlus"
+						type="primary"
+						plain
+						@click="emit('addConnector', $event)"
+					>
+						{{ t('devicesModule.buttons.addInstance.title') }}
+					</el-button>
+				</p>
+			</div>
+		</div>
 
-		<fb-media-item class="my-5">
-			<template #left>
+		<div class="my-5 flex flex-row">
+			<div class="flex-none w-20 text-center">
 				<el-icon :size="32">
-					<fas-store />
+					<Icon icon="fa6-solid:store" />
 				</el-icon>
-			</template>
+			</div>
 
-			<template #heading>
-				{{ t('devicesModule.headings.plugins.new') }}
-			</template>
+			<div class="flex-auto">
+				<h3 class="font-light">
+					{{ t('devicesModule.headings.plugins.new') }}
+				</h3>
 
-			<template #description>
-				{{ t('devicesModule.subHeadings.plugins.new') }}
-			</template>
+				<p>{{ t('devicesModule.subHeadings.plugins.new') }}</p>
 
-			<template #action>
-				<el-button
-					:icon="FasPlus"
-					type="info"
-					plain
-					@click="emit('installPlugin', $event)"
-				>
-					{{ t('devicesModule.buttons.addPlugin.title') }}
-				</el-button>
-			</template>
-		</fb-media-item>
+				<p>
+					<el-button
+						:icon="FasPlus"
+						type="info"
+						plain
+						@click="emit('installPlugin', $event)"
+					>
+						{{ t('devicesModule.buttons.addPlugin.title') }}
+					</el-button>
+				</p>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElIcon } from 'element-plus';
 
-import { FasEthernet, FasPlugCircleBolt, FasPlus, FasStore } from '@fastybird/web-ui-icons';
-import { FbMediaItem } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { IPluginsPreviewInfoProps } from './plugins-preview-info.types';
+
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
 
 defineOptions({
 	name: 'PluginsPreviewInfo',

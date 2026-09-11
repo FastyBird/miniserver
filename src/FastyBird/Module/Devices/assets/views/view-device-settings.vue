@@ -1,5 +1,5 @@
 <template>
-	<fb-app-bar-heading
+	<app-bar-heading
 		v-if="isSettingsRoute"
 		teleport
 	>
@@ -17,9 +17,9 @@
 		<template #subtitle>
 			{{ deviceData?.device.draft ? t('devicesModule.subHeadings.devices.new') : deviceData?.device.title }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isSettingsRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -27,9 +27,9 @@
 		@click="onClose"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.close.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isSettingsRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -37,9 +37,9 @@
 		@click="onSubmit"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.save.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="isMDDevice && isSettingsRoute && isConnectorRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.BACK"
@@ -47,9 +47,9 @@
 		@click="onBack"
 	>
 		<el-icon>
-			<fas-angle-left />
+			<Icon icon="fa6-solid:angle-left" />
 		</el-icon>
-	</fb-app-bar-button>
+	</app-bar-button>
 
 	<div
 		v-loading="(isLoading || connectorsPlugin === null || deviceData === null) && !isSettingsRoute"
@@ -130,7 +130,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onBeforeMount, onBeforeUnmount, onUnmounted, ref, watch } from 'vue';
+import { computed, h, inject, onBeforeMount, onBeforeUnmount, onUnmounted, ref, watch } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
@@ -138,10 +139,10 @@ import { useRouter } from 'vue-router';
 import { ElButton, ElIcon, ElScrollbar, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { DataType, ModuleSource } from '@fastybird/metadata-library';
 import { useBreakpoints } from '@fastybird/tools';
-import { FarCircleCheck, FarCircleXmark, FasAngleLeft } from '@fastybird/web-ui-icons';
-import { AppBarButtonAlignTypes, FbAppBarButton, FbAppBarHeading } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import {
 	DeviceDefaultDeviceSettings,
@@ -155,6 +156,9 @@ import { ApplicationError } from '../errors';
 import { FormResultType, FormResultTypes, IConnectorPlugin, IDevice, IDeviceData, IDeviceProperty, PropertyType } from '../types';
 
 import { IViewDeviceSettingsProps } from './view-device-settings.types';
+
+const FarCircleCheck = (): VNode => h(Icon, { icon: 'fa6-regular:circle-check' });
+const FarCircleXmark = (): VNode => h(Icon, { icon: 'fa6-regular:circle-xmark' });
 
 defineOptions({
 	name: 'ViewDeviceSettings',

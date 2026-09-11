@@ -1,5 +1,5 @@
 <template>
-	<fb-list class="flex-grow h-full w-full overflow-hidden">
+	<app-list class="flex-grow h-full w-full overflow-hidden">
 		<template #title>
 			{{ t('devicesModule.headings.connectors.devices') }}
 		</template>
@@ -53,17 +53,17 @@
 			>
 				<el-result>
 					<template #icon>
-						<fb-icon-with-child
+						<app-icon-with-child
 							:size="50"
 							type="primary"
 						>
 							<template #primary>
-								<fas-plug />
+								<Icon icon="fa6-solid:plug" />
 							</template>
 							<template #secondary>
-								<fas-info />
+								<Icon icon="fa6-solid:info" />
 							</template>
-						</fb-icon-with-child>
+						</app-icon-with-child>
 					</template>
 
 					<template #title>
@@ -94,21 +94,24 @@
 				@remove="emit('remove', deviceData.device.id, $event)"
 			/>
 		</el-scrollbar>
-	</fb-list>
+	</app-list>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElResult, ElScrollbar, ElSkeleton, ElSkeletonItem, ElText } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
-import { FasInfo, FasPlug, FasPlus } from '@fastybird/web-ui-icons';
-import { FbIconWithChild, FbList } from '@fastybird/web-ui-library';
+import { AppIconWithChild, AppList } from '@fastybird/application';
+import { Icon } from '@iconify/vue';
 
 import { IConnectorDevicesEmits, IConnectorDevicesProps, IDeviceData } from '../../types';
 import ConnectorDefaultConnectorDevice from '../connector-default/connector-default-connector-device.vue';
+
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
 
 defineOptions({
 	name: 'ConnectorDefaultConnectorDevices',

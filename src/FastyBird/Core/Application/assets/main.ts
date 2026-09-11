@@ -10,12 +10,21 @@ import 'virtual:uno.css';
 import { extensions } from '@config/extensions';
 import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, storesPlugin } from '@fastybird/tools';
 import { createWampV1Client } from '@fastybird/vue-wamp-v1';
-import '@fastybird/web-ui-theme-chalk/src/index.scss';
+import { addCollection } from '@iconify/vue';
 
 import App from './App.vue';
+import { iconCollections } from './icons.generated';
 import i18n from './locales';
 import router from './router';
 import './styles/base.scss';
+import './styles/element-plus.scss';
+
+// Register the trimmed, offline Iconify collections (see icons.generated.ts)
+// before anything renders, so <Icon icon="fa6-...:..."/> never falls back to
+// the https://api.iconify.design runtime loader.
+for (const collection of iconCollections) {
+	addCollection(collection);
+}
 
 const pinia = createPinia();
 

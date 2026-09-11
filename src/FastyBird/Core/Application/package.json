@@ -1,5 +1,9 @@
 {
   "name": "@fastybird/application",
+  "exports": {
+    ".": "./assets/entry.ts"
+  },
+  "types": "./assets/entry.ts",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -22,5 +26,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/FastyBird/miniserver.git"
+  },
+  "dependencies": {
+    "@iconify/vue": "^5"
   }
 }

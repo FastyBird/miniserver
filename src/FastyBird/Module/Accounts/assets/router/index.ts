@@ -1,11 +1,15 @@
-import { App } from 'vue';
+import { App, h } from 'vue';
+import type { VNode } from 'vue';
 import { RouteRecordRaw, Router } from 'vue-router';
 
 import { injectStoresManager } from '@fastybird/tools';
-import { FasKey, FasUser } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import { useRoutesNames } from '../composables';
 import { accountGuard, anonymousGuard, authenticatedGuard, sessionGuard } from '../router/guards';
+
+const FasKey = (): VNode => h(Icon, { icon: 'fa6-solid:key' });
+const FasUser = (): VNode => h(Icon, { icon: 'fa6-solid:user' });
 
 const { routeNames } = useRoutesNames();
 

@@ -1,7 +1,7 @@
 <template>
-	<fb-app-bar-heading teleport>
+	<app-bar-heading teleport>
 		<template #icon>
-			<fas-filter />
+			<Icon icon="fa6-solid:filter" />
 		</template>
 
 		<template #title>
@@ -11,7 +11,7 @@
 		<template #subtitle>
 			{{ t('devicesModule.subHeadings.devices.adjustFilters') }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
 	<div class="flex flex-col h-full w-full overflow-hidden">
 		<el-scrollbar class="flex-grow">
@@ -87,19 +87,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, h, reactive, ref, watch } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElCheckbox, ElCheckboxGroup, ElCollapse, ElCollapseItem, ElScrollbar, ElText } from 'element-plus';
 import isEqual from 'lodash.isequal';
 
-import { FasFilter, FasFilterCircleXmark } from '@fastybird/web-ui-icons';
-import { FbAppBarHeading } from '@fastybird/web-ui-library';
+import { AppBarHeading } from '@fastybird/application';
+import { Icon } from '@iconify/vue';
 
 import { ConnectionState, DevicesFilter, IConnector, IDevicesFilter } from '../../types';
 import { defaultDevicesFilter } from '../../utilities';
 
 import { IDevicesListAdjustProps } from './devices-list-adjust.types';
+
+const FasFilterCircleXmark = (): VNode => h(Icon, { icon: 'fa6-solid:filter-circle-xmark' });
 
 defineOptions({
 	name: 'DevicesListAdjust',

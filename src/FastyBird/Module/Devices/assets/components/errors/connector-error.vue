@@ -5,17 +5,17 @@
 	>
 		<el-result>
 			<template #icon>
-				<fb-icon-with-child
+				<app-icon-with-child
 					type="primary"
 					:size="50"
 				>
 					<template #primary>
-						<fas-ethernet />
+						<Icon icon="fa6-solid:ethernet" />
 					</template>
 					<template #secondary>
-						<fas-exclamation />
+						<Icon icon="fa6-solid:exclamation" />
 					</template>
-				</fb-icon-with-child>
+				</app-icon-with-child>
 			</template>
 
 			<template #title>
@@ -38,8 +38,8 @@ import type { ComponentPublicInstance } from 'vue';
 
 import { ElResult, ElText } from 'element-plus';
 
-import { FasEthernet, FasExclamation } from '@fastybird/web-ui-icons';
-import { FbIconWithChild } from '@fastybird/web-ui-library';
+import { AppIconWithChild } from '@fastybird/application';
+import { Icon } from '@iconify/vue';
 
 import { ApplicationError } from '../../errors';
 

@@ -8,20 +8,68 @@
 		@close="onClose"
 	>
 		<template #header>
-			<fb-dialog-header
-				:layout="isXSDevice ? 'phone' : 'default'"
-				:left-btn-label="t('accountsModule.buttons.close.title')"
-				:right-btn-label="t('accountsModule.buttons.save.title')"
-				@close="onClose"
-			>
-				<template #title>
-					{{ t('accountsModule.headings.accountSettings') }}
-				</template>
+			<div :class="[headerNs.b(), headerNs.m('type-primary'), headerNs.m('layout-' + (isXSDevice ? 'phone' : 'default'))]">
+				<div :class="headerNs.e('inner')">
+					<template v-if="isXSDevice">
+						<div :class="headerNs.e('heading')">
+							<div
+								:class="headerNs.e('title')"
+								role="heading"
+							>
+								{{ t('accountsModule.headings.accountSettings') }}
+							</div>
+						</div>
 
-				<template #icon>
-					<fas-user />
-				</template>
-			</fb-dialog-header>
+						<div :class="headerNs.e('left-button')">
+							<el-button
+								type="default"
+								size="default"
+								text
+								@click.prevent="onClose"
+							>
+								{{ t('accountsModule.buttons.close.title') }}
+							</el-button>
+						</div>
+
+						<div :class="headerNs.e('right-button')">
+							<el-button
+								type="default"
+								size="default"
+								text
+								@click.prevent="onSave"
+							>
+								{{ t('accountsModule.buttons.save.title') }}
+							</el-button>
+						</div>
+					</template>
+
+					<template v-else>
+						<div :class="headerNs.e('heading')">
+							<el-icon :class="headerNs.e('icon')">
+								<Icon icon="fa6-solid:user" />
+							</el-icon>
+
+							<div
+								:class="headerNs.e('title')"
+								role="heading"
+							>
+								{{ t('accountsModule.headings.accountSettings') }}
+							</div>
+						</div>
+
+						<button
+							:aria-label="t('accountsModule.buttons.close.title')"
+							:class="headerNs.e('close')"
+							type="button"
+							@click.prevent="onClose"
+						>
+							<el-icon>
+								<Icon icon="fa6-solid:xmark" />
+							</el-icon>
+						</button>
+					</template>
+				</div>
+			</div>
 		</template>
 
 		<settings-account-form
@@ -32,13 +80,32 @@
 		/>
 
 		<template #footer>
-			<fb-dialog-footer
-				:layout="isXSDevice ? 'phone' : 'default'"
-				:left-btn-label="t('accountsModule.buttons.close.title')"
-				:right-btn-label="t('accountsModule.buttons.save.title')"
-				@left-click="onClose"
-				@right-click="onSave"
-			/>
+			<footer
+				v-if="!isXSDevice"
+				:class="footerNs.b()"
+			>
+				<div :class="footerNs.e('left-button')">
+					<el-button
+						type="default"
+						size="large"
+						text
+						@click.prevent="onClose"
+					>
+						{{ t('accountsModule.buttons.close.title') }}
+					</el-button>
+				</div>
+
+				<div :class="footerNs.e('right-button')">
+					<el-button
+						type="primary"
+						size="large"
+						plain
+						@click.prevent="onSave"
+					>
+						{{ t('accountsModule.buttons.save.title') }}
+					</el-button>
+				</div>
+			</footer>
 		</template>
 	</el-dialog>
 </template>
@@ -47,11 +114,10 @@
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { ElDialog, ElLoading } from 'element-plus';
+import { ElButton, ElDialog, ElIcon, ElLoading, useNamespace } from 'element-plus';
 
 import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
-import { FasUser } from '@fastybird/web-ui-icons';
-import { FbDialogFooter, FbDialogHeader } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { sessionStoreKey } from '../../configuration';
 import { FormResultType, FormResultTypes } from '../../types';
@@ -72,6 +138,9 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 const { isXSDevice } = useBreakpoints();
+
+const headerNs = useNamespace('dialog-header');
+const footerNs = useNamespace('dialog-footer');
 
 const storesManager = injectStoresManager();
 

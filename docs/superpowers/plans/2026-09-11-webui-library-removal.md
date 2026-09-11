@@ -4,7 +4,7 @@
 
 **Goal:** Delete `src/FastyBird/Library/WebUi` (4,316 files, 52,810 lines) by consuming element-plus directly, porting the genuinely custom components into `Core/Application`, and replacing the generated Font Awesome package with `@iconify/vue`.
 
-**Architecture:** The eight consuming extensions currently import 16 named exports from `@fastybird/web-ui-library` and 46 icons from `@fastybird/web-ui-icons`. Components with an element-plus equivalent are replaced at the call site; the rest move into `Core/Application/assets/components` using the flat `<name>.vue` + `.types.ts` + `.scss` pattern that directory already uses. `Core/Application` gains an `exports` entry so other extensions can import from it, which follows the documented layering (`docs/architecture.md:18`: "Modules depend on `application`, ...").
+**Architecture:** The eight consuming extensions currently import 16 named exports from `@fastybird/web-ui-library` and 73 icons from `@fastybird/web-ui-icons`. Components with an element-plus equivalent are replaced at the call site; the rest move into `Core/Application/assets/components` using the flat `<name>.vue` + `.types.ts` + `.scss` pattern that directory already uses. `Core/Application` gains an `exports` entry so other extensions can import from it, which follows the documented layering (`docs/architecture.md:18`: "Modules depend on `application`, ...").
 
 **Tech Stack:** Vue 3 `<script setup>`, TypeScript, element-plus 2.8, `@iconify/vue` + `@iconify/json`, SCSS via element-plus's `theme-chalk` mixins, Vite 5, yarn 1 workspaces, Node 20.
 
@@ -119,9 +119,9 @@ git commit -m "feat(core): expose @fastybird/application for cross-extension imp
 
 ## Task 2: Replace the icon package with `@iconify/vue`
 
-`packages/icons` is 4,086 files and 41,148 lines — 78% of the library — generating 2,040 Vue components from Font Awesome SVGs. The application uses **46**.
+`packages/icons` is 4,086 files and 41,148 lines — 78% of the library — generating 2,040 Vue components from Font Awesome SVGs. The application uses **73**.
 
-All 46 were resolved against the Iconify API before this plan was written: 40 `fa6-solid`, 3 `fa6-regular`, 3 `fa6-brands`, **zero not found**. No Pro icon, so no local SVG fallback is needed.
+All 73 were resolved against the Iconify API before this plan was written: 61 `fa6-solid`, 8 `fa6-regular`, 4 `fa6-brands`, **zero not found**. (An earlier count of 46 came from a single-line regex over import statements; 7 of the 52 import statements are prettier-wrapped across multiple lines, so 27 icons were missed.) No Pro icon, so no local SVG fallback is needed.
 
 **Files:**
 - Modify: root `package.json`, `Core/Application/package.json`, and every manifest declaring `@fastybird/web-ui-icons`

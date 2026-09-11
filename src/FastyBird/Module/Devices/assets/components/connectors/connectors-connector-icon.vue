@@ -1,50 +1,49 @@
 <template>
-	<fb-icon-with-child
+	<app-icon-with-child
 		v-if="props.withState"
 		:type="stateColor"
 		:size="props.size"
 		:data-connector-state="stateName"
 	>
 		<template #primary>
-			<fas-ethernet />
+			<Icon icon="fa6-solid:ethernet" />
 		</template>
 		<template #secondary>
 			<component :is="stateIcon" />
 		</template>
-	</fb-icon-with-child>
+	</app-icon-with-child>
 
 	<el-icon
 		v-else
 		:size="props.size"
 	>
-		<fas-ethernet />
+		<Icon icon="fa6-solid:ethernet" />
 	</el-icon>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { Component } from 'vue';
+import { computed, h } from 'vue';
+import type { Component, VNode } from 'vue';
 
 import { ElIcon } from 'element-plus';
 
+import { AppIconWithChild } from '@fastybird/application';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import {
-	FarCircle,
-	FarCircleCheck,
-	FarCirclePause,
-	FarCirclePlay,
-	FarCircleQuestion,
-	FarCircleStop,
-	FarCircleUser,
-	FasCircleExclamation,
-	FasEthernet,
-} from '@fastybird/web-ui-icons';
-import { FbIconWithChild } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { useConnectorState } from '../../composables';
 import { ConnectionState, StateColor } from '../../types';
 
 import { IConnectorsConnectorIconProps } from './connectors-connector-icon.types';
+
+const FarCircle = (): VNode => h(Icon, { icon: 'fa6-regular:circle' });
+const FarCircleCheck = (): VNode => h(Icon, { icon: 'fa6-regular:circle-check' });
+const FarCirclePause = (): VNode => h(Icon, { icon: 'fa6-regular:circle-pause' });
+const FarCirclePlay = (): VNode => h(Icon, { icon: 'fa6-regular:circle-play' });
+const FarCircleQuestion = (): VNode => h(Icon, { icon: 'fa6-regular:circle-question' });
+const FarCircleStop = (): VNode => h(Icon, { icon: 'fa6-regular:circle-stop' });
+const FarCircleUser = (): VNode => h(Icon, { icon: 'fa6-regular:circle-user' });
+const FasCircleExclamation = (): VNode => h(Icon, { icon: 'fa6-solid:circle-exclamation' });
 
 defineOptions({
 	name: 'ConnectorsConnectorIcon',

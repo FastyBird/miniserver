@@ -26,7 +26,7 @@
 		</div>
 	</el-form>
 
-	<fb-list>
+	<app-list>
 		<template #title>
 			{{ t('devicesModule.headings.channels.variableProperties') }}
 		</template>
@@ -69,9 +69,9 @@
 			@edit="emit('editProperty', property.id, $event)"
 			@remove="emit('removeProperty', property.id, $event)"
 		/>
-	</fb-list>
+	</app-list>
 
-	<fb-list>
+	<app-list>
 		<template #title>
 			{{ t('devicesModule.headings.channels.dynamicProperties') }}
 		</template>
@@ -114,25 +114,28 @@
 			@edit="emit('editProperty', property.id, $event)"
 			@remove="emit('removeProperty', property.id, $event)"
 		/>
-	</fb-list>
+	</app-list>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, h, reactive, ref, watch } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElForm, FormInstance } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppList } from '@fastybird/application';
 import { flattenValue } from '@fastybird/tools';
-import { FasPlus } from '@fastybird/web-ui-icons';
-import { FbList } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { useChannelForm } from '../../composables';
 import { FormResultType, FormResultTypes, IChannelForm, IChannelProperty, IEditChannelEmits, IEditChannelProps, PropertyType } from '../../types';
 import ChannelDefaultChannelSettingsRename from '../channel-default/channel-default-channel-settings-rename.vue';
 import PropertyDefaultPropertySettings from '../property-default/property-default-property-settings.vue';
 import PropertyDefaultVariablePropertiesEdit from '../property-default/property-default-variable-properties-edit.vue';
+
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
 
 defineOptions({
 	name: 'ChannelDefaultChannelSettings',

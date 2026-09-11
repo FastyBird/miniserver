@@ -1,10 +1,10 @@
 <template>
-	<fb-app-bar-heading
+	<app-bar-heading
 		v-if="!isMDDevice && isPluginDetailRoute"
 		teleport
 	>
 		<template #icon>
-			<fas-plug-circle-bolt />
+			<Icon icon="fa6-solid:plug-circle-bolt" />
 		</template>
 
 		<template #title>
@@ -14,9 +14,9 @@
 		<template #subtitle>
 			{{ connectorsPlugin?.description }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isPluginDetailRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -24,9 +24,9 @@
 		@click="onClose"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.close.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isPluginDetailRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.RIGHT"
@@ -34,7 +34,7 @@
 		@click="onConnectorCreate"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.add.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
 	<div
 		v-loading="connectorsPlugin === null"
@@ -119,20 +119,20 @@
 		@closed="onCloseDrawer"
 	>
 		<div class="flex flex-col h-full">
-			<fb-app-bar menu-button-hidden>
+			<app-bar menu-button-hidden>
 				<template #button-right>
-					<fb-app-bar-button
+					<app-bar-button
 						:align="AppBarButtonAlignTypes.RIGHT"
 						@click="onCloseDrawer"
 					>
 						<template #icon>
 							<el-icon>
-								<fas-xmark />
+								<Icon icon="fa6-solid:xmark" />
 							</el-icon>
 						</template>
-					</fb-app-bar-button>
+					</app-bar-button>
 				</template>
-			</fb-app-bar>
+			</app-bar>
 
 			<view-error type="connector">
 				<suspense>
@@ -152,9 +152,9 @@ import { useRoute, useRouter } from 'vue-router';
 import { ElCol, ElDrawer, ElIcon, ElRow, ElScrollbar, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppBar, AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import { FasPlugCircleBolt, FasXmark } from '@fastybird/web-ui-icons';
-import { AppBarButtonAlignTypes, FbAppBar, FbAppBarButton, FbAppBarHeading } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { ConnectorsConnectorBox, PluginsPluginHeader, PluginsPluginStats, ViewError } from '../components';
 import { useConnectorActions, useConnectors, useDevices, usePluginActions, useRoutesNames } from '../composables';

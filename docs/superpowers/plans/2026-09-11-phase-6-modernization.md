@@ -69,6 +69,13 @@ Ordered. Each entry says why it sits where it sits.
 
 ### Track C — make the manifests honest, still on yarn
 
+**Reduced.** `docs/superpowers/plans/2026-09-11-webui-library-removal.md` deleted
+`src/FastyBird/Library/WebUi` outright, so this track now touches five fewer
+manifests than it did when written: the four WebUi package manifests that
+PR5/Task 8 and PR8/Task 11 would have edited are simply gone, and Track E's
+workspace count drops accordingly (see below). See the reduction notes on
+Task 8 and Task 11 themselves.
+
 6. **PR5 — Declare the dependencies yarn only supplies by hoisting** (Task 8). The most important de-risking step in the phase. No-ops under yarn 1's flat hoist, hard failures under pnpm. Done here, each is provable in isolation against a green tree; done inside the pnpm pull request, they are indistinguishable from migration breakage.
 7. **PR7 — Rewrite the six jsona mappers to import from the package root** (Task 10). Source only, and verified to work against the *currently installed* jsona 1.12.1, whose `lib/index.d.ts` already re-exports `ModelPropertiesMapper` and `JsonPropertiesMapper`. Split from the constraint bump so the bump is a one-line diff.
 8. **PR8 — Delete the dead frontend devDependencies** (Task 11). Removal only, after PR5 so the "what is actually used" question has already been answered once.
@@ -85,6 +92,14 @@ Ordered. Each entry says why it sits where it sits.
 
 ### Track E — pnpm
 
+**Reduced.** With `Library/WebUi`'s six nested workspaces gone, the
+workspace count this migration has to carry drops from nine to about four,
+and the `pnpm-workspace.yaml` written in Task 20 needs only two globs
+instead of the larger set originally planned. The "31 internal references"
+figure below and elsewhere in this track was counted against the pre-removal
+tree and has not been independently re-verified against the current one;
+treat it as an upper bound, not a fixed count.
+
 16. **PR16 — Migrate the JavaScript toolchain from yarn 1 to pnpm** (Tasks 19–23). The largest and highest-risk pull request in the phase, and necessarily one pull request: yarn 1 classic cannot parse the `workspace:` protocol, so the 31 internal references cannot be converted ahead of time, and a tree with `pnpm-workspace.yaml` but no `pnpm-lock.yaml` (or the reverse) has no working install path at all. **Zero version changes** — verified by diffing the resolved version sets.
 17. **PR17 — pnpm prose sweep** (Task 24). Archival documentation, per-package `.gitignore` files and the 11 `yarn add @fastybird/*` README lines. Split from PR16 so PR16's diff stays reviewable; PR16 itself carries the instruction-bearing prose (`README.md`, `CLAUDE.md`, `AGENTS.md`, the PR template, `docs/deployment.md`) because leaving those wrong between pull requests would mislead a contributor.
 
@@ -100,10 +115,10 @@ Ordered. Each entry says why it sits where it sits.
 25. **PR25 — Infection 0.27 → 0.31 and the first real coverage number** (Task 33). Infection first, not last: 0.27 predates PHPUnit 11 support, so this is a hard prerequisite for PR26, not an optional extra.
 26. **PR26 — PHPUnit 10.5 → 11.5 with paratest 7.4 → 7.8** (Task 34). One commit, mandatory: paratest 7.8.5 requires `phpunit/phpunit ^11.5.46`.
 27. **PR27 — PHPStan 1.12 → 2.2 with all five extensions** (Task 35). Last of the PHP QA chain: `level: max` silently becomes level 10, and all 120 `ignoreErrors` entries (539 counted occurrences) must be re-derived against the final PHP version, which only exists after PR24.
-28. **PR28 — Align the three lagging `Library/WebUi` build packages** (Task 36). After PR6 made their lint scripts a CI gate, so the alignment is enforced rather than assumed.
+28. ~~**PR28 — Align the three lagging `Library/WebUi` build packages** (Task 36).~~ **Superseded** — `Library/WebUi` is deleted; see Task 36's note.
 29. **PR29 — UnoCSS 0.64 → 66** (Task 37). The first frontend framework bump, and the hard peer block: `unocss@0.64.1` declares `vite ^2.9 || ^3 || ^4 || ^5`, so nothing else in the frontend chain moves until it does.
 30. **PR30 — Vite 6 and `@vitejs/plugin-vue` 6** (Task 38). Only reachable after PR29.
-31. **PR31 — Storybook 8 → 10 and vue-component-meta 2 → 3** (Task 39). Together, because they are the same Volar 2 → 3 move, and only after PR6 gave the docs workspace a CI gate.
+31. ~~**PR31 — Storybook 8 → 10 and vue-component-meta 2 → 3** (Task 39).~~ **Superseded** — the Storybook docs workspace is deleted; see Task 39's note.
 32. **PR32 — Node 20 → 22.13+** (Task 40). Deliberately late: after PR11/PR12 the `--ignore-engines` exception is already gone, so the only remaining reasons are security patching and four Node-gated upgrades. The gulp 4 → chokidar 2 → fsevents 1.2.13 chain in `theme-chalk` is the one plausible breakage and must be proven first.
 33. **PR33 — Replace `vue-meta` with `@unhead/vue`** (Task 41). A replacement, not an upgrade — npm's `latest` for `vue-meta` is 2.4.0 from 2020 and the installed 3.0.0-alpha.10 has no successor. 17 call sites plus three config wirings.
 34. **PR34 — The ORM-2-preserving Doctrine step** (Task 42). Last, and deliberately stops short of ORM 3.
@@ -122,6 +137,16 @@ Ordered. Each entry says why it sits where it sits.
 ## What could go wrong
 
 Stated plainly, because the plan is only useful if the failure modes are known before they happen.
+
+**Note (WebUi removal):** the two risk items below cite `Library/WebUi` specifics
+(the `@fastybird/web-ui-theme-chalk` entry import, four of "the five real
+`Library/WebUi` builds", the ten nested duplicate installs, and the "31
+internal references" figure). `Library/WebUi` is deleted; those specific
+clauses no longer apply, but the general risk pattern each item illustrates
+— undeclared transitive imports, and nested duplicate installs losing their
+pin under `pnpm import` — still holds for the surviving workspaces and is
+worth re-checking against the current tree rather than assuming it is now
+zero-risk.
 
 **The single biggest risk is PR16.** pnpm's isolated `node_modules` will expose every dependency that exists today only because yarn 1 hoists the whole tree flat. Four distinct classes are already confirmed by reading manifests and grepping every bare import specifier: root tooling (`stylelint-scss`, `stylelint-config-recommended-scss`, `@types/lodash`), an application entry import (`Core/Application/assets/main.ts:13` imports `@fastybird/web-ui-theme-chalk/src/index.scss`, which is declared in no manifest that can reach it), four of the five real `Library/WebUi` builds (`@vue/shared`, `chalk`, `consola`, `fs-extra`, `@storybook/theming`), and 31 internal references using plain semver instead of `workspace:*` — which on pnpm 10, where `link-workspace-packages` defaults to `false`, means pnpm goes to the public registry, and those names *exist* there, so the failure mode is silently building against a published 2024 tarball rather than an error. Track C exists to retire all of that before PR16 opens. The residual risk is a *fifth* class nobody found: an import satisfied by hoisting that grep missed because it is dynamic, or constructed, or inside a config file loaded by a tool that resolves from its own directory. Mitigation: PR16's Step "install and run every gate" is the detector, and PR5 having already landed means any failure there is attributable to pnpm rather than to a missing declaration.
 
@@ -722,12 +747,22 @@ git commit -m "fix(infra): exclude nested node_modules from the build context"
 
 ## Task 8: Declare the dependencies yarn only supplies by hoisting
 
+**Reduced.** `docs/superpowers/plans/2026-09-11-webui-library-removal.md` (Task 11
+of that plan) deleted `src/FastyBird/Library/WebUi` entirely, so the four
+WebUi-specific manifests below no longer exist and Steps 2–4 (the
+`@fastybird/web-ui-theme-chalk` entry import and the four WebUi packages'
+undeclared dependencies) are moot — `Core/Application/assets/main.ts` no
+longer imports `@fastybird/web-ui-theme-chalk/src/index.scss` either. Only
+Step 1 (root tooling: `@types/lodash`, `stylelint-config-recommended-scss`,
+`stylelint-scss`) still applies. This is part of the same reduction noted
+under Track C and Track E below (nine workspaces to about four).
+
 **Files:**
 - Modify: `package.json`
-- Modify: `src/FastyBird/Library/WebUi/packages/utils/package.json`
-- Modify: `src/FastyBird/Library/WebUi/packages/theme-chalk/package.json`
-- Modify: `src/FastyBird/Library/WebUi/web-ui-library/package.json`
-- Modify: `src/FastyBird/Library/WebUi/docs/package.json`
+- ~~Modify: `src/FastyBird/Library/WebUi/packages/utils/package.json`~~ (deleted)
+- ~~Modify: `src/FastyBird/Library/WebUi/packages/theme-chalk/package.json`~~ (deleted)
+- ~~Modify: `src/FastyBird/Library/WebUi/web-ui-library/package.json`~~ (deleted)
+- ~~Modify: `src/FastyBird/Library/WebUi/docs/package.json`~~ (deleted)
 - Modify: `yarn.lock` (regenerated)
 
 **Interfaces:**
@@ -750,32 +785,17 @@ Add to root `devDependencies`, using the versions already resolved so the lockfi
 
 Do **not** blindly add `postcss-html` (the peer of `stylelint-config-recommended-vue`): it is genuinely absent from `node_modules` today, which is evidence that config path is unused — and Task 11 removes `stylelint-config-recommended-vue` entirely.
 
-- [ ] **Step 2: The application entry import that resolves nowhere under pnpm**
+- [ ] **Step 2: ~~The application entry import that resolves nowhere under pnpm~~ — no longer applicable**
 
-`src/FastyBird/Core/Application/assets/main.ts:13` is `import '@fastybird/web-ui-theme-chalk/src/index.scss';`. `@fastybird/application`'s `package.json` has no `dependencies` block at all, and root `package.json` does not list `@fastybird/web-ui-theme-chalk` either — it is only a dependency of `packages/components` and `web-ui-library`. Today a yarn workspace symlink at the root makes it resolve. This is the **only** import in the eight extensions that resolves nowhere under pnpm; the rest of `Core/Application`'s imports are also undeclared but happen to be root dependencies, and Node/Vite resolution still walks up from a nested workspace package to the repository-root `node_modules` under pnpm — so they survive by luck, not by design.
+`Core/Application/assets/main.ts` no longer imports `@fastybird/web-ui-theme-chalk/src/index.scss`; the WebUi removal replaced it. See the note under this task's heading.
 
-Add to root `dependencies`:
+- [ ] **Step 3: ~~The four `Library/WebUi` builds that import what they never declared~~ — no longer applicable**
 
-```json
-    "@fastybird/web-ui-theme-chalk": "1.0.0-dev.24",
-```
+`packages/utils`, `packages/theme-chalk`, `web-ui-library` and `docs` no longer exist. See the note under this task's heading.
 
-(Task 20 converts it, and the other 30 internal references, to `workspace:*`.)
+- [ ] **Step 4: ~~Remove the duplicate declaration in `web-ui-library`~~ — no longer applicable**
 
-- [ ] **Step 3: The four `Library/WebUi` builds that import what they never declared**
-
-`build:ui` is a serial chain, so the first of these to fail stops `utils → icons → theme-chalk → components → web-ui-library` dead.
-
-- `packages/utils`: imports `@vue/shared` in six source files (`src/strings.ts:7`, `src/vue/install.ts:1`, `src/objects.ts:8`, `src/types.ts:1,4`, `src/vue/vnode.ts:2`, `src/functions.ts:1`), hoisted today from `vue`'s own tree. → add `@vue/shared` to its dependencies.
-- `packages/theme-chalk`: `gulpfile.ts:3` imports `chalk`, `:9` imports `consola`. → add both to devDependencies.
-- `web-ui-library`: `build/generate.ts:2` imports `fs-extra`, `:4` imports `chalk` (`consola` on line 3 *is* declared). → add `fs-extra`, `@types/fs-extra` and `chalk` to devDependencies.
-- `docs`: `.storybook/manager.js:2` imports `@storybook/theming/create`. → add `@storybook/theming` to devDependencies.
-
-`packages/icons` and `packages/components` are clean.
-
-- [ ] **Step 4: Remove the duplicate declaration in `web-ui-library`**
-
-`src/FastyBird/Library/WebUi/web-ui-library/package.json` declares `@fastybird/web-ui-theme-chalk` twice — line 43 in `dependencies` and line 56 in `devDependencies`. Delete the devDependencies entry.
+`web-ui-library/package.json` no longer exists. See the note under this task's heading.
 
 - [ ] **Step 5: Reinstall and prove no resolved version moved** **(long)**
 
@@ -796,16 +816,15 @@ Expected: `NO_VERSION_DRIFT`. `yarn.lock` gains new *keys* (the newly declared s
 
 ```bash
 docker compose run --rm --no-deps ui-server sh -lc \
-  'yarn lint:js && yarn lint:styles && yarn build:ui && yarn types && yarn build && yarn pretty:check'
+  'yarn lint:js && yarn lint:styles && yarn types && yarn build && yarn pretty:check'
 ```
 
-Expected: exit 0 for all six. Note that `yarn build` rewrites `src/FastyBird/Library/WebUi/packages/icons/src/components/index.ts` in a different order every run — that is a known non-regression; check it out afterwards rather than committing it.
+Expected: exit 0 for all five. (`yarn build:ui` and its `Library/WebUi/packages/icons` index-file churn no longer apply — that script and the directory it touched are gone.)
 
 - [ ] **Step 7: Commit**
 
 ```bash
-git checkout -- src/FastyBird/Library/WebUi/packages/icons/src/components/index.ts
-git add package.json yarn.lock src/FastyBird/Library/WebUi
+git add package.json yarn.lock
 git commit -m "fix(ui): declare the packages that only yarn hoisting supplies"
 ```
 
@@ -945,13 +964,21 @@ git commit -m "module(cross): import the jsona mappers from the package root"
 
 ## Task 11: Delete the dead frontend devDependencies
 
+**Reduced, and reconciled with `docs/superpowers/plans/2026-09-11-webui-library-removal.md`'s
+own Task 11**, which deleted `src/FastyBird/Library/WebUi` entirely — including
+the four package manifests this task would have edited — as part of removing
+the library outright rather than pruning its dead devDependencies in place.
+That plan's Task 11 is the one that actually executed; the work described
+below now applies to the root manifests only. Do not redo the WebUi-scoped
+half of Steps 1 and 2.
+
 **Files:**
 - Modify: `package.json`
 - Modify: `tsconfig.json`
-- Modify: `src/FastyBird/Library/WebUi/packages/theme-chalk/package.json`
-- Modify: `src/FastyBird/Library/WebUi/packages/utils/package.json`
-- Modify: `src/FastyBird/Library/WebUi/packages/components/package.json`
-- Modify: `src/FastyBird/Library/WebUi/web-ui-library/package.json`
+- ~~Modify: `src/FastyBird/Library/WebUi/packages/theme-chalk/package.json`~~ (deleted)
+- ~~Modify: `src/FastyBird/Library/WebUi/packages/utils/package.json`~~ (deleted)
+- ~~Modify: `src/FastyBird/Library/WebUi/packages/components/package.json`~~ (deleted)
+- ~~Modify: `src/FastyBird/Library/WebUi/web-ui-library/package.json`~~ (deleted)
 - Modify: `yarn.lock`
 
 **Interfaces:**
@@ -964,13 +991,13 @@ Each verified by grepping source, configs and scripts for zero hits: `babel-load
 
 `vite-plugin-vue-type-imports` must be removed **together with** its entry in `tsconfig.json`'s `types` array — it is the only one of the eleven that would surface as a compiler error if the package were simply deleted.
 
-Also remove `vue-loader` from `packages/utils`, `packages/components` and `web-ui-library`, and `stylelint-config-prettier` and `sass-loader` from `theme-chalk`.
+~~Also remove `vue-loader` from `packages/utils`, `packages/components` and `web-ui-library`, and `stylelint-config-prettier` and `sass-loader` from `theme-chalk`.~~ No longer applicable — those manifests are deleted.
 
 `stylelint-config-standard`, `stylelint-config-standard-scss`, `stylelint-order` and `postcss-scss` are also not extended by `stylelint.config.mjs` — remove them too, but verify with a `lint:styles` output diff in Step 3 rather than on inspection alone.
 
-- [ ] **Step 2: Remove `stylelint-config-recommended-vue` from the root and from `theme-chalk`**
+- [ ] **Step 2: Remove `stylelint-config-recommended-vue` from the root** (the `theme-chalk` half is gone with the deleted manifest)
 
-This is the stylelint half of the `--ignore-engines` problem. It is declared in both places, extended by no config (`stylelint.config.mjs` is the only stylelint config in the repository and extends only `stylelint-config-recommended-scss` and `stylelint-prettier/recommended`), and `lint:styles` globs `'src/FastyBird/*/*/assets/**/*.scss'`, so the Vue/HTML-embedded-CSS config it provides could not be exercised even if it were extended. Deleting the two declarations removes `stylelint-config-html@2.0.0` (`engines.node: "^22.12 || >=24"`) from the tree entirely.
+This is the stylelint half of the `--ignore-engines` problem. It is declared in root `package.json`, extended by no config (`stylelint.config.mjs` is the only stylelint config in the repository and extends only `stylelint-config-recommended-scss` and `stylelint-prettier/recommended`), and `lint:styles` globs `'src/FastyBird/*/*/assets/**/*.scss'`, so the Vue/HTML-embedded-CSS config it provides could not be exercised even if it were extended. Deleting the declaration removes `stylelint-config-html@2.0.0` (`engines.node: "^22.12 || >=24"`) from the tree entirely.
 
 - [ ] **Step 3: Diff `lint:styles` output before and after**
 
@@ -1000,11 +1027,12 @@ Expected: `GONE` and `NOT_IN_LOCK`. That leaves `@intlify/shared`/`@intlify/mess
 
 ```bash
 docker compose run --rm --no-deps ui-server sh -lc \
-  'yarn lint:js && yarn lint:styles && yarn build:ui && yarn types && yarn build'
-git checkout -- src/FastyBird/Library/WebUi/packages/icons/src/components/index.ts
-git add package.json tsconfig.json yarn.lock src/FastyBird/Library/WebUi
+  'yarn lint:js && yarn lint:styles && yarn types && yarn build'
+git add package.json tsconfig.json yarn.lock
 git commit -m "chore(deps): drop the frontend devDependencies nothing references"
 ```
+
+(`yarn build:ui` no longer exists — it orchestrated the now-deleted `Library/WebUi` workspaces.)
 
 ---
 
@@ -1421,8 +1449,22 @@ Expected: the pinned version prints. If it fails with `Error: Cannot find matchi
 
 ## Task 20: Convert the workspace manifests
 
+**Reduced.** `src/FastyBird/Library/WebUi` (three of the nine manifests and 10
+of the 31 references below) is gone, and independent dependency cleanup that
+landed alongside its removal has also changed some of the surviving
+manifests' internal `@fastybird/*` references. **The file/line inventory and
+counts in this task were computed against the pre-removal tree and are
+stale — re-run Step 1's own verification grep against the current tree
+before trusting any number here**, including the "9 × package.json" and "31
+internal references" figures immediately below and the `pnpm-workspace.yaml`
+glob list in Step 2. As of this note, `src/FastyBird/*/*` alone matches
+every remaining workspace package with a `package.json`
+(`Connector/HomeKit`, `Core/Application`, `Core/Tools`, `Library/Metadata`,
+`Module/Accounts`, `Module/Devices`, `Module/Triggers`, `Module/Ui`) — none
+of the other three globs below resolve to anything anymore.
+
 **Files:**
-- Modify: 9 × `package.json` (31 internal references)
+- Modify: 9 × `package.json` (31 internal references) — **stale, see note above**
 - Create: `pnpm-workspace.yaml`
 - Create: `.npmrc`
 - Modify: `package.json` (delete `workspaces`, add `pnpm.onlyBuiltDependencies`)
@@ -1436,7 +1478,9 @@ Expected: the pinned version prints. If it fails with `Error: Cannot find matchi
 
 All internal references use exact versions (`"0.0.0"` for the near-empty extensions, `"1.0.0-dev.24"` for the WebUi packages), and yarn 1 links a workspace member whenever its version satisfies the range — which is why this works today and why it cannot be done ahead of the migration (yarn 1 classic does not understand the `workspace:` protocol). Every version currently matches its workspace member exactly, so `workspace:*` is a safe drop-in.
 
-Sites, by file and line (verified against the current tree):
+Sites, by file and line (verified against the tree **before** the WebUi removal —
+stale; re-run the Step 1 verify command below to regenerate this list against
+the current tree rather than trusting these line numbers):
 
 ```
 package.json:47,48,50,51                                              (4)
@@ -1445,12 +1489,13 @@ src/FastyBird/Core/Tools/package.json:33                               (1)
 src/FastyBird/Module/Accounts/package.json:41,42,43,44                 (4)
 src/FastyBird/Module/Devices/package.json:41,42,44,45                  (4)
 src/FastyBird/Module/Ui/package.json:42,44,45                          (3)
-src/FastyBird/Library/WebUi/packages/components/package.json:45,46,47  (3)
-src/FastyBird/Library/WebUi/web-ui-library/package.json:43,54,55       (3)
-src/FastyBird/Library/WebUi/docs/package.json:28,29,30                 (3)
+~~src/FastyBird/Library/WebUi/packages/components/package.json:45,46,47~~  (deleted)
+~~src/FastyBird/Library/WebUi/web-ui-library/package.json:43,54,55~~       (deleted)
+~~src/FastyBird/Library/WebUi/docs/package.json:28,29,30~~                 (deleted)
 ```
 
-Plus the `@fastybird/web-ui-theme-chalk` entry Task 8 added to root `dependencies` (1) = 31.
+~~Plus the `@fastybird/web-ui-theme-chalk` entry Task 8 added to root `dependencies` (1) = 31.~~
+Task 8's Step 2 (which added that entry) no longer applies — see the note on Task 8.
 
 **Do NOT convert `@fastybird/vue-wamp-v1`** (root:49, `Module/Ui`:43, `Module/Devices`:43, `Connector/HomeKit`:45). It is a genuine external npm package with no workspace member.
 
@@ -1465,17 +1510,24 @@ Expected: `ALL_CONVERTED`.
 
 - [ ] **Step 2: Create `pnpm-workspace.yaml` and delete the `workspaces` array**
 
-The four globs port over unchanged — pnpm uses the same glob semantics and silently skips matches with no `package.json`:
+**Reduced.** Three of the original four globs pointed into `src/FastyBird/Library/WebUi`,
+which is deleted. Only the first glob still resolves to anything:
 
 ```yaml
 packages:
   - "src/FastyBird/*/*"
-  - "src/FastyBird/Library/WebUi/packages/*"
-  - "src/FastyBird/Library/WebUi/web-ui-library"
-  - "src/FastyBird/Library/WebUi/docs"
 ```
 
-`src/FastyBird/*/*` matches 42 paths, seven of which are `README.md` files and only nine of which carry a `package.json`, so 33 matches are inert. Do not narrow the glob — it is what lets a future extension gain a UI without touching the workspace file. Just do not be alarmed by pnpm reporting far fewer packages than directories. Note also that `src/FastyBird/Library/WebUi` is itself matched and *is* a package (`@fastybird/web-ui`, private, no scripts, no deps) containing three of the other globs' packages underneath it; pnpm handles nested workspace packages fine.
+If a second glob still proves necessary once Step 1 is re-verified against the
+current tree (for example if something under `Library/` should be excluded or
+re-included), add it then — do not carry the three dead `Library/WebUi` globs
+forward. `src/FastyBird/*/*` matches every remaining workspace package with a
+`package.json` (`Connector/HomeKit`, `Core/Application`, `Core/Tools`,
+`Library/Metadata`, `Module/Accounts`, `Module/Devices`, `Module/Triggers`,
+`Module/Ui`) plus a larger number of inert matches (extension directories and
+`README.md` files with no `package.json`, which pnpm silently skips) — do not
+narrow the glob, since that is what lets a future extension gain a UI without
+touching the workspace file.
 
 **Delete `package.json:26-31`'s `workspaces` array in the same commit.** Leaving it means a stray `npm install` or `yarn install` still half-works and produces a conflicting tree, and pnpm 9.12 already warns about it.
 
@@ -2393,52 +2445,13 @@ git commit -m "chore(deps): bump phpstan to 2.2 with a generated baseline"
 
 ## Task 36: Align the three lagging `Library/WebUi` build packages
 
-**Files:**
-- Modify: `src/FastyBird/Library/WebUi/packages/utils/package.json`
-- Modify: `src/FastyBird/Library/WebUi/packages/icons/package.json`
-- Modify: `src/FastyBird/Library/WebUi/packages/components/package.json`
-- Modify: `pnpm-lock.yaml`
-
-**Interfaces:**
-- Consumes: Task 9's CI gate on those packages' own `lint:js`, Task 23's pnpm tree.
-- Produces: one lint toolchain generation across the workspace, consumed by Tasks 37–39.
-
-Three of the five build packages carry a generation-behind lint toolchain: `utils`, `icons` and `components` declare `typescript-eslint ^7.8`, `@typescript-eslint/{parser,eslint-plugin} ^7.8`, `@vue/eslint-config-typescript ^13.0`, `@vue/eslint-config-prettier ^9.0`, `rimraf ^5.0`, while root, `web-ui-library` and `docs` declare `^8.15`/`^8.16`, `^14.1`, `^10.1`, `^6.0`. Under yarn this landed as three nested 7.18.0 installs while the hoisted copy was 8.70.0 — and typescript-eslint 7.18 peer-requires `eslint ^8.56.0` while the hoisted eslint is 9.39.5. Under pnpm the nesting is by design, so the divergence persists until it is fixed here. Dependabot PR340/PR343 (merged in Task 1) already moved the versions in those three manifests; **verify what actually remains before editing.**
-
-- [ ] **Step 1: Check the current state after Task 1's merges**
-
-```bash
-grep -n -E '"(typescript-eslint|@typescript-eslint/|@vue/eslint-config-|rimraf|@vueuse/core)' \
-  src/FastyBird/Library/WebUi/packages/{utils,icons,components}/package.json
-```
-
-Expected: `typescript-eslint` and `@typescript-eslint/*` already at `^8.70` (from PR340/343); `@vue/eslint-config-typescript ^13.0`, `@vue/eslint-config-prettier ^9.0`, `rimraf ^5.0` and `@vueuse/core ^10.9` still lagging.
-
-- [ ] **Step 2: Bump the four remaining**
-
-`@vue/eslint-config-typescript ^13` → `^14`, `@vue/eslint-config-prettier ^9` → `^10`, `rimraf ^5` → `^6`, `@vueuse/core ^10.9` → `^11.3`.
-
-On `@vueuse/core`: note that `element-plus` 2.14.5 hard-pins `@vueuse/core 14.4.0`, and `web-ui-library` declares `^11.3` — so this bump reduces three resident majors to two, not one. Fully collapsing it requires an element-plus decision that belongs with the frontend framework work.
-
-- [ ] **Step 3: Install and run the now-gated lint scripts**
-
-```bash
-docker compose run --rm --no-deps ui-server sh -lc \
-  'pnpm install && pnpm --filter @fastybird/web-ui-utils run lint:js \
-   && pnpm --filter @fastybird/web-ui-icons run lint:js \
-   && pnpm --filter @fastybird/web-ui-components run lint:js \
-   && pnpm run build:ui'
-```
-
-Expected: exit 0 for all four. CI now runs these too (Task 9), so a regression here is caught rather than discovered later.
-
-- [ ] **Step 4: Commit**
-
-```bash
-git checkout -- src/FastyBird/Library/WebUi/packages/icons/src/components/index.ts
-git add src/FastyBird/Library/WebUi pnpm-lock.yaml
-git commit -m "chore(deps): align the utils, icons and components lint toolchain with the root"
-```
+**Superseded.** `src/FastyBird/Library/WebUi` was deleted in its entirety by
+`docs/superpowers/plans/2026-09-11-webui-library-removal.md` (Task 11 of that
+plan). There is no lint toolchain left to align. See that plan and its spec,
+`docs/superpowers/specs/2026-09-11-webui-library-removal-design.md`, for what
+replaced it (element-plus directly, plus `@iconify/vue`). No action remains
+for this task; later tasks that referenced it (Tasks 37–39) have been
+adjusted accordingly.
 
 ---
 
@@ -2451,7 +2464,9 @@ git commit -m "chore(deps): align the utils, icons and components lint toolchain
 - Modify: `pnpm-lock.yaml`
 
 **Interfaces:**
-- Consumes: Task 36's aligned toolchain.
+- Consumes: nothing (Task 36 is superseded — see its note — so there is no
+  aligned toolchain to wait on; the root application uses UnoCSS directly and
+  is otherwise unaffected by the WebUi removal).
 - Produces: a Vite peer range that admits 6, consumed by Task 38 — nothing else in the frontend chain moves until this does.
 
 `unocss@0.64.1` and `@unocss/vite@0.64.1` declare `peerDependencies.vite: "^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0"` — a hard stop at Vite 5. This is the largest single upgrade in the JS set, it touches every extension at once, and no intermediate step reduces its size. **This is the second of the three places where a code change cannot be separated from a version change**: the 0.65 → 66.0 rename supersedes `presetUno` with `presetWind3`/`presetWind4`, which have different default theme scales, so the config edit and the version bump are one change.
@@ -2502,14 +2517,21 @@ git commit -m "chore(deps): bump unocss to 66 and migrate presetUno to presetWin
 
 ## Task 38: Vite 5 → 6 and `@vitejs/plugin-vue` 5 → 6
 
+**Reduced.** ~~plus the four `Library/WebUi` packages declaring vite~~ — those
+manifests are deleted; only the root `package.json` needs the bump.
+
 **Files:**
-- Modify: `package.json`, plus the four `Library/WebUi` packages declaring vite
+- Modify: `package.json`
 - Modify: `vite.config.ts` if the Sass API default requires it
 - Modify: `pnpm-lock.yaml`
 
 **Interfaces:**
 - Consumes: Task 37's widened peer range.
-- Produces: Vite 6, consumed by Task 39 (`@storybook/builder-vite@8.6.18` allows up to `^6.0.0`, so Storybook 8 independently caps the tree at 6 — Vite 7/8 needs Storybook 10 first).
+- Produces: Vite 6. ~~Consumed by Task 39~~ — Task 39 (Storybook) is
+  superseded, so this Vite bump has no downstream consumer inside this plan
+  anymore; the `@storybook/builder-vite` peer-range rationale below is
+  historical context for why the bump was staged here, not a live
+  dependency.
 
 Dependabot PR344 proved vite 6 genuinely builds here (JS Build and Docker Build both passed) — the reason it was deferred was solely the unocss peer range, which Task 37 has now cleared.
 
@@ -2557,76 +2579,31 @@ git commit -m "chore(deps): bump vite to 6 and @vitejs/plugin-vue to 6"
 
 ## Task 39: Storybook 8 → 10 and vue-component-meta 2 → 3
 
-**Files:**
-- Modify: `src/FastyBird/Library/WebUi/docs/package.json` (twelve `@storybook/*` entries, `storybook`, `@chromatic-com/storybook`, `vue-component-meta`, `vue-tsc`)
-- Modify: `src/FastyBird/Library/WebUi/docs/.storybook/*`
-- Modify: `pnpm-lock.yaml`
-
-**Interfaces:**
-- Consumes: Task 38's Vite 6, Task 9's `docs-build` gate, Task 8's `@storybook/theming` declaration.
-- Produces: a docs workspace on the current generation; retires deferred Dependabot pull requests 341 and 342.
-
-These are one migration, not two: `vue-component-meta@3.3.11` depends on `@vue/language-core 3.3.11` and `@volar/typescript 2.4.28` while the docs workspace runs `vue-tsc ^2.1` (Volar 2.x), and Storybook 10 carries the matching Volar generation. Doing them separately puts two incompatible `@vue/language-core` copies in one tree, parsing the same SFCs for argTypes extraction.
-
-- [ ] **Step 1: Move every `@storybook/*` entry in lockstep**
-
-All twelve `@storybook/*` packages plus `storybook` from `^8.4` to `^10.6`, `@chromatic-com/storybook` from `^3.2` to its 10-compatible major, `vue-component-meta ^2.0` → `^3.3`, and `vue-tsc ^2.1` → `^3.x` in that workspace. Verify the peer requirement first:
-
-```bash
-docker compose run --rm --no-deps ui-server sh -lc \
-  'npm view @storybook/addon-a11y@10.6.0 peerDependencies'
-```
-
-Expected: `{ storybook: '^10.6.0' }` — which is precisely why PR341 could not be merged alone.
-
-- [ ] **Step 2: Migrate the config**
-
-Storybook 10 changed `main.ts` framework options and addon packaging (several addons folded into core). Run the codemod inside the container:
-
-```bash
-docker compose run --rm --no-deps ui-server sh -lc \
-  'pnpm --filter @fastybird/web-ui-docs exec storybook automigrate' 
-```
-
-Expected: the codemod reports what it changed. Review each edit; `.storybook/manager.js:2`'s `@storybook/theming/create` import may move.
-
-- [ ] **Step 3: Build and serve**
-
-```bash
-docker compose run --rm --no-deps ui-server sh -lc 'pnpm build:ui && pnpm --filter @fastybird/web-ui-docs run build'
-docker compose up -d ui-server
-curl -s -o /dev/null -w "%{http_code}\n" http://localhost:6006/
-```
-
-Expected: the build exits 0 and the Storybook dev server returns `200`. Open a few component stories and confirm argTypes are still extracted — that is what `vue-component-meta` does, and a silent extraction failure produces an empty controls panel rather than an error.
-
-- [ ] **Step 4: Confirm only one `@vue/language-core` major is resident**
-
-```bash
-docker compose run --rm --no-deps ui-server sh -lc 'pnpm why @vue/language-core'
-```
-
-Expected: a single major. Two means Step 1 missed a package.
-
-- [ ] **Step 5: Close the two deferred Dependabot pull requests and commit**
-
-```bash
-gh pr close 341 --repo FastyBird/miniserver --comment "Landed as part of the Storybook 8->10 migration."
-gh pr close 342 --repo FastyBird/miniserver --comment "Landed as part of the Volar 2->3 migration."
-git add src/FastyBird/Library/WebUi/docs pnpm-lock.yaml
-git commit -m "chore(deps): migrate the storybook docs workspace to 10"
-```
+**Superseded.** The Storybook docs workspace lived at
+`src/FastyBird/Library/WebUi/docs` and was deleted along with the rest of
+`Library/WebUi` by `docs/superpowers/plans/2026-09-11-webui-library-removal.md`
+(Task 11 of that plan). There is no Storybook install left to migrate.
+Dependabot pull requests #341 and #342 (the storybook/vue-tsc bumps this task
+would have landed) are moot for the same reason; closing them is out of
+scope for this documentation pass. No action remains for this task.
 
 ---
 
 ## Task 40: Node 20 → 22.13+
+
+**Reduced.** `src/FastyBird/Library/WebUi` — including `packages/theme-chalk`,
+whose gulp/chokidar/fsevents chain was this task's one identified plausible
+breakage (Step 1) — is deleted. There is no longer a known risk source for
+this bump; Step 1's command needs a different verification target or may be
+unnecessary. The four WebUi packages' `@types/node` bumps in Step 3 no
+longer apply either.
 
 **Files:**
 - Modify: `docker/prod/Dockerfile:14`
 - Modify: `docker/dev/node/Dockerfile:1`
 - Modify: `.nvmrc`
 - Modify: `.github/workflows/ci-tests.yaml` (three-plus `node-version` blocks)
-- Modify: `package.json` (`engines.node`, `@types/node`), plus the four WebUi packages' `@types/node`
+- Modify: `package.json` (`engines.node`, `@types/node`)
 - Modify: `CLAUDE.md`, `README.md`
 
 **Interfaces:**
@@ -2635,16 +2612,22 @@ git commit -m "chore(deps): migrate the storybook docs workspace to 10"
 
 Node 20 reached EOL 2026-04-30, so `node:20` and `node:20-alpine` are no longer rebuilt upstream and accumulate OS-level CVEs. Deliberately placed late: after Tasks 11/14/15 the `--ignore-engines` exception is already gone, so the only remaining reasons are security patching and unlocking `vue-i18n` 11 (`engines >= 22`), `@intlify/unplugin-vue-i18n` 11.2.5 (`>= 22.13`), `@commitlint/cli` 21.2.2 (`>= 22.12`) and `sass-loader` 17.0.1 (`>= 22.11`). Nothing forbids the move: a scan of all 835 installed `engines.node` declarations found **zero** packages with any upper bound.
 
-- [ ] **Step 1: Re-verify the one plausible breakage on the current tree**
+- [ ] **Step 1: ~~Re-verify the one plausible breakage on the current tree~~ — re-scope, the original target is deleted**
 
-Task 3 Step 8 tested this before the pnpm migration and before six dependency changes. Re-run it now:
+`packages/theme-chalk` and its `gulp@4.0.2` → `glob-watcher@5` → `chokidar@^2.0.0` →
+`fsevents@1.2.13` chain no longer exist, so the command below (which targeted
+exactly that package) has nothing to filter on. Before assuming this step is
+simply gone, re-run the equivalent full-install-plus-build check against the
+current tree (`pnpm install --frozen-lockfile && pnpm build` under `node:22-alpine`)
+to confirm no other native-addon dependency has crept in; if it passes clean,
+this step can be dropped from the task entirely.
 
 ```bash
 docker run --rm -v "$PWD":/app -w /app node:22-alpine sh -lc \
-  'npm i -g pnpm@<pinned> && pnpm install --frozen-lockfile && pnpm --filter @fastybird/web-ui-theme-chalk run build'
+  'npm i -g pnpm@<pinned> && pnpm install --frozen-lockfile && pnpm build'
 ```
 
-Expected: exit 0. The chain `gulp@4.0.2` → `glob-watcher@5` → `chokidar@^2.0.0` → `fsevents@1.2.13` (a native addon built with `nan ^2.12.1`) is `os: darwin` and optional, so Alpine skips it entirely. **An Alpine pass does not clear a macOS host developer's machine** — a host install on Node 22/24 will attempt and fail the node-gyp build. Record that limitation in `CLAUDE.md` alongside the Node line, and note that `theme-chalk` also invokes `gulp --require @esbuild-kit/cjs-loader`, which is marked DEPRECATED on npm (folded into `tsx`) and should be replaced as a follow-up.
+Original rationale, preserved for context: Task 3 Step 8 tested this before the pnpm migration and before six dependency changes, targeting `@fastybird/web-ui-theme-chalk` specifically. Expected then: exit 0, because the `os: darwin`-optional `fsevents` dependency is skipped entirely on Alpine. **An Alpine pass does not clear a macOS host developer's machine** — a host install on Node 22/24 will attempt and fail a node-gyp build for any native addon that *is* installed there. If Step 1's re-run above turns up a new native-addon dependency, record the same Alpine-vs-host-macOS caveat in `CLAUDE.md` alongside the Node line.
 
 - [ ] **Step 2: Write a full `x.y.z` into `.nvmrc`, not a bare major**
 
@@ -2652,7 +2635,7 @@ Expected: exit 0. The chain `gulp@4.0.2` → `glob-watcher@5` → `chokidar@^2.0
 
 - [ ] **Step 3: Move the runtime and the types together**
 
-`node:20` → `node:22` in both Dockerfiles (re-resolving Task 27's production digest), `node-version: "20"` → `"22"` in every CI job, `engines.node: ">=20"` → `">=22.13"`, and `@types/node ^20.17` → `^22.x` in the root and all four WebUi packages. **A runtime bump without a types bump leaves `vue-tsc` type-checking against Node 20 typings** — this is the correct resolution of closed Dependabot PR339, and it goes to the major matching the runtime, not to 26.
+`node:20` → `node:22` in both Dockerfiles (re-resolving Task 27's production digest), `node-version: "20"` → `"22"` in every CI job, `engines.node: ">=20"` → `">=22.13"`, and `@types/node ^20.17` → `^22.x` in the root (the four WebUi packages this originally also named are deleted). **A runtime bump without a types bump leaves `vue-tsc` type-checking against Node 20 typings** — this is the correct resolution of closed Dependabot PR339, and it goes to the major matching the runtime, not to 26.
 
 - [ ] **Step 4: Remove the `@types/node` Dependabot ignore, or keep it and say why**
 

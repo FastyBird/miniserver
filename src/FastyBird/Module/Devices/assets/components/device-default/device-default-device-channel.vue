@@ -1,5 +1,5 @@
 <template>
-	<fb-list-item :variant="ListItemVariantTypes.LIST">
+	<app-list-item :variant="ListItemVariantTypes.LIST">
 		<template #icon>
 			<channels-channel-icon
 				:device="props.deviceData.device"
@@ -47,17 +47,24 @@
 				/>
 			</el-button-group>
 		</template>
-	</fb-list-item>
+	</app-list-item>
 </template>
 
 <script setup lang="ts">
+import { h } from 'vue';
+import type { VNode } from 'vue';
+
 import { ElButton, ElButtonGroup, ElText } from 'element-plus';
 
-import { FasCircleInfo, FasPencil, FasTrash } from '@fastybird/web-ui-icons';
-import { FbListItem, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { AppListItem, ListItemVariantTypes } from '@fastybird/application';
+import { Icon } from '@iconify/vue';
 
 import { IDeviceChannelEmits, IDeviceChannelProps } from '../../types';
 import ChannelsChannelIcon from '../channels/channels-channel-icon.vue';
+
+const FasCircleInfo = (): VNode => h(Icon, { icon: 'fa6-solid:circle-info' });
+const FasPencil = (): VNode => h(Icon, { icon: 'fa6-solid:pencil' });
+const FasTrash = (): VNode => h(Icon, { icon: 'fa6-solid:trash' });
 
 defineOptions({
 	name: 'DeviceDefaultDeviceChannel',

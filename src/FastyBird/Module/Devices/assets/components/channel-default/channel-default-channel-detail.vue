@@ -41,7 +41,7 @@
 		</dd>
 	</dl>
 
-	<fb-list class="flex-grow h-full w-full overflow-hidden">
+	<app-list class="flex-grow h-full w-full overflow-hidden">
 		<template #title>
 			{{ t('devicesModule.headings.channels.properties') }}
 		</template>
@@ -53,17 +53,17 @@
 			>
 				<el-result>
 					<template #icon>
-						<fb-icon-with-child
+						<app-icon-with-child
 							:size="50"
 							type="primary"
 						>
 							<template #primary>
-								<fas-lightbulb />
+								<Icon icon="fa6-solid:lightbulb" />
 							</template>
 							<template #secondary>
-								<fas-info />
+								<Icon icon="fa6-solid:info" />
 							</template>
-						</fb-icon-with-child>
+						</app-icon-with-child>
 					</template>
 
 					<template #title>
@@ -81,7 +81,7 @@
 				:channel="props.channelData.channel"
 			/>
 		</el-scrollbar>
-	</fb-list>
+	</app-list>
 </template>
 
 <script setup lang="ts">
@@ -90,8 +90,8 @@ import { I18nT, useI18n } from 'vue-i18n';
 
 import { ElResult, ElScrollbar, ElTag, ElText } from 'element-plus';
 
-import { FasInfo, FasLightbulb } from '@fastybird/web-ui-icons';
-import { FbIconWithChild, FbList } from '@fastybird/web-ui-library';
+import { AppIconWithChild, AppList } from '@fastybird/application';
+import { Icon } from '@iconify/vue';
 
 import { ChannelPropertyIdentifier, IChannelDetailProps, IChannelProperty, PropertyType } from '../../types';
 import { PropertyDefaultProperty } from '../property-default';

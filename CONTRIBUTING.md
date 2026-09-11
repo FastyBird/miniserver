@@ -43,7 +43,7 @@ The scope is the surface you changed, mirroring the extension type directories u
 | `bridge` | `src/FastyBird/Bridge/**` -- the six inter-extension bridges |
 | `addon` | `src/FastyBird/Addon/**` -- VirtualThermostat |
 | `automator` | `src/FastyBird/Automator/**` -- DateTime, DevicesModule |
-| `library` | `src/FastyBird/Library/**` -- Metadata, WebUi |
+| `library` | `src/FastyBird/Library/**` -- Metadata |
 | `ui` | Root frontend build tooling shared across extensions: `index.html`, `vite.config.ts`, `uno.config.ts`, `eslint.config.mjs`, `prettier.config.mjs`, `stylelint.config.mjs`, `config/extensions.ts` |
 | `infra` | `docker/**`, `docker-compose.yml`, `Makefile`, `bin/**`, `config/**` (shipped wiring), root `composer.json`/`tools/**` |
 | `ci` | `.github/**` |

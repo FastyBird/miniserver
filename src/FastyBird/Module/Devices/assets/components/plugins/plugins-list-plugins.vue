@@ -4,7 +4,7 @@
 		class="h-full w-full"
 	>
 		<template #icon>
-			<fb-icon-with-child
+			<app-icon-with-child
 				type="primary"
 				:size="50"
 			>
@@ -12,9 +12,9 @@
 					<fas-plug-circle-bolt />
 				</template>
 				<template #secondary>
-					<fas-info />
+					<Icon icon="fa6-solid:info" />
 				</template>
-			</fb-icon-with-child>
+			</app-icon-with-child>
 		</template>
 
 		<template #title>
@@ -23,9 +23,9 @@
 	</el-result>
 
 	<el-scrollbar v-else>
-		<fb-swipe :items="plugins">
+		<app-swipe :items="plugins">
 			<template #default="{ item }">
-				<fb-list-item
+				<app-list-item
 					:variant="ListItemVariantTypes.LIST"
 					class="b-r b-r-solid cursor-pointer mr-[-1px]"
 					@click="emit('detail', item.type, $event)"
@@ -45,7 +45,7 @@
 					<template #subtitle>
 						{{ item.description }}
 					</template>
-				</fb-list-item>
+				</app-list-item>
 			</template>
 
 			<template #right="{ item, close }">
@@ -58,26 +58,29 @@
 					"
 				>
 					<el-icon>
-						<fas-trash />
+						<Icon icon="fa6-solid:trash" />
 					</el-icon>
 				</div>
 			</template>
-		</fb-swipe>
+		</app-swipe>
 	</el-scrollbar>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElIcon, ElResult, ElScrollbar, useNamespace } from 'element-plus';
 
-import { FasInfo, FasPlugCircleBolt, FasTrash } from '@fastybird/web-ui-icons';
-import { FbIconWithChild, FbListItem, FbSwipe, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { AppIconWithChild, AppListItem, AppSwipe, ListItemVariantTypes } from '@fastybird/application';
+import { Icon } from '@iconify/vue';
 
 import { IConnectorPlugin } from '../../types';
 
 import { IPluginsListPluginsProps } from './plugins-list-plugins.types';
+
+const FasPlugCircleBolt = (): VNode => h(Icon, { icon: 'fa6-solid:plug-circle-bolt' });
 
 defineOptions({
 	name: 'PluginsListPlugins',

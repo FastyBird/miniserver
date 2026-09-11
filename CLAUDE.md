@@ -12,7 +12,7 @@ The host you are running on may report a different PHP/Node version. It does not
 
 ## Layout
 
-- `src/FastyBird/<Type>/<Name>/` -- 35 extensions across 8 types: Addon (1), Automator (2), Bridge (6), Connector (10), Core (3), Library (2), Module (4), Plugin (7). See `docs/architecture.md` for the full inventory and dependency layering.
+- `src/FastyBird/<Type>/<Name>/` -- 34 extensions across 8 types: Addon (1), Automator (2), Bridge (6), Connector (10), Core (3), Library (1), Module (4), Plugin (7). See `docs/architecture.md` for the full inventory and dependency layering.
 - `config/` -- shipped wiring (`common.neon`, `defaults.neon`, `extensions.ts`). `config/local.neon` is git-ignored and is where local overrides and secrets belong. `config/supervisor/` is a legacy, currently-unused layout (see `docs/deployment.md`) -- do not assume it is wired into anything.
 - `public/` -- `index.php` is the single entry point for both the JSON:API backend and the Vue SPA shell.
 - `bin/` -- `fb-console`/`fb-console.php` (Symfony-style console), `fb-supervisor`/`fb-supervisor.php` (supervisor event listener). Neither is executable in a fresh checkout (mode 644 in git); invoke them as `php bin/fb-console.php <command>`.

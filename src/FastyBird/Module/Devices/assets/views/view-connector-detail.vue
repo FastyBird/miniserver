@@ -1,5 +1,5 @@
 <template>
-	<fb-app-bar-heading
+	<app-bar-heading
 		v-if="isDetailRoute"
 		teleport
 	>
@@ -17,9 +17,9 @@
 		<template #subtitle>
 			{{ connectorData?.connector.comment }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isDetailRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -28,12 +28,12 @@
 	>
 		<template #icon>
 			<el-icon>
-				<fas-angle-left />
+				<Icon icon="fa6-solid:angle-left" />
 			</el-icon>
 		</template>
-	</fb-app-bar-button>
+	</app-bar-button>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isDetailRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.RIGHT"
@@ -41,7 +41,7 @@
 		@click="onConnectorEdit"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.edit.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
 	<div
 		v-loading="isLoading || connectorsPlugin === null || connectorData === null"
@@ -66,79 +66,83 @@
 					@remove="onConnectorRemove"
 				/>
 
-				<fb-expandable-box
-					:show="!isSettingsRoute"
-					class="flex flex-col"
-				>
+				<el-collapse-transition>
 					<div
-						v-loading="isLoading"
-						:element-loading-text="t('devicesModule.texts.misc.loadingConnector')"
+						v-if="!isSettingsRoute"
+						class="flex flex-col"
 					>
-						<connectors-connector-control
-							v-if="!isMDDevice"
-							:connector-data="connectorData"
-							@detail="onConnectorDetail"
-							@edit="onConnectorEdit"
-							@remove="onConnectorRemove"
-						/>
+						<div
+							v-loading="isLoading"
+							:element-loading-text="t('devicesModule.texts.misc.loadingConnector')"
+						>
+							<connectors-connector-control
+								v-if="!isMDDevice"
+								:connector-data="connectorData"
+								@detail="onConnectorDetail"
+								@edit="onConnectorEdit"
+								@remove="onConnectorRemove"
+							/>
 
-						<component
-							:is="connectorsPlugin.components.connectorDetail"
-							v-if="typeof connectorsPlugin.components.connectorDetail !== 'undefined'"
-							:loading="isLoading"
-							:connector-data="connectorData"
-							:alerts="[]"
-							:bridges="[]"
-							:service="null"
-						/>
+							<component
+								:is="connectorsPlugin.components.connectorDetail"
+								v-if="typeof connectorsPlugin.components.connectorDetail !== 'undefined'"
+								:loading="isLoading"
+								:connector-data="connectorData"
+								:alerts="[]"
+								:bridges="[]"
+								:service="null"
+							/>
 
-						<connector-default-connector-detail
-							v-else
-							:loading="isLoading"
-							:connector-data="connectorData"
-							:alerts="[]"
-							:bridges="[]"
-							:service="null"
-						/>
-					</div>
-
-					<div
-						v-loading="devicesLoading"
-						:element-loading-text="t('devicesModule.texts.misc.loadingDevices')"
-						class="flex-grow overflow-hidden"
-					>
-						<component
-							:is="connectorsPlugin.components.connectorDevices"
-							v-if="typeof connectorsPlugin.components.connectorDevices !== 'undefined'"
-							:loading="devicesLoading"
-							:connector-data="connectorData"
-							@detail="onDeviceOpen"
-							@edit="onDeviceEdit"
-							@remove="onDeviceRemove"
-							@add="onDeviceCreate"
-						/>
-
-						<connector-default-connector-devices
-							v-else
-							:loading="devicesLoading"
-							:connector-data="connectorData"
-							@detail="onDeviceOpen"
-							@edit="onDeviceEdit"
-							@remove="onDeviceRemove"
-							@add="onDeviceCreate"
-						/>
-					</div>
-				</fb-expandable-box>
-
-				<fb-expandable-box :show="isSettingsRoute">
-					<suspense>
-						<div class="flex-grow overflow-hidden h-full">
-							<view-error :type="'connector'">
-								<router-view />
-							</view-error>
+							<connector-default-connector-detail
+								v-else
+								:loading="isLoading"
+								:connector-data="connectorData"
+								:alerts="[]"
+								:bridges="[]"
+								:service="null"
+							/>
 						</div>
-					</suspense>
-				</fb-expandable-box>
+
+						<div
+							v-loading="devicesLoading"
+							:element-loading-text="t('devicesModule.texts.misc.loadingDevices')"
+							class="flex-grow overflow-hidden"
+						>
+							<component
+								:is="connectorsPlugin.components.connectorDevices"
+								v-if="typeof connectorsPlugin.components.connectorDevices !== 'undefined'"
+								:loading="devicesLoading"
+								:connector-data="connectorData"
+								@detail="onDeviceOpen"
+								@edit="onDeviceEdit"
+								@remove="onDeviceRemove"
+								@add="onDeviceCreate"
+							/>
+
+							<connector-default-connector-devices
+								v-else
+								:loading="devicesLoading"
+								:connector-data="connectorData"
+								@detail="onDeviceOpen"
+								@edit="onDeviceEdit"
+								@remove="onDeviceRemove"
+								@add="onDeviceCreate"
+							/>
+						</div>
+					</div>
+				</el-collapse-transition>
+
+				<el-collapse-transition>
+					<div v-if="isSettingsRoute">
+						<suspense>
+							<div class="flex-grow overflow-hidden h-full">
+								<view-error :type="'connector'">
+									<router-view />
+								</view-error>
+							</div>
+						</suspense>
+					</div>
+				</el-collapse-transition>
 			</template>
 		</template>
 	</div>
@@ -150,12 +154,12 @@ import { useI18n } from 'vue-i18n';
 import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
-import { ElIcon, vLoading } from 'element-plus';
+import { ElCollapseTransition, ElIcon, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import { FasAngleLeft } from '@fastybird/web-ui-icons';
-import { AppBarButtonAlignTypes, FbAppBarButton, FbAppBarHeading, FbExpandableBox } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import {
 	ConnectorDefaultConnectorDetail,

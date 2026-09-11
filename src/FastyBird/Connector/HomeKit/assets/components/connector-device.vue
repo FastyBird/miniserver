@@ -44,24 +44,25 @@
 </template>
 
 <script setup lang="ts">
-import { type Component, computed } from 'vue';
+import { type Component, computed, h } from 'vue';
+import type { VNode } from 'vue';
 
 import { ElButton, ElIcon, ElText, ElTooltip } from 'element-plus';
 
 import { ConnectionState, IConnectorDeviceEmits, IConnectorDeviceProps, IDeviceProperty, useDeviceState } from '@fastybird/devices-module';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import {
-	FarCirclePause,
-	FarCirclePlay,
-	FarCircleQuestion,
-	FarCircleStop,
-	FarCircleUser,
-	FasCircleExclamation,
-	FasCircleInfo,
-} from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import { DeviceIcon } from '../components';
 import { DeviceCategory, DevicePropertyIdentifier } from '../types';
+
+const FarCirclePause = (): VNode => h(Icon, { icon: 'fa6-regular:circle-pause' });
+const FarCirclePlay = (): VNode => h(Icon, { icon: 'fa6-regular:circle-play' });
+const FarCircleQuestion = (): VNode => h(Icon, { icon: 'fa6-regular:circle-question' });
+const FarCircleStop = (): VNode => h(Icon, { icon: 'fa6-regular:circle-stop' });
+const FarCircleUser = (): VNode => h(Icon, { icon: 'fa6-regular:circle-user' });
+const FasCircleExclamation = (): VNode => h(Icon, { icon: 'fa6-solid:circle-exclamation' });
+const FasCircleInfo = (): VNode => h(Icon, { icon: 'fa6-solid:circle-info' });
 
 type StateColor = 'info' | 'warning' | 'success' | 'primary' | 'danger' | undefined;
 

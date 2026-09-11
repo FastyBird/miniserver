@@ -1,0 +1,53 @@
+@use 'element-plus/theme-chalk/src/common/var' as *;
+@use 'element-plus/theme-chalk/src/mixins/mixins' as *;
+@use 'element-plus/theme-chalk/src/mixins/var' as *;
+@use '../styles/variables' as *;
+
+@include b(list) {
+	@include set-component-css-var('list', $list);
+}
+
+@include b(list) {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+
+	@include e(header) {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+		height: getCssVar('list', 'header', 'size');
+		padding: getCssVar('list', 'header', 'padding');
+		border-bottom: getCssVar('list', 'header', 'border');
+	}
+
+	@include e(title) {
+		padding: 0;
+		margin: 0;
+		line-height: getCssVar('list', 'header', 'line-height');
+		font-size: getCssVar('list', 'header', 'font-size');
+		font-weight: bold;
+		height: auto;
+		flex-grow: 1;
+
+		@media (getCssVar('breakpoints', 'sm')) {
+			flex: 4 0 0;
+		}
+
+		small {
+			font-weight: normal;
+			line-height: 1;
+			color: getCssVar('list', 'header', 'subtitle-color');
+			font-size: 65%;
+			margin-left: 0.5rem;
+		}
+	}
+
+	@include e(buttons) {
+		align-items: center;
+		justify-content: flex-end;
+		display: flex;
+		flex-flow: row nowrap;
+	}
+}

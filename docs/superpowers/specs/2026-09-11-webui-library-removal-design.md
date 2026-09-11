@@ -105,7 +105,7 @@ several, which is why these total 81 across the 39 import statements.
 
 `packages/icons` generates 2,040 Vue components from Font Awesome SVGs
 (`solid`/`regular`/`brands` to `fas`/`far`/`fab`). It is 4,086 tracked files and 41,148
-lines -- 78% of the whole library -- and the application uses **46 distinct icons**.
+lines -- 78% of the whole library -- and the application uses **73 distinct icons**.
 
 Replacement is `@iconify/vue` with `@iconify/json`, as in smart-panel. Component names
 map mechanically onto Iconify identifiers:
@@ -116,10 +116,13 @@ FarCircleCheck -> fa6-regular:circle-check
 FabGithub      -> fa6-brands:github
 ```
 
-**Verified before writing this spec:** all 46 icons were resolved against the Iconify
-API -- 40 `fa6-solid`, 3 `fa6-regular`, 3 `fa6-brands`, **zero not found**. The risk
-that some icon was Font Awesome Pro (which Iconify does not ship) does not materialise,
-so no local SVG fallback collection is needed.
+**Verified before writing this spec:** all 73 icons were resolved against the Iconify
+API -- 61 `fa6-solid`, 8 `fa6-regular`, 4 `fa6-brands`, **zero not found**. (An earlier
+count of 46 came from a single-line regex over import statements; 7 of the 52 import
+statements are prettier-wrapped across multiple lines, so 27 icons were missed. The
+figure above is the corrected, complete count.) The risk that some icon was Font
+Awesome Pro (which Iconify does not ship) does not materialise, so no local SVG
+fallback collection is needed.
 
 ## Styles and branding
 
@@ -187,7 +190,7 @@ ruleset 22836868 must be updated in the same change that removes `Docs Build`.
 
 Each step is provable, and the existing gates make most of it automatic.
 
-1. **Icon parity.** Every replaced icon renders. The 46-icon list is fixed and known;
+1. **Icon parity.** Every replaced icon renders. The 73-icon list is fixed and known;
    a build plus a grep for residual `@fastybird/web-ui-icons` imports proves completion.
 2. **No residual imports.** `grep -rn '@fastybird/web-ui-' --include='*.ts'
    --include='*.vue' src/FastyBird` returns nothing.

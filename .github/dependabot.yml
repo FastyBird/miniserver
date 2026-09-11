@@ -20,11 +20,6 @@ updates:
         patterns:
           - "typescript-eslint"
           - "@typescript-eslint/*"
-      storybook:
-        patterns:
-          - "@storybook/*"
-          - "storybook"
-          - "@chromatic-com/storybook"
       unocss:
         patterns:
           - "unocss"
@@ -38,11 +33,6 @@ updates:
         update-types: ["version-update:semver-major"]
       # Coupled to UnoCSS's vite peer range; moves as one migration (PR29/PR30).
       - dependency-name: "vite"
-        update-types: ["version-update:semver-major"]
-      # Coupled to the Storybook/Volar migration (PR31).
-      - dependency-name: "vue-tsc"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "vue-component-meta"
         update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"

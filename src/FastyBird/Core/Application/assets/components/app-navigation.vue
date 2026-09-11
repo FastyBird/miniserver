@@ -70,7 +70,7 @@
 					index="3-1"
 					@click="onSignOut"
 				>
-					<el-icon><fas-right-from-bracket /></el-icon>
+					<el-icon><Icon icon="fa6-solid:right-from-bracket" /></el-icon>
 					<template #title>
 						{{ t('application.userMenu.signOut') }}
 					</template>
@@ -81,7 +81,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
@@ -89,11 +90,14 @@ import { ElIcon, ElMenu, ElMenuItem, ElMenuItemGroup, ElScrollbar, useNamespace 
 
 import { injectAccountManager } from '@fastybird/tools';
 import { useBreakpoints } from '@fastybird/tools';
-import { FasLock, FasRightFromBracket, FasUser } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import { useMenu } from '../composables';
 
 import { IAppNavigationProps } from './app-navigation.types';
+
+const FasLock = (): VNode => h(Icon, { icon: 'fa6-solid:lock' });
+const FasUser = (): VNode => h(Icon, { icon: 'fa6-solid:user' });
 
 defineOptions({
 	name: 'AppNavigation',

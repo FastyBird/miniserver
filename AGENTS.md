@@ -17,7 +17,7 @@ yarn lint:js && yarn types && yarn build              # JS quality gate
 
 ## Layout
 
-`src/FastyBird/<Type>/<Name>/` holds 35 extensions, each with its own `src/`, `tests/`, optional `assets/`, `docs/`, `README.md`, `composer.json` and (for the 9 with a frontend) `package.json`. `config/` is the shipped wiring; `config/local.neon` is git-ignored and holds local overrides and secrets. The console is invoked as `php bin/fb-console.php <command>` -- there is no `vendor/bin/fb-console`, and `bin/fb-console` itself is not executable in a fresh checkout. `docs/architecture.md`, `docs/configuration.md` and `docs/deployment.md` are the authoritative references for, respectively, how the application boots and routes requests, how to enable an extension that ships in the tree but is not wired by default, and how the Docker images and supervisor processes are structured.
+`src/FastyBird/<Type>/<Name>/` holds 34 extensions, each with its own `src/`, `tests/`, optional `assets/`, `docs/`, `README.md`, `composer.json` and (for the 8 with a frontend) `package.json`. `config/` is the shipped wiring; `config/local.neon` is git-ignored and holds local overrides and secrets. The console is invoked as `php bin/fb-console.php <command>` -- there is no `vendor/bin/fb-console`, and `bin/fb-console` itself is not executable in a fresh checkout. `docs/architecture.md`, `docs/configuration.md` and `docs/deployment.md` are the authoritative references for, respectively, how the application boots and routes requests, how to enable an extension that ships in the tree but is not wired by default, and how the Docker images and supervisor processes are structured.
 
 ## Conventions
 

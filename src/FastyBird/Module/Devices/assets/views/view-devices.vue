@@ -1,10 +1,10 @@
 <template>
-	<fb-app-bar-heading
+	<app-bar-heading
 		v-if="!isMDDevice && isDevicesListRoute"
 		teleport
 	>
 		<template #icon>
-			<fas-plug />
+			<Icon icon="fa6-solid:plug" />
 		</template>
 
 		<template #title>
@@ -14,9 +14,9 @@
 		<template #subtitle>
 			{{ t('devicesModule.subHeadings.devices.allDevices', devicesData.length) }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isDevicesListRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -24,7 +24,7 @@
 		@click="onDeviceCreate"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.new.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
 	<div class="flex flex-row h-full w-full">
 		<devices-list-devices
@@ -58,20 +58,20 @@
 		@closed="onCloseDrawer"
 	>
 		<div class="flex flex-col h-full">
-			<fb-app-bar menu-button-hidden>
+			<app-bar menu-button-hidden>
 				<template #button-right>
-					<fb-app-bar-button
+					<app-bar-button
 						:align="AppBarButtonAlignTypes.RIGHT"
 						@click="onCloseDrawer"
 					>
 						<template #icon>
 							<el-icon>
-								<fas-xmark />
+								<Icon icon="fa6-solid:xmark" />
 							</el-icon>
 						</template>
-					</fb-app-bar-button>
+					</app-bar-button>
 				</template>
-			</fb-app-bar>
+			</app-bar>
 
 			<template v-if="showDrawer">
 				<devices-list-adjust
@@ -108,9 +108,9 @@ import { useRoute, useRouter } from 'vue-router';
 import { ElDrawer, ElIcon, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppBar, AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import { FasPlug, FasXmark } from '@fastybird/web-ui-icons';
-import { AppBarButtonAlignTypes, FbAppBar, FbAppBarButton, FbAppBarHeading } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { DevicesListAdjust, DevicesListDevices, ViewError } from '../components';
 import { useConnectors, useDeviceActions, useDevices, useRoutesNames } from '../composables';

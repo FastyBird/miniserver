@@ -61,6 +61,17 @@ So `make coverage-clover` dies with *"No code coverage driver is available"* reg
 
 ### 4. Task 39 Step 1 — most of the twelve `@storybook/*` entries have no `^10.6` to move to
 
+**Resolved by deletion.** `src/FastyBird/Library/WebUi` (including `docs/package.json`
+and `.storybook/`) was deleted by
+`docs/superpowers/plans/2026-09-11-webui-library-removal.md`, and Task 39 of
+the Phase 6 plan is marked superseded for the same reason. Every finding
+below described a real blocker in the Storybook 8 → 10 migration this review
+was checking — in particular, the `@storybook/theming` finding (the bullet
+starting "`@storybook/theming` (which Task 8 apparently adds ...") is the
+failure that blocked pull request #350. None of it needs fixing anymore
+because there is no Storybook install left to migrate; kept here rather than
+deleted so the reasoning stays findable.
+
 Actual contents of `src/FastyBird/Library/WebUi/docs/package.json`:
 
 - `@storybook/addon-actions`, `addon-essentials`, `addon-interactions`, `addon-links`, `blocks`, `test`, `manager-api` — folded into the `storybook` package in SB9/10 and no longer published as separate 10.x packages. Instructing "all twelve … to `^10.6`" produces an unresolvable install.
@@ -152,6 +163,9 @@ These are the agent contract for every future session; leaving them stale is a r
 
 ### 13. Task 39 Step 3 — nothing is listening on port 6006
 
+**Resolved by deletion.** Same as item 4 above: `Library/WebUi/docs` is gone
+and Task 39 is superseded. Kept for the record rather than removed.
+
 `docker/dev/node/Dockerfile:12` is `CMD ["yarn", "dev"]` (Vite on 3000). Compose publishes 6006 but nothing binds it. `storybook build` writes a static bundle; it does not serve. So `docker compose up -d ui-server` followed by `curl http://localhost:6006/` returns connection-refused.
 
 **Fix:** `docker compose run --rm --service-ports ui-server sh -lc 'pnpm --filter @fastybird/web-ui-docs dev --ci'` (`docs` scripts: `"dev": "storybook dev -p 6006"`), or serve `storybook-static/` and curl that.
@@ -183,6 +197,10 @@ Vite's dev server transpiles `.ts` on request and rewrites import specifiers. `c
 ---
 
 ### 17. Task 36 — `theme-chalk` is left behind, and Step 1's "Expected" does not match the tree
+
+**Resolved by deletion.** Same as item 4 above: `Library/WebUi` (including
+`theme-chalk`) is gone and Task 36 is superseded. Kept for the record rather
+than removed.
 
 - `theme-chalk/package.json:52` declares `rimraf: "^5.0"` — the exact bump Task 36 applies to the other three — and `sass-loader: "^14.2"` against root/docs `^16.0`. `theme-chalk` is not in the file list, so "one lint toolchain generation across the workspace" is not achieved.
 - Step 1 expects `typescript-eslint`/`@typescript-eslint/*` "already at `^8.70`". On the current tree all three are `^7.8`. Even if PR340/343 land, root is `^8.15` and `web-ui-library` `^8.16`, so the workspace still is not on one declared line.
