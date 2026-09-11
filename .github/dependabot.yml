@@ -28,7 +28,7 @@ updates:
       # Frozen deliberately: 1.13 added an exports map that blocks the subpath
       # import six mapper files rely on. Lifted by Phase 6 PR7 + PR13.
       - dependency-name: "jsona"
-      # Must track the pinned Node runtime, not npm latest. See closed PR #339.
+      # Must track the pinned Node runtime (24), not npm latest. See closed PR #339.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
       # Coupled to UnoCSS's vite peer range; moves as one migration (PR29/PR30).

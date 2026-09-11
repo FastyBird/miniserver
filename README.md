@@ -10,7 +10,7 @@ MiniServer is a standalone application built on the [FastyBird](https://www.fast
 
 ## Requirements
 
-PHP 8.2, Node 20, yarn 1, MariaDB. Redis, CouchDB and RabbitMQ are optional -- see [docs/configuration.md](docs/configuration.md).
+PHP 8.2, Node 24, yarn 1, MariaDB. Redis, CouchDB and RabbitMQ are optional -- see [docs/configuration.md](docs/configuration.md).
 
 ## Getting started
 
@@ -26,10 +26,8 @@ This builds `docker/prod/Dockerfile`, starts the application and a MariaDB datab
 
 ```sh
 composer install --no-dev --prefer-dist --classmap-authoritative
-yarn install --frozen-lockfile --ignore-engines && yarn build
+yarn install --frozen-lockfile && yarn build
 ```
-
-`--ignore-engines` is required: a transitive dependency declares `node >= 22` while this project is frozen at Node 20; the flag is metadata-only.
 
 Then create the schema and any module-specific data:
 

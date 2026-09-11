@@ -4,7 +4,7 @@ This file mirrors [CLAUDE.md](./CLAUDE.md) for agent tooling that reads `AGENTS.
 
 ## Requirements
 
-PHP 8.2, Node 20, yarn 1. The host you run on may differ; it does not count -- every verification command runs in the PHP 8.2 / Node 20 containers described in `docs/baseline.md`.
+PHP 8.2, Node 24, yarn 1. The host you run on may differ; it does not count -- every verification command runs in the PHP 8.2 / Node 24 containers described in `docs/baseline.md`.
 
 ## Commands
 
@@ -13,7 +13,7 @@ make lint && make cs && make phpstan && make tests   # PHP quality gate
 yarn lint:js && yarn types && yarn build              # JS quality gate
 ```
 
-`yarn install` always needs `--ignore-engines` (a transitive dependency wants Node >= 22; this project is frozen at Node 20). `make composer-validate` runs `composer validate` deliberately without `--strict` -- two pre-existing warnings make `--strict` exit 1 and that is permanent, not a bug to fix.
+`make composer-validate` runs `composer validate` deliberately without `--strict` -- two pre-existing warnings make `--strict` exit 1 and that is permanent, not a bug to fix.
 
 ## Layout
 

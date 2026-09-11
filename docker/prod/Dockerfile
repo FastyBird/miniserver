@@ -11,13 +11,13 @@
 # ============================================================
 # Stage 1: build the frontend
 # ============================================================
-FROM node:20 AS ui
+FROM node:24 AS ui
 
 WORKDIR /app
 
 COPY . .
 
-RUN yarn install --frozen-lockfile --ignore-engines \
+RUN yarn install --frozen-lockfile \
     && yarn build
 
 # ============================================================
