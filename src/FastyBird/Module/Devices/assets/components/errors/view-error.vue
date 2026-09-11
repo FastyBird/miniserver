@@ -5,7 +5,7 @@
 	>
 		<el-result>
 			<template #icon>
-				<fb-icon-with-child
+				<app-icon-with-child
 					type="primary"
 					:size="50"
 				>
@@ -23,7 +23,7 @@
 					<template #secondary>
 						<Icon icon="fa6-solid:exclamation" />
 					</template>
-				</fb-icon-with-child>
+				</app-icon-with-child>
 			</template>
 
 			<template #title>
@@ -65,7 +65,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElResult } from 'element-plus';
 
-import { FbIconWithChild } from '@fastybird/web-ui-library';
+import { AppIconWithChild } from '@fastybird/application';
 import { Icon } from '@iconify/vue';
 
 import { ApplicationError } from '../../errors';

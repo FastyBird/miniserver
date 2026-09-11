@@ -1,5 +1,5 @@
 <template>
-	<fb-icon-with-child
+	<app-icon-with-child
 		v-if="props.withState"
 		:type="stateColor"
 		:size="props.size"
@@ -11,7 +11,7 @@
 		<template #secondary>
 			<component :is="stateIcon" />
 		</template>
-	</fb-icon-with-child>
+	</app-icon-with-child>
 
 	<el-icon
 		v-else
@@ -27,8 +27,8 @@ import type { Component, VNode } from 'vue';
 
 import { ElIcon } from 'element-plus';
 
+import { AppIconWithChild } from '@fastybird/application';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import { FbIconWithChild } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { useConnectorState } from '../../composables';

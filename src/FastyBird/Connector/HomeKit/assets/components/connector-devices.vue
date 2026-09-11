@@ -27,7 +27,7 @@
 	>
 		<el-result class="w-[70%]">
 			<template #icon>
-				<fb-icon-with-child
+				<app-icon-with-child
 					:size="50"
 					type="primary"
 				>
@@ -37,7 +37,7 @@
 					<template #secondary>
 						<Icon icon="fa6-solid:info" />
 					</template>
-				</fb-icon-with-child>
+				</app-icon-with-child>
 			</template>
 
 			<template #title>
@@ -80,8 +80,8 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElResult, ElSkeleton, ElSkeletonItem, ElText } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
+import { AppIconWithChild } from '@fastybird/application';
 import { IConnectorDevicesEmits, IConnectorDevicesProps, IDeviceData } from '@fastybird/devices-module';
-import { FbIconWithChild } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { ConnectorDevice } from '../components';

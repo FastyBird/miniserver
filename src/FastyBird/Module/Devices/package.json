@@ -38,6 +38,7 @@
   "types": "./assets/entry.ts",
   "sideEffects": true,
   "dependencies": {
+    "@fastybird/application": "0.0.0",
     "@fastybird/metadata-library": "0.0.0",
     "@fastybird/tools": "0.0.0",
     "@fastybird/vue-wamp-v1": "^1.2",

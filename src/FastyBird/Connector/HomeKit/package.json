@@ -39,6 +39,7 @@
   "sideEffects": true,
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^2.0",
+    "@fastybird/application": "0.0.0",
     "@fastybird/devices-module": "0.0.0",
     "@fastybird/metadata-library": "0.0.0",
     "@fastybird/tools": "0.0.0",

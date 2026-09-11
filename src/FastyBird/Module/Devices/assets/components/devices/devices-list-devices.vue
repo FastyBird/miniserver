@@ -58,7 +58,7 @@
 				>
 					<el-result class="h-full w-full">
 						<template #icon>
-							<fb-icon-with-child
+							<app-icon-with-child
 								type="primary"
 								:size="50"
 							>
@@ -68,7 +68,7 @@
 								<template #secondary>
 									<Icon icon="fa6-solid:info" />
 								</template>
-							</fb-icon-with-child>
+							</app-icon-with-child>
 						</template>
 
 						<template #title>
@@ -83,7 +83,7 @@
 				>
 					<el-result class="h-full w-full">
 						<template #icon>
-							<fb-icon-with-child
+							<app-icon-with-child
 								type="primary"
 								:size="50"
 							>
@@ -93,7 +93,7 @@
 								<template #secondary>
 									<Icon icon="fa6-solid:filter" />
 								</template>
-							</fb-icon-with-child>
+							</app-icon-with-child>
 						</template>
 
 						<template #title>
@@ -223,7 +223,7 @@ import {
 	useNamespace,
 } from 'element-plus';
 
-import { FbIconWithChild } from '@fastybird/web-ui-library';
+import { AppIconWithChild } from '@fastybird/application';
 import { Icon } from '@iconify/vue';
 
 import { DevicesFilter } from '../../types';

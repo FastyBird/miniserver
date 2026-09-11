@@ -4,7 +4,7 @@
 		class="h-full w-full"
 	>
 		<template #icon>
-			<fb-icon-with-child
+			<app-icon-with-child
 				type="primary"
 				:size="50"
 			>
@@ -14,7 +14,7 @@
 				<template #secondary>
 					<Icon icon="fa6-solid:info" />
 				</template>
-			</fb-icon-with-child>
+			</app-icon-with-child>
 		</template>
 
 		<template #title>
@@ -73,7 +73,8 @@ import { useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElIcon, ElResult, ElScrollbar, useNamespace } from 'element-plus';
 
-import { FbIconWithChild, FbListItem, FbSwipe, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { AppIconWithChild } from '@fastybird/application';
+import { FbListItem, FbSwipe, ListItemVariantTypes } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { IConnectorPlugin } from '../../types';
