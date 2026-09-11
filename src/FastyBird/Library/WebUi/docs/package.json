@@ -46,7 +46,7 @@
     "@storybook/vue3": "^8.4",
     "@storybook/vue3-vite": "^8.4",
     "@typescript-eslint/eslint-plugin": "^8.15",
-    "@typescript-eslint/parser": "^8.15",
+    "@typescript-eslint/parser": "^8.70",
     "@vitejs/plugin-vue": "^5.2",
     "@vue/eslint-config-prettier": "^10.1",
     "@vue/eslint-config-typescript": "^14.1",

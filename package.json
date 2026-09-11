@@ -78,7 +78,7 @@
     "@types/node": "^20.17",
     "@types/nprogress": "^0.2",
     "@typescript-eslint/eslint-plugin": "^8.15",
-    "@typescript-eslint/parser": "^8.15",
+    "@typescript-eslint/parser": "^8.70",
     "@unocss/transformer-variant-group": "^0.64",
     "@vitejs/plugin-vue": "^5.2",
     "@vue/eslint-config-prettier": "^10.1",
