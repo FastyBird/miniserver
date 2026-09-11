@@ -17,6 +17,15 @@ The project's constraints permit newer PHP, but a dependency set two years old d
 behave the same three minor versions ahead. Every command below runs in a container for
 that reason. Results obtained on a host running PHP 8.5 or Node 24 are not evidence.
 
+> **Update, since this baseline was taken:** the toolchain moved from Node 20 to Node 24
+> in a later change. The `--ignore-engines` exception this document records below as
+> forced (see "Forced exceptions") is retired repo-wide as of that change -- it is no
+> longer present in any install command, Dockerfile or CI job. Everything else on this
+> page, including the gate results, reproduction commands and cold-reinstall numbers, is
+> left exactly as it was measured against the Node 20 baseline; it is not re-measured
+> here, and the `node:20`/`node:20-alpine` references below describe that historical
+> measurement, not the current toolchain.
+
 ## Gate results
 
 All six were run in the PHP 8.2 container against the final tree.

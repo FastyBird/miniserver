@@ -5,10 +5,10 @@ MiniServer is a single PHP (Nette) + Vue application repository, merged from the
 ## Requirements
 
 - **PHP**: 8.2
-- **Node**: 20
+- **Node**: 24
 - **Package manager**: yarn 1 (pnpm arrives in Phase 6 of the merge -- do not document or use pnpm before then)
 
-The host you are running on may report a different PHP/Node version. It does not count: every verification command for this project runs in the PHP 8.2 / Node 20 containers described in `docs/baseline.md`.
+The host you are running on may report a different PHP/Node version. It does not count: every verification command for this project runs in the PHP 8.2 / Node 24 containers described in `docs/baseline.md`.
 
 ## Layout
 
@@ -39,8 +39,6 @@ yarn lint:js             # ESLint
 yarn lint:styles         # stylelint
 yarn pretty:check        # Prettier check
 ```
-
-`yarn install` always needs `--ignore-engines`: a transitive dependency (`@intlify/shared`) wants Node >= 22, and this project is frozen at Node 20. It is metadata-only and resolves nothing differently.
 
 ```bash
 # Docker
