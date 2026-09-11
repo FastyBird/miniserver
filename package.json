@@ -92,7 +92,7 @@
     "postcss-scss": "^4.0",
     "prettier": "^3.3",
     "sass": "^1.81",
-    "sass-loader": "^16.0",
+    "sass-loader": "^17.0",
     "stylelint": "^16.10",
     "stylelint-config-prettier": "^9.0",
     "stylelint-config-recommended-vue": "^1.5",
