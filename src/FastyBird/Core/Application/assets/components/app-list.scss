@@ -31,7 +31,7 @@
 		height: auto;
 		flex-grow: 1;
 
-		@media (getCssVar('breakpoints', 'sm')) {
+		@include res(sm) {
 			flex: 4 0 0;
 		}
 
