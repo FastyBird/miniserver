@@ -57,7 +57,7 @@
 			</template>
 		</el-page-header>
 
-		<fb-app-bar-heading
+		<app-bar-heading
 			v-if="!isMDDevice"
 			teleport
 		>
@@ -75,7 +75,7 @@
 			<template #subtitle>
 				{{ sessionStore.account()?.email?.address || '' }}
 			</template>
-		</fb-app-bar-heading>
+		</app-bar-heading>
 
 		<el-tabs
 			v-if="isMDDevice"
@@ -137,8 +137,9 @@ import { ElAvatar, ElBreadcrumb, ElBreadcrumbItem, ElButton, ElIcon, ElPageHeade
 import get from 'lodash.get';
 import md5 from 'md5';
 
+import { AppBarHeading } from '@fastybird/application';
 import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
-import { FB_BREADCRUMBS_TARGET, FbAppBarHeading, FbBreadcrumbs } from '@fastybird/web-ui-library';
+import { FB_BREADCRUMBS_TARGET, FbBreadcrumbs } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { useRoutesNames } from '../composables';

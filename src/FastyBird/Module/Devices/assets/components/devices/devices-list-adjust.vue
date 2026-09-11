@@ -1,5 +1,5 @@
 <template>
-	<fb-app-bar-heading teleport>
+	<app-bar-heading teleport>
 		<template #icon>
 			<Icon icon="fa6-solid:filter" />
 		</template>
@@ -11,7 +11,7 @@
 		<template #subtitle>
 			{{ t('devicesModule.subHeadings.devices.adjustFilters') }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
 	<div class="flex flex-col h-full w-full overflow-hidden">
 		<el-scrollbar class="flex-grow">
@@ -94,7 +94,7 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElCheckbox, ElCheckboxGroup, ElCollapse, ElCollapseItem, ElScrollbar, ElText } from 'element-plus';
 import isEqual from 'lodash.isequal';
 
-import { FbAppBarHeading } from '@fastybird/web-ui-library';
+import { AppBarHeading } from '@fastybird/application';
 import { Icon } from '@iconify/vue';
 
 import { ConnectionState, DevicesFilter, IConnector, IDevicesFilter } from '../../types';

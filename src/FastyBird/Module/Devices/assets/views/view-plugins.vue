@@ -1,5 +1,5 @@
 <template>
-	<fb-app-bar-heading
+	<app-bar-heading
 		v-if="!isMDDevice && isPluginsListRoute"
 		teleport
 	>
@@ -14,9 +14,9 @@
 		<template #subtitle>
 			{{ t('devicesModule.subHeadings.plugins.allPlugins', connectorsPluginsWithConnectors.length) }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isPluginsListRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -24,7 +24,7 @@
 		@click="onPluginInstall"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.new.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
 	<div class="flex flex-row h-full w-full">
 		<div
@@ -75,8 +75,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { vLoading } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
+import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import { AppBarButtonAlignTypes, FbAppBarButton, FbAppBarHeading } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { PluginsListPlugins, PluginsPreviewInfo } from '../components';

@@ -12,7 +12,7 @@
 		:class="[ns.b()]"
 		class="h-full min-h-full max-h-full w-full min-w-full max-w-full"
 	>
-		<fb-app-bar
+		<app-bar
 			v-if="userAccount?.isSignedIn.value"
 			@toggle-menu="onToggleMenu"
 		>
@@ -21,7 +21,7 @@
 					<logo class="fill-white h-[30px]" />
 				</router-link>
 			</template>
-		</fb-app-bar>
+		</app-bar>
 
 		<el-main class="flex-1">
 			<router-view />
@@ -80,10 +80,9 @@ import { ElAside, ElContainer, ElDrawer, ElMain, useNamespace, vLoading } from '
 
 import { injectAccountManager, useBreakpoints, useEventBus } from '@fastybird/tools';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import { FbAppBar } from '@fastybird/web-ui-library';
 
 import Logo from './assets/images/fb_row.svg?component';
-import { AppNavigation, AppSidebar, AppTopbar } from './components';
+import { AppBar, AppNavigation, AppSidebar, AppTopbar } from './components';
 
 const router = useRouter();
 const ns = useNamespace('app');

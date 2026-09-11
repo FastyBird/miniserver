@@ -1,5 +1,5 @@
 <template>
-	<fb-app-bar-heading
+	<app-bar-heading
 		v-if="isDetailRoute"
 		teleport
 	>
@@ -17,9 +17,9 @@
 		<template #subtitle>
 			{{ connectorData?.connector.comment }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isDetailRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -31,9 +31,9 @@
 				<Icon icon="fa6-solid:angle-left" />
 			</el-icon>
 		</template>
-	</fb-app-bar-button>
+	</app-bar-button>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isDetailRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.RIGHT"
@@ -41,7 +41,7 @@
 		@click="onConnectorEdit"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.edit.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
 	<div
 		v-loading="isLoading || connectorsPlugin === null || connectorData === null"
@@ -153,8 +153,9 @@ import { useRouter } from 'vue-router';
 import { ElIcon, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import { AppBarButtonAlignTypes, FbAppBarButton, FbAppBarHeading, FbExpandableBox } from '@fastybird/web-ui-library';
+import { FbExpandableBox } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import {

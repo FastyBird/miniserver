@@ -1,5 +1,5 @@
 <template>
-	<fb-app-bar-heading
+	<app-bar-heading
 		v-if="isSettingsRoute"
 		teleport
 	>
@@ -17,9 +17,9 @@
 		<template #subtitle>
 			{{ connectorData?.connector.draft ? t('devicesModule.subHeadings.connectors.new') : connectorData?.connector.title }}
 		</template>
-	</fb-app-bar-heading>
+	</app-bar-heading>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isSettingsRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -27,9 +27,9 @@
 		@click="onClose"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.close.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
-	<fb-app-bar-button
+	<app-bar-button
 		v-if="!isMDDevice && isSettingsRoute"
 		teleport
 		:align="AppBarButtonAlignTypes.LEFT"
@@ -38,7 +38,7 @@
 		@click="onSubmit"
 	>
 		<span class="uppercase">{{ t('devicesModule.buttons.save.title') }}</span>
-	</fb-app-bar-button>
+	</app-bar-button>
 
 	<div
 		v-loading="(isLoading || connectorsPlugin === null || connectorData === null) && !isSettingsRoute"
@@ -129,9 +129,9 @@ import { useRouter } from 'vue-router';
 import { ElButton, ElScrollbar, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
+import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { DataType, ModuleSource } from '@fastybird/metadata-library';
 import { useBreakpoints } from '@fastybird/tools';
-import { AppBarButtonAlignTypes, FbAppBarButton, FbAppBarHeading } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import {

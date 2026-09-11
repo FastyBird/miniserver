@@ -1,3 +1,13 @@
+export { default as AppBar } from './app-bar.vue';
+export * from './app-bar.types';
+export { default as AppBarButton } from './app-bar-button.vue';
+export * from './app-bar-button.types';
+export { default as AppBarContent } from './app-bar-content.vue';
+export * from './app-bar-content.types';
+export { default as AppBarHeading } from './app-bar-heading.vue';
+export * from './app-bar-heading.types';
+export { default as AppBarIcon } from './app-bar-icon.vue';
+export * from './app-bar-icon.types';
 export { default as AppGravatar } from './app-gravatar.vue';
 export { default as AppIconWithChild } from './app-icon-with-child.vue';
 export * from './app-icon-with-child.types';
