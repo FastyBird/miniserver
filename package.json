@@ -72,7 +72,7 @@
     "@types/lodash.isequal": "^4.5",
     "@types/lodash.omit": "^4.5",
     "@types/md5": "^2.3",
-    "@types/node": "^20.17",
+    "@types/node": "^24.13",
     "@types/nprogress": "^0.2",
     "@typescript-eslint/parser": "^8.70",
     "@unocss/transformer-variant-group": "^0.64",
