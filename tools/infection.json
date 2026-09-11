@@ -6,8 +6,8 @@
     ]
   },
   "logs": {
-    "html": "var/tools/Coverage/mutations/infection.html",
-    "text": "var/tools/Coverage/mutations/infection.log",
+    "html": "../var/tools/Coverage/mutations/infection.html",
+    "text": "../var/tools/Coverage/mutations/infection.log",
     "stryker": {
       "report": "main"
     }

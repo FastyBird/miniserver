@@ -10,8 +10,16 @@ INFECTION_CONFIG=tools/infection.json
 
 # QA
 
+# Two recipe lines, not `make cs & make phpstan`. The `&` backgrounded `make cs`,
+# so this target's exit status was PHPStan's alone and a failing coding-standard
+# check left `make qa` green -- with the two outputs interleaved, so the failure
+# was easy to miss by eye as well. make stops on the first non-zero recipe line.
+# CI was never affected (php-cs and php-phpstan are separate jobs), but this is
+# the target a maintainer runs before pushing, so it is exactly the pre-push gate
+# that did not gate.
 qa: ## Check code quality - coding style and static analysis
-	make cs & make phpstan
+	make cs
+	make phpstan
 
 cs: ## Check PHP files coding style
 	mkdir -p var/tools/PHP_CodeSniffer
@@ -75,16 +83,16 @@ composer-validate: ## Validate the root and every extension composer manifest
 # DOCKER
 
 up:
-	docker-compose up -d
+	docker compose up -d
 
 down:
-	docker-compose down
+	docker compose down
 
 bash:
-	docker-compose exec -u www-data application bash
+	docker compose exec -u www-data application bash
 
 bash-root:
-	docker-compose exec -u 0 application bash
+	docker compose exec -u 0 application bash
 
 # UTILITIES
 

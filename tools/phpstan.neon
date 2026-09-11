@@ -4,6 +4,11 @@ includes:
 parameters:
     level: max
 
+    # Pinned so static analysis does not silently follow whatever PHP the runner
+    # happens to have. A no-op today, and that is the point: without it, Task 31's
+    # runtime bump would shift PHPStan's result with no way to attribute the delta.
+    phpVersion: 80200
+
     tmpDir: ../var/tools/PHPStan
     resultCachePath: %currentWorkingDirectory%/var/tools/PHPStan/resultCache.src.php
 
@@ -68,7 +73,6 @@ parameters:
     excludePaths:
         analyseAndScan:
             - ../src/FastyBird/Core/Application/src/EventLoop/Wrapper.php
-            - ../src/FastyBird/Core/Tools/src/Helpers/LoopWrapper.php
 
     ignoreErrors:
         -

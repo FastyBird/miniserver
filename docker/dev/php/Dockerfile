@@ -74,6 +74,15 @@ RUN pecl install apcu \
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
+# Install pcov extension
+#
+# The Makefile's coverage and mutation targets both run
+# `php -d pcov.enabled=1 -d pcov.directory=./src`, but pcov was installed
+# nowhere, and PRE_PHP sets XDEBUG_MODE=off for every target, so the only other
+# driver was disabled too. Every coverage run therefore had no driver at all.
+RUN pecl install pcov \
+    && docker-php-ext-enable pcov
+
 # Install Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
