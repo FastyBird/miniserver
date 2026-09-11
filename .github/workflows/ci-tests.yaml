@@ -253,6 +253,27 @@ jobs:
           yarn workspace @fastybird/web-ui-components lint:js
           yarn workspace @fastybird/web-ui-library lint:js
 
+      # theme-chalk is the sixth Library/WebUi package and the only one with no
+      # lint:js -- it is pure SCSS, so its gate is lint:styles. Root
+      # `lint:styles` globs src/FastyBird/*/*/assets/**/*.scss, which does not
+      # reach it.
+      - name: "Lint the theme-chalk stylesheets"
+        run: "yarn workspace @fastybird/web-ui-theme-chalk lint:styles"
+
+      # All six packages ship a pretty:check that nothing ran. Note web-ui-docs
+      # is the odd one out: it has no .prettierrc of its own, so it inherits the
+      # ROOT config including the sort-imports plugin, while the other five use
+      # their own plugin-less configs. That is why the docs package needed 25
+      # files reformatted to make this step green.
+      - name: "Check formatting in the Library/WebUi packages"
+        run: |
+          yarn workspace @fastybird/web-ui-utils pretty:check
+          yarn workspace @fastybird/web-ui-icons pretty:check
+          yarn workspace @fastybird/web-ui-components pretty:check
+          yarn workspace @fastybird/web-ui-library pretty:check
+          yarn workspace @fastybird/web-ui-theme-chalk pretty:check
+          yarn workspace @fastybird/web-ui-docs pretty:check
+
   js-types:
     name: "JS Types"
     runs-on: "ubuntu-latest"

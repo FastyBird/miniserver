@@ -1,16 +1,16 @@
 .fb-icon-with-child-story-block {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 
-    .fb-icon-with-child-story-block__item {
-        margin-right: 20px;
-    }
+	.fb-icon-with-child-story-block__item {
+		margin-right: 20px;
+	}
 
-    .fb-icon-with-child-story-block__item:last-child {
-        margin-right: 0;
-    }
+	.fb-icon-with-child-story-block__item:last-child {
+		margin-right: 0;
+	}
 
-    .icon-color {
-        color: var(--fb-color-default);
-    }
+	.icon-color {
+		color: var(--fb-color-default);
+	}
 }

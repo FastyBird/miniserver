@@ -1,13 +1,14 @@
-import "./colors.scss";
-import { Story } from "@storybook/vue3";
+import { Story } from '@storybook/vue3';
+
+import './colors.scss';
 
 export default {
-    title: "About/Colors",
+	title: 'About/Colors',
 };
 
 export const Colors: Story = () => {
-    return {
-        template: `
+	return {
+		template: `
       <div class="fb-story-colors__container">
         <div class="fb-story-colors__colors">
           <div class="fb-story-colors__colors-item fb-story-colors__colors-item-primary"><span class="fb-story-colors__colors-item-desc">primary</span></div>
@@ -20,5 +21,5 @@ export const Colors: Story = () => {
         </div>
       </div>
     `,
-    };
+	};
 };
