@@ -1,35 +1,4 @@
-$--colors: (
-	'primary': (
-		'base': #d9230f,
-	),
-	'success': (
-		'base': #469408,
-	),
-	'warning': (
-		'base': #d9831f,
-	),
-	'danger': (
-		'base': #db2828,
-	),
-	'error': (
-		'base': #db2828,
-	),
-	'info': (
-		'base': #029acf,
-	),
-);
-
-@forward 'element-plus/theme-chalk/src/common/var' with (
-	$colors: $--colors,
-	$button-padding-horizontal: (
-		'default': 50px,
-	),
-	// Break-point
-	$sm: 576px !default,
-	$md: 768px !default,
-	$lg: 992px !default,
-	$xl: 1200px !default
-);
+@forward './element-plus-vars';
 
 @use 'element-plus/theme-chalk/src/index' as *;
 @use 'element-plus/theme-chalk/src/reset' as *;

@@ -26,6 +26,7 @@
 		border-bottom: getCssVar('list', 'item', 'border');
 	}
 
+	// stylelint-disable-next-line nesting-selector-no-missing-scoping-root -- scoping root comes from the b() mixin above, which stylelint cannot see through
 	&[role='button'] {
 		cursor: pointer;
 	}

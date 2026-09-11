@@ -1,3 +1,4 @@
+@use '../styles/element-plus-vars' as *;
 @use 'element-plus/theme-chalk/src/common/var' as *;
 @use 'element-plus/theme-chalk/src/mixins/mixins' as *;
 @use 'element-plus/theme-chalk/src/mixins/var' as *;
@@ -31,7 +32,7 @@
 		height: auto;
 		flex-grow: 1;
 
-		@media (getCssVar('breakpoints', 'sm')) {
+		@include res(sm) {
 			flex: 4 0 0;
 		}
 
