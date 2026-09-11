@@ -79,39 +79,43 @@
 				@remove="onChannelRemove"
 			/>
 
-			<fb-expandable-box
-				:show="!isSettingsRoute"
-				class="flex flex-col"
-			>
+			<el-collapse-transition>
 				<div
-					v-loading="isLoading"
-					:element-loading-text="t('devicesModule.texts.misc.loadingChannel')"
+					v-if="!isSettingsRoute"
+					class="flex flex-col"
 				>
-					<component
-						:is="connectorsPlugin.components.channelDetail"
-						v-if="typeof connectorsPlugin.components.channelDetail !== 'undefined'"
-						:loading="isLoading"
-						:channel-data="channelData"
-						:alerts="[]"
-					/>
+					<div
+						v-loading="isLoading"
+						:element-loading-text="t('devicesModule.texts.misc.loadingChannel')"
+					>
+						<component
+							:is="connectorsPlugin.components.channelDetail"
+							v-if="typeof connectorsPlugin.components.channelDetail !== 'undefined'"
+							:loading="isLoading"
+							:channel-data="channelData"
+							:alerts="[]"
+						/>
 
-					<channel-default-channel-detail
-						:loading="isLoading"
-						:channel-data="channelData"
-						:alerts="[]"
-					/>
-				</div>
-			</fb-expandable-box>
-
-			<fb-expandable-box :show="isSettingsRoute">
-				<suspense>
-					<div class="flex-grow overflow-hidden h-full">
-						<view-error :type="'channel'">
-							<router-view />
-						</view-error>
+						<channel-default-channel-detail
+							:loading="isLoading"
+							:channel-data="channelData"
+							:alerts="[]"
+						/>
 					</div>
-				</suspense>
-			</fb-expandable-box>
+				</div>
+			</el-collapse-transition>
+
+			<el-collapse-transition>
+				<div v-if="isSettingsRoute">
+					<suspense>
+						<div class="flex-grow overflow-hidden h-full">
+							<view-error :type="'channel'">
+								<router-view />
+							</view-error>
+						</div>
+					</suspense>
+				</div>
+			</el-collapse-transition>
 		</template>
 	</div>
 </template>
@@ -122,12 +126,11 @@ import { useI18n } from 'vue-i18n';
 import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
-import { ElIcon, vLoading } from 'element-plus';
+import { ElCollapseTransition, ElIcon, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
 import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
-import { FbExpandableBox } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { ChannelDefaultChannelDetail, ChannelsChannelControl, ChannelsChannelIcon, ViewError } from '../components';
