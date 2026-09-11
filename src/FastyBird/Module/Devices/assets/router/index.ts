@@ -1,8 +1,13 @@
+import { h } from 'vue';
+import type { VNode } from 'vue';
 import { RouteRecordRaw, Router } from 'vue-router';
 
-import { FasEthernet, FasPlug } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import { useRoutesNames } from '../composables';
+
+const FasEthernet = (): VNode => h(Icon, { icon: 'fa6-solid:ethernet' });
+const FasPlug = (): VNode => h(Icon, { icon: 'fa6-solid:plug' });
 
 const routeNames = useRoutesNames();
 

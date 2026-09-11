@@ -26,5 +26,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/FastyBird/miniserver.git"
+  },
+  "dependencies": {
+    "@iconify/vue": "^5"
   }
 }

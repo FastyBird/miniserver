@@ -1,8 +1,12 @@
+import { h } from 'vue';
+import type { VNode } from 'vue';
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 import NProgress from 'nprogress';
 
-import { FasGaugeHigh } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
+
+const FasGaugeHigh = (): VNode => h(Icon, { icon: 'fa6-solid:gauge-high' });
 
 const routes: RouteRecordRaw[] = [
 	{

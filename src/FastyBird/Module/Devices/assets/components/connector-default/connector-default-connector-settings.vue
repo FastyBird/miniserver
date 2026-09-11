@@ -118,15 +118,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, h, reactive, ref, watch } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElForm, FormInstance } from 'element-plus';
 import get from 'lodash.get';
 
 import { flattenValue } from '@fastybird/tools';
-import { FasPlus } from '@fastybird/web-ui-icons';
 import { FbList } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { useConnectorForm } from '../../composables';
 import {
@@ -141,6 +142,8 @@ import {
 import ConnectorDefaultConnectorSettingsRename from '../connector-default/connector-default-connector-settings-rename.vue';
 import PropertyDefaultPropertySettings from '../property-default/property-default-property-settings.vue';
 import PropertyDefaultVariablePropertiesEdit from '../property-default/property-default-variable-properties-edit.vue';
+
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
 
 defineOptions({
 	name: 'ConnectorDefaultConnectorSettings',

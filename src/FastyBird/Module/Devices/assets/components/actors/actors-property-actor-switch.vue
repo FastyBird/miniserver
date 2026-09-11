@@ -16,11 +16,11 @@
 		/>
 
 		<el-icon v-show="property.command === PropertyCommandState.COMPLETED && property.lastResult === PropertyCommandResult.ERR">
-			<fas-ban />
+			<Icon icon="fa6-solid:ban" />
 		</el-icon>
 
 		<el-icon v-show="property.command === PropertyCommandState.COMPLETED && property.lastResult === PropertyCommandResult.OK">
-			<fas-check />
+			<Icon icon="fa6-solid:check" />
 		</el-icon>
 
 		<fb-spinner
@@ -41,8 +41,8 @@ import get from 'lodash.get';
 import { DataType, ModulePrefix, SwitchPayload } from '@fastybird/metadata-library';
 import { useFlashMessage } from '@fastybird/tools';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import { FasBan, FasCheck } from '@fastybird/web-ui-icons';
 import { FbSpinner } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { useDeviceState, useNormalizeValue } from '../../composables';
 import { channelPropertiesStoreKey, devicePropertiesStoreKey } from '../../configuration';

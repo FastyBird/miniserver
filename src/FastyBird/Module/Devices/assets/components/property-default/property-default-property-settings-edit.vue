@@ -70,19 +70,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, h, ref, watch } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElDialog } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { FarCircleCheck, FarCircleXmark, FasPencil } from '@fastybird/web-ui-icons';
 import { FbDialogFooter, FbDialogHeader } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { FormResultType, FormResultTypes } from '../../types';
 import PropertyDefaultPropertySettingsForm from '../property-default/property-default-property-settings-form.vue';
 
 import { IPropertyDefaultPropertySettingsEditProps } from './property-default-property-settings-edit.types';
+
+const FarCircleCheck = (): VNode => h(Icon, { icon: 'fa6-regular:circle-check' });
+const FarCircleXmark = (): VNode => h(Icon, { icon: 'fa6-regular:circle-xmark' });
+const FasPencil = (): VNode => h(Icon, { icon: 'fa6-solid:pencil' });
 
 defineOptions({
 	name: 'PropertyDefaultPropertySettingsEdit',

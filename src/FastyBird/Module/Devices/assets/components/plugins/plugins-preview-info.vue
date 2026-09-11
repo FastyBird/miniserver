@@ -3,7 +3,7 @@
 		<fb-media-item class="my-5">
 			<template #left>
 				<el-icon :size="32">
-					<fas-plug-circle-bolt />
+					<Icon icon="fa6-solid:plug-circle-bolt" />
 				</el-icon>
 			</template>
 
@@ -19,7 +19,7 @@
 		<fb-media-item class="my-5">
 			<template #left>
 				<el-icon :size="32">
-					<fas-ethernet />
+					<Icon icon="fa6-solid:ethernet" />
 				</el-icon>
 			</template>
 
@@ -62,7 +62,7 @@
 		<fb-media-item class="my-5">
 			<template #left>
 				<el-icon :size="32">
-					<fas-store />
+					<Icon icon="fa6-solid:store" />
 				</el-icon>
 			</template>
 
@@ -89,15 +89,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElIcon } from 'element-plus';
 
-import { FasEthernet, FasPlugCircleBolt, FasPlus, FasStore } from '@fastybird/web-ui-icons';
 import { FbMediaItem } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { IPluginsPreviewInfoProps } from './plugins-preview-info.types';
+
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
 
 defineOptions({
 	name: 'PluginsPreviewInfo',

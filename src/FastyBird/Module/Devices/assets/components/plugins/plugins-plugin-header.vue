@@ -94,16 +94,22 @@
 </template>
 
 <script setup lang="ts">
+import { h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElButton, ElPageHeader, ElTag, useNamespace } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { FasPlugCircleBolt, FasPlus, FasTrash } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import PluginsPluginStats from '../plugins/plugins-plugin-stats.vue';
 
 import { IPluginsPluginHeaderProps } from './plugins-plugin-header.types';
+
+const FasPlugCircleBolt = (): VNode => h(Icon, { icon: 'fa6-solid:plug-circle-bolt' });
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
+const FasTrash = (): VNode => h(Icon, { icon: 'fa6-solid:trash' });
 
 defineOptions({
 	name: 'PluginsPluginHeader',

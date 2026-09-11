@@ -39,13 +39,20 @@
 </template>
 
 <script setup lang="ts">
+import { h } from 'vue';
+import type { VNode } from 'vue';
+
 import { ElButton, ElButtonGroup, ElText } from 'element-plus';
 
-import { FasCircleInfo, FasPencil, FasTrash } from '@fastybird/web-ui-icons';
 import { FbListItem, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { IConnectorDeviceEmits, IConnectorDeviceProps } from '../../types';
 import DevicesDeviceIcon from '../devices/devices-device-icon.vue';
+
+const FasCircleInfo = (): VNode => h(Icon, { icon: 'fa6-solid:circle-info' });
+const FasPencil = (): VNode => h(Icon, { icon: 'fa6-solid:pencil' });
+const FasTrash = (): VNode => h(Icon, { icon: 'fa6-solid:trash' });
 
 defineOptions({
 	name: 'ConnectorDefaultConnectorDevice',

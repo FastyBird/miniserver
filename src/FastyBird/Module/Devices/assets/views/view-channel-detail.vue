@@ -39,7 +39,7 @@
 	>
 		<template #icon>
 			<el-icon>
-				<fas-angle-left />
+				<Icon icon="fa6-solid:angle-left" />
 			</el-icon>
 		</template>
 	</fb-app-bar-button>
@@ -62,7 +62,7 @@
 		@click="onBack"
 	>
 		<el-icon>
-			<fas-angle-left />
+			<Icon icon="fa6-solid:angle-left" />
 		</el-icon>
 	</fb-app-bar-button>
 
@@ -126,8 +126,8 @@ import { ElIcon, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { FasAngleLeft } from '@fastybird/web-ui-icons';
 import { AppBarButtonAlignTypes, FbAppBarButton, FbAppBarHeading, FbExpandableBox } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { ChannelDefaultChannelDetail, ChannelsChannelControl, ChannelsChannelIcon, ViewError } from '../components';
 import { useChannel, useChannelActions, useChannelRoutes, useConnectorRoutes, useRoutesNames, useUuid } from '../composables';

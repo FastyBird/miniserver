@@ -3,37 +3,37 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { Component } from 'vue';
+import { computed, h } from 'vue';
+import type { Component, VNode } from 'vue';
 
-import {
-	FabApple,
-	FasBell,
-	FasBridge,
-	FasDoorOpen,
-	FasDroplet,
-	FasFan,
-	FasFaucet,
-	FasFire,
-	FasGamepad,
-	FasGauge,
-	FasKey,
-	FasLightbulb,
-	FasMicrochip,
-	FasPersonBooth,
-	FasPlaneDeparture,
-	FasPlug,
-	FasTemperatureLow,
-	FasTv,
-	FasVideo,
-	FasVolumeLow,
-	FasWarehouse,
-	FasWind,
-} from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import { DeviceCategory } from '../types';
 
 import { DeviceIconProps } from './device-icon.types';
+
+const FabApple = (): VNode => h(Icon, { icon: 'fa6-brands:apple' });
+const FasBell = (): VNode => h(Icon, { icon: 'fa6-solid:bell' });
+const FasBridge = (): VNode => h(Icon, { icon: 'fa6-solid:bridge' });
+const FasDoorOpen = (): VNode => h(Icon, { icon: 'fa6-solid:door-open' });
+const FasDroplet = (): VNode => h(Icon, { icon: 'fa6-solid:droplet' });
+const FasFan = (): VNode => h(Icon, { icon: 'fa6-solid:fan' });
+const FasFaucet = (): VNode => h(Icon, { icon: 'fa6-solid:faucet' });
+const FasFire = (): VNode => h(Icon, { icon: 'fa6-solid:fire' });
+const FasGamepad = (): VNode => h(Icon, { icon: 'fa6-solid:gamepad' });
+const FasGauge = (): VNode => h(Icon, { icon: 'fa6-solid:gauge' });
+const FasKey = (): VNode => h(Icon, { icon: 'fa6-solid:key' });
+const FasLightbulb = (): VNode => h(Icon, { icon: 'fa6-solid:lightbulb' });
+const FasMicrochip = (): VNode => h(Icon, { icon: 'fa6-solid:microchip' });
+const FasPersonBooth = (): VNode => h(Icon, { icon: 'fa6-solid:person-booth' });
+const FasPlaneDeparture = (): VNode => h(Icon, { icon: 'fa6-solid:plane-departure' });
+const FasPlug = (): VNode => h(Icon, { icon: 'fa6-solid:plug' });
+const FasTemperatureLow = (): VNode => h(Icon, { icon: 'fa6-solid:temperature-low' });
+const FasTv = (): VNode => h(Icon, { icon: 'fa6-solid:tv' });
+const FasVideo = (): VNode => h(Icon, { icon: 'fa6-solid:video' });
+const FasVolumeLow = (): VNode => h(Icon, { icon: 'fa6-solid:volume-low' });
+const FasWarehouse = (): VNode => h(Icon, { icon: 'fa6-solid:warehouse' });
+const FasWind = (): VNode => h(Icon, { icon: 'fa6-solid:wind' });
 
 defineOptions({
 	name: 'DeviceIcon',

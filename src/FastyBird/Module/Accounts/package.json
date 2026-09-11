@@ -42,6 +42,7 @@
     "@fastybird/tools": "0.0.0",
     "@fastybird/web-ui-icons": "1.0.0-dev.24",
     "@fastybird/web-ui-library": "1.0.0-dev.24",
+    "@iconify/vue": "^5",
     "@sentry/vue": "^8.39",
     "ajv": "^8.17",
     "ajv-formats": "^3.0",

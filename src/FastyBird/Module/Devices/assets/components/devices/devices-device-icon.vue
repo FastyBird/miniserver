@@ -6,7 +6,7 @@
 		:data-connector-state="stateName"
 	>
 		<template #primary>
-			<fas-plug />
+			<Icon icon="fa6-solid:plug" />
 		</template>
 		<template #secondary>
 			<component :is="stateIcon" />
@@ -17,34 +17,33 @@
 		v-else
 		:size="props.size"
 	>
-		<fas-plug />
+		<Icon icon="fa6-solid:plug" />
 	</el-icon>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { Component } from 'vue';
+import { computed, h } from 'vue';
+import type { Component, VNode } from 'vue';
 
 import { ElIcon } from 'element-plus';
 
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import {
-	FarCircle,
-	FarCircleCheck,
-	FarCirclePause,
-	FarCirclePlay,
-	FarCircleQuestion,
-	FarCircleStop,
-	FarCircleUser,
-	FasCircleExclamation,
-	FasPlug,
-} from '@fastybird/web-ui-icons';
 import { FbIconWithChild } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { useDeviceState } from '../../composables';
 import { ConnectionState, StateColor } from '../../types';
 
 import { IDevicesDeviceIconProps } from './devices-device-icon.types';
+
+const FarCircle = (): VNode => h(Icon, { icon: 'fa6-regular:circle' });
+const FarCircleCheck = (): VNode => h(Icon, { icon: 'fa6-regular:circle-check' });
+const FarCirclePause = (): VNode => h(Icon, { icon: 'fa6-regular:circle-pause' });
+const FarCirclePlay = (): VNode => h(Icon, { icon: 'fa6-regular:circle-play' });
+const FarCircleQuestion = (): VNode => h(Icon, { icon: 'fa6-regular:circle-question' });
+const FarCircleStop = (): VNode => h(Icon, { icon: 'fa6-regular:circle-stop' });
+const FarCircleUser = (): VNode => h(Icon, { icon: 'fa6-regular:circle-user' });
+const FasCircleExclamation = (): VNode => h(Icon, { icon: 'fa6-solid:circle-exclamation' });
 
 defineOptions({
 	name: 'DevicesDeviceIcon',

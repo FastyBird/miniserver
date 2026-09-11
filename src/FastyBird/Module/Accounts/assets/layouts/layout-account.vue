@@ -89,7 +89,7 @@
 			>
 				<template #label>
 					<span class="flex flex-row items-center gap-2">
-						<el-icon><fas-user /></el-icon>
+						<el-icon><Icon icon="fa6-solid:user" /></el-icon>
 						<span>{{ t('accountsModule.tabs.profile') }}</span>
 					</span>
 				</template>
@@ -107,7 +107,7 @@
 			>
 				<template #label>
 					<span class="flex flex-row items-center gap-2">
-						<el-icon><fas-lock /></el-icon>
+						<el-icon><Icon icon="fa6-solid:lock" /></el-icon>
 						<span>{{ t('accountsModule.tabs.security') }}</span>
 					</span>
 				</template>
@@ -138,8 +138,8 @@ import get from 'lodash.get';
 import md5 from 'md5';
 
 import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
-import { FasLock, FasUser } from '@fastybird/web-ui-icons';
 import { FB_BREADCRUMBS_TARGET, FbAppBarHeading, FbBreadcrumbs } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { useRoutesNames } from '../composables';
 import { accountsStoreKey, emailsStoreKey, sessionStoreKey } from '../configuration';

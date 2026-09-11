@@ -43,6 +43,7 @@
     "@fastybird/vue-wamp-v1": "^1.2",
     "@fastybird/web-ui-icons": "1.0.0-dev.24",
     "@fastybird/web-ui-library": "1.0.0-dev.24",
+    "@iconify/vue": "^5",
     "ajv": "^8.17",
     "ajv-formats": "^3.0",
     "async-validator": "^4.2",

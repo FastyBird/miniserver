@@ -109,7 +109,7 @@
 								>
 									<template #reference>
 										<el-icon class="ml-1">
-											<fas-circle-info />
+											<Icon icon="fa6-solid:circle-info" />
 										</el-icon>
 									</template>
 
@@ -158,7 +158,7 @@
 							<el-link target="_blank">
 								{{ t('devicesModule.texts.plugins.documentation') }}
 								<el-icon class="el-icon--right">
-									<fas-arrow-up-right-from-square />
+									<Icon icon="fa6-solid:arrow-up-right-from-square" />
 								</el-icon>
 							</el-link>
 						</dd>
@@ -175,7 +175,7 @@
 							<el-link target="_blank">
 								{{ t('devicesModule.texts.plugins.developersGuides') }}
 								<el-icon class="el-icon--right">
-									<fas-arrow-up-right-from-square />
+									<Icon icon="fa6-solid:arrow-up-right-from-square" />
 								</el-icon>
 							</el-link>
 						</dd>
@@ -192,7 +192,7 @@
 							<el-link target="_blank">
 								{{ t('devicesModule.texts.plugins.knownIssues') }}
 								<el-icon class="el-icon--right">
-									<fas-arrow-up-right-from-square />
+									<Icon icon="fa6-solid:arrow-up-right-from-square" />
 								</el-icon>
 							</el-link>
 						</dd>
@@ -204,26 +204,25 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { I18nT, useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElButton, ElCol, ElIcon, ElLink, ElPopover, ElRow, ElText, useNamespace } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
-import {
-	FasArrowUpRightFromSquare,
-	FasBookOpen,
-	FasBridge,
-	FasBug,
-	FasCircleInfo,
-	FasEthernet,
-	FasLaptopCode,
-	FasPlug,
-} from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import PluginsPluginDefaultIcon from '../plugins/plugins-plugin-default-icon.vue';
 
 import { IPluginsPluginStatsProps } from './plugins-plugin-stats.types';
+
+const FasBookOpen = (): VNode => h(Icon, { icon: 'fa6-solid:book-open' });
+const FasBridge = (): VNode => h(Icon, { icon: 'fa6-solid:bridge' });
+const FasBug = (): VNode => h(Icon, { icon: 'fa6-solid:bug' });
+const FasEthernet = (): VNode => h(Icon, { icon: 'fa6-solid:ethernet' });
+const FasLaptopCode = (): VNode => h(Icon, { icon: 'fa6-solid:laptop-code' });
+const FasPlug = (): VNode => h(Icon, { icon: 'fa6-solid:plug' });
 
 defineOptions({
 	name: 'PluginsPluginStats',

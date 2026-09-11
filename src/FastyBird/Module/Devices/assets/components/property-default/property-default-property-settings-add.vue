@@ -120,7 +120,7 @@
 
 							<template #button>
 								<el-icon>
-									<fas-chevron-right />
+									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
 						</fb-list-item>
@@ -128,11 +128,11 @@
 
 					<el-result v-if="!connectors.length">
 						<template #primary>
-							<fas-ethernet />
+							<Icon icon="fa6-solid:ethernet" />
 						</template>
 
 						<template #secondary>
-							<fas-exclamation />
+							<Icon icon="fa6-solid:exclamation" />
 						</template>
 
 						<template #title>
@@ -173,7 +173,7 @@
 
 							<template #button>
 								<el-icon>
-									<fas-chevron-right />
+									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
 						</fb-list-item>
@@ -181,11 +181,11 @@
 
 					<el-result v-if="!devices.length">
 						<template #primary>
-							<fas-plug />
+							<Icon icon="fa6-solid:plug" />
 						</template>
 
 						<template #secondary>
-							<fas-exclamation />
+							<Icon icon="fa6-solid:exclamation" />
 						</template>
 
 						<template #title>
@@ -210,7 +210,7 @@
 							@click="onSelectChannel(channelItem)"
 						>
 							<template #icon>
-								<fas-cube />
+								<Icon icon="fa6-solid:cube" />
 							</template>
 
 							<template #title>
@@ -226,7 +226,7 @@
 
 							<template #button>
 								<el-icon>
-									<fas-chevron-right />
+									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
 						</fb-list-item>
@@ -234,11 +234,11 @@
 
 					<el-result v-if="!channels.length">
 						<template #primary>
-							<fas-cube />
+							<Icon icon="fa6-solid:cube" />
 						</template>
 
 						<template #secondary>
-							<fas-exclamation />
+							<Icon icon="fa6-solid:exclamation" />
 						</template>
 
 						<template #title>
@@ -271,7 +271,7 @@
 
 							<template #button>
 								<el-icon>
-									<fas-chevron-right />
+									<Icon icon="fa6-solid:chevron-right" />
 								</el-icon>
 							</template>
 						</fb-list-item>
@@ -279,11 +279,11 @@
 
 					<el-result v-if="!properties.length">
 						<template #primary>
-							<fas-cube />
+							<Icon icon="fa6-solid:cube" />
 						</template>
 
 						<template #secondary>
-							<fas-exclamation />
+							<Icon icon="fa6-solid:exclamation" />
 						</template>
 
 						<template #title>
@@ -412,26 +412,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, h, inject, ref } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElAlert, ElButton, ElDialog, ElIcon, ElResult } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
 import { useBreakpoints } from '@fastybird/tools';
-import {
-	FarCircleCheck,
-	FarCircleXmark,
-	FasChevronRight,
-	FasClone,
-	FasCube,
-	FasEthernet,
-	FasExclamation,
-	FasFile,
-	FasPlug,
-	FasPlus,
-} from '@fastybird/web-ui-icons';
 import { FbDialogFooter, FbDialogHeader, FbList, FbListItem, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import {
 	channelPropertiesStoreKey,
@@ -465,6 +455,12 @@ import {
 	IPropertyDefaultPropertySettingsAddProps,
 	PropertyDefaultPropertySettingsAddViewTypes,
 } from './property-default-property-settings-add.types';
+
+const FarCircleCheck = (): VNode => h(Icon, { icon: 'fa6-regular:circle-check' });
+const FarCircleXmark = (): VNode => h(Icon, { icon: 'fa6-regular:circle-xmark' });
+const FasClone = (): VNode => h(Icon, { icon: 'fa6-solid:clone' });
+const FasFile = (): VNode => h(Icon, { icon: 'fa6-solid:file' });
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
 
 defineOptions({
 	name: 'PropertyDefaultPropertySettingsAdd',

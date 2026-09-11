@@ -58,10 +58,10 @@
 							type="primary"
 						>
 							<template #primary>
-								<fas-lightbulb />
+								<Icon icon="fa6-solid:lightbulb" />
 							</template>
 							<template #secondary>
-								<fas-info />
+								<Icon icon="fa6-solid:info" />
 							</template>
 						</fb-icon-with-child>
 					</template>
@@ -90,8 +90,8 @@ import { I18nT, useI18n } from 'vue-i18n';
 
 import { ElResult, ElScrollbar, ElTag, ElText } from 'element-plus';
 
-import { FasInfo, FasLightbulb } from '@fastybird/web-ui-icons';
 import { FbIconWithChild, FbList } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { ChannelPropertyIdentifier, IChannelDetailProps, IChannelProperty, PropertyType } from '../../types';
 import { PropertyDefaultProperty } from '../property-default';

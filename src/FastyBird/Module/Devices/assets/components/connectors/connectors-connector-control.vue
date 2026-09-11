@@ -63,7 +63,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
@@ -71,12 +72,19 @@ import { ElButton, ElDivider } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import { FasArrowsRotate, FasCircleInfo, FasGears, FasPlay, FasStop, FasTrash } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import { useConnectorState, useRoutesNames } from '../../composables';
 import { ConnectionState } from '../../types';
 
 import { IConnectorsConnectorControlProps } from './connectors-connector-control.types';
+
+const FasArrowsRotate = (): VNode => h(Icon, { icon: 'fa6-solid:arrows-rotate' });
+const FasCircleInfo = (): VNode => h(Icon, { icon: 'fa6-solid:circle-info' });
+const FasGears = (): VNode => h(Icon, { icon: 'fa6-solid:gears' });
+const FasPlay = (): VNode => h(Icon, { icon: 'fa6-solid:play' });
+const FasStop = (): VNode => h(Icon, { icon: 'fa6-solid:stop' });
+const FasTrash = (): VNode => h(Icon, { icon: 'fa6-solid:trash' });
 
 defineOptions({
 	name: 'ConnectorsConnectorControl',

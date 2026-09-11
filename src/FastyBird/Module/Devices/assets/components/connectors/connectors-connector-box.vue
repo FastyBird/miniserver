@@ -184,7 +184,7 @@
 						<el-button size="small">
 							{{ t('devicesModule.buttons.more.title') }}
 							<el-icon class="el-icon--right">
-								<fas-ellipsis-vertical />
+								<Icon icon="fa6-solid:ellipsis-vertical" />
 							</el-icon>
 						</el-button>
 
@@ -234,20 +234,29 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { I18nT, useI18n } from 'vue-i18n';
 
 import { ElButton, ElCard, ElDivider, ElDropdown, ElDropdownItem, ElDropdownMenu, ElIcon, ElTag, ElText, useNamespace } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
-import { FasArrowsRotate, FasCircleInfo, FasEllipsisVertical, FasGears, FasPlay, FasPlug, FasStop, FasTrash } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 import { useConnectorState } from '../../composables';
 import { ConnectionState, IConnector, StateColor } from '../../types';
 import ConnectorsConnectorIcon from '../connectors/connectors-connector-icon.vue';
 
 import { IConnectorsConnectorBoxProps } from './connectors-connector-box.types';
+
+const FasArrowsRotate = (): VNode => h(Icon, { icon: 'fa6-solid:arrows-rotate' });
+const FasCircleInfo = (): VNode => h(Icon, { icon: 'fa6-solid:circle-info' });
+const FasGears = (): VNode => h(Icon, { icon: 'fa6-solid:gears' });
+const FasPlay = (): VNode => h(Icon, { icon: 'fa6-solid:play' });
+const FasPlug = (): VNode => h(Icon, { icon: 'fa6-solid:plug' });
+const FasStop = (): VNode => h(Icon, { icon: 'fa6-solid:stop' });
+const FasTrash = (): VNode => h(Icon, { icon: 'fa6-solid:trash' });
 
 defineOptions({
 	name: 'ConnectorsConnectorBox',

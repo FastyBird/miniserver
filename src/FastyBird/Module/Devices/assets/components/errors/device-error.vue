@@ -10,10 +10,10 @@
 					:size="50"
 				>
 					<template #primary>
-						<fas-plug />
+						<Icon icon="fa6-solid:plug" />
 					</template>
 					<template #secondary>
-						<fas-exclamation />
+						<Icon icon="fa6-solid:exclamation" />
 					</template>
 				</fb-icon-with-child>
 			</template>
@@ -38,8 +38,8 @@ import type { ComponentPublicInstance } from 'vue';
 
 import { ElResult, ElText } from 'element-plus';
 
-import { FasExclamation, FasPlug } from '@fastybird/web-ui-icons';
 import { FbIconWithChild } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { ApplicationError } from '../../errors';
 

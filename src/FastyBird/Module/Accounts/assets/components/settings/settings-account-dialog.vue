@@ -19,7 +19,7 @@
 				</template>
 
 				<template #icon>
-					<fas-user />
+					<Icon icon="fa6-solid:user" />
 				</template>
 			</fb-dialog-header>
 		</template>
@@ -50,8 +50,8 @@ import { useI18n } from 'vue-i18n';
 import { ElDialog, ElLoading } from 'element-plus';
 
 import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
-import { FasUser } from '@fastybird/web-ui-icons';
 import { FbDialogFooter, FbDialogHeader } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { sessionStoreKey } from '../../configuration';
 import { FormResultType, FormResultTypes } from '../../types';

@@ -58,10 +58,10 @@
 							type="primary"
 						>
 							<template #primary>
-								<fas-plug />
+								<Icon icon="fa6-solid:plug" />
 							</template>
 							<template #secondary>
-								<fas-info />
+								<Icon icon="fa6-solid:info" />
 							</template>
 						</fb-icon-with-child>
 					</template>
@@ -98,17 +98,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElResult, ElScrollbar, ElSkeleton, ElSkeletonItem, ElText } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
-import { FasInfo, FasPlug, FasPlus } from '@fastybird/web-ui-icons';
 import { FbIconWithChild, FbList } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { IConnectorDevicesEmits, IConnectorDevicesProps, IDeviceData } from '../../types';
 import ConnectorDefaultConnectorDevice from '../connector-default/connector-default-connector-device.vue';
+
+const FasPlus = (): VNode => h(Icon, { icon: 'fa6-solid:plus' });
 
 defineOptions({
 	name: 'ConnectorDefaultConnectorDevices',

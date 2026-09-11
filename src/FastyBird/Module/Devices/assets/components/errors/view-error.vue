@@ -11,17 +11,17 @@
 				>
 					<template #primary>
 						<template v-if="props.type === 'connectors' || props.type === 'connector'">
-							<fas-ethernet />
+							<Icon icon="fa6-solid:ethernet" />
 						</template>
 						<template v-else-if="props.type === 'devices' || props.type === 'device'">
-							<fas-plug />
+							<Icon icon="fa6-solid:plug" />
 						</template>
 						<template v-else-if="props.type === 'channels' || props.type === 'channel'">
-							<fas-box />
+							<Icon icon="fa6-solid:box" />
 						</template>
 					</template>
 					<template #secondary>
-						<fas-exclamation />
+						<Icon icon="fa6-solid:exclamation" />
 					</template>
 				</fb-icon-with-child>
 			</template>
@@ -65,8 +65,8 @@ import { useI18n } from 'vue-i18n';
 
 import { ElResult } from 'element-plus';
 
-import { FasBox, FasEthernet, FasExclamation, FasPlug } from '@fastybird/web-ui-icons';
 import { FbIconWithChild } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { ApplicationError } from '../../errors';
 

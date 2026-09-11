@@ -12,7 +12,7 @@
 					<fas-plug-circle-bolt />
 				</template>
 				<template #secondary>
-					<fas-info />
+					<Icon icon="fa6-solid:info" />
 				</template>
 			</fb-icon-with-child>
 		</template>
@@ -58,7 +58,7 @@
 					"
 				>
 					<el-icon>
-						<fas-trash />
+						<Icon icon="fa6-solid:trash" />
 					</el-icon>
 				</div>
 			</template>
@@ -67,17 +67,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElIcon, ElResult, ElScrollbar, useNamespace } from 'element-plus';
 
-import { FasInfo, FasPlugCircleBolt, FasTrash } from '@fastybird/web-ui-icons';
 import { FbIconWithChild, FbListItem, FbSwipe, ListItemVariantTypes } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { IConnectorPlugin } from '../../types';
 
 import { IPluginsListPluginsProps } from './plugins-list-plugins.types';
+
+const FasPlugCircleBolt = (): VNode => h(Icon, { icon: 'fa6-solid:plug-circle-bolt' });
 
 defineOptions({
 	name: 'PluginsListPlugins',

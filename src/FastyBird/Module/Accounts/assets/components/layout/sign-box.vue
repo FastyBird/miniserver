@@ -59,7 +59,7 @@
 					>
 						<template #icon>
 							<el-icon :size="20">
-								<fab-github />
+								<Icon icon="fa6-brands:github" />
 							</el-icon>
 						</template>
 					</el-link>
@@ -74,7 +74,7 @@
 					>
 						<template #icon>
 							<el-icon :size="20">
-								<fab-x-twitter />
+								<Icon icon="fa6-brands:x-twitter" />
 							</el-icon>
 						</template>
 					</el-link>
@@ -89,7 +89,7 @@
 					>
 						<template #icon>
 							<el-icon :size="20">
-								<fab-facebook />
+								<Icon icon="fa6-brands:facebook" />
 							</el-icon>
 						</template>
 					</el-link>
@@ -118,7 +118,7 @@ import { useRoute } from 'vue-router';
 import { ElCard, ElDivider, ElIcon, ElLink } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { FabFacebook, FabGithub, FabXTwitter } from '@fastybird/web-ui-icons';
+import { Icon } from '@iconify/vue';
 
 // @ts-ignore
 import Logo from '../../assets/images/fastybird_bird.svg?component';

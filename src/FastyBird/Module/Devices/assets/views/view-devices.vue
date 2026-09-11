@@ -4,7 +4,7 @@
 		teleport
 	>
 		<template #icon>
-			<fas-plug />
+			<Icon icon="fa6-solid:plug" />
 		</template>
 
 		<template #title>
@@ -66,7 +66,7 @@
 					>
 						<template #icon>
 							<el-icon>
-								<fas-xmark />
+								<Icon icon="fa6-solid:xmark" />
 							</el-icon>
 						</template>
 					</fb-app-bar-button>
@@ -109,8 +109,8 @@ import { ElDrawer, ElIcon, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { FasPlug, FasXmark } from '@fastybird/web-ui-icons';
 import { AppBarButtonAlignTypes, FbAppBar, FbAppBarButton, FbAppBarHeading } from '@fastybird/web-ui-library';
+import { Icon } from '@iconify/vue';
 
 import { DevicesListAdjust, DevicesListDevices, ViewError } from '../components';
 import { useConnectors, useDeviceActions, useDevices, useRoutesNames } from '../composables';
