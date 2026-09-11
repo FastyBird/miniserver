@@ -26,7 +26,7 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Requirements
 
-PHP part of [FastyBird](https://www.fastybird.com) triggers module is tested against PHP 8.2.
+PHP part of [FastyBird](https://www.fastybird.com) triggers module is tested against PHP 8.4.
 
 JavaScript part of [FastyBird](https://www.fastybird.com) triggers module is tested
 against [ECMAScript 6](https://www.w3schools.com/JS/js_es6.asp)

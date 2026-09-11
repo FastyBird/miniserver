@@ -25,7 +25,7 @@ use function is_string;
 final class UuidRule implements ObjectMapper\Rules\Rule
 {
 
-	public function resolveArgs(array $args, ObjectMapper\Context\ArgsContext $context): UuidArgs
+	public function resolveArgs(array $args, ObjectMapper\Meta\Context\MetaFieldContext $context): UuidArgs
 	{
 		return new UuidArgs();
 	}

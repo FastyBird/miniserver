@@ -4,11 +4,11 @@ MiniServer is a single PHP (Nette) + Vue application repository, merged from the
 
 ## Requirements
 
-- **PHP**: 8.2
+- **PHP**: 8.4
 - **Node**: 24
 - **Package manager**: yarn 1 (pnpm arrives in Phase 6 of the merge -- do not document or use pnpm before then)
 
-The host you are running on may report a different PHP/Node version. It does not count: every verification command for this project runs in the PHP 8.2 / Node 24 containers described in `docs/baseline.md`.
+The host you are running on may report a different PHP/Node version. It does not count: every verification command for this project runs in the PHP 8.4 / Node 24 containers described in `docs/baseline.md`.
 
 ## Layout
 

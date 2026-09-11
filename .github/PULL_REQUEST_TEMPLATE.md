@@ -28,7 +28,7 @@
 ## Verification
 
 <!--
-Run gates in containers, not on the host. The toolchain is PHP 8.2 / Node 24 and results
+Run gates in containers, not on the host. The toolchain is PHP 8.4 / Node 24 and results
 from a newer host toolchain are not evidence. See CONTRIBUTING.md.
 
   make lint · make cs · make phpstan · make tests

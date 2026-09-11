@@ -1,6 +1,6 @@
 FROM composer:2.4 AS composer
 
-FROM php:8.2-fpm
+FROM php:8.4-fpm
 
 RUN apt-get update
 
@@ -37,6 +37,12 @@ RUN apt-get install -y  \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
+# Note: `phar` is deliberately NOT in this list. It is compiled into php:8.4-fpm by
+# default, and asking docker-php-ext-install to build it fails with
+# "config.status: error: cannot find input file: '/phar.1.in'". Nine other entries
+# below (ctype, curl, dom, fileinfo, mbstring, pdo, simplexml, xml, xmlwriter) are
+# also already built in and are redundant, but harmless -- verified with `php -m`
+# against php:8.4-fpm.
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
@@ -58,13 +64,17 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     pdo_mysql \
     pdo_pgsql \
     pgsql \
-    phar \
     simplexml \
     sockets \
     xml \
     xmlwriter \
     xsl \
     zip
+
+# Refresh the PECL channel before installing from it. Without this, PHP 8.4 builds
+# fail with `Package "xdebug" Version "3.5.3" does not have REST dependency
+# information available` -- stale channel metadata, not an incompatibility.
+RUN pecl channel-update pecl.php.net
 
 # Install APCu extension
 RUN pecl install apcu \

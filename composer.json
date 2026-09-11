@@ -16,7 +16,7 @@
     ],
     "homepage": "https://www.fastybird.com",
     "require": {
-        "php": ">=8.2.0",
+        "php": ">=8.4.0",
         "ext-bcmath": "*",
         "ext-curl": "*",
         "ext-date": "*",

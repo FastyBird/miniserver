@@ -8,7 +8,7 @@ parameters:
     # Pinned so static analysis does not silently follow whatever PHP the runner
     # happens to have. A no-op today, and that is the point: without it, Task 31's
     # runtime bump would shift PHPStan's result with no way to attribute the delta.
-    phpVersion: 80200
+    phpVersion: 80400
 
     tmpDir: ../var/tools/PHPStan
     resultCachePath: %currentWorkingDirectory%/var/tools/PHPStan/resultCache.tests.php

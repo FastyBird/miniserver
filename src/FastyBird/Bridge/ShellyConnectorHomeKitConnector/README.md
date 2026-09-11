@@ -23,7 +23,7 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Requirements
 
-Shelly connector & HomeKit connector bridge is tested against PHP 8.2.
+Shelly connector & HomeKit connector bridge is tested against PHP 8.4.
 
 ## Installation
 
