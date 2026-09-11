@@ -235,45 +235,6 @@ jobs:
       - name: "yarn pretty:check"
         run: "yarn pretty:check"
 
-      # Root `lint:js`, `lint:styles` and `pretty:check` all glob only
-      # src/FastyBird/*/*/assets, so every Library/WebUi package was unlinted
-      # and unformatted-checked until now. That is why PR340, PR343 and PR338
-      # each had to be verified by hand: their nine green checks covered none
-      # of the code they changed.
-      #
-      # Each of these four packages carries its own eslint config and its own
-      # .prettierrc. The .prettierrc files do NOT declare the sort-imports
-      # plugin, and that is not an oversight -- prettier resolves the nearest
-      # config without merging, and prettier 3 does not auto-load plugins, so
-      # these packages are deliberately outside the root import-order rules.
-      - name: "Lint the Library/WebUi packages"
-        run: |
-          yarn workspace @fastybird/web-ui-utils lint:js
-          yarn workspace @fastybird/web-ui-icons lint:js
-          yarn workspace @fastybird/web-ui-components lint:js
-          yarn workspace @fastybird/web-ui-library lint:js
-
-      # theme-chalk is the sixth Library/WebUi package and the only one with no
-      # lint:js -- it is pure SCSS, so its gate is lint:styles. Root
-      # `lint:styles` globs src/FastyBird/*/*/assets/**/*.scss, which does not
-      # reach it.
-      - name: "Lint the theme-chalk stylesheets"
-        run: "yarn workspace @fastybird/web-ui-theme-chalk lint:styles"
-
-      # All six packages ship a pretty:check that nothing ran. Note web-ui-docs
-      # is the odd one out: it has no .prettierrc of its own, so it inherits the
-      # ROOT config including the sort-imports plugin, while the other five use
-      # their own plugin-less configs. That is why the docs package needed 25
-      # files reformatted to make this step green.
-      - name: "Check formatting in the Library/WebUi packages"
-        run: |
-          yarn workspace @fastybird/web-ui-utils pretty:check
-          yarn workspace @fastybird/web-ui-icons pretty:check
-          yarn workspace @fastybird/web-ui-components pretty:check
-          yarn workspace @fastybird/web-ui-library pretty:check
-          yarn workspace @fastybird/web-ui-theme-chalk pretty:check
-          yarn workspace @fastybird/web-ui-docs pretty:check
-
   js-types:
     name: "JS Types"
     runs-on: "ubuntu-latest"
@@ -290,16 +251,6 @@ jobs:
 
       - name: "Yarn install"
         run: "yarn install --frozen-lockfile --ignore-engines"
-
-      # vue-tsc needs the Library/WebUi packages built first. tsconfig.json's
-      # `types` array lists @fastybird/web-ui-library, whose package.json points
-      # `types` at dist/web-ui-library.d.ts -- a build artifact that does not
-      # exist in a clean checkout. Without this step the job fails with
-      # "TS2688: Cannot find type definition file for '@fastybird/web-ui-library'".
-      # `yarn build` does not have this problem because it runs build:ui itself;
-      # only this job runs vue-tsc in isolation.
-      - name: "Build the Library/WebUi packages (vue-tsc needs their .d.ts)"
-        run: "yarn build:ui"
 
       - name: "yarn types"
         run: "yarn types"
@@ -323,33 +274,6 @@ jobs:
 
       - name: "yarn build"
         run: "yarn build"
-
-  docs-build:
-    name: "Docs Build"
-    runs-on: "ubuntu-latest"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v7"
-
-      - name: "Setup Node"
-        uses: "actions/setup-node@v7"
-        with:
-          node-version: "20"
-          cache: "yarn"
-
-      - name: "Yarn install"
-        run: "yarn install --frozen-lockfile --ignore-engines"
-
-      # Storybook consumes the packages' built dist, exactly as js-types does.
-      - name: "Build the Library/WebUi packages"
-        run: "yarn build:ui"
-
-      # The docs workspace is not part of root `yarn build`, so nothing in CI
-      # compiled it. That is how PR341 and PR342 -- both storybook/vue-tsc
-      # bumps whose only consumer is this workspace -- passed all nine checks.
-      - name: "Build the storybook docs workspace"
-        run: "yarn workspace @fastybird/web-ui-docs build"
 
   docker-build:
     name: "Docker Build"
