@@ -35,6 +35,62 @@ jobs:
       - name: "make lint"
         run: "make lint"
 
+  composer-validate:
+    name: "Composer Validate"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v7"
+
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.2"
+          tools: "composer:v2"
+
+      # No `composer install` on purpose: validate reads the manifests and the
+      # lock, never the vendor tree. Deliberately not --strict either -- the
+      # root manifest carries ~30 permanent "unbound version constraints
+      # (@dev)" warnings for the internal fastybird/* packages plus the
+      # endroid/qr-code exact pin, and --strict turns every one of them into
+      # exit 1. See the Makefile target, which explains this at length. This
+      # job exists because nothing in CI called that target until now.
+      - name: "make composer-validate"
+        run: "make composer-validate"
+
+  composer-audit:
+    name: "Composer Audit"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v7"
+
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.2"
+          tools: "composer:v2"
+
+      # --abandoned=report is what makes this a real gate instead of a
+      # permanently red one, and the reason it is safe to run without
+      # continue-on-error.
+      #
+      # `tools: composer:v2` installs the latest 2.x -- 2.10.3, NOT the 2.4 the
+      # dev container pins -- and since 2.7 a plain `composer audit` exits 1
+      # when any dependency is abandoned, whether or not a single advisory
+      # exists. This lock has zero advisories and six abandoned packages
+      # (doctrine/annotations, doctrine/cache, leigh/curve25519, nette/safe,
+      # nettrine/cache, php-http/message-factory), so the plain form is red for
+      # a reason that is not a vulnerability. `report` still prints them; only
+      # a genuine advisory fails the job.
+      #
+      # Note this flag needs Composer >= 2.6, so it cannot be run in the dev
+      # container, which is on 2.4 until Task 26.
+      - name: "composer audit --locked"
+        run: "composer audit --locked --abandoned=report"
+
   php-cs:
     name: "PHP Coding Standard"
     runs-on: "ubuntu-latest"
@@ -173,6 +229,30 @@ jobs:
       - name: "yarn lint:js"
         run: "yarn lint:js"
 
+      - name: "yarn lint:styles"
+        run: "yarn lint:styles"
+
+      - name: "yarn pretty:check"
+        run: "yarn pretty:check"
+
+      # Root `lint:js`, `lint:styles` and `pretty:check` all glob only
+      # src/FastyBird/*/*/assets, so every Library/WebUi package was unlinted
+      # and unformatted-checked until now. That is why PR340, PR343 and PR338
+      # each had to be verified by hand: their nine green checks covered none
+      # of the code they changed.
+      #
+      # Each of these four packages carries its own eslint config and its own
+      # .prettierrc. The .prettierrc files do NOT declare the sort-imports
+      # plugin, and that is not an oversight -- prettier resolves the nearest
+      # config without merging, and prettier 3 does not auto-load plugins, so
+      # these packages are deliberately outside the root import-order rules.
+      - name: "Lint the Library/WebUi packages"
+        run: |
+          yarn workspace @fastybird/web-ui-utils lint:js
+          yarn workspace @fastybird/web-ui-icons lint:js
+          yarn workspace @fastybird/web-ui-components lint:js
+          yarn workspace @fastybird/web-ui-library lint:js
+
   js-types:
     name: "JS Types"
     runs-on: "ubuntu-latest"
@@ -222,6 +302,33 @@ jobs:
 
       - name: "yarn build"
         run: "yarn build"
+
+  docs-build:
+    name: "Docs Build"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v7"
+
+      - name: "Setup Node"
+        uses: "actions/setup-node@v7"
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: "Yarn install"
+        run: "yarn install --frozen-lockfile --ignore-engines"
+
+      # Storybook consumes the packages' built dist, exactly as js-types does.
+      - name: "Build the Library/WebUi packages"
+        run: "yarn build:ui"
+
+      # The docs workspace is not part of root `yarn build`, so nothing in CI
+      # compiled it. That is how PR341 and PR342 -- both storybook/vue-tsc
+      # bumps whose only consumer is this workspace -- passed all nine checks.
+      - name: "Build the storybook docs workspace"
+        run: "yarn workspace @fastybird/web-ui-docs build"
 
   docker-build:
     name: "Docker Build"

@@ -19,10 +19,7 @@ export const appBarButtonAlignTypes = [
 ] as const;
 
 export type AppBarButtonAlign =
-	| AppBarButtonAlignTypes.LEFT
-	| AppBarButtonAlignTypes.RIGHT
-	| AppBarButtonAlignTypes.BACK
-	| AppBarButtonAlignTypes.NONE;
+	AppBarButtonAlignTypes.LEFT | AppBarButtonAlignTypes.RIGHT | AppBarButtonAlignTypes.BACK | AppBarButtonAlignTypes.NONE;
 
 export const appBarButtonProps = buildProps({
 	...buttonProps,
