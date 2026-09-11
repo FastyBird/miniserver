@@ -2,7 +2,7 @@
 
 ## Extension layout
 
-Every extension lives under `src/FastyBird/<Type>/<Name>/` with its own `src/` (PHP, namespace `FastyBird\<Type>\<Name>`), `tests/cases/unit`, optional `assets/` (Vue 3 UI), optional `config/`, `docs/`, `README.md`, `composer.json` and, when `assets/` exists, `package.json`. There are 35 extensions across 8 types:
+Every extension lives under `src/FastyBird/<Type>/<Name>/` with its own `src/` (PHP, namespace `FastyBird\<Type>\<Name>`), `tests/cases/unit`, optional `assets/` (Vue 3 UI), optional `config/`, `docs/`, `README.md`, `composer.json` and, when `assets/` exists, `package.json`. There are 34 extensions across 8 types:
 
 | Type | Count | Extensions |
 |---|---|---|
@@ -11,7 +11,7 @@ Every extension lives under `src/FastyBird/<Type>/<Name>/` with its own `src/` (
 | Bridge | 6 | DevicesModuleUiModule, RedisDbPluginDevicesModule, RedisDbPluginTriggersModule, ShellyConnectorHomeKitConnector, VieraConnectorHomeKitConnector, VirtualThermostatAddonHomeKitConnector |
 | Connector | 10 | FbMqtt, HomeKit, Modbus, NsPanel, Shelly, Sonoff, Tuya, Viera, Virtual, Zigbee2Mqtt |
 | Core | 3 | Application, Exchange, Tools |
-| Library | 2 | Metadata, WebUi (a nested lerna workspace, no `composer.json`) |
+| Library | 1 | Metadata |
 | Module | 4 | Accounts, Devices, Triggers, Ui |
 | Plugin | 7 | ApiKey, CouchDb, RabbitMq, RedisDb, RedisDbCache, WebServer, WsServer |
 

@@ -40,6 +40,3 @@ Paste the output that matters, or say which gates you ran and which you did not.
 - [ ] PHP gates (`lint`, `cs`, `phpstan`, `tests`)
 - [ ] Frontend gates (`build`, `types`, `lint:js`, `lint:styles`, `pretty:check`)
 - [ ] Not applicable — this change touches neither
-
-> `yarn build` rewrites `Library/WebUi/packages/icons/src/components/index.ts` in a
-> different order each run. That churn is expected; do not commit it.

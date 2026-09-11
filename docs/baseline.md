@@ -158,15 +158,6 @@ nothing.** That is deliberate. An experiment added a ninth patch target for it, 
 showed the entry was inert because a dependency's own declaration wins, and the entry was
 reverted. The file is kept for a later phase; it is not live.
 
-**`yarn build` rewrites a tracked generated file in a different order every time.**
-`src/FastyBird/Library/WebUi/packages/icons/src/components/index.ts` is a generated barrel
-file that is nevertheless committed. The icons package's `build:generate` step re-emits it
-with the same 326 exports in a different order, so a build leaves the working tree dirty
-with a 163-line diff whose content is identical once sorted. Nothing fails because of it:
-no gate asserts a clean tree, and the emitted bundle is unaffected. Do not commit the churn
-when you see it -- `git checkout --` that path. The generator should sort its output, which
-is a Phase 6 concern.
-
 ## Cold reinstall, verified 2026-09-10
 
 The PHP half was proven from scratch: `vendor/` removed entirely, then
