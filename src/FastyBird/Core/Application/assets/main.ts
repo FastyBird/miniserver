@@ -10,12 +10,12 @@ import 'virtual:uno.css';
 import { extensions } from '@config/extensions';
 import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, storesPlugin } from '@fastybird/tools';
 import { createWampV1Client } from '@fastybird/vue-wamp-v1';
-import '@fastybird/web-ui-theme-chalk/src/index.scss';
 
 import App from './App.vue';
 import i18n from './locales';
 import router from './router';
 import './styles/base.scss';
+import './styles/element-plus.scss';
 
 const pinia = createPinia();
 
