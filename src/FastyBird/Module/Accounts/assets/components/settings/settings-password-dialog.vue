@@ -13,7 +13,10 @@
 				<div :class="headerNs.e('inner')">
 					<template v-if="isXSDevice">
 						<div :class="headerNs.e('heading')">
-							<div :class="headerNs.e('title')">
+							<div
+								:class="headerNs.e('title')"
+								role="heading"
+							>
 								{{ t('accountsModule.headings.passwordChange') }}
 							</div>
 						</div>
@@ -47,7 +50,10 @@
 								<Icon icon="fa6-solid:key" />
 							</el-icon>
 
-							<div :class="headerNs.e('title')">
+							<div
+								:class="headerNs.e('title')"
+								role="heading"
+							>
 								{{ t('accountsModule.headings.passwordChange') }}
 							</div>
 						</div>

@@ -10,7 +10,10 @@
 				<div :class="headerNs.e('inner')">
 					<template v-if="!isMDDevice">
 						<div :class="headerNs.e('heading')">
-							<div :class="headerNs.e('title')">
+							<div
+								:class="headerNs.e('title')"
+								role="heading"
+							>
 								{{ t('devicesModule.headings.properties.edit') }}
 							</div>
 						</div>
@@ -44,7 +47,10 @@
 								<component :is="FasPencil" />
 							</el-icon>
 
-							<div :class="headerNs.e('title')">
+							<div
+								:class="headerNs.e('title')"
+								role="heading"
+							>
 								{{ t('devicesModule.headings.properties.edit') }}
 							</div>
 						</div>
