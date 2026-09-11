@@ -6,19 +6,62 @@
 		@closed="onClosed"
 	>
 		<template #header>
-			<fb-dialog-header
-				:layout="isMDDevice ? 'default' : isSMDevice ? 'tablet' : 'phone'"
-				:left-btn-label="t('devicesModule.buttons.close.title')"
-				:right-btn-label="isDraft ? t('devicesModule.buttons.update.title') : t('devicesModule.buttons.save.title')"
-				:icon="FasPencil"
-				@left-click="onClose"
-				@right-click="onSubmit"
-				@close="onClose"
-			>
-				<template #title>
-					{{ t('devicesModule.headings.properties.edit') }}
-				</template>
-			</fb-dialog-header>
+			<div :class="[headerNs.b(), headerNs.m('type-primary'), headerNs.m('layout-' + (isMDDevice ? 'default' : isSMDevice ? 'tablet' : 'phone'))]">
+				<div :class="headerNs.e('inner')">
+					<template v-if="!isMDDevice">
+						<div :class="headerNs.e('heading')">
+							<div :class="headerNs.e('title')">
+								{{ t('devicesModule.headings.properties.edit') }}
+							</div>
+						</div>
+
+						<div :class="headerNs.e('left-button')">
+							<el-button
+								type="default"
+								size="default"
+								text
+								@click.prevent="onClose"
+							>
+								{{ t('devicesModule.buttons.close.title') }}
+							</el-button>
+						</div>
+
+						<div :class="headerNs.e('right-button')">
+							<el-button
+								type="default"
+								size="default"
+								text
+								@click.prevent="onSubmit"
+							>
+								{{ isDraft ? t('devicesModule.buttons.update.title') : t('devicesModule.buttons.save.title') }}
+							</el-button>
+						</div>
+					</template>
+
+					<template v-else>
+						<div :class="headerNs.e('heading')">
+							<el-icon :class="headerNs.e('icon')">
+								<component :is="FasPencil" />
+							</el-icon>
+
+							<div :class="headerNs.e('title')">
+								{{ t('devicesModule.headings.properties.edit') }}
+							</div>
+						</div>
+
+						<button
+							:aria-label="t('devicesModule.buttons.close.title')"
+							:class="headerNs.e('close')"
+							type="button"
+							@click.prevent="onClose"
+						>
+							<el-icon>
+								<Icon icon="fa6-solid:xmark" />
+							</el-icon>
+						</button>
+					</template>
+				</div>
+			</div>
 		</template>
 
 		<property-default-property-settings-form
@@ -32,13 +75,8 @@
 		/>
 
 		<template #footer>
-			<fb-dialog-footer
-				:left-btn-label="t('devicesModule.buttons.close.title')"
-				:right-btn-label="isDraft ? t('devicesModule.buttons.update.title') : t('devicesModule.buttons.save.title')"
-				@left-click="onClose"
-				@right-click="onSubmit"
-			>
-				<template #left-button>
+			<footer :class="footerNs.b()">
+				<div :class="footerNs.e('left-button')">
 					<el-button
 						size="large"
 						link
@@ -48,9 +86,9 @@
 					>
 						{{ t('devicesModule.buttons.close.title') }}
 					</el-button>
-				</template>
+				</div>
 
-				<template #right-button>
+				<div :class="footerNs.e('right-button')">
 					<el-button
 						:loading="remoteFormResult === FormResultTypes.WORKING"
 						:disabled="remoteFormResult !== FormResultTypes.NONE"
@@ -63,8 +101,8 @@
 					>
 						{{ t('devicesModule.buttons.save.title') }}
 					</el-button>
-				</template>
-			</fb-dialog-footer>
+				</div>
+			</footer>
 		</template>
 	</el-dialog>
 </template>
@@ -74,10 +112,9 @@ import { computed, h, ref, watch } from 'vue';
 import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { ElButton, ElDialog } from 'element-plus';
+import { ElButton, ElDialog, ElIcon, useNamespace } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { FbDialogFooter, FbDialogHeader } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { FormResultType, FormResultTypes } from '../../types';
@@ -101,6 +138,9 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 const { isSMDevice, isMDDevice } = useBreakpoints();
+
+const headerNs = useNamespace('dialog-header');
+const footerNs = useNamespace('dialog-footer');
 
 const open = ref<boolean>(true);
 
