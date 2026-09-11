@@ -350,10 +350,7 @@
 		</template>
 
 		<template #footer>
-			<footer
-				v-if="isMDDevice"
-				:class="footerNs.b()"
-			>
+			<footer :class="footerNs.b()">
 				<div :class="footerNs.e('left-button')">
 					<el-button
 						v-if="
