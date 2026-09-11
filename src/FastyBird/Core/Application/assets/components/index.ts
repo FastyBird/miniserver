@@ -1,5 +1,6 @@
 export { default as AppBar } from './app-bar.vue';
 export * from './app-bar.types';
+export * from './app-breadcrumbs.constants';
 export { default as AppBarButton } from './app-bar-button.vue';
 export * from './app-bar-button.types';
 export { default as AppBarContent } from './app-bar-content.vue';

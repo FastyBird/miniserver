@@ -1,5 +1,8 @@
 <template>
-	<fb-breadcrumbs>
+	<teleport
+		v-if="mounted"
+		:to="`#${FB_BREADCRUMBS_TARGET}`"
+	>
 		<el-breadcrumb
 			:id="FB_BREADCRUMBS_TARGET"
 			separator="/"
@@ -23,7 +26,7 @@
 				{{ t('accountsModule.breadcrumbs.security') }}
 			</el-breadcrumb-item>
 		</el-breadcrumb>
-	</fb-breadcrumbs>
+	</teleport>
 
 	<div class="lt-sm:p-5 sm:p-2">
 		<el-page-header
@@ -137,9 +140,8 @@ import { ElAvatar, ElBreadcrumb, ElBreadcrumbItem, ElButton, ElIcon, ElPageHeade
 import get from 'lodash.get';
 import md5 from 'md5';
 
-import { AppBarHeading } from '@fastybird/application';
+import { AppBarHeading, FB_BREADCRUMBS_TARGET } from '@fastybird/application';
 import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
-import { FB_BREADCRUMBS_TARGET, FbBreadcrumbs } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
 import { useRoutesNames } from '../composables';

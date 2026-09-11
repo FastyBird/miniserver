@@ -79,10 +79,9 @@ import { ElButton, ElDropdown, ElDropdownItem, ElDropdownMenu, ElHeader, ElSwitc
 
 import { IAccountManager } from '@fastybird/tools';
 import { IAccountDetails, injectAccountManager, useDarkMode } from '@fastybird/tools';
-import { FB_BREADCRUMBS_TARGET } from '@fastybird/web-ui-library';
 import { Icon } from '@iconify/vue';
 
-import { AppGravatar } from '../components';
+import { AppGravatar, FB_BREADCRUMBS_TARGET } from '../components';
 
 import { IAppTopbarProps } from './app-topbar.types';
 
