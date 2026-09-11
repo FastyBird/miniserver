@@ -15,6 +15,35 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
+    groups:
+      typescript-eslint:
+        patterns:
+          - "typescript-eslint"
+          - "@typescript-eslint/*"
+      storybook:
+        patterns:
+          - "@storybook/*"
+          - "storybook"
+          - "@chromatic-com/storybook"
+      unocss:
+        patterns:
+          - "unocss"
+          - "@unocss/*"
+    ignore:
+      # Frozen deliberately: 1.13 added an exports map that blocks the subpath
+      # import six mapper files rely on. Lifted by Phase 6 PR7 + PR13.
+      - dependency-name: "jsona"
+      # Must track the pinned Node runtime, not npm latest. See closed PR #339.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # Coupled to UnoCSS's vite peer range; moves as one migration (PR29/PR30).
+      - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      # Coupled to the Storybook/Volar migration (PR31).
+      - dependency-name: "vue-tsc"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vue-component-meta"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -23,3 +52,7 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
+    groups:
+      actions:
+        patterns:
+          - "*"
