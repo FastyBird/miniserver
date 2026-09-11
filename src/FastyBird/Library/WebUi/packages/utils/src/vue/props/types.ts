@@ -43,9 +43,7 @@ export type ResolvePropType<T> = IfNever<
  * FbPropMergeType<StringConstructor, never, number> =>  string | number
  */
 export type FbPropMergeType<Type, Value, Validator> =
-	| IfNever<UnknownToNever<Value>, ResolvePropType<Type>, never>
-	| UnknownToNever<Value>
-	| UnknownToNever<Validator>;
+	IfNever<UnknownToNever<Value>, ResolvePropType<Type>, never> | UnknownToNever<Value> | UnknownToNever<Validator>;
 
 /**
  * Handling default values for input (constraints)

@@ -88,7 +88,7 @@ export function renderIf(condition: boolean, ...args: Parameters<typeof createBl
 }
 
 export function renderBlock(...args: Parameters<typeof createBlock>): VNode {
-	return openBlock(), createBlock(...args);
+	return (openBlock(), createBlock(...args));
 }
 
 export const getNormalizedProps = (node: VNode): Record<string, any> => {
