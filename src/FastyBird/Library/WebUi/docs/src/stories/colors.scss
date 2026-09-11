@@ -1,52 +1,52 @@
-@use "element-plus/theme-chalk/src/mixins/function" as *;
+@use 'element-plus/theme-chalk/src/mixins/function' as *;
 
 .fb-story-colors {
-    &__container {
-        margin: 3rem;
-        max-width: 100%;
-        font-family: getCssVar("font-family");
-        font-size: getCssVar("font-size-base");
-    }
+	&__container {
+		margin: 3rem;
+		max-width: 100%;
+		font-family: getCssVar('font-family');
+		font-size: getCssVar('font-size-base');
+	}
 
-    &__colors {
-        &-item {
-            height: 100px;
-            width: 250px;
-            display: inline-block;
-            margin: 0 1rem 1rem 0;
+	&__colors {
+		&-item {
+			height: 100px;
+			width: 250px;
+			display: inline-block;
+			margin: 0 1rem 1rem 0;
 
-            &-desc {
-                padding: 10px;
-                background: white;
-            }
+			&-desc {
+				padding: 10px;
+				background: white;
+			}
 
-            &-primary {
-                background-color: getCssVar("color-primary");
-            }
+			&-primary {
+				background-color: getCssVar('color-primary');
+			}
 
-            &-success {
-                background-color: getCssVar("color-success");
-            }
+			&-success {
+				background-color: getCssVar('color-success');
+			}
 
-            &-info {
-                background-color: getCssVar("color-info");
-            }
+			&-info {
+				background-color: getCssVar('color-info');
+			}
 
-            &-warning {
-                background-color: getCssVar("color-warning");
-            }
+			&-warning {
+				background-color: getCssVar('color-warning');
+			}
 
-            &-danger {
-                background-color: getCssVar("color-danger");
-            }
+			&-danger {
+				background-color: getCssVar('color-danger');
+			}
 
-            &-error {
-                background-color: getCssVar("color-error");
-            }
+			&-error {
+				background-color: getCssVar('color-error');
+			}
 
-            &-default {
-                background-color: getCssVar("color-default");
-            }
-        }
-    }
+			&-default {
+				background-color: getCssVar('color-default');
+			}
+		}
+	}
 }

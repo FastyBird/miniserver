@@ -1,52 +1,52 @@
 .fb-swipe-story-block {
-    .fb-swipe-story-block__item {
-        width: 100%;
-        box-shadow: none;
-        border: 1px solid lightgray;
-        padding: 1rem;
-    }
+	.fb-swipe-story-block__item {
+		width: 100%;
+		box-shadow: none;
+		border: 1px solid lightgray;
+		padding: 1rem;
+	}
 
-    .fb-swipe__item:not(:last-child) .fb-swipe-story-block__item {
-        border-bottom: none;
-    }
+	.fb-swipe__item:not(:last-child) .fb-swipe-story-block__item {
+		border-bottom: none;
+	}
 
-    .fb-swipe-story-block__button-trash {
-        display: flex;
-        align-items: center;
-        padding: 0 3rem;
-        cursor: pointer;
-        left: 0;
-        color: white;
-        background-color: rgb(255, 59, 48);
-    }
+	.fb-swipe-story-block__button-trash {
+		display: flex;
+		align-items: center;
+		padding: 0 3rem;
+		cursor: pointer;
+		left: 0;
+		color: white;
+		background-color: rgb(255, 59, 48);
+	}
 
-    .fb-swipe-story-block__button-close {
-        display: flex;
-        align-items: center;
-        padding: 0 3rem;
-        cursor: pointer;
-        left: 0;
-        color: white;
-        background-color: rgb(88, 86, 214);
-    }
+	.fb-swipe-story-block__button-close {
+		display: flex;
+		align-items: center;
+		padding: 0 3rem;
+		cursor: pointer;
+		left: 0;
+		color: white;
+		background-color: rgb(88, 86, 214);
+	}
 
-    .fb-swipe-story-block__button-favorite {
-        display: flex;
-        align-items: center;
-        padding: 0 3rem;
-        cursor: pointer;
-        left: 0;
-        color: white;
-        background-color: rgb(0, 122, 255);
-    }
+	.fb-swipe-story-block__button-favorite {
+		display: flex;
+		align-items: center;
+		padding: 0 3rem;
+		cursor: pointer;
+		left: 0;
+		color: white;
+		background-color: rgb(0, 122, 255);
+	}
 
-    .fb-swipe-story-block__button-edit {
-        display: flex;
-        align-items: center;
-        padding: 0 3rem;
-        cursor: pointer;
-        left: 0;
-        color: white;
-        background-color: rgb(76, 217, 100);
-    }
+	.fb-swipe-story-block__button-edit {
+		display: flex;
+		align-items: center;
+		padding: 0 3rem;
+		cursor: pointer;
+		left: 0;
+		color: white;
+		background-color: rgb(76, 217, 100);
+	}
 }

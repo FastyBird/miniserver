@@ -1,16 +1,17 @@
-import { ElButton } from "element-plus";
+import { ref } from 'vue';
 
-import { Meta, StoryObj } from "@storybook/vue3";
-import { action } from "@storybook/addon-actions";
-import { FbBottomNavigation, FbBottomNavigationHeading } from "@fastybird/web-ui-components";
+import { ElButton } from 'element-plus';
 
-import "./fb-bottom-navigation.stories.scss";
-import { ref } from "vue";
+import { FbBottomNavigation, FbBottomNavigationHeading } from '@fastybird/web-ui-components';
+import { action } from '@storybook/addon-actions';
+import { Meta, StoryObj } from '@storybook/vue3';
+
+import './fb-bottom-navigation.stories.scss';
 
 const meta: Meta<typeof FbBottomNavigation> = {
-    component: FbBottomNavigation,
-    title: "Components/Navigation/Bottom navigation",
-    excludeStories: /.*Data$/,
+	component: FbBottomNavigation,
+	title: 'Components/Navigation/Bottom navigation',
+	excludeStories: /.*Data$/,
 };
 
 export default meta;
@@ -18,10 +19,10 @@ export default meta;
 type Story = StoryObj<typeof FbBottomNavigation>;
 
 export const BasicUsage: Story = {
-    parameters: {
-        docs: {
-            source: {
-                code: `
+	parameters: {
+		docs: {
+			source: {
+				code: `
 <template>
 </template>
 
@@ -30,22 +31,22 @@ export const BasicUsage: Story = {
 
 <style scoped>
 </style>`,
-            },
-        },
-    },
-    tags: ["hideInSidebar"],
-    render: () => ({
-        components: { ElButton, FbBottomNavigation, FbBottomNavigationHeading },
-        setup: () => {
-            const show = ref<boolean>(false);
-            const onClick = action("button-clicked");
+			},
+		},
+	},
+	tags: ['hideInSidebar'],
+	render: () => ({
+		components: { ElButton, FbBottomNavigation, FbBottomNavigationHeading },
+		setup: () => {
+			const show = ref<boolean>(false);
+			const onClick = action('button-clicked');
 
-            return {
-                show,
-                onClick,
-            };
-        },
-        template: `
+			return {
+				show,
+				onClick,
+			};
+		},
+		template: `
 <div class="fb-bottom-navigation-story-block">
 	<el-button @click="show = true">Open menu</el-button>
 
@@ -93,5 +94,5 @@ export const BasicUsage: Story = {
 		</fb-bottom-navigation-content>
 	</fb-bottom-navigation>
 </div>`,
-    }),
+	}),
 };
