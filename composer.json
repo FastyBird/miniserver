@@ -234,15 +234,10 @@
                 "Bug: invalid callback definition": "tools/patches/contributte-monolog-src-loggerholder-php.patch"
             },
             "doctrine/orm": {
-                "Bug: Ramsey uuid not working - Part 1": "tools/patches/doctrine-orm-lib-doctrine-orm-persisters-entity-basicentitypersister-php.patch",
-                "Bug: Ramsey uuid not working - Part 2": "tools/patches/doctrine-orm-lib-doctrine-orm-persisters-entity-joinedsubclasspersister-php.patch",
                 "Feature: Dynamic discriminator map": "tools/patches/doctrine-orm-lib-doctrine-orm-mapping-classmetadatafactory-php.patch"
             },
             "nette/utils": {
                 "Bug: Offset check with null support": "tools/patches/nette-utils-array-offsetcheck.diff"
-            },
-            "ramsey/uuid-doctrine": {
-                "Bug: Ramsey uuid conversion fallback": "tools/patches/ramsey-uuid-doctrine-src-uuidbinarytype-php.patch"
             },
             "softcreatr/jsonpath": {
                 "Feature: enable extended queries": "tools/patches/softcreatr-jsonpath-src-filters-querymatchfilter-php.patch"
