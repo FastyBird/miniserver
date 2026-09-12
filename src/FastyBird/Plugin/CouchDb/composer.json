@@ -42,8 +42,6 @@
     "nette/utils": "^4.0",
     "orisai/object-mapper": "^0.3",
     "php-on-couch/php-on-couch": "^4.0",
-    "phpdocumentor/reflection": "^6.6",
-    "phpdocumentor/reflection-common": "^2.2",
     "psr/log": "^3.0",
     "ramsey/uuid": "^4.7"
   },
