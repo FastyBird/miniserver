@@ -11,7 +11,7 @@ interface EventEmitterInterface
 
     public function removeListener(string $event, callable $listener): void;
 
-    public function removeAllListeners(string $event = null): void;
+    public function removeAllListeners(string|null $event = null): void;
 
     public function listeners(string|null $event = null): void;
 

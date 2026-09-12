@@ -6,8 +6,9 @@ parameters:
     level: max
 
     # Pinned so static analysis does not silently follow whatever PHP the runner
-    # happens to have. A no-op today, and that is the point: without it, Task 31's
-    # runtime bump would shift PHPStan's result with no way to attribute the delta.
+    # happens to have. It tracks the runtime deliberately and by hand: bumping it
+    # in the same commit as the runtime is what makes a baseline delta
+    # attributable to the bump rather than to a runner image that drifted.
     phpVersion: 80400
 
     tmpDir: ../var/tools/PHPStan
