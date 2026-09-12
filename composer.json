@@ -89,8 +89,6 @@
         "infection/infection": "^0.27",
         "ipub/websockets": "^1.7",
         "latte/latte": "^3.0",
-        "mockery/mockery": "^1.4",
-        "ninjify/nunjuck": "^0.4",
         "orisai/coding-standard": "^3.2",
         "pds/skeleton": "^1.0",
         "php-parallel-lint/php-parallel-lint": "^1.3",
