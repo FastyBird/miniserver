@@ -50,10 +50,6 @@ final class DevicesProperties extends DataFixtures\AbstractFixture implements Da
 	{
 		$device = $this->getReference('modbus-rtu-device', Entities\Devices\Device::class);
 
-		if (!$device instanceof Entities\Devices\Device) {
-			throw new Exceptions\InvalidState('Device reference could not be loaded');
-		}
-
 		$addressProperty = new DevicesEntities\Devices\Properties\Variable(
 			$device,
 			Types\DevicePropertyIdentifier::ADDRESS->value,

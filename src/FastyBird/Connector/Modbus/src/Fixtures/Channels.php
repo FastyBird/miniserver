@@ -18,7 +18,6 @@ namespace FastyBird\Connector\Modbus\Fixtures;
 use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
-use FastyBird\Connector\Modbus\Exceptions;
 
 /**
  * Devices channels database fixture
@@ -31,16 +30,9 @@ use FastyBird\Connector\Modbus\Exceptions;
 final class Channels extends DataFixtures\AbstractFixture implements DataFixtures\DependentFixtureInterface
 {
 
-	/**
-	 * @throws Exceptions\InvalidState
-	 */
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		$device = $this->getReference('modbus-rtu-device', Entities\Devices\Device::class);
-
-		if (!$device instanceof Entities\Devices\Device) {
-			throw new Exceptions\InvalidState('Device reference could not be loaded');
-		}
 
 		for ($i = 1; $i <= 4; $i++) {
 			$channel = new Entities\Channels\Channel($device, 'channel-' . $i);
