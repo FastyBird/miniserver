@@ -52,7 +52,7 @@ nettrineDbal:
         user: root
         password: root
         charset: utf8
-        wrapperClass: \FastyBird\Module\Devices\Tests\Tools\ConnectionWrapper
+        wrapperClass: \FastyBird\Plugin\ApiKey\Tests\Tools\ConnectionWrapper
 
         types:
             uuid_binary:
