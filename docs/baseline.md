@@ -166,9 +166,20 @@ removable only once Phase 6 updates or absorbs those three libraries. Verify wit
 > `dg/bypass-finals` (never applied here at all -- `patches_applied: []` -- and it never
 > fixed a library bug), `react/event-loop` (its last consumer disappeared in 2024) and the
 > `nettrine/orm` root entry (the dead duplicate described just above; the dependency's copy
-> is still the live one and is unaffected). Eight patch files and eight root entries across
-> six packages remain, and seven packages are patched at install time -- the seventh being
-> `nettrine/orm` through `fastybird/simple-auth`.
+> is still the live one and is unaffected).
+>
+> Four more went in the two changes that followed. `doctrine/dbal` cast null to `''` for
+> every parameter bound with an explicit string type -- not only in `quote()`, which was its
+> stated purpose and has no caller in `src/`, but in `bindParameters()`, which is how
+> Doctrine ORM binds every UPDATE. The two `doctrine/orm` "Ramsey uuid" patches pre-converted
+> UUID identifiers to raw bytes before a delete, which upstream made unnecessary in 2.7.0 and
+> 2.8.2 by passing `$types` through to `Connection::delete()` and `deleteJoinTableRecords()`;
+> and the `ramsey/uuid-doctrine` patch existed only to make `UuidBinaryType` tolerate the raw
+> bytes those two produced. All three had to go in one commit: with the ORM patches applied
+> and the uuid-doctrine one removed, every delete throws `ConversionException`.
+>
+> Four patch files and four root entries across four packages remain, and five packages are
+> patched at install time -- the fifth being `nettrine/orm` through `fastybird/simple-auth`.
 >
 > Two `extra` flags changed with them. `enable-patching` is now an explicit `true` rather
 > than relying on `Patches::isPatchingEnabled()` returning true as a side effect of a
