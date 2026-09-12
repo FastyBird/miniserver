@@ -47,6 +47,7 @@ use function preg_replace;
 use function strtolower;
 use function strval;
 
+#[ORM\MappedSuperclass]
 abstract class Property implements Entity,
 	EntityParams,
 	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated

@@ -52,7 +52,7 @@ abstract class Display implements Entities\Entity,
 	protected Uuid\UuidInterface $id;
 
 	#[ORM\OneToOne(
-		mappedBy: 'display',
+		inversedBy: 'display',
 		targetEntity: Entities\Widgets\Widget::class,
 		cascade: ['persist', 'remove'],
 	)]
