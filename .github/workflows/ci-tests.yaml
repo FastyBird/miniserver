@@ -29,6 +29,19 @@ jobs:
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
           tools: "composer:v2"
 
+      # Deliberately BEFORE `composer install`. The layering checker is plain PHP with no
+      # composer dependency, no vendor/ requirement and no autoloader, and running it on a
+      # bare checkout is what keeps that a tested property instead of a claim in a comment:
+      # if somebody reintroduces a vendor/ dependency, this job fails rather than a reviewer
+      # having to notice. It is also the cheapest step here (~2s), so a dependency-direction
+      # regression is reported before a slow or broken composer install can mask or delay it.
+      #
+      # The checker exits 2, not 1, when it could not do its job -- a tripped self-check
+      # floor, an invalid tools/layering.php, a missing src/FastyBird. That distinction is
+      # what tells you from the log alone whether the boundary broke or the gate broke.
+      - name: "make layers"
+        run: "make layers"
+
       - name: "Composer install"
         run: "composer install --no-interaction --no-progress --prefer-dist"
 

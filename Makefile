@@ -20,6 +20,7 @@ INFECTION_CONFIG=tools/infection.json
 qa: ## Check code quality - coding style and static analysis
 	make cs
 	make phpstan
+	make layers
 
 cs: ## Check PHP files coding style
 	mkdir -p var/tools/PHP_CodeSniffer
@@ -31,6 +32,22 @@ csf: ## Fix PHP files coding style
 
 lint:
 	$(PRE_PHP) "vendor/bin/parallel-lint" src --exclude .git --exclude vendor
+
+# Dependency-direction gate for the 34 packages under src/FastyBird. This is what replaced
+# the 34 per-package composer manifests, which were measured to be fiction (117 undeclared
+# edges against 149 declared) and unenforceable by construction anyway.
+#
+# Note there is no "vendor/bin/" here and no `composer install` prerequisite: the checker is
+# plain PHP with no dependency on vendor/, on an autoloader or on a framework, deliberately,
+# so that it runs on a bare checkout. The CI step runs it before `composer install` to keep
+# that a tested property rather than a claim in a comment.
+#
+# `make layers ARGS=--list-edges` prints the observed edge matrix without checking anything;
+# use it to derive the rule for a newly added Bridge or Addon. It is local-only by design:
+# because it checks nothing and always exits 0, the checker refuses to run it when CI is set
+# in the environment, so it cannot be pasted into the CI step and turn the gate green.
+layers: ## Check dependency direction between the packages under src/FastyBird
+	$(PRE_PHP) php tools/check-layering.php $(ARGS)
 
 phpstan: ## Analyse code with PHPStan
 	mkdir -p var/tools
