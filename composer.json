@@ -227,13 +227,11 @@
         }
     },
     "extra": {
-        "enable-patching": false,
+        "enable-patching": true,
+        "composer-exit-on-patch-failure": true,
         "patches": {
             "contributte/monolog": {
                 "Bug: invalid callback definition": "tools/patches/contributte-monolog-src-loggerholder-php.patch"
-            },
-            "dg/bypass-finals": {
-                "Bug: mkdir check": "tools/patches/dg-bypass-finals-src-nativewrapper-php.patch"
             },
             "doctrine/dbal": {
                 "Bug: PDO:Quote null patch": "tools/patches/doctrine-dbal-src-connection-php.patch"
@@ -243,14 +241,11 @@
                 "Bug: Ramsey uuid not working - Part 2": "tools/patches/doctrine-orm-lib-doctrine-orm-persisters-entity-joinedsubclasspersister-php.patch",
                 "Feature: Dynamic discriminator map": "tools/patches/doctrine-orm-lib-doctrine-orm-mapping-classmetadatafactory-php.patch"
             },
-            "nettrine/orm": {
-                "Enable connection overrides": "tools/patches/nettrine-orm-src-managerregistry-php.patch"
+            "nette/utils": {
+                "Bug: Offset check with null support": "tools/patches/nette-utils-array-offsetcheck.diff"
             },
             "ramsey/uuid-doctrine": {
                 "Bug: Ramsey uuid conversion fallback": "tools/patches/ramsey-uuid-doctrine-src-uuidbinarytype-php.patch"
-            },
-            "react/event-loop": {
-                "Bug: Use native return type": "tools/patches/react-event-loop-src-loop-php.patch"
             },
             "softcreatr/jsonpath": {
                 "Feature: enable extended queries": "tools/patches/softcreatr-jsonpath-src-filters-querymatchfilter-php.patch"
