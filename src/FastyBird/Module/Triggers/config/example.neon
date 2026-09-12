@@ -30,7 +30,7 @@ extensions:
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
     fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
-    fbWebServer                         : FastyBird\WebServer\DI\WebServerExtension
+    fbWebServer                         : FastyBird\Plugin\WebServer\DI\WebServerExtension
     fbTools                             : FastyBird\Core\Tools\DI\ToolsExtension
     fbExchange                          : FastyBird\Core\Exchange\DI\ExchangeExtension
 
