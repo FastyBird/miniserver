@@ -47,7 +47,23 @@
         `tests`, and under the old include that was a parent of the included
         directories, which would have zeroed the filter entirely.
     -->
-    <source>
+    <!--
+        restrictDeprecations keeps the deprecation report to code this project
+        owns, which is the same default that the configuration template
+        PHPUnit itself generates carries. Collector::testTriggeredPhpDeprecation() drops any
+        deprecation whose file is outside the <include> set below.
+
+        Without it the PHP 8.4 run reports 158 deprecations and writes roughly
+        28,000 lines of detail, none of it actionable: they all come from vendor
+        code tripping the implicitly-nullable-parameter deprecation
+        (thecodingmachine/safe through infection, illuminate/* through
+        mathsolver). Those are tracked in docs/deprecations.md, not here, and
+        burying our own deprecations under them is the opposite of what the
+        report is for.
+
+        This cannot change pass or fail: failOnDeprecation is not set.
+    -->
+    <source restrictDeprecations="true">
         <include>
             <directory suffix=".php">../src/FastyBird/Addon/*/src</directory>
             <directory suffix=".php">../src/FastyBird/Automator/*/src</directory>
