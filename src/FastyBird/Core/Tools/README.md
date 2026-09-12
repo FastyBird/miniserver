@@ -16,7 +16,7 @@ and is licensed under [Apache2](http://www.apache.org/licenses/LICENSE-2.0).
 
 ## Requirements
 
-Application tools library is tested against PHP 8.2.
+Application tools library is tested against PHP 8.4.
 
 ## Installation
 

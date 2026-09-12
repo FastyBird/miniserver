@@ -23,7 +23,7 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Requirements
 
-Application library is tested against PHP 8.2.
+Application library is tested against PHP 8.4.
 
 ## Installation
 

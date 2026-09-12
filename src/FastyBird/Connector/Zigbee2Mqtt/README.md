@@ -24,7 +24,7 @@ and is licensed under [Apache2](http://www.apache.org/licenses/LICENSE-2.0).
 
 ## Requirements
 
-Zigbee2MQTT connector is tested against PHP 8.2 and require installed [Process Control](https://www.php.net/manual/en/book.pcntl.php)
+Zigbee2MQTT connector is tested against PHP 8.4 and require installed [Process Control](https://www.php.net/manual/en/book.pcntl.php)
 PHP extension.
 
 ## Installation

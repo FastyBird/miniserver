@@ -22,7 +22,7 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Requirements
 
-Redis DB & Devices module bridge is tested against PHP 8.2.
+Redis DB & Devices module bridge is tested against PHP 8.4.
 
 ## Installation
 

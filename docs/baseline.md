@@ -13,6 +13,11 @@ against the commands here before assuming you broke something.
 `t3code/analyze-miniserver-repo-merge`.
 
 **Toolchain, and it is not negotiable:** PHP 8.2, Node 20, yarn 1, Composer 2.4.
+
+> **Update (2026-09-11):** the toolchain has since moved to **PHP 8.4 and Node 24**.
+> Every measurement below was taken on PHP 8.2 / Node 20 and is left unchanged as a
+> dated record. `--ignore-engines` is no longer required.
+
 The project's constraints permit newer PHP, but a dependency set two years old does not
 behave the same three minor versions ahead. Every command below runs in a container for
 that reason. Results obtained on a host running PHP 8.5 or Node 24 are not evidence.

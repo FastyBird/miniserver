@@ -25,7 +25,7 @@ jobs:
       - name: "Setup PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
           tools: "composer:v2"
 
@@ -46,7 +46,7 @@ jobs:
       - name: "Setup PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           tools: "composer:v2"
 
       # No `composer install` on purpose: validate reads the manifests and the
@@ -70,7 +70,7 @@ jobs:
       - name: "Setup PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           tools: "composer:v2"
 
       # --abandoned=report is what makes this a real gate instead of a
@@ -102,7 +102,7 @@ jobs:
       - name: "Setup PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
           tools: "composer:v2"
 
@@ -123,7 +123,7 @@ jobs:
       - name: "Setup PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
           tools: "composer:v2"
 
@@ -199,7 +199,7 @@ jobs:
       - name: "Setup PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, sockets, sodium, sqlite3, zip"
           tools: "composer:v2"
 

@@ -32,7 +32,7 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
-    "php": ">=8.2.0",
+    "php": ">=8.4.0",
     "cweagans/composer-patches": "^1.7",
     "fastybird/application": "@dev",
     "fastybird/metadata-library": "@dev",
@@ -40,10 +40,8 @@
     "nette/bootstrap": "^3.2",
     "nette/di": "^3.2",
     "nette/utils": "^4.0",
-    "orisai/object-mapper": "^0.2",
+    "orisai/object-mapper": "^0.3",
     "php-on-couch/php-on-couch": "^4.0",
-    "phpdocumentor/reflection": "^5.3",
-    "phpdocumentor/reflection-common": "^2.2",
     "psr/log": "^3.0",
     "ramsey/uuid": "^4.7"
   },

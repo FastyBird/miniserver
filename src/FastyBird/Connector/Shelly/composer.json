@@ -32,7 +32,7 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
-    "php": ">=8.2.0",
+    "php": ">=8.4.0",
     "ext-pcntl": "*",
     "clue/multicast-react": "^1.1",
     "contributte/console": "^0.9",
@@ -45,7 +45,7 @@
     "fastybird/tools": "@dev",
     "guzzlehttp/guzzle": "^7.5",
     "nette/di": "^3.2",
-    "orisai/object-mapper": "^0.2",
+    "orisai/object-mapper": "^0.3",
     "psr/log": "^3.0",
     "ratchet/pawl": "^0.4",
     "react/async": "^4.0",

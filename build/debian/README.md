@@ -15,7 +15,7 @@ Fixed during the port:
   on 2026-09-10 confirmed that path is never created, because Composer does not link a
   root package's own `bin` entries into `vendor/bin/`.
 - `etc/systemd/system/fb-miniserver.service` and `DEBIAN/control` originally depended on
-  `php8.1`. This repository requires PHP 8.2, so both were bumped to `php8.2`.
+  `php8.1`. This repository requires PHP 8.4, so both were bumped to `php8.4`.
 
 Do not run `make_deb.sh` against a production host until this packaging has
 been installed and tested end to end against the merged repository.

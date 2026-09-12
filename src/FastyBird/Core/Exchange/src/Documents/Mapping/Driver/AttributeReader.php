@@ -36,7 +36,13 @@ final class AttributeReader
 {
 
 	/**
-	 * @param ReflectionClass<object> $class
+	 * ReflectionClass is invariant in its template type, so ReflectionClass<object>
+	 * would reject every caller that holds a narrower reflection. This reader does
+	 * not care which class it is handed, so it takes its own template instead.
+	 *
+	 * @template TClass of object
+	 *
+	 * @param ReflectionClass<TClass> $class
 	 *
 	 * @return array<class-string<T>, T>
 	 */

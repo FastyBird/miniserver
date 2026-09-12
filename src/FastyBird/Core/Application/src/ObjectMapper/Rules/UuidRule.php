@@ -25,7 +25,7 @@ use function is_string;
 final class UuidRule implements ObjectMapper\Rules\Rule
 {
 
-	public function resolveArgs(array $args, ObjectMapper\Context\ArgsContext $context): UuidArgs
+	public function resolveArgs(array $args, ObjectMapper\Meta\Context\MetaFieldContext $context): UuidArgs
 	{
 		return new UuidArgs();
 	}
@@ -44,7 +44,9 @@ final class UuidRule implements ObjectMapper\Rules\Rule
 	public function processValue(
 		mixed $value,
 		ObjectMapper\Args\Args $args,
-		ObjectMapper\Context\FieldContext $context,
+		ObjectMapper\Processing\Context\ServicesContext $services,
+		ObjectMapper\Processing\Context\PropertyContext $property,
+		ObjectMapper\Processing\Context\DynamicContext $dynamic,
 	): Uuid\UuidInterface
 	{
 		if ($value instanceof Uuid\UuidInterface) {
@@ -53,7 +55,7 @@ final class UuidRule implements ObjectMapper\Rules\Rule
 
 		if (!is_string($value) || !Uuid\Uuid::isValid($value)) {
 			throw ObjectMapper\Exception\ValueDoesNotMatch::create(
-				$this->createType($args, $context),
+				$this->createType($args, $services, $dynamic),
 				ObjectMapper\Processing\Value::of($value),
 			);
 		}
@@ -66,7 +68,8 @@ final class UuidRule implements ObjectMapper\Rules\Rule
 	 */
 	public function createType(
 		ObjectMapper\Args\Args $args,
-		ObjectMapper\Context\TypeContext $context,
+		ObjectMapper\Processing\Context\ServicesContext $services,
+		ObjectMapper\Processing\Context\DynamicContext $dynamic,
 	): ObjectMapper\Types\SimpleValueType
 	{
 		return new ObjectMapper\Types\SimpleValueType('uuid');

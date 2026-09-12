@@ -15,6 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Helpers;
 
+use DateMalformedStringException;
 use DateTimeImmutable;
 use Exception;
 use FastyBird\DateTimeFactory;
@@ -45,6 +46,9 @@ final class SecurityHash
 	{
 	}
 
+	/**
+	 * @throws DateMalformedStringException
+	 */
 	public function createKey(string $interval = '+ 1 hour'): string
 	{
 		$now = $this->clock->getNow();

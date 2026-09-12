@@ -30,7 +30,7 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
-    "php": ">=8.2.0",
+    "php": ">=8.4.0",
     "ext-pcntl": "*",
     "binsoul/net-mqtt": "^0.8",
     "contributte/console": "^0.9",
@@ -42,7 +42,7 @@
     "fastybird/metadata-library": "@dev",
     "fastybird/tools": "@dev",
     "nette/di": "^3.2",
-    "orisai/object-mapper": "^0.2",
+    "orisai/object-mapper": "^0.3",
     "psr/log": "^3.0",
     "ramsey/uuid": "^4.7",
     "react/async": "^4.0",

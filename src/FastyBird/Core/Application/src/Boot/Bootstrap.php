@@ -80,7 +80,23 @@ class Bootstrap
 		// Load parameters from environment
 		$config->addStaticParameters(self::loadEnvParameters($envPrefix));
 
-		if (!class_exists('\Tester\Environment') || getenv(Tester\Environment::VariableRunner) === false) {
+		// Tracy installs a global error handler and a global exception handler and never
+		// restores either. Under a test runner that owns those handlers itself that is
+		// actively harmful: PHPUnit's own error handler survives its restore_error_handler()
+		// because Tracy's sits on top of it, so PHPUnit keeps intercepting diagnostics
+		// raised outside any test method -- including the @rewind(STDOUT) that its own
+		// process-isolation template performs on a stdout PHP 8.4 no longer replaces with
+		// php://temp -- and turns them into NoTestCaseObjectOnCallStackException. Tracy's
+		// exception handler then renders that as "ERROR: ... Check log to see more info."
+		// instead of a usable failure.
+		//
+		// The Nette Tester half of this condition predates the move to PHPUnit and is kept
+		// so that anything still running under Tester keeps its current behaviour.
+		$underTestRunner = defined('PHPUNIT_COMPOSER_INSTALL')
+			|| class_exists('\PHPUnit\Runner\Version', false)
+			|| (class_exists('\Tester\Environment') && getenv(Tester\Environment::VariableRunner) !== false);
+
+		if (!$underTestRunner) {
 			$config->enableTracy(FB_LOGS_DIR);
 		}
 

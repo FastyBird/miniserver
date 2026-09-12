@@ -27,7 +27,7 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Requirements
 
-PHP part of [FastyBird](https://www.fastybird.com) devices module is tested against PHP 8.2 and require installed [BCMath Arbitrary Precision Mathematics](https://www.php.net/manual/en/book.bc.php) and [Process Control](https://www.php.net/manual/en/book.pcntl.php)
+PHP part of [FastyBird](https://www.fastybird.com) devices module is tested against PHP 8.4 and require installed [BCMath Arbitrary Precision Mathematics](https://www.php.net/manual/en/book.bc.php) and [Process Control](https://www.php.net/manual/en/book.pcntl.php)
 PHP extensions.
 
 JavaScript part of [FastyBird](https://www.fastybird.com) devices module is tested

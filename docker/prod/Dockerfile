@@ -45,14 +45,14 @@ RUN composer install --no-dev --prefer-dist --no-interaction --classmap-authorit
 # ============================================================
 # Stage 3: runtime
 # ============================================================
-FROM php:8.2-fpm AS runtime
+FROM php:8.4-fpm AS runtime
 
 ARG APP_PATH=/app
 
 #
-# php:8.2-fpm already compiles in curl, mbstring, simplexml, sqlite3, xml
+# php:8.4-fpm already compiles in curl, mbstring, simplexml, sqlite3, xml
 # (and date, iconv, json, openssl, session, sodium) — confirmed via `php -m`
-# on a clean php:8.2-fpm container. Asking docker-php-ext-install to rebuild
+# on a clean php:8.4-fpm container. Asking docker-php-ext-install to rebuild
 # an already-built-in extension fails ("Cannot find config.m4"), so only the
 # genuinely missing composer.json ext-* requirements are installed below,
 # plus pdo_mysql (database driver) and opcache (already active by default,

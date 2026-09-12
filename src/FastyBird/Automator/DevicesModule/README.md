@@ -22,7 +22,7 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Requirements
 
-FastyBird Devices module automator is tested against PHP 8.2 and require installed [Process Control](https://www.php.net/manual/en/book.pcntl.php)
+FastyBird Devices module automator is tested against PHP 8.4 and require installed [Process Control](https://www.php.net/manual/en/book.pcntl.php)
 PHP extension.
 
 ## Installation

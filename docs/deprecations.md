@@ -65,6 +65,30 @@ Reported by the `Composer Audit` CI job on every run. None blocks anything today
 Several arrive transitively through Doctrine and nettrine, so the Doctrine ORM 3
 upgrade will likely retire some of them without direct action.
 
+## PHP 8.4 deprecation notices from vendor
+
+Requiring nothing but `vendor/autoload.php` on PHP 8.4 emits **258** `E_DEPRECATED`
+notices, every one of them "Implicitly marking parameter `$x` as nullable is
+deprecated". They come from files composer loads eagerly through `autoload.files`,
+so they fire before any application code runs. Nothing fails on them: they are
+notices, and PHPStan reports `[OK] No errors` with all 258 present.
+
+| package | notices | reached through | scope |
+|---|---|---|---|
+| `thecodingmachine/safe` v2.5.0 | 256 | `infection/infection` 0.27.11 | dev only |
+| `illuminate/support` v9.52.16 | 2 | `mathsolver/mathsolver` | production |
+
+The 256 retire themselves with the Infection upgrade that PHP 8.2 was blocking:
+Infection's current release (0.35.4) requires `php: ^8.3` and
+`thecodingmachine/safe: ^3`, and safe 3 fixed the implicit nullables.
+
+The remaining 2 (`optional()` and `with()` in `illuminate/support/helpers.php`) are
+production and have no such path. Laravel 9 is end of life, and
+`mathsolver/mathsolver` -- required by `Core/Tools`, from a git repository rather
+than Packagist -- is also the package behind one of the two permanent
+`composer validate` warnings. Worth its own look when the dependency upgrades reach
+it.
+
 ## yarn 1
 
 Unmaintained upstream. The migration to pnpm is planned as its own track and is

@@ -35,7 +35,7 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
-    "php": ">=8.2.0",
+    "php": ">=8.4.0",
     "cweagans/composer-patches": "^1.7",
     "fastybird/application": "@dev",
     "fastybird/metadata-library": "@dev",

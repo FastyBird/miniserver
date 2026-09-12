@@ -35,7 +35,7 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
-    "php": ">=8.2.0",
+    "php": ">=8.4.0",
     "contributte/console": "^0.9",
     "contributte/monolog": "^0.5",
     "contributte/translation": "^2.0",

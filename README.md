@@ -10,7 +10,7 @@ MiniServer is a standalone application built on the [FastyBird](https://www.fast
 
 ## Requirements
 
-PHP 8.2, Node 24, yarn 1, MariaDB. Redis, CouchDB and RabbitMQ are optional -- see [docs/configuration.md](docs/configuration.md).
+PHP 8.4, Node 24, yarn 1, MariaDB. Redis, CouchDB and RabbitMQ are optional -- see [docs/configuration.md](docs/configuration.md).
 
 ## Getting started
 

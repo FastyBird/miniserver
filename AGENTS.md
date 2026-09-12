@@ -4,7 +4,7 @@ This file mirrors [CLAUDE.md](./CLAUDE.md) for agent tooling that reads `AGENTS.
 
 ## Requirements
 
-PHP 8.2, Node 24, yarn 1. The host you run on may differ; it does not count -- every verification command runs in the PHP 8.2 / Node 24 containers described in `docs/baseline.md`.
+PHP 8.4, Node 24, yarn 1. The host you run on may differ; it does not count -- every verification command runs in the PHP 8.4 / Node 24 containers described in `docs/baseline.md`.
 
 ## Commands
 
