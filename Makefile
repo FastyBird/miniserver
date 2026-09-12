@@ -41,16 +41,16 @@ phpstan: ## Analyse code with PHPStan
 
 .PHONY: tests
 tests: ## Run all tests
-	$(PRE_PHP) $(PARATEST_COMMAND) $(ARGS)
+	$(PRE_PHP_TESTS) $(PARATEST_COMMAND) $(ARGS)
 
 tests-simple: ## Run all tests
-	$(PRE_PHP) $(PHPUNIT_COMMAND) $(ARGS)
+	$(PRE_PHP_TESTS) $(PHPUNIT_COMMAND) $(ARGS)
 
 coverage-clover: ## Generate code coverage in XML format
-	$(PRE_PHP) $(PHPUNIT_COVERAGE) --coverage-clover=var/tools/Coverage/clover.xml $(ARGS)
+	$(PRE_PHP_TESTS) $(PHPUNIT_COVERAGE) --coverage-clover=var/tools/Coverage/clover.xml $(ARGS)
 
 coverage-html: ## Generate code coverage in HTML format
-	$(PRE_PHP) $(PHPUNIT_COVERAGE) --coverage-html=var/tools/Coverage/html $(ARGS)
+	$(PRE_PHP_TESTS) $(PHPUNIT_COVERAGE) --coverage-html=var/tools/Coverage/html $(ARGS)
 
 mutations: ## Check code for mutants
 	make mutations-tests
@@ -58,10 +58,10 @@ mutations: ## Check code for mutants
 
 mutations-tests:
 	mkdir -p var/tools/Coverage
-	$(PRE_PHP) $(PHPUNIT_MUTATIONS) --coverage-xml=var/tools/Coverage/xml --log-junit=var/tools/Coverage/junit.xml
+	$(PRE_PHP_TESTS) $(PHPUNIT_MUTATIONS) --coverage-xml=var/tools/Coverage/xml --log-junit=var/tools/Coverage/junit.xml
 
 mutations-infection:
-	$(PRE_PHP) vendor/bin/infection \
+	$(PRE_PHP_TESTS) vendor/bin/infection \
 		--configuration=$(INFECTION_CONFIG) \
 		--threads=$(LOGICAL_CORES) \
 		--coverage=../var/tools/Coverage \
@@ -104,6 +104,16 @@ list:
 	grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort -u | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-$(LIST_PAD)s\033[0m %s\n", $$1, $$2}'
 
 PRE_PHP=XDEBUG_MODE=off
+
+# Everything that runs the test suite loads one extra ini file on top of the
+# image's own. It has to be an ini file rather than a phpunit.xml <php><ini>
+# entry, and it has to travel through the environment, because the processes
+# PHPUnit forks for @runTestsInSeparateProcesses inherit the environment but are
+# started long before any PHPUnit configuration is applied. See
+# tools/php.d/tests.ini for what is in it and why.
+#
+# The leading colon keeps the image's own scan directory; it does not replace it.
+PRE_PHP_TESTS=$(PRE_PHP) PHP_INI_SCAN_DIR=":$(CURDIR)/tools/php.d"
 
 PARATEST_COMMAND="vendor/bin/paratest" -c $(PHPUNIT_CONFIG) --runner=WrapperRunner -p$(LOGICAL_CORES)
 PHPUNIT_COMMAND="vendor/bin/phpunit" -c $(PHPUNIT_CONFIG)
