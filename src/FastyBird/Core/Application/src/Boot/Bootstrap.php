@@ -16,7 +16,6 @@
 namespace FastyBird\Core\Application\Boot;
 
 use FastyBird\Core\Application\Exceptions;
-use Tester;
 use function array_key_exists;
 use function array_merge;
 use function array_shift;
@@ -90,11 +89,11 @@ class Bootstrap
 		// exception handler then renders that as "ERROR: ... Check log to see more info."
 		// instead of a usable failure.
 		//
-		// The Nette Tester half of this condition predates the move to PHPUnit and is kept
-		// so that anything still running under Tester keeps its current behaviour.
+		// The Nette Tester half of this condition went with ninjify/nunjuck: nothing in the
+		// tree referenced it, so the dependency was removed and class_exists('\Tester\
+		// Environment') could only ever be false.
 		$underTestRunner = defined('PHPUNIT_COMPOSER_INSTALL')
-			|| class_exists('\PHPUnit\Runner\Version', false)
-			|| (class_exists('\Tester\Environment') && getenv(Tester\Environment::VariableRunner) !== false);
+			|| class_exists('\PHPUnit\Runner\Version', false);
 
 		if (!$underTestRunner) {
 			$config->enableTracy(FB_LOGS_DIR);
