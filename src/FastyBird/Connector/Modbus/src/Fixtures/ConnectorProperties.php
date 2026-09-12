@@ -48,11 +48,7 @@ final class ConnectorProperties extends DataFixtures\AbstractFixture implements 
 	 */
 	public function load(Persistence\ObjectManager $manager): void
 	{
-		$connector = $this->getReference('modbus-rtu-connector');
-
-		if (!$connector instanceof Entities\Connectors\Connector) {
-			throw new Exceptions\InvalidState('Connector reference could not be loaded');
-		}
+		$connector = $this->getReference('modbus-rtu-connector', Entities\Connectors\Connector::class);
 
 		$clientModeProperty = new DevicesEntities\Connectors\Properties\Variable(
 			$connector,

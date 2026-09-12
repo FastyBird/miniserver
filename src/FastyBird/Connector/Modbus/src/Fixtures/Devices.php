@@ -19,7 +19,6 @@ use BadMethodCallException;
 use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
-use FastyBird\Connector\Modbus\Exceptions;
 
 /**
  * Connector devices database fixture
@@ -33,16 +32,11 @@ final class Devices extends DataFixtures\AbstractFixture implements DataFixtures
 {
 
 	/**
-	 * @throws Exceptions\InvalidState
 	 * @throws BadMethodCallException
 	 */
 	public function load(Persistence\ObjectManager $manager): void
 	{
-		$connector = $this->getReference('modbus-rtu-connector');
-
-		if (!$connector instanceof Entities\Connectors\Connector) {
-			throw new Exceptions\InvalidState('Connector reference could not be loaded');
-		}
+		$connector = $this->getReference('modbus-rtu-connector', Entities\Connectors\Connector::class);
 
 		$device = new Entities\Devices\Device(
 			'fixture-device',

@@ -21,7 +21,6 @@ use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
-use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use TypeError;
 use ValueError;
 use function is_string;
@@ -34,10 +33,6 @@ class Bridge extends Device
 	public const TYPE = 'zigbee2mqtt-connector-bridge';
 
 	public const BASE_TOPIC = 'zigbee2mqtt';
-
-	#[IPubDoctrine\Crud(required: true, writable: true)]
-	#[ORM\Column(name: 'device_identifier', type: 'string', length: 50, nullable: false)]
-	protected string $identifier;
 
 	public static function getType(): string
 	{

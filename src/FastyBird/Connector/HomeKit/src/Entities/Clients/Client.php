@@ -67,7 +67,7 @@ class Client implements DoctrineCrud\Entities\IEntity,
 
 	/** @var string|resource */
 	#[IPubDoctrine\Crud(required: true, writable: true)]
-	#[ORM\Column(name: 'client_public_key', type: 'binary', nullable: false)]
+	#[ORM\Column(name: 'client_public_key', type: 'binary', length: 255, nullable: false)]
 	private $publicKey;
 
 	#[IPubDoctrine\Crud(writable: true)]

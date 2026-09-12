@@ -9,7 +9,6 @@ use FastyBird\Core\Application\Boot;
 use FastyBird\Core\Application\Exceptions;
 use IPub\DoctrineCrud;
 use Nette;
-use Nettrine\ORM as NettrineORM;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use function array_reverse;
@@ -186,9 +185,9 @@ abstract class DbTestCase extends TestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
-	protected function getEntityManager(): NettrineORM\EntityManagerDecorator
+	protected function getEntityManager(): ORM\EntityManagerInterface
 	{
-		return $this->getContainer()->getByType(NettrineORM\EntityManagerDecorator::class);
+		return $this->getContainer()->getByType(ORM\EntityManagerInterface::class);
 	}
 
 	/**
