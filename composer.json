@@ -120,6 +120,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "FastyBird\\MiniServer\\Tests\\Cases\\Application\\": "tests/cases/application",
             "FastyBird\\Addon\\VirtualThermostat\\Tests\\Cases\\Unit\\": "src/FastyBird/Addon/VirtualThermostat/tests/cases/unit",
             "FastyBird\\Addon\\VirtualThermostat\\Tests\\Fixtures\\": "src/FastyBird/Addon/VirtualThermostat/tests/fixtures",
             "FastyBird\\Addon\\VirtualThermostat\\Tests\\Fixtures\\Dummy\\": "src/FastyBird/Addon/VirtualThermostat/tests/fixtures/dummy",
