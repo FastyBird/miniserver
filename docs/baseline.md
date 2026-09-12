@@ -162,15 +162,39 @@ repository would break `composer install` on every future checkout. It becomes
 removable only once Phase 6 updates or absorbs those three libraries. Verify with
 `grep -rl libraries-patches vendor/*/*/composer.json` returning nothing.
 
+> **Update (2026-09-12), after a full audit of all eleven patches.** Three were deleted:
+> `dg/bypass-finals` (never applied here at all -- `patches_applied: []` -- and it never
+> fixed a library bug), `react/event-loop` (its last consumer disappeared in 2024) and the
+> `nettrine/orm` root entry (the dead duplicate described just above; the dependency's copy
+> is still the live one and is unaffected). Eight patch files and eight root entries across
+> six packages remain, and seven packages are patched at install time -- the seventh being
+> `nettrine/orm` through `fastybird/simple-auth`.
+>
+> Two `extra` flags changed with them. `enable-patching` is now an explicit `true` rather
+> than relying on `Patches::isPatchingEnabled()` returning true as a side effect of a
+> non-empty `patches` block: emptying that block would otherwise disable **all** patching
+> silently, including the dependency-supplied one. And `composer-exit-on-patch-failure` is
+> now `true`, so a patch that fails to apply stops the install instead of printing a
+> warning and exiting 0. A clean `composer install` was verified green under both.
+
 **Coverage configuration is wrong.** In `tools/phpunit.xml`, the `<source><include>`
 block lists test directories rather than source directories, so coverage and mutation
 testing measure the tests themselves. Pre-existing; it makes any future coverage gate
 meaningless until corrected.
 
-**`tools/patches/nette-utils-array-offsetcheck.diff` is vendored but referenced by
-nothing.** That is deliberate. An experiment added a ninth patch target for it, evidence
-showed the entry was inert because a dependency's own declaration wins, and the entry was
-reverted. The file is kept for a later phase; it is not live.
+**`tools/patches/nette-utils-array-offsetcheck.diff` is now declared in the root.** This
+paragraph used to record that an experiment added the entry, found it inert because a
+dependency's declaration wins, and reverted it. That was right about the mechanism and
+wrong about the conclusion. Inert today is exactly what protective later looks like: the
+moment `fastybird/json-api`, `fastybird/simple-auth` and `fastybird/datetime-factory`
+become first-party source, their `extra.patches` leave the dependency graph, nothing
+declares this patch, `composer install` exits 0 in silence, and `ArrayHash::offsetExists()`
+reverts -- which breaks the explicit-null path in every Devices state manager. The entry
+was re-added on 2026-09-12 under the description key `Bug: Offset check with null support`,
+matching the dependency's key character for character. That match is load bearing: a
+differing key makes both copies gather, the second fail, `patches_applied` mismatch
+permanently, and `checkPatches()` uninstall and re-download `nette/utils` on every
+subsequent install.
 
 ## Cold reinstall, verified 2026-09-10
 
