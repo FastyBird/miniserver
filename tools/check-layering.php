@@ -660,12 +660,17 @@ foreach ($config['packageRuleRequiredFor'] as $typeName) {
  * The effective allow-set for each package: its type rule UNION its per-package rule.
  * Package rules ADD, they never subtract -- see the long comment in tools/layering.php.
  *
- * Deliberately NOT transitively closed. One of the three designs called for computing the
- * reflexive-transitive closure so that a bridge would inherit its peers' peers; that was
- * rejected because it makes the declared peer list in layering.php narrower than the set
- * actually permitted, which destroys the one property a per-package matrix has over a
- * coarse type rule. The single edge closure would have absorbed is recorded as a written
- * exception instead.
+ * Production code is deliberately NOT transitively closed. Closing it would make the
+ * declared peer list in layering.php narrower than the set actually permitted, which
+ * destroys the one property a per-package matrix has over a coarse type rule.
+ *
+ * Test containers ARE closed, in $testAllows below, and only for files under <pkg>/tests/.
+ * A Nette DI container cannot boot a service without also registering what that service
+ * depends on, so a test container is obliged to register the full closure of its peers
+ * whether the package's own code touches those classes or not. Judging a test container by
+ * the direct-peer rule therefore reports the DI system's requirements as architectural
+ * debt. Maintainer's decision, 2026-09-12; the alternative was a hand-written exception per
+ * transitive registration, which is noise that grows with every new bridge.
  */
 $allows = [];
 $declaredTargets = [];
@@ -682,6 +687,30 @@ foreach ($packages as $identifier => $package) {
 	$allows[$identifier] = $allow;
 	$declaredTargets[$identifier] = $targets;
 }
+
+/*
+ * The test-container allow-set: the reflexive-transitive closure of $allows. Iterated to a
+ * fixed point rather than recursed, so a cycle in the rules cannot produce infinite
+ * descent -- the rules are acyclic today and nothing enforces that they stay so.
+ */
+$testAllows = $allows;
+
+do {
+	$grew = false;
+
+	foreach ($testAllows as $identifier => $allow) {
+		foreach (array_keys($allow) as $target) {
+			foreach (array_keys($testAllows[$target] ?? []) as $inherited) {
+				if (array_key_exists($inherited, $testAllows[$identifier])) {
+					continue;
+				}
+
+				$testAllows[$identifier][$inherited] = true;
+				$grew = true;
+			}
+		}
+	}
+} while ($grew);
 
 /*
  * Composition roots. An example application configuration that boots one module standalone
@@ -971,6 +1000,7 @@ foreach ($packages as $identifier => &$package) {
 			$area,
 			$isCompositionRoot,
 			$allows,
+			$testAllows,
 			$contents,
 		): void {
 			++$stats['references'];
@@ -1006,7 +1036,13 @@ foreach ($packages as $identifier => &$package) {
 				return;
 			}
 
-			if (array_key_exists($target, $allows[$identifier])) {
+			/*
+			 * Test containers are judged against the transitively closed set; production
+			 * code against the direct-peer set. See the $testAllows comment above.
+			 */
+			$effective = $area === 'tests' ? $testAllows[$identifier] : $allows[$identifier];
+
+			if (array_key_exists($target, $effective)) {
 				return;
 			}
 

@@ -365,6 +365,15 @@ return [
 	'packages' => [
 
 		/*
+		 * The automator that lets the triggers module act on devices. Its PHP reaches only
+		 * Module/Triggers, but its test container must have Module/Devices registered for
+		 * those actions to resolve at all -- which is the package's entire purpose, not a
+		 * leak. Maintainer's decision, 2026-09-12: encode it as a rule rather than carry it
+		 * as a standing exception, so the intent is stated where the rules live.
+		 */
+		'Automator/DevicesModule' => ['Module/Devices'],
+
+		/*
 		 * The only addon that exists. It implements a thermostat as a virtual device, so it
 		 * is built on the Virtual connector (its entities extend the connector's entities:
 		 * Device, Preset, Sensors, Configuration, State and Actors all import
@@ -535,46 +544,6 @@ return [
 	 */
 	'exceptions' => [
 		[
-			'from' => 'Core/Application',
-			'to' => 'Module/Accounts',
-			'path' => 'src/FastyBird/Core/Application/tests/common.neon',
-			'symbols' => ['FastyBird\Module\Accounts\Tests\Tools\ConnectionWrapper'],
-			'sites' => 1,
-			'reason' => 'Copy-paste in the test container: `wrapperClass` points at Module/Accounts\' test '
-				. 'Doctrine ConnectionWrapper. This is the sharpest inversion in the repository -- the '
-				. 'bottom package of the stack naming the top layer. Core/Application already ships an '
-				. 'identical src/FastyBird/Core/Application/tests/tools/ConnectionWrapper.php; point the '
-				. 'line at \FastyBird\Core\Application\Tests\Tools\ConnectionWrapper, run the '
-				. 'Core/Application suite, and delete this entry.',
-		],
-		[
-			'from' => 'Plugin/ApiKey',
-			'to' => 'Module/Devices',
-			'path' => 'src/FastyBird/Plugin/ApiKey/tests/common.neon',
-			'symbols' => ['FastyBird\Module\Devices\Tests\Tools\ConnectionWrapper'],
-			'sites' => 1,
-			'reason' => 'The same copy-paste as Core/Application: `wrapperClass` points at Module/Devices\' '
-				. 'test ConnectionWrapper. Plugin/ApiKey already ships its own identical '
-				. 'tests/tools/ConnectionWrapper.php; point the line at '
-				. '\FastyBird\Plugin\ApiKey\Tests\Tools\ConnectionWrapper, run the ApiKey suite, and '
-				. 'delete this entry. 23 of the 25 packages that carry a test ConnectionWrapper already '
-				. 'reference their own.',
-		],
-		[
-			'from' => 'Automator/DevicesModule',
-			'to' => 'Module/Devices',
-			'path' => 'src/FastyBird/Automator/DevicesModule/tests/common.neon',
-			'symbols' => ['FastyBird\Module\Devices\DI\DevicesExtension'],
-			'sites' => 1,
-			'reason' => 'The test container registers FastyBird\Module\Devices\DI\DevicesExtension, which '
-				. 'the package has no code dependency on: its 30 source files touch only Triggers, Core '
-				. 'and Library, its SQL fixture inserts only into fb_triggers_module_* tables, and its '
-				. 'device reference is a plain UUID column rather than a Doctrine association. The '
-				. 'sibling Automator/DateTime does not register it. Delete the line, run the automator '
-				. 'suite, then delete this entry. If the maintainer decides the edge is intended '
-				. 'instead, move Module/Devices into the Automator/DevicesModule package rule.',
-		],
-		[
 			'from' => 'Connector/Virtual',
 			'to' => 'Addon/VirtualThermostat',
 			'path' => 'src/FastyBird/Connector/Virtual/tests/common.neon',
@@ -589,23 +558,6 @@ return [
 				. 'connector\'s own namespace, expect the suite\'s behaviour to change for the better, '
 				. 'then delete this entry. This must never be blessed into the rules: a connector may '
 				. 'not depend on an addon.',
-		],
-		[
-			'from' => 'Bridge/VirtualThermostatAddonHomeKitConnector',
-			'to' => 'Connector/Virtual',
-			'path' => 'src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/common.neon',
-			'symbols' => ['FastyBird\Connector\Virtual\DI\VirtualExtension'],
-			'sites' => 1,
-			'reason' => 'NOT A DEBT, and unlike the four entries above it there is nothing here to pay off '
-				. '-- do not go looking for the bug. Test DI wiring registering the transitive closure '
-				. 'of an allowed peer: the bridge depends on Addon/VirtualThermostat, whose entities '
-				. 'extend Connector/Virtual\'s, so the test container MUST register VirtualExtension for '
-				. 'Doctrine to resolve the inheritance chain. The line is correct, necessary and '
-				. 'permanent for as long as that inheritance holds. It is recorded here rather than as a '
-				. 'fourth peer in the package rule because the package rule states what the CODE depends '
-				. 'on, and the bridge\'s PHP never names the connector. Delete this entry if the addon '
-				. 'stops extending the connector\'s entities; promote it to a peer if the bridge\'s PHP '
-				. 'ever does name the connector.',
 		],
 	],
 
