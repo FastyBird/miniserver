@@ -38,7 +38,7 @@ final class Devices extends DataFixtures\AbstractFixture implements DataFixtures
 	 */
 	public function load(Persistence\ObjectManager $manager): void
 	{
-		$connector = $this->getReference('modbus-rtu-connector');
+		$connector = $this->getReference('modbus-rtu-connector', Entities\Connectors\Connector::class);
 
 		if (!$connector instanceof Entities\Connectors\Connector) {
 			throw new Exceptions\InvalidState('Connector reference could not be loaded');

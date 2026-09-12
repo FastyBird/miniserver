@@ -36,7 +36,7 @@ final class Channels extends DataFixtures\AbstractFixture implements DataFixture
 	 */
 	public function load(Persistence\ObjectManager $manager): void
 	{
-		$device = $this->getReference('modbus-rtu-device');
+		$device = $this->getReference('modbus-rtu-device', Entities\Devices\Device::class);
 
 		if (!$device instanceof Entities\Devices\Device) {
 			throw new Exceptions\InvalidState('Device reference could not be loaded');
