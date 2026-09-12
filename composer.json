@@ -233,9 +233,6 @@
             "contributte/monolog": {
                 "Bug: invalid callback definition": "tools/patches/contributte-monolog-src-loggerholder-php.patch"
             },
-            "doctrine/dbal": {
-                "Bug: PDO:Quote null patch": "tools/patches/doctrine-dbal-src-connection-php.patch"
-            },
             "doctrine/orm": {
                 "Bug: Ramsey uuid not working - Part 1": "tools/patches/doctrine-orm-lib-doctrine-orm-persisters-entity-basicentitypersister-php.patch",
                 "Bug: Ramsey uuid not working - Part 2": "tools/patches/doctrine-orm-lib-doctrine-orm-persisters-entity-joinedsubclasspersister-php.patch",
