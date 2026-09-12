@@ -27,6 +27,9 @@ parameters:
         - phpstan-bootstrap.php
 
     paths:
+        # The application-scope tier. Outside src/FastyBird because it belongs to no
+        # single package: it boots every extension at once.
+        - ../tests/cases
         - ../src/FastyBird/Addon/VirtualThermostat/tests/cases
         - ../src/FastyBird/Automator/DateTime/tests/cases
         - ../src/FastyBird/Automator/DevicesModule/tests/cases

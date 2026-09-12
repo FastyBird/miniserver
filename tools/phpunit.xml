@@ -11,7 +11,16 @@
          displayDetailsOnTestsThatTriggerDeprecations="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
 >
+    <!--
+        The application-scope tier. Everything under src/FastyBird/*/tests boots exactly ONE
+        extension, because tools/phpunit-bootstrap.php points FB_APP_DIR at <repo>/tests,
+        which has no config/ directory, so config/common.neon and its 45 extension
+        registrations are silently skipped. Production registers 22. These tests boot the
+        real thing in a child process and are the only ones that can see a defect which only
+        appears when every extension is present.
+    -->
     <testsuite name="all">
+        <directory>../tests/cases/</directory>
         <directory>../src/FastyBird/Addon/**/tests/cases/</directory>
         <directory>../src/FastyBird/Automator/**/tests/cases/</directory>
         <directory>../src/FastyBird/Bridge/**/tests/cases/</directory>
