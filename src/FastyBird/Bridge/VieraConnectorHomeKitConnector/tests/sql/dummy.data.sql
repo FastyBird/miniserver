@@ -1,29 +1,23 @@
-INSERT
-IGNORE INTO `fb_devices_module_connectors` (`connector_id`, `connector_identifier`, `connector_name`, `connector_comment`, `connector_enabled`, `connector_type`, `created_at`, `updated_at`) VALUES
+INSERT INTO `fb_devices_module_connectors` (`connector_id`, `connector_identifier`, `connector_name`, `connector_comment`, `connector_enabled`, `connector_type`, `created_at`, `updated_at`) VALUES
 (_binary 0x2775E81939F8469796B7DB9E699E7CEC, 'panasonic-tv', 'Panasonic TV Integration', null, true, 'viera-connector', '2024-08-20 11:00:00', '2024-08-20 11:00:00'),
 (_binary 0x451ab010f5004eff82899ed09e56a887, 'homekit', 'HomeKit', null, true, 'homekit-connector', '2024-08-20 11:00:00', '2024-08-20 11:00:00');
 
-INSERT
-IGNORE INTO `fb_devices_module_connectors_controls` (`control_id`, `connector_id`, `control_name`, `created_at`, `updated_at`) VALUES
+INSERT INTO `fb_devices_module_connectors_controls` (`control_id`, `connector_id`, `control_name`, `created_at`, `updated_at`) VALUES
 (_binary 0xe7c9e5834af14b86b647f179207e6456, _binary 0x2775E81939F8469796B7DB9E699E7CEC, 'reboot', '2024-08-20 11:00:00', '2024-08-20 11:00:00'),
 (_binary 0xF4B79DBC733B4C5E8406C1F6B411356D, _binary 0x2775E81939F8469796B7DB9E699E7CEC, 'discover', '2024-08-20 11:00:00', '2024-08-20 11:00:00');
 
-INSERT
-INTO `fb_devices_module_connectors_properties` (`property_id`, `connector_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`, `property_value_transformer`) VALUES
+INSERT INTO `fb_devices_module_connectors_properties` (`property_id`, `connector_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`, `property_value_transformer`) VALUES
 (_binary 0x138305B879244DE0BB5E0C06A1C8B2C8, _binary 0x2775E81939F8469796B7DB9E699E7CEC, 'generic', 'state', null, 0, 0, 'enum', null, 'running,stopped,unknown,sleeping,alert', null, null, null, null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'dynamic', null);
 
-INSERT
-INTO `fb_devices_module_devices` (`device_id`, `connector_id`, `device_category`, `device_identifier`, `device_name`, `device_comment`, `params`, `created_at`, `updated_at`, `device_type`) VALUES
+INSERT INTO `fb_devices_module_devices` (`device_id`, `connector_id`, `device_category`, `device_identifier`, `device_name`, `device_comment`, `params`, `created_at`, `updated_at`, `device_type`) VALUES
 (_binary 0x8BB73F8A006E4A0B81FE384D01C3FCA2, _binary 0x2775E81939F8469796B7DB9E699E7CEC, 'generic', '4D454930-0200-1000-8001-A81374B30314', 'Bedroom TV', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'viera-connector'),
 (_binary 0xB6114B3256C448388E3E7427CE6F8BDB, _binary 0x2775E81939F8469796B7DB9E699E7CEC, 'generic', '4D454930-0200-1000-8001-80C755230D19', 'Living Room TV', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'viera-connector'),
 (_binary 0x1D0F40BFE0234E628BEC7A5D81E40E84, _binary 0x451AB010F5004EFF82899ED09E56A887, 'generic', '4D454930-0200-1000-8001-80C755230D19', 'Living Room TV', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'viera-connector-homekit-connector-bridge');
 
-INSERT
-INTO `fb_devices_module_devices_children` (`child_device`, `parent_device`) VALUES
+INSERT INTO `fb_devices_module_devices_children` (`child_device`, `parent_device`) VALUES
 (_binary 0x1D0F40BFE0234E628BEC7A5D81E40E84, _binary 0xB6114B3256C448388E3E7427CE6F8BDB);
 
-INSERT
-INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `property_value_transformer`, `params`, `created_at`, `updated_at`, `property_type`) VALUES
+INSERT INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `property_value_transformer`, `params`, `created_at`, `updated_at`, `property_type`) VALUES
 (_binary 0x51AA41EF772547FC81D3A2C8B778679A, _binary 0x8BB73F8A006E4A0B81FE384D01C3FCA2, null, 'generic', 'state', 'State', 0, 0, 'enum', null, 'connected,disconnected,alert,unknown', null, null, null, null, null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'dynamic'),
 (_binary 0x3833C181F5FC45B597BC4F53B99BE24D, _binary 0x8BB73F8A006E4A0B81FE384D01C3FCA2, null, 'generic', 'hardware_model', 'Hardware model', 0, 0, 'string', null, null, null, null, null, 'Panasonic VIErA TX-49DX600EA', null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'variable'),
 (_binary 0x6E7F16ABC68E467182248B90609982AD, _binary 0x8BB73F8A006E4A0B81FE384D01C3FCA2, null, 'generic', 'hardware_manufacturer', 'Hardware manufacturer', 0, 0, 'string', null, null, null, null, null, 'Panasonic', null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'variable'),
@@ -45,8 +39,7 @@ INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent
 (_binary 0x441B1A39524F454CA090DE00BE0751EC, _binary 0x1D0F40BFE0234E628BEC7A5D81E40E84, null, 'generic', 'firmware_manufacturer', null, 0, 0, 'string', null, null, null, null, null, 'Panasonic', null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'variable'),
 (_binary 0xD29A68A43F9E44B8B89C7BD33A933F41, _binary 0x1D0F40BFE0234E628BEC7A5D81E40E84, null, 'generic', 'category', null, 0, 0, 'uchar', null, null, null, null, null, '31', null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'variable');
 
-INSERT
-INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_category`, `channel_identifier`, `channel_name`, `channel_comment`, `params`, `created_at`, `updated_at`, `channel_type`) VALUES
+INSERT INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_category`, `channel_identifier`, `channel_name`, `channel_comment`, `params`, `created_at`, `updated_at`, `channel_type`) VALUES
 (_binary 0xDCE21E03786D47F6B9F73E1751BD67CC, _binary 0x8BB73F8A006E4A0B81FE384D01C3FCA2, 'generic', 'television', null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'viera-connector'),
 (_binary 0xA732C52CF0A945DEB1CE2506FD60C2CF, _binary 0xB6114B3256C448388E3E7427CE6F8BDB, 'generic', 'television', null, null, null, '2024-01-14 16:55:40', '2024-01-14 16:55:40', 'viera-connector'),
 (_binary 0x26C20FA0D99A40A48DF08C8511AFAF8D, _binary 0x1D0F40BFE0234E628BEC7A5D81E40E84, 'generic', 'television_1', 'Television', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'viera-connector-homekit-connector-bridge-television'),
@@ -63,8 +56,7 @@ INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_category`
 (_binary 0xE203FAF7722F45AC97E33851D965F9F7, _binary 0x1D0F40BFE0234E628BEC7A5D81E40E84, 'generic', 'input_source_10', 'Youtube music', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'viera-connector-homekit-connector-bridge-input-source'),
 (_binary 0x11BA698903F3492DB393C1B62578EBA1, _binary 0x1D0F40BFE0234E628BEC7A5D81E40E84, 'generic', 'input_source_11', 'Disney+', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'viera-connector-homekit-connector-bridge-input-source');
 
-INSERT
-INTO `fb_devices_module_channels_properties` (`property_id`, `channel_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `property_value_transformer`, `params`, `created_at`, `updated_at`, `property_type`) VALUES
+INSERT INTO `fb_devices_module_channels_properties` (`property_id`, `channel_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `property_value_transformer`, `params`, `created_at`, `updated_at`, `property_type`) VALUES
 (_binary 0xF9C913C5FC4044A081977FB446557C4A, _binary 0xDCE21E03786D47F6B9F73E1751BD67CC, null, 'generic', 'state', 'State', 1, 1, 'bool', null, null, null, null, null, null, null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'dynamic'),
 (_binary 0x1759C57691B54254B711140C0A161CB0, _binary 0xDCE21E03786D47F6B9F73E1751BD67CC, null, 'generic', 'remote', 'Remote', 1, 0, 'string', null, null, null, null, null, null, null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'dynamic'),
 (_binary 0x2911F32966D54A4D8B98E6F65E3D104B, _binary 0xDCE21E03786D47F6B9F73E1751BD67CC, null, 'generic', 'volume', 'Volume', 1, 1, 'uchar', null, '0:100', null, null, null, null, null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'dynamic'),

@@ -1,15 +1,12 @@
-INSERT
-IGNORE INTO `fb_devices_module_connectors` (`connector_id`, `connector_identifier`, `connector_name`, `connector_comment`, `connector_enabled`, `connector_type`, `created_at`, `updated_at`) VALUES
+INSERT INTO `fb_devices_module_connectors` (`connector_id`, `connector_identifier`, `connector_name`, `connector_comment`, `connector_enabled`, `connector_type`, `created_at`, `updated_at`) VALUES
 (_binary 0xbda37bc79bd74083a925386ac5522325, 'universal-test-connector', 'Testing connector', null, true, 'dummy', '2024-08-20 11:00:00', '2024-08-20 11:00:00'),
 (_binary 0x2b1ce81f99334d52afd4bec3583e6a06, 'shelly', 'Shelly', null, true, 'shelly-connector', '2024-08-20 11:00:00', '2024-08-20 11:00:00'),
 (_binary 0x451ab010f5004eff82899ed09e56a887, 'homekit', 'HomeKit', null, true, 'homekit-connector', '2024-08-20 11:00:00', '2024-08-20 11:00:00');
 
-INSERT
-IGNORE INTO `fb_devices_module_connectors_controls` (`control_id`, `connector_id`, `control_name`, `created_at`, `updated_at`) VALUES
+INSERT INTO `fb_devices_module_connectors_controls` (`control_id`, `connector_id`, `control_name`, `created_at`, `updated_at`) VALUES
 (_binary 0xe7c9e5834af14b86b647f179207e6456, _binary 0x2b1ce81f99334d52afd4bec3583e6a06, 'reboot', '2024-08-20 11:00:00', '2024-08-20 11:00:00');
 
-INSERT
-INTO `fb_devices_module_devices` (`device_id`, `connector_id`, `device_category`, `device_identifier`, `device_name`, `device_comment`, `params`, `created_at`, `updated_at`, `device_type`) VALUES
+INSERT INTO `fb_devices_module_devices` (`device_id`, `connector_id`, `device_category`, `device_identifier`, `device_name`, `device_comment`, `params`, `created_at`, `updated_at`, `device_type`) VALUES
 (_binary 0x31AA2F24B38E4F768E691F1FD2368D92, _binary 0x2b1ce81f99334d52afd4bec3583e6a06, 'generic', '98cdac1eb419-shelly1', 'Shelly 1', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'shelly-connector'),
 (_binary 0x7ec6831d112d4145955a3e1248858e07, _binary 0x2b1ce81f99334d52afd4bec3583e6a06, 'generic', '98cdac1eb219-shelly1pm', 'Shelly 1PM', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'shelly-connector'),
 (_binary 0x643A98D7A581410AB184570D42A80104, _binary 0x2b1ce81f99334d52afd4bec3583e6a06, 'generic', 'c45bbee4c926-shellyrgbw2', 'Shelly RGBW2 White', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'shelly-connector'),
@@ -21,12 +18,10 @@ INTO `fb_devices_module_devices` (`device_id`, `connector_id`, `device_category`
 (_binary 0xe10c43a9fa3b463e983104ba23025479, _binary 0xbda37bc79bd74083a925386ac5522325, 'generic', 'universal-test-device-two', 'Actor & Sensor device', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'dummy'),
 (_binary 0x5E1D0EE098B149A2BD88A3CF09CF2A14, _binary 0x451AB010F5004EFF82899ED09E56A887, 'generic', '98cdac1eb419-shelly1', 'Shelly 1', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'shelly-connector-homekit-connector-bridge');
 
-INSERT
-INTO `fb_devices_module_devices_children` (`child_device`, `parent_device`) VALUES
+INSERT INTO `fb_devices_module_devices_children` (`child_device`, `parent_device`) VALUES
 (_binary 0x5E1D0EE098B149A2BD88A3CF09CF2A14, _binary 0x31AA2F24B38E4F768E691F1FD2368D92);
 
-INSERT
-INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`, `property_value_transformer`) VALUES
+INSERT INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`, `property_value_transformer`) VALUES
 (_binary 0x03EC292C61F2414FAE2DA8CE73B89429, _binary 0x31AA2F24B38E4F768E691F1FD2368D92, null, 'generic', 'state', null, 0, 0, 'enum', null, 'connected,disconnected,running,sleeping,stopped,lost,alert,unknown', null, null, null, null, null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'dynamic', null),
 (_binary 0x1573611BF4264678A4E29DB4FCF65B8F, _binary 0x31AA2F24B38E4F768E691F1FD2368D92, null, 'generic', 'ip_address', 'IP address', 0, 0, 'string', null, null, null, null, null, '10.10.0.172', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'variable', null),
 (_binary 0x4E6910DA3FD7453DA7CC740A21A38A0A, _binary 0x31AA2F24B38E4F768E691F1FD2368D92, null, 'generic', 'generation', 'Generation', 0, 0, 'enum', null, 'gen1,gen2', null, null, null, 'gen1', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'variable', null),
@@ -84,8 +79,7 @@ INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent
 (_binary 0xBAE23341ABA346C0A5768ECAA457625A, _binary 0x5E1D0EE098B149A2BD88A3CF09CF2A14, null, 'generic', 'category', null, 0, 0, 'uchar', null, null, null, null, null, '8', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'variable', null),
 (_binary 0xD42AC191BD9F4BB8A4129F7518000BBE, _binary 0x5E1D0EE098B149A2BD88A3CF09CF2A14, null, 'generic', 'firmware_manufacturer', null, 0, 0, 'string', null, null, null, null, null, 'FastyBird & Shelly', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'variable', null);
 
-INSERT
-IGNORE INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_category`, `channel_identifier`, `channel_name`, `channel_comment`, `params`, `created_at`, `updated_at`, `channel_type`) VALUES
+INSERT INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_category`, `channel_identifier`, `channel_name`, `channel_comment`, `params`, `created_at`, `updated_at`, `channel_type`) VALUES
 (_binary 0x0D1546A7BD704C52B81B730C91671284, _binary 0x31AA2F24B38E4F768E691F1FD2368D92, 'generic', '1_relay_0', 'Relay 0', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'shelly-connector'),
 (_binary 0x71E39857F7DD46E79A748EC4C22B19F5, _binary 0x31AA2F24B38E4F768E691F1FD2368D92, 'generic', '2_sensor_0', 'Sensor 0', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'shelly-connector'),
 (_binary 0xEFBE005880CD42348F4A669108BBCE8F, _binary 0x31AA2F24B38E4F768E691F1FD2368D92, 'generic', '3_sensor_1', 'Sensor 1', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'shelly-connector'),
@@ -125,8 +119,7 @@ IGNORE INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_ca
 (_binary 0x0df26d9652954b1084d36dc0f626e9bb, _binary 0xe10c43a9fa3b463e983104ba23025479, 'generic', 'thermometer', 'Heating element', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'dummy'),
 (_binary 0x4EED85AB619343F58CA8334841CE3327, _binary 0x5E1D0EE098B149A2BD88A3CF09CF2A14, 'generic', 'switch_1', 'Switch 1', null, null, '2024-08-20 11:00:00', '2024-08-20 11:00:00', 'shelly-connector-homekit-connector-bridge-relay');
 
-INSERT
-INTO `fb_devices_module_channels_properties` (`property_id`, `channel_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`, `property_value_transformer`) VALUES
+INSERT INTO `fb_devices_module_channels_properties` (`property_id`, `channel_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`, `property_value_transformer`) VALUES
 (_binary 0xA4B47B3297EA40D2895CD642DD3341CC, _binary 0x0D1546A7BD704C52B81B730C91671284, null, 'generic', '1101_S_output', 'Output', 1, 1, 'switch', null, 'sw|switch_on:b|1:s|on,sw|switch_off:b|:s|off,sw|switch_toggle::s|toggle', null, null, null, null, null, null, '2023-04-10 07:55:12', '2023-11-06 17:13:32', 'dynamic', null),
 (_binary 0x61A1405EA8CF4765A4D7A37398394D4A, _binary 0x0D1546A7BD704C52B81B730C91671284, null, 'generic', '2101_S_input', 'Input', 0, 1, 'bool', null, null, null, null, null, null, null, null, '2023-04-10 07:55:12', '2023-04-10 07:55:12', 'dynamic', null),
 (_binary 0x3C4F359EFB0D406991EB14A842BA3F67, _binary 0x0D1546A7BD704C52B81B730C91671284, null, 'generic', '2102_EV_inputEvent', 'Input event', 0, 1, 'enum', null, 'S,L', null, null, null, null, null, null, '2023-04-10 07:55:12', '2023-11-06 17:13:32', 'dynamic', null),

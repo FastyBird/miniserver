@@ -31,6 +31,7 @@ use function strlen;
 use function substr;
 use function time;
 use function trim;
+use const PHP_EOL;
 
 abstract class DbTestCase extends TestCase
 {
@@ -173,8 +174,19 @@ abstract class DbTestCase extends TestCase
 			foreach ($schemas as $sql) {
 				try {
 					$db->executeStatement($sql);
-				} catch (DBAL\Exception) {
-					throw new RuntimeException('Database schema could not be created');
+				} catch (DBAL\Exception $ex) {
+					// Carry the driver's message and the failing DDL. Without them this reads
+					// as an environment problem when it is almost always a mapping problem.
+					throw new RuntimeException(
+						sprintf(
+							'Database schema could not be created: %s%sFailing statement: %s',
+							$ex->getMessage(),
+							PHP_EOL,
+							$sql,
+						),
+						0,
+						$ex,
+					);
 				}
 			}
 
@@ -226,38 +238,69 @@ abstract class DbTestCase extends TestCase
 		$delimiter = ';';
 		$sql = '';
 
-		while (!feof($handle)) {
-			$content = fgets($handle);
+		try {
+			while (!feof($handle)) {
+				$content = fgets($handle);
 
-			if ($content !== false) {
-				$s = rtrim($content);
+				if ($content !== false) {
+					$s = rtrim($content);
 
-				if (substr($s, 0, 10) === 'DELIMITER ') {
-					$delimiter = substr($s, 10);
-				} elseif (substr($s, -strlen($delimiter)) === $delimiter) {
-					$sql .= substr($s, 0, -strlen($delimiter));
+					if (substr($s, 0, 10) === 'DELIMITER ') {
+						$delimiter = substr($s, 10);
+					} elseif (substr($s, -strlen($delimiter)) === $delimiter) {
+						$sql .= substr($s, 0, -strlen($delimiter));
 
-					try {
-						$db->executeQuery($sql);
+						$this->executeFixtureStatement($db, $file, $sql);
+
 						$sql = '';
-					} catch (DBAL\Exception) {
-						// File could not be loaded
+					} else {
+						$sql .= $s . "\n";
 					}
-				} else {
-					$sql .= $s . "\n";
 				}
 			}
-		}
 
-		if (trim($sql) !== '') {
-			try {
-				$db->executeQuery($sql);
-			} catch (DBAL\Exception) {
-				// File could not be loaded
+			if (trim($sql) !== '') {
+				$this->executeFixtureStatement($db, $file, $sql);
 			}
+		} finally {
+			fclose($handle);
 		}
+	}
 
-		fclose($handle);
+	/**
+	 * A fixture that cannot load is a broken test, not a warning. This used to be a try with
+	 * an empty catch, and the statement buffer was reset inside that try -- so a failing
+	 * statement both vanished and took the rest of the file with it, the next line being
+	 * concatenated onto the broken SQL.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 */
+	private function executeFixtureStatement(DBAL\Connection $db, string $file, string $sql): void
+	{
+		try {
+			$db->executeStatement($sql);
+		} catch (DBAL\Exception $ex) {
+			$statement = trim($sql);
+
+			// Show both ends. A fixture INSERT names every column before it reaches a single
+			// value, so a plain head-truncation would report the column list and never the
+			// row that actually failed.
+			$excerpt = strlen($statement) > 520
+				? substr($statement, 0, 260) . ' [...] ' . substr($statement, -260)
+				: $statement;
+
+			throw new Exceptions\InvalidArgument(
+				sprintf(
+					'Fixture "%s" could not be loaded: %s%sFailing statement: %s',
+					$file,
+					$ex->getMessage(),
+					PHP_EOL,
+					$excerpt,
+				),
+				0,
+				$ex,
+			);
+		}
 	}
 
 	/**

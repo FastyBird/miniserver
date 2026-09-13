@@ -177,7 +177,7 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 					'd58fe894-0d1c-4bf0-bff5-a190cab20e5c' => 22.3, // target_sensor_1
 					'e2b98261-2a05-483d-be7c-ac3afe3888b2' => 24.0, // floor_sensor_1
 					'17627f14-ebbf-4bc1-88fd-e8fc32d3e5de' => 22.0, // target_temperature - manual
-					'1e196c5c-a469-4ec7-95e7-c4bb48d58fe0' => 17.0, // target_temperature - preset_away
+					'a6eb0f6c-c240-4956-b16d-7ada1f337189' => 17.0, // target_temperature - preset_away
 					'767ddcf6-24c5-48b0-baaa-e8c7a90d3dc0' => 20.0, // target_temperature - preset_eco
 					'15d157d1-0ec7-42a7-9683-51678de1ce9a' => 22.0, // target_temperature - preset_home
 					'a326ba38-d188-4eac-a6ad-43bdcc84a730' => Types\HvacMode::HEAT->value, // hvac_mode
@@ -234,7 +234,7 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 					'd58fe894-0d1c-4bf0-bff5-a190cab20e5c' => 21.7, // target_sensor_1
 					'e2b98261-2a05-483d-be7c-ac3afe3888b2' => 22.0, // floor_sensor_1
 					'17627f14-ebbf-4bc1-88fd-e8fc32d3e5de' => 22.0, // target_temperature - manual
-					'1e196c5c-a469-4ec7-95e7-c4bb48d58fe0' => 17.0, // target_temperature - preset_away
+					'a6eb0f6c-c240-4956-b16d-7ada1f337189' => 17.0, // target_temperature - preset_away
 					'767ddcf6-24c5-48b0-baaa-e8c7a90d3dc0' => 20.0, // target_temperature - preset_eco
 					'15d157d1-0ec7-42a7-9683-51678de1ce9a' => 22.0, // target_temperature - preset_home
 					'a326ba38-d188-4eac-a6ad-43bdcc84a730' => Types\HvacMode::HEAT->value, // hvac_mode
@@ -291,7 +291,7 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 					'd58fe894-0d1c-4bf0-bff5-a190cab20e5c' => 21.6, // target_sensor_1
 					'e2b98261-2a05-483d-be7c-ac3afe3888b2' => 22.0, // floor_sensor_1
 					'17627f14-ebbf-4bc1-88fd-e8fc32d3e5de' => 22.0, // target_temperature - manual
-					'1e196c5c-a469-4ec7-95e7-c4bb48d58fe0' => 17.0, // target_temperature - preset_away
+					'a6eb0f6c-c240-4956-b16d-7ada1f337189' => 17.0, // target_temperature - preset_away
 					'767ddcf6-24c5-48b0-baaa-e8c7a90d3dc0' => 20.0, // target_temperature - preset_eco
 					'15d157d1-0ec7-42a7-9683-51678de1ce9a' => 22.0, // target_temperature - preset_home
 					'a326ba38-d188-4eac-a6ad-43bdcc84a730' => Types\HvacMode::HEAT->value, // hvac_mode
@@ -348,7 +348,7 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 					'd58fe894-0d1c-4bf0-bff5-a190cab20e5c' => 22.3, // target_sensor_1
 					'e2b98261-2a05-483d-be7c-ac3afe3888b2' => 22.0, // floor_sensor_1
 					'17627f14-ebbf-4bc1-88fd-e8fc32d3e5de' => 22.0, // target_temperature - manual
-					'1e196c5c-a469-4ec7-95e7-c4bb48d58fe0' => 17.0, // target_temperature - preset_away
+					'a6eb0f6c-c240-4956-b16d-7ada1f337189' => 17.0, // target_temperature - preset_away
 					'767ddcf6-24c5-48b0-baaa-e8c7a90d3dc0' => 20.0, // target_temperature - preset_eco
 					'15d157d1-0ec7-42a7-9683-51678de1ce9a' => 22.0, // target_temperature - preset_home
 					'a326ba38-d188-4eac-a6ad-43bdcc84a730' => Types\HvacMode::HEAT->value, // hvac_mode
@@ -405,7 +405,7 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 					'd58fe894-0d1c-4bf0-bff5-a190cab20e5c' => 22.0, // target_sensor_1
 					'e2b98261-2a05-483d-be7c-ac3afe3888b2' => 23.0, // floor_sensor_1
 					'17627f14-ebbf-4bc1-88fd-e8fc32d3e5de' => 22.0, // target_temperature - manual
-					'1e196c5c-a469-4ec7-95e7-c4bb48d58fe0' => 17.0, // target_temperature - preset_away
+					'a6eb0f6c-c240-4956-b16d-7ada1f337189' => 17.0, // target_temperature - preset_away
 					'767ddcf6-24c5-48b0-baaa-e8c7a90d3dc0' => 20.0, // target_temperature - preset_eco
 					'15d157d1-0ec7-42a7-9683-51678de1ce9a' => 22.0, // target_temperature - preset_home
 					'a326ba38-d188-4eac-a6ad-43bdcc84a730' => Types\HvacMode::HEAT->value, // hvac_mode
@@ -446,7 +446,7 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 					'd58fe894-0d1c-4bf0-bff5-a190cab20e5c' => 22.0, // target_sensor_1
 					'e2b98261-2a05-483d-be7c-ac3afe3888b2' => 23.0, // floor_sensor_1
 					'17627f14-ebbf-4bc1-88fd-e8fc32d3e5de' => 22.0, // target_temperature - manual
-					'1e196c5c-a469-4ec7-95e7-c4bb48d58fe0' => 17.0, // target_temperature - preset_away
+					'a6eb0f6c-c240-4956-b16d-7ada1f337189' => 17.0, // target_temperature - preset_away
 					'767ddcf6-24c5-48b0-baaa-e8c7a90d3dc0' => 20.0, // target_temperature - preset_eco
 					'15d157d1-0ec7-42a7-9683-51678de1ce9a' => 22.0, // target_temperature - preset_home
 					'a326ba38-d188-4eac-a6ad-43bdcc84a730' => Types\HvacMode::HEAT->value, // hvac_mode
@@ -487,7 +487,7 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 					'd58fe894-0d1c-4bf0-bff5-a190cab20e5c' => 21.6, // target_sensor_1
 					'e2b98261-2a05-483d-be7c-ac3afe3888b2' => 31.0, // floor_sensor_1
 					'17627f14-ebbf-4bc1-88fd-e8fc32d3e5de' => 22.0, // target_temperature - manual
-					'1e196c5c-a469-4ec7-95e7-c4bb48d58fe0' => 17.0, // target_temperature - preset_away
+					'a6eb0f6c-c240-4956-b16d-7ada1f337189' => 17.0, // target_temperature - preset_away
 					'767ddcf6-24c5-48b0-baaa-e8c7a90d3dc0' => 20.0, // target_temperature - preset_eco
 					'15d157d1-0ec7-42a7-9683-51678de1ce9a' => 22.0, // target_temperature - preset_home
 					'a326ba38-d188-4eac-a6ad-43bdcc84a730' => Types\HvacMode::HEAT->value, // hvac_mode

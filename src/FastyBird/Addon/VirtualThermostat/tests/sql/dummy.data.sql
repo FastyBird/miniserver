@@ -1,26 +1,21 @@
-INSERT
-IGNORE INTO `fb_devices_module_connectors` (`connector_id`, `connector_identifier`, `connector_name`, `connector_comment`, `connector_enabled`, `connector_type`, `created_at`, `updated_at`) VALUES
+INSERT INTO `fb_devices_module_connectors` (`connector_id`, `connector_identifier`, `connector_name`, `connector_comment`, `connector_enabled`, `connector_type`, `created_at`, `updated_at`) VALUES
 (_binary 0x2b1ce81f99334d52afd4bec3583e6a06, 'virtual', 'Virtual', null, true, 'virtual-connector', '2023-10-15 11:00:00', '2023-10-15 11:00:00'),
 (_binary 0xbda37bc79bd74083a925386ac5522325, 'universal-test-connector', 'Testing connector', null, true, 'dummy', '2023-10-15 11:00:00', '2023-10-15 11:00:00');
 
-INSERT
-IGNORE INTO `fb_devices_module_connectors_controls` (`control_id`, `connector_id`, `control_name`, `created_at`, `updated_at`) VALUES
+INSERT INTO `fb_devices_module_connectors_controls` (`control_id`, `connector_id`, `control_name`, `created_at`, `updated_at`) VALUES
 (_binary 0xe7c9e5834af14b86b647f179207e6456, _binary 0x2b1ce81f99334d52afd4bec3583e6a06, 'reboot', '2023-10-15 11:00:00', '2023-10-15 11:00:00');
 
-INSERT
-IGNORE INTO `fb_devices_module_devices` (`device_id`, `connector_id`, `device_category`, `device_identifier`, `device_name`, `device_comment`, `params`, `created_at`, `updated_at`, `device_type`) VALUES
+INSERT INTO `fb_devices_module_devices` (`device_id`, `connector_id`, `device_category`, `device_identifier`, `device_name`, `device_comment`, `params`, `created_at`, `updated_at`, `device_type`) VALUES
 (_binary 0x552cea8a0e8141d9be2f839b079f315e, _binary 0x2b1ce81f99334d52afd4bec3583e6a06, 'generic', 'thermostat-office', 'Thermostat - Office', null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'virtual-thermostat-addon'),
 (_binary 0x495a7b6804284bdcb098dca416f03363, _binary 0xbda37bc79bd74083a925386ac5522325, 'generic', 'universal-test-device', 'Actor & Sensor device', null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dummy');
 
-INSERT
-IGNORE INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`) VALUES
+INSERT INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`) VALUES
 (_binary 0x580a6d7c45174821a6562810ae876898, _binary 0x552cea8a0e8141d9be2f839b079f315e, null, 'generic', 'hardware_model', null, 0, 0, 'string', null, null, null, null, null, 'virtual-thermostat', null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'variable'),
 (_binary 0xc24e65c8610a437db7097de3127695e3, _binary 0x552cea8a0e8141d9be2f839b079f315e, null, 'generic', 'state', null, 0, 0, 'enum', null, 'connected,disconnected,alert,unknown', null, null, null, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
 (_binary 0x4412b0eaafba41c3a9d07d3b04abf61c, _binary 0x552cea8a0e8141d9be2f839b079f315e, null, 'generic', 'hardware_mac_address', null, 0, 0, 'string', null, null, null, null, null, '9f:c7:60:c3:c8:bd:64', null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'variable'),
 (_binary 0xdb3dc98d0ea744ad8be3397dd48f62b4, _binary 0x552cea8a0e8141d9be2f839b079f315e, null, 'generic', 'hardware_manufacturer', null, 0, 0, 'string', null, null, null, null, null, 'FastyBird', null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'variable');
 
-INSERT
-IGNORE INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_category`, `channel_identifier`, `channel_name`, `channel_comment`, `params`, `created_at`, `updated_at`, `channel_type`) VALUES
+INSERT INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_category`, `channel_identifier`, `channel_name`, `channel_comment`, `params`, `created_at`, `updated_at`, `channel_type`) VALUES
 (_binary 0xc2c572b3324844daaca0fd329e1d9418, _binary 0x552cea8a0e8141d9be2f839b079f315e, 'generic', 'configuration', null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'virtual-thermostat-addon-configuration'),
 (_binary 0xb453987ebbf446fc830f6448b19d9665, _binary 0x552cea8a0e8141d9be2f839b079f315e, 'generic', 'state', null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'virtual-thermostat-addon-state'),
 (_binary 0x29e4d707142d422499830e568f259639, _binary 0x552cea8a0e8141d9be2f839b079f315e, 'generic', 'sensors', null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'virtual-thermostat-addon-sensors'),
@@ -31,12 +26,11 @@ IGNORE INTO `fb_devices_module_channels` (`channel_id`, `device_id`, `channel_ca
 (_binary 0x9791d405104c449583a1ffca996924ba, _binary 0x552cea8a0e8141d9be2f839b079f315e, 'generic', 'preset_home', null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'virtual-thermostat-addon-preset'),
 (_binary 0x6ecec6b9a48a48918d61d552e63e5f5a, _binary 0x495a7b6804284bdcb098dca416f03363, 'generic', 'thermometer', 'Heating element', null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dummy');
 
-INSERT
-IGNORE INTO `fb_devices_module_channels_properties` (`property_id`, `channel_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`) VALUES
+INSERT INTO `fb_devices_module_channels_properties` (`property_id`, `channel_id`, `parent_id`, `property_category`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_step`, `property_value`, `property_default`, `params`, `created_at`, `updated_at`, `property_type`) VALUES
 (_binary 0x9c5e5a5f1b5d4394a9b9199f1701efac, _binary 0x6ecec6b9a48a48918d61d552e63e5f5a, null, 'generic', 'opening_sensor', 'Temperature', 0, 1, 'float', '°C', null, null, null, null, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
 (_binary 0x1e196c5ca4694ec795e7c4bb48d58fe0, _binary 0x6ecec6b9a48a48918d61d552e63e5f5a, null, 'generic', 'floor_sensor', 'Floor temperature', 0, 1, 'float', '°C', null, null, null, null, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
 (_binary 0x11807caa082c468b8a1b88ba8a715ca1, _binary 0x6ecec6b9a48a48918d61d552e63e5f5a, null, 'generic', 'heater', 'Switch', 1, 1, 'bool', null, null, null, null, null, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
-(_binary 0x1e196c5ca4694ec795e7c4bb48d58fe0, _binary 0xc55dcc2f43c84f03862ea5a2c5ba91c4, null, 'generic', 'target_room_temperature', null, 1, 1, 'float', null, '7:35', null, null, 0.1, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
+(_binary 0xa6eb0f6cc2404956b16d7ada1f337189, _binary 0xc55dcc2f43c84f03862ea5a2c5ba91c4, null, 'generic', 'target_room_temperature', null, 1, 1, 'float', null, '7:35', null, null, 0.1, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
 (_binary 0x767ddcf624c548b0baaae8c7a90d3dc0, _binary 0xe1cb79d9f61840ac9576258a501a98be, null, 'generic', 'target_room_temperature', null, 1, 1, 'float', null, '7:35', null, null, 0.1, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
 (_binary 0xf0b8100f5ddb4abd8015d0dbf9a11aa0, _binary 0xb453987ebbf446fc830f6448b19d9665, null, 'generic', 'preset_mode', null, 0, 1, 'enum', null, 'manual,away,eco,home', null, null, null, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
 (_binary 0xa74d06a48eb2440e8bb06ec54a0bf93c, _binary 0xb453987ebbf446fc830f6448b19d9665, null, 'generic', 'current_room_temperature', null, 0, 1, 'float', null, '7:1000', null, null, 0.1, null, null, null, '2023-10-15 11:00:00', '2023-10-15 11:00:00', 'dynamic'),
