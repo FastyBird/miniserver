@@ -36,6 +36,7 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
+    "fastybird/doctrine-orm-query-library": "@dev",
     "php": ">=8.4.0",
     "ext-pcntl": "*",
     "contributte/console": "^0.9",
@@ -46,7 +47,7 @@
     "fastybird/exchange": "@dev",
     "fastybird/json-api": "^0.19",
     "fastybird/metadata-library": "@dev",
-    "fastybird/simple-auth": "^0.14",
+    "fastybird/simple-auth": "@dev",
     "fastybird/tools": "@dev",
     "ipub/slim-router": "^0.2",
     "nettrine/dbal": "^0.8",

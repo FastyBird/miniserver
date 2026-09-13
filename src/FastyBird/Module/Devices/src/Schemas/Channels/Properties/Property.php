@@ -20,6 +20,7 @@ use Exception;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Utilities as ToolsUtilities;
 use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
@@ -27,7 +28,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Schemas;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
@@ -178,7 +178,7 @@ abstract class Property extends JsonApiSchemas\JsonApi
 	 * @return array<Entities\Channels\Properties\Property>
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 */
 	protected function getChildren(Entities\Channels\Properties\Property $property): array
 	{

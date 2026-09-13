@@ -17,10 +17,10 @@ namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
+use FastyBird\Library\DoctrineOrmQuery;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Types;
-use IPub\DoctrineOrmQuery;
 use Ramsey\Uuid;
 use function in_array;
 

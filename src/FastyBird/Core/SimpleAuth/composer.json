@@ -1,0 +1,41 @@
+{
+  "name": "fastybird/simple-auth",
+  "type": "library",
+  "description": "PSR-7 authentication & authorization utils",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "FastyBird s.r.o.",
+      "email": "code@fastybird.com",
+      "homepage": "https://www.fastybird.com"
+    },
+    {
+      "name": "Adam Kadlec",
+      "email": "adam.kadlec@fastybird.com"
+    }
+  ],
+  "require": {
+    "casbin/casbin": "^3.23",
+    "contributte/event-dispatcher": "^0.9",
+    "ext-openssl": "*",
+    "fastybird/datetime-factory": "^0.7",
+    "fastybird/doctrine-orm-query-library": "@dev",
+    "ipub/doctrine-crud": "^5.1",
+    "ipub/slim-router": "^0.2.0",
+    "latte/latte": "^3.0",
+    "lcobucci/jwt": "^4.2",
+    "nette/application": "^3.1",
+    "nette/bootstrap": "^3.1",
+    "nette/di": "^3.0",
+    "nette/utils": "^3.2||^4.0",
+    "php": ">=8.4.0",
+    "ramsey/uuid": "^4.2",
+    "ramsey/uuid-doctrine": "^1.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "FastyBird\\Core\\SimpleAuth\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}

@@ -19,9 +19,9 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
+use FastyBird\Library\DoctrineOrmQuery;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Queries;
-use IPub\DoctrineOrmQuery;
 use Nette;
 use function is_array;
 

@@ -6,13 +6,13 @@ use Doctrine\DBAL;
 use Error;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Tests;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -29,8 +29,8 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -70,8 +70,8 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -132,8 +132,8 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws ToolsExceptions\InvalidArgument

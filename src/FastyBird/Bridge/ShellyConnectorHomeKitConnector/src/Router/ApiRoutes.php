@@ -17,9 +17,9 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
+use FastyBird\Core\SimpleAuth\Middleware as SimpleAuthMiddleware;
 use FastyBird\Library\Metadata;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
-use FastyBird\SimpleAuth\Middleware as SimpleAuthMiddleware;
 use IPub\SlimRouter\Routing;
 
 /**

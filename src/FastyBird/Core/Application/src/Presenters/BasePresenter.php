@@ -17,7 +17,7 @@ namespace FastyBird\Core\Application\Presenters;
 
 use FastyBird\Core\Application\Exceptions;
 use FastyBird\Core\Application\UI;
-use FastyBird\SimpleAuth\Application as SimpleAuthApplication;
+use FastyBird\Core\SimpleAuth\Application as SimpleAuthApplication;
 use Nette\Application;
 use function preg_match;
 

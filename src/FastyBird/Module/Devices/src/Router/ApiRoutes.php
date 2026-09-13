@@ -15,11 +15,11 @@
 
 namespace FastyBird\Module\Devices\Router;
 
+use FastyBird\Core\SimpleAuth\Middleware as SimpleAuthMiddleware;
 use FastyBird\Library\Metadata;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Middleware;
-use FastyBird\SimpleAuth\Middleware as SimpleAuthMiddleware;
 use IPub\SlimRouter\Routing;
 
 /**

@@ -16,13 +16,13 @@
 namespace FastyBird\Module\Accounts\Schemas\Roles;
 
 use Exception;
+use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\JsonApi\Schemas as JsonApis;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;
-use FastyBird\SimpleAuth\Models as SimpleAuthModels;
 use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 use function count;

@@ -27,7 +27,7 @@ extensions:
     ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
-    fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
+    fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
     fbWebServer                         : FastyBird\Plugin\WebServer\DI\WebServerExtension
     fbTools                             : FastyBird\Core\Tools\DI\ToolsExtension
     fbExchange                          : FastyBird\Core\Exchange\DI\ExchangeExtension
@@ -76,7 +76,7 @@ nettrineOrmAttributes:
 fbSimpleAuth:
     token:
         issuer: com.fastybird.accounts-module
-        signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
+        signature: '%security.signature%'                  # generate your own, e.g. openssl rand -base64 32
     enable:
         middleware: true
         doctrine:

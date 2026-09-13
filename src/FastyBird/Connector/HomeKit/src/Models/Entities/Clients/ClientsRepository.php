@@ -23,7 +23,7 @@ use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use IPub\DoctrineOrmQuery;
+use FastyBird\Library\DoctrineOrmQuery;
 use Nette;
 use function is_array;
 

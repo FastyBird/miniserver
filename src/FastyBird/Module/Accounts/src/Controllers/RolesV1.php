@@ -17,8 +17,10 @@ namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
 use Exception;
+use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Entities;
@@ -27,10 +29,8 @@ use FastyBird\Module\Accounts\Hydrators;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;
 use FastyBird\Module\Accounts\Schemas;
-use FastyBird\SimpleAuth\Models as SimpleAuthModels;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Psr\Http\Message;
 use Throwable;
 use function strtolower;
@@ -60,7 +60,7 @@ final class RolesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 */
 	public function index(
@@ -77,8 +77,8 @@ final class RolesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -166,8 +166,8 @@ final class RolesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */

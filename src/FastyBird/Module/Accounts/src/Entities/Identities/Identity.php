@@ -16,11 +16,11 @@
 namespace FastyBird\Module\Accounts\Entities\Identities;
 
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Types;
-use FastyBird\SimpleAuth\Security as SimpleAuthSecurity;
 use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use IPub\DoctrineTimestampable;
 use Nette\Utils;

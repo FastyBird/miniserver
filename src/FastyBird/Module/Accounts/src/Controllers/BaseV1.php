@@ -22,6 +22,8 @@ use FastyBird\DateTimeFactory;
 use FastyBird\JsonApi\Builder as JsonApiBuilder;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Library\DoctrineOrmQuery\ResultSet;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Router;
@@ -29,8 +31,6 @@ use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\DoctrineCrud;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
-use IPub\DoctrineOrmQuery\ResultSet;
 use IPub\JsonAPIDocument;
 use Nette;
 use Nette\Localization;
@@ -254,7 +254,7 @@ abstract class BaseV1
 	/**
 	 * @param DoctrineCrud\Entities\IEntity|array<DoctrineCrud\Entities\IEntity>|ResultSet<Entities\Entity>|null $data
 	 *
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 */
 	protected function buildResponse(

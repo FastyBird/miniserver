@@ -18,6 +18,7 @@ namespace FastyBird\Module\Devices\Schemas\Channels\Properties;
 use Exception;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
@@ -27,7 +28,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Schemas;
 use FastyBird\Module\Devices\Types;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
@@ -105,7 +105,7 @@ final class Dynamic extends Property
 	 *
 	 * @return iterable<string, mixed>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\InvalidArgument

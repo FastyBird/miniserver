@@ -21,6 +21,7 @@ use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Exceptions;
@@ -32,7 +33,6 @@ use FastyBird\Module\Devices\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette\Utils;
 use Psr\Http\Message;
 use Ramsey\Uuid;
@@ -338,8 +338,8 @@ final class ChannelPropertiesV1 extends BaseV1
 	/**
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
 	 * @throws InvalidArgumentException

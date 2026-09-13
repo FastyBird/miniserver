@@ -6,16 +6,16 @@ use Contributte\Translation;
 use Doctrine\Persistence;
 use Error;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\SimpleAuth;
+use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Accounts\Commands;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Tests;
-use FastyBird\SimpleAuth;
-use FastyBird\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\SimpleAuth\Security as SimpleAuthSecurity;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -31,8 +31,8 @@ final class CreateAccountTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Console\Exception\CommandNotFoundException
 	 * @throws Console\Exception\LogicException
 	 * @throws Exceptions\InvalidArgument

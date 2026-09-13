@@ -22,7 +22,7 @@ extensions:
     nettrineOrmConsole                  : Nettrine\ORM\DI\OrmConsoleExtension
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
+    fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
 
 services:
     - {factory: IPub\SlimRouter\Http\ResponseFactory}
