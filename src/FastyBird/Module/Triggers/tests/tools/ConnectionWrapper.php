@@ -7,13 +7,11 @@ use Doctrine\DBAL;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Driver;
 use WeakReference;
-use function getenv;
+use function bin2hex;
 use function getmypid;
-use function is_string;
-use function md5;
+use function random_bytes;
 use function register_shutdown_function;
 use function sprintf;
-use function time;
 
 class ConnectionWrapper extends DBAL\Connection
 {
@@ -32,9 +30,15 @@ class ConnectionWrapper extends DBAL\Connection
 		EventManager|null $eventManager = null,
 	)
 	{
-		$this->dbName = is_string(getenv('TEST_TOKEN'))
-			? 'fb_test_' . getmypid() . md5((string) time()) . getenv('TEST_TOKEN')
-			: 'fb_test_' . getmypid() . md5((string) time());
+		// Unique per connection, not per process-second.
+		//
+		// This used to be getmypid() plus md5(time()), which is a single value for a whole
+		// second within one process. Two connections opened in the same second in the same
+		// process therefore shared a name, and the second one's connect() would DROP and
+		// re-CREATE the first one's database out from under it. That cannot happen while
+		// every DbTestCase runs in its own forked process, and becomes live the moment they
+		// share one. The pid is kept so a stray database is still traceable to a process.
+		$this->dbName = 'fb_test_' . getmypid() . '_' . bin2hex(random_bytes(6));
 
 		unset($params['dbname']);
 
