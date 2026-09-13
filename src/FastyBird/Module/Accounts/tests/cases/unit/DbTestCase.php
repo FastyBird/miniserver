@@ -21,7 +21,6 @@ use function fclose;
 use function feof;
 use function fgets;
 use function fopen;
-use function getmypid;
 use function in_array;
 use function md5;
 use function rtrim;
@@ -29,7 +28,6 @@ use function set_time_limit;
 use function sprintf;
 use function strlen;
 use function substr;
-use function time;
 use function trim;
 use const PHP_EOL;
 
@@ -130,12 +128,13 @@ abstract class DbTestCase extends TestCase
 		$vendorDir = defined('FB_VENDOR_DIR') ? constant('FB_VENDOR_DIR') : $rootDir . '/../vendor';
 
 		$config = ApplicationBoot\Bootstrap::boot();
-		$config->setForceReloadContainer();
-		$config->setTempDirectory(FB_TEMP_DIR);
+		// Per package, because several caches under the temp directory use a fixed filename
+		// and would otherwise collide now that the directory is shared. The translation
+		// catalogue is the clearest case: Symfony names it from a hash of the fallback
+		// locales alone, which every package configures identically, and with debugMode off
+		// the ConfigCache has no resource checkers and treats any existing file as fresh.
+		$config->setTempDirectory(FB_TEMP_DIR . '/' . md5($rootDir));
 
-		$config->addStaticParameters(
-			['container' => ['class' => 'SystemContainer_' . getmypid() . md5((string) time())]],
-		);
 		$config->addStaticParameters(['appDir' => $rootDir, 'wwwDir' => $rootDir, 'vendorDir' => $vendorDir]);
 
 		$config->addConfig(__DIR__ . '/../../common.neon');
@@ -339,7 +338,7 @@ abstract class DbTestCase extends TestCase
 	{
 		$this->getDb()->close();
 
-		$this->container = null; // Fatal error: Cannot redeclare class SystemContainer
+		$this->container = null; // Release the container; the next test builds its own instance
 		$this->isDatabaseSetUp = false;
 
 		parent::tearDown();
