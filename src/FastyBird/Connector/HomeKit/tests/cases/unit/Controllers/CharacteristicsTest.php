@@ -22,16 +22,17 @@ use InvalidArgumentException;
 use IPub\SlimRouter\Http as SlimRouterHttp;
 use Nette;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use z4kn4fein\SemVer;
 use function call_user_func;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class CharacteristicsTest extends Tests\Cases\Unit\DbTestCase
 {
 
@@ -95,9 +96,8 @@ final class CharacteristicsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider characteristicsRead
 	 */
+	#[DataProvider('characteristicsRead')]
 	public function testRead(string $url, int $statusCode, string $fixture): void
 	{
 		$middleware = $this->getContainer()->getByType(Middleware\Router::class);

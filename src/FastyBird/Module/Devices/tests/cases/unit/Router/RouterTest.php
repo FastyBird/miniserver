@@ -12,6 +12,9 @@ use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use IPub\SlimRouter;
 use Nette;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 
@@ -19,10 +22,8 @@ const VALID_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZmFzdH
 	. 'yNzkwNWQzMDRjIiwiaWF0IjoxNTg1NzQyNDAwLCJleHAiOjE1ODU3NDk2MDAsInVzZXIiOiI1ZTc5ZWZiZi1iZDBkLTViN2MtNDZlZi1iZmJkZWZiZmJkMzQiLCJyb2xlcyI6WyJhZG1pb'
 	. 'mlzdHJhdG9yIl19.QH_Oo_uzTXAb3pNnHvXYnnX447nfVq2_ggQ9ZxStu4s';
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class RouterTest extends Tests\Cases\Unit\DbTestCase
 {
 
@@ -40,9 +41,8 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
-	 *
-	 * @dataProvider prefixedRoutes
 	 */
+	#[DataProvider('prefixedRoutes')]
 	public function testPrefixedRoutes(string $url, string $token, int $statusCode): void
 	{
 		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);

@@ -15,12 +15,12 @@ use FastyBird\Module\Accounts\Schemas;
 use FastyBird\Module\Accounts\Subscribers;
 use FastyBird\Module\Accounts\Tests;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class AccountsModuleExtensionTest extends Tests\Cases\Unit\DbTestCase
 {
 

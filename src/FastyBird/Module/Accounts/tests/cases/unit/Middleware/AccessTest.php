@@ -14,13 +14,14 @@ use IPub\SlimRouter;
 use IPub\SlimRouter\Http as SlimRouterHttp;
 use Nette;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class AccessTest extends Tests\Cases\Unit\DbTestCase
 {
 
@@ -32,9 +33,8 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider permissionAnnotation
 	 */
+	#[DataProvider('permissionAnnotation')]
 	public function testPermissionAnnotation(
 		string $url,
 		string $method,

@@ -15,6 +15,7 @@ use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\DI;
+use PHPUnit\Framework\Attributes\DataProvider;
 use React\EventLoop;
 use RuntimeException;
 use function array_key_exists;
@@ -66,9 +67,8 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
-	 *
-	 * @dataProvider processThermostatData
 	 */
+	#[DataProvider('processThermostatData')]
 	public function testProcess(array $readInitialStates, array $expectedWriteEntities): void
 	{
 		$channelPropertiesStatesManager = $this->createMock(DevicesModels\States\ChannelPropertiesManager::class);

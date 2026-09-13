@@ -9,11 +9,11 @@ use FastyBird\Automator\DevicesModule\Subscribers;
 use FastyBird\Automator\DevicesModule\Tests;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class DevicesModuleExtensionTest extends Tests\Cases\Unit\BaseTestCase
 {
 

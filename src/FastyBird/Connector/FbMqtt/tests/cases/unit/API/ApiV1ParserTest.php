@@ -6,6 +6,7 @@ use FastyBird\Connector\FbMqtt\API;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid;
 use Throwable;
@@ -17,9 +18,8 @@ final class ApiV1ParserTest extends TestCase
 	 * @param array<string, bool|float|int|string|array<string>> $expected
 	 *
 	 * @throws Exceptions\ParseMessage
-	 *
-	 * @dataProvider parseDeviceAttributesProvider
 	 */
+	#[DataProvider('parseDeviceAttributesProvider')]
 	public function testParseDeviceAttribute(
 		Uuid\UuidInterface $connectorId,
 		string $topic,
@@ -96,9 +96,8 @@ final class ApiV1ParserTest extends TestCase
 	 * @param array<string, bool|float|int|string|array<string>> $expected
 	 *
 	 * @throws Exceptions\ParseMessage
-	 *
-	 * @dataProvider parseDeviceHardwareInfoProvider
 	 */
+	#[DataProvider('parseDeviceHardwareInfoProvider')]
 	public function testParseDeviceHardwareInfo(
 		Uuid\UuidInterface $connectorId,
 		string $topic,
@@ -179,9 +178,8 @@ final class ApiV1ParserTest extends TestCase
 	 * @param array<string, bool|float|int|string|array<string>> $expected
 	 *
 	 * @throws Exceptions\ParseMessage
-	 *
-	 * @dataProvider parseDeviceFirmwareInfoProvider
 	 */
+	#[DataProvider('parseDeviceFirmwareInfoProvider')]
 	public function testParseDeviceFirmwareInfo(
 		Uuid\UuidInterface $connectorId,
 		string $topic,
@@ -236,9 +234,8 @@ final class ApiV1ParserTest extends TestCase
 	 * @param array<string, bool|float|int|string|array<string>> $expected
 	 *
 	 * @throws Exceptions\ParseMessage
-	 *
-	 * @dataProvider parseDevicePropertiesProvider
 	 */
+	#[DataProvider('parseDevicePropertiesProvider')]
 	public function testParseDeviceProperties(
 		Uuid\UuidInterface $connectorId,
 		string $topic,
@@ -279,9 +276,8 @@ final class ApiV1ParserTest extends TestCase
 	 * @param array<string, bool|float|int|string|array<string>> $expected
 	 *
 	 * @throws Exceptions\ParseMessage
-	 *
-	 * @dataProvider parseDevicePropertiesAttributesProvider
 	 */
+	#[DataProvider('parseDevicePropertiesAttributesProvider')]
 	public function testParseDevicePropertiesAttributes(
 		Uuid\UuidInterface $connectorId,
 		string $topic,
@@ -362,9 +358,9 @@ final class ApiV1ParserTest extends TestCase
 	 *
 	 * @throws Exceptions\ParseMessage
 	 *
-	 * @dataProvider parseDeviceAttributesInvalidProvider
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[DataProvider('parseDeviceAttributesInvalidProvider')]
 	public function testParseDeviceAttributeNotValid(
 		string $topic,
 		string $exception,
@@ -400,9 +396,9 @@ final class ApiV1ParserTest extends TestCase
 	 *
 	 * @throws Exceptions\ParseMessage
 	 *
-	 * @dataProvider parseDeviceHardwareInfoInvalidProvider
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[DataProvider('parseDeviceHardwareInfoInvalidProvider')]
 	public function testParseDeviceHardwareInfoNotValid(
 		string $topic,
 		string $exception,
@@ -438,9 +434,9 @@ final class ApiV1ParserTest extends TestCase
 	 *
 	 * @throws Exceptions\ParseMessage
 	 *
-	 * @dataProvider parseDeviceFirmwareInfoInvalidProvider
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[DataProvider('parseDeviceFirmwareInfoInvalidProvider')]
 	public function testParseDeviceFirmwareInfoNotValid(
 		string $topic,
 		string $exception,
@@ -475,9 +471,8 @@ final class ApiV1ParserTest extends TestCase
 	 * @param array<string, bool|float|int|string|array<string>> $expected
 	 *
 	 * @throws Exceptions\ParseMessage
-	 *
-	 * @dataProvider parseChannelAttributesProvider
 	 */
+	#[DataProvider('parseChannelAttributesProvider')]
 	public function testParseChannelAttributes(
 		Uuid\UuidInterface $connectorId,
 		string $topic,
@@ -545,9 +540,8 @@ final class ApiV1ParserTest extends TestCase
 	 * @param array<string, bool|float|int|string|array<string>> $expected
 	 *
 	 * @throws Exceptions\ParseMessage
-	 *
-	 * @dataProvider parseChannelPropertiesProvider
 	 */
+	#[DataProvider('parseChannelPropertiesProvider')]
 	public function testParseChannelProperties(
 		Uuid\UuidInterface $connectorId,
 		string $topic,
@@ -589,9 +583,8 @@ final class ApiV1ParserTest extends TestCase
 	 * @param array<string, bool|float|int|string|array<string>> $expected
 	 *
 	 * @throws Exceptions\ParseMessage
-	 *
-	 * @dataProvider parseChannelPropertiesAttributesProvider
 	 */
+	#[DataProvider('parseChannelPropertiesAttributesProvider')]
 	public function testParseChannelPropertiesAttributes(
 		Uuid\UuidInterface $connectorId,
 		string $topic,
@@ -675,9 +668,9 @@ final class ApiV1ParserTest extends TestCase
 	 *
 	 * @throws Exceptions\ParseMessage
 	 *
-	 * @dataProvider parseChannelAttributesInvalidProvider
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[DataProvider('parseChannelAttributesInvalidProvider')]
 	public function testParseChannelAttributeNotValid(
 		string $topic,
 		string $exception,

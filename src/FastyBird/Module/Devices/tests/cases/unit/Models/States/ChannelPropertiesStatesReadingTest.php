@@ -14,6 +14,7 @@ use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types;
 use Nette\DI;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid;
 
 final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTestCase
@@ -30,9 +31,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 	 * @throws DI\MissingServiceException
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
-	 *
-	 * @dataProvider readStates
 	 */
+	#[DataProvider('readStates')]
 	public function testReadState(
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
 		Documents\Channels\Properties\Dynamic|null $parent,
@@ -90,9 +90,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 	 * @throws DI\MissingServiceException
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
-	 *
-	 * @dataProvider getStates
 	 */
+	#[DataProvider('getStates')]
 	public function testGetState(
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
 		Documents\Channels\Properties\Dynamic|null $parent,

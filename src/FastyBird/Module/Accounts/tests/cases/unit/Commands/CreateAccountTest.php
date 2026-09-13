@@ -17,15 +17,15 @@ use FastyBird\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\SimpleAuth\Security as SimpleAuthSecurity;
 use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use RuntimeException;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class CreateAccountTest extends Tests\Cases\Unit\DbTestCase
 {
 

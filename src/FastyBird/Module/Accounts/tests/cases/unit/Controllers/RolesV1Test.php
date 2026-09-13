@@ -15,14 +15,15 @@ use IPub\SlimRouter;
 use IPub\SlimRouter\Http as SlimRouterHttp;
 use Nette;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use function file_get_contents;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class RolesV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
@@ -38,9 +39,8 @@ final class RolesV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider rolesRead
 	 */
+	#[DataProvider('rolesRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
 		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
@@ -219,9 +219,8 @@ final class RolesV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider rolesUpdate
 	 */
+	#[DataProvider('rolesUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
 		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);

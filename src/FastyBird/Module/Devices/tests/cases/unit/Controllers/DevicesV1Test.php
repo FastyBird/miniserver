@@ -13,14 +13,15 @@ use IPub\SlimRouter;
 use IPub\SlimRouter\Http as SlimRouterHttp;
 use Nette;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use function file_get_contents;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class DevicesV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
@@ -31,9 +32,8 @@ final class DevicesV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider devicesRead
 	 */
+	#[DataProvider('devicesRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
 		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
@@ -183,9 +183,8 @@ final class DevicesV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider devicesCreate
 	 */
+	#[DataProvider('devicesCreate')]
 	public function testCreate(
 		string $url,
 		string|null $token,
@@ -343,9 +342,8 @@ final class DevicesV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider devicesUpdate
 	 */
+	#[DataProvider('devicesUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
 		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
@@ -450,9 +448,8 @@ final class DevicesV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider devicesDelete
 	 */
+	#[DataProvider('devicesDelete')]
 	public function testDelete(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
 		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);

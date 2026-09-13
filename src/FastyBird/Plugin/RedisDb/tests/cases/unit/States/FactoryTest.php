@@ -8,6 +8,7 @@ use FastyBird\Plugin\RedisDb\States;
 use FastyBird\Plugin\RedisDb\Tests\Fixtures\Dummy\DummyState;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid;
 use stdClass;
@@ -23,9 +24,8 @@ final class FactoryTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider createStateValidDocumentData
 	 */
+	#[DataProvider('createStateValidDocumentData')]
 	public function testCreateEntity(string $class, array $data): void
 	{
 		$raw = new stdClass();
@@ -71,9 +71,8 @@ final class FactoryTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider createStateInvalidDocumentData
 	 */
+	#[DataProvider('createStateInvalidDocumentData')]
 	public function testCreateEntityFail(string $class, array $data, string $exception): void
 	{
 		$raw = new stdClass();

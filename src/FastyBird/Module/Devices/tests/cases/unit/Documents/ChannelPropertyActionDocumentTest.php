@@ -8,6 +8,7 @@ use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Tests;
 use Nette;
+use PHPUnit\Framework\Attributes\DataProvider;
 use function file_get_contents;
 
 final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestCase
@@ -20,9 +21,8 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 	 * @throws ApplicationExceptions\Mapping
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
-	 *
-	 * @dataProvider channelProperty
 	 */
+	#[DataProvider('channelProperty')]
 	public function testCreateDocument(string $data, string $class): void
 	{
 		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);
@@ -39,9 +39,8 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 	 * @throws ApplicationExceptions\Mapping
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
-	 *
-	 * @dataProvider channelPropertyInvalid
 	 */
+	#[DataProvider('channelPropertyInvalid')]
 	public function testCreateDocumentInvalid(string $data): void
 	{
 		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);

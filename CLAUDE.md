@@ -29,6 +29,8 @@ make csf                # PHP_CodeSniffer, auto-fix
 make lint                # php-parallel-lint
 make phpstan             # PHPStan, level max
 make tests                # PHPUnit via paratest
+make rector              # preview the PHPUnit annotation-to-attribute conversion (dry run)
+make rectorf             # apply it, then `make csf` -- Rector emits FQNs the standard rejects
 make composer-validate   # composer validate, root and every extension -- deliberately NOT --strict (two pre-existing warnings are permanent, see Makefile)
 
 # JS

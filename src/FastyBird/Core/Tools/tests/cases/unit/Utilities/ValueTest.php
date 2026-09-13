@@ -7,6 +7,7 @@ use FastyBird\Core\Tools\Exceptions;
 use FastyBird\Core\Tools\Formats as ToolsFormats;
 use FastyBird\Core\Tools\Utilities as ToolsUtilities;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 use ValueError;
@@ -20,9 +21,8 @@ final class ValueTest extends TestCase
 	 * @throws Exceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
-	 *
-	 * @dataProvider normalizeValue
 	 */
+	#[DataProvider('normalizeValue')]
 	public function testNormalizeValue(
 		MetadataTypes\DataType $dataType,
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong

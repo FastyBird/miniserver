@@ -11,12 +11,12 @@ use FastyBird\Connector\HomeKit\Tests;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use IPub\DoctrineOrmQuery;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class ClientsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 {
 

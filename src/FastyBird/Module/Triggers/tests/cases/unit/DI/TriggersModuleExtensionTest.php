@@ -15,12 +15,12 @@ use FastyBird\Module\Triggers\Schemas;
 use FastyBird\Module\Triggers\Subscribers;
 use FastyBird\Module\Triggers\Tests;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class TriggersModuleExtensionTest extends Tests\Cases\Unit\DbTestCase
 {
 

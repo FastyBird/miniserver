@@ -8,11 +8,11 @@ use FastyBird\Automator\DateTime\Schemas;
 use FastyBird\Automator\DateTime\Tests;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class DateTimeExtensionTest extends Tests\Cases\Unit\BaseTestCase
 {
 
