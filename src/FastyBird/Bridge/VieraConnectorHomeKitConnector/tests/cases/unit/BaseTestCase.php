@@ -12,9 +12,7 @@ use PHPUnit\Framework\TestCase;
 use function constant;
 use function defined;
 use function file_exists;
-use function getmypid;
 use function md5;
-use function time;
 
 abstract class BaseTestCase extends TestCase
 {
@@ -32,12 +30,13 @@ abstract class BaseTestCase extends TestCase
 		$vendorDir = defined('FB_VENDOR_DIR') ? constant('FB_VENDOR_DIR') : $rootDir . '/../vendor';
 
 		$config = ApplicationBoot\Bootstrap::boot();
-		$config->setForceReloadContainer();
-		$config->setTempDirectory(FB_TEMP_DIR);
+		// Per package, because several caches under the temp directory use a fixed filename
+		// and would otherwise collide now that the directory is shared. The translation
+		// catalogue is the clearest case: Symfony names it from a hash of the fallback
+		// locales alone, which every package configures identically, and with debugMode off
+		// the ConfigCache has no resource checkers and treats any existing file as fresh.
+		$config->setTempDirectory(FB_TEMP_DIR . '/' . md5($rootDir));
 
-		$config->addStaticParameters(
-			['container' => ['class' => 'SystemContainer_' . getmypid() . md5((string) time())]],
-		);
 		$config->addStaticParameters(['appDir' => $rootDir, 'wwwDir' => $rootDir, 'vendorDir' => $vendorDir]);
 
 		$config->addConfig(__DIR__ . '/../../common.neon');
