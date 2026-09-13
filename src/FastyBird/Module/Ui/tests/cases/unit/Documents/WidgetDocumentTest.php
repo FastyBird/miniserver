@@ -9,6 +9,7 @@ use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Tests;
 use Nette;
+use PHPUnit\Framework\Attributes\DataProvider;
 use function file_get_contents;
 use function method_exists;
 
@@ -25,9 +26,8 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ApplicationExceptions\Mapping
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
-	 *
-	 * @dataProvider widget
 	 */
+	#[DataProvider('widget')]
 	public function testCreateDocument(string $data, string $class, array $fixture): void
 	{
 		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);
@@ -49,9 +49,8 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ApplicationExceptions\Mapping
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
-	 *
-	 * @dataProvider widgetInvalid
 	 */
+	#[DataProvider('widgetInvalid')]
 	public function testCreateDocumentInvalid(string $data, string $class): void
 	{
 		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);

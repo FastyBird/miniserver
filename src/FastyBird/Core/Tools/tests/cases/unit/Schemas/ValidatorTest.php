@@ -5,6 +5,7 @@ namespace FastyBird\Core\Tools\Tests\Cases\Unit\Schemas;
 use FastyBird\Core\Tools\Exceptions;
 use FastyBird\Core\Tools\Schemas;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use function file_get_contents;
 
@@ -17,9 +18,8 @@ final class ValidatorTest extends TestCase
 	 * @throws Exceptions\InvalidData
 	 * @throws Exceptions\Logic
 	 * @throws Exceptions\MalformedInput
-	 *
-	 * @dataProvider validateValidData
 	 */
+	#[DataProvider('validateValidData')]
 	public function testValidateValidInput(
 		string $data,
 		string $schema,
@@ -39,9 +39,8 @@ final class ValidatorTest extends TestCase
 	 * @throws Exceptions\InvalidData
 	 * @throws Exceptions\Logic
 	 * @throws Exceptions\MalformedInput
-	 *
-	 * @dataProvider validateInvalidData
 	 */
+	#[DataProvider('validateInvalidData')]
 	public function testValidateDevicePropertyInvalid(
 		string $data,
 		string $schema,

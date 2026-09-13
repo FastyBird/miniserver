@@ -9,6 +9,7 @@ use FastyBird\Plugin\CouchDb\Tests;
 use InvalidArgumentException;
 use Orisai\ObjectMapper;
 use PHPOnCouch;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid;
 use Throwable;
@@ -24,9 +25,8 @@ final class FactoryTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws InvalidArgumentException
-	 *
-	 * @dataProvider createStateValidDocumentData
 	 */
+	#[DataProvider('createStateValidDocumentData')]
 	public function testCreateEntity(string $class, array $data): void
 	{
 		$document = $this->createMock(PHPOnCouch\CouchDocument::class);
@@ -77,9 +77,8 @@ final class FactoryTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws InvalidArgumentException
-	 *
-	 * @dataProvider createStateInvalidDocumentData
 	 */
+	#[DataProvider('createStateInvalidDocumentData')]
 	public function testCreateEntityFail(string $class, array $data, string $exception): void
 	{
 		$document = $this->createMock(PHPOnCouch\CouchDocument::class);

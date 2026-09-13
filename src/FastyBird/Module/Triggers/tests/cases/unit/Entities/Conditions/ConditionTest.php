@@ -10,13 +10,13 @@ use FastyBird\Module\Triggers\Queries;
 use FastyBird\Module\Triggers\Tests;
 use FastyBird\Module\Triggers\Tests\Fixtures\Dummy\DummyConditionEntity;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class ConditionTest extends Tests\Cases\Unit\DbTestCase
 {
 

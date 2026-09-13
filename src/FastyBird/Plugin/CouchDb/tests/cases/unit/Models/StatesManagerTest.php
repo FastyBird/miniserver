@@ -16,6 +16,7 @@ use InvalidArgumentException;
 use Nette\Utils;
 use Orisai\ObjectMapper;
 use PHPOnCouch;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid;
 use stdClass;
@@ -30,9 +31,8 @@ final class StatesManagerTest extends TestCase
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $expected
 	 *
 	 * @throws Exceptions\InvalidState
-	 *
-	 * @dataProvider createStateValue
 	 */
+	#[DataProvider('createStateValue')]
 	public function testCreateEntity(Uuid\UuidInterface $id, array $data, array $dbData, array $expected): void
 	{
 		$id = Uuid\Uuid::uuid4();
@@ -95,9 +95,8 @@ final class StatesManagerTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws InvalidArgumentException
-	 *
-	 * @dataProvider updateStateValue
 	 */
+	#[DataProvider('updateStateValue')]
 	public function testUpdateEntity(
 		Uuid\UuidInterface $id,
 		array $originalData,

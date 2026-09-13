@@ -33,6 +33,17 @@ csf: ## Fix PHP files coding style
 lint:
 	$(PRE_PHP) "vendor/bin/parallel-lint" src --exclude .git --exclude vendor
 
+# Rector is configured in rector.php for one job only: converting PHPUnit's doc-block
+# annotations to attributes across the test suites. It is not a general refactoring pass.
+# Rector emits fully qualified names, which the coding standard rejects, so always follow
+# a real run with `make csf`.
+rector: ## Preview the PHPUnit annotation-to-attribute conversion
+	$(PRE_PHP) "vendor/bin/rector" process --dry-run $(ARGS)
+
+rectorf: ## Apply the PHPUnit annotation-to-attribute conversion, then fix coding style
+	$(PRE_PHP) "vendor/bin/rector" process $(ARGS)
+	$(MAKE) csf
+
 # Dependency-direction gate for the 34 packages under src/FastyBird. This is what replaced
 # the 34 per-package composer manifests, which were measured to be fiction (117 undeclared
 # edges against 149 declared) and unenforceable by construction anyway.

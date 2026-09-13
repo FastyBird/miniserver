@@ -14,6 +14,7 @@ use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types;
 use Nette\DI;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid;
 use Throwable;
 
@@ -31,9 +32,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 	 * @throws DI\MissingServiceException
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
-	 *
-	 * @dataProvider writeStates
 	 */
+	#[DataProvider('writeStates')]
 	public function testWriteState(
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
 		Documents\Channels\Properties\Dynamic|null $parent,
@@ -147,9 +147,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 	 * @throws DI\MissingServiceException
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
-	 *
-	 * @dataProvider setStates
 	 */
+	#[DataProvider('setStates')]
 	public function testSetState(
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
 		Documents\Channels\Properties\Dynamic|null $parent,

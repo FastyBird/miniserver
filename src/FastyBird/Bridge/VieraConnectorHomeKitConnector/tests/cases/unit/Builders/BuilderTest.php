@@ -16,13 +16,14 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Nette\DI;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 {
 
@@ -39,9 +40,9 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws ToolsExceptions\InvalidArgument
 	 *
-	 * @dataProvider builder
 	 * @throws InvalidArgumentException
 	 */
+	#[DataProvider('builder')]
 	public function testBuild(
 		string $vieraIdentifier,
 		int $expectedChannelsCnt,

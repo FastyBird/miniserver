@@ -7,6 +7,7 @@ use FastyBird\Core\Application\Events;
 use FastyBird\Core\Application\Exceptions;
 use FastyBird\Core\Application\Tests;
 use Nette;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\EventDispatcher;
 use Throwable;
 use function array_merge;
@@ -24,9 +25,8 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Exceptions\MalformedInput
 	 * @throws Exceptions\Mapping
 	 * @throws Nette\DI\MissingServiceException
-	 *
-	 * @dataProvider channelProperty
 	 */
+	#[DataProvider('channelProperty')]
 	public function testCreateDocument(string $data, string $class, array $fixture): void
 	{
 		$factory = $this->container->getByType(Documents\DocumentFactory::class);
@@ -45,9 +45,8 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Exceptions\MalformedInput
 	 * @throws Exceptions\Mapping
 	 * @throws Nette\DI\MissingServiceException
-	 *
-	 * @dataProvider channelPropertyInvalid
 	 */
+	#[DataProvider('channelPropertyInvalid')]
 	public function testCreateDocumentInvalid(string $data, string $class): void
 	{
 		$factory = $this->container->getByType(Documents\DocumentFactory::class);
@@ -70,9 +69,8 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Exceptions\MalformedInput
 	 * @throws Exceptions\Mapping
 	 * @throws Nette\DI\MissingServiceException
-	 *
-	 * @dataProvider preLoadEvent
 	 */
+	#[DataProvider('preLoadEvent')]
 	public function testPreLoadEvent(string $data, array $modify, string $class, array $fixture): void
 	{
 		$eventDispatcher = $this->container->getByType(EventDispatcher\EventDispatcherInterface::class);

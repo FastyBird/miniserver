@@ -20,16 +20,16 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use InvalidArgumentException;
 use Nette\DI;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React;
 use React\EventLoop;
 use RuntimeException;
 use function array_diff;
 use function sprintf;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 {
 

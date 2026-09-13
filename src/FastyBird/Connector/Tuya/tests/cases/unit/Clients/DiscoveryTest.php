@@ -19,6 +19,8 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\DI;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Psr\Http;
 use React;
 use React\Datagram;
@@ -30,10 +32,8 @@ use function openssl_encrypt;
 use function strval;
 use const OPENSSL_RAW_DATA;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 {
 

@@ -14,16 +14,16 @@ use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp;
 use Nette\DI;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Psr\Http;
 use RuntimeException;
 use function is_array;
 use function str_replace;
 use function strval;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class Gen2HttpApiTest extends Tests\Cases\Unit\DbTestCase
 {
 

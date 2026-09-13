@@ -18,13 +18,13 @@ use FastyBird\Module\Ui\Queries as UiQueries;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Nette\DI;
 use Nette\Utils;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 {
 

@@ -10,13 +10,13 @@ use FastyBird\Automator\DevicesModule\Tests;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Triggers\Models as TriggersModels;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class FindConditionsTest extends Tests\Cases\Unit\DbTestCase
 {
 

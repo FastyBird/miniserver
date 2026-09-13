@@ -12,12 +12,12 @@ use FastyBird\Module\Ui\Schemas;
 use FastyBird\Module\Ui\Subscribers;
 use FastyBird\Module\Ui\Tests;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class UiExtensionTest extends Tests\Cases\Unit\DbTestCase
 {
 

@@ -8,6 +8,7 @@ use FastyBird\Core\Application\Exceptions;
 use FastyBird\Core\Application\Tests;
 use Monolog;
 use Nette;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Symfony\Bridge\Monolog as SymfonyMonolog;
 
 final class ApplicationExtensionTest extends Tests\Cases\Unit\BaseTestCase
@@ -33,9 +34,8 @@ final class ApplicationExtensionTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Error
-	 *
-	 * @doesNotPerformAssertions
 	 */
+	#[DoesNotPerformAssertions]
 	public function testServicesRegistration(): void
 	{
 		$this->createContainer();

@@ -12,6 +12,7 @@ use FastyBird\Plugin\RedisDb\States;
 use FastyBird\Plugin\RedisDb\Tests;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid;
@@ -27,9 +28,8 @@ final class StatesManagerTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider createStateValue
 	 */
+	#[DataProvider('createStateValue')]
 	public function testCreateEntity(Uuid\UuidInterface $id, array $data, array $dbData, array $expected): void
 	{
 		$redisClient = $this->createMock(Clients\Client::class);
@@ -65,9 +65,8 @@ final class StatesManagerTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Utils\JsonException
-	 *
-	 * @dataProvider updateStateValue
 	 */
+	#[DataProvider('updateStateValue')]
 	public function testUpdateEntity(
 		Uuid\UuidInterface $id,
 		array $originalData,
