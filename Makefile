@@ -130,7 +130,13 @@ PRE_PHP=XDEBUG_MODE=off
 # tools/php.d/tests.ini for what is in it and why.
 #
 # The leading colon keeps the image's own scan directory; it does not replace it.
-PRE_PHP_TESTS=$(PRE_PHP) PHP_INI_SCAN_DIR=":$(CURDIR)/tools/php.d"
+# FB_TEST_RUN_ID marks one suite run. tools/phpunit-bootstrap.php derives the temp and
+# logs directories from it, so every paratest worker and every forked
+# @runTestsInSeparateProcesses child of a single run share one compiled DI container,
+# while the next run starts from a clean directory. Without the second half the
+# container would never be rebuilt: debugMode is false under the test runner, so Nette
+# uses ContainerLoader::loadOnce(), which never revalidates what it finds on disk.
+PRE_PHP_TESTS=$(PRE_PHP) PHP_INI_SCAN_DIR=":$(CURDIR)/tools/php.d" FB_TEST_RUN_ID=$(shell date +%s)-$$$$
 
 PARATEST_COMMAND="vendor/bin/paratest" -c $(PHPUNIT_CONFIG) --runner=WrapperRunner -p$(LOGICAL_CORES)
 PHPUNIT_COMMAND="vendor/bin/phpunit" -c $(PHPUNIT_CONFIG)
