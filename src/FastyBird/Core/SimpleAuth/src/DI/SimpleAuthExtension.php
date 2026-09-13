@@ -63,7 +63,10 @@ class SimpleAuthExtension extends DI\CompilerExtension
 		return Schema\Expect::structure([
 			'token' => Schema\Expect::structure([
 				'issuer' => Schema\Expect::string(),
-				'signature' => Schema\Expect::string('g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='),
+				// Deliberately no default. This is the JWT signing key: a default means any
+				// deployment that forgets to configure it signs tokens with a value published
+				// on Packagist, and does so silently. Absent configuration has to fail.
+				'signature' => Schema\Expect::string()->required(),
 			]),
 			'enable' => Schema\Expect::structure([
 				'middleware' => Schema\Expect::bool(false),

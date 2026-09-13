@@ -88,7 +88,7 @@ nettrineOrmAttributes:
 fbSimpleAuth:
     token:
         issuer: com.fastybird.auth-module
-        signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
+        signature: '%security.signature%'                  # generate your own, e.g. openssl rand -base64 32
     enable:
         middleware: true
         doctrine:
