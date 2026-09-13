@@ -3364,6 +3364,43 @@
             }
         },
         {
+            "name": "fastybird/doctrine-phone-library",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Library/DoctrinePhone",
+                "reference": "0c0c3543e31125c664e55f59d94a0685512f3277"
+            },
+            "require": {
+                "doctrine/orm": "2.15.*",
+                "ipub/phone": "^2.3",
+                "nette/di": "^3.0",
+                "nette/utils": "^3.2||^4.0",
+                "php": ">=8.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Library\\DoctrinePhone\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "iPublikuj:cms",
+                    "email": "info@ipublikuj.eu",
+                    "homepage": "http://www.ipublikuj.eu/"
+                }
+            ],
+            "description": "Phone number manipulation for Nette Framework and Doctrine 2",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "fastybird/exchange",
             "version": "dev-main",
             "dist": {
@@ -4678,7 +4715,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Triggers",
-                "reference": "f5352ba20b1c87bba40ea10e2417cf33e9ee4766"
+                "reference": "2f94f35d61b7c61722d5fdbf8afc91ca862c079e"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4686,11 +4723,11 @@
                 "contributte/translation": "^2.0",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/application": "@dev",
+                "fastybird/doctrine-phone-library": "@dev",
                 "fastybird/exchange": "@dev",
                 "fastybird/json-api": "^0.19",
                 "fastybird/metadata-library": "@dev",
                 "fastybird/simple-auth": "^0.14",
-                "ipub/doctrine-phone": "^1.6",
                 "ipub/phone": "^2.3",
                 "ipub/slim-router": "^0.2",
                 "nettrine/dbal": "^0.8",
@@ -6683,86 +6720,6 @@
                 "source": "https://github.com/ipublikuj/doctrine-orm-query/tree/v0.1.1"
             },
             "time": "2024-06-19T20:13:49+00:00"
-        },
-        {
-            "name": "ipub/doctrine-phone",
-            "version": "v1.6.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ipublikuj/doctrine-phone.git",
-                "reference": "860eca17a1ac36d72b5d0155ce90bd19ba1b1bf7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/doctrine-phone/zipball/860eca17a1ac36d72b5d0155ce90bd19ba1b1bf7",
-                "reference": "860eca17a1ac36d72b5d0155ce90bd19ba1b1bf7",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "^2.6",
-                "ipub/phone": "^2.3",
-                "nette/di": "^3.0",
-                "nette/utils": "^3.2||^4.0",
-                "php": ">=7.4.0"
-            },
-            "require-dev": {
-                "contributte/console": "^0.9",
-                "mockery/mockery": "^1.4",
-                "nette/bootstrap": "^3.1",
-                "nettrine/cache": "^0.3",
-                "nettrine/orm": "^0.8",
-                "ninjify/nunjuck": "^0.3",
-                "ninjify/qa": "^0.12",
-                "pds/skeleton": "~1.0",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-doctrine": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
-                "tracy/tracy": "^2.8"
-            },
-            "type": "library",
-            "extra": {
-                "ipub": {
-                    "configuration": {
-                        "extension": "IPub\\DoctrinePhone\\DI\\DoctrinePhoneExtension"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "IPub\\DoctrinePhone\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "iPublikuj:cms",
-                    "email": "info@ipublikuj.eu",
-                    "homepage": "http://www.ipublikuj.eu/"
-                }
-            ],
-            "description": "Phone number manipulation for Nette Framework and Doctrine 2",
-            "homepage": "https://github.com/ipublikuj/doctrine-phone",
-            "keywords": [
-                "doctrine",
-                "ipub",
-                "ipublikuj",
-                "nette",
-                "phone",
-                "tools"
-            ],
-            "support": {
-                "email": "support@ipublikuj.eu",
-                "issues": "https://github.com/ipublikuj/doctrine-phone/issues",
-                "source": "https://github.com/ipublikuj/doctrine-phone/tree/v1.6.1"
-            },
-            "time": "2024-06-19T20:09:31+00:00"
         },
         {
             "name": "ipub/doctrine-timestampable",

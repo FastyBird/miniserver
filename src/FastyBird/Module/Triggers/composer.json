@@ -45,7 +45,7 @@
     "fastybird/json-api": "^0.19",
     "fastybird/metadata-library": "@dev",
     "fastybird/simple-auth": "^0.14",
-    "ipub/doctrine-phone": "^1.6",
+    "fastybird/doctrine-phone-library": "@dev",
     "ipub/phone": "^2.3",
     "ipub/slim-router": "^0.2",
     "nettrine/dbal": "^0.8",
