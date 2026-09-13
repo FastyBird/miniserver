@@ -6,6 +6,7 @@ use Doctrine\Common\EventManager;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Driver;
+use WeakReference;
 use function getenv;
 use function getmypid;
 use function is_string;
@@ -47,10 +48,25 @@ class ConnectionWrapper extends DBAL\Connection
 			$this->executeStatement(sprintf('CREATE DATABASE `%s`', $this->dbName));
 			$this->executeStatement(sprintf('USE `%s`', $this->dbName));
 
-			// drop on shutdown
+			// Drop on shutdown, through a weak reference.
+			//
+			// This closure used to capture $this. A shutdown function cannot be unregistered,
+			// so that pinned the connection -- and the connection holds Nettrine's
+			// ContainerAwareEventManager, which holds the whole Nette DI container -- for the
+			// life of the process. Invisible while every DbTestCase runs in its own forked
+			// process, because exactly one container exists per child, but it would leak one
+			// container per test the moment tests share a process.
+			//
+			// WeakReference does not keep the connection alive, so nothing is pinned. While
+			// the connection outlives the test, as it does today, the cleanup is unchanged.
+			$connection = WeakReference::create($this);
+			$dbName = $this->dbName;
+
 			register_shutdown_function(
-				function (): void {
-					$this->executeStatement(sprintf('DROP DATABASE IF EXISTS `%s`', $this->dbName));
+				static function () use ($connection, $dbName): void {
+					$connection->get()?->executeStatement(
+						sprintf('DROP DATABASE IF EXISTS `%s`', $dbName),
+					);
 				},
 			);
 
