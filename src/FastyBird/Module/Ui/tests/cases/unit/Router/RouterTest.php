@@ -4,7 +4,6 @@ namespace FastyBird\Module\Ui\Tests\Cases\Unit\Router;
 
 use Error;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Library\Metadata;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Tests;
@@ -13,6 +12,9 @@ use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use IPub\SlimRouter;
 use Nette;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 
@@ -20,10 +22,8 @@ const VALID_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uZmFzdH
 	. 'yNzkwNWQzMDRjIiwiaWF0IjoxNTg1NzQyNDAwLCJleHAiOjE1ODU3NDk2MDAsInVzZXIiOiI1ZTc5ZWZiZi1iZDBkLTViN2MtNDZlZi1iZmJkZWZiZmJkMzQiLCJyb2xlcyI6WyJhZG1pb'
 	. 'mlzdHJhdG9yIl19.QH_Oo_uzTXAb3pNnHvXYnnX447nfVq2_ggQ9ZxStu4s';
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class RouterTest extends Tests\Cases\Unit\DbTestCase
 {
 
@@ -41,9 +41,8 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
-	 *
-	 * @dataProvider prefixedRoutes
 	 */
+	#[DataProvider('prefixedRoutes')]
 	public function testPrefixedRoutes(string $url, string $token, int $statusCode): void
 	{
 		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
@@ -69,15 +68,15 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 	public static function prefixedRoutes(): array
 	{
 		return [
-			'readAllInvalid' => [
-				'/v1/dashboards',
-				'Bearer ' . VALID_TOKEN,
-				StatusCodeInterface::STATUS_NOT_FOUND,
-			],
 			'readAllValid' => [
-				'/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards',
+				'/api/v1/dashboards',
 				'Bearer ' . VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
+			],
+			'readAllInvalid' => [
+				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards',
+				'Bearer ' . VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
 			],
 		];
 	}

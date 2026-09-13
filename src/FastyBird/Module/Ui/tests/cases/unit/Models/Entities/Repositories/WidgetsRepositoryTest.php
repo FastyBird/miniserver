@@ -4,20 +4,19 @@ namespace FastyBird\Module\Ui\Tests\Cases\Unit\Models\Entities\Repositories;
 
 use Error;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Tests;
 use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use RuntimeException;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class WidgetsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 {
 
@@ -26,6 +25,7 @@ final class WidgetsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws DoctrineOrmQueryExceptions\QueryException
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -44,6 +44,7 @@ final class WidgetsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws DoctrineOrmQueryExceptions\QueryException
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
