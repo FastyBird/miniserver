@@ -21,6 +21,7 @@ use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Entities;
@@ -35,7 +36,6 @@ use FastyBird\Module\Accounts\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette\Utils;
 use Psr\Http\Message;
 use RuntimeException;
@@ -92,8 +92,8 @@ final class AccountEmailsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -111,8 +111,8 @@ final class AccountEmailsV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws Exceptions\Runtime
 	 * @throws InvalidArgumentException
@@ -249,8 +249,8 @@ final class AccountEmailsV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws Exceptions\Runtime
 	 * @throws InvalidArgumentException
@@ -380,8 +380,8 @@ final class AccountEmailsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\QueryException
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
+	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */

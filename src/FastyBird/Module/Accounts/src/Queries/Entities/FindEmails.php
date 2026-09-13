@@ -17,8 +17,8 @@ namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
+use FastyBird\Library\DoctrineOrmQuery;
 use FastyBird\Module\Accounts\Entities;
-use IPub\DoctrineOrmQuery;
 use Ramsey\Uuid;
 
 /**

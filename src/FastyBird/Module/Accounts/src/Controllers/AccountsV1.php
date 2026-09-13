@@ -19,9 +19,13 @@ use Casbin\Exceptions as CasbinExceptions;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\SimpleAuth\Exceptions as SimpleAuthExceptions;
+use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -33,13 +37,9 @@ use FastyBird\Module\Accounts\Router;
 use FastyBird\Module\Accounts\Schemas;
 use FastyBird\Module\Accounts\Types;
 use FastyBird\Module\Accounts\Utilities;
-use FastyBird\SimpleAuth\Exceptions as SimpleAuthExceptions;
-use FastyBird\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\SimpleAuth\Security as SimpleAuthSecurity;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use IPub\JsonAPIDocument;
 use Nette\Utils;
 use Psr\Http\Message;
@@ -101,8 +101,8 @@ final class AccountsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -120,8 +120,8 @@ final class AccountsV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
@@ -244,8 +244,8 @@ final class AccountsV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
@@ -328,8 +328,8 @@ final class AccountsV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
 	 * @throws InvalidArgumentException
@@ -405,8 +405,8 @@ final class AccountsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -487,8 +487,8 @@ final class AccountsV1 extends BaseV1
 
 	/**
 	 * @throws CasbinExceptions\CasbinException
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\AccountRoleInvalid
 	 * @throws SimpleAuthExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException

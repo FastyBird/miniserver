@@ -16,14 +16,14 @@
 namespace FastyBird\Module\Accounts\Controllers;
 
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\SimpleAuth\Exceptions as SimpleAuthExceptions;
+use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Queries;
-use FastyBird\SimpleAuth\Exceptions as SimpleAuthExceptions;
-use FastyBird\SimpleAuth\Models as SimpleAuthModels;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Psr\Http\Message;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 
@@ -48,8 +48,8 @@ final class RoleChildrenV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws SimpleAuthExceptions\InvalidState

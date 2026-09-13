@@ -36,7 +36,7 @@ extensions:
     ipubWebsocketsWamp                              : IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension
     # FastyBird libs
     fbDateTimeFactory                               : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbSimpleAuth                                    : FastyBird\SimpleAuth\DI\SimpleAuthExtension
+    fbSimpleAuth                                    : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
     fbJsonApi                                       : FastyBird\JsonApi\DI\JsonApiExtension
     # FastyBird app core
     fbApplication                                   : FastyBird\Core\Application\DI\ApplicationExtension

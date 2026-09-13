@@ -18,8 +18,8 @@ namespace FastyBird\Module\Triggers\Queries\Entities;
 use Closure;
 use Doctrine\Common;
 use Doctrine\ORM;
+use FastyBird\Library\DoctrineOrmQuery;
 use FastyBird\Module\Triggers\Entities;
-use IPub\DoctrineOrmQuery;
 use Ramsey\Uuid;
 
 /**

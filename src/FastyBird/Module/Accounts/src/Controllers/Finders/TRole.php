@@ -15,13 +15,13 @@
 
 namespace FastyBird\Module\Accounts\Controllers\Finders;
 
+use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;
-use FastyBird\SimpleAuth\Models as SimpleAuthModels;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette\Localization;
 use Psr\Http\Message;
 use Ramsey\Uuid;
@@ -35,8 +35,8 @@ trait TRole
 {
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */

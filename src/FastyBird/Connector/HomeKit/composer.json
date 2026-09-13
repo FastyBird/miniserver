@@ -31,6 +31,7 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
+    "fastybird/doctrine-orm-query-library": "@dev",
     "php": ">=8.4.0",
     "ext-gmp": "*",
     "ext-pcntl": "*",

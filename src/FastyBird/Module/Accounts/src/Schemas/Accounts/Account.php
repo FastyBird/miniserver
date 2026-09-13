@@ -16,16 +16,16 @@
 namespace FastyBird\Module\Accounts\Schemas\Accounts;
 
 use DateTimeInterface;
+use FastyBird\Core\SimpleAuth\Exceptions as SimpleAuthExceptions;
+use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
 use FastyBird\JsonApi\Schemas as JsonApis;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;
-use FastyBird\SimpleAuth\Exceptions as SimpleAuthExceptions;
-use FastyBird\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\SimpleAuth\Security as SimpleAuthSecurity;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 use function count;
@@ -138,8 +138,8 @@ final class Account extends JsonApis\JsonApi
 	 *
 	 * @return iterable<string, array<int, (array<Entities\Identities\Identity>|array<Entities\Roles\Role>|array<Entities\Emails\Email>|bool)>>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws SimpleAuthExceptions\InvalidState
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
@@ -256,8 +256,8 @@ final class Account extends JsonApis\JsonApi
 	/**
 	 * @return array<int, Entities\Roles\Role>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws SimpleAuthExceptions\InvalidState
 	 */
 	private function getRoles(Entities\Accounts\Account $account): array

@@ -18,16 +18,16 @@ namespace FastyBird\Module\Accounts\Commands\Accounts;
 use Doctrine;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
+use FastyBird\Core\SimpleAuth;
+use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Types;
-use FastyBird\SimpleAuth;
-use FastyBird\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\SimpleAuth\Security as SimpleAuthSecurity;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette\Localization;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -108,8 +108,8 @@ class Create extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\Runtime
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException

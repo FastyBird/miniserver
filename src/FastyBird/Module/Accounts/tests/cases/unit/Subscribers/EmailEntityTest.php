@@ -5,12 +5,12 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Subscribers;
 use Doctrine\DBAL;
 use Error;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Tests;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
-use IPub\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -27,8 +27,8 @@ final class EmailEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\InvalidStateException
-	 * @throws DoctrineOrmQueryExceptions\QueryException
+	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException

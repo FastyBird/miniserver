@@ -115,9 +115,11 @@
                 <element key="src/FastyBird/Core/Exchange/tests/cases/unit" value="FastyBird\Core\Exchange\Tests\Cases\Unit"/>
 
                 <element key="src/FastyBird/Core/Tools/src" value="FastyBird\Core\Tools"/>
+                <element key="src/FastyBird/Core/SimpleAuth/src" value="FastyBird\Core\SimpleAuth"/>
                 <element key="src/FastyBird/Core/Tools/tests/cases/unit" value="FastyBird\Core\Tools\Tests\Cases\Unit"/>
 
                 <element key="src/FastyBird/Library/DoctrinePhone/src" value="FastyBird\Library\DoctrinePhone"/>
+                <element key="src/FastyBird/Library/DoctrineOrmQuery/src" value="FastyBird\Library\DoctrineOrmQuery"/>
                 <element key="src/FastyBird/Library/Metadata/src" value="FastyBird\Library\Metadata"/>
                 <element key="src/FastyBird/Library/Metadata/tests/cases/unit" value="FastyBird\Library\Metadata\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Library/Metadata/tests/fixtures" value="FastyBird\Library\Metadata\Tests\Fixtures"/>

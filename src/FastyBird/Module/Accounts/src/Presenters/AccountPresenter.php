@@ -15,12 +15,12 @@
 
 namespace FastyBird\Module\Accounts\Presenters;
 
+use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
-use FastyBird\SimpleAuth\Security as SimpleAuthSecurity;
 use Nette\Application;
 use Nette\Utils;
 use Ramsey\Uuid;

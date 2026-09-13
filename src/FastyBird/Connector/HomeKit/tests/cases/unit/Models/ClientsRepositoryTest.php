@@ -9,7 +9,7 @@ use FastyBird\Connector\HomeKit\Models;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Tests;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use IPub\DoctrineOrmQuery;
+use FastyBird\Library\DoctrineOrmQuery;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -22,7 +22,7 @@ final class ClientsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQuery\Exceptions\QueryException
+	 * @throws DoctrineOrmQuery\Exceptions\Query
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
@@ -45,7 +45,7 @@ final class ClientsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQuery\Exceptions\QueryException
+	 * @throws DoctrineOrmQuery\Exceptions\Query
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
