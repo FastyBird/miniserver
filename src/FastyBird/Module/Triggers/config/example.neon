@@ -25,7 +25,7 @@ extensions:
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
     ipubDoctrineCrud                    : IPub\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    ipubDoctrinePhone                   : IPub\DoctrinePhone\DI\DoctrinePhoneExtension
+    ipubDoctrinePhone                   : FastyBird\Library\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
