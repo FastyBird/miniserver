@@ -39,7 +39,7 @@ class DeviceProperty extends Property
 	public const TYPE = 'device-property';
 
 	#[IPubDoctrine\Crud(required: true, writable: true)]
-	#[ORM\OneToOne(targetEntity: DevicesEntities\Devices\Properties\Property::class)]
+	#[ORM\ManyToOne(targetEntity: DevicesEntities\Devices\Properties\Property::class)]
 	#[ORM\JoinColumn(
 		name: 'data_source_property',
 		referencedColumnName: 'property_id',

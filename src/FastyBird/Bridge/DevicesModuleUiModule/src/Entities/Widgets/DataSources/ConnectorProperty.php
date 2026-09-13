@@ -39,7 +39,7 @@ class ConnectorProperty extends Property
 	public const TYPE = 'connector-property';
 
 	#[IPubDoctrine\Crud(required: true, writable: true)]
-	#[ORM\OneToOne(targetEntity: DevicesEntities\Connectors\Properties\Property::class)]
+	#[ORM\ManyToOne(targetEntity: DevicesEntities\Connectors\Properties\Property::class)]
 	#[ORM\JoinColumn(
 		name: 'data_source_property',
 		referencedColumnName: 'property_id',
