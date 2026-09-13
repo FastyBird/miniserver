@@ -68,7 +68,9 @@ INSERT INTO `fb_ui_module_widgets` (`widget_id`, `widget_identifier`, `widget_na
 
 INSERT INTO `fb_ui_module_widgets_data_sources` (`data_source_id`, `widget_id`, `params`, `created_at`, `updated_at`, `data_source_type`) VALUES
 (_binary 0x32DD50E44B664DEA9BC5E835F8543DC4, _binary 0x1D60090154E743EE8F5DA9E22663DDD7, '[]', '2020-05-28 12:27:47', '2020-05-28 12:27:47', 'channel-property'),
-(_binary 0x764937A78565472E8E12FE97CD55A377, _binary 0x155534434564454DAF040DFEEF08AA96, '[]', '2020-05-28 12:29:32', '2020-05-28 12:29:32', 'channel-property');
+(_binary 0x764937A78565472E8E12FE97CD55A377, _binary 0x155534434564454DAF040DFEEF08AA96, '[]', '2020-05-28 12:29:32', '2020-05-28 12:29:32', 'channel-property'),
+(_binary 0xCD96AA91A0A44A6C9D682E0754A0A56D, _binary 0x9A91473298DC47F6BFD19D81CA9F8CB6, '[]', '2020-05-28 11:35:44', '2020-05-28 11:35:44', 'channel-property'),
+(_binary 0xFFE067C88C024C2CB8DD05256A121215, _binary 0x5626E7A1C42C4A319B5D848E3CF0E82A, '[]', '2020-05-28 12:07:27', '2020-05-28 12:07:27', 'channel-property');
 
 INSERT INTO `fb_ui_module_widgets_display` (`display_id`, `widget_id`, `params`, `created_at`, `updated_at`, `display_type`) VALUES
 (_binary 0x2EA64D790D7D43D9BE3B51F9ADE849FC, _binary 0x5626E7A1C42C4A319B5D848E3CF0E82A, '[]', '2020-05-28 12:07:27', '2020-05-28 12:07:27', 'button'),
@@ -90,4 +92,6 @@ INSERT INTO `fb_ui_module_widgets_groups` (`group_id`, `widget_id`) VALUES
 
 INSERT INTO `fb_devices_module_ui_module_bridge_channels_data_sources` (`data_source_id`, `data_source_property`) VALUES
 (_binary 0x32DD50E44B664DEA9BC5E835F8543DC4, _binary 0xBBCCCF8C33AB431BA795D7BB38B6B6DB),
-(_binary 0x764937A78565472E8E12FE97CD55A377, _binary 0x28BC0D382F7C4A71AA7427B102F8DF4C);
+(_binary 0x764937A78565472E8E12FE97CD55A377, _binary 0x28BC0D382F7C4A71AA7427B102F8DF4C),
+(_binary 0xCD96AA91A0A44A6C9D682E0754A0A56D, _binary 0xBBCCCF8C33AB431BA795D7BB38B6B6DB),
+(_binary 0xFFE067C88C024C2CB8DD05256A121215, _binary 0xBBCCCF8C33AB431BA795D7BB38B6B6DB);

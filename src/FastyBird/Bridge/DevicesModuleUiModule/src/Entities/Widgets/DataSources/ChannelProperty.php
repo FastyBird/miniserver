@@ -39,7 +39,7 @@ class ChannelProperty extends Property
 	public const TYPE = 'channel-property';
 
 	#[IPubDoctrine\Crud(required: true, writable: true)]
-	#[ORM\OneToOne(targetEntity: DevicesEntities\Channels\Properties\Property::class)]
+	#[ORM\ManyToOne(targetEntity: DevicesEntities\Channels\Properties\Property::class)]
 	#[ORM\JoinColumn(
 		name: 'data_source_property',
 		referencedColumnName: 'property_id',
