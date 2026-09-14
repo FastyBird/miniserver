@@ -23,7 +23,7 @@ extensions:
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
     ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrinePhone                   : FastyBird\Library\DoctrinePhone\DI\DoctrinePhoneExtension
-    ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
+    ipubDoctrineTimestampable           : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
@@ -67,7 +67,7 @@ nettrineDbal:
                 class: Ramsey\Uuid\Doctrine\UuidBinaryType
                 commented: false
             utcdatetime:
-                class: IPub\DoctrineTimestampable\Types\UTCDateTime
+                class: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
                 commented: false
 
         typesMapping:

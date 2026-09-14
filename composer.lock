@@ -2833,7 +2833,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Application",
-                "reference": "9f3b7816279e224b5c83e53ef4bc296618b95f82"
+                "reference": "986c4ded2fc2f6949334075c9465d1d1037fb611"
             },
             "require": {
                 "contributte/cache": "^0.6",
@@ -2844,8 +2844,8 @@
                 "cweagans/composer-patches": "^1.7",
                 "doctrine/orm": "2.15.*",
                 "fastybird/doctrine-crud-library": "@dev",
+                "fastybird/doctrine-timestampable-library": "@dev",
                 "fastybird/simple-auth": "@dev",
-                "ipub/doctrine-timestampable": "^2.0",
                 "ipub/slim-router": "^0.2",
                 "nette/application": "^3.1",
                 "nette/bootstrap": "^3.2",
@@ -3471,6 +3471,42 @@
                 }
             ],
             "description": "Phone number manipulation for Nette Framework and Doctrine 2",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/doctrine-timestampable-library",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Library/DoctrineTimestampable",
+                "reference": "64268e6cdae630f3a17f6a1f0a8d3e44cc7075ad"
+            },
+            "require": {
+                "doctrine/orm": "2.15.*",
+                "nette/di": "^3.0",
+                "nette/utils": "^3.2||^4.0",
+                "php": ">=8.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Library\\DoctrineTimestampable\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "iPublikuj:cms",
+                    "email": "info@ipublikuj.eu",
+                    "homepage": "http://www.ipublikuj.eu/"
+                }
+            ],
+            "description": "Behavior for automate the update of timestamp fields on your entities",
             "transport-options": {
                 "relative": true
             }
@@ -4621,15 +4657,15 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Tools",
-                "reference": "9b1cc6e2af8a140957c21867f77149e0ba0d7996"
+                "reference": "d1de13496aa41bb16cd86571a3aba76b3b40b776"
             },
             "require": {
                 "contributte/monolog": "^0.5",
                 "doctrine/orm": "2.15.*",
                 "doctrine/persistence": "^2.5 || ^3.4",
                 "fastybird/datetime-factory": "^0.7.1",
+                "fastybird/doctrine-timestampable-library": "@dev",
                 "fastybird/metadata-library": "@dev",
-                "ipub/doctrine-timestampable": "^2.0",
                 "mathsolver/mathsolver": "@dev",
                 "nette/bootstrap": "^3.2",
                 "nette/di": "^3.2",
@@ -6544,85 +6580,6 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2023-06-11T21:11:53+00:00"
-        },
-        {
-            "name": "ipub/doctrine-timestampable",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ipublikuj/doctrine-timestampable.git",
-                "reference": "310de5d2aad0e46b9093470112b1d9e91d06b211"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/doctrine-timestampable/zipball/310de5d2aad0e46b9093470112b1d9e91d06b211",
-                "reference": "310de5d2aad0e46b9093470112b1d9e91d06b211",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "^2.6|^3.0",
-                "nette/di": "^3.0|^4.0",
-                "nette/utils": "^3.2|^4.0",
-                "php": ">=8.1.0"
-            },
-            "require-dev": {
-                "contributte/console": "^0.9",
-                "mockery/mockery": "^1.4",
-                "nette/bootstrap": "^3.1",
-                "nettrine/cache": "^0.3",
-                "nettrine/orm": "^0.8",
-                "ninjify/nunjuck": "^0.3",
-                "ninjify/qa": "^0.12",
-                "pds/skeleton": "~1.0",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-doctrine": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
-                "tracy/tracy": "^2.8"
-            },
-            "type": "library",
-            "extra": {
-                "ipub": {
-                    "configuration": {
-                        "extension": "IPub\\DoctrineTimestampable\\DI\\DoctrineTimestampableExtension"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "IPub\\DoctrineTimestampable\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "iPublikuj:cms",
-                    "email": "info@ipublikuj.eu",
-                    "homepage": "https://www.ipublikuj.eu/"
-                }
-            ],
-            "description": "Behavior for automate the update of timestamp fields on your entities.",
-            "homepage": "https://github.com/iPublikuj/doctrine-timestampable",
-            "keywords": [
-                "doctrine",
-                "ipub",
-                "ipublikuj",
-                "nette",
-                "timestampable",
-                "tools"
-            ],
-            "support": {
-                "email": "support@ipublikuj.eu",
-                "issues": "https://github.com/iPublikuj/doctrine-timestampable/issues",
-                "source": "https://github.com/ipublikuj/doctrine-timestampable/tree/v2.0.0"
-            },
-            "time": "2024-01-05T09:57:33+00:00"
         },
         {
             "name": "ipub/json-api-document",

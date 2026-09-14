@@ -22,7 +22,7 @@ extensions:
     nettrineOrmConsole                  : Nettrine\ORM\DI\OrmConsoleExtension
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
     ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
-    ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
+    ipubDoctrineTimestampable           : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
     fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
@@ -79,7 +79,7 @@ nettrineDbal:
                 class: Ramsey\Uuid\Doctrine\UuidBinaryType
                 commented: false
             utcdatetime:
-                class: IPub\DoctrineTimestampable\Types\UTCDateTime
+                class: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
                 commented: false
 
         typesMapping:

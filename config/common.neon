@@ -31,7 +31,7 @@ extensions:
     ipubPhone                                       : IPub\Phone\DI\PhoneExtension
     ipubDoctrinePhone                               : FastyBird\Library\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubDoctrineCrud                                : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
-    ipubDoctrineTimestampable                       : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
+    ipubDoctrineTimestampable                       : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     ipubWebsockets                                  : IPub\WebSockets\DI\WebSocketsExtension
     ipubWebsocketsWamp                              : IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension
     # FastyBird libs
@@ -190,7 +190,7 @@ nettrineDbal:
                 class: Ramsey\Uuid\Doctrine\UuidBinaryType
                 commented: false
             utcdatetime:
-                class: IPub\DoctrineTimestampable\Types\UTCDateTime
+                class: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
                 commented: false
 
         typesMapping:

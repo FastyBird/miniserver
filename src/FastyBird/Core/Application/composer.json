@@ -44,7 +44,7 @@
     "doctrine/orm": "2.15.*",
     "fastybird/simple-auth": "@dev",
     "fastybird/doctrine-crud-library": "@dev",
-    "ipub/doctrine-timestampable": "^2.0",
+    "fastybird/doctrine-timestampable-library": "@dev",
     "ipub/slim-router": "^0.2",
     "nette/bootstrap": "^3.2",
     "nette/application": "^3.1",
