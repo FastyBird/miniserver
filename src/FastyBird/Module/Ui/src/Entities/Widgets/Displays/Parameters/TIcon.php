@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Entities\Widgets\Displays\Parameters;
 
+use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use FastyBird\Module\Ui\Types;
-use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use function is_string;
 
 /**

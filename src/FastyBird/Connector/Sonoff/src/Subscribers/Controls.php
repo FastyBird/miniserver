@@ -21,10 +21,10 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Connector\Sonoff\Entities;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Nette;
 use Nette\Utils;
 

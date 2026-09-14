@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Accounts\Models\Entities\Identities;
 
 use Doctrine\DBAL;
+use FastyBird\Library\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Models;
-use IPub\DoctrineCrud\Crud as DoctrineCrudCrud;
-use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Nette;
 use Nette\Utils;
 use function assert;

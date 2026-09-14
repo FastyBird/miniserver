@@ -45,7 +45,7 @@
     "fastybird/tools": "@dev",
     "fig/http-message-util": "^1.1",
     "guzzlehttp/guzzle": "^7.5",
-    "ipub/doctrine-crud": "^5.1",
+    "fastybird/doctrine-crud-library": "@dev",
     "nette/di": "^3.2",
     "orisai/object-mapper": "^0.3",
     "psr/log": "^3.0",

@@ -2760,15 +2760,15 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/ApiKey",
-                "reference": "62947167d38747a1f3877f835bcc303213441ba1"
+                "reference": "51ac4008c18803bf8dfada35425268620af23eb0"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/application": "@dev",
+                "fastybird/doctrine-crud-library": "@dev",
                 "fastybird/json-api": "^0.19",
                 "fastybird/tools": "@dev",
                 "fig/http-message-util": "^1.1",
-                "ipub/doctrine-crud": "^5.1",
                 "nette/di": "^3.2",
                 "nette/utils": "^4.0",
                 "php": ">=8.4.0",
@@ -2833,7 +2833,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Application",
-                "reference": "ff358be44f47ac6edc891482185fe9c253b17753"
+                "reference": "9f3b7816279e224b5c83e53ef4bc296618b95f82"
             },
             "require": {
                 "contributte/cache": "^0.6",
@@ -2843,8 +2843,8 @@
                 "contributte/vite": "^0.2",
                 "cweagans/composer-patches": "^1.7",
                 "doctrine/orm": "2.15.*",
+                "fastybird/doctrine-crud-library": "@dev",
                 "fastybird/simple-auth": "@dev",
-                "ipub/doctrine-crud": "^5.1",
                 "ipub/doctrine-timestampable": "^2.0",
                 "ipub/slim-router": "^0.2",
                 "nette/application": "^3.1",
@@ -3361,6 +3361,44 @@
                 "issues": "https://github.com/FastyBird/miniserver/issues",
                 "source": "https://github.com/FastyBird/miniserver"
             },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/doctrine-crud-library",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Library/DoctrineCrud",
+                "reference": "9472ffb46468fab8803f9f0cac3ac8af04eacc1f"
+            },
+            "require": {
+                "doctrine/orm": "2.15.*",
+                "nette/bootstrap": "^3.2",
+                "nette/di": "^3.2",
+                "nette/utils": "^3.2||^4.0",
+                "php": ">=8.4.0",
+                "phpdocumentor/reflection-docblock": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Library\\DoctrineCrud\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "iPublikuj:cms",
+                    "email": "info@ipublikuj.eu",
+                    "homepage": "https://www.ipublikuj.eu/"
+                }
+            ],
+            "description": "CRUD methods for Doctrine2 ORM",
             "transport-options": {
                 "relative": true
             }
@@ -3910,7 +3948,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/NsPanel",
-                "reference": "a9954e290e8521ede099d9aa256169f164c03f9c"
+                "reference": "40ee7964a77a7e9943472c4b6731dd53f57a8b64"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -3922,11 +3960,11 @@
                 "ext-iconv": "*",
                 "fastybird/application": "@dev",
                 "fastybird/devices-module": "@dev",
+                "fastybird/doctrine-crud-library": "@dev",
                 "fastybird/metadata-library": "@dev",
                 "fastybird/tools": "@dev",
                 "fig/http-message-util": "^1.1",
                 "guzzlehttp/guzzle": "^7.5",
-                "ipub/doctrine-crud": "^5.1",
                 "nette/di": "^3.2",
                 "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
@@ -4498,15 +4536,15 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/SimpleAuth",
-                "reference": "cf95c84d800fa115784bab0e0c7f22a70ee39c81"
+                "reference": "fdd2959fcf27f650d2733aa095d088e4501539c9"
             },
             "require": {
                 "casbin/casbin": "^3.23",
                 "contributte/event-dispatcher": "^0.9",
                 "ext-openssl": "*",
                 "fastybird/datetime-factory": "^0.7",
+                "fastybird/doctrine-crud-library": "@dev",
                 "fastybird/doctrine-orm-query-library": "@dev",
-                "ipub/doctrine-crud": "^5.1",
                 "ipub/slim-router": "^0.2.0",
                 "latte/latte": "^3.0",
                 "lcobucci/jwt": "^4.2",
@@ -4788,7 +4826,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Tuya",
-                "reference": "c402627e09f3946c74b7822dfc2122736e00295d"
+                "reference": "b8ee9d6be73b9fac036b60755b93b54bf44b6920"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -4801,11 +4839,11 @@
                 "ext-pcntl": "*",
                 "fastybird/application": "@dev",
                 "fastybird/devices-module": "@dev",
+                "fastybird/doctrine-crud-library": "@dev",
                 "fastybird/metadata-library": "@dev",
                 "fastybird/tools": "@dev",
                 "fig/http-message-util": "^1.1",
                 "guzzlehttp/guzzle": "^7.5",
-                "ipub/doctrine-crud": "^5.1",
                 "nette/di": "^3.2",
                 "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
@@ -4965,7 +5003,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Viera",
-                "reference": "942d8bddacf79c9bd55f57fe89c8909797557f62"
+                "reference": "d713a5177754b48077ae69b6f577c7625ab2d108"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -4980,11 +5018,11 @@
                 "ext-sockets": "*",
                 "fastybird/application": "@dev",
                 "fastybird/devices-module": "@dev",
+                "fastybird/doctrine-crud-library": "@dev",
                 "fastybird/metadata-library": "@dev",
                 "fastybird/tools": "@dev",
                 "fig/http-message-util": "^1.1",
                 "guzzlehttp/guzzle": "^7.5",
-                "ipub/doctrine-crud": "^5.1",
                 "nette/di": "^3.2",
                 "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
@@ -5124,7 +5162,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Virtual",
-                "reference": "7af94510cfcc7572ca7153cc4efab22e31cad18e"
+                "reference": "7f4b0e2fae44b4ad7773772ca3de537d4d94fecf"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -5134,9 +5172,9 @@
                 "doctrine/orm": "2.15.*",
                 "fastybird/application": "@dev",
                 "fastybird/devices-module": "@dev",
+                "fastybird/doctrine-crud-library": "@dev",
                 "fastybird/metadata-library": "@dev",
                 "fastybird/tools": "@dev",
-                "ipub/doctrine-crud": "^5.1",
                 "nette/di": "^3.2",
                 "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
@@ -5201,7 +5239,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Addon/VirtualThermostat",
-                "reference": "4672db2270303bee72cdb13778383b322fab6bfb"
+                "reference": "ee9bb0c0f75e8250030c79aeb37b95ec27fd6be3"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -5211,10 +5249,10 @@
                 "doctrine/orm": "2.15.*",
                 "fastybird/application": "@dev",
                 "fastybird/devices-module": "@dev",
+                "fastybird/doctrine-crud-library": "@dev",
                 "fastybird/metadata-library": "@dev",
                 "fastybird/tools": "@dev",
                 "fastybird/virtual-connector": "@dev",
-                "ipub/doctrine-crud": "^5.1",
                 "nette/di": "^3.2",
                 "php": ">=8.4.0",
                 "psr/log": "^3.0",
@@ -6555,91 +6593,6 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2023-06-11T21:11:53+00:00"
-        },
-        {
-            "name": "ipub/doctrine-crud",
-            "version": "v5.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ipublikuj/doctrine-crud.git",
-                "reference": "40ad5065de2a3c2d4106fa39c3da6815a1372d27"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/doctrine-crud/zipball/40ad5065de2a3c2d4106fa39c3da6815a1372d27",
-                "reference": "40ad5065de2a3c2d4106fa39c3da6815a1372d27",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "^2.6",
-                "nette/bootstrap": "^3.2",
-                "nette/di": "^3.2",
-                "nette/utils": "^3.2||^4.0",
-                "php": ">=8.1.0",
-                "phpdocumentor/reflection-docblock": "^5.2"
-            },
-            "require-dev": {
-                "brianium/paratest": "^7.3",
-                "contributte/console": "^0.9",
-                "infection/infection": "^0.27",
-                "nettrine/cache": "^0.3",
-                "nettrine/orm": "^0.8",
-                "orisai/coding-standard": "^3.2",
-                "pds/skeleton": "^1.0",
-                "php-parallel-lint/php-parallel-lint": "^1.3",
-                "phpstan/extension-installer": "^1.3",
-                "phpstan/phpstan": "^1.10",
-                "phpstan/phpstan-deprecation-rules": "^1.1",
-                "phpstan/phpstan-doctrine": "^1.3",
-                "phpstan/phpstan-nette": "^1.2",
-                "phpstan/phpstan-phpunit": "^1.1",
-                "phpstan/phpstan-strict-rules": "^1.5",
-                "phpunit/phpunit": "^10.0",
-                "staabm/annotate-pull-request-from-checkstyle": "^1.8",
-                "tracy/tracy": "^2.9"
-            },
-            "type": "library",
-            "extra": {
-                "ipub": {
-                    "configuration": {
-                        "extension": "IPub\\DoctrineCrud\\DI\\DoctrineCrudExtension"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "IPub\\DoctrineCrud\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "iPublikuj:cms",
-                    "email": "info@ipublikuj.eu",
-                    "homepage": "https://www.ipublikuj.eu/"
-                }
-            ],
-            "description": "CRUD methods for Doctrine2 ORM",
-            "homepage": "https://github.com/iPublikuj/doctrine-crud",
-            "keywords": [
-                "crud",
-                "doctrine",
-                "doctrine2",
-                "framework",
-                "ipub",
-                "nette",
-                "tools"
-            ],
-            "support": {
-                "email": "support@ipublikuj.eu",
-                "issues": "https://github.com/iPublikuj/doctrine-crud/issues",
-                "source": "https://github.com/ipublikuj/doctrine-crud/tree/v5.1.0"
-            },
-            "time": "2024-08-05T08:03:14+00:00"
         },
         {
             "name": "ipub/doctrine-timestampable",

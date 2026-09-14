@@ -16,11 +16,11 @@
 namespace FastyBird\Module\Devices\Models\Entities\Connectors\Properties;
 
 use Doctrine\DBAL;
+use FastyBird\Library\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Models;
-use IPub\DoctrineCrud\Crud as DoctrineCrudCrud;
-use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher;

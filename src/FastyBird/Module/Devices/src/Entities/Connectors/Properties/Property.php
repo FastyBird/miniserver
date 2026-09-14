@@ -17,9 +17,9 @@ namespace FastyBird\Module\Devices\Entities\Connectors\Properties;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
-use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use Nette\Utils;
 use Ramsey\Uuid;
 use TypeError;

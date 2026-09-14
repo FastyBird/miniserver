@@ -17,8 +17,8 @@ namespace FastyBird\Core\SimpleAuth\Entities\Policies;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\SimpleAuth\Types;
-use IPub\DoctrineCrud;
-use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use FastyBird\Library\DoctrineCrud;
+use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use Ramsey\Uuid;
 
 #[ORM\Entity]

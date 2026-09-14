@@ -43,7 +43,7 @@
     "cweagans/composer-patches": "^1.7",
     "doctrine/orm": "2.15.*",
     "fastybird/simple-auth": "@dev",
-    "ipub/doctrine-crud": "^5.1",
+    "fastybird/doctrine-crud-library": "@dev",
     "ipub/doctrine-timestampable": "^2.0",
     "ipub/slim-router": "^0.2",
     "nette/bootstrap": "^3.2",

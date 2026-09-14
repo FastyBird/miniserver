@@ -16,9 +16,9 @@
 namespace FastyBird\Plugin\ApiKey\Models\Entities;
 
 use Doctrine\DBAL;
+use FastyBird\Library\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Plugin\ApiKey\Entities;
-use IPub\DoctrineCrud\Crud as DoctrineCrudCrud;
-use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Nette;
 use Nette\Utils;
 use function assert;

@@ -20,7 +20,7 @@
     "ext-openssl": "*",
     "fastybird/datetime-factory": "^0.7",
     "fastybird/doctrine-orm-query-library": "@dev",
-    "ipub/doctrine-crud": "^5.1",
+    "fastybird/doctrine-crud-library": "@dev",
     "ipub/slim-router": "^0.2.0",
     "latte/latte": "^3.0",
     "lcobucci/jwt": "^4.2",
