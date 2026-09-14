@@ -43,7 +43,7 @@
     "cweagans/composer-patches": "^1.7",
     "fastybird/application": "@dev",
     "fastybird/exchange": "@dev",
-    "fastybird/json-api": "^0.19",
+    "fastybird/json-api-library": "@dev",
     "fastybird/metadata-library": "@dev",
     "fastybird/simple-auth": "@dev",
     "fastybird/doctrine-phone-library": "@dev",

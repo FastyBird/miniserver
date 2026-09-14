@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Schemas\Channels\Properties\States;
 use DateTimeInterface;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;

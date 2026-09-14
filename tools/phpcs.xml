@@ -121,6 +121,7 @@
                 <element key="src/FastyBird/Library/DoctrinePhone/src" value="FastyBird\Library\DoctrinePhone"/>
                 <element key="src/FastyBird/Library/DoctrineOrmQuery/src" value="FastyBird\Library\DoctrineOrmQuery"/>
                 <element key="src/FastyBird/Library/DoctrineCrud/src" value="FastyBird\Library\DoctrineCrud"/>
+                <element key="src/FastyBird/Library/JsonApi/src" value="FastyBird\Library\JsonApi"/>
                 <element key="src/FastyBird/Library/Metadata/src" value="FastyBird\Library\Metadata"/>
                 <element key="src/FastyBird/Library/Metadata/tests/cases/unit" value="FastyBird\Library\Metadata\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Library/Metadata/tests/fixtures" value="FastyBird\Library\Metadata\Tests\Fixtures"/>

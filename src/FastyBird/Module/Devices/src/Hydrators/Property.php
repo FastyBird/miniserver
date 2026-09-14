@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Devices\Hydrators;
 
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Library\Metadata;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices\Entities;

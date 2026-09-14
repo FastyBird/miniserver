@@ -1,0 +1,40 @@
+{
+  "name": "fastybird/json-api-library",
+  "type": "library",
+  "description": "{JSON:API} api tools with data hydration",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "FastyBird s.r.o.",
+      "email": "code@fastybird.com",
+      "homepage": "https://www.fastybird.com"
+    },
+    {
+      "name": "Adam Kadlec",
+      "email": "adam.kadlec@fastybird.com"
+    }
+  ],
+  "require": {
+    "doctrine/orm": "2.15.*",
+    "ext-json": "*",
+    "fig/http-message-util": "^1.1",
+    "ipub/json-api-document": "^0.2",
+    "neomerx/json-api": "^4.0",
+    "nette/bootstrap": "^3.2",
+    "nette/di": "^3.1",
+    "nette/utils": "^3.2||^4.0",
+    "php": ">=8.4.0",
+    "phpdocumentor/reflection-docblock": "^5.3",
+    "psr/http-factory": "^1.1",
+    "psr/http-message": "^1.1",
+    "psr/http-server-middleware": "^1.0",
+    "psr/log": "^1.1|^3.0",
+    "ramsey/uuid": "^4.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "FastyBird\\Library\\JsonApi\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}

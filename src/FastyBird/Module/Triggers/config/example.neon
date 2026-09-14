@@ -28,7 +28,7 @@ extensions:
     ipubDoctrinePhone                   : FastyBird\Library\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
+    fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
     fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
     fbWebServer                         : FastyBird\Plugin\WebServer\DI\WebServerExtension
     fbTools                             : FastyBird\Core\Tools\DI\ToolsExtension

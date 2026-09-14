@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Schemas\Devices\Controls;
 
 use DateTimeInterface;
-use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;

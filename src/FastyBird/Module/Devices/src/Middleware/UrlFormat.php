@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Middleware;
 
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\Metadata;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Router;

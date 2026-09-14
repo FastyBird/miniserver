@@ -33,7 +33,7 @@
     "php": ">=8.4.0",
     "cweagans/composer-patches": "^1.7",
     "fastybird/application": "@dev",
-    "fastybird/json-api": "^0.19",
+    "fastybird/json-api-library": "@dev",
     "fastybird/tools": "@dev",
     "fig/http-message-util": "^1.1",
     "fastybird/doctrine-crud-library": "@dev",

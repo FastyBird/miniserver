@@ -17,8 +17,8 @@ namespace FastyBird\Module\Devices\Schemas\Devices;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;

@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Schemas\Channels;
 
 use DateTimeInterface;
-use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;

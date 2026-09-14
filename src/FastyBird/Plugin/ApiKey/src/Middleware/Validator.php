@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\ApiKey\Middleware;
 
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Plugin\ApiKey\Models;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
