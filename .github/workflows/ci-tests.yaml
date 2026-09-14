@@ -42,6 +42,12 @@ jobs:
       - name: "make layers"
         run: "make layers"
 
+      # Same shape as `make layers`: plain PHP, runs before `composer install` so that
+      # staying dependency-free remains a tested property. Exit 2 means the gate broke
+      # (self-check floor tripped), exit 1 means an inheritance root lost its seed.
+      - name: "make discriminators"
+        run: "make discriminators"
+
       - name: "Composer install"
         run: "composer install --no-interaction --no-progress --prefer-dist"
 

@@ -21,8 +21,6 @@ use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use FastyBird\Module\Triggers\Entities;
 use Ramsey\Uuid;
 use function array_merge;
-use function assert;
-use function is_string;
 
 #[ORM\Entity]
 #[ORM\Table(
@@ -41,7 +39,7 @@ class Email extends Notification
 
 	#[IPubDoctrine\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'notification_email', type: 'string', nullable: false)]
-	private string|null $email;
+	private string $email;
 
 	public function __construct(
 		string $email,
@@ -61,8 +59,6 @@ class Email extends Notification
 
 	public function getEmail(): string
 	{
-		assert(is_string($this->email));
-
 		return $this->email;
 	}
 

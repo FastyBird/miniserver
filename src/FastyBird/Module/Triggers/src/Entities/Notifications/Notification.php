@@ -34,6 +34,12 @@ use function assert;
 )]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'notification_type', type: 'string', length: 100)]
+// Seeded with a subtype this module owns; the rest arrive at runtime from
+// Core\Application's EntityDiscriminator. The map has to be non-empty: ClassMetadataFactory
+// calls addDefaultDiscriminatorMap() before dispatching loadClassMetadata and only when the
+// map is empty, and that default keys entries on short class names. An explicit map skips
+// it, which is what the doctrine/orm patch used to do by deferring the call.
+#[ORM\DiscriminatorMap([Entities\Notifications\Email::TYPE => Entities\Notifications\Email::class])]
 #[ORM\MappedSuperclass]
 abstract class Notification implements Entities\Entity,
 	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated

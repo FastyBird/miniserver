@@ -233,9 +233,6 @@
             "contributte/monolog": {
                 "Bug: invalid callback definition": "tools/patches/contributte-monolog-src-loggerholder-php.patch"
             },
-            "doctrine/orm": {
-                "Feature: Dynamic discriminator map": "tools/patches/doctrine-orm-lib-doctrine-orm-mapping-classmetadatafactory-php.patch"
-            },
             "nettrine/orm": {
                 "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine-orm-src-managerregistry-php.patch"
             },

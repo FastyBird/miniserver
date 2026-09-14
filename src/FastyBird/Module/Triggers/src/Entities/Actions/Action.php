@@ -34,6 +34,16 @@ use function assert;
 )]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'action_type', type: 'string', length: 100)]
+// Seeded with this root itself, which is exactly what Core\Application's EntityDiscriminator
+// appends when the root is absent from its own map; the concrete subtypes are contributed at
+// runtime from #[DiscriminatorEntry] in the automator packages that own them.
+//
+// The map must be non-empty. ClassMetadataFactory calls addDefaultDiscriminatorMap() before
+// dispatching loadClassMetadata and only when the map is empty, and that default keys every
+// subtype by its short class name -- so each subtype would land in the map twice, once under
+// the short name and once under its DiscriminatorEntry name. An explicit map skips the default
+// entirely, which is what the removed doctrine/orm patch achieved by deferring the call.
+#[ORM\DiscriminatorMap(['action' => Action::class])]
 #[ORM\MappedSuperclass]
 abstract class Action implements Entities\Entity,
 	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated

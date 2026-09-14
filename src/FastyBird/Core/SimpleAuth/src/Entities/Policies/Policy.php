@@ -35,6 +35,16 @@ use Ramsey\Uuid;
 )]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'policy_type', type: 'string', length: 100)]
+// Seeded with this root itself. Policy is concrete and 'policy' is a persisted
+// policy_type value, so the root has to be a key in its own map; subtypes such as the
+// Accounts module's Role are contributed at runtime from #[DiscriminatorEntry].
+//
+// The map must be non-empty. ClassMetadataFactory calls addDefaultDiscriminatorMap() before
+// dispatching loadClassMetadata and only when the map is empty, and that default keys every
+// subtype by its short class name -- so each subtype would land in the map twice, once under
+// the short name and once under its DiscriminatorEntry name. An explicit map skips the default
+// entirely, which is what the removed doctrine/orm patch achieved by deferring the call.
+#[ORM\DiscriminatorMap([Policy::TYPE => Policy::class])]
 class Policy implements DoctrineCrud\Entities\IEntity
 {
 

@@ -4051,12 +4051,6 @@ parameters:
 			path: ../src/FastyBird/Module/Triggers/src/Controllers/TriggersV1.php
 
 		-
-			message: '#^Property FastyBird\\Module\\Triggers\\Entities\\Notifications\\Email\:\:\$email \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
-			identifier: property.unusedType
-			count: 1
-			path: ../src/FastyBird/Module/Triggers/src/Entities/Notifications/Email.php
-
-		-
 			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
@@ -4145,6 +4139,12 @@ parameters:
 			identifier: nullsafe.neverNull
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Entities/Widgets/Displays/Parameters/TIcon.php
+
+		-
+			message: '#^Property FastyBird\\Module\\Ui\\Entities\\Widgets\\Widget\:\:\$display type mapping mismatch\: database can contain FastyBird\\Module\\Ui\\Entities\\Widgets\\Displays\\Display\|null but property expects FastyBird\\Module\\Ui\\Entities\\Widgets\\Displays\\Display\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: ../src/FastyBird/Module/Ui/src/Entities/Widgets/Widget.php
 
 		-
 			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\)\: FastyBird\\Module\\Ui\\Documents\\Dashboards\\Dashboard given\.$#'
