@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Triggers\Entities\Actions;
 
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use FastyBird\Module\Triggers\Entities;
-use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use IPub\DoctrineTimestampable;
 use Nette\Utils;
 use Ramsey\Uuid;

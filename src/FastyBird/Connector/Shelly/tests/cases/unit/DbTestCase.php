@@ -9,7 +9,7 @@ use FastyBird\Connector\Shelly\DI;
 use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Core\Application\Boot as ApplicationBoot;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use IPub\DoctrineCrud;
+use FastyBird\Library\DoctrineCrud;
 use Nette;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;

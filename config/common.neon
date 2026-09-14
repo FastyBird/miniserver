@@ -30,7 +30,7 @@ extensions:
     nettrineMigrations                              : Nettrine\Migrations\DI\MigrationsExtension
     ipubPhone                                       : IPub\Phone\DI\PhoneExtension
     ipubDoctrinePhone                               : FastyBird\Library\DoctrinePhone\DI\DoctrinePhoneExtension
-    ipubDoctrineCrud                                : IPub\DoctrineCrud\DI\DoctrineCrudExtension
+    ipubDoctrineCrud                                : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable                       : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     ipubWebsockets                                  : IPub\WebSockets\DI\WebSocketsExtension
     ipubWebsocketsWamp                              : IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension

@@ -18,8 +18,8 @@ namespace FastyBird\Module\Triggers\Entities\Triggers;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
+use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use FastyBird\Module\Triggers\Entities;
-use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use Ramsey\Uuid;
 
 #[ORM\Entity]

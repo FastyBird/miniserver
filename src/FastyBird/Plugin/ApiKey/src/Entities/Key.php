@@ -16,10 +16,10 @@
 namespace FastyBird\Plugin\ApiKey\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Library\DoctrineCrud;
+use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use FastyBird\Plugin\ApiKey\Entities;
 use FastyBird\Plugin\ApiKey\Types;
-use IPub\DoctrineCrud;
-use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use IPub\DoctrineTimestampable;
 use Ramsey\Uuid;
 
