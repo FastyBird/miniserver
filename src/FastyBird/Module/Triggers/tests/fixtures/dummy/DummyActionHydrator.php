@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\JsonAPIDocument;

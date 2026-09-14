@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Identities;
 
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Helpers;

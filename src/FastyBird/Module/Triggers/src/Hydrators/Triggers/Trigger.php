@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Hydrators\Triggers;
 
-use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Schemas;
 use IPub\JsonAPIDocument;

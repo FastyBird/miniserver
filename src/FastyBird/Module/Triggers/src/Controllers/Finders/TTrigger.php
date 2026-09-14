@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\Controllers\Finders;
 
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Queries;

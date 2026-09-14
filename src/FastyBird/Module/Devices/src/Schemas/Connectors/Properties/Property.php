@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Schemas\Connectors\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;

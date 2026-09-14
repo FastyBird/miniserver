@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Actions;
 
-use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;

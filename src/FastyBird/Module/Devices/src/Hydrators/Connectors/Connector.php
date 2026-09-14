@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Hydrators\Connectors;
 
-use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Devices\Entities;
 use IPub\JsonAPIDocument;
 use function boolval;

@@ -17,7 +17,7 @@ namespace FastyBird\Automator\DateTime\Hydrators\Conditions;
 
 use DateTimeInterface;
 use FastyBird\Automator\DateTime\Entities;
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\JsonAPIDocument;

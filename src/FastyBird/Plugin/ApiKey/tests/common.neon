@@ -23,7 +23,7 @@ extensions:
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
     ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
+    fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
 
 services:
     - {factory: IPub\SlimRouter\Http\ResponseFactory}
@@ -39,7 +39,7 @@ contributteTranslation:
     localeResolvers: []
     dirs:
         - %appDir%/../src/Translations
-        - %vendorDir%/fastybird/json-api/src/Translations
+        - %vendorDir%/fastybird/json-api-library/src/Translations
 
 nettrineDbal:
     connection:

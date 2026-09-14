@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Emails;
 
-use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Schemas;
 

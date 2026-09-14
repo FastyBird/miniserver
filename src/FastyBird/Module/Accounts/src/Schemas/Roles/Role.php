@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Schemas\Roles;
 
 use Exception;
 use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\JsonApi\Schemas as JsonApis;
+use FastyBird\Library\JsonApi\Schemas as JsonApis;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;

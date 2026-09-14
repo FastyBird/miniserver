@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Hydrators\Channels;
 
-use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Schemas;
 use IPub\JsonAPIDocument;

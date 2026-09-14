@@ -37,7 +37,7 @@ extensions:
     # FastyBird libs
     fbDateTimeFactory                               : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                                    : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
-    fbJsonApi                                       : FastyBird\JsonApi\DI\JsonApiExtension
+    fbJsonApi                                       : FastyBird\Library\JsonApi\DI\JsonApiExtension
     # FastyBird app core
     fbApplication                                   : FastyBird\Core\Application\DI\ApplicationExtension
     fbTools                                         : FastyBird\Core\Tools\DI\ToolsExtension
@@ -160,7 +160,7 @@ contributteTranslation:
         fallback: [en_US, en]
     localeResolvers: []
     dirs:
-        - %appDir%/vendor/fastybird/json-api/src/Translations
+        - %appDir%/vendor/fastybird/json-api-library/src/Translations
 
 contributteVite:
     server: http://localhost:3000

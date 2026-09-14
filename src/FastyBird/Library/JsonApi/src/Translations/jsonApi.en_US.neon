@@ -1,0 +1,28 @@
+#
+# Service translations
+#
+# @language		en_US
+#
+# @license		More in LICENSE.md
+# @copyright	https://www.fastybird.com
+# @author		Adam Kadlec <adam.kadlec@fastybird.com>
+# @package		FastyBird:JsonApi!
+# @subpackage	Translations
+# @since		0.1.0
+#
+# @date			13.04.19
+#
+
+hydrator:
+	invalidIdentifier:
+		heading	: "Invalid identifier"
+		message	: "Provided entity identifier is not valid"
+	invalidResource:
+		heading	: "Invalid resource"
+		message	: "Provided resource structure is not valid"
+	missingRequiredAttribute:
+		heading	: "Missing required attribute"
+		message	: "Provided request is missing required attribute"
+	missingRequiredRelation:
+		heading	: "Missing required relation"
+		message	: "Provided request is missing required relation"

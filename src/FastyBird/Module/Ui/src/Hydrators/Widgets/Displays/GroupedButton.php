@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Types;
 use Fig\Http\Message\StatusCodeInterface;

@@ -24,7 +24,7 @@ extensions:
     ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
+    fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
     fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
     fbTools                             : FastyBird\Core\Tools\DI\ToolsExtension
     fbExchange                          : FastyBird\Core\Exchange\DI\ExchangeExtension
@@ -61,7 +61,7 @@ contributteTranslation:
         fallback: [en_US, en]
     localeResolvers: []
     dirs:
-        - %vendorDir%/fastybird/json-api/src/Translations
+        - %vendorDir%/fastybird/json-api-library/src/Translations
 
 nettrineDbal:
     connection:

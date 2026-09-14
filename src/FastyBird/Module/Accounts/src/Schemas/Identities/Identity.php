@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Schemas\Identities;
 
-use FastyBird\JsonApi\Schemas as JsonApis;
+use FastyBird\Library\JsonApi\Schemas as JsonApis;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;

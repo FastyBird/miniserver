@@ -18,7 +18,7 @@ namespace FastyBird\Module\Triggers\Controllers;
 use Exception;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;

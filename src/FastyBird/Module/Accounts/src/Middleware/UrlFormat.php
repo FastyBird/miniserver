@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Middleware;
 
-use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\Metadata;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;

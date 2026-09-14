@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Dashboards\Tabs;
 
-use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 use IPub\JsonAPIDocument;

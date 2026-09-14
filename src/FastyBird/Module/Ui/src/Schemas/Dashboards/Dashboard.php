@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Schemas\Dashboards;
 
-use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
