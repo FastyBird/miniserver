@@ -20,9 +20,9 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
 use FastyBird\Core\SimpleAuth\Entities as SimpleAuthEntities;
 use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use FastyBird\Library\DoctrineTimestampable;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
-use IPub\DoctrineTimestampable;
 use Ramsey\Uuid;
 
 #[ORM\Entity]

@@ -59,7 +59,7 @@ nettrineDbal:
                 class: Ramsey\Uuid\Doctrine\UuidBinaryType
                 commented: false
             utcdatetime:
-                class: IPub\DoctrineTimestampable\Types\UTCDateTime
+                class: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
                 commented: false
 
         typesMapping:

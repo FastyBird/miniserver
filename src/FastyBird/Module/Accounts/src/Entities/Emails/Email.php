@@ -18,10 +18,10 @@ namespace FastyBird\Module\Accounts\Entities\Emails;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use FastyBird\Library\DoctrineTimestampable;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Types;
-use IPub\DoctrineTimestampable;
 use Nette\Utils;
 use Ramsey\Uuid;
 

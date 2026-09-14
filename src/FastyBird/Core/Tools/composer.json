@@ -34,7 +34,7 @@
     "contributte/monolog": "^0.5",
     "doctrine/orm": "2.15.*",
     "doctrine/persistence": "^2.5 || ^3.4",
-    "ipub/doctrine-timestampable": "^2.0",
+    "fastybird/doctrine-timestampable-library": "@dev",
     "fastybird/datetime-factory": "^0.7.1",
     "fastybird/metadata-library": "@dev",
     "mathsolver/mathsolver": "@dev",
