@@ -119,7 +119,7 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 	 */
 	public function postLoad(
 		object $entity,
-		ORM\Event\LifecycleEventArgs $eventArgs,
+		ORM\Event\PostLoadEventArgs $eventArgs,
 	): void
 	{
 		$em = $eventArgs->getObjectManager();
@@ -140,7 +140,7 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 		ORM\Event\PreFlushEventArgs $eventArgs,
 	): void
 	{
-		$this->postLoadAndPreFlush($entity, $eventArgs->getEntityManager());
+		$this->postLoadAndPreFlush($entity, $eventArgs->getObjectManager());
 	}
 
 	/**

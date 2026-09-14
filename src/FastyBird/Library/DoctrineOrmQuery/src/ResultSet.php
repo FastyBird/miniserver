@@ -240,7 +240,7 @@ final class ResultSet implements Countable, IteratorAggregate
 			$this->totalCount = $totalCount;
 
 			return $this->totalCount;
-		} catch (ORM\ORMException $e) {
+		} catch (ORM\Exception\ORMException | ORM\Exception\ManagerException $e) {
 			throw new Exceptions\Query($e, $this->query, $e->getMessage());
 		}
 	}
@@ -273,7 +273,7 @@ final class ResultSet implements Countable, IteratorAggregate
 				|| $this->query->getMaxResults() !== $limit
 			)
 		) {
-			$this->query->setFirstResult($offset);
+			$this->query->setFirstResult($offset ?? 0);
 			$this->query->setMaxResults($limit);
 
 			$this->iterator = null;
@@ -330,7 +330,7 @@ final class ResultSet implements Countable, IteratorAggregate
 			$this->frozen = true;
 
 			return $this->iterator = $iterator;
-		} catch (ORM\ORMException $e) {
+		} catch (ORM\Exception\ORMException | ORM\Exception\ManagerException $e) {
 			throw new Exceptions\Query($e, $this->query, $e->getMessage());
 		}
 	}

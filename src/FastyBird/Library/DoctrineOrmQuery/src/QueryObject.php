@@ -98,7 +98,7 @@ abstract class QueryObject
 		}
 
 		$query = $this->getQuery($repository)
-			->setFirstResult(null)
+			->setFirstResult(0)
 			->setMaxResults(null);
 
 		$paginatedQuery = new ORM\Tools\Pagination\Paginator(
@@ -168,7 +168,7 @@ abstract class QueryObject
 	{
 		try {
 			$query = $this->getQuery($repository)
-				->setFirstResult(null)
+				->setFirstResult(0)
 				->setMaxResults(null);
 
 			return $hydrationMode !== ORM\AbstractQuery::HYDRATE_OBJECT
@@ -205,7 +205,7 @@ abstract class QueryObject
 	{
 		try {
 			$query = $this->getQuery($repository)
-				->setFirstResult(null)
+				->setFirstResult(0)
 				->setMaxResults(1);
 
 			// getResult has to be called to have consistent result for the postFetch
