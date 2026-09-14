@@ -98,7 +98,13 @@ final class EntityMapper implements IEntityMapper
 			);
 		}
 
-		/** @var ORM\Mapping\ClassMetadataInfo<object> $classMetadata */
+		// ObjectManager::getClassMetadata() is typed to the Persistence interface, which has
+		// none of the members used below -- reflFields, setFieldValue(), getFieldValue() are
+		// all ORM specific -- so the narrowing is load bearing rather than cosmetic. It is
+		// ORM\Mapping\ClassMetadata and not ClassMetadataInfo deliberately: ORM 3 removes the
+		// latter, having merged it into the former, and in ORM 2 ClassMetadata already extends
+		// it, so this reads the same under both majors.
+		/** @var ORM\Mapping\ClassMetadata<object> $classMetadata */
 		$classMetadata = $entityClassManager->getClassMetadata($entityClass);
 
 		$reflectionProperties = [];
@@ -554,10 +560,10 @@ final class EntityMapper implements IEntityMapper
 	}
 
 	/**
-	 * @param ORM\Mapping\ClassMetadataInfo<object> $classMetadata
+	 * @param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */
 	private function setFieldValue(
-		ORM\Mapping\ClassMetadataInfo $classMetadata,
+		ORM\Mapping\ClassMetadata $classMetadata,
 		Entities\IEntity $entity,
 		string $field,
 		mixed $value,
@@ -591,10 +597,10 @@ final class EntityMapper implements IEntityMapper
 	}
 
 	/**
-	 * @param ORM\Mapping\ClassMetadataInfo<object> $classMetadata
+	 * @param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */
 	private function getFieldValue(
-		ORM\Mapping\ClassMetadataInfo $classMetadata,
+		ORM\Mapping\ClassMetadata $classMetadata,
 		Entities\IEntity $entity,
 		string $field,
 	): mixed
