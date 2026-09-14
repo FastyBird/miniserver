@@ -130,7 +130,7 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	 */
 	public function onFlush(ORM\Event\OnFlushEventArgs $eventArgs): void
 	{
-		$em = $eventArgs->getEntityManager();
+		$em = $eventArgs->getObjectManager();
 		$uow = $em->getUnitOfWork();
 
 		// Check all scheduled updates
@@ -319,9 +319,9 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	 * @throws Common\Annotations\AnnotationException
 	 * @throws ORM\Mapping\MappingException
 	 */
-	public function prePersist(object $entity, ORM\Event\LifecycleEventArgs $eventArgs): void
+	public function prePersist(object $entity, ORM\Event\PrePersistEventArgs $eventArgs): void
 	{
-		$em = $eventArgs->getEntityManager();
+		$em = $eventArgs->getObjectManager();
 		$uow = $em->getUnitOfWork();
 		/** @phpstan-var ORM\Mapping\ClassMetadata<object> $classMetadata */
 		$classMetadata = $em->getClassMetadata($entity::class);
@@ -341,9 +341,9 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	 * @throws Common\Annotations\AnnotationException
 	 * @throws ORM\Mapping\MappingException
 	 */
-	public function preUpdate(object $entity, ORM\Event\LifecycleEventArgs $eventArgs): void
+	public function preUpdate(object $entity, ORM\Event\PreUpdateEventArgs $eventArgs): void
 	{
-		$em = $eventArgs->getEntityManager();
+		$em = $eventArgs->getObjectManager();
 		$uow = $em->getUnitOfWork();
 		/** @phpstan-var ORM\Mapping\ClassMetadata<object> $classMetadata */
 		$classMetadata = $em->getClassMetadata($entity::class);
@@ -359,9 +359,9 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	 * @throws Common\Annotations\AnnotationException
 	 * @throws ORM\Mapping\MappingException
 	 */
-	public function preRemove(object $entity, ORM\Event\LifecycleEventArgs $eventArgs): void
+	public function preRemove(object $entity, ORM\Event\PreRemoveEventArgs $eventArgs): void
 	{
-		$em = $eventArgs->getEntityManager();
+		$em = $eventArgs->getObjectManager();
 		$uow = $em->getUnitOfWork();
 		/** @phpstan-var ORM\Mapping\ClassMetadata<object> $classMetadata */
 		$classMetadata = $em->getClassMetadata($entity::class);

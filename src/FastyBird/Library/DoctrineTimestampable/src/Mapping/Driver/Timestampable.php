@@ -115,10 +115,10 @@ final class Timestampable
 				/**
 				 *
 				 *
-				 * @phpstan-var ORM\Mapping\ClassMetadataInfo<object> $classMetadata
+				 * @phpstan-var ORM\Mapping\ClassMetadata<object> $classMetadata
 				 */
 				$classMetadata = $metadataFactory->getMetadataFor($class);
-				assert($classMetadata instanceof ORM\Mapping\ClassMetadataInfo);
+				assert($classMetadata instanceof ORM\Mapping\ClassMetadata);
 
 				// Re-generate metadata on cache miss
 				$this->loadMetadataForObjectClass($objectManager, $classMetadata);
@@ -150,11 +150,11 @@ final class Timestampable
 	 * @throws Common\Annotations\AnnotationException
 	 * @throws ORM\Mapping\MappingException
 	 *
-	 * @phpstan-param ORM\Mapping\ClassMetadataInfo<object> $classMetadata
+	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */
 	public function loadMetadataForObjectClass(
 		Persistence\ObjectManager $objectManager,
-		ORM\Mapping\ClassMetadataInfo $classMetadata,
+		ORM\Mapping\ClassMetadata $classMetadata,
 	): void
 	{
 		if ($classMetadata->isMappedSuperclass) {
@@ -178,10 +178,10 @@ final class Timestampable
 					/**
 					 *
 					 *
-					 * @phpstan-var ORM\Mapping\ClassMetadataInfo<object> $parentClassMetadata
+					 * @phpstan-var ORM\Mapping\ClassMetadata<object> $parentClassMetadata
 					 */
 					$parentClassMetadata = $objectManager->getClassMetadata($parentClass);
-					assert($parentClassMetadata instanceof ORM\Mapping\ClassMetadataInfo);
+					assert($parentClassMetadata instanceof ORM\Mapping\ClassMetadata);
 
 					$config = $this->readExtendedMetadata($parentClassMetadata, $config);
 
@@ -220,9 +220,9 @@ final class Timestampable
 	 *
 	 * @throws ORM\Mapping\MappingException
 	 *
-	 * @phpstan-param ORM\Mapping\ClassMetadataInfo<object> $classMetadata
+	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */
-	private function readExtendedMetadata(ORM\Mapping\ClassMetadataInfo $classMetadata, array $config): array
+	private function readExtendedMetadata(ORM\Mapping\ClassMetadata $classMetadata, array $config): array
 	{
 		$class = $classMetadata->getReflectionClass();
 
@@ -329,9 +329,9 @@ final class Timestampable
 	 *
 	 * @throws ORM\Mapping\MappingException
 	 *
-	 * @phpstan-param ORM\Mapping\ClassMetadataInfo<object> $classMetadata
+	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */
-	private function isValidField(ORM\Mapping\ClassMetadataInfo $classMetadata, string $field): bool
+	private function isValidField(ORM\Mapping\ClassMetadata $classMetadata, string $field): bool
 	{
 		$mapping = $classMetadata->getFieldMapping($field);
 
