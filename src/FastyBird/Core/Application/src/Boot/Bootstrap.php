@@ -148,6 +148,9 @@ class Bootstrap
 		return $files;
 	}
 
+	/**
+	 * @throws Exceptions\InvalidState
+	 */
 	private static function initConstants(): void
 	{
 		// Configuring APP dir path
@@ -206,9 +209,19 @@ class Bootstrap
 			define('FB_TEMP_DIR', FB_APP_DIR . DS . 'var' . DS . 'temp');
 		}
 
-		// Check for temporary dir
-		if (!is_dir(strval(FB_TEMP_DIR))) {
-			mkdir(strval(FB_TEMP_DIR), 0777, true);
+		// Check for temporary dir.
+		//
+		// The re-test after mkdir is not redundant. Ten paratest workers now share one temp
+		// directory -- it used to be per process -- so two can both see it missing and both
+		// create it. The loser gets "mkdir(): File exists", and tools/phpunit.xml sets
+		// failOnWarning, so a PHP warning becomes a test failure blamed on whatever test
+		// happened to be running. This is the guard Nette\Utils\FileSystem::createDir uses.
+		$tempDir = strval(FB_TEMP_DIR);
+
+		if (!is_dir($tempDir) && !@mkdir($tempDir, 0777, true) && !is_dir($tempDir)) {
+			throw new Exceptions\InvalidState(
+				sprintf('Temporary directory "%s" could not be created', $tempDir),
+			);
 		}
 
 		// Configuring logs dir path
@@ -222,9 +235,13 @@ class Bootstrap
 			define('FB_LOGS_DIR', FB_APP_DIR . DS . 'var' . DS . 'logs');
 		}
 
-		// Check for logs dir
-		if (!is_dir(strval(FB_LOGS_DIR))) {
-			mkdir(strval(FB_LOGS_DIR), 0777, true);
+		// Check for logs dir. Same shared-directory race as the temp dir above.
+		$logsDir = strval(FB_LOGS_DIR);
+
+		if (!is_dir($logsDir) && !@mkdir($logsDir, 0777, true) && !is_dir($logsDir)) {
+			throw new Exceptions\InvalidState(
+				sprintf('Logs directory "%s" could not be created', $logsDir),
+			);
 		}
 
 		// Configuring configuration dir path

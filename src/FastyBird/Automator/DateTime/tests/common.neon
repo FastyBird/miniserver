@@ -79,6 +79,22 @@ nettrineDbal:
 nettrineOrm:
     configuration:
         proxyDir: %tempDir%/cache/doctrine.proxies
+        # Build proxies in memory rather than on disk. nettrine defaults this to
+        # AUTOGENERATE_FILE_NOT_EXISTS, which is file_exists() then require, against a
+        # directory that all ten paratest workers now share -- the compiled container is
+        # reused per run, so the temp directory is no longer per process.
+        #
+        # The exact interleaving is not established. The write itself IS atomic: Doctrine's
+        # ProxyGenerator writes to a random temp name and rename()s it into place. Suspects
+        # are DG\BypassFinals, which replaces the file:// stream wrapper and appeared in the
+        # failing stack, and the fact that var/ is a Docker bind mount, where rename does not
+        # carry its usual guarantee. What is established is the symptom -- an intermittent
+        # Class "Nettrine\Proxy\__CG__\..." not found, about half of runs -- and that it
+        # appeared only once the directory became shared.
+        #
+        # Eval mode removes the file from the picture entirely, so it does not depend on
+        # which of those it was. Production stays on file mode: single process, no sharing.
+        autoGenerateProxyClasses: 3   # AbstractProxyFactory::AUTOGENERATE_EVAL
 
 nettrineOrmAttributes:
     mapping: []
