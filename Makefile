@@ -60,6 +60,15 @@ rectorf: ## Apply the PHPUnit annotation-to-attribute conversion, then fix codin
 layers: ## Check dependency direction between the packages under src/FastyBird
 	$(PRE_PHP) php tools/check-layering.php $(ARGS)
 
+# Like `layers`, plain PHP with no vendor/ dependency, so it runs on a bare checkout before
+# `composer install`. Guards the invariant that every Doctrine inheritance root declares an
+# explicit #[ORM\DiscriminatorMap]; without one, Doctrine's short-class-name default map is
+# applied before the EntityDiscriminator subscriber contributes the real keys and every
+# subtype lands in the map twice. That misbuild does not fail any test, because the value the
+# database stores is still one of the two keys -- hence a gate rather than a test.
+discriminators: ## Check every Doctrine inheritance root declares an explicit discriminator map
+	$(PRE_PHP) php tools/check-discriminators.php $(ARGS)
+
 phpstan: ## Analyse code with PHPStan
 	mkdir -p var/tools
 	$(PRE_PHP) "vendor/bin/phpstan" analyse -c $(PHPSTAN_SRC_CONFIG) $(ARGS)

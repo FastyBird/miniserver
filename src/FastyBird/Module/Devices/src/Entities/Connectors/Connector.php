@@ -43,6 +43,16 @@ use function array_map;
 #[ORM\UniqueConstraint(name: 'connector_identifier_unique', columns: ['connector_identifier'])]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'connector_type', type: 'string', length: 100)]
+// Seeded with the subtype this module owns; the rest are contributed at runtime by
+// Core\Application's EntityDiscriminator from #[DiscriminatorEntry] on connector packages.
+//
+// The map must be non-empty here. ClassMetadataFactory calls addDefaultDiscriminatorMap()
+// before dispatching loadClassMetadata, and only when the map is empty -- and that default
+// derives keys from short class names, which are all "connector" across the ten connector
+// packages, so it throws duplicate discriminator entry before any subscriber can run. An
+// explicit map skips it. This is what the removed doctrine/orm patch used to do by deferring
+// the call, and unlike the patch it needs nothing from ORM internals.
+#[ORM\DiscriminatorMap([Entities\Connectors\Generic::TYPE => Entities\Connectors\Generic::class])]
 #[ORM\MappedSuperclass]
 abstract class Connector implements Entities\Entity,
 	Entities\EntityParams,

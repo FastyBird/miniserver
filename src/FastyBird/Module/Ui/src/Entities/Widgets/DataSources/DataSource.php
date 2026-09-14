@@ -36,6 +36,12 @@ use Ramsey\Uuid;
 #[ORM\Index(columns: ['data_source_type'], name: 'data_source_type_idx')]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'data_source_type', type: 'string', length: 100)]
+// Seeded with a subtype this module owns; the rest arrive at runtime from
+// Core\Application's EntityDiscriminator. The map has to be non-empty: ClassMetadataFactory
+// calls addDefaultDiscriminatorMap() before dispatching loadClassMetadata and only when the
+// map is empty, and that default keys entries on short class names. An explicit map skips
+// it, which is what the doctrine/orm patch used to do by deferring the call.
+#[ORM\DiscriminatorMap([Entities\Widgets\DataSources\Generic::TYPE => Entities\Widgets\DataSources\Generic::class])]
 #[ORM\MappedSuperclass]
 abstract class DataSource implements Entities\Entity,
 	Entities\EntityParams,

@@ -40,6 +40,16 @@ use function array_map;
 #[ORM\UniqueConstraint(name: 'channel_identifier_unique', columns: ['channel_identifier', 'device_id'])]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'channel_type', type: 'string', length: 100)]
+// Seeded with the subtype this module owns; the rest are contributed at runtime by
+// Core\Application's EntityDiscriminator from #[DiscriminatorEntry] on other packages.
+//
+// The map must be non-empty here. ClassMetadataFactory calls addDefaultDiscriminatorMap()
+// before dispatching loadClassMetadata, and only when the map is empty -- and that default
+// derives keys from short class names, which collide across packages that all name their
+// entity the same, so it throws duplicate discriminator entry before any subscriber runs.
+// An explicit map skips it, which is what the doctrine/orm patch used to achieve by
+// deferring the call.
+#[ORM\DiscriminatorMap([Entities\Channels\Generic::TYPE => Entities\Channels\Generic::class])]
 #[ORM\MappedSuperclass]
 abstract class Channel implements Entities\Entity,
 	Entities\EntityParams,
