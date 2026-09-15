@@ -223,7 +223,15 @@ class Database
 
 		if ($connection !== null) {
 			$connection->close();
-			$connection->connect();
+
+			// close() drops the driver connection; the wrapper opens a fresh one lazily on the
+			// next statement. This helper is used by the long-running servers before serving a
+			// request, so the reconnect has to be eager rather than deferred -- hence the same
+			// dummy select ping() issues, which is public API on both DBAL majors.
+			//
+			// It used to call $connection->connect(). DBAL 4 makes that protected and ships no
+			// public equivalent, so the call would stop compiling rather than degrade quietly.
+			$connection->executeQuery($connection->getDatabasePlatform()->getDummySelectSQL(), [], []);
 
 			return;
 		}
