@@ -7,6 +7,18 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
+    ignore:
+      # 3.3.0 makes Presenter::$view and ::$layout private, which every first-party
+      # Presenter subclass reads directly -- 15 PHPStan errors on the branch that
+      # tried it (PR #403, closed). Needs its own fix pass, not a version bump.
+      - dependency-name: "nette/application"
+        update-types: ["version-update:semver-minor"]
+      # 0.x versioning, so a minor digit change (0.27 -> 0.31+) is the real break --
+      # the hard prerequisite paratest needs for the PHPUnit 11 bump (Task 34), and
+      # the plan wants "the first real coverage number" out of that step (Task
+      # 33/PR25), not a same-day Dependabot merge. Patches within 0.27.x still pass.
+      - dependency-name: "infection/infection"
+        update-types: ["version-update:semver-minor"]
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -34,6 +46,18 @@ updates:
       # Coupled to UnoCSS's vite peer range; moves as one migration (PR29/PR30).
       - dependency-name: "vite"
         update-types: ["version-update:semver-major"]
+      # 0.64 -> 66 is Task 37/PR29: "the hard peer block", the first frontend
+      # framework bump and the reason vite above is frozen too -- unocss@0.64.1
+      # declares the vite range vite would otherwise be free to move past.
+      - dependency-name: "unocss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@unocss/*"
+        update-types: ["version-update:semver-major"]
+      # 10.0.1 activates no-useless-assignment in the shared config, which fires
+      # across 15+ existing call sites (PR #368, closed). Left unrestricted rather
+      # than major-only: this repo has not verified whether ESLint ever adds a rule
+      # to a recommended config at a minor, only that this specific case was major.
+      - dependency-name: "@eslint/js"
 
   - package-ecosystem: "github-actions"
     directory: "/"
