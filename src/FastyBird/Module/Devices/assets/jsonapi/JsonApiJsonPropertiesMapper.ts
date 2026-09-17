@@ -1,5 +1,5 @@
+import { JsonPropertiesMapper } from 'jsona';
 import { IJsonPropertiesMapper, TAnyKeyValueObject, TJsonaModel, TJsonaRelationships } from 'jsona/lib/JsonaTypes';
-import { JsonPropertiesMapper, RELATIONSHIP_NAMES_PROP } from 'jsona/lib/simplePropertyMappers';
 import get from 'lodash.get';
 
 import { DataType } from '@fastybird/metadata-library';
@@ -7,6 +7,7 @@ import { DataType } from '@fastybird/metadata-library';
 import { useNormalizeValue } from '../composables';
 import { PropertyType } from '../types';
 
+import { RELATIONSHIP_NAMES_PROP } from './constants';
 import {
 	ANY_CONTROL_DOCUMENT_REG_EXP,
 	ANY_PROPERTY_DOCUMENT_REG_EXP,
