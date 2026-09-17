@@ -112,7 +112,60 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/mathsolver/mathsolver.git"
+            "url": "https://github.com/mathsolver/mathsolver.git",
+            "no-api": true
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "bunny/bunny",
+                "version": "0.6.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/jakubkulhan/bunny.git",
+                    "reference": "376626fb5009dc72bf0bbec3508ed2665404d63a"
+                },
+                "type": "library",
+                "require": {
+                    "php": "^8.1",
+                    "evenement/evenement": "^3.0",
+                    "react/async": "^4.2",
+                    "react/event-loop": "^1.5",
+                    "react/promise": "^3.1",
+                    "react/socket": "^1.15"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Bunny\\": "src/"
+                    }
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "clue/redis-react",
+                "version": "3.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/clue/reactphp-redis.git",
+                    "reference": "e928901a647fcf1b8c49ae6cce2497d4e9593285"
+                },
+                "type": "library",
+                "require": {
+                    "php": ">=7.1",
+                    "clue/redis-protocol": "^0.3.2",
+                    "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
+                    "react/event-loop": "^1.6",
+                    "react/promise": "^3.3",
+                    "react/socket": "^1.17"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Clue\\React\\Redis\\": "src/"
+                    }
+                }
+            }
         }
     ],
     "autoload": {
