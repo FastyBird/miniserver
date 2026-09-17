@@ -29,7 +29,7 @@ RUN pnpm install --frozen-lockfile \
 # ============================================================
 # Stage 2: install PHP dependencies
 # ============================================================
-FROM composer:2 AS vendor
+FROM composer:2.8 AS vendor
 
 WORKDIR /app
 

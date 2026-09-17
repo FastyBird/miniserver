@@ -27,7 +27,7 @@ jobs:
         with:
           php-version: "8.4"
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, pdo_mysql, sockets, sodium, sqlite3, zip"
-          tools: "composer:v2"
+          tools: "composer:2.8"
 
       # Deliberately BEFORE `composer install`. The layering checker is plain PHP with no
       # composer dependency, no vendor/ requirement and no autoloader, and running it on a
@@ -66,7 +66,7 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "8.4"
-          tools: "composer:v2"
+          tools: "composer:2.8"
 
       # No `composer install` on purpose: validate reads the manifests and the
       # lock, never the vendor tree. Deliberately not --strict either -- the
@@ -90,23 +90,20 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "8.4"
-          tools: "composer:v2"
+          tools: "composer:2.8"
 
       # --abandoned=report is what makes this a real gate instead of a
       # permanently red one, and the reason it is safe to run without
       # continue-on-error.
       #
-      # `tools: composer:v2` installs the latest 2.x -- 2.10.3, NOT the 2.4 the
-      # dev container pins -- and since 2.7 a plain `composer audit` exits 1
-      # when any dependency is abandoned, whether or not a single advisory
-      # exists. This lock has zero advisories and six abandoned packages
-      # (doctrine/annotations, doctrine/cache, leigh/curve25519, nette/safe,
-      # nettrine/cache, php-http/message-factory), so the plain form is red for
-      # a reason that is not a vulnerability. `report` still prints them; only
-      # a genuine advisory fails the job.
-      #
-      # Note this flag needs Composer >= 2.6, so it cannot be run in the dev
-      # container, which is on 2.4 until Task 26.
+      # Since 2.7 a plain `composer audit` exits 1 when any dependency is
+      # abandoned, whether or not a single advisory exists. This lock has zero
+      # advisories and six abandoned packages (doctrine/annotations,
+      # doctrine/cache, leigh/curve25519, nette/safe, nettrine/cache,
+      # php-http/message-factory), so the plain form is red for a reason that
+      # is not a vulnerability. `report` still prints them; only a genuine
+      # advisory fails the job. This flag needs Composer >= 2.6 -- dev,
+      # production and CI all run 2.8 as of Task 26, so it works everywhere.
       - name: "composer audit --locked"
         run: "composer audit --locked --abandoned=report"
 
@@ -123,7 +120,7 @@ jobs:
         with:
           php-version: "8.4"
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, pdo_mysql, sockets, sodium, sqlite3, zip"
-          tools: "composer:v2"
+          tools: "composer:2.8"
 
       - name: "Composer install"
         run: "composer install --no-interaction --no-progress --prefer-dist"
@@ -144,7 +141,7 @@ jobs:
         with:
           php-version: "8.4"
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, pdo_mysql, sockets, sodium, sqlite3, zip"
-          tools: "composer:v2"
+          tools: "composer:2.8"
 
       - name: "Composer install"
         run: "composer install --no-interaction --no-progress --prefer-dist"
@@ -206,7 +203,7 @@ jobs:
         with:
           php-version: "8.4"
           extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, pdo_mysql, sockets, sodium, sqlite3, zip"
-          tools: "composer:v2"
+          tools: "composer:2.8"
 
       - name: "Composer install"
         run: "composer install --no-interaction --no-progress --prefer-dist"
