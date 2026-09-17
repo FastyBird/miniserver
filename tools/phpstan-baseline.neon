@@ -2299,19 +2299,7 @@ parameters:
 			path: ../src/FastyBird/Connector/Tuya/src/API/LocalApi.php
 
 		-
-			message: '#^Method FastyBird\\Connector\\Tuya\\API\\LocalApi\:\:readStates\(\) should return React\\Promise\\PromiseInterface\<array\<FastyBird\\Connector\\Tuya\\API\\Messages\\Response\\DeviceDataPointState\>\|FastyBird\\Connector\\Tuya\\API\\Messages\\Response\\LocalDeviceWifiScan\|FastyBird\\Connector\\Tuya\\Types\\LocalDeviceError\|string\|null\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Connector/Tuya/src/API/LocalApi.php
-
-		-
 			message: '#^Method FastyBird\\Connector\\Tuya\\API\\LocalApi\:\:stitchPayload\(\) should return array\<int\> but returns array\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Connector/Tuya/src/API/LocalApi.php
-
-		-
-			message: '#^Method FastyBird\\Connector\\Tuya\\API\\LocalApi\:\:writeStates\(\) should return React\\Promise\\PromiseInterface\<array\<FastyBird\\Connector\\Tuya\\API\\Messages\\Response\\DeviceDataPointState\>\|FastyBird\\Connector\\Tuya\\API\\Messages\\Response\\LocalDeviceWifiScan\|FastyBird\\Connector\\Tuya\\Types\\LocalDeviceError\|string\|null\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Connector/Tuya/src/API/LocalApi.php
