@@ -89,6 +89,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         sockets \
         zip \
         opcache \
+    # The -dev packages above are needed only to compile the extensions.
+    # Purging them by exact name, without --auto-remove, drops only their
+    # headers, pkg-config files and unversioned link-time symlinks; the
+    # runtime shared libraries (libicu76, libgmp10, libzip5, libpng16-16t64,
+    # libjpeg62-turbo, zlib1g -- separate packages, pulled in automatically
+    # as each -dev package's own dependency) are untouched, since they are
+    # not named here, and the extensions above already linked against their
+    # versioned SONAMEs at build time.
+    && apt-get purge -y \
+        libicu-dev \
+        libgmp-dev \
+        libzip-dev \
+        libpng-dev \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
