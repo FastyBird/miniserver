@@ -156,25 +156,11 @@ jobs:
     name: "PHP Tests"
     runs-on: "ubuntu-latest"
 
-    # The test suite ignores almost everything configured below, and that is
-    # deliberate -- do not "align" it without reading this first.
-    #
-    # 25 per-package tests/common.neon files hardcode host 127.0.0.1, port
-    # 3306, user root, password root and dbname testdb, and a NEON file beats
-    # any FB_APP_PARAMETER__* environment variable. So the env block below
-    # does NOT configure the tests; it is kept only because the application
-    # bootstrap reads it outside the test connection.
-    #
-    # The dbname is inert too. Core/Application/tests/tools/ConnectionWrapper
-    # calls unset($params['dbname']) and then CREATEs a fresh per-process
-    # database named fb_test_<pid><hash>, dropping it on shutdown. MARIADB_DATABASE
-    # is therefore never touched by the suite.
-    #
-    # What the suite genuinely requires is exactly two things: MariaDB and Redis
-    # reachable on the job's own 127.0.0.1 (GitHub service containers are, which
-    # is why this works here while docker-compose hostnames do not), and root
-    # credentials, because creating and dropping databases needs them. Changing
-    # MARIADB_ROOT_PASSWORD away from "root" will break every database-backed test.
+    # The connection is defined once, in tests/config/dbal-test-connection.neon,
+    # and included by all 25 per-package tests/common.neon files. host/port/driver
+    # are overridable by FB_APP_PARAMETER__DATABASE_* below; user/password stay
+    # fixed at root/root because creating and dropping the per-run database needs
+    # root, and dbname is inert (ConnectionWrapper unsets it and creates its own).
 
     services:
       mariadb:
