@@ -187,7 +187,7 @@ services:
   # MYSQL DATABASE STORAGE
   database:
     container_name: fastybird-database
-    image: mariadb:10.11
+    image: mariadb:13.0
     environment:
       # Container specific environment variables
       TZ: ${APP_TZ:-UTC}
@@ -207,7 +207,7 @@ services:
   # REDIS STORAGE (not wired by default; see docs/configuration.md once it exists in Phase 4)
   redis:
     container_name: fastybird-redis
-    image: redis:7
+    image: redis:8
     profiles:
       - redis
     volumes:
