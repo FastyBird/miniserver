@@ -22,7 +22,7 @@ if [ "$1" != "only_clean" ] ; then
   sudo apt-get install fakeroot -y
 
   echo "Building web ui..."
-  sudo yarn install --frozen-lockfile --ignore-engines
+  sudo yarn install --frozen-lockfile
   sudo yarn build
 
   echo "Adding the files & folders, scripts in the package..."
