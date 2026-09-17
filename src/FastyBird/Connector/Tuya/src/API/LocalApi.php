@@ -459,6 +459,10 @@ final class LocalApi
 	 */
 	public function readStates(string|null $child = null): Promise\PromiseInterface
 	{
+		// Matches the element type $this->messagesListeners declares, so PHPStan can see this
+		// Deferred resolves to the same union rather than defaulting its generic to mixed.
+		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+		/** @var Promise\Deferred<string|array<Messages\Response\DeviceDataPointState>|Messages\Response\LocalDeviceWifiScan|Types\LocalDeviceError|null> $deferred */
 		$deferred = new Promise\Deferred();
 
 		if ($this->waitingForReading) {
@@ -526,6 +530,10 @@ final class LocalApi
 	 */
 	public function writeStates(array $states, string|null $child = null): Promise\PromiseInterface
 	{
+		// Matches the element type $this->messagesListeners declares, so PHPStan can see this
+		// Deferred resolves to the same union rather than defaulting its generic to mixed.
+		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+		/** @var Promise\Deferred<string|array<Messages\Response\DeviceDataPointState>|Messages\Response\LocalDeviceWifiScan|Types\LocalDeviceError|null> $deferred */
 		$deferred = new Promise\Deferred();
 
 		$localChild = null;
