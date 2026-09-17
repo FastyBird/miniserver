@@ -42,17 +42,7 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 composer require fastybird/ui-module
 ```
 
-And for user interface is the best way to install **@fastybird/ui-module** with [Yarn](https://yarnpkg.com/):
-
-```sh
-yarn add @fastybird/ui-module
-```
-
-or if you prefer npm:
-
-```sh
-npm install @fastybird/ui-module
-```
+**@fastybird/ui-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 # FastyBird
 

@@ -22,11 +22,7 @@ composer require fastybird/metadata-library
 
 ### JS based project:
 
-The best way to install **@fastybird/metadata-library** is using [Yarn](https://yarnpkg.com/):
-
-```sh
-yarn add @fastybird/metadata-library
-```
+**@fastybird/metadata-library** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Updating metadata
 

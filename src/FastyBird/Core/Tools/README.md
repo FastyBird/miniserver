@@ -27,17 +27,7 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 composer require fastybird/tools
 ```
 
-And for user interface is the best way to install **@fastybird/tools** with [Yarn](https://yarnpkg.com/):
-
-```sh
-yarn add @fastybird/tools
-```
-
-or if you prefer npm:
-
-```sh
-npm install @fastybird/tools
-```
+**@fastybird/tools** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 # FastyBird
 

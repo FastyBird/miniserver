@@ -39,17 +39,7 @@ The best way to install **fastybird/triggers-module** is using [Composer](http:/
 composer require fastybird/triggers-module
 ```
 
-And for user interface is the best way to install **@fastybird/triggers-module** with [Yarn](https://yarnpkg.com/):
-
-```sh
-yarn add @fastybird/triggers-module
-```
-
-or if you prefer npm:
-
-```sh
-npm install @fastybird/triggers-module
-```
+**@fastybird/triggers-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Documentation
 

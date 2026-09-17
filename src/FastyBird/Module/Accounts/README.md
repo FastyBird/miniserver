@@ -39,17 +39,7 @@ The best way to install **fastybird/accounts-module** is using [Composer](http:/
 composer require fastybird/accounts-module
 ```
 
-And for user interface is the best way to install **@fastybird/accounts-module** with [Yarn](https://yarnpkg.com/):
-
-```sh
-yarn add @fastybird/accounts-module
-```
-
-or if you prefer npm:
-
-```sh
-npm install @fastybird/accounts-module
-```
+**@fastybird/accounts-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Documentation
 

@@ -40,17 +40,7 @@ composer require fastybird/ui-module
 
 ### Module user interface
 
-The best way to install **@fastybird/ui-module** is using [Yarn](https://yarnpkg.com/):
-
-```sh
-yarn add @fastybird/ui-module
-```
-
-or if you prefer npm:
-
-```sh
-npm install @fastybird/ui-module
-```
+**@fastybird/ui-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Configuration
 
