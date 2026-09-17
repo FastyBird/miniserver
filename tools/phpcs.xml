@@ -183,7 +183,13 @@
     </rule>
 
     <!--Exclude folders -->
-    <exclude-pattern>^node_modules/*</exclude-pattern>
+    <!-- Not anchored to ^, unlike vendor/tools/tests below: pnpm materialises a
+         node_modules per workspace package (e.g.
+         src/FastyBird/Connector/HomeKit/node_modules/@fastybird/application ->
+         ../../../../Core/Application, a symlink to the whole package root, PHP
+         src/ included), not just at the repository root. tools/layering.php's
+         pruneDirsAnywhere already treats node_modules the same way. -->
+    <exclude-pattern>node_modules/*</exclude-pattern>
     <exclude-pattern>^vendor/*</exclude-pattern>
     <exclude-pattern>^tools/*</exclude-pattern>
     <exclude-pattern>^tests/stubs/*</exclude-pattern>
