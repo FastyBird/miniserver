@@ -10,6 +10,9 @@
 #
 # @date           22.01.22
 
+includes:
+    - ../../../../../tests/config/dbal-test-connection.neon
+
 php:
     date.timezone: Europe/Prague
 
@@ -49,25 +52,7 @@ contributteTranslation:
 nettrineDbal:
     connections:
         default:
-            serverVersion: 'mariadb-10.11.0'
-            host: 127.0.0.1
-            port: 3306
-            driver: pdo_mysql
-            dbname: testdb
-            user: root
-            password: root
-            charset: utf8
             wrapperClass: \FastyBird\Automator\DevicesModule\Tests\Tools\ConnectionWrapper
-
-    types:
-        uuid_binary: Ramsey\Uuid\Doctrine\UuidBinaryType
-        utcdatetime: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
-
-    typesMapping:
-        uuid_binary: binary
-
-    debug:
-        panel: false
 
 nettrineOrm:
     managers:

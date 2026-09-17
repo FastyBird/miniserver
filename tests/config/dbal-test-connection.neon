@@ -1,0 +1,46 @@
+#
+# Shared test database connection, included by every extension's tests/common.neon.
+#
+# Each extension's own common.neon overrides only nettrineDbal.connections.default.wrapperClass.
+# The %database.*% parameters below are the defaults; FB_APP_PARAMETER__DATABASE_HOST and
+# siblings (see Boot\Bootstrap::loadEnvParameters()) take precedence over them, since Nette
+# static parameters are compiled in after every addConfig()-loaded file regardless of call
+# order.
+#
+# @license        More in LICENSE.md
+# @copyright      https://www.fastybird.com
+# @author         Adam Kadlec <adam.kadlec@fastybird.com>
+# @package        FastyBird:MiniServer!
+# @subpackage     tests
+# @since          1.0.0
+#
+# @date           17.09.26
+
+parameters:
+    database:
+        version: 'mariadb-10.11.0'
+        host: 127.0.0.1
+        port: 3306
+        driver: pdo_mysql
+
+nettrineDbal:
+    connections:
+        default:
+            serverVersion: %database.version%
+            host: %database.host%
+            port: %database.port%
+            driver: %database.driver%
+            dbname: testdb
+            user: root
+            password: root
+            charset: utf8
+
+    types:
+        uuid_binary: Ramsey\Uuid\Doctrine\UuidBinaryType
+        utcdatetime: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
+
+    typesMapping:
+        uuid_binary: binary
+
+    debug:
+        panel: false
