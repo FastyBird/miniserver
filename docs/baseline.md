@@ -114,12 +114,14 @@ both are recorded here because an undocumented exception is a trap for whoever h
 The flag is metadata-only and changes no resolved version. It must be carried into every
 install instruction, Dockerfile and CI job until the toolchain moves past Node 20.
 
-**`jsona` is pinned to `~1.12.0`.** Four modules import a symbol from
-`jsona/lib/simplePropertyMappers`. Version 1.13 introduced an `exports` map listing only
-`"."`, which blocks subpath imports even though the files are still present, so three
-packages fail to build and the application shell never builds at all. The declared range
-`^1.12` permitted 1.14. This is not an upgrade: 1.12 is what the code was authored
-against, and pinning restores that.
+**`jsona` is pinned to `~1.12.0`.** Three modules -- `Module/Accounts`, `Module/Devices`,
+`Module/Ui` -- import a symbol from `jsona/lib/simplePropertyMappers`; specifically, six
+value imports of `RELATIONSHIP_NAMES_PROP`, the one symbol with no path off the subpath
+(corrected from an original "Four modules" miscount -- see the Phase 6 evidence run
+below). Version 1.13 introduced an `exports` map listing only `"."`, which blocks subpath
+imports even though the files are still present, so three packages fail to build and the
+application shell never builds at all. The declared range `^1.12` permitted 1.14. This is
+not an upgrade: 1.12 is what the code was authored against, and pinning restores that.
 
 Both exceptions share one root cause worth understanding, because it will recur. Neither
 lock file had ever been committed. "Frozen" therefore never applied to transitive
@@ -284,3 +286,116 @@ One suppression comment was found to state a falsehood and was corrected rather 
 deleted; the defect it masked is now recorded in the spec. Suppressions use
 `@phpstan-ignore <identifier>` rather than `@phpstan-ignore-next-line`, because the
 latter silences every error on the line regardless of the identifier written after it.
+
+## Phase 6 evidence run (2026-09-17)
+
+Task 3 of `docs/superpowers/plans/2026-09-11-phase-6-modernization.md` run against the
+tree as it stood after PR #407 (Track A/Dependabot triage complete). Some of the plan's
+own assumptions had already been overtaken by other work landed between 2026-09-11 and
+this run -- `Library/WebUi` deleted, `doctrine/orm` upgraded to 3.x, `--ignore-engines`
+retired -- so this section records what is true now, and says explicitly where it
+diverges from the plan rather than silently reconciling the two.
+
+**Composer.** `composer --version` inside the application image: `2.4.4` (2022-10-27) --
+confirms Task 26/PR19's premise, the dev container is still on the pre-CVE-fix line.
+`composer audit --locked`: **no security vulnerability advisories found.**
+`composer why-not php 8.3`: every first-party package now requires `>=8.4.0` -- PHP 8.4
+is the floor everywhere, not a target still being adopted. `composer why-not php 8.4`:
+nothing blocks it, for the same reason. Both `T2`'s "PHP 8.4 blocked by
+`orisai/object-mapper`" framing and Task 30/31's staged 8.3-then-8.4 plan are moot: this
+repo has required 8.4 since before this evidence run, and `why-not` confirms nothing
+downstream still expects less.
+
+**Cold install.** `rm -rf vendor && composer install`: `Package operations: 275 installs,
+0 updates, 0 removals` against a 275-entry lock. The 32-package gap this document's
+original baseline and the Phase 6 plan both recorded (253 installs from 285 entries) is
+**gone** -- installs now match the lock exactly. Three patches applied
+(`contributte/monolog`, `nette/utils`, `softcreatr/jsonpath`), all three resolving from
+local `tools/patches/*` files; none required a network fetch. The `nettrine/orm` patch
+the plan's Step 2 expected to see fetched over the network from
+`FastyBird/libraries-patches` no longer exists -- it was removed when this repo absorbed
+`nettrine/orm`'s successor behaviour during the ORM 3 upgrade.
+
+**PHPUnit coverage filter (Task 5).** Already fixed, not still broken as the plan
+assumed. `tools/phpunit.xml`'s `<source><include>` block correctly lists
+`../src/FastyBird/*/*/src`, carries an extensive comment explaining the original defect
+in the past tense, and a `--filter ZZZ_NoSuchTest --coverage-text` run reports 2177
+discovered classes -- nowhere near the 232 test classes the old broken filter measured
+(confirmed separately by grep: 232 top-level type declarations exist under
+`tests/cases/`, 2591 under `src/`). Whoever fixed this did not update this document to
+say so; this entry is that update.
+
+**`make qa` (Task 6, all four sub-fixes).** Also already done: `Makefile`'s `qa:` target
+runs `make cs` then `make phpstan` then `make layers` as three sequential recipe lines,
+with a comment above it explaining the `A & B` backgrounding bug in the past tense.
+Verified live rather than trusted from the comment: writing a deliberately malformed
+`ZzzTmp.php` and running `make qa` now exits `2` (`make: *** [Makefile:21: qa] Error 2`),
+where the original bug would have exited `0`. `tools/phpstan.neon` and
+`tools/phpstan.tests.neon` both pin `phpVersion: 80400` (tracking the runtime, not the
+80200-then-80300 staged pin the plan describes -- consistent with PHP already being at
+8.4). No stale `LoopWrapper` `excludePaths` entry remains. `tools/infection.json`'s log
+paths already carry the `../` prefix. Zero `docker-compose` (v1 syntax) references
+remain in the `Makefile`; all four docker targets use `docker compose` v2.
+
+**Docker context and opcache comment (Task 7).** The one item in this sweep that was
+genuinely still broken as described. Fixed in PR #413: `.dockerignore` now excludes
+`**/node_modules` (four nested copies existed under `src/FastyBird/**` as of that PR) and
+`.pnpm-store`; the `docker/prod/Dockerfile` opcache comment, which asserted opcache was
+"already active by default" directly beneath a sentence proving the opposite, now says
+what the evidence shows. Verified: production image builds, `php -m` lists Zend OPcache,
+`composer check-platform-reqs` reports every requirement satisfied. One thing surfaced
+and deliberately left for its own investigation: built and run on Apple Silicon, the
+image emits `PHP Warning: JIT on AArch64 doesn't support opcache.jit_buffer_size above
+128M` against the configured `256M` -- worth a look given this is an appliance and ARM
+production hardware is plausible, but out of scope for a comment-accuracy fix.
+
+**pnpm -- the four migration unknowns (Task 3 Step 5), materially different from the
+plan's prediction.** `pnpm --version`: `10.34.5`. `pnpm config get
+link-workspace-packages`: `undefined` (unset; default applies) -- **not** `false` as the
+plan asserted. Tested directly rather than trusted either claim: `pnpm import` against
+the current tree (no `pnpm-workspace.yaml`, internal references still plain `"0.0.0"`
+semver, not `workspace:*`) auto-links some internal packages by name
+(`@fastybird/tools is linked to ... from /app/src/FastyBird/Core/Tools`), confirming
+`link-workspace-packages` behaves as `true` by default -- but then **fails outright**
+(`ERR_PNPM_NO_MATCHING_VERSION`, exit 1, no `pnpm-lock.yaml` written) on
+`@fastybird/metadata-library@0.0.0`, because a real, unrelated package by that exact name
+is already published on the public npm registry (versions `1.0.0-dev.0` through
+`.24`) and `0.0.0` matches none of them. This is a harder blocker than the plan's own
+framing ("would resolve from the registry") suggests: Task 20's `workspace:*` conversion
+is not a nicety, `pnpm import` cannot complete without it. Also narrower than recorded:
+12 internal `"0.0.0"`-pinned cross-references remain across 4 workspace packages, not the
+"31 internal references" the plan carried forward as an unverified upper bound --
+consistent with the plan's own note that `Library/WebUi`'s removal was expected to shrink
+this count, now confirmed. Steps 6 and 8 of Task 3 could not be run as written: Step 6
+needs a working `pnpm-lock.yaml`, which Step 5 shows does not exist yet; Step 8 targets
+`@fastybird/web-ui-theme-chalk`, a package that no longer exists now that `Library/WebUi`
+is deleted.
+
+**Node image patch levels (Task 3 Step 7).** `node:20` and `node:20-alpine` both report
+`v20.20.2`, above the `>=20.19.0` floor the four Node-gated packages need. `yarn 1.22.22`
+runs cleanly on `node:24-alpine`. `node:20`'s image creation date: `2026-04-22` -- Docker
+Hub is still publishing patched builds past Node 20's own LTS window, which is the
+argument for Task 40 staying a security-patching move rather than an urgent one.
+
+**Floating image tags (Task 3 Step 9), worse than the plan's own framing.**
+`mariadb:latest` resolves to **12.3.3** -- not "11 or 12" as the plan estimated, and two
+full majors past the `10.11` this project's config and production both target.
+`redis:latest` resolves to `8.10.1`. `composer:2` (what CI's `tools: composer:v2` step
+installs) resolves to `2.10.3`; `composer:2.4` (the dev Dockerfile's pin) resolves to
+`2.4.4`, the same pre-CVE-fix version the cold-install check above measured directly.
+
+**jsona (Task 4 Step 3): this document's own "Four modules" was stale, corrected here.**
+It is **three**: `Module/Accounts`, `Module/Devices`, `Module/Ui` -- verified by grep
+against the current tree, matching the plan's own investigation exactly. 49 import
+statements total (21 from the package root, 28 from `jsona/lib/JsonaTypes` -- all nine
+distinct names imported there are types or interfaces, erased at compile time). The pin
+rests on exactly **6** value imports of `RELATIONSHIP_NAMES_PROP` from
+`jsona/lib/simplePropertyMappers`, the one symbol with no path off the subpath.
+
+**`--ignore-engines` (Task 4 Step 2): already corrected, before this run.** This
+document's own "Update, since this baseline was taken" note (above) already records the
+flag as retired repo-wide following the Node 20 -> 24 move, and a live grep of
+`Makefile`, `docker/` and `.github/` during this Phase 6 pass found zero remaining
+references. The plan's Step 2 (distinguish `@intlify/shared` from
+`stylelint-config-html` as two separate causes) is moot: there is no flag left to
+misattribute the cause of.
