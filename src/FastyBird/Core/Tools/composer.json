@@ -31,7 +31,7 @@
   },
   "require": {
     "php": ">=8.4.0",
-    "contributte/monolog": "^0.5",
+    "contributte/monolog": "^0.6",
     "doctrine/orm": "^3.3",
     "doctrine/persistence": "^3.4 || ^4.0",
     "fastybird/doctrine-timestampable-library": "@dev",

@@ -33,7 +33,7 @@
   "require": {
     "php": ">=8.4.0",
     "contributte/console": "^0.9",
-    "contributte/monolog": "^0.5",
+    "contributte/monolog": "^0.6",
     "contributte/translation": "^2.0",
     "cweagans/composer-patches": "^1.7",
     "doctrine/orm": "^3.3",

@@ -38,9 +38,9 @@
         "ext-zip": "*",
         "contributte/console": "^0.9",
         "contributte/event-dispatcher": "^0.9",
-        "contributte/monolog": "^0.5",
+        "contributte/monolog": "^0.6",
         "contributte/translation": "^2.0",
-        "contributte/vite": "^0.2",
+        "contributte/vite": "^0.3",
         "cweagans/composer-patches": "^1.7",
         "doctrine/orm": "^3.3",
         "fastybird/accounts-module": "@dev",
@@ -284,9 +284,6 @@
         "enable-patching": true,
         "composer-exit-on-patch-failure": true,
         "patches": {
-            "contributte/monolog": {
-                "Bug: invalid callback definition": "tools/patches/contributte-monolog-src-loggerholder-php.patch"
-            },
             "nette/utils": {
                 "Bug: Offset check with null support": "tools/patches/nette-utils-array-offsetcheck.diff"
             },
