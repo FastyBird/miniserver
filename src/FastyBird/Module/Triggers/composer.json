@@ -54,7 +54,9 @@
     "psr/event-dispatcher": "^1.0",
     "react/promise": "^3",
     "symfony/console": "^6.0",
-    "symfony/event-dispatcher": "^7.0",
+    "symfony/event-dispatcher": "^7.0"
+  },
+  "require-dev": {
     "symplify/vendor-patches": "^11.2"
   },
   "autoload": {

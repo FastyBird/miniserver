@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a36763e2a50c417f66fce6450023a5f",
+    "content-hash": "4a20818f25173a7c856814a7fbc9cbbe",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2390,7 +2390,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Accounts",
-                "reference": "a9bdea7c299d48c8c8fb912b4b441d541f06d62d"
+                "reference": "033c2feb6997cf54b69ed66c7924631cb2174ce7"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -2410,7 +2410,9 @@
                 "nettrine/orm": "^0.10",
                 "php": ">=8.4.0",
                 "react/promise": "^3",
-                "symfony/console": "^6.0",
+                "symfony/console": "^6.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -2473,7 +2475,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/ApiKey",
-                "reference": "6a014088c0ff19db3ce428596cfbe91625251e30"
+                "reference": "230e9a193b9ce09161a9f07c154fbe96d79bbe43"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -2490,7 +2492,9 @@
                 "psr/log": "^3.0",
                 "ramsey/uuid": "^4.7",
                 "react/promise": "^3",
-                "symfony/console": "^6.0",
+                "symfony/console": "^6.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -2546,7 +2550,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Application",
-                "reference": "37cac40dfbbffcd06881e540c6dcd576f0dde468"
+                "reference": "1d14893ee3fb8b22b6a73054067f8d4ef315ac7a"
             },
             "require": {
                 "contributte/cache": "^0.6",
@@ -2574,7 +2578,9 @@
                 "ramsey/uuid": "^4.7",
                 "react/event-loop": "^1.3",
                 "symfony/event-dispatcher-contracts": "^3.5",
-                "symfony/monolog-bridge": "^6.1",
+                "symfony/monolog-bridge": "^6.1"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -2707,7 +2713,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Automator/DateTime",
-                "reference": "46ecb0b3cae62d39ee5ef4aadf6faeafc24ec1b2"
+                "reference": "34a3b9bb240a1c6ed9bdd1630fd44fd06be43906"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -2723,7 +2729,9 @@
                 "ramsey/uuid": "^4.7",
                 "react/async": "^4.0",
                 "react/promise": "^3",
-                "react/socket": "^1.12",
+                "react/socket": "^1.12"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -2856,7 +2864,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Devices",
-                "reference": "915daf6122377bc41c495b8f294fe8a8413949a0"
+                "reference": "7fe7e3b10962220863809e0b07526300b12ad5b8"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -2882,7 +2890,9 @@
                 "react/promise": "^3",
                 "softcreatr/jsonpath": "^0.8",
                 "symfony/console": "^6.0",
-                "symfony/event-dispatcher": "^7.0",
+                "symfony/event-dispatcher": "^7.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -2946,7 +2956,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Automator/DevicesModule",
-                "reference": "000b14f8916d0b863b44e55c18bdfd2deb112d06"
+                "reference": "6e980031da475576fbadb4d315bd837d9635422b"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -2963,7 +2973,9 @@
                 "ramsey/uuid": "^4.7",
                 "react/async": "^4.0",
                 "react/promise": "^3",
-                "react/socket": "^1.12",
+                "react/socket": "^1.12"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -3017,7 +3029,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/DevicesModuleUiModule",
-                "reference": "209b59842ec40d951f945279f2b0dbb2b4a65980"
+                "reference": "6df405e2394bca604d21c1c51da28557d106c1bb"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -3028,7 +3040,9 @@
                 "nette/di": "^3.2",
                 "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
-                "psr/log": "^3.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -3230,7 +3244,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Exchange",
-                "reference": "e82ff58e71da831a8e9449a50019bc059dc97215"
+                "reference": "8657cf69500c74631b081598e67ca368c9ed2c9b"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -3241,7 +3255,9 @@
                 "php": ">=8.4.0",
                 "psr/event-dispatcher": "^1.0",
                 "react/promise": "^3",
-                "symfony/event-dispatcher": "^7.0",
+                "symfony/event-dispatcher": "^7.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -3296,7 +3312,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/FbMqtt",
-                "reference": "a1d0e90fb2bbfa2b56dfc61842fb3c736764121a"
+                "reference": "99ca908b8e21c80f70580d22b71c8bba2b4ed9f7"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -3316,7 +3332,9 @@
                 "ramsey/uuid": "^4.7",
                 "react/async": "^4.0",
                 "react/promise": "^3",
-                "react/socket": "^1.12",
+                "react/socket": "^1.12"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -3372,7 +3390,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/HomeKit",
-                "reference": "eac4ddc8830c7fdf200b84352322d44c4083b092"
+                "reference": "d654e832db7fcaec075f9dae6602757e41c2385e"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -3380,7 +3398,7 @@
                 "contributte/monolog": "^0.5",
                 "contributte/translation": "^2.0",
                 "cweagans/composer-patches": "^1.7",
-                "endroid/qr-code": "4.5",
+                "endroid/qr-code": "^4.5",
                 "evenement/evenement": "^3.0",
                 "ext-gmp": "*",
                 "ext-pcntl": "*",
@@ -3407,8 +3425,10 @@
                 "react/promise": "^3",
                 "simplito/elliptic-php": "^1.0",
                 "symfony/event-dispatcher": "^7.0",
-                "symplify/vendor-patches": "^11.2",
                 "z4kn4fein/php-semver": "^2.0"
+            },
+            "require-dev": {
+                "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
             "autoload": {
@@ -3571,7 +3591,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Modbus",
-                "reference": "b9b2e8d3ef61af2542aac982ae402f3ca0a471ee"
+                "reference": "408757a32e6d44cf0eb34de249322504066efcaf"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -3591,7 +3611,9 @@
                 "react/async": "^4.0",
                 "react/event-loop": "^1.3",
                 "react/promise": "^3",
-                "react/socket": "^1.12",
+                "react/socket": "^1.12"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -3648,7 +3670,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/NsPanel",
-                "reference": "b69c3c717a5ed7f4aa3e98e70528931c27bd31af"
+                "reference": "fb189e76b9c930cec5f8cbb0b0ccb1917d8f2a8c"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -3675,7 +3697,9 @@
                 "react/http": "^1.7",
                 "react/promise": "^3",
                 "react/socket": "^1.12",
-                "ringcentral/psr7": "^1.3",
+                "ringcentral/psr7": "^1.3"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -3803,7 +3827,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/RedisDbCache",
-                "reference": "e2e76b634623bf57c7841ed04a42368ee0d92854"
+                "reference": "b8ff5a676dc6fabbd8dca85b0fb3273efb3160dc"
             },
             "require": {
                 "clue/redis-react": "^3@dev",
@@ -3819,7 +3843,9 @@
                 "react/event-loop": "^1.3",
                 "react/promise": "^3",
                 "react/socket": "^1.12",
-                "symfony/event-dispatcher": "^7.0",
+                "symfony/event-dispatcher": "^7.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -3872,7 +3898,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/RedisDb",
-                "reference": "e6efdb9370bc9d4bf6d5efd42047a1f3e4849000"
+                "reference": "d2a1e7d2c1f13de8b30f64fc0be586ec599f5f3a"
             },
             "require": {
                 "clue/redis-react": "^3@dev",
@@ -3893,7 +3919,9 @@
                 "react/event-loop": "^1.3",
                 "react/promise": "^3",
                 "react/socket": "^1.12",
-                "symfony/event-dispatcher": "^7.0",
+                "symfony/event-dispatcher": "^7.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -3954,7 +3982,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/RedisDbPluginDevicesModule",
-                "reference": "84c936b010230a209a288595136ebeacf4d935a6"
+                "reference": "1c0ecfa3ae87408c4087f395d048bb37a98a49ea"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -3965,7 +3993,9 @@
                 "nette/di": "^3.2",
                 "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
-                "psr/log": "^3.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4019,7 +4049,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/RedisDbPluginTriggersModule",
-                "reference": "ffc1d2c8bd71e69139eaaeeceb6db31374df6446"
+                "reference": "dfae130509325f3985897bcd61e2d7e961ef6b48"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -4030,7 +4060,9 @@
                 "nette/di": "^3.2",
                 "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
-                "psr/log": "^3.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4084,7 +4116,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Shelly",
-                "reference": "3f85050be6be06cb9b76b3fc1824f188dc0e9be6"
+                "reference": "5487868dc8c20c02fe7c16177d2e1d5e2cf33c6f"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -4107,7 +4139,9 @@
                 "react/datagram": "^1.8",
                 "react/http": "^1.7",
                 "react/promise": "^3",
-                "ringcentral/psr7": "^1.3",
+                "ringcentral/psr7": "^1.3"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4165,7 +4199,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/ShellyConnectorHomeKitConnector",
-                "reference": "60124b1b1a5e070effcac38ac73311ef693c9664"
+                "reference": "f4d41e0e589e70697b85ffd02f51bae29b0e96f4"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4180,7 +4214,9 @@
                 "fastybird/shelly-connector": "@dev",
                 "nette/di": "^3.2",
                 "php": ">=8.4.0",
-                "psr/log": "^3.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4287,7 +4323,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Sonoff",
-                "reference": "2cbd22aeb94d52a3b6745c9e96c80227f371896b"
+                "reference": "873fbf047e408b00c305f3997766a1309c816064"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -4310,7 +4346,9 @@
                 "react/datagram": "^1.8",
                 "react/http": "^1.7",
                 "react/promise": "^3",
-                "ringcentral/psr7": "^1.3",
+                "ringcentral/psr7": "^1.3"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4441,7 +4479,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Triggers",
-                "reference": "bc60f24caa818a9f22b3e4e4d5d9d94c3cb366b0"
+                "reference": "ec3d6822319be1996070ac026805a1db249f6b1f"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4463,7 +4501,9 @@
                 "psr/event-dispatcher": "^1.0",
                 "react/promise": "^3",
                 "symfony/console": "^6.0",
-                "symfony/event-dispatcher": "^7.0",
+                "symfony/event-dispatcher": "^7.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4526,7 +4566,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Tuya",
-                "reference": "db25ca118fa0779a3e1c21759ed7e2d817cc6d28"
+                "reference": "74028ad2979cdb3aed3512b0f31c30a1a35474b5"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -4556,7 +4596,9 @@
                 "react/http": "^1.7",
                 "react/promise": "^3",
                 "react/socket": "^1.12",
-                "ringcentral/psr7": "^1.3",
+                "ringcentral/psr7": "^1.3"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4613,7 +4655,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Ui",
-                "reference": "fd41c7766d955338269932b112e7b53a2df457bd"
+                "reference": "a0abe48924dad5ad7a9ce50947d73f17d426a7dc"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4639,7 +4681,9 @@
                 "react/promise": "^3",
                 "softcreatr/jsonpath": "^0.8",
                 "symfony/console": "^6.0",
-                "symfony/event-dispatcher": "^7.0",
+                "symfony/event-dispatcher": "^7.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4703,7 +4747,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Viera",
-                "reference": "96a6fa32b0cd272a81bbd7e4a817314fb00a7c68"
+                "reference": "34119c64792ad632f71d53dd77d121b717a55dea"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -4734,7 +4778,9 @@
                 "react/http": "^1.7",
                 "react/promise": "^3",
                 "react/socket": "^1.12",
-                "ringcentral/psr7": "^1.3",
+                "ringcentral/psr7": "^1.3"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4791,7 +4837,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/VieraConnectorHomeKitConnector",
-                "reference": "8424b436d046bb27429b3d8ea5a1a5fcfc091399"
+                "reference": "0dd635149d78f50e1f1953bcdf9921bbcf5a0b32"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4806,7 +4852,9 @@
                 "fastybird/viera-connector": "@dev",
                 "nette/di": "^3.2",
                 "php": ">=8.4.0",
-                "psr/log": "^3.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4862,7 +4910,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Virtual",
-                "reference": "6c54c1c24210a34f5fa7c857c6d8b8a74e058815"
+                "reference": "08c1693aadf405f1cf78520c58ca99f2c8fb29e0"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4882,7 +4930,9 @@
                 "ramsey/uuid": "^4.7",
                 "react/async": "^4.0",
                 "react/event-loop": "^1.3",
-                "react/promise": "^3",
+                "react/promise": "^3"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -4939,7 +4989,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Addon/VirtualThermostat",
-                "reference": "bb796f28bb5b3ce6b53a3942d92cbd7992fdbf7d"
+                "reference": "1905284cbf8e92bc1f1263b61b425c63d1ba36ba"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4959,7 +5009,9 @@
                 "ramsey/uuid": "^4.7",
                 "react/async": "^4.0",
                 "react/event-loop": "^1.3",
-                "react/promise": "^3",
+                "react/promise": "^3"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -5018,7 +5070,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector",
-                "reference": "b3d6ac68d05e24a60fefa66d636095ece136c3df"
+                "reference": "e16943ab49bcffe101a2dbdda5e321343bb116af"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -5034,7 +5086,9 @@
                 "fastybird/virtual-thermostat-addon": "@dev",
                 "nette/di": "^3.2",
                 "php": ">=8.4.0",
-                "psr/log": "^3.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -5090,7 +5144,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/WebServer",
-                "reference": "dba07bdd55c7a75dec15e1034510aea4fefc0570"
+                "reference": "33b7dfb67d85588497f5f57e208c55baa92f44e9"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -5112,7 +5166,9 @@
                 "react/socket": "^1.12",
                 "sunrise/http-message": "^3.0",
                 "symfony/console": "^6.0",
-                "symfony/event-dispatcher": "^7.0",
+                "symfony/event-dispatcher": "^7.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -5172,7 +5228,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/WsServer",
-                "reference": "3c532548e72a034c41c053a01ef8b28a9dbc49c8"
+                "reference": "07627062c8a8658e51d97f5cb69ee79b3d2ff949"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -5189,7 +5245,9 @@
                 "react/promise": "^3",
                 "react/socket": "^1.12",
                 "symfony/console": "^6.0",
-                "symfony/event-dispatcher": "^7.0",
+                "symfony/event-dispatcher": "^7.0"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -5245,7 +5303,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Zigbee2Mqtt",
-                "reference": "fd53a0927c305562e4b61e748878cecd3cbb7267"
+                "reference": "9a460aa5c734c00875fab3a6ab7b512ad7a8b31c"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -5265,7 +5323,9 @@
                 "ramsey/uuid": "^4.7",
                 "react/async": "^4.0",
                 "react/promise": "^3",
-                "react/socket": "^1.12",
+                "react/socket": "^1.12"
+            },
+            "require-dev": {
                 "symplify/vendor-patches": "^11.2"
             },
             "type": "library",
@@ -15201,49 +15261,6 @@
             "time": "2026-08-23T10:03:40+00:00"
         },
         {
-            "name": "symplify/vendor-patches",
-            "version": "11.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/vendor-patches.git",
-                "reference": "04941b69734a93ef2736eac1db6d94b6eeee4d19"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/vendor-patches/zipball/04941b69734a93ef2736eac1db6d94b6eeee4d19",
-                "reference": "04941b69734a93ef2736eac1db6d94b6eeee4d19",
-                "shasum": ""
-            },
-            "require": {
-                "cweagans/composer-patches": "^1.7",
-                "php": ">=7.2"
-            },
-            "bin": [
-                "bin/vendor-patches"
-            ],
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Generate vendor patches for packages with single command",
-            "support": {
-                "issues": "https://github.com/symplify/vendor-patches/issues",
-                "source": "https://github.com/symplify/vendor-patches/tree/11.5.0"
-            },
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/rectorphp",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/tomasvotruba",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-07-10T10:13:07+00:00"
-        },
-        {
             "name": "tracy/tracy",
             "version": "v2.12.1",
             "source": {
@@ -19258,6 +19275,49 @@
             "time": "2026-08-21T17:40:08+00:00"
         },
         {
+            "name": "symplify/vendor-patches",
+            "version": "11.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symplify/vendor-patches.git",
+                "reference": "04941b69734a93ef2736eac1db6d94b6eeee4d19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symplify/vendor-patches/zipball/04941b69734a93ef2736eac1db6d94b6eeee4d19",
+                "reference": "04941b69734a93ef2736eac1db6d94b6eeee4d19",
+                "shasum": ""
+            },
+            "require": {
+                "cweagans/composer-patches": "^1.7",
+                "php": ">=7.2"
+            },
+            "bin": [
+                "bin/vendor-patches"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Generate vendor patches for packages with single command",
+            "support": {
+                "issues": "https://github.com/symplify/vendor-patches/issues",
+                "source": "https://github.com/symplify/vendor-patches/tree/11.5.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/rectorphp",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-07-10T10:13:07+00:00"
+        },
+        {
             "name": "thecodingmachine/safe",
             "version": "v2.5.0",
             "source": {
@@ -19500,6 +19560,7 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "ext-pcntl": "*",
+        "ext-pdo_mysql": "*",
         "ext-session": "*",
         "ext-simplexml": "*",
         "ext-sockets": "*",
@@ -19508,6 +19569,6 @@
         "ext-xml": "*",
         "ext-zip": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

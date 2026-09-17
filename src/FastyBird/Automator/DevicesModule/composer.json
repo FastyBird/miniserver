@@ -42,7 +42,9 @@
     "ramsey/uuid": "^4.7",
     "react/async": "^4.0",
     "react/promise": "^3",
-    "react/socket": "^1.12",
+    "react/socket": "^1.12"
+  },
+  "require-dev": {
     "symplify/vendor-patches": "^11.2"
   },
   "autoload": {

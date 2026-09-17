@@ -28,6 +28,7 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "ext-pcntl": "*",
+        "ext-pdo_mysql": "*",
         "ext-session": "*",
         "ext-simplexml": "*",
         "ext-sockets": "*",
@@ -80,7 +81,6 @@
         "nette/bootstrap": "^3.2",
         "nettrine/fixtures": "^0.9",
         "nettrine/migrations": "^0.10",
-        "symplify/vendor-patches": "^11.2",
         "vlucas/phpdotenv": "^5.4"
     },
     "require-dev": {
@@ -102,6 +102,7 @@
         "phpunit/phpunit": "^10.0",
         "rector/rector": "^2.6",
         "staabm/annotate-pull-request-from-checkstyle": "^1.8",
+        "symplify/vendor-patches": "^11.2",
         "tracy/tracy": "^2.9"
     },
     "repositories": [
