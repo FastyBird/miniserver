@@ -28,7 +28,7 @@
   },
   "require": {
     "php": ">=8.4.0",
-    "clue/redis-react": "^3@dev",
+    "clue/redis-react": "3.0.0",
     "cweagans/composer-patches": "^1.7",
     "nette/caching": "^3.3",
     "nette/di": "^3.2",
