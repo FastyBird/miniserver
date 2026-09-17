@@ -15,24 +15,23 @@
 
 namespace FastyBird\Core\SimpleAuth\Mapping\Driver;
 
-use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\SimpleAuth\Exceptions;
 use FastyBird\Core\SimpleAuth\Mapping;
 use Nette;
+use Psr\Cache\CacheItemPoolInterface;
 use ReflectionException;
 use function array_key_exists;
 use function array_reverse;
 use function assert;
 use function class_exists;
 use function class_parents;
+use function hash;
 use function in_array;
 use function is_array;
 use function is_string;
 use function sprintf;
-use function str_replace;
-use function strtoupper;
 
 /**
  * Doctrine owner annotation driver
@@ -64,9 +63,9 @@ final class Owner
 		'string',
 	];
 
-	private Common\Cache\Cache $cacheDriver;
+	private CacheItemPoolInterface $cacheDriver;
 
-	public function __construct(Common\Cache\Cache $cache)
+	public function __construct(CacheItemPoolInterface $cache)
 	{
 		$this->cacheDriver = $cache;
 	}
@@ -97,7 +96,8 @@ final class Owner
 
 			$cacheId = self::getCacheId($class);
 
-			if (($cached = $this->cacheDriver->fetch($cacheId)) !== false) {
+			if (($item = $this->cacheDriver->getItem($cacheId))->isHit()) {
+				$cached = $item->get();
 				self::$objectConfigurations[$class] = $cached;
 				$config = $cached;
 
@@ -132,7 +132,9 @@ final class Owner
 	 */
 	private static function getCacheId(string $className): string
 	{
-		return $className . '\\$' . strtoupper(str_replace('\\', '_', __NAMESPACE__)) . '_CLASSMETADATA';
+		// PSR-6 reserves {}()/\@: in keys; the class name carries backslashes. Hash rather than
+		// strip, so two classes cannot collide once their separators are gone.
+		return 'owner_' . hash('xxh128', $className);
 	}
 
 	/**
@@ -196,7 +198,7 @@ final class Owner
 		// Caching empty metadata will prevent re-parsing non-existent annotations
 		$cacheId = self::getCacheId($classMetadata->getName());
 
-		$this->cacheDriver->save($cacheId, $config);
+		$this->cacheDriver->save($this->cacheDriver->getItem($cacheId)->set($config));
 
 		self::$objectConfigurations[$classMetadata->getName()] = $config;
 	}

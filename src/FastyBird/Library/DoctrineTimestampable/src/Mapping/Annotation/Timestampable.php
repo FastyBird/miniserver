@@ -15,7 +15,7 @@
 
 namespace FastyBird\Library\DoctrineTimestampable\Mapping\Annotation;
 
-use Doctrine\Common\Annotations\Annotation;
+use Attribute;
 
 /**
  * Doctrine Timestampable annotation for Doctrine2
@@ -24,23 +24,20 @@ use Doctrine\Common\Annotations\Annotation;
  * @subpackage     Annotation
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- *
- * @Annotation
- * @Target({"PROPERTY"})
  */
-final class Timestampable extends Annotation
+#[Attribute(Attribute::TARGET_PROPERTY)]
+final class Timestampable
 {
 
-	public string $on = 'update';
-
-	/** @var string|array<string> */
-	public string|array $field;
-
-	// Deliberately untyped. Doctrine\Common\Annotations\Annotation declares this property
-	// without a type, and PHP forbids narrowing an inherited untyped property to one -- adding
-	// `mixed` here is a fatal "Type of ...::$value must not be defined" at class load. The
-	// coding standard's property type hint sniff will add it back if given the chance.
-	// phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
-	public $value;
+	/**
+	 * @param string|array<string>|null $field
+	 */
+	public function __construct(
+		public readonly string $on = 'update',
+		public readonly string|array|null $field = null,
+		public readonly mixed $value = null,
+	)
+	{
+	}
 
 }

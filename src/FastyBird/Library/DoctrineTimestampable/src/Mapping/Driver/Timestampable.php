@@ -15,20 +15,19 @@
 
 namespace FastyBird\Library\DoctrineTimestampable\Mapping\Driver;
 
-use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Library\DoctrineTimestampable;
 use FastyBird\Library\DoctrineTimestampable\Exceptions;
 use Nette;
+use Psr\Cache\CacheItemPoolInterface;
 use function array_reverse;
 use function assert;
 use function class_parents;
+use function hash;
 use function in_array;
 use function is_array;
 use function sprintf;
-use function str_replace;
-use function strtoupper;
 
 /**
  * Doctrine timestampable annotation driver
@@ -53,8 +52,6 @@ final class Timestampable
 	 */
 	private static array $objectConfigurations = [];
 
-	private Common\Annotations\Reader $annotationReader;
-
 	/**
 	 * List of types which are valid for blame
 	 *
@@ -66,19 +63,21 @@ final class Timestampable
 		'datetime',
 		'datetimetz',
 		'timestamp',
+		// DBAL 4 refuses a DateTimeImmutable on the mutable 'datetime' family and routes it to
+		// the *_immutable types; the app's clock hands out immutables, so those must validate.
+		'datetime_immutable',
+		'datetimetz_immutable',
+		'date_immutable',
+		'time_immutable',
 		'vardatetime',
 		'integer',
 	];
 
 	public function __construct(
 		private readonly DoctrineTimestampable\Configuration $configuration,
-		private readonly Common\Cache\Cache|null $cache = null,
+		private readonly CacheItemPoolInterface|null $cache = null,
 	)
 	{
-		$this->annotationReader = $cache !== null ? new Common\Annotations\PsrCachedReader(
-			new Common\Annotations\AnnotationReader(),
-			Common\Cache\Psr6\CacheAdapter::wrap($cache),
-		) : new Common\Annotations\AnnotationReader();
 	}
 
 	/**
@@ -89,7 +88,6 @@ final class Timestampable
 	 *
 	 * @throws ORM\Mapping\MappingException
 	 *
-	 * @throws Common\Annotations\AnnotationException
 	 * @throws ORM\Mapping\MappingException
 	 *
 	 * @phpstan-param class-string $class
@@ -143,11 +141,13 @@ final class Timestampable
 	 */
 	private static function getCacheId(string $className): string
 	{
-		return $className . '\\$' . strtoupper(str_replace('\\', '_', __NAMESPACE__)) . '_CLASSMETADATA';
+		// PSR-6 reserves {}()/\@: in keys, and a class name plus the old Doctrine\Common\Cache
+		// suffix carries both a backslash and a dollar sign. Hash it rather than strip it, so two
+		// classes cannot collide once their separators are gone.
+		return 'timestampable_' . hash('xxh128', $className);
 	}
 
 	/**
-	 * @throws Common\Annotations\AnnotationException
 	 * @throws ORM\Mapping\MappingException
 	 *
 	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata
@@ -207,7 +207,7 @@ final class Timestampable
 		$cacheId = self::getCacheId($classMetadata->getName());
 
 		if ($this->cache !== null) {
-			$this->cache->save($cacheId, $config);
+			$this->cache?->save($this->cache->getItem($cacheId)->set($config));
 		}
 
 		self::$objectConfigurations[$classMetadata->getName()] = $config;
@@ -235,7 +235,7 @@ final class Timestampable
 				continue;
 			}
 
-			$timestampable = $this->annotationReader->getPropertyAnnotation($property, self::EXTENSION_ANNOTATION);
+			$timestampable = ($property->getAttributes(self::EXTENSION_ANNOTATION)[0] ?? null)?->newInstance();
 
 			if ($timestampable !== null) {
 				$field = $property->getName();

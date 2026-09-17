@@ -29,7 +29,7 @@ use FastyBird\Library\DoctrineTimestampable\Mapping\Annotation as IPub;
 trait TEntityCreated
 {
 
-	/** @IPub\Timestampable(on="create") */
+	#[IPub\Timestampable(on: 'create')]
 	protected DateTimeInterface|null $createdAt = null;
 
 	public function getCreatedAt(): DateTimeInterface|null

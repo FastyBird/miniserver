@@ -29,7 +29,7 @@ use FastyBird\Library\DoctrineTimestampable\Mapping\Annotation as IPub;
 trait TEntityUpdated
 {
 
-	/** @IPub\Timestampable(on="update") */
+	#[IPub\Timestampable(on: 'update')]
 	protected DateTimeInterface|null $updatedAt = null;
 
 	public function getUpdatedAt(): DateTimeInterface|null

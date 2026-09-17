@@ -16,11 +16,11 @@
 namespace FastyBird\Module\Devices\Queries\Entities;
 
 use Closure;
-use Doctrine\Common;
 use Doctrine\ORM;
 use FastyBird\Library\DoctrineOrmQuery;
 use FastyBird\Module\Devices\Entities;
 use Ramsey\Uuid;
+use SortDirection;
 
 /**
  * Find devices entities query
@@ -144,11 +144,11 @@ class FindDevices extends DoctrineOrmQuery\QueryObject
 
 	public function sortBy(
 		string $sortBy,
-		Common\Collections\Order $sortDir = Common\Collections\Order::Ascending,
+		SortDirection $sortDir = SortDirection::Ascending,
 	): void
 	{
 		$this->filter[] = static function (ORM\QueryBuilder $qb) use ($sortBy, $sortDir): void {
-			$qb->addOrderBy($sortBy, $sortDir->value);
+			$qb->addOrderBy($sortBy, $sortDir);
 		};
 	}
 

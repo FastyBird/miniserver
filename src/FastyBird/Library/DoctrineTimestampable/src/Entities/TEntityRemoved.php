@@ -29,7 +29,7 @@ use FastyBird\Library\DoctrineTimestampable\Mapping\Annotation as IPub;
 trait TEntityRemoved
 {
 
-	/** @IPub\Timestampable(on="delete") */
+	#[IPub\Timestampable(on: 'delete')]
 	protected DateTimeInterface|null $deletedAt = null;
 
 	public function getDeletedAt(): DateTimeInterface|null

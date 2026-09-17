@@ -15,7 +15,6 @@
 
 namespace FastyBird\Library\DoctrineCrud\Mapping;
 
-use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Library\DoctrineCrud\Entities;
@@ -77,18 +76,11 @@ final class EntityMapper implements IEntityMapper
 	 */
 	public function fillEntity(Utils\ArrayHash $values, Entities\IEntity $entity, bool $isNew = false): Entities\IEntity
 	{
-		$reflectionClass = new ReflectionClass($entity::class);
-
-		// Hack for proxy classes...
-		if ($reflectionClass->implementsInterface(Common\Proxy\Proxy::class)) {
-			// ... we need to extract entity class name from proxy class
-			$parentClass = $reflectionClass->getParentClass();
-
-			$entityClass = $parentClass !== false ? $parentClass->getName() : $entity::class;
-
-		} else {
-			$entityClass = $entity::class;
-		}
+		// This used to unwrap Doctrine\Common\Proxy\Proxy subclasses to reach the real entity class.
+		// That interface left with doctrine/common, and under ORM 3 with native lazy objects there
+		// is no proxy class at all: the entity IS its own class, merely uninitialised. Where a
+		// proxy still exists, ClassMetadata::getName() below already resolves to the mapped class.
+		$entityClass = $entity::class;
 
 		$entityClassManager = $this->managerRegistry->getManagerForClass($entityClass);
 
@@ -99,7 +91,7 @@ final class EntityMapper implements IEntityMapper
 		}
 
 		// ObjectManager::getClassMetadata() is typed to the Persistence interface, which has
-		// none of the members used below -- reflFields, setFieldValue(), getFieldValue() are
+		// none of the members used below -- getPropertyAccessor(), setFieldValue(), getFieldValue() are
 		// all ORM specific -- so the narrowing is load bearing rather than cosmetic. It is
 		// ORM\Mapping\ClassMetadata and not ClassMetadataInfo deliberately: ORM 3 removes the
 		// latter, having merged it into the former, and in ORM 2 ClassMetadata already extends
@@ -167,7 +159,7 @@ final class EntityMapper implements IEntityMapper
 					$value instanceof Utils\ArrayHash
 					|| is_array($value)
 				)
-				&& isset($classMetadata->reflFields[$fieldName])
+				&& $classMetadata->getPropertyAccessor($fieldName) !== null
 			) {
 				if (!$classMetadata->getFieldValue($entity, $fieldName) instanceof Entities\IEntity) {
 					$propertyAttributes = $propertyReflection->getAttributes();
@@ -585,7 +577,7 @@ final class EntityMapper implements IEntityMapper
 				if (is_callable($callback)) {
 					call_user_func_array($callback, [$value]);
 				}
-			} elseif (isset($classMetadata->reflFields[$field])) {
+			} elseif ($classMetadata->getPropertyAccessor($field) !== null) {
 				// Fallback for missing setter
 				$classMetadata->setFieldValue($entity, $field, $value);
 			}
@@ -617,7 +609,7 @@ final class EntityMapper implements IEntityMapper
 				if (is_callable($callback)) {
 					return call_user_func($callback);
 				}
-			} elseif (isset($classMetadata->reflFields[$field])) {
+			} elseif ($classMetadata->getPropertyAccessor($field) !== null) {
 				// Fallback for missing setter
 				return $classMetadata->getFieldValue($entity, $field);
 			}

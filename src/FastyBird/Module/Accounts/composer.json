@@ -50,8 +50,8 @@
     "fastybird/simple-auth": "@dev",
     "fastybird/tools": "@dev",
     "ipub/slim-router": "^0.2",
-    "nettrine/dbal": "^0.8",
-    "nettrine/orm": "^0.8",
+    "nettrine/dbal": "^0.10",
+    "nettrine/orm": "^0.10",
     "react/promise": "^3",
     "symfony/console": "^6.0",
     "symplify/vendor-patches": "^11.2"

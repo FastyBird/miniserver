@@ -31,6 +31,7 @@ use Nette\DI;
 use Nette\Schema;
 use stdClass;
 use Symfony\Bridge\Monolog as SymfonyMonolog;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use function array_values;
 use function assert;
 use function class_exists;
@@ -148,6 +149,12 @@ class ApplicationExtension extends DI\CompilerExtension
 		/**
 		 * HELPERS
 		 */
+
+		// SPIKE: PSR-6 pool for the mapping drivers that used to autowire Doctrine\Common\Cache\Cache,
+		// which left the dependency graph with doctrine/cache. ArrayAdapter is per-process; the real
+		// branch should back this with %tempDir% (FilesystemAdapter) so metadata survives requests.
+		$builder->addDefinition($this->prefix('cache.psr6'), new DI\Definitions\ServiceDefinition())
+			->setType(ArrayAdapter::class);
 
 		$builder->addDefinition($this->prefix('eventLoop.wrapper'), new DI\Definitions\ServiceDefinition())
 			->setType(EventLoop\Wrapper::class);
@@ -281,22 +288,12 @@ class ApplicationExtension extends DI\CompilerExtension
 
 		/**
 		 * DOCTRINE
+		 *
+		 * The EntityDiscriminator subscriber used to be attached here by hand. nettrine/orm
+		 * 0.10's EventPass finds every service typed Doctrine\Common\EventSubscriber and
+		 * registers it on its ContainerEventManager itself, so doing it here as well would
+		 * subscribe it twice and fire loadClassMetadata twice per class.
 		 */
-
-		if (
-			class_exists('\Doctrine\DBAL\Connection')
-			&& class_exists('\Doctrine\ORM\EntityManager')
-			&& $builder->getByType('\Doctrine\ORM\EntityManagerInterface') !== null
-		) {
-			$emService = $builder->getDefinitionByType('\Doctrine\ORM\EntityManagerInterface');
-			assert($emService instanceof DI\Definitions\ServiceDefinition);
-
-			$emService
-				->addSetup('?->getEventManager()->addEventSubscriber(?)', [
-					'@self',
-					$builder->getDefinitionByType(Subscribers\EntityDiscriminator::class),
-				]);
-		}
 
 		/**
 		 * ROUTES
