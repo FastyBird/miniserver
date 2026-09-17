@@ -1,6 +1,7 @@
+import { JsonPropertiesMapper } from 'jsona';
 import { IJsonPropertiesMapper, TAnyKeyValueObject, TJsonaModel, TJsonaRelationships } from 'jsona/lib/JsonaTypes';
-import { JsonPropertiesMapper, RELATIONSHIP_NAMES_PROP } from 'jsona/lib/simplePropertyMappers';
 
+import { RELATIONSHIP_NAMES_PROP } from './constants';
 import {
 	ACCOUNT_DOCUMENT_REG_EXP,
 	EMAIL_DOCUMENT_REG_EXP,
