@@ -123,6 +123,11 @@ imports even though the files are still present, so three packages fail to build
 application shell never builds at all. The declared range `^1.12` permitted 1.14. This is
 not an upgrade: 1.12 is what the code was authored against, and pinning restores that.
 
+> **Update, since this baseline was taken:** Phase 6 rewrote the six `RELATIONSHIP_NAMES_PROP`
+> imports to come from the package root instead of the `jsona/lib/simplePropertyMappers`
+> subpath, which is what the exports map in 1.13+ was blocking. The pin is retired:
+> all three manifests now declare `jsona: ^1.14`, resolving to `1.14.0`.
+
 Both exceptions share one root cause worth understanding, because it will recur. Neither
 lock file had ever been committed. "Frozen" therefore never applied to transitive
 dependencies, and the set now committed is a 2026 resolution of 2024 constraints. Where
