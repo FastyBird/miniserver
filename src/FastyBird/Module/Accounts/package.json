@@ -42,7 +42,7 @@
     "@fastybird/metadata-library": "0.0.0",
     "@fastybird/tools": "0.0.0",
     "@iconify/vue": "^5",
-    "@sentry/vue": "^8.39",
+    "@sentry/vue": "^10.73",
     "ajv": "^8.17",
     "ajv-formats": "^3.0",
     "async-validator": "^4.2",
