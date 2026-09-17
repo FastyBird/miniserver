@@ -86,7 +86,7 @@
     "require-dev": {
         "brianium/paratest": "^7.3",
         "dg/bypass-finals": "^1.4",
-        "infection/infection": "^0.27",
+        "infection/infection": "^0.35",
         "ipub/websockets": "^1.7",
         "latte/latte": "^3.0",
         "orisai/coding-standard": "^3.2",
