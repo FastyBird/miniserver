@@ -3,6 +3,7 @@
   "type": "module",
   "private": true,
   "version": "1.0.0-alpha.1",
+  "packageManager": "pnpm@10.34.5+sha512.a4ee05f2f73658255bd6a89859c065a45c28a57daefae2c893a168ee2b73168c37b91e83e57ea67654ad03f03031746430e8bce38e362e042605fb8abc80192e",
   "description": "Repository for FastyBird packages development",
   "keywords": [
     "fastybird",
@@ -23,9 +24,6 @@
     "type": "git",
     "url": "https://github.com/FastyBird/miniserver.git"
   },
-  "workspaces": [
-    "src/FastyBird/*/*"
-  ],
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
@@ -33,14 +31,17 @@
     "lint:js": "eslint src/FastyBird/*/*/assets",
     "lint:js:fix": "eslint src/FastyBird/*/*/assets --fix",
     "lint:styles": "stylelint 'src/FastyBird/*/*/assets/**/*.scss'",
-    "pretty": "yarn pretty:write && yarn pretty:check",
+    "pretty": "pnpm run pretty:write && pnpm run pretty:check",
     "pretty:check": "prettier src/FastyBird/*/*/assets --check",
     "pretty:write": "prettier src/FastyBird/*/*/assets --write",
     "prepare": "husky"
   },
   "dependencies": {
-    "@fastybird/metadata-library": "0.0.0",
-    "@fastybird/tools": "0.0.0",
+    "@fastybird/accounts-module": "workspace:*",
+    "@fastybird/devices-module": "workspace:*",
+    "@fastybird/homekit-connector": "workspace:*",
+    "@fastybird/metadata-library": "workspace:*",
+    "@fastybird/tools": "workspace:*",
     "@fastybird/vue-wamp-v1": "^1.2",
     "@iconify/iconify": "^3.1",
     "@iconify/vue": "^5",
@@ -97,5 +98,8 @@
   },
   "engines": {
     "node": ">=24"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "vue-demi", "core-js", "@parcel/watcher"]
   }
 }

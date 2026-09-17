@@ -222,23 +222,26 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v7"
 
+      - name: "Setup pnpm"
+        uses: "pnpm/action-setup@v4"
+
       - name: "Setup Node"
         uses: "actions/setup-node@v7"
         with:
           node-version: "24"
-          cache: "yarn"
+          cache: "pnpm"
 
-      - name: "Yarn install"
-        run: "yarn install --frozen-lockfile"
+      - name: "pnpm install"
+        run: "pnpm install --frozen-lockfile"
 
-      - name: "yarn lint:js"
-        run: "yarn lint:js"
+      - name: "pnpm lint:js"
+        run: "pnpm lint:js"
 
-      - name: "yarn lint:styles"
-        run: "yarn lint:styles"
+      - name: "pnpm lint:styles"
+        run: "pnpm lint:styles"
 
-      - name: "yarn pretty:check"
-        run: "yarn pretty:check"
+      - name: "pnpm pretty:check"
+        run: "pnpm pretty:check"
 
   js-types:
     name: "JS Types"
@@ -248,17 +251,20 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v7"
 
+      - name: "Setup pnpm"
+        uses: "pnpm/action-setup@v4"
+
       - name: "Setup Node"
         uses: "actions/setup-node@v7"
         with:
           node-version: "24"
-          cache: "yarn"
+          cache: "pnpm"
 
-      - name: "Yarn install"
-        run: "yarn install --frozen-lockfile"
+      - name: "pnpm install"
+        run: "pnpm install --frozen-lockfile"
 
-      - name: "yarn types"
-        run: "yarn types"
+      - name: "pnpm types"
+        run: "pnpm types"
 
   js-build:
     name: "JS Build"
@@ -268,17 +274,20 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v7"
 
+      - name: "Setup pnpm"
+        uses: "pnpm/action-setup@v4"
+
       - name: "Setup Node"
         uses: "actions/setup-node@v7"
         with:
           node-version: "24"
-          cache: "yarn"
+          cache: "pnpm"
 
-      - name: "Yarn install"
-        run: "yarn install --frozen-lockfile"
+      - name: "pnpm install"
+        run: "pnpm install --frozen-lockfile"
 
-      - name: "yarn build"
-        run: "yarn build"
+      - name: "pnpm build"
+        run: "pnpm build"
 
   docker-build:
     name: "Docker Build"

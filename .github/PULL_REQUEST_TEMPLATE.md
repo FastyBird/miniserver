@@ -22,7 +22,7 @@
       `core module connector plugin bridge addon automator library ui infra ci deps
       deps-dev docs cross`. The subject starts lowercase and has no trailing period.
 - [ ] Commit messages follow the same convention (`commitlint` enforces this locally
-      once `yarn install` has run and wired the husky hook).
+      once `pnpm install` has run and wired the husky hook).
 - [ ] I ran the relevant gates and they pass.
 
 ## Verification
@@ -32,7 +32,7 @@ Run gates in containers, not on the host. The toolchain is PHP 8.4 / Node 24 and
 from a newer host toolchain are not evidence. See CONTRIBUTING.md.
 
   make lint · make cs · make phpstan · make tests
-  yarn build · yarn types · yarn lint:js · yarn lint:styles · yarn pretty:check
+  pnpm build · pnpm types · pnpm lint:js · pnpm lint:styles · pnpm pretty:check
 
 Paste the output that matters, or say which gates you ran and which you did not.
 -->

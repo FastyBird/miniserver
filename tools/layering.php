@@ -163,7 +163,7 @@ return [
 			'composer.lock',
 			'package.json',
 			'package-lock.json',
-			'yarn.lock',
+			'pnpm-lock.yaml',
 			'phpstan.neon',
 			'phpstan.neon.dist',
 			'phpstan.tests.neon',

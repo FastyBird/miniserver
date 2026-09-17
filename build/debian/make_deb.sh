@@ -22,8 +22,9 @@ if [ "$1" != "only_clean" ] ; then
   sudo apt-get install fakeroot -y
 
   echo "Building web ui..."
-  sudo yarn install --frozen-lockfile
-  sudo yarn build
+  sudo npm i -g pnpm@10.34.5
+  sudo pnpm install --frozen-lockfile
+  sudo pnpm build
 
   echo "Adding the files & folders, scripts in the package..."
   sudo rm -rf dist/

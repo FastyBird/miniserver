@@ -15,10 +15,16 @@ FROM node:24 AS ui
 
 WORKDIR /app
 
+# npm-installed globally rather than via corepack: corepack's bundled version on
+# Node 20 fails registry signature verification with "Cannot find matching keyid"
+# when fetching a pinned package manager. Node 24 does not carry that bug, but
+# pinning the same way keeps prod, dev and CI on one install mechanism.
+RUN npm i -g pnpm@10.34.5
+
 COPY . .
 
-RUN yarn install --frozen-lockfile \
-    && yarn build
+RUN pnpm install --frozen-lockfile \
+    && pnpm build
 
 # ============================================================
 # Stage 2: install PHP dependencies
