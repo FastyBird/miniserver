@@ -15,6 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Entities\Accounts;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
@@ -66,8 +67,8 @@ class Account implements Entities\Entity,
 	protected string|null $requestHash = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\Column(name: 'account_last_visit', type: 'datetime', nullable: true, options: ['default' => null])]
-	protected DateTimeInterface|null $lastVisit = null;
+	#[ORM\Column(name: 'account_last_visit', type: 'datetime_immutable', nullable: true, options: ['default' => null])]
+	protected DateTimeImmutable|null $lastVisit = null;
 
 	#[IPubDoctrine\Crud(required: true, writable: true)]
 	#[ORM\OneToOne(
@@ -169,7 +170,7 @@ class Account implements Entities\Entity,
 		return $this->lastVisit;
 	}
 
-	public function setLastVisit(DateTimeInterface $lastVisit): void
+	public function setLastVisit(DateTimeImmutable $lastVisit): void
 	{
 		$this->lastVisit = $lastVisit;
 	}

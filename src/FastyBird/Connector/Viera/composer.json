@@ -41,7 +41,7 @@
     "contributte/monolog": "^0.5",
     "contributte/translation": "^2.0",
     "cweagans/composer-patches": "^1.7",
-    "doctrine/orm": "2.15.*",
+    "doctrine/orm": "^3.3",
     "fastybird/application": "@dev",
     "fastybird/devices-module": "@dev",
     "fastybird/metadata-library": "@dev",

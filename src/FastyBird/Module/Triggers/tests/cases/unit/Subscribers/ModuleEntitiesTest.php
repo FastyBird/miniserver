@@ -15,7 +15,6 @@ use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Subscribers;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 use function is_string;
 
 final class ModuleEntitiesTest extends TestCase
@@ -303,19 +302,10 @@ final class ModuleEntitiesTest extends TestCase
 
 	private function getEntityManager(bool $withUow = false): ORM\EntityManagerInterface&MockObject
 	{
-		$metadata = new stdClass();
-		$metadata->fieldMappings = [
-			[
-				'fieldName' => 'name',
-			],
-			[
-				'fieldName' => 'comment',
-			],
-			[
-				'fieldName' => 'enabled',
-			],
-		];
-
+		// ORM 3 types EntityManagerInterface::getClassMetadata() as ClassMetadata, so PHPUnit
+		// refuses the stdClass stand-in this used to pass. Nothing under test reads the
+		// metadata, so an unloaded instance is enough -- it only has to satisfy the type.
+		$metadata = new ORM\Mapping\ClassMetadata(Entities\Triggers\Trigger::class);
 		$entityManager = $this->createMock(ORM\EntityManagerInterface::class);
 		$entityManager
 			->method('getClassMetadata')

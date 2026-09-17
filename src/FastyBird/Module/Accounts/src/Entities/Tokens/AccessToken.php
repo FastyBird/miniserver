@@ -52,7 +52,7 @@ class AccessToken extends SimpleAuthEntities\Tokens\Token implements
 	private Entities\Identities\Identity|null $identity = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\Column(name: 'token_valid_till', type: 'datetime', nullable: false)]
+	#[ORM\Column(name: 'token_valid_till', type: 'datetime_immutable', nullable: false)]
 	private DateTimeInterface|null $validTill = null;
 
 	public function __construct(

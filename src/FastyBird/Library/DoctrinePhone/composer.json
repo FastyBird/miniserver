@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": ">=8.4.0",
-    "doctrine/orm": "2.15.*",
+    "doctrine/orm": "^3.3",
     "ipub/phone": "^2.3",
     "nette/di": "^3.0",
     "nette/utils": "^3.2||^4.0"

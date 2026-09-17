@@ -42,7 +42,7 @@
     "fastybird/metadata-library": "@dev",
     "fastybird/tools": "@dev",
     "nette/di": "^3.2",
-    "nettrine/fixtures": "^0.6",
+    "nettrine/fixtures": "^0.9",
     "orisai/object-mapper": "^0.3",
     "psr/log": "^3.0",
     "react/async": "^4.0",

@@ -2299,19 +2299,7 @@ parameters:
 			path: ../src/FastyBird/Connector/Tuya/src/API/LocalApi.php
 
 		-
-			message: '#^Method FastyBird\\Connector\\Tuya\\API\\LocalApi\:\:readStates\(\) should return React\\Promise\\PromiseInterface\<array\<FastyBird\\Connector\\Tuya\\API\\Messages\\Response\\DeviceDataPointState\>\|FastyBird\\Connector\\Tuya\\API\\Messages\\Response\\LocalDeviceWifiScan\|FastyBird\\Connector\\Tuya\\Types\\LocalDeviceError\|string\|null\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Connector/Tuya/src/API/LocalApi.php
-
-		-
 			message: '#^Method FastyBird\\Connector\\Tuya\\API\\LocalApi\:\:stitchPayload\(\) should return array\<int\> but returns array\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Connector/Tuya/src/API/LocalApi.php
-
-		-
-			message: '#^Method FastyBird\\Connector\\Tuya\\API\\LocalApi\:\:writeStates\(\) should return React\\Promise\\PromiseInterface\<array\<FastyBird\\Connector\\Tuya\\API\\Messages\\Response\\DeviceDataPointState\>\|FastyBird\\Connector\\Tuya\\API\\Messages\\Response\\LocalDeviceWifiScan\|FastyBird\\Connector\\Tuya\\Types\\LocalDeviceError\|string\|null\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Connector/Tuya/src/API/LocalApi.php
@@ -4721,3 +4709,26 @@ parameters:
 			identifier: property.nonObject
 			count: 1
 			path: ../src/FastyBird/Plugin/WsServer/src/DI/WsServerExtension.php
+
+		# Pre-existing: the column is nullable while the property is not, on entities this
+		# branch does not touch. ORM 3 + phpstan-doctrine resolve the metadata far enough to
+		# see it; ORM 2 did not. Reconciling them needs either a migration making the columns
+		# NOT NULL (which can fail on deployments holding NULL rows) or a public API change,
+		# neither of which belongs in a Doctrine upgrade.
+		-
+			message: '#^Property FastyBird\\Automator\\DevicesModule\\Entities\\Actions\\PropertyAction\:\:\$value type mapping mismatch\: database can contain string\|null but property expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: ../src/FastyBird/Automator/DevicesModule/src/Entities/Actions/PropertyAction.php
+
+		-
+			message: '#^Property FastyBird\\Automator\\DevicesModule\\Entities\\Conditions\\PropertyCondition\:\:\$operand type mapping mismatch\: database can contain string\|null but property expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: ../src/FastyBird/Automator/DevicesModule/src/Entities/Conditions/PropertyCondition.php
+
+		-
+			message: '#^Property FastyBird\\Automator\\DevicesModule\\Entities\\Conditions\\PropertyCondition\:\:\$operator type mapping mismatch\: database can contain FastyBird\\Module\\Triggers\\Types\\ConditionOperator\|null but property expects FastyBird\\Module\\Triggers\\Types\\ConditionOperator\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: ../src/FastyBird/Automator/DevicesModule/src/Entities/Conditions/PropertyCondition.php

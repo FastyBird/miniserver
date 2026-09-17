@@ -15,7 +15,7 @@
     }
   ],
   "require": {
-    "doctrine/orm": "2.15.*",
+    "doctrine/orm": "^3.3",
     "ext-json": "*",
     "fig/http-message-util": "^1.1",
     "ipub/json-api-document": "^0.2",

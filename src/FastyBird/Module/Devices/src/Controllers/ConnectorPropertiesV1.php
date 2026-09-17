@@ -156,6 +156,18 @@ final class ConnectorPropertiesV1 extends BaseV1
 						'pointer' => '/data/attributes/' . Utilities\Api::fieldToJsonApi($ex->getField()),
 					],
 				);
+			} catch (Doctrine\ORM\Exception\EntityIdentityCollisionException) {
+				// ORM 3 detects a client-supplied duplicate id while adding to the identity
+				// map, which happens before the INSERT that used to surface this as a DBAL
+				// unique constraint violation on PRIMARY. Same condition, reported earlier.
+				throw new JsonApiExceptions\JsonApiError(
+					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+					strval($this->translator->translate('//devices-module.base.messages.uniqueIdentifier.heading')),
+					strval($this->translator->translate('//devices-module.base.messages.uniqueIdentifier.message')),
+					[
+						'pointer' => '/data/id',
+					],
+				);
 			} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
 				if (preg_match("%PRIMARY'%", $ex->getMessage(), $match) === 1) {
 					throw new JsonApiExceptions\JsonApiError(

@@ -43,7 +43,7 @@ class RefreshToken extends SimpleAuthEntities\Tokens\Token implements
 	public const TOKEN_EXPIRATION = '+3 days';
 
 	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\Column(name: 'token_valid_till', type: 'datetime', nullable: false)]
+	#[ORM\Column(name: 'token_valid_till', type: 'datetime_immutable', nullable: false)]
 	private DateTimeInterface|null $validTill = null;
 
 	public function __construct(

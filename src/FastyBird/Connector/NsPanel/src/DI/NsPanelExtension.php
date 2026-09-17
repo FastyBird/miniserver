@@ -16,7 +16,6 @@
 namespace FastyBird\Connector\NsPanel\DI;
 
 use Contributte\Translation;
-use Doctrine\Persistence;
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Clients;
@@ -1063,32 +1062,14 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * DOCTRINE ENTITIES
 		 */
 
-		$services = $builder->findByTag(NettrineORM\DI\OrmAttributesExtension::DRIVER_TAG);
-
-		if ($services !== []) {
-			$services = array_keys($services);
-			$ormAttributeDriverServiceName = array_pop($services);
-
-			$ormAttributeDriverService = $builder->getDefinition($ormAttributeDriverServiceName);
-
-			if ($ormAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
-				$ormAttributeDriverService->addSetup(
-					'addPaths',
-					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Entities']],
-				);
-
-				$ormAttributeDriverChainService = $builder->getDefinitionByType(
-					Persistence\Mapping\Driver\MappingDriverChain::class,
-				);
-
-				if ($ormAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
-					$ormAttributeDriverChainService->addSetup('addDriver', [
-						$ormAttributeDriverService,
-						'FastyBird\Connector\NsPanel\Entities',
-					]);
-				}
-			}
-		}
+		// nettrine/orm 0.10 tags the per-manager MappingDriverChain, not an AttributeDriver, so
+		// there is no service left to call addPaths() on. MappingHelper is nettrine's own
+		// entry point for contributing a mapping to a manager from another extension.
+		NettrineORM\DI\Helpers\MappingHelper::of($this)->addAttribute(
+			'default',
+			'FastyBird\Connector\NsPanel\Entities',
+			__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Entities',
+		);
 
 		/**
 		 * APPLICATION DOCUMENTS
