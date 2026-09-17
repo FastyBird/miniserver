@@ -187,7 +187,7 @@ services:
   # MYSQL DATABASE STORAGE
   database:
     container_name: fastybird-database
-    image: mariadb
+    image: mariadb:10.11
     environment:
       # Container specific environment variables
       TZ: ${APP_TZ:-UTC}
@@ -207,7 +207,7 @@ services:
   # REDIS STORAGE (not wired by default; see docs/configuration.md once it exists in Phase 4)
   redis:
     container_name: fastybird-redis
-    image: redis
+    image: redis:7
     profiles:
       - redis
     volumes:
@@ -224,7 +224,7 @@ services:
   # COUCH DB STORAGE (not wired by default)
   couchdb:
     container_name: fastybird-couchdb
-    image: couchdb
+    image: couchdb:3
     profiles:
       - couchdb
     environment:
@@ -243,7 +243,7 @@ services:
   # RABBIT MQ EXCHANGE (not wired by default)
   rabbitmq:
     container_name: fastybird-rabbitmq
-    image: rabbitmq:management
+    image: rabbitmq:4-management
     profiles:
       - rabbitmq
     environment:
@@ -263,7 +263,7 @@ services:
   # MQTT (not wired by default)
   mqtt:
     container_name: fastybird-mqtt
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:2
     profiles:
       - mqtt
     volumes:
