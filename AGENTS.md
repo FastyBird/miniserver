@@ -4,13 +4,13 @@ This file mirrors [CLAUDE.md](./CLAUDE.md) for agent tooling that reads `AGENTS.
 
 ## Requirements
 
-PHP 8.4, Node 24, yarn 1. The host you run on may differ; it does not count -- every verification command runs in the PHP 8.4 / Node 24 containers described in `docs/baseline.md`.
+PHP 8.4, Node 24, pnpm 10 (pinned via `packageManager` in `package.json`). The host you run on may differ; it does not count -- every verification command runs in the PHP 8.4 / Node 24 containers described in `docs/baseline.md`.
 
 ## Commands
 
 ```bash
 make lint && make cs && make phpstan && make tests   # PHP quality gate
-yarn lint:js && yarn types && yarn build              # JS quality gate
+pnpm lint:js && pnpm types && pnpm build              # JS quality gate
 ```
 
 `make composer-validate` runs `composer validate` deliberately without `--strict` -- two pre-existing warnings make `--strict` exit 1 and that is permanent, not a bug to fix.

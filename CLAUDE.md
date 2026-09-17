@@ -6,7 +6,7 @@ MiniServer is a single PHP (Nette) + Vue application repository, merged from the
 
 - **PHP**: 8.4
 - **Node**: 24
-- **Package manager**: yarn 1 (pnpm arrives in Phase 6 of the merge -- do not document or use pnpm before then)
+- **Package manager**: pnpm 10, pinned via `packageManager` in `package.json`
 
 The host you are running on may report a different PHP/Node version. It does not count: every verification command for this project runs in the PHP 8.4 / Node 24 containers described in `docs/baseline.md`.
 
@@ -36,12 +36,12 @@ make rectorf             # apply it, then `make csf` -- Rector emits FQNs the st
 make composer-validate   # composer validate, root and every extension -- deliberately NOT --strict (two pre-existing warnings are permanent, see Makefile)
 
 # JS
-yarn dev                # Vite dev server with hot reload
-yarn build              # build every UI package then the application shell
-yarn types               # vue-tsc --noEmit across every UI package
-yarn lint:js             # ESLint
-yarn lint:styles         # stylelint
-yarn pretty:check        # Prettier check
+pnpm dev                 # Vite dev server with hot reload
+pnpm build               # vue-tsc --noEmit, then the Vite build for the application shell
+pnpm types                # vue-tsc --noEmit across every UI package
+pnpm lint:js              # ESLint
+pnpm lint:styles          # stylelint
+pnpm pretty:check         # Prettier check
 ```
 
 ```bash

@@ -6,4 +6,4 @@ src
 .npmignore export-ignore
 Makefile export-ignore
 tsconfig.json
-yarn.lock
+pnpm-lock.yaml

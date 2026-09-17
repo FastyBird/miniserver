@@ -42,7 +42,7 @@ try {
 
 	// contributte/vite refuses to compile without a Vite manifest, and public/manifest.json is
 	// a frontend build artefact that is not tracked. Booting the container must not depend on
-	// `yarn build` having run: this test is about Doctrine metadata, and the Vite extension
+	// `pnpm build` having run: this test is about Doctrine metadata, and the Vite extension
 	// owns no entities. Pointing it at an empty manifest keeps all 45 extensions registered --
 	// which is the whole point of this tier -- without coupling it to the asset pipeline.
 	$configurator->addConfig([

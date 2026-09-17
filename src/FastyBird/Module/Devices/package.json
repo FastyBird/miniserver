@@ -38,9 +38,9 @@
   "types": "./assets/entry.ts",
   "sideEffects": true,
   "dependencies": {
-    "@fastybird/application": "0.0.0",
-    "@fastybird/metadata-library": "0.0.0",
-    "@fastybird/tools": "0.0.0",
+    "@fastybird/application": "workspace:*",
+    "@fastybird/metadata-library": "workspace:*",
+    "@fastybird/tools": "workspace:*",
     "@fastybird/vue-wamp-v1": "^1.2",
     "@iconify/vue": "^5",
     "ajv": "^8.17",

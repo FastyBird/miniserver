@@ -80,6 +80,13 @@ services:
       FB_APP_PARAMETER__WEBSOCKETS_TARGET: ws://ws-server:8888
     volumes:
       - ../../:/app:delegated
+      # Named (not anonymous) volume shadowing the bind mount's node_modules:
+      # without it the container executes whatever native binaries the host
+      # installed and vice versa (e.g. host-installed macOS esbuild/rollup
+      # binaries breaking a container-side pnpm install, or the reverse). Named
+      # rather than anonymous so it survives across separate `docker compose
+      # run` invocations of this service instead of starting empty each time.
+      - ui-node-modules:/app/node_modules
     ports:
       - "${UI_PORT:-3000}:3000"
       - "${UI_DOC_PORT:-6006}:6006"
@@ -281,3 +288,4 @@ volumes:
   mqtt-dev-data:
   mqtt-dev-log:
   rabbitmq-dev-data:
+  ui-node-modules:

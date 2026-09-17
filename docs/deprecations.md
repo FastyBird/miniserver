@@ -88,8 +88,3 @@ production and have no such path. Laravel 9 is end of life, and
 than Packagist -- is also the package behind one of the two permanent
 `composer validate` warnings. Worth its own look when the dependency upgrades reach
 it.
-
-## yarn 1
-
-Unmaintained upstream. The migration to pnpm is planned as its own track and is
-not blocked by anything here.

@@ -1,5 +1,8 @@
 .idea
-/node_modules
+# pnpm materialises node_modules per workspace package, not just at the root
+# (see the matching **/node_modules note in .dockerignore).
+**/node_modules
+/.pnpm-store
 /vendor
 .DS_Store
 /config/local.neon
