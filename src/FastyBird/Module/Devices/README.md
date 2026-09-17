@@ -42,17 +42,7 @@ In case you want to create you own distribution of [FastyBird](https://www.fasty
 composer require fastybird/devices-module
 ```
 
-And for user interface is the best way to install **@fastybird/devices-module** with [Yarn](https://yarnpkg.com/):
-
-```sh
-yarn add @fastybird/devices-module
-```
-
-or if you prefer npm:
-
-```sh
-npm install @fastybird/devices-module
-```
+**@fastybird/devices-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 # FastyBird
 

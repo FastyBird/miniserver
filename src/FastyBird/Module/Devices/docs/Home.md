@@ -40,17 +40,7 @@ composer require fastybird/devices-module
 
 ### Module user interface
 
-The best way to install **@fastybird/devices-module** is using [Yarn](https://yarnpkg.com/):
-
-```sh
-yarn add @fastybird/devices-module
-```
-
-or if you prefer npm:
-
-```sh
-npm install @fastybird/devices-module
-```
+**@fastybird/devices-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Configuration
 
