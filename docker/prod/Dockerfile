@@ -11,7 +11,7 @@
 # ============================================================
 # Stage 1: build the frontend
 # ============================================================
-FROM node:24@sha256:6dac556d980b7f0e5498d08f08cee0ca67798b4ad6c23964a9214920e67758d0 AS ui
+FROM node:26@sha256:f841711197904b6e70ef0019078bdea9b66a583fa2a7ee96969f1a8080f03b9e AS ui
 
 WORKDIR /app
 
@@ -29,7 +29,7 @@ RUN pnpm install --frozen-lockfile \
 # ============================================================
 # Stage 2: install PHP dependencies
 # ============================================================
-FROM composer:2.8@sha256:5248900ab8b5f7f880c2d62180e40960cd87f60149ec9a1abfd62ac72a02577c AS vendor
+FROM composer:2.10@sha256:aaeab4b6b031e0a88efb907f0f26b563532a644fc2f4ea0d000ecf8658f7a2b8 AS vendor
 
 WORKDIR /app
 
@@ -51,7 +51,7 @@ RUN composer install --no-dev --prefer-dist --no-interaction --classmap-authorit
 # ============================================================
 # Stage 3: runtime
 # ============================================================
-FROM php:8.4-fpm@sha256:c27f0d1c15968d17f40cd6f2755fbaca234474899583611afab46ae869da0c0e AS runtime
+FROM php:8.5-fpm@sha256:f697f5e5a02534fff868345cc77e29925a852bbea339c2ad53b690d28dba2868 AS runtime
 
 ARG APP_PATH=/app
 
