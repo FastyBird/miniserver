@@ -67,3 +67,33 @@ updates:
       actions:
         patterns:
           - "*"
+
+  - package-ecosystem: "docker"
+    directories:
+      - "/docker/prod"
+      - "/docker/dev/php"
+      - "/docker/dev/node"
+      - "/docker/dev/nginx"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      base-images:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "docker-compose"
+    directories:
+      - "/docker/prod"
+      - "/docker/dev"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      base-images:
+        patterns:
+          - "*"
