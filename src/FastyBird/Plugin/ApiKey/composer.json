@@ -44,7 +44,9 @@
     "psr/log": "^3.0",
     "ramsey/uuid": "^4.7",
     "react/promise": "^3",
-    "symfony/console": "^6.0",
+    "symfony/console": "^6.0"
+  },
+  "require-dev": {
     "symplify/vendor-patches": "^11.2"
   },
   "autoload": {

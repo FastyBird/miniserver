@@ -52,7 +52,9 @@
     "react/datagram": "^1.8",
     "react/http": "^1.7",
     "react/promise": "^3",
-    "ringcentral/psr7": "^1.3",
+    "ringcentral/psr7": "^1.3"
+  },
+  "require-dev": {
     "symplify/vendor-patches": "^11.2"
   },
   "autoload": {

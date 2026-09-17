@@ -55,16 +55,18 @@
     "orisai/object-mapper": "^0.3",
     "psr/event-dispatcher": "^1.0",
     "psr/log": "^3.0",
-    "endroid/qr-code": "4.5",
+    "endroid/qr-code": "^4.5",
     "react/async": "^4.0",
     "react/datagram": "^1.8",
     "react/dns": "^1.10",
     "react/http": "^1.7",
     "react/promise": "^3",
-    "symplify/vendor-patches": "^11.2",
     "simplito/elliptic-php": "^1.0",
     "symfony/event-dispatcher": "^7.0",
     "z4kn4fein/php-semver": "^2.0"
+  },
+  "require-dev": {
+    "symplify/vendor-patches": "^11.2"
   },
   "autoload": {
     "psr-4": {

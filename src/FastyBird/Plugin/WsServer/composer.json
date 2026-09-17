@@ -45,7 +45,9 @@
     "react/promise": "^3",
     "react/socket": "^1.12",
     "symfony/console": "^6.0",
-    "symfony/event-dispatcher": "^7.0",
+    "symfony/event-dispatcher": "^7.0"
+  },
+  "require-dev": {
     "symplify/vendor-patches": "^11.2"
   },
   "autoload": {

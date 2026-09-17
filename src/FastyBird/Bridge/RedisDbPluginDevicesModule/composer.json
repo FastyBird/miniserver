@@ -36,7 +36,9 @@
     "fastybird/redisdb-plugin": "@dev",
     "nette/di": "^3.2",
     "orisai/object-mapper": "^0.3",
-    "psr/log": "^3.0",
+    "psr/log": "^3.0"
+  },
+  "require-dev": {
     "symplify/vendor-patches": "^11.2"
   },
   "autoload": {

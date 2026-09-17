@@ -53,7 +53,9 @@
     "nettrine/dbal": "^0.10",
     "nettrine/orm": "^0.10",
     "react/promise": "^3",
-    "symfony/console": "^6.0",
+    "symfony/console": "^6.0"
+  },
+  "require-dev": {
     "symplify/vendor-patches": "^11.2"
   },
   "autoload": {
