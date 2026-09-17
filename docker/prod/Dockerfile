@@ -55,8 +55,11 @@ ARG APP_PATH=/app
 # on a clean php:8.4-fpm container. Asking docker-php-ext-install to rebuild
 # an already-built-in extension fails ("Cannot find config.m4"), so only the
 # genuinely missing composer.json ext-* requirements are installed below,
-# plus pdo_mysql (database driver) and opcache (already active by default,
-# kept here only to make the dependency explicit).
+# plus pdo_mysql (database driver) and opcache. opcache is NOT built in --
+# the sentence above is exactly why the install below can't be redundant
+# with it. docker/prod/php/opcache.ini (opcache.enable=1, the JIT buffer)
+# does nothing without this line; deleting it as "already the default"
+# silently loses opcache and JIT on an embedded target.
 RUN apt-get update && apt-get install -y --no-install-recommends \
         nginx \
         supervisor \

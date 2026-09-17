@@ -1,5 +1,12 @@
 .git
-node_modules
+# `**/` matches any depth including none, so this also covers the context-root
+# node_modules the bare form used to name alone. The nested node_modules under
+# src/FastyBird/** (four present as of this commit) were never excluded --
+# Docker's node_modules glob matches only the context root, not nested paths --
+# and were being copied into every build. pnpm makes this worse: a symlink farm
+# per workspace package, into <root>/node_modules/.pnpm.
+**/node_modules
+.pnpm-store
 vendor
 var/logs
 var/temp
