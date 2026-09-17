@@ -19,13 +19,8 @@ extensions:
     contributteTranslation                          : Contributte\Translation\DI\TranslationExtension
     contributteEvents                               : Contributte\EventDispatcher\DI\EventDispatcherExtension
     contributteVite                                 : Contributte\Vite\Nette\Extension
-    nettrineCache                                   : Nettrine\Cache\DI\CacheExtension
     nettrineDbal                                    : Nettrine\DBAL\DI\DbalExtension
-    nettrineDbalConsole                             : Nettrine\DBAL\DI\DbalConsoleExtension
     nettrineOrm                                     : Nettrine\ORM\DI\OrmExtension
-    nettrineOrmAttributes                           : Nettrine\ORM\DI\OrmAttributesExtension
-    nettrineOrmConsole                              : Nettrine\ORM\DI\OrmConsoleExtension
-    nettrineOrmCache                                : Nettrine\ORM\DI\OrmCacheExtension
     nettrineFixtures                                : Nettrine\Fixtures\DI\FixturesExtension
     nettrineMigrations                              : Nettrine\Migrations\DI\MigrationsExtension
     ipubPhone                                       : IPub\Phone\DI\PhoneExtension
@@ -174,37 +169,38 @@ fbApplication:
 ##########
 
 nettrineDbal:
-    connection:
-        serverVersion: %database.version%
-        host: %database.host%
-        port: %database.port%
-        driver: %database.driver%
-        memory: %database.memory%
-        dbname: %database.dbname%
-        user: %database.username%
-        password: %database.password%
-        charset: utf8
+    connections:
+        default:
+            serverVersion: %database.version%
+            host: %database.host%
+            port: %database.port%
+            driver: %database.driver%
+            dbname: %database.dbname%
+            user: %database.username%
+            password: %database.password%
+            charset: utf8
 
-        types:
-            uuid_binary:
-                class: Ramsey\Uuid\Doctrine\UuidBinaryType
-                commented: false
-            utcdatetime:
-                class: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
-                commented: false
+    types:
+        uuid_binary: Ramsey\Uuid\Doctrine\UuidBinaryType
+        utcdatetime: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
 
-        typesMapping:
-            uuid_binary: binary
+    typesMapping:
+        uuid_binary: binary
 
 nettrineOrm:
-    configuration:
-        proxyDir: %tempDir%/cache/doctrine.proxies
-
-nettrineOrmAttributes:
-    mapping: []
+    managers:
+        default:
+            connection: default
+            # PHP 8.4 native lazy objects: no generated proxy classes at all, so proxyDir and
+            # autoGenerateProxyClasses below are inert, and the shared-proxy-directory race the
+            # eval mode was working around cannot occur. ORM 3.7 otherwise demands
+            # symfony/var-exporter ^6.4|^7 for its LazyGhost proxies, and the tree is on 8.x.
+            lazyNativeObjects: true
+            proxyDir: %tempDir%/cache/doctrine.proxies
 
 nettrineFixtures:
     paths: []
 
 nettrineMigrations:
-    directory: %appDir%/migrations
+    directories:
+        Migrations: %appDir%/migrations

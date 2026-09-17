@@ -66,7 +66,7 @@ class Account implements Entities\Entity,
 	protected string|null $requestHash = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\Column(name: 'account_last_visit', type: 'datetime', nullable: true, options: ['default' => null])]
+	#[ORM\Column(name: 'account_last_visit', type: 'datetime_immutable', nullable: true, options: ['default' => null])]
 	protected DateTimeInterface|null $lastVisit = null;
 
 	#[IPubDoctrine\Crud(required: true, writable: true)]

@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Tests;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid;
-use stdClass;
 use function is_string;
 
 final class ModuleEntitiesTest extends TestCase
@@ -443,7 +442,10 @@ final class ModuleEntitiesTest extends TestCase
 
 	private function getEntityManager(bool $withUow = false): ORM\EntityManagerInterface&MockObject
 	{
-		$metadata = new stdClass();
+		// ORM 3 types EntityManagerInterface::getClassMetadata() as ClassMetadata, so PHPUnit
+		// refuses a stdClass stand-in. A real, unloaded ClassMetadata exposes the same public
+		// fieldMappings array the subscriber reads.
+		$metadata = new ORM\Mapping\ClassMetadata(Tests\Fixtures\Dummy\DummyDeviceEntity::class);
 		$metadata->fieldMappings = [
 			[
 				'fieldName' => 'identifier',

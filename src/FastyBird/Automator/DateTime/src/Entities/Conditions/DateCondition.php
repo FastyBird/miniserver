@@ -32,7 +32,7 @@ class DateCondition extends TriggersEntities\Conditions\Condition
 	public const TYPE = 'date';
 
 	#[IPubDoctrine\Crud(required: true, writable: true)]
-	#[ORM\Column(name: 'condition_date', type: 'datetime', nullable: true)]
+	#[ORM\Column(name: 'condition_date', type: 'datetime_immutable', nullable: true)]
 	private DateTimeInterface|null $date;
 
 	public function __construct(

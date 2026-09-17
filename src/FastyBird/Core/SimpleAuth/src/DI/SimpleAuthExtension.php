@@ -16,7 +16,6 @@
 namespace FastyBird\Core\SimpleAuth\DI;
 
 use Casbin;
-use Doctrine\Persistence;
 use FastyBird\Core\SimpleAuth;
 use FastyBird\Core\SimpleAuth\Access;
 use FastyBird\Core\SimpleAuth\Events;
@@ -30,6 +29,7 @@ use Nette\Application as NetteApplication;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
+use Nettrine\ORM as NettrineORM;
 use stdClass;
 use Symfony\Contracts\EventDispatcher;
 use function assert;
@@ -294,25 +294,13 @@ class SimpleAuthExtension extends DI\CompilerExtension
 			$configuration->enable->doctrine->models
 			|| $configuration->enable->casbin->database
 		) {
-			$ormAttributeDriverService = $builder->getDefinition('nettrineOrmAttributes.attributeDriver');
-
-			if ($ormAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
-				$ormAttributeDriverService->addSetup(
-					'addPaths',
-					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Entities']],
-				);
-			}
-
-			$ormAttributeDriverChainService = $builder->getDefinitionByType(
-				Persistence\Mapping\Driver\MappingDriverChain::class,
+			// nettrine/orm 0.10 tags the per-manager MappingDriverChain rather than an
+			// AttributeDriver, and the old nettrineOrmAttributes.attributeDriver service is gone.
+			NettrineORM\DI\Helpers\MappingHelper::of($this)->addAttribute(
+				'default',
+				'FastyBird\Core\SimpleAuth\Entities',
+				__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Entities',
 			);
-
-			if ($ormAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
-				$ormAttributeDriverChainService->addSetup('addDriver', [
-					$ormAttributeDriverService,
-					'FastyBird\Core\SimpleAuth\Entities',
-				]);
-			}
 		}
 
 		/**

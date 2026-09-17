@@ -86,11 +86,11 @@ class Email implements Entities\Entity,
 	private string|null $verificationHash = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\Column(name: 'email_verification_created', type: 'datetime', nullable: true, options: ['default' => null])]
+	#[ORM\Column(name: 'email_verification_created', type: 'datetime_immutable', nullable: true, options: ['default' => null])]
 	private DateTimeInterface|null $verificationCreated = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\Column(name: 'email_verification_completed', type: 'datetime', nullable: true, options: ['default' => null])]
+	#[ORM\Column(name: 'email_verification_completed', type: 'datetime_immutable', nullable: true, options: ['default' => null])]
 	private DateTimeInterface|null $verificationCompleted = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
