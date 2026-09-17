@@ -25,6 +25,7 @@ use FastyBird\Module\Accounts\Models;
 use Nette;
 use function array_key_exists;
 use function array_merge;
+use function assert;
 use function count;
 
 /**
@@ -122,7 +123,10 @@ final class EmailEntity implements Common\EventSubscriber
 		Entities\Emails\Email $email,
 	): void
 	{
-		$property = $classMetadata->getReflectionProperty('default');
+		// ORM 3 deprecates getReflectionProperty() and types it nullable; getPropertyAccessor() is
+		// the replacement and is what the ORM itself reads and writes mapped fields through.
+		$property = $classMetadata->getPropertyAccessor('default');
+		assert($property !== null);
 
 		foreach ($email->getAccount()->getEmails() as $accountEmail) {
 			// Deactivate all other user emails

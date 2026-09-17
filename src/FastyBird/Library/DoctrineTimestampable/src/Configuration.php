@@ -34,7 +34,7 @@ final class Configuration
 	public function __construct(
 		public readonly bool $lazyAssociation = false,
 		public readonly bool $autoMapField = false,
-		public readonly string $dbFieldType = 'datetime',
+		public readonly string $dbFieldType = 'datetime_immutable',
 	)
 	{
 	}

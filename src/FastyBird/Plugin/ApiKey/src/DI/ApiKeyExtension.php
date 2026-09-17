@@ -15,7 +15,6 @@
 
 namespace FastyBird\Plugin\ApiKey\DI;
 
-use Doctrine\Persistence;
 use FastyBird\Core\Application\Boot as ApplicationBoot;
 use FastyBird\Plugin\ApiKey\Commands;
 use FastyBird\Plugin\ApiKey\Middleware;
@@ -24,8 +23,6 @@ use Nette;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nettrine\ORM as NettrineORM;
-use function array_keys;
-use function array_pop;
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -78,38 +75,18 @@ class ApiKeyExtension extends DI\CompilerExtension
 	{
 		parent::beforeCompile();
 
-		$builder = $this->getContainerBuilder();
-
 		/**
 		 * DOCTRINE ENTITIES
 		 */
 
-		$services = $builder->findByTag(NettrineORM\DI\OrmAttributesExtension::DRIVER_TAG);
-
-		if ($services !== []) {
-			$services = array_keys($services);
-			$ormAttributeDriverServiceName = array_pop($services);
-
-			$ormAttributeDriverService = $builder->getDefinition($ormAttributeDriverServiceName);
-
-			if ($ormAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
-				$ormAttributeDriverService->addSetup(
-					'addPaths',
-					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Entities']],
-				);
-
-				$ormAttributeDriverChainService = $builder->getDefinitionByType(
-					Persistence\Mapping\Driver\MappingDriverChain::class,
-				);
-
-				if ($ormAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
-					$ormAttributeDriverChainService->addSetup('addDriver', [
-						$ormAttributeDriverService,
-						'FastyBird\Plugin\ApiKey\Entities',
-					]);
-				}
-			}
-		}
+		// nettrine/orm 0.10 tags the per-manager MappingDriverChain, not an AttributeDriver, so
+		// there is no service left to call addPaths() on. MappingHelper is nettrine's own
+		// entry point for contributing a mapping to a manager from another extension.
+		NettrineORM\DI\Helpers\MappingHelper::of($this)->addAttribute(
+			'default',
+			'FastyBird\Plugin\ApiKey\Entities',
+			__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Entities',
+		);
 	}
 
 }

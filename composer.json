@@ -41,7 +41,7 @@
         "contributte/translation": "^2.0",
         "contributte/vite": "^0.2",
         "cweagans/composer-patches": "^1.7",
-        "doctrine/orm": "2.15.*",
+        "doctrine/orm": "^3.3",
         "fastybird/accounts-module": "@dev",
         "fastybird/apikey-plugin": "@dev",
         "fastybird/application": "@dev",
@@ -78,8 +78,8 @@
         "fastybird/zigbee2mqtt-connector": "@dev",
         "nette/application": "^3.1",
         "nette/bootstrap": "^3.2",
-        "nettrine/fixtures": "^0.6",
-        "nettrine/migrations": "^0.8",
+        "nettrine/fixtures": "^0.9",
+        "nettrine/migrations": "^0.10",
         "symplify/vendor-patches": "^11.2",
         "vlucas/phpdotenv": "^5.4"
     },
@@ -232,9 +232,6 @@
         "patches": {
             "contributte/monolog": {
                 "Bug: invalid callback definition": "tools/patches/contributte-monolog-src-loggerholder-php.patch"
-            },
-            "nettrine/orm": {
-                "Enable connection overrides": "https://raw.githubusercontent.com/FastyBird/libraries-patches/master/nettrine-orm-src-managerregistry-php.patch"
             },
             "nette/utils": {
                 "Bug: Offset check with null support": "tools/patches/nette-utils-array-offsetcheck.diff"

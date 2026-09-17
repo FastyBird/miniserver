@@ -15,6 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Entities\Emails;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
@@ -86,12 +87,22 @@ class Email implements Entities\Entity,
 	private string|null $verificationHash = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\Column(name: 'email_verification_created', type: 'datetime', nullable: true, options: ['default' => null])]
-	private DateTimeInterface|null $verificationCreated = null;
+	#[ORM\Column(
+		name: 'email_verification_created',
+		type: 'datetime_immutable',
+		nullable: true,
+		options: ['default' => null],
+	)]
+	private DateTimeImmutable|null $verificationCreated = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\Column(name: 'email_verification_completed', type: 'datetime', nullable: true, options: ['default' => null])]
-	private DateTimeInterface|null $verificationCompleted = null;
+	#[ORM\Column(
+		name: 'email_verification_completed',
+		type: 'datetime_immutable',
+		nullable: true,
+		options: ['default' => null],
+	)]
+	private DateTimeImmutable|null $verificationCompleted = null;
 
 	#[IPubDoctrine\Crud(writable: true)]
 	#[ORM\Column(
@@ -137,7 +148,7 @@ class Email implements Entities\Entity,
 		return $this->verificationCreated;
 	}
 
-	public function setVerificationCreated(DateTimeInterface $verificationCreated): void
+	public function setVerificationCreated(DateTimeImmutable $verificationCreated): void
 	{
 		$this->verificationCreated = $verificationCreated;
 	}
@@ -147,7 +158,7 @@ class Email implements Entities\Entity,
 		return $this->verificationCompleted;
 	}
 
-	public function setVerificationCompleted(DateTimeInterface|null $verificationCompleted = null): void
+	public function setVerificationCompleted(DateTimeImmutable|null $verificationCompleted = null): void
 	{
 		$this->verificationCompleted = $verificationCompleted;
 	}
