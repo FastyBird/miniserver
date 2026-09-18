@@ -458,3 +458,61 @@ green mechanism this document's own "sanity-check any harness" principle warns a
 Production image verified directly rather than trusted from `docker build`'s own exit
 code: 282 hashed `.js` files in `public/assets/`, `public/.vite/manifest.json` and
 `public/index.html` all present, `composer check-platform-reqs` passes against it.
+
+## Phase 6 -- PHP runtime staging, Infection, first coverage number (2026-09-18)
+
+**Tasks 31 and 32 (staged PHP 8.3 runtime, non-blocking 8.4 CI leg): both fully moot,
+skipped rather than executed.** Live-verified before touching anything: root
+`composer.json`, all 34 first-party manifests, both Dockerfiles and all six CI
+`setup-php` blocks already declare PHP 8.4 -- not 8.2, not a staged 8.3 step. The
+runtime moved straight to 8.4 before this Phase 6 work began (the original baseline
+phase), never passing through the intermediate 8.3 stage the plan assumed. Task 32's
+entire premise -- "the 8.4 leg will fail at `composer install` until
+`orisai/object-mapper` moves" -- is backwards: PHP 8.4 already works fully, tree-wide,
+verified by every gate this whole phase. There is no failing leg to make non-blocking.
+
+**Task 33 -- infection/infection 0.27.11 -> 0.31.9.** Live-checked rather than
+following the plan's own suggested `-W` invocation blindly: an unscoped `composer
+update infection/infection -W` is legitimate here (unlike Task 30's Symfony case)
+because `thecodingmachine/safe`'s major bump (2.5.0 -> 3.4.0) is infection's own
+transitive requirement moving, not opportunistic first-party collateral -- confirmed
+by grepping every manifest for a direct constraint on it and finding none. Removed the
+now-obsolete `.github/dependabot.yml` ignore rule for `infection/infection`, whose
+entire purpose was deferring exactly this bump to this task.
+
+**A real, reproducible PHP 8.4 + coverage-instrumentation bug, found running Step 2.**
+`src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesReadingTest.php`
+crashes with `zend_mm_heap corrupted` (SIGABRT) under PCOV 1.0.12 coverage
+instrumentation, deterministically, after exactly 8 of its data-provider cases --
+reproduced in complete isolation (single process, no parallelism) with generous
+memory (2G) and with `zend.enable_gc=0` (a documented workaround for a similar,
+but evidently distinct, PHP 8.4 GC heap-corruption bug, php/php-src#20307 --
+did not help here). The test passes cleanly without coverage instrumentation, every
+time, matching every other test run this entire phase. PCOV 1.0.12 is the current
+latest release; there is no newer version to try. Worked around for both Step 2 and
+Step 3 by excluding just this one file from a coverage-instrumented run via a
+temporary `<exclude>` in a scratch copy of `tools/phpunit.xml`, never committed --
+the file keeps running in the real suite via `make tests`, which does not use PCOV
+and has never shown this crash. Flagged here as a known, unresolved defect rather
+than a fix, since the fix is either in PCOV itself or in PHP's 8.4 GC and neither is
+this project's to patch; if it recurs anywhere coverage runs, this is why.
+
+**First honest coverage number (Task 33 Step 2), the point of the exercise Task 5
+made possible: 27.2%** (32,270/118,489 statements), 1,391 of 1,415 tests (the 24
+missing are the excluded file's data-provider cases). Measured over the 2,801-file
+source set the repaired filter now actually targets, not the 232 test files the
+broken filter measured before. **Do not add a coverage gate on this number** -- per
+the plan, publish it for a few weeks before setting any floor.
+
+**Mutation testing is alive again (Task 33 Step 3), proving Task 5's coverage-filter
+fix reaches Infection, not just PHPUnit's own report:** 23,546 mutations generated,
+**Mutation Code Coverage: 100%**, **MSI: 69%** -- explicitly not the "0% MSI, every
+mutant uncovered" state that existed before the filter fix, per `make mutations`'s own
+success criterion. 1,924 mutants killed, 866 covered-but-undetected, 4 errors, 2
+timeouts. **A separate, real finding, not blocking this task's own success bar:**
+20,750 of 23,546 mutants (88%) hit Infection's default per-mutant time budget rather
+than reaching a real verdict -- worth its own investigation into timeout tuning for
+this suite's actual execution speed, deliberately not attempted here since Task 33's
+plan does not scope it and re-running the ~13-minute mutation pass repeatedly to tune
+a timeout is real additional cost. Logs land correctly under `var/tools/Coverage/
+mutations/` (`infection.log`, `infection.html`); no stray `tools/var` directory.

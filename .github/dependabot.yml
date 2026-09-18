@@ -13,12 +13,6 @@ updates:
       # tried it (PR #403, closed). Needs its own fix pass, not a version bump.
       - dependency-name: "nette/application"
         update-types: ["version-update:semver-minor"]
-      # 0.x versioning, so a minor digit change (0.27 -> 0.31+) is the real break --
-      # the hard prerequisite paratest needs for the PHPUnit 11 bump (Task 34), and
-      # the plan wants "the first real coverage number" out of that step (Task
-      # 33/PR25), not a same-day Dependabot merge. Patches within 0.27.x still pass.
-      - dependency-name: "infection/infection"
-        update-types: ["version-update:semver-minor"]
 
   - package-ecosystem: "npm"
     directory: "/"
