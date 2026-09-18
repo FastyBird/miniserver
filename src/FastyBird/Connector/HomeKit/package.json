@@ -57,7 +57,6 @@
     "unocss": "^0.64",
     "vue": "^3.5",
     "vue-i18n": "^10.0",
-    "vue-meta": "^3.0.0-alpha.10",
     "vue-router": "^4.4"
   }
 }

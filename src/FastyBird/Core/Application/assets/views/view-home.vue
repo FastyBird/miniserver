@@ -1,13 +1,13 @@
 <template>HOME</template>
 
 <script setup lang="ts">
-import { useMeta } from 'vue-meta';
+import { useHead } from '@unhead/vue';
 
 defineEmits<{
 	(e: 'toggleMenu'): void;
 }>();
 
-useMeta({
+useHead({
 	title: 'Homepage',
 });
 </script>

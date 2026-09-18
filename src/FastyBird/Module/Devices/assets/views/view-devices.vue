@@ -102,7 +102,6 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useMeta } from 'vue-meta';
 import { useRoute, useRouter } from 'vue-router';
 
 import { ElDrawer, ElIcon, vLoading } from 'element-plus';
@@ -111,6 +110,7 @@ import get from 'lodash.get';
 import { AppBar, AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
 import { Icon } from '@iconify/vue';
+import { useHead } from '@unhead/vue';
 
 import { DevicesListAdjust, DevicesListDevices, ViewError } from '../components';
 import { useConnectors, useDeviceActions, useDevices, useRoutesNames } from '../composables';
@@ -128,7 +128,7 @@ const props = defineProps<IViewDevicesProps>();
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-useMeta({
+useHead({
 	title: t('devicesModule.meta.devices.list.title'),
 });
 

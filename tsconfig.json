@@ -27,7 +27,6 @@
       "node",
       "vite/client",
       "vite-svg-loader",
-      "vue-meta",
       "unocss"
     ],
     "lib": [

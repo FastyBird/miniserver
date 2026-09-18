@@ -45,6 +45,7 @@
     "@fastybird/vue-wamp-v1": "^1.2",
     "@iconify/iconify": "^3.1",
     "@iconify/vue": "^5",
+    "@unhead/vue": "^3.4",
     "element-plus": "^2.8",
     "lodash.get": "^4.4",
     "md5": "^2.3",
@@ -53,7 +54,6 @@
     "unocss": "^66.10",
     "vue": "^3.5",
     "vue-i18n": "^10.0",
-    "vue-meta": "^3.0.0-alpha.10",
     "vue-router": "^4.4"
   },
   "devDependencies": {

@@ -32,6 +32,9 @@ importers:
       '@iconify/vue':
         specifier: ^5
         version: 5.0.1(vue@3.5.42(typescript@5.6.2))
+      '@unhead/vue':
+        specifier: ^3.4
+        version: 3.4.1(@oxc-project/types@0.150.0)(esbuild@0.25.12)(oxc-parser@0.150.0)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))(vue@3.5.42(typescript@5.6.2))
       element-plus:
         specifier: ^2.8
         version: 2.14.5(vue@3.5.42(typescript@5.6.2))
@@ -56,9 +59,6 @@ importers:
       vue-i18n:
         specifier: ^10.0
         version: 10.0.8(vue@3.5.42(typescript@5.6.2))
-      vue-meta:
-        specifier: ^3.0.0-alpha.10
-        version: 3.0.0-alpha.10(vue@3.5.42(typescript@5.6.2))
       vue-router:
         specifier: ^4.4
         version: 4.6.4(vue@3.5.42(typescript@5.6.2))
@@ -1494,6 +1494,48 @@ packages:
     resolution: {integrity: sha512-BoC8PiO4Hkdo0TVJh9Ntxr5MxPDI7/oFsrygN5ADelFSeXG/qgNuucIGA+L5Z6JpPTE/uRfcTWtscjbUaufepQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@unhead/bundler@3.4.1':
+    resolution: {integrity: sha512-1RLNvuZYCt6K+oIK7v0mKlbmFbTuNZRgAMrf+GdmiO5xfml2pl/ViZmBrCOxoBtLxCboDZ70hs+F9+z2YWHLuQ==}
+    peerDependencies:
+      '@unhead/cli': ^3.4.1
+      '@vitejs/devtools-kit': ^0.4.1
+      esbuild: '>=0.17.0'
+      lightningcss: '>=1.20.0'
+      oxc-parser: '>=0.98.0'
+      rolldown: '>=1.0.0'
+      unhead: ^3.4.1
+      vite: '>=6.4.2'
+      webpack: '>=5.0.0'
+    peerDependenciesMeta:
+      '@unhead/cli':
+        optional: true
+      '@vitejs/devtools-kit':
+        optional: true
+      esbuild:
+        optional: true
+      lightningcss:
+        optional: true
+      oxc-parser:
+        optional: true
+      rolldown:
+        optional: true
+      vite:
+        optional: true
+      webpack:
+        optional: true
+
+  '@unhead/vue@3.4.1':
+    resolution: {integrity: sha512-FQLTdsX1+m+a7Z5SzkQde8TR/4QK6p0+NQ6BuO9zbtc5xps2fRy7W+wQ90qn177C2X88aZAPzw29mg6T4VFSdA==}
+    peerDependencies:
+      vite: '>=6.4.2'
+      vue: '>=3.5.18'
+      webpack: '>=5.0.0'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+      webpack:
+        optional: true
+
   '@unocss/cli@66.10.5':
     resolution: {integrity: sha512-NjHkCNRsgnrU7m/hI1y2ryv8RMku+uejx9ChCnKcdKVKuBpgKFdhjmSjaTJQjpAHORyv5hLdT/7TkLbJzqk4tg==}
     hasBin: true
@@ -2336,6 +2378,9 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
+  hookable@6.1.2:
+    resolution: {integrity: sha512-+abwxtiEA52GCVIsQqut3S/uKTbUwYIp4Pe/vv+6py5XiXBCqMZHg6pA6Y5qhgLSEys0/cYuPbO0z1QFj5ZCmg==}
+
   hookified@1.15.1:
     resolution: {integrity: sha512-MvG/clsADq1GPM2KGo2nyfaWVyn9naPiXrqIe4jYjXNZQt238kWyOGrsyc/DmRAQ+Re6yeo6yX/yoNCG5KAEVg==}
 
@@ -2708,6 +2753,20 @@ packages:
     resolution: {integrity: sha512-54B4KUhrzbzc4sKvKwVYm7E2PgeROpGba0/2nlNZMqfDyca+yOor5IMb4WLGBatGDT0nkzYdYuzylg7n3YfB7A==}
     peerDependencies:
       oxc-parser: '>=0.98.0'
+
+  oxc-walker@1.1.1:
+    resolution: {integrity: sha512-Hwd7dq28zu/Er99+bpWp16CGwFrhyalJh0W3JOB7XpPvgWo3MqMi2ksWGKuzzA9zt50mJ2pIUwR5lpAdZ9ACNQ==}
+    peerDependencies:
+      '@oxc-project/types': '>=0.98.0'
+      oxc-parser: '>=0.98.0'
+      rolldown: '>=1.0.0'
+    peerDependenciesMeta:
+      '@oxc-project/types':
+        optional: true
+      oxc-parser:
+        optional: true
+      rolldown:
+        optional: true
 
   p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
@@ -3113,6 +3172,14 @@ packages:
   undici-types@7.18.2:
     resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
+  unhead@3.4.1:
+    resolution: {integrity: sha512-P1lDTwwMMICFQ84BXA1ac5CF/DPRCcrARQOGwblQFpHOekbBWq/724BV42C8ptH39NvyrUQLOwyt6qSd76GKPQ==}
+    peerDependencies:
+      vite: '>=6.4.2'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
@@ -3138,6 +3205,42 @@ packages:
   unplugin@2.3.11:
     resolution: {integrity: sha512-5uKD0nqiYVzlmCRs01Fhs2BdkEgBS3SAVP6ndrBsuK42iC2+JHyxM05Rm9G8+5mkmRtzMZGY8Ct5+mliZxU/Ww==}
     engines: {node: '>=18.12.0'}
+
+  unplugin@3.4.0:
+    resolution: {integrity: sha512-9skdIFlCsPdFV7wUfZxNsFInlW+7nJmGu2gkTu0OUhF56aXGsHab9x52/QhdJ4lC7ZDPWTxbiC4ANqVlsuaW3w==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      '@farmfe/core': '*'
+      '@rsbuild/core': '*'
+      '@rspack/core': '*'
+      bun-types-no-globals: '*'
+      esbuild: '*'
+      rolldown: '*'
+      rollup: '*'
+      unloader: '*'
+      vite: '*'
+      webpack: '*'
+    peerDependenciesMeta:
+      '@farmfe/core':
+        optional: true
+      '@rsbuild/core':
+        optional: true
+      '@rspack/core':
+        optional: true
+      bun-types-no-globals:
+        optional: true
+      esbuild:
+        optional: true
+      rolldown:
+        optional: true
+      rollup:
+        optional: true
+      unloader:
+        optional: true
+      vite:
+        optional: true
+      webpack:
+        optional: true
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -3227,11 +3330,6 @@ packages:
     resolution: {integrity: sha512-mIjy4utxMz9lMMo6G9vYePv7gUFt4ztOMhY9/4czDJxZ26xPeJ49MAGa9wBAE3XuXbYCrtVPmPxNjej7JJJkZQ==}
     engines: {node: '>= 16'}
     deprecated: v9 and v10 no longer supported. please migrate to v11. about maintenance status, see https://vue-i18n.intlify.dev/guide/maintenance.html
-    peerDependencies:
-      vue: ^3.0.0
-
-  vue-meta@3.0.0-alpha.10:
-    resolution: {integrity: sha512-rYeIGkhm1gKBcReEkPHiV6LV2Y6BZTMGTkGw1mQIZTxfFcVJL0srLZsL1zAmLeTGxMrlDYylMQEVSYRkDnwz3A==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -4287,6 +4385,49 @@ snapshots:
       '@typescript-eslint/types': 8.70.0
       eslint-visitor-keys: 5.0.1
 
+  '@unhead/bundler@3.4.1(@oxc-project/types@0.150.0)(esbuild@0.25.12)(oxc-parser@0.150.0)(rollup@4.63.1)(unhead@3.4.1(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)))(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))':
+    dependencies:
+      magic-string: 1.4.1
+      oxc-walker: 1.1.1(@oxc-project/types@0.150.0)(oxc-parser@0.150.0)
+      unhead: 3.4.1(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))
+      unplugin: 3.4.0(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))
+    optionalDependencies:
+      esbuild: 0.25.12
+      oxc-parser: 0.150.0
+      vite: 6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@farmfe/core'
+      - '@oxc-project/types'
+      - '@rsbuild/core'
+      - '@rspack/core'
+      - bun-types-no-globals
+      - rollup
+      - unloader
+
+  '@unhead/vue@3.4.1(@oxc-project/types@0.150.0)(esbuild@0.25.12)(oxc-parser@0.150.0)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))(vue@3.5.42(typescript@5.6.2))':
+    dependencies:
+      '@unhead/bundler': 3.4.1(@oxc-project/types@0.150.0)(esbuild@0.25.12)(oxc-parser@0.150.0)(rollup@4.63.1)(unhead@3.4.1(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)))(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))
+      hookable: 6.1.2
+      unhead: 3.4.1(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))
+      unplugin: 3.4.0(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))
+      vue: 3.5.42(typescript@5.6.2)
+    optionalDependencies:
+      vite: 6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@farmfe/core'
+      - '@oxc-project/types'
+      - '@rsbuild/core'
+      - '@rspack/core'
+      - '@unhead/cli'
+      - '@vitejs/devtools-kit'
+      - bun-types-no-globals
+      - esbuild
+      - lightningcss
+      - oxc-parser
+      - rolldown
+      - rollup
+      - unloader
+
   '@unocss/cli@66.10.5':
     dependencies:
       '@jridgewell/remapping': 2.3.5
@@ -5268,6 +5409,8 @@ snapshots:
 
   he@1.2.0: {}
 
+  hookable@6.1.2: {}
+
   hookified@1.15.1: {}
 
   hookified@2.2.0: {}
@@ -5591,6 +5734,11 @@ snapshots:
   oxc-walker@0.7.0(oxc-parser@0.150.0):
     dependencies:
       magic-regexp: 0.10.0
+      oxc-parser: 0.150.0
+
+  oxc-walker@1.1.1(@oxc-project/types@0.150.0)(oxc-parser@0.150.0):
+    optionalDependencies:
+      '@oxc-project/types': 0.150.0
       oxc-parser: 0.150.0
 
   p-limit@2.3.0:
@@ -6026,6 +6174,23 @@ snapshots:
 
   undici-types@7.18.2: {}
 
+  unhead@3.4.1(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)):
+    dependencies:
+      hookable: 6.1.2
+      unplugin: 3.4.0(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))
+    optionalDependencies:
+      vite: 6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@farmfe/core'
+      - '@rsbuild/core'
+      - '@rspack/core'
+      - bun-types-no-globals
+      - esbuild
+      - rolldown
+      - rollup
+      - unloader
+      - webpack
+
   unicorn-magic@0.1.0: {}
 
   unocss@66.10.5(cac@7.0.0)(rollup@4.63.1)(srvx@1.0.5)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)):
@@ -6068,6 +6233,16 @@ snapshots:
       acorn: 8.18.0
       picomatch: 4.0.7
       webpack-virtual-modules: 0.6.2
+
+  unplugin@3.4.0(esbuild@0.25.12)(rollup@4.63.1)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)):
+    dependencies:
+      '@jridgewell/remapping': 2.3.5
+      picomatch: 4.0.7
+      webpack-virtual-modules: 0.6.2
+    optionalDependencies:
+      esbuild: 0.25.12
+      rollup: 4.63.1
+      vite: 6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)
 
   uri-js@4.4.1:
     dependencies:
@@ -6135,10 +6310,6 @@ snapshots:
       '@intlify/core-base': 10.0.8
       '@intlify/shared': 10.0.8
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.42(typescript@5.6.2)
-
-  vue-meta@3.0.0-alpha.10(vue@3.5.42(typescript@5.6.2)):
-    dependencies:
       vue: 3.5.42(typescript@5.6.2)
 
   vue-router@4.6.4(vue@3.5.42(typescript@5.6.2)):

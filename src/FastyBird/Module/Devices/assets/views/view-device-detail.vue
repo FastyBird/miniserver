@@ -157,9 +157,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, watch } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useMeta } from 'vue-meta';
 import { useRoute, useRouter } from 'vue-router';
 
 import { ElCollapseTransition, ElIcon, vLoading } from 'element-plus';
@@ -168,6 +167,7 @@ import get from 'lodash.get';
 import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
 import { Icon } from '@iconify/vue';
+import { useHead } from '@unhead/vue';
 
 import { DeviceDefaultDeviceChannels, DeviceDefaultDeviceDetail, DevicesDeviceControl, DevicesDeviceIcon, ViewError } from '../components';
 import {
@@ -196,7 +196,9 @@ const props = defineProps<IViewDeviceDetailProps>();
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { meta } = useMeta({});
+const title = ref<string>();
+
+useHead({ title });
 
 const { isMDDevice } = useBreakpoints();
 const routeNames = useRoutesNames();
@@ -388,7 +390,7 @@ watch(
 	(): IDeviceData | null => deviceData.value,
 	(val: IDeviceData | null): void => {
 		if (val !== null) {
-			meta.title = t('devicesModule.meta.devices.detail.title', { device: deviceData.value?.device.title });
+			title.value = t('devicesModule.meta.devices.detail.title', { device: deviceData.value?.device.title });
 		}
 
 		if (!isLoading.value && val === null) {
