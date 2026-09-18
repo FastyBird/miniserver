@@ -57,7 +57,7 @@ services:
       retries: 3
 
   database:
-    image: mariadb:10.11@sha256:07c0aaff7396b74cb7975cba78257178d188e30f531a5db2b617c48beef13c41
+    image: mariadb:12.2@sha256:6a4c4bbf0447c2247801309513fcc0dd17c3f35390368139ce419387fdd1144d
     container_name: miniserver-database
     restart: unless-stopped
     environment:
@@ -70,7 +70,7 @@ services:
       - miniserver-database:/var/lib/mysql
 
   redis:
-    image: redis:7
+    image: redis:8
     container_name: miniserver-redis
     restart: unless-stopped
     profiles:
