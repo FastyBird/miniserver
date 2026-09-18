@@ -1,4 +1,4 @@
-import { defineConfig, presetUno } from 'unocss';
+import { defineConfig, presetWind3 } from 'unocss';
 
 import transformerVariantGroup from '@unocss/transformer-variant-group';
 
@@ -41,7 +41,7 @@ export default defineConfig({
 			xxl: '1400px',
 		},
 	},
-	presets: [presetUno({ dark: 'class' })],
+	presets: [presetWind3({ dark: 'class' })],
 	transformers: [transformerVariantGroup()],
 	content: {
 		pipeline: {
