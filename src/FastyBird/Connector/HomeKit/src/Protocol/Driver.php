@@ -81,7 +81,7 @@ class Driver
 			}
 
 			if ($existingAccessory->getId()->equals($accessory->getId())) {
-				$this->accessories->detach($existingAccessory);
+				$this->accessories->offsetUnset($existingAccessory);
 			}
 		}
 
@@ -105,11 +105,11 @@ class Driver
 				}
 
 				if ($existingAccessory->getConnector()->getId()->equals($accessory->getDevice()->getConnector())) {
-					$this->accessories->detach($existingAccessory);
+					$this->accessories->offsetUnset($existingAccessory);
 
 					$existingAccessory->addAccessory($accessory);
 
-					$this->accessories->attach($existingAccessory);
+					$this->accessories->offsetSet($existingAccessory);
 
 					return;
 				}
@@ -160,7 +160,7 @@ class Driver
 			}
 		}
 
-		$this->accessories->attach($accessory);
+		$this->accessories->offsetSet($accessory);
 	}
 
 	/**

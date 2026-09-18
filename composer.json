@@ -84,7 +84,7 @@
         "vlucas/phpdotenv": "^5.4"
     },
     "require-dev": {
-        "brianium/paratest": "^7.3",
+        "brianium/paratest": "^7.8",
         "dg/bypass-finals": "^1.4",
         "infection/infection": "^0.31.9",
         "ipub/websockets": "^1.7",
@@ -99,7 +99,7 @@
         "phpstan/phpstan-nette": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
-        "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit": "^11.5",
         "rector/rector": "^2.6",
         "staabm/annotate-pull-request-from-checkstyle": "^1.8",
         "symplify/vendor-patches": "^11.2",

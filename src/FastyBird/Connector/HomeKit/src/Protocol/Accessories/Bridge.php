@@ -109,7 +109,7 @@ class Bridge extends Accessory
 			}
 		}
 
-		$this->accessories->attach($accessory);
+		$this->accessories->offsetSet($accessory);
 	}
 
 	/**

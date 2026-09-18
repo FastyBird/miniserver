@@ -92,7 +92,7 @@ final class Subscriber
 
 		$ip = trim(strval(parse_url(strval($connection->getRemoteAddress()), PHP_URL_HOST)), '[]');
 
-		$this->connections->attach($connection, $ip);
+		$this->connections->offsetSet($connection, $ip);
 	}
 
 	public function unregisterConnection(Socket\ConnectionInterface $connection): void
@@ -112,7 +112,7 @@ final class Subscriber
 
 		foreach ($this->connections as $registeredConnection) {
 			if ($connection->getRemoteAddress() === $connection->getRemoteAddress()) {
-				$this->connections->detach($registeredConnection);
+				$this->connections->offsetUnset($registeredConnection);
 
 				return;
 			}

@@ -146,7 +146,7 @@ class Service
 			));
 		}
 
-		$this->characteristics->attach($characteristic);
+		$this->characteristics->offsetSet($characteristic);
 	}
 
 	public function hasCharacteristic(Types\CharacteristicType $name): bool

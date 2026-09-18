@@ -51,12 +51,12 @@ final class IidManager
 		Protocol\Accessories\Accessory|Protocol\Services\Service|Protocol\Characteristics\Characteristic $object,
 	): void
 	{
-		if ($this->storage->contains($object)) {
+		if ($this->storage->offsetExists($object)) {
 			return;
 		}
 
 		$this->counter += 1;
-		$this->storage->attach($object, $this->counter);
+		$this->storage->offsetSet($object, $this->counter);
 	}
 
 	/**
@@ -86,7 +86,7 @@ final class IidManager
 	{
 		$this->storage->rewind();
 
-		if ($this->storage->contains($object)) {
+		if ($this->storage->offsetExists($object)) {
 			return $this->storage[$object];
 		}
 
@@ -103,7 +103,7 @@ final class IidManager
 		$iid = $this->getIid($object);
 
 		if ($iid !== null) {
-			$this->storage->detach($object);
+			$this->storage->offsetUnset($object);
 		}
 
 		return $iid;
@@ -119,7 +119,7 @@ final class IidManager
 		$object = $this->getObject($iid);
 
 		if ($object !== null) {
-			$this->storage->detach($object);
+			$this->storage->offsetUnset($object);
 		}
 
 		return $object;

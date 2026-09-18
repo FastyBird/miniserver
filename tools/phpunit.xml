@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
          bootstrap="./phpunit-bootstrap.php"
          beStrictAboutOutputDuringTests="true"
          colors="true"
@@ -19,18 +19,73 @@
         real thing in a child process and are the only ones that can see a defect which only
         appears when every extension is present.
     -->
+    <!--
+        Enumerated explicitly, one <directory> per package, rather than the `**`
+        globs this block used before. Unlike PHP's own glob() (see the coverage
+        filter comment below), PHPUnit's own directory resolution follows symlinks
+        and treats `**` as a true globstar: pnpm workspace-links a member's entire
+        package root into every consumer's node_modules (e.g.
+        src/FastyBird/Connector/HomeKit/node_modules/@fastybird/devices-module ->
+        ../../../../Module/Devices), so a glob like `Connector/**/tests/cases/`
+        also discovers Module/Devices/tests/cases/ a second time through that
+        symlink. PHPUnit 10 tolerated the resulting duplicate silently; PHPUnit 11
+        errors on it ("Cannot add file ... as it was already added"). A <exclude>
+        for node_modules does not reliably fix this: upstream tracks <exclude>
+        not applying when a sibling <directory> entry uses a glob pattern
+        (sebastianbergmann/phpunit#2815), so the glob itself has to go, not just
+        be patched around. An explicit path can't be reached through a symlink
+        the way a recursive pattern can, and matches this project's own existing
+        convention: tools/phpstan.neon's `paths:` already enumerates every
+        package explicitly rather than globbing, for the same reason.
+    -->
     <testsuite name="all">
         <directory>../tests/cases/</directory>
-        <directory>../src/FastyBird/Addon/**/tests/cases/</directory>
-        <directory>../src/FastyBird/Automator/**/tests/cases/</directory>
-        <directory>../src/FastyBird/Bridge/**/tests/cases/</directory>
-        <directory>../src/FastyBird/Core/**/tests/cases/</directory>
-        <directory>../src/FastyBird/Connector/**/tests/cases/</directory>
-        <directory>../src/FastyBird/Library/**/tests/cases/</directory>
-        <directory>../src/FastyBird/Module/**/tests/cases/</directory>
-        <directory>../src/FastyBird/Plugin/**/tests/cases/</directory>
+        <directory>../src/FastyBird/Addon/VirtualThermostat/tests/cases/</directory>
+        <directory>../src/FastyBird/Automator/DateTime/tests/cases/</directory>
+        <directory>../src/FastyBird/Automator/DevicesModule/tests/cases/</directory>
+        <directory>../src/FastyBird/Bridge/DevicesModuleUiModule/tests/cases/</directory>
+        <directory>../src/FastyBird/Bridge/RedisDbPluginDevicesModule/tests/cases/</directory>
+        <directory>../src/FastyBird/Bridge/RedisDbPluginTriggersModule/tests/cases/</directory>
+        <directory>../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/cases/</directory>
+        <directory>../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/cases/</directory>
+        <directory>../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/FbMqtt/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/HomeKit/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/Modbus/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/NsPanel/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/Shelly/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/Sonoff/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/Tuya/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/Viera/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/Virtual/tests/cases/</directory>
+        <directory>../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/</directory>
+        <directory>../src/FastyBird/Core/Application/tests/cases/</directory>
+        <directory>../src/FastyBird/Core/Exchange/tests/cases/</directory>
+        <directory>../src/FastyBird/Core/Tools/tests/cases/</directory>
+        <directory>../src/FastyBird/Library/Metadata/tests/cases/</directory>
+        <directory>../src/FastyBird/Module/Accounts/tests/cases/</directory>
+        <directory>../src/FastyBird/Module/Devices/tests/cases/</directory>
+        <directory>../src/FastyBird/Module/Triggers/tests/cases/</directory>
+        <directory>../src/FastyBird/Module/Ui/tests/cases/</directory>
+        <directory>../src/FastyBird/Plugin/ApiKey/tests/cases/</directory>
+        <directory>../src/FastyBird/Plugin/CouchDb/tests/cases/</directory>
+        <directory>../src/FastyBird/Plugin/RabbitMq/tests/cases/</directory>
+        <directory>../src/FastyBird/Plugin/RedisDb/tests/cases/</directory>
+        <directory>../src/FastyBird/Plugin/RedisDbCache/tests/cases/</directory>
+        <directory>../src/FastyBird/Plugin/WebServer/tests/cases/</directory>
+        <directory>../src/FastyBird/Plugin/WsServer/tests/cases/</directory>
     </testsuite>
-    <coverage cacheDirectory="../var/tools/PHPUnit/coverage"/>
+    <coverage/>
+    <!--
+        coverage's own cacheDirectory attribute is gone: PHPUnit 11 folded the
+        coverage static-analysis cache into the single root-level cacheDirectory
+        above (var/tools/PHPUnit/.phpunit.cache/code-coverage/, confirmed
+        populated on disk). The old value, var/tools/PHPUnit/coverage/, was never
+        read by the Loader and that directory has never existed. PHPUnit's own
+        configuration migrator (the migrate-configuration CLI flag) removes
+        this attribute for the same reason
+        (RemoveCoverageElementCacheDirectoryAttribute).
+    -->
     <!--
         The coverage filter must list the SOURCE, not the tests. Until this was
         fixed it listed the tests/cases directories, so `make coverage-clover`
@@ -71,6 +126,22 @@
         report is for.
 
         This cannot change pass or fail: failOnDeprecation is not set.
+
+        Kept as restrictDeprecations rather than renamed to PHPUnit 11.1's
+        ignoreIndirectDeprecations, which the migrate-configuration CLI flag
+        suggests and which schema/11.4.xsd (and the current 11.5 schema, vendor/phpunit/
+        phpunit/phpunit.xsd) no longer declare. The two are not equivalent:
+        restrictDeprecations (still parsed by Xml/Loader.php, still enforced by
+        Runner/IssueFilter.php in 11.5.56) filters by whether the triggering
+        file is inside the <include> set below; ignoreIndirectDeprecations
+        filters by whether the trigger was direct or indirect in the call
+        stack, an unrelated axis that was not verified here to drop the same
+        158 vendor-noise deprecations. Renaming on faith would trade a known,
+        working, documented filter for an unverified one just to silence a
+        cosmetic notice. The resulting "Your XML configuration validates
+        against a deprecated schema" PHPUnit test runner deprecation (one per
+        paratest worker process, hence e.g. 11 with -p11) is accepted as a
+        known, non-blocking finding rather than chased further.
     -->
     <source restrictDeprecations="true">
         <include>

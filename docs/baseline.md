@@ -480,22 +480,31 @@ by grepping every manifest for a direct constraint on it and finding none. Remov
 now-obsolete `.github/dependabot.yml` ignore rule for `infection/infection`, whose
 entire purpose was deferring exactly this bump to this task.
 
-**A real, reproducible PHP 8.4 + coverage-instrumentation bug, found running Step 2.**
+**A `zend_mm_heap corrupted` crash was seen running Step 2, misdiagnosed at the time
+as a PCOV defect. Task 34 (below) traced it to Xdebug, not PCOV, and it does not
+recur under the real gate commands.**
 `src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesReadingTest.php`
+crashed with `zend_mm_heap corrupted` (SIGABRT) in ad hoc reproduction commands built
+by hand outside `make`, which omitted `XDEBUG_MODE=off`. Every real gate --
+`make tests`, `make coverage-clover`, `make mutations` -- sets it via `PRE_PHP_TESTS`
+in the Makefile and was never affected. The application image ships Xdebug 3.5.3
+alongside PCOV 1.0.12; with both loaded and Xdebug not forced off, this crash is
+100% reproducible on demand, and 100% absent with `XDEBUG_MODE=off` set, confirmed by
+alternating the one variable across repeated runs. The scratch `<exclude>` workaround
+described in the original text below was real -- the crash did happen in the commands
+that produced it -- but unnecessary: no version of this project's own tooling was ever
+exposed to it. Left here, struck through in spirit but not in fact, as the record of
+how the misdiagnosis happened: ~~`src/FastyBird/Module/Devices/tests/cases/unit/Models/States/ChannelPropertiesStatesReadingTest.php`
 crashes with `zend_mm_heap corrupted` (SIGABRT) under PCOV 1.0.12 coverage
 instrumentation, deterministically, after exactly 8 of its data-provider cases --
 reproduced in complete isolation (single process, no parallelism) with generous
 memory (2G) and with `zend.enable_gc=0` (a documented workaround for a similar,
 but evidently distinct, PHP 8.4 GC heap-corruption bug, php/php-src#20307 --
-did not help here). The test passes cleanly without coverage instrumentation, every
-time, matching every other test run this entire phase. PCOV 1.0.12 is the current
-latest release; there is no newer version to try. Worked around for both Step 2 and
-Step 3 by excluding just this one file from a coverage-instrumented run via a
-temporary `<exclude>` in a scratch copy of `tools/phpunit.xml`, never committed --
-the file keeps running in the real suite via `make tests`, which does not use PCOV
-and has never shown this crash. Flagged here as a known, unresolved defect rather
-than a fix, since the fix is either in PCOV itself or in PHP's 8.4 GC and neither is
-this project's to patch; if it recurs anywhere coverage runs, this is why.
+did not help here). PCOV 1.0.12 is the current latest release; there is no newer
+version to try.~~ Task 34 re-ran both `make coverage-clover`'s underlying command and
+`make mutations` in full, through the real gate path, with no exclude of any kind:
+zero crashes across a full 1415-test coverage-instrumented run and a full mutation
+pass. If this crash recurs, check `XDEBUG_MODE` before suspecting PCOV again.
 
 **First honest coverage number (Task 33 Step 2), the point of the exercise Task 5
 made possible: 27.2%** (32,270/118,489 statements), 1,391 of 1,415 tests (the 24
@@ -516,3 +525,69 @@ this suite's actual execution speed, deliberately not attempted here since Task 
 plan does not scope it and re-running the ~13-minute mutation pass repeatedly to tune
 a timeout is real additional cost. Logs land correctly under `var/tools/Coverage/
 mutations/` (`infection.log`, `infection.html`); no stray `tools/var` directory.
+
+**Task 34 -- phpunit/phpunit 10.5 -> 11.5, brianium/paratest 7.4 -> 7.8.** Dry-run
+confirmed both move together as the plan expects (paratest 7.8.5 requires
+`phpunit/phpunit ^11.5.46`); `composer update phpunit/phpunit brianium/paratest -W`
+resolved cleanly with the whole `sebastian/*` and `phpunit/php-*` constellation moving
+alongside, no unrelated collateral.
+
+**PHPUnit 11 hard-errors on a duplicate-file registration that PHPUnit 10 tolerated
+silently, caused by a pnpm workspace symlink, not by the version bump touching test
+code.** `tools/phpunit.xml`'s `<testsuite><directory>` entries used `**` globs (e.g.
+`Connector/**/tests/cases/`). PHPUnit's own directory resolution follows symlinks and
+treats `**` as a true recursive globstar (PHP's `glob()` has no globstar and does not
+follow symlinks this way); pnpm workspace-links `Module/Devices` into
+`Connector/HomeKit/node_modules/@fastybird/devices-module`, so the glob discovered
+`Module/Devices/tests/cases/` a second time through that symlink. An `<exclude>` for
+`node_modules` does not reliably fix this -- upstream tracks `<exclude>` not applying
+when a sibling `<directory>` entry uses a glob (`sebastianbergmann/phpunit#2815`).
+Fixed by replacing every glob `<directory>` with an explicit, enumerated list of all
+33 `tests/cases/` directories, matching the convention `tools/phpstan.neon` already
+uses for the same reason.
+
+**"PHPUnit Deprecations: 11" from a clean `make tests` run was never 11 distinct
+findings.** It is one cosmetic, non-actionable notice --
+`tools/phpunit.xml` does not validate against its own declared PHPUnit 11.5 schema,
+because `<source restrictDeprecations="true">` has not been part of the shipped XSD
+since PHPUnit 11.1 (still parsed by `Xml/Loader.php` and still enforced by
+`Runner/IssueFilter.php` in 11.5.56, just no longer schema-legal) -- reported once per
+paratest worker process, hence 11 with this machine's core count, not once. PHPUnit's
+own `--migrate-configuration` renames it to `ignoreIndirectDeprecations`, which is not
+the same filter (file-location scope vs. direct/indirect call-stack scope) and was not
+adopted here for that reason; see the comment in `tools/phpunit.xml` beside
+`restrictDeprecations` for the full reasoning. Separately, `<coverage
+cacheDirectory="../var/tools/PHPUnit/coverage">` was genuinely dead -- that directory
+has never existed on disk, and PHPUnit 11 folded the coverage static-analysis cache
+into the one root-level `cacheDirectory` -- so that attribute was dropped for real, not
+worked around.
+
+**"Deprecations: 60" from the same run was real and has been fixed in this same pull
+request, not merely documented**, per the plan's own instruction that version-bump
+consequences must be fixed here. `SplObjectStorage::attach()`, `::contains()` and
+`::detach()` are deprecated since PHP 8.5 in favour of `::offsetSet()`,
+`::offsetExists()` and `::offsetUnset()` -- forward notices PHP 8.4.25 already emits.
+42 call sites across 24 first-party files used the deprecated names, all on properties
+confirmed by their own `SplObjectStorage` type declarations, not on Doctrine
+`Collection`s (which expose a same-named but unrelated `contains()`; grepped and
+excluded by hand before touching anything). `offsetSet`/`offsetExists`/`offsetUnset`
+take the identical arguments, so this is a 1:1 rename, not a behaviour change. A clean
+`make tests` afterwards shows no `Deprecations:` line at all -- zero first-party
+deprecations remain.
+
+**Step 4, `dg/bypass-finals`: confirmed working, not just unchanged.** The full suite
+passes under PHPUnit 11.5.56 with no new failures among the many tests that mock final
+classes, and the patch situation is exactly as already recorded above (never applied,
+never needed here). If `dg/bypass-finals` had regressed under the new runner, those
+tests would fail outright (`Cannot mock final class`), not pass quietly.
+
+**Step 5, mutation testing re-run under PHPUnit 11 with no exclude of any kind:**
+23,696 mutations generated, **Mutation Code Coverage: 100%**, **MSI: 76%** -- up from
+Task 33's 69%, comparable as the plan expects and the modest first-party fixes above
+account for the rest. 2,655 killed, 812 covered-but-undetected, 4 errors, 2 timeouts,
+20,223 (86%) hit the default per-mutant time budget -- consistent with Task 33's 88%
+finding, not re-investigated here for the same reason Task 33 gave. Needed the same
+memory (`-d memory_limit=2G`) and reduced-parallelism (`-p6`/`--threads=6`)
+accommodation as Task 33's coverage/mutation commands; the Makefile's default `make
+mutations` recipe still OOMs at the stock 512M during the coverage-report merge step,
+unchanged from Task 33 and not this task's to fix.
