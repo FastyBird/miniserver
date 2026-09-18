@@ -34,7 +34,7 @@
     "ext-pcntl": "*",
     "binsoul/net-mqtt": "^0.8",
     "contributte/console": "^0.9",
-    "contributte/monolog": "^0.5",
+    "contributte/monolog": "^0.6",
     "contributte/translation": "^2.0",
     "cweagans/composer-patches": "^1.7",
     "fastybird/application": "@dev",

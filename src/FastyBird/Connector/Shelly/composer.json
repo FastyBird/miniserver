@@ -36,7 +36,7 @@
     "ext-pcntl": "*",
     "clue/multicast-react": "^1.1",
     "contributte/console": "^0.9",
-    "contributte/monolog": "^0.5",
+    "contributte/monolog": "^0.6",
     "contributte/translation": "^2.0",
     "cweagans/composer-patches": "^1.7",
     "fastybird/application": "@dev",
