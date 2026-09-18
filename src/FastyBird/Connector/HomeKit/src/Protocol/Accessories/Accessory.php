@@ -108,7 +108,7 @@ abstract class Accessory
 			}
 		}
 
-		$this->services->attach($service);
+		$this->services->offsetSet($service);
 	}
 
 	/**

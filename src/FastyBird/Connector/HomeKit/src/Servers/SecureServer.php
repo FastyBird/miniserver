@@ -56,10 +56,10 @@ final class SecureServer extends EventEmitter implements Socket\ServerInterface
 
 			$this->emit('connection', [$securedConnection]);
 
-			$this->activeConnections->attach($securedConnection);
+			$this->activeConnections->offsetSet($securedConnection);
 
 			$securedConnection->on('close', function () use ($securedConnection): void {
-				$this->activeConnections->detach($securedConnection);
+				$this->activeConnections->offsetUnset($securedConnection);
 			});
 		});
 

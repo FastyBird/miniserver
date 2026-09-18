@@ -76,8 +76,8 @@ class Container implements Consumer
 
 	public function register(Consumer $consumer, string|null $routingKey, bool $status = true): void
 	{
-		if (!$this->consumers->contains($consumer)) {
-			$this->consumers->attach(
+		if (!$this->consumers->offsetExists($consumer)) {
+			$this->consumers->offsetSet(
 				$consumer,
 				new Info($routingKey, $status),
 			);
@@ -100,8 +100,8 @@ class Container implements Consumer
 
 			if ($consumer::class === $name) {
 				if (!$info->isEnabled()) {
-					$this->consumers->detach($consumer);
-					$this->consumers->attach($consumer, new Info($info->getRoutingKey(), true));
+					$this->consumers->offsetUnset($consumer);
+					$this->consumers->offsetSet($consumer, new Info($info->getRoutingKey(), true));
 				}
 
 				return;
@@ -129,8 +129,8 @@ class Container implements Consumer
 
 			if ($consumer::class === $name) {
 				if ($info->isEnabled()) {
-					$this->consumers->detach($consumer);
-					$this->consumers->attach($consumer, new Info($info->getRoutingKey(), false));
+					$this->consumers->offsetUnset($consumer);
+					$this->consumers->offsetSet($consumer, new Info($info->getRoutingKey(), false));
 				}
 
 				return;

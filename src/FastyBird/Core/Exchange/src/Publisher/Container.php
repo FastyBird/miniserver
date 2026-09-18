@@ -63,8 +63,8 @@ class Container implements Publisher
 
 	public function register(Publisher $publisher): void
 	{
-		if (!$this->publishers->contains($publisher)) {
-			$this->publishers->attach($publisher);
+		if (!$this->publishers->offsetExists($publisher)) {
+			$this->publishers->offsetSet($publisher);
 		}
 	}
 

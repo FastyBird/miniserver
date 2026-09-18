@@ -166,7 +166,7 @@ abstract class Device
 			));
 		}
 
-		$this->capabilities->attach($capability);
+		$this->capabilities->offsetSet($capability);
 	}
 
 	public function findCapability(Uuid\UuidInterface $id): Protocol\Capabilities\Capability|null

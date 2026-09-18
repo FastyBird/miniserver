@@ -144,7 +144,7 @@ class Capability
 			));
 		}
 
-		$this->configurations->attach($configuration);
+		$this->configurations->offsetSet($configuration);
 	}
 
 	public function findConfiguration(Types\Configuration $type): Protocol\Configurations\Configuration|null
@@ -200,7 +200,7 @@ class Capability
 			));
 		}
 
-		$this->attributes->attach($attribute);
+		$this->attributes->offsetSet($attribute);
 	}
 
 	public function findAttribute(Types\Attribute|Uuid\UuidInterface $type): Protocol\Attributes\Attribute|null

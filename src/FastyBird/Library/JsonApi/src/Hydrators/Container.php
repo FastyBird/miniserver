@@ -89,8 +89,8 @@ class Container
 	 */
 	public function add(Hydrator $hydrator): void
 	{
-		if (!$this->hydrators->contains($hydrator)) {
-			$this->hydrators->attach($hydrator);
+		if (!$this->hydrators->offsetExists($hydrator)) {
+			$this->hydrators->offsetSet($hydrator);
 		}
 	}
 

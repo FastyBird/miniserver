@@ -54,7 +54,7 @@ final class Consumers
 
 	public function append(Consumer $consumer): void
 	{
-		$this->consumers->attach($consumer);
+		$this->consumers->offsetSet($consumer);
 
 		$this->logger->debug(
 			'Appended new messages consumer',

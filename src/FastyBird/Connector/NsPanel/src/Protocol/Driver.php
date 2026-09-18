@@ -61,7 +61,7 @@ class Driver
 			}
 		}
 
-		$this->devices->attach($device);
+		$this->devices->offsetSet($device);
 	}
 
 	/**
