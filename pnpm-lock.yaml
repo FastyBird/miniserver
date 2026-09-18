@@ -85,8 +85,8 @@ importers:
         specifier: ^11.2
         version: 11.2.5(eslint@9.39.5(jiti@2.6.1))(rollup@4.63.1)(typescript@5.6.2)(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))(vue-i18n@10.0.8(vue@3.5.42(typescript@5.6.2)))(vue@3.5.42(typescript@5.6.2))
       '@nabla/vite-plugin-eslint':
-        specifier: ^2.0
-        version: 2.0.6(eslint@9.39.5(jiti@2.6.1))(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))
+        specifier: ^3.0
+        version: 3.0.1(eslint@9.39.5(jiti@2.6.1))(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^6.0
         version: 6.0.2(@vue/compiler-sfc@3.5.42)(prettier@3.9.6)
@@ -931,11 +931,11 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
 
-  '@nabla/vite-plugin-eslint@2.0.6':
-    resolution: {integrity: sha512-QQZwq7aTx2WtG2/c2ASF+amNAytbLY8LYYc71bECIMzRr7Y7Cx3o6oAQrcb1qQbq2+z2S2rq7i7o5LTskQi8sA==}
+  '@nabla/vite-plugin-eslint@3.0.1':
+    resolution: {integrity: sha512-iN7WF0izOiPhJaOGzKaNzGEvBSX5WuHA2eRPqo+cGfTsWd/DTWCAur0Jkm/8Fq0sqIB48RTOO3T+VFfRaCIt/w==}
     peerDependencies:
-      eslint: ^8.45 || ^9
-      vite: ^4 || ^5 || ^6 || ^7
+      eslint: ^9 || ^10
+      vite: ^4 || ^5 || ^6 || ^7 || ^8
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     resolution: {integrity: sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ==}
@@ -3850,7 +3850,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@nabla/vite-plugin-eslint@2.0.6(eslint@9.39.5(jiti@2.6.1))(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))':
+  '@nabla/vite-plugin-eslint@3.0.1(eslint@9.39.5(jiti@2.6.1))(vite@6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0))':
     dependencies:
       '@types/eslint': 9.6.1
       chalk: 4.1.2
