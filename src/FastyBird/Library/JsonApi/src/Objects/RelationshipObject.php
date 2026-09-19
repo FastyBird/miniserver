@@ -64,10 +64,7 @@ class RelationshipObject implements IRelationshipObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_DATA);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getData()
+	public function getData(): IResourceIdentifierCollection|IResourceIdentifierObject|null
 	{
 		if ($this->isHasMany()) {
 			return $this->getIdentifiers();

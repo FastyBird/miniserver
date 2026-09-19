@@ -90,10 +90,7 @@ class LinkObjectCollection implements ILinkObjectCollection
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function add($link, string $key): void
+	public function add(ILinkObject|string $link, string $key): void
 	{
 		if (!$this->has($key)) {
 			$this->stack[$key] = $link;
@@ -105,10 +102,7 @@ class LinkObjectCollection implements ILinkObjectCollection
 		return array_key_exists($key, $this->stack);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function get(string $key)
+	public function get(string $key): string|ILinkObject
 	{
 		if (!$this->has($key)) {
 			throw new Exceptions\Runtime(sprintf('Link member "%s" is not present.', $key));

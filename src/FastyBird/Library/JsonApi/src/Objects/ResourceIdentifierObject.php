@@ -61,10 +61,7 @@ class ResourceIdentifierObject implements IResourceIdentifierObject
 		return $this->type;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isType($typeOrTypes): bool
+	public function isType(string|array $typeOrTypes): bool
 	{
 		return in_array($this->type, is_array($typeOrTypes) ? $typeOrTypes : [$typeOrTypes], true);
 	}

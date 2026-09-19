@@ -40,7 +40,7 @@ interface IRelationshipObject
 	/**
 	 * @phpstan-return IResourceIdentifierCollection<int, IResourceIdentifierObject>|IResourceIdentifierObject|null
 	 */
-	public function getData(): IResourceIdentifierCollection;
+	public function getData(): IResourceIdentifierCollection|IResourceIdentifierObject|null;
 
 	public function hasMeta(): bool;
 

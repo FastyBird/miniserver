@@ -33,10 +33,7 @@ class MetaObject implements IMetaObject
 	{
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getValue()
+	public function getValue(): string|int|float|bool|array
 	{
 		return $this->value;
 	}

@@ -39,10 +39,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 		$this->proxy = $proxy ?? new stdClass();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function get(string $key, $default = null)
+	public function get(string $key, mixed $default = null): string|int|float|bool|array|self|null
 	{
 		return Obj::get($this->proxy, $key, $default);
 	}
@@ -50,7 +47,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getMany(...$keys): array
+	public function getMany(string|array ...$keys): array
 	{
 		$values = [];
 
@@ -61,10 +58,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 		return $values;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function set(string $key, $value): IStandardObject
+	public function set(string $key, mixed $value): IStandardObject
 	{
 		$this->proxy->{$key} = $value;
 
@@ -97,7 +91,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
-	public function hasAny(...$keys): bool
+	public function hasAny(array ...$keys): bool
 	{
 		foreach ($this->normalizeKeys($keys) as $key) {
 			if ($this->has($key)) {
@@ -124,7 +118,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
-	public function remove(...$keys): IStandardObject
+	public function remove(array ...$keys): IStandardObject
 	{
 		foreach ($this->normalizeKeys($keys) as $key) {
 			unset($this->proxy->{$key});

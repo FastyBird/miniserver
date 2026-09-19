@@ -89,10 +89,7 @@ class Document implements IDocument
 		return Objects\ResourceObjectCollection::create($data->getAll());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getData()
+	public function getData(): Objects\IStandardObject|Objects\IStandardObjectCollection|null
 	{
 		if (!$this->data->has(self::KEYWORD_DATA)) {
 			throw new Exceptions\Runtime('Data member is not present.');

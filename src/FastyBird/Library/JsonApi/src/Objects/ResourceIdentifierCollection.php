@@ -126,10 +126,7 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 		return $this->stack === [];
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isOnly($typeOrTypes): bool
+	public function isOnly(string|array $typeOrTypes): bool
 	{
 		foreach ($this->stack as $identifier) {
 			if (!$identifier->isType($typeOrTypes)) {
@@ -140,10 +137,7 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 		return true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function map(array|null $typeMap = null)
+	public function map(array|null $typeMap = null): mixed
 	{
 		$ret = [];
 
