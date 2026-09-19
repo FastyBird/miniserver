@@ -37,7 +37,7 @@
     "fastybird/exchange": "@dev",
     "fastybird/metadata-library": "@dev",
     "fastybird/tools": "@dev",
-    "ipub/websockets-wamp": "^1.4",
+    "fastybird/websockets-library": "@dev",
     "nette/di": "^3.2",
     "nette/utils": "^4.0",
     "psr/event-dispatcher": "^1.0",

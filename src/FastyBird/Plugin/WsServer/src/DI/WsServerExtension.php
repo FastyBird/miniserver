@@ -17,11 +17,11 @@ namespace FastyBird\Plugin\WsServer\DI;
 
 use FastyBird\Core\Application\Boot as ApplicationBoot;
 use FastyBird\Core\Exchange\Exchange as ExchangeExchange;
+use FastyBird\Library\WebSockets;
 use FastyBird\Plugin\WsServer\Commands;
 use FastyBird\Plugin\WsServer\Events;
 use FastyBird\Plugin\WsServer\Exceptions;
 use FastyBird\Plugin\WsServer\Subscribers;
-use IPub\WebSockets;
 use Nette;
 use Nette\Bootstrap;
 use Nette\DI;

@@ -23,13 +23,13 @@ use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\Core\Tools\Utilities as ToolsUtilities;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\WebSockets;
+use FastyBird\Library\WebSockets\Wamp;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models as UiModels;
-use IPub\WebSockets;
-use IPub\WebSocketsWAMP;
 use Nette\Utils;
 use Throwable;
 use function array_merge;
@@ -67,7 +67,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 		private readonly UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
 		private readonly DevicesModuleUiModule\Logger $logger,
 		private readonly WebSockets\Router\LinkGenerator $linkGenerator,
-		private readonly WebSocketsWAMP\Topics\IStorage $topicsStorage,
+		private readonly Wamp\Topics\IStorage $topicsStorage,
 	)
 	{
 	}

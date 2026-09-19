@@ -128,6 +128,7 @@
                 <element key="src/FastyBird/Library/Metadata/tests/cases/unit" value="FastyBird\Library\Metadata\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Library/Metadata/tests/fixtures" value="FastyBird\Library\Metadata\Tests\Fixtures"/>
                 <element key="src/FastyBird/Library/Metadata/tests/fixtures/dummy" value="FastyBird\Library\Metadata\Tests\Fixtures\Dummy"/>
+                <element key="src/FastyBird/Library/WebSockets/src" value="FastyBird\Library\WebSockets"/>
 
                 <element key="src/FastyBird/Module/Accounts/src" value="FastyBird\Module\Accounts"/>
                 <element key="src/FastyBird/Module/Accounts/tests/cases/unit" value="FastyBird\Module\Accounts\Tests\Cases\Unit"/>
@@ -200,5 +201,11 @@
         <!--Modules -->
         <exclude-pattern>src/FastyBird/Module/Devices/src/Entities/Property\.php</exclude-pattern>
         <exclude-pattern>src/FastyBird/Module/Devices/src/Subscribers/StateEntities\.php</exclude-pattern>
+    </rule>
+
+    <!-- A pre-Nette-4.0 Nette\PhpGenerator\Literal rename guard: a conditional class_alias()
+         ahead of the extension class declaration. Behaviour-preserving, kept as absorbed. -->
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>src/FastyBird/Library/WebSockets/src/DI/WebSocketsExtension\.php</exclude-pattern>
     </rule>
 </ruleset>

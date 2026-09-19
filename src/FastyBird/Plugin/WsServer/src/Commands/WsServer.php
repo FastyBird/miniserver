@@ -18,8 +18,8 @@ namespace FastyBird\Plugin\WsServer\Commands;
 use FastyBird\Core\Exchange\Exchange as ExchangeExchange;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\WebSockets;
 use FastyBird\Plugin\WsServer\Events;
-use IPub\WebSockets;
 use Nette;
 use Psr\EventDispatcher;
 use Psr\Log;
@@ -116,7 +116,7 @@ final class WsServer extends Console\Command\Command
 
 			$this->eventLoop->run();
 
-		} catch (WebSockets\Exceptions\TerminateException $ex) {
+		} catch (WebSockets\Exceptions\Terminate $ex) {
 			// Log error action reason
 			$this->logger->error(
 				'WS server was forced to close',

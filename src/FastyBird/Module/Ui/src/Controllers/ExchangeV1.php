@@ -19,6 +19,8 @@ use FastyBird\Core\Application\Documents as ApplicationDocuments;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\WebSockets;
+use FastyBird\Library\WebSockets\Wamp;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Events;
@@ -26,8 +28,6 @@ use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Types;
-use IPub\WebSockets;
-use IPub\WebSocketsWAMP;
 use Nette\Utils;
 use Psr\EventDispatcher;
 use Throwable;
@@ -56,11 +56,11 @@ final class ExchangeV1 extends WebSockets\Application\Controller\Controller
 	}
 
 	/**
-	 * @param WebSocketsWAMP\Entities\Topics\ITopic<mixed> $topic
+	 * @param Wamp\Entities\Topics\ITopic<mixed> $topic
 	 */
 	public function actionSubscribe(
-		WebSocketsWAMP\Entities\Clients\IClient $client,
-		WebSocketsWAMP\Entities\Topics\ITopic $topic,
+		Wamp\Entities\Clients\IClient $client,
+		Wamp\Entities\Topics\ITopic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -80,7 +80,7 @@ final class ExchangeV1 extends WebSockets\Application\Controller\Controller
 
 			foreach ($dataSources as $dataSource) {
 				$client->send(Utils\Json::encode([
-					WebSocketsWAMP\Application\Application::MSG_EVENT,
+					Wamp\Application\Application::MSG_EVENT,
 					$topic->getId(),
 					Utils\Json::encode([
 						'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -103,7 +103,7 @@ final class ExchangeV1 extends WebSockets\Application\Controller\Controller
 
 	/**
 	 * @param array<string, mixed> $args
-	 * @param WebSocketsWAMP\Entities\Topics\ITopic<mixed> $topic
+	 * @param Wamp\Entities\Topics\ITopic<mixed> $topic
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
@@ -115,8 +115,8 @@ final class ExchangeV1 extends WebSockets\Application\Controller\Controller
 	 */
 	public function actionCall(
 		array $args,
-		WebSocketsWAMP\Entities\Clients\IClient $client,
-		WebSocketsWAMP\Entities\Topics\ITopic $topic,
+		Wamp\Entities\Clients\IClient $client,
+		Wamp\Entities\Topics\ITopic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -163,8 +163,8 @@ final class ExchangeV1 extends WebSockets\Application\Controller\Controller
 	 * @throws Utils\JsonException
 	 */
 	private function handleDataSourceAction(
-		WebSocketsWAMP\Entities\Clients\IClient $client,
-		WebSocketsWAMP\Entities\Topics\ITopic $topic,
+		Wamp\Entities\Clients\IClient $client,
+		Wamp\Entities\Topics\ITopic $topic,
 		Documents\Widgets\DataSources\Actions\Action $entity,
 	): void
 	{
@@ -187,7 +187,7 @@ final class ExchangeV1 extends WebSockets\Application\Controller\Controller
 			$this->dispatcher?->dispatch(new Events\ActionCommandReceived($entity, $dataSource));
 
 			$client->send(Utils\Json::encode([
-				WebSocketsWAMP\Application\Application::MSG_EVENT,
+				Wamp\Application\Application::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,

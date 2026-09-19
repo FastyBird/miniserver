@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\WsServer\Events;
 
-use IPub\WebSockets;
+use FastyBird\Library\WebSockets;
 
 /**
  * WS client sent message event
