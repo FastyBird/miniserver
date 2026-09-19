@@ -261,10 +261,6 @@ All open questions are now resolved.
 | `Application/Router`, `WebSockets/Router`, `SlimRouter/Routing`, `WebServer/Router` | `Core\Routing\<Domain>\` |
 | `SimpleAuth/Security`, `SimpleAuth/Access` | `Core\Security\<Domain>\` |
 | `Application/Boot` | `Core\Boot` (one, not domain-tagged — D5) |
-| `Application/Caching` | `Core\Caching\Application\` |
-| `Application/EventLoop` | `Core\EventLoop\Application\` |
-| `Application/Presenters` | `Core\Presenters\Application\` |
-| `Application/UI` | `Core\UI\Application\` (content not reviewed — open question 4) |
 | `SimpleAuth/Latte` (`AccessExtension.php` + `Nodes/`, a Latte macro extension for template-level access checks) | `Core\Latte\SimpleAuth\` |
 | `DoctrineTimestampable/Providers` (`DateProvider.php`, the injectable "current time" source for timestampable entities) | `Core\Providers\DoctrineTimestampable\` |
 | `Application/Caching` (`MemoryAdapterStorage.php`, `MemoryStorage.php`) | `Core\Caching\Application\` |
