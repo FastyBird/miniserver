@@ -23,9 +23,9 @@ importers:
       '@fastybird/tools':
         specifier: workspace:*
         version: link:src/FastyBird/Core/Tools
-      '@fastybird/vue-wamp-v1':
-        specifier: ^1.2
-        version: 1.2.3(vue@3.5.42(typescript@6.0.3))
+      '@fastybird/websockets-library':
+        specifier: workspace:*
+        version: link:src/FastyBird/Library/WebSockets
       '@iconify/iconify':
         specifier: ^3.1
         version: 3.1.1
@@ -195,9 +195,9 @@ importers:
       '@fastybird/tools':
         specifier: workspace:*
         version: link:../../Core/Tools
-      '@fastybird/vue-wamp-v1':
-        specifier: ^1.2
-        version: 1.2.3(vue@3.5.42(typescript@6.0.3))
+      '@fastybird/websockets-library':
+        specifier: workspace:*
+        version: link:../../Library/WebSockets
       '@iconify/vue':
         specifier: ^5
         version: 5.0.1(vue@3.5.42(typescript@6.0.3))
@@ -242,6 +242,8 @@ importers:
         version: 3.0.1
 
   src/FastyBird/Library/Metadata: {}
+
+  src/FastyBird/Library/WebSockets: {}
 
   src/FastyBird/Module/Accounts:
     dependencies:
@@ -308,9 +310,9 @@ importers:
       '@fastybird/tools':
         specifier: workspace:*
         version: link:../../Core/Tools
-      '@fastybird/vue-wamp-v1':
-        specifier: ^1.2
-        version: 1.2.3(vue@3.5.42(typescript@6.0.3))
+      '@fastybird/websockets-library':
+        specifier: workspace:*
+        version: link:../../Library/WebSockets
       '@iconify/vue':
         specifier: ^5
         version: 5.0.1(vue@3.5.42(typescript@6.0.3))
@@ -361,9 +363,9 @@ importers:
       '@fastybird/metadata-library':
         specifier: workspace:*
         version: link:../../Library/Metadata
-      '@fastybird/vue-wamp-v1':
-        specifier: ^1.2
-        version: 1.2.3(vue@3.5.42(typescript@6.0.3))
+      '@fastybird/websockets-library':
+        specifier: workspace:*
+        version: link:../../Library/WebSockets
       '@vueuse/core':
         specifier: ^11.2
         version: 11.3.0(vue@3.5.42(typescript@6.0.3))
@@ -783,12 +785,6 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@fastybird/vue-wamp-v1@1.2.3':
-    resolution: {integrity: sha512-JIki7MRTjlukomK0y1D7MroyXzXYgjpklcoA4mT6z5USXeCxHX/dknzY0FWH9LPxcSiwZRYYi5vb0gsjbWWQjA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      vue: ^3.2
 
   '@floating-ui/core@1.8.0':
     resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
@@ -3749,10 +3745,6 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
-
-  '@fastybird/vue-wamp-v1@1.2.3(vue@3.5.42(typescript@6.0.3))':
-    dependencies:
-      vue: 3.5.42(typescript@6.0.3)
 
   '@floating-ui/core@1.8.0':
     dependencies:

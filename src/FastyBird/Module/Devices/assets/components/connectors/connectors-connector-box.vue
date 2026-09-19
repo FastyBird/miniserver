@@ -241,7 +241,7 @@ import { I18nT, useI18n } from 'vue-i18n';
 import { ElButton, ElCard, ElDivider, ElDropdown, ElDropdownItem, ElDropdownMenu, ElIcon, ElTag, ElText, useNamespace } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/vue-wamp-v1';
+import { useWampV1Client } from '@fastybird/websockets-library';
 import { Icon } from '@iconify/vue';
 
 import { useConnectorState } from '../../composables';

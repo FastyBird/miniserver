@@ -5,7 +5,7 @@ import { Router } from 'vue-router';
 
 import { Pinia } from 'pinia';
 
-import { Client } from '@fastybird/vue-wamp-v1';
+import { Client } from '@fastybird/websockets-library';
 
 import {
 	IChannelDetailProps,

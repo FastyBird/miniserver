@@ -42,7 +42,7 @@
     "@fastybird/homekit-connector": "workspace:*",
     "@fastybird/metadata-library": "workspace:*",
     "@fastybird/tools": "workspace:*",
-    "@fastybird/vue-wamp-v1": "^1.2",
+    "@fastybird/websockets-library": "workspace:*",
     "@iconify/iconify": "^3.1",
     "@iconify/vue": "^5",
     "@unhead/vue": "^3.4",

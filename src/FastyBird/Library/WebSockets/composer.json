@@ -2,15 +2,16 @@
   "name": "fastybird/websockets-library",
   "type": "library",
   "description": "Extension for implementing WebSockets and WAMP protocol server into Nette Framework",
-  "license": [
-    "GPL-2.0",
-    "GPL-3.0"
-  ],
+  "license": "Apache-2.0",
   "authors": [
     {
-      "name": "iPublikuj:cms",
-      "email": "info@ipublikuj.eu",
-      "homepage": "https://www.ipublikuj.eu/"
+      "name": "FastyBird s.r.o.",
+      "email": "code@fastybird.com",
+      "homepage": "https://www.fastybird.com"
+    },
+    {
+      "name": "Adam Kadlec",
+      "email": "adam.kadlec@fastybird.com"
     }
   ],
   "require": {

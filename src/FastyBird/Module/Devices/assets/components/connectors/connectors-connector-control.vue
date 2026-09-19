@@ -71,7 +71,7 @@ import { useRoute } from 'vue-router';
 import { ElButton, ElDivider } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/vue-wamp-v1';
+import { useWampV1Client } from '@fastybird/websockets-library';
 import { Icon } from '@iconify/vue';
 
 import { useConnectorState, useRoutesNames } from '../../composables';

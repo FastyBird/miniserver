@@ -43,7 +43,7 @@
     "@fastybird/devices-module": "workspace:*",
     "@fastybird/metadata-library": "workspace:*",
     "@fastybird/tools": "workspace:*",
-    "@fastybird/vue-wamp-v1": "^1.2",
+    "@fastybird/websockets-library": "workspace:*",
     "@iconify/vue": "^5",
     "lodash.defaultsdeep": "^4.6",
     "lodash.get": "^4.4",

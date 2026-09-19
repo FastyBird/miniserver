@@ -146,7 +146,7 @@ import { ElCol, ElRow, ElTag, ElText } from 'element-plus';
 
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import { ConnectionState, IConnectorDetailProps, IConnectorProperty, useConnectorState } from '@fastybird/devices-module';
-import { useWampV1Client } from '@fastybird/vue-wamp-v1';
+import { useWampV1Client } from '@fastybird/websockets-library';
 
 import { ConnectorPropertyIdentifier } from '../types';
 

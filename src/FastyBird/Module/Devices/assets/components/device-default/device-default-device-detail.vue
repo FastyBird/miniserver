@@ -100,7 +100,7 @@ import { I18nT, useI18n } from 'vue-i18n';
 
 import { ElTag, ElText } from 'element-plus';
 
-import { useWampV1Client } from '@fastybird/vue-wamp-v1';
+import { useWampV1Client } from '@fastybird/websockets-library';
 
 import { useDeviceState } from '../../composables';
 import { ConnectionState, DevicePropertyIdentifier, IDeviceDetailProps, IDeviceProperty, PropertyType, StateColor } from '../../types';

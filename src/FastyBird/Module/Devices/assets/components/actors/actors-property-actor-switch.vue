@@ -41,7 +41,7 @@ import get from 'lodash.get';
 
 import { DataType, ModulePrefix, SwitchPayload } from '@fastybird/metadata-library';
 import { useFlashMessage } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/vue-wamp-v1';
+import { useWampV1Client } from '@fastybird/websockets-library';
 import { Icon } from '@iconify/vue';
 
 import { useDeviceState, useNormalizeValue } from '../../composables';
