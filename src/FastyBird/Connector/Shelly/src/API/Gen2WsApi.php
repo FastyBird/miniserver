@@ -206,14 +206,7 @@ final class Gen2WsApi
 			);
 		}
 
-		// PRE-EXISTING DEFECT, tracked for a follow-up fix: ratchet/rfc6455 v0.4.1 requires a
-		// RequestFactoryInterface here, so this call throws ArgumentCountError at runtime.
-		// The frozen code targets rfc6455 0.3.x, whose constructor had no required argument;
-		// ratchet/pawl permits ^0.3.1 || ^0.4.0 and no lock file was committed until now, so a
-		// fresh resolve selected 0.4.1. Not fixed here: this phase must not change behaviour or
-		// dependency constraints.
-		// @phpstan-ignore arguments.count (see the note above)
-		$negotiator = new RFC6455\Handshake\ClientNegotiator();
+		$negotiator = new RFC6455\Handshake\ClientNegotiator(new gPsr\HttpFactory());
 
 		$url = 'ws://' . $address . '/rpc';
 
