@@ -1,0 +1,41 @@
+{
+  "name": "@fastybird/websockets-library",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "FastyBird IoT WAMPv1 websockets client for Vue 3",
+  "keywords": [
+    "fastybird",
+    "fb",
+    "libs",
+    "library",
+    "ws",
+    "wamp",
+    "websocket",
+    "websockets",
+    "sockets",
+    "vue",
+    "vue3",
+    "realtime"
+  ],
+  "homepage": "https://www.fastybird.com",
+  "bugs": "https://github.com/FastyBird/miniserver/issues",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "FastyBird s.r.o.",
+    "email": "code@fastybird.com",
+    "url": "https://www.fastybird.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FastyBird/miniserver.git"
+  },
+  "exports": {
+    ".": "./assets/entry.ts"
+  },
+  "types": "./assets/entry.ts",
+  "sideEffects": true,
+  "peerDependencies": {
+    "vue": "^3.5"
+  }
+}

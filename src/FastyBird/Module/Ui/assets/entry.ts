@@ -5,7 +5,7 @@ import get from 'lodash.get';
 import 'virtual:uno.css';
 
 import { ModulePrefix } from '@fastybird/metadata-library';
-import { wampClient } from '@fastybird/vue-wamp-v1';
+import { wampClient } from '@fastybird/websockets-library';
 
 import { useFlashMessage } from './composables';
 import { configurationKey, metaKey } from './configuration';

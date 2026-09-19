@@ -41,7 +41,7 @@
     "@fastybird/application": "workspace:*",
     "@fastybird/metadata-library": "workspace:*",
     "@fastybird/tools": "workspace:*",
-    "@fastybird/vue-wamp-v1": "^1.2",
+    "@fastybird/websockets-library": "workspace:*",
     "@iconify/vue": "^5",
     "ajv": "^8.17",
     "ajv-formats": "^3.0",

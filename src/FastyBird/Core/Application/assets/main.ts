@@ -8,7 +8,7 @@ import 'virtual:uno.css';
 
 import { extensions } from '@config/extensions';
 import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, storesPlugin } from '@fastybird/tools';
-import { createWampV1Client } from '@fastybird/vue-wamp-v1';
+import { createWampV1Client } from '@fastybird/websockets-library';
 import { addCollection } from '@iconify/vue';
 import { createHead } from '@unhead/vue/client';
 

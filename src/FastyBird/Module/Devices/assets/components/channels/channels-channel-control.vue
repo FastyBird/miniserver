@@ -50,7 +50,7 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElDropdownItem, ElDropdownMenu } from 'element-plus';
 
 import { useBreakpoints } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/vue-wamp-v1';
+import { useWampV1Client } from '@fastybird/websockets-library';
 import { Icon } from '@iconify/vue';
 
 import { useChannelRoutes } from '../../composables';

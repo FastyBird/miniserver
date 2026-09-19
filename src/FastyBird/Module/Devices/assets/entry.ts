@@ -6,7 +6,7 @@ import 'virtual:uno.css';
 
 import { ModulePrefix } from '@fastybird/metadata-library';
 import { IExtensionOptions, injectStoresManager, useFlashMessage } from '@fastybird/tools';
-import { wampClient } from '@fastybird/vue-wamp-v1';
+import { wampClient } from '@fastybird/websockets-library';
 
 import {
 	channelControlsStoreKey,

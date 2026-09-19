@@ -9,7 +9,7 @@ import isEqual from 'lodash.isequal';
 import { v4 as uuid } from 'uuid';
 
 import { ModulePrefix } from '@fastybird/metadata-library';
-import { useWampV1Client } from '@fastybird/vue-wamp-v1';
+import { useWampV1Client } from '@fastybird/websockets-library';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.widget.dataSource.json';
 import { ApiError } from '../../errors';
