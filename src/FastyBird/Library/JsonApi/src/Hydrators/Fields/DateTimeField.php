@@ -16,7 +16,7 @@
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
 use DateTimeInterface;
-use IPub\JsonAPIDocument;
+use FastyBird\Library\JsonApi;
 use Nette\Utils;
 use function is_scalar;
 
@@ -43,9 +43,9 @@ final class DateTimeField extends Field
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 */
-	public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): DateTimeInterface|null
+	public function getValue(JsonApi\Objects\IStandardObject $attributes): DateTimeInterface|null
 	{
 		$value = $attributes->get($this->getMappedName());
 

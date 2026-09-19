@@ -15,7 +15,7 @@
 
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
-use IPub\JsonAPIDocument;
+use FastyBird\Library\JsonApi;
 
 /**
  * Entity mixed value field
@@ -40,9 +40,9 @@ final class MixedField extends Field
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 */
-	public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): mixed
+	public function getValue(JsonApi\Objects\IStandardObject $attributes): mixed
 	{
 		return $attributes->get($this->getMappedName());
 	}

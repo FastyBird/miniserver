@@ -2,10 +2,10 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Ramsey\Uuid;
 use function is_scalar;
 use function strval;
@@ -29,7 +29,7 @@ final class DummyActionHydrator extends Hydrators\Actions\Action
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateDoItemAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (

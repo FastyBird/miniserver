@@ -21,6 +21,7 @@ use Exception;
 use FastyBird\Core\Application\Documents as ApplicationDocuments;
 use FastyBird\Library\DoctrineCrud;
 use FastyBird\Library\DoctrineOrmQuery\ResultSet;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Builder as JsonApiBuilder;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
@@ -29,7 +30,6 @@ use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Router;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette;
 use Nette\Localization;
 use Nette\Utils;
@@ -135,7 +135,7 @@ abstract class BaseV1
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws RuntimeException
 	 */
-	protected function createDocument(Message\ServerRequestInterface $request): JsonAPIDocument\IDocument
+	protected function createDocument(Message\ServerRequestInterface $request): JsonApi\IDocument
 	{
 		try {
 			$content = Utils\Json::decode($request->getBody()->getContents());
@@ -148,7 +148,7 @@ abstract class BaseV1
 				);
 			}
 
-			$document = new JsonAPIDocument\Document($content);
+			$document = new JsonApi\Document($content);
 
 		} catch (Utils\JsonException) {
 			throw new JsonApiExceptions\JsonApiError(
@@ -156,7 +156,7 @@ abstract class BaseV1
 				strval($this->translator->translate('//devices-module.base.messages.notValidJson.heading')),
 				strval($this->translator->translate('//devices-module.base.messages.notValidJson.message')),
 			);
-		} catch (JsonAPIDocument\Exceptions\RuntimeException) {
+		} catch (JsonApi\Exceptions\Runtime) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//devices-module.base.messages.notValidJsonApi.heading')),
@@ -172,7 +172,7 @@ abstract class BaseV1
 	 */
 	protected function validateIdentifier(
 		Message\ServerRequestInterface $request,
-		JsonAPIDocument\IDocument $document,
+		JsonApi\IDocument $document,
 	): bool
 	{
 		if (

@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Triggers\Hydrators\Notifications;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Schemas;
-use IPub\JsonAPIDocument;
 use function is_scalar;
 
 /**
@@ -39,7 +39,7 @@ abstract class Notification extends JsonApiHydrators\Hydrator
 		Schemas\Notifications\Notification::RELATIONSHIPS_TRIGGER,
 	];
 
-	protected function hydrateEnabledAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): bool
+	protected function hydrateEnabledAttribute(JsonApi\Objects\IStandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('enabled')) && (bool) $attributes->get('enabled');
 	}

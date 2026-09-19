@@ -16,8 +16,8 @@
 namespace FastyBird\Library\JsonApi\Hydrators;
 
 use FastyBird\Library\JsonApi\Exceptions;
+use FastyBird\Library\JsonApi\IDocument;
 use FastyBird\Library\JsonApi\JsonApi;
-use IPub\JsonAPIDocument;
 use Nette\DI;
 use Psr\Log;
 use SplObjectStorage;
@@ -57,7 +57,7 @@ class Container
 	 * @throws DI\MissingServiceException
 	 * @throws Exceptions\InvalidState
 	 */
-	public function findHydrator(JsonAPIDocument\IDocument $document): Hydrator|null
+	public function findHydrator(IDocument $document): Hydrator|null
 	{
 		$this->hydrators->rewind();
 

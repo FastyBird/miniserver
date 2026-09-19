@@ -15,7 +15,7 @@
 
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
-use IPub\JsonAPIDocument;
+use FastyBird\Library\JsonApi;
 
 /**
  * Entity boolean field
@@ -40,9 +40,9 @@ final class BooleanField extends Field
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 */
-	public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): bool|null
+	public function getValue(JsonApi\Objects\IStandardObject $attributes): bool|null
 	{
 		$value = $attributes->get($this->getMappedName());
 

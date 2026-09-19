@@ -21,9 +21,9 @@ use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -51,13 +51,13 @@ final class Configuration extends VirtualHydrators\Channels\Channel
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 		VirtualEntities\Channels\Channel|null $entity,
 	): Entities\Devices\Device
 	{
 		if (
-			$relationship->getData() instanceof JsonAPIDocument\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {

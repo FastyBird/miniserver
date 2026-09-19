@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Dashboards\Tabs;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
-use IPub\JsonAPIDocument;
 use function is_scalar;
 
 /**
@@ -51,7 +51,7 @@ final class Tab extends JsonApiHydrators\Hydrator
 		return Entities\Dashboards\Tabs\Tab::class;
 	}
 
-	protected function hydrateNameAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -63,7 +63,7 @@ final class Tab extends JsonApiHydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateCommentAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))

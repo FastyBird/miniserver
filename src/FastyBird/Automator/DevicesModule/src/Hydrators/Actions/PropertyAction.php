@@ -16,10 +16,10 @@
 namespace FastyBird\Automator\DevicesModule\Hydrators\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Ramsey\Uuid;
 use function is_bool;
 use function is_scalar;
@@ -52,7 +52,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -79,7 +79,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -105,7 +105,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateValueAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): string
 	{
 		if (

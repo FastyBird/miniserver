@@ -2,11 +2,11 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators;
 use FastyBird\Module\Triggers\Types;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Ramsey\Uuid;
 use function is_bool;
 use function is_scalar;
@@ -33,7 +33,7 @@ final class DummyConditionHydrator extends Hydrators\Conditions\Condition
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateWatchItemAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -59,7 +59,7 @@ final class DummyConditionHydrator extends Hydrators\Conditions\Condition
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateOperatorAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Types\ConditionOperator
 	{
 		// Condition operator have to be set
@@ -96,7 +96,7 @@ final class DummyConditionHydrator extends Hydrators\Conditions\Condition
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateOperandAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): string
 	{
 		if (

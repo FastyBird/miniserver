@@ -19,6 +19,7 @@ use Contributte\Translation;
 use Doctrine\Persistence;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Library\DoctrineCrud\Entities as DoctrineCrudEntities;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Library\JsonApi\JsonApi as JsonApiJsonApi;
@@ -28,7 +29,6 @@ use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette\DI;
 use Ramsey\Uuid;
 use function assert;
@@ -86,7 +86,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 		parent::__construct($managerRegistry, $translator);
 	}
 
-	protected function hydrateNameAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -106,8 +106,8 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDisplayRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasOne()) {
@@ -134,7 +134,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 */
 	private function buildDisplay(
 		string $type,
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 		string|null $identifier = null,
 	): array
 	{
@@ -279,8 +279,8 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDataSourcesRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 	): array
 	{
 		if ($included === null) {
@@ -339,8 +339,8 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateTabsRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasMany()) {
@@ -384,8 +384,8 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateGroupsRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasMany()) {

@@ -15,11 +15,11 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Accounts;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette\Localization;
 use Nette\Utils;
 use TypeError;
@@ -50,7 +50,7 @@ trait TAccount
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 */
-	protected function hydrateFirstNameAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): string
+	protected function hydrateFirstNameAttribute(JsonApi\Objects\IStandardObject $attributes): string
 	{
 		if (!$attributes->has('first_name') || !is_scalar($attributes->get('first_name'))) {
 			throw new JsonApiExceptions\JsonApiError(
@@ -69,7 +69,7 @@ trait TAccount
 	/**
 	 * @throws JsonApiExceptions\JsonApi
 	 */
-	protected function hydrateLastNameAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): string
+	protected function hydrateLastNameAttribute(JsonApi\Objects\IStandardObject $attributes): string
 	{
 		if (!$attributes->has('last_name') || !is_scalar($attributes->get('last_name'))) {
 			throw new JsonApiExceptions\JsonApiError(
@@ -85,7 +85,7 @@ trait TAccount
 		return (string) $attributes->get('last_name');
 	}
 
-	protected function hydrateMiddleNameAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): string|null
+	protected function hydrateMiddleNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
 	{
 		return $attributes->has('middle_name') && is_scalar(
 			$attributes->get('middle_name'),
@@ -96,12 +96,12 @@ trait TAccount
 	 * @throws JsonApiExceptions\JsonApiError
 	 */
 	protected function hydrateDetailsAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Utils\ArrayHash|null
 	{
 		if (
 			$attributes->has('details')
-			&& $attributes->get('details') instanceof JsonAPIDocument\Objects\IStandardObject
+			&& $attributes->get('details') instanceof JsonApi\Objects\IStandardObject
 		) {
 			$details = $attributes->get('details');
 
@@ -150,7 +150,7 @@ trait TAccount
 	}
 
 	protected function hydrateParamsAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Utils\ArrayHash
 	{
 		$params = Utils\ArrayHash::from([
@@ -166,7 +166,7 @@ trait TAccount
 
 		if (
 			$attributes->has('datetime')
-			&& $attributes->get('datetime') instanceof JsonAPIDocument\Objects\IStandardObject
+			&& $attributes->get('datetime') instanceof JsonApi\Objects\IStandardObject
 		) {
 			$datetime = $attributes->get('datetime');
 
@@ -194,7 +194,7 @@ trait TAccount
 	 * @throws ValueError
 	 */
 	protected function hydrateStateAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Types\AccountState
 	{
 		if (

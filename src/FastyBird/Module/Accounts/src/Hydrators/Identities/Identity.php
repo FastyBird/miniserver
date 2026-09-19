@@ -15,6 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Identities;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Accounts\Entities;
@@ -22,7 +23,6 @@ use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use function is_scalar;
 use function strval;
 
@@ -59,7 +59,7 @@ class Identity extends JsonApiHydrators\Hydrator
 	 * @throws JsonApiExceptions\JsonApiError
 	 */
 	protected function hydratePasswordAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Helpers\Password
 	{
 		if (!is_scalar($attributes->get('password'))) {

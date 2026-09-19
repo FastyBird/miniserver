@@ -15,12 +15,12 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use function is_scalar;
 use function strval;
 
@@ -50,7 +50,7 @@ abstract class Display extends JsonApiHydrators\Hydrator
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 */
-	protected function hydratePrecisionAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): int
+	protected function hydratePrecisionAttribute(JsonApi\Objects\IStandardObject $attributes): int
 	{
 		if (
 			!is_scalar($attributes->get('precision'))
@@ -72,7 +72,7 @@ abstract class Display extends JsonApiHydrators\Hydrator
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 */
-	protected function hydrateMinimumValueAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): float
+	protected function hydrateMinimumValueAttribute(JsonApi\Objects\IStandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('minimum_value'))
@@ -94,7 +94,7 @@ abstract class Display extends JsonApiHydrators\Hydrator
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 */
-	protected function hydrateMaximumValueAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): float
+	protected function hydrateMaximumValueAttribute(JsonApi\Objects\IStandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('maximum_value'))
@@ -116,7 +116,7 @@ abstract class Display extends JsonApiHydrators\Hydrator
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 */
-	protected function hydrateStepValueAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): float
+	protected function hydrateStepValueAttribute(JsonApi\Objects\IStandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('step_value'))

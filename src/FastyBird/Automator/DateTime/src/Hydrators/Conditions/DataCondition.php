@@ -17,10 +17,10 @@ namespace FastyBird\Automator\DateTime\Hydrators\Conditions;
 
 use DateTimeInterface;
 use FastyBird\Automator\DateTime\Entities;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette\Utils;
 use function is_scalar;
 use function strval;
@@ -52,7 +52,7 @@ final class DataCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateDateAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): DateTimeInterface
 	{
 		// Condition date have to be set

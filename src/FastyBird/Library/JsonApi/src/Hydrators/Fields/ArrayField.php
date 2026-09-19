@@ -15,7 +15,7 @@
 
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
-use IPub\JsonAPIDocument;
+use FastyBird\Library\JsonApi;
 
 /**
  * Entity array field
@@ -40,15 +40,15 @@ final class ArrayField extends Field
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 *
 	 * @return array<mixed>|null
 	 */
-	public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): array|null
+	public function getValue(JsonApi\Objects\IStandardObject $attributes): array|null
 	{
 		$value = $attributes->get($this->getMappedName());
 
-		if ($value instanceof JsonAPIDocument\Objects\IStandardObject) {
+		if ($value instanceof JsonApi\Objects\IStandardObject) {
 			return $value->toArray();
 		}
 

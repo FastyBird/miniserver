@@ -22,6 +22,7 @@ use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\DoctrineCrud;
 use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Library\DoctrineOrmQuery\ResultSet;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Builder as JsonApiBuilder;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
@@ -31,7 +32,6 @@ use FastyBird\Module\Accounts\Router;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette;
 use Nette\Localization;
 use Nette\Utils;
@@ -153,13 +153,13 @@ abstract class BaseV1
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws RuntimeException
 	 */
-	protected function createDocument(Message\ServerRequestInterface $request): JsonAPIDocument\IDocument
+	protected function createDocument(Message\ServerRequestInterface $request): JsonApi\IDocument
 	{
 		try {
 			$data = Utils\Json::decode($request->getBody()->getContents());
 			assert($data instanceof stdClass);
 
-			$document = new JsonAPIDocument\Document($data);
+			$document = new JsonApi\Document($data);
 
 		} catch (Utils\JsonException) {
 			throw new JsonApiExceptions\JsonApiError(
@@ -167,7 +167,7 @@ abstract class BaseV1
 				strval($this->translator->translate('//accounts-module.base.messages.notValidJson.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notValidJson.message')),
 			);
-		} catch (JsonAPIDocument\Exceptions\RuntimeException) {
+		} catch (JsonApi\Exceptions\Runtime) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//accounts-module.base.messages.notValidJsonApi.heading')),
@@ -183,7 +183,7 @@ abstract class BaseV1
 	 */
 	protected function validateIdentifier(
 		Message\ServerRequestInterface $request,
-		JsonAPIDocument\IDocument $document,
+		JsonApi\IDocument $document,
 	): bool
 	{
 		if (

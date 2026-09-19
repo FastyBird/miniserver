@@ -15,11 +15,11 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Types;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use TypeError;
 use ValueError;
 use function is_scalar;
@@ -52,7 +52,7 @@ final class GroupedButton extends Display
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	protected function hydrateIconAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): Types\WidgetIcon
+	protected function hydrateIconAttribute(JsonApi\Objects\IStandardObject $attributes): Types\WidgetIcon
 	{
 		if (
 			!is_scalar($attributes->get('icon'))

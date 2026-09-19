@@ -16,7 +16,7 @@
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
 use BackedEnum;
-use IPub\JsonAPIDocument;
+use FastyBird\Library\JsonApi;
 use function call_user_func;
 use function is_callable;
 
@@ -44,9 +44,9 @@ final class BackedEnumField extends Field
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 */
-	public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): BackedEnum|null
+	public function getValue(JsonApi\Objects\IStandardObject $attributes): BackedEnum|null
 	{
 		$value = $attributes->get($this->getMappedName());
 
