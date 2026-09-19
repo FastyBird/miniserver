@@ -19,9 +19,9 @@ use Doctrine\DBAL;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\WebSockets;
 use FastyBird\Plugin\WsServer;
 use FastyBird\Plugin\WsServer\Events;
-use IPub\WebSockets;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
 use function explode;
@@ -64,7 +64,7 @@ class Client implements EventDispatcher\EventSubscriberInterface
 	}
 
 	/**
-	 * @throws WebSockets\Exceptions\InvalidArgumentException
+	 * @throws WebSockets\Exceptions\InvalidArgument
 	 */
 	public function clientConnected(Events\ClientConnected $event): void
 	{
@@ -74,8 +74,8 @@ class Client implements EventDispatcher\EventSubscriberInterface
 	/**
 	 * @throws DBAL\Exception
 	 * @throws ToolsExceptions\InvalidState
-	 * @throws WebSockets\Exceptions\InvalidArgumentException
-	 * @throws WebSockets\Exceptions\TerminateException
+	 * @throws WebSockets\Exceptions\InvalidArgument
+	 * @throws WebSockets\Exceptions\Terminate
 	 */
 	public function incomingMessage(Events\IncomingMessage $event): void
 	{
@@ -86,7 +86,7 @@ class Client implements EventDispatcher\EventSubscriberInterface
 
 			// ...and ping again
 			if (!$this->database->ping()) {
-				throw new WebSockets\Exceptions\TerminateException(
+				throw new WebSockets\Exceptions\Terminate(
 					'Connection to database could not be re-established',
 				);
 			}
@@ -99,7 +99,7 @@ class Client implements EventDispatcher\EventSubscriberInterface
 	 * @param array<string> $allowedWsKeys
 	 * @param array<string> $allowedOrigins
 	 *
-	 * @throws WebSockets\Exceptions\InvalidArgumentException
+	 * @throws WebSockets\Exceptions\InvalidArgument
 	 */
 	public function checkSecurity(
 		WebSockets\Entities\Clients\IClient $client,
@@ -163,7 +163,7 @@ class Client implements EventDispatcher\EventSubscriberInterface
 	}
 
 	/**
-	 * @throws WebSockets\Exceptions\InvalidArgumentException
+	 * @throws WebSockets\Exceptions\InvalidArgument
 	 */
 	private function closeSession(WebSockets\Entities\Clients\IClient $client): void
 	{

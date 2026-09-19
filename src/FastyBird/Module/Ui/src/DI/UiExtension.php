@@ -310,7 +310,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * WEBSOCKETS CONTROLLERS
 		 */
 
-		if (class_exists('IPub\WebSockets\DI\WebSocketsExtension')) {
+		if (class_exists('FastyBird\Library\WebSockets\DI\WebSocketsExtension')) {
 			$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
 				->setType(Controllers\ExchangeV1::class)
 				->setArguments([
@@ -448,8 +448,8 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 */
 
 		if (
-			$builder->findByType('IPub\WebSockets\Router\LinkGenerator') !== []
-			&& $builder->findByType('IPub\WebSocketsWAMP\Topics\IStorage') !== []
+			$builder->findByType('FastyBird\Library\WebSockets\Router\LinkGenerator') !== []
+			&& $builder->findByType('FastyBird\Library\WebSockets\Wamp\Topics\IStorage') !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.socketsBridge'),
@@ -533,10 +533,10 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * WEBSOCKETS
 		 */
 
-		if (class_exists('IPub\WebSockets\DI\WebSocketsExtension')) {
+		if (class_exists('FastyBird\Library\WebSockets\DI\WebSocketsExtension')) {
 			try {
 				$wsControllerFactoryService = $builder->getDefinitionByType(
-					'IPub\WebSockets\Application\Controller\IControllerFactory',
+					'FastyBird\Library\WebSockets\Application\Controller\IControllerFactory',
 				);
 				assert($wsControllerFactoryService instanceof DI\Definitions\ServiceDefinition);
 
@@ -552,7 +552,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 				$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
 				assert($consumerService instanceof DI\Definitions\ServiceDefinition);
 
-				$wsServerService = $builder->getDefinitionByType('IPub\WebSockets\Server\Server');
+				$wsServerService = $builder->getDefinitionByType('FastyBird\Library\WebSockets\Server\Server');
 				assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
 
 				$wsServerService->addSetup(

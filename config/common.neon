@@ -27,8 +27,8 @@ extensions:
     ipubDoctrinePhone                               : FastyBird\Library\Phone\DI\DoctrinePhoneExtension
     ipubDoctrineCrud                                : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable                       : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    ipubWebsockets                                  : IPub\WebSockets\DI\WebSocketsExtension
-    ipubWebsocketsWamp                              : IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension
+    ipubWebsockets                                  : FastyBird\Library\WebSockets\DI\WebSocketsExtension
+    ipubWebsocketsWamp                              : FastyBird\Library\WebSockets\Wamp\DI\WebSocketsWAMPExtension
     # FastyBird libs
     fbDateTimeFactory                               : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                                    : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension

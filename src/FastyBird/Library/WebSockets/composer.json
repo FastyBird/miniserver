@@ -1,0 +1,36 @@
+{
+  "name": "fastybird/websockets-library",
+  "type": "library",
+  "description": "Extension for implementing WebSockets and WAMP protocol server into Nette Framework",
+  "license": [
+    "GPL-2.0",
+    "GPL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "iPublikuj:cms",
+      "email": "info@ipublikuj.eu",
+      "homepage": "https://www.ipublikuj.eu/"
+    }
+  ],
+  "require": {
+    "php": ">=8.4.0",
+    "ext-iconv": "*",
+    "ext-mbstring": "*",
+    "ext-simplexml": "*",
+    "fig/http-message-util": "^1.1",
+    "nette/bootstrap": "^3.2",
+    "nette/di": "^3.2",
+    "nette/http": "^3.2",
+    "nette/utils": "^4.0",
+    "psr/log": "^3.0",
+    "react/socket": "^1.15",
+    "symfony/serializer": "^6.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "FastyBird\\Library\\WebSockets\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}

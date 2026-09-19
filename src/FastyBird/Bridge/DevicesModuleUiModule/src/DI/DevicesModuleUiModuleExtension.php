@@ -147,8 +147,8 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 */
 
 		if (
-			$builder->findByType('IPub\WebSockets\Router\LinkGenerator') !== []
-			&& $builder->findByType('IPub\WebSocketsWAMP\Topics\IStorage') !== []
+			$builder->findByType('FastyBird\Library\WebSockets\Router\LinkGenerator') !== []
+			&& $builder->findByType('FastyBird\Library\WebSockets\Wamp\Topics\IStorage') !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.stateEntities'),
@@ -219,12 +219,12 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 * WEBSOCKETS
 		 */
 
-		if (class_exists('IPub\WebSockets\DI\WebSocketsExtension')) {
+		if (class_exists('FastyBird\Library\WebSockets\DI\WebSocketsExtension')) {
 			try {
 				$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
 				assert($consumerService instanceof DI\Definitions\ServiceDefinition);
 
-				$wsServerService = $builder->getDefinitionByType('IPub\WebSockets\Server\Server');
+				$wsServerService = $builder->getDefinitionByType('FastyBird\Library\WebSockets\Server\Server');
 				assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
 
 				$wsServerService->addSetup(

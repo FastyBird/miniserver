@@ -19,9 +19,9 @@ use FastyBird\Core\Application\Documents as ApplicationDocuments;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\WebSockets;
+use FastyBird\Library\WebSockets\Wamp;
 use FastyBird\Module\Devices;
-use IPub\WebSockets;
-use IPub\WebSocketsWAMP;
 use Nette\Utils;
 use Throwable;
 
@@ -39,7 +39,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 	public function __construct(
 		private Devices\Logger $logger,
 		private WebSockets\Router\LinkGenerator $linkGenerator,
-		private WebSocketsWAMP\Topics\IStorage $topicsStorage,
+		private Wamp\Topics\IStorage $topicsStorage,
 	)
 	{
 	}
