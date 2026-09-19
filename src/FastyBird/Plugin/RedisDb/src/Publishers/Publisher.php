@@ -19,7 +19,7 @@ use DateTimeInterface;
 use FastyBird\Core\Application\Documents as ApplicationDocuments;
 use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Utilities;

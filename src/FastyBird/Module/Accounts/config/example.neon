@@ -25,7 +25,7 @@ extensions:
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
     ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable           : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
+    fbDateTimeFactory                   : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
     fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
     fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
     fbWebServer                         : FastyBird\Plugin\WebServer\DI\WebServerExtension

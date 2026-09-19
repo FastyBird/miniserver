@@ -20,7 +20,7 @@ extensions:
     contributteTranslation              : Contributte\Translation\DI\TranslationExtension
     nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
     nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
-    fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
+    fbDateTimeFactory                   : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
     fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
 
 services:

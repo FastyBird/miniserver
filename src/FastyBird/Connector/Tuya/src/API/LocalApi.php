@@ -26,7 +26,7 @@ use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Schemas as ToolsSchemas;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use Nette;
 use Nette\Utils;

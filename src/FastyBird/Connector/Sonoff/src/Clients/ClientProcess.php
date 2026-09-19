@@ -21,7 +21,7 @@ use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;

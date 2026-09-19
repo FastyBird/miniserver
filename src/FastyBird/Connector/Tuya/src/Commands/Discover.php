@@ -23,7 +23,7 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;

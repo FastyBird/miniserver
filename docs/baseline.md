@@ -591,3 +591,25 @@ memory (`-d memory_limit=2G`) and reduced-parallelism (`-p6`/`--threads=6`)
 accommodation as Task 33's coverage/mutation commands; the Makefile's default `make
 mutations` recipe still OOMs at the stock 512M during the coverage-report merge step,
 unchanged from Task 33 and not this task's to fix.
+
+**`FastyBird/libraries-patches` retirement update (2026-09-19).** The 2026-09-12
+addendum above named `fastybird/json-api`, `fastybird/datetime-factory` and
+`fastybird/simple-auth` as the three packages still declaring the raw-URL `nette/utils`
+patch, and `fastybird/simple-auth` alone as the one still declaring the raw-URL
+`nettrine/orm` patch. That text is now stale, not wrong at the time it was written:
+`fastybird/json-api` and `fastybird/simple-auth` were both absorbed into this tree
+during the ORM 3 migration (`src/FastyBird/Library/JsonApi`, `src/FastyBird/Core/
+SimpleAuth`), which took their own patch declarations out of the dependency graph as a
+side effect, not a deliberate step toward this. `fastybird/datetime-factory` was the
+one remaining external consumer of the raw-URL `nette/utils` patch, and absorbing it
+(`src/FastyBird/Library/DateTimeFactory`) was done deliberately, specifically to clear
+this exit criterion.
+
+`grep -rl libraries-patches vendor/*/*/composer.json` now returns nothing --
+confirmed against a real `composer install`, not inferred from the manifests alone.
+`FastyBird/libraries-patches` is genuinely no longer needed at install time: the only
+patch that referenced it (`nette/utils`, "Offset check with null support") has applied
+from `tools/patches/nette-utils-array-offsetcheck.diff` all along, identical fix,
+confirmed by diffing the two. The repository is eligible for deletion now, not just in
+principle -- the "becomes removable only once ... absorbs those three libraries"
+condition the 2026-09-12 text set is met.

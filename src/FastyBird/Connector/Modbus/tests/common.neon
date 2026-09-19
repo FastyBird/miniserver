@@ -23,7 +23,7 @@ extensions:
     nettrineFixtures                    : Nettrine\Fixtures\DI\FixturesExtension
     ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable           : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
+    fbDateTimeFactory                   : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
     fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
     fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
     fbTools                             : FastyBird\Core\Tools\DI\ToolsExtension

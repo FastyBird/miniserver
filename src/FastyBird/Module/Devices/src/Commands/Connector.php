@@ -23,7 +23,7 @@ use FastyBird\Core\Exchange\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Exchange\Exchange as ExchangeExchange;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Connectors;

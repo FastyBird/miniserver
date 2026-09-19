@@ -4,7 +4,7 @@ namespace FastyBird\Plugin\RabbitMq\Tests\Cases\Unit\Publishers;
 
 use DateTime;
 use DateTimeInterface;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Publishers;

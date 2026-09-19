@@ -27,7 +27,7 @@ use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Exchange\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices\Constants as DevicesConstants;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;

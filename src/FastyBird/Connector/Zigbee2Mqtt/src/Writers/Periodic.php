@@ -25,7 +25,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
