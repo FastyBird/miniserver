@@ -173,12 +173,9 @@ whole `Http*` family (`Http`, `HttpMethodNotAllowed`, `HttpNotFound`, `HttpSpeci
 `BadResponse`, `BadSignal`, `ClientNotFound`, `ForbiddenRequest`, `InvalidController`,
 `InvalidLink`, `Storage`, `Terminate`, `WebSockets`' own `NotImplemented`).
 
-**Needs confirmation on spec review (not yet a closed decision):** `Core\Application\Exceptions\Mapping`
-(empty, `extends LogicException`) is behaviorally identical to what the shared `Logic` exception
-would be. Proposed default: eliminate `Mapping`, repoint its few call sites at the shared
-`Logic` exception. If a caller wants to catch "a mapping problem" specifically and not any
-logic error, `Mapping` should stay as a thin subclass of the shared `Logic` instead of being
-eliminated — Adam to confirm which.
+**Resolved:** `Core\Application\Exceptions\Mapping` (empty, `extends LogicException`) is
+eliminated. It was behaviorally identical to the shared `Logic` exception; its few call sites
+repoint at `Core\Exceptions\Logic` directly.
 
 ## 6. DI consolidation
 
@@ -227,21 +224,19 @@ far, so budget for this taking meaningfully longer than prior absorptions.
    spec) → `Encoding`; `WebServer/Application/Application.php` → confirmed Server-runtime code,
    moves to the `HttpServer` domain tag alongside `Server`/`Utils`, no real collision once its
    contents were read.
-2. **`Core\Application\Exceptions\Mapping`** — eliminate in favor of the shared `Logic`
-   exception, or keep as a thin subclass. Still open, needs Adam's call. See §5.
+2. ~~`Core\Application\Exceptions\Mapping`~~ — **resolved: eliminate it.** Call sites repoint
+   at the shared `Core\Exceptions\Logic`.
 3. **`NotImplemented`** stays as two separate exceptions (`DoctrineOrmQuery`'s and
-   `WebSockets`') since they have incompatible SPL parents — confirm this is acceptable rather
-   than picking one parent and changing the other's behavior. Still open.
+   `WebSockets`') since they have incompatible SPL parents — confirmed acceptable, not picking
+   one parent and changing the other's behavior.
 4. ~~Unreviewed one-off folders~~ — **resolved.** All ~15 read and placed in Appendix A with
    their actual contents noted.
-5. **New, surfaced while resolving #1:** the `Persistence` bucket was defined around
-   ORM/data-access concerns (`DoctrineCrud/Crud`, `SimpleAuth/Models`/`Queries`,
-   `Application/ObjectMapper`, `JsonApi/Hydrators`), but `Exchange/Consumers` and
-   `Exchange/Publisher` are message-bus plumbing, not data persistence — a different concern
-   that happens to share the word "data" loosely. Either give Exchange's slice its own
-   `Messaging` bucket, or confirm `Persistence` is meant more broadly as "how data moves through
-   the system" (matching both ORM access and message consuming/publishing). Needs a decision
-   before the plan locks in `Core\Persistence\Exchange\` vs `Core\Messaging\Exchange\`.
+5. ~~Exchange's `Consumers`/`Publisher` bucket~~ — **resolved: new `Messaging` bucket.**
+   `Core\Messaging\Exchange\` for `Consumers`/`Publisher`/`Factory`. `Persistence` keeps its
+   narrower ORM/data-access meaning (`DoctrineCrud`, `SimpleAuth` `Models`/`Queries`,
+   `Application/ObjectMapper`, `JsonApi/Hydrators`).
+
+All open questions are now resolved.
 
 ## Appendix A: current folder → new location (proposed)
 
@@ -287,8 +282,7 @@ far, so budget for this taking meaningfully longer than prior absorptions.
 | `WebSockets/Encoding`, `WebSockets/Protocols` | `Core\Encoding\WebSockets\` |
 | `WebServer/Server`, `WebServer/Utils` | `Core\<Type>\HttpServer\` (D7) |
 | `WebServer/Application` (**resolved** — `Application.php` is the "Base application service": the actual PSR-7 HTTP request-dispatch runtime, built on `SlimRouter\Routing`. This is Server-runtime code exactly like `WebSockets\Server\Server`, not a routing framework other extensions build against — no genuine collision with the `Core/Application` former-package name once you see what's inside, it simply lands under a completely different domain tag) | `Core\<Type>\HttpServer\` (D7), alongside `Server`/`Utils` |
-| `Exchange/Exchange/Factory.php` (**resolved** — a single factory interface for creating Exchange/message-bus instances; no existing generic bucket fits, gets a minimal new one) | `Core\Factories\Exchange\` |
-| `Exchange/Consumers`, `Exchange/Publisher` | `Core\Persistence\Exchange\` — **needs one more look**: `Consumers`/`Publisher` are message-bus plumbing, not data persistence in the ORM sense that the rest of the `Persistence` bucket covers (`DoctrineCrud/Crud`, `SimpleAuth/Models`/`Queries`, `Application/ObjectMapper`, `JsonApi/Hydrators`). A cleaner name for that bucket might be `Messaging` for Exchange's slice specifically, or the bucket should split in two. Flagged for the plan-writing pass rather than decided here. |
+| `Exchange/Exchange/Factory.php`, `Exchange/Consumers`, `Exchange/Publisher` (**resolved**) | `Core\Messaging\Exchange\` — a dedicated bucket, kept separate from `Persistence` which stays scoped to ORM/data-access (`DoctrineCrud/Crud`, `SimpleAuth/Models`/`Queries`, `Application/ObjectMapper`, `JsonApi/Hydrators`) |
 
 ## Appendix B: full exception class inventory
 
