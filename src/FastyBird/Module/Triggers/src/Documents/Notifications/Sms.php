@@ -17,8 +17,8 @@ namespace FastyBird\Module\Triggers\Documents\Notifications;
 
 use FastyBird\Core\Application\Documents as ApplicationDocuments;
 use FastyBird\Module\Triggers\Entities;
-use IPub\Phone\Entities as PhoneEntities;
-use IPub\Phone\Exceptions as PhoneExceptions;
+use FastyBird\Library\Phone\Entities as PhoneEntities;
+use FastyBird\Library\Phone\Exceptions as PhoneExceptions;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;

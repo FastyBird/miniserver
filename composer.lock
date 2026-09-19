@@ -3031,11 +3031,11 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Library/DoctrinePhone",
-                "reference": "6fed26c83493c9338c4a26899865d2a40c813b72"
+                "reference": "6b121cd3a1f51a61b77080542f85f0d1bc57eef6"
             },
             "require": {
                 "doctrine/orm": "^3.3",
-                "ipub/phone": "^2.3",
+                "fastybird/phone-library": "@dev",
                 "nette/di": "^3.0",
                 "nette/utils": "^3.2||^4.0",
                 "php": ">=8.4.0"
@@ -3606,6 +3606,43 @@
                 "issues": "https://github.com/FastyBird/miniserver/issues",
                 "source": "https://github.com/FastyBird/miniserver"
             },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "fastybird/phone-library",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "src/FastyBird/Library/Phone",
+                "reference": "bd48c4aad2aaa28f0440036973986141f3af73ae"
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-intl": "*",
+                "giggsey/libphonenumber-for-php": "^8.12",
+                "nette/di": "^3.0",
+                "php": ">=8.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastyBird\\Library\\Phone\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "iPublikuj:cms",
+                    "email": "info@ipublikuj.eu",
+                    "homepage": "https://www.ipublikuj.eu/"
+                }
+            ],
+            "description": "Phone helper & validator for Nette Framework",
             "transport-options": {
                 "relative": true
             }
@@ -4339,7 +4376,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Triggers",
-                "reference": "b6a87f08cbb529c0295a00028b54ca4fd402882c"
+                "reference": "93f89f510853e15373d620b2f70949038206aa51"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4352,8 +4389,8 @@
                 "fastybird/exchange": "@dev",
                 "fastybird/json-api-library": "@dev",
                 "fastybird/metadata-library": "@dev",
+                "fastybird/phone-library": "@dev",
                 "fastybird/simple-auth": "@dev",
-                "ipub/phone": "^2.3",
                 "ipub/slim-router": "^0.2",
                 "nettrine/dbal": "^0.10",
                 "nettrine/orm": "^0.10",
@@ -6278,82 +6315,6 @@
                 "source": "https://github.com/ipublikuj/json-api-document/tree/v0.2.2"
             },
             "time": "2021-09-03T19:44:11+00:00"
-        },
-        {
-            "name": "ipub/phone",
-            "version": "v2.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ipublikuj/phone.git",
-                "reference": "e6f64c1197a30f5b0d505a727ad351cabae8dcda"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/phone/zipball/e6f64c1197a30f5b0d505a727ad351cabae8dcda",
-                "reference": "e6f64c1197a30f5b0d505a727ad351cabae8dcda",
-                "shasum": ""
-            },
-            "require": {
-                "ext-ctype": "*",
-                "ext-intl": "*",
-                "giggsey/libphonenumber-for-php": "^8.12",
-                "nette/di": "^3.0",
-                "php": ">=7.4.0"
-            },
-            "require-dev": {
-                "contributte/console": "^0.9",
-                "mockery/mockery": "^1.4",
-                "nette/bootstrap": "^3.1",
-                "ninjify/nunjuck": "^0.3",
-                "ninjify/qa": "^0.12",
-                "pds/skeleton": "~1.0",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-nette": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
-                "tracy/tracy": "^2.8"
-            },
-            "type": "library",
-            "extra": {
-                "ipub": {
-                    "configuration": {
-                        "extension": "IPub\\Phone\\DI\\PhoneExtension"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "IPub\\Phone\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "iPublikuj:cms",
-                    "email": "info@ipublikuj.eu",
-                    "homepage": "http://www.ipublikuj.eu/"
-                }
-            ],
-            "description": "Phone helper & validator for Nette Framework",
-            "homepage": "https://github.com/ipublikuj/phone",
-            "keywords": [
-                "ipub",
-                "ipublikuj",
-                "nette",
-                "phone",
-                "tools"
-            ],
-            "support": {
-                "email": "support@ipublikuj.eu",
-                "issues": "https://github.com/ipublikuj/phone/issues",
-                "source": "https://github.com/ipublikuj/phone/tree/v2.3.1"
-            },
-            "time": "2023-12-06T20:11:30+00:00"
         },
         {
             "name": "ipub/slim-router",

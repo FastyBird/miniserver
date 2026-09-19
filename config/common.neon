@@ -23,7 +23,7 @@ extensions:
     nettrineOrm                                     : Nettrine\ORM\DI\OrmExtension
     nettrineFixtures                                : Nettrine\Fixtures\DI\FixturesExtension
     nettrineMigrations                              : Nettrine\Migrations\DI\MigrationsExtension
-    ipubPhone                                       : IPub\Phone\DI\PhoneExtension
+    ipubPhone                                       : FastyBird\Library\Phone\DI\PhoneExtension
     ipubDoctrinePhone                               : FastyBird\Library\DoctrinePhone\DI\DoctrinePhoneExtension
     ipubDoctrineCrud                                : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable                       : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension

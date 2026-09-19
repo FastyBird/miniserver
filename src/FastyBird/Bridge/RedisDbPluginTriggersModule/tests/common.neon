@@ -22,7 +22,7 @@ extensions:
     nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
     ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
     ipubDoctrineTimestampable           : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    ipubPhone                           : IPub\Phone\DI\PhoneExtension
+    ipubPhone                           : FastyBird\Library\Phone\DI\PhoneExtension
     fbDateTimeFactory                   : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
     fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
     fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension

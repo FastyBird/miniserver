@@ -18,7 +18,7 @@ namespace FastyBird\Library\DoctrinePhone\Events;
 use Doctrine\Common;
 use Doctrine\ORM;
 use FastyBird\Library\DoctrinePhone\Types;
-use IPub\Phone;
+use FastyBird\Library\Phone;
 use Nette;
 use ReflectionClass;
 use ReflectionException;

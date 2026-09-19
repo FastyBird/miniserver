@@ -20,7 +20,7 @@ use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\JsonAPIDocument;
-use IPub\Phone;
+use FastyBird\Library\Phone;
 use Nette\Localization;
 use function is_scalar;
 use function strval;

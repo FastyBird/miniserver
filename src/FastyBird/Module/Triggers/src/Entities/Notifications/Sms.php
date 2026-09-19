@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
 use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use FastyBird\Module\Triggers\Entities;
-use IPub\Phone;
+use FastyBird\Library\Phone;
 use Ramsey\Uuid;
 use function array_merge;
 

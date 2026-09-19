@@ -17,8 +17,8 @@ namespace FastyBird\Library\DoctrinePhone\Types;
 
 use Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Types;
-use IPub\Phone\Entities;
-use IPub\Phone\Exceptions;
+use FastyBird\Library\Phone\Entities;
+use FastyBird\Library\Phone\Exceptions;
 
 /**
  * Doctrine phone data type
