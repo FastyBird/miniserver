@@ -13,12 +13,12 @@
  * @date           25.12.15
  */
 
-namespace FastyBird\Library\DoctrinePhone\Types;
+namespace FastyBird\Library\Phone\Types;
 
 use Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Types;
-use IPub\Phone\Entities;
-use IPub\Phone\Exceptions;
+use FastyBird\Library\Phone\Entities;
+use FastyBird\Library\Phone\Exceptions;
 
 /**
  * Doctrine phone data type
@@ -40,8 +40,8 @@ class Phone extends Types\StringType
 	}
 
 	/**
-	 * @throws Exceptions\NoValidCountryException
-	 * @throws Exceptions\NoValidPhoneException
+	 * @throws Exceptions\NoValidCountry
+	 * @throws Exceptions\NoValidPhone
 	 */
 	// phpcs:ignore Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps
 	public function convertToPHPValue(mixed $value, Platforms\AbstractPlatform $platform): Entities\Phone|null

@@ -13,12 +13,12 @@
  * @date           25.12.15
  */
 
-namespace FastyBird\Library\DoctrinePhone\Events;
+namespace FastyBird\Library\Phone\Events;
 
 use Doctrine\Common;
 use Doctrine\ORM;
-use FastyBird\Library\DoctrinePhone\Types;
-use IPub\Phone;
+use FastyBird\Library\Phone;
+use FastyBird\Library\Phone\Types;
 use Nette;
 use ReflectionClass;
 use ReflectionException;

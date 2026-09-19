@@ -13,11 +13,11 @@
  * @date           25.12.15
  */
 
-namespace FastyBird\Library\DoctrinePhone\DI;
+namespace FastyBird\Library\Phone\DI;
 
 use Doctrine;
-use FastyBird\Library\DoctrinePhone\Events;
-use FastyBird\Library\DoctrinePhone\Types;
+use FastyBird\Library\Phone\Events;
+use FastyBird\Library\Phone\Types;
 use Nette;
 use Nette\DI;
 use Nette\PhpGenerator as Code;

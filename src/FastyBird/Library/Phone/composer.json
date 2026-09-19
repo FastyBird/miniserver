@@ -1,7 +1,7 @@
 {
-  "name": "fastybird/doctrine-phone-library",
+  "name": "fastybird/phone-library",
   "type": "library",
-  "description": "Phone number manipulation for Nette Framework and Doctrine 2",
+  "description": "Phone helper & validator for Nette Framework",
   "license": [
     "GPL-2.0",
     "GPL-3.0"
@@ -10,19 +10,21 @@
     {
       "name": "iPublikuj:cms",
       "email": "info@ipublikuj.eu",
-      "homepage": "http://www.ipublikuj.eu/"
+      "homepage": "https://www.ipublikuj.eu/"
     }
   ],
   "require": {
     "php": ">=8.4.0",
+    "ext-intl": "*",
+    "ext-ctype": "*",
     "doctrine/orm": "^3.3",
-    "ipub/phone": "^2.3",
+    "giggsey/libphonenumber-for-php": "^8.12",
     "nette/di": "^3.0",
     "nette/utils": "^3.2||^4.0"
   },
   "autoload": {
     "psr-4": {
-      "FastyBird\\Library\\DoctrinePhone\\": "src/"
+      "FastyBird\\Library\\Phone\\": "src/"
     }
   },
   "minimum-stability": "stable"
