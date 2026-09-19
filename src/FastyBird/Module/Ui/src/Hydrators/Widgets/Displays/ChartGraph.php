@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Ui\Entities;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use function is_scalar;
 use function strval;
 
@@ -51,7 +51,7 @@ final class ChartGraph extends Display
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
 	 */
-	protected function hydrateEnableMinMaxAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): bool
+	protected function hydrateEnableMinMaxAttribute(JsonApi\Objects\IStandardObject $attributes): bool
 	{
 		if (
 			!is_scalar($attributes->get('enable_min_max'))

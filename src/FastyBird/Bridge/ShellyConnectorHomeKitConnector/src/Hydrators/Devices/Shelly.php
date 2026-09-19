@@ -23,6 +23,7 @@ use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Library\DoctrineCrud\Entities as DoctrineCrudEntities;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\JsonApi\Helpers;
 use FastyBird\Library\JsonApi\JsonApi as JsonApiJsonApi;
@@ -31,7 +32,6 @@ use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use JsonException;
 use Nette\DI;
 use Nette\Localization;
@@ -107,13 +107,13 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 		HomeKitEntities\Devices\Device|null $entity,
 	): HomeKitEntities\Connectors\Connector
 	{
 		if (
-			$relationship->getData() instanceof JsonAPIDocument\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {
@@ -149,12 +149,12 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationships,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationships,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 		Entities\Devices\Shelly|null $entity,
 	): array
 	{
-		if ($relationships->getData() instanceof JsonAPIDocument\Objects\ResourceIdentifierCollection) {
+		if ($relationships->getData() instanceof JsonApi\Objects\ResourceIdentifierCollection) {
 			$parents = [];
 			$foundValidParent = false;
 
@@ -205,8 +205,8 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @throws Throwable
 	 */
 	protected function hydratePropertiesRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 	): array
 	{
 		if ($included === null) {
@@ -242,7 +242,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 
 						if ($propertiesSchema->getType() === $item->getType()) {
 							try {
-								$document = JsonAPIDocument\Document::create(Utils\Json::encode([
+								$document = JsonApi\Document::create(Utils\Json::encode([
 									'data' => [
 										'id' => $item->getId(),
 										'type' => $item->getType(),

@@ -26,6 +26,7 @@ use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Module\Accounts;
@@ -40,7 +41,6 @@ use FastyBird\Module\Accounts\Types;
 use FastyBird\Module\Accounts\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use IPub\JsonAPIDocument;
 use Nette\Utils;
 use Psr\Http\Message;
 use Ramsey\Uuid;
@@ -505,7 +505,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws SimpleAuthExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
-	private function assignAccountToRoles(JsonAPIDocument\IDocument $document, Entities\Accounts\Account $account): void
+	private function assignAccountToRoles(JsonApi\IDocument $document, Entities\Accounts\Account $account): void
 	{
 		$relationships = $document->getResource()->getRelationships();
 
@@ -514,7 +514,7 @@ final class AccountsV1 extends BaseV1
 		$hasRoleRelation = false;
 
 		foreach ($relationships->getAll() as $relationship) {
-			if ($relationship->getData() instanceof JsonAPIDocument\Objects\IResourceIdentifierCollection) {
+			if ($relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierCollection) {
 				foreach ($relationship->getData()->getAll() as $resource) {
 					if ($resource->getType() === Schemas\Roles\Role::SCHEMA_TYPE && is_string($resource->getId())) {
 						$hasRoleRelation = true;

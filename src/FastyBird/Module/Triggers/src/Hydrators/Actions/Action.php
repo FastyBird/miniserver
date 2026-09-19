@@ -15,11 +15,11 @@
 
 namespace FastyBird\Module\Triggers\Hydrators\Actions;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Hydrators;
 use FastyBird\Module\Triggers\Schemas;
-use IPub\JsonAPIDocument;
 use function is_scalar;
 
 /**
@@ -40,7 +40,7 @@ abstract class Action extends JsonApiHydrators\Hydrator
 		Schemas\Actions\Action::RELATIONSHIPS_TRIGGER,
 	];
 
-	protected function hydrateEnabledAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): bool
+	protected function hydrateEnabledAttribute(JsonApi\Objects\IStandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('enabled')) && (bool) $attributes->get('enabled');
 	}

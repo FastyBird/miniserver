@@ -20,11 +20,11 @@ use BackedEnum;
 use DateTimeInterface;
 use Doctrine\ORM;
 use Doctrine\Persistence;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions;
 use FastyBird\Library\JsonApi\Helpers;
 use FastyBird\Library\JsonApi\Hydrators;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette;
 use Nette\Localization;
 use Nette\Utils;
@@ -159,7 +159,7 @@ abstract class Hydrator
 	 * @throws Throwable
 	 */
 	public function hydrate(
-		JsonAPIDocument\IDocument $document,
+		JsonApi\IDocument $document,
 		object|null $entity = null,
 		bool $includeRelationShips = true,
 	): Utils\ArrayHash
@@ -229,7 +229,7 @@ abstract class Hydrator
 
 				$result[$identifierKey] = Uuid\Uuid::fromString($identifier);
 
-			} catch (JsonAPIDocument\Exceptions\RuntimeException) {
+			} catch (JsonApi\Exceptions\Runtime) {
 				$result[$identifierKey] = Uuid\Uuid::uuid4();
 			}
 		}
@@ -799,7 +799,7 @@ abstract class Hydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 * @param array<Hydrators\Fields\Field> $entityMapping
 	 * @param T|null $entity
 	 *
@@ -809,7 +809,7 @@ abstract class Hydrator
 	 */
 	protected function hydrateAttributes(
 		string $className,
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 		array $entityMapping,
 		object|null $entity,
 		string|null $rootField,
@@ -852,10 +852,10 @@ abstract class Hydrator
 					// Get attribute entity class name
 					$fieldClassName = $field->getClassName();
 
-					/** @var string|JsonAPIDocument\Objects\IStandardObject<string, mixed> $fieldAttributes */
+					/** @var string|JsonApi\Objects\IStandardObject<string, mixed> $fieldAttributes */
 					$fieldAttributes = $attributes->get($field->getMappedName());
 
-					if ($fieldAttributes instanceof JsonAPIDocument\Objects\IStandardObject) {
+					if ($fieldAttributes instanceof JsonApi\Objects\IStandardObject) {
 						$data[$field->getFieldName()] = $this->hydrateAttributes(
 							$fieldClassName,
 							$fieldAttributes,
@@ -966,11 +966,11 @@ abstract class Hydrator
 	/**
 	 * Check if hydrator has custom attribute hydration method
 	 *
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 */
 	private function hasCustomHydrateAttribute(
 		string $attributeKey,
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): bool
 	{
 		$method = $this->methodForAttribute($attributeKey);
@@ -1008,12 +1008,12 @@ abstract class Hydrator
 	/**
 	 * Hydrate a attribute by invoking a method on this hydrator.
 	 *
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 * @param T|null $entity
 	 */
 	private function callHydrateAttribute(
 		string $attributeKey,
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 		object|null $entity = null,
 	): mixed
 	{
@@ -1034,7 +1034,7 @@ abstract class Hydrator
 
 	/**
 	 * @param array<Hydrators\Fields\Field> $entityMapping
-	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
+	 * @param JsonApi\Objects\IResourceObjectCollection<JsonApi\Objects\IResourceObject>|null $included
 	 * @param T|null $entity
 	 *
 	 * @return  array<mixed>
@@ -1042,9 +1042,9 @@ abstract class Hydrator
 	 * @throws Exceptions\InvalidState
 	 */
 	protected function hydrateRelationships(
-		JsonAPIDocument\Objects\IRelationshipObjectCollection $relationships,
+		JsonApi\Objects\IRelationshipObjectCollection $relationships,
 		array $entityMapping,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included = null,
+		JsonApi\Objects\IResourceObjectCollection|null $included = null,
 		object|null $entity = null,
 	): array
 	{
@@ -1109,7 +1109,7 @@ abstract class Hydrator
 	/**
 	 * Hydrate a relationship by invoking a method on this hydrator.
 	 *
-	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
+	 * @param JsonApi\Objects\IResourceObjectCollection<JsonApi\Objects\IResourceObject>|null $included
 	 * @param T|null $entity
 	 *
 	 * @return  array<mixed>|object|null
@@ -1118,8 +1118,8 @@ abstract class Hydrator
 	 */
 	private function callHydrateRelationship(
 		string $relationshipKey,
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included = null,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included = null,
 		object|null $entity = null,
 	): array|object|null
 	{
@@ -1165,7 +1165,7 @@ abstract class Hydrator
 	 */
 	protected function hydrateHasOne(
 		Hydrators\Fields\Field $field,
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IRelationshipObject $relationship,
 		object|null $entity,
 		array $entityMapping,
 	): object|null
@@ -1212,7 +1212,7 @@ abstract class Hydrator
 	 */
 	private function findRelated(
 		string $entityClassName,
-		JsonAPIDocument\Objects\IResourceIdentifierObject $identifier,
+		JsonApi\Objects\IResourceIdentifierObject $identifier,
 	): object|null
 	{
 		if ($identifier->getId() === null || !Uuid\Uuid::isValid($identifier->getId())) {
@@ -1244,7 +1244,7 @@ abstract class Hydrator
 	 */
 	protected function hydrateHasMany(
 		Hydrators\Fields\Field $field,
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IRelationshipObject $relationship,
 		object|null $entity,
 		array $entityMapping,
 	): array

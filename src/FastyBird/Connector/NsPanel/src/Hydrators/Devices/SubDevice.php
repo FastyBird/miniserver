@@ -19,12 +19,12 @@ use Doctrine\Persistence;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Schemas;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\JsonApi\Helpers;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette\Localization;
 use Ramsey\Uuid;
 use function is_string;
@@ -66,12 +66,12 @@ final class SubDevice extends Device
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationships,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationships,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 		Entities\Devices\Gateway|null $entity,
 	): array
 	{
-		if ($relationships->getData() instanceof JsonAPIDocument\Objects\ResourceIdentifierCollection) {
+		if ($relationships->getData() instanceof JsonApi\Objects\ResourceIdentifierCollection) {
 			$parents = [];
 			$foundValidParent = false;
 

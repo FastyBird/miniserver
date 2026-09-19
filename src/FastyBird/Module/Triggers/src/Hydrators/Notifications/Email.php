@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Triggers\Hydrators\Notifications;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Entities;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette\Utils;
 use function is_scalar;
 use function strval;
@@ -50,7 +50,7 @@ final class Email extends Notification
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateEmailAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): string
 	{
 		// Condition operator have to be set

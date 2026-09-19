@@ -16,11 +16,11 @@
 namespace FastyBird\Automator\DevicesModule\Hydrators\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -56,7 +56,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -83,7 +83,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -111,7 +111,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws ValueError
 	 */
 	protected function hydrateOperatorAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): TriggersTypes\ConditionOperator
 	{
 		// Condition operator have to be set
@@ -148,7 +148,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateOperandAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): string
 	{
 		if (

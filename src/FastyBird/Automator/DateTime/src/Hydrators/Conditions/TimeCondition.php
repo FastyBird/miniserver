@@ -17,10 +17,10 @@ namespace FastyBird\Automator\DateTime\Hydrators\Conditions;
 
 use DateTimeInterface;
 use FastyBird\Automator\DateTime\Entities;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette\Utils;
 use function in_array;
 use function is_array;
@@ -55,7 +55,7 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateTimeAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): DateTimeInterface
 	{
 		// Condition time have to be set
@@ -95,7 +95,7 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	protected function hydrateDaysAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): array
 	{
 		// Condition days have to be set

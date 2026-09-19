@@ -16,9 +16,9 @@
 namespace FastyBird\Automator\DevicesModule\Hydrators\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Ramsey\Uuid;
 use function is_scalar;
 use function strval;
@@ -54,7 +54,7 @@ final class ChannelPropertyAction extends PropertyAction
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateChannelAttribute(
-		JsonAPIDocument\Objects\IStandardObject $attributes,
+		JsonApi\Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (

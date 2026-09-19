@@ -15,8 +15,8 @@
 
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions;
-use IPub\JsonAPIDocument;
 use function sprintf;
 
 /**
@@ -31,11 +31,11 @@ final class CollectionField extends EntityField
 {
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): mixed
+	public function getValue(JsonApi\Objects\IStandardObject $attributes): mixed
 	{
 		throw new Exceptions\InvalidState(
 			sprintf('Collection field \'%s\' could not be mapped as attribute.', $this->getMappedName()),

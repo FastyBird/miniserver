@@ -17,13 +17,13 @@ namespace FastyBird\Module\Devices\Hydrators\Channels;
 
 use Doctrine\Persistence;
 use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\JsonApi\Helpers;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\JsonAPIDocument;
 use Nette\Localization;
 use Ramsey\Uuid;
 use function is_string;
@@ -62,13 +62,13 @@ final class Generic extends Channel
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(
-		JsonAPIDocument\Objects\IRelationshipObject $relationship,
-		JsonAPIDocument\Objects\IResourceObjectCollection|null $included,
+		JsonApi\Objects\IRelationshipObject $relationship,
+		JsonApi\Objects\IResourceObjectCollection|null $included,
 		Entities\Channels\Channel|null $entity,
 	): Entities\Devices\Device
 	{
 		if (
-			$relationship->getData() instanceof JsonAPIDocument\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {

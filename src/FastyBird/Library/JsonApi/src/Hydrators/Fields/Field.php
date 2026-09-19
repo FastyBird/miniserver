@@ -15,7 +15,7 @@
 
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
-use IPub\JsonAPIDocument;
+use FastyBird\Library\JsonApi;
 use Nette;
 
 /**
@@ -41,9 +41,9 @@ abstract class Field
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 */
-	abstract public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): mixed;
+	abstract public function getValue(JsonApi\Objects\IStandardObject $attributes): mixed;
 
 	public function getMappedName(): string
 	{

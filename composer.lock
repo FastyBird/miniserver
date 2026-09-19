@@ -3307,13 +3307,12 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Library/JsonApi",
-                "reference": "c285f871b18282eacb65536710112de613900aff"
+                "reference": "3ff89be54fc040f371680ec07d301735da269068"
             },
             "require": {
                 "doctrine/orm": "^3.3",
                 "ext-json": "*",
                 "fig/http-message-util": "^1.1",
-                "ipub/json-api-document": "^0.2",
                 "neomerx/json-api": "^4.0",
                 "nette/bootstrap": "^3.2",
                 "nette/di": "^3.1",
@@ -6214,71 +6213,6 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2023-06-11T21:11:53+00:00"
-        },
-        {
-            "name": "ipub/json-api-document",
-            "version": "v0.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ipublikuj/json-api-document.git",
-                "reference": "ed1741092a222e4adfd062f5aa09a1dde3bd6912"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ipublikuj/json-api-document/zipball/ed1741092a222e4adfd062f5aa09a1dde3bd6912",
-                "reference": "ed1741092a222e4adfd062f5aa09a1dde3bd6912",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=7.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4",
-                "ninjify/nunjuck": "^0.3",
-                "ninjify/qa": "^0.12",
-                "pds/skeleton": "~1.0",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "IPub\\JsonAPIDocument\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "iPublikuj:cms",
-                    "email": "info@ipublikuj.eu",
-                    "homepage": "https://www.ipublikuj.eu/"
-                }
-            ],
-            "description": "JSON:API document factory",
-            "homepage": "https://github.com/iPublikuj/json-api-document",
-            "keywords": [
-                "api",
-                "client",
-                "document",
-                "ipub",
-                "ipublikuj",
-                "json",
-                "jsonapi",
-                "tools"
-            ],
-            "support": {
-                "email": "support@fastybird.com",
-                "issues": "https://github.com/iPublikuj/json-api-document/issues",
-                "source": "https://github.com/ipublikuj/json-api-document/tree/v0.2.2"
-            },
-            "time": "2021-09-03T19:44:11+00:00"
         },
         {
             "name": "ipub/slim-router",
@@ -19676,6 +19610,6 @@
         "ext-xml": "*",
         "ext-zip": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

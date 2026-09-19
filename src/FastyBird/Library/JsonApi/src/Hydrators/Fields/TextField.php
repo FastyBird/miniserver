@@ -15,7 +15,7 @@
 
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
-use IPub\JsonAPIDocument;
+use FastyBird\Library\JsonApi;
 use function is_scalar;
 
 /**
@@ -41,9 +41,9 @@ final class TextField extends Field
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 */
-	public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): string|null
+	public function getValue(JsonApi\Objects\IStandardObject $attributes): string|null
 	{
 		$value = $attributes->get($this->getMappedName());
 

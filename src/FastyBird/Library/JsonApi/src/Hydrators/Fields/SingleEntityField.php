@@ -15,8 +15,8 @@
 
 namespace FastyBird\Library\JsonApi\Hydrators\Fields;
 
+use FastyBird\Library\JsonApi;
 use FastyBird\Library\JsonApi\Exceptions;
-use IPub\JsonAPIDocument;
 use function is_array;
 use function sprintf;
 
@@ -32,13 +32,13 @@ final class SingleEntityField extends EntityField
 {
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<string, mixed> $attributes
+	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 *
 	 * @return array<mixed>|null
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	public function getValue(JsonAPIDocument\Objects\IStandardObject $attributes): array|null
+	public function getValue(JsonApi\Objects\IStandardObject $attributes): array|null
 	{
 		if ($this->isRelationship()) {
 			throw new Exceptions\InvalidState(
@@ -48,7 +48,7 @@ final class SingleEntityField extends EntityField
 
 		$value = $attributes->get($this->getMappedName());
 
-		if ($value instanceof JsonAPIDocument\Objects\IStandardObject) {
+		if ($value instanceof JsonApi\Objects\IStandardObject) {
 			$value = $value->toArray();
 		}
 
