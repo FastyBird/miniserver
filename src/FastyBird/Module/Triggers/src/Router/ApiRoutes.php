@@ -17,10 +17,10 @@ namespace FastyBird\Module\Triggers\Router;
 
 use FastyBird\Core\SimpleAuth\Middleware as SimpleAuthMiddleware;
 use FastyBird\Library\Metadata;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Middleware;
-use IPub\SlimRouter\Routing;
 
 /**
  * Module router configuration

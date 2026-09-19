@@ -15,8 +15,8 @@
 
 namespace FastyBird\Plugin\WebServer\Middleware;
 
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Plugin\WebServer\Events;
-use IPub\SlimRouter\Routing;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

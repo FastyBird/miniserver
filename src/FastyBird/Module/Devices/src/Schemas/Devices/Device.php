@@ -19,13 +19,13 @@ use DateTimeInterface;
 use Exception;
 use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Schemas;
-use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 
 /**

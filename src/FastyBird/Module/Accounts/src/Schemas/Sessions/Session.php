@@ -18,11 +18,11 @@ namespace FastyBird\Module\Accounts\Schemas\Sessions;
 use DateTimeInterface;
 use FastyBird\Library\JsonApi\Schemas as JsonApis;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Router;
-use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 
 /**

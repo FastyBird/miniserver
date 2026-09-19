@@ -18,8 +18,8 @@ namespace FastyBird\Module\Accounts\Router;
 use FastRoute;
 use FastRoute\RouteCollector as FastRouteCollector;
 use FastRoute\RouteParser\Std;
+use FastyBird\Library\SlimRouter\Routing as SlimRouterRouting;
 use Fig\Http\Message\RequestMethodInterface;
-use IPub\SlimRouter\Routing as SlimRouterRouting;
 use Nette\DI;
 use function assert;
 

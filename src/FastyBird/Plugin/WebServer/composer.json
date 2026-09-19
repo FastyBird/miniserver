@@ -41,7 +41,7 @@
     "fastybird/metadata-library": "@dev",
     "fastybird/tools": "@dev",
     "fig/http-message-util": "^1.1",
-    "ipub/slim-router": "^0.2",
+    "fastybird/slim-router-library": "@dev",
     "nette/bootstrap": "^3.2",
     "nette/di": "^3.2",
     "nette/utils": "^4.0",

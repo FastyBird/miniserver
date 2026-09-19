@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Router;
 
 use FastyBird\Connector\HomeKit\Controllers;
-use IPub\SlimRouter\Routing;
+use FastyBird\Library\SlimRouter\Routing;
 
 /**
  * Connector router configuration

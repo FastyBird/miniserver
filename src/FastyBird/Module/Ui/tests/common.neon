@@ -29,9 +29,9 @@ extensions:
     fbExchange                          : FastyBird\Core\Exchange\DI\ExchangeExtension
 
 services:
-    - {factory: IPub\SlimRouter\Http\ResponseFactory}
+    - {factory: FastyBird\Library\SlimRouter\Http\ResponseFactory}
     -
-        factory: IPub\SlimRouter\Routing\Router
+        factory: FastyBird\Library\SlimRouter\Routing\Router
         setup:
             - addMiddleware(@fbJsonApi.middlewares.jsonapi)
 

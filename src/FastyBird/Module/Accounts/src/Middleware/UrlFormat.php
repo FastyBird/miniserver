@@ -17,10 +17,10 @@ namespace FastyBird\Module\Accounts\Middleware;
 
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\Metadata;
+use FastyBird\Library\SlimRouter\Http;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use IPub\SlimRouter\Http;
 use Nette\Localization;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

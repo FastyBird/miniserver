@@ -17,11 +17,11 @@ namespace FastyBird\Module\Triggers\Schemas\Triggers\Controls;
 
 use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Router;
 use FastyBird\Module\Triggers\Schemas;
-use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 
 /**

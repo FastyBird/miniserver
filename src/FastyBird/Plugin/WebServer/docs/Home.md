@@ -70,7 +70,7 @@ Or in case you want to implement automatic routes registration, you could use se
 ```php
 namespace Your\CoolApp\Routing;
 
-use IPub\SlimRouter\Routing;
+use FastyBird\Library\SlimRouter\Routing;
 
 use Your\CoolApp\Controllers;
 
@@ -119,7 +119,7 @@ services:
         factory: Your\CoolApp\Routing\Routes
 
 decorator:
-    IPub\SlimRouter\Routing\Router:
+    FastyBird\Library\SlimRouter\Routing\Router:
         setup:
             @appRoutes::registerRoutes
 ```
@@ -171,7 +171,7 @@ Registration of middlewares to router is done via decorator:
 
 ```neon
 decorator: 
-    IPub\SlimRouter\Routing\Router:
+    FastyBird\Library\SlimRouter\Routing\Router:
         setup:
             - addMiddleware(@accessControlMiddleware)
 ```
@@ -190,7 +190,7 @@ Middleware will be registered as usual service and could be injected into router
 ```php
 namespace Your\CoolApp\Routing;
 
-use IPub\SlimRouter\Routing;
+use FastyBird\Library\SlimRouter\Routing;
 
 class Routes
 {

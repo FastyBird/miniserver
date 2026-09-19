@@ -129,6 +129,7 @@
                 <element key="src/FastyBird/Library/Metadata/tests/fixtures" value="FastyBird\Library\Metadata\Tests\Fixtures"/>
                 <element key="src/FastyBird/Library/Metadata/tests/fixtures/dummy" value="FastyBird\Library\Metadata\Tests\Fixtures\Dummy"/>
                 <element key="src/FastyBird/Library/WebSockets/src" value="FastyBird\Library\WebSockets"/>
+                <element key="src/FastyBird/Library/SlimRouter/src" value="FastyBird\Library\SlimRouter"/>
 
                 <element key="src/FastyBird/Module/Accounts/src" value="FastyBird\Module\Accounts"/>
                 <element key="src/FastyBird/Module/Accounts/tests/cases/unit" value="FastyBird\Module\Accounts\Tests\Cases\Unit"/>

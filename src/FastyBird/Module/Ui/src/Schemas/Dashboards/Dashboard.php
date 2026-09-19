@@ -17,10 +17,10 @@ namespace FastyBird\Module\Ui\Schemas\Dashboards;
 
 use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
-use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 
 /**

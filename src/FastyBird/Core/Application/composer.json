@@ -45,7 +45,7 @@
     "fastybird/simple-auth": "@dev",
     "fastybird/doctrine-crud-library": "@dev",
     "fastybird/doctrine-timestampable-library": "@dev",
-    "ipub/slim-router": "^0.2",
+    "fastybird/slim-router-library": "@dev",
     "nette/bootstrap": "^3.2",
     "nette/application": "^3.1",
     "nette/caching": "^3.3",

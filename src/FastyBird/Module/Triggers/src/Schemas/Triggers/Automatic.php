@@ -16,12 +16,12 @@
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Router;
-use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 use function array_merge;
 use function count;

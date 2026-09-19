@@ -31,9 +31,9 @@ extensions:
     fbDevicesModule                     : FastyBird\Module\Devices\DI\DevicesExtension
 
 services:
-    - {factory: IPub\SlimRouter\Http\ResponseFactory}
+    - {factory: FastyBird\Library\SlimRouter\Http\ResponseFactory}
     -
-        factory: IPub\SlimRouter\Routing\Router
+        factory: FastyBird\Library\SlimRouter\Routing\Router
         setup:
             - addMiddleware(@fbJsonApi.middlewares.jsonapi)
 

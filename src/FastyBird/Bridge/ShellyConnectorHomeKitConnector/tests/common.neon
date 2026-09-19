@@ -32,9 +32,9 @@ extensions:
     fbShellyConnector                   : FastyBird\Connector\Shelly\DI\ShellyExtension
 
 services:
-    - {factory: IPub\SlimRouter\Http\ResponseFactory}
+    - {factory: FastyBird\Library\SlimRouter\Http\ResponseFactory}
     -
-        factory: IPub\SlimRouter\Routing\Router
+        factory: FastyBird\Library\SlimRouter\Routing\Router
         setup:
             - addMiddleware(@fbJsonApi.middlewares.jsonapi)
 
