@@ -22,12 +22,12 @@ use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\SlimRouter;
+use FastyBird\Library\SlimRouter\Exceptions as SlimRouterExceptions;
+use FastyBird\Library\SlimRouter\Http as SlimRouterHttp;
+use FastyBird\Library\SlimRouter\Routing as SlimRouterRouting;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use IPub\SlimRouter;
-use IPub\SlimRouter\Exceptions as SlimRouterExceptions;
-use IPub\SlimRouter\Http as SlimRouterHttp;
-use IPub\SlimRouter\Routing as SlimRouterRouting;
 use Nette\Utils;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;
@@ -88,7 +88,7 @@ final class Router
 			$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode([
 				Types\Representation::STATUS->value => $ex->getError()->value,
 			])));
-		} catch (SlimRouterExceptions\HttpException $ex) {
+		} catch (SlimRouterExceptions\Http $ex) {
 			$this->logger->warning(
 				'Received invalid HTTP request',
 				[

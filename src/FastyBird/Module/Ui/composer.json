@@ -50,7 +50,7 @@
     "fastybird/metadata-library": "@dev",
     "fastybird/simple-auth": "@dev",
     "fastybird/tools": "@dev",
-    "ipub/slim-router": "^0.2",
+    "fastybird/slim-router-library": "@dev",
     "nettrine/dbal": "^0.10",
     "nettrine/orm": "^0.10",
     "psr/event-dispatcher": "^1.0",

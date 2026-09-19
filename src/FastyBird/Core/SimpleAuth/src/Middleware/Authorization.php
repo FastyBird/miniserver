@@ -17,7 +17,7 @@ namespace FastyBird\Core\SimpleAuth\Middleware;
 
 use FastyBird\Core\SimpleAuth\Access;
 use FastyBird\Core\SimpleAuth\Exceptions;
-use IPub\SlimRouter;
+use FastyBird\Library\SlimRouter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

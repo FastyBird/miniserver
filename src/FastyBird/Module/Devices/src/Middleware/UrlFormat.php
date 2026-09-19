@@ -17,11 +17,11 @@ namespace FastyBird\Module\Devices\Middleware;
 
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\Library\Metadata;
+use FastyBird\Library\SlimRouter;
+use FastyBird\Library\SlimRouter\Http;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Router;
 use InvalidArgumentException;
-use IPub\SlimRouter;
-use IPub\SlimRouter\Http;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

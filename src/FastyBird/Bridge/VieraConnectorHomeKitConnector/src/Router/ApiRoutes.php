@@ -19,8 +19,8 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Controllers;
 use FastyBird\Core\SimpleAuth\Middleware as SimpleAuthMiddleware;
 use FastyBird\Library\Metadata;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
-use IPub\SlimRouter\Routing;
 
 /**
  * Bridge API routes configuration

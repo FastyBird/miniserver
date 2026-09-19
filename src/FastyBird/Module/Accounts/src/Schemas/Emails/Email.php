@@ -17,10 +17,10 @@ namespace FastyBird\Module\Accounts\Schemas\Emails;
 
 use FastyBird\Library\JsonApi\Schemas as JsonApis;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Router;
-use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 
 /**

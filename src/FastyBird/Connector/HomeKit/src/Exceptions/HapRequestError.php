@@ -16,11 +16,11 @@
 namespace FastyBird\Connector\HomeKit\Exceptions;
 
 use FastyBird\Connector\HomeKit\Types;
-use IPub\SlimRouter\Exceptions as SlimRouterExceptions;
+use FastyBird\Library\SlimRouter\Exceptions as SlimRouterExceptions;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
-class HapRequestError extends SlimRouterExceptions\HttpException implements Exception
+class HapRequestError extends SlimRouterExceptions\Http implements Exception
 {
 
 	public function __construct(

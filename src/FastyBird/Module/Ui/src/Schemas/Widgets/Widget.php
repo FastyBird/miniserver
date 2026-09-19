@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Ui\Schemas\Widgets;
 
 use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
-use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 use function count;
 

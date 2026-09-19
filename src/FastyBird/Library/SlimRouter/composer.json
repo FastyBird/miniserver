@@ -1,0 +1,31 @@
+{
+  "name": "fastybird/slim-router-library",
+  "type": "library",
+  "description": "Super simple PSR-7 customizable routing system with middleware",
+  "license": [
+    "GPL-2.0",
+    "GPL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "iPublikuj:cms",
+      "email": "info@ipublikuj.eu",
+      "homepage": "https://www.ipublikuj.eu/"
+    }
+  ],
+  "require": {
+    "php": ">=8.4.0",
+    "ext-json": "*",
+    "fig/http-message-util": "^1.1",
+    "nikic/fast-route": "^1.3",
+    "psr/http-factory": "^1.0",
+    "psr/http-server-middleware": "^1.0",
+    "ramsey/uuid": "^4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "FastyBird\\Library\\SlimRouter\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}

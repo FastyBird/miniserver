@@ -428,6 +428,21 @@ return [
 			'Connector/HomeKit',
 			'Module/Devices',
 		],
+
+		/*
+		 * The one deliberate exception to "Library is the floor". JsonApi's error-formatting
+		 * middleware has a single class_exists()-guarded branch that gives SlimRouter's
+		 * HttpException (404, 405, ...) its real status code and a JSON:API-formatted error
+		 * body; without it every SlimRouter routing failure in every REST module falls into
+		 * the generic handler and surfaces as a 500. It is not a structural dependency --
+		 * SlimRouter is not required to load JsonApi, and the two libraries solve unrelated
+		 * problems (JSON:API response formatting vs PSR-7 routing) -- so merging them into
+		 * one package the way the phone/websockets absorptions did would just be a stranger
+		 * package boundary for no real gain. Maintainer's decision, 2026-09-19: encode this
+		 * as a rule rather than carry it as a standing exception, so the intent is stated
+		 * where the rules live, same as Automator/DevicesModule above.
+		 */
+		'Library/JsonApi' => ['Library/SlimRouter'],
 	],
 
 	/*

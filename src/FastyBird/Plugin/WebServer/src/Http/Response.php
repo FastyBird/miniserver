@@ -15,8 +15,8 @@
 
 namespace FastyBird\Plugin\WebServer\Http;
 
+use FastyBird\Library\SlimRouter;
 use FastyBird\Plugin\WebServer\Exceptions;
-use IPub\SlimRouter;
 use function array_key_exists;
 use function func_num_args;
 use function sprintf;

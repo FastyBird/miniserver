@@ -16,13 +16,13 @@
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
 use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Router;
 use FastyBird\Module\Triggers\Schemas;
-use IPub\SlimRouter\Routing;
 use Neomerx\JsonApi;
 use function count;
 

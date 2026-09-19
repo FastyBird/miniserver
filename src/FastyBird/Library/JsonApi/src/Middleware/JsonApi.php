@@ -21,7 +21,6 @@ use FastyBird\Library\JsonApi\Exceptions;
 use FastyBird\Library\JsonApi\JsonApi as Tools;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use IPub;
 use Neomerx;
 use Neomerx\JsonApi\Contracts;
 use Neomerx\JsonApi\Schema;
@@ -89,8 +88,8 @@ class JsonApi implements Server\MiddlewareInterface
 				}
 
 			} elseif (
-				class_exists('\IPub\SlimRouter\Exceptions\HttpException')
-				&& $ex instanceof IPub\SlimRouter\Exceptions\HttpException
+				class_exists('\FastyBird\Library\SlimRouter\Exceptions\Http')
+				&& $ex instanceof \FastyBird\Library\SlimRouter\Exceptions\Http
 			) {
 				$response = $response->withStatus($ex->getCode());
 

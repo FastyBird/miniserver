@@ -15,8 +15,8 @@
 
 namespace FastyBird\Plugin\WebServer\Http;
 
+use FastyBird\Library\SlimRouter\Http\Stream;
 use Fig\Http\Message\StatusCodeInterface;
-use IPub\SlimRouter\Http\Stream;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 

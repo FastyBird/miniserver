@@ -17,10 +17,10 @@ namespace FastyBird\Module\Ui\Router;
 
 use FastyBird\Core\SimpleAuth\Middleware as SimpleAuthMiddleware;
 use FastyBird\Library\Metadata;
+use FastyBird\Library\SlimRouter\Routing;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Controllers;
 use FastyBird\Module\Ui\Middleware;
-use IPub\SlimRouter\Routing;
 
 /**
  * Module API routes configuration

@@ -27,7 +27,7 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas;
 use FastyBird\Core\Application\Boot as ApplicationBoot;
 use FastyBird\Core\Application\DI as ApplicationDI;
 use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use IPub\SlimRouter\Routing as SlimRouterRouting;
+use FastyBird\Library\SlimRouter\Routing as SlimRouterRouting;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;

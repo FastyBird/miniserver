@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\WebServer\Router;
 
-use IPub\SlimRouter\Routing;
+use FastyBird\Library\SlimRouter\Routing;
 
 /**
  * Plugin router configuration
