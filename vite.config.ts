@@ -36,7 +36,7 @@ export default defineConfig({
 		UnoCSS(),
 	],
 	resolve: {
-		dedupe: ['pinia', 'vue', 'vue-router', 'vue-i18n', 'vue-meta', 'nprogress', 'element-plus'],
+		dedupe: ['pinia', 'vue', 'vue-router', 'vue-i18n', '@unhead/vue', 'nprogress', 'element-plus'],
 		alias: {
 			'@config': resolve(__dirname, './config'),
 		},
@@ -47,7 +47,7 @@ export default defineConfig({
 		},
 	},
 	optimizeDeps: {
-		include: ['pinia', 'vue', 'vue-router', 'vue-i18n', 'vue-meta', 'nprogress', 'element-plus'],
+		include: ['pinia', 'vue', 'vue-router', 'vue-i18n', '@unhead/vue', 'nprogress', 'element-plus'],
 	},
 	build: {
 		manifest: true,

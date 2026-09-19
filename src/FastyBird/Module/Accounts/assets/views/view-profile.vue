@@ -32,11 +32,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useMeta } from 'vue-meta';
 
 import { ElButton, ElCard } from 'element-plus';
 
 import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
+import { useHead } from '@unhead/vue';
 
 import { SettingsAccountForm } from '../components';
 import { sessionStoreKey } from '../configuration';
@@ -111,7 +111,7 @@ watch(
 	}
 );
 
-useMeta({
+useHead({
 	title: t('accountsModule.meta.profile.profile.title'),
 });
 </script>

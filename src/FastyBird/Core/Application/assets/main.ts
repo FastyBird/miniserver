@@ -1,5 +1,4 @@
 import { createApp } from 'vue';
-import { createMetaManager, plugin as metaPlugin } from 'vue-meta';
 
 import { createPinia } from 'pinia';
 
@@ -11,6 +10,7 @@ import { extensions } from '@config/extensions';
 import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, storesPlugin } from '@fastybird/tools';
 import { createWampV1Client } from '@fastybird/vue-wamp-v1';
 import { addCollection } from '@iconify/vue';
+import { createHead } from '@unhead/vue/client';
 
 import App from './App.vue';
 import { iconCollections } from './icons.generated';
@@ -32,9 +32,7 @@ const app = createApp(App);
 
 app.use(i18n);
 
-app.use(createMetaManager());
-
-app.use(metaPlugin);
+app.use(createHead());
 
 app.use(pinia);
 

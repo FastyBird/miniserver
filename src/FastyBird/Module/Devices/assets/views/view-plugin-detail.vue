@@ -146,7 +146,6 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useMeta } from 'vue-meta';
 import { useRoute, useRouter } from 'vue-router';
 
 import { ElCol, ElDrawer, ElIcon, ElRow, ElScrollbar, vLoading } from 'element-plus';
@@ -155,6 +154,7 @@ import get from 'lodash.get';
 import { AppBar, AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
 import { Icon } from '@iconify/vue';
+import { useHead } from '@unhead/vue';
 
 import { ConnectorsConnectorBox, PluginsPluginHeader, PluginsPluginStats, ViewError } from '../components';
 import { useConnectorActions, useConnectors, useDevices, usePluginActions, useRoutesNames } from '../composables';
@@ -173,7 +173,9 @@ const props = defineProps<IViewPluginDetailProps>();
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { meta } = useMeta({});
+const title = ref<string>();
+
+useHead({ title });
 
 const { isMDDevice, isLGDevice, isXXLDevice } = useBreakpoints();
 const routeNames = useRoutesNames();
@@ -327,7 +329,7 @@ onBeforeMount((): void => {
 		route.matched.find((matched) => matched.name === routeNames.connectorCreate || matched.name === routeNames.connectorDetail) !== undefined;
 
 	if (connectorsPlugin.value !== null) {
-		meta.title = t('devicesModule.meta.plugins.detail.title', { plugin: connectorsPlugin.value.name });
+		title.value = t('devicesModule.meta.plugins.detail.title', { plugin: connectorsPlugin.value.name });
 	}
 });
 
@@ -343,7 +345,7 @@ watch(
 	(): IConnectorPlugin | null => connectorsPlugin.value,
 	(val: IConnectorPlugin | null): void => {
 		if (val !== null) {
-			meta.title = t('devicesModule.meta.plugins.detail.title', { plugin: val.name });
+			title.value = t('devicesModule.meta.plugins.detail.title', { plugin: val.name });
 		}
 	}
 );

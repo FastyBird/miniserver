@@ -123,7 +123,6 @@
 import { computed, h, inject, onBeforeMount, onBeforeUnmount, onUnmounted, ref, watch } from 'vue';
 import type { VNode } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
 import { ElButton, ElScrollbar, vLoading } from 'element-plus';
@@ -133,6 +132,7 @@ import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/
 import { DataType, ModuleSource } from '@fastybird/metadata-library';
 import { useBreakpoints } from '@fastybird/tools';
 import { Icon } from '@iconify/vue';
+import { useHead } from '@unhead/vue';
 
 import {
 	ConnectorDefaultConnectorSettings,
@@ -162,7 +162,9 @@ const router = useRouter();
 const { generate: generateUuid, validate: validateUuid } = useUuid();
 const { isMDDevice } = useBreakpoints();
 const routeNames = useRoutesNames();
-const { meta } = useMeta({});
+const title = ref<string>();
+
+useHead({ title });
 
 const connectorsStore = inject(connectorsStoreKey);
 const connectorPropertiesStore = inject(connectorPropertiesStoreKey);
@@ -345,7 +347,7 @@ watch(
 	(): IConnectorData | null => connectorData.value,
 	(actual: IConnectorData | null, previous: IConnectorData | null): void => {
 		if (actual !== null) {
-			meta.title = t('devicesModule.meta.connectors.settings.title', { connector: connectorData.value?.connector.title });
+			title.value = t('devicesModule.meta.connectors.settings.title', { connector: connectorData.value?.connector.title });
 		}
 
 		if (!isLoading.value && actual === null) {

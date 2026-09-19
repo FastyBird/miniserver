@@ -149,9 +149,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, watch } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
 import { ElCollapseTransition, ElIcon, vLoading } from 'element-plus';
@@ -160,6 +159,7 @@ import get from 'lodash.get';
 import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
 import { useBreakpoints } from '@fastybird/tools';
 import { Icon } from '@iconify/vue';
+import { useHead } from '@unhead/vue';
 
 import {
 	ConnectorDefaultConnectorDetail,
@@ -192,7 +192,9 @@ const props = defineProps<IViewConnectorDetailProps>();
 
 const { t } = useI18n();
 const router = useRouter();
-const { meta } = useMeta({});
+const title = ref<string>();
+
+useHead({ title });
 
 const { isMDDevice } = useBreakpoints();
 const routeNames = useRoutesNames();
@@ -319,7 +321,7 @@ watch(
 	(): IConnectorData | null => connectorData.value,
 	(val: IConnectorData | null): void => {
 		if (val !== null) {
-			meta.title = t('devicesModule.meta.connectors.detail.title', { connector: connectorData.value?.connector.title });
+			title.value = t('devicesModule.meta.connectors.detail.title', { connector: connectorData.value?.connector.title });
 		}
 
 		if (!isLoading.value && val === null) {

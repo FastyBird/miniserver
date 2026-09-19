@@ -1,10 +1,4 @@
 <template>
-	<metainfo>
-		<template #title="{ content }">
-			{{ content ? `${content} | FastyBird IO server` : `FastyBird IO server` }}
-		</template>
-	</metainfo>
-
 	<el-container
 		v-if="!isMDDevice"
 		v-loading="loadingOverlay"
@@ -73,13 +67,13 @@
 
 <script setup lang="ts">
 import { onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
 import { ElAside, ElContainer, ElDrawer, ElMain, useNamespace, vLoading } from 'element-plus';
 
 import { injectAccountManager, useBreakpoints, useEventBus } from '@fastybird/tools';
 import { useWampV1Client } from '@fastybird/vue-wamp-v1';
+import { useHead } from '@unhead/vue';
 
 import Logo from './assets/images/fb_row.svg?component';
 import { AppBar, AppNavigation, AppSidebar, AppTopbar } from './components';
@@ -159,8 +153,9 @@ watch(
 	}
 );
 
-useMeta({
+useHead({
 	title: 'IoT control',
+	titleTemplate: (title) => (title ? `${title} | FastyBird IO server` : 'FastyBird IO server'),
 	meta: [
 		{ charset: 'utf-8' },
 		{
@@ -168,7 +163,6 @@ useMeta({
 			content: 'width=device-width,initial-scale=1.0',
 		},
 		{
-			hid: 'description',
 			name: 'description',
 			content: __APP_DESCRIPTION__ ?? '',
 		},

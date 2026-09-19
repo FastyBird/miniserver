@@ -18,12 +18,12 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
 import { ElButton } from 'element-plus';
 
 import { useEventBus } from '@fastybird/tools';
+import { useHead } from '@unhead/vue';
 
 import { LayoutSignBox, LayoutSignHeader, SignInForm } from '../components';
 import { useRoutesNames } from '../composables';
@@ -56,7 +56,7 @@ watch(
 	}
 );
 
-useMeta({
+useHead({
 	title: t('accountsModule.meta.sign.in.title'),
 });
 </script>

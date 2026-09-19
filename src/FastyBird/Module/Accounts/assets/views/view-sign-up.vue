@@ -9,9 +9,9 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useMeta } from 'vue-meta';
 
 import { useEventBus } from '@fastybird/tools';
+import { useHead } from '@unhead/vue';
 
 import { LayoutSignBox, LayoutSignHeader, SignUpForm } from '../components';
 import { FormResultType, FormResultTypes } from '../types';
@@ -37,7 +37,7 @@ watch(
 	}
 );
 
-useMeta({
+useHead({
 	title: t('accountsModule.meta.sign.up.title'),
 });
 </script>
