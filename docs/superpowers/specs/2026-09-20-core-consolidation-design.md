@@ -221,22 +221,27 @@ far, so budget for this taking meaningfully longer than prior absorptions.
 
 ## 8. Open questions
 
-1. **Self-named folders.** `Core/Exchange/src/Exchange/`, `Library/JsonApi/src/JsonApi/`, and
-   arguably `Core/Application`'s bootstrap-adjacent content, have internal folders literally
-   named after their own former package. Under `Type\Domain\...`, a domain that is *also* used
-   as a type-like folder name reads oddly. Needs a decision per case: read what's actually
-   inside each and give it a real type-bucket name rather than preserving the self-referential
-   folder (e.g. `Exchange/Exchange/` likely becomes part of `Persistence` or a new `Messaging`
-   type bucket once its contents are reviewed — not yet done for this spec).
+1. ~~Self-named folders~~ — **resolved.** All three read and placed in Appendix A:
+   `Exchange/Exchange/Factory.php` → new minimal `Factories` bucket; `JsonApi/JsonApi/`
+   (actually `Encoder.php`/`SchemaContainer.php`, correcting an earlier mis-statement in this
+   spec) → `Encoding`; `WebServer/Application/Application.php` → confirmed Server-runtime code,
+   moves to the `HttpServer` domain tag alongside `Server`/`Utils`, no real collision once its
+   contents were read.
 2. **`Core\Application\Exceptions\Mapping`** — eliminate in favor of the shared `Logic`
-   exception, or keep as a thin subclass. See §5.
+   exception, or keep as a thin subclass. Still open, needs Adam's call. See §5.
 3. **`NotImplemented`** stays as two separate exceptions (`DoctrineOrmQuery`'s and
    `WebSockets`') since they have incompatible SPL parents — confirm this is acceptable rather
-   than picking one parent and changing the other's behavior.
-4. Appendix A's mapping table is a first-pass proposal for ~15 one-off folders (`Caching`,
-   `EventLoop`, `Presenters`, `UI`, `Latte`, `Providers`, `Builder`, `Objects`, `Clients`,
-   `Logger`) that this spec assigns by best judgment without reading each file's actual
-   content. Worth a closer read before the implementation plan locks in their final location.
+   than picking one parent and changing the other's behavior. Still open.
+4. ~~Unreviewed one-off folders~~ — **resolved.** All ~15 read and placed in Appendix A with
+   their actual contents noted.
+5. **New, surfaced while resolving #1:** the `Persistence` bucket was defined around
+   ORM/data-access concerns (`DoctrineCrud/Crud`, `SimpleAuth/Models`/`Queries`,
+   `Application/ObjectMapper`, `JsonApi/Hydrators`), but `Exchange/Consumers` and
+   `Exchange/Publisher` are message-bus plumbing, not data persistence — a different concern
+   that happens to share the word "data" loosely. Either give Exchange's slice its own
+   `Messaging` bucket, or confirm `Persistence` is meant more broadly as "how data moves through
+   the system" (matching both ORM access and message consuming/publishing). Needs a decision
+   before the plan locks in `Core\Persistence\Exchange\` vs `Core\Messaging\Exchange\`.
 
 ## Appendix A: current folder → new location (proposed)
 
@@ -265,19 +270,25 @@ far, so budget for this taking meaningfully longer than prior absorptions.
 | `Application/EventLoop` | `Core\EventLoop\Application\` |
 | `Application/Presenters` | `Core\Presenters\Application\` |
 | `Application/UI` | `Core\UI\Application\` (content not reviewed — open question 4) |
-| `SimpleAuth/Latte` | `Core\Latte\SimpleAuth\` |
-| `DoctrineTimestampable/Providers` | `Core\Providers\DoctrineTimestampable\` |
-| `JsonApi/Builder` | `Core\Builder\JsonApi\` (content not reviewed) |
-| `JsonApi/Objects` | `Core\Objects\JsonApi\` |
-| `JsonApi/Document.php`, `IDocument.php` (top-level `JsonApi/` folder) | needs review — open question 1 |
+| `SimpleAuth/Latte` (`AccessExtension.php` + `Nodes/`, a Latte macro extension for template-level access checks) | `Core\Latte\SimpleAuth\` |
+| `DoctrineTimestampable/Providers` (`DateProvider.php`, the injectable "current time" source for timestampable entities) | `Core\Providers\DoctrineTimestampable\` |
+| `Application/Caching` (`MemoryAdapterStorage.php`, `MemoryStorage.php`) | `Core\Caching\Application\` |
+| `Application/EventLoop` (`Status.php`, `Wrapper.php` — wraps the single shared ReactPHP event loop that both `HttpServer` and `WsServer` runtimes drive) | `Core\EventLoop\Application\` |
+| `Application/Presenters` (`BasePresenter.php`, `DefaultPresenter.php`) | `Core\Presenters\Application\` |
+| `Application/UI` (`TemplateFactory.php`) | `Core\UI\Application\` |
+| `JsonApi/Builder` (`Builder.php`, constructs a `Document` ready for encoding — output direction, pairs with `Encoder`/`SchemaContainer`/`Objects` below, not with `Hydrators`, which is input direction) | `Core\Encoding\JsonApi\` |
+| `JsonApi/Objects` (30 files: the JSON:API value-object hierarchy — `StandardObject`, `ResourceObject`, `ErrorObject`, `LinkObject`, `MetaObject`, `RelationshipObject`, `SourceObject` families, from the `ipub/json-api-document` absorption, PR #449) | `Core\Encoding\JsonApi\Objects\` (internal `Objects\` subfolder preserved as-is under the domain slice — only the top-level type/domain placement changes, not JsonApi's own internal structure) |
+| `JsonApi/Document.php`, `IDocument.php` (top-level, not inside a subfolder) | `Core\Encoding\JsonApi\` |
+| `JsonApi/JsonApi/` (**resolved** — actually contains `Encoder.php` + `SchemaContainer.php`, not `Document.php` as an earlier pass of this spec mis-stated; corrected here) | `Core\Encoding\JsonApi\` |
 | `DoctrineCrud/StringFunctions` | `Core\Helpers\DoctrineCrud\` |
-| `WebSockets/Clients` | `Core\Clients\WebSockets\` |
-| `WebSockets/Logger` | `Core\Helpers\WebSockets\` |
+| `WebSockets/Clients` (**resolved, moved from an earlier draft's `Core\Clients\WebSockets\`** — `ClientFactory`, `IClientFactory`, `Storage`, `IStorage`, `Drivers/`; this is live-connection state for *this* running server process, not shared WAMP protocol, so it belongs with the runtime) | `Core\Clients\WsServer\` |
+| `WebSockets/Logger` (**resolved, moved from an earlier draft's `Core\Helpers\WebSockets\`** — `Console.php`, `Formatter/`; console output formatting for the `fb:web-server:start`/`fb:ws-server:start` command, runtime-specific) | `Core\Helpers\WsServer\` |
 | `WebSockets/Server`, `WebSockets/Wamp/*` | `Core\<Type>\WsServer\` for `Server\*` (D7); everything else in `Wamp\*` distributes into the matching generic type bucket tagged `WebSockets` (D8), e.g. `Wamp/Events/*` → `Core\Events\WebSockets\` |
 | `WebSockets/Encoding`, `WebSockets/Protocols` | `Core\Encoding\WebSockets\` |
 | `WebServer/Server`, `WebServer/Utils` | `Core\<Type>\HttpServer\` (D7) |
-| `Exchange/Consumers`, `Exchange/Publisher`, `Exchange/Exchange` | needs review — open question 1 |
-| `WebServer/Application` (the HTTP-serving plugin's own `Application/` folder — a *third*, unrelated use of the word "Application", next to the `Core/Application` former-package name and `WebSockets/Application/Controller/*`'s request-handling framework) | needs review — same collision family as open question 1 |
+| `WebServer/Application` (**resolved** — `Application.php` is the "Base application service": the actual PSR-7 HTTP request-dispatch runtime, built on `SlimRouter\Routing`. This is Server-runtime code exactly like `WebSockets\Server\Server`, not a routing framework other extensions build against — no genuine collision with the `Core/Application` former-package name once you see what's inside, it simply lands under a completely different domain tag) | `Core\<Type>\HttpServer\` (D7), alongside `Server`/`Utils` |
+| `Exchange/Exchange/Factory.php` (**resolved** — a single factory interface for creating Exchange/message-bus instances; no existing generic bucket fits, gets a minimal new one) | `Core\Factories\Exchange\` |
+| `Exchange/Consumers`, `Exchange/Publisher` | `Core\Persistence\Exchange\` — **needs one more look**: `Consumers`/`Publisher` are message-bus plumbing, not data persistence in the ORM sense that the rest of the `Persistence` bucket covers (`DoctrineCrud/Crud`, `SimpleAuth/Models`/`Queries`, `Application/ObjectMapper`, `JsonApi/Hydrators`). A cleaner name for that bucket might be `Messaging` for Exchange's slice specifically, or the bucket should split in two. Flagged for the plan-writing pass rather than decided here. |
 
 ## Appendix B: full exception class inventory
 
