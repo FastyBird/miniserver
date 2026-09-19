@@ -119,7 +119,7 @@
                 <element key="src/FastyBird/Core/Tools/tests/cases/unit" value="FastyBird\Core\Tools\Tests\Cases\Unit"/>
 
                 <element key="src/FastyBird/Library/DateTimeFactory/src" value="FastyBird\Library\DateTimeFactory"/>
-                <element key="src/FastyBird/Library/DoctrinePhone/src" value="FastyBird\Library\DoctrinePhone"/>
+                <element key="src/FastyBird/Library/Phone/src" value="FastyBird\Library\Phone"/>
                 <element key="src/FastyBird/Library/DoctrineOrmQuery/src" value="FastyBird\Library\DoctrineOrmQuery"/>
                 <element key="src/FastyBird/Library/DoctrineCrud/src" value="FastyBird\Library\DoctrineCrud"/>
                 <element key="src/FastyBird/Library/DoctrineTimestampable/src" value="FastyBird\Library\DoctrineTimestampable"/>

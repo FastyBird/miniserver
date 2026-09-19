@@ -26,13 +26,9 @@ namespace FastyBird\Library\Phone;
 trait TPhone
 {
 
-	/** @var Phone */
 	protected Phone $phone;
 
-	/**
-	 * @param Phone $phone
-	 */
-	public function injectPhone(Phone $phone)
+	public function injectPhone(Phone $phone): void
 	{
 		$this->phone = $phone;
 	}

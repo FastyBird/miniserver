@@ -15,11 +15,16 @@
 
 namespace FastyBird\Library\Phone\Entities;
 
-use FastyBird\Library\Phone;
 use FastyBird\Library\Phone\Exceptions;
+use FastyBird\Library\Phone\Phone as PhoneHelper;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
 use Nette;
+use function ctype_alpha;
+use function in_array;
+use function sprintf;
+use function strlen;
+use function strtoupper;
 
 /**
  * Phone number entity
@@ -36,108 +41,77 @@ class Phone
 
 	/**
 	 * The country code
-	 *
-	 * @var int|null
 	 */
-	protected ?int $countryCode = null;
+	protected int|null $countryCode = null;
 
 	/**
 	 * The national number
-	 *
-	 * @var string|null
 	 */
-	protected ?string $nationalNumber = null;
+	protected string|null $nationalNumber = null;
 
 	/**
 	 * The international number
-	 *
-	 * @var string|null
 	 */
-	protected ?string $internationalNumber = null;
+	protected string|null $internationalNumber = null;
 
 	/**
 	 * The extension
-	 *
-	 * @var string|null
 	 */
-	protected ?string $extension = null;
+	protected string|null $extension = null;
 
 	/**
 	 * Whether this phone number uses an italian leading zero
-	 *
-	 * @var bool
 	 */
 	protected bool $italianLeadingZero = false;
 
 	/**
 	 * The number of leading zeros of this phone number
-	 *
-	 * @var int|null
 	 */
-	protected ?int $numberOfLeadingZeros;
+	protected int|null $numberOfLeadingZeros;
 
 	/**
 	 * The raw input
-	 *
-	 * @var string|null
 	 */
-	protected ?string $rawOutput = null;
+	protected string|null $rawOutput = null;
 
 	/**
 	 * The RFC3966 number format
-	 *
-	 * @var string|null
 	 */
-	protected ?string $rfcFormat = null;
+	protected string|null $rfcFormat = null;
 
 	/**
 	 * Phone number type
-	 *
-	 * @var string
 	 */
 	protected string $type;
 
 	/**
 	 * Carrier name
-	 *
-	 * @var string|null
 	 */
-	protected ?string $carrier;
+	protected string|null $carrier;
 
 	/**
 	 * Country name
-	 *
-	 * @var string|null
 	 */
-	protected ?string $country;
+	protected string|null $country;
 
 	/**
 	 * List of time zones
 	 *
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected array $timeZones = [];
 
-	/**
-	 * @param string $rawInput
-	 * @param string $rfcFormat
-	 * @param string $nationalNumber
-	 * @param string $internationalNumber
-	 * @param int $countryCode
-	 * @param string $country
-	 * @param string $type
-	 * @param string|null $carrierName
-	 */
 	public function __construct(
 		string $rawInput,
 		string $rfcFormat,
 		string $nationalNumber,
 		string $internationalNumber,
-		?int $countryCode,
-		?string $country,
+		int|null $countryCode,
+		string|null $country,
 		string $type,
-		?string $carrierName = null
-	) {
+		string|null $carrierName = null,
+	)
+	{
 		$this->rawOutput = $rawInput;
 		$this->rfcFormat = $rfcFormat;
 
@@ -153,161 +127,10 @@ class Phone
 	}
 
 	/**
-	 * @return int|null
+	 * @throws Exceptions\NoValidCountry
+	 * @throws Exceptions\NoValidPhone
 	 */
-	public function getCountryCode(): ?int
-	{
-		return $this->countryCode;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public function getNationalNumber(): ?string
-	{
-		return $this->nationalNumber;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public function getInternationalNumber(): ?string
-	{
-		return $this->internationalNumber;
-	}
-
-	/**
-	 * @param string $extension
-	 *
-	 * @return void
-	 */
-	public function setExtension(string $extension): void
-	{
-		$this->extension = $extension;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public function getExtension(): ?string
-	{
-		return $this->extension;
-	}
-
-	/**
-	 * @param bool $italianLeadingZero
-	 *
-	 * @return void
-	 */
-	public function setItalianLeadingZero(bool $italianLeadingZero): void
-	{
-		$this->italianLeadingZero = $italianLeadingZero;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function getItalianLeadingZero(): bool
-	{
-		return $this->italianLeadingZero;
-	}
-
-	/**
-	 * @param int $numberOfLeadingZeros
-	 *
-	 * @return void
-	 */
-	public function setNumberOfLeadingZeros(int $numberOfLeadingZeros): void
-	{
-		$this->numberOfLeadingZeros = $numberOfLeadingZeros;
-	}
-
-	/**
-	 * @return int|null
-	 */
-	public function getNumberOfLeadingZeros(): ?int
-	{
-		return $this->numberOfLeadingZeros;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public function getRawOutput(): ?string
-	{
-		return $this->rawOutput;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public function getRfcFormat(): ?string
-	{
-		return $this->rfcFormat;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getType(): string
-	{
-		return $this->type;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public function getCarrier(): ?string
-	{
-		return $this->carrier;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public function getCountry(): ?string
-	{
-		return $this->country;
-	}
-
-	/**
-	 * @param string[] $timeZones
-	 *
-	 * @return void
-	 */
-	public function setTimeZones(array $timeZones): void
-	{
-		$this->timeZones = $timeZones;
-	}
-
-	/**
-	 * @return string[]
-	 */
-	public function getTimeZones(): array
-	{
-		return $this->timeZones;
-	}
-
-	/**
-	 * @param string $timeZone
-	 *
-	 * @return bool
-	 */
-	public function isInTimeZone($timeZone): bool
-	{
-		return in_array($timeZone, $this->timeZones, true);
-	}
-
-	/**
-	 * @param string $number
-	 * @param string $country
-	 *
-	 * @return Phone
-	 *
-	 * @throws Exceptions\NoValidCountryException
-	 * @throws Exceptions\NoValidPhoneException
-	 */
-	public static function fromNumber(string $number, string $country = 'AUTO'): Phone
+	public static function fromNumber(string $number, string $country = 'AUTO'): self
 	{
 		$phoneNumberUtil = libphonenumber\PhoneNumberUtil::getInstance();
 		$carrierMapper = libphonenumber\PhoneNumberToCarrierMapper::getInstance();
@@ -320,8 +143,17 @@ class Phone
 		if ($country === 'AUTO') {
 			$country = 'AUTO';
 
-		} elseif (strlen($country) !== 2 || ctype_alpha($country) === false || !in_array($country, $phoneNumberUtil->getSupportedRegions(), true)) {
-			throw new Exceptions\NoValidCountryException(sprintf('Provided country code "%s" is not valid. Provide valid country code or AUTO for automatic detection.', $country));
+		} elseif (strlen($country) !== 2 || ctype_alpha($country) === false || !in_array(
+			$country,
+			$phoneNumberUtil->getSupportedRegions(),
+			true,
+		)) {
+			throw new Exceptions\NoValidCountry(
+				sprintf(
+					'Provided country code "%s" is not valid. Provide valid country code or AUTO for automatic detection.',
+					$country,
+				),
+			);
 		}
 
 		try {
@@ -329,63 +161,88 @@ class Phone
 			$parsed = $phoneNumberUtil->parse($number, $country);
 
 			// Check if number is valid
-			if (($country === 'AUTO' && $phoneNumberUtil->isValidNumber($parsed) === false) || ($country !== 'AUTO' && $phoneNumberUtil->isValidNumberForRegion($parsed, $country) === false)) {
-				throw new Exceptions\NoValidPhoneException(sprintf('Provided phone number "%s" is not valid phone number. Provide valid phone number.', $number));
+			if (
+				(
+					$country === 'AUTO'
+					&& $phoneNumberUtil->isValidNumber($parsed) === false
+				)
+				|| (
+					$country !== 'AUTO'
+					&& $phoneNumberUtil->isValidNumberForRegion(
+						$parsed,
+						$country,
+					) === false
+				)
+			) {
+				throw new Exceptions\NoValidPhone(
+					sprintf(
+						'Provided phone number "%s" is not valid phone number. Provide valid phone number.',
+						$number,
+					),
+				);
 			}
-
 		} catch (libphonenumber\NumberParseException $ex) {
 			switch ($ex->getErrorType()) {
 				case libphonenumber\NumberParseException::INVALID_COUNTRY_CODE:
-					throw new Exceptions\NoValidCountryException('Missing or invalid country.');
-
+					throw new Exceptions\NoValidCountry('Missing or invalid country.');
 				case libphonenumber\NumberParseException::NOT_A_NUMBER:
-					throw new Exceptions\NoValidPhoneException('The string supplied did not seem to be a phone number.');
-
+					throw new Exceptions\NoValidPhone(
+						'The string supplied did not seem to be a phone number.',
+					);
 				case libphonenumber\NumberParseException::TOO_SHORT_AFTER_IDD:
-					throw new Exceptions\NoValidPhoneException('Phone number had an IDD, but after this was not long enough to be a viable phone number.');
-
+					throw new Exceptions\NoValidPhone(
+						'Phone number had an IDD, but after this was not long enough to be a viable phone number.',
+					);
 				case libphonenumber\NumberParseException::TOO_SHORT_NSN:
-					throw new Exceptions\NoValidPhoneException('The string supplied is too short to be a phone number.');
-
+					throw new Exceptions\NoValidPhone(
+						'The string supplied is too short to be a phone number.',
+					);
 				case libphonenumber\NumberParseException::TOO_LONG:
-					throw new Exceptions\NoValidPhoneException('The string supplied was too long to parse into phone number.');
-
+					throw new Exceptions\NoValidPhone(
+						'The string supplied was too long to parse into phone number.',
+					);
 				default:
-					throw new Exceptions\NoValidPhoneException(sprintf('Provided phone number "%s" is not valid phone number. Provide valid phone number.', $number));
+					throw new Exceptions\NoValidPhone(
+						sprintf(
+							'Provided phone number "%s" is not valid phone number. Provide valid phone number.',
+							$number,
+						),
+					);
 			}
 		}
 
 		switch ($phoneNumberUtil->getNumberType($parsed)) {
 			case libphonenumber\PhoneNumberType::MOBILE:
-				$numberType = Phone\Phone::TYPE_MOBILE;
-				break;
+				$numberType = PhoneHelper::TYPE_MOBILE;
 
+				break;
 			case libphonenumber\PhoneNumberType::FIXED_LINE:
-				$numberType = Phone\Phone::TYPE_FIXED_LINE;
-				break;
+				$numberType = PhoneHelper::TYPE_FIXED_LINE;
 
+				break;
 			case libphonenumber\PhoneNumberType::FIXED_LINE_OR_MOBILE:
-				$numberType = Phone\Phone::TYPE_FIXED_LINE_OR_MOBILE;
-				break;
+				$numberType = PhoneHelper::TYPE_FIXED_LINE_OR_MOBILE;
 
+				break;
 			case libphonenumber\PhoneNumberType::VOIP:
-				$numberType = Phone\Phone::TYPE_VOIP;
-				break;
+				$numberType = PhoneHelper::TYPE_VOIP;
 
+				break;
 			case libphonenumber\PhoneNumberType::PAGER:
-				$numberType = Phone\Phone::TYPE_PAGER;
-				break;
+				$numberType = PhoneHelper::TYPE_PAGER;
 
+				break;
 			case libphonenumber\PhoneNumberType::EMERGENCY:
-				$numberType = Phone\Phone::TYPE_EMERGENCY;
-				break;
+				$numberType = PhoneHelper::TYPE_EMERGENCY;
 
+				break;
 			case libphonenumber\PhoneNumberType::VOICEMAIL:
-				$numberType = Phone\Phone::TYPE_VOICEMAIL;
-				break;
+				$numberType = PhoneHelper::TYPE_VOICEMAIL;
 
+				break;
 			default:
-				$numberType = Phone\Phone::TYPE_UNKNOWN;
+				$numberType = PhoneHelper::TYPE_UNKNOWN;
+
 				break;
 		}
 
@@ -397,7 +254,7 @@ class Phone
 			$parsed->getCountryCode(),
 			$phoneNumberUtil->getRegionCodeForNumber($parsed),
 			$numberType,
-			$carrierMapper->getNameForNumber($parsed, 'en')
+			$carrierMapper->getNameForNumber($parsed, 'en'),
 		);
 
 		$entity->setItalianLeadingZero($parsed->hasItalianLeadingZero());
@@ -415,10 +272,98 @@ class Phone
 		return $entity;
 	}
 
+	public function getCountryCode(): int|null
+	{
+		return $this->countryCode;
+	}
+
+	public function getNationalNumber(): string|null
+	{
+		return $this->nationalNumber;
+	}
+
+	public function getInternationalNumber(): string|null
+	{
+		return $this->internationalNumber;
+	}
+
+	public function setExtension(string $extension): void
+	{
+		$this->extension = $extension;
+	}
+
+	public function getExtension(): string|null
+	{
+		return $this->extension;
+	}
+
+	public function setItalianLeadingZero(bool $italianLeadingZero): void
+	{
+		$this->italianLeadingZero = $italianLeadingZero;
+	}
+
+	public function getItalianLeadingZero(): bool
+	{
+		return $this->italianLeadingZero;
+	}
+
+	public function setNumberOfLeadingZeros(int $numberOfLeadingZeros): void
+	{
+		$this->numberOfLeadingZeros = $numberOfLeadingZeros;
+	}
+
+	public function getNumberOfLeadingZeros(): int|null
+	{
+		return $this->numberOfLeadingZeros;
+	}
+
+	public function getRawOutput(): string|null
+	{
+		return $this->rawOutput;
+	}
+
+	public function getRfcFormat(): string|null
+	{
+		return $this->rfcFormat;
+	}
+
+	public function getType(): string
+	{
+		return $this->type;
+	}
+
+	public function getCarrier(): string|null
+	{
+		return $this->carrier;
+	}
+
+	public function getCountry(): string|null
+	{
+		return $this->country;
+	}
+
 	/**
-	 * @return string
+	 * @param array<string> $timeZones
 	 */
-	public function __toString()
+	public function setTimeZones(array $timeZones): void
+	{
+		$this->timeZones = $timeZones;
+	}
+
+	/**
+	 * @return array<string>
+	 */
+	public function getTimeZones(): array
+	{
+		return $this->timeZones;
+	}
+
+	public function isInTimeZone(string $timeZone): bool
+	{
+		return in_array($timeZone, $this->timeZones, true);
+	}
+
+	public function __toString(): string
 	{
 		return (string) $this->rawOutput;
 	}

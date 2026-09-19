@@ -3026,43 +3026,6 @@
             }
         },
         {
-            "name": "fastybird/doctrine-phone-library",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "src/FastyBird/Library/DoctrinePhone",
-                "reference": "6b121cd3a1f51a61b77080542f85f0d1bc57eef6"
-            },
-            "require": {
-                "doctrine/orm": "^3.3",
-                "fastybird/phone-library": "@dev",
-                "nette/di": "^3.0",
-                "nette/utils": "^3.2||^4.0",
-                "php": ">=8.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "FastyBird\\Library\\DoctrinePhone\\": "src/"
-                }
-            },
-            "license": [
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "iPublikuj:cms",
-                    "email": "info@ipublikuj.eu",
-                    "homepage": "http://www.ipublikuj.eu/"
-                }
-            ],
-            "description": "Phone number manipulation for Nette Framework and Doctrine 2",
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
             "name": "fastybird/doctrine-timestampable-library",
             "version": "dev-main",
             "dist": {
@@ -3616,13 +3579,15 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Library/Phone",
-                "reference": "bd48c4aad2aaa28f0440036973986141f3af73ae"
+                "reference": "7d6df0f10cd67d3916633da4c7c24dc6c5bfb33c"
             },
             "require": {
+                "doctrine/orm": "^3.3",
                 "ext-ctype": "*",
                 "ext-intl": "*",
                 "giggsey/libphonenumber-for-php": "^8.12",
                 "nette/di": "^3.0",
+                "nette/utils": "^3.2||^4.0",
                 "php": ">=8.4.0"
             },
             "type": "library",
@@ -4376,7 +4341,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Triggers",
-                "reference": "93f89f510853e15373d620b2f70949038206aa51"
+                "reference": "b2a7f8fc85e8a47e850f48823a95ad03455f5aaa"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4385,7 +4350,6 @@
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/application": "@dev",
                 "fastybird/doctrine-orm-query-library": "@dev",
-                "fastybird/doctrine-phone-library": "@dev",
                 "fastybird/exchange": "@dev",
                 "fastybird/json-api-library": "@dev",
                 "fastybird/metadata-library": "@dev",

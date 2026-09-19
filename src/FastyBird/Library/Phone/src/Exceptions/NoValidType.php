@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * InvalidArgumentException.php
+ * NoValidType.php
  *
  * @copyright      More in LICENSE.md
  * @license        http://www.ipublikuj.eu
@@ -15,9 +15,7 @@
 
 namespace FastyBird\Library\Phone\Exceptions;
 
-use InvalidArgumentException as PHPInvalidArgumentException;
-
-class InvalidArgumentException extends PHPInvalidArgumentException implements IException
+class NoValidType extends InvalidArgument
 {
 
 }

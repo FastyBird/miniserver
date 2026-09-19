@@ -21,7 +21,7 @@ extensions:
     nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
     nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
     ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
-    ipubDoctrinePhone                   : FastyBird\Library\DoctrinePhone\DI\DoctrinePhoneExtension
+    ipubDoctrinePhone                   : FastyBird\Library\Phone\DI\DoctrinePhoneExtension
     ipubDoctrineTimestampable           : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     ipubPhone                           : FastyBird\Library\Phone\DI\PhoneExtension
     fbDateTimeFactory                   : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension

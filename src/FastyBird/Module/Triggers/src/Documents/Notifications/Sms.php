@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Triggers\Documents\Notifications;
 
 use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Module\Triggers\Entities;
 use FastyBird\Library\Phone\Entities as PhoneEntities;
 use FastyBird\Library\Phone\Exceptions as PhoneExceptions;
+use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
@@ -50,8 +50,8 @@ final class Sms extends Notification
 	}
 
 	/**
-	 * @throws PhoneExceptions\NoValidCountryException
-	 * @throws PhoneExceptions\NoValidPhoneException
+	 * @throws PhoneExceptions\NoValidCountry
+	 * @throws PhoneExceptions\NoValidPhone
 	 */
 	public function getPhone(): PhoneEntities\Phone
 	{
@@ -59,8 +59,8 @@ final class Sms extends Notification
 	}
 
 	/**
-	 * @throws PhoneExceptions\NoValidCountryException
-	 * @throws PhoneExceptions\NoValidPhoneException
+	 * @throws PhoneExceptions\NoValidCountry
+	 * @throws PhoneExceptions\NoValidPhone
 	 */
 	public function toArray(): array
 	{

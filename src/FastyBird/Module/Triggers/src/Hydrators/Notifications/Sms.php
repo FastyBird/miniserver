@@ -17,10 +17,10 @@ namespace FastyBird\Module\Triggers\Hydrators\Notifications;
 
 use Doctrine\Persistence;
 use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Library\Phone;
 use FastyBird\Module\Triggers\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\JsonAPIDocument;
-use FastyBird\Library\Phone;
 use Nette\Localization;
 use function is_scalar;
 use function strval;
@@ -59,9 +59,9 @@ final class Sms extends Notification
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
-	 * @throws Phone\Exceptions\NoValidCountryException
-	 * @throws Phone\Exceptions\NoValidPhoneException
-	 * @throws Phone\Exceptions\NoValidTypeException
+	 * @throws Phone\Exceptions\NoValidCountry
+	 * @throws Phone\Exceptions\NoValidPhone
+	 * @throws Phone\Exceptions\NoValidType
 	 */
 	protected function hydratePhoneAttribute(
 		JsonAPIDocument\Objects\IStandardObject $attributes,

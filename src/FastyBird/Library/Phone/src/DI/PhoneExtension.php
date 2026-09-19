@@ -31,24 +31,16 @@ use Nette\DI;
 final class PhoneExtension extends DI\CompilerExtension
 {
 
-	/**
-	 * @param Nette\Configurator $config
-	 * @param string $extensionName
-	 *
-	 * @return void
-	 */
 	public static function register(
 		Nette\Configurator $config,
-		string $extensionName = 'phone'
-	): void {
-		$config->onCompile[] = function (Nette\Configurator $config, Nette\DI\Compiler $compiler) use ($extensionName): void {
-			$compiler->addExtension($extensionName, new PhoneExtension());
+		string $extensionName = 'phone',
+	): void
+	{
+		$config->onCompile[] = static function (Nette\Configurator $config, Nette\DI\Compiler $compiler) use ($extensionName): void {
+			$compiler->addExtension($extensionName, new self());
 		};
 	}
 
-	/**
-	 * @return void
-	 */
 	public function loadConfiguration(): void
 	{
 		// Get container builder
