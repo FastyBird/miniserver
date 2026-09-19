@@ -18,7 +18,7 @@ namespace FastyBird\Plugin\RedisDb\Models\States;
 use BackedEnum;
 use DateTimeInterface;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;

@@ -6,7 +6,7 @@ use BackedEnum;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\Models;

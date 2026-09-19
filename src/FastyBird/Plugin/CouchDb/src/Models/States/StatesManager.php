@@ -18,7 +18,7 @@ namespace FastyBird\Plugin\CouchDb\Models\States;
 use BackedEnum;
 use DateTimeInterface;
 use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use FastyBird\Library\Metadata\Types as MetadataTypes;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Events;

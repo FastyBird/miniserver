@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Helpers;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use Exception;
-use FastyBird\DateTimeFactory;
+use FastyBird\Library\DateTimeFactory;
 use Nette;
 use Nette\Utils;
 use function assert;
