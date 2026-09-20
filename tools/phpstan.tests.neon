@@ -49,10 +49,7 @@ parameters:
         - ../src/FastyBird/Connector/Viera/tests/cases
         - ../src/FastyBird/Connector/Virtual/tests/cases
         - ../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases
-        - ../src/FastyBird/Core/Application/tests/cases
-        - ../src/FastyBird/Core/Exchange/tests/cases
-        - ../src/FastyBird/Core/Tools/tests/cases
-        - ../src/FastyBird/Library/Metadata/tests/cases
+        - ../src/FastyBird/Core/Core/tests/cases
         - ../src/FastyBird/Module/Accounts/tests/cases
         - ../src/FastyBird/Module/Devices/tests/cases
         - ../src/FastyBird/Module/Triggers/tests/cases
@@ -62,8 +59,6 @@ parameters:
         - ../src/FastyBird/Plugin/RabbitMq/tests/cases
         - ../src/FastyBird/Plugin/RedisDb/tests/cases
         - ../src/FastyBird/Plugin/RedisDbCache/tests/cases
-        - ../src/FastyBird/Plugin/WebServer/tests/cases
-        - ../src/FastyBird/Plugin/WsServer/tests/cases
 
     scanDirectories:
         - ../src/FastyBird/Addon/VirtualThermostat/src
@@ -85,10 +80,7 @@ parameters:
         - ../src/FastyBird/Connector/Viera/src
         - ../src/FastyBird/Connector/Virtual/src
         - ../src/FastyBird/Connector/Zigbee2Mqtt/src
-        - ../src/FastyBird/Core/Application/src
-        - ../src/FastyBird/Core/Exchange/src
-        - ../src/FastyBird/Core/Tools/src
-        - ../src/FastyBird/Library/Metadata/src
+        - ../src/FastyBird/Core/Core/src
         - ../src/FastyBird/Module/Accounts/src
         - ../src/FastyBird/Module/Devices/src
         - ../src/FastyBird/Module/Triggers/src
@@ -98,5 +90,3 @@ parameters:
         - ../src/FastyBird/Plugin/RabbitMq/src
         - ../src/FastyBird/Plugin/RedisDb/src
         - ../src/FastyBird/Plugin/RedisDbCache/src
-        - ../src/FastyBird/Plugin/WebServer/src
-        - ../src/FastyBird/Plugin/WsServer/src

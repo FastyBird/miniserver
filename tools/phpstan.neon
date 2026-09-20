@@ -55,11 +55,8 @@ parameters:
         - ../src/FastyBird/Connector/Viera/src
         - ../src/FastyBird/Connector/Virtual/src
         - ../src/FastyBird/Connector/Zigbee2Mqtt/src
-        - ../src/FastyBird/Core/Application/src
-        - ../src/FastyBird/Core/Application/bin
-        - ../src/FastyBird/Core/Exchange/src
-        - ../src/FastyBird/Core/Tools/src
-        - ../src/FastyBird/Library/Metadata/src
+        - ../src/FastyBird/Core/Core/src
+        - ../src/FastyBird/Core/Core/bin
         - ../src/FastyBird/Module/Accounts/src
         - ../src/FastyBird/Module/Devices/src
         - ../src/FastyBird/Module/Triggers/src
@@ -69,9 +66,7 @@ parameters:
         - ../src/FastyBird/Plugin/RabbitMq/src
         - ../src/FastyBird/Plugin/RedisDb/src
         - ../src/FastyBird/Plugin/RedisDbCache/src
-        - ../src/FastyBird/Plugin/WebServer/src
-        - ../src/FastyBird/Plugin/WsServer/src
 
     excludePaths:
         analyseAndScan:
-            - ../src/FastyBird/Core/Application/src/EventLoop/Wrapper.php
+            - ../src/FastyBird/Core/Core/src/EventLoop/Application/Wrapper.php
