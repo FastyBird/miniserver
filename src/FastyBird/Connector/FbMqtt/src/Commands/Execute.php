@@ -18,7 +18,7 @@ namespace FastyBird\Connector\FbMqtt\Commands;
 use FastyBird\Connector\FbMqtt\Documents;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Queries;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;

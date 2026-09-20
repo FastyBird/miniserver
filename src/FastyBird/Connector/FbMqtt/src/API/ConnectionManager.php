@@ -18,7 +18,7 @@ namespace FastyBird\Connector\FbMqtt\API;
 use FastyBird\Connector\FbMqtt\Documents;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
 use TypeError;

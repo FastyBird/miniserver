@@ -20,7 +20,7 @@ use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use Ramsey\Uuid;
 use function array_key_exists;
 use function preg_match;

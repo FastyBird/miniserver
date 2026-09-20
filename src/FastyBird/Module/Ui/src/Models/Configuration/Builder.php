@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Models\Configuration;
 
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Ui\Caching;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;

@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Orisai\ObjectMapper;
 
 /**

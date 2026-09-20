@@ -18,7 +18,7 @@ namespace FastyBird\Connector\HomeKit\Controllers;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Servers;
-use FastyBird\Library\SlimRouter;
+use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
@@ -151,7 +151,7 @@ final class DiagnosticsController extends BaseController
 
 		$response = $response->withStatus(StatusCodeInterface::STATUS_OK);
 		$response = $response->withHeader('Content-Type', 'application/json');
-		$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode($result)));
+		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode($result)));
 
 		return $response;
 	}

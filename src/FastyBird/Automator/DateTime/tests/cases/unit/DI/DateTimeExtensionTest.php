@@ -6,7 +6,7 @@ use Error;
 use FastyBird\Automator\DateTime\Hydrators;
 use FastyBird\Automator\DateTime\Schemas;
 use FastyBird\Automator\DateTime\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;

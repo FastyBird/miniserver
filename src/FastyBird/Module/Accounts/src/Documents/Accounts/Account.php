@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Accounts\Documents\Accounts;
 
 use DateTimeInterface;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
@@ -49,7 +49,7 @@ final readonly class Account implements ApplicationDocuments\Document
 	 * @param array<int, Uuid\UuidInterface> $children
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		#[ObjectMapper\Modifiers\FieldName('first_name')]
@@ -87,12 +87,12 @@ final readonly class Account implements ApplicationDocuments\Document
 		#[ObjectMapper\Modifiers\FieldName('last_visit')]
 		private DateTimeInterface|null $lastVisit = null,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		private Uuid\UuidInterface|null $parent = null,
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 		)]
 		private array $children = [],
 	)

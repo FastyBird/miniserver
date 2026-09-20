@@ -18,7 +18,7 @@ namespace FastyBird\Module\Ui\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;

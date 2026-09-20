@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Devices\Middleware;
 
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\SlimRouter;
-use FastyBird\Library\SlimRouter\Http;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Http\SlimRouter;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Router;
 use InvalidArgumentException;
@@ -53,9 +53,9 @@ final readonly class UrlFormat implements MiddlewareInterface
 	{
 		$response = $handler->handle($request);
 
-		$route = $request->getAttribute(SlimRouter\Routing\Router::ROUTE);
+		$route = $request->getAttribute(SlimRouterRouting\Router::ROUTE);
 
-		if ($route instanceof SlimRouter\Routing\Route) {
+		if ($route instanceof SlimRouterRouting\Route) {
 			$body = $response->getBody();
 			$body->rewind();
 

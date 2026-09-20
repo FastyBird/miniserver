@@ -3,7 +3,7 @@
 namespace FastyBird\Plugin\RabbitMq\Tests\Cases\Unit\Connections;
 
 use Error;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Plugin\RabbitMq\Connections;
 use FastyBird\Plugin\RabbitMq\Tests;
 use Nette;

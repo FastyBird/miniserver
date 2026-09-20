@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Orisai\ObjectMapper;
 use TypeError;
 use ValueError;

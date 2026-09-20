@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Documents;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Ramsey\Uuid;
 
 /**

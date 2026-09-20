@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Documents\Connectors;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
 

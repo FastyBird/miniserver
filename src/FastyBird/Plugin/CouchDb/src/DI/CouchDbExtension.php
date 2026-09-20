@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\CouchDb\DI;
 
-use FastyBird\Core\Application\Boot as ApplicationBoot;
+use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Models;
 use Nette\Bootstrap;

@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Ui\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
-use FastyBird\Library\DoctrineCrud;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Schemas;
 
 #[ORM\Entity]

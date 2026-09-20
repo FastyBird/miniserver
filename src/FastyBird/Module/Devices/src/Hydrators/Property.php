@@ -15,11 +15,11 @@
 
 namespace FastyBird\Module\Devices\Hydrators;
 
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;

@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\DI;
 
 use Error;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Accounts\Commands;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Exceptions;

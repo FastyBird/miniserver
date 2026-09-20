@@ -17,11 +17,11 @@ namespace FastyBird\Module\Devices\Subscribers;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\EventLoop\Status;
-use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\EventLoop\Application\Status;
+use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Documents;

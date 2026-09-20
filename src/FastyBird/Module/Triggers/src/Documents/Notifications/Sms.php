@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Triggers\Documents\Notifications;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Library\Phone\Entities as PhoneEntities;
-use FastyBird\Library\Phone\Exceptions as PhoneExceptions;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Entities\Phone as PhoneEntities;
+use FastyBird\Core\Exceptions\Phone as PhoneExceptions;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;

@@ -24,10 +24,10 @@ use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Writers;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exchange\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -94,7 +94,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exceptions\InvalidArgument

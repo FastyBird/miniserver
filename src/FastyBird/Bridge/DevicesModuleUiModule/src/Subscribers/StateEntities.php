@@ -17,9 +17,9 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
-use FastyBird\Core\Application\EventLoop as ApplicationEventLoop;
-use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
+use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Ui;

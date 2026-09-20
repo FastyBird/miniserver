@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_map;
@@ -35,11 +35,11 @@ final readonly class StoreDeviceState implements Message
 	 * @param array<CapabilityState> $state
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $connector,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $gateway,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $device,
 		#[ObjectMapper\Rules\ArrayOf(
 			new ObjectMapper\Rules\MappedObjectValue(CapabilityState::class),

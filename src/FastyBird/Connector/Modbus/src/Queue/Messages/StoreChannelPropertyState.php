@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Modbus\Queue\Messages;
 
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
@@ -34,9 +34,9 @@ final class StoreChannelPropertyState extends Device
 	public function __construct(
 		Uuid\UuidInterface $connector,
 		Uuid\UuidInterface $device,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $channel,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),

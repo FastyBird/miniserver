@@ -11,10 +11,10 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Tests;
-use FastyBird\Core\Application\EventLoop as ApplicationEventLoop;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\SlimRouter\Http as SlimRouterHttp;
+use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\RequestMethodInterface;
@@ -42,7 +42,7 @@ final class AccessoriesTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState

@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Devices\Entities\Connectors\Properties;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use Nette\Utils;

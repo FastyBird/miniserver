@@ -17,8 +17,8 @@ namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Library\DoctrineTimestampable;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Entities;
 use Nette\Utils;
 use Ramsey\Uuid;

@@ -18,7 +18,7 @@ namespace FastyBird\Connector\HomeKit\Clients;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Nette\Utils;
 use React\EventLoop;

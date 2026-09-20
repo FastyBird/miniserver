@@ -4,10 +4,10 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Entities;
 
 use Doctrine\DBAL;
 use Error;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;

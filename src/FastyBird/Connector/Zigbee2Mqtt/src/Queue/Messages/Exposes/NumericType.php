@@ -16,10 +16,10 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Formats as ToolsFormats;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Formats\Tools as ToolsFormats;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Orisai\ObjectMapper;
 use TypeError;
 use ValueError;

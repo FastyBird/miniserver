@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Commands;
 
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
@@ -100,7 +100,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
@@ -130,7 +130,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
@@ -206,7 +206,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
@@ -273,7 +273,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
@@ -513,7 +513,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError
@@ -576,7 +576,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError
@@ -705,7 +705,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError
@@ -882,7 +882,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState
 	 * @throws TypeError

@@ -18,7 +18,7 @@ namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Ramsey\Uuid;
 
 /**

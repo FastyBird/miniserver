@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Roles;
 
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Schemas;
 use function is_scalar;

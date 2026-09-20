@@ -5,7 +5,7 @@ namespace FastyBird\Connector\NsPanel\Tests\Cases\Unit\API\Messages\Request;
 use Error;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;

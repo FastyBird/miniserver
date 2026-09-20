@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Viera\Queue;
 
 use FastyBird\Connector\Viera;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use SplQueue;
 

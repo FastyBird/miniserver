@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Documents\States\Channels\Properties\Actions;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
@@ -45,9 +45,9 @@ final readonly class Action implements ApplicationDocuments\Document
 	public function __construct(
 		#[ObjectMapper\Rules\BackedEnumValue(class: Types\PropertyAction::class)]
 		private Types\PropertyAction $action,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $channel,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: Documents\States\ActionValues::class),

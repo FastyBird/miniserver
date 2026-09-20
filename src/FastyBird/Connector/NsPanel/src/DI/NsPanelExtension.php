@@ -35,10 +35,9 @@ use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Services;
 use FastyBird\Connector\NsPanel\Subscribers;
 use FastyBird\Connector\NsPanel\Writers;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\DI as ApplicationDI;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Exchange\DI as ExchangeDI;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI;
@@ -104,7 +103,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			->setArguments([
 				'logger' => $logger,
 			])
-			->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
+			->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
 
 		/**
 		 * CLIENTS
@@ -1075,7 +1074,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(ApplicationDI\ApplicationExtension::DRIVER_TAG);
+		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

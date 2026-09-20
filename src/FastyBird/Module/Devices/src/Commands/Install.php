@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Devices\Commands;
 
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use Nette\Localization;
 use Symfony\Component\Console;

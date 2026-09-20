@@ -26,12 +26,12 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Formats as ToolsFormats;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Formats\Tools as ToolsFormats;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -112,7 +112,7 @@ class Loader
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState

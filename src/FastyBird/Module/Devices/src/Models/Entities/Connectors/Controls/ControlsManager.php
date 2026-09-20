@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Devices\Models\Entities\Connectors\Controls;
 
 use Doctrine\DBAL;
-use FastyBird\Library\DoctrineCrud\Crud as DoctrineCrudCrud;
-use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Models;

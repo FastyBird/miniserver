@@ -17,11 +17,11 @@ namespace FastyBird\Module\Accounts\Entities\Roles;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
-use FastyBird\Core\SimpleAuth\Entities as SimpleAuthEntities;
-use FastyBird\Core\SimpleAuth\Types as SimpleAuthTypes;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
-use FastyBird\Library\DoctrineTimestampable;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
+use FastyBird\Core\Types\SimpleAuth as SimpleAuthTypes;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Configuration\DoctrineTimestampable;
 use FastyBird\Module\Accounts\Entities;
 use Ramsey\Uuid;
 use function array_map;

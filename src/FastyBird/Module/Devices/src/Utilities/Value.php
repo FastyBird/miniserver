@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Utilities;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use function in_array;
 
 /**

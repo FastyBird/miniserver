@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Accounts\Router;
 
-use FastyBird\Core\SimpleAuth\Middleware as SimpleAuthMiddleware;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Routing\SlimRouter;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Middleware;

@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Module\Ui\Entities;
 use function array_merge;
 

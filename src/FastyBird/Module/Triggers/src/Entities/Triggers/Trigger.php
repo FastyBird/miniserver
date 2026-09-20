@@ -17,9 +17,9 @@ namespace FastyBird\Module\Triggers\Entities\Triggers;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\SimpleAuth\Entities as SimpleAuthEntities;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
-use FastyBird\Library\DoctrineTimestampable;
+use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Configuration\DoctrineTimestampable;
 use FastyBird\Module\Triggers\Entities;
 use Nette\Utils;
 use Ramsey\Uuid;

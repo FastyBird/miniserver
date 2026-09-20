@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Ui\Models\Entities\Widgets\Displays;
 
 use Doctrine\DBAL;
-use FastyBird\Library\DoctrineCrud\Crud as DoctrineCrudCrud;
-use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Events;
 use FastyBird\Module\Ui\Models;

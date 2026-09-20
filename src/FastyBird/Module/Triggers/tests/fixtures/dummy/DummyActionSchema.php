@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Triggers\Schemas;
 use Neomerx\JsonApi;
 use function array_merge;

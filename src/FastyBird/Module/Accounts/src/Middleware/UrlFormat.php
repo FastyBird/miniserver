@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Accounts\Middleware;
 
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\SlimRouter\Http;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Http\SlimRouter;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;

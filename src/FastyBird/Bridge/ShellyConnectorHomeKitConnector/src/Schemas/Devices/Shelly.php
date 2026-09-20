@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas\Devices;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Schemas as HomeKitSchemas;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 
 /**
  * Shelly device entity schema

@@ -29,10 +29,9 @@ use FastyBird\Connector\Tuya\Schemas;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Subscribers;
 use FastyBird\Connector\Tuya\Writers;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\DI as ApplicationDI;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Exchange\DI as ExchangeDI;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI;
@@ -97,7 +96,7 @@ class TuyaExtension extends DI\CompilerExtension implements Translation\DI\Trans
 			->setArguments([
 				'logger' => $logger,
 			])
-			->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
+			->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
 
 		/**
 		 * SERVICES & FACTORIES
@@ -367,7 +366,7 @@ class TuyaExtension extends DI\CompilerExtension implements Translation\DI\Trans
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(ApplicationDI\ApplicationExtension::DRIVER_TAG);
+		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

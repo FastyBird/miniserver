@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Security;
 
-use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Models;

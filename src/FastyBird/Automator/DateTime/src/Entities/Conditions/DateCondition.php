@@ -17,8 +17,8 @@ namespace FastyBird\Automator\DateTime\Entities\Conditions;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Ramsey\Uuid;
 use function array_merge;

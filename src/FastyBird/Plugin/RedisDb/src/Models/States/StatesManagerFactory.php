@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\RedisDb\Models\States;
 
-use FastyBird\Library\DateTimeFactory;
+use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;

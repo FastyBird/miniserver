@@ -2,7 +2,7 @@
 
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Fixtures\Dummy;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 
 final class DummyDeviceSchema extends DevicesSchemas\Devices\Device

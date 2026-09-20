@@ -17,9 +17,9 @@ namespace FastyBird\Automator\DateTime\DI;
 
 use FastyBird\Automator\DateTime\Hydrators;
 use FastyBird\Automator\DateTime\Schemas;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\DI as ApplicationDI;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nettrine\ORM as NettrineORM;
@@ -96,7 +96,7 @@ class DateTimeExtension extends DI\CompilerExtension
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(ApplicationDI\ApplicationExtension::DRIVER_TAG);
+		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

@@ -16,9 +16,9 @@
 namespace FastyBird\Automator\DevicesModule\Schemas\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Triggers\Schemas as TriggersSchemas;
 use Neomerx\JsonApi;
 use TypeError;

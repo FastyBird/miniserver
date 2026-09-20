@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Accounts\Models\Entities\Emails;
 
 use Doctrine\DBAL;
-use FastyBird\Library\DoctrineCrud\Crud as DoctrineCrudCrud;
-use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Models;
 use Nette;

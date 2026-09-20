@@ -18,8 +18,8 @@ namespace FastyBird\Connector\Viera\Entities\Connectors;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Viera\Entities;
 use FastyBird\Connector\Viera\Exceptions;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 
 #[ORM\Entity]

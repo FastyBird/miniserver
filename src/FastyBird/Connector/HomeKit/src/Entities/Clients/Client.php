@@ -17,9 +17,9 @@ namespace FastyBird\Connector\HomeKit\Entities\Clients;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Library\DoctrineCrud;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
-use FastyBird\Library\DoctrineTimestampable;
+use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Configuration\DoctrineTimestampable;
 use Ramsey\Uuid;
 use function is_resource;
 use function rewind;

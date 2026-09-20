@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Presenters;
 
-use FastyBird\Core\Application\Presenters as ApplicationPresenters;
+use FastyBird\Core\Presenters\Application as ApplicationPresenters;
 use Nette\Application;
 
 /**

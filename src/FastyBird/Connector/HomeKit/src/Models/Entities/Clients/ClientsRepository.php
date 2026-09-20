@@ -21,9 +21,9 @@ use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Entities\Clients\Client;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Queries;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\DoctrineOrmQuery;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use Nette;
 use function is_array;
 

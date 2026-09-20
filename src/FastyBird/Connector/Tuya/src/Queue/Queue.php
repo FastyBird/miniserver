@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Tuya\Queue;
 
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Queue\Messages\Message;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use SplQueue;
 

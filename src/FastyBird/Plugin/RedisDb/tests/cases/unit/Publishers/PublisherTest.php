@@ -4,8 +4,8 @@ namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit\Publishers;
 
 use DateTime;
 use DateTimeInterface;
-use FastyBird\Library\DateTimeFactory;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Services\DateTimeFactory;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Publishers;
 use FastyBird\Plugin\RedisDb\Tests;

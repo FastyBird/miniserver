@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Virtual\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Virtual\Entities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 use function assert;

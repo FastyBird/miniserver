@@ -18,12 +18,12 @@ namespace FastyBird\Module\Triggers\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Application\EventLoop\Status;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
-use FastyBird\Core\Exchange\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\EventLoop\Application\Status;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Types;
@@ -101,7 +101,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ExchangeExceptions\InvalidState
 	 */
 	public function postPersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
@@ -123,7 +123,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ExchangeExceptions\InvalidState
 	 */
 	public function postUpdate(Persistence\Event\LifecycleEventArgs $eventArgs): void
@@ -159,7 +159,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ExchangeExceptions\InvalidState
 	 */
 	public function postRemove(Persistence\Event\LifecycleEventArgs $eventArgs): void
@@ -179,7 +179,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ExchangeExceptions\InvalidState
 	 */
 	private function publishEntity(Entities\Entity $entity, string $action): void

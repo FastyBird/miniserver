@@ -29,7 +29,7 @@ require __DIR__ . '/../../../vendor/autoload.php';
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaValidator;
-use FastyBird\Core\Application\Boot;
+use FastyBird\Core\Boot;
 
 $report = static function (array $payload): never {
 	echo json_encode($payload, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES), PHP_EOL;

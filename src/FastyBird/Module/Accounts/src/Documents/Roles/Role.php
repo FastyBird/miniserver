@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Accounts\Documents\Roles;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use Orisai\ObjectMapper;
@@ -43,7 +43,7 @@ final readonly class Role implements ApplicationDocuments\Document
 {
 
 	public function __construct(
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private string $name,
@@ -59,7 +59,7 @@ final readonly class Role implements ApplicationDocuments\Document
 		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
 		private bool $administrator = false,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		private Uuid\UuidInterface|null $parent = null,

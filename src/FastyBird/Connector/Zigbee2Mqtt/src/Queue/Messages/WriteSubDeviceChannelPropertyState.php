@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 
@@ -31,13 +31,13 @@ final readonly class WriteSubDeviceChannelPropertyState implements Message
 {
 
 	public function __construct(
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $connector,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $device,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $channel,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: State::class),

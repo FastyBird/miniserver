@@ -11,7 +11,7 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 
 final class VieraConnectorHomeKitConnectorExtensionTest extends Tests\Cases\Unit\BaseTestCase

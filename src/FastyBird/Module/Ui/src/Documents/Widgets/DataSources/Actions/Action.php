@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources\Actions;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Types;
@@ -43,9 +43,9 @@ final readonly class Action implements Documents\Document
 	public function __construct(
 		#[ObjectMapper\Rules\BackedEnumValue(class: Types\DataSourceAction::class)]
 		private readonly Types\DataSourceAction $action,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $widget,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		#[ObjectMapper\Modifiers\FieldName('data_source')]
 		private readonly Uuid\UuidInterface $dataSource,
 		#[ObjectMapper\Rules\AnyOf([

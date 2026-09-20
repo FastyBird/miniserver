@@ -16,10 +16,10 @@
 namespace FastyBird\Plugin\RabbitMq\Handlers;
 
 use Bunny;
-use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Exceptions;
 use FastyBird\Plugin\RabbitMq\Utilities;

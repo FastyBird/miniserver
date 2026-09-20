@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Tuya\Queue\Messages;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Orisai\ObjectMapper;
 
 /**

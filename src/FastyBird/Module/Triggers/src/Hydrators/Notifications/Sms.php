@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Triggers\Hydrators\Notifications;
 
 use Doctrine\Persistence;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\Phone;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Services\Phone;
 use FastyBird\Module\Triggers\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;

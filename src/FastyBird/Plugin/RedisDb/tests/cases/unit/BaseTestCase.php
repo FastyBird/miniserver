@@ -3,8 +3,8 @@
 namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit;
 
 use Error;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Plugin\RedisDb;
 use Nette;
 use Nette\DI;

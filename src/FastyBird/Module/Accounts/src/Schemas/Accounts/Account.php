@@ -16,13 +16,13 @@
 namespace FastyBird\Module\Accounts\Schemas\Accounts;
 
 use DateTimeInterface;
-use FastyBird\Core\SimpleAuth\Exceptions as SimpleAuthExceptions;
-use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Library\JsonApi\Schemas as JsonApis;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
+use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Schemas\JsonApi as JsonApis;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Routing\SlimRouter;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;

@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
 use DateTimeInterface;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use Orisai\ObjectMapper;
 
 /**

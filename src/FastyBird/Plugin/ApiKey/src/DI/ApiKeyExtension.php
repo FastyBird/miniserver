@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\ApiKey\DI;
 
-use FastyBird\Core\Application\Boot as ApplicationBoot;
+use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Plugin\ApiKey\Commands;
 use FastyBird\Plugin\ApiKey\Middleware;
 use FastyBird\Plugin\ApiKey\Models;

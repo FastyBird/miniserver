@@ -17,10 +17,10 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Documents\Widgets\DataSources;
 
 use DateTimeInterface;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -33,7 +33,7 @@ abstract class Property extends UiDocuments\Widgets\DataSources\DataSource
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $widget,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),

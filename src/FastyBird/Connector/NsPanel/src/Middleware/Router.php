@@ -20,12 +20,11 @@ use FastyBird\Connector\NsPanel\Events;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter;
-use FastyBird\Library\SlimRouter\Exceptions as SlimRouterExceptions;
-use FastyBird\Library\SlimRouter\Http as SlimRouterHttp;
-use FastyBird\Library\SlimRouter\Routing as SlimRouterRouting;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Exceptions\SlimRouter as SlimRouterExceptions;
+use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
@@ -115,7 +114,7 @@ final class Router
 			$response = $this->responseFactory->createResponse($ex->getCode());
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
 				'event' => [
 					'header' => [
 						'name' => Types\Header::ERROR_RESPONSE->value,
@@ -144,7 +143,7 @@ final class Router
 			$response = $this->responseFactory->createResponse($ex->getCode());
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
 				'event' => [
 					'header' => [
 						'name' => Types\Header::ERROR_RESPONSE->value,
@@ -169,7 +168,7 @@ final class Router
 			$response = $this->responseFactory->createResponse(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
 				'event' => [
 					'header' => [
 						'name' => Types\Header::ERROR_RESPONSE->value,

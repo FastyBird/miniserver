@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas\Devices;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Schemas as HomeKitSchemas;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 
 /**
  * Viera device entity schema

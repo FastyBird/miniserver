@@ -17,9 +17,9 @@ namespace FastyBird\Module\Accounts\Models\Entities\Emails;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\DoctrineOrmQuery;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Queries;

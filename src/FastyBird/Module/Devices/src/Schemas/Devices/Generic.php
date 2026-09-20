@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Schemas\Devices;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Schemas;
 

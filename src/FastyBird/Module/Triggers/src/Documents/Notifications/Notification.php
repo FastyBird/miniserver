@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Triggers\Documents\Notifications;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
@@ -47,16 +47,16 @@ abstract class Notification implements ApplicationDocuments\Document, Applicatio
 	use ApplicationDocuments\TOwner;
 
 	public function __construct(
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $trigger,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $type,
 		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $enabled,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		protected readonly Uuid\UuidInterface|null $owner = null,

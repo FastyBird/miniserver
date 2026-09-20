@@ -18,13 +18,13 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Consumers;
 use FastyBird\Bridge\DevicesModuleUiModule;
 use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\WebSockets;
-use FastyBird\Library\WebSockets\Wamp;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Routing\WebSockets as WebSocketsRouting;
+use FastyBird\Core\Topics\WsServer as WsServerTopics;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Ui;
@@ -66,8 +66,8 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 	public function __construct(
 		private readonly UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
 		private readonly DevicesModuleUiModule\Logger $logger,
-		private readonly WebSockets\Router\LinkGenerator $linkGenerator,
-		private readonly Wamp\Topics\IStorage $topicsStorage,
+		private readonly WebSocketsRouting\LinkGenerator $linkGenerator,
+		private readonly WsServerTopics\IStorage $topicsStorage,
 	)
 	{
 	}

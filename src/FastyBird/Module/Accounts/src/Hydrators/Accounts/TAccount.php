@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Accounts;
 
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Fig\Http\Message\StatusCodeInterface;

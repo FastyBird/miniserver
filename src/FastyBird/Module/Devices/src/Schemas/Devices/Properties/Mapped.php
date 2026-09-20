@@ -16,12 +16,12 @@
 namespace FastyBird\Module\Devices\Schemas\Devices\Properties;
 
 use Exception;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Routing\SlimRouter;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
@@ -117,7 +117,7 @@ final class Mapped extends Property
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws TypeError
@@ -221,7 +221,7 @@ final class Mapped extends Property
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ToolsExceptions\InvalidArgument
 	 * @throws ToolsExceptions\InvalidState

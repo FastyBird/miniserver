@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Modbus\Queue\Messages;
 
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use Ramsey\Uuid;
 
 /**
@@ -30,9 +30,9 @@ abstract class Device implements Message
 {
 
 	public function __construct(
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $connector,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $device,
 	)
 	{

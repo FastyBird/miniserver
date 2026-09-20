@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers;
 
-use FastyBird\Library\Metadata;
+use FastyBird\Core\Constants\Metadata;
 use FastyBird\Module\Triggers\Entities as TriggersModuleEntities;
 
 /**

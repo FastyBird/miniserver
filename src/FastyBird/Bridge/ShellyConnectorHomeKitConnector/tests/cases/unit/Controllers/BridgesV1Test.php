@@ -4,10 +4,10 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Cases\Unit\Cont
 
 use Error;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\SlimRouter;
-use FastyBird\Library\SlimRouter\Http as SlimRouterHttp;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -39,7 +39,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('bridgesRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
 
 		$headers = [];
 
@@ -202,7 +202,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 		string $fixture,
 	): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
 
 		$headers = [];
 
@@ -390,7 +390,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('bridgesUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
 
 		$headers = [];
 
@@ -504,7 +504,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('bridgesDelete')]
 	public function testDelete(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
 
 		$headers = [];
 

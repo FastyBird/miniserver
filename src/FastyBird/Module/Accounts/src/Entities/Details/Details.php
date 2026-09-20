@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Accounts\Entities\Details;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
-use FastyBird\Library\DoctrineTimestampable;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Configuration\DoctrineTimestampable;
 use FastyBird\Module\Accounts\Entities;
 use Ramsey\Uuid;
 

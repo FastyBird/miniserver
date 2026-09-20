@@ -15,12 +15,12 @@
 
 namespace FastyBird\Module\Ui\Consumers;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\WebSockets;
-use FastyBird\Library\WebSockets\Wamp;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Routing\WebSockets as WebSocketsRouting;
+use FastyBird\Core\Topics\WsServer as WsServerTopics;
 use FastyBird\Module\Ui;
 use Nette\Utils;
 use Throwable;
@@ -39,8 +39,8 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 
 	public function __construct(
 		private Ui\Logger $logger,
-		private WebSockets\Router\LinkGenerator $linkGenerator,
-		private Wamp\Topics\IStorage $topicsStorage,
+		private WebSocketsRouting\LinkGenerator $linkGenerator,
+		private WsServerTopics\IStorage $topicsStorage,
 	)
 	{
 	}

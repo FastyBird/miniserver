@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Shelly\Queue;
 
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Queue\Messages\Message;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use SplQueue;
 

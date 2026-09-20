@@ -20,9 +20,9 @@ use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Documents;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -63,7 +63,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Runtime
 	 * @throws DBAL\Exception

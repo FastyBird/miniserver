@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\RabbitMq\Subscribers;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Publishers;
 use Psr\Log;

@@ -17,10 +17,10 @@ namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
 use Exception;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Models;

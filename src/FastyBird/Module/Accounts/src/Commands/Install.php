@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Commands;
 
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette\Localization;
 use Psr\Log;
 use Symfony\Component\Console;

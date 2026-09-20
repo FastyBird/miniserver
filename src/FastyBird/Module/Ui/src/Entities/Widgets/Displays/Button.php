@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Module\Ui\Entities;
 use function array_merge;
 

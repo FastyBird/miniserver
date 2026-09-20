@@ -8,7 +8,7 @@ use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Services;
 use FastyBird\Connector\Shelly\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp;
 use Nette\DI;

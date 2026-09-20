@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Routing\SlimRouter;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;

@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Schemas\Widgets;
 
-use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
+use FastyBird\Core\Routing\SlimRouter;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;

@@ -7,7 +7,7 @@ use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Automator\DevicesModule\Exceptions;
 use FastyBird\Automator\DevicesModule\Queries;
 use FastyBird\Automator\DevicesModule\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Triggers\Models as TriggersModels;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;

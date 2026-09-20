@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Router;
 
 use FastyBird\Connector\NsPanel\Controllers;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Routing\SlimRouter;
 
 /**
  * Connector router configuration

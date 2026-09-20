@@ -3,8 +3,8 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Models\Entities\Repositories;
 
 use Error;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;

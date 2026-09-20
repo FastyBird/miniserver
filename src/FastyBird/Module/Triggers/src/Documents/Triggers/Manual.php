@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Documents\Triggers;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Triggers\Entities;
 
 /**

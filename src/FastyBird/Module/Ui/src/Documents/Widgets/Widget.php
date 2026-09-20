@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Ui\Documents\Widgets;
 
 use DateTimeInterface;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Entities;
@@ -58,9 +58,9 @@ abstract class Widget implements Documents\Document, ApplicationDocuments\Owner,
 	 * @param array<Uuid\UuidInterface> $groups
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $display,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $identifier,
@@ -70,20 +70,20 @@ abstract class Widget implements Documents\Document, ApplicationDocuments\Owner,
 		])]
 		private readonly string|null $name = null,
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 		)]
 		#[ObjectMapper\Modifiers\FieldName('data_sources')]
 		private readonly array $dataSources = [],
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 		)]
 		private readonly array $tabs = [],
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 		)]
 		private readonly array $groups = [],
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		protected readonly Uuid\UuidInterface|null $owner = null,

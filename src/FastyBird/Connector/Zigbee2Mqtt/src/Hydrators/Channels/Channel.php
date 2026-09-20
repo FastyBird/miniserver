@@ -18,10 +18,10 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Hydrators\Channels;
 use Doctrine\Persistence;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Schemas;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Helpers;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
@@ -46,7 +46,7 @@ final class Channel extends DevicesHydrators\Channels\Channel
 		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		Helpers\CrudReader|null $crudReader = null,
+		JsonApiHelpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($managerRegistry, $translator, $crudReader);

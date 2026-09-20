@@ -3,9 +3,9 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\Documents;
 
 use Error;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Tests;
 use Nette;
@@ -23,7 +23,7 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
@@ -46,7 +46,7 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */

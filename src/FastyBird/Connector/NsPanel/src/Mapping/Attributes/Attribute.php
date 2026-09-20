@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\Mapping\Attributes;
 
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Orisai\ObjectMapper;
 use function array_filter;
 

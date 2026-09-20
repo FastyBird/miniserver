@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Exceptions;
 
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Library\SlimRouter\Exceptions as SlimRouterExceptions;
+use FastyBird\Core\Exceptions\SlimRouter as SlimRouterExceptions;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 

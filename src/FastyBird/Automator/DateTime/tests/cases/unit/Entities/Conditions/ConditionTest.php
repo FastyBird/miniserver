@@ -7,7 +7,7 @@ use Error;
 use FastyBird\Automator\DateTime\Entities;
 use FastyBird\Automator\DateTime\Exceptions;
 use FastyBird\Automator\DateTime\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Triggers\Models as TriggersModels;
 use FastyBird\Module\Triggers\Queries as TriggersQueries;
 use Nette;

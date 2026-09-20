@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\SlimRouter;
-use FastyBird\Library\SlimRouter\Http as SlimRouterHttp;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use FastyBird\Module\Devices\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -36,7 +36,7 @@ final class ConnectorsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('connectorsRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
 
 		$headers = [];
 
@@ -169,7 +169,7 @@ final class ConnectorsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('connectorsUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
 
 		$headers = [];
 

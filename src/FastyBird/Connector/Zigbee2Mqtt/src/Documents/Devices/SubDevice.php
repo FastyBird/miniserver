@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Documents\Devices;
 
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\SubDevice::class)]
 #[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\SubDevice::TYPE)]

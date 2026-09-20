@@ -4,8 +4,8 @@ namespace FastyBird\Connector\Sonoff\Tests\Cases\Unit;
 
 use Error;
 use FastyBird\Connector\Sonoff\DI;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 use PHPUnit\Framework\TestCase;
 use function constant;

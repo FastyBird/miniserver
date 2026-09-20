@@ -18,7 +18,7 @@ namespace FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use Nette;
 use Ramsey\Uuid;
 use SplObjectStorage;

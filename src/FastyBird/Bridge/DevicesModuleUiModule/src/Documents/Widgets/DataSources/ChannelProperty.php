@@ -17,9 +17,9 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Documents\Widgets\DataSources;
 
 use DateTimeInterface;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -31,7 +31,7 @@ class ChannelProperty extends Property
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $widget,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $channel,
 		Uuid\UuidInterface $property,
 		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value = null,

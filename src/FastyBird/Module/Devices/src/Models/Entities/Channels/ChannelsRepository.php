@@ -17,9 +17,9 @@ namespace FastyBird\Module\Devices\Models\Entities\Channels;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\DoctrineOrmQuery;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Queries;

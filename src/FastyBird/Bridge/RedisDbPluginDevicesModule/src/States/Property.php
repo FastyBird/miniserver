@@ -16,8 +16,8 @@
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
 use Orisai\ObjectMapper;

@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\API\Messages\Response;
 
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use stdClass;
@@ -58,7 +58,7 @@ final readonly class GetSubDevicesDataSubDevice implements API\Messages\Message
 		#[ObjectMapper\Rules\MappedObjectValue(API\Messages\State::class)]
 		private API\Messages\State $state,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\Rules\UuidValue(),
+			new ApplicationObjectMapper\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('third_serial_number')]

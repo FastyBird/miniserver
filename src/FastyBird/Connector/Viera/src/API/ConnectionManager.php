@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Viera\API;
 use FastyBird\Connector\Viera\Documents;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
 use Throwable;

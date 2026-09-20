@@ -4,7 +4,7 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Helpers;
 
 use DateTimeImmutable;
 use Exception;
-use FastyBird\Library\DateTimeFactory;
+use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Module\Accounts\Helpers;
 use PHPUnit\Framework\TestCase;
 

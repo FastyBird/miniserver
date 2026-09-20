@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use Nette\Utils;
 use function array_key_exists;
 use function array_merge;

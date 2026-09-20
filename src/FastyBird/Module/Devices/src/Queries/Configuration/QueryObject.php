@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Queries\Configuration;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use Flow\JSONPath;
 
 /**

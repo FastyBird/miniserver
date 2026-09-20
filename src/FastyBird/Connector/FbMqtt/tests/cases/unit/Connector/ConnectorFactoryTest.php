@@ -7,7 +7,7 @@ use FastyBird\Connector\FbMqtt\Connector;
 use FastyBird\Connector\FbMqtt\Documents;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;

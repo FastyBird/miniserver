@@ -17,7 +17,7 @@ namespace FastyBird\Module\Ui\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Library\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Module\Ui\Entities;
 use Ramsey\Uuid;
 

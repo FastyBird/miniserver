@@ -16,11 +16,11 @@
 namespace FastyBird\Plugin\RedisDb\Publishers;
 
 use DateTimeInterface;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\DateTimeFactory;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Services\DateTimeFactory;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Utilities;
 use Nette;

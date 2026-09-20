@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Connector\FbMqtt\Helpers;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_filter;
@@ -51,7 +51,7 @@ abstract class Attribute implements Message
 	public const CONTROLS = 'controls';
 
 	public function __construct(
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $connector,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $device,

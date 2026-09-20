@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Events;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Symfony\Contracts\EventDispatcher;
 use Throwable;
 

@@ -3,9 +3,9 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Documents;
 
 use Error;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types;
@@ -25,7 +25,7 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
@@ -48,7 +48,7 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
