@@ -12,7 +12,7 @@ for ($i = 0;$i < 10;$i++) {
 	$srcPath = realpath($path . DS . 'src');
 
 	if ($srcPath !== false) {
-		$boostrapFile = realpath($path) . DS . 'src' . DS . 'FastyBird' . DS . 'Core' . DS . 'Application' . DS . 'bin' . DS . 'fb-supervisor.php';
+		$boostrapFile = realpath($path) . DS . 'src' . DS . 'FastyBird' . DS . 'Core' . DS . 'Core' . DS . 'bin' . DS . 'fb-supervisor.php';
 
 		break;
 	}
