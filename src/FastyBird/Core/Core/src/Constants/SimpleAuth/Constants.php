@@ -13,7 +13,7 @@
  * @date           09.07.20
  */
 
-namespace FastyBird\Core\Services\SimpleAuth;
+namespace FastyBird\Core\Constants\SimpleAuth;
 
 /**
  * Library constants

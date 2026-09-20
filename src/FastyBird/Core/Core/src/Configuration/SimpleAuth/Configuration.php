@@ -13,7 +13,7 @@
  * @date           01.07.24
  */
 
-namespace FastyBird\Core\Services\SimpleAuth;
+namespace FastyBird\Core\Configuration\SimpleAuth;
 
 use Nette;
 use Nette\Application;
