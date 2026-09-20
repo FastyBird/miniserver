@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+/dist
+/node_modules
+/var
+/vendor
+composer.lock
+pnpm-lock.yaml
+tsconfig.tsbuildinfo
