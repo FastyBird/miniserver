@@ -13,7 +13,7 @@
  * @date           29.08.24
  */
 
-namespace FastyBird\Library\DateTimeFactory;
+namespace FastyBird\Core\Services\DateTimeFactory;
 
 use DateTime;
 use DateTimeImmutable;

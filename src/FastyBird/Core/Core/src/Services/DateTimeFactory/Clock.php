@@ -13,7 +13,7 @@
  * @date           08.03.20
  */
 
-namespace FastyBird\Library\DateTimeFactory;
+namespace FastyBird\Core\Services\DateTimeFactory;
 
 use DateTimeInterface;
 
