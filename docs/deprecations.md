@@ -84,7 +84,7 @@ Infection's current release (0.35.4) requires `php: ^8.3` and
 
 The remaining 2 (`optional()` and `with()` in `illuminate/support/helpers.php`) are
 production and have no such path. Laravel 9 is end of life, and
-`mathsolver/mathsolver` -- required by `Core/Tools`, from a git repository rather
-than Packagist -- is also the package behind one of the two permanent
-`composer validate` warnings. Worth its own look when the dependency upgrades reach
-it.
+`mathsolver/mathsolver` -- required by `Core/Core` (formerly `Core/Tools`, absorbed
+in the Core consolidation), from a git repository rather than Packagist -- is also
+the package behind one of the two permanent `composer validate` warnings. Worth its
+own look when the dependency upgrades reach it.
