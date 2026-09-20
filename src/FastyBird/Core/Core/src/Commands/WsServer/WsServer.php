@@ -13,13 +13,14 @@
  * @date           09.06.22
  */
 
-namespace FastyBird\Plugin\WsServer\Commands;
+namespace FastyBird\Core\Commands\WsServer;
 
-use FastyBird\Core\Exchange\Exchange as ExchangeExchange;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\WebSockets;
-use FastyBird\Plugin\WsServer\Events;
+use FastyBird\Core\Events\WsServer as Events;
+use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
+use FastyBird\Core\Server\WsServer as Server;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Psr\EventDispatcher;
 use Psr\Log;
@@ -49,8 +50,8 @@ final class WsServer extends Console\Command\Command
 	 * @param array<ExchangeExchange\Factory> $exchangeFactories
 	 */
 	public function __construct(
-		private readonly WebSockets\Server\Configuration $configuration,
-		private readonly WebSockets\Server\Server $server,
+		private readonly Server\Configuration $configuration,
+		private readonly Server\Server $server,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly array $exchangeFactories = [],
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
@@ -116,7 +117,7 @@ final class WsServer extends Console\Command\Command
 
 			$this->eventLoop->run();
 
-		} catch (WebSockets\Exceptions\Terminate $ex) {
+		} catch (WebSocketsExceptions\Terminate $ex) {
 			// Log error action reason
 			$this->logger->error(
 				'WS server was forced to close',

@@ -13,15 +13,19 @@
  * @date           15.01.22
  */
 
-namespace FastyBird\Plugin\WsServer\Subscribers;
+namespace FastyBird\Core\Subscribers\WsServer;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\WebSockets;
-use FastyBird\Plugin\WsServer;
-use FastyBird\Plugin\WsServer\Events;
+use FastyBird\Core\Constants\WsServer;
+use FastyBird\Core\Controllers\WebSockets\Responses;
+use FastyBird\Core\Entities\WsServer as Entities;
+use FastyBird\Core\Events\WsServer as Events;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Server\WsServer as Server;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
 use function explode;
@@ -64,7 +68,7 @@ class Client implements EventDispatcher\EventSubscriberInterface
 	}
 
 	/**
-	 * @throws WebSockets\Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function clientConnected(Events\ClientConnected $event): void
 	{
@@ -73,9 +77,9 @@ class Client implements EventDispatcher\EventSubscriberInterface
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws ToolsExceptions\InvalidState
-	 * @throws WebSockets\Exceptions\InvalidArgument
-	 * @throws WebSockets\Exceptions\Terminate
+	 * @throws Exceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws WebSocketsExceptions\Terminate
 	 */
 	public function incomingMessage(Events\IncomingMessage $event): void
 	{
@@ -86,7 +90,7 @@ class Client implements EventDispatcher\EventSubscriberInterface
 
 			// ...and ping again
 			if (!$this->database->ping()) {
-				throw new WebSockets\Exceptions\Terminate(
+				throw new WebSocketsExceptions\Terminate(
 					'Connection to database could not be re-established',
 				);
 			}
@@ -99,11 +103,11 @@ class Client implements EventDispatcher\EventSubscriberInterface
 	 * @param array<string> $allowedWsKeys
 	 * @param array<string> $allowedOrigins
 	 *
-	 * @throws WebSockets\Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function checkSecurity(
-		WebSockets\Entities\Clients\IClient $client,
-		WebSockets\Http\IRequest $httpRequest,
+		Entities\IClient $client,
+		Http\IRequest $httpRequest,
 		array $allowedWsKeys,
 		array $allowedOrigins,
 	): bool
@@ -163,15 +167,15 @@ class Client implements EventDispatcher\EventSubscriberInterface
 	}
 
 	/**
-	 * @throws WebSockets\Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 */
-	private function closeSession(WebSockets\Entities\Clients\IClient $client): void
+	private function closeSession(Entities\IClient $client): void
 	{
 		$headers = [
-			'X-Powered-By' => WebSockets\Server\Server::VERSION,
+			'X-Powered-By' => Server\Server::VERSION,
 		];
 
-		$response = new WebSockets\Application\Responses\ErrorResponse(401, $headers);
+		$response = new Responses\ErrorResponse(401, $headers);
 
 		$client->send($response);
 		$client->close();

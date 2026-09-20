@@ -1,39 +1,31 @@
 <?php declare(strict_types = 1);
 
 /**
- * Constants.php
+ * WsStartup.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:WsServerPlugin!
- * @subpackage     common
+ * @subpackage     Events
  * @since          1.0.0
  *
- * @date           09.03.20
+ * @date           05.10.21
  */
 
-namespace FastyBird\Plugin\WsServer;
+namespace FastyBird\Core\Events\WsServer;
+
+use Symfony\Contracts\EventDispatcher;
 
 /**
- * Service constants
+ * When WS server started
  *
  * @package        FastyBird:WsServerPlugin!
- * @subpackage     common
+ * @subpackage     Events
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Constants
+class Startup extends EventDispatcher\Event
 {
-
-	/**
-	 * Service headers
-	 */
-
-	public const WS_HEADER_AUTHORIZATION = 'authorization';
-
-	public const WS_HEADER_WS_KEY = 'x-ws-key';
-
-	public const WS_HEADER_ORIGIN = 'origin';
 
 }

@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * ClientConnected.php
+ * IncomingMessage.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -13,34 +13,35 @@
  * @date           15.01.22
  */
 
-namespace FastyBird\Plugin\WsServer\Events;
+namespace FastyBird\Core\Events\WsServer;
 
-use FastyBird\Library\WebSockets;
+use FastyBird\Core\Entities\WsServer as Entities;
+use FastyBird\Core\Http\WebSockets as Http;
 
 /**
- * WS client connected to server event
+ * WS client sent message event
  *
  * @package        FastyBird:WsServerPlugin!
  * @subpackage     Events
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-readonly class ClientConnected
+readonly class IncomingMessage
 {
 
 	public function __construct(
-		private WebSockets\Entities\Clients\IClient $client,
-		private WebSockets\Http\IRequest $httpRequest,
+		private Entities\IClient $client,
+		private Http\IRequest $httpRequest,
 	)
 	{
 	}
 
-	public function getClient(): WebSockets\Entities\Clients\IClient
+	public function getClient(): Entities\IClient
 	{
 		return $this->client;
 	}
 
-	public function getHttpRequest(): WebSockets\Http\IRequest
+	public function getHttpRequest(): Http\IRequest
 	{
 		return $this->httpRequest;
 	}
