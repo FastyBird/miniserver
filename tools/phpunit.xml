@@ -59,10 +59,7 @@
         <directory>../src/FastyBird/Connector/Viera/tests/cases/</directory>
         <directory>../src/FastyBird/Connector/Virtual/tests/cases/</directory>
         <directory>../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/</directory>
-        <directory>../src/FastyBird/Core/Application/tests/cases/</directory>
-        <directory>../src/FastyBird/Core/Exchange/tests/cases/</directory>
-        <directory>../src/FastyBird/Core/Tools/tests/cases/</directory>
-        <directory>../src/FastyBird/Library/Metadata/tests/cases/</directory>
+        <directory>../src/FastyBird/Core/Core/tests/cases/</directory>
         <directory>../src/FastyBird/Module/Accounts/tests/cases/</directory>
         <directory>../src/FastyBird/Module/Devices/tests/cases/</directory>
         <directory>../src/FastyBird/Module/Triggers/tests/cases/</directory>
@@ -72,8 +69,6 @@
         <directory>../src/FastyBird/Plugin/RabbitMq/tests/cases/</directory>
         <directory>../src/FastyBird/Plugin/RedisDb/tests/cases/</directory>
         <directory>../src/FastyBird/Plugin/RedisDbCache/tests/cases/</directory>
-        <directory>../src/FastyBird/Plugin/WebServer/tests/cases/</directory>
-        <directory>../src/FastyBird/Plugin/WsServer/tests/cases/</directory>
     </testsuite>
     <coverage/>
     <!--
