@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Router;
 
 use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Constants\Metadata;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Middleware;
@@ -71,14 +71,14 @@ class ApiRoutes
 	{
 	}
 
-	public function registerRoutes(Routing\IRouter $router): void
+	public function registerRoutes(SlimRouterRouting\IRouter $router): void
 	{
 		$routes = $router->group('/' . Metadata\Constants::ROUTER_API_PREFIX, function (
-			Routing\RouteCollector $group,
+			SlimRouterRouting\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group('/' . Metadata\Constants::MODULE_DEVICES_PREFIX, function (
-					Routing\RouteCollector $group,
+					SlimRouterRouting\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);
 				});
@@ -94,13 +94,13 @@ class ApiRoutes
 		$routes->addMiddleware($this->urlFormatlMiddleware);
 	}
 
-	private function buildRoutes(Routing\IRouter|Routing\IRouteCollector $group): Routing\IRouteGroup
+	private function buildRoutes(SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group): SlimRouterRouting\IRouteGroup
 	{
-		return $group->group('/v1', function (Routing\RouteCollector $group): void {
+		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
 			/**
 			 * CHANNELS
 			 */
-			$group->group('/channels', function (Routing\RouteCollector $group): void {
+			$group->group('/channels', function (SlimRouterRouting\RouteCollector $group): void {
 				$route = $group->get('', [$this->channelsV1Controller, 'index']);
 				$route->setName(Devices\Constants::ROUTE_NAME_CHANNELS);
 
@@ -127,11 +127,11 @@ class ApiRoutes
 
 				$group->group(
 					'/{' . self::URL_CHANNEL_ID . '}',
-					function (Routing\RouteCollector $group): void {
+					function (SlimRouterRouting\RouteCollector $group): void {
 						/**
 						 * CHANNEL PROPERTIES
 						 */
-						$group->group('/properties', function (Routing\RouteCollector $group): void {
+						$group->group('/properties', function (SlimRouterRouting\RouteCollector $group): void {
 							$route = $group->get('', [$this->channelPropertiesV1Controller, 'index']);
 							$route->setName(Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTIES);
 
@@ -166,7 +166,7 @@ class ApiRoutes
 							$route->setName(Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTY_RELATIONSHIP);
 
 							$group->group('/{' . self::URL_PROPERTY_ID . '}', function (
-								Routing\RouteCollector $group,
+								SlimRouterRouting\RouteCollector $group,
 							): void {
 								/**
 								 * CHILDREN
@@ -191,7 +191,7 @@ class ApiRoutes
 						/**
 						 * CHANNEL CONTROLS
 						 */
-						$group->group('/controls', function (Routing\RouteCollector $group): void {
+						$group->group('/controls', function (SlimRouterRouting\RouteCollector $group): void {
 							$route = $group->get('', [$this->channelControlsV1Controller, 'index']);
 							$route->setName(Devices\Constants::ROUTE_NAME_CHANNEL_CONTROLS);
 
@@ -217,7 +217,7 @@ class ApiRoutes
 			/**
 			 * DEVICES
 			 */
-			$group->group('/devices', function (Routing\RouteCollector $group): void {
+			$group->group('/devices', function (SlimRouterRouting\RouteCollector $group): void {
 				$route = $group->get('', [$this->devicesV1Controller, 'index']);
 				$route->setName(Devices\Constants::ROUTE_NAME_DEVICES);
 
@@ -239,7 +239,7 @@ class ApiRoutes
 				]);
 				$route->setName(Devices\Constants::ROUTE_NAME_DEVICE_RELATIONSHIP);
 
-				$group->group('/{' . self::URL_DEVICE_ID . '}', function (Routing\RouteCollector $group): void {
+				$group->group('/{' . self::URL_DEVICE_ID . '}', function (SlimRouterRouting\RouteCollector $group): void {
 					/**
 					 * PARENTS
 					 */
@@ -255,7 +255,7 @@ class ApiRoutes
 					/**
 					 * DEVICE PROPERTIES
 					 */
-					$group->group('/properties', function (Routing\RouteCollector $group): void {
+					$group->group('/properties', function (SlimRouterRouting\RouteCollector $group): void {
 						$route = $group->get('', [$this->devicePropertiesV1Controller, 'index']);
 						$route->setName(Devices\Constants::ROUTE_NAME_DEVICE_PROPERTIES);
 
@@ -291,7 +291,7 @@ class ApiRoutes
 
 						$group->group(
 							'/{' . self::URL_PROPERTY_ID . '}',
-							function (Routing\RouteCollector $group): void {
+							function (SlimRouterRouting\RouteCollector $group): void {
 								/**
 								 * CHILDREN
 								 */
@@ -310,7 +310,7 @@ class ApiRoutes
 					/**
 					 * DEVICE CONTROLS
 					 */
-					$group->group('/controls', function (Routing\RouteCollector $group): void {
+					$group->group('/controls', function (SlimRouterRouting\RouteCollector $group): void {
 						$route = $group->get('', [$this->deviceControlsV1Controller, 'index']);
 						$route->setName(Devices\Constants::ROUTE_NAME_DEVICE_CONTROLS);
 
@@ -333,7 +333,7 @@ class ApiRoutes
 					/**
 					 * CHANNELS
 					 */
-					$group->group('/channels', function (Routing\RouteCollector $group): void {
+					$group->group('/channels', function (SlimRouterRouting\RouteCollector $group): void {
 						$route = $group->get('', [$this->channelsV1Controller, 'index']);
 						$route->setName(Devices\Constants::ROUTE_NAME_DEVICE_CHANNELS);
 
@@ -363,11 +363,11 @@ class ApiRoutes
 
 						$group->group(
 							'/{' . self::URL_CHANNEL_ID . '}',
-							function (Routing\RouteCollector $group): void {
+							function (SlimRouterRouting\RouteCollector $group): void {
 								/**
 								 * CHANNEL PROPERTIES
 								 */
-								$group->group('/properties', function (Routing\RouteCollector $group): void {
+								$group->group('/properties', function (SlimRouterRouting\RouteCollector $group): void {
 									$route = $group->get('', [$this->channelPropertiesV1Controller, 'index']);
 									$route->setName(Devices\Constants::ROUTE_NAME_DEVICE_CHANNEL_PROPERTIES);
 
@@ -402,7 +402,7 @@ class ApiRoutes
 									$route->setName(Devices\Constants::ROUTE_NAME_DEVICE_CHANNEL_PROPERTY_RELATIONSHIP);
 
 									$group->group('/{' . self::URL_PROPERTY_ID . '}', function (
-										Routing\RouteCollector $group,
+										SlimRouterRouting\RouteCollector $group,
 									): void {
 										/**
 										 * CHILDREN
@@ -427,7 +427,7 @@ class ApiRoutes
 								/**
 								 * CHANNEL CONTROLS
 								 */
-								$group->group('/controls', function (Routing\RouteCollector $group): void {
+								$group->group('/controls', function (SlimRouterRouting\RouteCollector $group): void {
 									$route = $group->get('', [$this->channelControlsV1Controller, 'index']);
 									$route->setName(Devices\Constants::ROUTE_NAME_DEVICE_CHANNEL_CONTROLS);
 
@@ -455,7 +455,7 @@ class ApiRoutes
 			/**
 			 * CONNECTORS
 			 */
-			$group->group('/connectors', function (Routing\RouteCollector $group): void {
+			$group->group('/connectors', function (SlimRouterRouting\RouteCollector $group): void {
 				$route = $group->get('', [$this->connectorsV1Controller, 'index']);
 				$route->setName(Devices\Constants::ROUTE_NAME_CONNECTORS);
 
@@ -477,11 +477,11 @@ class ApiRoutes
 				]);
 				$route->setName(Devices\Constants::ROUTE_NAME_CONNECTOR_RELATIONSHIP);
 
-				$group->group('/{' . self::URL_CONNECTOR_ID . '}', function (Routing\RouteCollector $group): void {
+				$group->group('/{' . self::URL_CONNECTOR_ID . '}', function (SlimRouterRouting\RouteCollector $group): void {
 					/**
 					 * CONNECTOR PROPERTIES
 					 */
-					$group->group('/properties', function (Routing\RouteCollector $group): void {
+					$group->group('/properties', function (SlimRouterRouting\RouteCollector $group): void {
 						$route = $group->get('', [$this->connectorPropertiesV1Controller, 'index']);
 						$route->setName(Devices\Constants::ROUTE_NAME_CONNECTOR_PROPERTIES);
 
@@ -516,7 +516,7 @@ class ApiRoutes
 						$route->setName(Devices\Constants::ROUTE_NAME_CONNECTOR_PROPERTY_RELATIONSHIP);
 
 						$group->group('/{' . self::URL_PROPERTY_ID . '}', function (
-							Routing\RouteCollector $group,
+							SlimRouterRouting\RouteCollector $group,
 						): void {
 							/**
 							 * STATE
@@ -529,7 +529,7 @@ class ApiRoutes
 					/**
 					 * CONNECTOR CONTROLS
 					 */
-					$group->group('/controls', function (Routing\RouteCollector $group): void {
+					$group->group('/controls', function (SlimRouterRouting\RouteCollector $group): void {
 						$route = $group->get('', [$this->connectorControlsV1Controller, 'index']);
 						$route->setName(Devices\Constants::ROUTE_NAME_CONNECTOR_CONTROLS);
 
@@ -552,7 +552,7 @@ class ApiRoutes
 					/**
 					 * DEVICES
 					 */
-					$group->group('/devices', function (Routing\RouteCollector $group): void {
+					$group->group('/devices', function (SlimRouterRouting\RouteCollector $group): void {
 						$route = $group->get('', [$this->devicesV1Controller, 'index']);
 						$route->setName(Devices\Constants::ROUTE_NAME_CONNECTOR_DEVICES);
 
@@ -579,11 +579,11 @@ class ApiRoutes
 
 						$group->group(
 							'/{' . self::URL_DEVICE_ID . '}',
-							function (Routing\RouteCollector $group): void {
+							function (SlimRouterRouting\RouteCollector $group): void {
 								/**
 								 * DEVICE PROPERTIES
 								 */
-								$group->group('/properties', function (Routing\RouteCollector $group): void {
+								$group->group('/properties', function (SlimRouterRouting\RouteCollector $group): void {
 									$route = $group->get('', [$this->devicePropertiesV1Controller, 'index']);
 									$route->setName(Devices\Constants::ROUTE_NAME_CONNECTOR_DEVICE_PROPERTIES);
 
@@ -620,7 +620,7 @@ class ApiRoutes
 									);
 
 									$group->group('/{' . self::URL_PROPERTY_ID . '}', function (
-										Routing\RouteCollector $group,
+										SlimRouterRouting\RouteCollector $group,
 									): void {
 										/**
 										 * CHILDREN
@@ -647,7 +647,7 @@ class ApiRoutes
 								/**
 								 * DEVICE CONTROLS
 								 */
-								$group->group('/controls', function (Routing\RouteCollector $group): void {
+								$group->group('/controls', function (SlimRouterRouting\RouteCollector $group): void {
 									$route = $group->get('', [$this->deviceControlsV1Controller, 'index']);
 									$route->setName(Devices\Constants::ROUTE_NAME_CONNECTOR_DEVICE_CONTROLS);
 

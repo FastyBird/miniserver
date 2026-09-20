@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\Schemas\Notifications;
 
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Router;
@@ -41,7 +41,7 @@ abstract class Notification extends JsonApiSchemas\JsonApi
 	 */
 	public const RELATIONSHIPS_TRIGGER = 'trigger';
 
-	public function __construct(protected Routing\IRouter $router)
+	public function __construct(protected SlimRouterRouting\IRouter $router)
 	{
 	}
 

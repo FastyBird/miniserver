@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Middleware;
 
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Constants\Metadata;
-use FastyBird\Core\Http\SlimRouter;
+use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -119,7 +119,7 @@ final readonly class UrlFormat implements MiddlewareInterface
 				$content,
 			);
 
-			$response = $response->withBody(Http\Stream::fromBodyString($content));
+			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString($content));
 		}
 
 		return $response;

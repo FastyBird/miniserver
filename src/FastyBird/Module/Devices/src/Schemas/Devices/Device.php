@@ -19,7 +19,7 @@ use DateTimeInterface;
 use Exception;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
@@ -61,7 +61,7 @@ abstract class Device extends JsonApiSchemas\JsonApi
 		protected readonly Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		protected readonly Models\Entities\Devices\Controls\ControlsRepository $devicesControlsRepository,
 		protected readonly Models\Entities\Channels\ChannelsRepository $channelsRepository,
-		protected readonly Routing\IRouter $router,
+		protected readonly SlimRouterRouting\IRouter $router,
 	)
 	{
 	}

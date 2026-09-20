@@ -20,7 +20,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
@@ -56,7 +56,7 @@ final class Dynamic extends Property
 	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::DYNAMIC->value;
 
 	public function __construct(
-		Routing\IRouter $router,
+		SlimRouterRouting\IRouter $router,
 		Models\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly Models\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,

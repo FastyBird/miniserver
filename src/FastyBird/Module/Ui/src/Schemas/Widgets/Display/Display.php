@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Schemas\Widgets\Display;
 
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
@@ -40,7 +40,7 @@ abstract class Display extends JsonApiSchemas\JsonApi
 	 */
 	public const RELATIONSHIPS_WIDGET = 'widget';
 
-	public function __construct(protected readonly Routing\IRouter $router)
+	public function __construct(protected readonly SlimRouterRouting\IRouter $router)
 	{
 	}
 

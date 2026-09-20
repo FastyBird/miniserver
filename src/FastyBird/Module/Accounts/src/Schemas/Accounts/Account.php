@@ -22,7 +22,7 @@ use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Schemas\JsonApi as JsonApis;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
@@ -60,7 +60,7 @@ final class Account extends JsonApis\JsonApi
 	public const RELATIONSHIPS_EMAILS = 'emails';
 
 	public function __construct(
-		protected readonly Routing\IRouter $router,
+		protected readonly SlimRouterRouting\IRouter $router,
 		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
 		private readonly SimpleAuthSecurity\EnforcerFactory $enforcerFactory,
 	)

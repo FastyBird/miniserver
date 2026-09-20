@@ -21,7 +21,7 @@ use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
@@ -60,7 +60,7 @@ abstract class Property extends JsonApiSchemas\JsonApi
 	public const RELATIONSHIPS_STATE = 'state';
 
 	public function __construct(
-		protected readonly Routing\IRouter $router,
+		protected readonly SlimRouterRouting\IRouter $router,
 		protected readonly Models\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
 	)
 	{

@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Router;
 
 use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Constants\Metadata;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Middleware;
@@ -58,14 +58,14 @@ class ApiRoutes
 	{
 	}
 
-	public function registerRoutes(Routing\IRouter $router): void
+	public function registerRoutes(SlimRouterRouting\IRouter $router): void
 	{
 		$routes = $router->group('/' . Metadata\Constants::ROUTER_API_PREFIX, function (
-			Routing\RouteCollector $group,
+			SlimRouterRouting\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group('/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX, function (
-					Routing\RouteCollector $group,
+					SlimRouterRouting\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);
 				});
@@ -80,9 +80,9 @@ class ApiRoutes
 		$routes->addMiddleware($this->authAccessControlMiddleware);
 	}
 
-	private function buildRoutes(Routing\IRouter|Routing\IRouteCollector $group): Routing\IRouteGroup
+	private function buildRoutes(SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group): SlimRouterRouting\IRouteGroup
 	{
-		return $group->group('/v1', function (Routing\RouteCollector $group): void {
+		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
 			$group->post('/reset-identity', [$this->publicV1Controller, 'resetIdentity']);
 
 			$group->post('/register', [$this->publicV1Controller, 'register']);
@@ -90,7 +90,7 @@ class ApiRoutes
 			/**
 			 * SESSION
 			 */
-			$group->group('/session', function (Routing\RouteCollector $group): void {
+			$group->group('/session', function (SlimRouterRouting\RouteCollector $group): void {
 				$route = $group->get('', [$this->sessionV1Controller, 'read']);
 				$route->setName(Accounts\Constants::ROUTE_NAME_SESSION);
 
@@ -110,7 +110,7 @@ class ApiRoutes
 			/**
 			 * PROFILE
 			 */
-			$group->group('/me', function (Routing\RouteCollector $group): void {
+			$group->group('/me', function (SlimRouterRouting\RouteCollector $group): void {
 				$route = $group->get('', [$this->accountV1Controller, 'read']);
 				$route->setName(Accounts\Constants::ROUTE_NAME_ME);
 
@@ -127,7 +127,7 @@ class ApiRoutes
 				/**
 				 * PROFILE EMAILS
 				 */
-				$group->group('/emails', function (Routing\RouteCollector $group): void {
+				$group->group('/emails', function (SlimRouterRouting\RouteCollector $group): void {
 					$route = $group->get('', [$this->accountEmailsV1Controller, 'index']);
 					$route->setName(Accounts\Constants::ROUTE_NAME_ME_EMAILS);
 
@@ -153,7 +153,7 @@ class ApiRoutes
 				/**
 				 * PROFILE IDENTITIES
 				 */
-				$group->group('/identities', function (Routing\RouteCollector $group): void {
+				$group->group('/identities', function (SlimRouterRouting\RouteCollector $group): void {
 					$route = $group->get('', [$this->accountIdentitiesV1Controller, 'index']);
 					$route->setName(Accounts\Constants::ROUTE_NAME_ME_IDENTITIES);
 
@@ -179,7 +179,7 @@ class ApiRoutes
 			/**
 			 * ACCOUNTS
 			 */
-			$group->group('/accounts', function (Routing\RouteCollector $group): void {
+			$group->group('/accounts', function (SlimRouterRouting\RouteCollector $group): void {
 				$route = $group->get('', [$this->accountsV1Controller, 'index']);
 				$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNTS);
 
@@ -199,11 +199,11 @@ class ApiRoutes
 				$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_RELATIONSHIP);
 			});
 
-			$group->group('/accounts/{' . self::URL_ACCOUNT_ID . '}', function (Routing\RouteCollector $group): void {
+			$group->group('/accounts/{' . self::URL_ACCOUNT_ID . '}', function (SlimRouterRouting\RouteCollector $group): void {
 				/**
 				 * ACCOUNT IDENTITIES
 				 */
-				$group->group('/identities', function (Routing\RouteCollector $group): void {
+				$group->group('/identities', function (SlimRouterRouting\RouteCollector $group): void {
 					$route = $group->get('', [$this->identitiesV1Controller, 'index']);
 					$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITIES);
 
@@ -227,7 +227,7 @@ class ApiRoutes
 				/**
 				 * ACCOUNT EMAILS
 				 */
-				$group->group('/emails', function (Routing\RouteCollector $group): void {
+				$group->group('/emails', function (SlimRouterRouting\RouteCollector $group): void {
 					$route = $group->get('', [$this->emailsV1Controller, 'index']);
 					$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAILS);
 
@@ -254,7 +254,7 @@ class ApiRoutes
 			/**
 			 * ACCESS ROLES
 			 */
-			$group->group('/roles', function (Routing\RouteCollector $group): void {
+			$group->group('/roles', function (SlimRouterRouting\RouteCollector $group): void {
 				$route = $group->get('', [$this->rolesV1Controller, 'index']);
 				$route->setName(Accounts\Constants::ROUTE_NAME_ROLES);
 
@@ -279,7 +279,7 @@ class ApiRoutes
 				$route->setName(Accounts\Constants::ROUTE_NAME_ROLE_CHILDREN);
 			});
 
-			$group->group('/authenticate', static function (Routing\RouteCollector $group): void {
+			$group->group('/authenticate', static function (SlimRouterRouting\RouteCollector $group): void {
 			});
 		});
 	}

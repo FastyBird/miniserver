@@ -20,7 +20,7 @@ use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
@@ -57,7 +57,7 @@ final class State extends JsonApiSchemas\JsonApi
 	public const RELATIONSHIPS_PROPERTY = 'property';
 
 	public function __construct(
-		private readonly Routing\IRouter $router,
+		private readonly SlimRouterRouting\IRouter $router,
 		private readonly Models\Entities\Connectors\Properties\PropertiesRepository $connectorsPropertiesRepository,
 	)
 	{

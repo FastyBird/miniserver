@@ -17,7 +17,7 @@ namespace FastyBird\Module\Triggers\Router;
 
 use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Constants\Metadata;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Middleware;
@@ -53,14 +53,14 @@ class ApiRoutes
 	{
 	}
 
-	public function registerRoutes(Routing\IRouter $router): void
+	public function registerRoutes(SlimRouterRouting\IRouter $router): void
 	{
 		$routes = $router->group('/' . Metadata\Constants::ROUTER_API_PREFIX, function (
-			Routing\RouteCollector $group,
+			SlimRouterRouting\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group('/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX, function (
-					Routing\RouteCollector $group,
+					SlimRouterRouting\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);
 				});
@@ -75,10 +75,10 @@ class ApiRoutes
 		$routes->addMiddleware($this->triggersAccessControlMiddleware);
 	}
 
-	private function buildRoutes(Routing\IRouter|Routing\IRouteCollector $group): Routing\IRouteGroup
+	private function buildRoutes(SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group): SlimRouterRouting\IRouteGroup
 	{
-		return $group->group('/v1', function (Routing\RouteCollector $group): void {
-			$group->group('/triggers', function (Routing\RouteCollector $group): void {
+		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
+			$group->group('/triggers', function (SlimRouterRouting\RouteCollector $group): void {
 				/**
 				 * TRIGGERS
 				 */
@@ -101,8 +101,8 @@ class ApiRoutes
 				$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_RELATIONSHIP);
 			});
 
-			$group->group('/triggers/{' . self::URL_TRIGGER_ID . '}', function (Routing\RouteCollector $group): void {
-				$group->group('/actions', function (Routing\RouteCollector $group): void {
+			$group->group('/triggers/{' . self::URL_TRIGGER_ID . '}', function (SlimRouterRouting\RouteCollector $group): void {
+				$group->group('/actions', function (SlimRouterRouting\RouteCollector $group): void {
 					/**
 					 * ACTIONS
 					 */
@@ -128,7 +128,7 @@ class ApiRoutes
 					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP);
 				});
 
-				$group->group('/notifications', function (Routing\RouteCollector $group): void {
+				$group->group('/notifications', function (SlimRouterRouting\RouteCollector $group): void {
 					/**
 					 * NOTIFICATIONS
 					 */
@@ -154,7 +154,7 @@ class ApiRoutes
 					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATION_RELATIONSHIP);
 				});
 
-				$group->group('/conditions', function (Routing\RouteCollector $group): void {
+				$group->group('/conditions', function (SlimRouterRouting\RouteCollector $group): void {
 					/**
 					 * CONDITIONS
 					 */
@@ -180,7 +180,7 @@ class ApiRoutes
 					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITION_RELATIONSHIP);
 				});
 
-				$group->group('/controls', function (Routing\RouteCollector $group): void {
+				$group->group('/controls', function (SlimRouterRouting\RouteCollector $group): void {
 					/**
 					 * CONTROLS
 					 */

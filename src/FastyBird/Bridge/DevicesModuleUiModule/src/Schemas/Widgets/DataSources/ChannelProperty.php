@@ -20,7 +20,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -59,7 +59,7 @@ final class ChannelProperty extends Property
 	public function __construct(
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesRepository,
 		private readonly DevicesModels\States\ChannelPropertiesManager $channelPropertiesManager,
-		Routing\IRouter $router,
+		SlimRouterRouting\IRouter $router,
 	)
 	{
 		parent::__construct($router);

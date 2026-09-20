@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Router;
 
 use FastyBird\Connector\HomeKit\Controllers;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 
 /**
  * Connector router configuration
@@ -26,7 +26,7 @@ use FastyBird\Core\Routing\SlimRouter;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Router extends Routing\Router
+class Router extends SlimRouterRouting\Router
 {
 
 	public function __construct(
@@ -45,7 +45,7 @@ class Router extends Routing\Router
 
 		$this->group(
 			'/accessories',
-			static function (Routing\RouteCollector $group) use ($accessoriesController): void {
+			static function (SlimRouterRouting\RouteCollector $group) use ($accessoriesController): void {
 				$group->get('', [$accessoriesController, 'index']);
 			},
 		);
@@ -54,7 +54,7 @@ class Router extends Routing\Router
 
 		$this->group(
 			'/characteristics',
-			static function (Routing\RouteCollector $group) use ($characteristicsController): void {
+			static function (SlimRouterRouting\RouteCollector $group) use ($characteristicsController): void {
 				$group->get('', [$characteristicsController, 'index']);
 				$group->put('', [$characteristicsController, 'update']);
 			},
@@ -63,7 +63,7 @@ class Router extends Routing\Router
 
 		$this->group(
 			'/diagnostics',
-			static function (Routing\RouteCollector $group) use ($diagnosticsController): void {
+			static function (SlimRouterRouting\RouteCollector $group) use ($diagnosticsController): void {
 				$group->get('', [$diagnosticsController, 'index']);
 			},
 		);

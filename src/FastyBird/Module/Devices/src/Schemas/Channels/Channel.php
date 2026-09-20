@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Schemas\Channels;
 
 use DateTimeInterface;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Routing\SlimRouter;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
@@ -47,7 +47,7 @@ abstract class Channel extends JsonApiSchemas\JsonApi
 
 	public const RELATIONSHIPS_CONTROLS = 'controls';
 
-	public function __construct(private readonly Routing\IRouter $router)
+	public function __construct(private readonly SlimRouterRouting\IRouter $router)
 	{
 	}
 
