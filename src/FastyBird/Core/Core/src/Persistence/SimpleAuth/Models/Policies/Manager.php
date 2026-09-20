@@ -17,9 +17,10 @@ namespace FastyBird\Core\Persistence\SimpleAuth\Models\Policies;
 
 use Doctrine\DBAL;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Core\Persistence\SimpleAuth\Models;
-use FastyBird\Library\DoctrineCrud\Crud as DoctrineCrudCrud;
-use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Nette;
 use Nette\Utils;
 use function assert;
@@ -51,8 +52,8 @@ class Manager
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Policies\Policy
 	{
@@ -64,8 +65,8 @@ class Manager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function update(
 		Entities\Policies\Policy $entity,
@@ -79,8 +80,8 @@ class Manager
 	}
 
 	/**
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function delete(Entities\Policies\Policy $entity): bool
 	{

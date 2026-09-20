@@ -17,9 +17,9 @@ namespace FastyBird\Core\Entities\SimpleAuth\Tokens;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Core\Types\SimpleAuth as Types;
-use FastyBird\Library\DoctrineCrud;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -47,7 +47,7 @@ use Ramsey\Uuid;
 // entirely, which is what the removed doctrine/orm patch achieved by deferring the call.
 #[ORM\DiscriminatorMap(['token' => Token::class])]
 #[ORM\MappedSuperclass]
-abstract class Token implements DoctrineCrud\Entities\IEntity
+abstract class Token implements DoctrineCrud\IEntity
 {
 
 	#[ORM\Id]

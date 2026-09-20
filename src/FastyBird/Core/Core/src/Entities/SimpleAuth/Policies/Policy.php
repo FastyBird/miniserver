@@ -16,9 +16,9 @@
 namespace FastyBird\Core\Entities\SimpleAuth\Policies;
 
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Core\Types\SimpleAuth as Types;
-use FastyBird\Library\DoctrineCrud;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -45,7 +45,7 @@ use Ramsey\Uuid;
 // the short name and once under its DiscriminatorEntry name. An explicit map skips the default
 // entirely, which is what the removed doctrine/orm patch achieved by deferring the call.
 #[ORM\DiscriminatorMap([Policy::TYPE => Policy::class])]
-class Policy implements DoctrineCrud\Entities\IEntity
+class Policy implements DoctrineCrud\IEntity
 {
 
 	public const TYPE = 'policy';
