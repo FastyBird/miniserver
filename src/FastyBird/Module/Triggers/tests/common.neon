@@ -12,14 +12,6 @@ extensions:
 
 services:
 	-
-		factory: FastyBird\Core\Http\SlimRouter\ResponseFactory
-
-	-
-		factory: FastyBird\Core\Routing\SlimRouter\Router
-		setup:
-			- addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
-
-	-
 		factory: FastyBird\Module\Triggers\Tests\Fixtures\Dummy\DummyActionHydrator
 
 	-
@@ -33,7 +25,11 @@ services:
 
 	cache.storage: Nette\Caching\Storages\DevNullStorage
 
-decorator: null
+decorator:
+	FastyBird\Core\Routing\WebServer\Router:
+		setup:
+			- addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
+
 contributteTranslation:
 	locales:
 		default: en_US
@@ -44,7 +40,7 @@ contributteTranslation:
 	localeResolvers: []
 	dirs:
 		- %appDir%/../src/Translations
-		- %vendorDir%/fastybird/json-api-library/src/Translations
+		- %vendorDir%/fastybird/miniserver-core/src/Translations/JsonApi
 
 nettrineDbal:
 	connections:

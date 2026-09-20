@@ -22,10 +22,6 @@ extensions:
     nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
 
 services:
-    - {factory: FastyBird\Core\Http\SlimRouter\ResponseFactory}
-    -
-        factory: FastyBird\Core\Routing\SlimRouter\Router
-
     cache.storage: Nette\Caching\Storages\DevNullStorage
 
     - {factory: Symfony\Component\EventDispatcher\EventDispatcher}

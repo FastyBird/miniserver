@@ -12,17 +12,13 @@ extensions:
 	fbCore: FastyBird\Core\DI\CoreExtension
 
 services:
-	-
-		factory: FastyBird\Core\Http\SlimRouter\ResponseFactory
+	cache.storage: Nette\Caching\Storages\DevNullStorage
 
-	-
-		factory: FastyBird\Core\Routing\SlimRouter\Router
+decorator:
+	FastyBird\Core\Routing\WebServer\Router:
 		setup:
 			- addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
 
-	cache.storage: Nette\Caching\Storages\DevNullStorage
-
-decorator: null
 contributteTranslation:
 	locales:
 		default: en_US
@@ -32,7 +28,7 @@ contributteTranslation:
 
 	localeResolvers: []
 	dirs:
-		- %vendorDir%/fastybird/json-api-library/src/Translations
+		- %vendorDir%/fastybird/miniserver-core/src/Translations/JsonApi
 
 nettrineDbal:
 	connections:
