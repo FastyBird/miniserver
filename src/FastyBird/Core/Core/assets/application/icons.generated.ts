@@ -8,7 +8,7 @@
 //
 // Regenerate whenever icon usage changes, and commit the result:
 //   node scripts/generate-icons.mjs
-//   node_modules/.bin/prettier --write src/FastyBird/Core/Application/assets/icons.generated.ts
+//   node_modules/.bin/prettier --write src/FastyBird/Core/Core/assets/application/icons.generated.ts
 //
 // Icon ids: 74 (4 fa6-brands, 8 fa6-regular, 62 fa6-solid).
 import type { IconifyJSON } from '@iconify/types';

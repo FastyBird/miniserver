@@ -71,9 +71,10 @@ import { useRouter } from 'vue-router';
 
 import { ElAside, ElContainer, ElDrawer, ElMain, useNamespace, vLoading } from 'element-plus';
 
-import { injectAccountManager, useBreakpoints, useEventBus } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/websockets-library';
 import { useHead } from '@unhead/vue';
+
+import { injectAccountManager, useBreakpoints, useEventBus } from '../tools';
+import { useWampV1Client } from '../websockets';
 
 import Logo from './assets/images/fb_row.svg?component';
 import { AppBar, AppNavigation, AppSidebar, AppTopbar } from './components';

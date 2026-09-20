@@ -88,10 +88,10 @@ import { useRoute } from 'vue-router';
 
 import { ElIcon, ElMenu, ElMenuItem, ElMenuItemGroup, ElScrollbar, useNamespace } from 'element-plus';
 
-import { injectAccountManager } from '@fastybird/tools';
-import { useBreakpoints } from '@fastybird/tools';
 import { Icon } from '@iconify/vue';
 
+import { injectAccountManager } from '../../tools';
+import { useBreakpoints } from '../../tools';
 import { useMenu } from '../composables';
 
 import { IAppNavigationProps } from './app-navigation.types';

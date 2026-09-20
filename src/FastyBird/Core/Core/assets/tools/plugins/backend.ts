@@ -2,8 +2,7 @@ import { App } from 'vue';
 
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
-import { ModulePrefix } from '@fastybird/metadata-library';
-
+import { ModulePrefix } from '../../metadata';
 import { provideBackend } from '../backend';
 import { useBackend } from '../composables';
 

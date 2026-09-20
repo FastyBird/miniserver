@@ -7,10 +7,11 @@ import 'nprogress/nprogress.css';
 import 'virtual:uno.css';
 
 import { extensions } from '@config/extensions';
-import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, storesPlugin } from '@fastybird/tools';
-import { createWampV1Client } from '@fastybird/websockets-library';
 import { addCollection } from '@iconify/vue';
 import { createHead } from '@unhead/vue/client';
+
+import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, storesPlugin } from '../tools';
+import { createWampV1Client } from '../websockets';
 
 import App from './App.vue';
 import { iconCollections } from './icons.generated';

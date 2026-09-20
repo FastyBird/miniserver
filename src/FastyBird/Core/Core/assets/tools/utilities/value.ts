@@ -1,4 +1,4 @@
-import { ButtonPayload, CoverPayload, SwitchPayload } from '@fastybird/metadata-library';
+import { ButtonPayload, CoverPayload, SwitchPayload } from '../../metadata';
 
 export const flattenValue = (
 	value: string | number | boolean | ButtonPayload | CoverPayload | SwitchPayload | Date | null

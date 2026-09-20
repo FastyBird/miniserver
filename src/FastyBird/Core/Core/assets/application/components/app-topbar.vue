@@ -77,10 +77,10 @@ import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElDropdown, ElDropdownItem, ElDropdownMenu, ElHeader, ElSwitch, useNamespace } from 'element-plus';
 
-import { IAccountManager } from '@fastybird/tools';
-import { IAccountDetails, injectAccountManager, useDarkMode } from '@fastybird/tools';
 import { Icon } from '@iconify/vue';
 
+import { IAccountManager } from '../../tools';
+import { IAccountDetails, injectAccountManager, useDarkMode } from '../../tools';
 import { AppGravatar, FB_BREADCRUMBS_TARGET } from '../components';
 
 import { IAppTopbarProps } from './app-topbar.types';
