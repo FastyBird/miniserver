@@ -17,8 +17,8 @@ namespace FastyBird\Module\Devices\Entities\Connectors\Controls;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Core\Entities\DoctrineTimestampable;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities;
 use Nette\Utils;

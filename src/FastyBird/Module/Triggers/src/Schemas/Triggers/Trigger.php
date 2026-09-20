@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;

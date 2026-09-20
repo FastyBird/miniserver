@@ -17,11 +17,11 @@ namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
 use Exception;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;

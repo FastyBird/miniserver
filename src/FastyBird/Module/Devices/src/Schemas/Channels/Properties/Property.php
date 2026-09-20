@@ -17,11 +17,11 @@ namespace FastyBird\Module\Devices\Schemas\Channels\Properties;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;

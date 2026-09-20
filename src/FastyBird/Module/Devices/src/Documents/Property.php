@@ -16,13 +16,13 @@
 namespace FastyBird\Module\Devices\Documents;
 
 use DateTimeInterface;
+use FastyBird\Core\Constants\Metadata\Constants as MetadataConstants;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
-use FastyBird\Core\Constants\Metadata\Constants as MetadataConstants;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;

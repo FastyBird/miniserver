@@ -15,12 +15,12 @@
 
 namespace FastyBird\Module\Devices\Consumers;
 
+use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;

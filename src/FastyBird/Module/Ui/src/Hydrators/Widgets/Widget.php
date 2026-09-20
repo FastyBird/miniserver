@@ -17,12 +17,12 @@ namespace FastyBird\Module\Ui\Hydrators\Widgets;
 
 use Contributte\Translation;
 use Doctrine\Persistence;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
-use FastyBird\Core\Entities\DoctrineCrud as DoctrineCrudEntities;
 use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Core\Encoding\JsonApi as JsonApiJsonApi;
+use FastyBird\Core\Entities\DoctrineCrud as DoctrineCrudEntities;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Hydrators;
 use FastyBird\Module\Ui\Models;

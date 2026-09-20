@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources\Actions;
 
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents;

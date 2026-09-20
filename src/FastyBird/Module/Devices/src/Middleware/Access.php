@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Devices\Middleware;
 
-use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
 use Psr\Http\Message\ResponseInterface;

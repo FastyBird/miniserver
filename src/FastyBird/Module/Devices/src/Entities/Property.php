@@ -17,14 +17,14 @@ namespace FastyBird\Module\Devices\Entities;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
-use FastyBird\Core\Transformers\Tools as ToolsTransformers;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Transformers\Tools as ToolsTransformers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;

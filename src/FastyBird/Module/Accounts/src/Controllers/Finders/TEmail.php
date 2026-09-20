@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Controllers\Finders;
 
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;

@@ -4,10 +4,10 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Cases\Un
 
 use Error;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Constants\Metadata;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;

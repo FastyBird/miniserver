@@ -17,12 +17,12 @@ namespace FastyBird\Module\Devices\Models\States\Async;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Documents;

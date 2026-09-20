@@ -4,8 +4,8 @@ namespace FastyBird\Module\Devices\Tests\Fixtures\Dummy;
 
 use DateTimeInterface;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\States;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;

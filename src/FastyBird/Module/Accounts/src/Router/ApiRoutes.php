@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Router;
 
-use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Controllers;
@@ -80,7 +80,9 @@ class ApiRoutes
 		$routes->addMiddleware($this->authAccessControlMiddleware);
 	}
 
-	private function buildRoutes(SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group): SlimRouterRouting\IRouteGroup
+	private function buildRoutes(
+		SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group,
+	): SlimRouterRouting\IRouteGroup
 	{
 		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
 			$group->post('/reset-identity', [$this->publicV1Controller, 'resetIdentity']);
@@ -199,57 +201,60 @@ class ApiRoutes
 				$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_RELATIONSHIP);
 			});
 
-			$group->group('/accounts/{' . self::URL_ACCOUNT_ID . '}', function (SlimRouterRouting\RouteCollector $group): void {
-				/**
-				 * ACCOUNT IDENTITIES
-				 */
-				$group->group('/identities', function (SlimRouterRouting\RouteCollector $group): void {
-					$route = $group->get('', [$this->identitiesV1Controller, 'index']);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITIES);
+			$group->group(
+				'/accounts/{' . self::URL_ACCOUNT_ID . '}',
+				function (SlimRouterRouting\RouteCollector $group): void {
+					/**
+					 * ACCOUNT IDENTITIES
+					 */
+					$group->group('/identities', function (SlimRouterRouting\RouteCollector $group): void {
+						$route = $group->get('', [$this->identitiesV1Controller, 'index']);
+						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITIES);
 
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->identitiesV1Controller, 'read']);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITY);
+						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->identitiesV1Controller, 'read']);
+						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITY);
 
-					$group->post('', [$this->identitiesV1Controller, 'create']);
+						$group->post('', [$this->identitiesV1Controller, 'create']);
 
-					$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->identitiesV1Controller, 'update']);
+						$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->identitiesV1Controller, 'update']);
 
-					$route = $group->get(
-						'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
-						[
-							$this->identitiesV1Controller,
-							'readRelationship',
-						],
-					);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITY_RELATIONSHIP);
-				});
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
+							[
+								$this->identitiesV1Controller,
+								'readRelationship',
+							],
+						);
+						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITY_RELATIONSHIP);
+					});
 
-				/**
-				 * ACCOUNT EMAILS
-				 */
-				$group->group('/emails', function (SlimRouterRouting\RouteCollector $group): void {
-					$route = $group->get('', [$this->emailsV1Controller, 'index']);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAILS);
+					/**
+					 * ACCOUNT EMAILS
+					 */
+					$group->group('/emails', function (SlimRouterRouting\RouteCollector $group): void {
+						$route = $group->get('', [$this->emailsV1Controller, 'index']);
+						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAILS);
 
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->emailsV1Controller, 'read']);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAIL);
+						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->emailsV1Controller, 'read']);
+						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAIL);
 
-					$group->post('', [$this->emailsV1Controller, 'create']);
+						$group->post('', [$this->emailsV1Controller, 'create']);
 
-					$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->emailsV1Controller, 'update']);
+						$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->emailsV1Controller, 'update']);
 
-					$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->emailsV1Controller, 'delete']);
+						$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->emailsV1Controller, 'delete']);
 
-					$route = $group->get(
-						'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
-						[
-							$this->emailsV1Controller,
-							'readRelationship',
-						],
-					);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAIL_RELATIONSHIP);
-				});
-			});
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
+							[
+								$this->emailsV1Controller,
+								'readRelationship',
+							],
+						);
+						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAIL_RELATIONSHIP);
+					});
+				},
+			);
 
 			/**
 			 * ACCESS ROLES

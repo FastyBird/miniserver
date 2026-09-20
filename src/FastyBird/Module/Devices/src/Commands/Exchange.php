@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Commands;
 
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
+use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Consumers;

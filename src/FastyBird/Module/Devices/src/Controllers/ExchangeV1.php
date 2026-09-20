@@ -15,14 +15,14 @@
 
 namespace FastyBird\Module\Devices\Controllers;
 
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Controllers\WebSockets as WebSocketsControllers;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Controllers\WebSockets as WebSocketsControllers;
-use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;

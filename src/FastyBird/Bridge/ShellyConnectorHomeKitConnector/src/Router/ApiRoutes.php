@@ -17,8 +17,8 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
-use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
@@ -72,7 +72,9 @@ class ApiRoutes
 		$routes->addMiddleware($this->devicesAccessControlMiddleware);
 	}
 
-	private function buildRoutes(SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group): SlimRouterRouting\IRouteGroup
+	private function buildRoutes(
+		SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group,
+	): SlimRouterRouting\IRouteGroup
 	{
 		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
 			/**

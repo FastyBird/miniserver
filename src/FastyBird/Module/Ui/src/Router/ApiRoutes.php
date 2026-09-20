@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Router;
 
-use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Controllers;
@@ -78,7 +78,9 @@ class ApiRoutes
 		$routes->addMiddleware($this->uiAccessControlMiddleware);
 	}
 
-	private function buildRoutes(SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group): SlimRouterRouting\IRouteGroup
+	private function buildRoutes(
+		SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group,
+	): SlimRouterRouting\IRouteGroup
 	{
 		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
 			$group->group('/dashboards', function (SlimRouterRouting\RouteCollector $group): void {
@@ -181,49 +183,52 @@ class ApiRoutes
 				$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_RELATIONSHIP);
 			});
 
-			$group->group('/widgets/{' . self::URL_WIDGET_ID . '}', function (SlimRouterRouting\RouteCollector $group): void {
-				$group->group('/display', function (SlimRouterRouting\RouteCollector $group): void {
-					/**
-					 * WIDGET DISPLAY
-					 */
-					$route = $group->get('', [$this->displayV1Controller, 'read']);
-					$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY);
+			$group->group(
+				'/widgets/{' . self::URL_WIDGET_ID . '}',
+				function (SlimRouterRouting\RouteCollector $group): void {
+					$group->group('/display', function (SlimRouterRouting\RouteCollector $group): void {
+						/**
+						 * WIDGET DISPLAY
+						 */
+						$route = $group->get('', [$this->displayV1Controller, 'read']);
+						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY);
 
-					$group->patch('', [$this->displayV1Controller, 'update']);
+						$group->patch('', [$this->displayV1Controller, 'update']);
 
-					$route = $group->get('/relationships/{' . self::RELATION_ENTITY . '}', [
-						$this->displayV1Controller,
-						'readRelationship',
-					]);
-					$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP);
-				});
-
-				$group->group('/data-sources', function (SlimRouterRouting\RouteCollector $group): void {
-					/**
-					 * WIDGET DATA SOURCES
-					 */
-					$route = $group->get('', [$this->dataSourceV1Controller, 'index']);
-					$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCES);
-
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'read']);
-					$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE);
-
-					$group->post('', [$this->dataSourceV1Controller, 'create']);
-
-					$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'update']);
-
-					$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'delete']);
-
-					$route = $group->get(
-						'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
-						[
-							$this->dataSourceV1Controller,
+						$route = $group->get('/relationships/{' . self::RELATION_ENTITY . '}', [
+							$this->displayV1Controller,
 							'readRelationship',
-						],
-					);
-					$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP);
-				});
-			});
+						]);
+						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP);
+					});
+
+					$group->group('/data-sources', function (SlimRouterRouting\RouteCollector $group): void {
+						/**
+						 * WIDGET DATA SOURCES
+						 */
+						$route = $group->get('', [$this->dataSourceV1Controller, 'index']);
+						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCES);
+
+						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'read']);
+						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE);
+
+						$group->post('', [$this->dataSourceV1Controller, 'create']);
+
+						$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'update']);
+
+						$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'delete']);
+
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
+							[
+								$this->dataSourceV1Controller,
+								'readRelationship',
+							],
+						);
+						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP);
+					});
+				},
+			);
 		});
 	}
 

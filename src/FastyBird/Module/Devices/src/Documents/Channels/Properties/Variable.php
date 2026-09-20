@@ -17,10 +17,10 @@ namespace FastyBird\Module\Devices\Documents\Channels\Properties;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;

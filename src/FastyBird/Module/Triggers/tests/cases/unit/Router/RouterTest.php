@@ -3,8 +3,8 @@
 namespace FastyBird\Module\Triggers\Tests\Cases\Unit\Router;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Triggers\Exceptions;
 use FastyBird\Module\Triggers\Tests;

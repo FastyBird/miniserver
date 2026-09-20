@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Schemas\Dashboards\Tabs;
 
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;

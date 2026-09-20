@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Constants\Metadata;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;

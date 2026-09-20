@@ -16,8 +16,8 @@
 namespace FastyBird\Plugin\ApiKey\Models\Entities;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Plugin\ApiKey\Entities;
 use Nette;
 use Nette\Utils;

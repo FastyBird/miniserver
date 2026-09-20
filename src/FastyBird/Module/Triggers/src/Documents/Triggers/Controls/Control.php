@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;

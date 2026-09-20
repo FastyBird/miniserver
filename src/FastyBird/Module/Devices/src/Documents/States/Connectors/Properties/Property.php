@@ -17,8 +17,8 @@ namespace FastyBird\Module\Devices\Documents\States\Connectors\Properties;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use Ramsey\Uuid;

@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Accounts\Security;
 
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
-use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use Lcobucci\JWT;

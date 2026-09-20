@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\Modbus\Queue\Messages;
 
 use DateTimeInterface;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;

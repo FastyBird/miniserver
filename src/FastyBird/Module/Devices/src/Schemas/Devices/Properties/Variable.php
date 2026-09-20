@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Devices\Schemas\Devices\Properties;
 
 use Exception;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;

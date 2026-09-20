@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Triggers\Models\Entities\Notifications;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Models;
 use Nette;
