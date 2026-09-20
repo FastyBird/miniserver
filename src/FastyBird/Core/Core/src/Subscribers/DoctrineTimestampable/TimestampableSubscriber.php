@@ -13,16 +13,16 @@
  * @date           06.01.16
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Events;
+namespace FastyBird\Core\Subscribers\DoctrineTimestampable;
 
 use DateTime;
 use DateTimeInterface;
 use DateTimeZone;
 use Doctrine\Common;
 use Doctrine\ORM;
-use FastyBird\Library\DoctrineTimestampable\Exceptions;
-use FastyBird\Library\DoctrineTimestampable\Mapping;
-use FastyBird\Library\DoctrineTimestampable\Providers;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Mapping\DoctrineTimestampable as Mapping;
+use FastyBird\Core\Providers\DoctrineTimestampable as Providers;
 use Nette;
 use function array_key_exists;
 use function date_default_timezone_get;

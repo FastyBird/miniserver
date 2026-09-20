@@ -13,7 +13,7 @@
  * @date           06.01.15
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Types;
+namespace FastyBird\Core\Types\DoctrineTimestampable;
 
 use DateTime;
 use DateTimeZone;

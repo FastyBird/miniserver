@@ -13,7 +13,7 @@
  * @date           05.01.23
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Providers;
+namespace FastyBird\Core\Providers\DoctrineTimestampable;
 
 use DateTimeInterface;
 

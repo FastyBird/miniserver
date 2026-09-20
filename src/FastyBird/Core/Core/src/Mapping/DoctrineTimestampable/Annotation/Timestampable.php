@@ -13,7 +13,7 @@
  * @date           06.01.16
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Mapping\Annotation;
+namespace FastyBird\Core\Mapping\DoctrineTimestampable\Annotation;
 
 use Attribute;
 

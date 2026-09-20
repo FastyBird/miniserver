@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TEntityCreated.php
+ * IEntityCreated.php
  *
  * @copyright      More in LICENSE.md
  * @license        https://www.ipublikuj.eu
@@ -13,33 +13,23 @@
  * @date           06.01.15
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Entities;
+namespace FastyBird\Core\Entities\DoctrineTimestampable;
 
 use DateTimeInterface;
-use FastyBird\Library\DoctrineTimestampable\Mapping\Annotation as IPub;
 
 /**
- * Doctrine timestampable creating entity
+ * Doctrine timestampable creating entity interface
  *
  * @package        iPublikuj:DoctrineTimestampable!
  * @subpackage     Entities
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-trait TEntityCreated
+interface IEntityCreated
 {
 
-	#[IPub\Timestampable(on: 'create')]
-	protected DateTimeInterface|null $createdAt = null;
+	public function setCreatedAt(DateTimeInterface $createdAt): void;
 
-	public function getCreatedAt(): DateTimeInterface|null
-	{
-		return $this->createdAt;
-	}
-
-	public function setCreatedAt(DateTimeInterface $createdAt): void
-	{
-		$this->createdAt = $createdAt;
-	}
+	public function getCreatedAt(): DateTimeInterface|null;
 
 }

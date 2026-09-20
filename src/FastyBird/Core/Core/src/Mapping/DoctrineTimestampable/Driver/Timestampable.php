@@ -13,12 +13,12 @@
  * @date           05.01.16
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Mapping\Driver;
+namespace FastyBird\Core\Mapping\DoctrineTimestampable\Driver;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Library\DoctrineTimestampable;
-use FastyBird\Library\DoctrineTimestampable\Exceptions;
+use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Exceptions;
 use Nette;
 use Psr\Cache\CacheItemPoolInterface;
 use function array_reverse;
@@ -43,7 +43,7 @@ final class Timestampable
 	use Nette\SmartObject;
 
 	// Annotation field is timestampable
-	private const EXTENSION_ANNOTATION = 'FastyBird\Library\DoctrineTimestampable\Mapping\Annotation\Timestampable';
+	private const EXTENSION_ANNOTATION = 'FastyBird\Core\Mapping\DoctrineTimestampable\Annotation\Timestampable';
 
 	/**
 	 * List of cached object configurations

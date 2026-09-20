@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TEntityRemoved.php
+ * TEntityUpdated.php
  *
  * @copyright      More in LICENSE.md
  * @license        https://www.ipublikuj.eu
@@ -13,33 +13,33 @@
  * @date           06.01.15
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Entities;
+namespace FastyBird\Core\Entities\DoctrineTimestampable;
 
 use DateTimeInterface;
-use FastyBird\Library\DoctrineTimestampable\Mapping\Annotation as IPub;
+use FastyBird\Core\Mapping\DoctrineTimestampable\Annotation as IPub;
 
 /**
- * Doctrine timestampable removing entity
+ * Doctrine timestampable modifying entity
  *
  * @package        iPublikuj:DoctrineTimestampable!
  * @subpackage     Entities
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-trait TEntityRemoved
+trait TEntityUpdated
 {
 
-	#[IPub\Timestampable(on: 'delete')]
-	protected DateTimeInterface|null $deletedAt = null;
+	#[IPub\Timestampable(on: 'update')]
+	protected DateTimeInterface|null $updatedAt = null;
 
-	public function getDeletedAt(): DateTimeInterface|null
+	public function getUpdatedAt(): DateTimeInterface|null
 	{
-		return $this->deletedAt;
+		return $this->updatedAt;
 	}
 
-	public function setDeletedAt(DateTimeInterface $deletedAt): void
+	public function setUpdatedAt(DateTimeInterface $updatedAt): void
 	{
-		$this->deletedAt = $deletedAt;
+		$this->updatedAt = $updatedAt;
 	}
 
 }

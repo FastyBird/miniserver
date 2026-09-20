@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * IEntityCreated.php
+ * TEntityRemoved.php
  *
  * @copyright      More in LICENSE.md
  * @license        https://www.ipublikuj.eu
@@ -13,23 +13,33 @@
  * @date           06.01.15
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Entities;
+namespace FastyBird\Core\Entities\DoctrineTimestampable;
 
 use DateTimeInterface;
+use FastyBird\Core\Mapping\DoctrineTimestampable\Annotation as IPub;
 
 /**
- * Doctrine timestampable creating entity interface
+ * Doctrine timestampable removing entity
  *
  * @package        iPublikuj:DoctrineTimestampable!
  * @subpackage     Entities
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-interface IEntityCreated
+trait TEntityRemoved
 {
 
-	public function setCreatedAt(DateTimeInterface $createdAt): void;
+	#[IPub\Timestampable(on: 'delete')]
+	protected DateTimeInterface|null $deletedAt = null;
 
-	public function getCreatedAt(): DateTimeInterface|null;
+	public function getDeletedAt(): DateTimeInterface|null
+	{
+		return $this->deletedAt;
+	}
+
+	public function setDeletedAt(DateTimeInterface $deletedAt): void
+	{
+		$this->deletedAt = $deletedAt;
+	}
 
 }

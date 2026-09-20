@@ -16,8 +16,8 @@
 namespace FastyBird\Core\Utilities\Tools;
 
 use DateTimeInterface;
+use FastyBird\Core\Providers\DoctrineTimestampable as DoctrineTimestampableProviders;
 use FastyBird\Core\Services\DateTimeFactory;
-use FastyBird\Library\DoctrineTimestampable\Providers as DoctrineTimestampableProviders;
 
 /**
  * Date provider for doctrine timestampable

@@ -13,7 +13,7 @@
  * @date           06.01.16
  */
 
-namespace FastyBird\Library\DoctrineTimestampable;
+namespace FastyBird\Core\Configuration\DoctrineTimestampable;
 
 use Nette;
 

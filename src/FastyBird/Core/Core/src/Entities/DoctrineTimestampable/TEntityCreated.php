@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TEntityUpdated.php
+ * TEntityCreated.php
  *
  * @copyright      More in LICENSE.md
  * @license        https://www.ipublikuj.eu
@@ -13,33 +13,33 @@
  * @date           06.01.15
  */
 
-namespace FastyBird\Library\DoctrineTimestampable\Entities;
+namespace FastyBird\Core\Entities\DoctrineTimestampable;
 
 use DateTimeInterface;
-use FastyBird\Library\DoctrineTimestampable\Mapping\Annotation as IPub;
+use FastyBird\Core\Mapping\DoctrineTimestampable\Annotation as IPub;
 
 /**
- * Doctrine timestampable modifying entity
+ * Doctrine timestampable creating entity
  *
  * @package        iPublikuj:DoctrineTimestampable!
  * @subpackage     Entities
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-trait TEntityUpdated
+trait TEntityCreated
 {
 
-	#[IPub\Timestampable(on: 'update')]
-	protected DateTimeInterface|null $updatedAt = null;
+	#[IPub\Timestampable(on: 'create')]
+	protected DateTimeInterface|null $createdAt = null;
 
-	public function getUpdatedAt(): DateTimeInterface|null
+	public function getCreatedAt(): DateTimeInterface|null
 	{
-		return $this->updatedAt;
+		return $this->createdAt;
 	}
 
-	public function setUpdatedAt(DateTimeInterface $updatedAt): void
+	public function setCreatedAt(DateTimeInterface $createdAt): void
 	{
-		$this->updatedAt = $updatedAt;
+		$this->createdAt = $createdAt;
 	}
 
 }
