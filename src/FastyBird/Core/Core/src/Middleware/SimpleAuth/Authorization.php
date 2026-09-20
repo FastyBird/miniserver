@@ -17,8 +17,8 @@ namespace FastyBird\Core\Middleware\SimpleAuth;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
+use FastyBird\Core\Routing\SlimRouter;
 use FastyBird\Core\Security\SimpleAuth\Access;
-use FastyBird\Library\SlimRouter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -57,9 +57,9 @@ final class Authorization implements MiddlewareInterface
 		RequestHandlerInterface $handler,
 	): ResponseInterface
 	{
-		$route = $request->getAttribute(SlimRouter\Routing\Router::ROUTE);
+		$route = $request->getAttribute(SlimRouter\Router::ROUTE);
 
-		if ($route instanceof SlimRouter\Routing\IRoute) {
+		if ($route instanceof SlimRouter\IRoute) {
 			$routeCallable = $route->getCallable();
 
 			if (

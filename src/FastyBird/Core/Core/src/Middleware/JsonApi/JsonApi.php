@@ -88,8 +88,8 @@ class JsonApi implements Server\MiddlewareInterface
 				}
 
 			} elseif (
-				class_exists('\FastyBird\Library\SlimRouter\Exceptions\Http')
-				&& $ex instanceof \FastyBird\Library\SlimRouter\Exceptions\Http
+				class_exists('\FastyBird\Core\Exceptions\SlimRouter\Http')
+				&& $ex instanceof \FastyBird\Core\Exceptions\SlimRouter\Http
 			) {
 				$response = $response->withStatus($ex->getCode());
 
