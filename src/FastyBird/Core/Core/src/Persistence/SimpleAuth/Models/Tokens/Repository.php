@@ -19,10 +19,10 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Core\Persistence\SimpleAuth\Queries;
 use FastyBird\Core\Types\SimpleAuth as Types;
-use FastyBird\Library\DoctrineOrmQuery;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
 use Ramsey\Uuid;
 use Throwable;
@@ -55,7 +55,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 */
 	public function findOneByIdentifier(
@@ -80,7 +80,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 */
 	public function findOneByToken(
@@ -106,7 +106,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 */
 	public function findOneBy(

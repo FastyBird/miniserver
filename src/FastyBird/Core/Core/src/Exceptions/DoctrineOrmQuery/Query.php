@@ -13,9 +13,10 @@
  * @date           10.11.19
  */
 
-namespace FastyBird\Library\DoctrineOrmQuery\Exceptions;
+namespace FastyBird\Core\Exceptions\DoctrineOrmQuery;
 
 use Doctrine\ORM;
+use FastyBird\Core\Exceptions\Exception;
 use RuntimeException;
 use Throwable;
 

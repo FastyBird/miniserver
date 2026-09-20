@@ -19,9 +19,9 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Core\Persistence\SimpleAuth\Queries;
-use FastyBird\Library\DoctrineOrmQuery;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
 use Throwable;
 use function is_array;
@@ -53,7 +53,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 */
 	public function findOneBy(

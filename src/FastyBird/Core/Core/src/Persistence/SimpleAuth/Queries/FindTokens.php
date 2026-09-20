@@ -18,8 +18,8 @@ namespace FastyBird\Core\Persistence\SimpleAuth\Queries;
 use Closure;
 use Doctrine\ORM;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Core\Types\SimpleAuth as Types;
-use FastyBird\Library\DoctrineOrmQuery;
 use Ramsey\Uuid;
 
 /**

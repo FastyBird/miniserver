@@ -13,12 +13,14 @@
  * @date           10.11.19
  */
 
-namespace FastyBird\Library\DoctrineOrmQuery;
+namespace FastyBird\Core\Persistence\DoctrineOrmQuery;
 
 use ArrayIterator;
 use Countable;
 use Doctrine\ORM;
 use Exception;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use IteratorAggregate;
 use Nette\Utils;
 use function func_get_args;
@@ -222,7 +224,7 @@ final class ResultSet implements Countable, IteratorAggregate
 	}
 
 	/**
-	 * @throws Exceptions\Query
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 */
 	public function getTotalCount(): int
 	{
@@ -241,7 +243,7 @@ final class ResultSet implements Countable, IteratorAggregate
 
 			return $this->totalCount;
 		} catch (ORM\Exception\ORMException | ORM\Exception\ManagerException $e) {
-			throw new Exceptions\Query($e, $this->query, $e->getMessage());
+			throw new DoctrineOrmQueryExceptions\Query($e, $this->query, $e->getMessage());
 		}
 	}
 
@@ -331,7 +333,7 @@ final class ResultSet implements Countable, IteratorAggregate
 
 			return $this->iterator = $iterator;
 		} catch (ORM\Exception\ORMException | ORM\Exception\ManagerException $e) {
-			throw new Exceptions\Query($e, $this->query, $e->getMessage());
+			throw new DoctrineOrmQueryExceptions\Query($e, $this->query, $e->getMessage());
 		}
 	}
 

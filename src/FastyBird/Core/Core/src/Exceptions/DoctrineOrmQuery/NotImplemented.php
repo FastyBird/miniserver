@@ -13,8 +13,9 @@
  * @date           17.05.21
  */
 
-namespace FastyBird\Library\DoctrineOrmQuery\Exceptions;
+namespace FastyBird\Core\Exceptions\DoctrineOrmQuery;
 
+use FastyBird\Core\Exceptions\Exception;
 use RuntimeException;
 
 class NotImplemented extends RuntimeException implements Exception

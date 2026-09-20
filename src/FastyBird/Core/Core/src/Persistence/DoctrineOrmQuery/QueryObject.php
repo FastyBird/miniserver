@@ -13,11 +13,13 @@
  * @date           10.11.19
  */
 
-namespace FastyBird\Library\DoctrineOrmQuery;
+namespace FastyBird\Core\Persistence\DoctrineOrmQuery;
 
 use Closure;
 use Doctrine;
 use Doctrine\ORM;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use Nette;
 use Throwable;
 use function array_shift;
@@ -89,7 +91,7 @@ abstract class QueryObject
 			$query = $this->doCreateCountQuery($repository);
 
 			return (int) $this->toQuery($query)->getSingleScalarResult();
-		} catch (Exceptions\NotImplemented) {
+		} catch (DoctrineOrmQueryExceptions\NotImplemented) {
 			// Nothing to do here
 		}
 
@@ -118,7 +120,7 @@ abstract class QueryObject
 		ORM\EntityRepository $repository,
 	): ORM\QueryBuilder
 	{
-		throw new Exceptions\NotImplemented('Method doCreateCountQuery is not implemented');
+		throw new DoctrineOrmQueryExceptions\NotImplemented('Method doCreateCountQuery is not implemented');
 	}
 
 	private function toQuery(ORM\QueryBuilder $query): ORM\Query
@@ -155,7 +157,7 @@ abstract class QueryObject
 	/**
 	 * @return ResultSet|array<mixed>
 	 *
-	 * @throws Exceptions\Query
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 *
 	 * @phpstan-param ORM\EntityRepository<TEntityClass> $repository
 	 *
@@ -175,7 +177,7 @@ abstract class QueryObject
 				? $query->execute(null, $hydrationMode)
 				: $this->lastResult;
 		} catch (Throwable $ex) {
-			throw new Exceptions\Query(
+			throw new DoctrineOrmQueryExceptions\Query(
 				$ex,
 				$this->getLastQuery(),
 				'[' . ($this->getLastQuery() === null ? 'unknown' : get_class(
@@ -195,7 +197,7 @@ abstract class QueryObject
 
 	/**
 	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Query
+	 * @throws DoctrineOrmQueryExceptions\Query
 	 *
 	 * @phpstan-param ORM\EntityRepository<TEntityClass> $repository
 	 *
@@ -222,7 +224,7 @@ abstract class QueryObject
 				$ex,
 			);
 		} catch (Throwable $ex) {
-			throw new Exceptions\Query(
+			throw new DoctrineOrmQueryExceptions\Query(
 				$ex,
 				$this->getLastQuery(),
 				'[' . ($this->getLastQuery() === null ? 'unknown' : get_class(
