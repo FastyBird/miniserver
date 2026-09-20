@@ -16,8 +16,8 @@
 namespace FastyBird\Core\Documents\Exchange;
 
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Documents\Exchange as Documents;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions;
 use Nette\Utils;
 use ReflectionClass;
