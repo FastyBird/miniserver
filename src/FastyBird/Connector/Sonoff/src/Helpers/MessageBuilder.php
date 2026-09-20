@@ -19,6 +19,7 @@ use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Queue;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Schemas\Tools as ToolsSchemas;
 use Nette;
@@ -109,7 +110,7 @@ final class MessageBuilder
 
 			} catch (ToolsExceptions\InvalidData) {
 				continue;
-			} catch (ToolsExceptions\Logic | ToolsExceptions\MalformedInput | Utils\JsonException $ex) {
+			} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | Utils\JsonException $ex) {
 				throw new Exceptions\Runtime('Could not validate received response payload', $ex->getCode(), $ex);
 			}
 

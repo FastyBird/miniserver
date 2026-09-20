@@ -20,6 +20,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -108,7 +109,7 @@ class SubDevice extends Device
 			return $property->getValue();
 		}
 
-		throw new ToolsExceptions\InvalidState('Device IEEE addrress is not configured');
+		throw new ApplicationExceptions\InvalidState('Device IEEE addrress is not configured');
 	}
 
 	/**
@@ -134,7 +135,7 @@ class SubDevice extends Device
 			return Types\DeviceType::tryFrom(ToolsUtilities\Value::toString($property->getValue(), true));
 		}
 
-		throw new ToolsExceptions\InvalidState('Device hardware type is not configured');
+		throw new ApplicationExceptions\InvalidState('Device hardware type is not configured');
 	}
 
 	/**
