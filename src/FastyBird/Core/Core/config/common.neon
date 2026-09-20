@@ -20,7 +20,7 @@ extensions:
     contributteCacheFactory : Contributte\Cache\DI\CacheFactoryExtension
     # contributteCacheDebug : Contributte\Cache\DI\DebugStorageExtension
     orisaiObjectMapper      : OriNette\ObjectMapper\DI\ObjectMapperExtension
-    fbApplication           : FastyBird\Core\Application\DI\ApplicationExtension
+    fbCore                  : FastyBird\Core\DI\CoreExtension
 
 ##################################
 # Nette extensions configuration #
@@ -66,22 +66,23 @@ contributteMonolog:
 orisaiObjectMapper:
     debug: %debugMode%
     rules:
-        - FastyBird\Core\Application\ObjectMapper\Rules\UuidRule()
+        - FastyBird\Core\Persistence\Application\Rules\UuidRule()
 
 # Core application extension
 ############################
-fbApplication:
-    logging:
-        rotatingFile:
-            enabled: %logger.rotatingFile.enabled%
-            level: %logger.rotatingFile.level%
-            filename: %logger.rotatingFile.filename%
-        stdOut:
-            enabled: %logger.stdOut.enabled%
-            level: %logger.stdOut.level%
-        console:
-            enabled: %logger.console.enabled%
-            level: %logger.console.level%
+fbCore:
+    application:
+        logging:
+            rotatingFile:
+                enabled: %logger.rotatingFile.enabled%
+                level: %logger.rotatingFile.level%
+                filename: %logger.rotatingFile.filename%
+            stdOut:
+                enabled: %logger.stdOut.enabled%
+                level: %logger.stdOut.level%
+            console:
+                enabled: %logger.console.enabled%
+                level: %logger.console.level%
 
 # Application extension
 #######################

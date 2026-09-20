@@ -205,8 +205,11 @@
     </rule>
 
     <!-- A pre-Nette-4.0 Nette\PhpGenerator\Literal rename guard: a conditional class_alias()
-         ahead of the extension class declaration. Behaviour-preserving, kept as absorbed. -->
+         ahead of the extension class declaration. Behaviour-preserving, kept as absorbed.
+         Originally exempted on Library/WebSockets/src/DI/WebSocketsExtension.php; Task 18
+         (Core consolidation) transplanted the same guard into the merged CoreExtension.php,
+         so the exemption moves with it. -->
     <rule ref="PSR1.Files.SideEffects">
-        <exclude-pattern>src/FastyBird/Library/WebSockets/src/DI/WebSocketsExtension\.php</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Core/Core/src/DI/CoreExtension\.php</exclude-pattern>
     </rule>
 </ruleset>

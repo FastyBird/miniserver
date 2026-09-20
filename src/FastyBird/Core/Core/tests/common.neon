@@ -20,13 +20,11 @@ extensions:
     contributteTranslation              : Contributte\Translation\DI\TranslationExtension
     nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
     nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
-    fbDateTimeFactory                   : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
 
 services:
-    - {factory: FastyBird\Library\SlimRouter\Http\ResponseFactory}
+    - {factory: FastyBird\Core\Http\SlimRouter\ResponseFactory}
     -
-        factory: FastyBird\Library\SlimRouter\Routing\Router
+        factory: FastyBird\Core\Routing\SlimRouter\Router
 
     cache.storage: Nette\Caching\Storages\DevNullStorage
 
@@ -72,20 +70,19 @@ nettrineOrm:
             # which of those it was. Production stays on file mode: single process, no sharing.
             autoGenerateProxyClasses: 3   # AbstractProxyFactory::AUTOGENERATE_EVAL
 
-fbSimpleAuth:
-    token:
-        issuer: com.fastybird.auth-module
-        signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
-    services:
-        identity: true
-    casbin:
-        policy: %appDir%/policy.csv
-
-fbDateTimeFactory:
-    frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
-
-fbApplication:
-    documents:
-        mapping: [
-            FastyBird\Core\Tests\Fixtures\Dummy: %appDir%/fixtures/dummy
-        ]
+fbCore:
+    simpleAuth:
+        token:
+            issuer: com.fastybird.auth-module
+            signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
+        services:
+            identity: true
+        casbin:
+            policy: %appDir%/policy.csv
+    dateTimeFactory:
+        frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
+    application:
+        documents:
+            mapping: [
+                FastyBird\Core\Tests\Fixtures\Dummy: %appDir%/fixtures/dummy
+            ]
