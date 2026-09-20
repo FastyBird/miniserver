@@ -47,7 +47,7 @@ import { useRouter } from 'vue-router';
 import { ElButton, ElForm, ElFormItem, ElInput, FormInstance, FormRules } from 'element-plus';
 import get from 'lodash.get';
 
-import { injectStoresManager, useFlashMessage } from '@fastybird/tools';
+import { injectStoresManager, useFlashMessage } from '@fastybird/miniserver-core';
 
 import { useRoutesNames } from '../../composables';
 import { accountStoreKey } from '../../configuration';

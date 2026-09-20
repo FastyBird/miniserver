@@ -199,8 +199,7 @@ import { useI18n } from 'vue-i18n';
 import { ElCol, ElDivider, ElForm, ElFormItem, ElInput, ElOption, ElOptionGroup, ElRow, ElSelect, FormInstance, FormRules } from 'element-plus';
 import get from 'lodash.get';
 
-import { ModuleSource } from '@fastybird/metadata-library';
-import { injectStoresManager, useFlashMessage } from '@fastybird/tools';
+import { ModuleSource, injectStoresManager, useFlashMessage } from '@fastybird/miniserver-core';
 
 import { useTimezones } from '../../composables';
 import { accountStoreKey } from '../../configuration';

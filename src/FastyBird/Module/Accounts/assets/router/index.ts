@@ -2,7 +2,7 @@ import { App, h } from 'vue';
 import type { VNode } from 'vue';
 import { RouteRecordRaw, Router } from 'vue-router';
 
-import { injectStoresManager } from '@fastybird/tools';
+import { injectStoresManager } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { useRoutesNames } from '../composables';

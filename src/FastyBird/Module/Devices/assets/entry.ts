@@ -4,9 +4,7 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import get from 'lodash.get';
 import 'virtual:uno.css';
 
-import { ModulePrefix } from '@fastybird/metadata-library';
-import { IExtensionOptions, injectStoresManager, useFlashMessage } from '@fastybird/tools';
-import { wampClient } from '@fastybird/websockets-library';
+import { IExtensionOptions, ModulePrefix, injectStoresManager, useFlashMessage, wampClient } from '@fastybird/miniserver-core';
 
 import {
 	channelControlsStoreKey,

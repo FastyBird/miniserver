@@ -10,8 +10,7 @@ import lodashGet from 'lodash.get';
 import isEqual from 'lodash.isequal';
 import { v4 as uuid } from 'uuid';
 
-import { ModulePrefix } from '@fastybird/metadata-library';
-import { IStoresManager, injectStoresManager } from '@fastybird/tools';
+import { IStoresManager, ModulePrefix, injectStoresManager } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.connector.property.json';
 import { connectorsStoreKey } from '../../configuration';

@@ -210,7 +210,7 @@ import { I18nT, useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElButton, ElCol, ElIcon, ElLink, ElPopover, ElRow, ElText, useNamespace } from 'element-plus';
 
-import { useBreakpoints } from '@fastybird/tools';
+import { useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import PluginsPluginDefaultIcon from '../plugins/plugins-plugin-default-icon.vue';

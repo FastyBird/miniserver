@@ -39,11 +39,8 @@
   "sideEffects": true,
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^2.0",
-    "@fastybird/application": "workspace:*",
     "@fastybird/devices-module": "workspace:*",
-    "@fastybird/metadata-library": "workspace:*",
-    "@fastybird/tools": "workspace:*",
-    "@fastybird/websockets-library": "workspace:*",
+    "@fastybird/miniserver-core": "workspace:*",
     "@iconify/vue": "^5",
     "lodash.defaultsdeep": "^4.6",
     "lodash.get": "^4.4",

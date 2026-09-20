@@ -38,7 +38,7 @@ import type { VNode } from 'vue';
 
 import { ElButton, ElButtonGroup } from 'element-plus';
 
-import { AppListItem, ListItemVariantTypes } from '@fastybird/application';
+import { AppListItem, ListItemVariantTypes } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { IPropertyDefaultPropertySettingsProps } from './property-default-property-settings.types';

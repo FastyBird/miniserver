@@ -65,7 +65,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElResult } from 'element-plus';
 
-import { AppIconWithChild } from '@fastybird/application';
+import { AppIconWithChild } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { ApplicationError } from '../../errors';

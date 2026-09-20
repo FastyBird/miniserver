@@ -22,7 +22,7 @@ import { useRouter } from 'vue-router';
 
 import { ElButton } from 'element-plus';
 
-import { useEventBus } from '@fastybird/tools';
+import { useEventBus } from '@fastybird/miniserver-core';
 import { useHead } from '@unhead/vue';
 
 import { LayoutSignBox, LayoutSignHeader, SignInForm } from '../components';

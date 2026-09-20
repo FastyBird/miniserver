@@ -1,6 +1,6 @@
 import { InjectionKey } from 'vue';
 
-import { StoreInjectionKey } from '@fastybird/tools';
+import { StoreInjectionKey } from '@fastybird/miniserver-core';
 
 import {
 	IAccountActions,

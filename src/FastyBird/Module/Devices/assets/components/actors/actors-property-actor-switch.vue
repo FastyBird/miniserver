@@ -39,9 +39,7 @@ import { useI18n } from 'vue-i18n';
 import { ElIcon, ElSwitch } from 'element-plus';
 import get from 'lodash.get';
 
-import { DataType, ModulePrefix, SwitchPayload } from '@fastybird/metadata-library';
-import { useFlashMessage } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/websockets-library';
+import { DataType, ModulePrefix, SwitchPayload, useFlashMessage, useWampV1Client } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { useDeviceState, useNormalizeValue } from '../../composables';

@@ -4,8 +4,7 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import get from 'lodash.get';
 import 'virtual:uno.css';
 
-import { ModulePrefix } from '@fastybird/metadata-library';
-import { wampClient } from '@fastybird/websockets-library';
+import { ModulePrefix, wampClient } from '@fastybird/miniserver-core';
 
 import { useFlashMessage } from './composables';
 import { configurationKey, metaKey } from './configuration';

@@ -223,7 +223,7 @@ import {
 	useNamespace,
 } from 'element-plus';
 
-import { AppIconWithChild } from '@fastybird/application';
+import { AppIconWithChild } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { DevicesFilter } from '../../types';

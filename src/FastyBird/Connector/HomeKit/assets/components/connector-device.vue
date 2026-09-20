@@ -50,7 +50,7 @@ import type { VNode } from 'vue';
 import { ElButton, ElIcon, ElText, ElTooltip } from 'element-plus';
 
 import { ConnectionState, IConnectorDeviceEmits, IConnectorDeviceProps, IDeviceProperty, useDeviceState } from '@fastybird/devices-module';
-import { useWampV1Client } from '@fastybird/websockets-library';
+import { useWampV1Client } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { DeviceIcon } from '../components';

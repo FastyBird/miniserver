@@ -119,7 +119,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElForm, ElFormItem, ElInput, ElOption, ElSelect, ElSwitch, FormInstance, FormRules } from 'element-plus';
 
-import { DataType } from '@fastybird/metadata-library';
+import { DataType } from '@fastybird/miniserver-core';
 
 import { usePropertyForm } from '../../composables';
 import { FormResultType, FormResultTypes, IPropertyForm, PropertyType } from '../../types';

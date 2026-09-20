@@ -55,10 +55,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { AppListItem, ListItemVariantTypes } from '@fastybird/application';
-import { DataType } from '@fastybird/metadata-library';
-import { useBreakpoints } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/websockets-library';
+import { AppListItem, DataType, ListItemVariantTypes, useBreakpoints, useWampV1Client } from '@fastybird/miniserver-core';
 
 import { useConnectorState, useDeviceState } from '../../composables';
 import { PropertyType } from '../../types';

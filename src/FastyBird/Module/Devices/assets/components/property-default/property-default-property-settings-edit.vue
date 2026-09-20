@@ -120,7 +120,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElDialog, ElIcon, useNamespace } from 'element-plus';
 
-import { useBreakpoints } from '@fastybird/tools';
+import { useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { FormResultType, FormResultTypes } from '../../types';

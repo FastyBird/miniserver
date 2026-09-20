@@ -73,7 +73,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElIcon, ElResult, ElScrollbar, useNamespace } from 'element-plus';
 
-import { AppIconWithChild, AppListItem, AppSwipe, ListItemVariantTypes } from '@fastybird/application';
+import { AppIconWithChild, AppListItem, AppSwipe, ListItemVariantTypes } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { IConnectorPlugin } from '../../types';

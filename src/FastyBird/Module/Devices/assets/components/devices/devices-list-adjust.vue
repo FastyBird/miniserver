@@ -94,7 +94,7 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElCheckbox, ElCheckboxGroup, ElCollapse, ElCollapseItem, ElScrollbar, ElText } from 'element-plus';
 import isEqual from 'lodash.isequal';
 
-import { AppBarHeading } from '@fastybird/application';
+import { AppBarHeading } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { ConnectionState, DevicesFilter, IConnector, IDevicesFilter } from '../../types';

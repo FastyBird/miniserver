@@ -1,4 +1,4 @@
-import { ButtonPayload, CoverPayload, DataType, SwitchPayload } from '@fastybird/metadata-library';
+import { ButtonPayload, CoverPayload, DataType, SwitchPayload } from '@fastybird/miniserver-core';
 
 import {
 	IChannel,

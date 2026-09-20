@@ -463,8 +463,7 @@ import { useI18n } from 'vue-i18n';
 import { ElAlert, ElButton, ElDialog, ElIcon, ElResult, useNamespace } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
-import { AppList, AppListItem, ListItemVariantTypes } from '@fastybird/application';
-import { useBreakpoints } from '@fastybird/tools';
+import { AppList, AppListItem, ListItemVariantTypes, useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import {

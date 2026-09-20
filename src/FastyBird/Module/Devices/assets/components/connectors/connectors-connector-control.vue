@@ -70,8 +70,7 @@ import { useRoute } from 'vue-router';
 
 import { ElButton, ElDivider } from 'element-plus';
 
-import { useBreakpoints } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/websockets-library';
+import { useBreakpoints, useWampV1Client } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { useConnectorState, useRoutesNames } from '../../composables';

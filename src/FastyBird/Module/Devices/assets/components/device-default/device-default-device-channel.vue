@@ -56,7 +56,7 @@ import type { VNode } from 'vue';
 
 import { ElButton, ElButtonGroup, ElText } from 'element-plus';
 
-import { AppListItem, ListItemVariantTypes } from '@fastybird/application';
+import { AppListItem, ListItemVariantTypes } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { IDeviceChannelEmits, IDeviceChannelProps } from '../../types';

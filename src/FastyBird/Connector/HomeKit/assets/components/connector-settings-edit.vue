@@ -49,7 +49,7 @@ import {
 	PropertyType,
 	useConnectorForm,
 } from '@fastybird/devices-module';
-import { flattenValue, useFlashMessage } from '@fastybird/tools';
+import { flattenValue, useFlashMessage } from '@fastybird/miniserver-core';
 
 import { ConnectorPropertyIdentifier } from '../types';
 

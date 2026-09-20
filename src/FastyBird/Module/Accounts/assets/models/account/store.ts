@@ -5,8 +5,7 @@ import { Pinia, Store, defineStore } from 'pinia';
 import axios from 'axios';
 import { Jsona } from 'jsona';
 
-import { ModulePrefix, ModuleSource } from '@fastybird/metadata-library';
-import { injectStoresManager } from '@fastybird/tools';
+import { ModulePrefix, ModuleSource, injectStoresManager } from '@fastybird/miniserver-core';
 
 import { accountsStoreKey, emailsStoreKey, identitiesStoreKey, sessionStoreKey } from '../../configuration';
 import { ApiError } from '../../errors';

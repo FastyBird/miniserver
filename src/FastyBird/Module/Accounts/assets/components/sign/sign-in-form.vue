@@ -57,7 +57,7 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElCheckbox, ElForm, ElFormItem, ElInput, FormInstance, FormRules } from 'element-plus';
 import get from 'lodash.get';
 
-import { injectStoresManager, useFlashMessage } from '@fastybird/tools';
+import { injectStoresManager, useFlashMessage } from '@fastybird/miniserver-core';
 
 import { sessionStoreKey } from '../../configuration';
 import { FormResultType, FormResultTypes } from '../../types';

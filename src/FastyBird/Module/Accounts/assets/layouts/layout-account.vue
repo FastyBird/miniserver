@@ -140,8 +140,7 @@ import { ElAvatar, ElBreadcrumb, ElBreadcrumbItem, ElButton, ElIcon, ElPageHeade
 import get from 'lodash.get';
 import md5 from 'md5';
 
-import { AppBarHeading, FB_BREADCRUMBS_TARGET } from '@fastybird/application';
-import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
+import { AppBarHeading, FB_BREADCRUMBS_TARGET, injectStoresManager, useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { useRoutesNames } from '../composables';

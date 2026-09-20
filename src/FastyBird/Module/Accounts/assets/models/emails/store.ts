@@ -9,9 +9,7 @@ import { Jsona } from 'jsona';
 import lodashGet from 'lodash.get';
 import { v4 as uuid } from 'uuid';
 
-import { ModulePrefix, ModuleSource } from '@fastybird/metadata-library';
-import { injectStoresManager } from '@fastybird/tools';
-import { IStoresManager } from '@fastybird/tools';
+import { IStoresManager, ModulePrefix, ModuleSource, injectStoresManager } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.email.json';
 import { accountsStoreKey } from '../../configuration';

@@ -83,7 +83,7 @@ import { useI18n } from 'vue-i18n';
 import { RuleType } from 'async-validator';
 import { ElDatePicker, ElFormItem, ElInput, ElInputNumber, ElOption, ElSelect, ElSwitch, ElTimePicker, FormItemRule } from 'element-plus';
 
-import { DataType } from '@fastybird/metadata-library';
+import { DataType } from '@fastybird/miniserver-core';
 
 import { IPropertyDefaultVariablePropertyEditProps } from './property-default-variable-property-edit.types';
 

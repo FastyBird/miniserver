@@ -125,8 +125,7 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElForm, FormInstance } from 'element-plus';
 import get from 'lodash.get';
 
-import { AppList } from '@fastybird/application';
-import { flattenValue } from '@fastybird/tools';
+import { AppList, flattenValue } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { useChannelForm } from '../../composables';
