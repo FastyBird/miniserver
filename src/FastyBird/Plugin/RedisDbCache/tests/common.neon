@@ -1,24 +1,14 @@
-#
-# Plugin DI configuration
-#
-# @license        More in LICENSE.md
-# @copyright      https://www.fastybird.com
-# @author         Adam Kadlec <adam.kadlec@fastybird.com>
-# @package        FastyBird:RedisDbCachePlugin!
-# @subpackage     config
-# @since          1.0.0
-#
-# @date           15.08.24
-
 php:
-    date.timezone: Europe/Prague
+	date.timezone: Europe/Prague
 
 extensions:
-    fbDateTimeFactory       : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
+	fbCore: FastyBird\Core\DI\CoreExtension
 
-fbDateTimeFactory:
-    frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
+fbCore:
+	application:
+		documents:
+			mapping: []
 
-fbApplication:
-    documents:
-        mapping: []
+	dateTimeFactory:
+		frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
+
