@@ -18,7 +18,7 @@ namespace FastyBird\Module\Triggers\Controllers;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
@@ -63,7 +63,7 @@ abstract class BaseV1
 
 	protected Router\Validator $routesValidator;
 
-	/** @var JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> */
+	/** @var JsonApiHydrators\Container<DoctrineCrud\IEntity> */
 	protected JsonApiHydrators\Container $hydratorsContainer;
 
 	protected Log\LoggerInterface $logger;
@@ -94,7 +94,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> $hydratorsContainer
+	 * @param JsonApiHydrators\Container<DoctrineCrud\IEntity> $hydratorsContainer
 	 */
 	public function injectHydratorsContainer(JsonApiHydrators\Container $hydratorsContainer): void
 	{
@@ -207,14 +207,14 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param DoctrineCrud\Entities\IEntity|ResultSet<DoctrineCrud\Entities\IEntity>|array<DoctrineCrud\Entities\IEntity> $data
+	 * @param DoctrineCrud\IEntity|ResultSet<DoctrineCrud\IEntity>|array<DoctrineCrud\IEntity> $data
 	 *
 	 * @throws Exception
 	 */
 	protected function buildResponse(
 		Message\ServerRequestInterface $request,
 		ResponseInterface $response,
-		DoctrineCrud\Entities\IEntity|ResultSet|array $data,
+		DoctrineCrud\IEntity|ResultSet|array $data,
 	): ResponseInterface
 	{
 		$totalCount = null;
@@ -233,11 +233,11 @@ abstract class BaseV1
 				}
 			}
 
-			/** @var array<DoctrineCrud\Entities\IEntity> $entity */
+			/** @var array<DoctrineCrud\IEntity> $entity */
 			$entity = $data->toArray();
 
 		} elseif (is_array($data)) {
-			/** @var array<DoctrineCrud\Entities\IEntity> $entity */
+			/** @var array<DoctrineCrud\IEntity> $entity */
 			$entity = $data;
 
 		} else {

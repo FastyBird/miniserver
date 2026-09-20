@@ -16,9 +16,9 @@
 namespace FastyBird\Plugin\ApiKey\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Plugin\ApiKey\Entities;
 use FastyBird\Plugin\ApiKey\Types;
 use Ramsey\Uuid;
@@ -32,13 +32,13 @@ use Ramsey\Uuid;
 		'comment' => 'API Key plugin access keys',
 	],
 )]
-class Key implements Entities\Entity, DoctrineCrud\Entities\IEntity,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+class Key implements Entities\Entity, DoctrineCrud\IEntity,
+	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
 {
 
 	use TEntity;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'key_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]

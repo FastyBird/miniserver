@@ -23,7 +23,7 @@ use FastyBird\Addon\VirtualThermostat\Helpers;
 use FastyBird\Addon\VirtualThermostat\Hydrators;
 use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use Nette\Bootstrap;
 use Nette\DI;

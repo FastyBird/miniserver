@@ -20,7 +20,7 @@ use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Types;
@@ -57,14 +57,14 @@ use function array_map;
 abstract class Connector implements Entities\Entity,
 	Entities\EntityParams,
 	SimpleAuthEntities\Owner,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
 {
 
 	use Entities\TEntity;
 	use Entities\TEntityParams;
 	use SimpleAuthEntities\TOwner;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'connector_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]

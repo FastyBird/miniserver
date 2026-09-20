@@ -21,7 +21,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Hydrators;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use Nette\Bootstrap;
@@ -218,7 +218,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 * WEBSOCKETS
 		 */
 
-		if (class_exists('FastyBird\Core\Core\DI\CoreExtension')) {
+		if (class_exists('FastyBird\Core\DI\CoreExtension')) {
 			try {
 				$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
 				assert($consumerService instanceof DI\Definitions\ServiceDefinition);

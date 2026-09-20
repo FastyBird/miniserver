@@ -22,7 +22,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
@@ -65,7 +65,7 @@ abstract class BaseV1
 
 	protected DevicesRouter\Validator $routesValidator;
 
-	/** @var JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> */
+	/** @var JsonApiHydrators\Container<DoctrineCrud\IEntity> */
 	protected JsonApiHydrators\Container $hydratorsContainer;
 
 	protected ShellyConnectorHomeKitConnector\Logger $logger;
@@ -96,7 +96,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> $hydratorsContainer
+	 * @param JsonApiHydrators\Container<DoctrineCrud\IEntity> $hydratorsContainer
 	 */
 	public function injectHydratorsContainer(JsonApiHydrators\Container $hydratorsContainer): void
 	{
@@ -231,14 +231,14 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param DoctrineCrud\Entities\IEntity|ApplicationDocuments\Document|ResultSet<DoctrineCrud\Entities\IEntity>|array<DoctrineCrud\Entities\IEntity> $data
+	 * @param DoctrineCrud\IEntity|ApplicationDocuments\Document|ResultSet<DoctrineCrud\IEntity>|array<DoctrineCrud\IEntity> $data
 	 *
 	 * @throws Exception
 	 */
 	protected function buildResponse(
 		Message\ServerRequestInterface $request,
 		ResponseInterface $response,
-		ResultSet|DoctrineCrud\Entities\IEntity|ApplicationDocuments\Document|array $data,
+		ResultSet|DoctrineCrud\IEntity|ApplicationDocuments\Document|array $data,
 	): ResponseInterface
 	{
 		$totalCount = null;
@@ -257,11 +257,11 @@ abstract class BaseV1
 				}
 			}
 
-			/** @var array<DoctrineCrud\Entities\IEntity> $entity */
+			/** @var array<DoctrineCrud\IEntity> $entity */
 			$entity = $data->toArray();
 
 		} elseif (is_array($data)) {
-			/** @var array<DoctrineCrud\Entities\IEntity> $entity */
+			/** @var array<DoctrineCrud\IEntity> $entity */
 			$entity = $data;
 
 		} else {

@@ -17,7 +17,7 @@ namespace FastyBird\Module\Triggers\Entities\Notifications;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Module\Triggers\Entities;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -42,12 +42,12 @@ use function assert;
 #[ORM\DiscriminatorMap([Entities\Notifications\Email::TYPE => Entities\Notifications\Email::class])]
 #[ORM\MappedSuperclass]
 abstract class Notification implements Entities\Entity,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
 {
 
 	use Entities\TEntity;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'notification_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]

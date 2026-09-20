@@ -9,7 +9,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\DI;
 use FastyBird\Bridge\DevicesModuleUiModule\Exceptions;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Entities\DoctrineCrud;
 use Nette;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -164,7 +164,7 @@ abstract class DbTestCase extends TestCase
 		if (!$this->isDatabaseSetUp) {
 			$db = $this->getDb();
 
-			/** @var list<ORM\Mapping\ClassMetadata<DoctrineCrud\Entities\IEntity>> $metadata */
+			/** @var list<ORM\Mapping\ClassMetadata<DoctrineCrud\IEntity>> $metadata */
 			$metadata = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
 			$schemaTool = new ORM\Tools\SchemaTool($this->getEntityManager());
 

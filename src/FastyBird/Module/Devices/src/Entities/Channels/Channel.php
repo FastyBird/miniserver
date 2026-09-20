@@ -19,7 +19,7 @@ use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Types;
@@ -53,13 +53,13 @@ use function array_map;
 #[ORM\MappedSuperclass]
 abstract class Channel implements Entities\Entity,
 	Entities\EntityParams,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
 {
 
 	use Entities\TEntity;
 	use Entities\TEntityParams;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'channel_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]

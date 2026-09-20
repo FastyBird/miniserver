@@ -19,7 +19,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use Exception;
 use FastyBird\Core\Services\DateTimeFactory;
-use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
 use FastyBird\Core\Encoding\JsonApi;
@@ -72,7 +72,7 @@ abstract class BaseV1
 
 	protected Router\Validator $routesValidator;
 
-	/** @var JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> */
+	/** @var JsonApiHydrators\Container<DoctrineCrud\IEntity> */
 	protected JsonApiHydrators\Container $hydratorsContainer;
 
 	protected Log\LoggerInterface $logger;
@@ -113,7 +113,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> $hydratorsContainer
+	 * @param JsonApiHydrators\Container<DoctrineCrud\IEntity> $hydratorsContainer
 	 */
 	public function injectHydratorsContainer(JsonApiHydrators\Container $hydratorsContainer): void
 	{
@@ -252,7 +252,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param DoctrineCrud\Entities\IEntity|array<DoctrineCrud\Entities\IEntity>|ResultSet<Entities\Entity>|null $data
+	 * @param DoctrineCrud\IEntity|array<DoctrineCrud\IEntity>|ResultSet<Entities\Entity>|null $data
 	 *
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
@@ -260,7 +260,7 @@ abstract class BaseV1
 	protected function buildResponse(
 		Message\ServerRequestInterface $request,
 		ResponseInterface $response,
-		DoctrineCrud\Entities\IEntity|ResultSet|array|null $data,
+		DoctrineCrud\IEntity|ResultSet|array|null $data,
 	): ResponseInterface
 	{
 		$totalCount = null;

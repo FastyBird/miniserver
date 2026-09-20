@@ -26,7 +26,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use Nette\Bootstrap;

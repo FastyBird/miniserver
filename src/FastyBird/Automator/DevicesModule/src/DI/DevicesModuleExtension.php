@@ -19,7 +19,7 @@ use FastyBird\Automator\DevicesModule\Hydrators;
 use FastyBird\Automator\DevicesModule\Schemas;
 use FastyBird\Automator\DevicesModule\Subscribers;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use Nette\Bootstrap;
 use Nette\DI;

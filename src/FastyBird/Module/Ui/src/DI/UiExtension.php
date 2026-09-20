@@ -17,7 +17,7 @@ namespace FastyBird\Module\Ui\DI;
 
 use Contributte\Translation;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -309,7 +309,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * WEBSOCKETS CONTROLLERS
 		 */
 
-		if (class_exists('FastyBird\Core\Core\DI\CoreExtension')) {
+		if (class_exists('FastyBird\Core\DI\CoreExtension')) {
 			$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
 				->setType(Controllers\ExchangeV1::class)
 				->setArguments([
@@ -532,7 +532,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * WEBSOCKETS
 		 */
 
-		if (class_exists('FastyBird\Core\Core\DI\CoreExtension')) {
+		if (class_exists('FastyBird\Core\DI\CoreExtension')) {
 			try {
 				$wsControllerFactoryService = $builder->getDefinitionByType(
 					'FastyBird\Core\Controllers\WebSockets\Controller\IControllerFactory',

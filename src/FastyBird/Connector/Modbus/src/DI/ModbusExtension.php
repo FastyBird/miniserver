@@ -29,7 +29,7 @@ use FastyBird\Connector\Modbus\Schemas;
 use FastyBird\Connector\Modbus\Subscribers;
 use FastyBird\Connector\Modbus\Writers;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;

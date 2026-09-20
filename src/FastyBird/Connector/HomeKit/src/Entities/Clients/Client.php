@@ -17,9 +17,9 @@ namespace FastyBird\Connector\HomeKit\Entities\Clients;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use Ramsey\Uuid;
 use function is_resource;
 use function rewind;
@@ -36,12 +36,12 @@ use function strval;
 	],
 )]
 #[ORM\UniqueConstraint(name: 'client_uid_unique', columns: ['client_uid', 'connector_id'])]
-class Client implements DoctrineCrud\Entities\IEntity,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+class Client implements DoctrineCrud\IEntity,
+	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
 {
 
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'client_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]

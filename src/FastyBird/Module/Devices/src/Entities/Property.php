@@ -22,7 +22,7 @@ use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Transformers\Tools as ToolsTransformers;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Exceptions;
@@ -50,13 +50,13 @@ use function strval;
 #[ORM\MappedSuperclass]
 abstract class Property implements Entity,
 	EntityParams,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
 {
 
 	use TEntity;
 	use TEntityParams;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	private const MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';

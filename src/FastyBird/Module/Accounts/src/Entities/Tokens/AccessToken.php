@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use Ramsey\Uuid;
@@ -30,14 +30,14 @@ use Ramsey\Uuid;
 class AccessToken extends SimpleAuthEntities\Tokens\Token implements
 	Entities\Entity,
 	Entities\EntityParams,
-	DoctrineTimestampable\Entities\IEntityCreated,
-	DoctrineTimestampable\Entities\IEntityUpdated
+	DoctrineTimestampable\IEntityCreated,
+	DoctrineTimestampable\IEntityUpdated
 {
 
 	use Entities\TEntity;
 	use Entities\TEntityParams;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	public const TOKEN_EXPIRATION = '+6 hours';
 

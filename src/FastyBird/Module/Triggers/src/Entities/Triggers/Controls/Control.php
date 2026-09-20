@@ -17,7 +17,7 @@ namespace FastyBird\Module\Triggers\Entities\Triggers\Controls;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Module\Triggers\Entities;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -34,12 +34,12 @@ use Ramsey\Uuid;
 #[ORM\Index(columns: ['control_name'], name: 'control_name_idx')]
 #[ORM\UniqueConstraint(name: 'trigger_control_unique', columns: ['control_name', 'trigger_id'])]
 class Control implements Entities\Entity,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
 {
 
 	use Entities\TEntity;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'control_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]

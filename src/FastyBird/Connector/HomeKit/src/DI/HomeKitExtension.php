@@ -34,7 +34,7 @@ use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Subscribers;
 use FastyBird\Connector\HomeKit\Writers;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Core\DI as CoreDI;
+use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;

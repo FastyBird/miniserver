@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Entities;
 
-use FastyBird\Core\Helpers\DoctrineCrud;
+use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Ramsey\Uuid;
 
@@ -27,7 +27,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface Entity extends DoctrineCrud\Entities\IEntity
+interface Entity extends DoctrineCrud\IEntity
 {
 
 	public function getId(): Uuid\UuidInterface;
