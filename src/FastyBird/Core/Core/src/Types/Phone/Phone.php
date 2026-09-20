@@ -13,12 +13,12 @@
  * @date           25.12.15
  */
 
-namespace FastyBird\Library\Phone\Types;
+namespace FastyBird\Core\Types\Phone;
 
 use Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Types;
-use FastyBird\Library\Phone\Entities;
-use FastyBird\Library\Phone\Exceptions;
+use FastyBird\Core\Entities\Phone as Entities;
+use FastyBird\Core\Exceptions\Phone as Exceptions;
 
 /**
  * Doctrine phone data type

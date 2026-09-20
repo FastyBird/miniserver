@@ -13,7 +13,9 @@
  * @date           12.12.15
  */
 
-namespace FastyBird\Library\Phone;
+namespace FastyBird\Core\Entities\Phone;
+
+use FastyBird\Core\Services\Phone\Phone;
 
 /**
  * Phone number helpers trait

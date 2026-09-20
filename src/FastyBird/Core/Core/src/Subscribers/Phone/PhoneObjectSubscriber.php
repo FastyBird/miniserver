@@ -13,12 +13,12 @@
  * @date           25.12.15
  */
 
-namespace FastyBird\Library\Phone\Events;
+namespace FastyBird\Core\Subscribers\Phone;
 
 use Doctrine\Common;
 use Doctrine\ORM;
-use FastyBird\Library\Phone;
-use FastyBird\Library\Phone\Types;
+use FastyBird\Core\Entities\Phone as Entities;
+use FastyBird\Core\Types\Phone as Types;
 use Nette;
 use ReflectionClass;
 use ReflectionException;
@@ -162,11 +162,11 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 			foreach ($phoneMeta['fields'] as $phoneField) {
 				$number = $phoneMeta['class']->getFieldValue($entity, $phoneField);
 
-				if ($number instanceof Phone\Entities\Phone || $number === null) {
+				if ($number instanceof Entities\Phone || $number === null) {
 					continue;
 				}
 
-				$phoneMeta['class']->setFieldValue($entity, $phoneField, Phone\Entities\Phone::fromNumber($number));
+				$phoneMeta['class']->setFieldValue($entity, $phoneField, Entities\Phone::fromNumber($number));
 			}
 		}
 	}

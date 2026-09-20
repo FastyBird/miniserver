@@ -13,8 +13,11 @@
  * @date           12.12.15
  */
 
-namespace FastyBird\Library\Phone;
+namespace FastyBird\Core\Services\Phone;
 
+use FastyBird\Core\Entities\Phone as Entities;
+use FastyBird\Core\Exceptions\InvalidArgument;
+use FastyBird\Core\Exceptions\Phone as Exceptions;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
 use Nette;
@@ -152,7 +155,7 @@ final class Phone
 			case self::FORMAT_RFC3966:
 				return $entity->getRfcFormat();
 			default:
-				throw new Exceptions\InvalidArgument(
+				throw new InvalidArgument(
 					'Invalid number format given, provide valid phone number format.',
 				);
 		}
@@ -316,7 +319,7 @@ final class Phone
 			return $this->phoneNumberUtil->format($number, $format);
 		}
 
-		throw new Exceptions\InvalidArgument('Provided values could not build example number');
+		throw new InvalidArgument('Provided values could not build example number');
 	}
 
 	/**

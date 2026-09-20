@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Exception.php
+ * NoValidCountry.php
  *
  * @copyright      More in LICENSE.md
  * @license        http://www.ipublikuj.eu
@@ -13,9 +13,11 @@
  * @date           12.12.15
  */
 
-namespace FastyBird\Library\Phone\Exceptions;
+namespace FastyBird\Core\Exceptions\Phone;
 
-interface Exception
+use FastyBird\Core\Exceptions\InvalidArgument;
+
+class NoValidCountry extends InvalidArgument
 {
 
 }

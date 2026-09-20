@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * InvalidArgument.php
+ * NoValidPhone.php
  *
  * @copyright      More in LICENSE.md
  * @license        http://www.ipublikuj.eu
@@ -13,11 +13,11 @@
  * @date           13.12.15
  */
 
-namespace FastyBird\Library\Phone\Exceptions;
+namespace FastyBird\Core\Exceptions\Phone;
 
-use InvalidArgumentException as PHPInvalidArgumentException;
+use FastyBird\Core\Exceptions\InvalidArgument;
 
-class InvalidArgument extends PHPInvalidArgumentException implements Exception
+class NoValidPhone extends InvalidArgument
 {
 
 }

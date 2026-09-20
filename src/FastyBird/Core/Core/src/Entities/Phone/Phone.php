@@ -13,10 +13,10 @@
  * @date           17.12.15
  */
 
-namespace FastyBird\Library\Phone\Entities;
+namespace FastyBird\Core\Entities\Phone;
 
-use FastyBird\Library\Phone\Exceptions;
-use FastyBird\Library\Phone\Phone as PhoneHelper;
+use FastyBird\Core\Exceptions\Phone as Exceptions;
+use FastyBird\Core\Services\Phone\Phone as PhoneHelper;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
 use Nette;
