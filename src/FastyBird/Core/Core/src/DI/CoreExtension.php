@@ -189,14 +189,30 @@ class CoreExtension extends DI\CompilerExtension
 					]),
 				]),
 				'documents' => Schema\Expect::structure([
-					'mapping' => Schema\Expect::arrayOf(Schema\Expect::string(), Schema\Expect::string())->required(),
+					// No default previously -- ->required() forced every container that loads
+					// fbCore (now literally every container in the repo, see below) to supply a
+					// mapping even when it owns zero JSON:API documents. An empty map is a
+					// perfectly valid "this package/container has none" answer.
+					'mapping' => Schema\Expect::arrayOf(Schema\Expect::string(), Schema\Expect::string())
+						->default([]),
 					'excludePaths' => Schema\Expect::arrayOf(Schema\Expect::string(), Schema\Expect::string()),
 				]),
 			]),
 			'simpleAuth' => Schema\Expect::structure([
+				// SimpleAuth used to be its own separate, opt-in Nette extension
+				// (fbSimpleAuth/SimpleAuthExtension) that a container's own config chose to
+				// register -- or not. fbCore is now the single universal extension every
+				// container in the repo loads (production and every package's tests alike), so
+				// there is no longer a way to simply not register SimpleAuth. An empty-string
+				// default keeps container compilation possible for containers that never
+				// configure it; the "SIMPLE AUTH" block in loadConfiguration() below is gated on
+				// this same signature being non-empty, so an unconfigured signature never
+				// reaches TokenBuilder/TokenValidator or gets used for real token signing -- it
+				// simply means none of SimpleAuth's services are registered at all, matching
+				// pre-merge behaviour for containers that never opted into fbSimpleAuth.
 				'token' => Schema\Expect::structure([
 					'issuer' => Schema\Expect::string(),
-					'signature' => Schema\Expect::string()->required(),
+					'signature' => Schema\Expect::string(''),
 				]),
 				'enable' => Schema\Expect::structure([
 					'middleware' => Schema\Expect::bool(false),
@@ -465,157 +481,159 @@ class CoreExtension extends DI\CompilerExtension
 		 * SIMPLE AUTH
 		 */
 
-		$builder->addDefinition($this->prefix('simpleAuth.auth'), new DI\Definitions\ServiceDefinition())
-			->setType(SimpleAuthServices\SimpleAuth\Auth::class);
+		if ($configuration->simpleAuth->token->signature !== '') {
+			$builder->addDefinition($this->prefix('simpleAuth.auth'), new DI\Definitions\ServiceDefinition())
+				->setType(SimpleAuthServices\SimpleAuth\Auth::class);
 
-		$builder->addDefinition($this->prefix('simpleAuth.configuration'), new DI\Definitions\ServiceDefinition())
-			->setType(SimpleAuthConfiguration\SimpleAuth\Configuration::class)
-			->setArguments([
-				'tokenIssuer' => $configuration->simpleAuth->token->issuer,
-				'tokenSignature' => $configuration->simpleAuth->token->signature,
-				'enableMiddleware' => $configuration->simpleAuth->enable->middleware,
-				'enableDoctrineMapping' => $configuration->simpleAuth->enable->doctrine->mapping,
-				'enableDoctrineModels' => $configuration->simpleAuth->enable->doctrine->models,
-				'enableNetteApplication' => $configuration->simpleAuth->enable->nette->application,
-				'applicationSignInUrl' => $configuration->simpleAuth->application->signInUrl,
-				'applicationHomeUrl' => $configuration->simpleAuth->application->homeUrl,
-			]);
+			$builder->addDefinition($this->prefix('simpleAuth.configuration'), new DI\Definitions\ServiceDefinition())
+				->setType(SimpleAuthConfiguration\SimpleAuth\Configuration::class)
+				->setArguments([
+					'tokenIssuer' => $configuration->simpleAuth->token->issuer,
+					'tokenSignature' => $configuration->simpleAuth->token->signature,
+					'enableMiddleware' => $configuration->simpleAuth->enable->middleware,
+					'enableDoctrineMapping' => $configuration->simpleAuth->enable->doctrine->mapping,
+					'enableDoctrineModels' => $configuration->simpleAuth->enable->doctrine->models,
+					'enableNetteApplication' => $configuration->simpleAuth->enable->nette->application,
+					'applicationSignInUrl' => $configuration->simpleAuth->application->signInUrl,
+					'applicationHomeUrl' => $configuration->simpleAuth->application->homeUrl,
+				]);
 
-		$builder->addDefinition($this->prefix('simpleAuth.token.builder'), new DI\Definitions\ServiceDefinition())
-			->setType(SimpleAuthSecurity\SimpleAuth\TokenBuilder::class)
-			->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
-			->setArgument('tokenIssuer', $configuration->simpleAuth->token->issuer);
+			$builder->addDefinition($this->prefix('simpleAuth.token.builder'), new DI\Definitions\ServiceDefinition())
+				->setType(SimpleAuthSecurity\SimpleAuth\TokenBuilder::class)
+				->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
+				->setArgument('tokenIssuer', $configuration->simpleAuth->token->issuer);
 
-		$builder->addDefinition($this->prefix('simpleAuth.token.reader'), new DI\Definitions\ServiceDefinition())
-			->setType(SimpleAuthSecurity\SimpleAuth\TokenReader::class);
+			$builder->addDefinition($this->prefix('simpleAuth.token.reader'), new DI\Definitions\ServiceDefinition())
+				->setType(SimpleAuthSecurity\SimpleAuth\TokenReader::class);
 
-		$builder->addDefinition($this->prefix('simpleAuth.token.validator'), new DI\Definitions\ServiceDefinition())
-			->setType(SimpleAuthSecurity\SimpleAuth\TokenValidator::class)
-			->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
-			->setArgument('tokenIssuer', $configuration->simpleAuth->token->issuer);
+			$builder->addDefinition($this->prefix('simpleAuth.token.validator'), new DI\Definitions\ServiceDefinition())
+				->setType(SimpleAuthSecurity\SimpleAuth\TokenValidator::class)
+				->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
+				->setArgument('tokenIssuer', $configuration->simpleAuth->token->issuer);
 
-		if ($configuration->simpleAuth->services->identity) {
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.security.identityFactory'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(SimpleAuthSecurity\SimpleAuth\IdentityFactory::class);
-		}
-
-		$builder->addDefinition(
-			$this->prefix('simpleAuth.security.userStorage'),
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(SimpleAuthSecurity\SimpleAuth\UserStorage::class);
-
-		$builder->addDefinition(
-			$this->prefix('simpleAuth.access.annotationChecker'),
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(SimpleAuthSecurity\SimpleAuth\Access\AnnotationChecker::class);
-
-		$builder->addDefinition($this->prefix('simpleAuth.access.latteChecker'), new DI\Definitions\ServiceDefinition())
-			->setType(SimpleAuthSecurity\SimpleAuth\Access\LatteChecker::class);
-
-		$builder->addDefinition($this->prefix('simpleAuth.access.linkChecker'), new DI\Definitions\ServiceDefinition())
-			->setType(SimpleAuthSecurity\SimpleAuth\Access\LinkChecker::class);
-
-		if ($configuration->simpleAuth->enable->casbin->database) {
-			$adapter = $builder->addDefinition(
-				$this->prefix('simpleAuth.casbin.adapter'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(DoctrineCrudPersistence\SimpleAuth\Models\Casbin\Adapter::class);
-
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.casbin.subscriber'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(SimpleAuthSubscribers\SimpleAuth\Policy::class);
-		} else {
-			$policyFile = $configuration->simpleAuth->casbin->policy;
-
-			if (!is_string($policyFile) || !is_file($policyFile)) {
-				throw new Exceptions\Logic('Casbin policy file is not configured');
+			if ($configuration->simpleAuth->services->identity) {
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.security.identityFactory'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(SimpleAuthSecurity\SimpleAuth\IdentityFactory::class);
 			}
 
-			$adapter = $builder->addDefinition(
-				$this->prefix('simpleAuth.casbin.adapter'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Casbin\Persist\Adapters\FileAdapter::class)
-				->setArguments(['filePath' => $policyFile]);
-		}
-
-		$modelFile = $configuration->simpleAuth->casbin->model;
-
-		if (!is_string($modelFile) || !is_file($modelFile)) {
-			throw new Exceptions\Logic('Casbin model file is not configured');
-		}
-
-		$builder->addDefinition(
-			$this->prefix('simpleAuth.casbin.enforcerFactory'),
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(SimpleAuthSecurity\SimpleAuth\EnforcerFactory::class)
-			->setArguments(['modelFile' => $modelFile, 'adapter' => $adapter]);
-
-		if ($configuration->simpleAuth->enable->middleware) {
 			$builder->addDefinition(
-				$this->prefix('simpleAuth.middleware.access'),
+				$this->prefix('simpleAuth.security.userStorage'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(SimpleAuthMiddleware\SimpleAuth\Authorization::class);
-
-			$builder->addDefinition($this->prefix('simpleAuth.middleware.user'), new DI\Definitions\ServiceDefinition())
-				->setType(SimpleAuthMiddleware\SimpleAuth\User::class);
-		}
-
-		if ($configuration->simpleAuth->enable->doctrine->mapping) {
-			$builder->addDefinition($this->prefix('simpleAuth.doctrine.driver'), new DI\Definitions\ServiceDefinition())
-				->setType(SimpleAuthMapping\SimpleAuth\Driver\Owner::class);
+				->setType(SimpleAuthSecurity\SimpleAuth\UserStorage::class);
 
 			$builder->addDefinition(
-				$this->prefix('simpleAuth.doctrine.subscriber'),
+				$this->prefix('simpleAuth.access.annotationChecker'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(SimpleAuthSubscribers\SimpleAuth\User::class);
-		}
+				->setType(SimpleAuthSecurity\SimpleAuth\Access\AnnotationChecker::class);
 
-		if ($configuration->simpleAuth->enable->doctrine->models) {
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.doctrine.tokensRepository'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(DoctrineCrudPersistence\SimpleAuth\Models\Tokens\Repository::class);
+			$builder->addDefinition($this->prefix('simpleAuth.access.latteChecker'), new DI\Definitions\ServiceDefinition())
+				->setType(SimpleAuthSecurity\SimpleAuth\Access\LatteChecker::class);
+
+			$builder->addDefinition($this->prefix('simpleAuth.access.linkChecker'), new DI\Definitions\ServiceDefinition())
+				->setType(SimpleAuthSecurity\SimpleAuth\Access\LinkChecker::class);
+
+			if ($configuration->simpleAuth->enable->casbin->database) {
+				$adapter = $builder->addDefinition(
+					$this->prefix('simpleAuth.casbin.adapter'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Casbin\Adapter::class);
+
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.casbin.subscriber'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(SimpleAuthSubscribers\SimpleAuth\Policy::class);
+			} else {
+				$policyFile = $configuration->simpleAuth->casbin->policy;
+
+				if (!is_string($policyFile) || !is_file($policyFile)) {
+					throw new Exceptions\Logic('Casbin policy file is not configured');
+				}
+
+				$adapter = $builder->addDefinition(
+					$this->prefix('simpleAuth.casbin.adapter'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(Casbin\Persist\Adapters\FileAdapter::class)
+					->setArguments(['filePath' => $policyFile]);
+			}
+
+			$modelFile = $configuration->simpleAuth->casbin->model;
+
+			if (!is_string($modelFile) || !is_file($modelFile)) {
+				throw new Exceptions\Logic('Casbin model file is not configured');
+			}
 
 			$builder->addDefinition(
-				$this->prefix('simpleAuth.doctrine.tokensManager'),
+				$this->prefix('simpleAuth.casbin.enforcerFactory'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(DoctrineCrudPersistence\SimpleAuth\Models\Tokens\Manager::class);
-		}
+				->setType(SimpleAuthSecurity\SimpleAuth\EnforcerFactory::class)
+				->setArguments(['modelFile' => $modelFile, 'adapter' => $adapter]);
 
-		if ($configuration->simpleAuth->enable->casbin->database) {
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.doctrine.policiesRepository'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(DoctrineCrudPersistence\SimpleAuth\Models\Policies\Repository::class);
+			if ($configuration->simpleAuth->enable->middleware) {
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.middleware.access'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(SimpleAuthMiddleware\SimpleAuth\Authorization::class);
 
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.doctrine.policiesManager'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(DoctrineCrudPersistence\SimpleAuth\Models\Policies\Manager::class);
-		}
+				$builder->addDefinition($this->prefix('simpleAuth.middleware.user'), new DI\Definitions\ServiceDefinition())
+					->setType(SimpleAuthMiddleware\SimpleAuth\User::class);
+			}
 
-		if ($configuration->simpleAuth->enable->nette->application) {
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.nette.application'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(SimpleAuthSubscribers\SimpleAuth\Application::class);
+			if ($configuration->simpleAuth->enable->doctrine->mapping) {
+				$builder->addDefinition($this->prefix('simpleAuth.doctrine.driver'), new DI\Definitions\ServiceDefinition())
+					->setType(SimpleAuthMapping\SimpleAuth\Driver\Owner::class);
+
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.doctrine.subscriber'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(SimpleAuthSubscribers\SimpleAuth\User::class);
+			}
+
+			if ($configuration->simpleAuth->enable->doctrine->models) {
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.doctrine.tokensRepository'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Tokens\Repository::class);
+
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.doctrine.tokensManager'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Tokens\Manager::class);
+			}
+
+			if ($configuration->simpleAuth->enable->casbin->database) {
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.doctrine.policiesRepository'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Policies\Repository::class);
+
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.doctrine.policiesManager'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Policies\Manager::class);
+			}
+
+			if ($configuration->simpleAuth->enable->nette->application) {
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.nette.application'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(SimpleAuthSubscribers\SimpleAuth\Application::class);
+			}
 		}
 
 		/**
@@ -1031,6 +1049,58 @@ class CoreExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		/**
+		 * EVENT DISPATCHER -- default fallback
+		 *
+		 * Pre-merge, the WS server event bridge below (preserved from WsServerExtension, itself
+		 * a separate opt-in extension) could unconditionally require a
+		 * Psr\EventDispatcher\EventDispatcherInterface because every app config that registered
+		 * fbWsServerPlugin also registered contributteEvents (Contributte\EventDispatcher) --
+		 * two independent, always-paired entries in the same extensions: list. fbCore is now the
+		 * single universal extension every container in the repo loads, including single-package
+		 * test containers that have no reason to also load contributteEvents, so that pairing no
+		 * longer holds. Register a default here, but only if nothing has already provided one --
+		 * production still wires contributteEvents itself, and registering a second
+		 * EventDispatcherInterface-typed service unconditionally would reintroduce the exact
+		 * ambiguous-autowiring failure this same class of bug already caused for the router and
+		 * response factory. Symfony\Component\EventDispatcher\EventDispatcherInterface extends
+		 * Symfony\Contracts\EventDispatcher\EventDispatcherInterface extends
+		 * Psr\EventDispatcher\EventDispatcherInterface, so one concrete Symfony dispatcher
+		 * satisfies every lookup below, whichever of the two interfaces is asked for.
+		 */
+
+		if ($builder->getByType(WsServerEventDispatcher\EventDispatcherInterface::class) === null) {
+			$builder->addDefinition($this->prefix('application.eventDispatcher'))
+				->setType(EventDispatcher\EventDispatcher::class);
+		}
+
+		/**
+		 * DOCTRINE CRUD -- entity CRUD services, removed when Doctrine ORM is absent
+		 *
+		 * loadConfiguration() unconditionally registers doctrineCrud.entity.{mapper,creator,
+		 * updater,deleter} and doctrineCrud.crud: EntityMapper/EntityCreator/EntityUpdater all
+		 * take a non-nullable Doctrine\Persistence\ManagerRegistry constructor argument, which
+		 * only exists in containers that also register nettrineOrm/nettrineDbal. Several
+		 * fbCore-using containers (RabbitMq, RedisDb, RedisDbCache among them) don't, so those
+		 * five otherwise-unconditional definitions failed to compile at all. Whether
+		 * ManagerRegistry ends up registered can depend on another extension's own
+		 * loadConfiguration() -- order-dependent within that phase -- so this can only be
+		 * decided reliably here, in beforeCompile(), after every extension's loadConfiguration()
+		 * has already run.
+		 */
+
+		if ($builder->getByType(Doctrine\Persistence\ManagerRegistry::class) === null) {
+			foreach ([
+				'doctrineCrud.entity.mapper',
+				'doctrineCrud.entity.creator',
+				'doctrineCrud.entity.updater',
+				'doctrineCrud.entity.deleter',
+				'doctrineCrud.crud',
+			] as $doctrineCrudServiceName) {
+				$builder->removeDefinition($this->prefix($doctrineCrudServiceName));
+			}
+		}
+
+		/**
 		 * APPLICATION -- loggers, routes, UI
 		 */
 
@@ -1158,7 +1228,13 @@ class CoreExtension extends DI\CompilerExtension
 
 		$userContextServiceName = $builder->getByType(SimpleAuthSecurity\SimpleAuth\User::class);
 
-		if ($userContextServiceName === null) {
+		// Mirrors the signature !== '' gate around the "SIMPLE AUTH" block in
+		// loadConfiguration() above: this fallback's constructor needs IUserStorage, which only
+		// exists if that block ran and registered simpleAuth.security.userStorage. Without this
+		// gate, containers that never configure SimpleAuth (signature === '') would still get an
+		// unconditional fallback User service whose dependency was never registered, replacing
+		// "signature is missing" with a confusing "IUserStorage not found" deep in DI resolution.
+		if ($userContextServiceName === null && $configuration->simpleAuth->token->signature !== '') {
 			$builder->addDefinition($this->prefix('simpleAuth.security.user'), new DI\Definitions\ServiceDefinition())
 				->setType(SimpleAuthSecurity\SimpleAuth\User::class);
 		}
@@ -1218,22 +1294,34 @@ class CoreExtension extends DI\CompilerExtension
 		 * DOCTRINE CRUD -- custom DATE_FORMAT string function
 		 */
 
-		$entityManagerServiceName = $builder->getByType(Doctrine\ORM\EntityManagerInterface::class, true);
-		$entityManagerService = $builder->getDefinition($entityManagerServiceName);
+		// throw:true here unconditionally required Doctrine ORM's EntityManagerInterface in
+		// *every* container using fbCore -- including the several packages (CouchDb, RabbitMq,
+		// RedisDb, RedisDbCache among them) whose test containers never wire nettrineOrm at all.
+		// The Sentry handler lookup just above uses the same "look, act only if found" pattern
+		// this now matches; Doctrine's DATE_FORMAT function only needs registering when an
+		// EntityManager actually exists to register it on.
+		$entityManagerServiceName = $builder->getByType(Doctrine\ORM\EntityManagerInterface::class);
 
-		if ($entityManagerService instanceof DI\Definitions\ServiceDefinition) {
-			$entityManagerService->addSetup('?->getConfiguration()->addCustomStringFunction(?, ?)', [
-				'@self',
-				'DATE_FORMAT',
-				DoctrineCrudHelpers\DoctrineCrud\StringFunctions\DateFormat::class,
-			]);
+		if ($entityManagerServiceName !== null) {
+			$entityManagerService = $builder->getDefinition($entityManagerServiceName);
+
+			if ($entityManagerService instanceof DI\Definitions\ServiceDefinition) {
+				$entityManagerService->addSetup('?->getConfiguration()->addCustomStringFunction(?, ?)', [
+					'@self',
+					'DATE_FORMAT',
+					DoctrineCrudHelpers\DoctrineCrud\StringFunctions\DateFormat::class,
+				]);
+			}
 		}
 
 		/**
 		 * DOCTRINE TIMESTAMPABLE + DOCTRINE PHONE -- EventManager subscriber wiring
 		 */
 
-		$emServiceName = $builder->getByType(Doctrine\ORM\EntityManagerInterface::class, true);
+		// Same fix as the DATE_FORMAT block above and for the same reason: throw:true made this
+		// unconditional for every fbCore container, including the several packages that never
+		// wire Doctrine ORM at all.
+		$emServiceName = $builder->getByType(Doctrine\ORM\EntityManagerInterface::class);
 
 		if ($emServiceName !== null) {
 			$emService = $builder->getDefinition($emServiceName);
