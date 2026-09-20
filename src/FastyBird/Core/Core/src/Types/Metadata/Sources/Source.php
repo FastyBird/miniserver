@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Module.php
+ * Source.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -13,29 +13,19 @@
  * @date           26.04.21
  */
 
-namespace FastyBird\Library\Metadata\Types\Sources;
+namespace FastyBird\Core\Types\Metadata\Sources;
 
-use FastyBird\Library\Metadata;
+use BackedEnum;
 
 /**
- * Modules sources types
+ * Sources types
  *
  * @package        FastyBird:MetadataLibrary!
  * @subpackage     Types
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-enum Module: string implements Source
+interface Source extends BackedEnum
 {
-
-	case NOT_SPECIFIED = Metadata\Constants::NOT_SPECIFIED_SOURCE;
-
-	case ACCOUNTS = Metadata\Constants::MODULE_ACCOUNTS_SOURCE;
-
-	case DEVICES = Metadata\Constants::MODULE_DEVICES_SOURCE;
-
-	case TRIGGERS = Metadata\Constants::MODULE_TRIGGERS_SOURCE;
-
-	case UI = Metadata\Constants::MODULE_UI_SOURCE;
 
 }

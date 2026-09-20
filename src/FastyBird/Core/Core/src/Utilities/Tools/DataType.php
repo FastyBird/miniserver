@@ -17,7 +17,7 @@ namespace FastyBird\Core\Utilities\Tools;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Formats\Tools as Formats;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Throwable;
 use function floatval;
 use function intval;

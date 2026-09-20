@@ -13,9 +13,9 @@
  * @date           21.10.22
  */
 
-namespace FastyBird\Library\Metadata\Types\Sources;
+namespace FastyBird\Core\Types\Metadata\Sources;
 
-use FastyBird\Library\Metadata;
+use FastyBird\Core\Constants\Metadata;
 
 /**
  * Bridges sources types

@@ -13,7 +13,7 @@
  * @date           27.12.22
  */
 
-namespace FastyBird\Library\Metadata\Types\Payloads;
+namespace FastyBird\Core\Types\Metadata\Payloads;
 
 /**
  * Cover/Roller supported payload types

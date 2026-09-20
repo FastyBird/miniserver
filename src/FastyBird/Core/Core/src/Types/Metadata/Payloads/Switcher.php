@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Payload.php
+ * Switcher.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,22 +10,26 @@
  * @subpackage     Types
  * @since          1.0.0
  *
- * @date           05.02.24
+ * @date           03.03.20
  */
 
-namespace FastyBird\Library\Metadata\Types\Payloads;
-
-use BackedEnum;
+namespace FastyBird\Core\Types\Metadata\Payloads;
 
 /**
- * Supported payload types
+ * Switch supported payload types
  *
  * @package        FastyBird:MetadataLibrary!
  * @subpackage     Types
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface Payload extends BackedEnum
+enum Switcher: string implements Payload
 {
+
+	case ON = 'switch_on';
+
+	case OFF = 'switch_off';
+
+	case TOGGLE = 'switch_toggle';
 
 }

@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Messaging\Exchange\Consumers;
 
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 
 /**
  * Exchange consumer interface

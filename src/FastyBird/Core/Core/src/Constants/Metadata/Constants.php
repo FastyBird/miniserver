@@ -13,7 +13,7 @@
  * @date           04.05.20
  */
 
-namespace FastyBird\Library\Metadata;
+namespace FastyBird\Core\Constants\Metadata;
 
 /**
  * Library constants

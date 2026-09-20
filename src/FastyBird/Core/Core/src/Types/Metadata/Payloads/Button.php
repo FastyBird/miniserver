@@ -13,7 +13,7 @@
  * @date           17.11.21
  */
 
-namespace FastyBird\Library\Metadata\Types\Payloads;
+namespace FastyBird\Core\Types\Metadata\Payloads;
 
 /**
  * Button supported payload types

@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Source.php
+ * Automator.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,22 +10,28 @@
  * @subpackage     Types
  * @since          1.0.0
  *
- * @date           26.04.21
+ * @date           19.01.22
  */
 
-namespace FastyBird\Library\Metadata\Types\Sources;
+namespace FastyBird\Core\Types\Metadata\Sources;
 
-use BackedEnum;
+use FastyBird\Core\Constants\Metadata;
 
 /**
- * Sources types
+ * Triggers automators sources types
  *
  * @package        FastyBird:MetadataLibrary!
  * @subpackage     Types
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface Source extends BackedEnum
+enum Automator: string implements Source
 {
+
+	case NOT_SPECIFIED = Metadata\Constants::NOT_SPECIFIED_SOURCE;
+
+	case DEVICE_MODULE = Metadata\Constants::AUTOMATOR_DEVICE_MODULE_SOURCE;
+
+	case DATE_TIME = Metadata\Constants::AUTOMATOR_DATE_TIME_SOURCE;
 
 }

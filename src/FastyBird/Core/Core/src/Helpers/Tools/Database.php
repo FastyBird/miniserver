@@ -20,7 +20,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Events\Tools as Events;
 use FastyBird\Core\Exceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Psr\EventDispatcher;
 use Psr\Log;

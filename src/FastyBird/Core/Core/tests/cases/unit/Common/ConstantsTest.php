@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Library\Metadata\Tests\Cases\Unit\Common;
+namespace FastyBird\Core\Tests\Cases\Unit\Common;
 
-use FastyBird\Library\Metadata;
+use FastyBird\Core\Constants\Metadata;
 use PHPUnit\Framework\TestCase;
 use function preg_match;
 

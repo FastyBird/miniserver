@@ -21,7 +21,7 @@ use DateTimeInterface;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as Formats;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette\Utils;
 use TypeError;
 use ValueError;

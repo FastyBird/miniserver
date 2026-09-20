@@ -13,7 +13,7 @@
  * @date           04.08.22
  */
 
-namespace FastyBird\Library\Metadata\Types;
+namespace FastyBird\Core\Types\Metadata;
 
 use function in_array;
 

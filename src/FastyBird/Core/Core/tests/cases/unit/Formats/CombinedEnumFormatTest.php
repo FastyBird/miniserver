@@ -4,7 +4,7 @@ namespace FastyBird\Core\Tests\Cases\Unit\Formats;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Formats\Tools as Formats;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 use ValueError;

@@ -15,9 +15,9 @@
 
 namespace FastyBird\Core\Transformers\Tools;
 
+use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Exceptions;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use MathSolver\Math;
 use function array_key_exists;
 use function floatval;

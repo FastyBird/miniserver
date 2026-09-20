@@ -17,7 +17,7 @@ namespace FastyBird\Core\Formats\Tools;
 
 use BackedEnum;
 use FastyBird\Core\Exceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Nette\Utils;
 use TypeError;

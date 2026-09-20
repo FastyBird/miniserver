@@ -17,8 +17,8 @@ namespace FastyBird\Core\Transformers\Tools;
 
 use Contributte\Monolog;
 use DateTimeInterface;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
 use function boolval;
 use function in_array;
 
