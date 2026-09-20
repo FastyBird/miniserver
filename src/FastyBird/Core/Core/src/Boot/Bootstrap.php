@@ -16,6 +16,7 @@
 namespace FastyBird\Core\Boot;
 
 use FastyBird\Core\Exceptions;
+use Tracy\Debugger;
 use function array_key_exists;
 use function array_merge;
 use function array_shift;
@@ -97,6 +98,34 @@ class Bootstrap
 
 		if (!$underTestRunner) {
 			$config->enableTracy(FB_LOGS_DIR);
+
+			// Nette\Bootstrap\Configurator::enableTracy() unconditionally sets
+			// Debugger::$strictMode = true, and Tracy\Debugger::enable() itself unconditionally
+			// calls error_reporting(E_ALL), overriding whatever narrower level the calling script
+			// set beforehand. With strict mode on, Tracy\Debugger\DevelopmentStrategy::handleError()
+			// treats every diagnostic matching error_reporting() as fatal: it does not throw a
+			// catchable exception, it calls exit(255) directly. PHP 8.4 deprecates implicitly
+			// nullable parameters, and third-party code reachable from the full 45-extension
+			// container graph (e.g. binsoul/net-mqtt's FlowFactory) triggers that E_DEPRECATED
+			// notice merely by being autoloaded/reflected on during DI container compilation --
+			// which would otherwise kill the process before it ever reaches userland code, with
+			// no way for a try/catch anywhere to intervene. A deprecation notice must never be
+			// able to abort the process, so narrow strict mode to exclude E_DEPRECATED and
+			// E_USER_DEPRECATED while leaving every other severity exactly as strict as before.
+			Debugger::$strictMode = E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED;
+
+			// Debugger::enable()'s error_reporting(E_ALL) above also means deprecations that
+			// used to be invisible now reach Tracy\Debugger\DevelopmentStrategy::handleError(),
+			// which -- once strict mode no longer treats them as fatal -- falls through to an
+			// unconditional `echo` of the warning text on CLI (not gated by display_errors,
+			// which Debugger::enable() already turned off). Nothing before this call can
+			// pre-empt Tracy's own error_reporting(E_ALL), including a CLI script that narrows
+			// it before requiring the autoloader (tests/cases/application/bootstrap-production-
+			// scope.php does exactly that, to keep vendor deprecation noise out of the JSON it
+			// writes to stdout) -- so re-narrow it here, after Tracy is enabled, to keep that
+			// contract intact. This also means deprecations never reach Tracy's handler at all
+			// any more, not just that they no longer abort the process.
+			error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 		}
 
 		// Shipped extension defaults, then the application wiring, then the operator overrides
