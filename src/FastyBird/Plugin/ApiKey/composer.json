@@ -32,11 +32,8 @@
   "require": {
     "php": ">=8.4.0",
     "cweagans/composer-patches": "^1.7",
-    "fastybird/application": "@dev",
-    "fastybird/json-api-library": "@dev",
-    "fastybird/tools": "@dev",
+    "fastybird/miniserver-core": "@dev",
     "fig/http-message-util": "^1.1",
-    "fastybird/doctrine-crud-library": "@dev",
     "nette/di": "^3.2",
     "nette/utils": "^4.0",
     "psr/http-message": "^1.0",

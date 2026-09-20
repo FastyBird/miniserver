@@ -30,8 +30,7 @@
   "require": {
     "php": ">=8.4.0",
     "cweagans/composer-patches": "^1.7",
-    "fastybird/application": "@dev",
-    "fastybird/exchange": "@dev",
+    "fastybird/miniserver-core": "@dev",
     "fastybird/redisdb-plugin": "@dev",
     "fastybird/triggers-module": "@dev",
     "nette/di": "^3.2",
