@@ -61,7 +61,15 @@ final class ExchangeContainerTest extends TestCase
 		self::assertCount(0, $publisher->calls);
 	}
 
-	public function testRegisteringTheSamePublisherInstanceTwiceCallsItOnlyOnce(): void
+	/**
+	 * Pins the observable contract, not the mechanism: registering the same publisher instance
+	 * twice must not deliver a message to it twice. This happens to hold even with
+	 * register()'s offsetExists() guard removed, because SplObjectStorage keys entries by
+	 * object identity -- offsetSet() on an instance already stored overwrites that entry rather
+	 * than adding a second one. The guard is therefore redundant for this scenario; it is
+	 * SplObjectStorage's own identity keying that this test actually characterizes.
+	 */
+	public function testRegisteringTheSamePublisherTwiceDoesNotDuplicateDelivery(): void
 	{
 		/** @var ArrayObject<int, string> $log */
 		$log = new ArrayObject();
@@ -74,8 +82,6 @@ final class ExchangeContainerTest extends TestCase
 
 		$container->publish(Metadata\Sources\Module::NOT_SPECIFIED, 'test.routing.key', null);
 
-		// SplObjectStorage keys registrations by object identity, and register() guards with
-		// offsetExists(), so registering the same instance twice is a no-op the second time.
 		self::assertCount(1, $publisher->calls);
 	}
 
@@ -99,6 +105,52 @@ final class ExchangeContainerTest extends TestCase
 		self::assertSame(Metadata\Sources\Module::NOT_SPECIFIED, $consumerA->calls[0][0]);
 		self::assertSame('test.routing.key', $consumerA->calls[0][1]);
 		self::assertNull($consumerA->calls[0][2]);
+	}
+
+	public function testConsumeDeliversWhenTheConsumersRoutingKeyMatchesThePublishedOne(): void
+	{
+		/** @var ArrayObject<int, string> $log */
+		$log = new ArrayObject();
+
+		$consumer = $this->createRecordingConsumer($log, 'a');
+
+		$container = new Consumers\Container();
+		$container->register($consumer, 'matching.key');
+
+		$container->consume(Metadata\Sources\Module::NOT_SPECIFIED, 'matching.key', null);
+
+		self::assertCount(1, $consumer->calls);
+	}
+
+	public function testConsumeSkipsAConsumerWhoseRoutingKeyDiffersFromThePublishedOne(): void
+	{
+		/** @var ArrayObject<int, string> $log */
+		$log = new ArrayObject();
+
+		$consumer = $this->createRecordingConsumer($log, 'a');
+
+		$container = new Consumers\Container();
+		$container->register($consumer, 'matching.key');
+
+		$container->consume(Metadata\Sources\Module::NOT_SPECIFIED, 'different.key', null);
+
+		self::assertCount(0, $consumer->calls);
+	}
+
+	public function testConsumeDeliversToANullRoutingKeyConsumerForAnyPublishedKey(): void
+	{
+		/** @var ArrayObject<int, string> $log */
+		$log = new ArrayObject();
+
+		$consumer = $this->createRecordingConsumer($log, 'a');
+
+		$container = new Consumers\Container();
+		$container->register($consumer, null);
+
+		$container->consume(Metadata\Sources\Module::NOT_SPECIFIED, 'first.key', null);
+		$container->consume(Metadata\Sources\Module::NOT_SPECIFIED, 'second.key', null);
+
+		self::assertCount(2, $consumer->calls);
 	}
 
 	/**
