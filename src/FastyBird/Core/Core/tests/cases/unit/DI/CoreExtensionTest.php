@@ -5,8 +5,7 @@ namespace FastyBird\Core\Tests\Cases\Unit\DI;
 use Error;
 use FastyBird\Core\Commands as HttpServerCommands;
 use FastyBird\Core\Commands as WsServerCommands;
-use FastyBird\Core\Configuration as DoctrineTimestampableConfiguration;
-use FastyBird\Core\Configuration as SimpleAuthConfiguration;
+use FastyBird\Core\Configuration;
 use FastyBird\Core\Controllers as WebSocketsControllers;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Documents as ExchangeDocuments;
@@ -126,20 +125,19 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertNotNull($container->getByType(PhoneSubscribers\Phone\PhoneObjectSubscriber::class, false));
 
 		/**
-		 * The two service-key collisions this task's own investigation found (Flagged
+		 * The service-key collision this task's own investigation found (Flagged
 		 * Assumption 12), resolved by keying every service <domainTag>.<originalRelativeKey> --
-		 * assert both halves of each collision survive as distinct services, not one silently
-		 * overwriting the other.
+		 * assert both halves of the collision survive as distinct services, not one silently
+		 * overwriting the other. SimpleAuth and DoctrineTimestampable used to collide the same
+		 * way over `configuration` -- the 2026-09-21 core cleanup merged those two into the one
+		 * combined FastyBird\Core\Configuration\Configuration below, so this instead asserts
+		 * that single service is reachable both by type and by its service name.
 		 */
 
-		self::assertInstanceOf(
-			SimpleAuthConfiguration\SimpleAuth\Configuration::class,
-			$container->getService('fbCore.simpleAuth.configuration'),
-		);
-		self::assertInstanceOf(
-			DoctrineTimestampableConfiguration\DoctrineTimestampable\Configuration::class,
-			$container->getService('fbCore.doctrineTimestampable.configuration'),
-		);
+		$mergedConfiguration = $container->getService('fbCore.configuration');
+		self::assertInstanceOf(Configuration\Configuration::class, $mergedConfiguration);
+		self::assertSame($mergedConfiguration, $container->getByType(Configuration\Configuration::class, false));
+
 		self::assertInstanceOf(
 			PhoneSubscribers\Phone\PhoneObjectSubscriber::class,
 			$container->getService('fbCore.phone.doctrinePhone.subscriber'),

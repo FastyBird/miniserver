@@ -6,24 +6,24 @@
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     common
- * @since          0.1.0
+ * @package        FastyBird:Core!
+ * @subpackage     Configuration
+ * @since          1.0.0
  *
  * @date           01.07.24
  */
 
-namespace FastyBird\Core\Configuration\SimpleAuth;
+namespace FastyBird\Core\Configuration;
 
 use Nette;
 use Nette\Application;
 
 /**
- * Simple authentication extension configuration storage.
- * Store basic extension settings
+ * Application configuration storage.
+ * Stores the simple authentication and Doctrine timestampable extension settings
  *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     common
+ * @package        FastyBird:Core!
+ * @subpackage     Configuration
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
@@ -40,11 +40,16 @@ class Configuration
 		private readonly bool $enableDoctrineMapping,
 		private readonly bool $enableDoctrineModels,
 		private readonly bool $enableNetteApplication,
+		public readonly bool $lazyAssociation = false,
+		public readonly bool $autoMapField = false,
+		public readonly string $dbFieldType = 'datetime_immutable',
 		private readonly string|null $applicationSignInUrl = null,
 		private readonly string $applicationHomeUrl = '/',
 	)
 	{
 	}
+
+	// SIMPLE AUTH
 
 	public function getTokenIssuer(): string
 	{
@@ -102,6 +107,18 @@ class Configuration
 	public function getHomeUrl(array $params = []): string|null
 	{
 		return $this->linkGenerator->link($this->applicationHomeUrl, $params);
+	}
+
+	// DOCTRINE TIMESTAMPABLE
+
+	public function autoMapField(): bool
+	{
+		return $this->autoMapField === true;
+	}
+
+	public function useLazyAssociation(): bool
+	{
+		return $this->lazyAssociation === true;
 	}
 
 }

@@ -23,8 +23,7 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\Clients as WsServerClients;
 use FastyBird\Core\Commands as HttpServerCommands;
 use FastyBird\Core\Commands as WsServerCommands;
-use FastyBird\Core\Configuration as DoctrineTimestampableConfiguration;
-use FastyBird\Core\Configuration as SimpleAuthConfiguration;
+use FastyBird\Core\Configuration;
 use FastyBird\Core\Controllers as WebSocketsControllers;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Documents as ExchangeDocuments;
@@ -489,19 +488,6 @@ class CoreExtension extends DI\CompilerExtension
 			$builder->addDefinition($this->prefix('simpleAuth.auth'), new DI\Definitions\ServiceDefinition())
 				->setType(SimpleAuthServices\SimpleAuth\Auth::class);
 
-			$builder->addDefinition($this->prefix('simpleAuth.configuration'), new DI\Definitions\ServiceDefinition())
-				->setType(SimpleAuthConfiguration\SimpleAuth\Configuration::class)
-				->setArguments([
-					'tokenIssuer' => $configuration->simpleAuth->token->issuer,
-					'tokenSignature' => $configuration->simpleAuth->token->signature,
-					'enableMiddleware' => $configuration->simpleAuth->enable->middleware,
-					'enableDoctrineMapping' => $configuration->simpleAuth->enable->doctrine->mapping,
-					'enableDoctrineModels' => $configuration->simpleAuth->enable->doctrine->models,
-					'enableNetteApplication' => $configuration->simpleAuth->enable->nette->application,
-					'applicationSignInUrl' => $configuration->simpleAuth->application->signInUrl,
-					'applicationHomeUrl' => $configuration->simpleAuth->application->homeUrl,
-				]);
-
 			$builder->addDefinition($this->prefix('simpleAuth.token.builder'), new DI\Definitions\ServiceDefinition())
 				->setType(SimpleAuthSecurity\SimpleAuth\TokenBuilder::class)
 				->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
@@ -803,16 +789,31 @@ class CoreExtension extends DI\CompilerExtension
 			]);
 
 		/**
-		 * DOCTRINE TIMESTAMPABLE
+		 * CONFIGURATION (SimpleAuth + DoctrineTimestampable settings, combined -- see
+		 * SIMPLE AUTH above for why this is registered unconditionally rather than only
+		 * inside the `$configuration->simpleAuth->token->signature !== ''` gate: the
+		 * DoctrineTimestampable half of this data must always be available)
 		 */
 
-		$builder->addDefinition($this->prefix('doctrineTimestampable.configuration'))
-			->setType(DoctrineTimestampableConfiguration\DoctrineTimestampable\Configuration::class)
+		$builder->addDefinition($this->prefix('configuration'))
+			->setType(Configuration\Configuration::class)
 			->setArguments([
+				'tokenIssuer' => $configuration->simpleAuth->token->issuer,
+				'tokenSignature' => $configuration->simpleAuth->token->signature,
+				'enableMiddleware' => $configuration->simpleAuth->enable->middleware,
+				'enableDoctrineMapping' => $configuration->simpleAuth->enable->doctrine->mapping,
+				'enableDoctrineModels' => $configuration->simpleAuth->enable->doctrine->models,
+				'enableNetteApplication' => $configuration->simpleAuth->enable->nette->application,
+				'applicationSignInUrl' => $configuration->simpleAuth->application->signInUrl,
+				'applicationHomeUrl' => $configuration->simpleAuth->application->homeUrl,
 				'lazyAssociation' => $configuration->doctrineTimestampable->lazyAssociation,
 				'autoMapField' => $configuration->doctrineTimestampable->autoMapField,
 				'dbFieldType' => $configuration->doctrineTimestampable->dbFieldType,
 			]);
+
+		/**
+		 * DOCTRINE TIMESTAMPABLE
+		 */
 
 		$builder->addDefinition($this->prefix('doctrineTimestampable.driver'))
 			->setType(Timestampable::class);
