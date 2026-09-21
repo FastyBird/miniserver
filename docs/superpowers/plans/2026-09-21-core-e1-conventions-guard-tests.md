@@ -285,8 +285,8 @@ foreach ($files as $path) {
 
 // Self-check. A regex that silently stops matching would otherwise report success over zero
 // findings, which is the exact false-green this repository has been bitten by before. The
-// floors are deliberately far below today's real numbers (2,993 files, 8,700+ Core imports)
-// so that ordinary churn does not trip them, while a broken matcher does.
+// floors are deliberately far below today's measured numbers (3,431 files in scope, 4,045
+// FastyBird\Core imports) so ordinary churn does not trip them, while a broken matcher does.
 if (count($files) < 2_000) {
 	fbFail(sprintf('scanned only %d PHP files; expected at least 2000', count($files)));
 }
@@ -853,11 +853,10 @@ namespace FastyBird\Core\Tests\Cases\Unit\Security;
 
 use DateTimeImmutable;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth;
 use FastyBird\Core\Services\DateTimeFactory;
 use Lcobucci\JWT;
-use Nyholm\Psr7;
+use React\Http\Message\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -1019,7 +1018,7 @@ final class TokenTest extends TestCase
 
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', ['user']);
 
-		$request = (new Psr7\ServerRequest('GET', '/api/v1/devices'))
+		$request = (new ServerRequest('GET', '/api/v1/devices'))
 			->withHeader(Constants\Constants::TOKEN_HEADER_NAME, 'Bearer ' . $token->toString());
 
 		$read = $reader->read($request);
@@ -1036,7 +1035,7 @@ final class TokenTest extends TestCase
 		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 		$reader = new SimpleAuth\TokenReader($validator);
 
-		self::assertNull($reader->read(new Psr7\ServerRequest('GET', '/api/v1/devices')));
+		self::assertNull($reader->read(new ServerRequest('GET', '/api/v1/devices')));
 	}
 
 	/**
@@ -1047,7 +1046,7 @@ final class TokenTest extends TestCase
 		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 		$reader = new SimpleAuth\TokenReader($validator);
 
-		$request = (new Psr7\ServerRequest('GET', '/api/v1/devices'))
+		$request = (new ServerRequest('GET', '/api/v1/devices'))
 			->withHeader(Constants\Constants::TOKEN_HEADER_NAME, 'Basic dXNlcjpwYXNz');
 
 		self::assertNull($reader->read($request));
@@ -1062,12 +1061,15 @@ Run: `make tests ARGS="--filter TokenTest" > /tmp/t6.txt 2>&1; echo "exit=$?"; t
 
 Expected: `exit=0`, `OK (11 tests, ...)`.
 
-If `Nyholm\Psr7` is not available, check which PSR-7 implementation the repository actually
-ships (`grep -rn 'psr/http-factory\|nyholm\|guzzlehttp/psr7' composer.json`) and use that one
-instead — do not add a dependency for a test.
+`React\Http\Message\ServerRequest` is the PSR-7 implementation this repository's own tests
+already use (see `src/FastyBird/Bridge/DevicesModuleUiModule/tests/cases/unit/Controllers/DataSourcesV1Test.php`),
+and `react/http` is a direct requirement of Core. Do not add a PSR-7 dependency for a test —
+`nyholm/psr7` is **not** installed.
 
 If `testValidatorRejectsGarbage` errors instead of returning null, that is a **finding, not a
-test bug**: record the actual behaviour in the test (`expectException(Exceptions\UnauthorizedAccess::class)`)
+test bug**: record the actual behaviour in the test — add `use FastyBird\Core\Exceptions;` and
+`self::expectException(Exceptions\UnauthorizedAccess::class)`, and only then, since an unused
+import fails `make cs`
 and note it in the commit message. A characterization test documents what the code does today,
 not what it ought to do.
 
