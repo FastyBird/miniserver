@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Dotenv\Dotenv;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Server\HttpServer as WebServerApplication;
 use Nette\Application as NetteApplication;
 
@@ -37,7 +37,7 @@ if (file_exists($autoload)) {
 
 	$configurator = Boot\Bootstrap::boot();
 
-	$isApi = substr($_SERVER['REQUEST_URI'], 0, 4) === '/' . Metadata\Constants::ROUTER_API_PREFIX;
+	$isApi = substr($_SERVER['REQUEST_URI'], 0, 4) === '/' . Constants\Constants::ROUTER_API_PREFIX;
 
 	$container = $configurator->createContainer();
 

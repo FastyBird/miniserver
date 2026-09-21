@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts;
 
-use FastyBird\Core\Constants\Metadata;
-use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants as SimpleAuth;
 
 /**
  * Module constants

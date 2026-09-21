@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Commands;
 
-use FastyBird\Core\Commands\HttpServer as Commands;
+use FastyBird\Core\Commands;
 use FastyBird\Core\Middleware\WebServer as Middleware;
 use FastyBird\Core\Server\HttpServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

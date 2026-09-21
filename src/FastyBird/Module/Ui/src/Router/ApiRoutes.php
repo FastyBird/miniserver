@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Router;
 
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Ui;

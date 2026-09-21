@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Commands\Accounts;
 use Doctrine;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
-use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;

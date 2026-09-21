@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Presenters\SimpleAuth;
 
-use FastyBird\Core\Configuration\SimpleAuth;
+use FastyBird\Core\Configuration;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use FastyBird\Core\Security\SimpleAuth\Access;
 use Nette\Application;
@@ -36,7 +36,7 @@ use ReflectionMethod;
 trait TSimpleAuth
 {
 
-	protected SimpleAuth\Configuration $simpleAuthConfiguration;
+	protected Configuration\Configuration $simpleAuthConfiguration;
 
 	protected Access\AnnotationChecker $annotationChecker;
 
@@ -44,7 +44,7 @@ trait TSimpleAuth
 
 	public function injectSimpleAuth(
 		Access\AnnotationChecker $annotationChecker,
-		SimpleAuth\Configuration $configuration,
+		Configuration\Configuration $configuration,
 		Security\User|null $simpleUser = null,
 	): void
 	{

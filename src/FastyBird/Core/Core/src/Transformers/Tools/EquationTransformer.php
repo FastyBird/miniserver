@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Transformers\Tools;
 
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use MathSolver\Math;

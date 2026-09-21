@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Controllers;
 use DateTimeImmutable;
 use Doctrine;
 use Exception;
-use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;

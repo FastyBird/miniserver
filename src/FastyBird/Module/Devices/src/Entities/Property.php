@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Entities;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;

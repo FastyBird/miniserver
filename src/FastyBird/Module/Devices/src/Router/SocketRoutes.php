@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Router;
 
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Routing\WebSockets as WebSocketsRouting;
 

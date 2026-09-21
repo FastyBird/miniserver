@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices;
 
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 
 /**
  * Service constants

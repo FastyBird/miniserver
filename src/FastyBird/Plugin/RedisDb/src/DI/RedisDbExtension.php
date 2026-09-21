@@ -16,7 +16,7 @@
 namespace FastyBird\Plugin\RedisDb\DI;
 
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Exchange;

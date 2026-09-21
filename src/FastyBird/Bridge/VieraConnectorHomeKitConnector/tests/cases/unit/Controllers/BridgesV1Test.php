@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Cases\Unit\Contr
 
 use Error;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
