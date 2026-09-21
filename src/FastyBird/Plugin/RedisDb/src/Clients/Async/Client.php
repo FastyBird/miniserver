@@ -16,7 +16,7 @@
 namespace FastyBird\Plugin\RedisDb\Clients\Async;
 
 use Clue\React\Redis;
-use FastyBird\Core\Events\Exchange as ExchangeEvents;
+use FastyBird\Core\Events as ExchangeEvents;
 use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Events;
 use InvalidArgumentException;

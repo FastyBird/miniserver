@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Server\HttpServer;
 
-use FastyBird\Core\Events\HttpServer as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Routing\SlimRouter as Routing;
 use Nette;
 use Psr\EventDispatcher;
@@ -62,11 +62,11 @@ class Application
 	{
 		$request = ServerRequestFactory::fromGlobals();
 
-		$this->dispatcher?->dispatch(new Events\Request($request));
+		$this->dispatcher?->dispatch(new Events\HttpServerRequest($request));
 
 		$response = $this->router->handle($request);
 
-		$this->dispatcher?->dispatch(new Events\Response($request, $response));
+		$this->dispatcher?->dispatch(new Events\HttpServerResponse($request, $response));
 
 		$this->sendStatus($response);
 		$this->sendHeaders($response);

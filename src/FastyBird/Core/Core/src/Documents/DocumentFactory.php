@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Documents;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Events\Application as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use Nette\Utils;
 use Orisai\ObjectMapper;

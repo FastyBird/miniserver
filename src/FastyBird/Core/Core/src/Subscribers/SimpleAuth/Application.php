@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Subscribers\SimpleAuth;
 
 use FastyBird\Core\Constants\SimpleAuth;
-use FastyBird\Core\Events\SimpleAuth as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions\SimpleAuth as Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Lcobucci\JWT;
@@ -51,7 +51,7 @@ final class Application implements EventDispatcher\EventSubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			Events\Request::class => 'request',
+			Events\PresenterRequest::class => 'request',
 		];
 	}
 

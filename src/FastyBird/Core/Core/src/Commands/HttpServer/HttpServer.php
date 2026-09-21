@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Commands\HttpServer;
 
-use FastyBird\Core\Events\HttpServer as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Server\HttpServer as Server;
@@ -87,7 +87,7 @@ class HttpServer extends Console\Command\Command
 		);
 
 		try {
-			$this->dispatcher?->dispatch(new Events\Startup());
+			$this->dispatcher?->dispatch(new Events\HttpServerStartup());
 
 			$socketServer = new Socket\SocketServer(
 				$this->serverAddress . ':' . $this->serverPort,
@@ -110,7 +110,7 @@ class HttpServer extends Console\Command\Command
 			}
 
 			$socketServer->on('error', function (Throwable $ex): void {
-				$this->dispatcher?->dispatch(new Events\Error($ex));
+				$this->dispatcher?->dispatch(new Events\HttpServerError($ex));
 			});
 
 			$this->serverFactory->create($socketServer);

@@ -18,7 +18,7 @@ namespace FastyBird\Core\Helpers\Tools;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Events\Tools as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;

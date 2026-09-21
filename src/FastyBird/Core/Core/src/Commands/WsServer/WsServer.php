@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Commands\WsServer;
 
-use FastyBird\Core\Events\WsServer as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
@@ -88,7 +88,7 @@ final class WsServer extends Console\Command\Command
 		);
 
 		try {
-			$this->dispatcher?->dispatch(new Events\Startup());
+			$this->dispatcher?->dispatch(new Events\WsServerStartup());
 
 			$socketServer = new Socket\SocketServer(
 				$this->configuration->getAddress() . ':' . $this->configuration->getPort(),
@@ -97,7 +97,7 @@ final class WsServer extends Console\Command\Command
 			);
 
 			$socketServer->on('error', function (Throwable $ex): void {
-				$this->dispatcher?->dispatch(new Events\Error($ex));
+				$this->dispatcher?->dispatch(new Events\WsServerError($ex));
 
 				$this->logger->error(
 					'An error occurred during handling requests. Stopping WS server',

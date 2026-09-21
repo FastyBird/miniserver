@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Messaging\Exchange\Publisher;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Events\Exchange as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use SplObjectStorage;

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\EventLoop\Application;
 
-use FastyBird\Core\Events\Application as Events;
+use FastyBird\Core\Events;
 use Psr\EventDispatcher;
 use React\EventLoop as ReactEventLoop;
 use function error_get_last;

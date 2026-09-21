@@ -32,21 +32,21 @@ use FastyBird\Core\Encoding as JsonApiEncoding;
 use FastyBird\Core\Encoding as WebSocketsEncoding;
 use FastyBird\Core\EventLoop;
 use FastyBird\Core\Events as SimpleAuthEvents;
-use FastyBird\Core\Events\WebSockets\CloseEvent;
-use FastyBird\Core\Events\WebSockets\ErrorEvent;
-use FastyBird\Core\Events\WebSockets\MessageEvent;
-use FastyBird\Core\Events\WebSockets\OpenEvent;
-use FastyBird\Core\Events\WebSockets\PushEvent;
-use FastyBird\Core\Events\WsServer\AfterIncommingMessageEvent;
-use FastyBird\Core\Events\WsServer\ClientConnected;
-use FastyBird\Core\Events\WsServer\ClientConnectEvent;
-use FastyBird\Core\Events\WsServer\ClientDisconnectEvent;
-use FastyBird\Core\Events\WsServer\ClientErrorEvent;
-use FastyBird\Core\Events\WsServer\CreateEvent;
-use FastyBird\Core\Events\WsServer\IncomingMessage;
-use FastyBird\Core\Events\WsServer\IncommingMessageEvent;
-use FastyBird\Core\Events\WsServer\StartEvent;
-use FastyBird\Core\Events\WsServer\StopEvent;
+use FastyBird\Core\Events\AfterIncommingMessageEvent;
+use FastyBird\Core\Events\ClientConnected;
+use FastyBird\Core\Events\ClientConnectEvent;
+use FastyBird\Core\Events\ClientDisconnectEvent;
+use FastyBird\Core\Events\ClientErrorEvent;
+use FastyBird\Core\Events\CloseEvent;
+use FastyBird\Core\Events\CreateEvent;
+use FastyBird\Core\Events\ErrorEvent;
+use FastyBird\Core\Events\IncomingMessage;
+use FastyBird\Core\Events\IncommingMessageEvent;
+use FastyBird\Core\Events\MessageEvent;
+use FastyBird\Core\Events\OpenEvent;
+use FastyBird\Core\Events\PushEvent;
+use FastyBird\Core\Events\StartEvent;
+use FastyBird\Core\Events\StopEvent;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers as DoctrineCrudHelpers;
 use FastyBird\Core\Helpers as JsonApiHelpers;
@@ -1296,12 +1296,12 @@ class CoreExtension extends DI\CompilerExtension
 				$application->addSetup('?->onRequest[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 					'@self',
 					$dispatcher,
-					new PhpGenerator\Literal(SimpleAuthEvents\SimpleAuth\Request::class),
+					new PhpGenerator\Literal(SimpleAuthEvents\PresenterRequest::class),
 				]);
 				$application->addSetup('?->onResponse[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 					'@self',
 					$dispatcher,
-					new PhpGenerator\Literal(SimpleAuthEvents\SimpleAuth\Response::class),
+					new PhpGenerator\Literal(SimpleAuthEvents\PresenterResponse::class),
 				]);
 			}
 		}

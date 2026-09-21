@@ -19,7 +19,7 @@ use Doctrine\DBAL;
 use FastyBird\Core\Constants\WsServer;
 use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Entities\WsServer as Entities;
-use FastyBird\Core\Events\WsServer as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Middleware\WebServer;
 
-use FastyBird\Core\Events\HttpServer as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Routing\SlimRouter as Routing;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;
@@ -41,11 +41,11 @@ final readonly class Router
 
 	public function __invoke(ServerRequestInterface $request): ResponseInterface
 	{
-		$this->dispatcher?->dispatch(new Events\Request($request));
+		$this->dispatcher?->dispatch(new Events\HttpServerRequest($request));
 
 		$response = $this->router->handle($request);
 
-		$this->dispatcher?->dispatch(new Events\Response($request, $response));
+		$this->dispatcher?->dispatch(new Events\HttpServerResponse($request, $response));
 
 		return $response;
 	}
