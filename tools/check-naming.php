@@ -150,7 +150,7 @@ function fbCheckFile(string $path, string $code, string $relative): array
 
 	preg_match('/^namespace\s+([^;]+);/m', $code, $namespaceMatch);
 	$namespace = isset($namespaceMatch[1]) ? trim($namespaceMatch[1]) : '';
-	$isCore = str_starts_with($namespace, 'FastyBird\\Core');
+	$isCore = $namespace === 'FastyBird\\Core' || str_starts_with($namespace, 'FastyBird\\Core\\');
 
 	// 1. Namespace segments, Core only.
 	if ($isCore) {
@@ -239,16 +239,72 @@ if ($coreImports < 1_500) {
 
 sort($violations);
 
-if ($violations !== []) {
-	fwrite(STDERR, sprintf("%d naming violations:\n\n", count($violations)));
+$baselinePath = $repoRoot . '/tools/naming-baseline.txt';
 
-	foreach ($violations as $violation) {
+if (in_array('--generate-baseline', $argv, true)) {
+	file_put_contents($baselinePath, implode(PHP_EOL, $violations) . PHP_EOL);
+
+	printf("Wrote %d violations to tools/naming-baseline.txt.\n", count($violations));
+
+	exit(0);
+}
+
+if (!is_file($baselinePath)) {
+	fbFail('tools/naming-baseline.txt is missing; regenerate it with --generate-baseline');
+}
+
+$baselineRaw = file($baselinePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+if ($baselineRaw === false) {
+	fbFail('could not read tools/naming-baseline.txt');
+}
+
+$baseline = array_values($baselineRaw);
+
+$introduced = array_values(array_diff($violations, $baseline));
+$fixed = array_values(array_diff($baseline, $violations));
+
+if ($introduced !== []) {
+	fwrite(STDERR, sprintf("%d NEW naming violations, not in the baseline:\n\n", count($introduced)));
+
+	foreach ($introduced as $violation) {
 		fwrite(STDERR, '  ' . str_replace("\t", '  ', $violation) . PHP_EOL);
 	}
+
+	fwrite(
+		STDERR,
+		PHP_EOL
+		. "The baseline records what the Core identity refactor has not reached yet. It may\n"
+		. "only ever shrink. See docs/conventions.md and the comment at the top of\n"
+		. "tools/check-naming.php.\n",
+	);
 
 	exit(1);
 }
 
-printf("Checked %d PHP files; no former library names in namespaces, type names or aliases.\n", count($files));
+// A baseline entry that no longer matches anything is a failure, not a courtesy. It is what
+// forces the baseline to shrink as each epic lands, and it is also the real self-check: if the
+// matcher breaks, every entry goes stale at once and the tool fails loudly instead of
+// reporting a clean tree.
+if ($fixed !== []) {
+	fwrite(
+		STDERR,
+		sprintf("%d baseline entries are no longer violated. Remove them:\n\n", count($fixed)),
+	);
+
+	foreach ($fixed as $violation) {
+		fwrite(STDERR, '  ' . str_replace("\t", '  ', $violation) . PHP_EOL);
+	}
+
+	fwrite(STDERR, PHP_EOL . "Run: php tools/check-naming.php --generate-baseline\n");
+
+	exit(1);
+}
+
+printf(
+	"Checked %d PHP files; %d known violations remain in the baseline, no new ones.\n",
+	count($files),
+	count($baseline),
+);
 
 exit(0);
