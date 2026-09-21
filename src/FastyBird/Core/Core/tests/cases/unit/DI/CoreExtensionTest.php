@@ -47,7 +47,6 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
@@ -151,7 +150,6 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Logic
 	 * @throws Error
 	 */
 	#[DoesNotPerformAssertions]
