@@ -1758,6 +1758,36 @@ explanatory comment its `make layers` and `make discriminators` neighbours carry
 Verify: `make qa` now invokes the guard (`make -n qa | grep check-naming` prints the recipe),
 and the workflow still parses.
 
+Then add a **fifth false-green source** to `CLAUDE.md`'s trap list, discovered during Task 7.
+
+`CLAUDE.md` documents that the `vendor/fastybird/*` mirror goes stale because
+`COMPOSER_MIRROR_PATH_REPOS=1` copies path repos rather than symlinking them. It does not document
+the inverse: **a bare `composer reinstall <package>` without that variable set converts the mirror
+from a copy into a symlink.** That happened during Task 7 and armed a false green on the one
+package this whole programme edits most — a symlinked mirror can never go stale, so Core edits
+would always look right locally while CI, which sets the variable globally
+(`.github/workflows/ci-tests.yaml:14`, and `docker/prod/Dockerfile:37` for production), keeps
+loading a copy.
+
+It is invisible to the check `CLAUDE.md` already prescribes: `diff -rq src/... vendor/...` reported
+"in sync" throughout, because a symlink is trivially in sync with its target. Only checking the
+mirror's **type** catches it.
+
+Add to the traps list in `CLAUDE.md`:
+
+```markdown
+- `composer reinstall <package>` **without** `COMPOSER_MIRROR_PATH_REPOS=1` silently replaces the
+  copy with a symlink. CI sets that variable globally (`.github/workflows/ci-tests.yaml`) and so
+  does `docker/prod/Dockerfile`, so a copy is the truthful state; a symlinked mirror can never go
+  stale and therefore hides exactly the drift the copy would expose, making local runs greener
+  than CI. `diff -rq` will not catch it — a symlink is always "in sync" with its target. Check the
+  type: `find vendor/fastybird -maxdepth 1 -type l` must print nothing. Always
+  `COMPOSER_MIRROR_PATH_REPOS=1 composer reinstall <package>`, and confirm the output says
+  `Mirroring from src/FastyBird/...`.
+```
+
+Verify afterwards: `find vendor/fastybird -maxdepth 1 -type l` prints nothing.
+
 Finally, correct two stale figures that shipped in Tasks 1 and 3. Both comments say *"3,333
 aliases, 139 distinct forms"*, which counted **every** aliased `FastyBird\Core` import,
 including the ones the last-two-segments rule permits. The committed baseline measures the
