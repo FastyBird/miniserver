@@ -1788,6 +1788,28 @@ Add to the traps list in `CLAUDE.md`:
 
 Verify afterwards: `find vendor/fastybird -maxdepth 1 -type l` prints nothing.
 
+And a **sixth**, found while running E1's first full suite. `docker/dev/php/conf/php.ini` line 5 is
+`date.timezone=${PHP_DATE_TIMEZONE}`, and `docker/dev/docker-compose.yml` supplies
+`PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}`. A bare `docker run` of the same image supplies neither, so the
+directive interpolates to empty and PHP emits `Warning: PHP Startup: Invalid date.timezone value ''`
+**on stdout**. That is harmless until something parses a PHP subprocess's stdout — which
+`tests/cases/application/EntityMappingTest.php` does, and it turned into three `JsonException:
+Syntax error` failures in a test with no connection to the change under test.
+
+Add to the traps list in `CLAUDE.md`:
+
+```markdown
+- Running a gate via a bare `docker run` of the application image, rather than through compose,
+  leaves `date.timezone` empty: `docker/dev/php/conf/php.ini` interpolates it from
+  `PHP_DATE_TIMEZONE`, which only compose sets. PHP then prints a startup warning **to stdout**,
+  which is invisible until something parses a PHP subprocess's stdout — `EntityMappingTest` boots
+  the application in a subprocess and `json_decode`s it, and produced three phantom
+  `JsonException: Syntax error` failures from exactly this. Same mechanism as the "nothing may
+  print to stdout before `initialize()`" trap, different location. Pass
+  `-e TZ=UTC -e PHP_DATE_TIMEZONE=UTC` to any bare `docker run`.
+```
+
+
 Finally, correct two stale figures that shipped in Tasks 1 and 3. Both comments say *"3,333
 aliases, 139 distinct forms"*, which counted **every** aliased `FastyBird\Core` import,
 including the ones the last-two-segments rule permits. The committed baseline measures the
