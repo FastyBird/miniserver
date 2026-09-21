@@ -668,9 +668,18 @@ use FastyBird\Core\Documents as ExchangeDocuments;   // rejected by make naming
 This is a positive rule, not a denylist. A denylist can only ban the names someone already
 thought of; this bans every name not derived from where the symbol actually lives.
 
-There were 3,333 aliases violating it when this convention was written, in 139 distinct forms,
-with `FastyBird\Core\Exceptions` alone aliased 11 different ways. `tools/naming-baseline.txt`
-records the ones not yet cleaned up. It may only shrink.
+`tools/naming-baseline.txt` recorded **3,076 aliases violating this rule** when the convention
+was written, in 131 distinct forms using 112 distinct alias names. `FastyBird\Core\Exceptions`
+alone was aliased 11 different ways, one per library the importing file happened to come from:
+
+```
+538  as ApplicationExceptions      73  as DoctrineCrudExceptions     25  as ExchangeExceptions
+121  as JsonApiExceptions          56  as DoctrineOrmQueryExceptions 11  as SimpleAuthExceptions
+ 33  as ToolsExceptions             8  as WebSocketsExceptions        6  as SlimRouterExceptions
+  2  as PhoneExceptions             1  as Exceptions (redundant -- import it bare)
+```
+
+The baseline may only shrink. A stale entry in it fails the gate.
 
 ## Namespace layout
 
