@@ -23,7 +23,7 @@ use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 use FastyBird\Core\Server\WsServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Psr\Log;

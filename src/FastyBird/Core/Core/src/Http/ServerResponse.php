@@ -1,35 +1,34 @@
 <?php declare(strict_types = 1);
 
 /**
- * Response.php
+ * ServerResponse.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WebServerPlugin!
+ * @package        FastyBird:Core!
  * @subpackage     Http
  * @since          1.0.0
  *
  * @date           17.03.20
  */
 
-namespace FastyBird\Core\Http\WebServer;
+namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Http\SlimRouter;
 use function array_key_exists;
 use function func_num_args;
 use function sprintf;
 
 /**
- * Extended HTTP response
+ * Extended HTTP response, carries a JSON:API entity attribute alongside the PSR-7 payload
  *
- * @package        FastyBird:WebServerPlugin!
+ * @package        FastyBird:Core!
  * @subpackage     Http
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Response extends SlimRouter\Response
+class ServerResponse extends Response
 {
 
 	/** @var array<mixed> */

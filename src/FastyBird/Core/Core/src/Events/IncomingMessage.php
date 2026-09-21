@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Events;
 
 use FastyBird\Core\Entities\WsServer as Entities;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 
 /**
  * WS client sent message event

@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Entity.php
+ * ResponseAttributes.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -13,23 +13,13 @@
  * @date           17.03.20
  */
 
-namespace FastyBird\Core\Http\WebServer;
+namespace FastyBird\Core\Http;
 
-abstract class Entity
+interface ResponseAttributes
 {
 
-	public function __construct(protected mixed $data = null)
-	{
-	}
+	public const ATTR_ENTITY = '__entity__';
 
-	public function getData(): mixed
-	{
-		return $this->data;
-	}
-
-	protected function setData(mixed $data): void
-	{
-		$this->data = $data;
-	}
+	public const ATTR_TOTAL_COUNT = '__total_records_count__';
 
 }

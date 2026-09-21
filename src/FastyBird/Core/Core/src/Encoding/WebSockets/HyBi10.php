@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Encoding\WebSockets;
 
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 
 /**
  * HyBi10 webSocket protocol

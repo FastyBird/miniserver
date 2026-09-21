@@ -5,7 +5,7 @@ namespace FastyBird\Core\Entities\WsServer;
 use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Encoding\WebSockets as Protocols;
 use FastyBird\Core\Entities\WebSockets;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 use Nette\Security as NS;
 use React\Socket;
 

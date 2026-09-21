@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Http\WebSockets;
+namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
 use Nette;
@@ -9,14 +9,14 @@ use function sprintf;
 use function strlen;
 
 /**
- * HTTP response formater
+ * WAMP transport HTTP handshake response formatter
  *
- * @package        iPublikuj:WebSockets!
+ * @package        FastyBird:Core!
  * @subpackage     Http
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-final class Response implements IResponse
+final class WampResponse implements IResponse
 {
 
 	/**

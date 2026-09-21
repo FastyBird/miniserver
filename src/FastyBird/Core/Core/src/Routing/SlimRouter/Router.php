@@ -17,7 +17,7 @@ namespace FastyBird\Core\Routing\SlimRouter;
 
 use FastyBird\Core\Controllers\SlimRouter as Controllers;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Http\SlimRouter as Http;
+use FastyBird\Core\Http;
 use FastyBird\Core\Middleware\SlimRouter\IMiddlewareDispatcher;
 use FastyBird\Core\Middleware\SlimRouter\MiddlewareDispatcher;
 use Fig\Http\Message\RequestMethodInterface;

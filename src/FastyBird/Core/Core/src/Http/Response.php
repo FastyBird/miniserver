@@ -13,7 +13,7 @@
  * @date           14.03.20
  */
 
-namespace FastyBird\Core\Http\SlimRouter;
+namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
 use Psr\Http\Message\ResponseInterface;

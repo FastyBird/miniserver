@@ -13,7 +13,7 @@
  * @date           17.03.20
  */
 
-namespace FastyBird\Core\Http\WebServer;
+namespace FastyBird\Core\Http;
 
 final class ScalarEntity extends Entity
 {

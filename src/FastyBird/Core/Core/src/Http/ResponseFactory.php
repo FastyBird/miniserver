@@ -13,7 +13,7 @@
  * @date           15.03.20
  */
 
-namespace FastyBird\Core\Http\SlimRouter;
+namespace FastyBird\Core\Http;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseFactoryInterface;

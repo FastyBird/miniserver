@@ -22,7 +22,7 @@ use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as SlimRouterExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Http as SlimRouterHttp;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\StatusCodeInterface;

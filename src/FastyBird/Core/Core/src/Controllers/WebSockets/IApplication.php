@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Controllers\WebSockets;
 
 use FastyBird\Core\Entities\WsServer as Entities;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 use Throwable;
 
 /**

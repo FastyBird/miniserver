@@ -1010,7 +1010,7 @@ class CoreExtension extends DI\CompilerExtension
 			$this->prefix('httpServer.routing.responseFactory'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(WebServerHttp\WebServer\ResponseFactory::class);
+			->setType(WebServerHttp\ServerResponseFactory::class);
 
 		$builder->addDefinition($this->prefix('httpServer.routing.router'), new DI\Definitions\ServiceDefinition())
 			->setType(Routing\WebServer\Router::class);

@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Routing\WebSockets;
 
 use FastyBird\Core\Controllers\WebSockets as Application;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 
 /**
  * Router interface

@@ -9,7 +9,7 @@ use FastyBird\Core\Entities\WebSockets as WebSocketEntities;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 use Nette;
 use OverflowException;
 use Throwable;
@@ -323,7 +323,7 @@ final class Wrapper implements IWrapper
 	 */
 	private function close(Entities\IClient $client, int $code = 400, mixed $body = null): void
 	{
-		$response = new Http\Response($code, [
+		$response = new Http\WampResponse($code, [
 			'Sec-WebSocket-Version' => $this->protocolsProxy->getSupportedProtocols(),
 			'X-Powered-By' => Server::VERSION,
 		], $body);

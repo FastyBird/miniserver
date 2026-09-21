@@ -90,7 +90,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertNotNull($container->getByType(HttpServerServer\HttpServer\Application::class, false));
 		self::assertNotNull($container->getByType(HttpServerCommands\HttpServer\HttpServer::class, false));
-		self::assertNotNull($container->getByType(WebServerHttp\WebServer\ResponseFactory::class, false));
+		self::assertNotNull($container->getByType(WebServerHttp\ServerResponseFactory::class, false));
 		self::assertNotNull($container->getByType(EventLoop\LoopInterface::class, false));
 		self::assertNotNull($container->getByType(WebServerMiddleware\WebServer\Cors::class, false));
 		self::assertNotNull($container->getByType(WebServerMiddleware\WebServer\StaticFiles::class, false));

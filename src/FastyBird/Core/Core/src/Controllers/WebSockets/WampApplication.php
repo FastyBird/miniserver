@@ -21,7 +21,7 @@ use FastyBird\Core\Entities\WsServer as WebSocketsEntities;
 use FastyBird\Core\Entities\WsServer\Topics as TopicEntities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
-use FastyBird\Core\Http\WebSockets as WebSocketsHttp;
+use FastyBird\Core\Http as WebSocketsHttp;
 use FastyBird\Core\Routing\WebSockets as WebSocketsRouter;
 use FastyBird\Core\Server\WsServer as WebSocketsServer;
 use FastyBird\Core\Topics\WsServer as Topics;

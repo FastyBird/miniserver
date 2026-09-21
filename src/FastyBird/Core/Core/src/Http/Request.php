@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Http\WebSockets;
+namespace FastyBird\Core\Http;
 
 use Nette\Http;
 use function func_num_args;

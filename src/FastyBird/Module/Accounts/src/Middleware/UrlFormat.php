@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Middleware;
 
 use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Http as SlimRouterHttp;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
