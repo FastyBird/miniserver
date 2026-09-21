@@ -1670,6 +1670,43 @@ explanatory comment its `make layers` and `make discriminators` neighbours carry
 Verify: `make qa` now invokes the guard (`make -n qa | grep check-naming` prints the recipe),
 and the workflow still parses.
 
+Finally, correct two stale figures that shipped in Tasks 1 and 3. Both comments say *"3,333
+aliases, 139 distinct forms"*, which counted **every** aliased `FastyBird\Core` import,
+including the ones the last-two-segments rule permits. The committed baseline measures the
+violations: **3,076 aliases in 131 distinct forms**. A reader who compares the comment against
+`wc -l tools/naming-baseline.txt` should not find them disagreeing.
+
+In `tools/check-naming.php`, in the "WHY THIS IS A GATE" block, change:
+
+```
+ * the largest by far was import aliases: 3,333 `use FastyBird\Core\... as <OldName>;`
+ * statements, 139 distinct forms, with FastyBird\Core\Exceptions alone aliased 11 different
+```
+
+to:
+
+```
+ * the largest by far was import aliases: 3,076 `use FastyBird\Core\... as <OldName>;`
+ * statements, 131 distinct forms, with FastyBird\Core\Exceptions alone aliased 11 different
+```
+
+And in `Makefile`, in the `naming:` comment, change:
+
+```
+# Aliases are the reason this is a gate rather than a review habit. There were 3,333 of them
+# when the Core identity refactor started, in 139 distinct forms, and they existed purely
+```
+
+to:
+
+```
+# Aliases are the reason this is a gate rather than a review habit. There were 3,076 of them
+# when the Core identity refactor started, in 131 distinct forms, and they existed purely
+```
+
+Confirm no stale figure survives anywhere: `grep -rn '3,333\|139 distinct' tools/ Makefile docs/`
+must print nothing.
+
 - [ ] **Step 7: Commit and push**
 
 ```bash
