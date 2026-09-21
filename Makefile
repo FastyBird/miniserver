@@ -69,6 +69,18 @@ layers: ## Check dependency direction between the packages under src/FastyBird
 discriminators: ## Check every Doctrine inheritance root declares an explicit discriminator map
 	$(PRE_PHP) php tools/check-discriminators.php $(ARGS)
 
+# Like `layers` and `discriminators`, plain PHP with no vendor/ dependency, so it runs on a
+# bare checkout before `composer install`. Guards the invariant that no file names a library
+# fastybird/miniserver-core was assembled from -- in a Core namespace segment, in a declared
+# type name, or in a `use FastyBird\Core\... as X` alias anywhere in the repository.
+#
+# Aliases are the reason this is a gate rather than a review habit. There were 3,333 of them
+# when the Core identity refactor started, in 139 distinct forms, and they existed purely
+# because nothing checked. tools/naming-baseline.txt records the ones not yet reached; it may
+# only shrink, and a stale entry fails the gate.
+naming: ## Check no file names a library that Core was assembled from
+	$(PRE_PHP) php tools/check-naming.php $(ARGS)
+
 phpstan: ## Analyse code with PHPStan
 	mkdir -p var/tools
 	$(PRE_PHP) "vendor/bin/phpstan" analyse -c $(PHPSTAN_SRC_CONFIG) $(ARGS)

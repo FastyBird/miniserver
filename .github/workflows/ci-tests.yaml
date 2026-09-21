@@ -48,6 +48,9 @@ jobs:
       - name: "make discriminators"
         run: "make discriminators"
 
+      - name: "make naming"
+        run: "make naming"
+
       - name: "Composer install"
         run: "composer install --no-interaction --no-progress --prefer-dist"
 
