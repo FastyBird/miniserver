@@ -13,7 +13,7 @@
  * @date           16.06.24
  */
 
-namespace FastyBird\Core\Routing\Application;
+namespace FastyBird\Core\Routing;
 
 use Nette\Application;
 

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Schemas\Groups;
 
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui;

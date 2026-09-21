@@ -20,7 +20,7 @@ fbDevicesModule:
 	exchange: false
 
 decorator:
-	FastyBird\Core\Routing\WebServer\Router:
+	FastyBird\Core\Routing\ServerRouter:
 		setup:
 			- addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
 

@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Router;
 
 use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Routing\WebSockets as WebSocketsRouting;
+use FastyBird\Core\Routing as WebSocketsRouting;
 
 /**
  * Module sockets routes configuration
@@ -36,7 +36,7 @@ class SocketRoutes
 	public static function createRouter(): WebSocketsRouting\RouteList
 	{
 		$router = new WebSocketsRouting\RouteList();
-		$router[] = new WebSocketsRouting\Route(
+		$router[] = new WebSocketsRouting\WampRoute(
 			'/' . Metadata\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
 			'DevicesModule:Exchange:',
 		);

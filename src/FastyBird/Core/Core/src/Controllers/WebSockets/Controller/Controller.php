@@ -6,7 +6,7 @@ use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
-use FastyBird\Core\Routing\WebSockets as Router;
+use FastyBird\Core\Routing as Router;
 use Fig\Http;
 use Nette;
 use Nette\Security as NS;
@@ -83,7 +83,7 @@ abstract class Controller implements IController
 
 	private IControllerFactory $controllerFactory;
 
-	private Router\IRouter $router;
+	private Router\IWampRouter $router;
 
 	private Router\LinkGenerator $linkGenerator;
 
@@ -97,7 +97,7 @@ abstract class Controller implements IController
 	public function injectPrimary(
 		Nette\DI\Container|null $context = null,
 		IControllerFactory|null $controllerFactory = null,
-		Router\IRouter|null $router = null,
+		Router\IWampRouter|null $router = null,
 		Router\LinkGenerator|null $linkGenerator = null,
 		NS\User|null $user = null,
 	): void

@@ -13,7 +13,7 @@
  * @date           15.03.20
  */
 
-namespace FastyBird\Core\Routing\SlimRouter;
+namespace FastyBird\Core\Routing;
 
 use FastRoute\Dispatcher\GroupCountBased;
 

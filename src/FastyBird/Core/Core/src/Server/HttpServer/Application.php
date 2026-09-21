@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Server\HttpServer;
 
 use FastyBird\Core\Events;
-use FastyBird\Core\Routing\SlimRouter as Routing;
+use FastyBird\Core\Routing;
 use Nette;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;

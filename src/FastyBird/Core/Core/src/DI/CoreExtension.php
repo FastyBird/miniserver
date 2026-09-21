@@ -906,15 +906,15 @@ class CoreExtension extends DI\CompilerExtension
 			);
 
 		$router = $builder->addDefinition($this->prefix('webSockets.routing.router'))
-			->setType(Routing\WebSockets\IRouter::class)
-			->setFactory(Routing\WebSockets\RouteList::class);
+			->setType(Routing\IWampRouter::class)
+			->setFactory(Routing\RouteList::class);
 
 		foreach ($configuration->webSockets->routes as $mask => $action) {
-			$router->addSetup('$service[] = new FastyBird\Core\Routing\WebSockets\Route(?, ?);', [$mask, $action]);
+			$router->addSetup('$service[] = new FastyBird\Core\Routing\WampRoute(?, ?);', [$mask, $action]);
 		}
 
 		$builder->addDefinition($this->prefix('webSockets.routing.generator'))
-			->setType(Routing\WebSockets\LinkGenerator::class);
+			->setType(Routing\LinkGenerator::class);
 
 		$builder->addDefinition($this->prefix('wsServer.server.wrapper'))
 			->setType(WsServerServer\WsServer\Wrapper::class);
@@ -1013,7 +1013,7 @@ class CoreExtension extends DI\CompilerExtension
 			->setType(WebServerHttp\ServerResponseFactory::class);
 
 		$builder->addDefinition($this->prefix('httpServer.routing.router'), new DI\Definitions\ServiceDefinition())
-			->setType(Routing\WebServer\Router::class);
+			->setType(Routing\ServerRouter::class);
 
 		$builder->addDefinition($this->prefix('httpServer.commands.server'), new DI\Definitions\ServiceDefinition())
 			->setType(HttpServerCommands\HttpServer\HttpServer::class)
@@ -1168,7 +1168,7 @@ class CoreExtension extends DI\CompilerExtension
 		assert(is_string($appRouterServiceName));
 		$appRouterService = $builder->getDefinition($appRouterServiceName);
 		assert($appRouterService instanceof DI\Definitions\ServiceDefinition);
-		$appRouterService->addSetup([Routing\Application\AppRouter::class, 'createRouter'], [$appRouterService]);
+		$appRouterService->addSetup([Routing\AppRouter::class, 'createRouter'], [$appRouterService]);
 
 		$presenterFactoryService = $builder->getDefinitionByType(Application\IPresenterFactory::class);
 

@@ -6,7 +6,7 @@ use Error;
 use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http as SlimRouterHttp;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Triggers\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;

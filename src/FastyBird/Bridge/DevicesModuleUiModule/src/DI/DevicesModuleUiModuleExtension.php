@@ -146,7 +146,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 */
 
 		if (
-			$builder->findByType('FastyBird\Core\Routing\WebSockets\LinkGenerator') !== []
+			$builder->findByType('FastyBird\Core\Routing\LinkGenerator') !== []
 			&& $builder->findByType('FastyBird\Core\Topics\WsServer\IStorage') !== []
 		) {
 			$builder->addDefinition(

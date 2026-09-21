@@ -28,7 +28,7 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;

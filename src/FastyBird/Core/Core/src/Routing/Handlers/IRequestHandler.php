@@ -13,7 +13,7 @@
  * @date           15.03.20
  */
 
-namespace FastyBird\Core\Routing\SlimRouter\Handlers;
+namespace FastyBird\Core\Routing\Handlers;
 
 interface IRequestHandler extends IHandler
 {

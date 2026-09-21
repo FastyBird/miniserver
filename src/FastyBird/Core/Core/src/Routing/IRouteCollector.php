@@ -13,10 +13,10 @@
  * @date           14.03.20
  */
 
-namespace FastyBird\Core\Routing\SlimRouter;
+namespace FastyBird\Core\Routing;
 
 use FastyBird\Core\Middleware\SlimRouter as Middleware;
-use FastyBird\Core\Routing\SlimRouter as Routing;
+use FastyBird\Core\Routing;
 use Psr\Http\Server\MiddlewareInterface;
 
 interface IRouteCollector

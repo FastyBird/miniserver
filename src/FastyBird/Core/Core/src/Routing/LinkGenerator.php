@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Routing\WebSockets;
+namespace FastyBird\Core\Routing;
 
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Controllers\WebSockets\Controller;
@@ -35,7 +35,7 @@ class LinkGenerator
 	use Nette\SmartObject;
 
 	public function __construct(
-		private IRouter $router,
+		private IWampRouter $router,
 		private Controller\IControllerFactory|null $controllerFactory = null,
 	)
 	{

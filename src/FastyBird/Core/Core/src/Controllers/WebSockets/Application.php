@@ -7,7 +7,7 @@ use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http;
-use FastyBird\Core\Routing\WebSockets as Router;
+use FastyBird\Core\Routing as Router;
 use FastyBird\Core\Server\WsServer as Server;
 use Nette;
 use Psr\Log;
@@ -50,7 +50,7 @@ abstract class Application implements IApplication
 	protected Log\LoggerInterface|Log\NullLogger|null $logger = null;
 
 	public function __construct(
-		protected Router\IRouter $router,
+		protected Router\IWampRouter $router,
 		protected Controller\IControllerFactory $controllerFactory,
 		protected Clients\IStorage $clientsStorage,
 		Log\LoggerInterface|null $logger = null,

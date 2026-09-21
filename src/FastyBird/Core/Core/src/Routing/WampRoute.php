@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Routing\WebSockets;
+namespace FastyBird\Core\Routing;
 
 use Closure;
 use FastyBird\Core\Controllers\WebSockets as Application;
@@ -43,15 +43,15 @@ use function trim;
 use function ucwords;
 
 /**
- * The bidirectional router for WebSockets
+ * The bidirectional WAMP router for a single route mask
  *
- * @package        iPublikuj:WebSockets!
+ * @package        FastyBird:Core!
  * @subpackage     Router
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  * @author         David Grudl (https://davidgrudl.com)
  */
-class Route implements IRouter
+class WampRoute implements IWampRouter
 {
 
 	/**
@@ -75,7 +75,7 @@ class Route implements IRouter
 	public const RELATIVE = 3;
 
 	/**
-	 * Keys used in {@link Route::$styles} or metadata {@link Route::__construct}
+	 * Keys used in {@link WampRoute::$styles} or metadata {@link WampRoute::__construct}
 	 */
 	public const VALUE = 'value';
 
@@ -90,7 +90,7 @@ class Route implements IRouter
 	public const FILTER_STRICT = 'filterStrict';
 
 	/**
-	 * Fixity types - how to handle default value? {@link Route::$metadata}
+	 * Fixity types - how to handle default value? {@link WampRoute::$metadata}
 	 *
 	 * @internal
 	 */

@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * RequestResponseHandler.php
+ * RequestResponseArgsHandler.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.ipublikuj.eu
@@ -13,15 +13,16 @@
  * @date           15.03.20
  */
 
-namespace FastyBird\Core\Routing\SlimRouter\Handlers;
+namespace FastyBird\Core\Routing\Handlers;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use function array_values;
 
 /**
- * Default route callback strategy with route parameters as an array of arguments.
+ * Route callback strategy with route parameters as individual arguments.
  */
-class RequestResponseHandler implements IHandler
+class RequestResponseArgsHandler implements IHandler
 {
 
 	/**
@@ -34,11 +35,7 @@ class RequestResponseHandler implements IHandler
 		array $routeArguments,
 	): ResponseInterface
 	{
-		foreach ($routeArguments as $k => $v) {
-			$request = $request->withAttribute($k, $v);
-		}
-
-		return $callable($request, $response, $routeArguments);
+		return $callable($request, $response, ...array_values($routeArguments));
 	}
 
 }

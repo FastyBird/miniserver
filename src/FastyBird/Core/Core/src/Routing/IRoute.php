@@ -13,9 +13,9 @@
  * @date           14.03.20
  */
 
-namespace FastyBird\Core\Routing\SlimRouter;
+namespace FastyBird\Core\Routing;
 
-use FastyBird\Core\Routing\SlimRouter as Routing;
+use FastyBird\Core\Routing;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

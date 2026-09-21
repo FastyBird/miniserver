@@ -13,7 +13,7 @@
  * @date           14.03.20
  */
 
-namespace FastyBird\Core\Routing\SlimRouter;
+namespace FastyBird\Core\Routing;
 
 use Psr\Http\Message\UriInterface;
 

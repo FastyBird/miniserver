@@ -1,19 +1,19 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Routing\WebSockets;
+namespace FastyBird\Core\Routing;
 
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Http;
 
 /**
- * Router interface
+ * WAMP router interface
  *
- * @package        iPublikuj:WebSockets!
+ * @package        FastyBird:Core!
  * @subpackage     Router
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-interface IRouter
+interface IWampRouter
 {
 
 	/**

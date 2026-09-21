@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Middleware;
 use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Http as SlimRouterHttp;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Router;
 use InvalidArgumentException;

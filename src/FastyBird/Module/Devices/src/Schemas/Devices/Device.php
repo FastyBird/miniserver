@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Schemas\Devices;
 use DateTimeInterface;
 use Exception;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;

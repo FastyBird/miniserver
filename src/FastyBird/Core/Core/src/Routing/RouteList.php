@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Routing\WebSockets;
+namespace FastyBird\Core\Routing;
 
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Exceptions;
@@ -22,7 +22,7 @@ use function substr;
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  * @author         David Grudl (https://davidgrudl.com)
  */
-class RouteList extends Utils\ArrayList implements IRouter
+class RouteList extends Utils\ArrayList implements IWampRouter
 {
 
 	private array $cachedRoutes;
@@ -40,7 +40,7 @@ class RouteList extends Utils\ArrayList implements IRouter
 	public function match(Http\IRequest $httpRequest): Application\Request|null
 	{
 		foreach ($this as $route) {
-			assert($route instanceof IRouter);
+			assert($route instanceof IWampRouter);
 			$appRequest = $route->match($httpRequest);
 
 			if ($appRequest !== null) {
@@ -83,7 +83,7 @@ class RouteList extends Utils\ArrayList implements IRouter
 		}
 
 		foreach ($this->cachedRoutes[$controller] as $route) {
-			assert($route instanceof IRouter);
+			assert($route instanceof IWampRouter);
 			$url = $route->constructUrl($appRequest);
 
 			if ($url !== null) {
@@ -101,8 +101,8 @@ class RouteList extends Utils\ArrayList implements IRouter
 	 */
 	public function offsetSet(mixed $index, mixed $route): void
 	{
-		if (!$route instanceof IRouter) {
-			throw new Exceptions\InvalidArgument('Argument must be IRouter descendant.');
+		if (!$route instanceof IWampRouter) {
+			throw new Exceptions\InvalidArgument('Argument must be IWampRouter descendant.');
 		}
 
 		parent::offsetSet($index, $route);
@@ -119,7 +119,7 @@ class RouteList extends Utils\ArrayList implements IRouter
 		$routes['*'] = [];
 
 		foreach ($this as $route) {
-			$controllers = $route instanceof Route && is_array($tmp = $route->getTargetControllers())
+			$controllers = $route instanceof WampRoute && is_array($tmp = $route->getTargetControllers())
 				? $tmp
 				: array_keys($routes);
 
