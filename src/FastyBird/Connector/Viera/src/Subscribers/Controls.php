@@ -21,7 +21,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Connector\Viera\Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;

@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Transformers\Tools as ToolsTransformers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

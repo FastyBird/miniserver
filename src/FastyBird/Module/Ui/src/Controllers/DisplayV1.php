@@ -17,7 +17,7 @@ namespace FastyBird\Module\Ui\Controllers;
 
 use Doctrine;
 use Exception;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Controllers;

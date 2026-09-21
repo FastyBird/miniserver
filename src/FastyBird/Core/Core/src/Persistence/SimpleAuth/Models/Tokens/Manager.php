@@ -18,7 +18,7 @@ namespace FastyBird\Core\Persistence\SimpleAuth\Models\Tokens;
 use Doctrine\DBAL;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Core\Persistence\SimpleAuth\Models;
 use Nette;

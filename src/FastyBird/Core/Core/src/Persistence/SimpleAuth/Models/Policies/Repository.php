@@ -19,7 +19,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Core\Persistence\SimpleAuth\Queries;
 use Nette;

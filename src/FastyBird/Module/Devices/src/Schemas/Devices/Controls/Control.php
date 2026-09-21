@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Schemas\Devices\Controls;
 
 use DateTimeInterface;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;

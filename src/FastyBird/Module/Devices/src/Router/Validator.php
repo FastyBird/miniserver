@@ -19,7 +19,7 @@ use Exception;
 use FastRoute;
 use FastRoute\RouteCollector as FastRouteCollector;
 use FastRoute\RouteParser\Std;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use Fig\Http\Message\RequestMethodInterface;
 use Nette\DI;
 use function assert;

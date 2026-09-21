@@ -20,7 +20,7 @@ use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Schemas;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;

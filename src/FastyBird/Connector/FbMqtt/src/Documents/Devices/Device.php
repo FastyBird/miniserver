@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\FbMqtt\Documents\Devices;
 
 use FastyBird\Connector\FbMqtt\Entities;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\Device::class)]

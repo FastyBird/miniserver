@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Devices\Documents\States\Devices\Properties\Actions;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;

@@ -19,7 +19,7 @@ use Doctrine\DBAL;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Models;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use Nette;
 use Nette\Utils;

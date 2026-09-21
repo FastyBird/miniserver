@@ -3823,31 +3823,31 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
 
 		-
-			message: '#^Parameter \#2 \$post of class FastyBird\\Core\\Http\\WebSockets\\Request constructor expects array, null given\.$#'
+			message: '#^Parameter \#2 \$post of class FastyBird\\Core\\Http\\Request constructor expects array, null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
 
 		-
-			message: '#^Parameter \#3 \$files of class FastyBird\\Core\\Http\\WebSockets\\Request constructor expects array, null given\.$#'
+			message: '#^Parameter \#3 \$files of class FastyBird\\Core\\Http\\Request constructor expects array, null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
 
 		-
-			message: '#^Parameter \#4 \$cookies of class FastyBird\\Core\\Http\\WebSockets\\Request constructor expects array, null given\.$#'
+			message: '#^Parameter \#4 \$cookies of class FastyBird\\Core\\Http\\Request constructor expects array, null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
 
 		-
-			message: '#^Parameter \#5 \$headers of class FastyBird\\Core\\Http\\WebSockets\\Request constructor expects array\<string, string\>, null given\.$#'
+			message: '#^Parameter \#5 \$headers of class FastyBird\\Core\\Http\\Request constructor expects array\<string, string\>, null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
 
 		-
-			message: '#^Parameter \#6 \$method of class FastyBird\\Core\\Http\\WebSockets\\Request constructor expects string, null given\.$#'
+			message: '#^Parameter \#6 \$method of class FastyBird\\Core\\Http\\Request constructor expects string, null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
@@ -4309,46 +4309,46 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:loadMetadata\(\) should return array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\> but returns array\<class\-string\<T of FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\.$#'
+			message: '#^Method FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:loadMetadata\(\) should return array\<class\-string\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\> but returns array\<class\-string\<T of FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\>\>\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^PHPDoc tag @var with type array\<class\-string\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\|false is not subtype of native type array\<string, class\-string\>\|false\.$#'
+			message: '#^PHPDoc tag @var with type array\<class\-string\<T of FastyBird\\Core\\Documents\\Document\>\>\|false is not subtype of native type array\<string, class\-string\>\|false\.$#'
 			identifier: varTag.nativeType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^Parameter \#1 \$class of method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\> given\.$#'
+			message: '#^Parameter \#1 \$class of method FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^Parameter \#2 \$parent of method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|null, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\|null given\.$#'
+			message: '#^Parameter \#2 \$parent of method FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\|null, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\|FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\>\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:\$loadedMetadata \(array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\>\) does not accept non\-empty\-array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\.$#'
+			message: '#^Property FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:\$loadedMetadata \(array\<class\-string\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\>\) does not accept non\-empty\-array\<class\-string\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\|FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\>\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\Driver\\AttributeDriver\:\:\$excludePaths \(array\<int, string\>\) does not accept array\<string\>\.$#'
+			message: '#^Property FastyBird\\Core\\Documents\\Mapping\\Driver\\AttributeDriver\:\:\$excludePaths \(array\<int, string\>\) does not accept array\<string\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/Driver/AttributeDriver.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/Driver/AttributeDriver.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\Driver\\AttributeDriver\:\:\$paths \(array\<int, string\>\) does not accept array\<string\>\.$#'
+			message: '#^Property FastyBird\\Core\\Documents\\Mapping\\Driver\\AttributeDriver\:\:\$paths \(array\<int, string\>\) does not accept array\<string\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/Driver/AttributeDriver.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/Driver/AttributeDriver.php
 
 		-
 			message: '#^Cannot access offset ''limit'' on mixed\.$#'
@@ -5161,34 +5161,34 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Entities/WsServer/WampClient.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Exceptions\\DoctrineOrmQuery\\Query\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
-			identifier: missingType.generics
+			message: '#^Property FastyBird\\Core\\Exceptions\\HttpMethodNotAllowed\:\:\$code has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/DoctrineOrmQuery/Query.php
+			path: ../src/FastyBird/Core/Core/src/Exceptions/HttpMethodNotAllowed.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Exceptions\\HttpNotFound\:\:\$code has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Exceptions/HttpNotFound.php
+
+		-
+			message: '#^Parameter \#3 \$code of method FastyBird\\Core\\Exceptions\\Http\:\:__construct\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Exceptions/HttpSpecialized.php
 
 		-
 			message: '#^Cannot cast mixed to string\.$#'
 			identifier: cast.string
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Exceptions/JsonApi/JsonApiError.php
+			path: ../src/FastyBird/Core/Core/src/Exceptions/JsonApiError.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Exceptions\\SlimRouter\\HttpMethodNotAllowed\:\:\$code has no type specified\.$#'
-			identifier: missingType.property
+			message: '#^Method FastyBird\\Core\\Exceptions\\Query\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
+			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/SlimRouter/HttpMethodNotAllowed.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Exceptions\\SlimRouter\\HttpNotFound\:\:\$code has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/SlimRouter/HttpNotFound.php
-
-		-
-			message: '#^Parameter \#3 \$code of method FastyBird\\Core\\Exceptions\\SlimRouter\\Http\:\:__construct\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/SlimRouter/HttpSpecialized.php
+			path: ../src/FastyBird/Core/Core/src/Exceptions/Query.php
 
 		-
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
@@ -5347,526 +5347,526 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Helpers/WsServer/Console.php
 
 		-
-			message: '#^Cannot cast mixed to string\.$#'
-			identifier: cast.string
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:json\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:json\(\) throws checked exception JsonException but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:redirect\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:redirect\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:setHeader\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:validHeaderValues\(\) should return array\<string\> but returns list\<mixed\>\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:validHeaderValues\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:validProtocolVersion\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:validReasonPhrase\(\) should return string but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:validStatusCode\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Parameter \#1 \$headers of method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:loadHeaders\(\) expects array\<array\<string\>\>, array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Parameter \#1 \$reason of method FastyBird\\Core\\Http\\SlimRouter\\Response\:\:validReasonPhrase\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Response.php
-
-		-
-			message: '#^Cannot access offset 0 on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Stream\:\:__construct\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Stream\:\:__toString\(\) throws checked exception RuntimeException but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Stream\:\:fromBodyString\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Stream\:\:fromBodyString\(\) throws checked exception RuntimeException but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Stream\:\:fromResourceUri\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\SlimRouter\\Stream\:\:fromResourceUri\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Parameter \#1 \$haystack of function strstr expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Parameter \#1 \$resource of function get_resource_type expects resource, resource\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Parameter \#2 \$length of function fread expects int\<1, max\>, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Possibly invalid array key type mixed\.$#'
-			identifier: offsetAccess.invalidOffset
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Http\\SlimRouter\\Stream\:\:\$resource \(resource\) does not accept null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/SlimRouter/Stream.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\IResponse\:\:getHeaders\(\) return type has no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\IResponse\:\:getHeaders\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/IResponse.php
+			path: ../src/FastyBird/Core/Core/src/Http/IResponse.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\Request\:\:__construct\(\) has parameter \$cookies with no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\Request\:\:__construct\(\) has parameter \$cookies with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Request.php
+			path: ../src/FastyBird/Core/Core/src/Http/Request.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\Request\:\:__construct\(\) has parameter \$files with no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\Request\:\:__construct\(\) has parameter \$files with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Request.php
+			path: ../src/FastyBird/Core/Core/src/Http/Request.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\Request\:\:__construct\(\) has parameter \$post with no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\Request\:\:__construct\(\) has parameter \$post with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Request.php
+			path: ../src/FastyBird/Core/Core/src/Http/Request.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\Request\:\:getProtocolVersion\(\) never returns null so it can be removed from the return type\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\Request\:\:getProtocolVersion\(\) never returns null so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Request.php
+			path: ../src/FastyBird/Core/Core/src/Http/Request.php
 
 		-
 			message: '#^Parameter \#1 \$name of method Nette\\Http\\UrlImmutable\:\:getQueryParameter\(\) expects string, string\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Request.php
+			path: ../src/FastyBird/Core/Core/src/Http/Request.php
 
 		-
 			message: '#^Parameter \#4 \$cookies of method Nette\\Http\\Request\:\:__construct\(\) expects array\<string, string\>, array given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Request.php
+			path: ../src/FastyBird/Core/Core/src/Http/Request.php
 
 		-
 			message: '#^Argument of an invalid type list\<string\>\|false supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Binary operation "\." between mixed and ''/'' results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Call to function array_filter\(\) requires parameter \#2 to be passed to avoid loose comparison semantics\.$#'
 			identifier: arrayFilter.strict
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Cannot access offset mixed on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Cannot access offset string on array\<int\<0, max\>\|string, string\|true\>\|bool\|string\|null\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Cannot access offset string on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^If condition is always false\.$#'
 			identifier: if.alwaysFalse
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Left side of && is always false\.$#'
 			identifier: booleanAnd.leftAlwaysFalse
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\RequestFactory\:\:ipMatch\(\) has parameter \$ip with no type specified\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\RequestFactory\:\:ipMatch\(\) has parameter \$ip with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\RequestFactory\:\:ipMatch\(\) has parameter \$mask with no type specified\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\RequestFactory\:\:ipMatch\(\) has parameter \$mask with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\RequestFactory\:\:parseCookie\(\) return type has no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\RequestFactory\:\:parseCookie\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\RequestFactory\:\:setProxy\(\) has parameter \$proxy with no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\RequestFactory\:\:setProxy\(\) has parameter \$proxy with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Negated boolean expression is always true\.$#'
 			identifier: booleanNot.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, non\-empty\-string, non\-empty\-string, non\-falsy\-string\}\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Offset 2 might not exist on array\{\}\|array\{non\-falsy\-string, non\-empty\-string, non\-empty\-string, non\-falsy\-string\}\.$#'
 			identifier: offsetAccess.notFound
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Offset 3 might not exist on array\{\}\|array\{non\-falsy\-string, non\-empty\-string, non\-empty\-string, non\-falsy\-string\}\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in &&, array given on the right side\.$#'
 			identifier: booleanAnd.rightNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in &&, array\<int\<0, max\>\|string, string\|true\>\|bool\|string\|null given on the right side\.$#'
 			identifier: booleanAnd.rightNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in &&, null given on the left side\.$#'
 			identifier: booleanAnd.leftNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, array given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, array\<int\<0, max\>\|string, string\|true\>\|bool\|string\|null given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, int\<\-1, 1\> given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, int\<0, max\> given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, int\<0, max\>\|false given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, int\|false given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, null given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in a ternary operator condition, int\<0, max\> given\.$#'
 			identifier: ternary.condNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in an if condition, int\<0, max\>\|false given\.$#'
 			identifier: if.condNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only booleans are allowed in \|\|, int given on the right side\.$#'
 			identifier: booleanOr.rightNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only numeric types are allowed in \+, int\<0, max\>\|false given on the left side\.$#'
 			identifier: plus.leftNonNumeric
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Only numeric types are allowed in \-, int\<0, max\>\|false given on the left side\.$#'
 			identifier: minus.leftNonNumeric
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#1 \$ip of function inet_pton expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#1 \$string of function trim expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#1 \$string of function trim expects string, string\|null given\.$#'
 			identifier: argument.type
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#1 \$string1 of function strcasecmp expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#2 \$array of function array_map expects array, array\|false given\.$#'
 			identifier: argument.type
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#2 \$offset of function substr expects int, int\<0, max\>\|false given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#2 \$string of function explode expects string, string\|true given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#2 \$string of function unpack expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#3 \$previous of class Exception constructor expects Throwable\|null, string given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
-			message: '#^Parameter \#4 \$cookies of class FastyBird\\Core\\Http\\WebSockets\\Request constructor expects array, mixed given\.$#'
+			message: '#^Parameter \#4 \$cookies of class FastyBird\\Core\\Http\\Request constructor expects array, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
-			message: '#^Parameter \#9 \$rawBodyCallback of class FastyBird\\Core\\Http\\WebSockets\\Request constructor expects null, Closure given\.$#'
+			message: '#^Parameter \#9 \$rawBodyCallback of class FastyBird\\Core\\Http\\Request constructor expects null, Closure given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Http\\WebSockets\\RequestFactory\:\:\$cookieParts type has no value type specified in iterable type array\.$#'
+			message: '#^Property FastyBird\\Core\\Http\\RequestFactory\:\:\$cookieParts type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Http\\WebSockets\\RequestFactory\:\:\$proxies type has no value type specified in iterable type array\.$#'
+			message: '#^Property FastyBird\\Core\\Http\\RequestFactory\:\:\$proxies type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Result of \|\| is always true\.$#'
 			identifier: booleanOr.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between string and array\{\} will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 5
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/RequestFactory.php
+			path: ../src/FastyBird/Core/Core/src/Http/RequestFactory.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:json\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:json\(\) throws checked exception JsonException but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:redirect\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:redirect\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:setHeader\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:validHeaderValues\(\) should return array\<string\> but returns list\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:validHeaderValues\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:validProtocolVersion\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:validReasonPhrase\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Response\:\:validStatusCode\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Parameter \#1 \$headers of method FastyBird\\Core\\Http\\Response\:\:loadHeaders\(\) expects array\<array\<string\>\>, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Parameter \#1 \$reason of method FastyBird\\Core\\Http\\Response\:\:validReasonPhrase\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Response.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Stream\:\:__construct\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Stream\:\:__toString\(\) throws checked exception RuntimeException but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Stream\:\:fromBodyString\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Stream\:\:fromBodyString\(\) throws checked exception RuntimeException but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Stream\:\:fromResourceUri\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Http\\Stream\:\:fromResourceUri\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Parameter \#1 \$haystack of function strstr expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Parameter \#1 \$resource of function get_resource_type expects resource, resource\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Parameter \#2 \$length of function fread expects int\<1, max\>, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Http\\Stream\:\:\$resource \(resource\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/Stream.php
 
 		-
 			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Response.php
+			path: ../src/FastyBird/Core/Core/src/Http/WampResponse.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\Response\:\:__construct\(\) has parameter \$headers with no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\WampResponse\:\:__construct\(\) has parameter \$headers with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Response.php
+			path: ../src/FastyBird/Core/Core/src/Http/WampResponse.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\Response\:\:getHeaders\(\) return type has no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\WampResponse\:\:getHeaders\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Response.php
+			path: ../src/FastyBird/Core/Core/src/Http/WampResponse.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\WebSockets\\Response\:\:setCode\(\) throws checked exception TypeError but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Http\\WampResponse\:\:setCode\(\) throws checked exception TypeError but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Response.php
+			path: ../src/FastyBird/Core/Core/src/Http/WampResponse.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Http\\WebSockets\\Response\:\:\$reason \(string\) does not accept mixed\.$#'
+			message: '#^Property FastyBird\\Core\\Http\\WampResponse\:\:\$reason \(string\) does not accept mixed\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Response.php
+			path: ../src/FastyBird/Core/Core/src/Http/WampResponse.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Http\\WebSockets\\Response\:\:\$statusTexts type has no value type specified in iterable type array\.$#'
+			message: '#^Property FastyBird\\Core\\Http\\WampResponse\:\:\$statusTexts type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/WebSockets/Response.php
+			path: ../src/FastyBird/Core/Core/src/Http/WampResponse.php
 
 		-
 			message: '#^Access to deprecated property \$check of class Latte\\Compiler\\Nodes\\Php\\ModifierNode\.$#'
@@ -6133,7 +6133,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Messaging/WebSockets/PushMessages/Pusher.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:doCreateCountQuery\(\) throws checked exception FastyBird\\Core\\Exceptions\\DoctrineOrmQuery\\NotImplemented but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:doCreateCountQuery\(\) throws checked exception FastyBird\\Core\\Exceptions\\QueryNotImplemented but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
@@ -6205,7 +6205,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:applyPaginator\(\) throws checked exception FastyBird\\Core\\Exceptions\\DoctrineOrmQuery\\Query but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:applyPaginator\(\) throws checked exception FastyBird\\Core\\Exceptions\\Query but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
@@ -6235,7 +6235,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:isEmpty\(\) throws checked exception FastyBird\\Core\\Exceptions\\DoctrineOrmQuery\\Query but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:isEmpty\(\) throws checked exception FastyBird\\Core\\Exceptions\\Query but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
@@ -6463,898 +6463,898 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Presenters/Application/BasePresenter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Handlers\\IHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\Handlers\\IHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Handlers/IHandler.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Handlers/IHandler.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Handlers\\RequestHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\Handlers\\RequestHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Handlers/RequestHandler.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Handlers/RequestHandler.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Handlers\\RequestHandler\:\:__invoke\(\) should return Psr\\Http\\Message\\ResponseInterface but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\Handlers\\RequestHandler\:\:__invoke\(\) should return Psr\\Http\\Message\\ResponseInterface but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Handlers/RequestHandler.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Handlers/RequestHandler.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Handlers\\RequestResponseArgsHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\Handlers\\RequestResponseArgsHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Handlers/RequestResponseArgsHandler.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Handlers/RequestResponseArgsHandler.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Handlers\\RequestResponseArgsHandler\:\:__invoke\(\) should return Psr\\Http\\Message\\ResponseInterface but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\Handlers\\RequestResponseArgsHandler\:\:__invoke\(\) should return Psr\\Http\\Message\\ResponseInterface but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Handlers/RequestResponseArgsHandler.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Handlers/RequestResponseArgsHandler.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Handlers\\RequestResponseHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\Handlers\\RequestResponseHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Handlers/RequestResponseHandler.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Handlers/RequestResponseHandler.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Handlers\\RequestResponseHandler\:\:__invoke\(\) should return Psr\\Http\\Message\\ResponseInterface but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\Handlers\\RequestResponseHandler\:\:__invoke\(\) should return Psr\\Http\\Message\\ResponseInterface but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Handlers/RequestResponseHandler.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Handlers/RequestResponseHandler.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRoute\:\:getCallable\(\) return type has no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRoute\:\:getCallable\(\) return type has no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRoute.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRoute.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:delete\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:delete\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:get\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:get\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:group\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:group\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:map\(\) has parameter \$handler with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:map\(\) has parameter \$handler with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:options\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:options\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:patch\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:patch\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:post\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:post\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouteCollector\:\:put\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouteCollector\:\:put\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouteCollector.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouteCollector.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:delete\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:delete\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:get\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:get\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:group\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:group\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:map\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:map\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:options\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:options\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:patch\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:patch\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:post\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:post\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\IRouter\:\:put\(\) has parameter \$callable with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\IRouter\:\:put\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/IRouter.php
-
-		-
-			message: '#^Expression on left side of \?\? is not nullable\.$#'
-			identifier: nullCoalesce.expr
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Route.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Route\:\:__construct\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Route.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Route\:\:__construct\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Route.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Route\:\:getArgument\(\) should return string\|null but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Route.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Route\:\:getArguments\(\) should return array\<string\> but returns array\<mixed\>\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Route.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Route\:\:getCallable\(\) return type has no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Route.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Routing\\SlimRouter\\Route\:\:\$callable type has no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Route.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between array\<string, class\-string\> and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Route.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:createRoute\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:delete\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:get\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:getNamedRoute\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:group\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:lookupRoute\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:map\(\) has parameter \$handler with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:options\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:patch\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:post\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:put\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Routing\\SlimRouter\\RouteCollector\:\:\$routeParser is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteCollector.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteHandler.php
-
-		-
-			message: '#^Instanceof between FastyBird\\Core\\Routing\\SlimRouter\\IRoute and FastyBird\\Core\\Routing\\SlimRouter\\IRoute will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteHandler.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteHandler\:\:performRouting\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteHandler.php
-
-		-
-			message: '#^Parameter \#3 \$routeStatus of class FastyBird\\Core\\Routing\\SlimRouter\\RoutingResults constructor expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteHandler.php
-
-		-
-			message: '#^Parameter \#4 \$routeIdentifier of class FastyBird\\Core\\Routing\\SlimRouter\\RoutingResults constructor expects string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteHandler.php
-
-		-
-			message: '#^Parameter \#5 \$routeArguments of class FastyBird\\Core\\Routing\\SlimRouter\\RoutingResults constructor expects array\<mixed\>, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteHandler.php
-
-		-
-			message: '#^Binary operation "\." between ''Missing data for…'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteParser.php
-
-		-
-			message: '#^Cannot access offset 0 on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteParser.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\RouteParser\:\:relativeUrlFor\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteParser.php
-
-		-
-			message: '#^Parameter \#1 \$key of function array_key_exists expects int\|string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteParser.php
-
-		-
-			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, list\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RouteParser.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:delete\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:get\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:getIterator\(\) return type with generic class RecursiveArrayIterator does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:group\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:handle\(\) throws checked exception InvalidArgumentException but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:lookupRoute\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:map\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:options\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:patch\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:post\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\SlimRouter\\Router\:\:put\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/Router.php
-
-		-
-			message: '#^Parameter \#1 \$string of function rawurldecode expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/SlimRouter/RoutingResults.php
+			path: ../src/FastyBird/Core/Core/src/Routing/IRouter.php
 
 		-
 			message: '#^Cannot call method getName\(\) on ReflectionClass\|null\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/Routing/LinkGenerator.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\LinkGenerator\:\:link\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\LinkGenerator\:\:link\(\) has parameter \$params with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/Routing/LinkGenerator.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, int\|false given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/Routing/LinkGenerator.php
 
 		-
 			message: '#^Only booleans are allowed in a ternary operator condition, FastyBird\\Core\\Controllers\\WebSockets\\Controller\\IControllerFactory\|null given\.$#'
 			identifier: ternary.condNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/Routing/LinkGenerator.php
 
 		-
 			message: '#^Parameter \#1 \$object_or_class of function is_subclass_of expects object\|string, string\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/Routing/LinkGenerator.php
 
 		-
-			message: '#^Binary operation "\+" between mixed and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Binary operation "\+\=" between array\<non\-empty\-string\|null\> and mixed results in an error\.$#'
-			identifier: assignOp.invalid
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Route.php
 
 		-
-			message: '#^Binary operation "\." between mixed and ''\:'' results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Binary operation "\." between mixed and string results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Binary operation "\." between mixed and string\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Binary operation "\." between string and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''controller'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''defOut'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''filterIn'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''filterOut'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''filterStrict'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''filterTable'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''filterTable2'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''fixity'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 10
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''module'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''pattern'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset ''value'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 10
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset \(int\|string\) on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset 0 on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset bool\|float\|int\|string on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot access offset mixed on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Cannot cast mixed to string\.$#'
-			identifier: cast.string
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:__construct\(\) has parameter \$metadata with no signature specified for callable\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\Route\:\:__construct\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Route.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:__construct\(\) has parameter \$metadata with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method FastyBird\\Core\\Routing\\Route\:\:__construct\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Route.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:getAllowedOrigins\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method FastyBird\\Core\\Routing\\Route\:\:getArgument\(\) should return string\|null but returns mixed\.$#'
+			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Route.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:renameKeys\(\) has parameter \$arr with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method FastyBird\\Core\\Routing\\Route\:\:getArguments\(\) should return array\<string\> but returns array\<mixed\>\.$#'
+			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Route.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:renameKeys\(\) has parameter \$xlat with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method FastyBird\\Core\\Routing\\Route\:\:getCallable\(\) return type has no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Route.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:renameKeys\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Property FastyBird\\Core\\Routing\\Route\:\:\$callable type has no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Route.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:setMask\(\) has parameter \$metadata with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Strict comparison using \!\=\= between array\<string, class\-string\> and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/Route.php
 
 		-
-			message: '#^Offset int\<min, \-2\>\|int\<0, max\> might not exist on list\<string\>\.$#'
-			identifier: offsetAccess.notFound
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Offset int\<min, \-3\>\|int\<\-1, max\> might not exist on list\<string\>\.$#'
-			identifier: offsetAccess.notFound
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Offset int\<min, \-4\>\|int\<\-2, max\> might not exist on list\<string\>\.$#'
-			identifier: offsetAccess.notFound
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:createRoute\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Only booleans are allowed in a negated boolean, array\<string\>\|null given\.$#'
-			identifier: booleanNot.exprNotBoolean
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:delete\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Only booleans are allowed in a negated boolean, int\|false given\.$#'
-			identifier: booleanNot.exprNotBoolean
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:get\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Only booleans are allowed in a negated boolean, list\<string\> given\.$#'
-			identifier: booleanNot.exprNotBoolean
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:getNamedRoute\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Only booleans are allowed in a negated boolean, string given\.$#'
-			identifier: booleanNot.exprNotBoolean
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:group\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Only booleans are allowed in a ternary operator condition, int\|false given\.$#'
-			identifier: ternary.condNotBoolean
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:lookupRoute\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Only booleans are allowed in a ternary operator condition, string given\.$#'
-			identifier: ternary.condNotBoolean
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:map\(\) has parameter \$handler with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Only booleans are allowed in a ternary operator condition, string\|false given\.$#'
-			identifier: ternary.condNotBoolean
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:options\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Only booleans are allowed in an if condition, array given\.$#'
-			identifier: if.condNotBoolean
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Only booleans are allowed in an if condition, int\<0, max\> given\.$#'
-			identifier: if.condNotBoolean
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Only booleans are allowed in an if condition, int\|false given\.$#'
-			identifier: if.condNotBoolean
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:patch\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Parameter \#1 \$arr of static method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:renameKeys\(\) expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#1 \$array of function array_flip expects array\<int\|string\>, array given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#1 \$array of function array_flip expects array\<int\|string\>, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#1 \$callback of function call_user_func expects callable\(\)\: mixed, mixed given\.$#'
-			identifier: argument.type
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#1 \$data of function http_build_query expects array\|object, mixed given\.$#'
-			identifier: argument.type
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:post\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Parameter \#1 \$pattern of function preg_match expects string, mixed given\.$#'
-			identifier: argument.type
+			message: '#^Method FastyBird\\Core\\Routing\\RouteCollector\:\:put\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Parameter \#1 \$string of function rawurldecode expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#1 \$string of function strlen expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#1 \$string of function strtolower expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#1 \$string of function ucwords expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#2 \$array of function array_key_exists expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#2 \$metadata of method FastyBird\\Core\\Routing\\WebSockets\\Route\:\:setMask\(\) expects array, array\|\(callable\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#2 \$params of class FastyBird\\Core\\Controllers\\WebSockets\\Request constructor expects array, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Possibly invalid array key type mixed\.$#'
-			identifier: offsetAccess.invalidOffset
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Routing\\WebSockets\\Route\:\:\$allowedOrigins type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Routing\\WebSockets\\Route\:\:\$httpHost is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Routing\\WebSockets\\Route\:\:\$metadata type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Routing\\WebSockets\\Route\:\:\$scheme is never read, only written\.$#'
+			message: '#^Property FastyBird\\Core\\Routing\\RouteCollector\:\:\$routeParser is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteCollector.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Routing\\WebSockets\\Route\:\:\$sequence type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteHandler.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Routing\\WebSockets\\Route\:\:\$styles type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Instanceof between FastyBird\\Core\\Routing\\IRoute and FastyBird\\Core\\Routing\\IRoute will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteHandler.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Routing\\WebSockets\\Route\:\:\$xlat type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method FastyBird\\Core\\Routing\\RouteHandler\:\:performRouting\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/Route.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteHandler.php
+
+		-
+			message: '#^Parameter \#3 \$routeStatus of class FastyBird\\Core\\Routing\\RoutingResults constructor expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteHandler.php
+
+		-
+			message: '#^Parameter \#4 \$routeIdentifier of class FastyBird\\Core\\Routing\\RoutingResults constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteHandler.php
+
+		-
+			message: '#^Parameter \#5 \$routeArguments of class FastyBird\\Core\\Routing\\RoutingResults constructor expects array\<mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteHandler.php
 
 		-
 			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/RouteList.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteList.php
 
 		-
-			message: '#^Class FastyBird\\Core\\Routing\\WebSockets\\RouteList extends generic class Nette\\Utils\\ArrayList but does not specify its types\: T$#'
+			message: '#^Class FastyBird\\Core\\Routing\\RouteList extends generic class Nette\\Utils\\ArrayList but does not specify its types\: T$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/RouteList.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteList.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Routing\\WebSockets\\RouteList\:\:offsetSet\(\) throws checked exception Nette\\OutOfRangeException but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Routing\\RouteList\:\:offsetSet\(\) throws checked exception Nette\\OutOfRangeException but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/RouteList.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteList.php
 
 		-
 			message: '#^Only booleans are allowed in a ternary operator condition, string\|null given\.$#'
 			identifier: ternary.condNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/RouteList.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteList.php
 
 		-
 			message: '#^Only booleans are allowed in an if condition, int\<\-1, 1\> given\.$#'
 			identifier: if.condNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/RouteList.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteList.php
 
 		-
 			message: '#^Only booleans are allowed in an if condition, string given\.$#'
 			identifier: if.condNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/RouteList.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteList.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Routing\\WebSockets\\RouteList\:\:\$cachedRoutes type has no value type specified in iterable type array\.$#'
+			message: '#^Property FastyBird\\Core\\Routing\\RouteList\:\:\$cachedRoutes type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/RouteList.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteList.php
 
 		-
 			message: '#^Strict comparison using \=\=\= between array and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Routing/WebSockets/RouteList.php
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteList.php
+
+		-
+			message: '#^Binary operation "\." between ''Missing data for…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteParser.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteParser.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\RouteParser\:\:relativeUrlFor\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteParser.php
+
+		-
+			message: '#^Parameter \#1 \$key of function array_key_exists expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteParser.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, list\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/RouteParser.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:delete\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:get\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:getIterator\(\) return type with generic class RecursiveArrayIterator does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:group\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:handle\(\) throws checked exception InvalidArgumentException but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:lookupRoute\(\) throws checked exception FastyBird\\Core\\Exceptions\\Runtime but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:map\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:options\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:patch\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:post\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\Router\:\:put\(\) has parameter \$callable with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/Router.php
+
+		-
+			message: '#^Parameter \#1 \$string of function rawurldecode expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/RoutingResults.php
+
+		-
+			message: '#^Binary operation "\+" between mixed and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Binary operation "\+\=" between array\<non\-empty\-string\|null\> and mixed results in an error\.$#'
+			identifier: assignOp.invalid
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''\:'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Binary operation "\." between mixed and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Binary operation "\." between mixed and string\|null results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Binary operation "\." between string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''controller'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''defOut'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''filterIn'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''filterOut'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''filterStrict'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''filterTable'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''filterTable2'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''fixity'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 10
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''module'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''pattern'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset ''value'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 10
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset \(int\|string\) on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset bool\|float\|int\|string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\WampRoute\:\:__construct\(\) has parameter \$metadata with no signature specified for callable\.$#'
+			identifier: missingType.callable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\WampRoute\:\:__construct\(\) has parameter \$metadata with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\WampRoute\:\:getAllowedOrigins\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\WampRoute\:\:renameKeys\(\) has parameter \$arr with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\WampRoute\:\:renameKeys\(\) has parameter \$xlat with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\WampRoute\:\:renameKeys\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Routing\\WampRoute\:\:setMask\(\) has parameter \$metadata with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Offset int\<min, \-2\>\|int\<0, max\> might not exist on list\<string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Offset int\<min, \-3\>\|int\<\-1, max\> might not exist on list\<string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Offset int\<min, \-4\>\|int\<\-2, max\> might not exist on list\<string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in a negated boolean, array\<string\>\|null given\.$#'
+			identifier: booleanNot.exprNotBoolean
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in a negated boolean, int\|false given\.$#'
+			identifier: booleanNot.exprNotBoolean
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in a negated boolean, list\<string\> given\.$#'
+			identifier: booleanNot.exprNotBoolean
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in a negated boolean, string given\.$#'
+			identifier: booleanNot.exprNotBoolean
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in a ternary operator condition, int\|false given\.$#'
+			identifier: ternary.condNotBoolean
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in a ternary operator condition, string given\.$#'
+			identifier: ternary.condNotBoolean
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in a ternary operator condition, string\|false given\.$#'
+			identifier: ternary.condNotBoolean
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, array given\.$#'
+			identifier: if.condNotBoolean
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, int\<0, max\> given\.$#'
+			identifier: if.condNotBoolean
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, int\|false given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$arr of static method FastyBird\\Core\\Routing\\WampRoute\:\:renameKeys\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_flip expects array\<int\|string\>, array given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_flip expects array\<int\|string\>, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function call_user_func expects callable\(\)\: mixed, mixed given\.$#'
+			identifier: argument.type
+			count: 5
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$data of function http_build_query expects array\|object, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$pattern of function preg_match expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$string of function rawurldecode expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strlen expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strtolower expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#1 \$string of function ucwords expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_key_exists expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#2 \$metadata of method FastyBird\\Core\\Routing\\WampRoute\:\:setMask\(\) expects array, array\|\(callable\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#2 \$params of class FastyBird\\Core\\Controllers\\WebSockets\\Request constructor expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 5
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Routing\\WampRoute\:\:\$allowedOrigins type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Routing\\WampRoute\:\:\$httpHost is never written, only read\.$#'
+			identifier: property.onlyRead
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Routing\\WampRoute\:\:\$metadata type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Routing\\WampRoute\:\:\$scheme is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Routing\\WampRoute\:\:\$sequence type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Routing\\WampRoute\:\:\$styles type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Routing\\WampRoute\:\:\$xlat type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Routing/WampRoute.php
 
 		-
 			message: '#^Cannot cast mixed to string\.$#'
@@ -7597,13 +7597,13 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
 
 		-
-			message: '#^Cannot cast FastyBird\\Core\\Http\\WebSockets\\IResponse to string\.$#'
+			message: '#^Cannot cast FastyBird\\Core\\Http\\IResponse to string\.$#'
 			identifier: cast.string
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
 
 		-
-			message: '#^Instanceof between FastyBird\\Core\\Http\\WebSockets\\IRequest and FastyBird\\Core\\Http\\WebSockets\\IRequest will always evaluate to true\.$#'
+			message: '#^Instanceof between FastyBird\\Core\\Http\\IRequest and FastyBird\\Core\\Http\\IRequest will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
@@ -7633,7 +7633,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
 
 		-
-			message: '#^Parameter \#3 \$body of class FastyBird\\Core\\Http\\WebSockets\\Response constructor expects string\|null, mixed given\.$#'
+			message: '#^Parameter \#3 \$body of class FastyBird\\Core\\Http\\WampResponse constructor expects string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
@@ -7927,13 +7927,13 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:postLoadAndPreFlush\(\) throws checked exception FastyBird\\Core\\Exceptions\\Phone\\NoValidCountry but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:postLoadAndPreFlush\(\) throws checked exception FastyBird\\Core\\Exceptions\\NoValidCountry but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:postLoadAndPreFlush\(\) throws checked exception FastyBird\\Core\\Exceptions\\Phone\\NoValidPhone but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:postLoadAndPreFlush\(\) throws checked exception FastyBird\\Core\\Exceptions\\NoValidPhone but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
@@ -8434,13 +8434,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
@@ -8452,13 +8452,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
@@ -8470,13 +8470,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
@@ -8488,13 +8488,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
@@ -8506,13 +8506,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
@@ -8524,13 +8524,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
@@ -8542,13 +8542,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
@@ -8560,13 +8560,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
@@ -8578,13 +8578,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
@@ -8890,13 +8890,13 @@ parameters:
 			path: ../src/FastyBird/Module/Triggers/src/Entities/Triggers/Trigger.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Triggers/src/Models/States/ActionsManager.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Triggers/src/Models/States/ConditionsManager.php
@@ -9010,13 +9010,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
@@ -9028,13 +9028,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
@@ -9046,13 +9046,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
@@ -9064,13 +9064,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
@@ -9082,13 +9082,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
@@ -9100,13 +9100,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php

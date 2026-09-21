@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Exceptions;
 
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions\SlimRouter as SlimRouterExceptions;
+use FastyBird\Core\Exceptions as SlimRouterExceptions;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 

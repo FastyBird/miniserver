@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Devices\Documents\Devices;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;

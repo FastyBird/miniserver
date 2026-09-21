@@ -13,7 +13,7 @@ use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Tests;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Http as SlimRouterHttp;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\RequestMethodInterface;

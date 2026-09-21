@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Subscribers\HttpServer;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Events\HttpServer as Events;
+use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use Symfony\Component\EventDispatcher;
@@ -39,9 +39,9 @@ readonly class Server implements EventDispatcher\EventSubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			Events\Startup::class => 'check',
-			Events\Request::class => 'request',
-			Events\Response::class => 'response',
+			Events\HttpServerStartup::class => 'check',
+			Events\HttpServerRequest::class => 'request',
+			Events\HttpServerResponse::class => 'response',
 		];
 	}
 

@@ -17,7 +17,7 @@ namespace FastyBird\Plugin\RabbitMq\Publishers;
 
 use Bunny;
 use DateTimeInterface;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Services\DateTimeFactory;

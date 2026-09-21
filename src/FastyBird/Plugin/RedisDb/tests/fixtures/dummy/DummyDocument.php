@@ -2,7 +2,7 @@
 
 namespace FastyBird\Plugin\RedisDb\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use Orisai\ObjectMapper;
 
 #[ApplicationDocuments\Mapping\Document]

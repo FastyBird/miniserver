@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Server\WsServer;
 
 use FastyBird\Core\Clients\WsServer as Clients;
-use FastyBird\Core\Exceptions\WebSockets as Exceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 use Psr\Log;
 use React;

@@ -18,7 +18,7 @@ namespace FastyBird\Connector\HomeKit\Controllers;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Servers;
-use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Http as SlimRouterHttp;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;

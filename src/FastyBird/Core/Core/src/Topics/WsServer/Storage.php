@@ -17,7 +17,7 @@ namespace FastyBird\Core\Topics\WsServer;
 
 use ArrayIterator;
 use FastyBird\Core\Entities\WsServer\Topics as Entities;
-use FastyBird\Core\Exceptions\WebSockets as Exceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 use Psr\Log;
 use Throwable;

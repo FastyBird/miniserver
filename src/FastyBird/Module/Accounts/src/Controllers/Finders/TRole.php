@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Accounts\Controllers\Finders;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;

@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Models\Entities\Identities;
 
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Models;

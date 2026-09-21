@@ -20,9 +20,9 @@ use FastyBird\Core\Entities\WebSockets\PushMessages;
 use FastyBird\Core\Entities\WsServer as WebSocketsEntities;
 use FastyBird\Core\Entities\WsServer\Topics as TopicEntities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
-use FastyBird\Core\Http\WebSockets as WebSocketsHttp;
-use FastyBird\Core\Routing\WebSockets as WebSocketsRouter;
+use FastyBird\Core\Exceptions as WebSocketsExceptions;
+use FastyBird\Core\Http as WebSocketsHttp;
+use FastyBird\Core\Routing as WebSocketsRouter;
 use FastyBird\Core\Server\WsServer as WebSocketsServer;
 use FastyBird\Core\Topics\WsServer as Topics;
 use Nette\Http;
@@ -80,7 +80,7 @@ final class WampApplication extends Application implements IWampApplication
 
 	public function __construct(
 		private Topics\IStorage $topicsStorage,
-		WebSocketsRouter\IRouter $router,
+		WebSocketsRouter\IWampRouter $router,
 		Controller\IControllerFactory $controllerFactory,
 		WebSocketsClients\IStorage $clientsStorage,
 		Log\LoggerInterface|null $logger = null,

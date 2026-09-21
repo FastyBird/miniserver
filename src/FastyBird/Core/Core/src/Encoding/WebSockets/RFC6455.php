@@ -5,7 +5,7 @@ namespace FastyBird\Core\Encoding\WebSockets;
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 use Nette;
 use function array_key_exists;
 use function array_merge;
@@ -81,10 +81,10 @@ class RFC6455 implements IProtocol
 	public function doHandshake(Http\IRequest $httpRequest): Http\IResponse
 	{
 		if ($this->verifier->verifyAll($httpRequest) !== true) {
-			return new Http\Response(Http\IResponse::S400_BAD_REQUEST);
+			return new Http\WampResponse(Http\IResponse::S400_BAD_REQUEST);
 		}
 
-		return new Http\Response(Http\IResponse::S101_SWITCHING_PROTOCOLS, [
+		return new Http\WampResponse(Http\IResponse::S101_SWITCHING_PROTOCOLS, [
 			'Upgrade' => 'websocket',
 			'Connection' => 'Upgrade',
 			'Sec-WebSocket-Accept' => $this->sign((string) $httpRequest->getHeader('Sec-WebSocket-Key')),

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Entities\Phone;
 
-use FastyBird\Core\Exceptions\Phone as Exceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Services\Phone\Phone as PhoneHelper;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;

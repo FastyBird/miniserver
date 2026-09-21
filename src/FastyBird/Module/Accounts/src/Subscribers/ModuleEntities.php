@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\EventLoop\Application\Status;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
@@ -55,7 +55,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	public function __construct(
 		private readonly ORM\EntityManagerInterface $entityManager,
 		private readonly Status $eventLoopStatus,
-		private readonly ExchangeDocuments\DocumentFactory $documentFactory,
+		private readonly ExchangeDocuments\RoutingDocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Publisher $publisher,
 		private readonly ExchangePublisher\Async\Publisher $asyncPublisher,
 	)

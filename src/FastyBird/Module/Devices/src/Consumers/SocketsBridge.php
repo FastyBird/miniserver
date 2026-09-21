@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Devices\Consumers;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Routing\WebSockets as WebSocketsRouting;
+use FastyBird\Core\Routing as WebSocketsRouting;
 use FastyBird\Core\Topics\WsServer as WsServerTopics;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;

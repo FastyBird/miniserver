@@ -5,7 +5,7 @@ namespace FastyBird\Core\Entities\WsServer;
 use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Entities\WebSockets;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 use Nette;
 use Nette\Security as NS;
 use Nette\Utils;

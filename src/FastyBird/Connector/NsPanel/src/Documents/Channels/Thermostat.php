@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Thermostat::class)]
 #[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Thermostat::TYPE)]

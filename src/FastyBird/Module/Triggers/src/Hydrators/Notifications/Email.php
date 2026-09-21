@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\Hydrators\Notifications;
 
 use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;

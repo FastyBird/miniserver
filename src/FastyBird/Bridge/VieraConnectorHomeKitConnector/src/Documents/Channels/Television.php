@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Documents\Channels;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Television::class)]
 #[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Television::TYPE)]

@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
 use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Ui\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use function is_scalar;

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Models\Configuration;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 

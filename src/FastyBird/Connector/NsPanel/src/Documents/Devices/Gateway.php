@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Documents\Devices;
 
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\Gateway::class)]
 #[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Gateway::TYPE)]

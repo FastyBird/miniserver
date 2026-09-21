@@ -31,21 +31,21 @@ use FastyBird\Core\Encoding as JsonApiEncoding;
 use FastyBird\Core\Encoding as WebSocketsEncoding;
 use FastyBird\Core\EventLoop;
 use FastyBird\Core\Events as SimpleAuthEvents;
-use FastyBird\Core\Events\WebSockets\CloseEvent;
-use FastyBird\Core\Events\WebSockets\ErrorEvent;
-use FastyBird\Core\Events\WebSockets\MessageEvent;
-use FastyBird\Core\Events\WebSockets\OpenEvent;
-use FastyBird\Core\Events\WebSockets\PushEvent;
-use FastyBird\Core\Events\WsServer\AfterIncommingMessageEvent;
-use FastyBird\Core\Events\WsServer\ClientConnected;
-use FastyBird\Core\Events\WsServer\ClientConnectEvent;
-use FastyBird\Core\Events\WsServer\ClientDisconnectEvent;
-use FastyBird\Core\Events\WsServer\ClientErrorEvent;
-use FastyBird\Core\Events\WsServer\CreateEvent;
-use FastyBird\Core\Events\WsServer\IncomingMessage;
-use FastyBird\Core\Events\WsServer\IncommingMessageEvent;
-use FastyBird\Core\Events\WsServer\StartEvent;
-use FastyBird\Core\Events\WsServer\StopEvent;
+use FastyBird\Core\Events\AfterIncommingMessageEvent;
+use FastyBird\Core\Events\ClientConnected;
+use FastyBird\Core\Events\ClientConnectEvent;
+use FastyBird\Core\Events\ClientDisconnectEvent;
+use FastyBird\Core\Events\ClientErrorEvent;
+use FastyBird\Core\Events\CloseEvent;
+use FastyBird\Core\Events\CreateEvent;
+use FastyBird\Core\Events\ErrorEvent;
+use FastyBird\Core\Events\IncomingMessage;
+use FastyBird\Core\Events\IncommingMessageEvent;
+use FastyBird\Core\Events\MessageEvent;
+use FastyBird\Core\Events\OpenEvent;
+use FastyBird\Core\Events\PushEvent;
+use FastyBird\Core\Events\StartEvent;
+use FastyBird\Core\Events\StopEvent;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers as DoctrineCrudHelpers;
 use FastyBird\Core\Helpers as JsonApiHelpers;
@@ -434,13 +434,13 @@ class CoreExtension extends DI\CompilerExtension
 			->setAutowired(false);
 
 		$builder->addDefinition('document.factory', new DI\Definitions\ServiceDefinition())
-			->setType(ApplicationDocuments\Application\DocumentFactory::class);
+			->setType(ApplicationDocuments\DocumentFactory::class);
 
 		$attributeDriver = $builder->addDefinition(
 			'document.mapping.attributeDriver',
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(ApplicationDocuments\Application\Mapping\Driver\AttributeDriver::class)
+			->setType(ApplicationDocuments\Mapping\Driver\AttributeDriver::class)
 			->setArguments(['paths' => array_values($configuration->application->documents->mapping)])
 			->addSetup('addExcludePaths', [$configuration->application->documents->excludePaths])
 			->addTag(self::DRIVER_TAG)
@@ -450,10 +450,10 @@ class CoreExtension extends DI\CompilerExtension
 			'document.mapping.mappingDriver',
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(ApplicationDocuments\Application\Mapping\Driver\MappingDriverChain::class);
+			->setType(ApplicationDocuments\Mapping\Driver\MappingDriverChain::class);
 
 		$builder->addDefinition('document.mapping.classMetadataFactory', new DI\Definitions\ServiceDefinition())
-			->setType(ApplicationDocuments\Application\Mapping\ClassMetadataFactory::class)
+			->setType(ApplicationDocuments\Mapping\ClassMetadataFactory::class)
 			->setArguments(['driver' => $mappingDriver, 'cache' => $metadataCache]);
 
 		foreach ($configuration->application->documents->mapping as $namespace => $path) {
@@ -478,7 +478,7 @@ class CoreExtension extends DI\CompilerExtension
 			->setType(ExchangeMessaging\Exchange\Publisher\Async\Container::class);
 
 		$builder->addDefinition($this->prefix('exchange.entityFactory'), new DI\Definitions\ServiceDefinition())
-			->setType(ExchangeDocuments\Exchange\DocumentFactory::class);
+			->setType(ExchangeDocuments\RoutingDocumentFactory::class);
 
 		/**
 		 * SIMPLE AUTH
@@ -907,15 +907,15 @@ class CoreExtension extends DI\CompilerExtension
 			);
 
 		$router = $builder->addDefinition($this->prefix('webSockets.routing.router'))
-			->setType(Routing\WebSockets\IRouter::class)
-			->setFactory(Routing\WebSockets\RouteList::class);
+			->setType(Routing\IWampRouter::class)
+			->setFactory(Routing\RouteList::class);
 
 		foreach ($configuration->webSockets->routes as $mask => $action) {
-			$router->addSetup('$service[] = new FastyBird\Core\Routing\WebSockets\Route(?, ?);', [$mask, $action]);
+			$router->addSetup('$service[] = new FastyBird\Core\Routing\WampRoute(?, ?);', [$mask, $action]);
 		}
 
 		$builder->addDefinition($this->prefix('webSockets.routing.generator'))
-			->setType(Routing\WebSockets\LinkGenerator::class);
+			->setType(Routing\LinkGenerator::class);
 
 		$builder->addDefinition($this->prefix('wsServer.server.wrapper'))
 			->setType(WsServerServer\WsServer\Wrapper::class);
@@ -1006,10 +1006,10 @@ class CoreExtension extends DI\CompilerExtension
 			$this->prefix('httpServer.routing.responseFactory'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(WebServerHttp\WebServer\ResponseFactory::class);
+			->setType(WebServerHttp\ServerResponseFactory::class);
 
 		$builder->addDefinition($this->prefix('httpServer.routing.router'), new DI\Definitions\ServiceDefinition())
-			->setType(Routing\WebServer\Router::class);
+			->setType(Routing\ServerRouter::class);
 
 		$builder->addDefinition($this->prefix('httpServer.commands.server'), new DI\Definitions\ServiceDefinition())
 			->setType(HttpServerCommands\HttpServer::class)
@@ -1164,7 +1164,7 @@ class CoreExtension extends DI\CompilerExtension
 		assert(is_string($appRouterServiceName));
 		$appRouterService = $builder->getDefinition($appRouterServiceName);
 		assert($appRouterService instanceof DI\Definitions\ServiceDefinition);
-		$appRouterService->addSetup([Routing\Application\AppRouter::class, 'createRouter'], [$appRouterService]);
+		$appRouterService->addSetup([Routing\AppRouter::class, 'createRouter'], [$appRouterService]);
 
 		$presenterFactoryService = $builder->getDefinitionByType(Application\IPresenterFactory::class);
 
@@ -1292,12 +1292,12 @@ class CoreExtension extends DI\CompilerExtension
 				$application->addSetup('?->onRequest[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 					'@self',
 					$dispatcher,
-					new PhpGenerator\Literal(SimpleAuthEvents\SimpleAuth\Request::class),
+					new PhpGenerator\Literal(SimpleAuthEvents\PresenterRequest::class),
 				]);
 				$application->addSetup('?->onResponse[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 					'@self',
 					$dispatcher,
-					new PhpGenerator\Literal(SimpleAuthEvents\SimpleAuth\Response::class),
+					new PhpGenerator\Literal(SimpleAuthEvents\PresenterResponse::class),
 				]);
 			}
 		}

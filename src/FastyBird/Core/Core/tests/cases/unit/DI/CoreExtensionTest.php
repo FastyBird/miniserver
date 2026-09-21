@@ -47,7 +47,6 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
@@ -61,9 +60,9 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertNotNull($container->getByType(Monolog\Handler\RotatingFileHandler::class, false));
 		self::assertNull($container->getByType(SymfonyMonolog\Handler\ConsoleHandler::class, false));
-		self::assertNotNull($container->getByType(ApplicationDocuments\Application\DocumentFactory::class, false));
+		self::assertNotNull($container->getByType(ApplicationDocuments\DocumentFactory::class, false));
 		self::assertInstanceOf(
-			ApplicationDocuments\Application\DocumentFactory::class,
+			ApplicationDocuments\DocumentFactory::class,
 			$container->getService('document.factory'),
 		);
 
@@ -71,7 +70,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * EXCHANGE -- from ExchangeExtensionTest
 		 */
 
-		self::assertNotNull($container->getByType(ExchangeDocuments\Exchange\DocumentFactory::class, false));
+		self::assertNotNull($container->getByType(ExchangeDocuments\RoutingDocumentFactory::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Publisher\Container::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Publisher\Async\Container::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Consumers\Container::class, false));
@@ -89,7 +88,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertNotNull($container->getByType(HttpServerServer\HttpServer\Application::class, false));
 		self::assertNotNull($container->getByType(HttpServerCommands\HttpServer::class, false));
-		self::assertNotNull($container->getByType(WebServerHttp\WebServer\ResponseFactory::class, false));
+		self::assertNotNull($container->getByType(WebServerHttp\ServerResponseFactory::class, false));
 		self::assertNotNull($container->getByType(EventLoop\LoopInterface::class, false));
 		self::assertNotNull($container->getByType(WebServerMiddleware\WebServer\Cors::class, false));
 		self::assertNotNull($container->getByType(WebServerMiddleware\WebServer\StaticFiles::class, false));
@@ -151,7 +150,6 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Logic
 	 * @throws Error
 	 */
 	#[DoesNotPerformAssertions]

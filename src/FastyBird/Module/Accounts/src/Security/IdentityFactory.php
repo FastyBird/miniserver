@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\Security;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;

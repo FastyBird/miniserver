@@ -17,7 +17,7 @@ namespace FastyBird\Module\Triggers\Router;
 
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Middleware;

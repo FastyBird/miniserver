@@ -17,7 +17,7 @@ namespace FastyBird\Addon\VirtualThermostat\Documents\Devices;
 
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\Device::class)]
 #[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Device::TYPE)]

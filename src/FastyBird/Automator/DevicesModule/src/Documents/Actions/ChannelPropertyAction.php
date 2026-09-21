@@ -16,7 +16,7 @@
 namespace FastyBird\Automator\DevicesModule\Documents\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use Orisai\ObjectMapper;

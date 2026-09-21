@@ -22,7 +22,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use Nette\Bootstrap;
 use Nette\DI;
@@ -146,7 +146,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 */
 
 		if (
-			$builder->findByType('FastyBird\Core\Routing\WebSockets\LinkGenerator') !== []
+			$builder->findByType('FastyBird\Core\Routing\LinkGenerator') !== []
 			&& $builder->findByType('FastyBird\Core\Topics\WsServer\IStorage') !== []
 		) {
 			$builder->addDefinition(

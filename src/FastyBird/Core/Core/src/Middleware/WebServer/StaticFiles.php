@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Middleware\WebServer;
 
 use Closure;
-use FastyBird\Core\Exceptions\WebServer as Exceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Server\HttpServer as Utils;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;

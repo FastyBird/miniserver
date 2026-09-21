@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Encoding\WebSockets;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 use Nette;
 use function array_keys;
 use function implode;

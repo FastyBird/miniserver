@@ -19,7 +19,7 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Controllers;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
 /**

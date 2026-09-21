@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Security\SimpleAuth;
 
-use FastyBird\Core\Exceptions\SimpleAuth as Exceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 
 /**

@@ -4,7 +4,7 @@ namespace FastyBird\Core\Encoding\WebSockets;
 
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Entities\WsServer as Entities;
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 
 /**
  * A standard interface for interacting with the various version of the WebSocket protocol

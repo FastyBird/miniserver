@@ -5,7 +5,7 @@ namespace FastyBird\Module\Ui\Tests\Cases\Unit\Router;
 use Error;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Tests;
 use Fig\Http\Message\RequestMethodInterface;

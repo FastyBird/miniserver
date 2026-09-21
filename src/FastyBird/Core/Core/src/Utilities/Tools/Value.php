@@ -19,7 +19,7 @@ use BackedEnum;
 use DateTime;
 use DateTimeInterface;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as Formats;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette\Utils;

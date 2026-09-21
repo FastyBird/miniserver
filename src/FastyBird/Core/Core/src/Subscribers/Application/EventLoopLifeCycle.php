@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Subscribers\Application;
 
 use FastyBird\Core\EventLoop\Application as EventLoop;
-use FastyBird\Core\Events\Application as Events;
+use FastyBird\Core\Events;
 use Nette;
 use Symfony\Component\EventDispatcher;
 

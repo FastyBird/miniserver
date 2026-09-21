@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Triggers\Documents\Conditions;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;

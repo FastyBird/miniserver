@@ -2,8 +2,8 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Documents;
 
-use FastyBird\Core\Documents\Application as Documents;
-use FastyBird\Core\Events\Application as Events;
+use FastyBird\Core\Documents;
+use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Tests;
 use Nette;

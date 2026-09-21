@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Encoding\WebSockets\RFC6455;
 
-use FastyBird\Core\Http\WebSockets as Http;
+use FastyBird\Core\Http;
 use Nette;
 use function array_search;
 use function base64_decode;

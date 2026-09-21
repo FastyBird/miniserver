@@ -19,7 +19,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Helpers\DoctrineCrud\Helpers;
 use FastyBird\Core\Mapping\DoctrineCrud as Mapping;
 use Nette;

@@ -4,7 +4,7 @@ namespace FastyBird\Module\Ui\Tests\Cases\Unit\Models\Entities\Repositories;
 
 use Error;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;

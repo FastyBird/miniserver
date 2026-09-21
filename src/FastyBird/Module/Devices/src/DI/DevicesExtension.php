@@ -18,10 +18,10 @@ namespace FastyBird\Module\Devices\DI;
 use Contributte\Translation;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
@@ -910,7 +910,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
 
 		if (
-			$builder->findByType('FastyBird\Core\Routing\WebSockets\LinkGenerator') !== []
+			$builder->findByType('FastyBird\Core\Routing\LinkGenerator') !== []
 			&& $builder->findByType('FastyBird\Core\Topics\WsServer\IStorage') !== []
 		) {
 			$builder->addDefinition(

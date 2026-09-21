@@ -17,7 +17,7 @@ namespace FastyBird\Core\Security\SimpleAuth;
 
 use DateTimeImmutable;
 use FastyBird\Core\Constants as SimpleAuth;
-use FastyBird\Core\Exceptions\SimpleAuth as Exceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Services\DateTimeFactory;
 use Lcobucci\Clock;
 use Lcobucci\JWT;
