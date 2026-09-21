@@ -17,6 +17,7 @@ namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
 use Exception;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
@@ -77,7 +78,7 @@ final class RolesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
@@ -166,7 +167,7 @@ final class RolesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi

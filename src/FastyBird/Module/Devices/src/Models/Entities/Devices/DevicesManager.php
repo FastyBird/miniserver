@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Devices\Models\Entities\Devices;
 
 use Doctrine\DBAL;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Devices\Entities;
@@ -55,8 +56,8 @@ final class DevicesManager
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Devices\Device
 	{
@@ -70,8 +71,8 @@ final class DevicesManager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function update(
 		Entities\Devices\Device $entity,
@@ -87,8 +88,8 @@ final class DevicesManager
 	}
 
 	/**
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function delete(Entities\Devices\Device $entity): bool
 	{

@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Accounts\Models\Entities\Emails;
 
 use Doctrine\DBAL;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Accounts\Entities;
@@ -52,8 +53,8 @@ final class EmailsManager
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Emails\Email
 	{
@@ -65,8 +66,8 @@ final class EmailsManager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function update(
 		Entities\Emails\Email $entity,
@@ -80,8 +81,8 @@ final class EmailsManager
 	}
 
 	/**
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function delete(Entities\Emails\Email $entity): bool
 	{

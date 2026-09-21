@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Ui\Models\Entities\Groups;
 
 use Doctrine\DBAL;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Ui\Entities;
@@ -55,8 +56,8 @@ final class Manager
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Groups\Group
 	{
@@ -70,8 +71,8 @@ final class Manager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function update(
 		Entities\Groups\Group $entity,
@@ -87,8 +88,8 @@ final class Manager
 	}
 
 	/**
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function delete(Entities\Groups\Group $entity): bool
 	{

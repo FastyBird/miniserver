@@ -83,7 +83,7 @@ final class AccountIdentitiesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
@@ -102,7 +102,7 @@ final class AccountIdentitiesV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\Runtime
 	 * @throws InvalidArgumentException
@@ -228,7 +228,7 @@ final class AccountIdentitiesV1 extends BaseV1
 
 	/**
 	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */

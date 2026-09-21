@@ -102,7 +102,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDisplayRelationship(
@@ -129,7 +129,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildDisplay(
@@ -274,7 +274,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>
 	 *
 	 * @throws DI\MissingServiceException
-	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */

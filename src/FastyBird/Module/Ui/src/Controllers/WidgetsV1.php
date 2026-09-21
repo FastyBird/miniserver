@@ -323,7 +323,6 @@ final class WidgetsV1 extends BaseV1
 	/**
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
@@ -386,7 +385,7 @@ final class WidgetsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws JsonApiExceptions\JsonApi
 	 */

@@ -108,7 +108,6 @@ class Create extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidState

@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Accounts\Models\Entities\Identities;
 
 use Doctrine\DBAL;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Accounts\Entities;
@@ -52,8 +53,8 @@ class IdentitiesManager
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function create(
 		Utils\ArrayHash $values,
@@ -67,8 +68,8 @@ class IdentitiesManager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function update(
 		Entities\Identities\Identity $entity,
@@ -82,8 +83,8 @@ class IdentitiesManager
 	}
 
 	/**
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function delete(Entities\Identities\Identity $entity): bool
 	{

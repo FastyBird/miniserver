@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
 use Exception;
-use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -75,7 +75,7 @@ final class PublicV1 extends BaseV1
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineCrudExceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exception
 	 *
 	 * @Secured\User(guest)

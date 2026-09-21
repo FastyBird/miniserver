@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Accounts\Schemas\Accounts;
 
 use DateTimeInterface;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
-use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApis;
@@ -138,9 +138,8 @@ final class Account extends JsonApis\JsonApi
 	 *
 	 * @return iterable<string, array<int, (array<Entities\Identities\Identity>|array<Entities\Roles\Role>|array<Entities\Emails\Email>|bool)>>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws SimpleAuthExceptions\InvalidState
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -256,9 +255,8 @@ final class Account extends JsonApis\JsonApi
 	/**
 	 * @return array<int, Entities\Roles\Role>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws SimpleAuthExceptions\InvalidState
 	 */
 	private function getRoles(Entities\Accounts\Account $account): array
 	{

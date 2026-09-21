@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Models\Entities\Widgets\Displays;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Events;
@@ -54,8 +54,8 @@ class Manager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function update(
 		Entities\Widgets\Displays\Display $entity,

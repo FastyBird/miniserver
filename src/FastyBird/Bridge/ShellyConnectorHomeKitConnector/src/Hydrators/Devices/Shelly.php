@@ -200,7 +200,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @return array<mixed>
 	 *
 	 * @throws DI\MissingServiceException
-	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws Throwable
 	 */

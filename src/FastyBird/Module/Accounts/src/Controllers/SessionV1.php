@@ -19,6 +19,7 @@ use DateTimeImmutable;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
@@ -66,7 +67,7 @@ final class SessionV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws Exceptions\InvalidState
@@ -386,7 +387,7 @@ final class SessionV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
@@ -480,7 +481,7 @@ final class SessionV1 extends BaseV1
 
 	/**
 	 * @throws SimpleAuthExceptions\UnauthorizedAccess
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi

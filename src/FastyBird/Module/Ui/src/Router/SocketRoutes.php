@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Router;
 
 use FastyBird\Core\Constants\Metadata;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Routing\WebSockets as WebSocketsRouting;
 
 /**
@@ -31,7 +31,7 @@ class SocketRoutes
 {
 
 	/**
-	 * @throws WebSocketsExceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public static function createRouter(): WebSocketsRouting\RouteList
 	{
