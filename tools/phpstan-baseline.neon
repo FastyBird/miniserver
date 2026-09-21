@@ -2977,312 +2977,6 @@ parameters:
 			path: ../src/FastyBird/Connector/Zigbee2Mqtt/src/Queue/Consumers/WriteSubDeviceChannelPropertyState.php
 
 		-
-			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, string\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: ../src/FastyBird/Core/Application/bin/fb-supervisor.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Application\\Boot\\Bootstrap\:\:loadEnvParameters\(\) should return array\<mixed\> but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Boot/Bootstrap.php
-
-		-
-			message: '#^Parameter \#1 \$array of function implode expects array\<string\>, array given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Boot/Bootstrap.php
-
-		-
-			message: '#^Parameter \#1 \$key of function array_key_exists expects int\|string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Boot/Bootstrap.php
-
-		-
-			message: '#^Parameter \#1 \$params of method Nette\\Bootstrap\\Configurator\:\:addStaticParameters\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Boot/Bootstrap.php
-
-		-
-			message: '#^Parameter \#1 \$path of function realpath expects string, string\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Boot/Bootstrap.php
-
-		-
-			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 6
-			path: ../src/FastyBird/Core/Application/src/Boot/Bootstrap.php
-
-		-
-			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Boot/Bootstrap.php
-
-		-
-			message: '#^Possibly invalid array key type mixed\.$#'
-			identifier: offsetAccess.invalidOffset
-			count: 3
-			path: ../src/FastyBird/Core/Application/src/Boot/Bootstrap.php
-
-		-
-			message: '#^Parameter \#1 \$conditions of method Nette\\Caching\\Storage\:\:clean\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Caching/MemoryAdapterStorage.php
-
-		-
-			message: '#^Parameter \#3 \$dependencies of method Nette\\Caching\\Storage\:\:write\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Caching/MemoryAdapterStorage.php
-
-		-
-			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Binary operation "\." between ''FB_LOGS_DIR/''\|''FB_LOGS_DIR\\\\'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Cannot access property \$console on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Cannot access property \$enabled on mixed\.$#'
-			identifier: property.nonObject
-			count: 8
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Cannot access property \$excludePaths on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Cannot access property \$filename on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Cannot access property \$level on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Cannot access property \$mapping on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Cannot access property \$rotatingFile on mixed\.$#'
-			identifier: property.nonObject
-			count: 5
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Cannot access property \$stdOut on mixed\.$#'
-			identifier: property.nonObject
-			count: 4
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Parameter \#1 \$array of function array_values expects array\<T\>, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Parameter \#1 \$filename of function is_dir expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/DI/ApplicationExtension.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadataFactory\:\:loadMetadata\(\) should return array\<class\-string\<FastyBird\\Core\\Application\\Documents\\Document\>, FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Application\\Documents\\Document\>\> but returns array\<class\-string\<T of FastyBird\\Core\\Application\\Documents\\Document\>, FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Application\\Documents\\Document\>\>\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Documents/Mapping/ClassMetadataFactory.php
-
-		-
-			message: '#^PHPDoc tag @var with type array\<class\-string\<T of FastyBird\\Core\\Application\\Documents\\Document\>\>\|false is not subtype of native type array\<string, class\-string\>\|false\.$#'
-			identifier: varTag.nativeType
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Documents/Mapping/ClassMetadataFactory.php
-
-		-
-			message: '#^Parameter \#1 \$class of method FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Application\\Documents\\Document\>, FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Application\\Documents\\Document\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Documents/Mapping/ClassMetadataFactory.php
-
-		-
-			message: '#^Parameter \#2 \$parent of method FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Application\\Documents\\Document\>\|null, FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Application\\Documents\\Document\>\|FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Application\\Documents\\Document\>\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Documents/Mapping/ClassMetadataFactory.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadataFactory\:\:\$loadedMetadata \(array\<class\-string\<FastyBird\\Core\\Application\\Documents\\Document\>, FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Application\\Documents\\Document\>\>\) does not accept non\-empty\-array\<class\-string\<FastyBird\\Core\\Application\\Documents\\Document\>, FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Application\\Documents\\Document\>\|FastyBird\\Core\\Application\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Application\\Documents\\Document\>\>\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Documents/Mapping/ClassMetadataFactory.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Application\\Documents\\Mapping\\Driver\\AttributeDriver\:\:\$excludePaths \(array\<int, string\>\) does not accept array\<string\>\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Documents/Mapping/Driver/AttributeDriver.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Application\\Documents\\Mapping\\Driver\\AttributeDriver\:\:\$paths \(array\<int, string\>\) does not accept array\<string\>\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Documents/Mapping/Driver/AttributeDriver.php
-
-		-
-			message: '#^Parameter \#2 \$parentRc of method FastyBird\\Core\\Application\\Subscribers\\EntityDiscriminator\:\:detectFromChildren\(\) expects ReflectionClass\<object\>, ReflectionClass\<covariant object\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Subscribers/EntityDiscriminator.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>value" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 1
-			path: ../src/FastyBird/Core/Application/src/Subscribers/EntityDiscriminator.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Exchange\\Publisher\\Async\\Container\:\:publish\(\) should return React\\Promise\\PromiseInterface\<bool\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Exchange/src/Publisher/Async/Container.php
-
-		-
-			message: '#^Cannot access property \$dsn on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Tools/src/DI/ToolsExtension.php
-
-		-
-			message: '#^Cannot access property \$level on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/DI/ToolsExtension.php
-
-		-
-			message: '#^Cannot access property \$sentry on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/DI/ToolsExtension.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/Formats/CombinedEnumItem.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: ../src/FastyBird/Core/Tools/src/Formats/NumberRange.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Tools\\Formats\\NumberRange\:\:\$max \(float\|int\|null\) is never assigned int so it can be removed from the property type\.$#'
-			identifier: property.unusedType
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/Formats/NumberRange.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Tools\\Formats\\NumberRange\:\:\$min \(float\|int\|null\) is never assigned int so it can be removed from the property type\.$#'
-			identifier: property.unusedType
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/Formats/NumberRange.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between string and null will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 2
-			path: ../src/FastyBird/Core/Tools/src/Formats/NumberRange.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 2
-			path: ../src/FastyBird/Core/Tools/src/Formats/NumberRange.php
-
-		-
-			message: '#^Cannot call method args\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Tools/src/Schemas/Validator.php
-
-		-
-			message: '#^Cannot call method data\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/Schemas/Validator.php
-
-		-
-			message: '#^Cannot call method keyword\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/Schemas/Validator.php
-
-		-
-			message: '#^Cannot call method path\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/Schemas/Validator.php
-
-		-
-			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Tools/src/Schemas/Validator.php
-
-		-
-			message: '#^Parameter \#1 \$array of function implode expects array\<string\>, array given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Tools/src/Transformers/EquationTransformer.php
-
-		-
-			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
-			identifier: argument.type
-			count: 4
-			path: ../src/FastyBird/Core/Tools/src/Transformers/EquationTransformer.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Tools\\Utilities\\Value\:\:normalizeEnumItemValue\(\) throws checked exception ValueError but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 4
-			path: ../src/FastyBird/Core/Tools/src/Utilities/Value.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 3
@@ -4639,83 +4333,6 @@ parameters:
 			path: ../src/FastyBird/Plugin/RedisDbCache/src/DI/RedisDbCacheExtension.php
 
 		-
-			message: '#^Cannot access property \$address on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$allow on mixed\.$#'
-			identifier: property.nonObject
-			count: 4
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$certificate on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$credentials on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$enabled on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$headers on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$methods on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$origin on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$port on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$publicRoot on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WebServer/src/DI/WebServerExtension.php
-
-		-
-			message: '#^Cannot access property \$keys on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WsServer/src/DI/WsServerExtension.php
-
-		-
-			message: '#^Cannot access property \$origins on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/WsServer/src/DI/WsServerExtension.php
-
-		# Pre-existing: the column is nullable while the property is not, on entities this
-		# branch does not touch. ORM 3 + phpstan-doctrine resolve the metadata far enough to
-		# see it; ORM 2 did not. Reconciling them needs either a migration making the columns
-		# NOT NULL (which can fail on deployments holding NULL rows) or a public API change,
-		# neither of which belongs in a Doctrine upgrade.
-		-
 			message: '#^Property FastyBird\\Automator\\DevicesModule\\Entities\\Actions\\PropertyAction\:\:\$value type mapping mismatch\: database can contain string\|null but property expects string\.$#'
 			identifier: doctrine.columnType
 			count: 1
@@ -4732,3 +4349,363 @@ parameters:
 			identifier: doctrine.columnType
 			count: 1
 			path: ../src/FastyBird/Automator/DevicesModule/src/Entities/Conditions/PropertyCondition.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: ../src/FastyBird/Core/Core/bin/fb-supervisor.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Boot\\Bootstrap\:\:loadEnvParameters\(\) should return array\<mixed\> but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
+
+		-
+			message: '#^Parameter \#1 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
+
+		-
+			message: '#^Parameter \#1 \$key of function array_key_exists expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
+
+		-
+			message: '#^Parameter \#1 \$params of method Nette\\Bootstrap\\Configurator\:\:addStaticParameters\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
+
+		-
+			message: '#^Parameter \#1 \$path of function realpath expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 6
+			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
+
+		-
+			message: '#^Parameter \#1 \$conditions of method Nette\\Caching\\Storage\:\:clean\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Caching/Application/MemoryAdapterStorage.php
+
+		-
+			message: '#^Parameter \#3 \$dependencies of method Nette\\Caching\\Storage\:\:write\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Caching/Application/MemoryAdapterStorage.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$address on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$allow on mixed\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$certificate on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$console on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$credentials on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$dsn on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$enabled on mixed\.$#'
+			identifier: property.nonObject
+			count: 10
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$excludePaths on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$filename on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$headers on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$keys on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$level on mixed\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$mapping on mixed\.$#'
+			identifier: property.nonObject
+			count: 6
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$methods on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$origin on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$origins on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$port on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$publicRoot on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$rotatingFile on mixed\.$#'
+			identifier: property.nonObject
+			count: 5
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$sentry on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Cannot access property \$stdOut on mixed\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_values expects array\<T\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Parameter \#1 \$filename of function is_dir expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:loadMetadata\(\) should return array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\> but returns array\<class\-string\<T of FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+
+		-
+			message: '#^PHPDoc tag @var with type array\<class\-string\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\|false is not subtype of native type array\<string, class\-string\>\|false\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+
+		-
+			message: '#^Parameter \#1 \$class of method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+
+		-
+			message: '#^Parameter \#2 \$parent of method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|null, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:\$loadedMetadata \(array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\>\) does not accept non\-empty\-array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\Driver\\AttributeDriver\:\:\$excludePaths \(array\<int, string\>\) does not accept array\<string\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/Driver/AttributeDriver.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\Driver\\AttributeDriver\:\:\$paths \(array\<int, string\>\) does not accept array\<string\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/Driver/AttributeDriver.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Formats/Tools/CombinedEnumItem.php
+
+		-
+			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Formats\\Tools\\NumberRange\:\:\$max \(float\|int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Formats\\Tools\\NumberRange\:\:\$min \(float\|int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between string and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Messaging\\Exchange\\Publisher\\Async\\Container\:\:publish\(\) should return React\\Promise\\PromiseInterface\<bool\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Messaging/Exchange/Publisher/Async/Container.php
+
+		-
+			message: '#^Cannot call method args\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+
+		-
+			message: '#^Cannot call method data\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+
+		-
+			message: '#^Cannot call method keyword\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+
+		-
+			message: '#^Cannot call method path\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+
+		-
+			message: '#^Parameter \#2 \$parentRc of method FastyBird\\Core\\Subscribers\\Application\\EntityDiscriminator\:\:detectFromChildren\(\) expects ReflectionClass\<object\>, ReflectionClass\<covariant object\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Subscribers/Application/EntityDiscriminator.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>value" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Subscribers/Application/EntityDiscriminator.php
+
+		-
+			message: '#^Parameter \#1 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Transformers/Tools/EquationTransformer.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/Transformers/Tools/EquationTransformer.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Utilities\\Tools\\Value\:\:normalizeEnumItemValue\(\) throws checked exception ValueError but it''s missing from the PHPDoc @throws tag\.$#'
+			identifier: missingType.checkedException
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/Utilities/Tools/Value.php

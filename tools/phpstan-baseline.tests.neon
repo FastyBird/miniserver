@@ -466,4 +466,4 @@ parameters:
 			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
 			identifier: method.unresolvableReturnType
 			count: 3
-			path: ../src/FastyBird/Plugin/WebServer/tests/cases/unit/Commands/HttpServerCommandTest.php
+			path: ../src/FastyBird/Core/Core/tests/cases/unit/Commands/HttpServerCommandTest.php
