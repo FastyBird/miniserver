@@ -6,25 +6,29 @@
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:MetadataLibrary!
- * @subpackage     common
+ * @package        FastyBird:Core!
+ * @subpackage     Constants
  * @since          1.0.0
  *
  * @date           04.05.20
  */
 
-namespace FastyBird\Core\Constants\Metadata;
+namespace FastyBird\Core\Constants;
 
 /**
- * Library constants
+ * Application constants
  *
- * @package        FastyBird:MetadataLibrary!
- * @subpackage     common
+ * @package        FastyBird:Core!
+ * @subpackage     Constants
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Constants
 {
+
+	/**
+	 * METADATA
+	 */
 
 	public const EXCHANGE_CHANNEL_NAME = 'fb_exchange';
 
@@ -150,5 +154,56 @@ final class Constants
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	public const VALUE_EQUATION_TRANSFORMER = '/^equation:(?:(?:x=)(?<equation_x>(?:(?:[\d.y]?)*(?:[\+\-\^\*\:\/\(\)])*(?:\s)*)*)){1}(?:\|(?:(?:y=)(?<equation_y>(?:(?:[\d.x]?)*(?:[\+\-\^\*\:\/\(\)])*(?:\s)*)*))){0,1}$/';
+
+	/**
+	 * SIMPLE AUTH -- ACL
+	 */
+
+	// Permissions string delimiter
+	public const PERMISSIONS_DELIMITER = ':';
+
+	public const ACCESS_TOKEN_COOKIE = 'token';
+
+	/**
+	 * SIMPLE AUTH -- Security tokens
+	 */
+
+	public const TOKEN_URI_NAME = 'authorization';
+
+	public const TOKEN_HEADER_NAME = 'authorization';
+
+	public const TOKEN_HEADER_REGEXP = '/Bearer\s+(.*)$/i';
+
+	public const TOKEN_CLAIM_USER = 'user';
+
+	public const TOKEN_CLAIM_ROLES = 'roles';
+
+	/**
+	 * SIMPLE AUTH -- Defined roles
+	 */
+
+	// Anonymous
+	public const ROLE_ANONYMOUS = 'guest';
+
+	// Signed in
+	public const ROLE_VISITOR = 'visitor';
+
+	public const ROLE_USER = 'user';
+
+	public const ROLE_MANAGER = 'manager';
+
+	public const ROLE_ADMINISTRATOR = 'administrator';
+
+	public const USER_ANONYMOUS = 'guest';
+
+	/**
+	 * WS SERVER -- Service headers
+	 */
+
+	public const WS_HEADER_AUTHORIZATION = 'authorization';
+
+	public const WS_HEADER_WS_KEY = 'x-ws-key';
+
+	public const WS_HEADER_ORIGIN = 'origin';
 
 }

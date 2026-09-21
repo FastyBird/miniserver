@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Cases\Un
 
 use Error;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;

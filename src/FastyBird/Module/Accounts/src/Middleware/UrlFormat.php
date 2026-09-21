@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Middleware;
 
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use FastyBird\Module\Accounts\Security;

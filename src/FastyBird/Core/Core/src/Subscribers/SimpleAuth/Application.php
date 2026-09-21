@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Subscribers\SimpleAuth;
 
-use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Events\SimpleAuth as Events;
 use FastyBird\Core\Exceptions\SimpleAuth as Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;

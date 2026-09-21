@@ -16,7 +16,7 @@
 namespace FastyBird\Plugin\RabbitMq\Channels;
 
 use Bunny;
-use FastyBird\Core\Constants\Metadata\Constants as MetadataConstants;
+use FastyBird\Core\Constants\Constants as MetadataConstants;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Plugin\RabbitMq\Connections;
 use FastyBird\Plugin\RabbitMq\Events;

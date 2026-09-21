@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Types\Metadata\Sources;
 
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 
 /**
  * Plugins sources types
