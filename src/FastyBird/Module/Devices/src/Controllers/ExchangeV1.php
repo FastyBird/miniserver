@@ -95,7 +95,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 					if ($state !== null) {
 						$client->send(Utils\Json::encode([
-							WebSocketsControllers\Application::MSG_EVENT,
+							WebSocketsControllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -122,7 +122,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 					if ($state !== null) {
 						$client->send(Utils\Json::encode([
-							WebSocketsControllers\Application::MSG_EVENT,
+							WebSocketsControllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -146,7 +146,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 					if ($state !== null) {
 						$client->send(Utils\Json::encode([
-							WebSocketsControllers\Application::MSG_EVENT,
+							WebSocketsControllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -330,7 +330,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			}
 
 			$client->send(Utils\Json::encode([
-				WebSocketsControllers\Application::MSG_EVENT,
+				WebSocketsControllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -423,7 +423,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			}
 
 			$client->send(Utils\Json::encode([
-				WebSocketsControllers\Application::MSG_EVENT,
+				WebSocketsControllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -516,7 +516,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			}
 
 			$client->send(Utils\Json::encode([
-				WebSocketsControllers\Application::MSG_EVENT,
+				WebSocketsControllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,

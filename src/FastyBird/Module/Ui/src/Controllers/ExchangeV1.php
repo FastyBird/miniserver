@@ -80,7 +80,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 			foreach ($dataSources as $dataSource) {
 				$client->send(Utils\Json::encode([
-					WebSocketsControllers\Application::MSG_EVENT,
+					WebSocketsControllers\WampApplication::MSG_EVENT,
 					$topic->getId(),
 					Utils\Json::encode([
 						'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -187,7 +187,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			$this->dispatcher?->dispatch(new Events\ActionCommandReceived($entity, $dataSource));
 
 			$client->send(Utils\Json::encode([
-				WebSocketsControllers\Application::MSG_EVENT,
+				WebSocketsControllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
