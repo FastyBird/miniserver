@@ -6,14 +6,27 @@ says so.
 
 ## Identity
 
-No file may name a library that `fastybird/miniserver-core` was assembled from. The 15 merged
-packages were SimpleAuth, SlimRouter, DoctrineCrud, DoctrineOrmQuery, DoctrineTimestampable,
-DoctrinePhone, JsonApi, JsonAPIDocument, WebSockets, WebSocketsWAMP, WsServerPlugin,
-WebServerPlugin, MetadataLibrary, Tools, Exchange, DateTimeFactory and Application.
+Core was assembled by merging fifteen packages: `Library/Metadata`, `DateTimeFactory`,
+`DoctrineCrud`, `DoctrineOrmQuery`, `DoctrineTimestampable`, `JsonApi`, `Phone`, `SlimRouter`,
+`WebSockets`, `Core/Application`, `Core/Exchange`, `Core/SimpleAuth`, `Core/Tools`,
+`Plugin/WebServer` and `Plugin/WsServer`. Several of those had themselves absorbed third-party
+libraries whose names also survive in the tree — `iPublikuj:SlimRouter`,
+`iPublikuj:DoctrineCrud`, `iPublikuj:JsonAPIDocument` and others.
 
-Functional and technical terms are fine, because they describe what a thing *is* rather than
-which package it came from: `Http`, `WebSockets`, `Wamp`, `Server`, `Phone`, `Clock`,
-`Exchange`.
+**The rule is not "never write these words."** It is that a name may not be used as a grouping
+layer *because that is where the code came from*. The test is whether the name says what the
+code IS, or only which package once shipped it:
+
+- `Security\` is right and `SimpleAuth\` is wrong. The capability is authentication and
+  authorization; SimpleAuth was only the brand of the library that implemented it.
+- `Http\` is right and `SlimRouter\` is wrong, for the same reason.
+- `WebSockets\` and `Exchange\` are right **even though packages by those names were merged in**,
+  because Core genuinely has a WebSockets capability and an Exchange capability. There the word
+  is doing descriptive work rather than carrying a lineage.
+
+`tools/check-naming.php` is the machine-readable form of this distinction. Its two denylists
+differ on purpose: `Application`, `Metadata` and `Tools` are rejected as namespace segments but
+allowed inside a class name, where they are ordinary English words.
 
 Enforced by `make naming`, which checks three places: namespace segments under
 `FastyBird\Core`, declared type names under `FastyBird\Core`, and `use FastyBird\Core\... as X`
@@ -50,17 +63,21 @@ The baseline may only shrink. A stale entry in it fails the gate.
 
 Core is **capability-first**, following Symfony's component convention:
 `Security\`, `WebSockets\`, `Api\`, `Http\`, `Persistence\`, `Values\`, `Documents\`,
-`Exchange\`, `Phone\`, `Clock\`, `Logging\`.
+`Exchange\`, `Phone\`, `Clock\`, `Logging\`, and `Exceptions\`.
 
-Layer names — `Middleware`, `Subscribers`, `Entities`, `Controllers` — appear only *inside* a
-capability, never at the top level. Exceptions and events live inside their capability too;
-only genuinely cross-cutting exceptions sit at the root.
+`Exceptions\` is the odd one out — it is a shared root holding only the handful of
+genuinely cross-cutting exceptions, not a capability. Layer names — `Middleware`,
+`Subscribers`, `Entities`, `Controllers` — appear only *inside* a capability, never at the
+top level. Exceptions and events live inside their capability too; only genuinely
+cross-cutting exceptions sit at the root.
 
 ## Docblocks
 
 **No file header.** The licence is in `LICENSE.md`, the author in `composer.json`, and the
 namespace supersedes `@package`. `@package`, `@subpackage`, `@author`, `@copyright`,
-`@license`, `@since` and `@date` are rejected by `make cs`.
+`@license`, `@since` and `@date` are forbidden. **Not enforced yet:** `tools/phpcs.xml` still excludes
+`SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden`. E2 removes that
+exclusion once Core's 409 file headers are gone, and `make cs` rejects them from then on.
 
 - `@var`, `@param`, `@return`: omit where they only restate a native type. Keep for array
   shapes, generics and `@template`.
@@ -81,4 +98,6 @@ namespace supersedes `@package`. `@package`, `@subpackage`, `@author`, `@copyrig
 - `#[\Override]` on every genuine override.
 - `readonly class` where every property is readonly.
 - Typed class constants, enforced by `SlevomatCodingStandard.TypeHints.ClassConstantTypeHint`.
+  **Active for `src/FastyBird/Core/Core` only** — the other 28 packages are excluded in
+  `tools/phpcs.xml` until E7 types their remaining 1,419 constants across 563 files.
 - Constructor property promotion, enforced by `SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion`.
