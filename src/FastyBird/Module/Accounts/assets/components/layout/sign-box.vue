@@ -117,7 +117,7 @@ import { useRoute } from 'vue-router';
 
 import { ElCard, ElDivider, ElIcon, ElLink } from 'element-plus';
 
-import { useBreakpoints } from '@fastybird/tools';
+import { useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 // @ts-ignore

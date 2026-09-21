@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Models\Configuration\Widgets\DataSources;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Ui\Caching;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Exceptions;

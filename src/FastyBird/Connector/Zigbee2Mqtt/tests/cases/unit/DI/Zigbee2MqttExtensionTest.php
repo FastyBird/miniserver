@@ -15,7 +15,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Schemas;
 use FastyBird\Connector\Zigbee2Mqtt\Subscribers;
 use FastyBird\Connector\Zigbee2Mqtt\Tests;
 use FastyBird\Connector\Zigbee2Mqtt\Writers;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 
 final class Zigbee2MqttExtensionTest extends Tests\Cases\Unit\BaseTestCase

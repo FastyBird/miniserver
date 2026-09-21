@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Sonoff\Queue\Messages\Parameters;
 
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Orisai\ObjectMapper;
 
 /**

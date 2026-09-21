@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Sonoff\Schemas\Channels;
 
 use FastyBird\Connector\Sonoff\Entities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 
 /**

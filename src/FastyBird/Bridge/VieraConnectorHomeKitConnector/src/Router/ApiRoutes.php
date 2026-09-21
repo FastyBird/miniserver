@@ -17,9 +17,9 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Router;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Controllers;
-use FastyBird\Core\SimpleAuth\Middleware as SimpleAuthMiddleware;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
 /**
@@ -47,16 +47,16 @@ class ApiRoutes
 	{
 	}
 
-	public function registerRoutes(Routing\IRouter $router): void
+	public function registerRoutes(SlimRouterRouting\IRouter $router): void
 	{
 		$routes = $router->group('/' . Metadata\Constants::ROUTER_API_PREFIX, function (
-			Routing\RouteCollector $group,
+			SlimRouterRouting\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group(
 					'/' . Metadata\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
 					function (
-						Routing\RouteCollector $group,
+						SlimRouterRouting\RouteCollector $group,
 					): void {
 						$this->buildRoutes($group);
 					},
@@ -72,13 +72,15 @@ class ApiRoutes
 		$routes->addMiddleware($this->devicesAccessControlMiddleware);
 	}
 
-	private function buildRoutes(Routing\IRouter|Routing\IRouteCollector $group): Routing\IRouteGroup
+	private function buildRoutes(
+		SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group,
+	): SlimRouterRouting\IRouteGroup
 	{
-		return $group->group('/v1', function (Routing\RouteCollector $group): void {
+		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
 			/**
 			 * BRIDGES
 			 */
-			$group->group('/bridges', function (Routing\RouteCollector $group): void {
+			$group->group('/bridges', function (SlimRouterRouting\RouteCollector $group): void {
 				$route = $group->get('', [$this->bridgesV1Controller, 'index']);
 				$route->setName(VieraConnectorHomeKitConnector\Constants::ROUTE_NAME_BRIDGES);
 

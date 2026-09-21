@@ -23,11 +23,11 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\DateTimeFactory;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Services\DateTimeFactory;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -75,7 +75,7 @@ final class CharacteristicsController extends BaseController
 	 * @throws Exceptions\InvalidState
 	 * @throws InvalidArgumentException
 	 * @throws Utils\JsonException
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -184,7 +184,7 @@ final class CharacteristicsController extends BaseController
 			$anyError ? StatusCodeInterface::STATUS_MULTI_STATUS : StatusCodeInterface::STATUS_OK,
 		);
 		$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-		$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode($result)));
+		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode($result)));
 
 		return $response;
 	}
@@ -350,7 +350,7 @@ final class CharacteristicsController extends BaseController
 
 		if ($anyError) {
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode($result)));
+			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode($result)));
 		}
 
 		return $response;
@@ -413,7 +413,7 @@ final class CharacteristicsController extends BaseController
 
 		$response = $response->withStatus(StatusCodeInterface::STATUS_OK);
 		$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-		$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode($result)));
+		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode($result)));
 
 		return $response;
 	}
@@ -421,8 +421,8 @@ final class CharacteristicsController extends BaseController
 	/**
 	 * @return array<string, (bool|int|array<int>|float|string|array<string>|null)>
 	 *
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -509,8 +509,8 @@ final class CharacteristicsController extends BaseController
 	 * @return array<string, bool|float|int|string|null>
 	 *
 	 * @throws Exceptions\Runtime
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

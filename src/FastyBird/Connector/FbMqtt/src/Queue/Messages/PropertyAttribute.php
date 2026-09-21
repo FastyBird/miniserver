@@ -18,7 +18,7 @@ namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Orisai\ObjectMapper;
 use TypeError;

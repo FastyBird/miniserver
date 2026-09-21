@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Security;
 
-use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
+use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Module\Accounts\Entities;
 use Ramsey\Uuid;
 

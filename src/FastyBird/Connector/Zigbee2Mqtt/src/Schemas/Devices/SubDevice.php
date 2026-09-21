@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Schemas\Devices;
 
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Schemas;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 
 /**
  * Zigbee2MQTT sub-device entity schema

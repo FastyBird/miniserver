@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Core\Tools\Transformers as ToolsTransformers;
+use FastyBird\Core\Transformers\Tools as ToolsTransformers;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use function is_float;
 use function is_int;

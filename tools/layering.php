@@ -247,23 +247,12 @@ return [
 	'types' => [
 
 		/*
-		 * Library is the floor. "Code that would work in an application that is not this
-		 * one" cannot, by definition, reach anything in this one. Measured: 0 out-edges of
-		 * any kind. This is the only type whose target list is empty, and that emptiness is
-		 * the strongest single statement in the file -- Library/Metadata has an in-degree
-		 * of 774 and an out-degree of 0.
+		 * Core is the cornerstone -- Core/Core is now the ONLY package of this type, and
+		 * the only package in the whole repository other packages boot on. Library/* no
+		 * longer exists as a type at all (all 9 packages absorbed into Core/Core alongside
+		 * the 6 Core/Plugin packages) -- see docs/superpowers/specs/2026-09-20-core-consolidation-design.md.
 		 */
-		'Library' => [],
-
-		/*
-		 * Core is the cornerstone: Core/Application (in-degree 982) is what every other
-		 * package boots on. Core may reach Library and it may reach its two siblings
-		 * (measured Core -> Core 15, all of them Core/Exchange -> Core/Application).
-		 * Core/Application itself has ZERO out-edges -- it is the true bottom alongside
-		 * Library/Metadata. Core reaching a Module is the sharpest possible inversion and
-		 * there is exactly one in the tree; see the exception list.
-		 */
-		'Core' => ['Core/*', 'Library/*'],
+		'Core' => ['Core/*'],
 
 		/*
 		 * Plugins are infrastructure the application wires in: redis, web server, sockets,
@@ -272,25 +261,25 @@ return [
 		 * The Plugin/RedisDb <-> Module coupling that people expect to find lives in two
 		 * BRIDGE packages, which is exactly what bridges are for.
 		 */
-		'Plugin' => ['Core/*', 'Library/*'],
+		'Plugin' => ['Core/*'],
 
 		/*
-		 * Modules are the application. They sit on Core and Library and on nothing else --
+		 * Modules are the application. They sit on Core and on nothing else --
 		 * no Module -> Module (measured zero, which is why there is no `Module/*` target
 		 * here; Devices and Ui are joined by Bridge/DevicesModuleUiModule instead) and no
 		 * Module -> Plugin (also measured zero in PHP, though see the stale
 		 * FastyBird\WebServer spelling noted under 'externalNamespaces').
 		 */
-		'Module' => ['Core/*', 'Library/*'],
+		'Module' => ['Core/*'],
 
 		/*
 		 * "A special plugin FOR THE TRIGGERS MODULE." The singular is the rule. Both
 		 * automators reach Module/Triggers and no other module, 41 refs, zero strays --
 		 * so the tight target goes here on the type rather than being repeated per package.
-		 * An automator reaches devices through the exchange bus using Library/Metadata
-		 * documents, never by linking Module/Devices.
+		 * An automator reaches devices through the exchange bus using Metadata
+		 * documents (now part of Core/Core), never by linking Module/Devices.
 		 */
-		'Automator' => ['Core/*', 'Library/*', 'Module/Triggers'],
+		'Automator' => ['Core/*', 'Module/Triggers'],
 
 		/*
 		 * "A special plugin FOR THE DEVICES MODULE, talking to the real world." Same shape
@@ -302,14 +291,14 @@ return [
 		 * Connector -> Connector is sideways and measured zero; connectors that must know
 		 * about each other do it through a Bridge.
 		 */
-		'Connector' => ['Core/*', 'Library/*', 'Module/Devices'],
+		'Connector' => ['Core/*', 'Module/Devices'],
 
 		/*
 		 * "Adds a special FUNCTION." An addon is built on top of some connector and some
 		 * module, but WHICH ones is the addon's identity, not its type -- so the type rule
 		 * grants only the universal floor and the real peers are mandatory per-package.
 		 */
-		'Addon' => ['Core/*', 'Library/*'],
+		'Addon' => ['Core/*'],
 
 		/*
 		 * "A contract BETWEEN extensions." A bridge is defined entirely by the pair it
@@ -317,7 +306,7 @@ return [
 		 * type that legitimately reaches Plugin and Addon, and it does so one named package
 		 * at a time. Mandatory per-package, see below.
 		 */
-		'Bridge' => ['Core/*', 'Library/*'],
+		'Bridge' => ['Core/*'],
 	],
 
 	/*
@@ -339,8 +328,8 @@ return [
 	 *
 	 * These ADD to the package's type rule. They never subtract. Do not "improve" this into
 	 * replacement semantics: every real case in this tree is "this bridge ADDITIONALLY
-	 * reaches these two packages", and Core/* + Library/* are granted by every type that
-	 * has any grant at all, so there is no tightening use case today. If one ever appears,
+	 * reaches these two packages", and Core/* is granted by every type that has any grant
+	 * at all, so there is no tightening use case today. If one ever appears,
 	 * add a 'deny' key at that point -- inventing the mechanism before there is a user for
 	 * it is how a config format rots.
 	 *
@@ -428,21 +417,6 @@ return [
 			'Connector/HomeKit',
 			'Module/Devices',
 		],
-
-		/*
-		 * The one deliberate exception to "Library is the floor". JsonApi's error-formatting
-		 * middleware has a single class_exists()-guarded branch that gives SlimRouter's
-		 * HttpException (404, 405, ...) its real status code and a JSON:API-formatted error
-		 * body; without it every SlimRouter routing failure in every REST module falls into
-		 * the generic handler and surfaces as a 500. It is not a structural dependency --
-		 * SlimRouter is not required to load JsonApi, and the two libraries solve unrelated
-		 * problems (JSON:API response formatting vs PSR-7 routing) -- so merging them into
-		 * one package the way the phone/websockets absorptions did would just be a stranger
-		 * package boundary for no real gain. Maintainer's decision, 2026-09-19: encode this
-		 * as a rule rather than carry it as a standing exception, so the intent is stated
-		 * where the rules live, same as Automator/DevicesModule above.
-		 */
-		'Library/JsonApi' => ['Library/SlimRouter'],
 	],
 
 	/*
@@ -619,17 +593,17 @@ return [
 	 *       of 1 is a real floor and not a formality.
 	 */
 	'selfCheck' => [
-		'minPackages' => 25, // measured 34
-		'minFiles' => 3000, // measured 4142
-		'minNeonFiles' => 40, // measured 65
+		'minPackages' => 20, // measured 29
+		'minFiles' => 3000, // measured 4397
+		'minNeonFiles' => 40, // measured 62
 		'minJsonFiles' => 600, // measured 904
-		'minReferences' => 9000, // measured 13762 (self-references included)
-		'minCrossReferences' => 3000, // measured 4534
-		'minPackagePairs' => 100, // measured 150 distinct ordered pairs
-		'minNeonReferences' => 100, // measured 161
-		'minNeonCrossReferences' => 60, // measured 97
-		'minTestsReferences' => 1200, // measured 1910 from files under <pkg>/tests/
-		'minSrcReferences' => 8000, // measured 11799 from files under <pkg>/src/
+		'minReferences' => 7500, // measured 10715 (self-references included)
+		'minCrossReferences' => 1250, // measured 1818
+		'minPackagePairs' => 35, // measured 53 distinct ordered pairs
+		'minNeonReferences' => 60, // measured 90
+		'minNeonCrossReferences' => 22, // measured 33
+		'minTestsReferences' => 900, // measured 1378 from files under <pkg>/tests/
+		'minSrcReferences' => 6500, // measured 9295 from files under <pkg>/src/
 		'minFilesPerPackage' => 1, // measured minimum 12, Bridge/RedisDbPluginTriggersModule
 	],
 ];

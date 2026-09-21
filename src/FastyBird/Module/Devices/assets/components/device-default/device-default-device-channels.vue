@@ -105,7 +105,7 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElResult, ElScrollbar, ElSkeleton, ElSkeletonItem, ElText } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
-import { AppIconWithChild, AppList } from '@fastybird/application';
+import { AppIconWithChild, AppList } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { IChannelData, IDeviceChannelsEmits, IDeviceChannelsProps } from '../../types';

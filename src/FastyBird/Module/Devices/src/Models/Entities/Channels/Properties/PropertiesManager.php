@@ -16,8 +16,9 @@
 namespace FastyBird\Module\Devices\Models\Entities\Channels\Properties;
 
 use Doctrine\DBAL;
-use FastyBird\Library\DoctrineCrud\Crud as DoctrineCrudCrud;
-use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Models;
@@ -55,8 +56,8 @@ final class PropertiesManager
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function create(
 		Utils\ArrayHash $values,
@@ -72,8 +73,8 @@ final class PropertiesManager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function update(
 		Entities\Channels\Properties\Property $entity,
@@ -89,8 +90,8 @@ final class PropertiesManager
 	}
 
 	/**
-	 * @throws DoctrineCrudExceptions\InvalidArgument
-	 * @throws DoctrineCrudExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function delete(Entities\Channels\Properties\Property $entity): bool
 	{

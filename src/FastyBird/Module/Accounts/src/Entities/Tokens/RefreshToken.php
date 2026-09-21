@@ -17,10 +17,10 @@ namespace FastyBird\Module\Accounts\Entities\Tokens;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
-use FastyBird\Core\SimpleAuth\Entities as SimpleAuthEntities;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
-use FastyBird\Library\DoctrineTimestampable;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Entities\DoctrineTimestampable;
+use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use Ramsey\Uuid;
@@ -31,14 +31,14 @@ use function sprintf;
 class RefreshToken extends SimpleAuthEntities\Tokens\Token implements
 	Entities\Entity,
 	Entities\EntityParams,
-	DoctrineTimestampable\Entities\IEntityCreated,
-	DoctrineTimestampable\Entities\IEntityUpdated
+	DoctrineTimestampable\IEntityCreated,
+	DoctrineTimestampable\IEntityUpdated
 {
 
 	use Entities\TEntity;
 	use Entities\TEntityParams;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	public const TOKEN_EXPIRATION = '+3 days';
 

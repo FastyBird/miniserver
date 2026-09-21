@@ -37,7 +37,7 @@ nettrineDbal:
 
     types:
         uuid_binary: Ramsey\Uuid\Doctrine\UuidBinaryType
-        utcdatetime: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
+        utcdatetime: FastyBird\Core\Types\DoctrineTimestampable\UTCDateTime
 
     typesMapping:
         uuid_binary: binary

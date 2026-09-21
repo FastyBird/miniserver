@@ -23,23 +23,8 @@ extensions:
     nettrineOrm                                     : Nettrine\ORM\DI\OrmExtension
     nettrineFixtures                                : Nettrine\Fixtures\DI\FixturesExtension
     nettrineMigrations                              : Nettrine\Migrations\DI\MigrationsExtension
-    ipubPhone                                       : FastyBird\Library\Phone\DI\PhoneExtension
-    ipubDoctrinePhone                               : FastyBird\Library\Phone\DI\DoctrinePhoneExtension
-    ipubDoctrineCrud                                : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
-    ipubDoctrineTimestampable                       : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    ipubWebsockets                                  : FastyBird\Library\WebSockets\DI\WebSocketsExtension
-    ipubWebsocketsWamp                              : FastyBird\Library\WebSockets\Wamp\DI\WebSocketsWAMPExtension
-    # FastyBird libs
-    fbDateTimeFactory                               : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbSimpleAuth                                    : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
-    fbJsonApi                                       : FastyBird\Library\JsonApi\DI\JsonApiExtension
-    # FastyBird app core
-    fbApplication                                   : FastyBird\Core\Application\DI\ApplicationExtension
-    fbTools                                         : FastyBird\Core\Tools\DI\ToolsExtension
-    fbExchange                                      : FastyBird\Core\Exchange\DI\ExchangeExtension
-    # FastyBird app plugins
-    fbWebServerPlugin                               : FastyBird\Plugin\WebServer\DI\WebServerExtension
-    fbWsServerPlugin                                : FastyBird\Plugin\WsServer\DI\WsServerExtension
+    # FastyBird core
+    fbCore                                          : FastyBird\Core\DI\CoreExtension
     # FastyBird modules
     fbAccountsModule                                : FastyBird\Module\Accounts\DI\AccountsExtension
     fbDevicesModule                                 : FastyBird\Module\Devices\DI\DevicesExtension
@@ -65,64 +50,59 @@ extensions:
     fbVirtualThermostatAddon                        : FastyBird\Addon\VirtualThermostat\DI\VirtualThermostatExtension
 
 decorator:
-    FastyBird\Plugin\WebServer\Router\Router:
+    FastyBird\Core\Routing\WebServer\Router:
         setup:
-            - addMiddleware(@fbJsonApi.middlewares.jsonapi)
+            - addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
             - addMiddleware(@fbAccountsModule.middlewares.urlFormat)
 
 ##################################
 # Nette extensions configuration #
 ##################################
 
-# Simple authentication
-#######################
-fbSimpleAuth:
-    token:
-        issuer: %security.issuer%
-        signature: %security.signature%
-    enable:
-        middleware: true
-        doctrine:
-            models: true
-            mapping: true
-        casbin:
-            database: true
-        nette:
-            application: true
+# FastyBird Core
+################
+fbCore:
+    simpleAuth:
+        token:
+            issuer: %security.issuer%
+            signature: %security.signature%
+        enable:
+            middleware: true
+            doctrine:
+                models: true
+                mapping: true
+            casbin:
+                database: true
+            nette:
+                application: true
+        application:
+            signInUrl: Accounts:Sign:in
+            homeUrl: App:Default:default
+    jsonApi:
+        meta:
+            copyright: FastyBird s.r.o
+    webSockets:
+        server:
+            address: %sockets.address%
+            port: %sockets.port%
+    httpServer:
+        static:
+            publicRoot: %appDir%/public/dist/
+            enabled: true
+        cors:
+            allow:
+                headers:
+                    - Content-Type
+                    - Authorization
+                    - X-Requested-With
+                    - X-Api-Key
+        server:
+            address: %server.address%
+            port: %server.port%
+            certificate: %server.certificate%
     application:
-        signInUrl: Accounts:Sign:in
-        homeUrl: App:Default:default
-
-# JSON:Api support
-##################
-fbJsonApi:
-    meta:
-        copyright: FastyBird s.r.o
-
-# WS server
-###########
-ipubWebsockets:
-    server:
-        address: %sockets.address%
-        port: %sockets.port%
-
-# Web server plugin
-###################
-fbWebServerPlugin:
-    static:
-        publicRoot: %appDir%/public/dist/
-        enabled: true
-    cors:
-        allow:
-            headers:
-                - Content-Type
-                - Authorization
-                - X-Requested-With
-                - X-Api-Key
-    server:
-        address: %server.address%
-        port: %server.port%
-        certificate: %server.certificate%
+        documents:
+            mapping: []
 
 # Modules
 #########
@@ -155,15 +135,11 @@ contributteTranslation:
         fallback: [en_US, en]
     localeResolvers: []
     dirs:
-        - %appDir%/vendor/fastybird/json-api-library/src/Translations
+        - %appDir%/vendor/fastybird/miniserver-core/src/Translations/JsonApi
 
 contributteVite:
     server: http://localhost:3000
     cookie: fb-app-vite
-
-fbApplication:
-    documents:
-        mapping: []
 
 # Doctrine
 ##########
@@ -182,7 +158,7 @@ nettrineDbal:
 
     types:
         uuid_binary: Ramsey\Uuid\Doctrine\UuidBinaryType
-        utcdatetime: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
+        utcdatetime: FastyBird\Core\Types\DoctrineTimestampable\UTCDateTime
 
     typesMapping:
         uuid_binary: binary

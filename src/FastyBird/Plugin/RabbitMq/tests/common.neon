@@ -1,30 +1,18 @@
-#
-# Plugin DI configuration
-#
-# @license        More in LICENSE.md
-# @copyright      https://www.fastybird.com
-# @author         Adam Kadlec <adam.kadlec@fastybird.com>
-# @package        FastyBird:RabbitMqPlugin!
-# @subpackage     config
-# @since          1.0.0
-#
-# @date           19.07.20
-
 php:
-    date.timezone: Europe/Prague
+	date.timezone: Europe/Prague
 
 extensions:
-    fbDateTimeFactory       : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbTools                 : FastyBird\Core\Tools\DI\ToolsExtension
-    fbExchange              : FastyBird\Core\Exchange\DI\ExchangeExtension
+	fbCore: FastyBird\Core\DI\CoreExtension
 
 fbRabbitMqPlugin:
-    queue:
-        name: testingQueueName
+	queue:
+		name: testingQueueName
 
-fbDateTimeFactory:
-    frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
+fbCore:
+	application:
+		documents:
+			mapping: []
 
-fbApplication:
-    documents:
-        mapping: []
+	dateTimeFactory:
+		frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
+

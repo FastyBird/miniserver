@@ -17,11 +17,11 @@ namespace FastyBird\Module\Devices\Schemas\Devices\Properties;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
@@ -60,7 +60,7 @@ abstract class Property extends JsonApiSchemas\JsonApi
 	public const RELATIONSHIPS_STATE = 'state';
 
 	public function __construct(
-		protected readonly Routing\IRouter $router,
+		protected readonly SlimRouterRouting\IRouter $router,
 		protected readonly Models\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
 	)
 	{
@@ -72,8 +72,8 @@ abstract class Property extends JsonApiSchemas\JsonApi
 	 * @return iterable<string, (string|bool|int|float|array<string>|array<int, (int|float|array<int, (string|int|float|null)>|null)>|array<int, array<int, (string|array<int, (string|int|float|bool)>|null)>>|null)>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 *

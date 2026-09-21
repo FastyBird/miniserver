@@ -2,7 +2,7 @@ import { computed } from 'vue';
 
 import { orderBy } from 'natural-orderby';
 
-import { injectStoresManager } from '@fastybird/tools';
+import { injectStoresManager } from '@fastybird/miniserver-core';
 
 import {
 	channelControlsStoreKey,

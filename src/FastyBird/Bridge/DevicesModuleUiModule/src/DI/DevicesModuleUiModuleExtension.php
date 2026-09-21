@@ -20,11 +20,10 @@ use FastyBird\Bridge\DevicesModuleUiModule\Consumers;
 use FastyBird\Bridge\DevicesModuleUiModule\Hydrators;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\DI as ApplicationDI;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Exchange\DI as ExchangeDI;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\DI as CoreDI;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
@@ -147,8 +146,8 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 */
 
 		if (
-			$builder->findByType('FastyBird\Library\WebSockets\Router\LinkGenerator') !== []
-			&& $builder->findByType('FastyBird\Library\WebSockets\Wamp\Topics\IStorage') !== []
+			$builder->findByType('FastyBird\Core\Routing\WebSockets\LinkGenerator') !== []
+			&& $builder->findByType('FastyBird\Core\Topics\WsServer\IStorage') !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.stateEntities'),
@@ -158,7 +157,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 				->setArguments([
 					'logger' => $logger,
 				])
-				->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
+				->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
 		}
 	}
 
@@ -188,7 +187,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(ApplicationDI\ApplicationExtension::DRIVER_TAG);
+		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);
@@ -219,12 +218,12 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 * WEBSOCKETS
 		 */
 
-		if (class_exists('FastyBird\Library\WebSockets\DI\WebSocketsExtension')) {
+		if (class_exists('FastyBird\Core\DI\CoreExtension')) {
 			try {
 				$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
 				assert($consumerService instanceof DI\Definitions\ServiceDefinition);
 
-				$wsServerService = $builder->getDefinitionByType('FastyBird\Library\WebSockets\Server\Server');
+				$wsServerService = $builder->getDefinitionByType('FastyBird\Core\Server\WsServer\Server');
 				assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
 
 				$wsServerService->addSetup(

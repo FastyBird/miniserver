@@ -17,9 +17,9 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Utilities as ToolsUtilities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use TypeError;
 use ValueError;
 use function array_unique;
@@ -36,7 +36,7 @@ final class Television extends HomeKitProtocol\Services\Generic
 {
 
 	/**
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function recalculateCharacteristics(
 		HomeKitProtocol\Characteristics\Characteristic|null $characteristic = null,
@@ -158,8 +158,8 @@ final class Television extends HomeKitProtocol\Services\Generic
 	 *
 	 * @return array<string, array<array<string, array<int|string>|bool|float|int|string|null>|int|null>|bool|int|string|null>
 	 *
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

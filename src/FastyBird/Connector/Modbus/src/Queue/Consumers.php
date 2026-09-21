@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Modbus\Queue;
 
 use FastyBird\Connector\Modbus;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use SplObjectStorage;
 

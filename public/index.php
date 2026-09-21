@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Dotenv\Dotenv;
-use FastyBird\Core\Application\Boot;
-use FastyBird\Library\Metadata;
-use FastyBird\Plugin\WebServer\Application as WebServerApplication;
+use FastyBird\Core\Boot;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Server\HttpServer as WebServerApplication;
 use Nette\Application as NetteApplication;
 
 if (isset($_ENV['FB_APP_DIR'])) {

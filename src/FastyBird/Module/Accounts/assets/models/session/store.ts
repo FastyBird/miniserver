@@ -8,8 +8,7 @@ import { Jsona } from 'jsona';
 import { jwtDecode } from 'jwt-decode';
 import lodashGet from 'lodash.get';
 
-import { ModulePrefix } from '@fastybird/metadata-library';
-import { injectStoresManager } from '@fastybird/tools';
+import { ModulePrefix, injectStoresManager } from '@fastybird/miniserver-core';
 
 import { accountsStoreKey } from '../../configuration';
 import { ApiError } from '../../errors';

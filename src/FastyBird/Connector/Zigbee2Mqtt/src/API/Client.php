@@ -20,8 +20,8 @@ use Closure;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Clients;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
@@ -160,7 +160,7 @@ final class Client
 	 * @return Promise\PromiseInterface<mixed>
 	 *
 	 * @throws InvalidArgumentException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	public function connect(int $timeout = 5): Promise\PromiseInterface
 	{

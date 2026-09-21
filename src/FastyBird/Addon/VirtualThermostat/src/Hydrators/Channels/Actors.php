@@ -20,9 +20,9 @@ use FastyBird\Addon\VirtualThermostat\Hydrators;
 use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Ramsey\Uuid;
 use function is_string;
@@ -47,7 +47,7 @@ final class Actors extends VirtualHydrators\Channels\Channel
 
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(

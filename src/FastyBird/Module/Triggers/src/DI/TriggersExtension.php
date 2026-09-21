@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Triggers\DI;
 
 use Contributte\Translation;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\DI as ApplicationDI;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Library\SlimRouter\Routing as SlimRouterRouting;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\DI as CoreDI;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Triggers\Commands;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Hydrators;
@@ -217,7 +217,7 @@ class TriggersExtension extends DI\CompilerExtension implements Translation\DI\T
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(ApplicationDI\ApplicationExtension::DRIVER_TAG);
+		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

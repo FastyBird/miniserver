@@ -74,8 +74,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { vLoading } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
-import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
-import { useBreakpoints } from '@fastybird/tools';
+import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading, useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 import { useHead } from '@unhead/vue';
 

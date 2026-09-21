@@ -31,7 +31,7 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
-    "fastybird/doctrine-orm-query-library": "@dev",
+    "fastybird/miniserver-core": "@dev",
     "php": ">=8.4.0",
     "ext-gmp": "*",
     "ext-pcntl": "*",
@@ -43,13 +43,8 @@
     "contributte/translation": "^2.0",
     "cweagans/composer-patches": "^1.7",
     "evenement/evenement": "^3.0",
-    "fastybird/application": "@dev",
     "fastybird/devices-module": "@dev",
-    "fastybird/exchange": "@dev",
-    "fastybird/metadata-library": "@dev",
-    "fastybird/tools": "@dev",
     "hashids/hashids": "^4.1",
-    "fastybird/slim-router-library": "@dev",
     "leigh/curve25519": "^0.1",
     "nette/di": "^3.2",
     "orisai/object-mapper": "^0.3",

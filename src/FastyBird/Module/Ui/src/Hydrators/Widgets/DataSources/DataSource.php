@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\DataSources;
 
-use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 

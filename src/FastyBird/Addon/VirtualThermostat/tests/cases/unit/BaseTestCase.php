@@ -4,8 +4,8 @@ namespace FastyBird\Addon\VirtualThermostat\Tests\Cases\Unit;
 
 use Error;
 use FastyBird\Addon\VirtualThermostat\DI;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 use PHPUnit\Framework\TestCase;
 use function constant;

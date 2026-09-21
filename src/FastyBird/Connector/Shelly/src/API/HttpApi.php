@@ -19,9 +19,10 @@ use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Services;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Schemas as ToolsSchemas;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Schemas\Tools as ToolsSchemas;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
@@ -455,7 +456,7 @@ abstract class HttpApi
 				$body,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ToolsExceptions\Logic | ToolsExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
 			if ($throw) {
 				throw new Exceptions\HttpApiCall(
 					'Could not validate received response payload',

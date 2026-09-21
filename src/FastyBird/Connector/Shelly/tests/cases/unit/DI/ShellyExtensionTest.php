@@ -15,7 +15,7 @@ use FastyBird\Connector\Shelly\Services;
 use FastyBird\Connector\Shelly\Subscribers;
 use FastyBird\Connector\Shelly\Tests;
 use FastyBird\Connector\Shelly\Writers;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 
 final class ShellyExtensionTest extends Tests\Cases\Unit\BaseTestCase

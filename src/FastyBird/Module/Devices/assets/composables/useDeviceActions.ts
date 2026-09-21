@@ -4,8 +4,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { ElMessageBox } from 'element-plus';
 import get from 'lodash.get';
 
-import { injectStoresManager } from '@fastybird/tools';
-import { useFlashMessage } from '@fastybird/tools';
+import { injectStoresManager } from '@fastybird/miniserver-core';
+import { useFlashMessage } from '@fastybird/miniserver-core';
 
 import { devicesStoreKey } from '../configuration';
 import { ApplicationError } from '../errors';

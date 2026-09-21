@@ -3,8 +3,7 @@ import { App } from 'vue';
 import defaultsDeep from 'lodash.defaultsdeep';
 
 import { connectorPlugins } from '@fastybird/devices-module';
-import { ConnectorSource } from '@fastybird/metadata-library';
-import { IExtensionOptions } from '@fastybird/tools';
+import { ConnectorSource, IExtensionOptions } from '@fastybird/miniserver-core';
 
 import { ConnectorDetail, ConnectorDevices, ConnectorSettingsEdit } from './components';
 import locales, { MessageSchema } from './locales';

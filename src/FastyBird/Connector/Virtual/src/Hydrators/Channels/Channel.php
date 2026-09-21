@@ -18,10 +18,10 @@ namespace FastyBird\Connector\Virtual\Hydrators\Channels;
 use Doctrine\Persistence;
 use FastyBird\Connector\Virtual\Entities;
 use FastyBird\Connector\Virtual\Schemas;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Helpers;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
@@ -47,7 +47,7 @@ abstract class Channel extends DevicesHydrators\Channels\Channel
 		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		Helpers\CrudReader|null $crudReader = null,
+		JsonApiHelpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($managerRegistry, $translator, $crudReader);
@@ -55,7 +55,7 @@ abstract class Channel extends DevicesHydrators\Channels\Channel
 
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(

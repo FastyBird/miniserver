@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Documents\Devi
 
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\Thermostat::class)]
 #[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Thermostat::TYPE)]

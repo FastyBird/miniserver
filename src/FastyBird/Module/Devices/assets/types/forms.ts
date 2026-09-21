@@ -1,4 +1,4 @@
-import { DataType } from '@fastybird/metadata-library';
+import { DataType } from '@fastybird/miniserver-core';
 
 import { IChannel, IChannelProperty, IConnector, IConnectorProperty, IDevice, IDeviceProperty } from '../types';
 

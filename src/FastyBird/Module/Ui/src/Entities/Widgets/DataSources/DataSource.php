@@ -17,9 +17,9 @@ namespace FastyBird\Module\Ui\Entities\Widgets\DataSources;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Library\DoctrineCrud;
-use FastyBird\Library\DoctrineTimestampable;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Entities\DoctrineTimestampable;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Entities;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -45,13 +45,13 @@ use Ramsey\Uuid;
 #[ORM\MappedSuperclass]
 abstract class DataSource implements Entities\Entity,
 	Entities\EntityParams,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
 {
 
 	use Entities\TEntity;
 	use Entities\TEntityParams;
-	use DoctrineTimestampable\Entities\TEntityCreated;
-	use DoctrineTimestampable\Entities\TEntityUpdated;
+	use DoctrineTimestampable\TEntityCreated;
+	use DoctrineTimestampable\TEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'data_source_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
@@ -92,7 +92,7 @@ abstract class DataSource implements Entities\Entity,
 
 	abstract public function hasRelation(string $relation): bool;
 
-	abstract public function getRelation(string $relation): DoctrineCrud\Entities\IEntity|null;
+	abstract public function getRelation(string $relation): DoctrineCrud\IEntity|null;
 
 	/**
 	 * {@inheritDoc}

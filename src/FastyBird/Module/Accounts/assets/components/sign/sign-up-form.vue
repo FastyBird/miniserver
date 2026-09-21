@@ -117,7 +117,7 @@ import { useRouter } from 'vue-router';
 import { ElButton, ElForm, ElFormItem, ElInput, FormInstance, FormItemInstance, FormRules } from 'element-plus';
 import get from 'lodash.get';
 
-import { useFlashMessage } from '@fastybird/tools';
+import { useFlashMessage } from '@fastybird/miniserver-core';
 
 import { useRoutesNames } from '../../composables';
 import { FormResultType, FormResultTypes } from '../../types';

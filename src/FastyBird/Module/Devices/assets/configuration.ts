@@ -1,7 +1,6 @@
 import { InjectionKey } from 'vue';
 
-import { ConnectorSource } from '@fastybird/metadata-library';
-import { StoreInjectionKey } from '@fastybird/tools';
+import { ConnectorSource, StoreInjectionKey } from '@fastybird/miniserver-core';
 
 import {
 	IChannelControlsActions,

@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Triggers\Controls;
 
-use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Router;
@@ -47,7 +47,7 @@ final class Control extends JsonApiSchemas\JsonApi
 	 */
 	public const RELATIONSHIPS_TRIGGER = 'trigger';
 
-	public function __construct(private readonly Routing\IRouter $router)
+	public function __construct(private readonly SlimRouterRouting\IRouter $router)
 	{
 	}
 

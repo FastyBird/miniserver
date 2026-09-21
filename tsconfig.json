@@ -20,8 +20,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "types": [
-      "@fastybird/tools",
-      "@fastybird/metadata-library",
+      "@fastybird/miniserver-core",
       "@intlify/unplugin-vue-i18n/messages",
       "@types/lodash",
       "@types/md5",

@@ -28,14 +28,12 @@
     "source": "https://github.com/FastyBird/miniserver"
   },
   "require": {
-    "fastybird/doctrine-orm-query-library": "@dev",
+    "fastybird/miniserver-core": "@dev",
     "php": ">=8.4.0",
     "contributte/console": "^0.9",
     "contributte/monolog": "^0.6",
     "contributte/translation": "^2.0",
     "cweagans/composer-patches": "^1.7",
-    "fastybird/application": "@dev",
-    "fastybird/metadata-library": "@dev",
     "fastybird/devices-module": "@dev",
     "fastybird/homekit-connector": "@dev",
     "fastybird/shelly-connector": "@dev",

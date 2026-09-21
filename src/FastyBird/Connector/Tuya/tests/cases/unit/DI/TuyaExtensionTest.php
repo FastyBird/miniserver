@@ -15,7 +15,7 @@ use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Subscribers;
 use FastyBird\Connector\Tuya\Tests;
 use FastyBird\Connector\Tuya\Writers;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 
 final class TuyaExtensionTest extends Tests\Cases\Unit\BaseTestCase

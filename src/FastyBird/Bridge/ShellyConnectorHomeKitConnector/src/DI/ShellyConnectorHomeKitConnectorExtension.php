@@ -25,10 +25,10 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\DI as ApplicationDI;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Library\SlimRouter\Routing as SlimRouterRouting;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\DI as CoreDI;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
@@ -249,7 +249,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(ApplicationDI\ApplicationExtension::DRIVER_TAG);
+		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

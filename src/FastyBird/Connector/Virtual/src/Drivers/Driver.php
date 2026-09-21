@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Virtual\Drivers;
 
 use DateTimeInterface;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use React\Promise;
 

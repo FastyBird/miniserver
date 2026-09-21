@@ -1,6 +1,6 @@
 import { TJsonaModel } from 'jsona/lib/JsonaTypes';
 
-import { ButtonPayload, CoverPayload, DataType, SwitchPayload } from '@fastybird/metadata-library';
+import { ButtonPayload, CoverPayload, DataType, SwitchPayload } from '@fastybird/miniserver-core';
 
 import { IEntityMeta, PropertyCategory } from '../../types';
 

@@ -5,7 +5,7 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import get from 'lodash.get';
 import 'virtual:uno.css';
 
-import { IAccountDetails, IExtensionOptions, injectStoresManager, provideAccountManager, useBackend } from '@fastybird/tools';
+import { IAccountDetails, IExtensionOptions, injectStoresManager, provideAccountManager, useBackend } from '@fastybird/miniserver-core';
 
 import { accountStoreKey, accountsStoreKey, emailsStoreKey, identitiesStoreKey, metaKey, rolesStoreKey, sessionStoreKey } from './configuration';
 import locales, { MessageSchema } from './locales';

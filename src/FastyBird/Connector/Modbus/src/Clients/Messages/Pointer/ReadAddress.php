@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Clients\Messages\Pointer;
 
 use FastyBird\Connector\Modbus\Clients;
 use FastyBird\Connector\Modbus\Documents;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 
 /**

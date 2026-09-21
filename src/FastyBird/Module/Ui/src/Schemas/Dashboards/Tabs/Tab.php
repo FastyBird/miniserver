@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Schemas\Dashboards\Tabs;
 
-use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
@@ -48,7 +48,7 @@ final class Tab extends JsonApiSchemas\JsonApi
 
 	public const RELATIONSHIPS_WIDGETS = 'widgets';
 
-	public function __construct(protected readonly Routing\IRouter $router)
+	public function __construct(protected readonly SlimRouterRouting\IRouter $router)
 	{
 	}
 

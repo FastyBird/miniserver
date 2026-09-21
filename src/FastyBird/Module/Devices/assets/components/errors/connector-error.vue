@@ -38,7 +38,7 @@ import type { ComponentPublicInstance } from 'vue';
 
 import { ElResult, ElText } from 'element-plus';
 
-import { AppIconWithChild } from '@fastybird/application';
+import { AppIconWithChild } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { ApplicationError } from '../../errors';

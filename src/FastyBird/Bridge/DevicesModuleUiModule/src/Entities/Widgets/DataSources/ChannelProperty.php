@@ -16,8 +16,8 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
-use FastyBird\Library\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Ui\Entities as UiEntities;
 use Ramsey\Uuid;

@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Sonoff\Documents\Connectors;
 
 use FastyBird\Connector\Sonoff\Entities;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Connectors\Connector::class)]

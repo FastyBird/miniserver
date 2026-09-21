@@ -17,12 +17,12 @@ namespace FastyBird\Module\Ui\Hydrators\Widgets;
 
 use Contributte\Translation;
 use Doctrine\Persistence;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\DoctrineCrud\Entities as DoctrineCrudEntities;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
-use FastyBird\Library\JsonApi\JsonApi as JsonApiJsonApi;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Encoding\JsonApi as JsonApiJsonApi;
+use FastyBird\Core\Entities\DoctrineCrud as DoctrineCrudEntities;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Hydrators;
 use FastyBird\Module\Ui\Models;
@@ -102,7 +102,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDisplayRelationship(
@@ -129,7 +129,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildDisplay(
@@ -274,7 +274,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>
 	 *
 	 * @throws DI\MissingServiceException
-	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
@@ -335,7 +335,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateTabsRelationship(
@@ -380,7 +380,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateGroupsRelationship(

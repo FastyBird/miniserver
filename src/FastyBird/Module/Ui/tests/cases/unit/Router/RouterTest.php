@@ -3,9 +3,9 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\Router;
 
 use Error;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\SlimRouter;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -45,7 +45,7 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('prefixedRoutes')]
 	public function testPrefixedRoutes(string $url, string $token, int $statusCode): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
 
 		$headers = [
 			'authorization' => $token,

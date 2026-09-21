@@ -4,8 +4,8 @@ import { useI18n } from 'vue-i18n';
 import { ElMessageBox } from 'element-plus';
 import get from 'lodash.get';
 
-import { injectStoresManager } from '@fastybird/tools';
-import { useFlashMessage } from '@fastybird/tools';
+import { injectStoresManager } from '@fastybird/miniserver-core';
+import { useFlashMessage } from '@fastybird/miniserver-core';
 
 import { channelPropertiesStoreKey, connectorPropertiesStoreKey, devicePropertiesStoreKey } from '../configuration';
 import { ApplicationError } from '../errors';

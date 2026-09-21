@@ -2,8 +2,8 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers\Documents;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -18,7 +18,7 @@ final class DummyActionDocument extends Documents\Actions\Action
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $trigger,
 		bool $enabled,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		#[ObjectMapper\Modifiers\FieldName('do_item')]
 		private readonly Uuid\UuidInterface $doItem,
 		#[ObjectMapper\Rules\AnyOf([

@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas\Device
 
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Schemas as HomeKitSchemas;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 
 /**
  * Thermostat device entity schema

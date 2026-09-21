@@ -8,8 +8,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Bridge\DevicesModuleUiModule\Exceptions;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Bridge\DevicesModuleUiModule\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Library\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -33,7 +32,6 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DI\MissingServiceException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
 	 * @throws Error
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
@@ -85,7 +83,6 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DI\MissingServiceException
-	 * @throws DoctrineCrudExceptions\InvalidArgument
 	 * @throws Error
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException

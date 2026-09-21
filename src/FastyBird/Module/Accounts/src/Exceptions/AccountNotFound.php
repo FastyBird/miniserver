@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Exceptions;
 
-use FastyBird\Core\SimpleAuth\Exceptions as SimpleAuthExceptions;
+use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
 
 class AccountNotFound extends SimpleAuthExceptions\Authentication implements Exception
 {

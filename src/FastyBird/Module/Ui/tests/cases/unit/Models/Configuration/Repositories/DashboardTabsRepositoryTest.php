@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\Models\Configuration\Repositories;
 
 use Error;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;

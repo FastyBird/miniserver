@@ -1,0 +1,50 @@
+{
+  "name": "@fastybird/miniserver-core",
+  "exports": {
+    ".": "./assets/entry.ts"
+  },
+  "types": "./assets/entry.ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "FastyBird MiniServer core application shell, shared tools, metadata and WebSockets/WAMP client for Vue 3",
+  "keywords": [
+    "fastybird",
+    "fb",
+    "core",
+    "ui",
+    "interface",
+    "vue",
+    "metadata",
+    "websocket",
+    "wamp"
+  ],
+  "homepage": "https://www.fastybird.com",
+  "bugs": "https://github.com/FastyBird/miniserver/issues",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "FastyBird s.r.o.",
+    "email": "code@fastybird.com",
+    "url": "https://www.fastybird.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FastyBird/miniserver.git"
+  },
+  "sideEffects": true,
+  "dependencies": {
+    "@iconify/vue": "^5",
+    "@vueuse/core": "^11.2",
+    "axios": "^1.6",
+    "lodash.get": "^4.4",
+    "mitt": "^3.0"
+  },
+  "peerDependencies": {
+    "element-plus": "^2.8",
+    "pinia": "^2.2",
+    "unocss": "^0.64",
+    "vue": "^3.5",
+    "vue-i18n": "^10.0",
+    "vue-router": "^4.4"
+  }
+}

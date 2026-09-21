@@ -105,31 +105,11 @@
                 <element key="src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit" value="FastyBird\Connector\Zigbee2Mqtt\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Connector/Zigbee2Mqtt/tests/tools" value="FastyBird\Connector\Zigbee2Mqtt\Tests\Tools"/>
 
-                <element key="src/FastyBird/Core/Application/src" value="FastyBird\Core\Application"/>
-                <element key="src/FastyBird/Core/Application/tests/cases/unit" value="FastyBird\Core\Application\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Core/Application/tests/fixtures" value="FastyBird\Core\Application\Tests\Fixtures"/>
-                <element key="src/FastyBird/Core/Application/tests/fixtures/dummy" value="FastyBird\Core\Application\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Core/Application/tests/tools" value="FastyBird\Core\Application\Tests\Tools"/>
-
-                <element key="src/FastyBird/Core/Exchange/src" value="FastyBird\Core\Exchange"/>
-                <element key="src/FastyBird/Core/Exchange/tests/cases/unit" value="FastyBird\Core\Exchange\Tests\Cases\Unit"/>
-
-                <element key="src/FastyBird/Core/Tools/src" value="FastyBird\Core\Tools"/>
-                <element key="src/FastyBird/Core/SimpleAuth/src" value="FastyBird\Core\SimpleAuth"/>
-                <element key="src/FastyBird/Core/Tools/tests/cases/unit" value="FastyBird\Core\Tools\Tests\Cases\Unit"/>
-
-                <element key="src/FastyBird/Library/DateTimeFactory/src" value="FastyBird\Library\DateTimeFactory"/>
-                <element key="src/FastyBird/Library/Phone/src" value="FastyBird\Library\Phone"/>
-                <element key="src/FastyBird/Library/DoctrineOrmQuery/src" value="FastyBird\Library\DoctrineOrmQuery"/>
-                <element key="src/FastyBird/Library/DoctrineCrud/src" value="FastyBird\Library\DoctrineCrud"/>
-                <element key="src/FastyBird/Library/DoctrineTimestampable/src" value="FastyBird\Library\DoctrineTimestampable"/>
-                <element key="src/FastyBird/Library/JsonApi/src" value="FastyBird\Library\JsonApi"/>
-                <element key="src/FastyBird/Library/Metadata/src" value="FastyBird\Library\Metadata"/>
-                <element key="src/FastyBird/Library/Metadata/tests/cases/unit" value="FastyBird\Library\Metadata\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Library/Metadata/tests/fixtures" value="FastyBird\Library\Metadata\Tests\Fixtures"/>
-                <element key="src/FastyBird/Library/Metadata/tests/fixtures/dummy" value="FastyBird\Library\Metadata\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Library/WebSockets/src" value="FastyBird\Library\WebSockets"/>
-                <element key="src/FastyBird/Library/SlimRouter/src" value="FastyBird\Library\SlimRouter"/>
+                <element key="src/FastyBird/Core/Core/src" value="FastyBird\Core"/>
+                <element key="src/FastyBird/Core/Core/tests/cases/unit" value="FastyBird\Core\Tests\Cases\Unit"/>
+                <element key="src/FastyBird/Core/Core/tests/fixtures" value="FastyBird\Core\Tests\Fixtures"/>
+                <element key="src/FastyBird/Core/Core/tests/fixtures/dummy" value="FastyBird\Core\Tests\Fixtures\Dummy"/>
+                <element key="src/FastyBird/Core/Core/tests/tools" value="FastyBird\Core\Tests\Tools"/>
 
                 <element key="src/FastyBird/Module/Accounts/src" value="FastyBird\Module\Accounts"/>
                 <element key="src/FastyBird/Module/Accounts/tests/cases/unit" value="FastyBird\Module\Accounts\Tests\Cases\Unit"/>
@@ -175,12 +155,6 @@
                 <element key="src/FastyBird/Plugin/RedisDbCache/src" value="FastyBird\Plugin\RedisDbCache"/>
                 <element key="src/FastyBird/Plugin/RedisDbCache/tests/cases/unit" value="FastyBird\Plugin\RedisDbCache\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Plugin/RedisDbCache/tests/tools" value="FastyBird\Plugin\RedisDbCache\Tests\Tools"/>
-
-                <element key="src/FastyBird/Plugin/WebServer/src" value="FastyBird\Plugin\WebServer"/>
-                <element key="src/FastyBird/Plugin/WebServer/tests/cases/unit" value="FastyBird\Plugin\WebServer\Tests\Cases\Unit"/>
-
-                <element key="src/FastyBird/Plugin/WsServer/src" value="FastyBird\Plugin\WsServer"/>
-                <element key="src/FastyBird/Plugin/WsServer/tests/cases/unit" value="FastyBird\Plugin\WsServer\Tests\Cases\Unit"/>
             </property>
         </properties>
     </rule>
@@ -205,8 +179,11 @@
     </rule>
 
     <!-- A pre-Nette-4.0 Nette\PhpGenerator\Literal rename guard: a conditional class_alias()
-         ahead of the extension class declaration. Behaviour-preserving, kept as absorbed. -->
+         ahead of the extension class declaration. Behaviour-preserving, kept as absorbed.
+         Originally exempted on Library/WebSockets/src/DI/WebSocketsExtension.php; Task 18
+         (Core consolidation) transplanted the same guard into the merged CoreExtension.php,
+         so the exemption moves with it. -->
     <rule ref="PSR1.Files.SideEffects">
-        <exclude-pattern>src/FastyBird/Library/WebSockets/src/DI/WebSocketsExtension\.php</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Core/Core/src/DI/CoreExtension\.php</exclude-pattern>
     </rule>
 </ruleset>

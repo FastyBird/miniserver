@@ -39,8 +39,7 @@
   "types": "./assets/entry.ts",
   "sideEffects": true,
   "dependencies": {
-    "@fastybird/metadata-library": "workspace:*",
-    "@fastybird/websockets-library": "workspace:*",
+    "@fastybird/miniserver-core": "workspace:*",
     "@vueuse/core": "^11.2",
     "ajv": "^8.12",
     "ajv-formats": "^3.0",

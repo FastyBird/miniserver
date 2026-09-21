@@ -18,12 +18,13 @@ namespace FastyBird\Module\Triggers\Controllers;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Library\DoctrineCrud;
-use FastyBird\Library\DoctrineOrmQuery\ResultSet;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Builder as JsonApiBuilder;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
+use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
+use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Triggers\Exceptions;
 use FastyBird\Module\Triggers\Router;
 use Fig\Http\Message\RequestMethodInterface;
@@ -63,7 +64,7 @@ abstract class BaseV1
 
 	protected Router\Validator $routesValidator;
 
-	/** @var JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> */
+	/** @var JsonApiHydrators\Container<DoctrineCrud\IEntity> */
 	protected JsonApiHydrators\Container $hydratorsContainer;
 
 	protected Log\LoggerInterface $logger;
@@ -94,7 +95,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> $hydratorsContainer
+	 * @param JsonApiHydrators\Container<DoctrineCrud\IEntity> $hydratorsContainer
 	 */
 	public function injectHydratorsContainer(JsonApiHydrators\Container $hydratorsContainer): void
 	{
@@ -155,7 +156,7 @@ abstract class BaseV1
 				strval($this->translator->translate('//triggers-module.base.messages.notValidJson.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.notValidJson.message')),
 			);
-		} catch (JsonApi\Exceptions\Runtime) {
+		} catch (ApplicationExceptions\Runtime) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//triggers-module.base.messages.notValidJsonApi.heading')),
@@ -207,14 +208,14 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param DoctrineCrud\Entities\IEntity|ResultSet<DoctrineCrud\Entities\IEntity>|array<DoctrineCrud\Entities\IEntity> $data
+	 * @param DoctrineCrud\IEntity|ResultSet<DoctrineCrud\IEntity>|array<DoctrineCrud\IEntity> $data
 	 *
 	 * @throws Exception
 	 */
 	protected function buildResponse(
 		Message\ServerRequestInterface $request,
 		ResponseInterface $response,
-		DoctrineCrud\Entities\IEntity|ResultSet|array $data,
+		DoctrineCrud\IEntity|ResultSet|array $data,
 	): ResponseInterface
 	{
 		$totalCount = null;
@@ -233,11 +234,11 @@ abstract class BaseV1
 				}
 			}
 
-			/** @var array<DoctrineCrud\Entities\IEntity> $entity */
+			/** @var array<DoctrineCrud\IEntity> $entity */
 			$entity = $data->toArray();
 
 		} elseif (is_array($data)) {
-			/** @var array<DoctrineCrud\Entities\IEntity> $entity */
+			/** @var array<DoctrineCrud\IEntity> $entity */
 			$entity = $data;
 
 		} else {

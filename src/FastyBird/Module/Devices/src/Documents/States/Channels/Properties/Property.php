@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Devices\Documents\States\Channels\Properties;
 
 use DateTimeInterface;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\ObjectMapper as ApplicationObjectMapper;
-use FastyBird\Core\Exchange\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use Ramsey\Uuid;
@@ -44,7 +44,7 @@ final class Property extends Devices\Documents\States\Property
 
 	public function __construct(
 		Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\Rules\UuidValue()]
+		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $channel,
 		Documents\States\StateValues $read,
 		Documents\States\StateValues $get,

@@ -10,7 +10,7 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Hydrators;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Router;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 
 final class VirtualThermostatAddonHomeKitConnectorExtensionTest extends Tests\Cases\Unit\BaseTestCase

@@ -116,7 +116,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElDialog, ElIcon, ElLoading, useNamespace } from 'element-plus';
 
-import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
+import { injectStoresManager, useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { sessionStoreKey } from '../../configuration';

@@ -18,9 +18,9 @@ namespace FastyBird\Module\Accounts\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\SimpleAuth;
-use FastyBird\Core\SimpleAuth\Exceptions as SimpleAuthExceptions;
-use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
+use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
@@ -64,7 +64,7 @@ final class AccountEntity implements Common\EventSubscriber
 	 * @param Persistence\Event\LifecycleEventArgs<ORM\EntityManagerInterface> $eventArgs
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws SimpleAuthExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function prePersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{
@@ -90,7 +90,7 @@ final class AccountEntity implements Common\EventSubscriber
 
 	/**
 	 * @throws Exceptions\AccountRoleInvalid
-	 * @throws SimpleAuthExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function onFlush(ORM\Event\OnFlushEventArgs $eventArgs): void
 	{

@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Router;
 
 use FastyBird\Connector\NsPanel\Controllers;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 
 /**
  * Connector router configuration
@@ -26,7 +26,7 @@ use FastyBird\Library\SlimRouter\Routing;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Router extends Routing\Router
+class Router extends SlimRouterRouting\Router
 {
 
 	public const URL_GATEWAY_ID = 'gateway';

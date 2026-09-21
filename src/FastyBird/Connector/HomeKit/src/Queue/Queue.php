@@ -17,7 +17,7 @@ namespace FastyBird\Connector\HomeKit\Queue;
 
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Queue\Messages\Message;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use SplQueue;
 

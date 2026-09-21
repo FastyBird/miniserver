@@ -90,7 +90,7 @@ import { I18nT, useI18n } from 'vue-i18n';
 
 import { ElResult, ElScrollbar, ElTag, ElText } from 'element-plus';
 
-import { AppIconWithChild, AppList } from '@fastybird/application';
+import { AppIconWithChild, AppList } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { ChannelPropertyIdentifier, IChannelDetailProps, IChannelProperty, PropertyType } from '../../types';

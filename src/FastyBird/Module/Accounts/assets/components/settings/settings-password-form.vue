@@ -63,7 +63,7 @@ import { InternalRuleItem, SyncValidateResult } from 'async-validator';
 import { ElForm, ElFormItem, ElInput, FormInstance, FormRules } from 'element-plus';
 import get from 'lodash.get';
 
-import { injectStoresManager, useFlashMessage } from '@fastybird/tools';
+import { injectStoresManager, useFlashMessage } from '@fastybird/miniserver-core';
 
 import { accountStoreKey } from '../../configuration';
 import { FormResultType, FormResultTypes, LayoutTypes } from '../../types';

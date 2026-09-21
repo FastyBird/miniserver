@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Triggers\Models\States;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Documents;
 use FastyBird\Module\Triggers\Entities;
@@ -54,7 +54,7 @@ final class ConditionsManager
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 */
 	public function create(
 		Entities\Conditions\Condition $condition,
@@ -77,7 +77,7 @@ final class ConditionsManager
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 */
 	public function update(
 		Entities\Conditions\Condition $condition,
@@ -105,7 +105,7 @@ final class ConditionsManager
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 */
 	public function delete(
 		Entities\Conditions\Condition $condition,
@@ -129,7 +129,7 @@ final class ConditionsManager
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 */
 	private function publishEntity(
 		Entities\Conditions\Condition $condition,

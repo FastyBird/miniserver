@@ -17,7 +17,7 @@ namespace FastyBird\Connector\FbMqtt\Queue\Consumers;
 
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Queue;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use TypeError;
 use ValueError;
 use function array_merge;

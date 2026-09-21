@@ -17,11 +17,12 @@ namespace FastyBird\Module\Devices\Subscribers;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Application\EventLoop\Status;
-use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\EventLoop\Application\Status;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Documents;
@@ -77,8 +78,8 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	 * @throws Exception
 	 * @throws Exceptions\InvalidState
 	 * @throws ToolsExceptions\InvalidData
-	 * @throws ToolsExceptions\Logic
-	 * @throws ToolsExceptions\MalformedInput
+	 * @throws ApplicationExceptions\Logic
+	 * @throws ApplicationExceptions\MalformedInput
 	 */
 	public function stateCreated(
 		Events\ConnectorPropertyStateEntityCreated|Events\DevicePropertyStateEntityCreated|Events\ChannelPropertyStateEntityCreated $event,
@@ -99,8 +100,8 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	 * @throws Exception
 	 * @throws Exceptions\InvalidState
 	 * @throws ToolsExceptions\InvalidData
-	 * @throws ToolsExceptions\Logic
-	 * @throws ToolsExceptions\MalformedInput
+	 * @throws ApplicationExceptions\Logic
+	 * @throws ApplicationExceptions\MalformedInput
 	 */
 	public function stateUpdated(
 		Events\ConnectorPropertyStateEntityUpdated|Events\DevicePropertyStateEntityUpdated|Events\ChannelPropertyStateEntityUpdated $event,
@@ -132,8 +133,8 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	/**
 	 * @throws Exception
 	 * @throws ToolsExceptions\InvalidData
-	 * @throws ToolsExceptions\Logic
-	 * @throws ToolsExceptions\MalformedInput
+	 * @throws ApplicationExceptions\Logic
+	 * @throws ApplicationExceptions\MalformedInput
 	 */
 	private function publishDocument(
 		MetadataTypes\Sources\Source $source,

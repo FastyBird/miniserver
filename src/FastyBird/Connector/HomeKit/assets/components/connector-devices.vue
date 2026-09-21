@@ -80,8 +80,8 @@ import { useI18n } from 'vue-i18n';
 import { ElButton, ElResult, ElSkeleton, ElSkeletonItem, ElText } from 'element-plus';
 import { orderBy } from 'natural-orderby';
 
-import { AppIconWithChild } from '@fastybird/application';
 import { IConnectorDevicesEmits, IConnectorDevicesProps, IDeviceData } from '@fastybird/devices-module';
+import { AppIconWithChild } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { ConnectorDevice } from '../components';

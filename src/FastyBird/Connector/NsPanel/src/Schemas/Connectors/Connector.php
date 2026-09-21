@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Schemas\Connectors;
 
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 
 /**

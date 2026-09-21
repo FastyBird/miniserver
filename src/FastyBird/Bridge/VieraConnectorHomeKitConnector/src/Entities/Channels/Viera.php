@@ -18,7 +18,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities\Channels;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Ramsey\Uuid;
 use function assert;
 

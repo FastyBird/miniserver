@@ -17,7 +17,7 @@ namespace FastyBird\Addon\VirtualThermostat\Documents\Channels;
 
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\State::class)]
 #[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\State::TYPE)]

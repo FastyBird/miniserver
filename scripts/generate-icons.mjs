@@ -15,11 +15,11 @@
  *
  * Usage:
  *   node scripts/generate-icons.mjs
- *   node_modules/.bin/prettier --write src/FastyBird/Core/Application/assets/icons.generated.ts
+ *   node_modules/.bin/prettier --write src/FastyBird/Core/Core/assets/application/icons.generated.ts
  *
  * Regenerate this file whenever icon usage changes -- a new, removed, or
  * renamed `<Icon icon="fa6-...:...">` call site -- and commit the result. The
- * output is consumed by src/FastyBird/Core/Application/assets/main.ts before
+ * output is consumed by src/FastyBird/Core/Core/assets/application/main.ts before
  * the app mounts.
  */
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
@@ -31,7 +31,7 @@ import { getIcons } from '@iconify/utils';
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(SCRIPT_DIR, '..');
 const SRC_DIR = join(ROOT, 'src', 'FastyBird');
-const OUTPUT_FILE = join(ROOT, 'src', 'FastyBird', 'Core', 'Application', 'assets', 'icons.generated.ts');
+const OUTPUT_FILE = join(ROOT, 'src', 'FastyBird', 'Core', 'Core', 'assets', 'application', 'icons.generated.ts');
 
 // Kept in sync with the audit command from the design spec / final review:
 //   grep -rhoE "fa6-(solid|regular|brands):[a-z0-9-]+" --include='*.ts' --include='*.vue' src/FastyBird | sort -u
@@ -138,7 +138,7 @@ const headerLines = [
 	'//',
 	'// Regenerate whenever icon usage changes, and commit the result:',
 	'//   node scripts/generate-icons.mjs',
-	'//   node_modules/.bin/prettier --write src/FastyBird/Core/Application/assets/icons.generated.ts',
+	'//   node_modules/.bin/prettier --write src/FastyBird/Core/Core/assets/application/icons.generated.ts',
 	'//',
 	`// Icon ids: ${ids.length} (${summary}).`,
 	'',

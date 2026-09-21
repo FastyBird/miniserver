@@ -21,12 +21,12 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\DoctrineCrud\Entities as DoctrineCrudEntities;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Helpers;
-use FastyBird\Library\JsonApi\JsonApi as JsonApiJsonApi;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Encoding\JsonApi as JsonApiJsonApi;
+use FastyBird\Core\Entities\DoctrineCrud as DoctrineCrudEntities;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -88,7 +88,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 		private readonly DI\Container $container,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		Helpers\CrudReader|null $crudReader = null,
+		JsonApiHelpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($connectorsRepository, $managerRegistry, $translator, $crudReader);
@@ -103,7 +103,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @param Entities\Devices\Shelly|null $entity
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
@@ -145,7 +145,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
@@ -200,7 +200,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @return array<mixed>
 	 *
 	 * @throws DI\MissingServiceException
-	 * @throws JsonApiExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws Throwable
 	 */

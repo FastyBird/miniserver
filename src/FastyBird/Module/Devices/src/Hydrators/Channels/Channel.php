@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Devices\Hydrators\Channels;
 
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Schemas;
 use function is_scalar;

@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Devices\Hydrators\Devices;
 
 use Doctrine\Persistence;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Helpers;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Schemas;
@@ -45,7 +45,7 @@ final class Generic extends Device
 		private readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		Helpers\CrudReader|null $crudReader = null,
+		JsonApiHelpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($managerRegistry, $translator, $crudReader);
@@ -58,7 +58,7 @@ final class Generic extends Device
 
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(

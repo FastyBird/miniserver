@@ -8,7 +8,7 @@ import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
 import { v4 as uuid } from 'uuid';
 
-import { ModulePrefix } from '@fastybird/metadata-library';
+import { ModulePrefix } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.dashboard.json';
 import { ApiError } from '../../errors';

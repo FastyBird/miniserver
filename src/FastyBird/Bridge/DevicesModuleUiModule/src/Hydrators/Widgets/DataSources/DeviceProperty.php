@@ -18,10 +18,10 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Hydrators\Widgets\DataSources;
 use Doctrine\Persistence;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Helpers;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Ui\Hydrators as UiHydrators;
@@ -53,7 +53,7 @@ final class DeviceProperty extends UiHydrators\Widgets\DataSources\DataSource
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		Helpers\CrudReader|null $crudReader = null,
+		JsonApiHelpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($managerRegistry, $translator, $crudReader);
@@ -66,7 +66,7 @@ final class DeviceProperty extends UiHydrators\Widgets\DataSources\DataSource
 
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyRelationship(

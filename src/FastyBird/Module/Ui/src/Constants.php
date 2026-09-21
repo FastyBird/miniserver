@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui;
 
-use FastyBird\Library\Metadata;
+use FastyBird\Core\Constants\Metadata;
 
 /**
  * Service constants

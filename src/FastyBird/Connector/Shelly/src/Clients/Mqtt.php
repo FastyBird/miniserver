@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Shelly\Clients;
 
 use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
 use Psr\EventDispatcher as PsrEventDispatcher;

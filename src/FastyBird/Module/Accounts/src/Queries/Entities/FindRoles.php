@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Doctrine\DBAL;
 use Doctrine\ORM;
-use FastyBird\Core\SimpleAuth\Queries as SimpleAuthQueries;
+use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
 use FastyBird\Module\Accounts\Entities;
 use Ramsey\Uuid;
 

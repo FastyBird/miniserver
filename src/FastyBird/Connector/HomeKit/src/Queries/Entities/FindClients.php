@@ -18,7 +18,7 @@ namespace FastyBird\Connector\HomeKit\Queries\Entities;
 use Closure;
 use Doctrine\ORM;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Library\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 

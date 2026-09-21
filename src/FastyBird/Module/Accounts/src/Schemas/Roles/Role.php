@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Accounts\Schemas\Roles;
 
 use Exception;
-use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Library\JsonApi\Schemas as JsonApis;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Schemas\JsonApi as JsonApis;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
@@ -54,7 +54,7 @@ final class Role extends JsonApis\JsonApi
 
 	public function __construct(
 		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
-		private readonly Routing\IRouter $router,
+		private readonly SlimRouterRouting\IRouter $router,
 	)
 	{
 	}

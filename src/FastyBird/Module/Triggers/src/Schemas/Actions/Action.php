@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Actions;
 
-use FastyBird\Library\JsonApi\Schemas as JsonApiSchemas;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;
@@ -44,7 +44,7 @@ abstract class Action extends JsonApiSchemas\JsonApi
 	public const RELATIONSHIPS_TRIGGER = 'trigger';
 
 	public function __construct(
-		protected readonly Routing\IRouter $router,
+		protected readonly SlimRouterRouting\IRouter $router,
 		private readonly Models\States\ActionsRepository $stateRepository,
 	)
 	{

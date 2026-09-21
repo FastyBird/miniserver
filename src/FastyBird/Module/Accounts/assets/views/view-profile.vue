@@ -35,7 +35,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElCard } from 'element-plus';
 
-import { injectStoresManager, useBreakpoints } from '@fastybird/tools';
+import { injectStoresManager, useBreakpoints } from '@fastybird/miniserver-core';
 import { useHead } from '@unhead/vue';
 
 import { SettingsAccountForm } from '../components';

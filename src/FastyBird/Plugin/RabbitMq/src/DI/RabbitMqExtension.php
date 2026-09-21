@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\RabbitMq\DI;
 
-use FastyBird\Core\Application\Boot as ApplicationBoot;
+use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Connections;
 use FastyBird\Plugin\RabbitMq\Handlers;

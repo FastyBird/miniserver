@@ -5,9 +5,9 @@ namespace FastyBird\Module\Ui\Tests\Cases\Unit;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Error;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\Exceptions as ApplicationExceptions;
-use FastyBird\Library\DoctrineCrud;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Ui\DI;
 use FastyBird\Module\Ui\Exceptions;
 use Nette;
@@ -164,7 +164,7 @@ abstract class DbTestCase extends TestCase
 		if (!$this->isDatabaseSetUp) {
 			$db = $this->getDb();
 
-			/** @var list<ORM\Mapping\ClassMetadata<DoctrineCrud\Entities\IEntity>> $metadata */
+			/** @var list<ORM\Mapping\ClassMetadata<DoctrineCrud\IEntity>> $metadata */
 			$metadata = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
 			$schemaTool = new ORM\Tools\SchemaTool($this->getEntityManager());
 

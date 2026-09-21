@@ -20,12 +20,11 @@ use FastyBird\Connector\HomeKit\Events;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter;
-use FastyBird\Library\SlimRouter\Exceptions as SlimRouterExceptions;
-use FastyBird\Library\SlimRouter\Http as SlimRouterHttp;
-use FastyBird\Library\SlimRouter\Routing as SlimRouterRouting;
+use FastyBird\Core\Exceptions\SlimRouter as SlimRouterExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
@@ -85,7 +84,7 @@ final class Router
 			$response = $this->responseFactory->createResponse($ex->getCode());
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
 				Types\Representation::STATUS->value => $ex->getError()->value,
 			])));
 		} catch (SlimRouterExceptions\Http $ex) {
@@ -105,7 +104,7 @@ final class Router
 			$response = $this->responseFactory->createResponse($ex->getCode());
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
 				Types\Representation::STATUS->value => Types\ServerStatus::SERVICE_COMMUNICATION_FAILURE->value,
 			])));
 		} catch (Throwable $ex) {
@@ -121,7 +120,7 @@ final class Router
 			$response = $this->responseFactory->createResponse(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouter\Http\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
 				Types\Representation::STATUS->value => Types\ServerStatus::SERVICE_COMMUNICATION_FAILURE->value,
 			])));
 		}

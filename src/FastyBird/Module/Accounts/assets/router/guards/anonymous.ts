@@ -2,7 +2,7 @@ import { RouteLocationNormalized } from 'vue-router';
 
 import get from 'lodash.get';
 
-import { IStoresManager } from '@fastybird/tools';
+import { IStoresManager } from '@fastybird/miniserver-core';
 
 import { sessionStoreKey } from '../../configuration';
 

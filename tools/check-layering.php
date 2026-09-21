@@ -571,6 +571,19 @@ foreach (array_keys($packages) as $identifier) {
 	$packagesByLowerName[strtolower($identifier)] = $identifier;
 }
 
+// A type with exactly one package needs no package-name segment to disambiguate: there is
+// nothing else `FastyBird\<Type>\...` could mean. `Core/Core` is the current example --
+// its files declare `FastyBird\Core\Boot`, `FastyBird\Core\DI`, and so on, never
+// `FastyBird\Core\Core\...`. Built once here and reused by both the coordinate resolver and
+// the per-package namespace self-check below, so a type gaining a second package
+// automatically loses the fallback in both places at once.
+/** @var array<string, list<string>> $packagesByType */
+$packagesByType = [];
+
+foreach ($packages as $identifier => $package) {
+	$packagesByType[$package['type']][] = $identifier;
+}
+
 // ------------------------------------------------------------------------------------
 // Configuration validation
 //
@@ -945,9 +958,17 @@ foreach ($packages as $identifier => &$package) {
 		},
 	);
 
+	// A package that is the sole one under its type may drop the package-name segment and
+	// declare straight off the type root -- Core/Core's files say `FastyBird\Core\Boot`,
+	// `FastyBird\Core\DI`, never `FastyBird\Core\Core\...`. Accept that bare form IN
+	// ADDITION TO the fully-qualified `FastyBird\<Type>\<PackageName>\` form, never instead
+	// of it, so a second package landing under the same type later -- or a file that still
+	// spells the coordinate out in full -- both keep matching.
 	$namespacePattern = '~^[ \t]*namespace[ \t]+FastyBird\\\\'
-		. preg_quote($package['type'], '~') . '\\\\' . preg_quote($package['name'], '~')
-		. '(\\\\|[ \t]*;)~m';
+		. preg_quote($package['type'], '~') . '\\\\(?:'
+		. preg_quote($package['name'], '~') . '(?:\\\\|[ \t]*;)'
+		. (count($packagesByType[$package['type']]) === 1 ? '|[A-Za-z_][A-Za-z0-9_]*(?:\\\\|[ \t]*;)' : '')
+		. ')~m';
 
 	foreach (new RecursiveIteratorIterator($filter) as $file) {
 		assert($file instanceof SplFileInfo);
@@ -1131,6 +1152,17 @@ foreach ($packages as $identifier => &$package) {
 				}
 
 				$target = $packagesByLowerName[strtolower($typeName . '/' . $segmentThree)] ?? null;
+
+				// A type with exactly one package needs no package-name segment to disambiguate --
+				// see the $packagesByType comment near package discovery. Core/Core's files
+				// reference `FastyBird\Core\Boot`, `FastyBird\Core\Documents`, and so on; segment
+				// three is never `Core`, so the direct lookup above always misses for this type.
+				// Fall back to the sole package ONLY when the type has exactly one: a type with
+				// two or more packages must keep failing exactly as before, or a typo'd package
+				// name would silently resolve to whichever package happened to be sitting there.
+				if ($target === null && count($packagesByType[$typeName] ?? []) === 1) {
+					$target = $packagesByType[$typeName][0];
+				}
 
 				if ($target === null) {
 					// `FastyBird\Module\Something` where Something is not a package on disk. Under a

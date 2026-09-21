@@ -17,9 +17,9 @@ namespace FastyBird\Module\Ui\Models\Entities\Groups;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\DoctrineOrmQuery;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Queries;
@@ -58,7 +58,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
@@ -78,7 +78,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindGroups $queryObject,
@@ -97,7 +97,7 @@ final class Repository
 	 *
 	 * @return array<T>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function findAll(string $type = Entities\Groups\Group::class): array
 	{
@@ -140,7 +140,7 @@ final class Repository
 	 * @return DoctrineOrmQuery\ResultSet<T>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindGroups $queryObject,

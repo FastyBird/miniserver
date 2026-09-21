@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Sonoff\Clients;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Exceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use function sprintf;
 

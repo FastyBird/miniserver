@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Devices\Tests\Fixtures\Dummy;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Schemas;
 
 final class DummyDeviceSchema extends Schemas\Devices\Device

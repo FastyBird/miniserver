@@ -128,9 +128,7 @@ import { useRouter } from 'vue-router';
 import { ElButton, ElScrollbar, vLoading } from 'element-plus';
 import get from 'lodash.get';
 
-import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading } from '@fastybird/application';
-import { DataType, ModuleSource } from '@fastybird/metadata-library';
-import { useBreakpoints } from '@fastybird/tools';
+import { AppBarButton, AppBarButtonAlignTypes, AppBarHeading, DataType, ModuleSource, useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 import { useHead } from '@unhead/vue';
 

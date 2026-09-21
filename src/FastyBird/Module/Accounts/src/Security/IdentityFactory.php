@@ -15,10 +15,11 @@
 
 namespace FastyBird\Module\Accounts\Security;
 
-use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\SimpleAuth\Queries as SimpleAuthQueries;
-use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
+use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use Lcobucci\JWT;
@@ -41,7 +42,7 @@ readonly class IdentityFactory implements SimpleAuthSecurity\IIdentityFactory
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidState
 	 */

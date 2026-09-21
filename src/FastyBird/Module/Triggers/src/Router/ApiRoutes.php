@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Triggers\Router;
 
-use FastyBird\Core\SimpleAuth\Middleware as SimpleAuthMiddleware;
-use FastyBird\Library\Metadata;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Middleware;
@@ -53,14 +53,14 @@ class ApiRoutes
 	{
 	}
 
-	public function registerRoutes(Routing\IRouter $router): void
+	public function registerRoutes(SlimRouterRouting\IRouter $router): void
 	{
 		$routes = $router->group('/' . Metadata\Constants::ROUTER_API_PREFIX, function (
-			Routing\RouteCollector $group,
+			SlimRouterRouting\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group('/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX, function (
-					Routing\RouteCollector $group,
+					SlimRouterRouting\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);
 				});
@@ -75,10 +75,12 @@ class ApiRoutes
 		$routes->addMiddleware($this->triggersAccessControlMiddleware);
 	}
 
-	private function buildRoutes(Routing\IRouter|Routing\IRouteCollector $group): Routing\IRouteGroup
+	private function buildRoutes(
+		SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group,
+	): SlimRouterRouting\IRouteGroup
 	{
-		return $group->group('/v1', function (Routing\RouteCollector $group): void {
-			$group->group('/triggers', function (Routing\RouteCollector $group): void {
+		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
+			$group->group('/triggers', function (SlimRouterRouting\RouteCollector $group): void {
 				/**
 				 * TRIGGERS
 				 */
@@ -101,111 +103,117 @@ class ApiRoutes
 				$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_RELATIONSHIP);
 			});
 
-			$group->group('/triggers/{' . self::URL_TRIGGER_ID . '}', function (Routing\RouteCollector $group): void {
-				$group->group('/actions', function (Routing\RouteCollector $group): void {
-					/**
-					 * ACTIONS
-					 */
-					$route = $group->get('', [$this->actionsV1Controller, 'index']);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTIONS);
+			$group->group(
+				'/triggers/{' . self::URL_TRIGGER_ID . '}',
+				function (SlimRouterRouting\RouteCollector $group): void {
+					$group->group('/actions', function (SlimRouterRouting\RouteCollector $group): void {
+						/**
+						 * ACTIONS
+						 */
+						$route = $group->get('', [$this->actionsV1Controller, 'index']);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTIONS);
 
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->actionsV1Controller, 'read']);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION);
+						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->actionsV1Controller, 'read']);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION);
 
-					$group->post('', [$this->actionsV1Controller, 'create']);
+						$group->post('', [$this->actionsV1Controller, 'create']);
 
-					$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->actionsV1Controller, 'update']);
+						$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->actionsV1Controller, 'update']);
 
-					$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->actionsV1Controller, 'delete']);
+						$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->actionsV1Controller, 'delete']);
 
-					$route = $group->get(
-						'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
-						[
-							$this->actionsV1Controller,
-							'readRelationship',
-						],
-					);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP);
-				});
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
+							[
+								$this->actionsV1Controller,
+								'readRelationship',
+							],
+						);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP);
+					});
 
-				$group->group('/notifications', function (Routing\RouteCollector $group): void {
-					/**
-					 * NOTIFICATIONS
-					 */
-					$route = $group->get('', [$this->notificationsV1Controller, 'index']);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATIONS);
+					$group->group('/notifications', function (SlimRouterRouting\RouteCollector $group): void {
+						/**
+						 * NOTIFICATIONS
+						 */
+						$route = $group->get('', [$this->notificationsV1Controller, 'index']);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATIONS);
 
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->notificationsV1Controller, 'read']);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATION);
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}',
+							[$this->notificationsV1Controller, 'read'],
+						);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATION);
 
-					$group->post('', [$this->notificationsV1Controller, 'create']);
+						$group->post('', [$this->notificationsV1Controller, 'create']);
 
-					$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->notificationsV1Controller, 'update']);
+						$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->notificationsV1Controller, 'update']);
 
-					$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->notificationsV1Controller, 'delete']);
+						$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->notificationsV1Controller, 'delete']);
 
-					$route = $group->get(
-						'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
-						[
-							$this->notificationsV1Controller,
-							'readRelationship',
-						],
-					);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATION_RELATIONSHIP);
-				});
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
+							[
+								$this->notificationsV1Controller,
+								'readRelationship',
+							],
+						);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATION_RELATIONSHIP);
+					});
 
-				$group->group('/conditions', function (Routing\RouteCollector $group): void {
-					/**
-					 * CONDITIONS
-					 */
-					$route = $group->get('', [$this->conditionsV1Controller, 'index']);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITIONS);
+					$group->group('/conditions', function (SlimRouterRouting\RouteCollector $group): void {
+						/**
+						 * CONDITIONS
+						 */
+						$route = $group->get('', [$this->conditionsV1Controller, 'index']);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITIONS);
 
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->conditionsV1Controller, 'read']);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITION);
+						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->conditionsV1Controller, 'read']);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITION);
 
-					$group->post('', [$this->conditionsV1Controller, 'create']);
+						$group->post('', [$this->conditionsV1Controller, 'create']);
 
-					$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->conditionsV1Controller, 'update']);
+						$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->conditionsV1Controller, 'update']);
 
-					$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->conditionsV1Controller, 'delete']);
+						$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->conditionsV1Controller, 'delete']);
 
-					$route = $group->get(
-						'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
-						[
-							$this->conditionsV1Controller,
-							'readRelationship',
-						],
-					);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITION_RELATIONSHIP);
-				});
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
+							[
+								$this->conditionsV1Controller,
+								'readRelationship',
+							],
+						);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITION_RELATIONSHIP);
+					});
 
-				$group->group('/controls', function (Routing\RouteCollector $group): void {
-					/**
-					 * CONTROLS
-					 */
-					$route = $group->get('', [$this->controlsV1Controller, 'index']);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROLS);
+					$group->group('/controls', function (SlimRouterRouting\RouteCollector $group): void {
+						/**
+						 * CONTROLS
+						 */
+						$route = $group->get('', [$this->controlsV1Controller, 'index']);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROLS);
 
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'read']);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROL);
+						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'read']);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROL);
 
-					$group->post('', [$this->controlsV1Controller, 'create']);
+						$group->post('', [$this->controlsV1Controller, 'create']);
 
-					$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'update']);
+						$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'update']);
 
-					$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'delete']);
+						$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'delete']);
 
-					$route = $group->get(
-						'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
-						[
-							$this->controlsV1Controller,
-							'readRelationship',
-						],
-					);
-					$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROL_RELATIONSHIP);
-				});
-			});
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
+							[
+								$this->controlsV1Controller,
+								'readRelationship',
+							],
+						);
+						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROL_RELATIONSHIP);
+					});
+				},
+			);
 		});
 	}
 

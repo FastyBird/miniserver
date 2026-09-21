@@ -2,7 +2,7 @@
 
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Module\Devices\Documents;
 
 #[ApplicationDocuments\Mapping\Document(entity: DummyChannelEntity::class)]

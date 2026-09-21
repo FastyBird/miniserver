@@ -1,103 +1,73 @@
-#
-# Module DI configuration
-#
-# @license        More in LICENSE.md
-# @copyright      https://www.fastybird.com
-# @author         Adam Kadlec <adam.kadlec@fastybird.com>
-# @package        FastyBird:UiModule!
-# @subpackage     config
-# @since          1.0.0
-#
-# @date           08.07.24
-
 includes:
-    - ../../../../../tests/config/dbal-test-connection.neon
+	- ../../../../../tests/config/dbal-test-connection.neon
 
 php:
-    date.timezone: Europe/Prague
+	date.timezone: Europe/Prague
 
 extensions:
-    contributteTranslation              : Contributte\Translation\DI\TranslationExtension
-    nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
-    nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
-    ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
-    ipubDoctrineTimestampable           : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    fbDateTimeFactory                   : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
-    fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
-    fbTools                             : FastyBird\Core\Tools\DI\ToolsExtension
-    fbExchange                          : FastyBird\Core\Exchange\DI\ExchangeExtension
+	contributteTranslation: Contributte\Translation\DI\TranslationExtension
+	nettrineDbal: Nettrine\DBAL\DI\DbalExtension
+	nettrineOrm: Nettrine\ORM\DI\OrmExtension
+	fbCore: FastyBird\Core\DI\CoreExtension
 
 services:
-    - {factory: FastyBird\Library\SlimRouter\Http\ResponseFactory}
-    -
-        factory: FastyBird\Library\SlimRouter\Routing\Router
-        setup:
-            - addMiddleware(@fbJsonApi.middlewares.jsonapi)
+	cache.storage: Nette\Caching\Storages\DevNullStorage
 
-    cache.storage: Nette\Caching\Storages\DevNullStorage
+decorator:
+	FastyBird\Core\Routing\WebServer\Router:
+		setup:
+			- addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
 
 contributteTranslation:
-    locales:
-        default: en_US
-        fallback: [en_US, en]
-    localeResolvers: []
-    dirs:
-        - %appDir%/../src/Translations
-        - %vendorDir%/fastybird/json-api-library/src/Translations
+	locales:
+		default: en_US
+		fallback:
+			- en_US
+			- en
+
+	localeResolvers: []
+	dirs:
+		- %appDir%/../src/Translations
+		- %vendorDir%/fastybird/miniserver-core/src/Translations/JsonApi
 
 nettrineDbal:
-    connections:
-        default:
-            wrapperClass: \FastyBird\Module\Ui\Tests\Tools\ConnectionWrapper
+	connections:
+		default:
+			wrapperClass: \FastyBird\Module\Ui\Tests\Tools\ConnectionWrapper
 
 nettrineOrm:
-    managers:
-        default:
-            connection: default
-            # PHP 8.4 native lazy objects: no generated proxy classes at all, so proxyDir and
-            # autoGenerateProxyClasses below are inert, and the shared-proxy-directory race the
-            # eval mode was working around cannot occur. ORM 3.7 otherwise demands
-            # symfony/var-exporter ^6.4|^7 for its LazyGhost proxies, and the tree is on 8.x.
-            lazyNativeObjects: true
-            proxyDir: %tempDir%/cache/doctrine.proxies
-            # Build proxies in memory rather than on disk. nettrine defaults this to
-            # AUTOGENERATE_FILE_NOT_EXISTS, which is file_exists() then require, against a
-            # directory that all ten paratest workers now share -- the compiled container is
-            # reused per run, so the temp directory is no longer per process.
-            #
-            # The exact interleaving is not established. The write itself IS atomic: Doctrine's
-            # ProxyGenerator writes to a random temp name and rename()s it into place. Suspects
-            # are DG\BypassFinals, which replaces the file:// stream wrapper and appeared in the
-            # failing stack, and the fact that var/ is a Docker bind mount, where rename does not
-            # carry its usual guarantee. What is established is the symptom -- an intermittent
-            # Class "Nettrine\Proxy\__CG__\..." not found, about half of runs -- and that it
-            # appeared only once the directory became shared.
-            #
-            # Eval mode removes the file from the picture entirely, so it does not depend on
-            # which of those it was. Production stays on file mode: single process, no sharing.
-            autoGenerateProxyClasses: 3   # AbstractProxyFactory::AUTOGENERATE_EVAL
+	managers:
+		default:
+			connection: default
+			lazyNativeObjects: true
+			proxyDir: %tempDir%/cache/doctrine.proxies
+			autoGenerateProxyClasses: 3
 
-fbSimpleAuth:
-    token:
-        issuer: com.fastybird.auth-module
-        signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
-    enable:
-        middleware: true
-        nette:
-            application: true
-    casbin:
-        policy: %appDir%/policy.csv
-    services:
-        identity: true
+fbCore:
+	application:
+		documents:
+			mapping: []
 
-fbJsonApi:
-    meta:
-        copyright: FastyBird s.r.o
+	simpleAuth:
+		token:
+			issuer: com.fastybird.auth-module
+			signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
 
-fbDateTimeFactory:
-    frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
+		enable:
+			middleware: true
+			nette:
+				application: true
 
-fbApplication:
-    documents:
-        mapping: []
+		casbin:
+			policy: %appDir%/policy.csv
+
+		services:
+			identity: true
+
+	jsonApi:
+		meta:
+			copyright: FastyBird s.r.o
+
+	dateTimeFactory:
+		frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
+

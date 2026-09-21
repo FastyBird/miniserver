@@ -22,10 +22,11 @@ use FastyBird\Connector\Tuya\Exceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
-use FastyBird\Core\Tools\Exceptions as ToolsExceptions;
-use FastyBird\Core\Tools\Schemas as ToolsSchemas;
-use FastyBird\Library\DateTimeFactory;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Schemas\Tools as ToolsSchemas;
+use FastyBird\Core\Services\DateTimeFactory;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Nette\Utils;
 use Ratchet;
@@ -286,7 +287,7 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_SCHEMA_FILENAME),
 			);
 
-		} catch (ToolsExceptions\Logic | ToolsExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
 			throw new Exceptions\OpenPulsarError('Could not decode received Tuya WS message', $ex->getCode(), $ex);
 		}
 
@@ -333,7 +334,7 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_PAYLOAD_SCHEMA_FILENAME),
 			);
 
-		} catch (ToolsExceptions\Logic | ToolsExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
 			throw new Exceptions\OpenPulsarError(
 				'Could not decode received Tuya WS message payload',
 				$ex->getCode(),
@@ -382,7 +383,7 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_PAYLOAD_DATA_SCHEMA_FILENAME),
 			);
 
-		} catch (ToolsExceptions\Logic | ToolsExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
 			throw new Exceptions\OpenPulsarError(
 				'Could not decode received Tuya WS message payload data decrypted',
 				$ex->getCode(),

@@ -49,8 +49,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElButton, ElDropdownItem, ElDropdownMenu } from 'element-plus';
 
-import { useBreakpoints } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/websockets-library';
+import { useBreakpoints, useWampV1Client } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { useDeviceRoutes } from '../../composables';

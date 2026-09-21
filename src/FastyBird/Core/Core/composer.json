@@ -1,0 +1,108 @@
+{
+  "name": "fastybird/miniserver-core",
+  "description": "FastyBird MiniServer core application, exchange, authentication, HTTP/WS server runtimes and shared libraries",
+  "keywords": [
+    "fastybird",
+    "fb",
+    "core",
+    "api",
+    "php",
+    "iot",
+    "nette",
+    "vue3",
+    "pinia"
+  ],
+  "homepage": "https://www.fastybird.com",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "FastyBird s.r.o.",
+      "email": "code@fastybird.com",
+      "homepage": "https://www.fastybird.com"
+    },
+    {
+      "name": "Adam Kadlec",
+      "email": "adam.kadlec@fastybird.com"
+    }
+  ],
+  "support": {
+    "email": "code@fastybird.com",
+    "issues": "https://github.com/FastyBird/miniserver/issues",
+    "source": "https://github.com/FastyBird/miniserver"
+  },
+  "require": {
+    "php": ">=8.4.0",
+    "casbin/casbin": "^3.23",
+    "contributte/cache": "^0.6",
+    "contributte/console": "^0.9",
+    "contributte/event-dispatcher": "^0.9",
+    "contributte/monolog": "^0.6",
+    "contributte/translation": "^2.0",
+    "contributte/vite": "^0.3",
+    "cweagans/composer-patches": "^1.7",
+    "doctrine/orm": "^3.3",
+    "doctrine/persistence": "^3.4 || ^4.0",
+    "ext-ctype": "*",
+    "ext-iconv": "*",
+    "ext-intl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "ext-simplexml": "*",
+    "fig/http-message-util": "^1.1",
+    "giggsey/libphonenumber-for-php": "^8.12",
+    "latte/latte": "^3.0",
+    "lcobucci/jwt": "^4.2",
+    "mathsolver/mathsolver": "@dev",
+    "neomerx/json-api": "^4.0",
+    "nette/application": "^3.1",
+    "nette/bootstrap": "^3.2",
+    "nette/caching": "^3.3",
+    "nette/di": "^3.2",
+    "nette/http": "^3.2",
+    "nette/utils": "^4.0",
+    "nettrine/dbal": "^0.10",
+    "nettrine/orm": "^0.10",
+    "nikic/fast-route": "^1.3",
+    "opis/json-schema": "^2.3",
+    "orisai/nette-object-mapper": "^0.3",
+    "orisai/object-mapper": "^0.3",
+    "phpdocumentor/reflection-docblock": "^5.3",
+    "psr/event-dispatcher": "^1.0",
+    "psr/http-factory": "^1.1",
+    "psr/http-message": "^1.1",
+    "psr/http-server-middleware": "^1.0",
+    "psr/log": "^3.0",
+    "ramsey/uuid": "^4.7",
+    "ramsey/uuid-doctrine": "^2.1",
+    "react/event-loop": "^1.3",
+    "react/http": "^1.7",
+    "react/promise": "^3",
+    "react/socket": "^1.15",
+    "sentry/sdk": "^3.1",
+    "sunrise/http-message": "^3.0",
+    "symfony/console": "^6.0",
+    "symfony/event-dispatcher": "^7.0",
+    "symfony/event-dispatcher-contracts": "^3.5",
+    "symfony/monolog-bridge": "^7.0",
+    "symfony/serializer": "^6.4"
+  },
+  "require-dev": {
+    "symplify/vendor-patches": "^11.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "FastyBird\\Core\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "FastyBird\\Core\\Tests\\Cases\\Unit\\": "tests/cases/unit",
+      "FastyBird\\Core\\Tests\\Fixtures\\": "tests/fixtures",
+      "FastyBird\\Core\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
+      "FastyBird\\Core\\Tests\\Tools\\": "tests/tools"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Sonoff\Queue;
 
 use FastyBird\Connector\Sonoff;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use SplQueue;
 

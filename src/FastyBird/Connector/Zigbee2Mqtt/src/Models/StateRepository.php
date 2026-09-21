@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Models;
 
 use DateTimeInterface;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Ramsey\Uuid;
 use function array_key_exists;
 

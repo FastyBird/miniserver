@@ -27,8 +27,7 @@ import type { Component, VNode } from 'vue';
 
 import { ElIcon } from 'element-plus';
 
-import { AppIconWithChild } from '@fastybird/application';
-import { useWampV1Client } from '@fastybird/websockets-library';
+import { AppIconWithChild, useWampV1Client } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import { useDeviceState } from '../../composables';

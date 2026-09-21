@@ -16,14 +16,13 @@
 namespace FastyBird\Module\Devices\DI;
 
 use Contributte\Translation;
-use FastyBird\Core\Application\Boot as ApplicationBoot;
-use FastyBird\Core\Application\DI as ApplicationDI;
-use FastyBird\Core\Application\Documents as ApplicationDocuments;
-use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Exchange\DI as ExchangeDI;
-use FastyBird\Core\Exchange\Exchange as ExchangeExchange;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter\Routing as SlimRouterRouting;
+use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\DI as CoreDI;
+use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
+use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Commands;
@@ -172,7 +171,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
-		if (class_exists('FastyBird\Library\WebSockets\DI\WebSocketsExtension')) {
+		if (class_exists('FastyBird\Core\DI\CoreExtension')) {
 			$builder->addDefinition($this->prefix('router.sockets.routes'), new DI\Definitions\ServiceDefinition())
 				->setType(Router\SocketRoutes::class)
 				->addTag('ipub.websockets.routes');
@@ -654,7 +653,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * WEBSOCKETS CONTROLLERS
 		 */
 
-		if (class_exists('FastyBird\Library\WebSockets\DI\WebSocketsExtension')) {
+		if (class_exists('FastyBird\Core\DI\CoreExtension')) {
 			$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
 				->setType(Controllers\ExchangeV1::class)
 				->setArguments([
@@ -898,7 +897,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			->setArguments([
 				'logger' => $logger,
 			])
-			->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
+			->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
 
 		$builder->addDefinition(
 			$this->prefix('exchange.consumer.moduleEntities'),
@@ -908,11 +907,11 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			->setArguments([
 				'logger' => $logger,
 			])
-			->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
+			->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
 
 		if (
-			$builder->findByType('FastyBird\Library\WebSockets\Router\LinkGenerator') !== []
-			&& $builder->findByType('FastyBird\Library\WebSockets\Wamp\Topics\IStorage') !== []
+			$builder->findByType('FastyBird\Core\Routing\WebSockets\LinkGenerator') !== []
+			&& $builder->findByType('FastyBird\Core\Topics\WsServer\IStorage') !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.socketsBridge'),
@@ -922,7 +921,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 				->setArguments([
 					'logger' => $logger,
 				])
-				->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
+				->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
 		}
 
 		/**
@@ -980,7 +979,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(ApplicationDI\ApplicationExtension::DRIVER_TAG);
+		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);
@@ -1069,10 +1068,10 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * WEBSOCKETS
 		 */
 
-		if (class_exists('FastyBird\Library\WebSockets\DI\WebSocketsExtension')) {
+		if (class_exists('FastyBird\Core\DI\CoreExtension')) {
 			try {
 				$wsControllerFactoryService = $builder->getDefinitionByType(
-					'FastyBird\Library\WebSockets\Application\Controller\IControllerFactory',
+					'FastyBird\Core\Controllers\WebSockets\Controller\IControllerFactory',
 				);
 				assert($wsControllerFactoryService instanceof DI\Definitions\ServiceDefinition);
 
@@ -1088,7 +1087,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 				$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
 				assert($consumerService instanceof DI\Definitions\ServiceDefinition);
 
-				$wsServerService = $builder->getDefinitionByType('FastyBird\Library\WebSockets\Server\Server');
+				$wsServerService = $builder->getDefinitionByType('FastyBird\Core\Server\WsServer\Server');
 				assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
 
 				$wsServerService->addSetup(

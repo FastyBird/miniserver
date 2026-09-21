@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\FbMqtt\Queue;
 
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use SplQueue;
 

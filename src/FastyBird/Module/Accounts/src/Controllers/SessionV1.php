@@ -18,16 +18,17 @@ namespace FastyBird\Module\Accounts\Controllers;
 use DateTimeImmutable;
 use Doctrine;
 use Exception;
-use FastyBird\Core\SimpleAuth;
-use FastyBird\Core\SimpleAuth\Exceptions as SimpleAuthExceptions;
-use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\SimpleAuth\Queries as SimpleAuthQueries;
-use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
-use FastyBird\Core\SimpleAuth\Types as SimpleAuthTypes;
-use FastyBird\Core\Tools\Helpers as ToolsHelpers;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
+use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
+use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Types\SimpleAuth as SimpleAuthTypes;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Router;
@@ -66,7 +67,7 @@ final class SessionV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
 	 * @throws Exceptions\InvalidState
@@ -386,7 +387,7 @@ final class SessionV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
@@ -480,7 +481,7 @@ final class SessionV1 extends BaseV1
 
 	/**
 	 * @throws SimpleAuthExceptions\UnauthorizedAccess
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi

@@ -16,13 +16,13 @@
 namespace FastyBird\Module\Accounts\Schemas\Accounts;
 
 use DateTimeInterface;
-use FastyBird\Core\SimpleAuth\Exceptions as SimpleAuthExceptions;
-use FastyBird\Core\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\SimpleAuth\Security as SimpleAuthSecurity;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Library\JsonApi\Schemas as JsonApis;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
-use FastyBird\Library\SlimRouter\Routing;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
+use FastyBird\Core\Schemas\JsonApi as JsonApis;
+use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
@@ -60,7 +60,7 @@ final class Account extends JsonApis\JsonApi
 	public const RELATIONSHIPS_EMAILS = 'emails';
 
 	public function __construct(
-		protected readonly Routing\IRouter $router,
+		protected readonly SlimRouterRouting\IRouter $router,
 		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
 		private readonly SimpleAuthSecurity\EnforcerFactory $enforcerFactory,
 	)
@@ -138,9 +138,8 @@ final class Account extends JsonApis\JsonApi
 	 *
 	 * @return iterable<string, array<int, (array<Entities\Identities\Identity>|array<Entities\Roles\Role>|array<Entities\Emails\Email>|bool)>>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws SimpleAuthExceptions\InvalidState
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -256,9 +255,8 @@ final class Account extends JsonApis\JsonApi
 	/**
 	 * @return array<int, Entities\Roles\Role>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws SimpleAuthExceptions\InvalidState
 	 */
 	private function getRoles(Entities\Accounts\Account $account): array
 	{

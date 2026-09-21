@@ -10,7 +10,7 @@
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { useEventBus } from '@fastybird/tools';
+import { useEventBus } from '@fastybird/miniserver-core';
 import { useHead } from '@unhead/vue';
 
 import { LayoutSignBox, LayoutSignHeader, SignUpForm } from '../components';

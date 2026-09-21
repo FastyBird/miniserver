@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\States;
 
 use DateTimeInterface;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 

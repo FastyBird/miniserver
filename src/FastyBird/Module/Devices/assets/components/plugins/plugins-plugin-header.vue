@@ -100,7 +100,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ElAvatar, ElButton, ElPageHeader, ElTag, useNamespace } from 'element-plus';
 
-import { useBreakpoints } from '@fastybird/tools';
+import { useBreakpoints } from '@fastybird/miniserver-core';
 import { Icon } from '@iconify/vue';
 
 import PluginsPluginStats from '../plugins/plugins-plugin-stats.vue';

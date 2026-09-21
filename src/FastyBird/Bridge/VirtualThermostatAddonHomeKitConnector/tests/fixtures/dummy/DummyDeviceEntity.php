@@ -3,7 +3,7 @@
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Fixtures\Dummy;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Application\Entities\Mapping as ApplicationMapping;
+use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 
 #[ORM\Entity]

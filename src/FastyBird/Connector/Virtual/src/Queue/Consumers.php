@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Virtual\Queue;
 
 use FastyBird\Connector\Virtual;
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use SplObjectStorage;
 

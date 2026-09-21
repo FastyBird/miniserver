@@ -4,7 +4,7 @@ import { Router } from 'vue-router';
 
 import { Pinia } from 'pinia';
 
-import { Client } from '@fastybird/websockets-library';
+import { Client } from '@fastybird/miniserver-core';
 
 export * from './exchange';
 

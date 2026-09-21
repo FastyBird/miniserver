@@ -4,8 +4,8 @@ import { useI18n } from 'vue-i18n';
 import capitalize from 'lodash.capitalize';
 import get from 'lodash.get';
 
-import { injectStoresManager } from '@fastybird/tools';
-import { useFlashMessage } from '@fastybird/tools';
+import { injectStoresManager } from '@fastybird/miniserver-core';
+import { useFlashMessage } from '@fastybird/miniserver-core';
 
 import { devicePropertiesStoreKey, devicesStoreKey } from '../configuration';
 import { FormResultType, FormResultTypes, IDevice, IDeviceForm, UseDeviceForm } from '../types';

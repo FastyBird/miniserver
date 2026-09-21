@@ -10,9 +10,7 @@ import lodashGet from 'lodash.get';
 import isEqual from 'lodash.isequal';
 import { v4 as uuid } from 'uuid';
 
-import { ModulePrefix } from '@fastybird/metadata-library';
-import { IStoresManager, injectStoresManager } from '@fastybird/tools';
-import { useWampV1Client } from '@fastybird/websockets-library';
+import { IStoresManager, ModulePrefix, injectStoresManager, useWampV1Client } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.channel.control.json';
 import { channelsStoreKey } from '../../configuration';

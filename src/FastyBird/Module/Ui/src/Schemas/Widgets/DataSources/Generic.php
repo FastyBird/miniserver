@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Schemas\Widgets\DataSources;
 
-use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 

@@ -18,14 +18,15 @@ namespace FastyBird\Module\Accounts\Controllers;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Library\DateTimeFactory;
-use FastyBird\Library\DoctrineCrud;
-use FastyBird\Library\DoctrineOrmQuery\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Library\DoctrineOrmQuery\ResultSet;
-use FastyBird\Library\JsonApi;
-use FastyBird\Library\JsonApi\Builder as JsonApiBuilder;
-use FastyBird\Library\JsonApi\Exceptions as JsonApiExceptions;
-use FastyBird\Library\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
+use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
+use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Router;
@@ -72,7 +73,7 @@ abstract class BaseV1
 
 	protected Router\Validator $routesValidator;
 
-	/** @var JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> */
+	/** @var JsonApiHydrators\Container<DoctrineCrud\IEntity> */
 	protected JsonApiHydrators\Container $hydratorsContainer;
 
 	protected Log\LoggerInterface $logger;
@@ -113,7 +114,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param JsonApiHydrators\Container<DoctrineCrud\Entities\IEntity> $hydratorsContainer
+	 * @param JsonApiHydrators\Container<DoctrineCrud\IEntity> $hydratorsContainer
 	 */
 	public function injectHydratorsContainer(JsonApiHydrators\Container $hydratorsContainer): void
 	{
@@ -167,7 +168,7 @@ abstract class BaseV1
 				strval($this->translator->translate('//accounts-module.base.messages.notValidJson.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notValidJson.message')),
 			);
-		} catch (JsonApi\Exceptions\Runtime) {
+		} catch (ApplicationExceptions\Runtime) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//accounts-module.base.messages.notValidJsonApi.heading')),
@@ -252,7 +253,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param DoctrineCrud\Entities\IEntity|array<DoctrineCrud\Entities\IEntity>|ResultSet<Entities\Entity>|null $data
+	 * @param DoctrineCrud\IEntity|array<DoctrineCrud\IEntity>|ResultSet<Entities\Entity>|null $data
 	 *
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exception
@@ -260,7 +261,7 @@ abstract class BaseV1
 	protected function buildResponse(
 		Message\ServerRequestInterface $request,
 		ResponseInterface $response,
-		DoctrineCrud\Entities\IEntity|ResultSet|array|null $data,
+		DoctrineCrud\IEntity|ResultSet|array|null $data,
 	): ResponseInterface
 	{
 		$totalCount = null;

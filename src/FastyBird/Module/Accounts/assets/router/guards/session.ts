@@ -3,7 +3,7 @@ import { RouteLocation } from 'vue-router';
 import { jwtDecode } from 'jwt-decode';
 import get from 'lodash.get';
 
-import { IStoresManager } from '@fastybird/tools';
+import { IStoresManager } from '@fastybird/miniserver-core';
 import * as Sentry from '@sentry/vue';
 
 import { sessionStoreKey } from '../../configuration';

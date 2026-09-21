@@ -1,94 +1,84 @@
-#
-# Module DI configuration
-#
-# @license        More in LICENSE.md
-# @copyright      https://www.fastybird.com
-# @author         Adam Kadlec <adam.kadlec@fastybird.com>
-# @package        FastyBird:UiModule!
-# @subpackage     config
-# @since          1.0.0
-#
-# @date           08.07.24
-
 php:
-    date.timezone: Europe/Prague
+	date.timezone: Europe/Prague
 
 extensions:
-    contributteConsole                  : Contributte\Console\DI\ConsoleExtension(%consoleMode%)
-    contributteTranslation              : Contributte\Translation\DI\TranslationExtension
-    contributteEvents                   : Contributte\EventDispatcher\DI\EventDispatcherExtension
-    nettrineCache                       : Nettrine\Cache\DI\CacheExtension
-    nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
-    nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
-    nettrineOrmAttributes               : Nettrine\ORM\DI\OrmAttributesExtension
-    nettrineOrmConsole                  : Nettrine\ORM\DI\OrmConsoleExtension
-    nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
-    ipubDoctrineCrud                    : FastyBird\Library\DoctrineCrud\DI\DoctrineCrudExtension
-    ipubDoctrineTimestampable           : FastyBird\Library\DoctrineTimestampable\DI\DoctrineTimestampableExtension
-    fbDateTimeFactory                   : FastyBird\Library\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbJsonApi                           : FastyBird\Library\JsonApi\DI\JsonApiExtension
-    fbSimpleAuth                        : FastyBird\Core\SimpleAuth\DI\SimpleAuthExtension
-    fbWebServer                         : FastyBird\Plugin\WebServer\DI\WebServerExtension
-    fbTools                             : FastyBird\Core\Tools\DI\ToolsExtension
-    fbExchange                          : FastyBird\Core\Exchange\DI\ExchangeExtension
+	contributteConsole: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+	contributteTranslation: Contributte\Translation\DI\TranslationExtension
+	contributteEvents: Contributte\EventDispatcher\DI\EventDispatcherExtension
+	nettrineCache: Nettrine\Cache\DI\CacheExtension
+	nettrineDbal: Nettrine\DBAL\DI\DbalExtension
+	nettrineOrm: Nettrine\ORM\DI\OrmExtension
+	nettrineOrmAttributes: Nettrine\ORM\DI\OrmAttributesExtension
+	nettrineOrmConsole: Nettrine\ORM\DI\OrmConsoleExtension
+	nettrineOrmCache: Nettrine\ORM\DI\OrmCacheExtension
+	fbCore: FastyBird\Core\DI\CoreExtension
 
 contributteTranslation:
-    locales:
-        default: en_US
-        fallback: [en_US, en]
-    localeResolvers: []
-    dirs:
-        - %vendorDir%/fastybird/json-api-library/src/Translations
+	locales:
+		default: en_US
+		fallback:
+			- en_US
+			- en
+
+	localeResolvers: []
+	dirs:
+		- %vendorDir%/fastybird/miniserver-core/src/Translations/JsonApi
 
 nettrineDbal:
-    connection:
-        serverVersion: 'mariadb-10.11.0'
-        host: 127.0.0.1
-        port: 3306
-        driver: pdo_mysql
-        memory: false
-        dbname: testdb
-        user: root
-        password: root
-        charset: utf8
+	connection:
+		serverVersion: mariadb-10.11.0
+		host: '127.0.0.1'
+		port: 3306
+		driver: pdo_mysql
+		memory: false
+		dbname: testdb
+		user: root
+		password: root
+		charset: utf8
+		types:
+			uuid_binary:
+				class: Ramsey\Uuid\Doctrine\UuidBinaryType
+				commented: false
 
-        types:
-            uuid_binary:
-                class: Ramsey\Uuid\Doctrine\UuidBinaryType
-                commented: false
-            utcdatetime:
-                class: FastyBird\Library\DoctrineTimestampable\Types\UTCDateTime
-                commented: false
+			utcdatetime:
+				class: FastyBird\Core\Types\DoctrineTimestampable\UTCDateTime
+				commented: false
 
-        typesMapping:
-            uuid_binary: binary
+		typesMapping:
+			uuid_binary: binary
 
-    debug:
-        panel: false
+	debug:
+		panel: false
 
 nettrineOrm:
-    configuration:
-        proxyDir: %tempDir%/cache/doctrine.proxies
+	configuration:
+		proxyDir: %tempDir%/cache/doctrine.proxies
 
 nettrineOrmAttributes:
-    mapping: []
+	mapping: []
 
-fbSimpleAuth:
-    token:
-        issuer: com.fastybird.accounts-module
-        signature: '%security.signature%'                  # generate your own, e.g. openssl rand -base64 32
-    enable:
-        middleware: true
-        doctrine:
-            mapping: true
-            models: true
-        casbin:
-            database: true
-        nette:
-            application: true
-    services:
-        identity: true
+fbCore:
+	simpleAuth:
+		token:
+			issuer: com.fastybird.accounts-module
+			signature: %security.signature%
 
-fbJsonApi:
-    meta:
-        copyright: FastyBird s.r.o
+		enable:
+			middleware: true
+			doctrine:
+				mapping: true
+				models: true
+
+			casbin:
+				database: true
+
+			nette:
+				application: true
+
+		services:
+			identity: true
+
+	jsonApi:
+		meta:
+			copyright: FastyBird s.r.o
+
