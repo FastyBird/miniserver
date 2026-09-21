@@ -13,9 +13,9 @@
  * @date           10.02.24
  */
 
-namespace FastyBird\Core\Documents\Application\Mapping;
+namespace FastyBird\Core\Documents\Mapping;
 
-use FastyBird\Core\Documents\Application as Documents;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
 use ReflectionClass;
 use function array_pop;

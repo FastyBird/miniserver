@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TUpdatedAt.php
+ * DiscriminatorMap.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,29 +10,32 @@
  * @subpackage     Documents
  * @since          1.0.0
  *
- * @date           03.01.23
+ * @date           10.02.24
  */
 
-namespace FastyBird\Core\Documents\Application;
+namespace FastyBird\Core\Documents\Mapping;
 
-use DateTimeInterface;
+use Attribute;
+use FastyBird\Core\Documents;
 
 /**
- * Document updated date trait
+ * Document discriminator map definition
+ *
+ * @template T of Documents\Document
  *
  * @package        FastyBird:Application!
  * @subpackage     Documents
- *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- *
- * @property-read DateTimeInterface|null $updatedAt
  */
-trait TUpdatedAt
+#[Attribute(Attribute::TARGET_CLASS)]
+final readonly class DiscriminatorMap implements MappingAttribute
 {
 
-	public function getUpdatedAt(): DateTimeInterface|null
+	/**
+	 * @param array<int|string, class-string<T>> $value
+	 */
+	public function __construct(public array $value)
 	{
-		return $this->updatedAt;
 	}
 
 }

@@ -13,9 +13,9 @@
  * @date           10.02.24
  */
 
-namespace FastyBird\Core\Documents\Application\Mapping\Driver;
+namespace FastyBird\Core\Documents\Mapping\Driver;
 
-use FastyBird\Core\Documents\Application as Documents;
+use FastyBird\Core\Documents;
 
 /**
  * Contract for metadata drivers

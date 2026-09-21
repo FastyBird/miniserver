@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Document.php
+ * TUpdatedAt.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,27 +10,29 @@
  * @subpackage     Documents
  * @since          1.0.0
  *
- * @date           31.05.22
+ * @date           03.01.23
  */
 
-namespace FastyBird\Core\Documents\Application;
+namespace FastyBird\Core\Documents;
 
-use Orisai\ObjectMapper;
+use DateTimeInterface;
 
 /**
- * Data document interface
+ * Document updated date trait
  *
  * @package        FastyBird:Application!
  * @subpackage     Documents
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @property-read DateTimeInterface|null $updatedAt
  */
-interface Document extends ObjectMapper\MappedObject
+trait TUpdatedAt
 {
 
-	/**
-	 * @return array<string, mixed>
-	 */
-	public function toArray(): array;
+	public function getUpdatedAt(): DateTimeInterface|null
+	{
+		return $this->updatedAt;
+	}
 
 }

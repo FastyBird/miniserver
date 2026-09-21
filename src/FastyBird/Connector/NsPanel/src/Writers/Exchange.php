@@ -21,7 +21,7 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;

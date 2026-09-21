@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TCreatedAt.php
+ * InheritanceType.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,29 +10,27 @@
  * @subpackage     Documents
  * @since          1.0.0
  *
- * @date           03.01.23
+ * @date           10.02.24
  */
 
-namespace FastyBird\Core\Documents\Application;
+namespace FastyBird\Core\Documents\Mapping;
 
-use DateTimeInterface;
+use Attribute;
 
 /**
- * Document created date trait
+ * Document definition
  *
  * @package        FastyBird:Application!
  * @subpackage     Documents
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- *
- * @property-read DateTimeInterface|null $createdAt
  */
-trait TCreatedAt
+#[Attribute(Attribute::TARGET_CLASS)]
+final readonly class InheritanceType implements MappingAttribute
 {
 
-	public function getCreatedAt(): DateTimeInterface|null
+	public function __construct(public string $type)
 	{
-		return $this->createdAt;
 	}
 
 }

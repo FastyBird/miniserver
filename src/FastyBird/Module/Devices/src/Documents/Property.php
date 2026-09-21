@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Documents;
 
 use DateTimeInterface;
 use FastyBird\Core\Constants\Metadata\Constants as MetadataConstants;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;

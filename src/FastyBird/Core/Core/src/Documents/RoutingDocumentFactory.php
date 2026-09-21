@@ -1,23 +1,20 @@
 <?php declare(strict_types = 1);
 
 /**
- * DocumentFactory.php
+ * RoutingDocumentFactory.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Exchange!
+ * @package        FastyBird:Core!
  * @subpackage     Documents
  * @since          1.0.0
  *
  * @date           13.06.22
  */
 
-namespace FastyBird\Core\Documents\Exchange;
+namespace FastyBird\Core\Documents;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
-use FastyBird\Core\Documents\Exchange as Documents;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions;
 use Nette\Utils;
 use ReflectionClass;
@@ -27,41 +24,38 @@ use function is_subclass_of;
 use function sprintf;
 
 /**
- * Exchange document factory
+ * Routing-key based document factory resolver, delegates the actual document construction
+ * to DocumentFactory once it has found the document class matching a given routing key
  *
- * @package        FastyBird:Exchange!
+ * @package        FastyBird:Core!
  * @subpackage     Documents
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class DocumentFactory
+final class RoutingDocumentFactory
 {
 
-	/** @var array<string, class-string<ApplicationDocuments\Document>>|null */
+	/** @var array<string, class-string<Document>>|null */
 	private array|null $routingMap = null;
 
-	/** @var Documents\Mapping\Driver\AttributeReader<Documents\Mapping\MappingAttribute> */
-	private Documents\Mapping\Driver\AttributeReader $reader;
+	/** @var Mapping\Driver\AttributeReader<Mapping\MappingAttribute> */
+	private Mapping\Driver\AttributeReader $reader;
 
 	public function __construct(
-		private readonly ApplicationDocuments\Mapping\Driver\MappingDriver $mappingDriver,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly Mapping\Driver\MappingDriver $mappingDriver,
+		private readonly DocumentFactory $documentFactory,
 	)
 	{
-		$this->reader = new Documents\Mapping\Driver\AttributeReader();
+		$this->reader = new Mapping\Driver\AttributeReader();
 	}
 
 	/**
 	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\MalformedInput
+	 * @throws Exceptions\Logic
 	 */
-	public function create(
-		Utils\ArrayHash $data,
-		string $routingKey,
-	): ApplicationDocuments\Document
+	public function create(Utils\ArrayHash $data, string $routingKey): Document
 	{
 		return $this->documentFactory->create(
 			$this->loadDocument($routingKey),
@@ -70,7 +64,7 @@ final class DocumentFactory
 	}
 
 	/**
-	 * @return class-string<ApplicationDocuments\Document>
+	 * @return class-string<Document>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
@@ -97,15 +91,15 @@ final class DocumentFactory
 		$this->routingMap = [];
 
 		foreach ($this->mappingDriver->getAllClassNames() as $className) {
-			if (!is_subclass_of($className, ApplicationDocuments\Document::class)) {
+			if (!is_subclass_of($className, Document::class)) {
 				continue;
 			}
 
 			$classAttributes = $this->reader->getClassAttributes(new ReflectionClass($className));
 
-			if (isset($classAttributes[Documents\Mapping\RoutingMap::class])) {
-				$routingMapAttribute = $classAttributes[Documents\Mapping\RoutingMap::class];
-				assert($routingMapAttribute instanceof Documents\Mapping\RoutingMap);
+			if (isset($classAttributes[Mapping\RoutingMap::class])) {
+				$routingMapAttribute = $classAttributes[Mapping\RoutingMap::class];
+				assert($routingMapAttribute instanceof Mapping\RoutingMap);
 
 				foreach ($routingMapAttribute->value as $route) {
 					if (array_key_exists($route, $this->routingMap)) {

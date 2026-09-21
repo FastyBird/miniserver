@@ -21,7 +21,7 @@ use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Queue;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;

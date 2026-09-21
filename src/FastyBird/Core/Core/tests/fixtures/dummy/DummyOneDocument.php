@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Documents\Application as Documents;
+use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document]
 #[Documents\Mapping\DiscriminatorEntry(name: self::TYPE)]

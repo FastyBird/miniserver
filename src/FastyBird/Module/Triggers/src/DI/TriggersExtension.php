@@ -18,7 +18,7 @@ namespace FastyBird\Module\Triggers\DI;
 use Contributte\Translation;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Module\Triggers\Commands;
 use FastyBird\Module\Triggers\Controllers;

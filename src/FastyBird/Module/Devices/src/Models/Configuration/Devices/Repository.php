@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Models\Configuration\Devices;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;

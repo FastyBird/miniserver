@@ -18,7 +18,7 @@ namespace FastyBird\Module\Ui\Controllers;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
 use FastyBird\Core\Entities\DoctrineCrud;

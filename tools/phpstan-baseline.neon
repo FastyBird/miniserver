@@ -4315,46 +4315,46 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:loadMetadata\(\) should return array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\> but returns array\<class\-string\<T of FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\.$#'
+			message: '#^Method FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:loadMetadata\(\) should return array\<class\-string\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\> but returns array\<class\-string\<T of FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\>\>\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^PHPDoc tag @var with type array\<class\-string\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\|false is not subtype of native type array\<string, class\-string\>\|false\.$#'
+			message: '#^PHPDoc tag @var with type array\<class\-string\<T of FastyBird\\Core\\Documents\\Document\>\>\|false is not subtype of native type array\<string, class\-string\>\|false\.$#'
 			identifier: varTag.nativeType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^Parameter \#1 \$class of method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\> given\.$#'
+			message: '#^Parameter \#1 \$class of method FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^Parameter \#2 \$parent of method FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|null, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\|null given\.$#'
+			message: '#^Parameter \#2 \$parent of method FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:doLoadMetadata\(\) expects FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\|null, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\|FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\>\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadataFactory\:\:\$loadedMetadata \(array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\>\) does not accept non\-empty\-array\<class\-string\<FastyBird\\Core\\Documents\\Application\\Document\>, FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Application\\Document\>\|FastyBird\\Core\\Documents\\Application\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Application\\Document\>\>\.$#'
+			message: '#^Property FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:\$loadedMetadata \(array\<class\-string\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\>\) does not accept non\-empty\-array\<class\-string\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\|FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\>\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/ClassMetadataFactory.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/ClassMetadataFactory.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\Driver\\AttributeDriver\:\:\$excludePaths \(array\<int, string\>\) does not accept array\<string\>\.$#'
+			message: '#^Property FastyBird\\Core\\Documents\\Mapping\\Driver\\AttributeDriver\:\:\$excludePaths \(array\<int, string\>\) does not accept array\<string\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/Driver/AttributeDriver.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/Driver/AttributeDriver.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Documents\\Application\\Mapping\\Driver\\AttributeDriver\:\:\$paths \(array\<int, string\>\) does not accept array\<string\>\.$#'
+			message: '#^Property FastyBird\\Core\\Documents\\Mapping\\Driver\\AttributeDriver\:\:\$paths \(array\<int, string\>\) does not accept array\<string\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Documents/Application/Mapping/Driver/AttributeDriver.php
+			path: ../src/FastyBird/Core/Core/src/Documents/Mapping/Driver/AttributeDriver.php
 
 		-
 			message: '#^Cannot access offset ''limit'' on mixed\.$#'
@@ -8236,6 +8236,18 @@ parameters:
 			path: ../src/FastyBird/Module/Accounts/src/Schemas/Accounts/Account.php
 
 		-
+			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Module/Accounts/src/Subscribers/ModuleEntities.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: ../src/FastyBird/Module/Accounts/src/Subscribers/ModuleEntities.php
+
+		-
 			message: '#^Strict comparison using \!\=\= between FastyBird\\Module\\Devices\\Documents\\Devices\\Device and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
@@ -8440,13 +8452,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
@@ -8458,13 +8470,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
@@ -8476,13 +8488,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
@@ -8494,13 +8506,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
@@ -8512,13 +8524,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
@@ -8530,13 +8542,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
@@ -8548,13 +8560,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
@@ -8566,13 +8578,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
@@ -8584,13 +8596,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
@@ -8836,6 +8848,18 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/PropertiesManager.php
 
 		-
+			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Module/Devices/src/Subscribers/ModuleEntities.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: ../src/FastyBird/Module/Devices/src/Subscribers/ModuleEntities.php
+
+		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 11
@@ -8896,16 +8920,28 @@ parameters:
 			path: ../src/FastyBird/Module/Triggers/src/Entities/Triggers/Trigger.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Triggers/src/Models/States/ActionsManager.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Triggers/src/Models/States/ConditionsManager.php
+
+		-
+			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Module/Triggers/src/Subscribers/ModuleEntities.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: ../src/FastyBird/Module/Triggers/src/Subscribers/ModuleEntities.php
 
 		-
 			message: '#^Cannot access offset ''limit'' on mixed\.$#'
@@ -9016,13 +9052,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
@@ -9034,13 +9070,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
@@ -9052,13 +9088,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
@@ -9070,13 +9106,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
@@ -9088,13 +9124,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
@@ -9106,13 +9142,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php
@@ -9152,6 +9188,18 @@ parameters:
 			identifier: assign.propertyType
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Entities/Widgets/Repository.php
+
+		-
+			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Module/Ui/src/Subscribers/ModuleEntities.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: ../src/FastyBird/Module/Ui/src/Subscribers/ModuleEntities.php
 
 		-
 			message: '#^Cannot access property \$database on mixed\.$#'
@@ -9238,9 +9286,21 @@ parameters:
 			path: ../src/FastyBird/Plugin/RabbitMq/src/DI/RabbitMqExtension.php
 
 		-
+			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Plugin/RabbitMq/src/Handlers/Message.php
+
+		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 2
+			path: ../src/FastyBird/Plugin/RabbitMq/src/Handlers/Message.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
+			identifier: argument.templateType
+			count: 1
 			path: ../src/FastyBird/Plugin/RabbitMq/src/Handlers/Message.php
 
 		-
@@ -9322,6 +9382,12 @@ parameters:
 			path: ../src/FastyBird/Plugin/RedisDb/src/DI/RedisDbExtension.php
 
 		-
+			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Plugin/RedisDb/src/Exchange/Handler.php
+
+		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -9336,6 +9402,12 @@ parameters:
 		-
 			message: '#^Parameter \#4 \$senderId of method FastyBird\\Plugin\\RedisDb\\Exchange\\Handler\:\:consume\(\) expects string\|null, mixed given\.$#'
 			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Plugin/RedisDb/src/Exchange/Handler.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
+			identifier: argument.templateType
 			count: 1
 			path: ../src/FastyBird/Plugin/RedisDb/src/Exchange/Handler.php
 

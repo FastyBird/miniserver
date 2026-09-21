@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Documents\Channels;
 
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Generic::class)]
 #[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Generic::TYPE)]

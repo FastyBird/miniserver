@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\DI;
 use Contributte\Translation;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;

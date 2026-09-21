@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Events\Application;
 
-use FastyBird\Core\Documents\Application as Documents;
+use FastyBird\Core\Documents;
 use Symfony\Contracts\EventDispatcher;
 
 /**

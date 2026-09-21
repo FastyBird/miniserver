@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Document.php
+ * TUpdatedAt.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,30 +10,26 @@
  * @subpackage     Documents
  * @since          1.0.0
  *
- * @date           10.02.24
+ * @date           03.01.23
  */
 
-namespace FastyBird\Core\Documents\Application\Mapping;
+namespace FastyBird\Core\Documents;
 
-use Attribute;
+use DateTimeInterface;
 
 /**
- * Document definition
+ * Data document updated at interface
  *
  * @package        FastyBird:Application!
  * @subpackage     Documents
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @property-read DateTimeInterface|null $updatedAt
  */
-#[Attribute(Attribute::TARGET_CLASS)]
-final readonly class Document implements MappingAttribute
+interface UpdatedAt
 {
 
-	/**
-	 * @param class-string|null $entity
-	 */
-	public function __construct(public string|null $entity = null)
-	{
-	}
+	public function getUpdatedAt(): DateTimeInterface|null;
 
 }

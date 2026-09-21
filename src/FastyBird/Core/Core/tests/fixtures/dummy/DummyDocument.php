@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Tests\Fixtures\Dummy;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents\Application as Documents;
+use FastyBird\Core\Documents;
 use Orisai\ObjectMapper;
 
 #[Documents\Mapping\Document]

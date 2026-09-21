@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * Owner.php
+ * TOwner.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -13,21 +13,26 @@
  * @date           05.06.22
  */
 
-namespace FastyBird\Core\Documents\Application;
+namespace FastyBird\Core\Documents;
 
 use Ramsey\Uuid;
 
 /**
- * Data document owner interface
+ * Document owner trait
  *
  * @package        FastyBird:Application!
  * @subpackage     Documents
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @property-read Uuid\UuidInterface|null $owner
  */
-interface Owner
+trait TOwner
 {
 
-	public function getOwner(): Uuid\UuidInterface|null;
+	public function getOwner(): Uuid\UuidInterface|null
+	{
+		return $this->owner;
+	}
 
 }

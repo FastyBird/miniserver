@@ -435,13 +435,13 @@ class CoreExtension extends DI\CompilerExtension
 			->setAutowired(false);
 
 		$builder->addDefinition('document.factory', new DI\Definitions\ServiceDefinition())
-			->setType(ApplicationDocuments\Application\DocumentFactory::class);
+			->setType(ApplicationDocuments\DocumentFactory::class);
 
 		$attributeDriver = $builder->addDefinition(
 			'document.mapping.attributeDriver',
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(ApplicationDocuments\Application\Mapping\Driver\AttributeDriver::class)
+			->setType(ApplicationDocuments\Mapping\Driver\AttributeDriver::class)
 			->setArguments(['paths' => array_values($configuration->application->documents->mapping)])
 			->addSetup('addExcludePaths', [$configuration->application->documents->excludePaths])
 			->addTag(self::DRIVER_TAG)
@@ -451,10 +451,10 @@ class CoreExtension extends DI\CompilerExtension
 			'document.mapping.mappingDriver',
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(ApplicationDocuments\Application\Mapping\Driver\MappingDriverChain::class);
+			->setType(ApplicationDocuments\Mapping\Driver\MappingDriverChain::class);
 
 		$builder->addDefinition('document.mapping.classMetadataFactory', new DI\Definitions\ServiceDefinition())
-			->setType(ApplicationDocuments\Application\Mapping\ClassMetadataFactory::class)
+			->setType(ApplicationDocuments\Mapping\ClassMetadataFactory::class)
 			->setArguments(['driver' => $mappingDriver, 'cache' => $metadataCache]);
 
 		foreach ($configuration->application->documents->mapping as $namespace => $path) {
@@ -479,7 +479,7 @@ class CoreExtension extends DI\CompilerExtension
 			->setType(ExchangeMessaging\Exchange\Publisher\Async\Container::class);
 
 		$builder->addDefinition($this->prefix('exchange.entityFactory'), new DI\Definitions\ServiceDefinition())
-			->setType(ExchangeDocuments\Exchange\DocumentFactory::class);
+			->setType(ExchangeDocuments\RoutingDocumentFactory::class);
 
 		/**
 		 * SIMPLE AUTH

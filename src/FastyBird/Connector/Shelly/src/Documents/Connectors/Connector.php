@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Shelly\Documents\Connectors;
 
 use FastyBird\Connector\Shelly\Entities;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
 #[ApplicationDocuments\Mapping\Document(entity: Entities\Connectors\Connector::class)]

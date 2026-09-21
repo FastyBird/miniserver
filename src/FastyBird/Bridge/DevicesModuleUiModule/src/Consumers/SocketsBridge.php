@@ -18,7 +18,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Consumers;
 use FastyBird\Bridge\DevicesModuleUiModule;
 use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing\WebSockets as WebSocketsRouting;

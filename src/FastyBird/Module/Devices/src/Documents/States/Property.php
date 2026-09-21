@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;

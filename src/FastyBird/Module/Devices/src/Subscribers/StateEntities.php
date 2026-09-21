@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Subscribers;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\EventLoop\Application\Status;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;

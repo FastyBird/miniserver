@@ -22,7 +22,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use Nette\Bootstrap;
 use Nette\DI;

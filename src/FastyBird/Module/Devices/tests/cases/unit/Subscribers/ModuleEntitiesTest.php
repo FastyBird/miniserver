@@ -5,7 +5,7 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Subscribers;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

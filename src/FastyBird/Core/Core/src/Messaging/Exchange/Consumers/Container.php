@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Messaging\Exchange\Consumers;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Events\Exchange as Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

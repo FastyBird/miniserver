@@ -18,7 +18,7 @@ namespace FastyBird\Connector\NsPanel\Documents\Channels;
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use function array_key_exists;
 use function preg_match;
 

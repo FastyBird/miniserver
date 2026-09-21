@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Controllers;
 
 use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Controllers\WebSockets as WebSocketsControllers;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;

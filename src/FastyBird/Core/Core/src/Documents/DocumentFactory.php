@@ -13,9 +13,9 @@
  * @date           02.06.22
  */
 
-namespace FastyBird\Core\Documents\Application;
+namespace FastyBird\Core\Documents;
 
-use FastyBird\Core\Documents\Application as Documents;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Events\Application as Events;
 use FastyBird\Core\Exceptions;
 use Nette\Utils;

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\RedisDb\Exchange;
 
-use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

@@ -13,9 +13,9 @@
  * @date           10.02.24
  */
 
-namespace FastyBird\Core\Documents\Application\Mapping\Driver;
+namespace FastyBird\Core\Documents\Mapping\Driver;
 
-use FastyBird\Core\Documents\Application as Documents;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
 use function array_keys;
 use function implode;

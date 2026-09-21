@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * DiscriminatorEntry.php
+ * TCreatedAt.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,27 +10,26 @@
  * @subpackage     Documents
  * @since          1.0.0
  *
- * @date           10.02.24
+ * @date           03.01.23
  */
 
-namespace FastyBird\Core\Documents\Application\Mapping;
+namespace FastyBird\Core\Documents;
 
-use Attribute;
+use DateTimeInterface;
 
 /**
- * Document discriminator item attribute
+ * Data document created at interface
  *
  * @package        FastyBird:Application!
  * @subpackage     Documents
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @property-read DateTimeInterface|null $createdAt
  */
-#[Attribute(Attribute::TARGET_CLASS)]
-final readonly class DiscriminatorEntry implements MappingAttribute
+interface CreatedAt
 {
 
-	public function __construct(public string $name)
-	{
-	}
+	public function getCreatedAt(): DateTimeInterface|null;
 
 }

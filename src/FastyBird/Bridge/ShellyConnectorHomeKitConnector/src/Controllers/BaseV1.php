@@ -21,7 +21,7 @@ use Exception;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
 use FastyBird\Core\Entities\DoctrineCrud;

@@ -13,7 +13,7 @@
  * @date           10.02.24
  */
 
-namespace FastyBird\Core\Documents\Application\Mapping;
+namespace FastyBird\Core\Documents\Mapping;
 
 interface MappingAttribute
 {

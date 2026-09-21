@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * TOwner.php
+ * Document.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,29 +10,27 @@
  * @subpackage     Documents
  * @since          1.0.0
  *
- * @date           05.06.22
+ * @date           31.05.22
  */
 
-namespace FastyBird\Core\Documents\Application;
+namespace FastyBird\Core\Documents;
 
-use Ramsey\Uuid;
+use Orisai\ObjectMapper;
 
 /**
- * Document owner trait
+ * Data document interface
  *
  * @package        FastyBird:Application!
  * @subpackage     Documents
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- *
- * @property-read Uuid\UuidInterface|null $owner
  */
-trait TOwner
+interface Document extends ObjectMapper\MappedObject
 {
 
-	public function getOwner(): Uuid\UuidInterface|null
-	{
-		return $this->owner;
-	}
+	/**
+	 * @return array<string, mixed>
+	 */
+	public function toArray(): array;
 
 }

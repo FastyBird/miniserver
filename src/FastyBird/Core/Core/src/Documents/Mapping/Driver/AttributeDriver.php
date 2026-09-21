@@ -13,10 +13,10 @@
  * @date           10.02.24
  */
 
-namespace FastyBird\Core\Documents\Application\Mapping\Driver;
+namespace FastyBird\Core\Documents\Mapping\Driver;
 
 use Error;
-use FastyBird\Core\Documents\Application as Documents;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
@@ -287,7 +287,7 @@ final class AttributeDriver implements MappingDriver
 
 			try {
 				$inheritanceType = constant(
-					'FastyBird\Core\Documents\Application\Mapping\ClassMetadata::INHERITANCE_TYPE_' . $inheritanceTypeAttribute->type,
+					'FastyBird\Core\Documents\Mapping\ClassMetadata::INHERITANCE_TYPE_' . $inheritanceTypeAttribute->type,
 				);
 				assert(is_int($inheritanceType));
 			} catch (Error $ex) {

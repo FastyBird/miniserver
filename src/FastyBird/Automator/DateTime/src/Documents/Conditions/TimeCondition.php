@@ -17,7 +17,7 @@ namespace FastyBird\Automator\DateTime\Documents\Conditions;
 
 use DateTimeInterface;
 use FastyBird\Automator\DateTime\Entities;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;

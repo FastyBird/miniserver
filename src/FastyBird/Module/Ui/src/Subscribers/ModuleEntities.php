@@ -18,7 +18,7 @@ namespace FastyBird\Module\Ui\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\EventLoop\Application\Status;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;

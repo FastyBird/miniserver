@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Events\Exchange;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Symfony\Contracts\EventDispatcher;
 

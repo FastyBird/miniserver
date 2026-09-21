@@ -11,7 +11,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Tests;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

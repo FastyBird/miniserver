@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * InheritanceType.php
+ * Owner.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -10,27 +10,24 @@
  * @subpackage     Documents
  * @since          1.0.0
  *
- * @date           10.02.24
+ * @date           05.06.22
  */
 
-namespace FastyBird\Core\Documents\Application\Mapping;
+namespace FastyBird\Core\Documents;
 
-use Attribute;
+use Ramsey\Uuid;
 
 /**
- * Document definition
+ * Data document owner interface
  *
  * @package        FastyBird:Application!
  * @subpackage     Documents
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[Attribute(Attribute::TARGET_CLASS)]
-final readonly class InheritanceType implements MappingAttribute
+interface Owner
 {
 
-	public function __construct(public string $type)
-	{
-	}
+	public function getOwner(): Uuid\UuidInterface|null;
 
 }

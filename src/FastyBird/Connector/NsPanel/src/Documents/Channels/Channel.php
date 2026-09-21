@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
 #[ApplicationDocuments\Mapping\MappedSuperclass()]

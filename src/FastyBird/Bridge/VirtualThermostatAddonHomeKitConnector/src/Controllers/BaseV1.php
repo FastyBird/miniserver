@@ -21,7 +21,7 @@ use Exception;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Router;
-use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
 use FastyBird\Core\Entities\DoctrineCrud;

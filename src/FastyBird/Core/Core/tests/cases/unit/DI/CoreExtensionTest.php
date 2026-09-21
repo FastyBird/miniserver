@@ -62,9 +62,9 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertNotNull($container->getByType(Monolog\Handler\RotatingFileHandler::class, false));
 		self::assertNull($container->getByType(SymfonyMonolog\Handler\ConsoleHandler::class, false));
-		self::assertNotNull($container->getByType(ApplicationDocuments\Application\DocumentFactory::class, false));
+		self::assertNotNull($container->getByType(ApplicationDocuments\DocumentFactory::class, false));
 		self::assertInstanceOf(
-			ApplicationDocuments\Application\DocumentFactory::class,
+			ApplicationDocuments\DocumentFactory::class,
 			$container->getService('document.factory'),
 		);
 
@@ -72,7 +72,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * EXCHANGE -- from ExchangeExtensionTest
 		 */
 
-		self::assertNotNull($container->getByType(ExchangeDocuments\Exchange\DocumentFactory::class, false));
+		self::assertNotNull($container->getByType(ExchangeDocuments\RoutingDocumentFactory::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Publisher\Container::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Publisher\Async\Container::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Consumers\Container::class, false));
