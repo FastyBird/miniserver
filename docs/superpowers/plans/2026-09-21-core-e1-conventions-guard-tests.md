@@ -42,6 +42,31 @@
 
 ---
 
+## Gate checklist for every characterization task (Tasks 6-11)
+
+Task 6's review found `make phpstan` red on a new test file that had passed every other gate,
+because no task's steps asked for it. Every characterization task must run **all four** of these
+and none is optional:
+
+| Gate | Requirement |
+|---|---|
+| `make tests ARGS="--filter <TestName>"` | exit 0 |
+| `make phpstan` | the new file introduces **no** error. `tools/phpstan.tests.neon` sets `exceptions.check.missingCheckedExceptionInThrows: true`, so **every private helper needs its own `@throws` tag** — a `@throws` on the test methods that call it does not cover it. `new DateTimeImmutable($var)` throws `DateMalformedStringException` under PHP 8.4; so do many parsing constructors. |
+| `make cs` | still exactly **214** findings, all `ClassConstantTypeHint`, none in the new file. Class constants in the new file **must be typed** (`private const string FOO = ...`) — Task 5 switched that rule on for `src/FastyBird/Core/Core` and untyped constants in a test file count against it. Clear `var/tools/PHP_CodeSniffer` first; strip ANSI before counting. |
+| `make naming` | exit 0, baseline unchanged. Imports follow `docs/conventions.md`. |
+
+Run them in a container — there is no PHP 8.4 or composer on the host:
+
+```bash
+docker run --rm -v "$PWD":/app -w /app t3code-6ace9350-application make <target>
+```
+
+Do **not** run the full unfiltered `make tests` there: no MariaDB is reachable from a bare
+`docker run`, so ~1,192 DB-backed tests in unrelated packages fail with connection-refused. That
+is environmental, not a regression.
+
+---
+
 ## Task 1: The naming guard — detection
 
 **Files:**
@@ -1213,7 +1238,16 @@ tag on every method that can throw.
 
 - [ ] **Step 3: Run the test**
 
-Run: `make tests ARGS="--filter ExchangeContainerTest" > /tmp/t7.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t7.txt`
+Run all four gates from the **Gate checklist for every characterization task** near the top of
+this plan. Start with:
+
+```bash
+docker run --rm -v "$PWD":/app -w /app t3code-6ace9350-application \
+  make tests ARGS="--filter ExchangeContainerTest" > /tmp/t7.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t7.txt
+```
+
+then `make phpstan`, `make cs` and `make naming`. **`make phpstan` is not optional** — Task 6
+shipped a file that passed the other three and failed this one.
 
 Expected: `exit=0` with at least 7 tests.
 
@@ -1290,7 +1324,16 @@ Follow the file layout established in Task 6.
 
 - [ ] **Step 3: Run the test**
 
-Run: `make tests ARGS="--filter ResponseTest" > /tmp/t8.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t8.txt`
+Run all four gates from the **Gate checklist for every characterization task** near the top of
+this plan. Start with:
+
+```bash
+docker run --rm -v "$PWD":/app -w /app t3code-6ace9350-application \
+  make tests ARGS="--filter ResponseTest" > /tmp/t8.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t8.txt
+```
+
+then `make phpstan`, `make cs` and `make naming`. **`make phpstan` is not optional** — Task 6
+shipped a file that passed the other three and failed this one.
 
 Expected: `exit=0` with at least 9 tests.
 
@@ -1372,7 +1415,16 @@ Follow the file layout established in Task 6.
 
 - [ ] **Step 3: Run the test**
 
-Run: `make tests ARGS="--filter RouteParserTest" > /tmp/t9.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t9.txt`
+Run all four gates from the **Gate checklist for every characterization task** near the top of
+this plan. Start with:
+
+```bash
+docker run --rm -v "$PWD":/app -w /app t3code-6ace9350-application \
+  make tests ARGS="--filter RouteParserTest" > /tmp/t9.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t9.txt
+```
+
+then `make phpstan`, `make cs` and `make naming`. **`make phpstan` is not optional** — Task 6
+shipped a file that passed the other three and failed this one.
 
 Expected: `exit=0` with at least 8 tests.
 
@@ -1459,7 +1511,16 @@ Follow the file layout established in Task 6.
 
 - [ ] **Step 3: Run the test**
 
-Run: `make tests ARGS="--filter HydratorFieldsTest" > /tmp/t10.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t10.txt`
+Run all four gates from the **Gate checklist for every characterization task** near the top of
+this plan. Start with:
+
+```bash
+docker run --rm -v "$PWD":/app -w /app t3code-6ace9350-application \
+  make tests ARGS="--filter HydratorFieldsTest" > /tmp/t10.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t10.txt
+```
+
+then `make phpstan`, `make cs` and `make naming`. **`make phpstan` is not optional** — Task 6
+shipped a file that passed the other three and failed this one.
 
 Expected: `exit=0` with at least 9 tests.
 
@@ -1548,7 +1609,16 @@ Follow the file layout established in Task 6.
 
 - [ ] **Step 3: Run the test**
 
-Run: `make tests ARGS="--filter FrameTest" > /tmp/t11.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t11.txt`
+Run all four gates from the **Gate checklist for every characterization task** near the top of
+this plan. Start with:
+
+```bash
+docker run --rm -v "$PWD":/app -w /app t3code-6ace9350-application \
+  make tests ARGS="--filter FrameTest" > /tmp/t11.txt 2>&1; echo "exit=$?"; tail -30 /tmp/t11.txt
+```
+
+then `make phpstan`, `make cs` and `make naming`. **`make phpstan` is not optional** — Task 6
+shipped a file that passed the other three and failed this one.
 
 Expected: `exit=0` with at least 9 tests.
 
