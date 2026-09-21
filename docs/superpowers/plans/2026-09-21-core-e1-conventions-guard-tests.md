@@ -49,7 +49,7 @@
 
 **Interfaces:**
 - Consumes: nothing. Plain PHP, runs on a bare checkout with no `vendor/`.
-- Produces: `php tools/check-naming.php` exits 1 and prints a sorted violation list to STDERR, one per line, in the format `<kind>\t<repo-relative path>\t<detail>` where `<kind>` is one of `namespace`, `type`, `alias`. Task 2 consumes exactly that line format.
+- Produces: `php tools/check-naming.php` exits 1 and prints a sorted violation list to STDERR. Internally each violation is the string `<kind>\t<repo-relative path>\t<detail>`, where `<kind>` is one of `namespace`, `type`, `alias`; the STDERR *rendering* expands those tabs to spaces for readability. Task 2 consumes the tab-separated `$violations` array and the baseline file — **not** the STDERR text — so both sides stay tab-separated.
 
 - [ ] **Step 1: Write the guard's detection core**
 
@@ -398,7 +398,36 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 - Consumes: the `<kind>\t<path>\t<detail>` violation lines produced by Task 1.
 - Produces: `php tools/check-naming.php` exits 0 on the current tree. `php tools/check-naming.php --generate-baseline` rewrites `tools/naming-baseline.txt`. A violation absent from the baseline exits 1; a baseline line that is no longer violated also exits 1, with a message telling the engineer to remove it.
 
-- [ ] **Step 1: Add baseline handling to the guard**
+- [ ] **Step 1: Fix the namespace-boundary check carried over from Task 1**
+
+Task 1's review found a latent false positive: `str_starts_with($namespace, 'FastyBird\\Core')`
+also matches a namespace like `FastyBird\CoreExtra\Application`, which would then be scanned as
+though it were Core. No such namespace exists today, so it is not an active bug — but a false
+positive in a gate that will run across seven more epics is expensive, and the fix is one line.
+
+In `fbCheckFile()`, change:
+
+```php
+	$isCore = str_starts_with($namespace, 'FastyBird\\Core');
+```
+
+to:
+
+```php
+	$isCore = $namespace === 'FastyBird\\Core' || str_starts_with($namespace, 'FastyBird\\Core\\');
+```
+
+Confirm it still finds the same violations as before the change:
+
+```bash
+php tools/check-naming.php 2>&1 | head -1
+```
+
+Expected: `3292 naming violations:` — the same count Task 1 reported. A *different* count means
+the boundary change altered real detection rather than only the latent case, which is a finding,
+not an improvement.
+
+- [ ] **Step 2: Add baseline handling to the guard**
 
 In `tools/check-naming.php`, replace everything from `sort($violations);` to the end of the file
 with:
@@ -477,19 +506,19 @@ printf(
 exit(0);
 ```
 
-- [ ] **Step 2: Generate the baseline**
+- [ ] **Step 3: Generate the baseline**
 
 Run: `php tools/check-naming.php --generate-baseline`
 
 Expected: `Wrote <N> violations to tools/naming-baseline.txt.` with N in the 3,500–3,800 range.
 
-- [ ] **Step 3: Run the guard clean**
+- [ ] **Step 4: Run the guard clean**
 
 Run: `php tools/check-naming.php; echo "exit=$?"`
 
 Expected: `exit=0` and `Checked <N> PHP files; <M> known violations remain in the baseline, no new ones.`
 
-- [ ] **Step 4: Verify the guard rejects a new violation**
+- [ ] **Step 5: Verify the guard rejects a new violation**
 
 ```bash
 printf '<?php declare(strict_types = 1);\n\nnamespace FastyBird\\Module\\Devices;\n\nuse FastyBird\\Core\\Documents as SlimRouterDocuments;\n' > src/FastyBird/Module/Devices/src/FbNamingProbe.php
@@ -500,7 +529,7 @@ rm src/FastyBird/Module/Devices/src/FbNamingProbe.php
 Expected: `exit=1`, reporting exactly one new violation naming `FbNamingProbe.php` and
 `expected CoreDocuments`.
 
-- [ ] **Step 5: Verify the guard rejects a stale baseline entry**
+- [ ] **Step 6: Verify the guard rejects a stale baseline entry**
 
 ```bash
 head -1 tools/naming-baseline.txt          # note which file it names
@@ -512,7 +541,7 @@ git checkout tools/naming-baseline.txt 2>/dev/null || php tools/check-naming.php
 Expected: `exit=1` with `1 baseline entries are no longer violated. Remove them:` naming
 `NoSuchFile.php`.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
 git add tools/check-naming.php tools/naming-baseline.txt
