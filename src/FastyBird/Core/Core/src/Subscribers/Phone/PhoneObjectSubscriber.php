@@ -232,7 +232,6 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 				continue;
 			}
 
-			/** @phpstan-ignore-next-line */
 			$rc = $classMetadata->isInheritedField($fieldName)
 				? new ReflectionClass($mapping['declared'])
 				: $classMetadata->getReflectionClass();

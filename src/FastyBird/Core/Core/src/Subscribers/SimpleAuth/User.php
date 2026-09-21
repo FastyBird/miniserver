@@ -149,7 +149,6 @@ final class User implements Common\EventSubscriber
 
 						if ($new === null) { // let manual values
 							$needChanges = true;
-							// @phpstan-ignore-next-line
 							$this->updateField($uow, $object, $classMetadata, $field);
 						}
 					}

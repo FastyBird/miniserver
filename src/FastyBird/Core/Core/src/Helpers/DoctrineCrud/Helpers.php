@@ -91,7 +91,6 @@ class Helpers
 							if (
 								is_object($argument)
 								&& (
-									// @phpstan-ignore-next-line
 									is_subclass_of($argument, $class) || $argument::class === $class
 								)
 							) {
