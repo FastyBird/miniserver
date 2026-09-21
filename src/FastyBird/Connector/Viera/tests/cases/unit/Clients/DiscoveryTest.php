@@ -12,7 +12,6 @@ use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Services;
 use FastyBird\Connector\Viera\Tests;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use GuzzleHttp;

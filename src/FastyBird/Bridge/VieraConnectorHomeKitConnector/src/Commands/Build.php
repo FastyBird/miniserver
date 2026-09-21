@@ -25,7 +25,6 @@ use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Queries as VieraQueries;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;

@@ -16,7 +16,6 @@
 namespace FastyBird\Module\Devices\Models\Configuration;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;

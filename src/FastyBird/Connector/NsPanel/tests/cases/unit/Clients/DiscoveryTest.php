@@ -13,7 +13,6 @@ use FastyBird\Connector\NsPanel\Services;
 use FastyBird\Connector\NsPanel\Tests;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\DI;

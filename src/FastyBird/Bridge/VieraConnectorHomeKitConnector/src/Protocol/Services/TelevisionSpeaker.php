@@ -18,7 +18,6 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Protocol\Services;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 

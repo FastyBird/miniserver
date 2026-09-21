@@ -22,7 +22,6 @@ use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use TypeError;
 use ValueError;

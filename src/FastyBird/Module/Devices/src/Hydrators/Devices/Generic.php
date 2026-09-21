@@ -17,9 +17,8 @@ namespace FastyBird\Module\Devices\Hydrators\Devices;
 
 use Doctrine\Persistence;
 use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;

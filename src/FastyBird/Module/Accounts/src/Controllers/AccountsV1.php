@@ -24,7 +24,6 @@ use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;

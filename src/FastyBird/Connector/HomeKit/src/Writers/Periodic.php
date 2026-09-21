@@ -24,7 +24,6 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

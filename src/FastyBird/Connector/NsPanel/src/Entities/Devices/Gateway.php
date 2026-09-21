@@ -20,7 +20,6 @@ use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use TypeError;
 use ValueError;

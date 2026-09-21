@@ -28,7 +28,6 @@ use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;

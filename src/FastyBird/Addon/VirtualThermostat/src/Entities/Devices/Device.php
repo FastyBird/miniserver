@@ -22,7 +22,6 @@ use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;

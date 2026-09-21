@@ -19,7 +19,6 @@ use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Core\Events\Application as ApplicationEvents;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;

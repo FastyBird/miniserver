@@ -19,7 +19,6 @@ use FastyBird\Connector\Viera\Documents;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
 use Throwable;

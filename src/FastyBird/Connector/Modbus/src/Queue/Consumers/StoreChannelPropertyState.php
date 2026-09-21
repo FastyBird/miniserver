@@ -20,7 +20,6 @@ use FastyBird\Connector\Modbus\Documents;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;

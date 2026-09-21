@@ -25,7 +25,6 @@ use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

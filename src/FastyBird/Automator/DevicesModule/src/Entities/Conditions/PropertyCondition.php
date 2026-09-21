@@ -17,7 +17,6 @@ namespace FastyBird\Automator\DevicesModule\Entities\Conditions;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;

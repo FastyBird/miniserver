@@ -13,7 +13,6 @@ use FastyBird\Connector\Shelly\Services;
 use FastyBird\Connector\Shelly\Tests;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\DI;

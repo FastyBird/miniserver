@@ -11,7 +11,6 @@ use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette\DI;

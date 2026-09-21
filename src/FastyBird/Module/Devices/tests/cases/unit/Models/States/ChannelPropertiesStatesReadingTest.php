@@ -5,7 +5,6 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Models\States;
 use DateTimeInterface;
 use Error;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;

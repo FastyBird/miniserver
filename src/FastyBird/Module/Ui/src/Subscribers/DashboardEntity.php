@@ -19,7 +19,6 @@ use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;

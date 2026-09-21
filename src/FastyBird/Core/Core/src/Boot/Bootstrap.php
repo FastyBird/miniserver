@@ -25,6 +25,7 @@ use function class_exists;
 use function count;
 use function define;
 use function defined;
+use function error_reporting;
 use function explode;
 use function file_exists;
 use function getenv;
@@ -42,6 +43,9 @@ use function strtolower;
 use function strval;
 use function substr;
 use const DIRECTORY_SEPARATOR as DS;
+use const E_ALL;
+use const E_DEPRECATED;
+use const E_USER_DEPRECATED;
 
 /**
  * Service application configurator

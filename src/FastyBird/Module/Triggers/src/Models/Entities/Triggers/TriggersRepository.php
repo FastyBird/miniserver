@@ -18,7 +18,6 @@ namespace FastyBird\Module\Triggers\Models\Entities\Triggers;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Module\Triggers\Entities;

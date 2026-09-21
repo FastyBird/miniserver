@@ -531,10 +531,16 @@ class CoreExtension extends DI\CompilerExtension
 			)
 				->setType(SimpleAuthSecurity\SimpleAuth\Access\AnnotationChecker::class);
 
-			$builder->addDefinition($this->prefix('simpleAuth.access.latteChecker'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition(
+				$this->prefix('simpleAuth.access.latteChecker'),
+				new DI\Definitions\ServiceDefinition(),
+			)
 				->setType(SimpleAuthSecurity\SimpleAuth\Access\LatteChecker::class);
 
-			$builder->addDefinition($this->prefix('simpleAuth.access.linkChecker'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition(
+				$this->prefix('simpleAuth.access.linkChecker'),
+				new DI\Definitions\ServiceDefinition(),
+			)
 				->setType(SimpleAuthSecurity\SimpleAuth\Access\LinkChecker::class);
 
 			if ($configuration->simpleAuth->enable->casbin->database) {
@@ -600,12 +606,18 @@ class CoreExtension extends DI\CompilerExtension
 				)
 					->setType(SimpleAuthMiddleware\SimpleAuth\Authorization::class);
 
-				$builder->addDefinition($this->prefix('simpleAuth.middleware.user'), new DI\Definitions\ServiceDefinition())
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.middleware.user'),
+					new DI\Definitions\ServiceDefinition(),
+				)
 					->setType(SimpleAuthMiddleware\SimpleAuth\User::class);
 			}
 
 			if ($configuration->simpleAuth->enable->doctrine->mapping) {
-				$builder->addDefinition($this->prefix('simpleAuth.doctrine.driver'), new DI\Definitions\ServiceDefinition())
+				$builder->addDefinition(
+					$this->prefix('simpleAuth.doctrine.driver'),
+					new DI\Definitions\ServiceDefinition(),
+				)
 					->setType(SimpleAuthMapping\SimpleAuth\Driver\Owner::class);
 
 				$builder->addDefinition(

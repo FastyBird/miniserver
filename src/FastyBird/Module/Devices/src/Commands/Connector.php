@@ -19,7 +19,6 @@ use BadMethodCallException;
 use DateTimeInterface;
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;

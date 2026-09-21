@@ -32,7 +32,6 @@ use FastyBird\Connector\Viera\Queries as VieraQueries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;

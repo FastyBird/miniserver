@@ -18,7 +18,6 @@ namespace FastyBird\Connector\HomeKit\Protocol;
 use DateTimeInterface;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;

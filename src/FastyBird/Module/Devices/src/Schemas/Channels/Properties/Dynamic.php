@@ -18,7 +18,6 @@ namespace FastyBird\Module\Devices\Schemas\Channels\Properties;
 use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Routing\SlimRouter as SlimRouterRouting;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;

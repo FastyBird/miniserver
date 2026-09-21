@@ -16,7 +16,6 @@
 namespace FastyBird\Module\Devices\Commands;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;

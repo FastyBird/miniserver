@@ -18,7 +18,6 @@ namespace FastyBird\Module\Devices\Documents\Connectors\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
