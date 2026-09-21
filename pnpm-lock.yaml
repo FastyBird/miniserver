@@ -17,15 +17,9 @@ importers:
       '@fastybird/homekit-connector':
         specifier: workspace:*
         version: link:src/FastyBird/Connector/HomeKit
-      '@fastybird/metadata-library':
+      '@fastybird/miniserver-core':
         specifier: workspace:*
-        version: link:src/FastyBird/Library/Metadata
-      '@fastybird/tools':
-        specifier: workspace:*
-        version: link:src/FastyBird/Core/Tools
-      '@fastybird/websockets-library':
-        specifier: workspace:*
-        version: link:src/FastyBird/Library/WebSockets
+        version: link:src/FastyBird/Core/Core
       '@iconify/iconify':
         specifier: ^3.1
         version: 3.1.1
@@ -183,21 +177,12 @@ importers:
       '@chenfengyuan/vue-qrcode':
         specifier: ^2.0
         version: 2.0.0(qrcode@1.5.4)(vue@3.5.42(typescript@6.0.3))
-      '@fastybird/application':
-        specifier: workspace:*
-        version: link:../../Core/Application
       '@fastybird/devices-module':
         specifier: workspace:*
         version: link:../../Module/Devices
-      '@fastybird/metadata-library':
+      '@fastybird/miniserver-core':
         specifier: workspace:*
-        version: link:../../Library/Metadata
-      '@fastybird/tools':
-        specifier: workspace:*
-        version: link:../../Core/Tools
-      '@fastybird/websockets-library':
-        specifier: workspace:*
-        version: link:../../Library/WebSockets
+        version: link:../../Core/Core
       '@iconify/vue':
         specifier: ^5
         version: 5.0.1(vue@3.5.42(typescript@6.0.3))
@@ -217,17 +202,11 @@ importers:
         specifier: ^1.5
         version: 1.5.4
 
-  src/FastyBird/Core/Application:
+  src/FastyBird/Core/Core:
     dependencies:
       '@iconify/vue':
         specifier: ^5
         version: 5.0.1(vue@3.5.42(typescript@6.0.3))
-
-  src/FastyBird/Core/Tools:
-    dependencies:
-      '@fastybird/metadata-library':
-        specifier: workspace:*
-        version: link:../../Library/Metadata
       '@vueuse/core':
         specifier: ^11.2
         version: 11.3.0(vue@3.5.42(typescript@6.0.3))
@@ -241,21 +220,11 @@ importers:
         specifier: ^3.0
         version: 3.0.1
 
-  src/FastyBird/Library/Metadata: {}
-
-  src/FastyBird/Library/WebSockets: {}
-
   src/FastyBird/Module/Accounts:
     dependencies:
-      '@fastybird/application':
+      '@fastybird/miniserver-core':
         specifier: workspace:*
-        version: link:../../Core/Application
-      '@fastybird/metadata-library':
-        specifier: workspace:*
-        version: link:../../Library/Metadata
-      '@fastybird/tools':
-        specifier: workspace:*
-        version: link:../../Core/Tools
+        version: link:../../Core/Core
       '@iconify/vue':
         specifier: ^5
         version: 5.0.1(vue@3.5.42(typescript@6.0.3))
@@ -301,18 +270,9 @@ importers:
 
   src/FastyBird/Module/Devices:
     dependencies:
-      '@fastybird/application':
+      '@fastybird/miniserver-core':
         specifier: workspace:*
-        version: link:../../Core/Application
-      '@fastybird/metadata-library':
-        specifier: workspace:*
-        version: link:../../Library/Metadata
-      '@fastybird/tools':
-        specifier: workspace:*
-        version: link:../../Core/Tools
-      '@fastybird/websockets-library':
-        specifier: workspace:*
-        version: link:../../Library/WebSockets
+        version: link:../../Core/Core
       '@iconify/vue':
         specifier: ^5
         version: 5.0.1(vue@3.5.42(typescript@6.0.3))
@@ -360,12 +320,9 @@ importers:
 
   src/FastyBird/Module/Ui:
     dependencies:
-      '@fastybird/metadata-library':
+      '@fastybird/miniserver-core':
         specifier: workspace:*
-        version: link:../../Library/Metadata
-      '@fastybird/websockets-library':
-        specifier: workspace:*
-        version: link:../../Library/WebSockets
+        version: link:../../Core/Core
       '@vueuse/core':
         specifier: ^11.2
         version: 11.3.0(vue@3.5.42(typescript@6.0.3))
