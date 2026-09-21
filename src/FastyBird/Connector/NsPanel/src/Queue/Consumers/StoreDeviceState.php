@@ -21,7 +21,6 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
@@ -72,7 +71,7 @@ final class StoreDeviceState implements Queue\Consumer
 	 * @throws Exceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -188,7 +187,7 @@ final class StoreDeviceState implements Queue\Consumer
 	 * @throws Exceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -232,7 +231,7 @@ final class StoreDeviceState implements Queue\Consumer
 	 * @throws Exceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

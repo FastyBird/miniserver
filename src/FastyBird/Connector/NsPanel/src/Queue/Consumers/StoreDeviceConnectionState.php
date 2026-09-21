@@ -21,7 +21,6 @@ use FastyBird\Connector\NsPanel\Documents;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -71,7 +70,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

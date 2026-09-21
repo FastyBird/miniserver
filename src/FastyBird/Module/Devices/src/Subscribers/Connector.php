@@ -17,7 +17,6 @@ namespace FastyBird\Module\Devices\Subscribers;
 
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Events;
@@ -80,7 +79,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -103,7 +102,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -126,7 +125,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -154,7 +153,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -200,7 +199,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

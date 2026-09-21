@@ -27,7 +27,6 @@ use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -1703,7 +1702,7 @@ class Install extends Console\Command\Command
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2389,7 +2388,7 @@ class Install extends Console\Command\Command
 	 * @throws Exceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

@@ -23,7 +23,6 @@ use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -70,7 +69,7 @@ final class StoreCloudDevice implements Queue\Consumer
 	 * @throws DBAL\Exception
 	 * @throws Exceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

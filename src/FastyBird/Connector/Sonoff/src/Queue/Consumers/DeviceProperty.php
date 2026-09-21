@@ -22,7 +22,6 @@ use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -53,7 +52,7 @@ trait DeviceProperty
 	 * @throws DBAL\Exception
 	 * @throws Exceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 */
 	private function setDeviceProperty(
 		Uuid\UuidInterface $deviceId,

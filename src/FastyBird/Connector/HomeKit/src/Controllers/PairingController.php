@@ -28,7 +28,6 @@ use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http\SlimRouter as SlimRouterHttp;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -901,7 +900,7 @@ final class PairingController extends BaseController
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1319,7 +1318,7 @@ final class PairingController extends BaseController
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2072,7 +2071,7 @@ final class PairingController extends BaseController
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws ApplicationExceptions\Runtime
 	 */
 	private function setConfiguration(
 		Documents\Connectors\Connector $connector,

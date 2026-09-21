@@ -22,7 +22,6 @@ use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -65,7 +64,7 @@ final class ChannelAttribute implements Queue\Consumer
 	/**
 	 * @throws DBAL\Exception
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws Exceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

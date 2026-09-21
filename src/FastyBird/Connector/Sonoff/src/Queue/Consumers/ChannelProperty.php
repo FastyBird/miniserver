@@ -19,7 +19,6 @@ use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -52,7 +51,7 @@ trait ChannelProperty
 	 *
 	 * @throws DBAL\Exception
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\Runtime
+	 * @throws Exceptions\Runtime
 	 */
 	private function setChannelProperty(
 		string $type,
