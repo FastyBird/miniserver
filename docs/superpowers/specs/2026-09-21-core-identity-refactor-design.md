@@ -172,6 +172,23 @@ at the root** (`Core\Boot\`, `Core\DI\`, `Core\Caching\`, `Core\EventLoop\`, `Co
 `Core\UI\`) rather than being gathered under an invented umbrella — they are unrelated to each
 other, and `Application\` is precisely the former `FastyBird:Application!` package name.
 
+### 4.2.1 `Routing\` holds three unrelated systems, not one
+
+Found during E1's characterization work (Task 9) and verified by reading the sources. The
+capability table above implicitly treats `FastyBird\Core\Routing\` as one thing that moves into
+`Http\`. It is not. Three systems share that namespace **by merge history alone**:
+
+| System | Classes | Belongs in |
+|---|---|---|
+| Slim-derived HTTP router | `Router`, `ServerRouter`, `RouteCollector`, `RouteParser`, `Route`, `RouteGroup`, `RouteHandler`, `RoutingResults`, `FastRouteDispatcher`, `LinkGenerator`, `Handlers/`, `IRoute*` | `Http\Routing\` |
+| WAMP/WebSockets router | `RouteList` (`extends Nette\Utils\ArrayList implements IWampRouter`, tagged `@package iPublikuj:WebSockets!`), `IWampRouter`, `WampRoute` | `WebSockets\Wamp\` |
+| Nette presenter registrar | `AppRouter` — registers one `Application\Routers\RouteList` route (`/` → `Default::default`), wired from `CoreExtension`, never through `Router` | dissolved at the root, beside `Presenters\` |
+
+`RouteList` is the trap: the name suggests it belongs with `RouteCollector`, and nothing but its
+`implements` clause and a stale `@package` tag says otherwise. E3's census subtask must split these
+three before moving anything, or the WAMP router lands inside the HTTP capability and the mistake
+becomes invisible once the old names are gone.
+
 ### 4.3 Two structural rules
 
 1. **Exceptions and events live inside their capability**, following Symfony:
