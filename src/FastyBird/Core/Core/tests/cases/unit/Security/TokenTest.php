@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Security;
 
+use DateMalformedStringException;
 use DateTimeImmutable;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
@@ -21,9 +22,46 @@ final class TokenTest extends TestCase
 
 	private const string NOW = '2026-09-21T12:00:00+00:00';
 
+	/**
+	 * @throws DateMalformedStringException
+	 */
 	private function clock(string $at = self::NOW): DateTimeFactory\FrozenClock
 	{
 		return new DateTimeFactory\FrozenClock(new DateTimeImmutable($at));
+	}
+
+	/**
+	 * Builds a token that satisfies the validator's signature, issuer and expiry checks but
+	 * carries only the given application claims. TokenBuilder always sets both
+	 * TOKEN_CLAIM_USER and TOKEN_CLAIM_ROLES, so it cannot produce a token missing either one;
+	 * this bypasses it to exercise the claims-presence checks in TokenValidator::validate()
+	 * in isolation.
+	 *
+	 * @param array<string, mixed> $claims
+	 *
+	 * @throws DateMalformedStringException
+	 * @throws JWT\Encoding\CannotEncodeContent
+	 * @throws JWT\Signer\CannotSignPayload
+	 * @throws JWT\Signer\Ecdsa\ConversionFailed
+	 * @throws JWT\Signer\InvalidKeyProvided
+	 * @throws JWT\Token\RegisteredClaimGiven
+	 */
+	private function tokenWithClaims(array $claims): string
+	{
+		$configuration = JWT\Configuration::forSymmetricSigner(
+			new JWT\Signer\Hmac\Sha256(),
+			JWT\Signer\Key\InMemory::plainText(self::SIGNATURE),
+		);
+
+		$builder = $configuration->builder()
+			->issuedBy(self::ISSUER)
+			->issuedAt(new DateTimeImmutable(self::NOW));
+
+		foreach ($claims as $name => $value) {
+			$builder = $builder->withClaim($name, $value);
+		}
+
+		return $builder->getToken($configuration->signer(), $configuration->signingKey())->toString();
 	}
 
 	/**
@@ -164,6 +202,49 @@ final class TokenTest extends TestCase
 	/**
 	 * @throws Throwable
 	 */
+	public function testValidatorRejectsATokenWithoutAUserClaim(): void
+	{
+		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+
+		$token = $this->tokenWithClaims([
+			Constants\Constants::TOKEN_CLAIM_ROLES => ['user'],
+		]);
+
+		self::assertNull($validator->validate($token));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testValidatorRejectsATokenWithoutARolesClaim(): void
+	{
+		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+
+		$token = $this->tokenWithClaims([
+			Constants\Constants::TOKEN_CLAIM_USER => '9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a',
+		]);
+
+		self::assertNull($validator->validate($token));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testValidatorRejectsATokenWithANonUuidUserClaim(): void
+	{
+		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+
+		$token = $this->tokenWithClaims([
+			Constants\Constants::TOKEN_CLAIM_USER => 'not-a-uuid',
+			Constants\Constants::TOKEN_CLAIM_ROLES => ['user'],
+		]);
+
+		self::assertNull($validator->validate($token));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
 	public function testReaderExtractsABearerToken(): void
 	{
 		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
@@ -204,6 +285,29 @@ final class TokenTest extends TestCase
 			->withHeader(Constants\Constants::TOKEN_HEADER_NAME, 'Basic dXNlcjpwYXNz');
 
 		self::assertNull($reader->read($request));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testReaderThrowsWhenTheBearerTokenFailsValidation(): void
+	{
+		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new SimpleAuth\TokenValidator(
+			'Nq7ZBvAaP2sXtYuEwR5cV8bN1mK4jH6gF9dS3aQ0zL',
+			self::ISSUER,
+			$this->clock(),
+		);
+		$reader = new SimpleAuth\TokenReader($validator);
+
+		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', ['user']);
+
+		$request = (new ServerRequest('GET', '/api/v1/devices'))
+			->withHeader(Constants\Constants::TOKEN_HEADER_NAME, 'Bearer ' . $token->toString());
+
+		self::expectException(Exceptions\UnauthorizedAccess::class);
+
+		$reader->read($request);
 	}
 
 }
