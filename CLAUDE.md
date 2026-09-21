@@ -59,6 +59,10 @@ Install commands exist per module/connector/addon, not as a single `fb:initializ
 
 Conventional commits (`<type>(<scope>): <subject>`), scope required, enforced by commitlint locally and by `lint-pr.yml` on PR titles. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the type and scope tables.
 
+Code conventions — identity rules, import aliases, docblocks, naming, PHP idiom — are in
+[docs/conventions.md](./docs/conventions.md) and enforced by `make naming` and `make cs`. Read
+it before adding a file to `src/FastyBird/Core/Core`.
+
 ## Architecture reference
 
 Read [docs/architecture.md](./docs/architecture.md) before changing request routing, the config load order, or how extensions register their DI extensions. Read [docs/configuration.md](./docs/configuration.md) before wiring an extension that is present in the tree but not registered by default (RedisDb and its two bridges, RedisDbCache, CouchDb, RabbitMq, the two automators, ApiKey). Read [docs/deployment.md](./docs/deployment.md) before changing anything under `docker/` or `config/supervisor/`.
