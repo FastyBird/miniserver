@@ -21,6 +21,7 @@ qa: ## Check code quality - coding style and static analysis
 	make cs
 	make phpstan
 	make layers
+	make naming
 
 cs: ## Check PHP files coding style
 	mkdir -p var/tools/PHP_CodeSniffer
@@ -74,8 +75,8 @@ discriminators: ## Check every Doctrine inheritance root declares an explicit di
 # fastybird/miniserver-core was assembled from -- in a Core namespace segment, in a declared
 # type name, or in a `use FastyBird\Core\... as X` alias anywhere in the repository.
 #
-# Aliases are the reason this is a gate rather than a review habit. There were 3,333 of them
-# when the Core identity refactor started, in 139 distinct forms, and they existed purely
+# Aliases are the reason this is a gate rather than a review habit. There were 3,076 of them
+# when the Core identity refactor started, in 131 distinct forms, and they existed purely
 # because nothing checked. tools/naming-baseline.txt records the ones not yet reached; it may
 # only shrink, and a stale entry fails the gate.
 naming: ## Check no file names a library that Core was assembled from

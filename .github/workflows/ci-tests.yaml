@@ -48,6 +48,11 @@ jobs:
       - name: "make discriminators"
         run: "make discriminators"
 
+      # Same shape as `make layers` and `make discriminators`: plain PHP, runs before
+      # `composer install` so that staying dependency-free remains a tested property. Exit 2
+      # means the gate broke (a self-check floor tripped), exit 1 means either a new naming
+      # violation or a baseline entry that is no longer violated -- the baseline may only
+      # shrink.
       - name: "make naming"
         run: "make naming"
 

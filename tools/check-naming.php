@@ -7,8 +7,8 @@
  * WHY THIS IS A GATE
  *
  * Core was merged from 15 packages. The merge preserved their identities in six layers, and
- * the largest by far was import aliases: 3,333 `use FastyBird\Core\... as <OldName>;`
- * statements, 139 distinct forms, with FastyBird\Core\Exceptions alone aliased 11 different
+ * the largest by far was import aliases: 3,076 `use FastyBird\Core\... as <OldName>;`
+ * statements, 131 distinct forms, with FastyBird\Core\Exceptions alone aliased 11 different
  * ways depending on which library the importing file came from.
  *
  * They exist because nothing checked for them, and they will re-form without a gate, because
