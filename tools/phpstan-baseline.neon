@@ -8236,18 +8236,6 @@ parameters:
 			path: ../src/FastyBird/Module/Accounts/src/Schemas/Accounts/Account.php
 
 		-
-			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Module/Accounts/src/Subscribers/ModuleEntities.php
-
-		-
-			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: ../src/FastyBird/Module/Accounts/src/Subscribers/ModuleEntities.php
-
-		-
 			message: '#^Strict comparison using \!\=\= between FastyBird\\Module\\Devices\\Documents\\Devices\\Device and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
@@ -8848,18 +8836,6 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/PropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Module/Devices/src/Subscribers/ModuleEntities.php
-
-		-
-			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: ../src/FastyBird/Module/Devices/src/Subscribers/ModuleEntities.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 11
@@ -8930,18 +8906,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Triggers/src/Models/States/ConditionsManager.php
-
-		-
-			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Module/Triggers/src/Subscribers/ModuleEntities.php
-
-		-
-			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: ../src/FastyBird/Module/Triggers/src/Subscribers/ModuleEntities.php
 
 		-
 			message: '#^Cannot access offset ''limit'' on mixed\.$#'
@@ -9190,18 +9154,6 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Entities/Widgets/Repository.php
 
 		-
-			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Module/Ui/src/Subscribers/ModuleEntities.php
-
-		-
-			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: ../src/FastyBird/Module/Ui/src/Subscribers/ModuleEntities.php
-
-		-
 			message: '#^Cannot access property \$database on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -9286,21 +9238,9 @@ parameters:
 			path: ../src/FastyBird/Plugin/RabbitMq/src/DI/RabbitMqExtension.php
 
 		-
-			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Plugin/RabbitMq/src/Handlers/Message.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 2
-			path: ../src/FastyBird/Plugin/RabbitMq/src/Handlers/Message.php
-
-		-
-			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
-			identifier: argument.templateType
-			count: 1
 			path: ../src/FastyBird/Plugin/RabbitMq/src/Handlers/Message.php
 
 		-
@@ -9382,12 +9322,6 @@ parameters:
 			path: ../src/FastyBird/Plugin/RedisDb/src/DI/RedisDbExtension.php
 
 		-
-			message: '#^Parameter \#1 \$documentClass of method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\) expects class\-string\<FastyBird\\Core\\Documents\\Document\>, Nette\\Utils\\ArrayHash given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDb/src/Exchange/Handler.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -9402,12 +9336,6 @@ parameters:
 		-
 			message: '#^Parameter \#4 \$senderId of method FastyBird\\Plugin\\RedisDb\\Exchange\\Handler\:\:consume\(\) expects string\|null, mixed given\.$#'
 			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDb/src/Exchange/Handler.php
-
-		-
-			message: '#^Unable to resolve the template type T in call to method FastyBird\\Core\\Documents\\DocumentFactory\:\:create\(\)$#'
-			identifier: argument.templateType
 			count: 1
 			path: ../src/FastyBird/Plugin/RedisDb/src/Exchange/Handler.php
 

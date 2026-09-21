@@ -62,7 +62,7 @@ final class ModuleEntities implements Common\EventSubscriber
 		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
 		private readonly Models\States\Async\ChannelPropertiesManager $asyncChannelPropertiesStatesManager,
 		private readonly Status $eventLoopStatus,
-		private readonly ExchangeDocuments\DocumentFactory $documentFactory,
+		private readonly ExchangeDocuments\RoutingDocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Publisher $publisher,
 		private readonly ExchangePublisher\Async\Publisher $asyncPublisher,
 	)

@@ -45,7 +45,7 @@ final readonly class Handler
 
 	public function __construct(
 		private Utilities\IdentifierGenerator $identifier,
-		private ExchangeDocuments\DocumentFactory $documentFactory,
+		private ExchangeDocuments\RoutingDocumentFactory $documentFactory,
 		private ExchangeConsumers\Container $consumer,
 		private EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 		private Log\LoggerInterface $logger = new Log\NullLogger(),

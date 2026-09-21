@@ -28,7 +28,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$entityManager = $this->createMock(ORM\EntityManagerInterface::class);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\DocumentFactory::class);
+		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
 
 		$eventLoopStatus = $this->createMock(ApplicationEventLoop\Status::class);
 
@@ -106,7 +106,7 @@ final class ModuleEntitiesTest extends TestCase
 				'is_triggered' => false,
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\DocumentFactory::class);
+		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
@@ -190,7 +190,7 @@ final class ModuleEntitiesTest extends TestCase
 				'is_triggered' => false,
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\DocumentFactory::class);
+		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
@@ -276,7 +276,7 @@ final class ModuleEntitiesTest extends TestCase
 				'is_triggered' => false,
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\DocumentFactory::class);
+		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);

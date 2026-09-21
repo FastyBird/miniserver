@@ -54,7 +54,7 @@ final class Message
 
 	public function __construct(
 		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly ExchangeDocuments\DocumentFactory $documentFactory,
+		private readonly ExchangeDocuments\RoutingDocumentFactory $documentFactory,
 		private readonly ExchangeConsumers\Container $consumer,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),

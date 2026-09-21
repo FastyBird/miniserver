@@ -56,7 +56,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	public function __construct(
 		private readonly ORM\EntityManagerInterface $entityManager,
 		private readonly Status $eventLoopStatus,
-		private readonly ExchangeDocuments\DocumentFactory $documentFactory,
+		private readonly ExchangeDocuments\RoutingDocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Publisher $publisher,
 		private readonly ExchangePublisher\Async\Publisher $asyncPublisher,
 	)

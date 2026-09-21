@@ -51,7 +51,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$asyncChannelPropertiesStates = $this->createMock(Models\States\Async\ChannelPropertiesManager::class);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\DocumentFactory::class);
+		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
 
 		$eventLoopStatus = $this->createMock(ApplicationEventLoop\Status::class);
 
@@ -160,7 +160,7 @@ final class ModuleEntitiesTest extends TestCase
 				'children' => [],
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\DocumentFactory::class);
+		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
@@ -281,7 +281,7 @@ final class ModuleEntitiesTest extends TestCase
 				'children' => [],
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\DocumentFactory::class);
+		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
@@ -410,7 +410,7 @@ final class ModuleEntitiesTest extends TestCase
 				'children' => [],
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\DocumentFactory::class);
+		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
