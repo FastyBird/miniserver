@@ -1624,6 +1624,43 @@ echo "build exit=$?"
 
 Expected: `build exit=0`.
 
+- [ ] **Step 7: Fold the naming guard into the pre-push aggregate, and comment the CI step**
+
+Two polish items Task 3's review raised, held back so they would not land as an unreviewed
+amendment to an already-reviewed commit.
+
+`qa:` carries the comment *"the target a maintainer runs before pushing, so it is exactly the
+pre-push gate that did not gate"* — a note left after an incident where it failed to catch
+something. The invariant this whole program exists to protect should not be missing from it.
+In `Makefile`, add `make naming` to the `qa:` recipe, after `make layers`:
+
+```make
+qa: ## Check code quality - coding style and static analysis
+	make cs
+	make phpstan
+	make layers
+	make naming
+```
+
+Leave `discriminators` alone — it is absent from `qa` too, but that is a pre-existing gap and
+changing it is outside this epic.
+
+Then, in `.github/workflows/ci-tests.yaml`, give the `make naming` step the same kind of
+explanatory comment its `make layers` and `make discriminators` neighbours carry:
+
+```yaml
+      # Same shape as `make layers` and `make discriminators`: plain PHP, runs before
+      # `composer install` so that staying dependency-free remains a tested property. Exit 2
+      # means the gate broke (a self-check floor tripped), exit 1 means either a new naming
+      # violation or a baseline entry that is no longer violated -- the baseline may only
+      # shrink.
+      - name: "make naming"
+        run: "make naming"
+```
+
+Verify: `make qa` now invokes the guard (`make -n qa | grep check-naming` prints the recipe),
+and the workflow still parses.
+
 - [ ] **Step 7: Commit and push**
 
 ```bash
