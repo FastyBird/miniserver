@@ -61,7 +61,12 @@ files sit under such a segment.
 ### 3.2 Import aliases — the largest and most visible layer
 
 **3,333 aliased `use` statements** repository-wide resurrect the old names in the one place a
-reader actually looks, the body of the code: 139 distinct alias forms, 120 distinct alias names.
+reader actually looks, the body of the code — 139 distinct alias forms, 120 distinct alias names.
+
+Of those, **3,076 in 131 forms violate the rule the guard enforces** (§5.2); the remainder happen
+to alias to a legal name already. The two figures appear in different places for that reason: 3,333
+is how many aliased Core imports exist, 3,076 is how many are wrong, and it is the second that
+`tools/naming-baseline.txt` records and must drive to zero.
 
 | Occurrences | Statement |
 |---|---|
@@ -255,7 +260,7 @@ denylist of tokens (`SimpleAuth`, `SlimRouter`, `DoctrineCrud`, `DoctrineOrmQuer
 `JsonApiDocument`, `DateTimeFactory`, `WebServerPlugin`, `WsServerPlugin`) in three places:
 namespaces, class names, **and `use … as` aliases**.
 
-The third is the point. The 3,333 aliases exist precisely because nothing checked for them, and
+The third is the point. The 3,076 violating aliases exist precisely because nothing checked for them, and
 they will re-form without a gate, because aliasing is the cheapest way to move a class without
 rewriting the file body. The guard ships with a baseline file that shrinks with each epic and is
 deleted in E8.
@@ -340,7 +345,15 @@ absence.
    output to a file, checking *that command's* exit status. Never piped through `tail`, which
    reports `tail`'s status and has previously turned `make: *** Error 255` into a recorded
    success.
-4. `orm:schema-tool:update --dump-sql` must report zero drift.
+4. `orm:schema-tool:update --dump-sql` must report no **entity** drift. Note that it currently
+   always proposes `DROP TABLE doctrine_migrations` — Doctrine Migrations' own bookkeeping table,
+   which is not ORM-mapped and which no schema-asset filter excludes (issue #477). Until that is
+   fixed the check is not a clean/dirty signal but a read-the-one-line signal, which is precisely
+   the shape of gate this repository has been burned by. **Fix #477 before E3 starts**; E3 moves
+   entities between capabilities, so it is the epic most likely to produce real drift and least
+   able to afford noise. Also note the command is meaningless against an un-migrated database —
+   run `migrations:migrate --no-interaction --allow-no-migration` first, or it dumps the entire
+   schema and looks like catastrophic drift.
 5. Production Docker build and smoke test at every epic boundary — the gate that catches
    pre-`initialize()` stdout regressions.
 
