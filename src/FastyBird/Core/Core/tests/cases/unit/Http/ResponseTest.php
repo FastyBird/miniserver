@@ -22,6 +22,7 @@ final class ResponseTest extends TestCase
 	{
 		$response = Response::json(['foo' => 'bar', 'count' => 3]);
 
+		self::assertSame(200, $response->getStatusCode());
 		self::assertSame('application/json', $response->getHeaderLine('Content-Type'));
 		self::assertSame(
 			['foo' => 'bar', 'count' => 3],
@@ -33,11 +34,20 @@ final class ResponseTest extends TestCase
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function testTextHtmlAndXmlEachSetTheirOwnContentType(): void
+	public function testTextHtmlAndXmlDefaultToStatus200WithTheirOwnContentType(): void
 	{
-		self::assertSame('text/plain', Response::text('hi')->getHeaderLine('Content-Type'));
-		self::assertSame('text/html', Response::html('<p>hi</p>')->getHeaderLine('Content-Type'));
-		self::assertSame('application/xml', Response::xml('<hi/>')->getHeaderLine('Content-Type'));
+		$text = Response::text('hi');
+		$html = Response::html('<p>hi</p>');
+		$xml = Response::xml('<hi/>');
+
+		self::assertSame(200, $text->getStatusCode());
+		self::assertSame('text/plain', $text->getHeaderLine('Content-Type'));
+
+		self::assertSame(200, $html->getStatusCode());
+		self::assertSame('text/html', $html->getHeaderLine('Content-Type'));
+
+		self::assertSame(200, $xml->getStatusCode());
+		self::assertSame('application/xml', $xml->getHeaderLine('Content-Type'));
 	}
 
 	/**
@@ -61,6 +71,37 @@ final class ResponseTest extends TestCase
 		self::assertGreaterThanOrEqual(300, $response->getStatusCode());
 		self::assertLessThan(400, $response->getStatusCode());
 		self::assertSame('https://example.test/target', $response->getHeaderLine('Location'));
+	}
+
+	/**
+	 * @throws Exceptions\Runtime
+	 * @throws Exceptions\InvalidArgument
+	 */
+	public function testRedirectRejectsAStatusBelowTheThreeHundredRange(): void
+	{
+		self::expectException(Exceptions\InvalidArgument::class);
+
+		Response::redirect('https://example.test/target', 299);
+	}
+
+	/**
+	 * @throws Exceptions\Runtime
+	 * @throws Exceptions\InvalidArgument
+	 */
+	public function testRedirectRejectsAStatusAboveTheThreeHundredRange(): void
+	{
+		self::expectException(Exceptions\InvalidArgument::class);
+
+		Response::redirect('https://example.test/target', 400);
+	}
+
+	/**
+	 * @throws Exceptions\Runtime
+	 * @throws Exceptions\InvalidArgument
+	 */
+	public function testRedirectAcceptsAValidNonDefaultStatus(): void
+	{
+		self::assertSame(301, Response::redirect('https://example.test/target', 301)->getStatusCode());
 	}
 
 	/**
