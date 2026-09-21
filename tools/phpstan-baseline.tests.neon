@@ -271,6 +271,24 @@ parameters:
 			path: ../src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/Clients/DiscoveryTest.php
 
 		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 3
+			path: ../src/FastyBird/Core/Core/tests/cases/unit/Commands/HttpServerCommandTest.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Tests\\Cases\\Unit\\DI\\CoreExtensionTest\:\:testCompilersServices\(\) has FastyBird\\Core\\Exceptions\\Logic in PHPDoc @throws tag but it''s not thrown\.$#'
+			identifier: throws.unusedType
+			count: 1
+			path: ../src/FastyBird/Core/Core/tests/cases/unit/DI/CoreExtensionTest.php
+
+		-
+			message: '#^Method FastyBird\\Core\\Tests\\Cases\\Unit\\DI\\CoreExtensionTest\:\:testServicesRegistration\(\) has FastyBird\\Core\\Exceptions\\Logic in PHPDoc @throws tag but it''s not thrown\.$#'
+			identifier: throws.unusedType
+			count: 1
+			path: ../src/FastyBird/Core/Core/tests/cases/unit/DI/CoreExtensionTest.php
+
+		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -461,9 +479,3 @@ parameters:
 			identifier: method.unresolvableReturnType
 			count: 1
 			path: ../src/FastyBird/Plugin/RedisDb/tests/cases/unit/Publishers/PublisherTest.php
-
-		-
-			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
-			identifier: method.unresolvableReturnType
-			count: 3
-			path: ../src/FastyBird/Core/Core/tests/cases/unit/Commands/HttpServerCommandTest.php
