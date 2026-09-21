@@ -81,8 +81,8 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

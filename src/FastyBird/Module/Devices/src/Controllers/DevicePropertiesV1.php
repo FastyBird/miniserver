@@ -324,7 +324,7 @@ final class DevicePropertiesV1 extends BaseV1
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 *
 	 * @Secured\Role(manager,administrator)
 	 */

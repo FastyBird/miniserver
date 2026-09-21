@@ -88,8 +88,8 @@ final class Mqtt implements Client
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws InvalidArgumentException
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -179,8 +179,8 @@ final class Mqtt implements Client
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -194,8 +194,8 @@ final class Mqtt implements Client
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -250,8 +250,8 @@ final class Mqtt implements Client
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

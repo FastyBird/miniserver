@@ -20,6 +20,7 @@ use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Types;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -41,8 +42,8 @@ final class ConnectorProperties extends DataFixtures\AbstractFixture implements 
 	/**
 	 * @throws Exceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

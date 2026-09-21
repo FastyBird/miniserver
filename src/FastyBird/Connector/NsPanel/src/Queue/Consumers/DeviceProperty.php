@@ -20,6 +20,7 @@ use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Queries;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -50,7 +51,7 @@ trait DeviceProperty
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws DBAL\Exception
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ToolsExceptions\Runtime
 	 */
 	private function setDeviceProperty(

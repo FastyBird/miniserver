@@ -23,6 +23,7 @@ use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -75,7 +76,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 	 * @param Entities\Devices\Viera|null $entity
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
@@ -117,7 +118,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(

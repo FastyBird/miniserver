@@ -80,7 +80,7 @@ final class WriteV1ChannelPropertyState implements Queue\Consumer
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

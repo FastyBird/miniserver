@@ -68,7 +68,7 @@ final class TriggersV1 extends BaseV1
 	/**
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,

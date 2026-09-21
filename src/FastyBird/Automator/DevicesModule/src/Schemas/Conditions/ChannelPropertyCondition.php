@@ -16,6 +16,7 @@
 namespace FastyBird\Automator\DevicesModule\Schemas\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
@@ -56,7 +57,7 @@ final class ChannelPropertyCondition extends TriggersSchemas\Conditions\Conditio
 	/**
 	 * @return iterable<string, string|bool|array<int>|null>
 	 *
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 *

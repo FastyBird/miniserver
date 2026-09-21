@@ -22,6 +22,7 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -56,7 +57,7 @@ final class StoreThirdPartyDevice implements Queue\Consumer
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws DBAL\Exception
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ToolsExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool

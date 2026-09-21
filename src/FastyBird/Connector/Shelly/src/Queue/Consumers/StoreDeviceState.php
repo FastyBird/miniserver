@@ -81,8 +81,8 @@ final class StoreDeviceState implements Queue\Consumer
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ToolsExceptions\Runtime
 	 * @throws TypeError
 	 * @throws Utils\JsonException

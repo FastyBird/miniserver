@@ -16,6 +16,7 @@
 namespace FastyBird\Automator\DevicesModule\Entities\Actions;
 
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -85,7 +86,7 @@ abstract class PropertyAction extends TriggersEntities\Actions\Action
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

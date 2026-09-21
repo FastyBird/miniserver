@@ -15,6 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Security;
 
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Module\Accounts\Entities;
@@ -60,7 +61,7 @@ final class Authenticator implements SimpleAuthSecurity\IAuthenticator
 	 * @throws Exceptions\AccountNotFound
 	 * @throws Exceptions\AuthenticationFailed
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function authenticate(array $credentials): SimpleAuthSecurity\IIdentity
 	{

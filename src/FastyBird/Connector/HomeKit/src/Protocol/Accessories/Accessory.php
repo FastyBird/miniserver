@@ -18,6 +18,7 @@ namespace FastyBird\Connector\HomeKit\Protocol\Accessories;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use Nette;
 use Ramsey\Uuid;
@@ -148,8 +149,8 @@ abstract class Accessory
 	 *
 	 * @return array<string, array<int, array<string, array<array<string, array<int|string>|bool|float|int|string|null>|int|null>|bool|int|string|null>>|int|null>
 	 *
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

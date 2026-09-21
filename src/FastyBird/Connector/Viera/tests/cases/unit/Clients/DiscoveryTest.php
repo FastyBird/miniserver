@@ -41,7 +41,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws DI\MissingServiceException
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testDiscover(): void

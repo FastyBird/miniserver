@@ -21,6 +21,7 @@ use FastyBird\Connector\FbMqtt\Entities;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -63,7 +64,7 @@ final class ChannelAttribute implements Queue\Consumer
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws ToolsExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
@@ -175,7 +176,7 @@ final class ChannelAttribute implements Queue\Consumer
 	 * @throws DoctrineCrudExceptions\EntityCreation
 	 * @throws DoctrineCrudExceptions\InvalidArgument
 	 * @throws DoctrineCrudExceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	private function setChannelProperties(
 		DevicesEntities\Channels\Channel $channel,
@@ -218,7 +219,7 @@ final class ChannelAttribute implements Queue\Consumer
 	 * @throws DoctrineCrudExceptions\EntityCreation
 	 * @throws DoctrineCrudExceptions\InvalidArgument
 	 * @throws DoctrineCrudExceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	private function setChannelControls(
 		DevicesEntities\Channels\Channel $channel,

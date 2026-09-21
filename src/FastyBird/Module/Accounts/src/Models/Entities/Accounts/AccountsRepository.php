@@ -17,6 +17,7 @@ namespace FastyBird\Module\Accounts\Models\Entities\Accounts;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
@@ -51,7 +52,7 @@ final class AccountsRepository
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindAccounts $queryObject,
@@ -83,7 +84,7 @@ final class AccountsRepository
 	 * @return DoctrineOrmQuery\ResultSet<Entities\Accounts\Account>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindAccounts $queryObject,

@@ -228,7 +228,7 @@ class Connector extends Console\Command\Command
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ExchangeExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function prepare(

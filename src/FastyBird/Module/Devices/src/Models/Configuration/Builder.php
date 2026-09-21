@@ -15,6 +15,7 @@
 
 namespace FastyBird\Module\Devices\Models\Configuration;
 
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Exceptions;
@@ -83,8 +84,8 @@ final class Builder
 	 * @return array<mixed>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws InvalidArgumentException

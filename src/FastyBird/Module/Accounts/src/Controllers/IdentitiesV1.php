@@ -76,7 +76,7 @@ final class IdentitiesV1 extends BaseV1
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function index(

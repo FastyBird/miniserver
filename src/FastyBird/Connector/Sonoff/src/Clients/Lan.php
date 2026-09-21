@@ -88,7 +88,7 @@ final class Lan extends ClientProcess implements Client
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -187,8 +187,8 @@ final class Lan extends ClientProcess implements Client
 	 * @throws Exceptions\LanApiCall
 	 * @throws Exceptions\LanApiError
 	 * @throws Exceptions\Runtime
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

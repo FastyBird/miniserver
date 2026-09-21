@@ -18,6 +18,7 @@ namespace FastyBird\Connector\Shelly\Queue\Consumers;
 use Doctrine\DBAL;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Entities;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -50,7 +51,7 @@ trait ChannelProperty
 	 * @param string|array<int, string>|array<int, string|int|float|array<int, string|int|float>|Utils\ArrayHash|null>|array<int, array<int, string|array<int, string|int|float|bool>|Utils\ArrayHash|null>>|null $format
 	 *
 	 * @throws DBAL\Exception
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws ToolsExceptions\Runtime
 	 */
 	private function setChannelProperty(

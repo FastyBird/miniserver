@@ -17,6 +17,7 @@ namespace FastyBird\Module\Triggers\Models\Entities\Notifications;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
@@ -51,7 +52,7 @@ final class NotificationsRepository
 	/**
 	 * @param class-string<Entities\Notifications\Notification> $type
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindNotifications $queryObject,
@@ -68,7 +69,7 @@ final class NotificationsRepository
 	 *
 	 * @return array<Entities\Notifications\Notification>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function findAllBy(
 		Queries\Entities\FindNotifications $queryObject,
@@ -97,7 +98,7 @@ final class NotificationsRepository
 	 *
 	 * @return DoctrineOrmQuery\ResultSet<Entities\Notifications\Notification>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindNotifications $queryObject,

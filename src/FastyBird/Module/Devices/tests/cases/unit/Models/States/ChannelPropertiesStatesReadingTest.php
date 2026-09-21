@@ -29,8 +29,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	#[DataProvider('readStates')]
 	public function testReadState(
@@ -88,8 +88,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	#[DataProvider('getStates')]
 	public function testGetState(

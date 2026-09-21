@@ -17,6 +17,7 @@ namespace FastyBird\Module\Devices\Models\States\Async;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
@@ -155,8 +156,8 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ValueError
 	 * @throws TypeError
 	 */
@@ -207,8 +208,8 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ValueError
 	 * @throws TypeError
 	 */
@@ -261,8 +262,8 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ValueError
 	 * @throws TypeError
 	 */
@@ -313,8 +314,8 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ValueError
 	 * @throws TypeError
 	 */
@@ -574,8 +575,8 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 *

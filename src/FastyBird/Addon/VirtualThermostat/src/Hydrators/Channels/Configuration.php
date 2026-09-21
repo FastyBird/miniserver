@@ -22,6 +22,7 @@ use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Ramsey\Uuid;
@@ -47,7 +48,7 @@ final class Configuration extends VirtualHydrators\Channels\Channel
 
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(

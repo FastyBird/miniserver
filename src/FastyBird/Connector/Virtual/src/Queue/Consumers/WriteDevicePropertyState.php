@@ -80,7 +80,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 	 * @throws RuntimeException
 	 * @throws ValueError
 	 * @throws TypeError
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Devices\Entities\Connectors\Properties;
 
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Module\Devices\Entities;
@@ -94,8 +95,8 @@ abstract class Property extends Entities\Property
 
 	/**
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Utils\JsonException
 	 * @throws TypeError
 	 * @throws ValueError

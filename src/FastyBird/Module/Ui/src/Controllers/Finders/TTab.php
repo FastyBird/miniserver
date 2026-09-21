@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Ui\Controllers\Finders;
 
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Models;
@@ -34,7 +35,7 @@ trait TTab
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findTab(

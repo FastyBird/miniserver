@@ -18,6 +18,7 @@ namespace FastyBird\Module\Devices\Documents\Channels\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Core\Documents\Exchange as ExchangeDocuments;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -106,8 +107,8 @@ abstract class Property extends Documents\Property
 
 	/**
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

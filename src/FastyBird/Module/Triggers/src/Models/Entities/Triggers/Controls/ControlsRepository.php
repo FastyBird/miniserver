@@ -17,6 +17,7 @@ namespace FastyBird\Module\Triggers\Models\Entities\Triggers\Controls;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
@@ -49,7 +50,7 @@ final class ControlsRepository
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindTriggerControls $queryObject,
@@ -63,7 +64,7 @@ final class ControlsRepository
 	/**
 	 * @return array<Entities\Triggers\Controls\Control>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function findAllBy(Queries\Entities\FindTriggerControls $queryObject): array
 	{
@@ -87,7 +88,7 @@ final class ControlsRepository
 	/**
 	 * @return DoctrineOrmQuery\ResultSet<Entities\Triggers\Controls\Control>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindTriggerControls $queryObject,

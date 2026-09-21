@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Accounts\Controllers\Finders;
 
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Models;
@@ -36,7 +37,7 @@ trait TEmail
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function findEmail(

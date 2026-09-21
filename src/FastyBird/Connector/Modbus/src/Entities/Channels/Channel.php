@@ -20,6 +20,7 @@ use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Types;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
@@ -67,8 +68,8 @@ class Channel extends DevicesEntities\Channels\Channel
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -92,8 +93,8 @@ class Channel extends DevicesEntities\Channels\Channel
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -118,8 +119,8 @@ class Channel extends DevicesEntities\Channels\Channel
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

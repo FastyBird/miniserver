@@ -38,7 +38,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Utils\JsonException
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 *
 	 * @throws InvalidArgumentException
 	 */

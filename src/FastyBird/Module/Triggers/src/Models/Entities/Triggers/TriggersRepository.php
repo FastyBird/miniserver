@@ -17,6 +17,7 @@ namespace FastyBird\Module\Triggers\Models\Entities\Triggers;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
@@ -51,7 +52,7 @@ final class TriggersRepository
 	/**
 	 * @param class-string<Entities\Triggers\Trigger> $type
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindTriggers $queryObject,
@@ -68,7 +69,7 @@ final class TriggersRepository
 	 *
 	 * @return array<Entities\Triggers\Trigger>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function findAllBy(
 		Queries\Entities\FindTriggers $queryObject,
@@ -97,7 +98,7 @@ final class TriggersRepository
 	 *
 	 * @return DoctrineOrmQuery\ResultSet<Entities\Triggers\Trigger>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindTriggers $queryObject,

@@ -68,8 +68,8 @@ abstract class PropertiesManager
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidExpectedValue
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -208,8 +208,8 @@ abstract class PropertiesManager
 	 * @param TChild $mappedProperty
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ToolsExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
@@ -311,8 +311,8 @@ abstract class PropertiesManager
 	/**
 	 * @param TParent $property
 	 *
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ToolsExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
@@ -355,8 +355,8 @@ abstract class PropertiesManager
 	 * @param TChild $mappedProperty
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ToolsExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError

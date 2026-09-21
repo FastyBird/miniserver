@@ -89,7 +89,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	public function connect(): void
 	{

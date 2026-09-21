@@ -88,7 +88,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 	 * @throws Exceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws Throwable
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

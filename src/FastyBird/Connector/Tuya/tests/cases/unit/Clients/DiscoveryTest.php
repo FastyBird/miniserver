@@ -44,7 +44,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws DI\MissingServiceException
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testDiscoverCloudDevices(): void
@@ -226,7 +226,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws DI\MissingServiceException
 	 * @throws Exceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testDiscoverLocalDevices(): void

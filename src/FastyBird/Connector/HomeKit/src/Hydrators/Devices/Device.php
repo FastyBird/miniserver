@@ -20,6 +20,7 @@ use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Schemas;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
@@ -65,7 +66,7 @@ class Device extends DevicesHydrators\Devices\Device
 	 * @param T|null $entity
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(

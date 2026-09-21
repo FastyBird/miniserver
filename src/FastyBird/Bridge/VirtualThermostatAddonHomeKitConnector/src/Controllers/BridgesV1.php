@@ -414,7 +414,7 @@ class BridgesV1 extends BaseV1
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 *
 	 * @Secured
 	 * @Secured\Role(manager,administrator)
@@ -475,7 +475,7 @@ class BridgesV1 extends BaseV1
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findDevice(string $id): Entities\Devices\Thermostat

@@ -34,7 +34,7 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testAddChildProperty(): void
@@ -75,7 +75,7 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testRemoveChildProperty(): void
@@ -136,7 +136,7 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws DoctrineOrmQueryExceptions\Query
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws Error
 	 */

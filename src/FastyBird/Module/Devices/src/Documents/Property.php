@@ -18,6 +18,7 @@ namespace FastyBird\Module\Devices\Documents;
 use DateTimeInterface;
 use FastyBird\Core\Constants\Metadata\Constants as MetadataConstants;
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
@@ -230,7 +231,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -255,8 +256,8 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -313,8 +314,8 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 
 	/**
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -350,7 +351,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 	/**
 	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
 	 *
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

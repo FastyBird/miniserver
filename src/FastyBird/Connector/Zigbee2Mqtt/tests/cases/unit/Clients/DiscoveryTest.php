@@ -42,8 +42,8 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws InvalidArgumentException
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws RuntimeException
 	 */
 	public function testDiscover(): void

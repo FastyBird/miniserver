@@ -17,6 +17,7 @@ namespace FastyBird\Module\Triggers\Models\Entities\Actions;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
@@ -52,7 +53,7 @@ final class ActionsRepository
 	 * @param Queries\Entities\FindActions<Entities\Actions\Action> $queryObject
 	 * @param class-string<Entities\Actions\Action> $type
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindActions $queryObject,
@@ -70,7 +71,7 @@ final class ActionsRepository
 	 *
 	 * @return array<Entities\Actions\Action>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function findAllBy(
 		Queries\Entities\FindActions $queryObject,
@@ -100,7 +101,7 @@ final class ActionsRepository
 	 *
 	 * @return DoctrineOrmQuery\ResultSet<Entities\Actions\Action>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindActions $queryObject,

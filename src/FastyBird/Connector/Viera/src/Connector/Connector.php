@@ -83,7 +83,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{

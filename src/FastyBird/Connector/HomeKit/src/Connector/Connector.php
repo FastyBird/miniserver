@@ -98,8 +98,8 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws Nette\IOException
 	 * @throws SemVer\SemverException
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ToolsExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError

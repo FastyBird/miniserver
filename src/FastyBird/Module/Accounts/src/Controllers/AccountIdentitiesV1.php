@@ -67,7 +67,7 @@ final class AccountIdentitiesV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Exceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,

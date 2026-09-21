@@ -17,6 +17,7 @@ namespace FastyBird\Module\Ui\Models\Entities\Dashboards\Tabs;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
@@ -58,7 +59,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
@@ -78,7 +79,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindDashboardTabs $queryObject,
@@ -97,7 +98,7 @@ final class Repository
 	 *
 	 * @return array<T>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function findAll(string $type = Entities\Dashboards\Tabs\Tab::class): array
 	{
@@ -140,7 +141,7 @@ final class Repository
 	 * @return DoctrineOrmQuery\ResultSet<T>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindDashboardTabs $queryObject,

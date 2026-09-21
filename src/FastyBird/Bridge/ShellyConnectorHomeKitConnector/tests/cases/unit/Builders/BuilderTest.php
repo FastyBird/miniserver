@@ -40,7 +40,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 *
 	 * @throws InvalidArgumentException
 	 */

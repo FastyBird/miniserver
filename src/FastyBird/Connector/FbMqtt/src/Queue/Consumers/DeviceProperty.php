@@ -73,7 +73,7 @@ final class DeviceProperty implements Queue\Consumer
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exceptions\ParseMessage
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws Throwable
 	 */
 	public function consume(Queue\Messages\Message $message): bool

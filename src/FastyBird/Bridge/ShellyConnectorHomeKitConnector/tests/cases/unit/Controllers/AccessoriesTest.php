@@ -52,7 +52,7 @@ final class AccessoriesTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws SemVer\SemverException
 	 * @throws RuntimeException
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws Error
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */

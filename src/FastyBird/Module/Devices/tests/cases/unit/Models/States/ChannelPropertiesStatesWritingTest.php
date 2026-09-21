@@ -30,8 +30,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	#[DataProvider('writeStates')]
 	public function testWriteState(
@@ -145,8 +145,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws ToolsExceptions\InvalidArgument
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	#[DataProvider('setStates')]
 	public function testSetState(

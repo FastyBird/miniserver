@@ -77,7 +77,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws Throwable
 	 */
 	public function consume(Queue\Messages\Message $message): bool

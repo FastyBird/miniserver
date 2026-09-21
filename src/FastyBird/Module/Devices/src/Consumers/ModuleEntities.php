@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Devices\Consumers;
 
 use FastyBird\Core\Documents\Application as ApplicationDocuments;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
@@ -46,7 +47,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function consume(
 		MetadataTypes\Sources\Source $source,

@@ -17,6 +17,7 @@ namespace FastyBird\Module\Devices\Models\Entities\Devices\Controls;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
@@ -52,7 +53,7 @@ final class ControlsRepository
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
@@ -64,7 +65,7 @@ final class ControlsRepository
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function findOneBy(Queries\Entities\FindDeviceControls $queryObject): Entities\Devices\Controls\Control|null
 	{
@@ -76,7 +77,7 @@ final class ControlsRepository
 	/**
 	 * @return array<Entities\Devices\Controls\Control>
 	 *
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function findAll(): array
 	{
@@ -106,7 +107,7 @@ final class ControlsRepository
 	 * @return DoctrineOrmQuery\ResultSet<Entities\Devices\Controls\Control>
 	 *
 	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindDeviceControls $queryObject,

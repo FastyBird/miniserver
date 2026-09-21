@@ -16,6 +16,7 @@
 namespace FastyBird\Automator\DevicesModule\Schemas\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
@@ -55,7 +56,7 @@ final class ChannelPropertyAction extends TriggersSchemas\Actions\Action
 	/**
 	 * @return iterable<string, string|bool|null>
 	 *
-	 * @throws ToolsExceptions\InvalidArgument
+	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 *

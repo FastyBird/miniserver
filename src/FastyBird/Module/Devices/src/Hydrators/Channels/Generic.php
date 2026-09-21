@@ -18,6 +18,7 @@ namespace FastyBird\Module\Devices\Hydrators\Channels;
 use Doctrine\Persistence;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
 use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Entities;
@@ -58,7 +59,7 @@ final class Generic extends Channel
 
 	/**
 	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws ToolsExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(
