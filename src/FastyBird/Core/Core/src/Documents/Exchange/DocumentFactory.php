@@ -56,7 +56,7 @@ final class DocumentFactory
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Mapping
+	 * @throws ApplicationExceptions\Logic
 	 */
 	public function create(
 		Utils\ArrayHash $data,

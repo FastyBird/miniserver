@@ -58,7 +58,7 @@ final readonly class DocumentFactory
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\MalformedInput
-	 * @throws Exceptions\Mapping
+	 * @throws Exceptions\Logic
 	 */
 	public function create(string $documentClass, array|string|object $data): Documents\Document
 	{
