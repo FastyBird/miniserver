@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 use UnderflowException;
 use function intdiv;
 use function ord;
+use function str_repeat;
 use function strlen;
 use function substr;
 
@@ -99,6 +100,67 @@ final class FrameTest extends TestCase
 	}
 
 	/**
+	 * A payload of 126-65535 bytes switches the length marker (the frame's second byte, masked
+	 * off) from an inline 7-bit value to the sentinel 126 plus a 16-bit big-endian extension. The
+	 * marker bytes themselves are only read back when a *different* frame parses raw wire bytes
+	 * via addBuffer() -- getPayloadLength() on the originating frame returns its cached in-memory
+	 * length regardless of what landed in the extension bytes. So this round-trips through
+	 * getContents() into a freshly parsed frame, the way a real receiver would, to actually
+	 * exercise the 16-bit marker rather than merely the cached constructor value.
+	 *
+	 * @throws UnderflowException
+	 */
+	public function testExtendedLength16BitMarkerRoundTripsThroughContentsAndAddBuffer(): void
+	{
+		$payload = str_repeat('A', 200);
+
+		$source = new Frame($payload, true, Frame::OP_TEXT);
+
+		self::assertSame(200, $source->getPayloadLength());
+		self::assertSame(4, $source->getPayloadStartingByte());
+
+		$contents = $source->getContents();
+
+		self::assertSame(126, ord(substr($contents, 1, 1)));
+
+		$rebuilt = new Frame();
+		$rebuilt->addBuffer($contents);
+
+		self::assertSame(200, $rebuilt->getPayloadLength());
+		self::assertSame(4, $rebuilt->getPayloadStartingByte());
+		self::assertSame($payload, $rebuilt->getPayload());
+	}
+
+	/**
+	 * A payload above 65535 bytes switches the length marker to the sentinel 127 plus a 64-bit
+	 * big-endian extension (implemented as two 32-bit halves, the high half always zero). Same
+	 * reasoning as the 16-bit case: only a freshly parsed frame actually reads those extension
+	 * bytes back.
+	 *
+	 * @throws UnderflowException
+	 */
+	public function testExtendedLength64BitMarkerRoundTripsThroughContentsAndAddBuffer(): void
+	{
+		$payload = str_repeat('B', 70_000);
+
+		$source = new Frame($payload, true, Frame::OP_TEXT);
+
+		self::assertSame(70_000, $source->getPayloadLength());
+		self::assertSame(10, $source->getPayloadStartingByte());
+
+		$contents = $source->getContents();
+
+		self::assertSame(127, ord(substr($contents, 1, 1)));
+
+		$rebuilt = new Frame();
+		$rebuilt->addBuffer($contents);
+
+		self::assertSame(70_000, $rebuilt->getPayloadLength());
+		self::assertSame(10, $rebuilt->getPayloadStartingByte());
+		self::assertSame($payload, $rebuilt->getPayload());
+	}
+
+	/**
 	 * @throws UnderflowException
 	 */
 	public function testExtractOverflowReturnsBytesBeyondFirstFrameAndLeavesItIntact(): void
@@ -160,6 +222,15 @@ final class FrameTest extends TestCase
 		self::assertSame('Hello World', $message->getPayload());
 	}
 
+	/**
+	 * `ext-mbstring` is a hard requirement in both the root and Core `composer.json`, so
+	 * `extension_loaded('mbstring')` inside `isUtf8()` is always true and `mb_check_encoding()`
+	 * always runs first. Every rejection this assertion observes is decided there -- the
+	 * hand-rolled DFA loop underneath only ever sees strings mbstring has already accepted, so
+	 * its `UTF8_REJECT` branch is unreachable while that requirement holds. That loop is dead
+	 * code as written, flagged for removal in the API-rewrite epic rather than exercised here:
+	 * this test covers the accept path only, not the DFA's own rejection logic.
+	 */
 	public function testValidatorCheckEncodingAcceptsValidUtf8AndRejectsInvalidByteSequence(): void
 	{
 		$validator = new Validator();
