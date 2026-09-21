@@ -21,7 +21,7 @@ use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http\WebSockets as Http;
 use FastyBird\Core\Server\WsServer as Server;

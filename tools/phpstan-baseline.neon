@@ -5167,34 +5167,34 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Entities/WsServer/WampClient.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Exceptions\\DoctrineOrmQuery\\Query\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
-			identifier: missingType.generics
+			message: '#^Property FastyBird\\Core\\Exceptions\\HttpMethodNotAllowed\:\:\$code has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/DoctrineOrmQuery/Query.php
+			path: ../src/FastyBird/Core/Core/src/Exceptions/HttpMethodNotAllowed.php
+
+		-
+			message: '#^Property FastyBird\\Core\\Exceptions\\HttpNotFound\:\:\$code has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Exceptions/HttpNotFound.php
+
+		-
+			message: '#^Parameter \#3 \$code of method FastyBird\\Core\\Exceptions\\Http\:\:__construct\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Exceptions/HttpSpecialized.php
 
 		-
 			message: '#^Cannot cast mixed to string\.$#'
 			identifier: cast.string
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Exceptions/JsonApi/JsonApiError.php
+			path: ../src/FastyBird/Core/Core/src/Exceptions/JsonApiError.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Exceptions\\SlimRouter\\HttpMethodNotAllowed\:\:\$code has no type specified\.$#'
-			identifier: missingType.property
+			message: '#^Method FastyBird\\Core\\Exceptions\\Query\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
+			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/SlimRouter/HttpMethodNotAllowed.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Exceptions\\SlimRouter\\HttpNotFound\:\:\$code has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/SlimRouter/HttpNotFound.php
-
-		-
-			message: '#^Parameter \#3 \$code of method FastyBird\\Core\\Exceptions\\SlimRouter\\Http\:\:__construct\(\) expects int, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/SlimRouter/HttpSpecialized.php
+			path: ../src/FastyBird/Core/Core/src/Exceptions/Query.php
 
 		-
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
@@ -6139,7 +6139,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Messaging/WebSockets/PushMessages/Pusher.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:doCreateCountQuery\(\) throws checked exception FastyBird\\Core\\Exceptions\\DoctrineOrmQuery\\NotImplemented but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:doCreateCountQuery\(\) throws checked exception FastyBird\\Core\\Exceptions\\QueryNotImplemented but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
@@ -6211,7 +6211,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:applyPaginator\(\) throws checked exception FastyBird\\Core\\Exceptions\\DoctrineOrmQuery\\Query but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:applyPaginator\(\) throws checked exception FastyBird\\Core\\Exceptions\\Query but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
@@ -6241,7 +6241,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:isEmpty\(\) throws checked exception FastyBird\\Core\\Exceptions\\DoctrineOrmQuery\\Query but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:isEmpty\(\) throws checked exception FastyBird\\Core\\Exceptions\\Query but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
@@ -7933,13 +7933,13 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:postLoadAndPreFlush\(\) throws checked exception FastyBird\\Core\\Exceptions\\Phone\\NoValidCountry but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:postLoadAndPreFlush\(\) throws checked exception FastyBird\\Core\\Exceptions\\NoValidCountry but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:postLoadAndPreFlush\(\) throws checked exception FastyBird\\Core\\Exceptions\\Phone\\NoValidPhone but it''s missing from the PHPDoc @throws tag\.$#'
+			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:postLoadAndPreFlush\(\) throws checked exception FastyBird\\Core\\Exceptions\\NoValidPhone but it''s missing from the PHPDoc @throws tag\.$#'
 			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php

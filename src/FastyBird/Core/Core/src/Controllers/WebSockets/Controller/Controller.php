@@ -5,7 +5,7 @@ namespace FastyBird\Core\Controllers\WebSockets\Controller;
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Routing\WebSockets as Router;
 use Fig\Http;
 use Nette;

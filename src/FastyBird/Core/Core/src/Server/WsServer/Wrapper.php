@@ -8,7 +8,7 @@ use FastyBird\Core\Encoding\WebSockets as Protocols;
 use FastyBird\Core\Entities\WebSockets as WebSocketEntities;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http\WebSockets as Http;
 use Nette;
 use OverflowException;

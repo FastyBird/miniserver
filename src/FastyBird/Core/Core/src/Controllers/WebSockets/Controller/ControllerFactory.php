@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Controllers\WebSockets\Controller;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\WebSockets as Exceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 use Nette\DI;
 use Nette\Utils;

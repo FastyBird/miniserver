@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Constants\Metadata;
 use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Core\Transformers\Tools as ToolsTransformers;

@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Schemas\Tools;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Exceptions as ToolsExceptions;
 use Nette;
 use Nette\Utils;
 use Opis\JsonSchema;

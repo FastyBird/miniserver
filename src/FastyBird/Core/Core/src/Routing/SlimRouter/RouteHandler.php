@@ -19,7 +19,7 @@ use FastRoute;
 use FastRoute\RouteCollector as FastRouteCollector;
 use FastRoute\RouteParser\Std;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\SlimRouter as SlimRouterExceptions;
+use FastyBird\Core\Exceptions as SlimRouterExceptions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

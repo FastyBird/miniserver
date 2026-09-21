@@ -22,7 +22,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Helpers\JsonApi as Helpers;
 use FastyBird\Core\Persistence\JsonApi\Hydrators;
 use Fig\Http\Message\StatusCodeInterface;

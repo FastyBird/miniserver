@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Schemas;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\Tools as ToolsExceptions;
+use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Schemas\Tools as Schemas;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;

@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Http\SlimRouter;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\SlimRouter as SlimRouterExceptions;
+use FastyBird\Core\Exceptions as SlimRouterExceptions;
 use Psr\Http\Message\StreamInterface;
 use function fclose;
 use function feof;

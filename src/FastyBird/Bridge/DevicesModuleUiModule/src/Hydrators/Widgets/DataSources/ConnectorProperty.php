@@ -20,7 +20,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;

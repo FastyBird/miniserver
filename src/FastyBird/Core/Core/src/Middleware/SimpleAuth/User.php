@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Middleware\SimpleAuth;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
+use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Services\SimpleAuth;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

@@ -22,7 +22,7 @@ use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Ramsey\Uuid;
 use function is_string;

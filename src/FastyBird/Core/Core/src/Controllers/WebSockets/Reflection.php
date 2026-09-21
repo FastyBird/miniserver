@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Controllers\WebSockets;
 
-use FastyBird\Core\Exceptions\WebSockets as Exceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 use ReflectionException;
 use ReflectionFunctionAbstract;

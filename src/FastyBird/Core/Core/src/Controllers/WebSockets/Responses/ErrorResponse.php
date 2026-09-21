@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Controllers\WebSockets\Responses;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use Nette;
 use Nette\Utils;
 use function is_array;

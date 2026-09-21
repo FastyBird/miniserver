@@ -5,7 +5,7 @@ namespace FastyBird\Core\Controllers\WebSockets;
 use FastyBird\Core\Clients\WsServer as Clients;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http\WebSockets as Http;
 use FastyBird\Core\Routing\WebSockets as Router;
 use FastyBird\Core\Server\WsServer as Server;

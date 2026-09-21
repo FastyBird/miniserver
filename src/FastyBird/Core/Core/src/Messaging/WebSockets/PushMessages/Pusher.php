@@ -17,7 +17,7 @@ namespace FastyBird\Core\Messaging\WebSockets\PushMessages;
 
 use FastyBird\Core\Encoding\WebSockets as Serializers;
 use FastyBird\Core\Entities\WebSockets\PushMessages as Entities;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Routing\WebSockets as WebSocketsRouter;
 use Nette;
 use ReflectionException;

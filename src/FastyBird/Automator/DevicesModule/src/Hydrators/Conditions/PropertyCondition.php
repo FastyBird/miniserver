@@ -17,7 +17,7 @@ namespace FastyBird\Automator\DevicesModule\Hydrators\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
 use Fig\Http\Message\StatusCodeInterface;

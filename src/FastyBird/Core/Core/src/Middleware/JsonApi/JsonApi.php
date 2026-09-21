@@ -18,7 +18,7 @@
 namespace FastyBird\Core\Middleware\JsonApi;
 
 use FastyBird\Core\Encoding\JsonApi as Tools;
-use FastyBird\Core\Exceptions\JsonApi as Exceptions;
+use FastyBird\Core\Exceptions as Exceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Neomerx;
@@ -88,8 +88,8 @@ class JsonApi implements Server\MiddlewareInterface
 				}
 
 			} elseif (
-				class_exists('\FastyBird\Core\Exceptions\SlimRouter\Http')
-				&& $ex instanceof \FastyBird\Core\Exceptions\SlimRouter\Http
+				class_exists('\FastyBird\Core\Exceptions\Http')
+				&& $ex instanceof \FastyBird\Core\Exceptions\Http
 			) {
 				$response = $response->withStatus($ex->getCode());
 

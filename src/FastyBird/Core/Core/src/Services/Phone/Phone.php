@@ -16,8 +16,8 @@
 namespace FastyBird\Core\Services\Phone;
 
 use FastyBird\Core\Entities\Phone as Entities;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
-use FastyBird\Core\Exceptions\Phone as Exceptions;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
 use Nette;

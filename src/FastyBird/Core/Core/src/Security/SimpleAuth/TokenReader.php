@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Security\SimpleAuth;
 
 use FastyBird\Core\Constants\SimpleAuth;
-use FastyBird\Core\Exceptions\SimpleAuth as Exceptions;
+use FastyBird\Core\Exceptions;
 use Lcobucci\JWT;
 use Nette;
 use Psr\Http\Message\ServerRequestInterface;

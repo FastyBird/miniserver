@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Models\Entities\Channels\Properties;
 
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineCrud as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;

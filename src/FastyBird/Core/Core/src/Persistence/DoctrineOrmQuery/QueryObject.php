@@ -19,7 +19,7 @@ use Closure;
 use Doctrine;
 use Doctrine\ORM;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use Nette;
 use Throwable;
 use function array_shift;
@@ -91,7 +91,7 @@ abstract class QueryObject
 			$query = $this->doCreateCountQuery($repository);
 
 			return (int) $this->toQuery($query)->getSingleScalarResult();
-		} catch (DoctrineOrmQueryExceptions\NotImplemented) {
+		} catch (DoctrineOrmQueryExceptions\QueryNotImplemented) {
 			// Nothing to do here
 		}
 
@@ -120,7 +120,7 @@ abstract class QueryObject
 		ORM\EntityRepository $repository,
 	): ORM\QueryBuilder
 	{
-		throw new DoctrineOrmQueryExceptions\NotImplemented('Method doCreateCountQuery is not implemented');
+		throw new DoctrineOrmQueryExceptions\QueryNotImplemented('Method doCreateCountQuery is not implemented');
 	}
 
 	private function toQuery(ORM\QueryBuilder $query): ORM\Query

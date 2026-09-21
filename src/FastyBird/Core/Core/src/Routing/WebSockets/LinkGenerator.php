@@ -4,7 +4,7 @@ namespace FastyBird\Core\Routing\WebSockets;
 
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Controllers\WebSockets\Controller;
-use FastyBird\Core\Exceptions\WebSockets as Exceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 use ReflectionException;
 use ReflectionParameter;

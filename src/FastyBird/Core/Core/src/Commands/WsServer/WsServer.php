@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Commands\WsServer;
 
 use FastyBird\Core\Events;
-use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
+use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Server\WsServer as Server;

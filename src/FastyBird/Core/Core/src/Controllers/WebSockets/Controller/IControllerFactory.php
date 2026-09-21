@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Controllers\WebSockets\Controller;
 
-use FastyBird\Core\Exceptions\WebSockets as Exceptions;
+use FastyBird\Core\Exceptions;
 
 /**
  * Responsible for creating a new instance of given controller

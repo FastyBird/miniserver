@@ -18,7 +18,7 @@ namespace FastyBird\Core\Types\Phone;
 use Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Types;
 use FastyBird\Core\Entities\Phone as Entities;
-use FastyBird\Core\Exceptions\Phone as Exceptions;
+use FastyBird\Core\Exceptions;
 
 /**
  * Doctrine phone data type

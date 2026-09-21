@@ -15,7 +15,7 @@
 
 namespace FastyBird\Core\Helpers\DoctrineCrud;
 
-use FastyBird\Core\Exceptions\DoctrineCrud as Exceptions;
+use FastyBird\Core\Exceptions;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionParameter;

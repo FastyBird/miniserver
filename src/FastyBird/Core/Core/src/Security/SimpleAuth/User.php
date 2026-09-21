@@ -19,7 +19,7 @@ use Casbin\Exceptions as CasbinExceptions;
 use Closure;
 use FastyBird\Core\Constants\SimpleAuth;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\SimpleAuth as SimpleAuthExceptions;
+use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Nette;
 use Nette\Utils;

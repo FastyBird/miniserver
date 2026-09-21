@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Commands\WsServer;
 
-use FastyBird\Core\Exceptions\WebSockets as Exceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers\WsServer as Logger;
 use FastyBird\Core\Server\WsServer as Server;
 use Psr\Log;

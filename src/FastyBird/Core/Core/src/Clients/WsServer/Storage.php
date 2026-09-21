@@ -4,7 +4,7 @@ namespace FastyBird\Core\Clients\WsServer;
 
 use ArrayIterator;
 use FastyBird\Core\Entities\WsServer as Entities;
-use FastyBird\Core\Exceptions\WebSockets as Exceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 use Psr\Log;
 use Throwable;

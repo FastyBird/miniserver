@@ -20,7 +20,7 @@ use Countable;
 use Doctrine\ORM;
 use Exception;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions\DoctrineOrmQuery as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use IteratorAggregate;
 use Nette\Utils;
 use function func_get_args;
