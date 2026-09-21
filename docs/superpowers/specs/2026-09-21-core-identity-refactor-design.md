@@ -207,9 +207,15 @@ every genuine override (0 today) · `readonly class` where every property is rea
 class constants · enums in place of string constants where applicable · `orisai/coding-standard`
 ruleset raised from 8.2 to 8.4.
 
-*To verify before E1 starts: whether `orisai/coding-standard ^3.2` ships a `ruleset-8.4.xml`. The
-vendor directory is absent from the working worktree, so this could not be checked while writing
-this spec. If it does not, the ruleset bump becomes a dependency-upgrade subtask, or is dropped.*
+**Resolved 2026-09-21.** `orisai/coding-standard` 3.11.0 is already locked and does ship
+`ruleset-8.4.xml`. The entire difference from `ruleset-8.2.xml` is `php_version` 80200 → 80400
+plus one added rule, `SlevomatCodingStandard.TypeHints.ClassConstantTypeHint` (introduced in the
+8.3 ruleset; 8.4 adds nothing further). No dependency upgrade is needed.
+
+That one rule is not small here: the repository has **1,636 untyped class constants across 605
+files and zero typed ones**, 212 of them in 37 Core files. It is therefore switched on for Core
+in E1 and excluded for the other 28 packages until E7 reaches them — a second list that may only
+shrink, alongside the naming baseline.
 
 ### 5.4 Enforcement — `make naming`
 
