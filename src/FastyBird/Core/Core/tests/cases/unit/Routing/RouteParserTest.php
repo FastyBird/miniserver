@@ -131,6 +131,26 @@ final class RouteParserTest extends TestCase
 
 	/**
 	 * @throws Exceptions\Runtime
+	 */
+	public function testNestedGroupsAccumulatePatternPrefixesAcrossLevels(): void
+	{
+		$router = new Router();
+
+		$router->group('/api/v1', static function (IRouteCollector $group): void {
+			$group->group('/devices', static function (IRouteCollector $nested): void {
+				$nested->get('/{id}', static function (): void {
+				})->setName('devices.read');
+			});
+		});
+
+		$route = $router->getNamedRoute('devices.read');
+
+		self::assertNotNull($route);
+		self::assertSame('/api/v1/devices/{id}', $route->getPattern());
+	}
+
+	/**
+	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
 	 */
 	public function testSetBasePathIsReflectedInUrlForOutput(): void
