@@ -16,6 +16,7 @@
 namespace FastyBird\Core\Encoding\JsonApi;
 
 use FastyBird\Core\Encoding\JsonApi\Objects\IStandardObject;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
 use JsonException;
 use stdClass;
@@ -40,6 +41,9 @@ class Document implements IDocument
 		$this->data = new Objects\StandardObject($data);
 	}
 
+	/**
+	 * @throws InvalidArgument
+	 */
 	public static function create(string|stdClass $data): IDocument
 	{
 		if ($data instanceof stdClass) {
@@ -53,6 +57,9 @@ class Document implements IDocument
 		}
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function hasResource(): bool
 	{
 		$data = $this->getData();
@@ -60,6 +67,9 @@ class Document implements IDocument
 		return $data instanceof IStandardObject;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getResource(): Objects\IResourceObject
 	{
 		$data = $this->getData();
@@ -71,6 +81,9 @@ class Document implements IDocument
 		return new Objects\ResourceObject($data);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function hasResources(): bool
 	{
 		$data = $this->getData();
@@ -78,6 +91,9 @@ class Document implements IDocument
 		return $data instanceof Objects\IStandardObjectCollection;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getResources(): Objects\IResourceObjectCollection
 	{
 		$data = $this->getData();
@@ -89,6 +105,9 @@ class Document implements IDocument
 		return Objects\ResourceObjectCollection::create($data->getAll());
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getData(): Objects\IStandardObject|Objects\IStandardObjectCollection|null
 	{
 		if (!$this->data->has(self::KEYWORD_DATA)) {
@@ -113,6 +132,9 @@ class Document implements IDocument
 		return $this->data->has(self::KEYWORD_LINKS);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getLinks(): Objects\ILinkObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_LINKS);
@@ -129,6 +151,9 @@ class Document implements IDocument
 		return $this->data->has(self::KEYWORD_META);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getMeta(): Objects\IMetaObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_META);
@@ -145,6 +170,9 @@ class Document implements IDocument
 		return $this->data->has(self::KEYWORD_INCLUDED);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getIncluded(): Objects\IResourceObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_INCLUDED);
@@ -161,6 +189,9 @@ class Document implements IDocument
 		return $this->data->has(self::KEYWORD_ERRORS);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getErrors(): Objects\IErrorObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_ERRORS);

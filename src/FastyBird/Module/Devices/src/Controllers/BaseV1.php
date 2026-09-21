@@ -22,6 +22,7 @@ use FastyBird\Core\Documents\Application as ApplicationDocuments;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
 use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
 use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
 use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
@@ -156,7 +157,7 @@ abstract class BaseV1
 				strval($this->translator->translate('//devices-module.base.messages.notValidJson.heading')),
 				strval($this->translator->translate('//devices-module.base.messages.notValidJson.message')),
 			);
-		} catch (JsonApi\Exceptions\Runtime) {
+		} catch (ApplicationExceptions\Runtime) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//devices-module.base.messages.notValidJsonApi.heading')),
