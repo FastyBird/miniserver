@@ -544,6 +544,22 @@ class CoreExtension extends DI\CompilerExtension
 				)
 					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Casbin\Adapter::class);
 
+				// Adapter::__construct only stores the DBAL connection; every method that
+				// actually queries it (loadPolicy, savePolicy, ...) runs later, on demand.
+				// Autowiring still resolves the constructor argument eagerly, though, which
+				// forces nettrineDbal.connections.default.connection to exist merely because
+				// something -- transitively -- asked for an EnforcerFactory. In production
+				// (Tracy debug bar + AccountsModule's UserPanel + nettrine/dbal's own Tracy
+				// connection panel all present at once) that eager build closes a real cycle:
+				// tracy.bar -> fbAccountsModule.security.userPanel -> security.user ->
+				// this enforcerFactory -> this adapter -> nettrineDbal's connection, whose own
+				// ConnectionPanel::initialize() setup autowires an optional Tracy\Bar argument
+				// and calls back into tracy.bar while it is still being constructed. A PHP 8.4
+				// lazy ghost defers the constructor (and therefore the connection lookup) until
+				// something actually calls a method on the adapter, which happens outside that
+				// call stack, breaking the cycle without touching nettrine/dbal or Tracy.
+				$adapter->lazy = true;
+
 				$builder->addDefinition(
 					$this->prefix('simpleAuth.casbin.subscriber'),
 					new DI\Definitions\ServiceDefinition(),
