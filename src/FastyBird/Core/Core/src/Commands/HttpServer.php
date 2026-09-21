@@ -13,7 +13,7 @@
  * @date           15.03.20
  */
 
-namespace FastyBird\Core\Commands\HttpServer;
+namespace FastyBird\Core\Commands;
 
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;

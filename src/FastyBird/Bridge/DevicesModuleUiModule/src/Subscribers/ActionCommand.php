@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Documents;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;

@@ -13,7 +13,7 @@
  * @date           09.06.22
  */
 
-namespace FastyBird\Core\Commands\WsServer;
+namespace FastyBird\Core\Commands;
 
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;

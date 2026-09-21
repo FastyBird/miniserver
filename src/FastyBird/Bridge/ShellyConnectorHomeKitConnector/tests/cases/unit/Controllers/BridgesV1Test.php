@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Cases\Unit\Cont
 
 use Error;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http as SlimRouterHttp;
 use FastyBird\Core\Routing as SlimRouterRouting;

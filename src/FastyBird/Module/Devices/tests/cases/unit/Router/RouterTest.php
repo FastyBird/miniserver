@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Router;
 
 use Error;
-use FastyBird\Core\Constants\Metadata;
+use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Devices\Exceptions;

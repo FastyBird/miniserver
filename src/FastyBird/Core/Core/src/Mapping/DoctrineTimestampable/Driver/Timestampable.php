@@ -17,7 +17,7 @@ namespace FastyBird\Core\Mapping\DoctrineTimestampable\Driver;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Configuration\DoctrineTimestampable;
+use FastyBird\Core\Configuration;
 use FastyBird\Core\Exceptions;
 use Nette;
 use Psr\Cache\CacheItemPoolInterface;
@@ -74,7 +74,7 @@ final class Timestampable
 	];
 
 	public function __construct(
-		private readonly DoctrineTimestampable\Configuration $configuration,
+		private readonly Configuration\Configuration $configuration,
 		private readonly CacheItemPoolInterface|null $cache = null,
 	)
 	{

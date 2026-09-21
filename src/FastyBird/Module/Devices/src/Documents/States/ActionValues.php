@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Constants\Metadata\Constants as MetadataConstants;
+use FastyBird\Core\Constants\Constants as MetadataConstants;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;

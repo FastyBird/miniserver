@@ -16,7 +16,7 @@
 namespace FastyBird\Core\Subscribers\WsServer;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Constants\WsServer;
+use FastyBird\Core\Constants as WsServer;
 use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Events;

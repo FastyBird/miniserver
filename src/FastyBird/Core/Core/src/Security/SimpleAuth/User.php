@@ -17,7 +17,7 @@ namespace FastyBird\Core\Security\SimpleAuth;
 
 use Casbin\Exceptions as CasbinExceptions;
 use Closure;
-use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;

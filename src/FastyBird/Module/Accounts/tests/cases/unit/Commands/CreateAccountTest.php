@@ -5,7 +5,7 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Commands;
 use Contributte\Translation;
 use Doctrine\Persistence;
 use Error;
-use FastyBird\Core\Constants\SimpleAuth;
+use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
