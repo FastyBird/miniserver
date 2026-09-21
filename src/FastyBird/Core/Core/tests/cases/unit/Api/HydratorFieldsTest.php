@@ -164,6 +164,20 @@ final class HydratorFieldsTest extends TestCase
 		self::assertNull($field->getValue($attributes));
 	}
 
+	public function testDateTimeFieldGetValueRejectsADateThatParsesButDoesNotRoundTrip(): void
+	{
+		$field = new DateTimeField(false, 'field', 'field', true, true);
+
+		// September has 30 days. `createFromFormat()` accepts day 31 and silently
+		// overflows into October 1st -- it parses, but re-formatting the result with
+		// the same ATOM format no longer reproduces the input string. The round-trip
+		// equality check in the source is what rejects this, not the `instanceof` check
+		// alone.
+		$attributes = (new StandardObject())->set('field', '2026-09-31T12:00:00+00:00');
+
+		self::assertNull($field->getValue($attributes));
+	}
+
 	public function testBackedEnumFieldGetValueReturnsTheMatchingCaseForAValidBackingValue(): void
 	{
 		$field = new BackedEnumField(DataType::class, false, 'field', 'field', true, true);
@@ -222,6 +236,16 @@ final class HydratorFieldsTest extends TestCase
 		self::assertNull($notNullableField->getValue($attributes));
 	}
 
+	public function testArrayFieldGetValueConvertsANestedStandardObjectViaToArray(): void
+	{
+		$field = new ArrayField(false, 'field', 'field', true, true);
+
+		$nested = (new StandardObject())->set('inner', 'value');
+		$attributes = (new StandardObject())->set('field', $nested);
+
+		self::assertSame(['inner' => 'value'], $field->getValue($attributes));
+	}
+
 	public function testMixedFieldGetValueReturnsTheAttributeUnchanged(): void
 	{
 		$field = new MixedField(false, 'field', 'field', true, true);
@@ -229,6 +253,17 @@ final class HydratorFieldsTest extends TestCase
 		$attributes = (new StandardObject())->set('field', ['nested' => 'value']);
 
 		self::assertSame(['nested' => 'value'], $field->getValue($attributes));
+	}
+
+	public function testMixedFieldGetValueOnMissingKeyReturnsNullRegardlessOfNullable(): void
+	{
+		$nullableField = new MixedField(true, 'field', 'field', true, true);
+		$notNullableField = new MixedField(false, 'field', 'field', true, true);
+
+		$attributes = new StandardObject();
+
+		self::assertNull($nullableField->getValue($attributes));
+		self::assertNull($notNullableField->getValue($attributes));
 	}
 
 	public function testEntityFieldGetClassNameIsNullableAndIsRelationshipReturnConstructorArgumentsUnchanged(): void
