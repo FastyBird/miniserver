@@ -510,7 +510,7 @@ exit(0);
 
 Run: `php tools/check-naming.php --generate-baseline`
 
-Expected: `Wrote <N> violations to tools/naming-baseline.txt.` with N in the 3,500–3,800 range.
+Expected: `Wrote 3292 violations to tools/naming-baseline.txt.` — the same count Step 1 asserted.
 
 - [ ] **Step 4: Run the guard clean**
 
