@@ -965,11 +965,6 @@ class CoreExtension extends DI\CompilerExtension
 			->setType(WsServerServer\WsServer\Server::class)
 			->setArguments([$handlers, $loop, $serverConfiguration]);
 
-		if (class_exists('Symfony\Component\Console\Command\Command')) {
-			$builder->addDefinition($this->prefix('wsServer.commands.server'))
-				->setType(WsServerCommands\WsServer\ServerCommand::class);
-		}
-
 		$wampStorageDriver = $configuration->webSockets->storage->topics->driver === '@wsServer.wamp.topics.driver.memory'
 			? $builder->addDefinition($this->prefix('wsServer.wamp.topics.driver.memory'))
 			->setType(InMemory::class)
@@ -1016,7 +1011,7 @@ class CoreExtension extends DI\CompilerExtension
 			->setType(Routing\WebServer\Router::class);
 
 		$builder->addDefinition($this->prefix('httpServer.commands.server'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpServerCommands\HttpServer\HttpServer::class)
+			->setType(HttpServerCommands\HttpServer::class)
 			->setArguments([
 				'serverAddress' => $configuration->httpServer->server->address,
 				'serverPort' => $configuration->httpServer->server->port,
@@ -1058,7 +1053,7 @@ class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('wsServer.commands.wsServer'), new DI\Definitions\ServiceDefinition())
-			->setType(WsServerCommands\WsServer\WsServer::class)
+			->setType(WsServerCommands\WsServer::class)
 			->setArguments(['exchangeFactories' => $builder->findByType(ExchangeMessaging\Exchange\Factory::class)]);
 
 		$builder->addDefinition($this->prefix('wsServer.subscribers.client'), new DI\Definitions\ServiceDefinition())

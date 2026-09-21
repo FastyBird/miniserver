@@ -1,24 +1,25 @@
 <?php declare(strict_types = 1);
 
 /**
- * HttpServer.php
+ * WsServer.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WebServerPlugin!
+ * @package        FastyBird:WsServerPlugin!
  * @subpackage     Commands
  * @since          1.0.0
  *
- * @date           15.03.20
+ * @date           09.06.22
  */
 
-namespace FastyBird\Core\Commands\HttpServer;
+namespace FastyBird\Core\Commands;
 
-use FastyBird\Core\Events\HttpServer as Events;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Events\WsServer as Events;
+use FastyBird\Core\Exceptions\WebSockets as WebSocketsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Server\HttpServer as Server;
+use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
+use FastyBird\Core\Server\WsServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Psr\EventDispatcher;
@@ -29,32 +30,32 @@ use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
 use Throwable;
-use function file_exists;
-use function is_file;
 
 /**
- * HTTP server command
+ * WS server command
  *
- * @package        FastyBird:WebServerPlugin!
+ * @package        FastyBird:WsServerPlugin!
  * @subpackage     Commands
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class HttpServer extends Console\Command\Command
+final class WsServer extends Console\Command\Command
 {
 
 	use Nette\SmartObject;
 
-	public const NAME = 'fb:web-server:start';
+	public const NAME = 'fb:ws-server:start';
 
+	/**
+	 * @param array<ExchangeExchange\Factory> $exchangeFactories
+	 */
 	public function __construct(
-		private readonly string $serverAddress,
-		private readonly int $serverPort,
-		private readonly Server\Factory $serverFactory,
+		private readonly Server\Configuration $configuration,
+		private readonly Server\Server $server,
 		private readonly EventLoop\LoopInterface $eventLoop,
+		private readonly array $exchangeFactories = [],
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
-		private readonly string|null $serverCertificate = null,
 		string|null $name = null,
 	)
 	{
@@ -70,7 +71,7 @@ class HttpServer extends Console\Command\Command
 
 		$this
 			->setName(self::NAME)
-			->setDescription('Start http server');
+			->setDescription('WebSockets server service');
 	}
 
 	protected function execute(
@@ -79,9 +80,9 @@ class HttpServer extends Console\Command\Command
 	): int
 	{
 		$this->logger->info(
-			'Starting HTTP Server',
+			'Starting WS server',
 			[
-				'source' => MetadataTypes\Sources\Plugin::WEB_SERVER->value,
+				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
 				'type' => 'server-command',
 			],
 		);
@@ -90,39 +91,52 @@ class HttpServer extends Console\Command\Command
 			$this->dispatcher?->dispatch(new Events\Startup());
 
 			$socketServer = new Socket\SocketServer(
-				$this->serverAddress . ':' . $this->serverPort,
+				$this->configuration->getAddress() . ':' . $this->configuration->getPort(),
 				[],
 				$this->eventLoop,
 			);
 
-			if ($this->serverCertificate !== null) {
-				if (
-					is_file($this->serverCertificate)
-					&& file_exists($this->serverCertificate)
-				) {
-					$socketServer = new Socket\SecureServer($socketServer, $this->eventLoop, [
-						'local_cert' => $this->serverCertificate,
-					]);
-
-				} else {
-					throw new Exceptions\InvalidArgument('Provided SSL certificate file could not be loaded');
-				}
-			}
-
 			$socketServer->on('error', function (Throwable $ex): void {
 				$this->dispatcher?->dispatch(new Events\Error($ex));
+
+				$this->logger->error(
+					'An error occurred during handling requests. Stopping WS server',
+					[
+						'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+						'type' => 'server-command',
+						'exception' => ToolsHelpers\Logger::buildException($ex),
+					],
+				);
 			});
 
-			$this->serverFactory->create($socketServer);
+			$this->server->create($socketServer);
+
+			foreach ($this->exchangeFactories as $exchangeFactory) {
+				$exchangeFactory->create();
+			}
 
 			$this->eventLoop->run();
+
+		} catch (WebSocketsExceptions\Terminate $ex) {
+			// Log error action reason
+			$this->logger->error(
+				'WS server was forced to close',
+				[
+					'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+					'type' => 'server-command',
+					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'cmd' => $this->getName(),
+				],
+			);
+
+			$this->eventLoop->stop();
 
 		} catch (Throwable $ex) {
 			// Log error action reason
 			$this->logger->error(
-				'An unhandled error occurred. Stopping HTTP server',
+				'An unhandled error occurred. Stopping WS server',
 				[
-					'source' => MetadataTypes\Sources\Plugin::WEB_SERVER->value,
+					'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
 					'type' => 'server-command',
 					'exception' => ToolsHelpers\Logger::buildException($ex),
 					'cmd' => $this->getName(),

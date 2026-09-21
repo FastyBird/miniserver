@@ -89,7 +89,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 */
 
 		self::assertNotNull($container->getByType(HttpServerServer\HttpServer\Application::class, false));
-		self::assertNotNull($container->getByType(HttpServerCommands\HttpServer\HttpServer::class, false));
+		self::assertNotNull($container->getByType(HttpServerCommands\HttpServer::class, false));
 		self::assertNotNull($container->getByType(WebServerHttp\WebServer\ResponseFactory::class, false));
 		self::assertNotNull($container->getByType(EventLoop\LoopInterface::class, false));
 		self::assertNotNull($container->getByType(WebServerMiddleware\WebServer\Cors::class, false));
@@ -102,7 +102,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * WS SERVER (Plugin/WsServer's own registrations) -- from WsServerExtensionTest
 		 */
 
-		self::assertNotNull($container->getByType(WsServerCommands\WsServer\WsServer::class, false));
+		self::assertNotNull($container->getByType(WsServerCommands\WsServer::class, false));
 		self::assertNotNull($container->getByType(WsServerSubscribers\WsServer\Client::class, false));
 
 		/**

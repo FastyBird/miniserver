@@ -3151,12 +3151,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Clients/WsServer/Storage.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Commands\\WsServer\\ServerCommand\:\:configure\(\) throws checked exception Symfony\\Component\\Console\\Exception\\InvalidArgumentException but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Commands/WsServer/ServerCommand.php
-
-		-
 			message: '#^Method FastyBird\\Core\\Controllers\\SlimRouter\\ControllerResolver\:\:assertCallable\(\) return type has no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
