@@ -7,11 +7,22 @@
 
 ## 1. Goal
 
-`fastybird/miniserver-core` was assembled by merging 15 previously independent packages. The
-merge preserved their identities: the package is still legible as a conglomerate of SimpleAuth,
-SlimRouter, DoctrineCrud, DoctrineTimestampable, DoctrinePhone, DoctrineOrmQuery, JsonApi,
-JsonAPIDocument, WebSockets, WebSocketsWAMP, WsServerPlugin, WebServerPlugin, MetadataLibrary,
-Tools, Exchange, DateTimeFactory and Application.
+`fastybird/miniserver-core` was assembled by merging fifteen previously independent packages:
+`Library/Metadata`, `DateTimeFactory`, `DoctrineCrud`, `DoctrineOrmQuery`,
+`DoctrineTimestampable`, `JsonApi`, `Phone`, `SlimRouter`, `WebSockets`, `Core/Application`,
+`Core/Exchange`, `Core/SimpleAuth`, `Core/Tools`, `Plugin/WebServer` and `Plugin/WsServer` (the
+canonical list is in `docs/architecture.md`). Several had themselves absorbed third-party
+libraries whose names also survive in the tree — `iPublikuj:SlimRouter`, `iPublikuj:DoctrineCrud`,
+`iPublikuj:JsonAPIDocument`, `iPublikuj:WebSocketsWAMP` and others.
+
+The merge preserved all of those identities, and the package is still legible as a conglomerate
+of them.
+
+Note that the objection is **not** to the words themselves. `WebSockets` and `Exchange` were
+merged packages, yet `WebSockets\` and `Exchange\` are correct capability names in the target
+layout, because there the word describes what the code IS rather than which package shipped it.
+What is forbidden is a name used as a grouping layer *because that is where the code came from* —
+`SimpleAuth\` for what is really Security, `SlimRouter\` for what is really Http.
 
 Make Core read as one package that was designed as a single unit from the start. No file, class,
 namespace, import alias, docblock, DI key or asset directory may name the library it came from.
@@ -212,8 +223,9 @@ ruleset raised from 8.2 to 8.4.
 plus one added rule, `SlevomatCodingStandard.TypeHints.ClassConstantTypeHint` (introduced in the
 8.3 ruleset; 8.4 adds nothing further). No dependency upgrade is needed.
 
-That one rule is not small here: the repository has **1,636 untyped class constants across 605
-files and zero typed ones**, 212 of them in 37 Core files. It is therefore switched on for Core
+That one rule is not small here: PHP_CodeSniffer reports **1,633 untyped class constants across
+602 files and zero typed ones**, 214 of them in 39 Core files, leaving 1,419 across 563 files for
+the other 28 packages. It is therefore switched on for Core
 in E1 and excluded for the other 28 packages until E7 reaches them — a second list that may only
 shrink, alongside the naming baseline.
 

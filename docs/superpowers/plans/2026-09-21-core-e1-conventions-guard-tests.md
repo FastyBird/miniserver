@@ -758,8 +758,9 @@ two things: `<config name="php_version">` goes from `80200` to `80400`, and one 
 `SlevomatCodingStandard.TypeHints.ClassConstantTypeHint` (introduced in the 8.3 ruleset; 8.4 adds
 nothing further).
 
-That one rule is not small here. The repository has **1,636 untyped class constants across 605
-files** and **zero** typed ones. 212 of them, in 37 files, are in Core. So the rule is switched
+That one rule is not small here. PHP_CodeSniffer itself reports **1,633 untyped class constants across 602
+files** and **zero** typed ones. **214 of them, in 39 Core files** (36 under `src/`, plus
+`Http/IResponse.php` and two test fixtures). So the rule is switched
 on for Core only, and the other 28 packages are excluded until E7 reaches them.
 
 - [ ] **Step 1: Confirm the fallout before changing anything**
@@ -769,9 +770,9 @@ grep -rEc '^\s*(public|protected|private)?\s*(final\s+)?const\s+[A-Z_][A-Z0-9_]*
   --include='*.php' src/FastyBird/Core/Core/src | grep -v ':0$' | wc -l
 ```
 
-Expected: `37` — the number of Core files carrying at least one untyped constant. If this
-prints something very different, stop and re-measure before continuing; the exclusion list
-below is sized against it.
+Expected: around `36`. This is a crude regex, not PHP_CodeSniffer, so treat it as an
+order-of-magnitude check only — the authoritative figure is what `make cs` reports in Step 3,
+which is **214 findings in 39 files**. Stop only if this prints something wildly different.
 
 - [ ] **Step 2: Switch the ruleset and scope the new rule**
 
@@ -791,10 +792,11 @@ Then, immediately before the closing `</ruleset>`, add:
 
 ```xml
     <!-- The only rule ruleset-8.4 adds over ruleset-8.2 (it arrived in the 8.3 ruleset; 8.4
-         adds nothing further). The repository has 1,636 untyped class constants across 605
-         files and zero typed ones, so it is switched on for Core first and the remaining
-         packages are excluded until E7 of the Core identity refactor reaches them. This list
-         may only shrink; deleting its last entry deletes the block. -->
+         adds nothing further). PHP_CodeSniffer reports 1,633 untyped class constants across
+         602 files and zero typed ones; 214 of them, in 39 files, are Core's. So it is switched
+         on for Core first and the remaining packages -- 1,419 findings across 563 files -- are
+         excluded until E7 of the Core identity refactor reaches them. This list may only
+         shrink; deleting its last entry deletes the block. -->
     <rule ref="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint">
         <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
@@ -814,9 +816,19 @@ grep -c 'ClassConstantTypeHint' /tmp/cs.txt
 grep 'ClassConstantTypeHint' /tmp/cs.txt | grep -c 'src/FastyBird/Core/Core'
 ```
 
-Expected: `exit=1` (Core's 212 untyped constants are now reported — they are fixed in E2, not
-here), the two counts equal, and no `ClassConstantTypeHint` finding outside
-`src/FastyBird/Core/Core`.
+Expected: **`exit=2`** — PHP_CodeSniffer returns 2 when errors are present and 1 when there are
+only warnings, so 2 is the correct red here. Expect **214 findings, all of them
+`ClassConstantTypeHint`, all inside `src/FastyBird/Core/Core`**. They are fixed in E2, not here.
+
+Strip ANSI colour codes before counting, or the greps will miss: PHPCS prints the sniff code on
+the line after the message and wraps both in colour escapes.
+
+```bash
+sed -e 's/\x1b\[[0-9;]*m//g' /tmp/cs.txt > /tmp/cs-plain.txt
+grep -oE '\([A-Za-z]+\.[A-Za-z.]+\)$' /tmp/cs-plain.txt | sort | uniq -c | sort -rn
+```
+
+Expected: a single line, `214 (SlevomatCodingStandard.TypeHints.ClassConstantTypeHint.MissingNativeTypeHint)`.
 
 The cache removal matters: PHPCS caches per-file results in `var/tools/PHP_CodeSniffer`, and a
 warm cache will not re-evaluate files against the changed ruleset.
@@ -826,15 +838,20 @@ warm cache will not re-evaluate files against the changed ruleset.
 `make cs` is now red on Core's untyped constants, by design. This is the one point in E1 where
 a gate is deliberately left failing, so state it in the commit message rather than hiding it.
 
-Confirm nothing *else* broke — the `php_version` bump can change other sniffs' behaviour:
+Confirm nothing *else* broke — the `php_version` bump can change other sniffs' behaviour. Use
+the ANSI-stripped file from Step 3:
 
 ```bash
-grep -oE '\| ERROR \| \[?x?\]? *\S+' /tmp/cs.txt | awk '{print $NF}' | sort | uniq -c | sort -rn | head -20
+grep -oE '\([A-Za-z]+\.[A-Za-z.]+\)$' /tmp/cs-plain.txt | sort | uniq -c | sort -rn
 ```
 
-Expected: `ClassConstantTypeHint` dominates. If any *other* sniff appears that was not failing
-before the change, fix those findings in this task — they are fallout from `php_version`, not
-from the new rule, and they must not be carried into E2.
+Expected: exactly **one** distinct sniff, `ClassConstantTypeHint`. If any *other* sniff appears,
+fix those findings in this task — they are fallout from `php_version`, not from the new rule, and
+they must not be carried into E2.
+
+The baseline that makes this interpretable: on the commit immediately before this task, `make cs`
+exits 0 with zero ERROR and zero WARNING lines. Anything you see afterwards is caused by this
+change.
 
 - [ ] **Step 5: Commit**
 
@@ -844,12 +861,12 @@ git commit -m "build(tools): raise the PHPCS ruleset from 8.2 to 8.4
 
 The whole difference is php_version 80200 -> 80400 plus one rule,
 SlevomatCodingStandard.TypeHints.ClassConstantTypeHint, which arrived in the
-8.3 ruleset. The repository has 1,636 untyped class constants across 605
-files and zero typed ones, so the rule is scoped to Core and the other 28
-packages are excluded until E7 reaches them.
+8.3 ruleset. PHP_CodeSniffer reports 1,633 untyped class constants across
+602 files and zero typed ones, so the rule is scoped to Core and the other
+28 packages are excluded until E7 reaches them.
 
-make cs is deliberately left failing on Core's 212 untyped constants; E2
-types them.
+make cs is deliberately left failing, exit 2, on Core's 214 untyped
+constants; E2 types them.
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ```
@@ -1587,17 +1604,18 @@ done
 ```
 
 Expected: `exit=0` for `layers`, `discriminators`, `naming`, `lint`, `composer-validate`,
-`phpstan` and `tests`.
+`phpstan` and `tests`; `exit=2` for `cs`, per the paragraph below.
 
-`cs` is expected to **exit 1**, on Core's 212 untyped class constants and nothing else — that
-is Task 5's deliberate, documented state, closed by E2. Confirm it is only that:
+`cs` is expected to **exit 2** — PHP_CodeSniffer's code for "errors present" — on Core's 214
+untyped class constants and nothing else. That is Task 5's deliberate, documented state, closed
+by E2. Confirm it is only that, stripping ANSI codes first:
 
 ```bash
-grep -oE '\| ERROR \| .*' /tmp/gate-cs.txt | grep -oE '[A-Za-z]+\.[A-Za-z.]+$' | sort | uniq -c | sort -rn
+sed -e 's/\x1b\[[0-9;]*m//g' /tmp/gate-cs.txt | grep -oE '\([A-Za-z]+\.[A-Za-z.]+\)$' | sort | uniq -c | sort -rn
 ```
 
-Expected: one line, `ClassConstantTypeHint`. Any other sniff is a regression from this epic and
-must be fixed before the epic closes.
+Expected: one line, `214 (SlevomatCodingStandard.TypeHints.ClassConstantTypeHint.MissingNativeTypeHint)`.
+Any other sniff is a regression from this epic and must be fixed before the epic closes.
 
 - [ ] **Step 4: Regenerate the naming baseline**
 
@@ -1731,7 +1749,7 @@ manager, which makes them integration tests against MariaDB rather than the pure
 rest of this epic delivers. They belong in E3's `Persistence` subtask, where the capability is
 being moved anyway and the integration harness is worth standing up once.
 
-**Known deliberate red.** Task 5 leaves `make cs` failing on 212 findings. Task 12 Step 3 pins
+**Known deliberate red.** Task 5 leaves `make cs` failing, exit 2, on 214 findings. Task 12 Step 3 pins
 exactly which findings are acceptable. E2 closes it. This is stated in three places so it cannot
 be mistaken for a regression.
 
