@@ -109,13 +109,13 @@ parameters:
 			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Library\\Metadata\\Types\\DataType given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Types\\Metadata\\DataType given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Tools\\Formats\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src/Builders/Builder.php
@@ -169,13 +169,13 @@ parameters:
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Library\\Metadata\\Types\\DataType given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Types\\Metadata\\DataType given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Tools\\Formats\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Builders/Builder.php
@@ -229,13 +229,13 @@ parameters:
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Controllers/BridgesV1.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Library\\Metadata\\Types\\DataType given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Types\\Metadata\\DataType given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Tools\\Formats\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/src/Builders/Builder.php
@@ -379,7 +379,7 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Library\\Metadata\\Types\\DataType given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Types\\Metadata\\DataType given\.$#'
 			identifier: argument.type
 			count: 4
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
@@ -391,7 +391,7 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Tools\\Formats\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
@@ -427,19 +427,19 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Library\\Metadata\\Types\\Payloads\\Button\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Button\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Library\\Metadata\\Types\\Payloads\\Cover\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Cover\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Library\\Metadata\\Types\\Payloads\\Switcher\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Switcher\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
@@ -469,7 +469,7 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Strict comparison using \!\=\= between array\{FastyBird\\Library\\Metadata\\Types\\DataTypeShort\|null, string\|null\}\|string and null will always evaluate to true\.$#'
+			message: '#^Strict comparison using \!\=\= between array\{FastyBird\\Core\\Types\\Metadata\\DataTypeShort\|null, string\|null\}\|string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
@@ -643,13 +643,13 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Controllers/PairingController.php
 
 		-
-			message: '#^Method FastyBird\\Connector\\HomeKit\\Entities\\Channels\\Channel\:\:getSource\(\) never returns FastyBird\\Library\\Metadata\\Types\\Sources\\Bridge so it can be removed from the return type\.$#'
+			message: '#^Method FastyBird\\Connector\\HomeKit\\Entities\\Channels\\Channel\:\:getSource\(\) never returns FastyBird\\Core\\Types\\Metadata\\Sources\\Bridge so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Entities/Channels/Channel.php
 
 		-
-			message: '#^Method FastyBird\\Connector\\HomeKit\\Entities\\Devices\\Device\:\:getSource\(\) never returns FastyBird\\Library\\Metadata\\Types\\Sources\\Bridge so it can be removed from the return type\.$#'
+			message: '#^Method FastyBird\\Connector\\HomeKit\\Entities\\Devices\\Device\:\:getSource\(\) never returns FastyBird\\Core\\Types\\Metadata\\Sources\\Bridge so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Entities/Devices/Device.php
@@ -1003,7 +1003,7 @@ parameters:
 			path: ../src/FastyBird/Connector/Modbus/src/API/Transformer.php
 
 		-
-			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, list\<FastyBird\\Library\\Metadata\\Types\\DataTypeShort\> given\.$#'
+			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, list\<FastyBird\\Core\\Types\\Metadata\\DataTypeShort\> given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Connector/Modbus/src/API/Transformer.php
@@ -1207,7 +1207,7 @@ parameters:
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Tools\\Formats\\CombinedEnum constructor expects array\<int, array\<int, array\<int, bool\|float\|int\|string\|null\>\|string\|null\>\>\|string, list\<array\<int, array\<int, mixed\>\>\> given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\CombinedEnum constructor expects array\<int, array\<int, array\<int, bool\|float\|int\|string\|null\>\|string\|null\>\>\|string, list\<array\<int, array\<int, mixed\>\>\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
@@ -1219,25 +1219,25 @@ parameters:
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Library\\Metadata\\Types\\Payloads\\Button\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Button\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Library\\Metadata\\Types\\Payloads\\Cover\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Cover\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Library\\Metadata\\Types\\Payloads\\Switcher\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Switcher\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Strict comparison using \!\=\= between array\{FastyBird\\Library\\Metadata\\Types\\DataTypeShort\|null, string\}\|string and null will always evaluate to true\.$#'
+			message: '#^Strict comparison using \!\=\= between array\{FastyBird\\Core\\Types\\Metadata\\DataTypeShort\|null, string\}\|string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
@@ -3283,13 +3283,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Controls/Repository.php
@@ -3301,13 +3301,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Properties/Repository.php
@@ -3319,13 +3319,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Channels/Repository.php
@@ -3337,13 +3337,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Controls/Repository.php
@@ -3355,13 +3355,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Properties/Repository.php
@@ -3373,13 +3373,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Connectors/Repository.php
@@ -3391,13 +3391,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Controls/Repository.php
@@ -3409,13 +3409,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Properties/Repository.php
@@ -3427,13 +3427,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/Configuration/Devices/Repository.php
@@ -3511,7 +3511,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/ChannelPropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Library\\Metadata\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/ChannelPropertiesManager.php
@@ -3553,7 +3553,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/ConnectorPropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Library\\Metadata\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/ConnectorPropertiesManager.php
@@ -3595,13 +3595,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/DevicePropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Library\\Metadata\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/DevicePropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Library\\Metadata\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/ChannelPropertiesManager.php
@@ -3625,7 +3625,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Channels/Repository.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Library\\Metadata\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/ConnectorPropertiesManager.php
@@ -3649,7 +3649,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Connectors/Repository.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Library\\Metadata\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/DevicePropertiesManager.php
@@ -3733,13 +3733,13 @@ parameters:
 			path: ../src/FastyBird/Module/Triggers/src/Controllers/TriggersV1.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Triggers/src/Models/States/ActionsManager.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Triggers/src/Models/States/ConditionsManager.php
@@ -3835,13 +3835,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Repository.php
@@ -3853,13 +3853,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Dashboards/Tabs/Repository.php
@@ -3871,13 +3871,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Groups/Repository.php
@@ -3889,13 +3889,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/DataSources/Repository.php
@@ -3907,13 +3907,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Displays/Repository.php
@@ -3925,13 +3925,13 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php
 
 		-
-			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Application\\Documents\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
+			message: '#^Parameter \#2 \$data of method FastyBird\\Core\\Documents\\Application\\DocumentFactory\:\:create\(\) expects array\<string, mixed\>\|object\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Module/Ui/src/Models/Configuration/Widgets/Repository.php
