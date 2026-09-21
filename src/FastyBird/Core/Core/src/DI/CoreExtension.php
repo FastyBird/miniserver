@@ -16,6 +16,7 @@
 namespace FastyBird\Core\DI;
 
 use Casbin;
+use DateInvalidTimeZoneException;
 use DateTimeZone;
 use Doctrine;
 use FastyBird\Core\Boot;
@@ -332,6 +333,9 @@ class CoreExtension extends DI\CompilerExtension
 	}
 
 	/**
+	 * @throws DateInvalidTimeZoneException
+	 * @throws DI\MissingServiceException
+	 * @throws DI\NotAllowedDuringResolvingException
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Logic
