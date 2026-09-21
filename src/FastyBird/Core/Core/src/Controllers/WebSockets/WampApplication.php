@@ -123,7 +123,7 @@ final class WampApplication extends Application implements IWampApplication
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws WebSocketsExceptions\TerminateException
+	 * @throws WebSocketsExceptions\Terminate
 	 */
 	public function handleMessage(
 		WebSocketsEntities\IClient $client,
@@ -176,7 +176,7 @@ final class WampApplication extends Application implements IWampApplication
 
 						$client->send(Utils\Json::encode([self::MSG_CALL_RESULT, $rpcId, $response->create()]));
 
-					} catch (WebSocketsExceptions\TerminateException $ex) {
+					} catch (WebSocketsExceptions\Terminate $ex) {
 						throw $ex;
 					} catch (Throwable $ex) {
 						$data = [
@@ -288,7 +288,7 @@ final class WampApplication extends Application implements IWampApplication
 				default:
 					throw new Exceptions\InvalidArgument('Invalid WAMP message type');
 			}
-		} catch (WebSocketsExceptions\TerminateException $ex) {
+		} catch (WebSocketsExceptions\Terminate $ex) {
 			throw $ex;
 		} catch (Throwable $ex) {
 			$this->logger->error(sprintf('An error (%s) has occurred: %s', $ex->getCode(), $ex->getMessage()));
@@ -300,7 +300,7 @@ final class WampApplication extends Application implements IWampApplication
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws WebSocketsExceptions\TerminateException
+	 * @throws WebSocketsExceptions\Terminate
 	 */
 	public function handlePush(PushMessages\IMessage $message, string $provider): void
 	{
@@ -334,7 +334,7 @@ final class WampApplication extends Application implements IWampApplication
 
 			$this->onPush($message, $provider, $topic);
 
-		} catch (WebSocketsExceptions\TerminateException $ex) {
+		} catch (WebSocketsExceptions\Terminate $ex) {
 			throw $ex;
 		} catch (Throwable $ex) {
 			$context = [

@@ -19,6 +19,7 @@ use Doctrine\Persistence;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Entities\Phone as PhoneEntities;
 use FastyBird\Core\Exceptions\JsonApi as JsonApiExceptions;
+use FastyBird\Core\Exceptions\Phone as PhoneExceptions;
 use FastyBird\Core\Services\Phone;
 use FastyBird\Module\Triggers\Entities;
 use Fig\Http\Message\StatusCodeInterface;
@@ -60,9 +61,9 @@ final class Sms extends Notification
 
 	/**
 	 * @throws JsonApiExceptions\JsonApi
-	 * @throws Phone\Exceptions\NoValidCountry
-	 * @throws Phone\Exceptions\NoValidPhone
-	 * @throws Phone\Exceptions\NoValidType
+	 * @throws PhoneExceptions\NoValidCountry
+	 * @throws PhoneExceptions\NoValidPhone
+	 * @throws PhoneExceptions\NoValidType
 	 */
 	protected function hydratePhoneAttribute(
 		JsonApi\Objects\IStandardObject $attributes,

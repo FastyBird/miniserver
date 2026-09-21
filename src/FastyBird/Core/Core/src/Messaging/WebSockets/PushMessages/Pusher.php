@@ -51,7 +51,7 @@ abstract class Pusher implements IPusher
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws WebSocketsExceptions\InvalidLinkException
+	 * @throws WebSocketsExceptions\InvalidLink
 	 * @throws ReflectionException
 	 */
 	public function push(
