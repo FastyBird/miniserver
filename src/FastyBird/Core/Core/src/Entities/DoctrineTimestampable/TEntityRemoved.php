@@ -6,7 +6,7 @@ use DateTimeInterface;
 use FastyBird\Core\Mapping\DoctrineTimestampable\Annotation as IPub;
 
 /**
- * Doctrine timestampable removing entity
+ * Adds a deletedAt property, stamped automatically when the entity is soft-deleted
  */
 trait TEntityRemoved
 {

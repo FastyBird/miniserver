@@ -95,6 +95,8 @@ abstract class QueryObject
 	}
 
 	/**
+	 * @throws DoctrineOrmQueryExceptions\QueryNotImplemented
+	 *
 	 * @phpstan-param ORM\EntityRepository<TEntityClass> $repository
 	 */
 	// phpcs:ignore Squiz.Commenting.FunctionComment.InvalidNoReturn

@@ -43,6 +43,8 @@ class Route implements IRoute, RequestHandlerInterface
 	 * @param array<string> $methods                 The route HTTP methods
 	 * @param string $pattern                   The route pattern
 	 * @param callable|string|array<mixed> $callable The route callable
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function __construct(
 		private array $methods,

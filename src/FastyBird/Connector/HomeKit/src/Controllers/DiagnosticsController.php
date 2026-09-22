@@ -24,6 +24,7 @@ use InvalidArgumentException;
 use Nette\Utils;
 use Psr\Http\Message;
 use Ramsey\Uuid;
+use RuntimeException;
 use function array_filter;
 use function array_key_exists;
 use function array_map;
@@ -56,6 +57,7 @@ final class DiagnosticsController extends BaseController
 	 * @throws Exceptions\InvalidState
 	 * @throws InvalidArgumentException
 	 * @throws Utils\JsonException
+	 * @throws RuntimeException
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,

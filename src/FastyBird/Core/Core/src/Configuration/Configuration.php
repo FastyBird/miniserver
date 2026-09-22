@@ -7,7 +7,7 @@ use Nette\Application;
 
 /**
  * Application configuration storage.
- * Stores the simple authentication and Doctrine timestampable extension settings
+ * Stores the authentication and entity timestamping settings
  */
 class Configuration
 {

@@ -27,6 +27,8 @@ class LinkObjectCollection implements ILinkObjectCollection
 
 	/**
 	 * @param array<mixed> $link
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(array $link = [])
 	{
@@ -35,6 +37,8 @@ class LinkObjectCollection implements ILinkObjectCollection
 
 	/**
 	 * @phpstan-return ILinkObjectCollection<string, ILinkObject|string>
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public static function create(Objects\IStandardObject|null $linkObject): ILinkObjectCollection
 	{
@@ -60,6 +64,8 @@ class LinkObjectCollection implements ILinkObjectCollection
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function addMany(array $link): void
 	{
@@ -84,6 +90,9 @@ class LinkObjectCollection implements ILinkObjectCollection
 		return array_key_exists($key, $this->stack);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function get(string $key): string|ILinkObject
 	{
 		if (!$this->has($key)) {
@@ -107,6 +116,8 @@ class LinkObjectCollection implements ILinkObjectCollection
 	 * {@inheritDoc}
 	 *
 	 * @phpstan-return Traversable<string, ILinkObject|string>
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function getAll(): Traversable
 	{

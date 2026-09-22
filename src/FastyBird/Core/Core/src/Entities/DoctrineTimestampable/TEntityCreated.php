@@ -6,7 +6,7 @@ use DateTimeInterface;
 use FastyBird\Core\Mapping\DoctrineTimestampable\Annotation as IPub;
 
 /**
- * Doctrine timestampable creating entity
+ * Adds a createdAt property, stamped automatically on entity creation
  */
 trait TEntityCreated
 {

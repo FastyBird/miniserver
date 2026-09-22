@@ -12,7 +12,7 @@ use FastyBird\Core\Persistence\DoctrineCrud\Crud;
 use Nette\Utils;
 
 /**
- * Doctrine CRUD entity updater
+ * Fills an existing entity's #[Crud]-marked properties from submitted values and persists it
  *
  * @template   T of Entities\IEntity
  * @extends    Crud\CrudManager<T>

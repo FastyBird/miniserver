@@ -6,7 +6,7 @@ use Attribute;
 use Doctrine\ORM\Mapping as ORMMapping;
 
 /**
- * Entity owner attribute for Doctrine2
+ * Property attribute marking a Doctrine entity field to be stamped with the acting user on create or update
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class Owner implements ORMMapping\MappingAttribute

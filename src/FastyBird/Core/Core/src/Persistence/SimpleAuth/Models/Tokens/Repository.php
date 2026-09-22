@@ -40,6 +40,7 @@ final class Repository
 	 *
 	 * @throws Exceptions\InvalidState
 	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function findOneByIdentifier(
 		string $identifier,

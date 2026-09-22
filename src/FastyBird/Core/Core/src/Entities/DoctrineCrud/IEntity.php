@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Entities\DoctrineCrud;
 
 /**
- * Doctrine CRUD base entity interface
+ * Marker interface for entities mappable through the CRUD entity mapper
  */
 interface IEntity
 {

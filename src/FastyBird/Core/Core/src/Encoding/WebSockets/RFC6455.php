@@ -7,6 +7,8 @@ use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use Nette;
+use TypeError;
+use UnderflowException;
 use function array_key_exists;
 use function array_merge;
 use function assert;
@@ -72,6 +74,7 @@ class RFC6455 implements IProtocol
 	 * {@inheritDoc}
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	public function doHandshake(Http\IRequest $httpRequest): Http\IResponse
 	{
@@ -86,6 +89,9 @@ class RFC6455 implements IProtocol
 		]);
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function handleMessage(
 		Entities\IClient $client,
 		Application\IApplication $application,

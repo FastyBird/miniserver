@@ -20,6 +20,8 @@ class ErrorObjectCollection implements IErrorObjectCollection
 
 	/**
 	 * @param array<mixed> $error
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(array $error = [])
 	{
@@ -30,6 +32,8 @@ class ErrorObjectCollection implements IErrorObjectCollection
 	 * @param array<mixed> $errorArray
 	 *
 	 * @phpstan-return IErrorObjectCollection<int, IErrorObject>
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public static function create(array $errorArray): IErrorObjectCollection
 	{
@@ -46,6 +50,8 @@ class ErrorObjectCollection implements IErrorObjectCollection
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function addMany(array $error): void
 	{

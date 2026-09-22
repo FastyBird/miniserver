@@ -18,6 +18,7 @@ namespace FastyBird\Module\Devices\Router;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Routing as WebSocketsRouting;
+use Nette;
 
 /**
  * Module sockets routes configuration
@@ -32,6 +33,7 @@ class SocketRoutes
 
 	/**
 	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\OutOfRangeException
 	 */
 	public static function createRouter(): WebSocketsRouting\RouteList
 	{

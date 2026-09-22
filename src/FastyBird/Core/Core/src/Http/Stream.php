@@ -5,6 +5,7 @@ namespace FastyBird\Core\Http;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as SlimRouterExceptions;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 use function fclose;
 use function feof;
 use function fopen;
@@ -39,6 +40,8 @@ class Stream implements StreamInterface
 	 * @param resource $resource One of the stream type resources
 	 *
 	 * @see https://www.php.net/manual/en/resource.php
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(private $resource = null)
 	{
@@ -47,6 +50,10 @@ class Stream implements StreamInterface
 		}
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public static function fromResourceUri(string $streamUri, string $mode = 'r'): self
 	{
 		$resource = fopen($streamUri, $mode);
@@ -60,6 +67,10 @@ class Stream implements StreamInterface
 		return new self($resource);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 * @throws RuntimeException
+	 */
 	public static function fromBodyString(string $body): self
 	{
 		$resource = fopen('php://temp', 'w+b');
@@ -278,6 +289,9 @@ class Stream implements StreamInterface
 		return $key !== null ? $this->metaData[$key] ?? null : $this->metaData;
 	}
 
+	/**
+	 * @throws RuntimeException
+	 */
 	public function __toString(): string
 	{
 		try {

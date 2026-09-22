@@ -14,6 +14,9 @@ use function is_string;
 class RelationshipObject implements IRelationshipObject
 {
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
 	public function __construct(private Objects\IStandardObject $data)
 	{
 		if (
@@ -30,6 +33,10 @@ class RelationshipObject implements IRelationshipObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_LINKS);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getLinks(): ILinkObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_LINKS);
@@ -46,6 +53,10 @@ class RelationshipObject implements IRelationshipObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_DATA);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getData(): IResourceIdentifierCollection|IResourceIdentifierObject|null
 	{
 		if ($this->isHasMany()) {
@@ -62,6 +73,10 @@ class RelationshipObject implements IRelationshipObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_META);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getMeta(): IMetaObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_META);
@@ -89,6 +104,10 @@ class RelationshipObject implements IRelationshipObject
 		return $data === null || $data instanceof Objects\IStandardObject;
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getIdentifiers(): IResourceIdentifierCollection
 	{
 		if (!$this->isHasMany()) {
@@ -113,6 +132,10 @@ class RelationshipObject implements IRelationshipObject
 			&& $data->has(JsonApi\IDocument::KEYWORD_ID);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getIdentifier(): IResourceIdentifierObject
 	{
 		if (!$this->isHasOne()) {

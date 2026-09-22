@@ -5,6 +5,7 @@ namespace FastyBird\Core\Routing;
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
+use Nette;
 use Nette\Utils;
 use function array_keys;
 use function assert;
@@ -92,6 +93,7 @@ class RouteList extends Utils\ArrayList implements IWampRouter
 	 * Adds the router
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws Nette\OutOfRangeException
 	 */
 	public function offsetSet(mixed $index, mixed $route): void
 	{

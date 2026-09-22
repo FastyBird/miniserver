@@ -5,7 +5,7 @@ namespace FastyBird\Core\Persistence\DoctrineCrud\Crud\Delete;
 use FastyBird\Core\Entities\DoctrineCrud as Entities;
 
 /**
- * Doctrine CRUD entity deleter factory
+ * Interface for factories creating an EntityDeleter for a given entity class
  *
  * @template T of Entities\IEntity
  */

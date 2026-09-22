@@ -13,6 +13,7 @@ use FastyBird\Core\Http;
 use Nette;
 use OverflowException;
 use Throwable;
+use TypeError;
 use UnderflowException;
 use function array_flip;
 use function array_key_exists;
@@ -120,6 +121,7 @@ final class Wrapper implements IWrapper
 	 * {@inheritDoc}
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	public function handleClose(Entities\IClient $client): void
 	{
@@ -132,6 +134,7 @@ final class Wrapper implements IWrapper
 	 * {@inheritDoc}
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	public function handleError(Entities\IClient $client, Throwable $ex): void
 	{
@@ -145,6 +148,7 @@ final class Wrapper implements IWrapper
 
 	/**
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	private function connectionOpen(Entities\IClient $client, Http\IRequest $httpRequest): void
 	{
@@ -170,6 +174,7 @@ final class Wrapper implements IWrapper
 
 	/**
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	private function connectionClose(Entities\IClient $client): void
 	{
@@ -189,6 +194,7 @@ final class Wrapper implements IWrapper
 
 	/**
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	public function connectionError(Entities\IClient $client, Throwable $ex): void
 	{
@@ -315,6 +321,7 @@ final class Wrapper implements IWrapper
 	 * @param int $code HTTP status code
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	private function close(Entities\IClient $client, int $code = 400, mixed $body = null): void
 	{

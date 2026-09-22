@@ -19,6 +19,7 @@ use Nette\Localization;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use ValueError;
 
 /**
  * Characterizes the pure value-coercion behaviour of the JSON:API hydrator field
@@ -236,6 +237,9 @@ final class HydratorFieldsTest extends TestCase
 		self::assertFalse($notNullableField->getValue($attributes));
 	}
 
+	/**
+	 * @throws ValueError
+	 */
 	public function testDateTimeFieldGetValueParsesAtomFormatAndPreservesTheInstant(): void
 	{
 		$field = new DateTimeField(false, 'field', 'field', true, true);
@@ -248,6 +252,9 @@ final class HydratorFieldsTest extends TestCase
 		self::assertSame('2026-09-21T12:00:00+00:00', $value->format(DateTimeInterface::ATOM));
 	}
 
+	/**
+	 * @throws ValueError
+	 */
 	public function testDateTimeFieldGetValueReturnsNullForAnUnparseableStringRatherThanThrowing(): void
 	{
 		$field = new DateTimeField(false, 'field', 'field', true, true);
@@ -257,6 +264,9 @@ final class HydratorFieldsTest extends TestCase
 		self::assertNull($field->getValue($attributes));
 	}
 
+	/**
+	 * @throws ValueError
+	 */
 	public function testDateTimeFieldGetValueRejectsADateThatParsesButDoesNotRoundTrip(): void
 	{
 		$field = new DateTimeField(false, 'field', 'field', true, true);

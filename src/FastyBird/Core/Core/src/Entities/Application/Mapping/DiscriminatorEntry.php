@@ -6,7 +6,7 @@ use Attribute;
 use Doctrine\ORM\Mapping as ORMMapping;
 
 /**
- * Entity discriminator item attribute for Doctrine2
+ * Class attribute registering an entity under a discriminator map entry
  */
 #[Attribute(Attribute::TARGET_CLASS)]
 final readonly class DiscriminatorEntry implements ORMMapping\MappingAttribute

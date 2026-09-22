@@ -15,6 +15,7 @@ use ReflectionException;
 use ReflectionMethod;
 use Reflector;
 use stdClass;
+use TypeError;
 use function array_key_exists;
 use function call_user_func;
 use function get_class;
@@ -89,6 +90,9 @@ abstract class Controller implements IController
 		$this->payload = new stdClass();
 	}
 
+	/**
+	 * @throws Nette\InvalidStateException
+	 */
 	public function injectPrimary(
 		Nette\DI\Container|null $context = null,
 		IControllerFactory|null $controllerFactory = null,
@@ -119,6 +123,7 @@ abstract class Controller implements IController
 	 * @throws WebSocketsExceptions\ForbiddenRequest
 	 * @throws Exceptions\InvalidState
 	 * @throws ReflectionException
+	 * @throws TypeError
 	 */
 	public function run(Application\Request $request): Responses\IResponse
 	{
@@ -398,6 +403,7 @@ abstract class Controller implements IController
 	 * Initializes $this->globalParams, $this->action. Called by run()
 	 *
 	 * @throws WebSocketsExceptions\BadRequest
+	 * @throws TypeError
 	 */
 	private function initGlobalParameters(): void
 	{

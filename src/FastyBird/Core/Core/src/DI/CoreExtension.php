@@ -115,11 +115,10 @@ if (!class_exists('Nette\PhpGenerator\Literal')) {
 /**
  * FastyBird Core -- consolidated DI extension
  *
- * Replaces ApplicationExtension, ExchangeExtension, SimpleAuthExtension, ToolsExtension,
- * DateTimeFactoryExtension, DoctrineCrudExtension, DoctrineTimestampableExtension,
- * JsonApiExtension, PhoneExtension, DoctrinePhoneExtension, WebSocketsExtension,
- * WebSocketsWAMPExtension, WebServerExtension and WsServerExtension. See
- * docs/superpowers/specs/2026-09-20-core-consolidation-design.md section 6.
+ * Registers every service Core provides in one pass: application bootstrapping, the
+ * exchange, authentication and authorization, shared tooling, date/time handling, entity
+ * CRUD and timestamping, JSON:API, phone number handling, and the WebSocket, WAMP and web
+ * servers. See docs/superpowers/specs/2026-09-20-core-consolidation-design.md section 6.
  */
 class CoreExtension extends DI\CompilerExtension
 {

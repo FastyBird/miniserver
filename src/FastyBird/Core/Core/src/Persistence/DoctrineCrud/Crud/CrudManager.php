@@ -9,7 +9,7 @@ use FastyBird\Core\Exceptions;
 use Nette;
 
 /**
- * Doctrine CRUD entities manager
+ * Base class resolving the Doctrine entity manager and repository for a given entity class
  *
  * @template T of Entities\IEntity
  */

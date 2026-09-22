@@ -21,6 +21,7 @@ class PlainIdentity implements Security\IIdentity
 	 * @param array<string> $roles
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function __construct(string $id, private readonly array $roles = [])
 	{

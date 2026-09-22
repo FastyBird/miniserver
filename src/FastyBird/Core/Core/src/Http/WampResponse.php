@@ -4,6 +4,7 @@ namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
 use Nette;
+use TypeError;
 use function array_key_exists;
 use function sprintf;
 use function strlen;
@@ -90,6 +91,7 @@ final class WampResponse implements IResponse
 
 	/**
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	public function __construct(int $code, private array $headers = [], string|null $body = null)
 	{
@@ -101,6 +103,7 @@ final class WampResponse implements IResponse
 	 * {@inheritDoc}
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
 	 */
 	public function setCode(int $code, string|null $reason = null): void
 	{

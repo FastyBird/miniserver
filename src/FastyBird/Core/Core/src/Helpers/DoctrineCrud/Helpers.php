@@ -17,7 +17,7 @@ use function sprintf;
 use function strtolower;
 
 /**
- * Doctrine CRUD helpers
+ * Reflection helpers for autowiring constructor arguments during entity creation
  */
 class Helpers
 {

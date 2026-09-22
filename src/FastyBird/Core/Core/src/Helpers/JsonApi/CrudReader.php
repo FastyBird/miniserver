@@ -9,7 +9,7 @@ use function array_reduce;
 use function assert;
 
 /**
- * Doctrine CRUD annotation reader
+ * Reads a property's #[Crud] attribute to determine whether it is required and/or writable
  */
 class CrudReader
 {

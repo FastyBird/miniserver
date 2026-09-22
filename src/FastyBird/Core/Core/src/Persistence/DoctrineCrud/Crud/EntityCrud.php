@@ -8,7 +8,7 @@ use FastyBird\Core\Persistence\DoctrineCrud\Crud;
 use Nette;
 
 /**
- * Doctrine CRUD
+ * Bundles an entity's creator, updater and deleter behind a single facade
  *
  * @template    T of Entities\IEntity
  * @implements  IEntityCrud<T>

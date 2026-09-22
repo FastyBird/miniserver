@@ -9,6 +9,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\SimpleAuth as Mapping;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Nette;
+use Psr\Cache\InvalidArgumentException;
 use ReflectionException;
 use function array_key_exists;
 use function is_array;
@@ -49,6 +50,7 @@ final class User implements Common\EventSubscriber
 	/**
 	 * @throws Exceptions\InvalidMapping
 	 * @throws ORM\Mapping\MappingException
+	 * @throws InvalidArgumentException
 	 */
 	public function loadClassMetadata(
 		ORM\Event\LoadClassMetadataEventArgs $eventArgs,
@@ -106,6 +108,7 @@ final class User implements Common\EventSubscriber
 	 * @throws ORM\ORMInvalidArgumentException
 	 * @throws Persistence\Mapping\MappingException
 	 * @throws ReflectionException
+	 * @throws InvalidArgumentException
 	 */
 	public function onFlush(ORM\Event\OnFlushEventArgs $eventArgs): void
 	{
@@ -178,6 +181,7 @@ final class User implements Common\EventSubscriber
 	 * @throws ORM\Mapping\MappingException
 	 * @throws Persistence\Mapping\MappingException
 	 * @throws ReflectionException
+	 * @throws InvalidArgumentException
 	 */
 	public function prePersist(
 		mixed $entity,

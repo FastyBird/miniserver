@@ -6,7 +6,7 @@ use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use FastyBird\Core\Mapping\DoctrineCrud as Mapping;
 
 /**
- * Doctrine CRUD entity updater factory
+ * Interface for factories creating an EntityUpdater for a given entity class
  *
  * @template T of Entities\IEntity
  */

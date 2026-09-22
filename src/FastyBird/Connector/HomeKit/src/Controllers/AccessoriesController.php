@@ -31,6 +31,7 @@ use InvalidArgumentException;
 use Nette\Utils;
 use Psr\Http\Message;
 use Ramsey\Uuid;
+use RuntimeException;
 use TypeError;
 use ValueError;
 use function boolval;
@@ -61,6 +62,7 @@ final class AccessoriesController extends BaseController
 	 * @throws InvalidArgumentException
 	 * @throws Utils\JsonException
 	 * @throws ApplicationExceptions\InvalidState
+	 * @throws RuntimeException
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

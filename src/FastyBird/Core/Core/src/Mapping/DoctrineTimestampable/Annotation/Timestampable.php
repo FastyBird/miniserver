@@ -5,7 +5,7 @@ namespace FastyBird\Core\Mapping\DoctrineTimestampable\Annotation;
 use Attribute;
 
 /**
- * Doctrine Timestampable annotation for Doctrine2
+ * Property attribute marking a Doctrine entity field to be stamped with the current time on create, update or delete
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class Timestampable

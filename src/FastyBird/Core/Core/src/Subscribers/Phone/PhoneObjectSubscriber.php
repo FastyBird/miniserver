@@ -5,6 +5,7 @@ namespace FastyBird\Core\Subscribers\Phone;
 use Doctrine\Common;
 use Doctrine\ORM;
 use FastyBird\Core\Entities\Phone as Entities;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Phone as Types;
 use Nette;
 use ReflectionClass;
@@ -96,6 +97,8 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 	}
 
 	/**
+	 * @throws Exceptions\NoValidCountry
+	 * @throws Exceptions\NoValidPhone
 	 * @throws ORM\Mapping\MappingException
 	 * @throws ReflectionException
 	 */
@@ -114,6 +117,8 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 	}
 
 	/**
+	 * @throws Exceptions\NoValidCountry
+	 * @throws Exceptions\NoValidPhone
 	 * @throws ORM\Mapping\MappingException
 	 * @throws ReflectionException
 	 */
@@ -126,6 +131,8 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 	}
 
 	/**
+	 * @throws Exceptions\NoValidCountry
+	 * @throws Exceptions\NoValidPhone
 	 * @throws ORM\Mapping\MappingException
 	 * @throws ReflectionException
 	 */

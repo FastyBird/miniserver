@@ -18,6 +18,9 @@ class ErrorObject implements IErrorObject
 	{
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getId(): string|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_ID);
@@ -34,6 +37,10 @@ class ErrorObject implements IErrorObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_LINKS);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getLinks(): ILinkObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_LINKS);
@@ -45,6 +52,9 @@ class ErrorObject implements IErrorObject
 		return LinkObjectCollection::create($raw);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getStatus(): int|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_STATUS);
@@ -56,6 +66,9 @@ class ErrorObject implements IErrorObject
 		return $raw !== null ? (int) $raw : null;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getCode(): string|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_CODE);
@@ -67,6 +80,9 @@ class ErrorObject implements IErrorObject
 		return $raw;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getTitle(): string|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_TITLE);
@@ -78,6 +94,9 @@ class ErrorObject implements IErrorObject
 		return $raw;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getDetail(): string|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_DETAIL);
@@ -89,6 +108,10 @@ class ErrorObject implements IErrorObject
 		return $raw;
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getSource(): ISourceObject|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_SOURCE);
@@ -105,6 +128,10 @@ class ErrorObject implements IErrorObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_META);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getMeta(): IMetaObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_META);

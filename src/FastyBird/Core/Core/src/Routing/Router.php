@@ -8,6 +8,7 @@ use FastyBird\Core\Http;
 use FastyBird\Core\Middleware\SlimRouter\IMiddlewareDispatcher;
 use FastyBird\Core\Middleware\SlimRouter\MiddlewareDispatcher;
 use Fig\Http\Message\RequestMethodInterface;
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -68,6 +69,9 @@ class Router implements IRouter
 		return $this->routeCollector->getNamedRoute($name);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function lookupRoute(string $identifier): IRoute
 	{
 		$route = $this->routeCollector->lookupRoute($identifier);
@@ -168,6 +172,9 @@ class Router implements IRouter
 		return $this->routeParser->urlFor($routeName, $data, $queryParams);
 	}
 
+	/**
+	 * @throws InvalidArgumentException
+	 */
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 		$response = $this->middlewareDispatcher->handle($request);

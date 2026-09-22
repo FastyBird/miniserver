@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Services\Phone;
 
+use Error;
 use FastyBird\Core\Entities\Phone as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
@@ -80,6 +81,7 @@ final class Phone
 	/**
 	 * @throws Exceptions\NoValidCountry
 	 * @throws Exceptions\NoValidType
+	 * @throws Error
 	 */
 	public function isValid(
 		string $number,
@@ -117,6 +119,7 @@ final class Phone
 	/**
 	 * @throws Exceptions\NoValidCountry
 	 * @throws Exceptions\NoValidPhone
+	 * @throws InvalidArgument
 	 */
 	public function format(
 		string $number,
@@ -148,6 +151,7 @@ final class Phone
 	 * @throws Exceptions\NoValidPhone
 	 * @throws Exceptions\NoValidType
 	 * @throws libphonenumber\NumberParseException
+	 * @throws Error
 	 */
 	public function getLocation(
 		string $number,
@@ -255,6 +259,8 @@ final class Phone
 	 *
 	 * @throws Exceptions\NoValidCountry
 	 * @throws Exceptions\NoValidType
+	 * @throws InvalidArgument
+	 * @throws Error
 	 */
 	public function getExampleNationalNumber(
 		string $country,
@@ -269,6 +275,8 @@ final class Phone
 	 *
 	 * @throws Exceptions\NoValidCountry
 	 * @throws Exceptions\NoValidType
+	 * @throws InvalidArgument
+	 * @throws Error
 	 */
 	public function getExampleInternationalNumber(
 		string $country,
@@ -281,6 +289,8 @@ final class Phone
 	/**
 	 * @throws Exceptions\NoValidCountry
 	 * @throws Exceptions\NoValidType
+	 * @throws InvalidArgument
+	 * @throws Error
 	 */
 	private function getExampleNumber(
 		string $country,
@@ -330,6 +340,7 @@ final class Phone
 
 	/**
 	 * @throws Exceptions\NoValidType
+	 * @throws Error
 	 */
 	private function validateType(string $type): int
 	{

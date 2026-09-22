@@ -3,8 +3,10 @@
 namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
+use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 use function array_merge;
 use function array_values;
 use function fopen;
@@ -121,6 +123,8 @@ class Response implements ResponseInterface
 	 *                                    default it will be resolved from it.
 	 *
 	 * @see https://tools.ietf.org/html/rfc7231#section-6
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(
 		int $statusCode,
@@ -143,6 +147,8 @@ class Response implements ResponseInterface
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function withStatus($code, $reasonPhrase = ''): ResponseInterface
 	{
@@ -165,6 +171,8 @@ class Response implements ResponseInterface
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function withProtocolVersion($version): ResponseInterface
 	{
@@ -217,6 +225,8 @@ class Response implements ResponseInterface
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function withHeader($name, $value): ResponseInterface
 	{
@@ -229,6 +239,8 @@ class Response implements ResponseInterface
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function withAddedHeader($name, $value): ResponseInterface
 	{
@@ -276,16 +288,25 @@ class Response implements ResponseInterface
 		return $clone;
 	}
 
+	/**
+	 * @throws RuntimeException
+	 */
 	public static function text(string $text, int $statusCode = 200): ResponseInterface
 	{
 		return new self($statusCode, Stream::fromBodyString($text), ['Content-Type' => 'text/plain']);
 	}
 
+	/**
+	 * @throws RuntimeException
+	 */
 	public static function html(string $html, int $statusCode = 200): ResponseInterface
 	{
 		return new self($statusCode, Stream::fromBodyString($html), ['Content-Type' => 'text/html']);
 	}
 
+	/**
+	 * @throws RuntimeException
+	 */
 	public static function xml(string $xml, int $statusCode = 200): ResponseInterface
 	{
 		return new self($statusCode, Stream::fromBodyString($xml), ['Content-Type' => 'application/xml']);
@@ -297,6 +318,10 @@ class Response implements ResponseInterface
 	 * will be switched off.
 	 *
 	 * @param array<mixed> $data
+	 *
+	 * @throws Exceptions\Runtime
+	 * @throws JsonException
+	 * @throws RuntimeException
 	 */
 	public static function json(array $data, int $statusCode = 200, int $encodeOptions = 0): ResponseInterface
 	{
@@ -310,6 +335,10 @@ class Response implements ResponseInterface
 		return new self($statusCode, Stream::fromBodyString($serialized), ['Content-Type' => 'application/json']);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public static function redirect(string $uri, int $status = 303): ResponseInterface
 	{
 		if ($status < 300 || $status > 399) {
@@ -325,6 +354,10 @@ class Response implements ResponseInterface
 		return new self($status, new Stream($resource), ['Location' => $uri]);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public static function notFound(StreamInterface|null $body = null): ResponseInterface
 	{
 		return new self(404, $body ?? Stream::fromResourceUri('php://temp'));
@@ -332,6 +365,8 @@ class Response implements ResponseInterface
 
 	/**
 	 * @param array<array<string>> $headers
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	private function loadHeaders(array $headers): void
 	{
@@ -342,6 +377,8 @@ class Response implements ResponseInterface
 
 	/**
 	 * @param string|array<string> $value
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	private function setHeader(string $name, string|array $value): void
 	{
@@ -371,6 +408,8 @@ class Response implements ResponseInterface
 
 	/**
 	 * @return array<string>
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	private function validHeaderValues(mixed $headerValues): array
 	{
@@ -387,6 +426,9 @@ class Response implements ResponseInterface
 		return array_values($headerValues);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
 	private function validProtocolVersion(string $version): string
 	{
 		if (!in_array($version, $this->supportedProtocolVersions, true)) {
@@ -401,6 +443,9 @@ class Response implements ResponseInterface
 		return $version;
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
 	private function validStatusCode(int $code): int
 	{
 		if ($code < 100 || $code >= 600) {

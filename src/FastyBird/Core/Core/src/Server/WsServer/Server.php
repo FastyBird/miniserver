@@ -2,11 +2,14 @@
 
 namespace FastyBird\Core\Server\WsServer;
 
+use BadMethodCallException;
+use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
 use Psr\Log;
 use React;
 use React\EventLoop;
+use RuntimeException;
 use Throwable;
 use function parse_url;
 use function property_exists;
@@ -49,6 +52,10 @@ final class Server
 
 	/**
 	 * Run IO server
+	 *
+	 * @throws BadMethodCallException
+	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 */
 	public function create(
 		React\Socket\SocketServer|null $socket = null,

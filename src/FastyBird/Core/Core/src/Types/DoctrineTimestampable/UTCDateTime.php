@@ -6,13 +6,14 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Types;
+use ValueError;
 use function sprintf;
 use function strlen;
 use function strval;
 use function substr;
 
 /**
- * Doctrine phone data type
+ * Doctrine DBAL type that persists DateTime values normalized to UTC
  */
 class UTCDateTime extends Types\DateTimeType
 {
@@ -24,6 +25,7 @@ class UTCDateTime extends Types\DateTimeType
 
 	/**
 	 * @throws Types\ConversionException
+	 * @throws ValueError
 	 */
 	// DBAL 4's DateTimeType::convertToPHPValue() declares ': ?DateTime'. DateTimeInterface|null
 	// is WIDER than that, which is a declaration-time fatal, and because Type::addType()

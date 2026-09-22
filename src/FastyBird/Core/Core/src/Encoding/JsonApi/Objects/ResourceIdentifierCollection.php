@@ -22,6 +22,8 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 
 	/**
 	 * @param array<mixed> $identifiers
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(array $identifiers = [])
 	{
@@ -34,6 +36,8 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 	 * @param array<mixed> $input
 	 *
 	 * @phpstan-return IResourceIdentifierCollection<int, IResourceIdentifierObject>
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public static function create(array $input): IResourceIdentifierCollection
 	{
@@ -56,6 +60,8 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function addMany(array $identifiers): void
 	{
@@ -119,6 +125,9 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 		return true;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function map(array|null $typeMap = null): mixed
 	{
 		$ret = [];

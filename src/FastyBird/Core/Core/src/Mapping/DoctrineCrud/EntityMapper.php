@@ -39,7 +39,7 @@ use function trim;
 use function ucfirst;
 
 /**
- * Doctrine CRUD entity mapper
+ * Maps request values onto an entity's #[Crud]-marked properties, enforcing their required and writable rules
  */
 final class EntityMapper implements IEntityMapper
 {

@@ -8,6 +8,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\SimpleAuth as Mapping;
 use Nette;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
 use ReflectionException;
 use function array_key_exists;
 use function array_reverse;
@@ -21,7 +22,7 @@ use function is_string;
 use function sprintf;
 
 /**
- * Doctrine owner annotation driver
+ * Reads #[Owner] attributes off entity properties and builds their ownership-stamping metadata
  *
  * @template T of object
  */
@@ -64,6 +65,7 @@ final class Owner
 	 * @throws Exceptions\InvalidMapping
 	 * @throws ORM\Mapping\MappingException
 	 * @throws Persistence\Mapping\MappingException
+	 * @throws InvalidArgumentException
 	 * @throws ReflectionException
 	 */
 	public function getObjectConfigurations(Persistence\ObjectManager $objectManager, string $class): array
@@ -125,6 +127,7 @@ final class Owner
 	 *
 	 * @throws Exceptions\InvalidMapping
 	 * @throws ORM\Mapping\MappingException
+	 * @throws InvalidArgumentException
 	 */
 	public function loadMetadataForObjectClass(
 		Persistence\ObjectManager $objectManager,

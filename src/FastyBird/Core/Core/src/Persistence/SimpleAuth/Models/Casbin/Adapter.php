@@ -82,7 +82,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 			->executeQuery();
 
 		while ($row = $stmt->fetchAssociative()) {
-			/** @var array<int, string|null> $row */
+			/** @var array<string, string|null> $row */
 			$this->loadPolicyArray($this->filterRule($row), $model);
 		}
 	}
@@ -112,7 +112,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 		$stmt = $queryBuilder->from($this->policyTableName)->executeQuery();
 
 		while ($row = $stmt->fetchAssociative()) {
-			/** @var array<int, string|null> $row */
+			/** @var array<string, string|null> $row */
 			$line = implode(', ', array_filter($row, static fn ($val) => $val != '' && $val !== null));
 			$this->loadPolicyLine(trim($line), $model);
 		}
@@ -232,6 +232,8 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	/**
 	 * @param array<int, array<int, string|null>> $oldRules
 	 * @param array<int, array<int, string|null>> $newRules
+	 *
+	 * @throws DBAL\Exception
 	 */
 	public function updatePolicies(string $sec, string $pType, array $oldRules, array $newRules): void
 	{
@@ -271,7 +273,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	}
 
 	/**
-	 * @param array<int, string|null> $rule
+	 * @param array<string, string|null> $rule
 	 *
 	 * @return array<int, string>
 	 */
@@ -337,7 +339,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 			$stmt = $queryBuilder->select(...$this->columns)->from($this->policyTableName)->executeQuery();
 
 			while ($row = $stmt->fetchAssociative()) {
-				/** @var array<int, string|null> $row */
+				/** @var array<string, string|null> $row */
 				$removedRules[] = $this->filterRule($row);
 			}
 

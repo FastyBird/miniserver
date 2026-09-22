@@ -76,6 +76,7 @@ final class CharacteristicsController extends BaseController
 	 * @throws InvalidArgumentException
 	 * @throws Utils\JsonException
 	 * @throws ApplicationExceptions\InvalidState
+	 * @throws RuntimeException
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

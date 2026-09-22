@@ -6,7 +6,7 @@ use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud;
 
 /**
- * Doctrine CRUD interface
+ * Interface exposing an entity's creator, updater and deleter as a single unit
  *
  * @template T of Entities\IEntity
  */
