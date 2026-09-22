@@ -17,11 +17,20 @@ INFECTION_CONFIG=tools/infection.json
 # CI was never affected (php-cs and php-phpstan are separate jobs), but this is
 # the target a maintainer runs before pushing, so it is exactly the pre-push gate
 # that did not gate.
+#
+# Order matters while `cs` is deliberately red (see tools/phpcs.xml's ClassConstantTypeHint
+# comment): make stops at the first non-zero recipe line, and `cs` exits 2 on the 214 known
+# findings every time. The cheap, always-green guards -- `layers`, `discriminators`, `naming`
+# -- run first so a maintainer still gets their signal instead of `make qa` dying on the first
+# line and never reaching them. `phpstan` runs before `cs` for the same reason: it is expected
+# to pass, and `cs` -- the one recipe line expected to fail -- runs last so it does not hide
+# the others.
 qa: ## Check code quality - coding style and static analysis
-	make cs
-	make phpstan
 	make layers
+	make discriminators
 	make naming
+	make phpstan
+	make cs
 
 cs: ## Check PHP files coding style
 	mkdir -p var/tools/PHP_CodeSniffer

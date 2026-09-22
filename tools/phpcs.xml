@@ -188,9 +188,10 @@
     </rule>
 
     <!-- The only rule ruleset-8.4 adds over ruleset-8.2 (it arrived in the 8.3 ruleset; 8.4
-         adds nothing further). The repository has 1,636 untyped class constants across 605
-         files and zero typed ones, so it is switched on for Core first and the remaining
-         packages are excluded until E7 of the Core identity refactor reaches them. This list
+         adds nothing further). The repository has 1,633 untyped class constants across 602
+         files and zero typed ones (214 in 39 Core files, 1,419 in 563 files elsewhere), so
+         it is switched on for Core first and the remaining packages are excluded until E7 of
+         the Core identity refactor reaches them. This list
          may only shrink; deleting its last entry deletes the block. -->
     <rule ref="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint">
         <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
