@@ -44,7 +44,7 @@ final class WsServer extends Console\Command\Command
 
 	use Nette\SmartObject;
 
-	public const NAME = 'fb:ws-server:start';
+	public const string NAME = 'fb:ws-server:start';
 
 	/**
 	 * @param array<ExchangeExchange\Factory> $exchangeFactories

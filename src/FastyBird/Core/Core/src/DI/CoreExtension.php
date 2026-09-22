@@ -142,19 +142,19 @@ if (!class_exists('Nette\PhpGenerator\Literal')) {
 class CoreExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbCore';
+	public const string NAME = 'fbCore';
 
-	public const DRIVER_TAG = 'fastybird.application.attribute.driver';
+	public const string DRIVER_TAG = 'fastybird.application.attribute.driver';
 
-	public const CONSUMER_STATE = 'consumer_state';
+	public const string CONSUMER_STATE = 'consumer_state';
 
-	public const CONSUMER_ROUTING_KEY = 'consumer_routing_key';
+	public const string CONSUMER_ROUTING_KEY = 'consumer_routing_key';
 
 	// Wire-level tag string, not a namespace -- Module/Devices (not migrated by this plan)
 	// still produces this exact string at src/FastyBird/Module/Devices/src/DI/DevicesExtension.php,
 	// so the value must stay byte-for-byte what WebSocketsExtension used, not the
 	// fastybird.core.* convention the rest of this file's own tags use.
-	public const TAG_WEBSOCKETS_ROUTES = 'ipub.websockets.routes';
+	public const string TAG_WEBSOCKETS_ROUTES = 'ipub.websockets.routes';
 
 	public static function register(
 		Boot\Configurator $config,

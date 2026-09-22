@@ -14,7 +14,7 @@ interface IResponse
 {
 
 	// HTTP 1.1 response code
-	public const
+	public const int
 		S101_SWITCHING_PROTOCOLS = 101,
 		S200_OK = 200,
 		S400_BAD_REQUEST = 400,

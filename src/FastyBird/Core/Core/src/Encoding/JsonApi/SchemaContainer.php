@@ -35,9 +35,9 @@ use function substr;
 class SchemaContainer extends JsonApi\Schema\SchemaContainer
 {
 
-	private const DOCTRINE_MARKER = '__CG__';
+	private const string DOCTRINE_MARKER = '__CG__';
 
-	private const DOCTRINE_MARKER_LENGTH = 6;
+	private const int DOCTRINE_MARKER_LENGTH = 6;
 
 	public function __construct()
 	{

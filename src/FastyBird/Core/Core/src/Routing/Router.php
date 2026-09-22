@@ -31,11 +31,11 @@ use function strtoupper;
 class Router implements IRouter
 {
 
-	public const ROUTE = '__route__';
+	public const string ROUTE = '__route__';
 
-	public const ROUTING_RESULTS = '__routingResults__';
+	public const string ROUTING_RESULTS = '__routingResults__';
 
-	public const BASE_PATH = '__basePath__';
+	public const string BASE_PATH = '__basePath__';
 
 	private string $basePath = '';
 

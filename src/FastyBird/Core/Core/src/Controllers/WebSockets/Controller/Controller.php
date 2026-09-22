@@ -55,11 +55,11 @@ abstract class Controller implements IController
 	 *
 	 * @internal
 	 */
-	public const ACTION_KEY = 'action';
+	public const string ACTION_KEY = 'action';
 
-	public const SIGNAL_KEY = 'signal';
+	public const string SIGNAL_KEY = 'signal';
 
-	public const DEFAULT_ACTION = 'default';
+	public const string DEFAULT_ACTION = 'default';
 
 	private Application\Request $request;
 

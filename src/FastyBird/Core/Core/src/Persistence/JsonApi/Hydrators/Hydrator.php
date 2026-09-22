@@ -81,7 +81,7 @@ abstract class Hydrator
 
 	use Nette\SmartObject;
 
-	protected const IDENTIFIER_KEY = 'id';
+	protected const string IDENTIFIER_KEY = 'id';
 
 	/**
 	 * Whether the resource has a client generated id

@@ -52,7 +52,7 @@ use function str_replace;
 final class AttributeDriver implements MappingDriver
 {
 
-	private const DOCUMENT_ATTRIBUTE_CLASSES = [
+	private const array DOCUMENT_ATTRIBUTE_CLASSES = [
 		Documents\Mapping\Document::class => 1,
 		Documents\Mapping\MappedSuperclass::class => 2,
 	];

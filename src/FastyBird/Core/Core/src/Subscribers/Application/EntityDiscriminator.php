@@ -37,7 +37,7 @@ use function strtolower;
 class EntityDiscriminator implements Common\EventSubscriber
 {
 
-	private const INHERITANCE_TYPE = ['SINGLE_TABLE', 'JOINED'];
+	private const array INHERITANCE_TYPE = ['SINGLE_TABLE', 'JOINED'];
 
 	/** @var array<string, string> */
 	private static array $discriminators = [];

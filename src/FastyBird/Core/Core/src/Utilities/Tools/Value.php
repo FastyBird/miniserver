@@ -53,11 +53,11 @@ use function strval;
 final class Value
 {
 
-	private const DATE_FORMAT = 'Y-m-d';
+	private const string DATE_FORMAT = 'Y-m-d';
 
-	private const TIME_FORMAT = 'H:i:sP';
+	private const string TIME_FORMAT = 'H:i:sP';
 
-	private const BOOL_TRUE_VALUES = ['true', 't', 'yes', 'y', '1', 'on'];
+	private const array BOOL_TRUE_VALUES = ['true', 't', 'yes', 'y', '1', 'on'];
 
 	/**
 	 * Purpose of this method is to convert value to defined data type

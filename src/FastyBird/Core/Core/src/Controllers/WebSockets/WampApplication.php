@@ -56,23 +56,23 @@ use function uniqid;
 final class WampApplication extends Application implements IWampApplication
 {
 
-	public const MSG_WELCOME = 0;
+	public const int MSG_WELCOME = 0;
 
-	public const MSG_PREFIX = 1;
+	public const int MSG_PREFIX = 1;
 
-	public const MSG_CALL = 2;
+	public const int MSG_CALL = 2;
 
-	public const MSG_CALL_RESULT = 3;
+	public const int MSG_CALL_RESULT = 3;
 
-	public const MSG_CALL_ERROR = 4;
+	public const int MSG_CALL_ERROR = 4;
 
-	public const MSG_SUBSCRIBE = 5;
+	public const int MSG_SUBSCRIBE = 5;
 
-	public const MSG_UNSUBSCRIBE = 6;
+	public const int MSG_UNSUBSCRIBE = 6;
 
-	public const MSG_PUBLISH = 7;
+	public const int MSG_PUBLISH = 7;
 
-	public const MSG_EVENT = 8;
+	public const int MSG_EVENT = 8;
 
 	public array $onPush = [];
 

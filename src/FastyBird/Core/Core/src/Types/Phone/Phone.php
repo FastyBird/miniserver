@@ -32,7 +32,7 @@ class Phone extends Types\StringType
 {
 
 	// Data type name
-	public const PHONE = 'phone';
+	public const string PHONE = 'phone';
 
 	public function getName(): string
 	{

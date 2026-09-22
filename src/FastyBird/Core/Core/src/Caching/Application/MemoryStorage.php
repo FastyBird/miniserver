@@ -26,9 +26,9 @@ class MemoryStorage implements Caching\Storage
 
 	use Nette\SmartObject;
 
-	private const DATA_KEY = 'data';
+	private const string DATA_KEY = 'data';
 
-	private const DEPENDENCIES_KEY = 'dependencies';
+	private const string DEPENDENCIES_KEY = 'dependencies';
 
 	/** @var array<string, array<string, mixed|array<mixed>>> */
 	private array $data = [];

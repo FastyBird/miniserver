@@ -36,7 +36,7 @@ use function sprintf;
 final class ControllerResolver implements IControllerResolver
 {
 
-	private const CALLABLE_PATTERN = '!^([^\:]+)\:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)$!';
+	private const string CALLABLE_PATTERN = '!^([^\:]+)\:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)$!';
 
 	/**
 	 * {@inheritDoc}

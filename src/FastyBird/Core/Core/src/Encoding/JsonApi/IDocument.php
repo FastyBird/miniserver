@@ -27,100 +27,100 @@ interface IDocument
 {
 
 	// Reserved keyword
-	public const KEYWORD_LINKS = 'links';
+	public const string KEYWORD_LINKS = 'links';
 
 	// Reserved keyword
-	public const KEYWORD_HREF = 'href';
+	public const string KEYWORD_HREF = 'href';
 
 	// Reserved keyword
-	public const KEYWORD_RELATIONSHIPS = 'relationships';
+	public const string KEYWORD_RELATIONSHIPS = 'relationships';
 
 	// Reserved keyword
-	public const KEYWORD_SELF = 'self';
+	public const string KEYWORD_SELF = 'self';
 
 	// Reserved keyword
-	public const KEYWORD_FIRST = 'first';
+	public const string KEYWORD_FIRST = 'first';
 
 	// Reserved keyword
-	public const KEYWORD_LAST = 'last';
+	public const string KEYWORD_LAST = 'last';
 
 	// Reserved keyword
-	public const KEYWORD_NEXT = 'next';
+	public const string KEYWORD_NEXT = 'next';
 
 	// Reserved keyword
-	public const KEYWORD_PREV = 'prev';
+	public const string KEYWORD_PREV = 'prev';
 
 	// Reserved keyword
-	public const KEYWORD_RELATED = 'related';
+	public const string KEYWORD_RELATED = 'related';
 
 	// Reserved keyword
-	public const KEYWORD_TYPE = 'type';
+	public const string KEYWORD_TYPE = 'type';
 
 	// Reserved keyword
-	public const KEYWORD_ID = 'id';
+	public const string KEYWORD_ID = 'id';
 
 	// Reserved keyword
-	public const KEYWORD_ATTRIBUTES = 'attributes';
+	public const string KEYWORD_ATTRIBUTES = 'attributes';
 
 	// Reserved keyword
-	public const KEYWORD_META = 'meta';
+	public const string KEYWORD_META = 'meta';
 
 	// Reserved keyword
-	public const KEYWORD_ALIASES = 'aliases';
+	public const string KEYWORD_ALIASES = 'aliases';
 
 	// Reserved keyword
-	public const KEYWORD_PROFILE = 'profile';
+	public const string KEYWORD_PROFILE = 'profile';
 
 	// Reserved keyword
-	public const KEYWORD_DATA = 'data';
+	public const string KEYWORD_DATA = 'data';
 
 	// Reserved keyword
-	public const KEYWORD_INCLUDED = 'included';
+	public const string KEYWORD_INCLUDED = 'included';
 
 	// Reserved keyword
-	public const KEYWORD_JSON_API = 'jsonapi';
+	public const string KEYWORD_JSON_API = 'jsonapi';
 
 	// Reserved keyword
-	public const KEYWORD_VERSION = 'version';
+	public const string KEYWORD_VERSION = 'version';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS = 'errors';
+	public const string KEYWORD_ERRORS = 'errors';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_ID = 'id';
+	public const string KEYWORD_ERRORS_ID = 'id';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_TYPE = 'type';
+	public const string KEYWORD_ERRORS_TYPE = 'type';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_STATUS = 'status';
+	public const string KEYWORD_ERRORS_STATUS = 'status';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_CODE = 'code';
+	public const string KEYWORD_ERRORS_CODE = 'code';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_TITLE = 'title';
+	public const string KEYWORD_ERRORS_TITLE = 'title';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_DETAIL = 'detail';
+	public const string KEYWORD_ERRORS_DETAIL = 'detail';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_META = 'meta';
+	public const string KEYWORD_ERRORS_META = 'meta';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_SOURCE = 'source';
+	public const string KEYWORD_ERRORS_SOURCE = 'source';
 
 	// Reserved keyword
-	public const KEYWORD_ERRORS_ABOUT = 'about';
+	public const string KEYWORD_ERRORS_ABOUT = 'about';
 
 	// Reserved keyword
-	public const KEYWORD_POINTER = 'pointer';
+	public const string KEYWORD_POINTER = 'pointer';
 
 	// Reserved keyword
-	public const KEYWORD_PARAMETER = 'parameter';
+	public const string KEYWORD_PARAMETER = 'parameter';
 
 	// Include path separator
-	public const PATH_SEPARATOR = '.';
+	public const string PATH_SEPARATOR = '.';
 
 	public function hasResource(): bool;
 
