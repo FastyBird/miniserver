@@ -7,9 +7,6 @@ use Override;
 
 /**
  * Controller request
- *
- * @property string $controllerName
- * @property array $parameters
  */
 final class Request implements IRequest
 {

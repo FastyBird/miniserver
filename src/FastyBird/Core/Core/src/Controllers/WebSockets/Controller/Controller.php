@@ -35,9 +35,6 @@ use const PREG_SPLIT_NO_EMPTY;
 
 /**
  * WebSockets application controller interface
- *
- * @property-read stdClass $payload
- * @property-read NS\User $user
  */
 abstract class Controller implements IController
 {
