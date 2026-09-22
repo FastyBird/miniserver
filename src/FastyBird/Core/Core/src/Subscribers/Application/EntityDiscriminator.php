@@ -6,6 +6,7 @@ use Doctrine\Common;
 use Doctrine\ORM;
 use FastyBird\Core\Entities\Application as Entities;
 use FastyBird\Core\Exceptions;
+use Override;
 use ReflectionClass;
 use function array_keys;
 use function end;
@@ -15,7 +16,7 @@ use function sprintf;
 use function str_contains;
 use function strtolower;
 
-class EntityDiscriminator implements Common\EventSubscriber
+final class EntityDiscriminator implements Common\EventSubscriber
 {
 
 	private const array INHERITANCE_TYPE = ['SINGLE_TABLE', 'JOINED'];
@@ -26,6 +27,7 @@ class EntityDiscriminator implements Common\EventSubscriber
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

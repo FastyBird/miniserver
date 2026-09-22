@@ -5,6 +5,7 @@ namespace FastyBird\Core\Security\SimpleAuth;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions;
 use Lcobucci\JWT;
+use Override;
 use Ramsey\Uuid;
 use function is_array;
 use function is_string;
@@ -12,13 +13,14 @@ use function is_string;
 /**
  * Application plain identity factory
  */
-class IdentityFactory implements IIdentityFactory
+final class IdentityFactory implements IIdentityFactory
 {
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function create(JWT\UnencryptedToken $token): IIdentity|null
 	{
 		$claims = $token->claims();

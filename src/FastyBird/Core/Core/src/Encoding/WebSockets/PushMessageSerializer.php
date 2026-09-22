@@ -9,7 +9,7 @@ use Symfony\Component\Serializer;
 /**
  * Push message data serializer
  */
-class PushMessageSerializer
+final class PushMessageSerializer
 {
 
 	/**

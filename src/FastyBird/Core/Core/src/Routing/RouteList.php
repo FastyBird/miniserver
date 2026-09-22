@@ -7,6 +7,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use Nette;
 use Nette\Utils;
+use Override;
 use function array_keys;
 use function assert;
 use function is_array;
@@ -17,7 +18,7 @@ use function substr;
 /**
  * WebSockets routes list
  */
-class RouteList extends Utils\ArrayList implements IWampRouter
+final class RouteList extends Utils\ArrayList implements IWampRouter
 {
 
 	private array $cachedRoutes;
@@ -32,6 +33,7 @@ class RouteList extends Utils\ArrayList implements IWampRouter
 	/**
 	 * Maps HTTP request to a application Request object
 	 */
+	#[Override]
 	public function match(Http\IRequest $httpRequest): Application\Request|null
 	{
 		foreach ($this as $route) {
@@ -55,6 +57,7 @@ class RouteList extends Utils\ArrayList implements IWampRouter
 	/**
 	 * Constructs absolute URL from Request object
 	 */
+	#[Override]
 	public function constructUrl(Application\IRequest $appRequest): string|null
 	{
 		if ($this->cachedRoutes === null) {
@@ -95,6 +98,7 @@ class RouteList extends Utils\ArrayList implements IWampRouter
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\OutOfRangeException
 	 */
+	#[Override]
 	public function offsetSet(mixed $index, mixed $route): void
 	{
 		if (!$route instanceof IWampRouter) {

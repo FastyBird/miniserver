@@ -5,6 +5,7 @@ namespace FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Schemas\JsonApi as Schemas;
 use Neomerx\JsonApi;
+use Override;
 use function interface_exists;
 use function strrpos;
 use function substr;
@@ -14,7 +15,7 @@ use function substr;
  *
  * @template     T of object
  */
-class SchemaContainer extends JsonApi\Schema\SchemaContainer
+final class SchemaContainer extends JsonApi\Schema\SchemaContainer
 {
 
 	private const string DOCTRINE_MARKER = '__CG__';
@@ -55,6 +56,7 @@ class SchemaContainer extends JsonApi\Schema\SchemaContainer
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function getResourceType($resource): string
 	{
 		if (

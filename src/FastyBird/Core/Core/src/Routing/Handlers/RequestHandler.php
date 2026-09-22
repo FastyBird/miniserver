@@ -2,13 +2,14 @@
 
 namespace FastyBird\Core\Routing\Handlers;
 
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * PSR-15 RequestHandler invocation strategy
  */
-class RequestHandler implements IRequestHandler
+final class RequestHandler implements IRequestHandler
 {
 
 	public function __construct(private bool $appendRouteArgumentsToRequestAttributes = false)
@@ -18,6 +19,7 @@ class RequestHandler implements IRequestHandler
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function __invoke(
 		callable $callable,
 		ServerRequestInterface $request,

@@ -4,6 +4,7 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 
 use ArrayIterator;
 use FastyBird\Core\Exceptions;
+use Override;
 use SplObjectStorage;
 use function array_map;
 use function iterator_to_array;
@@ -11,7 +12,7 @@ use function iterator_to_array;
 /**
  * Standard objects collection
  */
-class StandardObjectCollection implements IStandardObjectCollection
+final class StandardObjectCollection implements IStandardObjectCollection
 {
 
 	/** @phpstan-var SplObjectStorage<IStandardObject, null> */
@@ -53,6 +54,7 @@ class StandardObjectCollection implements IStandardObjectCollection
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addMany(array $objects): void
 	{
 		foreach ($objects as $object) {
@@ -64,6 +66,7 @@ class StandardObjectCollection implements IStandardObjectCollection
 		}
 	}
 
+	#[Override]
 	public function add(IStandardObject $object): void
 	{
 		if (!$this->has($object)) {
@@ -71,6 +74,7 @@ class StandardObjectCollection implements IStandardObjectCollection
 		}
 	}
 
+	#[Override]
 	public function has(IStandardObject $object): bool
 	{
 		return $this->stack->offsetExists($object);
@@ -81,6 +85,7 @@ class StandardObjectCollection implements IStandardObjectCollection
 	 *
 	 * @phpstan-return ArrayIterator<int, IStandardObject<string, mixed>>
 	 */
+	#[Override]
 	public function getIterator(): ArrayIterator
 	{
 		return new ArrayIterator($this->getAll());
@@ -89,16 +94,19 @@ class StandardObjectCollection implements IStandardObjectCollection
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getAll(): array
 	{
 		return iterator_to_array($this->stack);
 	}
 
+	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack->count() === 0;
 	}
 
+	#[Override]
 	public function count(): int
 	{
 		return $this->stack->count();

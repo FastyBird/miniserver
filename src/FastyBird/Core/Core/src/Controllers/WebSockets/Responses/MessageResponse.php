@@ -3,11 +3,12 @@
 namespace FastyBird\Core\Controllers\WebSockets\Responses;
 
 use Nette;
+use Override;
 
 /**
  * Simple data response only for own handled message
  */
-class MessageResponse implements IResponse
+final class MessageResponse implements IResponse
 {
 
 	/**
@@ -22,6 +23,7 @@ class MessageResponse implements IResponse
 	{
 	}
 
+	#[Override]
 	public function create(): array|null
 	{
 		return $this->data;
@@ -30,6 +32,7 @@ class MessageResponse implements IResponse
 	/**
 	 * @throws Nette\Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Nette\Utils\Json::encode($this->create());

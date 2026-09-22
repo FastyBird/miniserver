@@ -5,6 +5,7 @@ namespace FastyBird\Core\Server\WsServer;
 use Exception;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
+use Override;
 use SimpleXMLElement;
 use Throwable;
 use TypeError;
@@ -86,6 +87,7 @@ final class FlashWrapper implements IWrapper
 		$this->cacheValid = false;
 	}
 
+	#[Override]
 	public function handleOpen(Entities\IClient $client): void
 	{
 		// The Flash policy file is served entirely from handleMessage()
@@ -96,6 +98,7 @@ final class FlashWrapper implements IWrapper
 	 * @throws Exception
 	 * @throws TypeError
 	 */
+	#[Override]
 	public function handleMessage(Entities\IClient $client, string $message): void
 	{
 		if (!$this->cacheValid) {
@@ -107,11 +110,13 @@ final class FlashWrapper implements IWrapper
 		$client->getConnection()->end();
 	}
 
+	#[Override]
 	public function handleClose(Entities\IClient $client): void
 	{
 		// The connection is already closed by handleMessage() after the policy is sent
 	}
 
+	#[Override]
 	public function handleError(Entities\IClient $client, Throwable $ex): void
 	{
 		$client->getConnection()->end();

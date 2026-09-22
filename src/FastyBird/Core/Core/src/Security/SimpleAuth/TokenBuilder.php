@@ -14,7 +14,7 @@ use function assert;
 /**
  * JW token builder
  */
-final class TokenBuilder
+final readonly class TokenBuilder
 {
 
 	use Nette\SmartObject;

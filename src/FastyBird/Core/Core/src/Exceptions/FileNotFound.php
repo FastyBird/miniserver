@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use RuntimeException;
 
-class FileNotFound extends RuntimeException implements Exception
+final class FileNotFound extends RuntimeException implements Exception
 {
 
 }

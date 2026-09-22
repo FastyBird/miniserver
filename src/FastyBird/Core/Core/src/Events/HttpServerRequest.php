@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * HTTP server PSR-7 request event
  */
-class HttpServerRequest extends EventDispatcher\Event
+final class HttpServerRequest extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly ServerRequestInterface $request)

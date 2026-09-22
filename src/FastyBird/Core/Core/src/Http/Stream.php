@@ -4,6 +4,7 @@ namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as SlimRouterExceptions;
+use Override;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 use function fclose;
@@ -24,7 +25,7 @@ use const SEEK_SET;
 /**
  * Basic http response resource
  */
-class Stream implements StreamInterface
+final class Stream implements StreamInterface
 {
 
 	/** @var array<mixed>|null */
@@ -86,6 +87,7 @@ class Stream implements StreamInterface
 		return $stream;
 	}
 
+	#[Override]
 	public function close(): void
 	{
 		$resource = $this->detach();
@@ -98,6 +100,7 @@ class Stream implements StreamInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function detach()
 	{
 		if ($this->resource === null) {
@@ -115,6 +118,7 @@ class Stream implements StreamInterface
 		return $resource;
 	}
 
+	#[Override]
 	public function getSize(): int|null
 	{
 		if ($this->resource === null) {
@@ -126,6 +130,7 @@ class Stream implements StreamInterface
 		return $fileInfo !== false ? $fileInfo['size'] : null;
 	}
 
+	#[Override]
 	public function tell(): int
 	{
 		if ($this->resource === null) {
@@ -141,11 +146,13 @@ class Stream implements StreamInterface
 		return $position;
 	}
 
+	#[Override]
 	public function eof(): bool
 	{
 		return $this->resource !== null ? feof($this->resource) : true;
 	}
 
+	#[Override]
 	public function isSeekable(): bool
 	{
 		if ($this->seekable !== null) {
@@ -158,6 +165,7 @@ class Stream implements StreamInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function seek($offset, $whence = SEEK_SET): void
 	{
 		if ($this->resource === null) {
@@ -175,6 +183,7 @@ class Stream implements StreamInterface
 		}
 	}
 
+	#[Override]
 	public function rewind(): void
 	{
 		$this->seek(0);
@@ -183,6 +192,7 @@ class Stream implements StreamInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function isWritable()
 	{
 		if ($this->writable !== null) {
@@ -198,6 +208,7 @@ class Stream implements StreamInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function write($string)
 	{
 		if ($this->resource === null) {
@@ -220,6 +231,7 @@ class Stream implements StreamInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function isReadable()
 	{
 		if ($this->readable !== null) {
@@ -234,6 +246,7 @@ class Stream implements StreamInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function read($length)
 	{
 		if ($this->resource === null) {
@@ -256,6 +269,7 @@ class Stream implements StreamInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getContents()
 	{
 		if ($this->resource === null) {
@@ -278,6 +292,7 @@ class Stream implements StreamInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getMetadata($key = null)
 	{
 		if ($this->resource === null) {
@@ -292,6 +307,7 @@ class Stream implements StreamInterface
 	/**
 	 * @throws RuntimeException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		try {

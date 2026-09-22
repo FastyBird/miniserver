@@ -2,18 +2,20 @@
 
 namespace FastyBird\Core\Routing\Handlers;
 
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Default route callback strategy with route parameters as an array of arguments.
  */
-class RequestResponseHandler implements IHandler
+final class RequestResponseHandler implements IHandler
 {
 
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function __invoke(
 		callable $callable,
 		ServerRequestInterface $request,

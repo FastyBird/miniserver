@@ -9,7 +9,7 @@ use Neomerx\JsonApi as NeomerxJsonApi;
 /**
  * Process multiple error
  */
-class JsonApiMultipleError extends PHPException implements JsonApi
+final class JsonApiMultipleError extends PHPException implements JsonApi
 {
 
 	/** @var array<NeomerxJsonApi\Schema\Error> */

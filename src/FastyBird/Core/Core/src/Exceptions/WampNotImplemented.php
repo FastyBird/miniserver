@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use Nette;
 
-class WampNotImplemented extends Nette\NotImplementedException implements Exception
+final class WampNotImplemented extends Nette\NotImplementedException implements Exception
 {
 
 }

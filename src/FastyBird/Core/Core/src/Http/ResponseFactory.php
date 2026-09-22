@@ -4,19 +4,21 @@ namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Basic http response factory
  */
-class ResponseFactory implements ResponseFactoryInterface
+final class ResponseFactory implements ResponseFactoryInterface
 {
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function createResponse(
 		int $code = StatusCodeInterface::STATUS_OK,
 		string $reasonPhrase = '',

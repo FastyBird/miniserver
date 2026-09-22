@@ -17,7 +17,7 @@ use function is_string;
 /**
  * JW token validator
  */
-final class TokenValidator
+final readonly class TokenValidator
 {
 
 	use Nette\SmartObject;

@@ -8,6 +8,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use Nette;
 use Nette\Utils;
+use Override;
 use function array_flip;
 use function array_key_exists;
 use function array_pop;
@@ -45,7 +46,7 @@ use function ucwords;
 /**
  * The bidirectional WAMP router for a single route mask
  */
-class WampRoute implements IWampRouter
+final class WampRoute implements IWampRouter
 {
 
 	/**
@@ -201,6 +202,7 @@ class WampRoute implements IWampRouter
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function match(Http\IRequest $httpRequest): Application\Request|null
 	{
 		// Combine with precedence: mask (params in URL-path), fixity, query, (post,) defaults
@@ -320,6 +322,7 @@ class WampRoute implements IWampRouter
 	/**
 	 * Constructs absolute URL from Request object
 	 */
+	#[Override]
 	public function constructUrl(Application\IRequest $appRequest): string|null
 	{
 		$params = $appRequest->getParameters();
@@ -510,7 +513,7 @@ class WampRoute implements IWampRouter
 			$matches = Utils\Strings::matchAll($parts[$i - 1], '/(?:([a-zA-Z0-9_.-]+)=)?<([^> ]+) *([^>]*)>/');
 
 			foreach ($matches as [, $param, $name, $pattern]) { // $pattern is not used
-				$meta = static::$styles['?' . $name] ?? static::$styles['?#'];
+				$meta = self::$styles['?' . $name] ?? self::$styles['?#'];
 
 				if (isset($metadata[$name])) {
 					$meta = $metadata[$name] + $meta;
@@ -598,7 +601,7 @@ class WampRoute implements IWampRouter
 			}
 
 			// pattern, condition & metadata
-			$meta = static::$styles[$name] ?? static::$styles['#'];
+			$meta = self::$styles[$name] ?? self::$styles['#'];
 
 			if (isset($metadata[$name])) {
 				$meta = $metadata[$name] + $meta;

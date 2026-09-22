@@ -7,6 +7,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Nette;
 use Nette\Utils;
+use Override;
 use ReflectionClass;
 use ReflectionException;
 use Reflector;
@@ -32,7 +33,7 @@ use const PREG_SPLIT_NO_EMPTY;
 /**
  * Presenter & component annotation access checker
  */
-final class AnnotationChecker implements Checker, CheckRequirements
+final readonly class AnnotationChecker implements Checker, CheckRequirements
 {
 
 	/**
@@ -82,6 +83,7 @@ final class AnnotationChecker implements Checker, CheckRequirements
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function isAllowed(mixed $element): bool
 	{
 		assert($element instanceof Reflector);

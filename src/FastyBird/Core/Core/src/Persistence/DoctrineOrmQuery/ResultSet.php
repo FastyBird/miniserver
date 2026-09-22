@@ -10,6 +10,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use IteratorAggregate;
 use Nette\Utils;
+use Override;
 use function func_get_args;
 use function implode;
 use function is_array;
@@ -305,6 +306,7 @@ final class ResultSet implements Countable, IteratorAggregate
 	 *
 	 * @phpstan-return ArrayIterator<int, TEntityClass>
 	 */
+	#[Override]
 	public function getIterator(
 		int $hydrationMode = ORM\AbstractQuery::HYDRATE_OBJECT,
 	): ArrayIterator
@@ -336,6 +338,7 @@ final class ResultSet implements Countable, IteratorAggregate
 	/**
 	 * @throws Exception
 	 */
+	#[Override]
 	public function count(): int
 	{
 		return $this->getIterator()->count();

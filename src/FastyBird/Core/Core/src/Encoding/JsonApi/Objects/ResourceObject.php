@@ -5,12 +5,13 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use function is_string;
 
 /**
  * Resource
  */
-class ResourceObject implements IResourceObject
+final class ResourceObject implements IResourceObject
 {
 
 	private IResourceIdentifierObject $identifier;
@@ -34,16 +35,19 @@ class ResourceObject implements IResourceObject
 		$this->identifier = new ResourceIdentifierObject($data);
 	}
 
+	#[Override]
 	public function getId(): string|null
 	{
 		return $this->identifier->getId();
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return $this->identifier->getType();
 	}
 
+	#[Override]
 	public function hasAttributes(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_ATTRIBUTES);
@@ -52,6 +56,7 @@ class ResourceObject implements IResourceObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getAttributes(): Objects\IStandardObject
 	{
 		$data = $this->data->get(JsonApi\IDocument::KEYWORD_ATTRIBUTES);
@@ -63,6 +68,7 @@ class ResourceObject implements IResourceObject
 		return $data;
 	}
 
+	#[Override]
 	public function hasRelationships(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_RELATIONSHIPS);
@@ -72,6 +78,7 @@ class ResourceObject implements IResourceObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationships(): IRelationshipObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_RELATIONSHIPS);
@@ -83,6 +90,7 @@ class ResourceObject implements IResourceObject
 		return RelationshipObjectCollection::create($raw);
 	}
 
+	#[Override]
 	public function hasLinks(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_LINKS);
@@ -92,6 +100,7 @@ class ResourceObject implements IResourceObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getLinks(): ILinkObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_LINKS);
@@ -103,6 +112,7 @@ class ResourceObject implements IResourceObject
 		return LinkObjectCollection::create($raw);
 	}
 
+	#[Override]
 	public function hasMeta(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_META);
@@ -112,6 +122,7 @@ class ResourceObject implements IResourceObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getMeta(): IMetaObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_META);

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Persistence\SimpleAuth\Models\Casbin;
 
-class Filter
+final readonly class Filter
 {
 
 	/**

@@ -10,6 +10,7 @@ use FastyBird\Core\Http;
 use FastyBird\Core\Routing as Router;
 use FastyBird\Core\Server\WsServer as Server;
 use Nette;
+use Override;
 use Psr\Log;
 use Throwable;
 use function array_merge;
@@ -54,6 +55,7 @@ abstract class Application implements IApplication
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
+	#[Override]
 	public function handleOpen(Entities\IClient $client, Http\IRequest $httpRequest): void
 	{
 		$this->logger->info(sprintf('New connection! (%s)', $client->getId()));
@@ -61,6 +63,7 @@ abstract class Application implements IApplication
 		$this->onOpen($this, $client, $httpRequest);
 	}
 
+	#[Override]
 	public function handleClose(Entities\IClient $client, Http\IRequest $httpRequest): void
 	{
 		$this->onClose($this, $client, $httpRequest);
@@ -73,6 +76,7 @@ abstract class Application implements IApplication
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function handleError(Entities\IClient $client, Http\IRequest $httpRequest, Throwable $ex): void
 	{
 		$this->logger->info(sprintf('An error (%s) has occurred: %s', $ex->getCode(), $ex->getMessage()));
@@ -89,6 +93,7 @@ abstract class Application implements IApplication
 		}
 	}
 
+	#[Override]
 	public function handleMessage(Entities\IClient $from, Http\IRequest $httpRequest, string $message): void
 	{
 		$this->onMessage($this, $from, $httpRequest, $message);

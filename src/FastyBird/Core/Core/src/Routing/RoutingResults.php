@@ -4,7 +4,7 @@ namespace FastyBird\Core\Routing;
 
 use function rawurldecode;
 
-class RoutingResults
+final class RoutingResults
 {
 
 	public const int NOT_FOUND = 0;

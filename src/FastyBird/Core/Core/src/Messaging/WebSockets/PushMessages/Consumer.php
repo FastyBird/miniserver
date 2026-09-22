@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Messaging\WebSockets\PushMessages;
 
 use Nette;
+use Override;
 
 /**
  * Server push consumer
@@ -19,6 +20,7 @@ abstract class Consumer implements IConsumer
 	{
 	}
 
+	#[Override]
 	public function getName(): string
 	{
 		return $this->name;

@@ -10,7 +10,7 @@ use function get_object_vars;
 use function is_array;
 use function property_exists;
 
-class Obj
+final class Obj
 {
 
 	/**
@@ -35,13 +35,13 @@ class Obj
 		$value = $data->{$key};
 
 		if ($value instanceof IStandardObject || $value instanceof stdClass) {
-			return static::cast($value);
+			return self::cast($value);
 		} elseif (is_array($value)) {
 			$mapped = [];
 
 			foreach ($value as $fieldKey => $field) {
 				$mapped[$fieldKey] = $field instanceof IStandardObject || $field instanceof stdClass
-					? static::cast($field)
+					? self::cast($field)
 					: $field;
 			}
 
@@ -65,7 +65,7 @@ class Obj
 
 		foreach (array_keys(get_object_vars($copy)) as $key) {
 			if ($data->{$key} instanceof stdClass) {
-				$copy->{$key} = static::replicate($data->{$key});
+				$copy->{$key} = self::replicate($data->{$key});
 			}
 		}
 
@@ -88,11 +88,11 @@ class Obj
 
 		if (is_array($data)) {
 			foreach ($data as $key => $value) {
-				yield $key => $value instanceof stdClass ? static::cast($value) : $value;
+				yield $key => $value instanceof stdClass ? self::cast($value) : $value;
 			}
 		} else {
 			foreach (array_keys(get_object_vars($data)) as $key) {
-				yield $key => $data->{$key} instanceof stdClass ? static::cast($data->{$key}) : $data->{$key};
+				yield $key => $data->{$key} instanceof stdClass ? self::cast($data->{$key}) : $data->{$key};
 			}
 		}
 	}
@@ -115,12 +115,12 @@ class Obj
 
 		if (is_array($data)) {
 			foreach ($data as $key => $value) {
-				$arr[$key] = ($value instanceof stdClass || is_array($value)) ? static::toArray($value) : $value;
+				$arr[$key] = ($value instanceof stdClass || is_array($value)) ? self::toArray($value) : $value;
 			}
 		} else {
 			foreach (array_keys(get_object_vars($data)) as $key) {
 				$arr[$key] = ($data->{$key} instanceof stdClass || is_array($data->{$key}))
-					? static::toArray($data->{$key})
+					? self::toArray($data->{$key})
 					: $data->{$key};
 			}
 		}

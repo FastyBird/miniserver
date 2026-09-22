@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Encoding\WebSockets;
 
+use Override;
 use function extension_loaded;
 use function iconv;
 use function mb_check_encoding;
@@ -444,6 +445,7 @@ final class Validator implements IValidator
 		$this->hasIconv = extension_loaded('iconv');
 	}
 
+	#[Override]
 	public function checkEncoding(string $str, string $against): bool
 	{
 		if ($against === 'UTF-8') {

@@ -11,7 +11,7 @@ use function assert;
 /**
  * Reads a property's #[Crud] attribute to determine whether it is required and/or writable
  */
-class CrudReader
+final class CrudReader
 {
 
 	/**

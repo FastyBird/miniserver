@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
 use FastyBird\Core\Types\SimpleAuth as Types;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -166,6 +167,7 @@ abstract class Token implements DoctrineCrud\IEntity
 		return $this->token;
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->getToken();

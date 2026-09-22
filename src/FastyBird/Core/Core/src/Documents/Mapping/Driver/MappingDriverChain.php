@@ -4,6 +4,7 @@ namespace FastyBird\Core\Documents\Mapping\Driver;
 
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
+use Override;
 use function array_keys;
 use function implode;
 use function spl_object_hash;
@@ -52,6 +53,7 @@ final class MappingDriverChain implements MappingDriver
 	 *
 	 * @throws Exceptions\Logic
 	 */
+	#[Override]
 	public function loadMetadataForClass(Documents\Mapping\ClassMetadata $metadata): void
 	{
 		foreach ($this->drivers as $namespace => $driver) {
@@ -82,6 +84,7 @@ final class MappingDriverChain implements MappingDriver
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function getAllClassNames(): array
 	{
 		$classNames = [];
@@ -118,6 +121,7 @@ final class MappingDriverChain implements MappingDriver
 	 *
 	 * @param class-string $className
 	 */
+	#[Override]
 	public function isTransient(string $className): bool
 	{
 		foreach ($this->drivers as $namespace => $driver) {

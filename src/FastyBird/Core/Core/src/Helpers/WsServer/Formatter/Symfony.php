@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Helpers\WsServer\Formatter;
 
+use Override;
 use Symfony\Component\Console;
 
 /**
@@ -14,21 +15,25 @@ final class Symfony implements IFormatter
 	{
 	}
 
+	#[Override]
 	public function error(string $message): void
 	{
 		$this->output->error($message);
 	}
 
+	#[Override]
 	public function warning(string $message): void
 	{
 		$this->output->warning($message);
 	}
 
+	#[Override]
 	public function note(string $message): void
 	{
 		$this->output->note($message);
 	}
 
+	#[Override]
 	public function caution(string $message): void
 	{
 		$this->output->caution($message);

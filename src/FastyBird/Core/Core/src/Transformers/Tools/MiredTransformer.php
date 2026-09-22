@@ -2,13 +2,14 @@
 
 namespace FastyBird\Core\Transformers\Tools;
 
+use Override;
 use function array_key_exists;
 use function round;
 
 /**
  * Light temperature in mired transformer
  */
-final class MiredTransformer implements Transformer
+final readonly class MiredTransformer implements Transformer
 {
 
 	private const array LOOKUP_TABLE = [ // <MIRED => [SATURATION, HUE]>
@@ -449,6 +450,7 @@ final class MiredTransformer implements Transformer
 		return new HsbTransformer(round($hue ?? 0), round($saturation ?? 0), $this->getBrightness());
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

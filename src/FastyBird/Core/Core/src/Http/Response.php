@@ -4,6 +4,7 @@ namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
 use JsonException;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
@@ -140,6 +141,7 @@ class Response implements ResponseInterface
 		$this->loadHeaders($headers);
 	}
 
+	#[Override]
 	public function getStatusCode(): int
 	{
 		return $this->status;
@@ -150,6 +152,7 @@ class Response implements ResponseInterface
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function withStatus($code, $reasonPhrase = ''): ResponseInterface
 	{
 		$clone = clone $this;
@@ -159,11 +162,13 @@ class Response implements ResponseInterface
 		return $clone;
 	}
 
+	#[Override]
 	public function getReasonPhrase(): string
 	{
 		return $this->reason;
 	}
 
+	#[Override]
 	public function getProtocolVersion(): string
 	{
 		return $this->version;
@@ -174,6 +179,7 @@ class Response implements ResponseInterface
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function withProtocolVersion($version): ResponseInterface
 	{
 		$clone = clone $this;
@@ -185,6 +191,7 @@ class Response implements ResponseInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getHeaders(): array
 	{
 		return $this->headers ?? [];
@@ -193,6 +200,7 @@ class Response implements ResponseInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function hasHeader($name): bool
 	{
 		return isset($this->headerNames[strtolower($name)]);
@@ -201,6 +209,7 @@ class Response implements ResponseInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getHeader($name): array
 	{
 		if (!$this->hasHeader($name)) {
@@ -216,6 +225,7 @@ class Response implements ResponseInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getHeaderLine($name): string
 	{
 		$header = $this->getHeader($name);
@@ -228,6 +238,7 @@ class Response implements ResponseInterface
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function withHeader($name, $value): ResponseInterface
 	{
 		$clone = clone $this;
@@ -242,6 +253,7 @@ class Response implements ResponseInterface
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function withAddedHeader($name, $value): ResponseInterface
 	{
 		if (!$this->hasHeader($name)) {
@@ -267,6 +279,7 @@ class Response implements ResponseInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function withoutHeader($name): ResponseInterface
 	{
 		$clone = clone $this;
@@ -275,11 +288,13 @@ class Response implements ResponseInterface
 		return $clone;
 	}
 
+	#[Override]
 	public function getBody(): StreamInterface
 	{
 		return $this->body;
 	}
 
+	#[Override]
 	public function withBody(StreamInterface $body): ResponseInterface
 	{
 		$clone = clone $this;

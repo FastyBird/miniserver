@@ -7,6 +7,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Nette\Utils;
+use Override;
 use TypeError;
 use ValueError;
 use function count;
@@ -197,6 +198,7 @@ final class CombinedEnumItem
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return implode('|', $this->toArray());

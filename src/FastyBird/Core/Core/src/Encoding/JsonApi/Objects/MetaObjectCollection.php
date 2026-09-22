@@ -5,6 +5,7 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 use ArrayIterator;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use Traversable;
 use function array_key_exists;
 use function array_keys;
@@ -17,7 +18,7 @@ use function sprintf;
 /**
  * Meta object collection
  */
-class MetaObjectCollection implements IMetaObjectCollection
+final class MetaObjectCollection implements IMetaObjectCollection
 {
 
 	/**
@@ -66,6 +67,7 @@ class MetaObjectCollection implements IMetaObjectCollection
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addMany(array $meta): void
 	{
 		foreach ($meta as $key => $item) {
@@ -77,6 +79,7 @@ class MetaObjectCollection implements IMetaObjectCollection
 		}
 	}
 
+	#[Override]
 	public function add(IMetaObject $meta, string $key): void
 	{
 		if (!$this->has($key)) {
@@ -87,6 +90,7 @@ class MetaObjectCollection implements IMetaObjectCollection
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function get(string $key): IMetaObject
 	{
 		if (!$this->has($key)) {
@@ -96,6 +100,7 @@ class MetaObjectCollection implements IMetaObjectCollection
 		return $this->stack[$key];
 	}
 
+	#[Override]
 	public function has(string $key): bool
 	{
 		return array_key_exists($key, $this->stack);
@@ -106,6 +111,7 @@ class MetaObjectCollection implements IMetaObjectCollection
 	 *
 	 * @phpstan-return ArrayIterator<string, IMetaObject>
 	 */
+	#[Override]
 	public function getIterator(): ArrayIterator
 	{
 		return new ArrayIterator($this->stack);
@@ -114,6 +120,7 @@ class MetaObjectCollection implements IMetaObjectCollection
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getAll(): Traversable
 	{
 		foreach (array_keys($this->stack) as $key) {
@@ -121,11 +128,13 @@ class MetaObjectCollection implements IMetaObjectCollection
 		}
 	}
 
+	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];
 	}
 
+	#[Override]
 	public function count(): int
 	{
 		return count($this->stack);

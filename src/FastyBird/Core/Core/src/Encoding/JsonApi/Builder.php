@@ -28,7 +28,7 @@ use const JSON_PRETTY_PRINT;
 /**
  * {JSON:API} formatting output handling middleware
  */
-class Builder
+final readonly class Builder
 {
 
 	private const string LINK_SELF = Contracts\Schema\DocumentInterface::KEYWORD_SELF;

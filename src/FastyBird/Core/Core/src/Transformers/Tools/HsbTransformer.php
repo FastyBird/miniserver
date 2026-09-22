@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Transformers\Tools;
 
+use Override;
 use function abs;
 use function floor;
 use function intval;
@@ -184,6 +185,7 @@ final readonly class HsbTransformer implements Transformer
 		return new MiredTransformer(intval(round(1_000_000 / $temperature)), $this->getBrightness());
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

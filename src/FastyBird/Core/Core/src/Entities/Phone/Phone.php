@@ -7,6 +7,7 @@ use FastyBird\Core\Services\Phone\Phone as PhoneHelper;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
 use Nette;
+use Override;
 use function ctype_alpha;
 use function in_array;
 use function sprintf;
@@ -16,7 +17,7 @@ use function strtoupper;
 /**
  * Phone number entity
  */
-class Phone
+final class Phone
 {
 
 	use Nette\SmartObject;
@@ -345,6 +346,7 @@ class Phone
 		return in_array($timeZone, $this->timeZones, true);
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return (string) $this->rawOutput;

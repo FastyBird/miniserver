@@ -15,7 +15,7 @@ use Nette\Utils;
  * @template   T of Entities\IEntity
  * @extends    Crud\CrudManager<T>
  */
-class EntityDeleter extends Crud\CrudManager
+final class EntityDeleter extends Crud\CrudManager
 {
 
 	/** @var array<callable(Entities\IEntity): void> */

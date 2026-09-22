@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Middleware\SlimRouter;
 
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -10,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * Router middleware dispatcher
  */
-class MiddlewareDispatcher implements IMiddlewareDispatcher
+final class MiddlewareDispatcher implements IMiddlewareDispatcher
 {
 
 	/**
@@ -23,16 +24,19 @@ class MiddlewareDispatcher implements IMiddlewareDispatcher
 		$this->seedMiddlewareStack($kernel);
 	}
 
+	#[Override]
 	public function seedMiddlewareStack(RequestHandlerInterface $kernel): void
 	{
 		$this->tip = $kernel;
 	}
 
+	#[Override]
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 		return $this->tip->handle($request);
 	}
 
+	#[Override]
 	public function add(MiddlewareInterface $middleware): void
 	{
 		$next = $this->tip;

@@ -6,6 +6,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Routing;
 use FastyBird\Core\Security\SimpleAuth\Access;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -20,7 +21,7 @@ use function is_string;
 /**
  * Access check middleware
  */
-final class Authorization implements MiddlewareInterface
+final readonly class Authorization implements MiddlewareInterface
 {
 
 	public function __construct(
@@ -34,6 +35,7 @@ final class Authorization implements MiddlewareInterface
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function process(
 		ServerRequestInterface $request,
 		RequestHandlerInterface $handler,

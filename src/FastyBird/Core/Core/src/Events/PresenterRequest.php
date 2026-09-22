@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Nette presenter (native MVC) request event
  */
-class PresenterRequest extends EventDispatcher\Event
+final class PresenterRequest extends EventDispatcher\Event
 {
 
 	public function __construct(

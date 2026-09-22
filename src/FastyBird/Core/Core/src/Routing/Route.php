@@ -6,6 +6,7 @@ use FastyBird\Core\Controllers\SlimRouter as Controllers;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Middleware\SlimRouter as Middleware;
 use FastyBird\Core\Routing;
+use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -19,7 +20,7 @@ use function class_implements;
 use function in_array;
 use function is_array;
 
-class Route implements IRoute, RequestHandlerInterface
+final class Route implements IRoute, RequestHandlerInterface
 {
 
 	private string $identifier;
@@ -68,6 +69,7 @@ class Route implements IRoute, RequestHandlerInterface
 		$this->middlewareDispatcher = new Middleware\MiddlewareDispatcher($this);
 	}
 
+	#[Override]
 	public function setInvocationHandler(Routing\Handlers\IHandler $invocationHandler): void
 	{
 		$this->invocationHandler = $invocationHandler;
@@ -76,36 +78,43 @@ class Route implements IRoute, RequestHandlerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getMethods(): array
 	{
 		return $this->methods;
 	}
 
+	#[Override]
 	public function getPattern(): string
 	{
 		return $this->routeCollector->getPattern() . $this->pattern;
 	}
 
+	#[Override]
 	public function getCallable(): callable|string|array
 	{
 		return $this->callable;
 	}
 
+	#[Override]
 	public function setName(string $name): void
 	{
 		$this->name = $name;
 	}
 
+	#[Override]
 	public function getName(): string|null
 	{
 		return $this->name;
 	}
 
+	#[Override]
 	public function getIdentifier(): string
 	{
 		return $this->identifier;
 	}
 
+	#[Override]
 	public function setArgument(string $name, string $value, bool $includeInSavedArguments = true): void
 	{
 		if ($includeInSavedArguments) {
@@ -115,6 +124,7 @@ class Route implements IRoute, RequestHandlerInterface
 		$this->arguments[$name] = $value;
 	}
 
+	#[Override]
 	public function getArgument(string $name, string|null $default = null): string|null
 	{
 		if (array_key_exists($name, $this->arguments)) {
@@ -127,6 +137,7 @@ class Route implements IRoute, RequestHandlerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function setArguments(array $arguments, bool $includeInSavedArguments = true): void
 	{
 		if ($includeInSavedArguments) {
@@ -139,11 +150,13 @@ class Route implements IRoute, RequestHandlerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getArguments(): array
 	{
 		return $this->arguments;
 	}
 
+	#[Override]
 	public function addMiddleware(MiddlewareInterface $middleware): void
 	{
 		$this->middlewareDispatcher->add($middleware);
@@ -152,11 +165,13 @@ class Route implements IRoute, RequestHandlerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function prepare(array $arguments): void
 	{
 		$this->arguments = array_replace($this->savedArguments, $arguments) ?? [];
 	}
 
+	#[Override]
 	public function run(ServerRequestInterface $request): ResponseInterface
 	{
 		if (!$this->groupMiddlewareAppended) {
@@ -172,6 +187,7 @@ class Route implements IRoute, RequestHandlerInterface
 		return $this->middlewareDispatcher->handle($request);
 	}
 
+	#[Override]
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 		$callable = $this->controllerResolver->resolve($this->callable);

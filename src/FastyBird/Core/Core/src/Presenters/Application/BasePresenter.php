@@ -6,6 +6,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Presenters\SimpleAuth as SimpleAuthApplication;
 use FastyBird\Core\UI\Application as UI;
 use Nette\Application;
+use Override;
 use function preg_match;
 
 /**
@@ -26,6 +27,7 @@ abstract class BasePresenter extends Application\UI\Presenter
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function formatLayoutTemplateFiles(): array
 	{
 		if (
@@ -44,6 +46,7 @@ abstract class BasePresenter extends Application\UI\Presenter
 		return $this->templateFactory?->getLayouts() ?? [];
 	}
 
+	#[Override]
 	public function formatTemplateFiles(): array
 	{
 		[, $presenter] = Application\Helpers::splitName($this->getName() ?? '');

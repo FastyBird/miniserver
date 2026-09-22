@@ -3,8 +3,9 @@
 namespace FastyBird\Core\Caching\Application;
 
 use Nette\Caching;
+use Override;
 
-class MemoryAdapterStorage implements Caching\Storage
+final class MemoryAdapterStorage implements Caching\Storage
 {
 
 	private MemoryStorage $memoryStorage;
@@ -17,6 +18,7 @@ class MemoryAdapterStorage implements Caching\Storage
 	/**
 	 * Read from cache
 	 */
+	#[Override]
 	public function read(string $key): mixed
 	{
 		// Get data from memory storage
@@ -42,6 +44,7 @@ class MemoryAdapterStorage implements Caching\Storage
 	 *
 	 * Not implemented by MemoryStorage
 	 */
+	#[Override]
 	public function lock(string $key): void
 	{
 		$this->cachedStorage->lock($key);
@@ -52,6 +55,7 @@ class MemoryAdapterStorage implements Caching\Storage
 	 *
 	 * @param array<mixed> $dependencies
 	 */
+	#[Override]
 	public function write(string $key, mixed $data, array $dependencies): void
 	{
 		$this->cachedStorage->write($key, $data, $dependencies);
@@ -61,6 +65,7 @@ class MemoryAdapterStorage implements Caching\Storage
 	/**
 	 * Removes item from the cache
 	 */
+	#[Override]
 	public function remove(string $key): void
 	{
 		$this->cachedStorage->remove($key);
@@ -72,6 +77,7 @@ class MemoryAdapterStorage implements Caching\Storage
 	 *
 	 * @param array<mixed> $conditions
 	 */
+	#[Override]
 	public function clean(array $conditions): void
 	{
 		$this->cachedStorage->clean($conditions);

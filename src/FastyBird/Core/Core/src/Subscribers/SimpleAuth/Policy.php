@@ -9,12 +9,13 @@ use FastyBird\Core\Entities\SimpleAuth as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Nette;
+use Override;
 use function count;
 
 /**
  * Casbin policy entity subscriber
  */
-final class Policy implements Common\EventSubscriber
+final readonly class Policy implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
@@ -26,6 +27,7 @@ final class Policy implements Common\EventSubscriber
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

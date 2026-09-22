@@ -6,7 +6,7 @@ use RuntimeException;
 use Throwable;
 use function implode;
 
-class InvalidData extends RuntimeException implements Exception
+final class InvalidData extends RuntimeException implements Exception
 {
 
 	/**

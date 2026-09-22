@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use function implode;
 
-class HttpMethodNotAllowed extends HttpSpecialized
+final class HttpMethodNotAllowed extends HttpSpecialized
 {
 
 	/** @var array<string> */

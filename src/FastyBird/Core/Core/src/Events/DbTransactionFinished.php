@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Database transaction finished event
  */
-class DbTransactionFinished extends EventDispatcher\Event
+final class DbTransactionFinished extends EventDispatcher\Event
 {
 
 }

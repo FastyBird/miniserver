@@ -14,7 +14,7 @@ use function assert;
 /**
  * Security tokens entities manager
  */
-class Manager
+final class Manager
 {
 
 	use Nette\SmartObject;

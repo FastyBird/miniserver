@@ -4,8 +4,9 @@ namespace FastyBird\Core\Latte\SimpleAuth;
 
 use FastyBird\Core\Security\SimpleAuth\Access;
 use Latte;
+use Override;
 
-class AccessExtension extends Latte\Extension
+final class AccessExtension extends Latte\Extension
 {
 
 	public function __construct(
@@ -15,6 +16,7 @@ class AccessExtension extends Latte\Extension
 	{
 	}
 
+	#[Override]
 	public function getTags(): array
 	{
 		return [
@@ -24,6 +26,7 @@ class AccessExtension extends Latte\Extension
 		];
 	}
 
+	#[Override]
 	public function getPasses(): array
 	{
 		return [
@@ -31,6 +34,7 @@ class AccessExtension extends Latte\Extension
 		];
 	}
 
+	#[Override]
 	public function getProviders(): array
 	{
 		return [

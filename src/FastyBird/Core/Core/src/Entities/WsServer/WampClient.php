@@ -4,11 +4,12 @@ namespace FastyBird\Core\Entities\WsServer;
 
 use FastyBird\Core\Controllers\WebSockets\WampApplication;
 use Nette\Utils;
+use Override;
 
 /**
  * WAMP single client connection
  */
-class WampClient extends Client implements IWampClient
+final class WampClient extends Client implements IWampClient
 {
 
 	/**
@@ -16,6 +17,7 @@ class WampClient extends Client implements IWampClient
 	 *
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function event(Topics\ITopic $topic, mixed $message): void
 	{
 		$this->send(Utils\Json::encode([WampApplication::MSG_EVENT, (string) $topic, $message]));

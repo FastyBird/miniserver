@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Database transaction started event
  */
-class DbTransactionStarted extends EventDispatcher\Event
+final class DbTransactionStarted extends EventDispatcher\Event
 {
 
 }

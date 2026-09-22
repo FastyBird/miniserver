@@ -9,6 +9,7 @@ use FastyBird\Core\Security\SimpleAuth as Security;
 use Lcobucci\JWT;
 use Nette;
 use Nette\Http;
+use Override;
 use Symfony\Component\EventDispatcher;
 use Throwable;
 use function is_string;
@@ -16,7 +17,7 @@ use function is_string;
 /**
  * Application UI events
  */
-final class Application implements EventDispatcher\EventSubscriberInterface
+final readonly class Application implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
@@ -30,6 +31,7 @@ final class Application implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

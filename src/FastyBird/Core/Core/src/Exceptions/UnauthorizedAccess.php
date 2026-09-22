@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use RuntimeException;
 
-class UnauthorizedAccess extends RuntimeException implements Exception
+final class UnauthorizedAccess extends RuntimeException implements Exception
 {
 
 }

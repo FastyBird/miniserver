@@ -6,6 +6,7 @@ use FastyBird\Core\Exceptions;
 use Nette;
 use Nette\Application;
 use Nette\Application\UI;
+use Override;
 use ReflectionException;
 use function array_merge;
 use function array_pop;
@@ -22,7 +23,7 @@ use function ucfirst;
 /**
  * Create link access checker
  */
-final class LinkChecker implements Checker
+final readonly class LinkChecker implements Checker
 {
 
 	/**
@@ -47,6 +48,7 @@ final class LinkChecker implements Checker
 	 * @throws Exceptions\InvalidState
 	 * @throws ReflectionException
 	 */
+	#[Override]
 	public function isAllowed(mixed $element): bool
 	{
 		assert(is_string($element));

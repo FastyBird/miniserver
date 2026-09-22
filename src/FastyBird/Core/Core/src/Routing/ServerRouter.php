@@ -5,7 +5,7 @@ namespace FastyBird\Core\Routing;
 /**
  * Plugin router configuration, a distinctly-typed router service for Nette DI to register
  */
-class ServerRouter extends Router
+final class ServerRouter extends Router
 {
 
 }

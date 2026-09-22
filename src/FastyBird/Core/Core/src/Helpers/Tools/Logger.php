@@ -21,7 +21,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Logger helpers
  */
-class Logger
+final class Logger
 {
 
 	use Nette\SmartObject;

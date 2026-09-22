@@ -5,13 +5,14 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use function is_numeric;
 use function is_string;
 
 /**
  * Error object
  */
-class ErrorObject implements IErrorObject
+final class ErrorObject implements IErrorObject
 {
 
 	public function __construct(private Objects\IStandardObject $data)
@@ -21,6 +22,7 @@ class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getId(): string|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_ID);
@@ -32,6 +34,7 @@ class ErrorObject implements IErrorObject
 		return $raw;
 	}
 
+	#[Override]
 	public function hasLinks(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_LINKS);
@@ -41,6 +44,7 @@ class ErrorObject implements IErrorObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getLinks(): ILinkObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_LINKS);
@@ -55,6 +59,7 @@ class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getStatus(): int|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_STATUS);
@@ -69,6 +74,7 @@ class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getCode(): string|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_CODE);
@@ -83,6 +89,7 @@ class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getTitle(): string|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_TITLE);
@@ -97,6 +104,7 @@ class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getDetail(): string|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_DETAIL);
@@ -112,6 +120,7 @@ class ErrorObject implements IErrorObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getSource(): ISourceObject|null
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_ERRORS_SOURCE);
@@ -123,6 +132,7 @@ class ErrorObject implements IErrorObject
 		return $raw !== null ? new SourceObject($raw) : null;
 	}
 
+	#[Override]
 	public function hasMeta(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_META);
@@ -132,6 +142,7 @@ class ErrorObject implements IErrorObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getMeta(): IMetaObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_META);

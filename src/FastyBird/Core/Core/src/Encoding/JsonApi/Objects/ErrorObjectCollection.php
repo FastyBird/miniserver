@@ -5,6 +5,7 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 use ArrayIterator;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use Traversable;
 use function count;
 use function in_array;
@@ -12,7 +13,7 @@ use function in_array;
 /**
  * Error object collection
  */
-class ErrorObjectCollection implements IErrorObjectCollection
+final class ErrorObjectCollection implements IErrorObjectCollection
 {
 
 	/** @var Array<int, IErrorObject> */
@@ -53,6 +54,7 @@ class ErrorObjectCollection implements IErrorObjectCollection
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addMany(array $error): void
 	{
 		foreach ($error as $item) {
@@ -64,6 +66,7 @@ class ErrorObjectCollection implements IErrorObjectCollection
 		}
 	}
 
+	#[Override]
 	public function add(IErrorObject $error): void
 	{
 		if (!$this->has($error)) {
@@ -71,6 +74,7 @@ class ErrorObjectCollection implements IErrorObjectCollection
 		}
 	}
 
+	#[Override]
 	public function has(IErrorObject $error): bool
 	{
 		return in_array($error, $this->stack, true);
@@ -81,21 +85,25 @@ class ErrorObjectCollection implements IErrorObjectCollection
 	 *
 	 * @phpstan-return ArrayIterator<int, IErrorObject>
 	 */
+	#[Override]
 	public function getIterator(): ArrayIterator
 	{
 		return new ArrayIterator($this->stack);
 	}
 
+	#[Override]
 	public function getAll(): Traversable
 	{
 		return $this->getIterator();
 	}
 
+	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];
 	}
 
+	#[Override]
 	public function count(): int
 	{
 		return count($this->stack);

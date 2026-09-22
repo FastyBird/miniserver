@@ -4,11 +4,12 @@ namespace FastyBird\Core\Caching\Application;
 
 use Nette;
 use Nette\Caching;
+use Override;
 use function array_key_exists;
 use function in_array;
 use function is_array;
 
-class MemoryStorage implements Caching\Storage
+final class MemoryStorage implements Caching\Storage
 {
 
 	use Nette\SmartObject;
@@ -20,11 +21,13 @@ class MemoryStorage implements Caching\Storage
 	/** @var array<string, array<string, mixed|array<mixed>>> */
 	private array $data = [];
 
+	#[Override]
 	public function read(string $key): mixed
 	{
 		return $this->data[$key][self::DATA_KEY] ?? null;
 	}
 
+	#[Override]
 	public function lock(string $key): void
 	{
 		// Lock is not implemented
@@ -33,6 +36,7 @@ class MemoryStorage implements Caching\Storage
 	/**
 	 * @param array<mixed> $dependencies
 	 */
+	#[Override]
 	public function write(string $key, mixed $data, array $dependencies = []): void
 	{
 		$this->data[$key] = [
@@ -41,6 +45,7 @@ class MemoryStorage implements Caching\Storage
 		];
 	}
 
+	#[Override]
 	public function remove(string $key): void
 	{
 		unset($this->data[$key]);
@@ -49,6 +54,7 @@ class MemoryStorage implements Caching\Storage
 	/**
 	 * @param array<mixed> $conditions
 	 */
+	#[Override]
 	public function clean(array $conditions): void
 	{
 		if (array_key_exists(Caching\Cache::All, $conditions)) {

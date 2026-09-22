@@ -10,7 +10,7 @@ use function sprintf;
 /**
  * Extended HTTP response, carries a JSON:API entity attribute alongside the PSR-7 payload
  */
-class ServerResponse extends Response
+final class ServerResponse extends Response
 {
 
 	/** @var array<mixed> */

@@ -5,22 +5,25 @@ namespace FastyBird\Core\Utilities\Tools;
 use DateTimeInterface;
 use FastyBird\Core\Providers\DoctrineTimestampable as DoctrineTimestampableProviders;
 use FastyBird\Core\Services\DateTimeFactory;
+use Override;
 
 /**
  * Date provider for doctrine timestampable
  */
-readonly class DateTimeProvider implements DoctrineTimestampableProviders\DateProvider
+final readonly class DateTimeProvider implements DoctrineTimestampableProviders\DateProvider
 {
 
 	public function __construct(private DateTimeFactory\Clock $clock)
 	{
 	}
 
+	#[Override]
 	public function getDate(): DateTimeInterface
 	{
 		return $this->clock->getNow();
 	}
 
+	#[Override]
 	public function getTimestamp(): int
 	{
 		return $this->clock->getNow()->getTimestamp();

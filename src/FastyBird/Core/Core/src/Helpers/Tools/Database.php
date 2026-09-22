@@ -18,7 +18,7 @@ use function is_int;
 /**
  * Database connection helpers
  */
-class Database
+final readonly class Database
 {
 
 	use Nette\SmartObject;

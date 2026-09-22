@@ -5,13 +5,14 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use function is_array;
 use function is_string;
 
 /**
  * Relationship object
  */
-class RelationshipObject implements IRelationshipObject
+final class RelationshipObject implements IRelationshipObject
 {
 
 	/**
@@ -28,6 +29,7 @@ class RelationshipObject implements IRelationshipObject
 		}
 	}
 
+	#[Override]
 	public function hasLinks(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_LINKS);
@@ -37,6 +39,7 @@ class RelationshipObject implements IRelationshipObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getLinks(): ILinkObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_LINKS);
@@ -48,6 +51,7 @@ class RelationshipObject implements IRelationshipObject
 		return LinkObjectCollection::create($raw);
 	}
 
+	#[Override]
 	public function hasData(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_DATA);
@@ -57,6 +61,7 @@ class RelationshipObject implements IRelationshipObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getData(): IResourceIdentifierCollection|IResourceIdentifierObject|null
 	{
 		if ($this->isHasMany()) {
@@ -68,6 +73,7 @@ class RelationshipObject implements IRelationshipObject
 		throw new Exceptions\Runtime('No data member or data member is not a valid relationship.');
 	}
 
+	#[Override]
 	public function hasMeta(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_META);
@@ -77,6 +83,7 @@ class RelationshipObject implements IRelationshipObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getMeta(): IMetaObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_META);
@@ -88,11 +95,13 @@ class RelationshipObject implements IRelationshipObject
 		return MetaObjectCollection::create($raw);
 	}
 
+	#[Override]
 	public function isHasMany(): bool
 	{
 		return is_array($this->data->get(JsonApi\IDocument::KEYWORD_DATA));
 	}
 
+	#[Override]
 	public function isHasOne(): bool
 	{
 		if (!$this->data->has(JsonApi\IDocument::KEYWORD_DATA)) {
@@ -108,6 +117,7 @@ class RelationshipObject implements IRelationshipObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getIdentifiers(): IResourceIdentifierCollection
 	{
 		if (!$this->isHasMany()) {
@@ -123,6 +133,7 @@ class RelationshipObject implements IRelationshipObject
 		return ResourceIdentifierCollection::create($data);
 	}
 
+	#[Override]
 	public function hasIdentifier(): bool
 	{
 		$data = $this->data->get(JsonApi\IDocument::KEYWORD_DATA);
@@ -136,6 +147,7 @@ class RelationshipObject implements IRelationshipObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getIdentifier(): IResourceIdentifierObject
 	{
 		if (!$this->isHasOne()) {

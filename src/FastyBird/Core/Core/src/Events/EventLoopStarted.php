@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Event loop was started event
  */
-class EventLoopStarted extends EventDispatcher\Event
+final class EventLoopStarted extends EventDispatcher\Event
 {
 
 }

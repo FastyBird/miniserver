@@ -14,6 +14,7 @@ use FastyBird\Core\Server\WsServer as WebSocketsServer;
 use FastyBird\Core\Topics\WsServer as Topics;
 use Nette\Http;
 use Nette\Utils;
+use Override;
 use Psr\Log;
 use SplObjectStorage;
 use Throwable;
@@ -76,6 +77,7 @@ final class WampApplication extends Application implements IWampApplication
 	 *
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function handleOpen(WebSocketsEntities\IClient $client, WebSocketsHttp\IRequest $httpRequest): void
 	{
 		$client->addParameter('wampSession', str_replace('.', '', uniqid((string) mt_rand(), true)));
@@ -93,6 +95,7 @@ final class WampApplication extends Application implements IWampApplication
 		parent::handleOpen($client, $httpRequest);
 	}
 
+	#[Override]
 	public function handleClose(WebSocketsEntities\IClient $client, WebSocketsHttp\IRequest $httpRequest): void
 	{
 		parent::handleClose($client, $httpRequest);
@@ -107,6 +110,7 @@ final class WampApplication extends Application implements IWampApplication
 	 *
 	 * @throws WebSocketsExceptions\Terminate
 	 */
+	#[Override]
 	public function handleMessage(
 		WebSocketsEntities\IClient $client,
 		WebSocketsHttp\IRequest $httpRequest,
@@ -284,6 +288,7 @@ final class WampApplication extends Application implements IWampApplication
 	 *
 	 * @throws WebSocketsExceptions\Terminate
 	 */
+	#[Override]
 	public function handlePush(PushMessages\IMessage $message, string $provider): void
 	{
 		try {
@@ -335,6 +340,7 @@ final class WampApplication extends Application implements IWampApplication
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getSubProtocols(): array
 	{
 		return ['wamp'];

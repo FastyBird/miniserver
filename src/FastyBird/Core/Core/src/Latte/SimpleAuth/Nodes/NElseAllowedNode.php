@@ -6,6 +6,7 @@ use FastyBird\Core\Exceptions;
 use Generator;
 use Latte;
 use Latte\Compiler;
+use Override;
 use TypeError;
 use function array_splice;
 use function count;
@@ -78,6 +79,7 @@ final class NElseAllowedNode extends Compiler\Nodes\StatementNode
 		});
 	}
 
+	#[Override]
 	public function &getIterator(): Generator
 	{
 		yield $this->content;

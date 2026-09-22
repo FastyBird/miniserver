@@ -21,7 +21,7 @@ use function str_contains;
 /**
  * @template T of Documents\Document
  */
-class ClassMetadata
+final class ClassMetadata
 {
 
 	public const int INHERITANCE_TYPE_NONE = 0;

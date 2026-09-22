@@ -3,12 +3,13 @@
 namespace FastyBird\Core\Http;
 
 use Nette\Http;
+use Override;
 use function func_num_args;
 
 /**
  * HTTP request
  */
-class Request extends Http\Request implements IRequest
+final class Request extends Http\Request implements IRequest
 {
 
 	private float $protocolVersion;
@@ -38,31 +39,37 @@ class Request extends Http\Request implements IRequest
 		);
 	}
 
+	#[Override]
 	public function setUrl(Http\UrlScript $url): void
 	{
 		$this->url = $url;
 	}
 
+	#[Override]
 	public function getUrl(): Http\UrlScript
 	{
 		return clone $this->url;
 	}
 
+	#[Override]
 	public function getQuery(string|null $key = null): mixed
 	{
 		return func_num_args() === 0 ? $this->url->getQueryParameters() : $this->url->getQueryParameter($key);
 	}
 
+	#[Override]
 	public function isSecured(): bool
 	{
 		return $this->url->getScheme() === 'wss';
 	}
 
+	#[Override]
 	public function setProtocolVersion(float $version): void
 	{
 		$this->protocolVersion = $version;
 	}
 
+	#[Override]
 	public function getProtocolVersion(): float|null
 	{
 		return $this->protocolVersion;

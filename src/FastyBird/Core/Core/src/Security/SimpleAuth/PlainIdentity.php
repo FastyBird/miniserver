@@ -5,12 +5,13 @@ namespace FastyBird\Core\Security\SimpleAuth;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * System basic plain identity
  */
-class PlainIdentity implements Security\IIdentity
+final class PlainIdentity implements Security\IIdentity
 {
 
 	use Nette\SmartObject;
@@ -32,6 +33,7 @@ class PlainIdentity implements Security\IIdentity
 		$this->id = Uuid\Uuid::fromString($id);
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -40,6 +42,7 @@ class PlainIdentity implements Security\IIdentity
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getRoles(): array
 	{
 		return $this->roles;

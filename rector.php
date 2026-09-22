@@ -21,7 +21,6 @@ return RectorConfig::configure()
 		__DIR__ . '/src/FastyBird/Bridge',
 		__DIR__ . '/src/FastyBird/Connector',
 		__DIR__ . '/src/FastyBird/Core',
-		__DIR__ . '/src/FastyBird/Library',
 		__DIR__ . '/src/FastyBird/Module',
 		__DIR__ . '/src/FastyBird/Plugin',
 		__DIR__ . '/tests',

@@ -5,9 +5,10 @@ namespace FastyBird\Core\Latte\SimpleAuth\Nodes;
 use Generator;
 use Latte;
 use Latte\Compiler;
+use Override;
 use TypeError;
 
-class IfAllowedNode extends Compiler\Nodes\StatementNode
+final class IfAllowedNode extends Compiler\Nodes\StatementNode
 {
 
 	public Compiler\Nodes\Php\Expression\ArrayNode $args;
@@ -131,6 +132,7 @@ class IfAllowedNode extends Compiler\Nodes\StatementNode
 		);
 	}
 
+	#[Override]
 	public function &getIterator(): Generator
 	{
 		yield $this->args;

@@ -6,13 +6,14 @@ use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use SplObjectStorage;
 
 /**
  * Exchange consumer proxy
  */
-class Container implements Consumer
+final class Container implements Consumer
 {
 
 	/** @var SplObjectStorage<Consumer, Info> */
@@ -25,6 +26,7 @@ class Container implements Consumer
 		$this->consumers = new SplObjectStorage();
 	}
 
+	#[Override]
 	public function consume(
 		MetadataTypes\Sources\Source $source,
 		string $routingKey,

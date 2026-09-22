@@ -6,6 +6,7 @@ use ArrayIterator;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use Nette;
+use Override;
 use Psr\Log;
 use Throwable;
 use function sprintf;
@@ -36,6 +37,7 @@ final class Storage implements IStorage
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
+	#[Override]
 	public function setStorageDriver(Drivers\IDriver $driver): void
 	{
 		$this->driver = $driver;
@@ -47,6 +49,7 @@ final class Storage implements IStorage
 	 * @throws Exceptions\ClientNotFound
 	 * @throws Exceptions\Storage
 	 */
+	#[Override]
 	public function getClient(int $identifier): Entities\IClient
 	{
 		try {
@@ -70,6 +73,7 @@ final class Storage implements IStorage
 	 *
 	 * @throws Exceptions\Storage
 	 */
+	#[Override]
 	public function addClient(int $identifier, Entities\IClient $client): void
 	{
 		$context = [
@@ -99,6 +103,7 @@ final class Storage implements IStorage
 	 *
 	 * @throws Exceptions\Storage
 	 */
+	#[Override]
 	public function hasClient(int $identifier): bool
 	{
 		try {
@@ -116,6 +121,7 @@ final class Storage implements IStorage
 	 *
 	 * @throws Exceptions\Storage
 	 */
+	#[Override]
 	public function removeClient(int $identifier): bool
 	{
 		$this->logger->debug('REMOVE CLIENT ' . $identifier);
@@ -135,6 +141,7 @@ final class Storage implements IStorage
 	 *
 	 * @throws Exceptions\Storage
 	 */
+	#[Override]
 	public function refreshClient(Entities\IClient $client): void
 	{
 		if ($this->hasClient($client->getId())) {
@@ -147,6 +154,7 @@ final class Storage implements IStorage
 	/**
 	 * @return array<Entities\IClient>|ArrayIterator
 	 */
+	#[Override]
 	public function getIterator(): ArrayIterator
 	{
 		return new ArrayIterator($this->driver->fetchAll());

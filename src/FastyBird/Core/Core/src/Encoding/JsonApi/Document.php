@@ -6,6 +6,7 @@ use FastyBird\Core\Encoding\JsonApi\Objects\IStandardObject;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
 use JsonException;
+use Override;
 use stdClass;
 use function is_array;
 use function json_decode;
@@ -13,7 +14,7 @@ use function json_decode;
 /**
  * JSON:API document
  */
-class Document implements IDocument
+final class Document implements IDocument
 {
 
 	private Objects\IStandardObject $data;
@@ -43,6 +44,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function hasResource(): bool
 	{
 		$data = $this->getData();
@@ -54,6 +56,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getResource(): Objects\IResourceObject
 	{
 		$data = $this->getData();
@@ -69,6 +72,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function hasResources(): bool
 	{
 		$data = $this->getData();
@@ -80,6 +84,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getResources(): Objects\IResourceObjectCollection
 	{
 		$data = $this->getData();
@@ -95,6 +100,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getData(): Objects\IStandardObject|Objects\IStandardObjectCollection|null
 	{
 		if (!$this->data->has(self::KEYWORD_DATA)) {
@@ -114,6 +120,7 @@ class Document implements IDocument
 		return $data;
 	}
 
+	#[Override]
 	public function hasLinks(): bool
 	{
 		return $this->data->has(self::KEYWORD_LINKS);
@@ -123,6 +130,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getLinks(): Objects\ILinkObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_LINKS);
@@ -134,6 +142,7 @@ class Document implements IDocument
 		return Objects\LinkObjectCollection::create($raw);
 	}
 
+	#[Override]
 	public function hasMeta(): bool
 	{
 		return $this->data->has(self::KEYWORD_META);
@@ -143,6 +152,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getMeta(): Objects\IMetaObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_META);
@@ -154,6 +164,7 @@ class Document implements IDocument
 		return Objects\MetaObjectCollection::create($raw);
 	}
 
+	#[Override]
 	public function hasIncluded(): bool
 	{
 		return $this->data->has(self::KEYWORD_INCLUDED);
@@ -163,6 +174,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getIncluded(): Objects\IResourceObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_INCLUDED);
@@ -174,6 +186,7 @@ class Document implements IDocument
 		return Objects\ResourceObjectCollection::create(Objects\StandardObjectCollection::create($raw)->getAll());
 	}
 
+	#[Override]
 	public function hasErrors(): bool
 	{
 		return $this->data->has(self::KEYWORD_ERRORS);
@@ -183,6 +196,7 @@ class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getErrors(): Objects\IErrorObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_ERRORS);

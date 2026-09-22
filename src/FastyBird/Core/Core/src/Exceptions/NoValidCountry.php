@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Exceptions;
 
-class NoValidCountry extends InvalidArgument
+final class NoValidCountry extends InvalidArgument
 {
 
 }

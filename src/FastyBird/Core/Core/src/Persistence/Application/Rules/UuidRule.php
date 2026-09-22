@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Persistence\Application\Rules;
 
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 
@@ -12,11 +13,13 @@ use function is_string;
 final class UuidRule implements ObjectMapper\Rules\Rule
 {
 
+	#[Override]
 	public function resolveArgs(array $args, ObjectMapper\Meta\Context\MetaFieldContext $context): UuidArgs
 	{
 		return new UuidArgs();
 	}
 
+	#[Override]
 	public function getArgsType(): string
 	{
 		return UuidArgs::class;
@@ -28,6 +31,7 @@ final class UuidRule implements ObjectMapper\Rules\Rule
 	 * @throws ObjectMapper\Exception\ValueDoesNotMatch
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function processValue(
 		mixed $value,
 		ObjectMapper\Args\Args $args,
@@ -53,6 +57,7 @@ final class UuidRule implements ObjectMapper\Rules\Rule
 	/**
 	 * @param UuidArgs $args
 	 */
+	#[Override]
 	public function createType(
 		ObjectMapper\Args\Args $args,
 		ObjectMapper\Processing\Context\ServicesContext $services,

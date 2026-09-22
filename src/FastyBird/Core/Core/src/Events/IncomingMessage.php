@@ -8,7 +8,7 @@ use FastyBird\Core\Http;
 /**
  * WS client sent message event
  */
-readonly class IncomingMessage
+final readonly class IncomingMessage
 {
 
 	public function __construct(

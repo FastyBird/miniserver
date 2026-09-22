@@ -9,6 +9,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\SimpleAuth as Mapping;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Nette;
+use Override;
 use Psr\Cache\InvalidArgumentException;
 use ReflectionException;
 use function array_key_exists;
@@ -19,7 +20,7 @@ use function is_array;
  *
  * @template T of object
  */
-final class User implements Common\EventSubscriber
+final readonly class User implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
@@ -39,6 +40,7 @@ final class User implements Common\EventSubscriber
 	 *
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

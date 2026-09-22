@@ -6,6 +6,7 @@ use ArrayIterator;
 use IteratorAggregate;
 use Nette;
 use Nette\Utils;
+use Override;
 use Traversable;
 use function array_filter;
 use function array_map;
@@ -78,11 +79,13 @@ final class StringEnum implements IteratorAggregate
 		return $this->toArray();
 	}
 
+	#[Override]
 	public function getIterator(): Traversable
 	{
 		return new ArrayIterator($this->getItems());
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return implode(',', $this->getItems());

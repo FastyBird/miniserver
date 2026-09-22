@@ -6,6 +6,7 @@ use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use FastyBird\Core\Mapping\DoctrineCrud as Mapping;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud;
 use Nette;
+use Override;
 
 /**
  * Bundles an entity's creator, updater and deleter behind a single facade
@@ -35,16 +36,19 @@ final class EntityCrud implements IEntityCrud
 		// CRUD factories
 	}
 
+	#[Override]
 	public function getEntityCreator(): Crud\Create\EntityCreator
 	{
 		return $this->entityCreatorFactory->create($this->entityName, $this->entityMapper);
 	}
 
+	#[Override]
 	public function getEntityUpdater(): Crud\Update\EntityUpdater
 	{
 		return $this->entityUpdaterFactory->create($this->entityName, $this->entityMapper);
 	}
 
+	#[Override]
 	public function getEntityDeleter(): Crud\Delete\EntityDeleter
 	{
 		return $this->entityDeleterFactory->create($this->entityName);

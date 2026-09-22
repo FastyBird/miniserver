@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Entities\WebSockets\PushMessages;
 
 use Nette;
+use Override;
 
 /**
  * A push message
@@ -19,6 +20,7 @@ final class Message implements IMessage
 	{
 	}
 
+	#[Override]
 	public function getTopic(): string
 	{
 		return $this->topic;
@@ -27,6 +29,7 @@ final class Message implements IMessage
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getData(): array
 	{
 		return $this->data;

@@ -5,12 +5,13 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use function is_string;
 
 /**
  * Link object
  */
-class LinkObject implements ILinkObject
+final class LinkObject implements ILinkObject
 {
 
 	/**
@@ -26,6 +27,7 @@ class LinkObject implements ILinkObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getHref(): string
 	{
 		$href = $this->data->get(JsonApi\IDocument::KEYWORD_HREF);
@@ -37,6 +39,7 @@ class LinkObject implements ILinkObject
 		return $href;
 	}
 
+	#[Override]
 	public function hasMeta(): bool
 	{
 		return $this->data->has(JsonApi\IDocument::KEYWORD_META);
@@ -46,6 +49,7 @@ class LinkObject implements ILinkObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getMeta(): IMetaObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_META);

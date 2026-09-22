@@ -5,6 +5,7 @@ namespace FastyBird\Core\Messaging\Exchange\Publisher\Async;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Events;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Promise;
 use SplObjectStorage;
@@ -13,7 +14,7 @@ use Throwable;
 /**
  * Exchange async publishers proxy
  */
-class Container implements Publisher
+final class Container implements Publisher
 {
 
 	/** @var SplObjectStorage<Publisher, null> */
@@ -29,6 +30,7 @@ class Container implements Publisher
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 */
+	#[Override]
 	public function publish(
 		MetadataTypes\Sources\Source $source,
 		string $routingKey,

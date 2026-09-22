@@ -5,7 +5,7 @@ namespace FastyBird\Core\Server\HttpServer;
 /**
  * List of known mime types
  */
-class MimeTypesList
+final class MimeTypesList
 {
 
 	public const array MIMES = [
