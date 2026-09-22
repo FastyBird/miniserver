@@ -10,7 +10,7 @@ use FastyBird\Core\Persistence\DoctrineCrud\Crud;
 use Nette\Utils;
 
 /**
- * Doctrine CRUD entity deleter
+ * Removes an entity from persistence inside its own transaction
  *
  * @template   T of Entities\IEntity
  * @extends    Crud\CrudManager<T>

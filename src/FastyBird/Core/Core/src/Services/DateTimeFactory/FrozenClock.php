@@ -2,11 +2,14 @@
 
 namespace FastyBird\Core\Services\DateTimeFactory;
 
+use DateInvalidTimeZoneException;
+use DateMalformedStringException;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use Nette;
+use ValueError;
 use function assert;
 use function date_default_timezone_get;
 use function floor;
@@ -19,6 +22,11 @@ class FrozenClock implements Clock
 
 	private DateTimeImmutable $dt;
 
+	/**
+	 * @throws DateInvalidTimeZoneException
+	 * @throws DateMalformedStringException
+	 * @throws ValueError
+	 */
 	public function __construct(float|DateTimeInterface $timestamp, DateTimeZone|null $timeZone = null)
 	{
 		if ($timestamp instanceof DateTime) {

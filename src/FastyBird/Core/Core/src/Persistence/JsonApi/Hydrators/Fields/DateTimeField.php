@@ -5,6 +5,7 @@ namespace FastyBird\Core\Persistence\JsonApi\Hydrators\Fields;
 use DateTimeInterface;
 use FastyBird\Core\Encoding\JsonApi;
 use Nette\Utils;
+use ValueError;
 use function is_scalar;
 
 /**
@@ -26,6 +27,8 @@ final class DateTimeField extends Field
 
 	/**
 	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
+	 *
+	 * @throws ValueError
 	 */
 	public function getValue(JsonApi\Objects\IStandardObject $attributes): DateTimeInterface|null
 	{

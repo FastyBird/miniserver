@@ -5,7 +5,7 @@ namespace FastyBird\Core\Entities\DoctrineTimestampable;
 use DateTimeInterface;
 
 /**
- * Doctrine timestampable removing entity interface
+ * Interface for entities that record when they were soft-deleted
  */
 interface IEntityRemoved
 {

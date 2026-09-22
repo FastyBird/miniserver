@@ -5,7 +5,7 @@ namespace FastyBird\Core\Entities\DoctrineTimestampable;
 use DateTimeInterface;
 
 /**
- * Doctrine timestampable modifying entity interface
+ * Interface for entities that record when they were last updated
  */
 interface IEntityUpdated
 {

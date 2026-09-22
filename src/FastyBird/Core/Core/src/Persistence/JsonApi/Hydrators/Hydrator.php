@@ -842,7 +842,11 @@ abstract class Hydrator
 					// Get attribute entity class name
 					$fieldClassName = $field->getClassName();
 
-					/** @var string|JsonApi\Objects\IStandardObject<string, mixed> $fieldAttributes */
+					/**
+					 * @var string|int|float|bool|array<mixed>|JsonApi\Objects\IStandardObject|null $fieldAttributes
+					 *
+					 * @phpstan-var string|int|float|bool|array<mixed>|JsonApi\Objects\IStandardObject<string, string|int|float|bool|array<mixed>|null>|null $fieldAttributes
+					 */
 					$fieldAttributes = $attributes->get($field->getMappedName());
 
 					if ($fieldAttributes instanceof JsonApi\Objects\IStandardObject) {

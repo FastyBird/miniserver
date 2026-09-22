@@ -24,6 +24,8 @@ class ResourceObjectCollection implements IResourceObjectCollection
 
 	/**
 	 * @param array<mixed> $resource
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(array $resource = [])
 	{
@@ -34,6 +36,8 @@ class ResourceObjectCollection implements IResourceObjectCollection
 	 * @param array<mixed> $resourceArray
 	 *
 	 * @phpstan-return IResourceObjectCollection<int, IResourceObject>
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public static function create(array $resourceArray): IResourceObjectCollection
 	{
@@ -50,6 +54,8 @@ class ResourceObjectCollection implements IResourceObjectCollection
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function addMany(array $resource): void
 	{

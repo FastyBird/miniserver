@@ -27,6 +27,8 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 
 	/**
 	 * @param array<mixed> $relationship
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(array $relationship = [])
 	{
@@ -35,6 +37,8 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 
 	/**
 	 * @phpstan-return IRelationshipObjectCollection<string, IRelationshipObject>
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public static function create(Objects\IStandardObject|null $relationshipObject): IRelationshipObjectCollection
 	{
@@ -57,6 +61,8 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function addMany(array $relationship): void
 	{
@@ -81,6 +87,9 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 		return array_key_exists($key, $this->stack);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function get(string $key): IRelationshipObject
 	{
 		if (!$this->has($key)) {
@@ -100,6 +109,9 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 		return new ArrayIterator($this->stack);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getAll(): Traversable
 	{
 		foreach (array_keys($this->stack) as $key) {

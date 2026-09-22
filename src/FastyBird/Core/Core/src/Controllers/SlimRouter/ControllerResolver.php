@@ -22,6 +22,8 @@ final class ControllerResolver implements IControllerResolver
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function resolve($toResolve): callable
 	{

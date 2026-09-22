@@ -29,6 +29,8 @@ class MetaObjectCollection implements IMetaObjectCollection
 
 	/**
 	 * @param array<mixed> $meta
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(array $meta = [])
 	{
@@ -37,6 +39,8 @@ class MetaObjectCollection implements IMetaObjectCollection
 
 	/**
 	 * @phpstan-return IMetaObjectCollection<string, IMetaObject>
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public static function create(Objects\IStandardObject|null $metaObject): IMetaObjectCollection
 	{
@@ -59,6 +63,8 @@ class MetaObjectCollection implements IMetaObjectCollection
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function addMany(array $meta): void
 	{
@@ -78,6 +84,9 @@ class MetaObjectCollection implements IMetaObjectCollection
 		}
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function get(string $key): IMetaObject
 	{
 		if (!$this->has($key)) {
@@ -102,6 +111,9 @@ class MetaObjectCollection implements IMetaObjectCollection
 		return new ArrayIterator($this->stack);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getAll(): Traversable
 	{
 		foreach (array_keys($this->stack) as $key) {

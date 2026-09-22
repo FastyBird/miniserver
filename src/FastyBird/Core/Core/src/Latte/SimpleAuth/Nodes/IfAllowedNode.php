@@ -5,6 +5,7 @@ namespace FastyBird\Core\Latte\SimpleAuth\Nodes;
 use Generator;
 use Latte;
 use Latte\Compiler;
+use TypeError;
 
 class IfAllowedNode extends Compiler\Nodes\StatementNode
 {
@@ -21,6 +22,7 @@ class IfAllowedNode extends Compiler\Nodes\StatementNode
 
 	/**
 	 * @throws Latte\CompileException
+	 * @throws TypeError
 	 */
 	public static function create(Compiler\Tag $tag): Generator
 	{

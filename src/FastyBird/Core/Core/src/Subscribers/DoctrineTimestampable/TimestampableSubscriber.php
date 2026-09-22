@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Subscribers\DoctrineTimestampable;
 
+use DateInvalidTimeZoneException;
 use DateTime;
 use DateTimeInterface;
 use DateTimeZone;
@@ -11,6 +12,8 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\DoctrineTimestampable as Mapping;
 use FastyBird\Core\Providers\DoctrineTimestampable as Providers;
 use Nette;
+use Psr\Cache\InvalidArgumentException;
+use ValueError;
 use function array_key_exists;
 use function date_default_timezone_get;
 use function explode;
@@ -24,7 +27,7 @@ use function sprintf;
 use function time;
 
 /**
- * Doctrine timestampable subscriber
+ * Doctrine event subscriber that stamps #[Timestampable]-marked properties on flush
  */
 final class TimestampableSubscriber implements Common\EventSubscriber
 {
@@ -52,7 +55,9 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	}
 
 	/**
+	 * @throws Exceptions\InvalidMapping
 	 * @throws ORM\Mapping\MappingException
+	 * @throws InvalidArgumentException
 	 */
 	public function loadClassMetadata(ORM\Event\LoadClassMetadataEventArgs $eventArgs): void
 	{
@@ -106,7 +111,14 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	}
 
 	/**
+	 * @throws DateInvalidTimeZoneException
+	 * @throws Exceptions\InvalidMapping
+	 * @throws Exceptions\InvalidState
+	 * @throws Exceptions\UnexpectedValue
 	 * @throws ORM\Mapping\MappingException
+	 * @throws ORM\ORMInvalidArgumentException
+	 * @throws ValueError
+	 * @throws InvalidArgumentException
 	 */
 	public function onFlush(ORM\Event\OnFlushEventArgs $eventArgs): void
 	{
@@ -241,7 +253,10 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	/**
 	 * Updates a field
 	 *
+	 * @throws DateInvalidTimeZoneException
+	 * @throws Exceptions\InvalidState
 	 * @throws ORM\Mapping\MappingException
+	 * @throws ValueError
 	 *
 	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */
@@ -268,7 +283,10 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	/**
 	 * Get the date value to set on a timestampable field
 	 *
+	 * @throws DateInvalidTimeZoneException
+	 * @throws Exceptions\InvalidState
 	 * @throws ORM\Mapping\MappingException
+	 * @throws ValueError
 	 *
 	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */
@@ -296,7 +314,12 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	}
 
 	/**
+	 * @throws DateInvalidTimeZoneException
+	 * @throws Exceptions\InvalidMapping
+	 * @throws Exceptions\InvalidState
 	 * @throws ORM\Mapping\MappingException
+	 * @throws ValueError
+	 * @throws InvalidArgumentException
 	 */
 	public function prePersist(object $entity, ORM\Event\PrePersistEventArgs $eventArgs): void
 	{
@@ -317,7 +340,12 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	}
 
 	/**
+	 * @throws DateInvalidTimeZoneException
+	 * @throws Exceptions\InvalidMapping
+	 * @throws Exceptions\InvalidState
 	 * @throws ORM\Mapping\MappingException
+	 * @throws ValueError
+	 * @throws InvalidArgumentException
 	 */
 	public function preUpdate(object $entity, ORM\Event\PreUpdateEventArgs $eventArgs): void
 	{
@@ -334,7 +362,12 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	}
 
 	/**
+	 * @throws DateInvalidTimeZoneException
+	 * @throws Exceptions\InvalidMapping
+	 * @throws Exceptions\InvalidState
 	 * @throws ORM\Mapping\MappingException
+	 * @throws ValueError
+	 * @throws InvalidArgumentException
 	 */
 	public function preRemove(object $entity, ORM\Event\PreRemoveEventArgs $eventArgs): void
 	{
@@ -353,7 +386,10 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	/**
 	 * @param array<string> $fields
 	 *
+	 * @throws DateInvalidTimeZoneException
+	 * @throws Exceptions\InvalidState
 	 * @throws ORM\Mapping\MappingException
+	 * @throws ValueError
 	 *
 	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */

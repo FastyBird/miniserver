@@ -53,6 +53,9 @@ final class Message implements Protocols\IMessage, Countable
 		$this->frames->push($fragment);
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function getOpCode(): int
 	{
 		if (count($this->frames) === 0) {
@@ -78,6 +81,9 @@ final class Message implements Protocols\IMessage, Countable
 		return $len;
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function getPayload(): string
 	{
 		if (!$this->isCoalesced()) {
@@ -93,6 +99,9 @@ final class Message implements Protocols\IMessage, Countable
 		return $buffer;
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function getContents(): string
 	{
 		if (!$this->isCoalesced()) {

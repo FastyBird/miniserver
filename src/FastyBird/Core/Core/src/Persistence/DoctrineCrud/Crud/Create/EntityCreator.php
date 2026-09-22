@@ -19,7 +19,7 @@ use function is_string;
 use function sprintf;
 
 /**
- * Doctrine CRUD entity creator
+ * Instantiates a new entity, fills its #[Crud]-marked properties from submitted values and persists it
  *
  * @template   T of Entities\IEntity
  * @extends    Crud\CrudManager<T>

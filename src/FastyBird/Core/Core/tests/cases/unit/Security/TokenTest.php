@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Security;
 
+use DateInvalidTimeZoneException;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use FastyBird\Core\Constants;
@@ -12,6 +13,7 @@ use Lcobucci\JWT;
 use PHPUnit\Framework\TestCase;
 use React\Http\Message\ServerRequest;
 use Throwable;
+use ValueError;
 
 final class TokenTest extends TestCase
 {
@@ -23,7 +25,9 @@ final class TokenTest extends TestCase
 	private const string NOW = '2026-09-21T12:00:00+00:00';
 
 	/**
+	 * @throws DateInvalidTimeZoneException
 	 * @throws DateMalformedStringException
+	 * @throws ValueError
 	 */
 	private function clock(string $at = self::NOW): DateTimeFactory\FrozenClock
 	{

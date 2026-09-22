@@ -6,7 +6,7 @@ use Attribute;
 use Doctrine\ORM\Mapping as ORMMapping;
 
 /**
- * Doctrine CRUD attribute for Doctrine2
+ * Property attribute marking a Doctrine entity field as required and/or writable through CRUD hydration
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class Crud implements ORMMapping\MappingAttribute

@@ -720,6 +720,7 @@ final class Value
 
 	/**
 	 * @throws Exceptions\InvalidArgument
+	 * @throws ValueError
 	 */
 	private static function normalizeEnumItemValue(
 		bool|int|float|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value,

@@ -5,7 +5,7 @@ namespace FastyBird\Core\Persistence\DoctrineCrud\Crud;
 use FastyBird\Core\Entities\DoctrineCrud as Entities;
 
 /**
- * Doctrine CRUD factory
+ * Interface for factories creating an EntityCrud for a given entity class
  *
  * @template T of Entities\IEntity
  */

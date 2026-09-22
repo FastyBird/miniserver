@@ -165,6 +165,9 @@ class StandardObject implements IteratorAggregate, IStandardObject
 		$this->proxy = Obj::replicate($this->proxy);
 	}
 
+	/**
+	 * @throws OutOfBoundsException
+	 */
 	public function __get(string $key): mixed
 	{
 		if (!$this->has($key)) {

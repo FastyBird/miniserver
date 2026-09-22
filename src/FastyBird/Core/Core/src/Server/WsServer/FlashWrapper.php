@@ -2,10 +2,12 @@
 
 namespace FastyBird\Core\Server\WsServer;
 
+use Exception;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use SimpleXMLElement;
 use Throwable;
+use TypeError;
 use function in_array;
 use function preg_match;
 
@@ -89,6 +91,11 @@ final class FlashWrapper implements IWrapper
 		// The Flash policy file is served entirely from handleMessage()
 	}
 
+	/**
+	 * @throws Exceptions\UnexpectedValue
+	 * @throws Exception
+	 * @throws TypeError
+	 */
 	public function handleMessage(Entities\IClient $client, string $message): void
 	{
 		if (!$this->cacheValid) {
@@ -114,6 +121,7 @@ final class FlashWrapper implements IWrapper
 	 * Builds the crossdomain file based on the template policy
 	 *
 	 * @throws Exceptions\UnexpectedValue
+	 * @throws Exception
 	 */
 	public function renderPolicy(): SimpleXMLElement
 	{

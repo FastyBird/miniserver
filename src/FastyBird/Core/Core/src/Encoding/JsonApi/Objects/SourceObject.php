@@ -13,6 +13,9 @@ use function is_string;
 class SourceObject implements ISourceObject
 {
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
 	public function __construct(private Objects\IStandardObject $data)
 	{
 		if (
@@ -23,6 +26,9 @@ class SourceObject implements ISourceObject
 		}
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getPointer(): string|null
 	{
 		$pointer = $this->data->get(JsonApi\IDocument::KEYWORD_POINTER);
@@ -34,6 +40,9 @@ class SourceObject implements ISourceObject
 		return $pointer;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getParameter(): string|null
 	{
 		$parameter = $this->data->get(JsonApi\IDocument::KEYWORD_PARAMETER);

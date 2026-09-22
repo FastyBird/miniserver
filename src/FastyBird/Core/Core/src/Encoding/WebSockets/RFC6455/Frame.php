@@ -162,6 +162,9 @@ final class Frame implements Protocols\IFrame
 		}
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function isFinal(): bool
 	{
 		if ($this->firstByte === -1) {
@@ -209,6 +212,9 @@ final class Frame implements Protocols\IFrame
 		return ($this->firstByte & 16) === 16;
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function isMasked(): bool
 	{
 		if ($this->secondByte === -1) {
@@ -220,6 +226,9 @@ final class Frame implements Protocols\IFrame
 		return ($this->secondByte & 128) === 128;
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function getMaskingKey(): string
 	{
 		if (!$this->isMasked()) {
@@ -256,6 +265,7 @@ final class Frame implements Protocols\IFrame
 	 *
 	 * @throws OutOfBoundsException
 	 * @throws Exceptions\InvalidArgument If there is an issue with the given masking key
+	 * @throws UnderflowException
 	 */
 	public function maskPayload(string|null $maskingKey = null): void
 	{
@@ -343,6 +353,9 @@ final class Frame implements Protocols\IFrame
 		return $applied;
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function getOpCode(): int
 	{
 		if ($this->firstByte === -1) {
@@ -401,6 +414,8 @@ final class Frame implements Protocols\IFrame
 	/**
 	 * This just returns the number of bytes used in the frame to describe the payload length (as opposed to # of bits)
 	 *
+	 * @throws UnderflowException
+	 *
 	 * @see getNumPayloadBits
 	 */
 	private function getNumPayloadBytes(): int
@@ -408,6 +423,9 @@ final class Frame implements Protocols\IFrame
 		return (1 + $this->getNumPayloadBits()) / 8;
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function getPayloadLength(): int
 	{
 		if ($this->defPayLen !== -1) {
@@ -440,12 +458,17 @@ final class Frame implements Protocols\IFrame
 		return $this->getPayloadLength();
 	}
 
+	/**
+	 * @throws UnderflowException
+	 */
 	public function getPayloadStartingByte(): int
 	{
 		return 1 + $this->getNumPayloadBytes() + ($this->isMasked() ? self::MASK_LENGTH : 0);
 	}
 
 	/**
+	 * @throws UnderflowException
+	 *
 	 * @todo Consider not checking mask, always returning the payload, masked or not
 	 *
 	 * {@inheritDoc}
@@ -466,6 +489,8 @@ final class Frame implements Protocols\IFrame
 	}
 
 	/**
+	 * @throws UnderflowException
+	 *
 	 * @todo This is untested, make sure the substr is right - trying to return the frame w/o the overflow
 	 *
 	 * Get the raw contents of the frame
@@ -476,6 +501,8 @@ final class Frame implements Protocols\IFrame
 	}
 
 	/**
+	 * @throws UnderflowException
+	 *
 	 * @todo Consider returning new Frame
 	 *
 	 * Sometimes clients will concatenate more than one frame over the wire

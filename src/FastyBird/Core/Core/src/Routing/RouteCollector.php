@@ -67,6 +67,9 @@ class RouteCollector implements IRouteCollector
 		return $routes;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getNamedRoute(string $name, bool $throw = true): IRoute|null
 	{
 		foreach ($this->routes as $route) {
@@ -90,6 +93,9 @@ class RouteCollector implements IRouteCollector
 		return null;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function removeNamedRoute(string $name): bool
 	{
 		$route = $this->getNamedRoute($name);
@@ -111,6 +117,9 @@ class RouteCollector implements IRouteCollector
 		return false;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function lookupRoute(string $identifier, bool $throw = true): IRoute|null
 	{
 		if (isset($this->routes[$identifier])) {
@@ -139,6 +148,8 @@ class RouteCollector implements IRouteCollector
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function get(string $pattern, $callable): IRoute
 	{
@@ -147,6 +158,8 @@ class RouteCollector implements IRouteCollector
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function post(string $pattern, $callable): IRoute
 	{
@@ -155,6 +168,8 @@ class RouteCollector implements IRouteCollector
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function put(string $pattern, $callable): IRoute
 	{
@@ -163,6 +178,8 @@ class RouteCollector implements IRouteCollector
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function patch(string $pattern, $callable): IRoute
 	{
@@ -171,6 +188,8 @@ class RouteCollector implements IRouteCollector
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function delete(string $pattern, $callable): IRoute
 	{
@@ -179,6 +198,8 @@ class RouteCollector implements IRouteCollector
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function options(string $pattern, $callable): IRoute
 	{
@@ -187,6 +208,8 @@ class RouteCollector implements IRouteCollector
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function any(string $pattern, $callable): IRoute
 	{
@@ -202,6 +225,8 @@ class RouteCollector implements IRouteCollector
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	public function map(array $methods, string $pattern, $handler): IRoute
 	{
@@ -246,6 +271,8 @@ class RouteCollector implements IRouteCollector
 	/**
 	 * @param array<string> $methods
 	 * @param callable|string|array<mixed> $callable
+	 *
+	 * @throws Exceptions\Runtime
 	 */
 	private function createRoute(array $methods, string $pattern, callable|string|array $callable): IRoute
 	{

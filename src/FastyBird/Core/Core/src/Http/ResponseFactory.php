@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Http;
 
+use FastyBird\Core\Exceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -12,6 +13,10 @@ use Psr\Http\Message\ResponseInterface;
 class ResponseFactory implements ResponseFactoryInterface
 {
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function createResponse(
 		int $code = StatusCodeInterface::STATUS_OK,
 		string $reasonPhrase = '',

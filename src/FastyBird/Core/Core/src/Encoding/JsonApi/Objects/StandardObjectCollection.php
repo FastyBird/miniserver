@@ -19,6 +19,8 @@ class StandardObjectCollection implements IStandardObjectCollection
 
 	/**
 	 * @param array<mixed> $objects
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(array $objects = [])
 	{
@@ -31,6 +33,8 @@ class StandardObjectCollection implements IStandardObjectCollection
 	 * @param array<mixed> $objects
 	 *
 	 * @phpstan-return IStandardObjectCollection<int, IStandardObject<string, mixed>>
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public static function create(array $objects): IStandardObjectCollection
 	{
@@ -46,6 +50,8 @@ class StandardObjectCollection implements IStandardObjectCollection
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function addMany(array $objects): void
 	{

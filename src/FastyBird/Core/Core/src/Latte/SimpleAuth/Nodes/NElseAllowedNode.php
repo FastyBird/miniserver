@@ -6,6 +6,7 @@ use FastyBird\Core\Exceptions;
 use Generator;
 use Latte;
 use Latte\Compiler;
+use TypeError;
 use function array_splice;
 use function count;
 use function trim;
@@ -15,6 +16,9 @@ final class NElseAllowedNode extends Compiler\Nodes\StatementNode
 
 	public Compiler\Nodes\AreaNode $content;
 
+	/**
+	 * @throws TypeError
+	 */
 	public static function create(Compiler\Tag $tag): Generator
 	{
 		$node = $tag->node = new static();

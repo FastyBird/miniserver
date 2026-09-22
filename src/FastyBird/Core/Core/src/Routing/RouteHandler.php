@@ -25,6 +25,7 @@ class RouteHandler implements RequestHandlerInterface
 	/**
 	 * {@inheritDoc}
 	 *
+	 * @throws Exceptions\Runtime
 	 * @throws SlimRouterExceptions\HttpMethodNotAllowed
 	 * @throws SlimRouterExceptions\HttpNotFound
 	 */
@@ -47,6 +48,7 @@ class RouteHandler implements RequestHandlerInterface
 	}
 
 	/**
+	 * @throws Exceptions\Runtime
 	 * @throws SlimRouterExceptions\HttpMethodNotAllowed
 	 * @throws SlimRouterExceptions\HttpNotFound
 	 */

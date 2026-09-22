@@ -31,6 +31,7 @@ use Nette\Utils;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use Throwable;
 
 /**
@@ -57,6 +58,7 @@ final class Router
 
 	/**
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @throws Utils\JsonException
 	 */
 	public function __invoke(ServerRequestInterface $request): ResponseInterface

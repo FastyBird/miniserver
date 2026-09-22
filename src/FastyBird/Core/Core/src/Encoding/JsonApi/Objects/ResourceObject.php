@@ -15,6 +15,9 @@ class ResourceObject implements IResourceObject
 
 	private IResourceIdentifierObject $identifier;
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
 	public function __construct(private Objects\IStandardObject $data)
 	{
 		if (
@@ -46,6 +49,9 @@ class ResourceObject implements IResourceObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_ATTRIBUTES);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getAttributes(): Objects\IStandardObject
 	{
 		$data = $this->data->get(JsonApi\IDocument::KEYWORD_ATTRIBUTES);
@@ -62,6 +68,10 @@ class ResourceObject implements IResourceObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_RELATIONSHIPS);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getRelationships(): IRelationshipObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_RELATIONSHIPS);
@@ -78,6 +88,10 @@ class ResourceObject implements IResourceObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_LINKS);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getLinks(): ILinkObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_LINKS);
@@ -94,6 +108,10 @@ class ResourceObject implements IResourceObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_META);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getMeta(): IMetaObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_META);

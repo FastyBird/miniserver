@@ -4,6 +4,7 @@ namespace FastyBird\Core\Entities\WebSockets;
 
 use FastyBird\Core\Encoding\WebSockets as Protocols;
 use Nette;
+use TypeError;
 
 final class WebSocket implements IWebSocket
 {
@@ -60,6 +61,9 @@ final class WebSocket implements IWebSocket
 		return $this->message;
 	}
 
+	/**
+	 * @throws TypeError
+	 */
 	public function destroyMessage(): void
 	{
 		$this->message = null;
@@ -80,6 +84,9 @@ final class WebSocket implements IWebSocket
 		return $this->frame;
 	}
 
+	/**
+	 * @throws TypeError
+	 */
 	public function destroyFrame(): void
 	{
 		$this->frame = null;

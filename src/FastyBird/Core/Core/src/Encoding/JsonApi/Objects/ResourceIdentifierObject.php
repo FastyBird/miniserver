@@ -20,6 +20,9 @@ class ResourceIdentifierObject implements IResourceIdentifierObject
 
 	private string|null $id;
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
 	public function __construct(IStandardObject $data)
 	{
 		$type = $data->get(JsonApi\IDocument::KEYWORD_TYPE);

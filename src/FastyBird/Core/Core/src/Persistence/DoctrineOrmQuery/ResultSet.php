@@ -104,6 +104,9 @@ final class ResultSet implements Countable, IteratorAggregate
 		$this->iterator = null;
 	}
 
+	/**
+	 * @throws Exceptions\InvalidState
+	 */
 	private function updating(): void
 	{
 		if ($this->frozen !== false) {
@@ -192,6 +195,10 @@ final class ResultSet implements Countable, IteratorAggregate
 		$this->iterator = null;
 	}
 
+	/**
+	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\InvalidArgument
+	 */
 	public function applyPaginator(
 		Utils\Paginator $paginator,
 		int|null $itemsPerPage = null,
@@ -207,6 +214,7 @@ final class ResultSet implements Countable, IteratorAggregate
 
 	/**
 	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\InvalidArgument
 	 */
 	public function getTotalCount(): int
 	{
@@ -230,6 +238,8 @@ final class ResultSet implements Countable, IteratorAggregate
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
+	 *
 	 * @phpstan-return ORM\Tools\Pagination\Paginator<TEntityClass>
 	 */
 	private function createPaginatedQuery(
@@ -264,6 +274,10 @@ final class ResultSet implements Countable, IteratorAggregate
 		}
 	}
 
+	/**
+	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\InvalidArgument
+	 */
 	public function isEmpty(): bool
 	{
 		$count = $this->getTotalCount();

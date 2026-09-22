@@ -8,6 +8,7 @@ use FastyBird\Core\Configuration;
 use FastyBird\Core\Exceptions;
 use Nette;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
 use function array_reverse;
 use function assert;
 use function class_parents;
@@ -17,7 +18,7 @@ use function is_array;
 use function sprintf;
 
 /**
- * Doctrine timestampable annotation driver
+ * Reads #[Timestampable] attributes off entity properties and builds their timestamping metadata
  */
 final class Timestampable
 {
@@ -68,9 +69,9 @@ final class Timestampable
 	 *
 	 * @return array<mixed>
 	 *
+	 * @throws Exceptions\InvalidMapping
 	 * @throws ORM\Mapping\MappingException
-	 *
-	 * @throws ORM\Mapping\MappingException
+	 * @throws InvalidArgumentException
 	 *
 	 * @phpstan-param class-string $class
 	 */
@@ -130,7 +131,9 @@ final class Timestampable
 	}
 
 	/**
+	 * @throws Exceptions\InvalidMapping
 	 * @throws ORM\Mapping\MappingException
+	 * @throws InvalidArgumentException
 	 *
 	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata
 	 */
@@ -200,6 +203,7 @@ final class Timestampable
 	 *
 	 * @return array<mixed>
 	 *
+	 * @throws Exceptions\InvalidMapping
 	 * @throws ORM\Mapping\MappingException
 	 *
 	 * @phpstan-param ORM\Mapping\ClassMetadata<object> $classMetadata

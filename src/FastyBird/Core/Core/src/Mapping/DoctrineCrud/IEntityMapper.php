@@ -6,7 +6,7 @@ use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use Nette\Utils;
 
 /**
- * Doctrine CRUD entity mapper interface
+ * Interface for mapping request values onto an entity's #[Crud]-marked properties
  */
 interface IEntityMapper
 {

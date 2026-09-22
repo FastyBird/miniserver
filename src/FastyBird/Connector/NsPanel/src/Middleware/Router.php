@@ -88,6 +88,7 @@ final class Router
 
 	/**
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 * @throws Utils\JsonException
 	 */
 	public function __invoke(ServerRequestInterface $request): ResponseInterface

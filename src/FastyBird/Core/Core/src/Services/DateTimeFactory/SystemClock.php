@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Services\DateTimeFactory;
 
+use DateInvalidTimeZoneException;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
@@ -15,6 +16,9 @@ class SystemClock implements Clock
 
 	private DateTimeZone $timeZone;
 
+	/**
+	 * @throws DateInvalidTimeZoneException
+	 */
 	public function __construct(DateTimeZone|null $timeZone = null)
 	{
 		$this->timeZone = $timeZone ?? new DateTimeZone(date_default_timezone_get());

@@ -40,6 +40,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function hasResource(): bool
@@ -50,6 +51,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function getResource(): Objects\IResourceObject
@@ -64,6 +66,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function hasResources(): bool
@@ -74,6 +77,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function getResources(): Objects\IResourceObjectCollection
@@ -88,6 +92,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function getData(): Objects\IStandardObject|Objects\IStandardObjectCollection|null
@@ -115,6 +120,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function getLinks(): Objects\ILinkObjectCollection
@@ -134,6 +140,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function getMeta(): Objects\IMetaObjectCollection
@@ -153,6 +160,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function getIncluded(): Objects\IResourceObjectCollection
@@ -172,6 +180,7 @@ class Document implements IDocument
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
 	public function getErrors(): Objects\IErrorObjectCollection

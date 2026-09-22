@@ -7,6 +7,7 @@ use FastyBird\Core\Http\Response;
 use FastyBird\Core\Http\ServerResponse;
 use FastyBird\Core\Http\Stream;
 use InvalidArgumentException;
+use JsonException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use function json_decode;
@@ -17,6 +18,8 @@ final class ResponseTest extends TestCase
 	/**
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
+	 * @throws JsonException
+	 * @throws RuntimeException
 	 */
 	public function testJsonSetsJsonContentTypeAndRoundTripsTheBody(): void
 	{
@@ -33,6 +36,7 @@ final class ResponseTest extends TestCase
 	/**
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
+	 * @throws RuntimeException
 	 */
 	public function testTextHtmlAndXmlDefaultToStatus200WithTheirOwnContentType(): void
 	{
@@ -108,6 +112,7 @@ final class ResponseTest extends TestCase
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 */
 	public function testWithHeaderReturnsANewInstanceAndLeavesTheOriginalUntouched(): void
 	{
@@ -123,6 +128,7 @@ final class ResponseTest extends TestCase
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 */
 	public function testWithStatusReturnsANewInstanceAndLeavesTheOriginalUntouched(): void
 	{
@@ -138,6 +144,7 @@ final class ResponseTest extends TestCase
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 */
 	public function testWithBodyReturnsANewInstanceAndLeavesTheOriginalUntouched(): void
 	{
@@ -152,6 +159,7 @@ final class ResponseTest extends TestCase
 	/**
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
+	 * @throws RuntimeException
 	 */
 	public function testWithProtocolVersionReturnsANewInstanceAndLeavesTheOriginalUntouched(): void
 	{
@@ -167,6 +175,7 @@ final class ResponseTest extends TestCase
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 */
 	public function testWithoutHeaderRemovesAHeaderThatWithHeaderAdded(): void
 	{
@@ -181,6 +190,7 @@ final class ResponseTest extends TestCase
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
 	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
 	 */
 	public function testWithAddedHeaderAppendsRatherThanReplaces(): void
 	{
@@ -207,6 +217,7 @@ final class ResponseTest extends TestCase
 	 * @throws Exceptions\Runtime
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
+	 * @throws RuntimeException
 	 */
 	public function testServerResponseWithAttributeIsImmutableAndAttributeAccessorsReportPresence(): void
 	{

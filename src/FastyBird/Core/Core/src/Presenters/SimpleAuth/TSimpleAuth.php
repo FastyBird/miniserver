@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Presenters\SimpleAuth;
 
 use FastyBird\Core\Configuration;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use FastyBird\Core\Security\SimpleAuth\Access;
 use Nette\Application;
@@ -40,6 +41,8 @@ trait TSimpleAuth
 	 *
 	 * @throws Application\ForbiddenRequestException
 	 * @throws Application\UI\InvalidLinkException
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 */
 	public function checkRequirements(ReflectionClass|ReflectionMethod $element): void
 	{

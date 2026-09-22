@@ -13,6 +13,9 @@ use function is_string;
 class LinkObject implements ILinkObject
 {
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
 	public function __construct(private Objects\IStandardObject $data)
 	{
 		if (!$data->has(JsonApi\IDocument::KEYWORD_HREF)) {
@@ -20,6 +23,9 @@ class LinkObject implements ILinkObject
 		}
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getHref(): string
 	{
 		$href = $this->data->get(JsonApi\IDocument::KEYWORD_HREF);
@@ -36,6 +42,10 @@ class LinkObject implements ILinkObject
 		return $this->data->has(JsonApi\IDocument::KEYWORD_META);
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 */
 	public function getMeta(): IMetaObjectCollection
 	{
 		$raw = $this->data->get(JsonApi\IDocument::KEYWORD_META);
