@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Transformers\Tools;
 
+use Override;
 use function cos;
 use function floatval;
 use function fmod;
@@ -115,6 +116,7 @@ final readonly class HsiTransformer implements Transformer
 		); // For some reason, the rgb numbers need to be X3...
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

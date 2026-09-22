@@ -5,7 +5,7 @@ namespace FastyBird\Core\Exceptions;
 use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use Throwable;
 
-class MissingRequiredField extends InvalidState
+final class MissingRequiredField extends InvalidState
 {
 
 	public function __construct(

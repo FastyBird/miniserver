@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use LogicException as PHPLogicException;
 
-class Logic extends PHPLogicException implements Exception
+final class Logic extends PHPLogicException implements Exception
 {
 
 }

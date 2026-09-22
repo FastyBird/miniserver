@@ -22,7 +22,7 @@ use function is_file;
 /**
  * HTTP server command
  */
-class HttpServer extends Console\Command\Command
+final class HttpServer extends Console\Command\Command
 {
 
 	use Nette\SmartObject;

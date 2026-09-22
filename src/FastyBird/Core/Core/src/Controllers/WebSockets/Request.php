@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Controllers\WebSockets;
 
 use Nette;
+use Override;
 
 /**
  * Controller request
@@ -10,7 +11,7 @@ use Nette;
  * @property string $controllerName
  * @property array $parameters
  */
-class Request implements IRequest
+final class Request implements IRequest
 {
 
 	/**
@@ -26,11 +27,13 @@ class Request implements IRequest
 	{
 	}
 
+	#[Override]
 	public function setControllerName(string $name): void
 	{
 		$this->name = $name;
 	}
 
+	#[Override]
 	public function getControllerName(): string
 	{
 		return $this->name;
@@ -39,6 +42,7 @@ class Request implements IRequest
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function setParameters(array $params): void
 	{
 		$this->params = $params;
@@ -47,11 +51,13 @@ class Request implements IRequest
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getParameters(): array
 	{
 		return $this->params;
 	}
 
+	#[Override]
 	public function getParameter(string $key): mixed
 	{
 		return $this->params[$key] ?? null;

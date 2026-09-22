@@ -7,6 +7,7 @@ use FastyBird\Core\Exceptions;
 use Nette;
 use Nette\DI;
 use Nette\Utils;
+use Override;
 use ReflectionClass;
 use ReflectionException;
 use function array_keys;
@@ -29,7 +30,7 @@ use const E_USER_WARNING;
 /**
  * Default controller loader
  */
-class ControllerFactory implements IControllerFactory
+final class ControllerFactory implements IControllerFactory
 {
 
 	/**
@@ -80,6 +81,7 @@ class ControllerFactory implements IControllerFactory
 	 * @throws Exceptions\InvalidController
 	 * @throws ReflectionException
 	 */
+	#[Override]
 	public function createController(string $name): IController
 	{
 		return call_user_func_array($this->factory, [$this->getControllerClass($name)]);
@@ -93,6 +95,7 @@ class ControllerFactory implements IControllerFactory
 	 * @throws Exceptions\InvalidController
 	 * @throws ReflectionException
 	 */
+	#[Override]
 	public function getControllerClass(string &$name): string
 	{
 		if (isset($this->cache[$name])) {

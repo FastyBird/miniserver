@@ -7,7 +7,7 @@ use Nette;
 /**
  * Consumer configuration
  */
-final class Info
+final readonly class Info
 {
 
 	use Nette\SmartObject;

@@ -7,6 +7,7 @@ use Nette\Bootstrap;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;
+use Override;
 use ReflectionClass;
 use function array_keys;
 use function assert;
@@ -24,7 +25,7 @@ use const PHP_VERSION_ID;
 /**
  * Extended container configurator
  */
-class Configurator extends Bootstrap\Configurator
+final class Configurator extends Bootstrap\Configurator
 {
 
 	private bool $forceReloadContainer = false;
@@ -37,6 +38,7 @@ class Configurator extends Bootstrap\Configurator
 	/**
 	 * @return class-string<Container>
 	 */
+	#[Override]
 	public function loadContainer(): string
 	{
 		/** @infection-ignore-all */

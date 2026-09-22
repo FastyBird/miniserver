@@ -4,6 +4,7 @@ namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
 use Nette;
+use Override;
 use TypeError;
 use function array_key_exists;
 use function sprintf;
@@ -105,6 +106,7 @@ final class WampResponse implements IResponse
 	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 */
+	#[Override]
 	public function setCode(int $code, string|null $reason = null): void
 	{
 		if ($code < 100 || $code > 599) {
@@ -119,16 +121,19 @@ final class WampResponse implements IResponse
 		) ? self::$statusTexts[$code] : 'Unknown status'));
 	}
 
+	#[Override]
 	public function getCode(): int
 	{
 		return $this->code;
 	}
 
+	#[Override]
 	public function addHeader(string $name, string $value): void
 	{
 		$this->headers[$name] = $value;
 	}
 
+	#[Override]
 	public function getHeader(string $header, mixed $default = null): mixed
 	{
 		if (isset($this->headers[$header])) {
@@ -141,21 +146,25 @@ final class WampResponse implements IResponse
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getHeaders(): array
 	{
 		return $this->headers;
 	}
 
+	#[Override]
 	public function getReason(): string
 	{
 		return $this->reason;
 	}
 
+	#[Override]
 	public function setBody(string|null $body = null): void
 	{
 		$this->body = $body;
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		$message = 'HTTP/1.1 ' . $this->code . ' ' . $this->reason;

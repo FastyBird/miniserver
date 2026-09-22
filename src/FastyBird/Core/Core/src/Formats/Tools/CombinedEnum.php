@@ -7,6 +7,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Utilities\Tools as Utilities;
 use IteratorAggregate;
 use Nette;
+use Override;
 use Traversable;
 use TypeError;
 use ValueError;
@@ -107,6 +108,7 @@ final class CombinedEnum implements IteratorAggregate
 		);
 	}
 
+	#[Override]
 	public function getIterator(): Traversable
 	{
 		return new ArrayIterator($this->getItems());
@@ -125,6 +127,7 @@ final class CombinedEnum implements IteratorAggregate
 		return $this->toArray();
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return implode(',', array_map(static fn (array $item) =>

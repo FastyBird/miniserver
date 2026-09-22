@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use RuntimeException as PHPRuntimeException;
 
-class BadResponse extends PHPRuntimeException implements Exception
+final class BadResponse extends PHPRuntimeException implements Exception
 {
 
 }

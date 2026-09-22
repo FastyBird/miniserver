@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use Nette;
+use Override;
 use function date_default_timezone_get;
 
 class SystemClock implements Clock
@@ -24,6 +25,7 @@ class SystemClock implements Clock
 		$this->timeZone = $timeZone ?? new DateTimeZone(date_default_timezone_get());
 	}
 
+	#[Override]
 	public function getNow(): DateTimeInterface
 	{
 		return (new DateTimeImmutable('now'))

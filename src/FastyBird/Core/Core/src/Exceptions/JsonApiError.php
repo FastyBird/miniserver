@@ -9,7 +9,7 @@ use function strval;
 /**
  * Process single error
  */
-class JsonApiError extends PHPException implements Exception, JsonApi
+final class JsonApiError extends PHPException implements Exception, JsonApi
 {
 
 	/**

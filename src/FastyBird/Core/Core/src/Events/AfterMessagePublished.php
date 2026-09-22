@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * After message published event
  */
-class AfterMessagePublished extends EventDispatcher\Event
+final class AfterMessagePublished extends EventDispatcher\Event
 {
 
 	public function __construct(

@@ -6,6 +6,7 @@ use FastyBird\Core\Encoding\WebSockets as Protocols;
 use FastyBird\Core\Exceptions;
 use Nette;
 use OutOfBoundsException;
+use Override;
 use UnderflowException;
 use function chr;
 use function extension_loaded;
@@ -127,6 +128,7 @@ final class Frame implements Protocols\IFrame
 		$this->bytesReceived = 2 + strlen($ext) + $this->defPayLen;
 	}
 
+	#[Override]
 	public function isCoalesced(): bool
 	{
 		if ($this->isCoalesced === true) {
@@ -146,6 +148,7 @@ final class Frame implements Protocols\IFrame
 		return $this->isCoalesced;
 	}
 
+	#[Override]
 	public function addBuffer(string $buffer): void
 	{
 		$len = strlen($buffer);
@@ -165,6 +168,7 @@ final class Frame implements Protocols\IFrame
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function isFinal(): bool
 	{
 		if ($this->firstByte === -1) {
@@ -215,6 +219,7 @@ final class Frame implements Protocols\IFrame
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function isMasked(): bool
 	{
 		if ($this->secondByte === -1) {
@@ -229,6 +234,7 @@ final class Frame implements Protocols\IFrame
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function getMaskingKey(): string
 	{
 		if (!$this->isMasked()) {
@@ -356,6 +362,7 @@ final class Frame implements Protocols\IFrame
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function getOpCode(): int
 	{
 		if ($this->firstByte === -1) {
@@ -426,6 +433,7 @@ final class Frame implements Protocols\IFrame
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function getPayloadLength(): int
 	{
 		if ($this->defPayLen !== -1) {
@@ -473,6 +481,7 @@ final class Frame implements Protocols\IFrame
 	 *
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getPayload(): string
 	{
 		if (!$this->isCoalesced()) {
@@ -495,6 +504,7 @@ final class Frame implements Protocols\IFrame
 	 *
 	 * Get the raw contents of the frame
 	 */
+	#[Override]
 	public function getContents(): string
 	{
 		return substr($this->data, 0, $this->getPayloadStartingByte() + $this->getPayloadLength());

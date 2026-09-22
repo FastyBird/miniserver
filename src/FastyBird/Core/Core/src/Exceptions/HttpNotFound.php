@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Exceptions;
 
-class HttpNotFound extends HttpSpecialized
+final class HttpNotFound extends HttpSpecialized
 {
 
 	protected $code = 404;

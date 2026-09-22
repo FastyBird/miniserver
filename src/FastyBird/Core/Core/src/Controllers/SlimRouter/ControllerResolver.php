@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Controllers\SlimRouter;
 
 use FastyBird\Core\Exceptions;
+use Override;
 use function class_exists;
 use function is_array;
 use function is_callable;
@@ -25,6 +26,7 @@ final class ControllerResolver implements IControllerResolver
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function resolve($toResolve): callable
 	{
 		if (is_callable($toResolve)) {

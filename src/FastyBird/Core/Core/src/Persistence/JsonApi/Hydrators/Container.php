@@ -14,7 +14,7 @@ use SplObjectStorage;
  *
  * @template T of object
  */
-class Container
+final class Container
 {
 
 	/** @var SplObjectStorage<Hydrator<T>, null> */

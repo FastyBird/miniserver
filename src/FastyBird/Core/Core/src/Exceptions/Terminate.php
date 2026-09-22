@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use Exception as PHPException;
 
-class Terminate extends PHPException implements Exception
+final class Terminate extends PHPException implements Exception
 {
 
 }

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Exceptions;
 
-class TopicNotFound extends Storage implements Exception
+final class TopicNotFound extends Storage implements Exception
 {
 
 }

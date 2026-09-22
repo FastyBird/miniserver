@@ -5,6 +5,7 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 use ArrayIterator;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use Traversable;
 use function array_key_exists;
 use function array_keys;
@@ -15,7 +16,7 @@ use function sprintf;
 /**
  * Relationship object collection
  */
-class RelationshipObjectCollection implements IRelationshipObjectCollection
+final class RelationshipObjectCollection implements IRelationshipObjectCollection
 {
 
 	/**
@@ -64,6 +65,7 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addMany(array $relationship): void
 	{
 		foreach ($relationship as $key => $item) {
@@ -75,6 +77,7 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 		}
 	}
 
+	#[Override]
 	public function add(IRelationshipObject $relationship, string $key): void
 	{
 		if (!$this->has($key)) {
@@ -82,6 +85,7 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 		}
 	}
 
+	#[Override]
 	public function has(string $key): bool
 	{
 		return array_key_exists($key, $this->stack);
@@ -90,6 +94,7 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function get(string $key): IRelationshipObject
 	{
 		if (!$this->has($key)) {
@@ -104,6 +109,7 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 	 *
 	 * @phpstan-return ArrayIterator<string, IRelationshipObject>
 	 */
+	#[Override]
 	public function getIterator(): ArrayIterator
 	{
 		return new ArrayIterator($this->stack);
@@ -112,6 +118,7 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getAll(): Traversable
 	{
 		foreach (array_keys($this->stack) as $key) {
@@ -119,11 +126,13 @@ class RelationshipObjectCollection implements IRelationshipObjectCollection
 		}
 	}
 
+	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];
 	}
 
+	#[Override]
 	public function count(): int
 	{
 		return count($this->stack);

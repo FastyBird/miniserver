@@ -8,7 +8,7 @@ use Sentry\ClientInterface;
 /**
  * Sentry connection helpers
  */
-class Sentry
+final readonly class Sentry
 {
 
 	use Nette\SmartObject;

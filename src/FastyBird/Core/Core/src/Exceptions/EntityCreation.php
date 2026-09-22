@@ -5,7 +5,7 @@ namespace FastyBird\Core\Exceptions;
 use RuntimeException;
 use Throwable;
 
-class EntityCreation extends RuntimeException implements Exception
+final class EntityCreation extends RuntimeException implements Exception
 {
 
 	public function __construct(

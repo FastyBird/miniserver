@@ -25,7 +25,7 @@ use function strval;
  *
  * @internal
  */
-class Reflection
+final class Reflection
 {
 
 	/**

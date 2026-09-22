@@ -17,7 +17,7 @@ use Nette\Utils;
  * @template   T of Entities\IEntity
  * @extends    Crud\CrudManager<T>
  */
-class EntityUpdater extends Crud\CrudManager
+final class EntityUpdater extends Crud\CrudManager
 {
 
 	/** @var array<callable(Entities\IEntity, Utils\ArrayHash): void> */

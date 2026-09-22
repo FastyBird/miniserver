@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use UnexpectedValueException as PHPUnexpectedValueException;
 
-class UnexpectedValue extends PHPUnexpectedValueException implements Exception
+final class UnexpectedValue extends PHPUnexpectedValueException implements Exception
 {
 
 }

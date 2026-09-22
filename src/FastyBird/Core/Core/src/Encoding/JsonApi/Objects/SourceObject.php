@@ -5,12 +5,13 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use function is_string;
 
 /**
  * Source object
  */
-class SourceObject implements ISourceObject
+final class SourceObject implements ISourceObject
 {
 
 	/**
@@ -29,6 +30,7 @@ class SourceObject implements ISourceObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getPointer(): string|null
 	{
 		$pointer = $this->data->get(JsonApi\IDocument::KEYWORD_POINTER);
@@ -43,6 +45,7 @@ class SourceObject implements ISourceObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getParameter(): string|null
 	{
 		$parameter = $this->data->get(JsonApi\IDocument::KEYWORD_PARAMETER);

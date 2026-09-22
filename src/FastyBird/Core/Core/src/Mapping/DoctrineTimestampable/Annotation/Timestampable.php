@@ -8,7 +8,7 @@ use Attribute;
  * Property attribute marking a Doctrine entity field to be stamped with the current time on create, update or delete
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-final class Timestampable
+final readonly class Timestampable
 {
 
 	/**

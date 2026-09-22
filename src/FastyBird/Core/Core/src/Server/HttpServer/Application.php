@@ -19,7 +19,7 @@ use function ucwords;
 /**
  * Base application service
  */
-class Application
+final readonly class Application
 {
 
 	use Nette\SmartObject;

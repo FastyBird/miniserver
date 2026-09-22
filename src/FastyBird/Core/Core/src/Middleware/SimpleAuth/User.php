@@ -5,6 +5,7 @@ namespace FastyBird\Core\Middleware\SimpleAuth;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Services\SimpleAuth;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -13,7 +14,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * User login middleware
  */
-final class User implements MiddlewareInterface
+final readonly class User implements MiddlewareInterface
 {
 
 	public function __construct(private readonly SimpleAuth\Auth $auth)
@@ -25,6 +26,7 @@ final class User implements MiddlewareInterface
 	 * @throws Exceptions\InvalidState
 	 * @throws SimpleAuthExceptions\UnauthorizedAccess
 	 */
+	#[Override]
 	public function process(
 		ServerRequestInterface $request,
 		RequestHandlerInterface $handler,

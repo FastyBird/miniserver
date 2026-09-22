@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher;
  *
  * @template T of Documents\Document
  */
-class LoadClassMetadata extends EventDispatcher\Event
+final class LoadClassMetadata extends EventDispatcher\Event
 {
 
 	/**

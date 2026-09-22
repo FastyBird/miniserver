@@ -5,6 +5,7 @@ namespace FastyBird\Core\Encoding\WebSockets\RFC6455;
 use Countable;
 use FastyBird\Core\Encoding\WebSockets as Protocols;
 use Nette;
+use Override;
 use SplDoublyLinkedList;
 use UnderflowException;
 use function count;
@@ -27,11 +28,13 @@ final class Message implements Protocols\IMessage, Countable
 		$this->frames = new SplDoublyLinkedList();
 	}
 
+	#[Override]
 	public function count(): int
 	{
 		return count($this->frames);
 	}
 
+	#[Override]
 	public function isCoalesced(): bool
 	{
 		if (count($this->frames) === 0) {
@@ -48,6 +51,7 @@ final class Message implements Protocols\IMessage, Countable
 	 *
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function addFrame(Protocols\IFrame $fragment): void
 	{
 		$this->frames->push($fragment);
@@ -56,6 +60,7 @@ final class Message implements Protocols\IMessage, Countable
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function getOpCode(): int
 	{
 		if (count($this->frames) === 0) {
@@ -65,6 +70,7 @@ final class Message implements Protocols\IMessage, Countable
 		return $this->frames->bottom()->getOpCode();
 	}
 
+	#[Override]
 	public function getPayloadLength(): int
 	{
 		$len = 0;
@@ -84,6 +90,7 @@ final class Message implements Protocols\IMessage, Countable
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function getPayload(): string
 	{
 		if (!$this->isCoalesced()) {
@@ -102,6 +109,7 @@ final class Message implements Protocols\IMessage, Countable
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function getContents(): string
 	{
 		if (!$this->isCoalesced()) {

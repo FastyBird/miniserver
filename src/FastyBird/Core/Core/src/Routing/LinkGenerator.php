@@ -20,7 +20,7 @@ use function urldecode;
 /**
  * WebSockets connection link generator
  */
-class LinkGenerator
+final class LinkGenerator
 {
 
 	/**

@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Before message consumed event
  */
-class BeforeMessageConsumed extends EventDispatcher\Event
+final class BeforeMessageConsumed extends EventDispatcher\Event
 {
 
 	public function __construct(

@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * HTTP server PSR-7 response event
  */
-class HttpServerResponse extends EventDispatcher\Event
+final class HttpServerResponse extends EventDispatcher\Event
 {
 
 	public function __construct(

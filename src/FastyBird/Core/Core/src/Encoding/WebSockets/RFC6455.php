@@ -7,6 +7,7 @@ use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use Nette;
+use Override;
 use TypeError;
 use UnderflowException;
 use function array_key_exists;
@@ -58,11 +59,13 @@ class RFC6455 implements IProtocol
 		$this->validator = new Validator();
 	}
 
+	#[Override]
 	public function getVersion(): int
 	{
 		return 13;
 	}
 
+	#[Override]
 	public function isVersion(Http\IRequest $httpRequest): bool
 	{
 		$version = (int) (string) $httpRequest->getHeader('Sec-WebSocket-Version');
@@ -76,6 +79,7 @@ class RFC6455 implements IProtocol
 	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 */
+	#[Override]
 	public function doHandshake(Http\IRequest $httpRequest): Http\IResponse
 	{
 		if ($this->verifier->verifyAll($httpRequest) !== true) {
@@ -92,6 +96,7 @@ class RFC6455 implements IProtocol
 	/**
 	 * @throws UnderflowException
 	 */
+	#[Override]
 	public function handleMessage(
 		Entities\IClient $client,
 		Application\IApplication $application,
@@ -242,6 +247,7 @@ class RFC6455 implements IProtocol
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function send(Entities\IClient $client, $payload): void
 	{
 		if (!$client->getWebSocket()->isClosing()) {
@@ -253,6 +259,7 @@ class RFC6455 implements IProtocol
 		}
 	}
 
+	#[Override]
 	public function close(Entities\IClient $client, int|null $code = null): void
 	{
 		if ($client->getWebSocket()->isClosing()) {
@@ -330,6 +337,7 @@ class RFC6455 implements IProtocol
 		//$this->closeCodes[RFC6455\Frame::CLOSE_TLS] = true;
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return (string) $this->getVersion();

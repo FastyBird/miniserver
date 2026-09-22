@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Helpers\WsServer;
 
 use Nette;
+use Override;
 use Psr\Log;
 
 /**
@@ -26,6 +27,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function emergency($message, array $context = []): void
 	{
 		if ($this->formatter) {
@@ -41,6 +43,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function alert($message, array $context = []): void
 	{
 		if ($this->formatter) {
@@ -56,6 +59,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function critical($message, array $context = []): void
 	{
 		if ($this->formatter) {
@@ -71,6 +75,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function error($message, array $context = []): void
 	{
 		if ($this->formatter) {
@@ -86,6 +91,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function warning($message, array $context = []): void
 	{
 		if ($this->formatter) {
@@ -101,6 +107,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function notice($message, array $context = []): void
 	{
 		if ($this->formatter) {
@@ -116,6 +123,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function info($message, array $context = []): void
 	{
 		if ($this->formatter) {
@@ -131,6 +139,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function debug($message, array $context = []): void
 	{
 		if ($this->formatter) {
@@ -146,6 +155,7 @@ final class Console implements Log\LoggerInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function log($level, $message, array $context = []): void
 	{
 		if ($this->formatter) {

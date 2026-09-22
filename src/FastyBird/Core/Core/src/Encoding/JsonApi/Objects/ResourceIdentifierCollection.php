@@ -6,6 +6,7 @@ use ArrayIterator;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use function count;
 use function in_array;
 use function is_array;
@@ -14,7 +15,7 @@ use function is_string;
 /**
  * Resource identifier object
  */
-class ResourceIdentifierCollection implements IResourceIdentifierCollection
+final class ResourceIdentifierCollection implements IResourceIdentifierCollection
 {
 
 	/** @var array<IResourceIdentifierObject> */
@@ -63,6 +64,7 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addMany(array $identifiers): void
 	{
 		foreach ($identifiers as $identifier) {
@@ -74,6 +76,7 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 		}
 	}
 
+	#[Override]
 	public function add(IResourceIdentifierObject $identifier): void
 	{
 		if (!$this->has($identifier)) {
@@ -81,6 +84,7 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 		}
 	}
 
+	#[Override]
 	public function has(IResourceIdentifierObject $identifier): bool
 	{
 		return in_array($identifier, $this->stack, true);
@@ -91,6 +95,7 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 	 *
 	 * @phpstan-return ArrayIterator<int, IResourceIdentifierObject>
 	 */
+	#[Override]
 	public function getIterator(): ArrayIterator
 	{
 		return new ArrayIterator($this->getAll());
@@ -99,21 +104,25 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getAll(): array
 	{
 		return $this->stack;
 	}
 
+	#[Override]
 	public function count(): int
 	{
 		return count($this->stack);
 	}
 
+	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];
 	}
 
+	#[Override]
 	public function isOnly(string|array $typeOrTypes): bool
 	{
 		foreach ($this->stack as $identifier) {
@@ -128,6 +137,7 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function map(array|null $typeMap = null): mixed
 	{
 		$ret = [];
@@ -148,6 +158,7 @@ class ResourceIdentifierCollection implements IResourceIdentifierCollection
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getIds(): array
 	{
 		$ids = [];

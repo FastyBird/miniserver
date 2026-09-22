@@ -6,6 +6,7 @@ use ArrayIterator;
 use FastyBird\Core\Entities\WsServer\Topics as Entities;
 use FastyBird\Core\Exceptions;
 use Nette;
+use Override;
 use Psr\Log;
 use Throwable;
 use function sprintf;
@@ -36,11 +37,13 @@ final class Storage implements IStorage
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
+	#[Override]
 	public function setStorageDriver(Drivers\IDriver $driver): void
 	{
 		$this->driver = $driver;
 	}
 
+	#[Override]
 	public static function getStorageId(Entities\ITopic $topic): string
 	{
 		return $topic->getId();
@@ -52,6 +55,7 @@ final class Storage implements IStorage
 	 * @throws Exceptions\Storage
 	 * @throws Exceptions\TopicNotFound
 	 */
+	#[Override]
 	public function getTopic(string $identifier): Entities\ITopic
 	{
 		try {
@@ -75,6 +79,7 @@ final class Storage implements IStorage
 	 *
 	 * @throws Exceptions\Storage
 	 */
+	#[Override]
 	public function addTopic(string $identifier, Entities\ITopic $topic): void
 	{
 		$context = [
@@ -100,6 +105,7 @@ final class Storage implements IStorage
 	 *
 	 * @throws Exceptions\Storage
 	 */
+	#[Override]
 	public function hasTopic(string $identifier): bool
 	{
 		try {
@@ -117,6 +123,7 @@ final class Storage implements IStorage
 	 *
 	 * @throws Exceptions\Storage
 	 */
+	#[Override]
 	public function removeTopic(string $identifier): bool
 	{
 		$this->logger->debug('REMOVE TOPIC ' . $identifier);
@@ -134,6 +141,7 @@ final class Storage implements IStorage
 	/**
 	 * @return array<Entities\ITopic>|ArrayIterator
 	 */
+	#[Override]
 	public function getIterator(): ArrayIterator
 	{
 		return new ArrayIterator($this->driver->fetchAll());

@@ -19,7 +19,7 @@ use function strtolower;
 /**
  * Reflection helpers for autowiring constructor arguments during entity creation
  */
-class Helpers
+final class Helpers
 {
 
 	/**

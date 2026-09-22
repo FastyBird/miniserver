@@ -15,7 +15,7 @@ use Ramsey\Uuid;
  * @template T of Entities\Tokens\Token
  * @extends  DoctrineOrmQuery\QueryObject<T>
  */
-class FindTokens extends DoctrineOrmQuery\QueryObject
+final class FindTokens extends DoctrineOrmQuery\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

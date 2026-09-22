@@ -3,11 +3,12 @@
 namespace FastyBird\Core\Controllers\WebSockets\Responses;
 
 use Nette;
+use Override;
 
 /**
  * Null response
  */
-class NullResponse implements IResponse
+final class NullResponse implements IResponse
 {
 
 	/**
@@ -15,11 +16,13 @@ class NullResponse implements IResponse
 	 */
 	use Nette\SmartObject;
 
+	#[Override]
 	public function create(): array|null
 	{
 		return null;
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->create();

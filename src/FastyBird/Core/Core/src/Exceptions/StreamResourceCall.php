@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Exceptions;
 
-class StreamResourceCall extends Runtime
+final class StreamResourceCall extends Runtime
 {
 
 }

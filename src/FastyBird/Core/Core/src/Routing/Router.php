@@ -9,6 +9,7 @@ use FastyBird\Core\Middleware\SlimRouter\IMiddlewareDispatcher;
 use FastyBird\Core\Middleware\SlimRouter\MiddlewareDispatcher;
 use Fig\Http\Message\RequestMethodInterface;
 use InvalidArgumentException;
+use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -54,16 +55,19 @@ class Router implements IRouter
 		$this->middlewareDispatcher = new MiddlewareDispatcher($routeHandler);
 	}
 
+	#[Override]
 	public function getBasePath(): string
 	{
 		return $this->basePath;
 	}
 
+	#[Override]
 	public function setBasePath(string $basePath): void
 	{
 		$this->basePath = $basePath;
 	}
 
+	#[Override]
 	public function getNamedRoute(string $name): IRoute|null
 	{
 		return $this->routeCollector->getNamedRoute($name);
@@ -72,6 +76,7 @@ class Router implements IRouter
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function lookupRoute(string $identifier): IRoute
 	{
 		$route = $this->routeCollector->lookupRoute($identifier);
@@ -83,6 +88,7 @@ class Router implements IRouter
 		return $route;
 	}
 
+	#[Override]
 	public function addMiddleware(MiddlewareInterface $middleware): void
 	{
 		$this->middlewareDispatcher->add($middleware);
@@ -91,6 +97,7 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function get(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_GET], $pattern, $callable);
@@ -99,6 +106,7 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function post(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_POST], $pattern, $callable);
@@ -107,6 +115,7 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function put(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_PUT], $pattern, $callable);
@@ -115,6 +124,7 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function patch(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_PATCH], $pattern, $callable);
@@ -123,6 +133,7 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function delete(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_DELETE], $pattern, $callable);
@@ -131,6 +142,7 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function options(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_OPTIONS], $pattern, $callable);
@@ -139,6 +151,7 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function any(string $pattern, $callable): IRoute
 	{
 		return $this->map([
@@ -154,11 +167,13 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function map(array $methods, string $pattern, $callable): IRoute
 	{
 		return $this->routeCollector->map($methods, $pattern, $callable);
 	}
 
+	#[Override]
 	public function group(string $pattern, callable $callable): IRouteGroup
 	{
 		return $this->routeCollector->group($pattern, $callable);
@@ -167,6 +182,7 @@ class Router implements IRouter
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function urlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{
 		return $this->routeParser->urlFor($routeName, $data, $queryParams);
@@ -175,6 +191,7 @@ class Router implements IRouter
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 		$response = $this->middlewareDispatcher->handle($request);
@@ -200,6 +217,7 @@ class Router implements IRouter
 	/**
 	 * @return RecursiveArrayIterator<IRoute>
 	 */
+	#[Override]
 	public function getIterator(): RecursiveArrayIterator
 	{
 		return new RecursiveArrayIterator($this->routeCollector->getRoutes());

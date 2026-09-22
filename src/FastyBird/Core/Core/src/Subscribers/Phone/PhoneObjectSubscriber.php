@@ -8,6 +8,7 @@ use FastyBird\Core\Entities\Phone as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Phone as Types;
 use Nette;
+use Override;
 use ReflectionClass;
 use ReflectionException;
 use function get_called_class;
@@ -28,6 +29,7 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 	 *
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

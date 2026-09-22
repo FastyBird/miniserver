@@ -8,6 +8,7 @@ use FastyBird\Core\Entities\WsServer as WebSocketsEntities;
 use FastyBird\Core\Exceptions;
 use Nette;
 use Nette\Utils;
+use Override;
 use SplObjectStorage;
 use Traversable;
 use function assert;
@@ -47,6 +48,7 @@ final class Topic implements ITopic
 		$this->subscribers = new SplObjectStorage();
 	}
 
+	#[Override]
 	public function getId(): string
 	{
 		return $this->id;
@@ -58,6 +60,7 @@ final class Topic implements ITopic
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function broadcast(
 		Responses\IResponse|string $message,
 		array $exclude = [],
@@ -89,16 +92,19 @@ final class Topic implements ITopic
 		}
 	}
 
+	#[Override]
 	public function has(WebSocketsEntities\IClient $client): bool
 	{
 		return $this->subscribers->offsetExists($client);
 	}
 
+	#[Override]
 	public function add(WebSocketsEntities\IClient $client): void
 	{
 		$this->subscribers->offsetSet($client);
 	}
 
+	#[Override]
 	public function remove(WebSocketsEntities\IClient $client): void
 	{
 		if ($this->subscribers->offsetExists($client)) {
@@ -106,26 +112,31 @@ final class Topic implements ITopic
 		}
 	}
 
+	#[Override]
 	public function getIterator(): Traversable
 	{
 		return $this->subscribers;
 	}
 
+	#[Override]
 	public function count(): int
 	{
 		return $this->subscribers->count();
 	}
 
+	#[Override]
 	public function enableAutoDelete(): void
 	{
 		$this->autoDelete = true;
 	}
 
+	#[Override]
 	public function disableAutoDelete(): void
 	{
 		$this->autoDelete = false;
 	}
 
+	#[Override]
 	public function isAutoDeleteEnabled(): bool
 	{
 		return $this->autoDelete;
@@ -134,6 +145,7 @@ final class Topic implements ITopic
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function __toString()
 	{
 		return $this->getId();

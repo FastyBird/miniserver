@@ -6,6 +6,7 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Types;
+use Override;
 use ValueError;
 use function sprintf;
 use function strlen;
@@ -15,7 +16,7 @@ use function substr;
 /**
  * Doctrine DBAL type that persists DateTime values normalized to UTC
  */
-class UTCDateTime extends Types\DateTimeType
+final class UTCDateTime extends Types\DateTimeType
 {
 
 	// Define datatype name
@@ -34,6 +35,8 @@ class UTCDateTime extends Types\DateTimeType
 	// DBAL 3, whose parent declares no return type at all. It is also what this method really
 	// returns -- DateTime::createFromFormat().
 	// phpcs:ignore Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps
+
+	#[Override]
 	public function convertToPHPValue(mixed $value, Platforms\AbstractPlatform $platform): DateTime|null
 	{
 		if ($value === null) {
@@ -74,6 +77,7 @@ class UTCDateTime extends Types\DateTimeType
 		return self::UTC_DATETIME;
 	}
 
+	#[Override]
 	public function convertToDatabaseValue(mixed $value, Platforms\AbstractPlatform $platform): string|null
 	{
 		if ($value === null) {

@@ -9,7 +9,7 @@ use Nette\Application;
  * Application configuration storage.
  * Stores the authentication and entity timestamping settings
  */
-class Configuration
+final readonly class Configuration
 {
 
 	use Nette\SmartObject;
@@ -86,7 +86,7 @@ class Configuration
 	 *
 	 * @throws Application\UI\InvalidLinkException
 	 */
-	public function getHomeUrl(array $params = []): string|null
+	public function getHomeUrl(array $params = []): string
 	{
 		return $this->linkGenerator->link($this->applicationHomeUrl, $params);
 	}

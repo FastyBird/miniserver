@@ -6,6 +6,7 @@ use Error;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
 use FilesystemIterator;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
@@ -124,6 +125,7 @@ final class AttributeDriver implements MappingDriver
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function getAllClassNames(): array
 	{
 		if ($this->classNames !== null) {
@@ -219,6 +221,7 @@ final class AttributeDriver implements MappingDriver
 	 *
 	 * @param class-string<object> $className
 	 */
+	#[Override]
 	public function isTransient(string $className): bool
 	{
 		$classAttributes = $this->reader->getClassAttributes(new ReflectionClass($className));
@@ -239,6 +242,7 @@ final class AttributeDriver implements MappingDriver
 	 *
 	 * @throws Exceptions\Logic
 	 */
+	#[Override]
 	public function loadMetadataForClass(Documents\Mapping\ClassMetadata $metadata): void
 	{
 		$reflectionClass = $metadata->getReflectionClass();

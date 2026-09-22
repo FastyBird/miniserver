@@ -5443,12 +5443,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/AllowedHrefNode.php
 
 		-
-			message: '#^Unsafe usage of new static\(\)\.$#'
-			identifier: new.static
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/AllowedHrefNode.php
-
-		-
 			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
@@ -5523,12 +5517,6 @@ parameters:
 		-
 			message: '#^Property FastyBird\\Core\\Latte\\SimpleAuth\\Nodes\\IfAllowedNode\:\:\$then \(Latte\\Compiler\\Nodes\\AreaNode\) does not accept mixed\.$#'
 			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Unsafe usage of new static\(\)\.$#'
-			identifier: new.static
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
 

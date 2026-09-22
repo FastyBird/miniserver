@@ -3,6 +3,7 @@
 namespace FastyBird\Core\EventLoop\Application;
 
 use FastyBird\Core\Events;
+use Override;
 use Psr\EventDispatcher;
 use React\EventLoop as ReactEventLoop;
 use function error_get_last;
@@ -31,56 +32,67 @@ class Wrapper implements ReactEventLoop\LoopInterface
 	{
 	}
 
+	#[Override]
 	public function addTimer($interval, $callback)
 	{
 		return $this->get()->addTimer($interval, $callback);
 	}
 
+	#[Override]
 	public function addPeriodicTimer($interval, $callback)
 	{
 		return $this->get()->addPeriodicTimer($interval, $callback);
 	}
 
+	#[Override]
 	public function cancelTimer(ReactEventLoop\TimerInterface $timer): void
 	{
 		$this->get()->cancelTimer($timer);
 	}
 
+	#[Override]
 	public function addSignal($signal, $listener): void
 	{
 		$this->get()->addSignal($signal, $listener);
 	}
 
+	#[Override]
 	public function removeSignal($signal, $listener): void
 	{
 		$this->get()->removeSignal($signal, $listener);
 	}
 
+	#[Override]
 	public function addReadStream($stream, $listener): void
 	{
 		$this->get()->addReadStream($stream, $listener);
 	}
 
+	#[Override]
 	public function removeReadStream($stream): void
 	{
 		$this->get()->removeReadStream($stream);
 	}
 
+	#[Override]
 	public function addWriteStream($stream, $listener): void
 	{
 		$this->get()->addWriteStream($stream, $listener);
 	}
 
+	#[Override]
 	public function removeWriteStream($stream): void
 	{
 		$this->get()->removeWriteStream($stream);
 	}
 
+	#[Override]
 	public function futureTick($listener): void
 	{
 		$this->get()->futureTick($listener);
 	}
 
+	#[Override]
 	public function run(): void
 	{
 		$this->dispatcher?->dispatch(new Events\EventLoopStarted());
@@ -96,6 +108,7 @@ class Wrapper implements ReactEventLoop\LoopInterface
 		$this->get()->run();
 	}
 
+	#[Override]
 	public function stop(): void
 	{
 		$this->get()->stop();

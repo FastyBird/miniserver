@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use Exception as PHPException;
 
-class Abort extends PHPException implements Exception
+final class Abort extends PHPException implements Exception
 {
 
 }

@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Routing\Handlers;
 
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function array_values;
@@ -9,12 +10,13 @@ use function array_values;
 /**
  * Route callback strategy with route parameters as individual arguments.
  */
-class RequestResponseArgsHandler implements IHandler
+final class RequestResponseArgsHandler implements IHandler
 {
 
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function __invoke(
 		callable $callable,
 		ServerRequestInterface $request,

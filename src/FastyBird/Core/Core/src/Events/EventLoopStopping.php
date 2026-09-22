@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Event loop is going to be stopped event
  */
-class EventLoopStopping extends EventDispatcher\Event
+final class EventLoopStopping extends EventDispatcher\Event
 {
 
 }

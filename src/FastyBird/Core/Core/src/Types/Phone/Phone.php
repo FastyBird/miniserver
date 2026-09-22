@@ -6,11 +6,12 @@ use Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Types;
 use FastyBird\Core\Entities\Phone as Entities;
 use FastyBird\Core\Exceptions;
+use Override;
 
 /**
  * Doctrine phone data type
  */
-class Phone extends Types\StringType
+final class Phone extends Types\StringType
 {
 
 	// Data type name
@@ -26,11 +27,14 @@ class Phone extends Types\StringType
 	 * @throws Exceptions\NoValidPhone
 	 */
 	// phpcs:ignore Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps
+
+	#[Override]
 	public function convertToPHPValue(mixed $value, Platforms\AbstractPlatform $platform): Entities\Phone|null
 	{
 		return $value === null ? null : Entities\Phone::fromNumber($value);
 	}
 
+	#[Override]
 	public function convertToDatabaseValue(mixed $value, Platforms\AbstractPlatform $platform): mixed
 	{
 		if ($value instanceof Entities\Phone) {

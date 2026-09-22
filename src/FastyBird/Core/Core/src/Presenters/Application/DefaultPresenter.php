@@ -5,7 +5,7 @@ namespace FastyBird\Core\Presenters\Application;
 /**
  * Default application presenter
  */
-class DefaultPresenter extends BasePresenter
+final class DefaultPresenter extends BasePresenter
 {
 
 }

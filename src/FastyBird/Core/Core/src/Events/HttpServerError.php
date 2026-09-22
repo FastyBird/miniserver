@@ -8,7 +8,7 @@ use Throwable;
 /**
  * HTTP server connection error event
  */
-class HttpServerError extends EventDispatcher\Event
+final class HttpServerError extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Throwable $ex)

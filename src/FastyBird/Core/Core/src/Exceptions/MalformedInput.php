@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use RuntimeException;
 
-class MalformedInput extends RuntimeException implements Exception
+final class MalformedInput extends RuntimeException implements Exception
 {
 
 }

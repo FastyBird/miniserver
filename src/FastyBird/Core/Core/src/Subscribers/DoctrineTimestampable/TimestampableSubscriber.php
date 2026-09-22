@@ -12,6 +12,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\DoctrineTimestampable as Mapping;
 use FastyBird\Core\Providers\DoctrineTimestampable as Providers;
 use Nette;
+use Override;
 use Psr\Cache\InvalidArgumentException;
 use ValueError;
 use function array_key_exists;
@@ -29,7 +30,7 @@ use function time;
 /**
  * Doctrine event subscriber that stamps #[Timestampable]-marked properties on flush
  */
-final class TimestampableSubscriber implements Common\EventSubscriber
+final readonly class TimestampableSubscriber implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
@@ -46,6 +47,7 @@ final class TimestampableSubscriber implements Common\EventSubscriber
 	 *
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

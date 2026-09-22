@@ -3,18 +3,21 @@
 namespace FastyBird\Core\Encoding\WebSockets;
 
 use FastyBird\Core\Http;
+use Override;
 
 /**
  * HyBi10 webSocket protocol
  */
-class HyBi10 extends RFC6455
+final class HyBi10 extends RFC6455
 {
 
+	#[Override]
 	public function getVersion(): int
 	{
 		return 6;
 	}
 
+	#[Override]
 	public function isVersion(Http\IRequest $httpRequest): bool
 	{
 		$version = (int) (string) $httpRequest->getHeader('Sec-WebSocket-Version');

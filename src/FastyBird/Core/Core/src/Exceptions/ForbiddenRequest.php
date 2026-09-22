@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use Exception as PHPException;
 
-class ForbiddenRequest extends PHPException implements Exception
+final class ForbiddenRequest extends PHPException implements Exception
 {
 
 }

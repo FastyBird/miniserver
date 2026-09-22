@@ -4,6 +4,7 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 
 use IteratorAggregate;
 use OutOfBoundsException;
+use Override;
 use stdClass;
 use Traversable;
 use function array_keys;
@@ -16,7 +17,7 @@ use function sprintf;
 /**
  * @phpstan-implements IteratorAggregate<mixed, mixed|IStandardObject>
  */
-class StandardObject implements IteratorAggregate, IStandardObject
+final class StandardObject implements IteratorAggregate, IStandardObject
 {
 
 	protected stdClass $proxy;
@@ -26,6 +27,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 		$this->proxy = $proxy ?? new stdClass();
 	}
 
+	#[Override]
 	public function get(string $key, mixed $default = null): string|int|float|bool|array|self|null
 	{
 		return Obj::get($this->proxy, $key, $default);
@@ -34,6 +36,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getMany(string|array ...$keys): array
 	{
 		$values = [];
@@ -45,6 +48,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 		return $values;
 	}
 
+	#[Override]
 	public function set(string $key, mixed $value): IStandardObject
 	{
 		$this->proxy->{$key} = $value;
@@ -55,6 +59,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function setMany(array $values): IStandardObject
 	{
 		foreach ($values as $key => $value) {
@@ -64,6 +69,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 		return $this;
 	}
 
+	#[Override]
 	public function has(string $key): bool
 	{
 		foreach ($this->normalizeKeys([$key]) as $normalizedKey) {
@@ -78,6 +84,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function hasAny(array ...$keys): bool
 	{
 		foreach ($this->normalizeKeys($keys) as $key) {
@@ -92,11 +99,13 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function keys(): array
 	{
 		return array_keys(get_object_vars($this->proxy));
 	}
 
+	#[Override]
 	public function copy(): IStandardObject
 	{
 		return clone $this;
@@ -105,6 +114,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function remove(array ...$keys): IStandardObject
 	{
 		foreach ($this->normalizeKeys($keys) as $key) {
@@ -114,6 +124,7 @@ class StandardObject implements IteratorAggregate, IStandardObject
 		return $this;
 	}
 
+	#[Override]
 	public function toStdClass(): stdClass
 	{
 		return Obj::replicate($this->proxy);
@@ -122,11 +133,13 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return Obj::toArray($this->proxy);
 	}
 
+	#[Override]
 	public function jsonSerialize(): stdClass
 	{
 		return $this->proxy;
@@ -137,11 +150,13 @@ class StandardObject implements IteratorAggregate, IStandardObject
 	 *
 	 * @phpstan-return Traversable<string, mixed>
 	 */
+	#[Override]
 	public function getIterator(): Traversable
 	{
 		return Obj::traverse($this->proxy);
 	}
 
+	#[Override]
 	public function count(): int
 	{
 		return count($this->toArray());

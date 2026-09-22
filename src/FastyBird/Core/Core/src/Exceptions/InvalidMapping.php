@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Exceptions;
 
-class InvalidMapping extends InvalidArgument implements Exception
+final class InvalidMapping extends InvalidArgument implements Exception
 {
 
 }

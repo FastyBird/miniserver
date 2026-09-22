@@ -6,13 +6,14 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use Nette;
 use Nette\Utils;
+use Override;
 use function is_array;
 use function sprintf;
 
 /**
  * Communication error response
  */
-class ErrorResponse implements IResponse
+final class ErrorResponse implements IResponse
 {
 
 	/**
@@ -72,6 +73,7 @@ class ErrorResponse implements IResponse
 		$this->headers->offsetSet($header, $value);
 	}
 
+	#[Override]
 	public function create(): array|null
 	{
 		$headers = [];
@@ -87,6 +89,7 @@ class ErrorResponse implements IResponse
 	/**
 	 * @throws Nette\Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->create());

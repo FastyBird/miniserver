@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Subscribers\Application;
 
 use Monolog;
+use Override;
 use Psr\Log\LogLevel;
 use Symfony\Bridge\Monolog as SymfonyMonolog;
 use Symfony\Component\Console as SymfonyConsole;
@@ -11,7 +12,7 @@ use Symfony\Component\EventDispatcher;
 /**
  * Console subscriber
  */
-readonly class Console implements EventDispatcher\EventSubscriberInterface
+final readonly class Console implements EventDispatcher\EventSubscriberInterface
 {
 
 	/**
@@ -27,6 +28,7 @@ readonly class Console implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

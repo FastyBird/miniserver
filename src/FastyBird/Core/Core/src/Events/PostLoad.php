@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher;
  *
  * @template T of Documents\Document
  */
-class PostLoad extends EventDispatcher\Event
+final class PostLoad extends EventDispatcher\Event
 {
 
 	/**

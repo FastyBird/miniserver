@@ -7,6 +7,7 @@ use FastyBird\Core\Entities\WebSockets\PushMessages as Entities;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Routing as WebSocketsRouter;
 use Nette;
+use Override;
 use ReflectionException;
 
 /**
@@ -36,6 +37,7 @@ abstract class Pusher implements IPusher
 	 * @throws WebSocketsExceptions\InvalidLink
 	 * @throws ReflectionException
 	 */
+	#[Override]
 	public function push(
 		array|string $data,
 		string $destination,
@@ -50,16 +52,19 @@ abstract class Pusher implements IPusher
 		$this->doPush($this->serializer->serialize($message), $context);
 	}
 
+	#[Override]
 	public function setConnected(bool $bool = true): void
 	{
 		$this->connected = $bool;
 	}
 
+	#[Override]
 	public function isConnected(): bool
 	{
 		return $this->connected;
 	}
 
+	#[Override]
 	public function getName(): string
 	{
 		return $this->name;

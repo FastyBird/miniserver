@@ -6,6 +6,7 @@ use FastyBird\Core\Exceptions;
 use Neomerx\JsonApi\Contracts;
 use Neomerx\JsonApi\Schema;
 use Nette;
+use Override;
 use function method_exists;
 use function property_exists;
 
@@ -31,6 +32,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships($resource, Contracts\Schema\ContextInterface $context): iterable
 	{
 		return [];
@@ -43,6 +45,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getLinks($resource): iterable
 	{
 		return [
@@ -55,6 +58,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getSelfLink($resource): Contracts\Schema\LinkInterface
 	{
 		return new Schema\Link(true, $this->getSelfSubUrl($resource), false);
@@ -87,6 +91,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getId($resource): string|null
 	{
 		if (method_exists($resource, 'getId')) {
@@ -103,6 +108,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipSelfLink($resource, string $name): Contracts\Schema\LinkInterface
 	{
 		// Feel free to override this method to change default URL or add meta
@@ -118,6 +124,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink($resource, string $name): Contracts\Schema\LinkInterface
 	{
 		// Feel free to override this method to change default URL or add meta
@@ -131,6 +138,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function hasIdentifierMeta($resource): bool
 	{
 		return false;
@@ -143,6 +151,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getIdentifierMeta($resource): mixed
 	{
 		throw new Exceptions\Logic('Default schema does not provide any meta');
@@ -153,6 +162,7 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function hasResourceMeta($resource): bool
 	{
 		return false;
@@ -165,16 +175,19 @@ abstract class JsonApi implements Contracts\Schema\SchemaInterface
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getResourceMeta($resource): mixed
 	{
 		throw new Exceptions\Logic('Default schema does not provide any meta');
 	}
 
+	#[Override]
 	public function isAddSelfLinkInRelationshipByDefault(string $relationshipName): bool
 	{
 		return true;
 	}
 
+	#[Override]
 	public function isAddRelatedLinkInRelationshipByDefault(string $relationshipName): bool
 	{
 		return true;

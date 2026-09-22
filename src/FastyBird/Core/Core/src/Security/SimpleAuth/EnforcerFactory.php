@@ -8,7 +8,7 @@ use FastyBird\Core\Exceptions;
 /**
  * Class security annotation checker
  */
-class EnforcerFactory
+final class EnforcerFactory
 {
 
 	private Casbin\CachedEnforcer|null $enforcer = null;

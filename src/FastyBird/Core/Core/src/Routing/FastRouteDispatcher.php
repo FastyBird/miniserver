@@ -3,8 +3,9 @@
 namespace FastyBird\Core\Routing;
 
 use FastRoute\Dispatcher\GroupCountBased;
+use Override;
 
-class FastRouteDispatcher extends GroupCountBased
+final class FastRouteDispatcher extends GroupCountBased
 {
 
 	/** @var array<array<string>> */
@@ -15,6 +16,7 @@ class FastRouteDispatcher extends GroupCountBased
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function dispatch($httpMethod, $uri): array
 	{
 		$routingResults = $this->routingResults($httpMethod, $uri);

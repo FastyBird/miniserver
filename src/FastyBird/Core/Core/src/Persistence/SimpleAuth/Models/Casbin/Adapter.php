@@ -8,6 +8,7 @@ use Closure;
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\SimpleAuth as Types;
+use Override;
 use Ramsey\Uuid;
 use Throwable;
 use TypeError;
@@ -23,7 +24,7 @@ use function trim;
 /**
  * Casbin database adapter
  */
-class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapter, CasbinPersist\UpdatableAdapter
+final class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapter, CasbinPersist\UpdatableAdapter
 {
 
 	use CasbinPersist\AdapterHelper;
@@ -46,7 +47,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function savePolicyLine(string $pType, array $rule): DBAL\Result|int|string
+	public function savePolicyLine(string $pType, array $rule): DBAL\Result
 	{
 		$queryBuilder = $this->connection->createQueryBuilder();
 		$queryBuilder
@@ -72,6 +73,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	/**
 	 * @throws DBAL\Exception
 	 */
+	#[Override]
 	public function loadPolicy(CasbinModel\Model $model): void
 	{
 		$queryBuilder = $this->connection->createQueryBuilder();
@@ -91,6 +93,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 * @throws DBAL\Exception
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function loadFilteredPolicy(CasbinModel\Model $model, $filter): void
 	{
 		$queryBuilder = $this->connection->createQueryBuilder();
@@ -125,6 +128,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function savePolicy(CasbinModel\Model $model): void
 	{
 		foreach ($model['p'] ?? [] as $pType => $ast) {
@@ -147,6 +151,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function addPolicy(string $sec, string $pType, array $rule): void
 	{
 		$this->savePolicyLine($pType, $rule);
@@ -159,6 +164,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function addPolicies(string $sec, string $pType, array $rules): void
 	{
 		$this->connection->transactional(function () use ($pType, $rules): void {
@@ -173,6 +179,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 *
 	 * @throws DBAL\Exception
 	 */
+	#[Override]
 	public function removePolicy(string $sec, string $pType, array $rule): void
 	{
 		$this->removePolicyLine($pType, $rule);
@@ -183,6 +190,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 *
 	 * @throws Throwable
 	 */
+	#[Override]
 	public function removePolicies(string $sec, string $pType, array $rules): void
 	{
 		$this->connection->transactional(function () use ($pType, $rules): void {
@@ -195,6 +203,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	/**
 	 * @throws Throwable
 	 */
+	#[Override]
 	public function removeFilteredPolicy(string $sec, string $pType, int $fieldIndex, string ...$fieldValues): void
 	{
 		$this->removeFiltered($pType, $fieldIndex, ...$fieldValues);
@@ -206,6 +215,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 *
 	 * @throws DBAL\Exception
 	 */
+	#[Override]
 	public function updatePolicy(string $sec, string $pType, array $oldRule, array $newPolicy): void
 	{
 		$queryBuilder = $this->connection->createQueryBuilder();
@@ -235,6 +245,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 *
 	 * @throws DBAL\Exception
 	 */
+	#[Override]
 	public function updatePolicies(string $sec, string $pType, array $oldRules, array $newRules): void
 	{
 		$this->connection->transactional(function () use ($sec, $pType, $oldRules, $newRules): void {
@@ -251,6 +262,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 	 *
 	 * @throws Throwable
 	 */
+	#[Override]
 	public function updateFilteredPolicies(
 		string $sec,
 		string $pType,
@@ -284,6 +296,7 @@ class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapt
 		return array_filter($rule, static fn ($value): bool => $value !== null && $value !== '');
 	}
 
+	#[Override]
 	public function isFiltered(): bool
 	{
 		return $this->filtered;

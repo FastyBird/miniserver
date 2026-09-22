@@ -7,6 +7,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Nette;
 use Nette\Utils;
+use Override;
 use function array_filter;
 use function assert;
 use function count;
@@ -18,7 +19,7 @@ use function is_string;
 /**
  * Latte helper for access checking
  */
-final class LatteChecker implements Checker
+final readonly class LatteChecker implements Checker
 {
 
 	use Nette\SmartObject;
@@ -31,6 +32,7 @@ final class LatteChecker implements Checker
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function isAllowed(mixed $element): bool
 	{
 		// Check annotations only if element have to be secured

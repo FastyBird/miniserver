@@ -5,12 +5,13 @@ namespace FastyBird\Core\Subscribers\Application;
 use FastyBird\Core\EventLoop\Application as EventLoop;
 use FastyBird\Core\Events;
 use Nette;
+use Override;
 use Symfony\Component\EventDispatcher;
 
 /**
  * Event loop events
  */
-final class EventLoopLifeCycle implements EventDispatcher\EventSubscriberInterface
+final readonly class EventLoopLifeCycle implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
@@ -19,6 +20,7 @@ final class EventLoopLifeCycle implements EventDispatcher\EventSubscriberInterfa
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

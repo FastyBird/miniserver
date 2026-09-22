@@ -4,6 +4,7 @@ namespace FastyBird\Core\Encoding\JsonApi\Objects;
 
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions;
+use Override;
 use function array_key_exists;
 use function in_array;
 use function is_array;
@@ -13,7 +14,7 @@ use function sprintf;
 /**
  * Resource identifier object
  */
-class ResourceIdentifierObject implements IResourceIdentifierObject
+final class ResourceIdentifierObject implements IResourceIdentifierObject
 {
 
 	private string $type;
@@ -36,16 +37,19 @@ class ResourceIdentifierObject implements IResourceIdentifierObject
 		$this->id = $id;
 	}
 
+	#[Override]
 	public function getId(): string|null
 	{
 		return $this->id;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return $this->type;
 	}
 
+	#[Override]
 	public function isType(string|array $typeOrTypes): bool
 	{
 		return in_array($this->type, is_array($typeOrTypes) ? $typeOrTypes : [$typeOrTypes], true);
@@ -54,6 +58,7 @@ class ResourceIdentifierObject implements IResourceIdentifierObject
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function mapType(array $types): string
 	{
 		if (array_key_exists($this->type, $types)) {
@@ -63,17 +68,20 @@ class ResourceIdentifierObject implements IResourceIdentifierObject
 		throw new Exceptions\Runtime(sprintf('Type "%s" is not in the supplied map.', $this->type));
 	}
 
+	#[Override]
 	public function isSame(IResourceIdentifierObject $identifier): bool
 	{
 		return $this->type === $identifier->getType() &&
 			$this->id === $identifier->getId();
 	}
 
+	#[Override]
 	public function toString(): string
 	{
 		return sprintf('%s:%s', $this->type, $this->id);
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->toString();

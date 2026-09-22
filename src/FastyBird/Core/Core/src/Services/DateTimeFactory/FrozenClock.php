@@ -9,13 +9,14 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use Nette;
+use Override;
 use ValueError;
 use function assert;
 use function date_default_timezone_get;
 use function floor;
 use function round;
 
-class FrozenClock implements Clock
+final class FrozenClock implements Clock
 {
 
 	use Nette\SmartObject;
@@ -47,6 +48,7 @@ class FrozenClock implements Clock
 		$this->dt = $dt->setTimezone($timeZone ?? new DateTimeZone(date_default_timezone_get()));
 	}
 
+	#[Override]
 	public function getNow(): DateTimeInterface
 	{
 		return clone $this->dt;

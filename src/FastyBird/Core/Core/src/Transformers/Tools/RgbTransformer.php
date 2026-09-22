@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Transformers\Tools;
 
+use Override;
 use function abs;
 use function floatval;
 use function max;
@@ -105,6 +106,7 @@ final readonly class RgbTransformer implements Transformer
 		return new HsiTransformer($hue, abs($saturation), $intensity);
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

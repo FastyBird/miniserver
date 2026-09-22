@@ -6,7 +6,7 @@ use Doctrine\ORM;
 use RuntimeException;
 use Throwable;
 
-class Query extends RuntimeException implements Exception
+final class Query extends RuntimeException implements Exception
 {
 
 	public function __construct(

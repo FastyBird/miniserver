@@ -37,7 +37,7 @@ use const E_USER_DEPRECATED;
 /**
  * Service application configurator
  */
-class Bootstrap
+final class Bootstrap
 {
 
 	/**

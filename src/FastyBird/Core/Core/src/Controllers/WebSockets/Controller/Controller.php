@@ -10,6 +10,7 @@ use FastyBird\Core\Routing as Router;
 use Fig\Http;
 use Nette;
 use Nette\Security as NS;
+use Override;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -125,6 +126,7 @@ abstract class Controller implements IController
 	 * @throws ReflectionException
 	 * @throws TypeError
 	 */
+	#[Override]
 	public function run(Application\Request $request): Responses\IResponse
 	{
 		try {
@@ -170,6 +172,7 @@ abstract class Controller implements IController
 		return $this->response;
 	}
 
+	#[Override]
 	public function getName(): string
 	{
 		return $this->name;

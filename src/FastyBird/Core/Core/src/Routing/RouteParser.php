@@ -4,6 +4,7 @@ namespace FastyBird\Core\Routing;
 
 use FastRoute\RouteParser\Std;
 use FastyBird\Core\Exceptions;
+use Override;
 use Psr\Http\Message\UriInterface;
 use function array_key_exists;
 use function array_reverse;
@@ -11,7 +12,7 @@ use function http_build_query;
 use function implode;
 use function is_string;
 
-class RouteParser implements IRouteParser
+final class RouteParser implements IRouteParser
 {
 
 	private Std $routeParser;
@@ -26,6 +27,7 @@ class RouteParser implements IRouteParser
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function relativeUrlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{
 		$route = $this->router->getNamedRoute($routeName);
@@ -100,6 +102,7 @@ class RouteParser implements IRouteParser
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function urlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{
 		$basePath = $this->router->getBasePath();
@@ -117,6 +120,7 @@ class RouteParser implements IRouteParser
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function fullUrlFor(UriInterface $uri, string $routeName, array $data = [], array $queryParams = []): string
 	{
 		$path = $this->urlFor($routeName, $data, $queryParams);

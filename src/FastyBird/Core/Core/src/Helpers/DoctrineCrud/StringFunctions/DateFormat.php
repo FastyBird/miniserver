@@ -4,7 +4,7 @@ namespace FastyBird\Core\Helpers\DoctrineCrud\StringFunctions;
 
 use Doctrine\ORM\Query;
 
-class DateFormat extends Query\AST\Functions\FunctionNode
+final class DateFormat extends Query\AST\Functions\FunctionNode
 {
 
 	/**

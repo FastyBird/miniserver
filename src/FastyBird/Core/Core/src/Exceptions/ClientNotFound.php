@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Exceptions;
 
-class ClientNotFound extends Storage implements Exception
+final class ClientNotFound extends Storage implements Exception
 {
 
 }

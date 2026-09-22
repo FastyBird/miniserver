@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use RuntimeException;
 
-class QueryNotImplemented extends RuntimeException implements Exception
+final class QueryNotImplemented extends RuntimeException implements Exception
 {
 
 }

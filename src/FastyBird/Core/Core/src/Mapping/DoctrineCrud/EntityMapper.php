@@ -11,6 +11,7 @@ use FastyBird\Core\Helpers\DoctrineCrud\Helpers;
 use FastyBird\Core\Mapping\DoctrineCrud as Mapping;
 use Nette;
 use Nette\Utils;
+use Override;
 use phpDocumentor;
 use ReflectionAttribute;
 use ReflectionClass;
@@ -41,7 +42,7 @@ use function ucfirst;
 /**
  * Maps request values onto an entity's #[Crud]-marked properties, enforcing their required and writable rules
  */
-final class EntityMapper implements IEntityMapper
+final readonly class EntityMapper implements IEntityMapper
 {
 
 	use Nette\SmartObject;
@@ -57,6 +58,7 @@ final class EntityMapper implements IEntityMapper
 	 * @throws Exceptions\InvalidState
 	 * @throws ReflectionException
 	 */
+	#[Override]
 	public function fillEntity(Utils\ArrayHash $values, Entities\IEntity $entity, bool $isNew = false): Entities\IEntity
 	{
 		// This used to unwrap Doctrine\Common\Proxy\Proxy subclasses to reach the real entity class.

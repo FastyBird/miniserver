@@ -6,7 +6,7 @@ use FastyBird\Core\Exceptions;
 use function file_exists;
 use function sprintf;
 
-class TemplateFactory
+final class TemplateFactory
 {
 
 	/** @var array<string> */

@@ -15,7 +15,7 @@ use function reset;
 /**
  * JW token reader
  */
-final class TokenReader
+final readonly class TokenReader
 {
 
 	use Nette\SmartObject;

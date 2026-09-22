@@ -24,7 +24,7 @@ use const JSON_PRETTY_PRINT;
 /**
  * {JSON:API} formatting output handling middleware
  */
-class JsonApi implements Server\MiddlewareInterface
+final class JsonApi implements Server\MiddlewareInterface
 {
 
 	private Log\LoggerInterface $logger;
@@ -42,7 +42,8 @@ class JsonApi implements Server\MiddlewareInterface
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */
-	public function process(
+	#[\Override]
+    public function process(
 		Message\ServerRequestInterface $request,
 		Server\RequestHandlerInterface $handler,
 	): Message\ResponseInterface

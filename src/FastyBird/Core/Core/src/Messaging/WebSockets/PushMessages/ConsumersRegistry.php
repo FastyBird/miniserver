@@ -4,6 +4,7 @@ namespace FastyBird\Core\Messaging\WebSockets\PushMessages;
 
 use FastyBird\Core\Exceptions;
 use Nette;
+use Override;
 use function sprintf;
 
 /**
@@ -25,6 +26,7 @@ final class ConsumersRegistry implements IConsumersRegistry
 		$this->consumers = [];
 	}
 
+	#[Override]
 	public function addConsumer(IConsumer $consumer): void
 	{
 		$this->consumers[$consumer->getName()] = $consumer;
@@ -35,6 +37,7 @@ final class ConsumersRegistry implements IConsumersRegistry
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function getConsumer(string $name): IConsumer
 	{
 		if (isset($this->consumers[$name])) {
@@ -47,6 +50,7 @@ final class ConsumersRegistry implements IConsumersRegistry
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getConsumers(): array
 	{
 		return $this->consumers;

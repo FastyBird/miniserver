@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use RuntimeException;
 
-class InvalidValue extends RuntimeException implements Exception
+final class InvalidValue extends RuntimeException implements Exception
 {
 
 }

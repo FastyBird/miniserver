@@ -7,7 +7,7 @@ use Neomerx\JsonApi\Encoder as NeomerxEncoder;
 /**
  * Extended Json:API encoder
  */
-class Encoder extends NeomerxEncoder\Encoder
+final class Encoder extends NeomerxEncoder\Encoder
 {
 
 	/**

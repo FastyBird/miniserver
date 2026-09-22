@@ -24,7 +24,7 @@ use function sprintf;
  * @template   T of Entities\IEntity
  * @extends    Crud\CrudManager<T>
  */
-class EntityCreator extends Crud\CrudManager
+final class EntityCreator extends Crud\CrudManager
 {
 
 	/** @var array<callable(Entities\IEntity, Utils\ArrayHash): void> */

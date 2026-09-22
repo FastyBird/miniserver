@@ -80,6 +80,7 @@ use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use Psr\EventDispatcher as WsServerEventDispatcher;
 use Psr\Log;
 use React;
@@ -120,7 +121,7 @@ if (!class_exists('Nette\PhpGenerator\Literal')) {
  * CRUD and timestamping, JSON:API, phone number handling, and the WebSocket, WAMP and web
  * servers. See docs/superpowers/specs/2026-09-20-core-consolidation-design.md section 6.
  */
-class CoreExtension extends DI\CompilerExtension
+final class CoreExtension extends DI\CompilerExtension
 {
 
 	public const string NAME = 'fbCore';
@@ -150,6 +151,7 @@ class CoreExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

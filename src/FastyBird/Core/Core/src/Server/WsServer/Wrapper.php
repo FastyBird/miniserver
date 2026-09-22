@@ -12,6 +12,7 @@ use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http;
 use Nette;
 use OverflowException;
+use Override;
 use Throwable;
 use TypeError;
 use UnderflowException;
@@ -78,6 +79,7 @@ final class Wrapper implements IWrapper
 		$this->requestFactory = new Http\RequestFactory();
 	}
 
+	#[Override]
 	public function handleOpen(Entities\IClient $client): void
 	{
 		$client->setHttpHeadersReceived(false);
@@ -88,6 +90,7 @@ final class Wrapper implements IWrapper
 	 *
 	 * @throws Throwable
 	 */
+	#[Override]
 	public function handleMessage(Entities\IClient $client, string $message): void
 	{
 		if (!$client->isHttpHeadersReceived()) {
@@ -123,6 +126,7 @@ final class Wrapper implements IWrapper
 	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 */
+	#[Override]
 	public function handleClose(Entities\IClient $client): void
 	{
 		if ($client->isHttpHeadersReceived()) {
@@ -136,6 +140,7 @@ final class Wrapper implements IWrapper
 	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 */
+	#[Override]
 	public function handleError(Entities\IClient $client, Throwable $ex): void
 	{
 		if ($client->isHttpHeadersReceived()) {

@@ -8,7 +8,7 @@ use Throwable;
 /**
  * Exchange service occurred and error
  */
-class ExchangeError extends EventDispatcher\Event
+final class ExchangeError extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Throwable|null $ex = null)

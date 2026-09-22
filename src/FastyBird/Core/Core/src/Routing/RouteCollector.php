@@ -7,6 +7,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Middleware\SlimRouter as Middleware;
 use FastyBird\Core\Routing;
 use Fig\Http\Message\RequestMethodInterface;
+use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use function array_merge;
@@ -15,7 +16,7 @@ use function array_merge;
  * RouteCollector is used to collect routes and route groups
  * as well as generate paths and URLs relative to its environment
  */
-class RouteCollector implements IRouteCollector
+final class RouteCollector implements IRouteCollector
 {
 
 	private Routing\Handlers\IHandler $defaultInvocationHandler;
@@ -41,11 +42,13 @@ class RouteCollector implements IRouteCollector
 		$this->defaultInvocationHandler = $defaultInvocationHandler ?? new Routing\Handlers\RequestResponseHandler();
 	}
 
+	#[Override]
 	public function setDefaultInvocationHandler(Routing\Handlers\IHandler $strategy): void
 	{
 		$this->defaultInvocationHandler = $strategy;
 	}
 
+	#[Override]
 	public function getPattern(): string
 	{
 		return ($this->routeCollector?->getPattern() ?? '') . $this->pattern;
@@ -54,6 +57,7 @@ class RouteCollector implements IRouteCollector
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getRoutes(): array
 	{
 		$routes = [];
@@ -70,6 +74,7 @@ class RouteCollector implements IRouteCollector
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getNamedRoute(string $name, bool $throw = true): IRoute|null
 	{
 		foreach ($this->routes as $route) {
@@ -96,6 +101,7 @@ class RouteCollector implements IRouteCollector
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function removeNamedRoute(string $name): bool
 	{
 		$route = $this->getNamedRoute($name);
@@ -120,6 +126,7 @@ class RouteCollector implements IRouteCollector
 	/**
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function lookupRoute(string $identifier, bool $throw = true): IRoute|null
 	{
 		if (isset($this->routes[$identifier])) {
@@ -141,6 +148,7 @@ class RouteCollector implements IRouteCollector
 		return null;
 	}
 
+	#[Override]
 	public function addMiddleware(MiddlewareInterface $middleware): void
 	{
 		$this->middleware[] = $middleware;
@@ -151,6 +159,7 @@ class RouteCollector implements IRouteCollector
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function get(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_GET], $pattern, $callable);
@@ -161,6 +170,7 @@ class RouteCollector implements IRouteCollector
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function post(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_POST], $pattern, $callable);
@@ -171,6 +181,7 @@ class RouteCollector implements IRouteCollector
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function put(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_PUT], $pattern, $callable);
@@ -181,6 +192,7 @@ class RouteCollector implements IRouteCollector
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function patch(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_PATCH], $pattern, $callable);
@@ -191,6 +203,7 @@ class RouteCollector implements IRouteCollector
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function delete(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_DELETE], $pattern, $callable);
@@ -201,6 +214,7 @@ class RouteCollector implements IRouteCollector
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function options(string $pattern, $callable): IRoute
 	{
 		return $this->map([RequestMethodInterface::METHOD_OPTIONS], $pattern, $callable);
@@ -211,6 +225,7 @@ class RouteCollector implements IRouteCollector
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function any(string $pattern, $callable): IRoute
 	{
 		return $this->map([
@@ -228,6 +243,7 @@ class RouteCollector implements IRouteCollector
 	 *
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function map(array $methods, string $pattern, $handler): IRoute
 	{
 		$route = $this->createRoute($methods, $pattern, $handler);
@@ -237,6 +253,7 @@ class RouteCollector implements IRouteCollector
 		return $route;
 	}
 
+	#[Override]
 	public function group(string $pattern, callable $callable): IRouteGroup
 	{
 		$routeCollector = new self(
@@ -257,6 +274,7 @@ class RouteCollector implements IRouteCollector
 		return $group;
 	}
 
+	#[Override]
 	public function appendMiddlewareToDispatcher(Middleware\MiddlewareDispatcher $dispatcher): void
 	{
 		foreach ($this->middleware as $middleware) {

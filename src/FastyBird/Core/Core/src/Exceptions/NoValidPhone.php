@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Exceptions;
 
-class NoValidPhone extends InvalidArgument
+final class NoValidPhone extends InvalidArgument
 {
 
 }

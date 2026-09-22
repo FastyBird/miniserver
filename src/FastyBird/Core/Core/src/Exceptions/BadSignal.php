@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Exceptions;
 
-class BadSignal extends BadRequest implements Exception
+final class BadSignal extends BadRequest implements Exception
 {
 
 }

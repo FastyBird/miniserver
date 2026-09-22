@@ -4,7 +4,7 @@ namespace FastyBird\Core\Exceptions;
 
 use Exception as PHPException;
 
-class InvalidController extends PHPException implements Exception
+final class InvalidController extends PHPException implements Exception
 {
 
 }

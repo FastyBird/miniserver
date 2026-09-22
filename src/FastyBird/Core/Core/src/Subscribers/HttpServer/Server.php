@@ -6,18 +6,20 @@ use Doctrine\DBAL;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use Override;
 use Symfony\Component\EventDispatcher;
 
 /**
  * Database check subscriber
  */
-readonly class Server implements EventDispatcher\EventSubscriberInterface
+final readonly class Server implements EventDispatcher\EventSubscriberInterface
 {
 
 	public function __construct(private ToolsHelpers\Database $database)
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

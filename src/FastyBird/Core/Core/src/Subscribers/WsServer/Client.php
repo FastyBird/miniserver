@@ -13,6 +13,7 @@ use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http;
 use FastyBird\Core\Server\WsServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
+use Override;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
 use function explode;
@@ -21,7 +22,7 @@ use function in_array;
 /**
  * WS client events subscriber
  */
-class Client implements EventDispatcher\EventSubscriberInterface
+final class Client implements EventDispatcher\EventSubscriberInterface
 {
 
 	/** @var array<string> */
@@ -41,6 +42,7 @@ class Client implements EventDispatcher\EventSubscriberInterface
 		$this->allowedOrigins = $allowedOrigins !== null ? explode(',', $allowedOrigins) : [];
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

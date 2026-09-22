@@ -7,13 +7,14 @@ use FastRoute\RouteCollector as FastRouteCollector;
 use FastRoute\RouteParser\Std;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as SlimRouterExceptions;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use function assert;
 use function rawurldecode;
 
-class RouteHandler implements RequestHandlerInterface
+final class RouteHandler implements RequestHandlerInterface
 {
 
 	private FastRouteDispatcher|null $dispatcher = null;
@@ -29,6 +30,7 @@ class RouteHandler implements RequestHandlerInterface
 	 * @throws SlimRouterExceptions\HttpMethodNotAllowed
 	 * @throws SlimRouterExceptions\HttpNotFound
 	 */
+	#[Override]
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 		// If routing hasn't been done, then do it now so we can dispatch

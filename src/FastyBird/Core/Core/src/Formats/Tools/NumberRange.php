@@ -6,6 +6,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Nette\Utils;
+use Override;
 use TypeError;
 use ValueError;
 use function array_map;
@@ -234,6 +235,7 @@ final class NumberRange
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return implode(':', array_map(static function (int|float|array|null $item): string|int|float|null {

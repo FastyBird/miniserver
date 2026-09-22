@@ -5,9 +5,10 @@ namespace FastyBird\Core\Latte\SimpleAuth\Nodes;
 use Generator;
 use Latte;
 use Latte\Compiler;
+use Override;
 use function sprintf;
 
-class AllowedHrefNode extends Compiler\Nodes\StatementNode
+final class AllowedHrefNode extends Compiler\Nodes\StatementNode
 {
 
 	public Compiler\Nodes\Php\ExpressionNode $destination;
@@ -21,7 +22,7 @@ class AllowedHrefNode extends Compiler\Nodes\StatementNode
 	/**
 	 * @throws Latte\CompileException
 	 */
-	public static function create(Compiler\Tag $tag): static|null
+	public static function create(Compiler\Tag $tag): static
 	{
 		$tag->outputMode = $tag::OutputKeepIndentation;
 		$tag->expectArguments();
@@ -109,6 +110,7 @@ class AllowedHrefNode extends Compiler\Nodes\StatementNode
 		);
 	}
 
+	#[Override]
 	public function &getIterator(): Generator
 	{
 		yield $this->destination;
