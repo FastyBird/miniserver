@@ -16,6 +16,11 @@
 namespace FastyBird\Core\Persistence\JsonApi\Hydrators\Fields;
 
 use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Exceptions;
+use Fig\Http\Message\StatusCodeInterface;
+use Nette\Localization;
+use function is_array;
+use function strval;
 
 /**
  * Entity array field
@@ -29,6 +34,7 @@ final class ArrayField extends Field
 {
 
 	public function __construct(
+		private readonly Localization\Translator $translator,
 		private readonly bool $isNullable,
 		string $mappedName,
 		string $fieldName,
@@ -43,6 +49,8 @@ final class ArrayField extends Field
 	 * @param JsonApi\Objects\IStandardObject<string, mixed> $attributes
 	 *
 	 * @return array<mixed>|null
+	 *
+	 * @throws Exceptions\JsonApiError
 	 */
 	public function getValue(JsonApi\Objects\IStandardObject $attributes): array|null
 	{
@@ -52,7 +60,22 @@ final class ArrayField extends Field
 			return $value->toArray();
 		}
 
-		return $value === null ? ($this->isNullable ? [] : null) : (array) $value;
+		if ($value === null) {
+			return $this->isNullable ? [] : null;
+		}
+
+		if (!is_array($value)) {
+			throw new Exceptions\JsonApiError(
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				strval($this->translator->translate('//jsonApi.hydrator.invalidAttribute.heading')),
+				strval($this->translator->translate('//jsonApi.hydrator.invalidAttribute.message')),
+				[
+					'pointer' => '/data/attributes/' . $this->getMappedName(),
+				],
+			);
+		}
+
+		return $value;
 	}
 
 	public function isNullable(): bool

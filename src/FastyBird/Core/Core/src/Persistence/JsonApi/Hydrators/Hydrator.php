@@ -598,6 +598,7 @@ abstract class Hydrator
 
 							} elseif ($typeRc->isSubclassOf(BackedEnum::class)) {
 								$fields[] = new Hydrators\Fields\BackedEnumField(
+									$this->translator,
 									$className,
 									$isNullable,
 									$mappedKey,
@@ -608,6 +609,7 @@ abstract class Hydrator
 
 							} elseif ($typeRc->implementsInterface(ArrayAccess::class)) {
 								$fields[] = new Hydrators\Fields\ArrayField(
+									$this->translator,
 									$isNullable,
 									$mappedKey,
 									$fieldName,
@@ -648,6 +650,7 @@ abstract class Hydrator
 
 					} elseif ($isNumber || $isDecimal) {
 						$fields[] = new Hydrators\Fields\NumberField(
+							$this->translator,
 							$isDecimal,
 							$isNullable,
 							$mappedKey,
@@ -658,6 +661,7 @@ abstract class Hydrator
 
 					} elseif ($isArray) {
 						$fields[] = new Hydrators\Fields\ArrayField(
+							$this->translator,
 							$isNullable,
 							$mappedKey,
 							$fieldName,
@@ -667,6 +671,7 @@ abstract class Hydrator
 
 					} elseif ($isBool) {
 						$fields[] = new Hydrators\Fields\BooleanField(
+							$this->translator,
 							$isNullable,
 							$mappedKey,
 							$fieldName,
@@ -807,6 +812,7 @@ abstract class Hydrator
 	 * @return array<mixed>
 	 *
 	 * @throws Exceptions\InvalidState
+	 * @throws Exceptions\JsonApiError
 	 */
 	protected function hydrateAttributes(
 		string $className,
