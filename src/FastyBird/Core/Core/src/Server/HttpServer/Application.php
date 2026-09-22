@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Application.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Application
- * @since          1.0.0
- *
- * @date           23.02.21
- */
-
 namespace FastyBird\Core\Server\HttpServer;
 
 use FastyBird\Core\Events;
@@ -31,11 +18,6 @@ use function ucwords;
 
 /**
  * Base application service
- *
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Application
 {

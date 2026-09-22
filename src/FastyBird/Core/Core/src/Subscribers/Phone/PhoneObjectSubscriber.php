@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PhoneObjectSubscriber.php
- *
- * @copyright      More in LICENSE.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:DoctrinePhone!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           25.12.15
- */
-
 namespace FastyBird\Core\Subscribers\Phone;
 
 use Doctrine\Common;
@@ -26,11 +13,6 @@ use function get_called_class;
 
 /**
  * Doctrine phone hydration listener
- *
- * @package        iPublikuj:DoctrinePhone!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class PhoneObjectSubscriber implements Common\EventSubscriber
 {

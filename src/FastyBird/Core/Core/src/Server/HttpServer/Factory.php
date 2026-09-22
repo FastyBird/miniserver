@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Factory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Server
- * @since          1.0.0
- *
- * @date           10.06.22
- */
-
 namespace FastyBird\Core\Server\HttpServer;
 
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
@@ -28,11 +15,6 @@ use function str_replace;
 
 /**
  * HTTP server factory
- *
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Server
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Factory
 {

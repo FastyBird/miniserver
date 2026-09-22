@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * EquationTransformer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Transformers
- * @since          1.0.0
- *
- * @date           26.04.23
- */
-
 namespace FastyBird\Core\Transformers\Tools;
 
 use FastyBird\Core\Constants as Metadata;
@@ -29,11 +16,6 @@ use function round;
 
 /**
  * Equation value transformer
- *
- * @package        FastyBird:Tools!
- * @subpackage     Transformers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class EquationTransformer
 {

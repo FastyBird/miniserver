@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * LoadClassMetadata.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Application!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           12.02.24
- */
-
 namespace FastyBird\Core\Events;
 
 use FastyBird\Core\Documents;
@@ -22,10 +9,6 @@ use Symfony\Contracts\EventDispatcher;
  * Event triggered when document metadata are loaded
  *
  * @template T of Documents\Document
- *
- * @package        FastyBird:Application!
- * @subpackage     Events
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class LoadClassMetadata extends EventDispatcher\Event
 {

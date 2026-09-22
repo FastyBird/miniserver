@@ -7,11 +7,6 @@ use FastyBird\Core\Controllers\WebSockets\Responses;
 
 /**
  * WebSockets controller interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IController
 {

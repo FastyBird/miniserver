@@ -7,11 +7,6 @@ use function func_num_args;
 
 /**
  * HTTP request
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Http
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class Request extends Http\Request implements IRequest
 {

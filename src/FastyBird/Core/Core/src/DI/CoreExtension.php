@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CoreExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Core!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           2026-09-20
- */
-
 namespace FastyBird\Core\DI;
 
 use Casbin;
@@ -133,11 +120,6 @@ if (!class_exists('Nette\PhpGenerator\Literal')) {
  * JsonApiExtension, PhoneExtension, DoctrinePhoneExtension, WebSocketsExtension,
  * WebSocketsWAMPExtension, WebServerExtension and WsServerExtension. See
  * docs/superpowers/specs/2026-09-20-core-consolidation-design.md section 6.
- *
- * @package        FastyBird:Core!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class CoreExtension extends DI\CompilerExtension
 {

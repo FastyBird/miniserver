@@ -44,12 +44,6 @@ use function ucwords;
 
 /**
  * The bidirectional WAMP router for a single route mask
- *
- * @package        FastyBird:Core!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @author         David Grudl (https://davidgrudl.com)
  */
 class WampRoute implements IWampRouter
 {

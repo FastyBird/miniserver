@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * JsonApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:JsonApi!
- * @subpackage     Builder
- * @since          0.1.0
- *
- * @date           17.04.19
- */
-
 namespace FastyBird\Core\Encoding\JsonApi;
 
 use FastyBird\Core\Encoding\JsonApi;
@@ -40,11 +27,6 @@ use const JSON_PRETTY_PRINT;
 
 /**
  * {JSON:API} formatting output handling middleware
- *
- * @package        FastyBird:JsonApi!
- * @subpackage     Builder
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Builder
 {

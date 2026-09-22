@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * HttpServerResponse.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Core!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           05.10.21
- */
-
 namespace FastyBird\Core\Events;
 
 use Psr\Http\Message\ResponseInterface;
@@ -21,11 +8,6 @@ use Symfony\Contracts\EventDispatcher;
 
 /**
  * HTTP server PSR-7 response event
- *
- * @package        FastyBird:Core!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class HttpServerResponse extends EventDispatcher\Event
 {

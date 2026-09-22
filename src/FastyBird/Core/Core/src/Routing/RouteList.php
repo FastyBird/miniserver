@@ -15,12 +15,6 @@ use function substr;
 
 /**
  * WebSockets routes list
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @author         David Grudl (https://davidgrudl.com)
  */
 class RouteList extends Utils\ArrayList implements IWampRouter
 {

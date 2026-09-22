@@ -1,27 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * IDocument.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:JsonAPIDocument!
- * @subpackage     common
- * @since          0.0.1
- *
- * @date           05.05.18
- */
-
 namespace FastyBird\Core\Encoding\JsonApi;
 
 /**
  * Response document interface
- *
- * @package        iPublikuj:JsonAPIDocument!
- * @subpackage     Objects
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IDocument
 {

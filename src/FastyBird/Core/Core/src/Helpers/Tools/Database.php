@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Database.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           15.04.20
- */
-
 namespace FastyBird\Core\Helpers\Tools;
 
 use Doctrine\DBAL;
@@ -30,11 +17,6 @@ use function is_int;
 
 /**
  * Database connection helpers
- *
- * @package        FastyBird:Tools!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Database
 {

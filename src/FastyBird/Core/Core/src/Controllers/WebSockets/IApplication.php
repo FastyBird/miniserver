@@ -8,11 +8,6 @@ use Throwable;
 
 /**
  * WebSockets application interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IApplication
 {

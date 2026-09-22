@@ -28,11 +28,6 @@ use const E_USER_WARNING;
 
 /**
  * Default controller loader
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class ControllerFactory implements IControllerFactory
 {

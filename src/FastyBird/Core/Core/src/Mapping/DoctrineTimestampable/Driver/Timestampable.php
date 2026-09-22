@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Timestampable.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:DoctrineTimestampable!
- * @subpackage     Driver
- * @since          1.0.0
- *
- * @date           05.01.16
- */
-
 namespace FastyBird\Core\Mapping\DoctrineTimestampable\Driver;
 
 use Doctrine\ORM;
@@ -31,11 +18,6 @@ use function sprintf;
 
 /**
  * Doctrine timestampable annotation driver
- *
- * @package        iPublikuj:DoctrineTimestampable!
- * @subpackage     Driver
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Timestampable
 {

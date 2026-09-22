@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * IStorage.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Topics
- * @since          1.0.0
- *
- * @date           24.02.17
- */
-
 namespace FastyBird\Core\Topics\WsServer;
 
 use FastyBird\Core\Entities\WsServer\Topics as Entities;
@@ -20,11 +7,6 @@ use IteratorAggregate;
 
 /**
  * Storage for manage all topics
- *
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Topics
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IStorage extends IteratorAggregate
 {

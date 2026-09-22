@@ -7,11 +7,6 @@ use FastyBird\Core\Http;
 
 /**
  * WAMP router interface
- *
- * @package        FastyBird:Core!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IWampRouter
 {

@@ -4,11 +4,6 @@ namespace FastyBird\Core\Helpers\WsServer\Formatter;
 
 /**
  * WebSockets server output formater interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Logger
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IFormatter
 {

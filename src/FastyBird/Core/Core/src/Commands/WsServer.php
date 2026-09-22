@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WsServer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WsServerPlugin!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           09.06.22
- */
-
 namespace FastyBird\Core\Commands;
 
 use FastyBird\Core\Events;
@@ -33,11 +20,6 @@ use Throwable;
 
 /**
  * WS server command
- *
- * @package        FastyBird:WsServerPlugin!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class WsServer extends Console\Command\Command
 {

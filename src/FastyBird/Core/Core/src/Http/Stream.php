@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Stream.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:SlimRouter!
- * @subpackage     Http
- * @since          0.1.0
- *
- * @date           14.03.20
- */
-
 namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
@@ -35,11 +22,6 @@ use const SEEK_SET;
 
 /**
  * Basic http response resource
- *
- * @package        iPublikuj:SlimRouter!
- * @subpackage     Http
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class Stream implements StreamInterface
 {

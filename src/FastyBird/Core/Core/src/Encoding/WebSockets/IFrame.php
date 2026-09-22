@@ -4,11 +4,6 @@ namespace FastyBird\Core\Encoding\WebSockets;
 
 /**
  * Communication frame interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Protocols
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IFrame extends IData
 {

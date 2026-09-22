@@ -6,11 +6,6 @@ use Nette;
 
 /**
  * Null response
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Responses
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class NullResponse implements IResponse
 {

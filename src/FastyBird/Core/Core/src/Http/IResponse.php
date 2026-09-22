@@ -4,11 +4,6 @@ namespace FastyBird\Core\Http;
 
 /**
  * HTTP response formater interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Http
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IResponse
 {

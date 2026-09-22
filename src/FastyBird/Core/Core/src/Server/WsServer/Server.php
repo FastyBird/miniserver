@@ -15,11 +15,6 @@ use function sprintf;
 /**
  * WebSocket server
  *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Server
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- *
  * @method onCreate(Server $server)
  * @method onStart(EventLoop\LoopInterface $loop, Server $server)
  * @method onStop(EventLoop\LoopInterface $loop, Server $server)

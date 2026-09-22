@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Application.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           01.07.24
- */
-
 namespace FastyBird\Core\Subscribers\SimpleAuth;
 
 use FastyBird\Core\Constants as SimpleAuth;
@@ -28,11 +15,6 @@ use function is_string;
 
 /**
  * Application UI events
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Application implements EventDispatcher\EventSubscriberInterface
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * User.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Subscribers
- * @since          0.1.0
- *
- * @date           14.07.20
- */
-
 namespace FastyBird\Core\Subscribers\SimpleAuth;
 
 use Doctrine\Common;
@@ -30,10 +17,6 @@ use function is_array;
  * Doctrine entities events
  *
  * @template T of object
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Subscribers
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class User implements Common\EventSubscriber
 {

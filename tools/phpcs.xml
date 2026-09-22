@@ -7,8 +7,6 @@
 
     <!-- Import coding-standard -->
     <rule ref="./vendor/orisai/coding-standard/src/ruleset-8.4.xml">
-        <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden"/>
-
         <exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectLinesCountBetweenDifferentAnnotationsTypes"/>
         <exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectAnnotationsGroup"/>
     </rule>
@@ -194,6 +192,34 @@
          the Core identity refactor reaches them. This list
          may only shrink; deleting its last entry deletes the block. -->
     <rule ref="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint">
+        <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Module/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Plugin/*</exclude-pattern>
+    </rule>
+
+    <!-- Every FastyBird-authored file once carried forbidden identity annotations (@license,
+         @copyright, @author, @package, @subpackage, @since, @date, in a file header and/or a
+         class docblock) duplicating what Git and LICENSE.md already record. Core's have been
+         removed (E2 of the Core identity refactor); the other six package types have not. This
+         list may only shrink; deleting its last entry deletes the block, at which point the
+         sniff applies repository-wide and this comment goes with it. Owned by #462 (E7). -->
+    <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+        <properties>
+            <property name="forbiddenAnnotations" type="array">
+                <element value="@author"/>
+                <element value="@copyright"/>
+                <element value="@created"/>
+                <element value="@date"/>
+                <element value="@license"/>
+                <element value="@package"/>
+                <element value="@since"/>
+                <element value="@subpackage"/>
+                <element value="@version"/>
+            </property>
+        </properties>
         <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>

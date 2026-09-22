@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Application.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Boot
- * @since          1.0.0
- *
- * @date           08.03.20
- */
-
 namespace FastyBird\Core\Boot;
 
 use FastyBird\Core\Exceptions;
@@ -49,11 +36,6 @@ use const E_USER_DEPRECATED;
 
 /**
  * Service application configurator
- *
- * @package        FastyBird:Tools!
- * @subpackage     Boot
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Bootstrap
 {

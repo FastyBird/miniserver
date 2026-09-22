@@ -21,11 +21,6 @@ use function sprintf;
  * Application which run on server and provide creating controllers
  * with correctly params - convert message => control.
  *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- *
  * @method onOpen(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest)
  * @method onClose(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest)
  * @method onMessage(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest, string $message)

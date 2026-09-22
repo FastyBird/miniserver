@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * HttpServer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           15.03.20
- */
-
 namespace FastyBird\Core\Commands;
 
 use FastyBird\Core\Events;
@@ -34,11 +21,6 @@ use function is_file;
 
 /**
  * HTTP server command
- *
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class HttpServer extends Console\Command\Command
 {

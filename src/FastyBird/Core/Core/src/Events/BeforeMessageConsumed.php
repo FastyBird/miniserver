@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * BeforeMessageConsumed.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Exchange!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           19.06.22
- */
-
 namespace FastyBird\Core\Events;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
@@ -21,11 +8,6 @@ use Symfony\Contracts\EventDispatcher;
 
 /**
  * Before message consumed event
- *
- * @package        FastyBird:Exchange!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class BeforeMessageConsumed extends EventDispatcher\Event
 {

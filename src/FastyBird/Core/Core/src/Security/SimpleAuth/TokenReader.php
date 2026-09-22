@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TokenReader.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- * @since          0.1.0
- *
- * @date           09.07.20
- */
-
 namespace FastyBird\Core\Security\SimpleAuth;
 
 use FastyBird\Core\Constants as SimpleAuth;
@@ -27,11 +14,6 @@ use function reset;
 
 /**
  * JW token reader
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class TokenReader
 {

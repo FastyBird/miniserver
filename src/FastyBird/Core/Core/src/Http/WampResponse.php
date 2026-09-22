@@ -10,11 +10,6 @@ use function strlen;
 
 /**
  * WAMP transport HTTP handshake response formatter
- *
- * @package        FastyBird:Core!
- * @subpackage     Http
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class WampResponse implements IResponse
 {

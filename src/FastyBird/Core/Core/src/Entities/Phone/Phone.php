@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Phone.php
- *
- * @copyright      More in LICENSE.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:Phone!
- * @subpackage     Entities
- * @since          1.0.1
- *
- * @date           17.12.15
- */
-
 namespace FastyBird\Core\Entities\Phone;
 
 use FastyBird\Core\Exceptions;
@@ -28,11 +15,6 @@ use function strtoupper;
 
 /**
  * Phone number entity
- *
- * @package        iPublikuj:Phone!
- * @subpackage     Entities
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class Phone
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Value.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Utilities
- * @since          1.0.0
- *
- * @date           05.12.20
- */
-
 namespace FastyBird\Core\Utilities\Tools;
 
 use BackedEnum;
@@ -44,11 +31,6 @@ use function strval;
 
 /**
  * Value helpers
- *
- * @package        FastyBird:Tools!
- * @package        FastyBird:Tools!
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Value
 {

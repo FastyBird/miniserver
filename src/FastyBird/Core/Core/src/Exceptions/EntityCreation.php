@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * EntityCreation.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:DoctrineCrud!
- * @subpackage     Exceptions
- * @since          1.0.0
- *
- * @date           10.12.16
- */
-
 namespace FastyBird\Core\Exceptions;
 
 use RuntimeException;

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TokenValidator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- * @since          0.1.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Core\Security\SimpleAuth;
 
 use DateTimeImmutable;
@@ -29,11 +16,6 @@ use function is_string;
 
 /**
  * JW token validator
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class TokenValidator
 {

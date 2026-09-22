@@ -20,11 +20,6 @@ use function substr_replace;
 
 /**
  * Communication frame
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Protocols
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Frame implements Protocols\IFrame
 {

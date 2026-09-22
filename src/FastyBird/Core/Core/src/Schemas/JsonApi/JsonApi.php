@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * JsonApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:JsonApi!
- * @subpackage     Schemas
- * @since          0.1.0
- *
- * @date           01.06.19
- */
-
 namespace FastyBird\Core\Schemas\JsonApi;
 
 use FastyBird\Core\Exceptions;
@@ -27,10 +14,6 @@ use function property_exists;
  *
  * @template     T of object
  * @implements   Contracts\Schema\SchemaInterface<T>
- *
- * @package            FastyBird:JsonApi!
- * @subpackage         Schemas
- * @author             Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class JsonApi implements Contracts\Schema\SchemaInterface
 {

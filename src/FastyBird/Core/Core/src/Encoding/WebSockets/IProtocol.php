@@ -8,11 +8,6 @@ use FastyBird\Core\Http;
 
 /**
  * A standard interface for interacting with the various version of the WebSocket protocol
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Protocols
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IProtocol
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ErrorEvent.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:WebSockets!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           15.11.19
- */
-
 namespace FastyBird\Core\Events;
 
 use FastyBird\Core\Controllers\WebSockets as Application;
@@ -23,11 +10,6 @@ use Throwable;
 
 /**
  * Connection close event
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class ErrorEvent extends EventDispatcher\Event
 {

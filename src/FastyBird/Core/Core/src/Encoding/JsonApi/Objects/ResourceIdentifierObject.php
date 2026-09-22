@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ResourceIdentifierObject.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:JsonAPIDocument!
- * @subpackage     Objects
- * @since          0.0.1
- *
- * @date           05.05.18
- */
-
 namespace FastyBird\Core\Encoding\JsonApi\Objects;
 
 use FastyBird\Core\Encoding\JsonApi;
@@ -25,11 +12,6 @@ use function sprintf;
 
 /**
  * Resource identifier object
- *
- * @package        iPublikuj:JsonAPIDocument!
- * @subpackage     Objects
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class ResourceIdentifierObject implements IResourceIdentifierObject
 {

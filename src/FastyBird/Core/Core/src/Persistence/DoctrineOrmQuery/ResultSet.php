@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ResultSet.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        iPublikuj:DoctrineOrmQuery!
- * @subpackage     common
- * @since          0.0.1
- *
- * @date           10.11.19
- */
-
 namespace FastyBird\Core\Persistence\DoctrineOrmQuery;
 
 use ArrayIterator;
@@ -55,11 +42,6 @@ use function trim;
  *
  * @phpstan-template    TEntityClass of object
  * @phpstan-implements  IteratorAggregate<int, TEntityClass>
- *
- * @package        iPublikuj:DoctrineOrmQuery!
- * @subpackage     common
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @author         Filip Procházka <filip@prochazka.su>
  */
 final class ResultSet implements Countable, IteratorAggregate
 {

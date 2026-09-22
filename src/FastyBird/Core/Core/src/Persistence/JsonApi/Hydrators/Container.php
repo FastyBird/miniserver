@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Container.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:JsonApi!
- * @subpackage     Hydrators
- * @since          0.7.0
- *
- * @date           11.01.22
- */
-
 namespace FastyBird\Core\Persistence\JsonApi\Hydrators;
 
 use FastyBird\Core\Encoding\JsonApi;
@@ -26,9 +13,6 @@ use SplObjectStorage;
  * API hydrators container
  *
  * @template T of object
- *
- * @package        FastyBird:JsonApi!
- * @subpackage     Hydrators
  */
 class Container
 {

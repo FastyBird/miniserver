@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Server.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           15.04.20
- */
-
 namespace FastyBird\Core\Subscribers\HttpServer;
 
 use Doctrine\DBAL;
@@ -23,11 +10,6 @@ use Symfony\Component\EventDispatcher;
 
 /**
  * Database check subscriber
- *
- * @package         FastyBird:WebServerPlugin!
- * @subpackage      Subscribers
- *
- * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class Server implements EventDispatcher\EventSubscriberInterface
 {

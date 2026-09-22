@@ -6,11 +6,6 @@ use FastyBird\Core\Http;
 
 /**
  * HyBi10 webSocket protocol
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Protocols
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class HyBi10 extends RFC6455
 {

@@ -6,11 +6,6 @@ use Symfony\Component\Console;
 
 /**
  * WebSockets server symfony console output formater
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Logger
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Symfony implements IFormatter
 {

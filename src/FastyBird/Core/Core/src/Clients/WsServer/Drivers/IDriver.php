@@ -6,11 +6,6 @@ use FastyBird\Core\Entities\WsServer as Entities;
 
 /**
  * Clients storage driver interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IDriver
 {

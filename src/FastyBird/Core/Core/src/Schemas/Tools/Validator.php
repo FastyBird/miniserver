@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Validator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           24.06.20
- */
-
 namespace FastyBird\Core\Schemas\Tools;
 
 use FastyBird\Core\Exceptions;
@@ -27,11 +14,6 @@ use function sprintf;
 
 /**
  * JSON schema validator
- *
- * @package        FastyBird:Tools!
- * @subpackage     Schemas
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Validator
 {

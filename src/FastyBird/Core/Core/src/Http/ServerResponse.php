@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ServerResponse.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Core!
- * @subpackage     Http
- * @since          1.0.0
- *
- * @date           17.03.20
- */
-
 namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
@@ -22,11 +9,6 @@ use function sprintf;
 
 /**
  * Extended HTTP response, carries a JSON:API entity attribute alongside the PSR-7 payload
- *
- * @package        FastyBird:Core!
- * @subpackage     Http
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ServerResponse extends Response
 {

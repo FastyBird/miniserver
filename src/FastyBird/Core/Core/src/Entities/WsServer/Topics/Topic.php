@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Topic.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           25.02.17
- */
-
 namespace FastyBird\Core\Entities\WsServer\Topics;
 
 use FastyBird\Core\Controllers\WebSockets\Responses;
@@ -31,11 +18,6 @@ use function sprintf;
 
 /**
  * A topic/channel containing connections that have subscribed to it
- *
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Entities
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Topic implements ITopic
 {

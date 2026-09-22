@@ -7,11 +7,6 @@ use Nette;
 /**
  * Controller request
  *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- *
  * @property string $controllerName
  * @property array $parameters
  */

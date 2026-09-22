@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * EventLoopLifeCycle.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Application!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           11.09.24
- */
-
 namespace FastyBird\Core\Subscribers\Application;
 
 use FastyBird\Core\EventLoop\Application as EventLoop;
@@ -22,11 +9,6 @@ use Symfony\Component\EventDispatcher;
 
 /**
  * Event loop events
- *
- * @package        FastyBird:Application!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class EventLoopLifeCycle implements EventDispatcher\EventSubscriberInterface
 {

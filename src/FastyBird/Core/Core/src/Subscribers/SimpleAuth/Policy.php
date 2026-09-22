@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Policy.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           22.03.20
- */
-
 namespace FastyBird\Core\Subscribers\SimpleAuth;
 
 use Doctrine\Common;
@@ -26,11 +13,6 @@ use function count;
 
 /**
  * Casbin policy entity subscriber
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Policy implements Common\EventSubscriber
 {

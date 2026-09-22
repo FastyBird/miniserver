@@ -6,11 +6,6 @@ use Nette;
 
 /**
  * WebSockets server configuration container
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Server
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Configuration
 {

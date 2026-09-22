@@ -18,11 +18,6 @@ use function strtolower;
  * These are checks to ensure the client requested handshake are valid
  * Verification rules come from section 4.2.1 of the RFC6455 document
  *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Protocols
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- *
  * @todo           Currently just returning invalid - should consider returning appropriate HTTP status code error #s
  */
 final class HandshakeVerifier

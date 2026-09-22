@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CombinedEnumFormat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Formats
- * @since          1.0.0
- *
- * @date           05.08.22
- */
-
 namespace FastyBird\Core\Formats\Tools;
 
 use ArrayIterator;
@@ -34,11 +21,6 @@ use function trim;
  * Combined enum value format
  *
  * @implements     IteratorAggregate<int, array<int, CombinedEnumItem|null>>
- *
- * @package        FastyBird:Tools!
- * @subpackage     Formats
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class CombinedEnum implements IteratorAggregate
 {

@@ -7,11 +7,6 @@ use function array_values;
 
 /**
  * Classic memory client storage driver
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class InMemory implements IDriver
 {

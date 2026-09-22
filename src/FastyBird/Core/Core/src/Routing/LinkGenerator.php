@@ -19,12 +19,6 @@ use function urldecode;
 
 /**
  * WebSockets connection link generator
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @author         David Grudl (https://davidgrudl.com)
  */
 class LinkGenerator
 {

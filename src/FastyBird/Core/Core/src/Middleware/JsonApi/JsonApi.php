@@ -2,19 +2,6 @@
 
 // phpcs:ignoreFile
 
-/**
- * JsonApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:JsonApi!
- * @subpackage     Middleware
- * @since          0.1.0
- *
- * @date           17.04.19
- */
-
 namespace FastyBird\Core\Middleware\JsonApi;
 
 use FastyBird\Core\Encoding\JsonApi as Tools;
@@ -36,11 +23,6 @@ use const JSON_PRETTY_PRINT;
 
 /**
  * {JSON:API} formatting output handling middleware
- *
- * @package        FastyBird:JsonApi!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class JsonApi implements Server\MiddlewareInterface
 {

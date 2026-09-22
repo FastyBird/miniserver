@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * MessageEvent.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:WebSockets!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           15.11.19
- */
-
 namespace FastyBird\Core\Events;
 
 use FastyBird\Core\Controllers\WebSockets as Application;
@@ -22,11 +9,6 @@ use Symfony\Contracts\EventDispatcher;
 
 /**
  * Message received event
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class MessageEvent extends EventDispatcher\Event
 {

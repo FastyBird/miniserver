@@ -1,19 +1,6 @@
 <?php declare(strict_types = 1);
 
 /**
- * check-layering.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:MiniServer!
- * @subpackage     Tools
- * @since          1.0.0
- *
- * @date           12.09.26
- */
-
-/**
  * DEPENDENCY-DIRECTION GATE FOR THE PACKAGES UNDER src/FastyBird.
  *
  * Run it:   php tools/check-layering.php
