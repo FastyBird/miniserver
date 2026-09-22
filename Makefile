@@ -17,10 +17,20 @@ INFECTION_CONFIG=tools/infection.json
 # CI was never affected (php-cs and php-phpstan are separate jobs), but this is
 # the target a maintainer runs before pushing, so it is exactly the pre-push gate
 # that did not gate.
+#
+# Order matters while `cs` is deliberately red (see tools/phpcs.xml's ClassConstantTypeHint
+# comment): make stops at the first non-zero recipe line, and `cs` exits 2 on the 214 known
+# findings every time. The cheap, always-green guards -- `layers`, `discriminators`, `naming`
+# -- run first so a maintainer still gets their signal instead of `make qa` dying on the first
+# line and never reaching them. `phpstan` runs before `cs` for the same reason: it is expected
+# to pass, and `cs` -- the one recipe line expected to fail -- runs last so it does not hide
+# the others.
 qa: ## Check code quality - coding style and static analysis
-	make cs
-	make phpstan
 	make layers
+	make discriminators
+	make naming
+	make phpstan
+	make cs
 
 cs: ## Check PHP files coding style
 	mkdir -p var/tools/PHP_CodeSniffer
@@ -68,6 +78,18 @@ layers: ## Check dependency direction between the packages under src/FastyBird
 # database stores is still one of the two keys -- hence a gate rather than a test.
 discriminators: ## Check every Doctrine inheritance root declares an explicit discriminator map
 	$(PRE_PHP) php tools/check-discriminators.php $(ARGS)
+
+# Like `layers` and `discriminators`, plain PHP with no vendor/ dependency, so it runs on a
+# bare checkout before `composer install`. Guards the invariant that no file names a library
+# fastybird/miniserver-core was assembled from -- in a Core namespace segment, in a declared
+# type name, or in a `use FastyBird\Core\... as X` alias anywhere in the repository.
+#
+# Aliases are the reason this is a gate rather than a review habit. There were 3,076 of them
+# when the Core identity refactor started, in 131 distinct forms, and they existed purely
+# because nothing checked. tools/naming-baseline.txt records the ones not yet reached; it may
+# only shrink, and a stale entry fails the gate.
+naming: ## Check no file names a library that Core was assembled from
+	$(PRE_PHP) php tools/check-naming.php $(ARGS)
 
 phpstan: ## Analyse code with PHPStan
 	mkdir -p var/tools

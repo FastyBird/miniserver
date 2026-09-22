@@ -26,6 +26,7 @@ The host you are running on may report a different PHP/Node version. It does not
 # PHP
 make layers              # dependency direction between packages; plain PHP, runs on a bare checkout
 make discriminators      # every Doctrine inheritance root declares an explicit #[ORM\DiscriminatorMap]
+make naming               # no file names a library fastybird/miniserver-core was assembled from; plain PHP, runs on a bare checkout
 make cs                 # PHP_CodeSniffer
 make csf                # PHP_CodeSniffer, auto-fix
 make lint                # php-parallel-lint
@@ -59,6 +60,10 @@ Install commands exist per module/connector/addon, not as a single `fb:initializ
 
 Conventional commits (`<type>(<scope>): <subject>`), scope required, enforced by commitlint locally and by `lint-pr.yml` on PR titles. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the type and scope tables.
 
+Code conventions — identity rules, import aliases, docblocks, naming, PHP idiom — are in
+[docs/conventions.md](./docs/conventions.md) and enforced by `make naming` and `make cs`. Read
+it before adding a file to `src/FastyBird/Core/Core`.
+
 ## Architecture reference
 
 Read [docs/architecture.md](./docs/architecture.md) before changing request routing, the config load order, or how extensions register their DI extensions. Read [docs/configuration.md](./docs/configuration.md) before wiring an extension that is present in the tree but not registered by default (RedisDb and its two bridges, RedisDbCache, CouchDb, RabbitMq, the two automators, ApiKey). Read [docs/deployment.md](./docs/deployment.md) before changing anything under `docker/` or `config/supervisor/`.
@@ -76,4 +81,20 @@ Read [docs/architecture.md](./docs/architecture.md) before changing request rout
 - `composer install` does not refresh the `vendor/fastybird/*` mirror. `COMPOSER_MIRROR_PATH_REPOS=1` copies the path repos rather than symlinking them, and Composer then considers each package already installed at the same version and skips it, so an edit under `src/FastyBird/<Type>/<Name>/src/` has no effect on anything that autoloads the production namespaces -- console commands, `orm:schema-tool`, `migrations:diff`. Use `composer reinstall <package>`, which reports `Mirroring from src/FastyBird/...`. This bites production classes only: PHPUnit loads the files under `tests/` from `src/` directly. It once produced a confident "Nothing to update" from `orm:schema-tool:update`, which would have shipped an entity change with no migration. **A change that spans packages stales every package it touched, not just the one you were working in**: renaming a namespace means rewriting `use` statements in each package that consumes it, and every one of those mirrors is now stale too. `composer reinstall` accepts several names at once; `rm -rf vendor/fastybird && composer install` rebuilds the lot. Skipping that once produced 133 errors out of 141 tests, which read as a botched rename and were entirely a stale mirror. After any cross-package edit, diff `src/FastyBird/<Type>/<Name>/src` against `vendor/fastybird/<package>/src` before believing a red *or* a green.
 - `composer update` with no package argument upgrades the entire dependency tree, not just what you changed. Adding a single path repository and running a bare `composer update` once bumped 14 unrelated third-party packages -- Symfony 7.4 to 8.1 among them -- and buried the change under the drift, in a diff that had to be unpicked by hand. Name the package: `composer update fastybird/<name>`. `--with-dependencies` widens it to that package's own requirements, which is usually still more than you meant.
 - Test files must be named `*Test.php`. Two files carried a `.phpt` extension and were invisible to every gate at once: `tools/phpunit.xml` `<directory>` entries set no `suffix`, so PHPUnit's default excluded them, and PHPCS and PHPStan only scan `.php`. They had never run, and one of them asserted the opposite of what its three sibling modules assert.
-- A green verdict is worth only as much as the harness that produced it. Four sources of false green have bitten this repo: a stale `vendor/fastybird/*` mirror (`COMPOSER_MIRROR_PATH_REPOS=1` copies path repos, it does not symlink, so production namespaces load the copy and not `src/`); a warm `var/temp/cache` container cache; a leftover `public/.vite/manifest.json` from an old `yarn build` that made a test pass locally and fail in CI; and piping a gate through `tail`, which reports the exit status of `tail` and turned a `make: *** Error 255` into a task that recorded success. Pipe to a file and check the command's own status, and sanity-check any harness with a known-positive control before trusting a batch verdict.
+- A green verdict is worth only as much as the harness that produced it. Six sources of false green have bitten this repo: a stale `vendor/fastybird/*` mirror (`COMPOSER_MIRROR_PATH_REPOS=1` copies path repos, it does not symlink, so production namespaces load the copy and not `src/`); a warm `var/temp/cache` container cache; a leftover `public/.vite/manifest.json` from an old `yarn build` that made a test pass locally and fail in CI; piping a gate through `tail`, which reports the exit status of `tail` and turned a `make: *** Error 255` into a task that recorded success; `composer reinstall <package>` run without `COMPOSER_MIRROR_PATH_REPOS=1` (see below); and a bare `docker run` of the application image leaving `date.timezone` empty (see below). Pipe to a file and check the command's own status, and sanity-check any harness with a known-positive control before trusting a batch verdict.
+- `composer reinstall <package>` **without** `COMPOSER_MIRROR_PATH_REPOS=1` silently replaces the
+  copy with a symlink. CI sets that variable globally (`.github/workflows/ci-tests.yaml`) and so
+  does `docker/prod/Dockerfile`, so a copy is the truthful state; a symlinked mirror can never go
+  stale and therefore hides exactly the drift the copy would expose, making local runs greener
+  than CI. `diff -rq` will not catch it -- a symlink is always "in sync" with its target. Check the
+  type: `find vendor/fastybird -maxdepth 1 -type l` must print nothing. Always
+  `COMPOSER_MIRROR_PATH_REPOS=1 composer reinstall <package>`, and confirm the output says
+  `Mirroring from src/FastyBird/...`.
+- Running a gate via a bare `docker run` of the application image, rather than through compose,
+  leaves `date.timezone` empty: `docker/dev/php/conf/php.ini` interpolates it from
+  `PHP_DATE_TIMEZONE`, which only compose sets. PHP then prints a startup warning **to stdout**,
+  which is invisible until something parses a PHP subprocess's stdout -- `EntityMappingTest` boots
+  the application in a subprocess and `json_decode`s it, and produced three phantom
+  `JsonException: Syntax error` failures from exactly this. Same mechanism as the "nothing may
+  print to stdout before `initialize()`" trap, different location. Pass
+  `-e TZ=UTC -e PHP_DATE_TIMEZONE=UTC` to any bare `docker run`.

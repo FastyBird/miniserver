@@ -6,7 +6,7 @@
     <arg name="cache" value="./../var/tools/PHP_CodeSniffer/cache.dat"/>
 
     <!-- Import coding-standard -->
-    <rule ref="./vendor/orisai/coding-standard/src/ruleset-8.2.xml">
+    <rule ref="./vendor/orisai/coding-standard/src/ruleset-8.4.xml">
         <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden"/>
 
         <exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectLinesCountBetweenDifferentAnnotationsTypes"/>
@@ -185,5 +185,20 @@
          so the exemption moves with it. -->
     <rule ref="PSR1.Files.SideEffects">
         <exclude-pattern>src/FastyBird/Core/Core/src/DI/CoreExtension\.php</exclude-pattern>
+    </rule>
+
+    <!-- The only rule ruleset-8.4 adds over ruleset-8.2 (it arrived in the 8.3 ruleset; 8.4
+         adds nothing further). The repository has 1,633 untyped class constants across 602
+         files and zero typed ones (214 in 39 Core files, 1,419 in 563 files elsewhere), so
+         it is switched on for Core first and the remaining packages are excluded until E7 of
+         the Core identity refactor reaches them. This list
+         may only shrink; deleting its last entry deletes the block. -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint">
+        <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Module/*</exclude-pattern>
+        <exclude-pattern>src/FastyBird/Plugin/*</exclude-pattern>
     </rule>
 </ruleset>
