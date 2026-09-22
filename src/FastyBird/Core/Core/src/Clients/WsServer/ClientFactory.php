@@ -7,11 +7,6 @@ use React\Socket;
 
 /**
  * Client connection factory
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class ClientFactory implements IClientFactory
 {

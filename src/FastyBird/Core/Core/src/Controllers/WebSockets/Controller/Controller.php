@@ -34,11 +34,6 @@ use const PREG_SPLIT_NO_EMPTY;
 /**
  * WebSockets application controller interface
  *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- *
  * @property-read stdClass $payload
  * @property-read NS\User $user
  */

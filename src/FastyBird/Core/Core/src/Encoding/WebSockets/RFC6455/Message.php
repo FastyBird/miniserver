@@ -11,11 +11,6 @@ use function count;
 
 /**
  * Communication message
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Protocols
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Message implements Protocols\IMessage, Countable
 {

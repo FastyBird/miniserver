@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindTokens.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Queries
- * @since          0.1.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Core\Persistence\SimpleAuth\Queries;
 
 use Closure;
@@ -27,10 +14,6 @@ use Ramsey\Uuid;
  *
  * @template T of Entities\Tokens\Token
  * @extends  DoctrineOrmQuery\QueryObject<T>
- *
- * @package          FastyBird:SimpleAuth!
- * @subpackage       Queries
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindTokens extends DoctrineOrmQuery\QueryObject
 {

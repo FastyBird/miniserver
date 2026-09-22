@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ClientDisconnectEvent.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:WebSockets!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           15.11.19
- */
-
 namespace FastyBird\Core\Events;
 
 use FastyBird\Core\Entities\WsServer as Entities;
@@ -21,11 +8,6 @@ use Symfony\Contracts\EventDispatcher;
 
 /**
  * Client disconnected event
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class ClientDisconnectEvent extends EventDispatcher\Event
 {

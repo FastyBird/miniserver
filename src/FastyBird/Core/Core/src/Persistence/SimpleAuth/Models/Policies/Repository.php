@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Repository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Models
- * @since          0.1.0
- *
- * @date           15.07.24
- */
-
 namespace FastyBird\Core\Persistence\SimpleAuth\Models\Policies;
 
 use Doctrine\ORM;
@@ -28,10 +15,6 @@ use function is_array;
 
 /**
  * Security token repository
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Models
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Repository
 {

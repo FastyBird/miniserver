@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Manager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Models
- * @since          0.1.0
- *
- * @date           15.07.24
- */
-
 namespace FastyBird\Core\Persistence\SimpleAuth\Models\Policies;
 
 use Doctrine\DBAL;
@@ -20,17 +7,12 @@ use FastyBird\Core\Entities\SimpleAuth as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
-use FastyBird\Core\Persistence\SimpleAuth\Models;
 use Nette;
 use Nette\Utils;
 use function assert;
 
 /**
  * Security tokens entities manager
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Models
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Manager
 {

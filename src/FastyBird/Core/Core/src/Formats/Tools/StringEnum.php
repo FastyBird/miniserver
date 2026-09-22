@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StringEnumFormat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     ValueObjects
- * @since          1.0.0
- *
- * @date           05.08.22
- */
-
 namespace FastyBird\Core\Formats\Tools;
 
 use ArrayIterator;
@@ -34,10 +21,6 @@ use function trim;
  * String enum value format
  *
  * @implements     IteratorAggregate<int, string>
- *
- * @package        FastyBird:Tools!
- * @subpackage     ValueObjects
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StringEnum implements IteratorAggregate
 {

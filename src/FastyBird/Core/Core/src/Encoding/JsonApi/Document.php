@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Document.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:JsonAPIDocument!
- * @subpackage     common
- * @since          0.0.1
- *
- * @date           05.05.18
- */
-
 namespace FastyBird\Core\Encoding\JsonApi;
 
 use FastyBird\Core\Encoding\JsonApi\Objects\IStandardObject;
@@ -25,11 +12,6 @@ use function json_decode;
 
 /**
  * JSON:API document
- *
- * @package        iPublikuj:JsonAPIDocument!
- * @subpackage     Objects
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class Document implements IDocument
 {

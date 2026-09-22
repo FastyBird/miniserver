@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PushMessageSerializer.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Serializers
- * @since          1.0.0
- *
- * @date           28.02.17
- */
-
 namespace FastyBird\Core\Encoding\WebSockets;
 
 use FastyBird\Core\Entities\WebSockets\PushMessages as Entities;
@@ -21,11 +8,6 @@ use Symfony\Component\Serializer;
 
 /**
  * Push message data serializer
- *
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Serializers
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class PushMessageSerializer
 {

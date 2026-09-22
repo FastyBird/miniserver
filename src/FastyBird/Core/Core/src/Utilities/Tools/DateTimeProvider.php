@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TemplateFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Utilities
- * @since          1.0.0
- *
- * @date           29.08.24
- */
-
 namespace FastyBird\Core\Utilities\Tools;
 
 use DateTimeInterface;
@@ -21,11 +8,6 @@ use FastyBird\Core\Services\DateTimeFactory;
 
 /**
  * Date provider for doctrine timestampable
- *
- * @package        FastyBird:Tools!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class DateTimeProvider implements DoctrineTimestampableProviders\DateProvider
 {

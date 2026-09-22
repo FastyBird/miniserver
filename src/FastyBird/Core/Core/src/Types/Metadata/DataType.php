@@ -1,29 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * DataType.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:MetadataLibrary!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           24.09.18
- */
-
 namespace FastyBird\Core\Types\Metadata;
 
 use function in_array;
 
 /**
  * Device or channel property data types
- *
- * @package        FastyBird:MetadataLibrary!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 enum DataType: string
 {

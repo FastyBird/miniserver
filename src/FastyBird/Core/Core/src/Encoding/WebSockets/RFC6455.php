@@ -23,11 +23,6 @@ use function unpack;
  *
  * @link           http://tools.ietf.org/html/rfc6455
  *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Protocols
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- *
  * @todo           Unicode: return mb_convert_encoding(pack("N",$u), mb_internal_encoding(), 'UCS-4BE');
  */
 class RFC6455 implements IProtocol

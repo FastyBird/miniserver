@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Client.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WsServerPlugin!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           15.01.22
- */
-
 namespace FastyBird\Core\Subscribers\WsServer;
 
 use Doctrine\DBAL;
@@ -33,11 +20,6 @@ use function in_array;
 
 /**
  * WS client events subscriber
- *
- * @package        FastyBird:WsServerPlugin!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Client implements EventDispatcher\EventSubscriberInterface
 {

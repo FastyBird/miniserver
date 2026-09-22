@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * LinkChecker.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- * @since          0.1.0
- *
- * @date           24.07.24
- */
-
 namespace FastyBird\Core\Security\SimpleAuth\Access;
 
 use FastyBird\Core\Exceptions;
@@ -34,11 +21,6 @@ use function ucfirst;
 
 /**
  * Create link access checker
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Access
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class LinkChecker implements Checker
 {

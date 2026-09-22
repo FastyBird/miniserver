@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Authorization.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Middleware
- * @since          0.1.0
- *
- * @date           01.04.20
- */
-
 namespace FastyBird\Core\Middleware\SimpleAuth;
 
 use FastyBird\Core\Exceptions;
@@ -32,11 +19,6 @@ use function is_string;
 
 /**
  * Access check middleware
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Authorization implements MiddlewareInterface
 {

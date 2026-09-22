@@ -7,11 +7,6 @@ use Psr\Log;
 
 /**
  * WebSockets server output printer
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Logger
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Console implements Log\LoggerInterface
 {

@@ -11,11 +11,6 @@ use function sprintf;
 
 /**
  * Communication error response
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Responses
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class ErrorResponse implements IResponse
 {

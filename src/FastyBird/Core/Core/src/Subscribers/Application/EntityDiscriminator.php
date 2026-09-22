@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * EntityDiscriminator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Application!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           06.02.24
- */
-
 namespace FastyBird\Core\Subscribers\Application;
 
 use Doctrine\Common;
@@ -28,12 +15,6 @@ use function sprintf;
 use function str_contains;
 use function strtolower;
 
-/**
- * @package        FastyBird:Application!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- */
 class EntityDiscriminator implements Common\EventSubscriber
 {
 

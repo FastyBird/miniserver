@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WsServerError.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Core!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           09.10.21
- */
-
 namespace FastyBird\Core\Events;
 
 use Symfony\Contracts\EventDispatcher;
@@ -20,11 +7,6 @@ use Throwable;
 
 /**
  * WS server connection error event
- *
- * @package        FastyBird:Core!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class WsServerError extends EventDispatcher\Event
 {

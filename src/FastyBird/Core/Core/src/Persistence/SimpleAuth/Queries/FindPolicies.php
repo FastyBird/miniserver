@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindPolicies.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Queries
- * @since          0.1.0
- *
- * @date           15.07.24
- */
-
 namespace FastyBird\Core\Persistence\SimpleAuth\Queries;
 
 use Closure;
@@ -28,10 +15,6 @@ use function assert;
  *
  * @template T of Entities\Policies\Policy
  * @extends  DoctrineOrmQuery\QueryObject<T>
- *
- * @package          FastyBird:SimpleAuth!
- * @subpackage       Queries
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindPolicies extends DoctrineOrmQuery\QueryObject
 {

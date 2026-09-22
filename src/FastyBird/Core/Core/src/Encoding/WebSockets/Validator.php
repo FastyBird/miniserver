@@ -11,11 +11,6 @@ use function strlen;
 
 /**
  * Encoding validation
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Encoding
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Validator implements IValidator
 {

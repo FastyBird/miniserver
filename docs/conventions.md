@@ -82,9 +82,11 @@ cross-cutting exceptions sit at the root.
 
 **No file header.** The licence is in `LICENSE.md`, the author in `composer.json`, and the
 namespace supersedes `@package`. `@package`, `@subpackage`, `@author`, `@copyright`,
-`@license`, `@since` and `@date` are forbidden. **Not enforced yet:** `tools/phpcs.xml` still excludes
-`SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden`. E2 removes that
-exclusion once Core's 409 file headers are gone, and `make cs` rejects them from then on.
+`@license`, `@since`, `@created`, `@version` and `@date` are forbidden. **Enforced for Core:**
+`tools/phpcs.xml` runs `SlevomatCodingStandard.Commenting.ForbiddenAnnotations` with no exclusion
+under `src/FastyBird/Core/Core`; `make cs` rejects any of these annotations there. The other six
+package types (`Addon`, `Automator`, `Bridge`, `Connector`, `Module`, `Plugin`) are still exempt
+via a shrink-only `<exclude-pattern>` list in `tools/phpcs.xml`, owned by E7 (#462).
 
 - `@var`, `@param`, `@return`: omit where they only restate a native type. Keep for array
   shapes, generics and `@template`.

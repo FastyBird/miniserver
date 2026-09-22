@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Configuration.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Core!
- * @subpackage     Configuration
- * @since          1.0.0
- *
- * @date           01.07.24
- */
-
 namespace FastyBird\Core\Configuration;
 
 use Nette;
@@ -21,11 +8,6 @@ use Nette\Application;
 /**
  * Application configuration storage.
  * Stores the simple authentication and Doctrine timestampable extension settings
- *
- * @package        FastyBird:Core!
- * @subpackage     Configuration
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Configuration
 {

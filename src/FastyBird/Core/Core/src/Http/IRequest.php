@@ -6,11 +6,6 @@ use Nette\Http;
 
 /**
  * HTTP request interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Http
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IRequest extends Http\IRequest
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * IAuthenticator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- * @since          0.1.0
- *
- * @date           29.08.20
- */
-
 namespace FastyBird\Core\Security\SimpleAuth;
 
 use FastyBird\Core\Exceptions;
@@ -20,11 +7,6 @@ use FastyBird\Core\Security\SimpleAuth as Security;
 
 /**
  * Application authenticator interface
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 interface IAuthenticator
 {

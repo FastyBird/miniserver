@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * UTCDateTime.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:DoctrineTimestampable!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           06.01.15
- */
-
 namespace FastyBird\Core\Types\DoctrineTimestampable;
 
 use DateTime;
@@ -26,11 +13,6 @@ use function substr;
 
 /**
  * Doctrine phone data type
- *
- * @package        iPublikuj:DoctrineTimestampable!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class UTCDateTime extends Types\DateTimeType
 {

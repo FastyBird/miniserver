@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Logger.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           08.04.23
- */
-
 namespace FastyBird\Core\Helpers\Tools;
 
 use DirectoryIterator;
@@ -33,11 +20,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Logger helpers
- *
- * @package        FastyBird:Tools!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Logger
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StaticFiles.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Middleware
- * @since          1.0.0
- *
- * @date           08.05.21
- */
-
 namespace FastyBird\Core\Middleware\WebServer;
 
 use Closure;
@@ -32,11 +19,6 @@ use const PATHINFO_EXTENSION;
 
 /**
  * Public static files middleware
- *
- * @package        FastyBird:WebServerPlugin!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StaticFiles
 {

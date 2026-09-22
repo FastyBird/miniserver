@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * AttributeDriver.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Application!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           10.02.24
- */
-
 namespace FastyBird\Core\Documents\Mapping\Driver;
 
 use Error;
@@ -43,11 +30,6 @@ use function str_replace;
 
 /**
  * Document mapping attribute driver
- *
- * @package        FastyBird:Application!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class AttributeDriver implements MappingDriver
 {

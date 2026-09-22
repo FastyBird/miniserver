@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Adapter.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Models
- * @since          0.1.0
- *
- * @date           09.07.24
- */
-
 namespace FastyBird\Core\Persistence\SimpleAuth\Models\Casbin;
 
 use Casbin\Model as CasbinModel;
@@ -20,7 +7,6 @@ use Casbin\Persist as CasbinPersist;
 use Closure;
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models;
 use FastyBird\Core\Types\SimpleAuth as Types;
 use Ramsey\Uuid;
 use Throwable;
@@ -36,10 +22,6 @@ use function trim;
 
 /**
  * Casbin database adapter
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Models
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Adapter implements CasbinPersist\FilteredAdapter, CasbinPersist\BatchAdapter, CasbinPersist\UpdatableAdapter
 {

@@ -11,11 +11,6 @@ use React\Socket;
 
 /**
  * Single client connection interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Entities
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IClient
 {

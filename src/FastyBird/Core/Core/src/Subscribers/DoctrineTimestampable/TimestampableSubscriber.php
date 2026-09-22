@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TimestampableSubscriber.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:DoctrineTimestampable!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           06.01.16
- */
-
 namespace FastyBird\Core\Subscribers\DoctrineTimestampable;
 
 use DateTime;
@@ -38,11 +25,6 @@ use function time;
 
 /**
  * Doctrine timestampable subscriber
- *
- * @package        iPublikuj:DoctrineTimestampable!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class TimestampableSubscriber implements Common\EventSubscriber
 {

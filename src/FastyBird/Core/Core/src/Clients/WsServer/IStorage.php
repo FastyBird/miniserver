@@ -7,11 +7,6 @@ use IteratorAggregate;
 
 /**
  * Storage for manage all connections
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IStorage extends IteratorAggregate
 {

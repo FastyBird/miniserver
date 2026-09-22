@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Container.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Exchange!
- * @subpackage     Publishers
- * @since          1.0.0
- *
- * @date           19.12.20
- */
-
 namespace FastyBird\Core\Messaging\Exchange\Publisher\Async;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
@@ -25,11 +12,6 @@ use Throwable;
 
 /**
  * Exchange async publishers proxy
- *
- * @package        FastyBird:Exchange!
- * @subpackage     Publishers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Container implements Publisher
 {

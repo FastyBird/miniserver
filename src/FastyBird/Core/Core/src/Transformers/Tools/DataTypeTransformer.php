@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DataTypeTransformer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Transformers
- * @since          1.0.0
- *
- * @date           17.01.24
- */
-
 namespace FastyBird\Core\Transformers\Tools;
 
 use Contributte\Monolog;
@@ -24,11 +11,6 @@ use function in_array;
 
 /**
  * Compatible data type value transformer
- *
- * @package        FastyBird:Tools!
- * @subpackage     Transformers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class DataTypeTransformer
 {

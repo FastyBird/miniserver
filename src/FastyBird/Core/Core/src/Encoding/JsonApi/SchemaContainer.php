@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SchemaContainer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:JsonApi!
- * @subpackage     JsonApi
- * @since          0.1.0
- *
- * @date           13.03.20
- */
-
 namespace FastyBird\Core\Encoding\JsonApi;
 
 use FastyBird\Core\Exceptions;
@@ -26,11 +13,6 @@ use function substr;
  * Json:API schemas container
  *
  * @template     T of object
- *
- * @package        FastyBird:JsonApi!
- * @subpackage     JsonApi
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class SchemaContainer extends JsonApi\Schema\SchemaContainer
 {

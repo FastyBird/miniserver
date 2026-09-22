@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DataType.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Utilities
- * @since          1.0.0
- *
- * @date           05.12.20
- */
-
 namespace FastyBird\Core\Utilities\Tools;
 
 use FastyBird\Core\Exceptions;
@@ -25,11 +12,6 @@ use function sprintf;
 
 /**
  * Data type helpers
- *
- * @package        FastyBird:Tools!
- * @subpackage     Utilities
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DataType
 {

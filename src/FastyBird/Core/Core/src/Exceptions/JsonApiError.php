@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * JsonApiError.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:JsonApi!
- * @subpackage     Exceptions
- * @since          0.1.0
- *
- * @date           12.04.19
- */
-
 namespace FastyBird\Core\Exceptions;
 
 use Exception as PHPException;
@@ -21,11 +8,6 @@ use function strval;
 
 /**
  * Process single error
- *
- * @package        FastyBird:JsonApi!
- * @subpackage     Exceptions
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class JsonApiError extends PHPException implements Exception, JsonApi
 {

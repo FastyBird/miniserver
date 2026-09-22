@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TSimpleAuth.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Application
- * @since          1.0.0
- *
- * @date           01.07.24
- */
-
 namespace FastyBird\Core\Presenters\SimpleAuth;
 
 use FastyBird\Core\Configuration;
@@ -24,11 +11,6 @@ use ReflectionMethod;
 
 /**
  * Nette's presenters security trait
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @method Application\IPresenter getPresenter()
  * @method string storeRequest(string $expiration = '+ 10 minutes')

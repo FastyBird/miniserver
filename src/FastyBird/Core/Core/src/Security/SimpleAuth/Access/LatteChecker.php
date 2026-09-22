@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * LatteChecker.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- * @since          0.1.0
- *
- * @date           24.07.24
- */
-
 namespace FastyBird\Core\Security\SimpleAuth\Access;
 
 use FastyBird\Core\Constants as SimpleAuth;
@@ -30,11 +17,6 @@ use function is_string;
 
 /**
  * Latte helper for access checking
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Access
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class LatteChecker implements Checker
 {

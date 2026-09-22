@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RoutingDocumentFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Core!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           13.06.22
- */
-
 namespace FastyBird\Core\Documents;
 
 use FastyBird\Core\Exceptions;
@@ -26,11 +13,6 @@ use function sprintf;
 /**
  * Routing-key based document factory resolver, delegates the actual document construction
  * to DocumentFactory once it has found the document class matching a given routing key
- *
- * @package        FastyBird:Core!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class RoutingDocumentFactory
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ControllerResolver.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:SlimRouter!
- * @subpackage     Controllers
- * @since          0.1.0
- *
- * @date           14.04.19
- */
-
 namespace FastyBird\Core\Controllers\SlimRouter;
 
 use FastyBird\Core\Exceptions;
@@ -27,11 +14,6 @@ use function sprintf;
 
 /**
  * Endpoint controller callback resolver
- *
- * @package        iPublikuj:SlimRouter!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class ControllerResolver implements IControllerResolver
 {

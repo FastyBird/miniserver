@@ -1,19 +1,6 @@
 <?php declare(strict_types = 1);
 
 /**
- * layering.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:MiniServer!
- * @subpackage     Tools
- * @since          1.0.0
- *
- * @date           12.09.26
- */
-
-/**
  * THE DEPENDENCY-DIRECTION RULE MATRIX FOR THE 34 PACKAGES UNDER src/FastyBird.
  *
  * This file is DATA ONLY. It returns a plain array, it has no logic, no closures and no

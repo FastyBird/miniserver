@@ -10,11 +10,6 @@ use function implode;
 
 /**
  * Manage the various protocols of the WebSocket protocol
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Protocols
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class ProtocolProxy
 {

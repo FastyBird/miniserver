@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Helpers.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:DoctrineCrud!
- * @subpackage     common
- * @since          1.0.0
- *
- * @date           29.01.14
- */
-
 namespace FastyBird\Core\Helpers\DoctrineCrud;
 
 use FastyBird\Core\Exceptions;
@@ -31,11 +18,6 @@ use function strtolower;
 
 /**
  * Doctrine CRUD helpers
- *
- * @package        iPublikuj:DoctrineCrud!
- * @subpackage     common
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class Helpers
 {

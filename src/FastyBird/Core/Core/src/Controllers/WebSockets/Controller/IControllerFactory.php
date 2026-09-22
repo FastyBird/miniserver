@@ -6,11 +6,6 @@ use FastyBird\Core\Exceptions;
 
 /**
  * Responsible for creating a new instance of given controller
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IControllerFactory
 {

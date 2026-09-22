@@ -12,11 +12,6 @@ use function sprintf;
 
 /**
  * Storage for manage all connections
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Storage
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Storage implements IStorage
 {

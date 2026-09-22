@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Application.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Application
- * @since          1.0.0
- *
- * @date           14.02.17
- */
-
 namespace FastyBird\Core\Controllers\WebSockets;
 
 use FastyBird\Core\Clients\WsServer as WebSocketsClients;
@@ -45,11 +32,6 @@ use function uniqid;
 /**
  * Application which run on server and provide creating controllers
  * with correctly params - convert message => control
- *
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  *
  * @method onPush(PushMessages\IMessage $message, string $provider, TopicEntities\ITopic $topic)
  */

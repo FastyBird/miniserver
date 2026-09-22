@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Response.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:SlimRouter!
- * @subpackage     Http
- * @since          0.1.0
- *
- * @date           14.03.20
- */
-
 namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
@@ -38,11 +25,6 @@ use const JSON_UNESCAPED_SLASHES;
 
 /**
  * Basic http response
- *
- * @package        iPublikuj:SlimRouter!
- * @subpackage     Http
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class Response implements ResponseInterface
 {

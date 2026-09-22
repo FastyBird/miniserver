@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * NumberRangeFormat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Tools!
- * @subpackage     Formats
- * @since          1.0.0
- *
- * @date           05.08.22
- */
-
 namespace FastyBird\Core\Formats\Tools;
 
 use FastyBird\Core\Exceptions;
@@ -36,11 +23,6 @@ use function trim;
 
 /**
  * String enum value format
- *
- * @package        FastyBird:Tools!
- * @subpackage     Formats
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class NumberRange
 {

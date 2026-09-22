@@ -11,11 +11,6 @@ use Throwable;
 
 /**
  * WebSocket server
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Server
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Handlers
 {

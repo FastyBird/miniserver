@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Wrapper.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Application!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           02.01.24
- */
-
 namespace FastyBird\Core\EventLoop\Application;
 
 use FastyBird\Core\Events;
@@ -30,11 +17,6 @@ use const SIGTERM;
 
 /**
  * React event loop wrapper
- *
- * @package        FastyBird:Application!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Wrapper implements ReactEventLoop\LoopInterface
 {

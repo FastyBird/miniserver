@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Storage.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Topics
- * @since          1.0.0
- *
- * @date           14.02.17
- */
-
 namespace FastyBird\Core\Topics\WsServer;
 
 use ArrayIterator;
@@ -25,11 +12,6 @@ use function sprintf;
 
 /**
  * Storage for manage all topics
- *
- * @package        iPublikuj:WebSocketsWAMP!
- * @subpackage     Topics
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class Storage implements IStorage
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * EntityMapper.php
- *
- * @copyright      More in LICENSE.md
- * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:DoctrineCrud!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           29.01.14
- */
-
 namespace FastyBird\Core\Mapping\DoctrineCrud;
 
 use Doctrine\ORM;
@@ -53,11 +40,6 @@ use function ucfirst;
 
 /**
  * Doctrine CRUD entity mapper
- *
- * @package        iPublikuj:DoctrineCrud!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class EntityMapper implements IEntityMapper
 {

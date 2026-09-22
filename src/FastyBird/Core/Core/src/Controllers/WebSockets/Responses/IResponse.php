@@ -4,12 +4,6 @@ namespace FastyBird\Core\Controllers\WebSockets\Responses;
 
 /**
  * Response interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Responses
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @author         Vít Ledvinka, frosty22 <ledvinka.vit@gmail.com>
  */
 interface IResponse
 {

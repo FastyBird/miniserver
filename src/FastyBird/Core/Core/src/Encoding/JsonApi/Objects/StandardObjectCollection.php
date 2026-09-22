@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StandardObjectCollection.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:JsonAPIDocument!
- * @subpackage     Objects
- * @since          0.2.0
- *
- * @date           18.05.21
- */
-
 namespace FastyBird\Core\Encoding\JsonApi\Objects;
 
 use ArrayIterator;
@@ -23,11 +10,6 @@ use function iterator_to_array;
 
 /**
  * Standard objects collection
- *
- * @package        iPublikuj:JsonAPIDocument!
- * @subpackage     Objects
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class StandardObjectCollection implements IStandardObjectCollection
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CrudReader.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:JsonApi!
- * @subpackage     Helpers
- * @since          0.2.0
- *
- * @date           20.05.21
- */
-
 namespace FastyBird\Core\Helpers\JsonApi;
 
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
@@ -23,11 +10,6 @@ use function assert;
 
 /**
  * Doctrine CRUD annotation reader
- *
- * @package            FastyBird:JsonApi!
- * @subpackage         Helpers
- *
- * @author             Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class CrudReader
 {

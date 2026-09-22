@@ -42,11 +42,6 @@ use const PHP_SAPI;
 
 /**
  * HTTP request factory
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Http
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 final class RequestFactory
 {

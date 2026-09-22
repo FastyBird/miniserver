@@ -4,11 +4,6 @@ namespace FastyBird\Core\Encoding\WebSockets;
 
 /**
  * Encoding validation interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Encoding
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IValidator
 {

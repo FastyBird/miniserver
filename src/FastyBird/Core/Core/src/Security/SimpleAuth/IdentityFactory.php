@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * IdentityFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- * @since          0.1.0
- *
- * @date           15.07.20
- */
-
 namespace FastyBird\Core\Security\SimpleAuth;
 
 use FastyBird\Core\Constants as SimpleAuth;
@@ -23,11 +10,6 @@ use function is_string;
 
 /**
  * Application plain identity factory
- *
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Security
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class IdentityFactory implements IIdentityFactory
 {

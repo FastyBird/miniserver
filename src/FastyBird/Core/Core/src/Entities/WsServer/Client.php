@@ -13,11 +13,6 @@ use React\Socket;
 
 /**
  * Single client connection
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Entities
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class Client implements IClient
 {

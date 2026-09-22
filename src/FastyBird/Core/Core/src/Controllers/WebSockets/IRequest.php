@@ -4,11 +4,6 @@ namespace FastyBird\Core\Controllers\WebSockets;
 
 /**
  * Controller request interface
- *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Application
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IRequest
 {

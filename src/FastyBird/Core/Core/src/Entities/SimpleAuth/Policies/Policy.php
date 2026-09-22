@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Policy.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SimpleAuth!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           14.07.24
- */
-
 namespace FastyBird\Core\Entities\SimpleAuth\Policies;
 
 use Doctrine\ORM\Mapping as ORM;

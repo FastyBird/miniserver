@@ -27,11 +27,6 @@ use function trim;
  * WebSockets server application wrapper
  * Purpose of this class is to create better interface for connection objects
  *
- * @package        iPublikuj:WebSockets!
- * @subpackage     Server
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- *
  * @method onClientConnected(Entities\IClient $client, Http\IRequest $httpRequest)
  * @method onClientDisconnected(Entities\IClient $client, Http\IRequest $httpRequest)
  * @method onClientError(Entities\IClient $client, Http\IRequest $httpRequest)

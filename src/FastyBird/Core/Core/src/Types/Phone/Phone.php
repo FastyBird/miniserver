@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Phone.php
- *
- * @copyright      More in LICENSE.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
- * @package        iPublikuj:DoctrinePhone!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           25.12.15
- */
-
 namespace FastyBird\Core\Types\Phone;
 
 use Doctrine\DBAL\Platforms;
@@ -22,11 +9,6 @@ use FastyBird\Core\Exceptions;
 
 /**
  * Doctrine phone data type
- *
- * @package        iPublikuj:DoctrinePhone!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class Phone extends Types\StringType
 {
