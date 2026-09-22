@@ -4,6 +4,7 @@ namespace FastyBird\Core\Tests\Cases\Unit\Api;
 
 use DateTimeInterface;
 use FastyBird\Core\Encoding\JsonApi\Objects\StandardObject;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\ArrayField;
 use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\BackedEnumField;
 use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\BooleanField;
@@ -13,14 +14,19 @@ use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\NumberField;
 use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\SingleEntityField;
 use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\TextField;
 use FastyBird\Core\Types\Metadata\DataType;
+use Fig\Http\Message\StatusCodeInterface;
+use Nette\Localization;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use ValueError;
 
 /**
  * Characterizes the pure value-coercion behaviour of the JSON:API hydrator field
  * classes as they exist today, ahead of the E3 move to `FastyBird\Core\Api\Hydrators\Fields\`.
+ *
+ * NumberField, BooleanField, ArrayField and BackedEnumField reject malformed input (#476,
+ * decided 2026-09-22) rather than silently coercing it -- the tests named accordingly
+ * document that reversal rather than the original defect.
  */
 final class HydratorFieldsTest extends TestCase
 {
@@ -66,78 +72,165 @@ final class HydratorFieldsTest extends TestCase
 		self::assertSame('', $notNullableField->getValue($attributes));
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testNumberFieldGetValueCastsToIntWhenNotDecimal(): void
 	{
-		$field = new NumberField(false, false, 'field', 'field', true, true);
+		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
 		$attributes = (new StandardObject())->set('field', '42');
 
 		self::assertSame(42, $field->getValue($attributes));
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testNumberFieldGetValueCastsToFloatWhenDecimal(): void
 	{
-		$field = new NumberField(true, false, 'field', 'field', true, true);
+		$field = new NumberField($this->createTranslator(), true, false, 'field', 'field', true, true);
 
 		$attributes = (new StandardObject())->set('field', '4.5');
 
 		self::assertSame(4.5, $field->getValue($attributes));
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testNumberFieldGetValueTruncatesADecimalStringWhenNotDecimal(): void
 	{
-		$field = new NumberField(false, false, 'field', 'field', true, true);
+		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
 		$attributes = (new StandardObject())->set('field', '4.5');
 
 		self::assertSame(4, $field->getValue($attributes));
 	}
 
-	public function testNumberFieldGetValueOnNonNumericStringCoercesToZeroRatherThanThrowing(): void
+	public function testNumberFieldGetValueOnNonNumericStringThrowsJsonApiErrorWithAttributePointer(): void
 	{
-		$field = new NumberField(false, false, 'field', 'field', true, true);
+		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
 		$attributes = (new StandardObject())->set('field', 'not a number');
 
-		self::assertSame(0, $field->getValue($attributes));
+		try {
+			$field->getValue($attributes);
+
+			self::fail('NumberField::getValue() did not reject a non-numeric string.');
+		} catch (Exceptions\JsonApiError $ex) {
+			self::assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $ex->getCode());
+			self::assertSame(['pointer' => '/data/attributes/field'], $ex->getSource());
+		}
 	}
 
-	#[DataProvider('booleanScalars')]
-	public function testBooleanFieldGetValueCoercesEachScalarInput(bool|string|int $value, bool $expected): void
+	public function testNumberFieldGetValueRejectsABooleanRatherThanCastingItToZeroOrOne(): void
 	{
-		$field = new BooleanField(false, 'field', 'field', true, true);
+		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', $value);
+		$attributes = (new StandardObject())->set('field', true);
 
-		self::assertSame($expected, $field->getValue($attributes));
+		try {
+			$field->getValue($attributes);
+
+			self::fail('NumberField::getValue() did not reject a boolean value.');
+		} catch (Exceptions\JsonApiError $ex) {
+			self::assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $ex->getCode());
+		}
 	}
 
 	/**
-	 * @return array<string, array{0: bool|string|int, 1: bool}>
+	 * A non-scalar value (array/object) is out of scope for #476 -- it is treated the
+	 * same as an absent attribute, not rejected. Pinned so this stays a deliberate
+	 * boundary rather than an undocumented silent-coercion path.
+	 *
+	 * @throws Exceptions\JsonApiError
 	 */
-	public static function booleanScalars(): array
+	public function testNumberFieldGetValueOnNonScalarReturnsNullRatherThanThrowing(): void
+	{
+		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
+
+		$attributes = (new StandardObject())->set('field', ['nested' => 'value']);
+
+		self::assertNull($field->getValue($attributes));
+	}
+
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
+	public function testBooleanFieldGetValueReturnsActualBooleanUnchanged(): void
+	{
+		$field = new BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
+
+		self::assertTrue($field->getValue((new StandardObject())->set('field', true)));
+		self::assertFalse($field->getValue((new StandardObject())->set('field', false)));
+	}
+
+	#[DataProvider('nonBooleanScalars')]
+	public function testBooleanFieldGetValueRejectsAnyNonBooleanScalar(bool|string|int $value): void
+	{
+		$field = new BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
+
+		$attributes = (new StandardObject())->set('field', $value);
+
+		try {
+			$field->getValue($attributes);
+
+			self::fail('BooleanField::getValue() did not reject a non-boolean scalar.');
+		} catch (Exceptions\JsonApiError $ex) {
+			self::assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $ex->getCode());
+			self::assertSame(['pointer' => '/data/attributes/field'], $ex->getSource());
+		}
+	}
+
+	/**
+	 * @return array<string, array{0: string|int}>
+	 */
+	public static function nonBooleanScalars(): array
 	{
 		return [
-			'bool_true' => [true, true],
-			'bool_false' => [false, false],
-			'string_true' => ['true', true],
+			'string_true' => ['true'],
 			// Any non-empty string other than "0" is truthy in PHP -- including the
-			// string "false". This is the sharpest probe on this class: a mutant that
-			// special-cased the literal string "false" would still pass every other case.
-			'string_false' => ['false', true],
-			'string_one' => ['1', true],
-			'string_zero' => ['0', false],
-			'int_one' => [1, true],
-			'int_zero' => [0, false],
+			// string "false". This is the case that made #476 obvious: a client
+			// serialising a boolean as the string "false" used to get back `true`.
+			// Every one of these cases must now be rejected, not just this one --
+			// option 1 closed the lenient "1" -> true reading along with it.
+			'string_false' => ['false'],
+			'string_one' => ['1'],
+			'string_zero' => ['0'],
+			'int_one' => [1],
+			'int_zero' => [0],
 		];
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testBooleanFieldGetValueOnMissingKeyReturnsNullOrFalseDependingOnNullable(): void
 	{
-		$nullableField = new BooleanField(true, 'field', 'field', true, true);
-		$notNullableField = new BooleanField(false, 'field', 'field', true, true);
+		$nullableField = new BooleanField($this->createTranslator(), true, 'field', 'field', true, true);
+		$notNullableField = new BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
 
 		$attributes = new StandardObject();
+
+		self::assertNull($nullableField->getValue($attributes));
+		self::assertFalse($notNullableField->getValue($attributes));
+	}
+
+	/**
+	 * `IStandardObject::get()` cannot distinguish an attribute explicitly sent as JSON
+	 * `null` from one that was never sent at all -- both reach `getValue()` as PHP
+	 * `null`. Pinned deliberately so a future change to that boundary is a visible
+	 * decision instead of a silent behavioural drift.
+	 *
+	 * @throws Exceptions\JsonApiError
+	 */
+	public function testBooleanFieldGetValueOnExplicitNullIsTreatedTheSameAsMissingKey(): void
+	{
+		$nullableField = new BooleanField($this->createTranslator(), true, 'field', 'field', true, true);
+		$notNullableField = new BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
+
+		$attributes = (new StandardObject())->set('field', null);
 
 		self::assertNull($nullableField->getValue($attributes));
 		self::assertFalse($notNullableField->getValue($attributes));
@@ -178,57 +271,85 @@ final class HydratorFieldsTest extends TestCase
 		self::assertNull($field->getValue($attributes));
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testBackedEnumFieldGetValueReturnsTheMatchingCaseForAValidBackingValue(): void
 	{
-		$field = new BackedEnumField(DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField($this->createTranslator(), DataType::class, false, 'field', 'field', true, true);
 
 		$attributes = (new StandardObject())->set('field', 'char');
 
 		self::assertSame(DataType::CHAR, $field->getValue($attributes));
 	}
 
-	public function testBackedEnumFieldGetValueThrowsValueErrorForAnInvalidBackingValue(): void
+	public function testBackedEnumFieldGetValueThrowsJsonApiErrorForAnInvalidBackingValue(): void
 	{
-		$field = new BackedEnumField(DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField($this->createTranslator(), DataType::class, false, 'field', 'field', true, true);
 
 		$attributes = (new StandardObject())->set('field', 'not-a-data-type');
 
-		self::expectException(ValueError::class);
+		try {
+			$field->getValue($attributes);
 
-		$field->getValue($attributes);
+			self::fail('BackedEnumField::getValue() did not reject an invalid backing value.');
+		} catch (Exceptions\JsonApiError $ex) {
+			// Closes the gap #476 called out: previously a bare `\ValueError` reached
+			// the controllers' generic `catch (Throwable)` and came back as a 422 with
+			// no pointer. It must carry the same field-specific pointer as the other
+			// three fields now.
+			self::assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $ex->getCode());
+			self::assertSame(['pointer' => '/data/attributes/field'], $ex->getSource());
+		}
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testBackedEnumFieldGetValueReturnsNullWhenAttributeIsAbsentRatherThanThrowing(): void
 	{
-		$field = new BackedEnumField(DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField($this->createTranslator(), DataType::class, false, 'field', 'field', true, true);
 
 		$attributes = new StandardObject();
 
 		self::assertNull($field->getValue($attributes));
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testArrayFieldGetValueRoundTripsAnArray(): void
 	{
-		$field = new ArrayField(false, 'field', 'field', true, true);
+		$field = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
 		$attributes = (new StandardObject())->set('field', [1, 2, 3]);
 
 		self::assertSame([1, 2, 3], $field->getValue($attributes));
 	}
 
-	public function testArrayFieldGetValueCoercesANonArrayScalarIntoASingleElementArray(): void
+	public function testArrayFieldGetValueRejectsANonArrayScalarRatherThanWrappingIt(): void
 	{
-		$field = new ArrayField(false, 'field', 'field', true, true);
+		$field = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
 		$attributes = (new StandardObject())->set('field', 'not an array');
 
-		self::assertSame(['not an array'], $field->getValue($attributes));
+		try {
+			$field->getValue($attributes);
+
+			self::fail('ArrayField::getValue() did not reject a non-array scalar.');
+		} catch (Exceptions\JsonApiError $ex) {
+			self::assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $ex->getCode());
+			self::assertSame(['pointer' => '/data/attributes/field'], $ex->getSource());
+		}
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testArrayFieldGetValueOnMissingKeyReturnsEmptyArrayOrNullDependingOnNullable(): void
 	{
-		$nullableField = new ArrayField(true, 'field', 'field', true, true);
-		$notNullableField = new ArrayField(false, 'field', 'field', true, true);
+		$nullableField = new ArrayField($this->createTranslator(), true, 'field', 'field', true, true);
+		$notNullableField = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
 		$attributes = new StandardObject();
 
@@ -236,9 +357,26 @@ final class HydratorFieldsTest extends TestCase
 		self::assertNull($notNullableField->getValue($attributes));
 	}
 
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
+	public function testArrayFieldGetValueOnExplicitNullIsTreatedTheSameAsMissingKey(): void
+	{
+		$nullableField = new ArrayField($this->createTranslator(), true, 'field', 'field', true, true);
+		$notNullableField = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
+
+		$attributes = (new StandardObject())->set('field', null);
+
+		self::assertSame([], $nullableField->getValue($attributes));
+		self::assertNull($notNullableField->getValue($attributes));
+	}
+
+	/**
+	 * @throws Exceptions\JsonApiError
+	 */
 	public function testArrayFieldGetValueConvertsANestedStandardObjectViaToArray(): void
 	{
-		$field = new ArrayField(false, 'field', 'field', true, true);
+		$field = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
 		$nested = (new StandardObject())->set('inner', 'value');
 		$attributes = (new StandardObject())->set('field', $nested);
@@ -273,6 +411,14 @@ final class HydratorFieldsTest extends TestCase
 		self::assertSame(stdClass::class, $field->getClassName());
 		self::assertTrue($field->isNullable());
 		self::assertFalse($field->isRelationship());
+	}
+
+	private function createTranslator(): Localization\Translator
+	{
+		$translator = $this->createMock(Localization\Translator::class);
+		$translator->method('translate')->willReturnArgument(0);
+
+		return $translator;
 	}
 
 }

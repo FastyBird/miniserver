@@ -20,6 +20,9 @@ hydrator:
 	invalidResource:
 		heading	: "Invalid resource"
 		message	: "Provided resource structure is not valid"
+	invalidAttribute:
+		heading	: "Invalid attribute"
+		message	: "Provided attribute value is not valid"
 	missingRequiredAttribute:
 		heading	: "Missing required attribute"
 		message	: "Provided request is missing required attribute"
