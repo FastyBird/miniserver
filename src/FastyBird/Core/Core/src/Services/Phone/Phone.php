@@ -45,29 +45,29 @@ final class Phone
 	use Nette\SmartObject;
 
 	// Define phone number types
-	public const TYPE_FIXED_LINE = 'FIXED_LINE';
+	public const string TYPE_FIXED_LINE = 'FIXED_LINE';
 
-	public const TYPE_MOBILE = 'MOBILE';
+	public const string TYPE_MOBILE = 'MOBILE';
 
-	public const TYPE_FIXED_LINE_OR_MOBILE = 'FIXED_LINE_OR_MOBILE';
+	public const string TYPE_FIXED_LINE_OR_MOBILE = 'FIXED_LINE_OR_MOBILE';
 
-	public const TYPE_VOIP = 'VOIP';
+	public const string TYPE_VOIP = 'VOIP';
 
-	public const TYPE_PAGER = 'PAGER';
+	public const string TYPE_PAGER = 'PAGER';
 
-	public const TYPE_EMERGENCY = 'EMERGENCY';
+	public const string TYPE_EMERGENCY = 'EMERGENCY';
 
-	public const TYPE_VOICEMAIL = 'VOICEMAIL';
+	public const string TYPE_VOICEMAIL = 'VOICEMAIL';
 
-	public const TYPE_UNKNOWN = 'UNKNOWN';
+	public const string TYPE_UNKNOWN = 'UNKNOWN';
 
-	public const FORMAT_E164 = PhoneNumberFormat::E164;
+	public const int FORMAT_E164 = PhoneNumberFormat::E164;
 
-	public const FORMAT_INTERNATIONAL = PhoneNumberFormat::INTERNATIONAL;
+	public const int FORMAT_INTERNATIONAL = PhoneNumberFormat::INTERNATIONAL;
 
-	public const FORMAT_NATIONAL = PhoneNumberFormat::NATIONAL;
+	public const int FORMAT_NATIONAL = PhoneNumberFormat::NATIONAL;
 
-	public const FORMAT_RFC3966 = PhoneNumberFormat::RFC3966;
+	public const int FORMAT_RFC3966 = PhoneNumberFormat::RFC3966;
 
 	public function __construct(
 		private libphonenumber\PhoneNumberUtil $phoneNumberUtil,

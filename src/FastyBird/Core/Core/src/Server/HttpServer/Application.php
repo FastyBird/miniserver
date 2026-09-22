@@ -42,7 +42,7 @@ class Application
 
 	use Nette\SmartObject;
 
-	private const UNIQUE_HEADERS = [
+	private const array UNIQUE_HEADERS = [
 		'content-type',
 	];
 

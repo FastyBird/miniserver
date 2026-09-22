@@ -49,17 +49,17 @@ use const JSON_PRETTY_PRINT;
 class Builder
 {
 
-	private const LINK_SELF = Contracts\Schema\DocumentInterface::KEYWORD_SELF;
+	private const string LINK_SELF = Contracts\Schema\DocumentInterface::KEYWORD_SELF;
 
-	private const LINK_RELATED = Contracts\Schema\DocumentInterface::KEYWORD_RELATED;
+	private const string LINK_RELATED = Contracts\Schema\DocumentInterface::KEYWORD_RELATED;
 
-	private const LINK_FIRST = Contracts\Schema\DocumentInterface::KEYWORD_FIRST;
+	private const string LINK_FIRST = Contracts\Schema\DocumentInterface::KEYWORD_FIRST;
 
-	private const LINK_LAST = Contracts\Schema\DocumentInterface::KEYWORD_LAST;
+	private const string LINK_LAST = Contracts\Schema\DocumentInterface::KEYWORD_LAST;
 
-	private const LINK_NEXT = Contracts\Schema\DocumentInterface::KEYWORD_NEXT;
+	private const string LINK_NEXT = Contracts\Schema\DocumentInterface::KEYWORD_NEXT;
 
-	private const LINK_PREV = Contracts\Schema\DocumentInterface::KEYWORD_PREV;
+	private const string LINK_PREV = Contracts\Schema\DocumentInterface::KEYWORD_PREV;
 
 	/**
 	 * @param string|array<string> $metaAuthor

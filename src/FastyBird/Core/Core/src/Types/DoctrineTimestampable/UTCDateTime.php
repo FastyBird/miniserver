@@ -36,7 +36,7 @@ class UTCDateTime extends Types\DateTimeType
 {
 
 	// Define datatype name
-	public const UTC_DATETIME = 'utcdatetime';
+	public const string UTC_DATETIME = 'utcdatetime';
 
 	private static DateTimeZone|null $utc = null;
 

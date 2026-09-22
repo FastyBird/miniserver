@@ -45,7 +45,7 @@ class HttpServer extends Console\Command\Command
 
 	use Nette\SmartObject;
 
-	public const NAME = 'fb:web-server:start';
+	public const string NAME = 'fb:web-server:start';
 
 	public function __construct(
 		private readonly string $serverAddress,

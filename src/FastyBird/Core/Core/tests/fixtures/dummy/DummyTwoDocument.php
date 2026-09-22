@@ -9,6 +9,6 @@ use FastyBird\Core\Documents;
 class DummyTwoDocument extends DummyDocument
 {
 
-	public const TYPE = 'two';
+	public const string TYPE = 'two';
 
 }

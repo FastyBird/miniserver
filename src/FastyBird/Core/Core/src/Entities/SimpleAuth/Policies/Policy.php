@@ -48,7 +48,7 @@ use Ramsey\Uuid;
 class Policy implements DoctrineCrud\IEntity
 {
 
-	public const TYPE = 'policy';
+	public const string TYPE = 'policy';
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'policy_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]

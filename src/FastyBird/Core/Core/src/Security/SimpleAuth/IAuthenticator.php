@@ -30,18 +30,18 @@ interface IAuthenticator
 {
 
 	// Credential key
-	public const USERNAME = 0;
+	public const int USERNAME = 0;
 
-	public const PASSWORD = 1;
+	public const int PASSWORD = 1;
 
 	// Exception error code
-	public const IDENTITY_NOT_FOUND = 1;
+	public const int IDENTITY_NOT_FOUND = 1;
 
-	public const INVALID_CREDENTIAL = 2;
+	public const int INVALID_CREDENTIAL = 2;
 
-	public const FAILURE = 3;
+	public const int FAILURE = 3;
 
-	public const NOT_APPROVED = 4;
+	public const int NOT_APPROVED = 4;
 
 	/**
 	 * @param array<mixed> $credentials

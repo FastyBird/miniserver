@@ -20,9 +20,9 @@ use function strlen;
 final class Validator implements IValidator
 {
 
-	public const UTF8_ACCEPT = 0;
+	public const int UTF8_ACCEPT = 0;
 
-	public const UTF8_REJECT = 1;
+	public const int UTF8_REJECT = 1;
 
 	/**
 	 * Incremental UTF-8 validator with constant memory consumption (minimal state).

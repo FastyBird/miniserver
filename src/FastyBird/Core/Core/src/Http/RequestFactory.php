@@ -59,16 +59,16 @@ final class RequestFactory
 	/**
 	 * @internal
 	 */
-	public const CHARS = '\x09\x0A\x0D\x20-\x7E\xA0-\x{10FFFF}';
+	public const string CHARS = '\x09\x0A\x0D\x20-\x7E\xA0-\x{10FFFF}';
 
 	/**
 	 * Undefined method
 	 *
 	 * @internal
 	 */
-	public const METHOD_EXTENDED = 'extended';
+	public const string METHOD_EXTENDED = 'extended';
 
-	public const EOM = "\r\n\r\n";
+	public const string EOM = "\r\n\r\n";
 
 	/**
 	 * Cookie part names to snake_case array values

@@ -41,7 +41,7 @@ class Role extends SimpleAuthEntities\Policies\Policy implements Entities\Entity
 	use DoctrineTimestampable\TEntityCreated;
 	use DoctrineTimestampable\TEntityUpdated;
 
-	public const TYPE = 'user_role';
+	public const string TYPE = 'user_role';
 
 	#[IPubDoctrine\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'policy_comment', type: 'string', nullable: false)]

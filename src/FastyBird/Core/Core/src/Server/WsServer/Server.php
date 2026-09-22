@@ -32,7 +32,7 @@ final class Server
 	 */
 	use Nette\SmartObject;
 
-	public const VERSION = 'IPub/WebSockets/1.0.0';
+	public const string VERSION = 'IPub/WebSockets/1.0.0';
 
 	public array $onCreate = [];
 

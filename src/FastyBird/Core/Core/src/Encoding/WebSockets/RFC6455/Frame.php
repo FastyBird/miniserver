@@ -34,46 +34,46 @@ final class Frame implements Protocols\IFrame
 	 */
 	use Nette\SmartObject;
 
-	public const OP_CONTINUE = 0;
+	public const int OP_CONTINUE = 0;
 
-	public const OP_TEXT = 1;
+	public const int OP_TEXT = 1;
 
-	public const OP_BINARY = 2;
+	public const int OP_BINARY = 2;
 
-	public const OP_CLOSE = 8;
+	public const int OP_CLOSE = 8;
 
-	public const OP_PING = 9;
+	public const int OP_PING = 9;
 
-	public const OP_PONG = 10;
+	public const int OP_PONG = 10;
 
 	/**
 	 * Closing codes
 	 */
-	public const CLOSE_NORMAL = 1_000;
+	public const int CLOSE_NORMAL = 1_000;
 
-	public const CLOSE_GOING_AWAY = 1_001;
+	public const int CLOSE_GOING_AWAY = 1_001;
 
-	public const CLOSE_PROTOCOL = 1_002;
+	public const int CLOSE_PROTOCOL = 1_002;
 
-	public const CLOSE_BAD_DATA = 1_003;
+	public const int CLOSE_BAD_DATA = 1_003;
 
-	public const CLOSE_NO_STATUS = 1_005;
+	public const int CLOSE_NO_STATUS = 1_005;
 
-	public const CLOSE_ABNORMAL = 1_006;
+	public const int CLOSE_ABNORMAL = 1_006;
 
-	public const CLOSE_BAD_PAYLOAD = 1_007;
+	public const int CLOSE_BAD_PAYLOAD = 1_007;
 
-	public const CLOSE_POLICY = 1_008;
+	public const int CLOSE_POLICY = 1_008;
 
-	public const CLOSE_TOO_BIG = 1_009;
+	public const int CLOSE_TOO_BIG = 1_009;
 
-	public const CLOSE_MAND_EXT = 1_010;
+	public const int CLOSE_MAND_EXT = 1_010;
 
-	public const CLOSE_SRV_ERR = 1_011;
+	public const int CLOSE_SRV_ERR = 1_011;
 
-	public const CLOSE_TLS = 1_015;
+	public const int CLOSE_TLS = 1_015;
 
-	public const MASK_LENGTH = 4;
+	public const int MASK_LENGTH = 4;
 
 	/**
 	 * The contents of the frame

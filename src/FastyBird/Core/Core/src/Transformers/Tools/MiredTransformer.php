@@ -29,7 +29,7 @@ use function round;
 final class MiredTransformer implements Transformer
 {
 
-	private const LOOKUP_TABLE = [ // <MIRED => [SATURATION, HUE]>
+	private const array LOOKUP_TABLE = [ // <MIRED => [SATURATION, HUE]>
 		100 => [19, 222.1],
 		101 => [18.7, 222.2],
 		102 => [18.4, 222.3],

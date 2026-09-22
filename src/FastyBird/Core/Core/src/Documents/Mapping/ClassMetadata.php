@@ -37,11 +37,11 @@ use function str_contains;
 class ClassMetadata
 {
 
-	public const INHERITANCE_TYPE_NONE = 0;
+	public const int INHERITANCE_TYPE_NONE = 0;
 
-	public const INHERITANCE_TYPE_SINGLE_TABLE = 1;
+	public const int INHERITANCE_TYPE_SINGLE_TABLE = 1;
 
-	public const INHERITANCE_TYPE_JOINED_TABLE = 2;
+	public const int INHERITANCE_TYPE_JOINED_TABLE = 2;
 
 	/** @var class-string<T> */
 	private string $name;

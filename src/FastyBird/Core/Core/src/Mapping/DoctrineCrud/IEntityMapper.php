@@ -32,9 +32,9 @@ interface IEntityMapper
 	/**
 	 * Annotation strings
 	 */
-	public const ANNOTATION_REQUIRED = 'required';
+	public const string ANNOTATION_REQUIRED = 'required';
 
-	public const ANNOTATION_WRITABLE = 'writable';
+	public const string ANNOTATION_WRITABLE = 'writable';
 
 	public function fillEntity(
 		Utils\ArrayHash $values,

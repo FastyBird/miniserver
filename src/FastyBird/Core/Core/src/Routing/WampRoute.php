@@ -59,46 +59,46 @@ class WampRoute implements IWampRouter
 	 */
 	use Nette\SmartObject;
 
-	public const CONTROLLER_KEY = 'controller';
+	public const string CONTROLLER_KEY = 'controller';
 
-	public const MODULE_KEY = 'module';
+	public const string MODULE_KEY = 'module';
 
 	/**
 	 * Url type
 	 *
 	 * @internal
 	 */
-	public const HOST = 1;
+	public const int HOST = 1;
 
-	public const PATH = 2;
+	public const int PATH = 2;
 
-	public const RELATIVE = 3;
+	public const int RELATIVE = 3;
 
 	/**
 	 * Keys used in {@link WampRoute::$styles} or metadata {@link WampRoute::__construct}
 	 */
-	public const VALUE = 'value';
+	public const string VALUE = 'value';
 
-	public const PATTERN = 'pattern';
+	public const string PATTERN = 'pattern';
 
-	public const FILTER_IN = 'filterIn';
+	public const string FILTER_IN = 'filterIn';
 
-	public const FILTER_OUT = 'filterOut';
+	public const string FILTER_OUT = 'filterOut';
 
-	public const FILTER_TABLE = 'filterTable';
+	public const string FILTER_TABLE = 'filterTable';
 
-	public const FILTER_STRICT = 'filterStrict';
+	public const string FILTER_STRICT = 'filterStrict';
 
 	/**
 	 * Fixity types - how to handle default value? {@link WampRoute::$metadata}
 	 *
 	 * @internal
 	 */
-	public const OPTIONAL = 0;
+	public const int OPTIONAL = 0;
 
-	public const PATH_OPTIONAL = 1;
+	public const int PATH_OPTIONAL = 1;
 
-	public const CONSTANT = 2;
+	public const int CONSTANT = 2;
 
 	public static array $styles = [
 		'#' => [

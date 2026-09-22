@@ -33,7 +33,7 @@ use function round;
 final readonly class HsbTransformer implements Transformer
 {
 
-	private const RGB_THRESHOLD = 10; // Define a threshold for how close RGB values should be when calculate white level
+	private const int RGB_THRESHOLD = 10; // Define a threshold for how close RGB values should be when calculate white level
 
 	public function __construct(
 		private float $hue,

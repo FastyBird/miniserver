@@ -43,7 +43,7 @@ final class Timestampable
 	use Nette\SmartObject;
 
 	// Annotation field is timestampable
-	private const EXTENSION_ANNOTATION = 'FastyBird\Core\Mapping\DoctrineTimestampable\Annotation\Timestampable';
+	private const string EXTENSION_ANNOTATION = 'FastyBird\Core\Mapping\DoctrineTimestampable\Annotation\Timestampable';
 
 	/**
 	 * List of cached object configurations

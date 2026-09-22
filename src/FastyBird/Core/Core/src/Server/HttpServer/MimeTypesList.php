@@ -26,7 +26,7 @@ namespace FastyBird\Core\Server\HttpServer;
 class MimeTypesList
 {
 
-	public const MIMES = [
+	public const array MIMES = [
 		'ez' => [
 			'application/andrew-inset',
 		],
