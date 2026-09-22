@@ -319,7 +319,7 @@ final class WampApplication extends Application implements IWampApplication
 
 			$this->logger->info(sprintf('Message was pushed to %s topic', $topic->getId()));
 
-			$this->onPush($message, $provider, $topic);
+			Utils\Arrays::invoke($this->onPush, $message, $provider, $topic);
 
 		} catch (WebSocketsExceptions\Terminate $ex) {
 			throw $ex;

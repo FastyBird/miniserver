@@ -128,12 +128,12 @@ final class Server
 			$this->logger->error('Could not establish connection: ' . $ex->getMessage());
 		});
 
-		$this->onCreate($this);
+		Utils\Arrays::invoke($this->onCreate, $this);
 	}
 
 	public function run(): void
 	{
-		$this->onStart($this->loop, $this);
+		Utils\Arrays::invoke($this->onStart, $this->loop, $this);
 
 		$this->logger->debug('Starting FastyBird\Core\Server\WsServer');
 		$this->logger->debug(
@@ -149,7 +149,7 @@ final class Server
 
 	public function stop(): void
 	{
-		$this->onStop($this->loop, $this);
+		Utils\Arrays::invoke($this->onStop, $this->loop, $this);
 
 		$this->loop->stop();
 	}

@@ -10,6 +10,7 @@ use FastyBird\Core\Http;
 use FastyBird\Core\Routing as Router;
 use FastyBird\Core\Server\WsServer as Server;
 use Nette;
+use Nette\Utils;
 use Override;
 use Psr\Log;
 use Throwable;
@@ -60,13 +61,13 @@ abstract class Application implements IApplication
 	{
 		$this->logger->info(sprintf('New connection! (%s)', $client->getId()));
 
-		$this->onOpen($this, $client, $httpRequest);
+		Utils\Arrays::invoke($this->onOpen, $this, $client, $httpRequest);
 	}
 
 	#[Override]
 	public function handleClose(Entities\IClient $client, Http\IRequest $httpRequest): void
 	{
-		$this->onClose($this, $client, $httpRequest);
+		Utils\Arrays::invoke($this->onClose, $this, $client, $httpRequest);
 
 		$this->logger->info(sprintf('Connection %s has disconnected', $client->getId()));
 	}
@@ -83,7 +84,7 @@ abstract class Application implements IApplication
 
 		$code = $ex->getCode();
 
-		$this->onError($this, $client, $httpRequest, $ex);
+		Utils\Arrays::invoke($this->onError, $this, $client, $httpRequest, $ex);
 
 		if ($code >= 400 && $code < 600) {
 			$this->close($client, $code);
@@ -96,7 +97,7 @@ abstract class Application implements IApplication
 	#[Override]
 	public function handleMessage(Entities\IClient $from, Http\IRequest $httpRequest, string $message): void
 	{
-		$this->onMessage($this, $from, $httpRequest, $message);
+		Utils\Arrays::invoke($this->onMessage, $this, $from, $httpRequest, $message);
 	}
 
 	/**
