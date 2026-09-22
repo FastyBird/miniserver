@@ -26,6 +26,7 @@ The host you are running on may report a different PHP/Node version. It does not
 # PHP
 make layers              # dependency direction between packages; plain PHP, runs on a bare checkout
 make discriminators      # every Doctrine inheritance root declares an explicit #[ORM\DiscriminatorMap]
+make naming               # no file names a library fastybird/miniserver-core was assembled from; plain PHP, runs on a bare checkout
 make cs                 # PHP_CodeSniffer
 make csf                # PHP_CodeSniffer, auto-fix
 make lint                # php-parallel-lint

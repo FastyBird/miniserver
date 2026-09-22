@@ -61,7 +61,14 @@ The baseline may only shrink. A stale entry in it fails the gate.
 
 ## Namespace layout
 
-Core is **capability-first**, following Symfony's component convention:
+**Target state, not current — E3 of the Core identity refactor gets Core here.** Today
+`src/FastyBird/Core/Core/src` is still the type-first layout PRs #454/#455 produced:
+`Middleware`, `Subscribers`, `Entities`, `Controllers`, `Providers`, `Presenters`, `Helpers`,
+`Services`, `Types`, `Utilities` and more all sit at the top level, and epic test files import
+paths like `FastyBird\Core\Entities\WsServer\Topics\Topic` that this section's target
+contradicts.
+
+Once E3 lands, Core will be **capability-first**, following Symfony's component convention:
 `Security\`, `WebSockets\`, `Api\`, `Http\`, `Persistence\`, `Values\`, `Documents\`,
 `Exchange\`, `Phone\`, `Clock\`, `Logging\`, and `Exceptions\`.
 
@@ -86,10 +93,25 @@ exclusion once Core's 409 file headers are gone, and `make cs` rejects them from
 
 ## Naming
 
-- Interfaces: no `I` prefix. Prefer no interface at all until there is a second implementation
-  or a DI substitution point; otherwise the `…Interface` suffix.
-- Traits: no `T` prefix. The `…Trait` suffix.
+- Interfaces: no `I` prefix. Prefer deleting the interface entirely when it has one
+  implementation and is not a DI substitution point — that remains the first choice. Where an
+  interface must exist, **name it for what it does**, not with a type suffix: `IRouteParser` /
+  `RouteParser` becomes an interface named for the role it expresses (e.g. `UrlGenerator`)
+  alongside the concrete `RouteParser`.
+- Traits: no `T` prefix, and no `…Trait` suffix either — name the capability, not the
+  language construct.
+- **`…Interface` and `…Trait` suffixes are rejected by `make cs`**:
+  `SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming` and
+  `SlevomatCodingStandard.Classes.SuperfluousTraitNaming` are active. Neither sniff objects to
+  the `I`/`T` prefix — only to the suffix — but this repository rejects the prefix too, by the
+  maintainer's ruling: name by role, no suffix either direction.
 - No stuttering: not `Middleware\JsonApi\JsonApi`, not `Services\Phone\Phone`.
+
+Core's `Routing/` already shows why a name is needed rather than a mechanical drop of the `I`:
+`IRoute`, `IRouteCollector`, `IRouteGroup`, `IRouteParser`, `IRouter` sit beside concrete
+`Route`, `RouteCollector`, `RouteGroup`, `RouteParser`, `Router`. Simply deleting the `I` would
+collide with the concrete class of the same name, so each interface needs a role name instead
+— what it does, not what implements it.
 
 ## Code
 
