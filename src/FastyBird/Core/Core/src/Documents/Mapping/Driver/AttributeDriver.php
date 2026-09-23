@@ -273,7 +273,7 @@ final class AttributeDriver implements MappingDriver
 
 			try {
 				$inheritanceType = constant(
-					'FastyBird\Core\Documents\Mapping\ClassMetadata::INHERITANCE_TYPE_' . $inheritanceTypeAttribute->type,
+					Documents\Mapping\ClassMetadata::class . '::INHERITANCE_TYPE_' . $inheritanceTypeAttribute->type,
 				);
 				assert(is_int($inheritanceType));
 			} catch (Error $ex) {
