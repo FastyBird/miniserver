@@ -7,7 +7,6 @@ use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
 use Lcobucci\JWT;
-use Nette;
 use Nette\Http;
 use Override;
 use Symfony\Component\EventDispatcher;
@@ -19,8 +18,6 @@ use function is_string;
  */
 final readonly class Application implements EventDispatcher\EventSubscriberInterface
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly Security\IIdentityFactory $identityFactory,

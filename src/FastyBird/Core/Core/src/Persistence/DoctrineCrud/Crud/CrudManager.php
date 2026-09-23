@@ -6,7 +6,6 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use FastyBird\Core\Exceptions;
-use Nette;
 
 /**
  * Base class resolving the Doctrine entity manager and repository for a given entity class
@@ -15,8 +14,6 @@ use Nette;
  */
 abstract class CrudManager
 {
-
-	use Nette\SmartObject;
 
 	/** @var Persistence\ObjectRepository<T> */
 	protected Persistence\ObjectRepository $entityRepository;

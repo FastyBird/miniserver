@@ -9,7 +9,6 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Helpers\DoctrineCrud\Helpers;
 use FastyBird\Core\Mapping\DoctrineCrud as Mapping;
-use Nette;
 use Nette\Utils;
 use Override;
 use phpDocumentor;
@@ -44,8 +43,6 @@ use function ucfirst;
  */
 final readonly class EntityMapper implements IEntityMapper
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly Persistence\ManagerRegistry $managerRegistry,

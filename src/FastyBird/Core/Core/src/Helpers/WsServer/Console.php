@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Helpers\WsServer;
 
-use Nette;
 use Override;
 use Psr\Log;
 
@@ -11,11 +10,6 @@ use Psr\Log;
  */
 final class Console implements Log\LoggerInterface
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private Formatter\IFormatter $formatter;
 

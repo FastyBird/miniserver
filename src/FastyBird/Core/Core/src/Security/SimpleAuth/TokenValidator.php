@@ -8,7 +8,6 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Services\DateTimeFactory;
 use Lcobucci\Clock;
 use Lcobucci\JWT;
-use Nette;
 use Ramsey\Uuid;
 use Throwable;
 use function assert;
@@ -19,8 +18,6 @@ use function is_string;
  */
 final readonly class TokenValidator
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param non-empty-string $tokenSignature

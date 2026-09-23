@@ -5,7 +5,6 @@ namespace FastyBird\Core\Routing;
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Controllers\WebSockets\Controller;
 use FastyBird\Core\Exceptions;
-use Nette;
 use ReflectionException;
 use ReflectionParameter;
 use function array_key_exists;
@@ -22,11 +21,6 @@ use function urldecode;
  */
 final class LinkGenerator
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public function __construct(
 		private IWampRouter $router,

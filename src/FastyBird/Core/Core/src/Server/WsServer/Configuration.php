@@ -2,18 +2,11 @@
 
 namespace FastyBird\Core\Server\WsServer;
 
-use Nette;
-
 /**
  * WebSockets server configuration container
  */
 final class Configuration
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public function __construct(
 		private int $port = 8_080,

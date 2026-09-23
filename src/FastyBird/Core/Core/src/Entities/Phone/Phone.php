@@ -6,7 +6,6 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Services\Phone\Phone as PhoneHelper;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
-use Nette;
 use Override;
 use function ctype_alpha;
 use function in_array;
@@ -19,8 +18,6 @@ use function strtoupper;
  */
 final class Phone
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * The country code

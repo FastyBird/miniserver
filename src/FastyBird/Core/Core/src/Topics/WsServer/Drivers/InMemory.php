@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Topics\WsServer\Drivers;
 
 use FastyBird\Core\Entities\WsServer\Topics as Entities;
-use Nette;
 use Override;
 use function array_values;
 
@@ -12,11 +11,6 @@ use function array_values;
  */
 final class InMemory implements IDriver
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private array $elements;
 

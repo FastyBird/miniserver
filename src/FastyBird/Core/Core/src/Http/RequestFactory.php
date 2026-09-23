@@ -4,7 +4,6 @@ namespace FastyBird\Core\Http;
 
 use Exception;
 use Fig\Http\Message;
-use Nette;
 use Nette\Http;
 use OverflowException;
 use Throwable;
@@ -45,11 +44,6 @@ use const PHP_SAPI;
  */
 final class RequestFactory
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/**
 	 * @internal

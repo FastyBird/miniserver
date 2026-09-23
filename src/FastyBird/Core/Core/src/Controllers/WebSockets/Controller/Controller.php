@@ -35,17 +35,9 @@ use const PREG_SPLIT_NO_EMPTY;
 
 /**
  * WebSockets application controller interface
- *
- * @property-read stdClass $payload
- * @property-read NS\User $user
  */
 abstract class Controller implements IController
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/**
 	 * Special parameter keys

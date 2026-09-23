@@ -4,7 +4,6 @@ namespace FastyBird\Core\Security\SimpleAuth;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
-use Nette;
 use Override;
 use Ramsey\Uuid;
 
@@ -13,8 +12,6 @@ use Ramsey\Uuid;
  */
 final class PlainIdentity implements Security\IIdentity
 {
-
-	use Nette\SmartObject;
 
 	private Uuid\UuidInterface $id;
 

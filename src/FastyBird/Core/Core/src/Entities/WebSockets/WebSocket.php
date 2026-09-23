@@ -3,17 +3,11 @@
 namespace FastyBird\Core\Entities\WebSockets;
 
 use FastyBird\Core\Encoding\WebSockets as Protocols;
-use Nette;
 use Override;
 use TypeError;
 
 final class WebSocket implements IWebSocket
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private Protocols\IMessage $message;
 

@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Controllers\WebSockets;
 
+use Closure;
 use FastyBird\Core\Clients\WsServer as WebSocketsClients;
 use FastyBird\Core\Entities\WebSockets\PushMessages;
 use FastyBird\Core\Entities\WsServer as WebSocketsEntities;
@@ -33,8 +34,6 @@ use function uniqid;
 /**
  * Application which run on server and provide creating controllers
  * with correctly params - convert message => control
- *
- * @method onPush(PushMessages\IMessage $message, string $provider, TopicEntities\ITopic $topic)
  */
 final class WampApplication extends Application implements IWampApplication
 {
@@ -57,6 +56,7 @@ final class WampApplication extends Application implements IWampApplication
 
 	public const int MSG_EVENT = 8;
 
+	/** @var array<Closure(PushMessages\IMessage $message, string $provider, TopicEntities\ITopic $topic): void> */
 	public array $onPush = [];
 
 	private SplObjectStorage $subscriptions;
@@ -303,11 +303,10 @@ final class WampApplication extends Application implements IWampApplication
 
 			$httpRequest = new WebSocketsHttp\Request(
 				new Http\UrlScript($url),
-				null,
-				null,
-				null,
-				null,
-				null,
+				[],
+				[],
+				[],
+				[],
 				WebSocketsHttp\IRequest::GET,
 			);
 
@@ -319,7 +318,7 @@ final class WampApplication extends Application implements IWampApplication
 
 			$this->logger->info(sprintf('Message was pushed to %s topic', $topic->getId()));
 
-			$this->onPush($message, $provider, $topic);
+			Utils\Arrays::invoke($this->onPush, $message, $provider, $topic);
 
 		} catch (WebSocketsExceptions\Terminate $ex) {
 			throw $ex;

@@ -4,7 +4,6 @@ namespace FastyBird\Core\Server\HttpServer;
 
 use FastyBird\Core\Events;
 use FastyBird\Core\Routing;
-use Nette;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
@@ -21,8 +20,6 @@ use function ucwords;
  */
 final readonly class Application
 {
-
-	use Nette\SmartObject;
 
 	private const array UNIQUE_HEADERS = [
 		'content-type',

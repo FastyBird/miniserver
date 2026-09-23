@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Messaging\WebSockets\PushMessages;
 
 use FastyBird\Core\Exceptions;
-use Nette;
 use Override;
 use function sprintf;
 
@@ -12,11 +11,6 @@ use function sprintf;
  */
 final class ConsumersRegistry implements IConsumersRegistry
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/** @var array<IConsumer> */
 	private array $consumers = [];

@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Caching\Application;
 
-use Nette;
 use Nette\Caching;
 use Override;
 use function array_key_exists;
@@ -11,8 +10,6 @@ use function is_array;
 
 final class MemoryStorage implements Caching\Storage
 {
-
-	use Nette\SmartObject;
 
 	private const string DATA_KEY = 'data';
 

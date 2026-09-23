@@ -5,7 +5,6 @@ namespace FastyBird\Core\Schemas\JsonApi;
 use FastyBird\Core\Exceptions;
 use Neomerx\JsonApi\Contracts;
 use Neomerx\JsonApi\Schema;
-use Nette;
 use Override;
 use function method_exists;
 use function property_exists;
@@ -18,8 +17,6 @@ use function property_exists;
  */
 abstract class JsonApi implements Contracts\Schema\SchemaInterface
 {
-
-	use Nette\SmartObject;
 
 	private string|null $subUrl = null;
 

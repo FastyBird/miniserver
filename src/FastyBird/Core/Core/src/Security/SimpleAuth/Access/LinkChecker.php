@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Security\SimpleAuth\Access;
 
 use FastyBird\Core\Exceptions;
-use Nette;
 use Nette\Application;
 use Nette\Application\UI;
 use Override;
@@ -25,11 +24,6 @@ use function ucfirst;
  */
 final readonly class LinkChecker implements Checker
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly Application\IPresenterFactory $presenterFactory,

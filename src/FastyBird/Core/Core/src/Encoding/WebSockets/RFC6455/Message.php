@@ -4,7 +4,6 @@ namespace FastyBird\Core\Encoding\WebSockets\RFC6455;
 
 use Countable;
 use FastyBird\Core\Encoding\WebSockets as Protocols;
-use Nette;
 use Override;
 use SplDoublyLinkedList;
 use UnderflowException;
@@ -15,11 +14,6 @@ use function count;
  */
 final class Message implements Protocols\IMessage, Countable
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private SplDoublyLinkedList $frames;
 

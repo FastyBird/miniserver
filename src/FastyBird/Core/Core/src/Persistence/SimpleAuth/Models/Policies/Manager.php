@@ -7,7 +7,6 @@ use FastyBird\Core\Entities\SimpleAuth as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
-use Nette;
 use Nette\Utils;
 use function assert;
 
@@ -16,8 +15,6 @@ use function assert;
  */
 final class Manager
 {
-
-	use Nette\SmartObject;
 
 	/** @var DoctrineCrudCrud\IEntityCrud<Entities\Policies\Policy>|null */
 	private DoctrineCrudCrud\IEntityCrud|null $entityCrud = null;

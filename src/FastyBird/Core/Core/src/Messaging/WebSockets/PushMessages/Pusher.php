@@ -6,7 +6,6 @@ use FastyBird\Core\Encoding\WebSockets as Serializers;
 use FastyBird\Core\Entities\WebSockets\PushMessages as Entities;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Routing as WebSocketsRouter;
-use Nette;
 use Override;
 use ReflectionException;
 
@@ -15,11 +14,6 @@ use ReflectionException;
  */
 abstract class Pusher implements IPusher
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private bool $connected = false;
 

@@ -13,7 +13,6 @@ use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Helpers\JsonApi as Helpers;
 use FastyBird\Core\Persistence\JsonApi\Hydrators;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette;
 use Nette\Localization;
 use Nette\Utils;
 use phpDocumentor;
@@ -61,8 +60,6 @@ use function ucwords;
  */
 abstract class Hydrator
 {
-
-	use Nette\SmartObject;
 
 	protected const string IDENTIFIER_KEY = 'id';
 

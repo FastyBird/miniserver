@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Helpers\Tools;
 
-use Nette;
 use Sentry\ClientInterface;
 
 /**
@@ -10,8 +9,6 @@ use Sentry\ClientInterface;
  */
 final readonly class Sentry
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly ClientInterface|null $client = null,

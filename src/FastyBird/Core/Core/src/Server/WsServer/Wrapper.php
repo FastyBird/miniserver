@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Server\WsServer;
 
+use Closure;
 use FastyBird\Core\Clients\WsServer as Clients;
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Encoding\WebSockets as Protocols;
@@ -10,7 +11,7 @@ use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http;
-use Nette;
+use Nette\Utils;
 use OverflowException;
 use Override;
 use Throwable;
@@ -28,29 +29,23 @@ use function trim;
 /**
  * WebSockets server application wrapper
  * Purpose of this class is to create better interface for connection objects
- *
- * @method onClientConnected(Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onClientDisconnected(Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onClientError(Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onIncomingMessage(Entities\IClient $client, Http\IRequest $httpRequest, string $message)
- * @method onAfterIncomingMessage(Entities\IClient $client, Http\IRequest $httpRequest)
  */
 final class Wrapper implements IWrapper
 {
 
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request): void> */
 	public array $onClientConnected = [];
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request): void> */
 	public array $onClientDisconnected = [];
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request): void> */
 	public array $onClientError = [];
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request, string $message): void> */
 	public array $onIncomingMessage = [];
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request): void> */
 	public array $onAfterIncomingMessage = [];
 
 	/**
@@ -185,7 +180,7 @@ final class Wrapper implements IWrapper
 	{
 		try {
 			// Call service event
-			$this->onClientDisconnected($client, $client->getRequest());
+			Utils\Arrays::invoke($this->onClientDisconnected, $client, $client->getRequest());
 
 			// Call application event
 			$this->application->handleClose($client, $client->getRequest());
@@ -208,7 +203,7 @@ final class Wrapper implements IWrapper
 
 			if ($webSocket->isEstablished()) {
 				// Call service event
-				$this->onClientError($client, $client->getRequest());
+				Utils\Arrays::invoke($this->onClientError, $client, $client->getRequest());
 
 				// Call application event
 				$this->application->handleError($client, $client->getRequest(), $ex);
@@ -233,12 +228,12 @@ final class Wrapper implements IWrapper
 
 		if ($webSocket->isEstablished() === true) {
 			// Call service event
-			$this->onIncomingMessage($client, $client->getRequest(), $message);
+			Utils\Arrays::invoke($this->onIncomingMessage, $client, $client->getRequest(), $message);
 
 			$webSocket->getProtocol()->handleMessage($client, $this->application, $message);
 
 			// Call service event
-			$this->onAfterIncomingMessage($client, $client->getRequest());
+			Utils\Arrays::invoke($this->onAfterIncomingMessage, $client, $client->getRequest());
 
 			return;
 		}
@@ -290,7 +285,7 @@ final class Wrapper implements IWrapper
 		$webSocket->setEstablished(true);
 
 		// Call service event
-		$this->onClientConnected($client, $httpRequest);
+		Utils\Arrays::invoke($this->onClientConnected, $client, $httpRequest);
 
 		// Call application event
 		return $this->application->handleOpen($client, $httpRequest);

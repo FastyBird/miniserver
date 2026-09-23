@@ -10,7 +10,6 @@ use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Persistence\DoctrineOrmQuery;
 use FastyBird\Core\Persistence\SimpleAuth\Queries;
 use FastyBird\Core\Types\SimpleAuth as Types;
-use Nette;
 use Ramsey\Uuid;
 use Throwable;
 use function assert;
@@ -21,8 +20,6 @@ use function is_array;
  */
 final class Repository
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<ORM\EntityRepository<Entities\Tokens\Token>> */
 	private array $repository = [];

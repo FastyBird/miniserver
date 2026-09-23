@@ -3,15 +3,12 @@
 namespace FastyBird\Core\Persistence\JsonApi\Hydrators\Fields;
 
 use FastyBird\Core\Encoding\JsonApi;
-use Nette;
 
 /**
  * Entity field
  */
 abstract class Field
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly string $mappedName,

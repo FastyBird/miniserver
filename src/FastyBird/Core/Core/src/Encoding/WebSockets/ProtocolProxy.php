@@ -4,7 +4,6 @@ namespace FastyBird\Core\Encoding\WebSockets;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
-use Nette;
 use function array_keys;
 use function implode;
 
@@ -13,11 +12,6 @@ use function implode;
  */
 final class ProtocolProxy
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/**
 	 * Storage of enabled protocols

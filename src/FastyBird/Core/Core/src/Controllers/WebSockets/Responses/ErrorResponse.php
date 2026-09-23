@@ -16,11 +16,6 @@ use function sprintf;
 final class ErrorResponse implements IResponse
 {
 
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
 	private Utils\ArrayHash $headers;
 
 	private int $statusCode;

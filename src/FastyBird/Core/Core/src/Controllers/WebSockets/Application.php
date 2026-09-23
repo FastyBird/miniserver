@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Controllers\WebSockets;
 
+use Closure;
 use FastyBird\Core\Clients\WsServer as Clients;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
@@ -9,7 +10,7 @@ use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Routing as Router;
 use FastyBird\Core\Server\WsServer as Server;
-use Nette;
+use Nette\Utils;
 use Override;
 use Psr\Log;
 use Throwable;
@@ -21,26 +22,20 @@ use function sprintf;
 /**
  * Application which run on server and provide creating controllers
  * with correctly params - convert message => control.
- *
- * @method onOpen(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onClose(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onMessage(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest, string $message)
- * @method onError(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest, Throwable $ex)
  */
 abstract class Application implements IApplication
 {
 
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
+	/** @var array<Closure(self $application, Entities\IClient $client, Http\IRequest $httpRequest): void> */
 	public array $onOpen = [];
 
+	/** @var array<Closure(self $application, Entities\IClient $client, Http\IRequest $httpRequest): void> */
 	public array $onClose = [];
 
+	/** @var array<Closure(self $application, Entities\IClient $from, Http\IRequest $httpRequest, string $message): void> */
 	public array $onMessage = [];
 
+	/** @var array<Closure(self $application, Entities\IClient $client, Http\IRequest $httpRequest, Throwable $ex): void> */
 	public array $onError = [];
 
 	protected Log\LoggerInterface|Log\NullLogger|null $logger = null;
@@ -60,13 +55,13 @@ abstract class Application implements IApplication
 	{
 		$this->logger->info(sprintf('New connection! (%s)', $client->getId()));
 
-		$this->onOpen($this, $client, $httpRequest);
+		Utils\Arrays::invoke($this->onOpen, $this, $client, $httpRequest);
 	}
 
 	#[Override]
 	public function handleClose(Entities\IClient $client, Http\IRequest $httpRequest): void
 	{
-		$this->onClose($this, $client, $httpRequest);
+		Utils\Arrays::invoke($this->onClose, $this, $client, $httpRequest);
 
 		$this->logger->info(sprintf('Connection %s has disconnected', $client->getId()));
 	}
@@ -83,7 +78,7 @@ abstract class Application implements IApplication
 
 		$code = $ex->getCode();
 
-		$this->onError($this, $client, $httpRequest, $ex);
+		Utils\Arrays::invoke($this->onError, $this, $client, $httpRequest, $ex);
 
 		if ($code >= 400 && $code < 600) {
 			$this->close($client, $code);
@@ -96,7 +91,7 @@ abstract class Application implements IApplication
 	#[Override]
 	public function handleMessage(Entities\IClient $from, Http\IRequest $httpRequest, string $message): void
 	{
-		$this->onMessage($this, $from, $httpRequest, $message);
+		Utils\Arrays::invoke($this->onMessage, $this, $from, $httpRequest, $message);
 	}
 
 	/**

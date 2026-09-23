@@ -6,7 +6,6 @@ use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
-use Nette;
 use Override;
 use TypeError;
 use UnderflowException;
@@ -30,11 +29,6 @@ use function unpack;
  */
 class RFC6455 implements IProtocol
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/**
 	 * Handshake hash

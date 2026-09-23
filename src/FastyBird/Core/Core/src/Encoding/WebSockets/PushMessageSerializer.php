@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Encoding\WebSockets;
 
 use FastyBird\Core\Entities\WebSockets\PushMessages as Entities;
-use Nette;
 use Symfony\Component\Serializer;
 
 /**
@@ -11,11 +10,6 @@ use Symfony\Component\Serializer;
  */
 final class PushMessageSerializer
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private Serializer\Serializer $serializer;
 

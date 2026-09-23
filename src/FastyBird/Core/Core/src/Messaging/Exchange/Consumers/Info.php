@@ -2,15 +2,11 @@
 
 namespace FastyBird\Core\Messaging\Exchange\Consumers;
 
-use Nette;
-
 /**
  * Consumer configuration
  */
 final readonly class Info
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly string|null $routingKey,

@@ -6,7 +6,6 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\SimpleAuth as Mapping;
-use Nette;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use ReflectionException;
@@ -28,8 +27,6 @@ use function sprintf;
  */
 final class Owner
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * List of cached object configurations

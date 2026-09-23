@@ -8,7 +8,6 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
-use Nette;
 use Nette\Localization;
 use function constant;
 use function ctype_alpha;
@@ -24,8 +23,6 @@ use function strtoupper;
  */
 final class Phone
 {
-
-	use Nette\SmartObject;
 
 	// Define phone number types
 	public const string TYPE_FIXED_LINE = 'FIXED_LINE';

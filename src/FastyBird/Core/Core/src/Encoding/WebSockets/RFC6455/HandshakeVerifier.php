@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Encoding\WebSockets\RFC6455;
 
 use FastyBird\Core\Http;
-use Nette;
 use function array_search;
 use function base64_decode;
 use function explode;
@@ -22,11 +21,6 @@ use function strtolower;
  */
 final class HandshakeVerifier
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public function __construct(private int $version)
 	{

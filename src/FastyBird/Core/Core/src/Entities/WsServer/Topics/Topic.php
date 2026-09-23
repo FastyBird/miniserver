@@ -6,7 +6,6 @@ use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Controllers\WebSockets\WampApplication;
 use FastyBird\Core\Entities\WsServer as WebSocketsEntities;
 use FastyBird\Core\Exceptions;
-use Nette;
 use Nette\Utils;
 use Override;
 use SplObjectStorage;
@@ -22,11 +21,6 @@ use function sprintf;
  */
 final class Topic implements ITopic
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/**
 	 * If true the TopicManager will destroy this object if it's ever empty of connections

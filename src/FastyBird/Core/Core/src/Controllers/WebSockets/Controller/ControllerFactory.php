@@ -33,11 +33,6 @@ use const E_USER_WARNING;
 final class ControllerFactory implements IControllerFactory
 {
 
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
 	/** @var array<array> of module => splited mask */
 	private array $mapping = [
 		'*' => ['', '*Module\\', '*Controller'],

@@ -3,8 +3,8 @@
 namespace FastyBird\Core\Server\WsServer;
 
 use BadMethodCallException;
+use Closure;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use Psr\Log;
 use React;
@@ -17,25 +17,19 @@ use function sprintf;
 
 /**
  * WebSocket server
- *
- * @method onCreate(Server $server)
- * @method onStart(EventLoop\LoopInterface $loop, Server $server)
- * @method onStop(EventLoop\LoopInterface $loop, Server $server)
  */
 final class Server
 {
 
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
 	public const string VERSION = 'IPub/WebSockets/1.0.0';
 
+	/** @var array<Closure(self $server): void> */
 	public array $onCreate = [];
 
+	/** @var array<Closure(EventLoop\LoopInterface $loop, self $server): void> */
 	public array $onStart = [];
 
+	/** @var array<Closure(EventLoop\LoopInterface $loop, self $server): void> */
 	public array $onStop = [];
 
 	private Log\LoggerInterface|Log\NullLogger|null $logger = null;
@@ -128,12 +122,12 @@ final class Server
 			$this->logger->error('Could not establish connection: ' . $ex->getMessage());
 		});
 
-		$this->onCreate($this);
+		Utils\Arrays::invoke($this->onCreate, $this);
 	}
 
 	public function run(): void
 	{
-		$this->onStart($this->loop, $this);
+		Utils\Arrays::invoke($this->onStart, $this->loop, $this);
 
 		$this->logger->debug('Starting FastyBird\Core\Server\WsServer');
 		$this->logger->debug(
@@ -149,7 +143,7 @@ final class Server
 
 	public function stop(): void
 	{
-		$this->onStop($this->loop, $this);
+		Utils\Arrays::invoke($this->onStop, $this->loop, $this);
 
 		$this->loop->stop();
 	}

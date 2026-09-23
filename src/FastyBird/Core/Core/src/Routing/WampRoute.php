@@ -6,7 +6,6 @@ use Closure;
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
-use Nette;
 use Nette\Utils;
 use Override;
 use function array_flip;
@@ -48,11 +47,6 @@ use function ucwords;
  */
 final class WampRoute implements IWampRouter
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public const string CONTROLLER_KEY = 'controller';
 

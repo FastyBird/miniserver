@@ -5,7 +5,6 @@ namespace FastyBird\Core\Persistence\DoctrineCrud\Crud;
 use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use FastyBird\Core\Mapping\DoctrineCrud as Mapping;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud;
-use Nette;
 
 /**
  * Builds an EntityCrud instance bundling an entity's creator, updater and deleter for a given class
@@ -14,8 +13,6 @@ use Nette;
  */
 final class EntityCrudFactory
 {
-
-	use Nette\SmartObject;
 
 	/** @var Create\IEntityCreator<T> */
 	private Create\IEntityCreator $entityCreatorFactory;

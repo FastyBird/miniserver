@@ -8,7 +8,6 @@ use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
-use Nette;
 use Nette\Utils;
 use Ramsey\Uuid;
 use function func_get_args;
@@ -18,8 +17,6 @@ use function func_get_args;
  */
 class User
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<Closure(Security\User $user): void> */
 	public array $onLoggedIn = [];

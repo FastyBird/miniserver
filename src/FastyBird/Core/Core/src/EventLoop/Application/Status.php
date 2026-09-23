@@ -2,15 +2,11 @@
 
 namespace FastyBird\Core\EventLoop\Application;
 
-use Nette;
-
 /**
  * Event loop status helper
  */
 final class Status
 {
-
-	use Nette\SmartObject;
 
 	private bool $status = false;
 

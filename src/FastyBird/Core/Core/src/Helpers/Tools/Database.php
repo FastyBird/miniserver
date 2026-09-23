@@ -8,7 +8,6 @@ use Doctrine\Persistence;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use Nette;
 use Psr\EventDispatcher;
 use Psr\Log;
 use Throwable;
@@ -20,8 +19,6 @@ use function is_int;
  */
 final readonly class Database
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly Persistence\ManagerRegistry|null $managerRegistry = null,

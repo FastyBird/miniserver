@@ -8,7 +8,6 @@ use Doctrine\Persistence;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
-use Nette;
 use Override;
 use function count;
 
@@ -17,8 +16,6 @@ use function count;
  */
 final readonly class Policy implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly ORM\EntityManagerInterface $entityManager,
