@@ -277,6 +277,12 @@ parameters:
 			path: ../src/FastyBird/Core/Core/tests/cases/unit/Commands/HttpServerCommandTest.php
 
 		-
+			message: '#^Return type of call to method PHPUnit\\Framework\\TestCase\:\:createMock\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 5
+			path: ../src/FastyBird/Core/Core/tests/cases/unit/WebSockets/ServerTest.php
+
+		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
