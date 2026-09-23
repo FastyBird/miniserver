@@ -58,6 +58,7 @@ use FastyBird\Core\Server as WsServerServer;
 use FastyBird\Core\Services as DateTimeFactoryServices;
 use FastyBird\Core\Services as PhoneServices;
 use FastyBird\Core\Services as SimpleAuthServices;
+use FastyBird\Core\Subscribers;
 use FastyBird\Core\Subscribers as ApplicationSubscribers;
 use FastyBird\Core\Subscribers as DoctrineTimestampableSubscribers;
 use FastyBird\Core\Subscribers as HttpServerSubscribers;
@@ -803,6 +804,23 @@ final class CoreExtension extends DI\CompilerExtension
 
 		$builder->addDefinition($this->prefix('doctrineTimestampable.subscriber'))
 			->setType(DoctrineTimestampableSubscribers\DoctrineTimestampable\TimestampableSubscriber::class);
+
+		/**
+		 * DOCTRINE MIGRATIONS
+		 *
+		 * Registered only where nettrineMigrations itself is -- isolated per-package unit tests
+		 * boot only Core's own internal config, not the application's config/common.neon that
+		 * declares that extension, so its Doctrine\Migrations\Metadata\Storage\
+		 * TableMetadataStorageConfiguration service the subscriber is autowired against would
+		 * otherwise never exist for them to compile against.
+		 */
+
+		if (
+			$builder->findByType(Doctrine\Migrations\Metadata\Storage\TableMetadataStorageConfiguration::class) !== []
+		) {
+			$builder->addDefinition($this->prefix('doctrineMigrations.subscriber'))
+				->setType(Subscribers\DoctrineMigrations\SchemaSubscriber::class);
+		}
 
 		/**
 		 * JSON:API
