@@ -1558,7 +1558,6 @@ alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Schemas as
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Security as SimpleAuthSecurity (expected CoreSecurity)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Server as HttpServerServer (expected CoreServer)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Server as WsServerServer (expected CoreServer)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Services as DateTimeFactoryServices (expected CoreServices)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Services as PhoneServices (expected CoreServices)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Services as SimpleAuthServices (expected CoreServices)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Subscribers as ApplicationSubscribers (expected CoreSubscribers)
@@ -3242,9 +3241,6 @@ namespace	src/FastyBird/Core/Core/src/Server/WsServer/Handlers.php	WsServer in F
 namespace	src/FastyBird/Core/Core/src/Server/WsServer/IWrapper.php	WsServer in FastyBird\Core\Server\WsServer
 namespace	src/FastyBird/Core/Core/src/Server/WsServer/Server.php	WsServer in FastyBird\Core\Server\WsServer
 namespace	src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php	WsServer in FastyBird\Core\Server\WsServer
-namespace	src/FastyBird/Core/Core/src/Services/DateTimeFactory/Clock.php	DateTimeFactory in FastyBird\Core\Services\DateTimeFactory
-namespace	src/FastyBird/Core/Core/src/Services/DateTimeFactory/FrozenClock.php	DateTimeFactory in FastyBird\Core\Services\DateTimeFactory
-namespace	src/FastyBird/Core/Core/src/Services/DateTimeFactory/SystemClock.php	DateTimeFactory in FastyBird\Core\Services\DateTimeFactory
 namespace	src/FastyBird/Core/Core/src/Services/SimpleAuth/Auth.php	SimpleAuth in FastyBird\Core\Services\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Subscribers/Application/Console.php	Application in FastyBird\Core\Subscribers\Application
 namespace	src/FastyBird/Core/Core/src/Subscribers/Application/EntityDiscriminator.php	Application in FastyBird\Core\Subscribers\Application
