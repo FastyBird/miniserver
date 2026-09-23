@@ -71,8 +71,8 @@ final class JsonApi implements Server\MiddlewareInterface
 				}
 
 			} elseif (
-				class_exists('\FastyBird\Core\Exceptions\Http')
-				&& $ex instanceof \FastyBird\Core\Exceptions\Http
+				class_exists(Exceptions\Http::class)
+				&& $ex instanceof Exceptions\Http
 			) {
 				$response = $response->withStatus($ex->getCode());
 

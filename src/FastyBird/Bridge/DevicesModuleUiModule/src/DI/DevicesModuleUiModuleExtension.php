@@ -24,6 +24,9 @@ use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Routing as CoreRouting;
+use FastyBird\Core\Server\WsServer as ServerWsServer;
+use FastyBird\Core\Topics\WsServer as TopicsWsServer;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
@@ -32,7 +35,6 @@ use stdClass;
 use function array_keys;
 use function array_pop;
 use function assert;
-use function class_exists;
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -146,8 +148,8 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 */
 
 		if (
-			$builder->findByType('FastyBird\Core\Routing\LinkGenerator') !== []
-			&& $builder->findByType('FastyBird\Core\Topics\WsServer\IStorage') !== []
+			$builder->findByType(CoreRouting\LinkGenerator::class) !== []
+			&& $builder->findByType(TopicsWsServer\IStorage::class) !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.stateEntities'),
@@ -218,26 +220,24 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 * WEBSOCKETS
 		 */
 
-		if (class_exists('FastyBird\Core\DI\CoreExtension')) {
-			try {
-				$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
-				assert($consumerService instanceof DI\Definitions\ServiceDefinition);
+		try {
+			$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
+			assert($consumerService instanceof DI\Definitions\ServiceDefinition);
 
-				$wsServerService = $builder->getDefinitionByType('FastyBird\Core\Server\WsServer\Server');
-				assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
+			$wsServerService = $builder->getDefinitionByType(ServerWsServer\Server::class);
+			assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
 
-				$wsServerService->addSetup(
-					'?->onCreate[] = function() {?->enable(?);}',
-					[
-						'@self',
-						$consumerService,
-						Consumers\SocketsBridge::class,
-					],
-				);
+			$wsServerService->addSetup(
+				'?->onCreate[] = function() {?->enable(?);}',
+				[
+					'@self',
+					$consumerService,
+					Consumers\SocketsBridge::class,
+				],
+			);
 
-			} catch (DI\MissingServiceException) {
-				// Extension is not registered
-			}
+		} catch (DI\MissingServiceException) {
+			// Extension is not registered
 		}
 	}
 

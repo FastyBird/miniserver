@@ -912,7 +912,10 @@ final class CoreExtension extends DI\CompilerExtension
 			->setFactory(Routing\RouteList::class);
 
 		foreach ($configuration->webSockets->routes as $mask => $action) {
-			$router->addSetup('$service[] = new FastyBird\Core\Routing\WampRoute(?, ?);', [$mask, $action]);
+			$router->addSetup(
+				sprintf('$service[] = new %s(?, ?);', Routing\WampRoute::class),
+				[$mask, $action],
+			);
 		}
 
 		$builder->addDefinition($this->prefix('webSockets.routing.generator'))
