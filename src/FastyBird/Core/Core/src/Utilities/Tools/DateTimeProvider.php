@@ -3,8 +3,8 @@
 namespace FastyBird\Core\Utilities\Tools;
 
 use DateTimeInterface;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Providers\DoctrineTimestampable as DoctrineTimestampableProviders;
-use FastyBird\Core\Services\DateTimeFactory;
 use Override;
 
 /**
@@ -13,7 +13,7 @@ use Override;
 final readonly class DateTimeProvider implements DoctrineTimestampableProviders\DateProvider
 {
 
-	public function __construct(private DateTimeFactory\Clock $clock)
+	public function __construct(private Clock\Clock $clock)
 	{
 	}
 

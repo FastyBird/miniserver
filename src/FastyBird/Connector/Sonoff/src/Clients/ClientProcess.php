@@ -19,8 +19,8 @@ use DateTimeInterface;
 use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Helpers;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
@@ -71,7 +71,7 @@ abstract class ClientProcess
 	public function __construct(
 		protected readonly Helpers\Device $deviceHelper,
 		protected readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		protected readonly DateTimeFactory\Clock $clock,
+		protected readonly Clock\Clock $clock,
 		protected readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{

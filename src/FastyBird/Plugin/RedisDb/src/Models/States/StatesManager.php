@@ -17,8 +17,8 @@ namespace FastyBird\Plugin\RedisDb\Models\States;
 
 use BackedEnum;
 use DateTimeInterface;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
@@ -61,7 +61,7 @@ class StatesManager
 	public function __construct(
 		private readonly Clients\Client $client,
 		private readonly States\StateFactory $stateFactory,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly string $entity = States\State::class,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)

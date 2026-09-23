@@ -22,9 +22,9 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -88,7 +88,7 @@ abstract class Periodic implements Writer
 		protected readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		protected readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		protected readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		protected readonly DateTimeFactory\Clock $clock,
+		protected readonly Clock\Clock $clock,
 		protected readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{

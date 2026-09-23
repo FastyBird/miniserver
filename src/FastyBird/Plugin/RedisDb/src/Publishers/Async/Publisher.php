@@ -16,10 +16,10 @@
 namespace FastyBird\Plugin\RedisDb\Publishers\Async;
 
 use DateTimeInterface;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
@@ -47,7 +47,7 @@ final class Publisher implements ExchangePublisher\Async\Publisher
 		private readonly Utilities\IdentifierGenerator $identifier,
 		private readonly string $channel,
 		private readonly Clients\Async\Client $client,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{

@@ -21,8 +21,8 @@ use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -59,7 +59,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 		DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		DateTimeFactory\Clock $clock,
+		Clock\Clock $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)

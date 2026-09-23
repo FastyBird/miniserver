@@ -8,6 +8,7 @@ use DateTimeZone;
 use Doctrine;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Clients as WsServerClients;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Commands as HttpServerCommands;
 use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
@@ -55,7 +56,6 @@ use FastyBird\Core\Schemas as ToolsSchemas;
 use FastyBird\Core\Security as SimpleAuthSecurity;
 use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Server as WsServerServer;
-use FastyBird\Core\Services as DateTimeFactoryServices;
 use FastyBird\Core\Services as PhoneServices;
 use FastyBird\Core\Services as SimpleAuthServices;
 use FastyBird\Core\Subscribers;
@@ -718,7 +718,7 @@ final class CoreExtension extends DI\CompilerExtension
 				$this->prefix('dateTimeFactory.datetime.system'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(DateTimeFactoryServices\DateTimeFactory\SystemClock::class)
+				->setType(Clock\SystemClock::class)
 				->setArgument('timeZone', new DateTimeZone($configuration->dateTimeFactory->timeZone))
 				->setAutowired($configuration->dateTimeFactory->frozen === null);
 		}
@@ -728,7 +728,7 @@ final class CoreExtension extends DI\CompilerExtension
 				$this->prefix('dateTimeFactory.datetime.frozen'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(DateTimeFactoryServices\DateTimeFactory\FrozenClock::class)
+				->setType(Clock\FrozenClock::class)
 				->setArguments([
 					'timestamp' => $configuration->dateTimeFactory->frozen,
 					'timeZone' => new DateTimeZone($configuration->dateTimeFactory->timeZone),

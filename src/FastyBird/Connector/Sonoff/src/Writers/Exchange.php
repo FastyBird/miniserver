@@ -21,12 +21,12 @@ use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Constants as DevicesConstants;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -61,7 +61,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 		DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		DateTimeFactory\Clock $clock,
+		Clock\Clock $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly ExchangeConsumers\Container $consumer,
 	)

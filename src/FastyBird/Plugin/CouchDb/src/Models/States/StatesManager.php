@@ -17,8 +17,8 @@ namespace FastyBird\Plugin\CouchDb\Models\States;
 
 use BackedEnum;
 use DateTimeInterface;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Events;
@@ -67,7 +67,7 @@ class StatesManager
 	public function __construct(
 		private readonly Connections\Connection $client,
 		private readonly States\StateFactory $stateFactory,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly string $entity = States\State::class,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),

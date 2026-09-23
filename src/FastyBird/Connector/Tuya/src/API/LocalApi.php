@@ -24,10 +24,10 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Nette;
 use Nette\Utils;
@@ -179,7 +179,7 @@ final class LocalApi
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly Tuya\Logger $logger,
 		private readonly ToolsSchemas\Validator $schemaValidator,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{

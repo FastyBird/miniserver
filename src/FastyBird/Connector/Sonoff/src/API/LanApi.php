@@ -22,10 +22,10 @@ use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
@@ -117,7 +117,7 @@ final class LanApi
 		private readonly Services\MulticastFactory $multicastFactory,
 		private readonly Helpers\MessageBuilder $entityHelper,
 		private readonly Sonoff\Logger $logger,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly ToolsSchemas\Validator $schemaValidator,
 	)

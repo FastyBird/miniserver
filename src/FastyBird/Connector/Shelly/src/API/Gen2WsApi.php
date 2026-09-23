@@ -23,11 +23,11 @@ use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Connector\Shelly\ValueObjects;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp\Psr7 as gPsr;
@@ -155,7 +155,7 @@ final class Gen2WsApi
 		private readonly string|null $password,
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly Shelly\Logger $logger,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly ToolsSchemas\Validator $schemaValidator,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,

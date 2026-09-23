@@ -3,8 +3,8 @@
 namespace FastyBird\Core\Security\SimpleAuth;
 
 use DateTimeImmutable;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Constants as SimpleAuth;
-use FastyBird\Core\Services\DateTimeFactory;
 use Lcobucci\JWT;
 use Ramsey\Uuid;
 use Throwable;
@@ -23,7 +23,7 @@ final readonly class TokenBuilder
 	public function __construct(
 		private readonly string $tokenSignature,
 		private readonly string $tokenIssuer,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 	)
 	{
 	}

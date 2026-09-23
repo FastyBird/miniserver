@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Services\DateTimeFactory;
+namespace FastyBird\Core\Clock;
 
 use DateInvalidTimeZoneException;
 use DateMalformedStringException;

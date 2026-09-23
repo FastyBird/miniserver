@@ -18,11 +18,11 @@ namespace FastyBird\Module\Devices\Commands;
 use BadMethodCallException;
 use DateTimeInterface;
 use Doctrine\DBAL;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Connectors;
@@ -101,7 +101,7 @@ class Connector extends Console\Command\Command
 		private readonly ToolsHelpers\Database $database,
 		private readonly ExchangeConsumers\Container $consumer,
 		private readonly EventLoop\LoopInterface $eventLoop,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly Localization\Translator $translator,
 		private readonly array $exchangeFactories = [],
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,

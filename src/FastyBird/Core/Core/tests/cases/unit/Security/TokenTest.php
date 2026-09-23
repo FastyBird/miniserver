@@ -5,10 +5,10 @@ namespace FastyBird\Core\Tests\Cases\Unit\Security;
 use DateInvalidTimeZoneException;
 use DateMalformedStringException;
 use DateTimeImmutable;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth;
-use FastyBird\Core\Services\DateTimeFactory;
 use Lcobucci\JWT;
 use PHPUnit\Framework\TestCase;
 use React\Http\Message\ServerRequest;
@@ -29,9 +29,9 @@ final class TokenTest extends TestCase
 	 * @throws DateMalformedStringException
 	 * @throws ValueError
 	 */
-	private function clock(string $at = self::NOW): DateTimeFactory\FrozenClock
+	private function clock(string $at = self::NOW): Clock\FrozenClock
 	{
-		return new DateTimeFactory\FrozenClock(new DateTimeImmutable($at));
+		return new Clock\FrozenClock(new DateTimeImmutable($at));
 	}
 
 	/**

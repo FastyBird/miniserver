@@ -5,8 +5,8 @@ namespace FastyBird\Plugin\CouchDb\Tests\Cases\Unit\Models;
 use BackedEnum;
 use DateTimeImmutable;
 use DateTimeInterface;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\Models;
@@ -276,7 +276,7 @@ final class StatesManagerTest extends TestCase
 
 		$factory = new States\StateFactory($processor);
 
-		$systemClock = $this->createMock(DateTimeFactory\SystemClock::class);
+		$systemClock = $this->createMock(Clock\SystemClock::class);
 
 		return new Models\States\StatesManager(
 			$couchClient,
