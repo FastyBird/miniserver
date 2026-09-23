@@ -25,7 +25,7 @@ this document (and the one downstream census row it touches) needs to change.
 | # | Decision | Recommendation | One-line reason |
 |---|---|---|---|
 | 1 | **Interface policy (§3.6)** | **B** (default) | E3 renames only the 27 types with an external implementer, a DI-generated factory, or 2+ implementers inside Core; the 47 single-implementer candidates and 3 dead types move but keep their prefix, handed to #460 in one sweep. Renaming all 77 now (policy A) means E5 deletes several of the just-renamed ones again — the double-sweep the Epic's own reasoning argues against. The non-binding appendix below gives placeholder names for all 50 in case the maintainer prefers A. |
-| 2 | `Compat\User` | **`WebSockets\Compat\User`**, not `Security\Compat\User` (Epic's default) | Its own `core.tsv` row shows it declares `namespace Nette\Security;`, not `FastyBird\Core\…` — it is a conditional polyfill (`if (!class_exists('\Nette\Security\User')) { final class User {} }`), not a Core symbol at all, so `make naming` never sees it wherever it lives. Only `WebSockets` code references `Nette\Security` in a way this shim would matter to (Epic's own measurement); Security's own files use the real `Nette\Security\User`. Placing it under `Security\` would associate a global polyfill with a capability that has no code-level dependency on it. |
+| 2 | `Compat\User` | **File-only move to `WebSockets/Compat/User.php`; FQCN unchanged (`Nette\Security\User`), EXCLUDED from every move map's FQCN rewrite** | It is dead, never-loaded code, not merely a polyfill this census misjudged: it is in no `composer.json` `autoload.files`/`classmap` entry (checked: neither Core's own `composer.json` nor the root one), nothing `require`s it, and `git grep -n "Compat/User\|src/Compat" origin/main` finds it named only in a historical planning doc, never in code. PSR-4 (`FastyBird\Core\ → src/`) can never map the class it conditionally declares, `Nette\Security\User`, to `src/Compat/User.php` — a `FastyBird\Core\…`-rooted autoloader cannot resolve a `Nette\Security\…` class name by path, at any location under `src/`. `tests/cases/unit/Controllers/WebSockets/Controller/ControllerTest.php`'s own docblock (lines 18–19) confirms the consequence at runtime: `class_exists(Nette\Security\User::class)` is false. Because the polyfill never fires, this row must **not** enter the move tool's FQCN rewrite map: the tool renames a file's declared type *and* every reference to its old FQCN, and this file's "old FQCN" is `Nette\Security\User` — the same FQCN that 2 other files in Core genuinely reference for the real `nette/security` class (`Clients/WsServer/Storage.php:78`, `Controllers/WebSockets/Controller/Controller.php:259`), plus 2 docblock lines in the test above. Rewriting on this file's presence would retarget those. It is added to the dead/unreferenced hand-off list below instead — deletion is #460's call, not E3's. Its directory still needs to leave `src/` top level (the Definition of Done allows no bare `Compat/`); `WebSockets/Compat/User.php` is as good a location as any since past measurement suggested WebSockets was its only would-be consumer, but the choice is now cosmetic, not a capability-ownership decision. |
 | 3 | `PresenterRequest` / `PresenterResponse` | **`Presenters\Events\{PresenterRequest,PresenterResponse}`**, beside `Presenters\`, not `Security` | These describe a presenter's request/response lifecycle; structural rule 1 (Epic §"Two structural rules") says events live with the concept they describe, not with their sole listener. `Presenters\` is already one of the Definition-of-Done's allowed root namespaces, so it can carry its own `Events\` the same way a capability does. |
 | 4 | `Commands\HttpServer` / `Commands\WsServer` | **`Http\Commands\HttpServer`, `WebSockets\Commands\WsServer`** (Epic's default) | No departure — `Commands` is a layer name and dissolves into the capability it starts, per structural rule 2. |
 | 5 | `Constants` / `Configuration` | **Root-level types**: `FastyBird\Core\Constants`, `FastyBird\Core\Configuration` (files directly under `src/`), not a sub-namespace | A one-class sub-namespace (`Constants\Constants`, `Configuration\Configuration`) is exactly the stutter the checklist flags. Flattening removes the stutter without inventing a role name for either class. `Constants`' internal split across capabilities stays out of scope (E5, #460, per Epic §3.10). |
@@ -62,8 +62,8 @@ against:
 | Persistence | 45 | 44 | +1 (`SchemaSubscriber.php`, new on `main`) | 9 | 4 |
 | Api | 55 | 55 | — | 0 | 16 |
 | Http | 50 | 50 | — | 1 | 8 |
-| WebSockets | 103 | 102 | +1 (`Compat\User`, decision 2) | 9 | 20 |
-| Security | 47 | 48 | −1 (`Compat\User` moved out, decision 2) | 5 | 1 |
+| WebSockets | 103 | 102 | +1 (`Compat\User.php`, file-only move, decision 2 — its FQCN `Nette\Security\User` is untouched and not part of the 27/50 counts) | 9 | 20 |
+| Security | 47 | 48 | −1 (`Compat\User.php` physically moved out, decision 2) | 5 | 1 |
 | Root (dissolved) | 19 | 20 | −1 (`Console.php` moved out, decision 7) | 0 | 0 |
 | Exceptions (shared root) | 8 | 8 stay | — | 0 | 0 |
 | **Total** | **410** | **409** | **+1** | **27** | **50** |
@@ -114,15 +114,16 @@ Recommendation: shared root for all three (decision 6 above).
 ## Name table — the 27 policy-B renames
 
 Every surviving interface and live trait, its §1.6 classification, and its target role name
-(no `I`/`T` prefix, no `…Interface`/`…Trait` suffix, per `docs/conventions.md`). Regenerable:
-`php ~/.cache/e3/render_renames.php` against this census's `target.php`.
+(no `I`/`T` prefix, no `…Interface`/`…Trait` suffix, per `docs/conventions.md`). Produced by
+this census's local `render_renames.php` against `target.php` (see "How this was produced"
+below) — this table, not the script, is the artifact later PRs execute.
 
 Total renamed: 27
 
 | Current FQCN | Kind | Classification (§1.6) | Target FQCN (role name) |
 |---|---|---|---|
 | `FastyBird\Core\Clients\WsServer\IClientFactory` | interface | 2+ implementers inside Core | `FastyBird\Core\WebSockets\Clients\ClientProvider` |
-| `FastyBird\Core\Controllers\WebSockets\Controller\IController` | interface | 2+ implementers inside Core | `FastyBird\Core\WebSockets\Controllers\Controller\RequestController` |
+| `FastyBird\Core\Controllers\WebSockets\Controller\IController` | interface | 2+ implementers inside Core | `FastyBird\Core\WebSockets\Controllers\RequestController` |
 | `FastyBird\Core\Controllers\WebSockets\IApplication` | interface | 2+ implementers inside Core | `FastyBird\Core\WebSockets\Controllers\Dispatcher` |
 | `FastyBird\Core\Controllers\WebSockets\IRequest` | interface | 2+ implementers inside Core (one of 2 IRequest interfaces -- see collision table) | `FastyBird\Core\WebSockets\Controllers\DispatchRequest` |
 | `FastyBird\Core\Controllers\WebSockets\Responses\IResponse` | interface | 2+ implementers inside Core (one of 2 IResponse interfaces -- see collision table) | `FastyBird\Core\WebSockets\Controllers\Responses\ControllerResponse` |
@@ -157,8 +158,7 @@ mechanical placeholders, not considered role names: drop the `I`/`T` prefix; whe
 collide with a sibling type already declared in the same target namespace, append `Contract`
 instead of inventing a bespoke name. `#460` is expected to replace most of these with something
 better when it does the real per-interface judgement the Epic calls for — this appendix exists
-only so a policy flip costs no second census round. Regenerable:
-`php ~/.cache/e3/render_appendix.php`.
+only so a policy flip costs no second census round.
 
 | Target FQCN (moved, prefix kept under policy B) | Placeholder name if policy A |
 |---|---|
@@ -194,7 +194,7 @@ only so a policy flip costs no second census round. Regenerable:
 | `FastyBird\Core\Security\Identity\IUserStorage` | `FastyBird\Core\Security\Identity\UserStorageContract` |
 | `FastyBird\Core\WebSockets\Clients\Drivers\IDriver` | `FastyBird\Core\WebSockets\Clients\Drivers\Driver` |
 | `FastyBird\Core\WebSockets\Clients\IStorage` | `FastyBird\Core\WebSockets\Clients\StorageContract` |
-| `FastyBird\Core\WebSockets\Controllers\Controller\IControllerFactory` | `FastyBird\Core\WebSockets\Controllers\Controller\ControllerFactoryContract` |
+| `FastyBird\Core\WebSockets\Controllers\IControllerFactory` | `FastyBird\Core\WebSockets\Controllers\ControllerFactoryContract` |
 | `FastyBird\Core\WebSockets\Controllers\IWampApplication` | `FastyBird\Core\WebSockets\Controllers\WampApplicationContract` |
 | `FastyBird\Core\WebSockets\Encoding\IFrame` | `FastyBird\Core\WebSockets\Encoding\Frame` |
 | `FastyBird\Core\WebSockets\Encoding\IMessage` | `FastyBird\Core\WebSockets\Encoding\Message` |
@@ -233,7 +233,7 @@ type name changed.
 | Two `Request`s in `WebSockets` (`Http\Request` handshake, `Controllers\WebSockets\Request` dispatch) | Sub-namespace: `WebSockets\Handshake\Request` vs `WebSockets\Controllers\Request`. |
 | Two `Router`s in `Http` (`Routing\Router`, `Middleware\WebServer\Router`) | Sub-namespace: `Http\Routing\Router` vs `Http\Middleware\Router`. |
 | Three `Phone`s (`Entities\Phone\Phone`, `Services\Phone\Phone`, `Types\Phone\Phone`) | See stutter table: `Phone\Entities\Phone` unchanged, `Phone\Services\PhoneNumberHelper`, `Phone\Types\PhoneType`. |
-| Four `User`s in `Security` (`Security\SimpleAuth\User`, `Middleware\SimpleAuth\User`, `Subscribers\SimpleAuth\User`, `Compat\User`) | Sub-namespace for the first three: `Security\Identity\User`, `Security\Middleware\User`, `Security\Subscribers\User` (all unchanged names). `Compat\User` moves out of `Security` entirely (decision 2) to `WebSockets\Compat\User`, and it isn't really a `FastyBird\Core` symbol (declares `namespace Nette\Security;`), so it was never a same-namespace collision to begin with. |
+| Four `User`-named files in `Security` (`Security\SimpleAuth\User`, `Middleware\SimpleAuth\User`, `Subscribers\SimpleAuth\User`, `Compat\User.php`) | Sub-namespace for the 3 real `FastyBird\Core` classes: `Security\Identity\User`, `Security\Middleware\User`, `Security\Subscribers\User` (all unchanged names). `Compat\User.php` was never actually a fourth `FastyBird\Core\…\User` to collide with — it declares `namespace Nette\Security;` and is dead code (decision 2); it physically relocates to `WebSockets/Compat/User.php` but its FQCN (`Nette\Security\User`) is untouched and excluded from every move map. |
 | **Found by this census** — `IApplication` (2 implementers: `Application`, `WampApplication`) would collide with the concrete `Application` class on a bare I-drop | Rename: `WebSockets\Controllers\Dispatcher`. |
 | **Found by this census** — `IClientFactory` (`Clients/WsServer`) would collide with the concrete `ClientFactory` on a bare I-drop | Rename: `WebSockets\Clients\ClientProvider`. |
 | **Found by this census** — `IController` (`Controllers/WebSockets/Controller`) would collide with the concrete `Controller` on a bare I-drop | Rename: `WebSockets\Controllers\Controller\RequestController`. |
@@ -261,7 +261,7 @@ the target namespace's last segment equals the declared type's short name.
 | `Presenters\SimpleAuth\TSimpleAuth` | checklist (T-prefix) | `Security\Presenters\HasAuthorization` |
 | `Messaging\Exchange\Publisher\Publisher` | found; stutters (`Publisher\Publisher`) | `Exchange\Publisher\MessagePublisher` |
 | `Messaging\Exchange\Publisher\Async\Publisher` | found; stutters | `Exchange\Publisher\Async\MessagePublisher` |
-| `Controllers\WebSockets\Controller\Controller` | found; stutters (`Controller\Controller`); abstract base class | `WebSockets\Controllers\Controller\AbstractController` |
+| `Controllers\WebSockets\Controller\Controller` | found; stutters (`Controller\Controller`); abstract base class. Renaming to `AbstractController` was the first draft but **fails `make cs`**: `SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming` is active and not excluded for Core (`tools/phpcs.xml`). Fixed by flattening the directory instead of renaming the class — `WebSockets\Controllers\Controller\*` collapses into `WebSockets\Controllers\*`, so the class keeps its name `Controller` and its new namespace's last segment is `Controllers` (plural), not `Controller` (singular) — the same near-miss reasoning already applied to `Exchange`'s `Consumers\Consumer`, not an exact-match stutter. `ControllerFactory`, `IControllerFactory` and the renamed `IController` (→ `RequestController`) move into the flattened `WebSockets\Controllers\` alongside it; re-validated for short-name collisions against its 7 existing siblings there (`Application`, `Dispatcher`, `DispatchRequest`, `IWampApplication`, `Reflection`, `Request`, `WampApplication`) — none | `WebSockets\Controllers\Controller` (unchanged name, flattened namespace) |
 | `Server\WsServer\Server` | found; stutters (`Server\Server`) | `WebSockets\Server\ServerRuntime` |
 | `Security\SimpleAuth\IIdentity` | found — renaming it to plain `Identity` (the mechanical I-drop) would stutter against the `Security\Identity\` namespace this bucket collapses into | `Security\Identity\UserIdentity` |
 | `Services\DateTimeFactory\Clock` | **deliberately not fixed** — Epic §4 E3.3: "`Clock\Clock` is a temporary stutter until #460 replaces the interface with PSR-20" (§3.10) | `Clock\Clock` (unchanged; accepted) |
@@ -271,17 +271,18 @@ match) and is left alone — a judgement call, noted here rather than silently s
 
 ## Hand-off list for #460
 
-**50 prefixed types, moved but not renamed (policy B).** Full list with target FQCNs: see
-`~/.cache/e3/handoff.txt` (reproduced in the non-binding appendix below, one row each with a
-placeholder name). Regenerable: `php ~/.cache/e3/handoff_gen.php` against this census's
-`target.php`.
+**50 prefixed types, moved but not renamed (policy B).** Full list with target FQCNs is
+reproduced in the non-binding appendix above, one row each with a placeholder name.
 
-**15 unreferenced types (Epic §1.8).** 3 of these are also on the 50-type hand-off list above
-(`IEntityRemoved`, `TEntityRemoved`, `TPhone`); the other 12 are ordinary classes/enums that are
-dead but not I/T-prefixed, so #460 (not policy B) decides whether to delete or keep each:
+**16 unreferenced/dead types** — Epic §1.8's 15, plus `Compat\User.php` (found by this
+census's second pass, decision 2). 3 of the original 15 are also on the 50-type hand-off list
+above (`IEntityRemoved`, `TEntityRemoved`, `TPhone`); the rest are ordinary classes/enums that
+are dead but not I/T-prefixed, so #460 (not policy B) decides whether to delete or keep each —
+E3 deletes no types:
 
-| Current FQCN | Target FQCN | Why it looks dead |
+| Current FQCN | Target (physical location) | Why it looks dead |
 |---|---|---|
+| `Nette\Security\User` (`Compat/User.php`) | `src/WebSockets/Compat/User.php`, **FQCN unchanged, excluded from every move map** (decision 2) | Not in any `composer.json` `autoload.files`/`classmap`; nothing `require`s it; PSR-4 cannot map `Nette\Security\User` to any path under `FastyBird\Core\`'s root. `tests/…/ControllerTest.php`'s own docblock confirms `class_exists(Nette\Security\User::class)` is false at runtime — the conditional polyfill it defines never fires |
 | `FastyBird\Core\Caching\Application\MemoryAdapterStorage` | `FastyBird\Core\Caching\MemoryAdapterStorage` | unreferenced; a commented-out NEON line in `Core/config/common.neon:30` is the only trace |
 | `FastyBird\Core\Entities\DoctrineTimestampable\IEntityRemoved` (also hand-off) | `FastyBird\Core\Persistence\Entities\IEntityRemoved` | unreferenced anywhere |
 | `FastyBird\Core\Entities\DoctrineTimestampable\TEntityRemoved` (also hand-off) | `FastyBird\Core\Persistence\Entities\TEntityRemoved` | unreferenced anywhere |
@@ -322,9 +323,19 @@ subset of these lines, so the real per-PR count is at most 5 and likely lower. `
 Every number above comes from token-level parsing (`PhpToken::tokenize`) of the tree at
 `origin/main` `9188c4d72`, run in the `fb-e2-app:latest` application container (matches
 `docker/dev/php`, not the bare-PHP tools image — see `CLAUDE.md`'s gate-under-128M trap), never
-by regex over a text window. Scripts live in `~/.cache/e3/` (copied and adapted from the
-planning session's `~/.cache/e3plan/`, re-run against the current tree per this issue's
-instructions):
+by regex over a text window.
+
+**The scripts are local scratch, not part of this repository.** They live in `~/.cache/e3/` on
+the machine this census was produced on (copied and adapted from the planning session's
+`~/.cache/e3plan/`, re-run against the current tree per this issue's instructions) — they are
+not committed, not portable to another machine or reviewer as-is, and nothing in E3's later PRs
+depends on them existing. **The 410-row table below is the authoritative artifact.** `#496`
+onward's move maps (`tools/core-moves/NN-<capability>.php`, which *are* committed) are written
+by hand from this document's rows, the same way any other approved design doc is executed —
+not by re-running these scripts, and not assumed to produce byte-identical output on a second
+machine (container image tag, PHP patch version and `core.tsv`'s file order are not pinned).
+A future author wanting to re-derive or spot-check a row is welcome to reconstruct an equivalent
+script from the description below; they are not re-running *this* one.
 
 ```bash
 # From the repository root, all output re-verified against a clean docker run each time:
@@ -338,27 +349,29 @@ docker run --rm -v "$PWD":/app -v "$HOME/.cache":/cache -w /app \
 | `census.php <dir>` | one row per `.php` file: path, namespace, kind, name, modifiers, extends, implements | `core.tsv` (410 rows, `src/FastyBird/Core/Core/src`), `all.tsv` (3,437 rows, whole repo — matches `check-naming.php`'s own self-check floor) |
 | `refs.php <repo>` | every resolved reference (code / docblock / string) from every tracked `.php` file to a Core symbol | `refs.tsv`, 7,379 rows (Epic's §1.2 measured 7,376 at `464880ce6`; +3 is `SchemaSubscriber`'s own references) |
 | `alloc.php` | `fbAlloc()` — path → draft capability, from the Epic's §3.5 table, +1 rule added for `Subscribers/DoctrineMigrations/` → `Persistence` | shared by every script below |
-| `target.php` | `fbTargetNamespace()` (dirname/basename → target namespace) and `$RENAMES` (current FQCN → target simple name) — **this census's actual layout decision**, one entry per directory group and per renamed type | `gen.php`, `handoff_gen.php`, `validate.php` |
-| `gen.php` | applies `target.php` to every row of `core.tsv` | `final.tsv`, 410 rows: current path, current FQCN, capability, kind, target FQCN |
+| `target.php` | `fbTargetNamespace()` (dirname/basename → target namespace) and `$RENAMES` (current FQCN → target simple name) — **this census's actual layout decision**, one entry per directory group and per renamed type, plus the `Compat/User.php` special case | `gen.php`, `handoff_gen.php`, `validate.php` |
+| `gen.php` | applies `target.php` to every row of `core.tsv`; leaves `Compat/User.php`'s FQCN untouched and tags it `EXCLUDED-FROM-FQCN-REWRITE` | `final.tsv`, 410 rows: current path, current FQCN, capability, kind, target FQCN, note |
 | `handoff_gen.php` | every I/T-prefixed interface/trait not in `$RENAMES` | `handoff.txt`, 50 rows — matches the Epic's count exactly |
-| `validate.php` | checks every target FQCN in `final.tsv` against `tools/check-naming.php`'s `FB_NAMESPACE_DENYLIST`/`FB_TYPE_DENYLIST`, literal stutter (last namespace segment == short name), duplicate FQCNs, and short-name collisions within the same target namespace, against the `handoff.txt` allowlist for expected `I`/`T` prefixes | reported **zero violations** (one explicitly accepted exception: `Clock\Clock`, §4 E3.3) |
+| `validate.php` | checks every target FQCN in `final.tsv` (skipping `Compat/User.php`, not a Core symbol) against `tools/check-naming.php`'s `FB_NAMESPACE_DENYLIST`/`FB_TYPE_DENYLIST`; literal stutter; duplicate FQCNs; short-name collisions within the same target namespace; the `handoff.txt` allowlist for expected `I`/`T` prefixes; and the active Slevomat "superfluous naming" sniffs not excluded for Core in `tools/phpcs.xml` — no `Abstract` prefix/suffix (`SuperfluousAbstractClassNaming`), no `Exception` suffix on a class (`SuperfluousExceptionNaming`), no `Interface` suffix on an interface, no `Trait` suffix on a trait | reported **zero violations** (one explicitly accepted exception: `Clock\Clock`, §4 E3.3) |
 | `ifaces.php` | classifies all 77 `I`/`T`-prefixed interfaces/traits by implementer count inside/outside Core (§1.6) | `ifaces.txt` — byte-identical to the planning session's version; the new file is a class, not an I/T type, so this list is unaffected by the +1 file |
-| `dead.php` | every Core symbol with zero references outside its own file | `dead.tsv`, 15 rows — byte-identical to the planning session's version |
+| `dead.php` | every Core symbol with zero references outside its own file | `dead.tsv`, 15 rows — byte-identical to the planning session's version (does not itself catch `Compat/User.php`, since its FQCN `Nette\Security\User` was never in `core.tsv`'s `FastyBird\Core\…` symbol table to begin with — found separately, by hand, for this revision) |
 | `similarity.php` | upper-bound rename-similarity estimate per file | rename-threshold table above — same 5 files, same order, as the planning session |
 | `metrics.php` | per-capability rollup (files, referencing files, packages, PHPStan/naming-baseline hits) | cross-checked against Epic §3.5's table; identical except Persistence +1 (the new file) |
 | `groupby.php` | groups `core.tsv` by exact `dirname()`, 138 distinct groups | the input this census's `target.php` was hand-designed against, one decision per group rather than per file |
 
-Where this census's measurement disagrees with #458's §3.5 draft: only the file count
-(409 → 410, the one new file) and the two capability counts it shifts (`Persistence` 44 → 45)
-plus the two departures in the "Decisions for the maintainer" table (`Compat\User` to
-`WebSockets` instead of `Security`; `Console.php`/`EventLoopLifeCycle.php` out of the generic
-"root" bucket into `Logging`/`EventLoop`). Nothing else in §3.5's table changed.
+Where this census's measurement disagrees with #458's §3.5 draft: the file count (409 → 410,
+the one new file), the two capability counts it shifts (`Persistence` 44 → 45), and the
+departures in the "Decisions for the maintainer" table above — most significantly, `Compat\User`
+is not a `Security`-vs-`WebSockets` capability-ownership question at all, but dead code that
+must be excluded from the FQCN rewrite entirely.
 
 
 ## Full file-by-file table (410 rows, grouped by capability)
 
 One row per file under `src/FastyBird/Core/Core/src`, grouped by target capability, sorted by
-current path within each group. Regenerable: `php ~/.cache/e3/render.php` against `final.tsv`.
+current path within each group. This table is the authoritative artifact (see "How this was
+produced" above) -- later E3 PRs' move maps are written from these rows by hand, not by
+re-running the local script that assembled them.
 
 
 ### Clock (3 files)
@@ -651,12 +664,12 @@ current path within each group. Regenerable: `php ~/.cache/e3/render.php` agains
 | `Clients/WsServer/Storage.php` | `FastyBird\Core\Clients\WsServer\Storage` | class | `FastyBird\Core\WebSockets\Clients\Storage` |
 | `Clients/WsServer/WampClientFactory.php` | `FastyBird\Core\Clients\WsServer\WampClientFactory` | class | `FastyBird\Core\WebSockets\Clients\WampClientFactory` |
 | `Commands/WsServer.php` | `FastyBird\Core\Commands\WsServer` | class | `FastyBird\Core\WebSockets\Commands\WsServer` |
-| `Compat/User.php` | `Nette\Security\User` | class | `FastyBird\Core\WebSockets\Compat\User` |
+| `Compat/User.php` | `Nette\Security\User` | class | `Nette\Security\User (unchanged -- file-only move, see decision 2)` |
 | `Controllers/WebSockets/Application.php` | `FastyBird\Core\Controllers\WebSockets\Application` | class | `FastyBird\Core\WebSockets\Controllers\Application` |
-| `Controllers/WebSockets/Controller/Controller.php` | `FastyBird\Core\Controllers\WebSockets\Controller\Controller` | class | `FastyBird\Core\WebSockets\Controllers\Controller\AbstractController` |
-| `Controllers/WebSockets/Controller/ControllerFactory.php` | `FastyBird\Core\Controllers\WebSockets\Controller\ControllerFactory` | class | `FastyBird\Core\WebSockets\Controllers\Controller\ControllerFactory` |
-| `Controllers/WebSockets/Controller/IController.php` | `FastyBird\Core\Controllers\WebSockets\Controller\IController` | interface | `FastyBird\Core\WebSockets\Controllers\Controller\RequestController` |
-| `Controllers/WebSockets/Controller/IControllerFactory.php` | `FastyBird\Core\Controllers\WebSockets\Controller\IControllerFactory` | interface | `FastyBird\Core\WebSockets\Controllers\Controller\IControllerFactory` |
+| `Controllers/WebSockets/Controller/Controller.php` | `FastyBird\Core\Controllers\WebSockets\Controller\Controller` | class | `FastyBird\Core\WebSockets\Controllers\Controller` |
+| `Controllers/WebSockets/Controller/ControllerFactory.php` | `FastyBird\Core\Controllers\WebSockets\Controller\ControllerFactory` | class | `FastyBird\Core\WebSockets\Controllers\ControllerFactory` |
+| `Controllers/WebSockets/Controller/IController.php` | `FastyBird\Core\Controllers\WebSockets\Controller\IController` | interface | `FastyBird\Core\WebSockets\Controllers\RequestController` |
+| `Controllers/WebSockets/Controller/IControllerFactory.php` | `FastyBird\Core\Controllers\WebSockets\Controller\IControllerFactory` | interface | `FastyBird\Core\WebSockets\Controllers\IControllerFactory` |
 | `Controllers/WebSockets/IApplication.php` | `FastyBird\Core\Controllers\WebSockets\IApplication` | interface | `FastyBird\Core\WebSockets\Controllers\Dispatcher` |
 | `Controllers/WebSockets/IRequest.php` | `FastyBird\Core\Controllers\WebSockets\IRequest` | interface | `FastyBird\Core\WebSockets\Controllers\DispatchRequest` |
 | `Controllers/WebSockets/IWampApplication.php` | `FastyBird\Core\Controllers\WebSockets\IWampApplication` | interface | `FastyBird\Core\WebSockets\Controllers\IWampApplication` |
