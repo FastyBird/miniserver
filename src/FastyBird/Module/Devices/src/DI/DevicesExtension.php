@@ -24,7 +24,7 @@ use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
-use FastyBird\Core\Topics\WsServer;
+use FastyBird\Core\Topics\WsServer as TopicsWsServer;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
@@ -909,7 +909,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		if (
 			$builder->findByType(SlimRouterRouting\LinkGenerator::class) !== []
-			&& $builder->findByType(WsServer\IStorage::class) !== []
+			&& $builder->findByType(TopicsWsServer\IStorage::class) !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.socketsBridge'),

@@ -26,7 +26,7 @@ use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as CoreRouting;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
-use FastyBird\Core\Topics\WsServer;
+use FastyBird\Core\Topics\WsServer as TopicsWsServer;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
@@ -149,7 +149,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 
 		if (
 			$builder->findByType(CoreRouting\LinkGenerator::class) !== []
-			&& $builder->findByType(WsServer\IStorage::class) !== []
+			&& $builder->findByType(TopicsWsServer\IStorage::class) !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.stateEntities'),
