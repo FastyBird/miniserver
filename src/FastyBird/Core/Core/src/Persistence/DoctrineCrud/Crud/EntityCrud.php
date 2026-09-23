@@ -5,7 +5,6 @@ namespace FastyBird\Core\Persistence\DoctrineCrud\Crud;
 use FastyBird\Core\Entities\DoctrineCrud as Entities;
 use FastyBird\Core\Mapping\DoctrineCrud as Mapping;
 use FastyBird\Core\Persistence\DoctrineCrud\Crud;
-use Nette;
 use Override;
 
 /**
@@ -16,8 +15,6 @@ use Override;
  */
 final class EntityCrud implements IEntityCrud
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param class-string<T> $entityName

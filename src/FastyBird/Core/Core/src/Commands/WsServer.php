@@ -8,7 +8,6 @@ use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Server\WsServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use Nette;
 use Psr\EventDispatcher;
 use Psr\Log;
 use React\EventLoop;
@@ -23,8 +22,6 @@ use Throwable;
  */
 final class WsServer extends Console\Command\Command
 {
-
-	use Nette\SmartObject;
 
 	public const string NAME = 'fb:ws-server:start';
 

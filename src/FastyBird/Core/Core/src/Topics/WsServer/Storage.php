@@ -5,7 +5,6 @@ namespace FastyBird\Core\Topics\WsServer;
 use ArrayIterator;
 use FastyBird\Core\Entities\WsServer\Topics as Entities;
 use FastyBird\Core\Exceptions;
-use Nette;
 use Override;
 use Psr\Log;
 use Throwable;
@@ -16,11 +15,6 @@ use function sprintf;
  */
 final class Storage implements IStorage
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private Drivers\IDriver $driver;
 

@@ -9,7 +9,6 @@ use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Routing as Router;
 use FastyBird\Core\Server\WsServer as Server;
-use Nette;
 use Nette\Utils;
 use Override;
 use Psr\Log;
@@ -22,19 +21,9 @@ use function sprintf;
 /**
  * Application which run on server and provide creating controllers
  * with correctly params - convert message => control.
- *
- * @method onOpen(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onClose(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onMessage(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest, string $message)
- * @method onError(IApplication $application, Entities\IClient $client, Http\IRequest $httpRequest, Throwable $ex)
  */
 abstract class Application implements IApplication
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public array $onOpen = [];
 

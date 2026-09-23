@@ -40,11 +40,6 @@ abstract class Controller implements IController
 {
 
 	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
-	/**
 	 * Special parameter keys
 	 *
 	 * @internal

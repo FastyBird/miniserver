@@ -6,7 +6,6 @@ use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Entities\WebSockets;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
-use Nette;
 use Nette\Security as NS;
 use Nette\Utils;
 use Override;
@@ -17,11 +16,6 @@ use React\Socket;
  */
 class Client implements IClient
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private NS\User|null $user = null;
 

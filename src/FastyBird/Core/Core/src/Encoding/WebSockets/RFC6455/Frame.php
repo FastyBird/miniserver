@@ -4,7 +4,6 @@ namespace FastyBird\Core\Encoding\WebSockets\RFC6455;
 
 use FastyBird\Core\Encoding\WebSockets as Protocols;
 use FastyBird\Core\Exceptions;
-use Nette;
 use OutOfBoundsException;
 use Override;
 use UnderflowException;
@@ -24,11 +23,6 @@ use function substr_replace;
  */
 final class Frame implements Protocols\IFrame
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public const int OP_CONTINUE = 0;
 

@@ -8,7 +8,6 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use Nette;
 use Override;
 use ValueError;
 use function assert;
@@ -18,8 +17,6 @@ use function round;
 
 final class FrozenClock implements Clock
 {
-
-	use Nette\SmartObject;
 
 	private DateTimeImmutable $dt;
 

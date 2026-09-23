@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Controllers\WebSockets;
 
 use FastyBird\Core\Exceptions;
-use Nette;
 use ReflectionException;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
@@ -27,11 +26,6 @@ use function strval;
  */
 final class Reflection
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/**
 	 * @param array<mixed> $args

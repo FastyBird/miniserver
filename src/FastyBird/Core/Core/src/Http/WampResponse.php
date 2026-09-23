@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Http;
 
 use FastyBird\Core\Exceptions;
-use Nette;
 use Override;
 use TypeError;
 use function array_key_exists;
@@ -15,11 +14,6 @@ use function strlen;
  */
 final class WampResponse implements IResponse
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/** @var int HTTP response code */
 	private int $code = self::S200_OK;

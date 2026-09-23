@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Helpers\Tools;
 
 use DirectoryIterator;
-use Nette;
 use RuntimeException;
 use Throwable;
 use Tracy;
@@ -23,8 +22,6 @@ use const DIRECTORY_SEPARATOR;
  */
 final class Logger
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @return array<array<string, string|int>>

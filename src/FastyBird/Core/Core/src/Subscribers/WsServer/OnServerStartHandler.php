@@ -4,7 +4,6 @@ namespace FastyBird\Core\Subscribers\WsServer;
 
 use FastyBird\Core\Controllers\WebSockets\IWampApplication;
 use FastyBird\Core\Messaging\WebSockets\PushMessages;
-use Nette;
 use React\EventLoop\LoopInterface;
 use function assert;
 
@@ -13,11 +12,6 @@ use function assert;
  */
 final class OnServerStartHandler
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public function __construct(
 		private PushMessages\ConsumersRegistry $consumersRegistry,

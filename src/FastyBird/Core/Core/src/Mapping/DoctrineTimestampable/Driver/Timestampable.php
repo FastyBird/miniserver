@@ -6,7 +6,6 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Exceptions;
-use Nette;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use function array_reverse;
@@ -22,8 +21,6 @@ use function sprintf;
  */
 final class Timestampable
 {
-
-	use Nette\SmartObject;
 
 	// Annotation field is timestampable
 	private const string EXTENSION_ANNOTATION = 'FastyBird\Core\Mapping\DoctrineTimestampable\Annotation\Timestampable';

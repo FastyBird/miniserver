@@ -12,11 +12,6 @@ final class MessageResponse implements IResponse
 {
 
 	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
-	/**
 	 * @param array<mixed> $data
 	 */
 	public function __construct(private array $data)

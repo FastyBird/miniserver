@@ -4,7 +4,6 @@ namespace FastyBird\Core\Server\WsServer;
 
 use FastyBird\Core\Clients\WsServer as Clients;
 use FastyBird\Core\Exceptions;
-use Nette;
 use Psr\Log;
 use React;
 use Throwable;
@@ -14,11 +13,6 @@ use Throwable;
  */
 final class Handlers
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	private IWrapper $application;
 

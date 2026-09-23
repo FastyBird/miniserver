@@ -10,7 +10,6 @@ use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http;
-use Nette;
 use Nette\Utils;
 use OverflowException;
 use Override;
@@ -29,20 +28,9 @@ use function trim;
 /**
  * WebSockets server application wrapper
  * Purpose of this class is to create better interface for connection objects
- *
- * @method onClientConnected(Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onClientDisconnected(Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onClientError(Entities\IClient $client, Http\IRequest $httpRequest)
- * @method onIncomingMessage(Entities\IClient $client, Http\IRequest $httpRequest, string $message)
- * @method onAfterIncomingMessage(Entities\IClient $client, Http\IRequest $httpRequest)
  */
 final class Wrapper implements IWrapper
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public array $onClientConnected = [];
 

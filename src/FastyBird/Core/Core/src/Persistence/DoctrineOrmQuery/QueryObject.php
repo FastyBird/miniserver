@@ -7,7 +7,6 @@ use Doctrine;
 use Doctrine\ORM;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use Nette;
 use Throwable;
 use function array_shift;
 use function get_class;
@@ -44,8 +43,6 @@ use function get_class;
  */
 abstract class QueryObject
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<Closure> */
 	public array $onPostFetch = [];

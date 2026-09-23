@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Controllers\WebSockets;
 
-use Nette;
 use Override;
 
 /**
@@ -10,11 +9,6 @@ use Override;
  */
 final class Request implements IRequest
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	/**
 	 * @param string $name  fully qualified controller name (module:module:controller)

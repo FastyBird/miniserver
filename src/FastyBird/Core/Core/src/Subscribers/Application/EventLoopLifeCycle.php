@@ -4,7 +4,6 @@ namespace FastyBird\Core\Subscribers\Application;
 
 use FastyBird\Core\EventLoop\Application as EventLoop;
 use FastyBird\Core\Events;
-use Nette;
 use Override;
 use Symfony\Component\EventDispatcher;
 
@@ -13,8 +12,6 @@ use Symfony\Component\EventDispatcher;
  */
 final readonly class EventLoopLifeCycle implements EventDispatcher\EventSubscriberInterface
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(private readonly EventLoop\Status $eventLoopStatus)
 	{

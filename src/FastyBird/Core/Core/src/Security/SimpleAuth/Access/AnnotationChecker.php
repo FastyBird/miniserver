@@ -5,7 +5,6 @@ namespace FastyBird\Core\Security\SimpleAuth\Access;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionClass;
@@ -35,11 +34,6 @@ use const PREG_SPLIT_NO_EMPTY;
  */
 final readonly class AnnotationChecker implements Checker, CheckRequirements
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public function __construct(private readonly Security\User $user)
 	{

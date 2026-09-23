@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Configuration;
 
-use Nette;
 use Nette\Application;
 
 /**
@@ -11,8 +10,6 @@ use Nette\Application;
  */
 final readonly class Configuration
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly Application\LinkGenerator $linkGenerator,

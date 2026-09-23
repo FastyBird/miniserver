@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Messaging\WebSockets\PushMessages;
 
-use Nette;
 use Override;
 
 /**
@@ -10,11 +9,6 @@ use Override;
  */
 abstract class Consumer implements IConsumer
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public function __construct(private string $name)
 	{

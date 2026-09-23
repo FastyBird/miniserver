@@ -6,14 +6,11 @@ use DateInvalidTimeZoneException;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use Nette;
 use Override;
 use function date_default_timezone_get;
 
 class SystemClock implements Clock
 {
-
-	use Nette\SmartObject;
 
 	private DateTimeZone $timeZone;
 

@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Entities\WebSockets\PushMessages;
 
-use Nette;
 use Override;
 
 /**
@@ -10,11 +9,6 @@ use Override;
  */
 final class Message implements IMessage
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public function __construct(private string $topic, private array $data)
 	{

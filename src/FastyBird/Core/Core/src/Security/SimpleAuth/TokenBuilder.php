@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Services\DateTimeFactory;
 use Lcobucci\JWT;
-use Nette;
 use Ramsey\Uuid;
 use Throwable;
 use function assert;
@@ -16,8 +15,6 @@ use function assert;
  */
 final readonly class TokenBuilder
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param non-empty-string $tokenSignature

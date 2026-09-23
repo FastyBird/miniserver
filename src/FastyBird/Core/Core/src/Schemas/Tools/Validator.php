@@ -4,7 +4,6 @@ namespace FastyBird\Core\Schemas\Tools;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
-use Nette;
 use Nette\Utils;
 use Opis\JsonSchema;
 use function array_key_exists;
@@ -17,8 +16,6 @@ use function sprintf;
  */
 final class Validator
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<string, JsonSchema\Schema>  */
 	private array $schemas = [];

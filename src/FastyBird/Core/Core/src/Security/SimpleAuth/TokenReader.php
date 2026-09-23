@@ -5,7 +5,6 @@ namespace FastyBird\Core\Security\SimpleAuth;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions;
 use Lcobucci\JWT;
-use Nette;
 use Psr\Http\Message\ServerRequestInterface;
 use function is_array;
 use function is_string;
@@ -17,8 +16,6 @@ use function reset;
  */
 final readonly class TokenReader
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(private readonly TokenValidator $tokenValidator)
 	{

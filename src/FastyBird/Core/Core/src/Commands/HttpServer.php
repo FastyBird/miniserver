@@ -7,7 +7,6 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Server\HttpServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use Nette;
 use Psr\EventDispatcher;
 use Psr\Log;
 use React\EventLoop;
@@ -24,8 +23,6 @@ use function is_file;
  */
 final class HttpServer extends Console\Command\Command
 {
-
-	use Nette\SmartObject;
 
 	public const string NAME = 'fb:web-server:start';
 

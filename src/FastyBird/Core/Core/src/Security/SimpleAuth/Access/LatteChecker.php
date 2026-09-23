@@ -5,7 +5,6 @@ namespace FastyBird\Core\Security\SimpleAuth\Access;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\SimpleAuth as Security;
-use Nette;
 use Nette\Utils;
 use Override;
 use function array_filter;
@@ -21,8 +20,6 @@ use function is_string;
  */
 final readonly class LatteChecker implements Checker
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(private readonly Security\User $user)
 	{

@@ -6,7 +6,6 @@ use ArrayIterator;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Utilities\Tools as Utilities;
 use IteratorAggregate;
-use Nette;
 use Override;
 use Traversable;
 use TypeError;
@@ -25,8 +24,6 @@ use function trim;
  */
 final class CombinedEnum implements IteratorAggregate
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<int, array<int, CombinedEnumItem|null>> */
 	private array $items;

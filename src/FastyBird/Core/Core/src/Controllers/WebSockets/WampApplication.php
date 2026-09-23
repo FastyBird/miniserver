@@ -33,8 +33,6 @@ use function uniqid;
 /**
  * Application which run on server and provide creating controllers
  * with correctly params - convert message => control
- *
- * @method onPush(PushMessages\IMessage $message, string $provider, TopicEntities\ITopic $topic)
  */
 final class WampApplication extends Application implements IWampApplication
 {

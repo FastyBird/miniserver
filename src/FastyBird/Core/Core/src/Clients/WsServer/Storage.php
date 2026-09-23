@@ -17,11 +17,6 @@ use function sprintf;
 final class Storage implements IStorage
 {
 
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
 	private Drivers\IDriver $driver;
 
 	private int|null $ttl = null;

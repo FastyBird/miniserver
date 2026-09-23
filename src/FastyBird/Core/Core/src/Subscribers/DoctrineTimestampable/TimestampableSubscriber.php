@@ -11,7 +11,6 @@ use Doctrine\ORM;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\DoctrineTimestampable as Mapping;
 use FastyBird\Core\Providers\DoctrineTimestampable as Providers;
-use Nette;
 use Override;
 use Psr\Cache\InvalidArgumentException;
 use ValueError;
@@ -32,8 +31,6 @@ use function time;
  */
 final readonly class TimestampableSubscriber implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly Mapping\Driver\Timestampable $driver,

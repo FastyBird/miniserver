@@ -8,7 +8,6 @@ use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\SimpleAuth as Mapping;
 use FastyBird\Core\Security\SimpleAuth as Security;
-use Nette;
 use Override;
 use Psr\Cache\InvalidArgumentException;
 use ReflectionException;
@@ -22,8 +21,6 @@ use function is_array;
  */
 final readonly class User implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param Mapping\Driver\Owner<T> $driver

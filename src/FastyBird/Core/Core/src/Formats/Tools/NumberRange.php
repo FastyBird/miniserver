@@ -4,7 +4,6 @@ namespace FastyBird\Core\Formats\Tools;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
-use Nette;
 use Nette\Utils;
 use Override;
 use TypeError;
@@ -27,8 +26,6 @@ use function trim;
  */
 final class NumberRange
 {
-
-	use Nette\SmartObject;
 
 	private int|float|null $min = null;
 

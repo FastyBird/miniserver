@@ -4,7 +4,6 @@ namespace FastyBird\Core\Server\WsServer;
 
 use BadMethodCallException;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use Psr\Log;
 use React;
@@ -17,18 +16,9 @@ use function sprintf;
 
 /**
  * WebSocket server
- *
- * @method onCreate(Server $server)
- * @method onStart(EventLoop\LoopInterface $loop, Server $server)
- * @method onStop(EventLoop\LoopInterface $loop, Server $server)
  */
 final class Server
 {
-
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
 
 	public const string VERSION = 'IPub/WebSockets/1.0.0';
 

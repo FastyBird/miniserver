@@ -4,7 +4,6 @@ namespace FastyBird\Core\Formats\Tools;
 
 use ArrayIterator;
 use IteratorAggregate;
-use Nette;
 use Nette\Utils;
 use Override;
 use Traversable;
@@ -25,8 +24,6 @@ use function trim;
  */
 final class StringEnum implements IteratorAggregate
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<int, string> */
 	private array $items;
