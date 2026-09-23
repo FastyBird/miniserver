@@ -303,11 +303,10 @@ final class WampApplication extends Application implements IWampApplication
 
 			$httpRequest = new WebSocketsHttp\Request(
 				new Http\UrlScript($url),
-				null,
-				null,
-				null,
-				null,
-				null,
+				[],
+				[],
+				[],
+				[],
 				WebSocketsHttp\IRequest::GET,
 			);
 

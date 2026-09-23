@@ -3763,36 +3763,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
 
 		-
-			message: '#^Parameter \#2 \$post of class FastyBird\\Core\\Http\\Request constructor expects array, null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
-
-		-
-			message: '#^Parameter \#3 \$files of class FastyBird\\Core\\Http\\Request constructor expects array, null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
-
-		-
-			message: '#^Parameter \#4 \$cookies of class FastyBird\\Core\\Http\\Request constructor expects array, null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
-
-		-
-			message: '#^Parameter \#5 \$headers of class FastyBird\\Core\\Http\\Request constructor expects array\<string, string\>, null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
-
-		-
-			message: '#^Parameter \#6 \$method of class FastyBird\\Core\\Http\\Request constructor expects string, null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
-
-		-
 			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\WampApplication\:\:\$subscriptions is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
