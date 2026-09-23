@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Messaging\Exchange\Consumers;
 
-
 /**
  * Consumer configuration
  */

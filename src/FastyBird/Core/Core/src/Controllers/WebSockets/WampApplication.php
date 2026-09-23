@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Controllers\WebSockets;
 
+use Closure;
 use FastyBird\Core\Clients\WsServer as WebSocketsClients;
 use FastyBird\Core\Entities\WebSockets\PushMessages;
 use FastyBird\Core\Entities\WsServer as WebSocketsEntities;
@@ -55,6 +56,7 @@ final class WampApplication extends Application implements IWampApplication
 
 	public const int MSG_EVENT = 8;
 
+	/** @var array<Closure(PushMessages\IMessage $message, string $provider, TopicEntities\ITopic $topic): void> */
 	public array $onPush = [];
 
 	private SplObjectStorage $subscriptions;

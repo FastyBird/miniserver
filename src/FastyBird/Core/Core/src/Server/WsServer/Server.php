@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Server\WsServer;
 
 use BadMethodCallException;
+use Closure;
 use InvalidArgumentException;
 use Nette\Utils;
 use Psr\Log;
@@ -22,10 +23,13 @@ final class Server
 
 	public const string VERSION = 'IPub/WebSockets/1.0.0';
 
+	/** @var array<Closure(self $server): void> */
 	public array $onCreate = [];
 
+	/** @var array<Closure(EventLoop\LoopInterface $loop, self $server): void> */
 	public array $onStart = [];
 
+	/** @var array<Closure(EventLoop\LoopInterface $loop, self $server): void> */
 	public array $onStop = [];
 
 	private Log\LoggerInterface|Log\NullLogger|null $logger = null;

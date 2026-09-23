@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\EventLoop\Application;
 
-
 /**
  * Event loop status helper
  */

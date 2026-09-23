@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Server\WsServer;
 
-
 /**
  * WebSockets server configuration container
  */

@@ -246,7 +246,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				throw new Exceptions\InvalidArgument('Provided message has unsupported routing key');
 		}
 
-		$this->payload->data = [
+		$this->getPayload()->data = [
 			'response' => 'accepted',
 		];
 	}

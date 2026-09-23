@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Controllers\WebSockets;
 
+use Closure;
 use FastyBird\Core\Clients\WsServer as Clients;
 use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Exceptions;
@@ -25,12 +26,16 @@ use function sprintf;
 abstract class Application implements IApplication
 {
 
+	/** @var array<Closure(self $application, Entities\IClient $client, Http\IRequest $httpRequest): void> */
 	public array $onOpen = [];
 
+	/** @var array<Closure(self $application, Entities\IClient $client, Http\IRequest $httpRequest): void> */
 	public array $onClose = [];
 
+	/** @var array<Closure(self $application, Entities\IClient $from, Http\IRequest $httpRequest, string $message): void> */
 	public array $onMessage = [];
 
+	/** @var array<Closure(self $application, Entities\IClient $client, Http\IRequest $httpRequest, Throwable $ex): void> */
 	public array $onError = [];
 
 	protected Log\LoggerInterface|Log\NullLogger|null $logger = null;

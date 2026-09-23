@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Server\WsServer;
 
+use Closure;
 use FastyBird\Core\Clients\WsServer as Clients;
 use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Encoding\WebSockets as Protocols;
@@ -32,14 +33,19 @@ use function trim;
 final class Wrapper implements IWrapper
 {
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request): void> */
 	public array $onClientConnected = [];
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request): void> */
 	public array $onClientDisconnected = [];
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request): void> */
 	public array $onClientError = [];
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request, string $message): void> */
 	public array $onIncomingMessage = [];
 
+	/** @var array<Closure(Entities\IClient $client, Http\IRequest $request): void> */
 	public array $onAfterIncomingMessage = [];
 
 	/**

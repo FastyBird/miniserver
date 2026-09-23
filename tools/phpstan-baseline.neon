@@ -3211,30 +3211,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Application\:\:\$onClose type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Application\:\:\$onError type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Application\:\:\$onMessage type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Application\:\:\$onOpen type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php
-
-		-
 			message: '#^Argument of an invalid type list\<string\>\|false supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
@@ -3643,12 +3619,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Reflection.php
 
 		-
-			message: '#^Class FastyBird\\Core\\Controllers\\WebSockets\\Request has PHPDoc tag @property for property \$parameters with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Request.php
-
-		-
 			message: '#^Method FastyBird\\Core\\Controllers\\WebSockets\\Request\:\:__construct\(\) has parameter \$params with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -3819,12 +3789,6 @@ parameters:
 		-
 			message: '#^Parameter \#6 \$method of class FastyBird\\Core\\Http\\Request constructor expects string, null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\WampApplication\:\:\$onPush type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php
 
@@ -6919,24 +6883,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Server.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Server\:\:\$onCreate type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Server.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Server\:\:\$onStart type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Server.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Server\:\:\$onStop type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Server.php
-
-		-
 			message: '#^Argument of an invalid type list\<string\>\|false supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
@@ -6998,36 +6944,6 @@ parameters:
 
 		-
 			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Wrapper\:\:\$acceptedSubProtocols type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Wrapper\:\:\$onAfterIncomingMessage type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Wrapper\:\:\$onClientConnected type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Wrapper\:\:\$onClientDisconnected type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Wrapper\:\:\$onClientError type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Server\\WsServer\\Wrapper\:\:\$onIncomingMessage type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
