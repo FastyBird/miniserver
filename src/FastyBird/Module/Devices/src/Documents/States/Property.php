@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function is_bool;
@@ -38,7 +38,7 @@ abstract class Property implements Documents\Document, Documents\CreatedAt, Docu
 	use Documents\HasUpdatedAt;
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\MappedObjectValue(class: StateValues::class)]
 		private readonly StateValues $read,

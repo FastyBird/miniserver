@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_map;
@@ -38,9 +38,9 @@ final readonly class StoreSubDevice implements Message
 	 * @param array<string, string|array<string, string>> $tags
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $connector,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $gateway,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		#[ObjectMapper\Modifiers\FieldName('serial_number')]
@@ -58,7 +58,7 @@ final readonly class StoreSubDevice implements Message
 		#[ObjectMapper\Modifiers\FieldName('display_category')]
 		private Types\Category $displayCategory,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('third_serial_number')]

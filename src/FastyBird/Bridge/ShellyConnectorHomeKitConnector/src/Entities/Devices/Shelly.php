@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
@@ -27,7 +27,7 @@ use Ramsey\Uuid;
 use function sprintf;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Shelly extends HomeKitEntities\Devices\Device
 {
 

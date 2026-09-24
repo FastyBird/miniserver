@@ -21,15 +21,15 @@ use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
-use FastyBird\Connector\HomeKit\Helpers;
+use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -91,13 +91,13 @@ class Loader
 		private readonly array $accessoryFactories,
 		private readonly array $serviceFactories,
 		private readonly array $characteristicsFactories,
-		private readonly Helpers\MessageBuilder $messageBuilder,
-		private readonly Helpers\Device $deviceHelper,
-		private readonly Helpers\Channel $channelHelper,
-		private readonly Helpers\Loader $loader,
+		private readonly HomeKitHelpers\MessageBuilder $messageBuilder,
+		private readonly HomeKitHelpers\Device $deviceHelper,
+		private readonly HomeKitHelpers\Channel $channelHelper,
+		private readonly HomeKitHelpers\Loader $loader,
 		private readonly Queue\Queue $queue,
 		private readonly HomeKit\Logger $logger,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly PersistenceHelpers\Database $databaseHelper,
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
@@ -767,7 +767,7 @@ class Loader
 				)
 			) {
 				return $serviceFactory->create(
-					Helpers\Protocol::hapTypeToUuid(strval($serviceMetadata->offsetGet('UUID'))),
+					HomeKitHelpers\Protocol::hapTypeToUuid(strval($serviceMetadata->offsetGet('UUID'))),
 					$type,
 					$accessory,
 					$channel,
@@ -932,7 +932,7 @@ class Loader
 				)
 			) {
 				return $characteristicFactory->create(
-					Helpers\Protocol::hapTypeToUuid(strval($characteristicMetadata->offsetGet('UUID'))),
+					HomeKitHelpers\Protocol::hapTypeToUuid(strval($characteristicMetadata->offsetGet('UUID'))),
 					$name,
 					HomeKitTypes\DataType::from($characteristicMetadata->offsetGet('Format')),
 					array_map(

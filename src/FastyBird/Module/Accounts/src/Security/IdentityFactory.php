@@ -16,12 +16,12 @@
 namespace FastyBird\Module\Accounts\Security;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use Lcobucci\JWT;
 
 /**
@@ -43,8 +43,8 @@ readonly class IdentityFactory implements SimpleAuthSecurity\IIdentityFactory
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws AccountsExceptions\InvalidState
 	 */
 	public function create(JWT\Token $token): SimpleAuthSecurity\IIdentity|null
 	{

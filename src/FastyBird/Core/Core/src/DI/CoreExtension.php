@@ -38,22 +38,28 @@ use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
-use FastyBird\Core\Helpers as DoctrineCrudHelpers;
 use FastyBird\Core\Helpers as JsonApiHelpers;
-use FastyBird\Core\Helpers as ToolsHelpers;
 use FastyBird\Core\Helpers as WsServerHelpers;
 use FastyBird\Core\Http as WebServerHttp;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Logging\Subscribers as LoggingSubscribers;
-use FastyBird\Core\Mapping as DoctrineCrudMapping;
 use FastyBird\Core\Mapping as SimpleAuthMapping;
-use FastyBird\Core\Mapping\DoctrineTimestampable\Driver\Timestampable;
 use FastyBird\Core\Messaging as WebSocketsMessaging;
 use FastyBird\Core\Middleware as SimpleAuthMiddleware;
 use FastyBird\Core\Middleware as WebServerMiddleware;
 use FastyBird\Core\Middleware\JsonApi\JsonApi;
 use FastyBird\Core\Persistence as DoctrineCrudPersistence;
 use FastyBird\Core\Persistence as JsonApiPersistence;
+use FastyBird\Core\Persistence\Crud;
+use FastyBird\Core\Persistence\Crud\Create;
+use FastyBird\Core\Persistence\Crud\Delete;
+use FastyBird\Core\Persistence\Crud\Update;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
+use FastyBird\Core\Persistence\Helpers\StringFunctions;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Driver;
+use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
+use FastyBird\Core\Persistence\Utilities;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Phone\Types;
@@ -63,16 +69,13 @@ use FastyBird\Core\Security as SimpleAuthSecurity;
 use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Server as WsServerServer;
 use FastyBird\Core\Services as SimpleAuthServices;
-use FastyBird\Core\Subscribers as CoreSubscribers;
 use FastyBird\Core\Subscribers as ApplicationSubscribers;
-use FastyBird\Core\Subscribers as DoctrineTimestampableSubscribers;
 use FastyBird\Core\Subscribers as HttpServerSubscribers;
 use FastyBird\Core\Subscribers as SimpleAuthSubscribers;
 use FastyBird\Core\Subscribers as WsServerSubscribers;
 use FastyBird\Core\Topics\WsServer\Drivers\InMemory;
 use FastyBird\Core\Topics\WsServer\Storage;
 use FastyBird\Core\UI;
-use FastyBird\Core\Utilities\Tools\DateTimeProvider;
 use FastyBird\Core\Values\Schemas as ValuesSchemas;
 use libphonenumber;
 use Monolog;
@@ -399,7 +402,7 @@ final class CoreExtension extends DI\CompilerExtension
 				$this->prefix('application.subscribers.entityDiscriminator'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(ApplicationSubscribers\Application\EntityDiscriminator::class);
+				->setType(PersistenceSubscribers\EntityDiscriminator::class);
 		}
 
 		$builder->addDefinition(
@@ -649,14 +652,14 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if (class_exists('\Doctrine\DBAL\Connection') && class_exists('\Doctrine\ORM\EntityManager')) {
 			$builder->addDefinition($this->prefix('tools.helpers.database'), new DI\Definitions\ServiceDefinition())
-				->setType(ToolsHelpers\Tools\Database::class);
+				->setType(PersistenceHelpers\Database::class);
 		}
 
 		$builder->addDefinition(
 			$this->prefix('tools.utilities.doctrineDateProvider'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(DateTimeProvider::class);
+			->setType(Utilities\DateTimeProvider::class);
 
 		$builder->addDefinition($this->prefix('tools.schemas.validator'), new DI\Definitions\ServiceDefinition())
 			->setType(ValuesSchemas\Validator::class);
@@ -744,31 +747,31 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('doctrineCrud.entity.mapper'))
-			->setType(DoctrineCrudMapping\DoctrineCrud\EntityMapper::class)
+			->setType(PersistenceMapping\EntityMapper::class)
 			->setAutowired(false);
 
 		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.creator'))
-			->setImplement(DoctrineCrudPersistence\DoctrineCrud\Crud\Create\IEntityCreator::class)
+			->setImplement(Create\EntityCreatorFactory::class)
 			->setAutowired(false)
 			->getResultDefinition()
-			->setType(DoctrineCrudPersistence\DoctrineCrud\Crud\Create\EntityCreator::class);
+			->setType(Create\EntityCreator::class);
 
 		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.updater'))
-			->setImplement(DoctrineCrudPersistence\DoctrineCrud\Crud\Update\IEntityUpdater::class)
+			->setImplement(Update\EntityUpdaterFactory::class)
 			->setAutowired(false)
 			->getResultDefinition()
-			->setFactory(DoctrineCrudPersistence\DoctrineCrud\Crud\Update\EntityUpdater::class);
+			->setFactory(Update\EntityUpdater::class);
 
 		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.deleter'))
-			->setImplement(DoctrineCrudPersistence\DoctrineCrud\Crud\Delete\IEntityDeleter::class)
+			->setImplement(Delete\EntityDeleterFactory::class)
 			->setAutowired(false)
 			->getResultDefinition()
-			->setFactory(DoctrineCrudPersistence\DoctrineCrud\Crud\Delete\EntityDeleter::class);
+			->setFactory(Delete\EntityDeleter::class);
 
 		$builder->addFactoryDefinition($this->prefix('doctrineCrud.crud'))
-			->setImplement(DoctrineCrudPersistence\DoctrineCrud\Crud\IEntityCrudFactory::class)
+			->setImplement(Crud\CrudFactory::class)
 			->getResultDefinition()
-			->setType(DoctrineCrudPersistence\DoctrineCrud\Crud\EntityCrud::class)
+			->setType(Crud\EntityCrud::class)
 			->setArguments([
 				new PhpGenerator\Literal('$entityName'),
 				'@' . $this->prefix('doctrineCrud.entity.mapper'),
@@ -805,10 +808,10 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('doctrineTimestampable.driver'))
-			->setType(Timestampable::class);
+			->setType(Driver\Timestampable::class);
 
 		$builder->addDefinition($this->prefix('doctrineTimestampable.subscriber'))
-			->setType(DoctrineTimestampableSubscribers\DoctrineTimestampable\TimestampableSubscriber::class);
+			->setType(PersistenceSubscribers\TimestampableSubscriber::class);
 
 		/**
 		 * DOCTRINE MIGRATIONS
@@ -827,7 +830,7 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if ($this->compiler->getExtensions(NettrineMigrations\DI\MigrationsExtension::class) !== []) {
 			$builder->addDefinition($this->prefix('doctrineMigrations.subscriber'))
-				->setType(CoreSubscribers\DoctrineMigrations\SchemaSubscriber::class);
+				->setType(PersistenceSubscribers\SchemaSubscriber::class);
 		}
 
 		/**
@@ -1349,7 +1352,7 @@ final class CoreExtension extends DI\CompilerExtension
 				$entityManagerService->addSetup('?->getConfiguration()->addCustomStringFunction(?, ?)', [
 					'@self',
 					'DATE_FORMAT',
-					DoctrineCrudHelpers\DoctrineCrud\StringFunctions\DateFormat::class,
+					StringFunctions\DateFormat::class,
 				]);
 			}
 		}

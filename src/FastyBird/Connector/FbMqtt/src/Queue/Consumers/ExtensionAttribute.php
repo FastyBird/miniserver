@@ -23,7 +23,7 @@ use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
@@ -48,7 +48,7 @@ final class ExtensionAttribute implements Queue\Consumer
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $deviceRepository,
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $propertiesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 	)
 	{
 	}

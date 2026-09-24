@@ -20,11 +20,11 @@ use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Types;
@@ -108,8 +108,8 @@ class Create extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\Runtime
+	 * @throws PersistenceExceptions\Query
+	 * @throws AccountsExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
@@ -359,7 +359,7 @@ class Create extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\Runtime
 	 */
 	protected function getOrmConnection(): Connection
 	{
@@ -369,7 +369,7 @@ class Create extends Console\Command\Command
 			return $connection;
 		}
 
-		throw new Exceptions\Runtime('Transformer manager could not be loaded');
+		throw new AccountsExceptions\Runtime('Transformer manager could not be loaded');
 	}
 
 }

@@ -9,8 +9,8 @@ use FastyBird\Core\Entities\WsServer as Entities;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Security\SimpleAuth;
 use FastyBird\Core\Server\WsServer as Server;
 use FastyBird\Core\Values\Types\Sources;
@@ -39,7 +39,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 * Without them no token can be validated, so every client is refused.
 	 */
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly SimpleAuth\TokenReader|null $tokenReader = null,
 		private readonly SimpleAuth\TokenValidator|null $tokenValidator = null,
 		private readonly SimpleAuth\IIdentityFactory|null $identityFactory = null,

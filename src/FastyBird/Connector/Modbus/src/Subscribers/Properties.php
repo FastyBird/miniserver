@@ -20,11 +20,11 @@ use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -68,10 +68,10 @@ final class Properties implements Common\EventSubscriber
 	/**
 	 * @param Persistence\Event\LifecycleEventArgs<ORM\EntityManagerInterface> $eventArgs
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
+	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError

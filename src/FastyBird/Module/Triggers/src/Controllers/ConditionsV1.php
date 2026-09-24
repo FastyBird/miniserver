@@ -18,13 +18,13 @@ namespace FastyBird\Module\Triggers\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Entities;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Queries;
 use FastyBird\Module\Triggers\Router;
@@ -68,7 +68,7 @@ final class ConditionsV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
@@ -100,7 +100,7 @@ final class ConditionsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	public function read(
@@ -127,7 +127,7 @@ final class ConditionsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws Doctrine\DBAL\ConnectionException
@@ -158,7 +158,7 @@ final class ConditionsV1 extends BaseV1
 					// Commit all changes into database
 					$this->getOrmConnection()->commit();
 
-				} catch (DoctrineCrudExceptions\MissingRequiredField $ex) {
+				} catch (PersistenceExceptions\MissingRequiredField $ex) {
 					throw new JsonApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 						strval(
@@ -171,7 +171,7 @@ final class ConditionsV1 extends BaseV1
 							'pointer' => '/data/attributes/' . Utilities\Api::fieldToJsonApi($ex->getField()),
 						],
 					);
-				} catch (DoctrineCrudExceptions\EntityCreation $ex) {
+				} catch (PersistenceExceptions\EntityCreation $ex) {
 					throw new JsonApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 						strval(
@@ -302,7 +302,7 @@ final class ConditionsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws Doctrine\DBAL\ConnectionException
@@ -385,7 +385,7 @@ final class ConditionsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws Doctrine\DBAL\ConnectionException
@@ -449,7 +449,7 @@ final class ConditionsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	public function readRelationship(

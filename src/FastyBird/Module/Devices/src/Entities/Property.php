@@ -18,9 +18,9 @@ namespace FastyBird\Module\Devices\Entities;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Constants as Metadata;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Transformers;
@@ -53,13 +53,13 @@ use function strval;
 #[ORM\MappedSuperclass]
 abstract class Property implements Entity,
 	EntityParams,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+	Entities\EntityCreated, Entities\EntityUpdated
 {
 
 	use TEntity;
 	use TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use Entities\HasEntityCreated;
+	use Entities\HasEntityUpdated;
 
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	private const MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
@@ -71,7 +71,7 @@ abstract class Property implements Entity,
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'property_category',
 		type: 'string',
@@ -82,19 +82,19 @@ abstract class Property implements Entity,
 	)]
 	protected DevicesTypes\PropertyCategory $category;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'property_identifier', type: 'string', length: 50, nullable: false)]
 	protected string $identifier;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_name', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $name = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_settable', type: 'boolean', length: 1, nullable: false, options: ['default' => false])]
 	protected bool $settable = false;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'property_queryable',
 		type: 'boolean',
@@ -104,7 +104,7 @@ abstract class Property implements Entity,
 	)]
 	protected bool $queryable = false;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'property_data_type',
 		type: 'string',
@@ -115,35 +115,35 @@ abstract class Property implements Entity,
 	)]
 	protected ValuesTypes\DataType $dataType;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_unit', type: 'string', length: 20, nullable: true, options: ['default' => null])]
 	protected string|null $unit = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_format', type: 'text', nullable: true, options: ['default' => null])]
 	protected string|null $format = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_invalid', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $invalid = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_scale', type: 'integer', nullable: true, options: ['default' => null])]
 	protected int|null $scale = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_step', type: 'float', nullable: true, options: ['default' => null])]
 	protected float|null $step = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_value', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $value = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_default', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $default = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'property_value_transformer', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $valueTransformer = null;
 

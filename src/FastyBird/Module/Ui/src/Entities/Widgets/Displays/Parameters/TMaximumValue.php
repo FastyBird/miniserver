@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Entities\Widgets\Displays\Parameters;
 
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use function floatval;
 use function is_numeric;
 use function is_string;
@@ -34,7 +34,7 @@ use function is_string;
 trait TMaximumValue
 {
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	protected float|null $maximumValue = null;
 
 	public function getMaximumValue(): float|null

@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Documents\Devices\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -61,7 +61,7 @@ abstract class Property extends DevicesDocuments\Property
 	 */
 	public function __construct(
 		Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $device,
 		DevicesTypes\PropertyCategory $category,
 		string $identifier,

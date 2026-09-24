@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Ui\Models\Entities\Dashboards;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Crud;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Events;
 use FastyBird\Module\Ui\Models;
@@ -40,14 +40,14 @@ final class Manager
 
 	use Nette\SmartObject;
 
-	/** @var DoctrineCrudCrud\IEntityCrud<Entities\Dashboards\Dashboard>|null */
-	private DoctrineCrudCrud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\IEntityCrud<Entities\Dashboards\Dashboard>|null */
+	private Crud\IEntityCrud|null $entityCrud = null;
 
 	/**
-	 * @param DoctrineCrudCrud\IEntityCrudFactory<Entities\Dashboards\Dashboard> $entityCrudFactory
+	 * @param Crud\CrudFactory<Entities\Dashboards\Dashboard> $entityCrudFactory
 	 */
 	public function __construct(
-		private readonly DoctrineCrudCrud\IEntityCrudFactory $entityCrudFactory,
+		private readonly Crud\CrudFactory $entityCrudFactory,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
@@ -55,9 +55,9 @@ final class Manager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function create(
 		Utils\ArrayHash $values,
@@ -73,8 +73,8 @@ final class Manager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function update(
 		Entities\Dashboards\Dashboard $entity,
@@ -90,8 +90,8 @@ final class Manager
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function delete(Entities\Dashboards\Dashboard $entity): bool
 	{
@@ -106,9 +106,9 @@ final class Manager
 	}
 
 	/**
-	 * @return DoctrineCrudCrud\IEntityCrud<Entities\Dashboards\Dashboard>
+	 * @return Crud\IEntityCrud<Entities\Dashboards\Dashboard>
 	 */
-	public function getEntityCrud(): DoctrineCrudCrud\IEntityCrud
+	public function getEntityCrud(): Crud\IEntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Dashboards\Dashboard::class);

@@ -17,8 +17,8 @@ namespace FastyBird\Module\Triggers\Entities\Triggers;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities;
 use Ramsey\Uuid;
 
@@ -31,14 +31,14 @@ use Ramsey\Uuid;
 		'comment' => 'Automatic triggers',
 	],
 )]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Automatic extends Trigger
 {
 
 	public const TYPE = 'automatic';
 
 	/** @var Common\Collections\Collection<int, Entities\Conditions\Condition> */
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'trigger',
 		targetEntity: Entities\Conditions\Condition::class,

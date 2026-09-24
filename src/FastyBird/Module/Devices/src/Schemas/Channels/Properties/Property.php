@@ -18,13 +18,13 @@ namespace FastyBird\Module\Devices\Schemas\Channels\Properties;
 use DateTimeInterface;
 use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Router;
@@ -71,7 +71,7 @@ abstract class Property extends JsonApiSchemas\JsonApi
 	 *
 	 * @return iterable<string, (string|bool|int|float|array<string>|array<int, (int|float|array<int, (string|int|float|null)>|null)>|array<int, array<int, (string|array<int, (string|int|float|bool)>|null)>>|null)>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -178,7 +178,7 @@ abstract class Property extends JsonApiSchemas\JsonApi
 	 * @return array<Entities\Channels\Properties\Property>
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 */
 	protected function getChildren(Entities\Channels\Properties\Property $property): array
 	{

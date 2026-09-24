@@ -5,9 +5,9 @@ namespace FastyBird\Core\Persistence\SimpleAuth\Models\Policies;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Core\Persistence\SimpleAuth\Queries;
 use Throwable;
 use function is_array;
@@ -33,8 +33,8 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
 	 */
 	public function findOneBy(
 		Queries\FindPolicies $queryObject,
@@ -52,7 +52,7 @@ final class Repository
 	 *
 	 * @return array<T>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findAllBy(
 		Queries\FindPolicies $queryObject,
@@ -65,7 +65,7 @@ final class Repository
 
 			return $result;
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
+			throw new CoreExceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
 		}
 	}
 
@@ -75,20 +75,20 @@ final class Repository
 	 * @param Queries\FindPolicies<T> $queryObject
 	 * @param class-string<T> $type
 	 *
-	 * @return DoctrineOrmQuery\ResultSet<T>
+	 * @return Query\ResultSet<T>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\FindPolicies $queryObject,
 		string $type = Entities\Policies\Policy::class,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		$result = $queryObject->fetch($this->getRepository($type));
 
 		if (is_array($result)) {
-			throw new Exceptions\InvalidState('Result set could not be created');
+			throw new CoreExceptions\InvalidState('Result set could not be created');
 		}
 
 		return $result;

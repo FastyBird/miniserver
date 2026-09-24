@@ -15,8 +15,8 @@ use FastyBird\Core\Encoding\WebSockets as EncodingWebSockets;
 use FastyBird\Core\Entities\WebSockets as EntitiesWebSockets;
 use FastyBird\Core\Entities\WsServer as EntitiesWsServer;
 use FastyBird\Core\Events;
-use FastyBird\Core\Helpers\Tools\Database;
 use FastyBird\Core\Http;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Security\SimpleAuth;
 use FastyBird\Core\Server\WsServer\Wrapper;
 use FastyBird\Core\Subscribers\WsServer\Client;
@@ -127,7 +127,7 @@ final class ClientAuthenticationTest extends TestCase
 		$managerRegistry = $this->createMock(ManagerRegistry::class);
 		$managerRegistry->method('getManager')->willReturn($entityManager);
 
-		$database = new Database($managerRegistry);
+		$database = new Helpers\Database($managerRegistry);
 
 		return $configured
 			? new Client($database, new SimpleAuth\TokenReader($validator), $validator, $identityFactory, $logger)

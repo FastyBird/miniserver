@@ -5,7 +5,7 @@ namespace FastyBird\Core\Persistence\SimpleAuth\Queries;
 use Closure;
 use Doctrine\ORM;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Core\Types\SimpleAuth as Types;
 use Ramsey\Uuid;
 
@@ -13,9 +13,9 @@ use Ramsey\Uuid;
  * Find tokens entities query
  *
  * @template T of Entities\Tokens\Token
- * @extends  DoctrineOrmQuery\QueryObject<T>
+ * @extends  Query\QueryObject<T>
  */
-final class FindTokens extends DoctrineOrmQuery\QueryObject
+final class FindTokens extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

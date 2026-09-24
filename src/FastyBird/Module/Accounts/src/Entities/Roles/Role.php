@@ -17,12 +17,12 @@ namespace FastyBird\Module\Accounts\Entities\Roles;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Types\SimpleAuth as SimpleAuthTypes;
-use FastyBird\Module\Accounts\Entities;
+use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use Ramsey\Uuid;
 use function array_map;
 use function assert;
@@ -31,23 +31,23 @@ use function is_string;
 
 #[ORM\Entity]
 #[ORM\UniqueConstraint(name: 'policy_name_unique', columns: ['parent_id', 'policy_v0'])]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
-class Role extends SimpleAuthEntities\Policies\Policy implements Entities\Entity,
-	DoctrineTimestampable\IEntityCreated,
-	DoctrineTimestampable\IEntityUpdated
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
+class Role extends SimpleAuthEntities\Policies\Policy implements AccountsEntities\Entity,
+	PersistenceEntities\EntityCreated,
+	PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use AccountsEntities\TEntity;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	public const string TYPE = 'user_role';
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'policy_comment', type: 'string', nullable: false)]
 	private string $comment;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
 	#[ORM\JoinColumn(
 		name: 'parent_id',
@@ -58,7 +58,7 @@ class Role extends SimpleAuthEntities\Policies\Policy implements Entities\Entity
 	private self|null $parent = null;
 
 	/** @var Common\Collections\Collection<int, Role> */
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
 	private Common\Collections\Collection $children;
 

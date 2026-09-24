@@ -18,9 +18,9 @@ namespace FastyBird\Module\Accounts\Entities\Emails;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Accounts\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Types;
 use Nette\Utils;
@@ -37,23 +37,23 @@ use Ramsey\Uuid;
 )]
 #[ORM\Index(columns: ['email_address'], name: 'email_address_idx')]
 #[ORM\UniqueConstraint(name: 'email_address_unique', columns: ['email_address'])]
-class Email implements Entities\Entity,
-	DoctrineTimestampable\IEntityCreated,
-	DoctrineTimestampable\IEntityUpdated
+class Email implements AccountsEntities\Entity,
+	PersistenceEntities\EntityCreated,
+	PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use AccountsEntities\TEntity;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'email_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Accounts\Account::class,
+		targetEntity: AccountsEntities\Accounts\Account::class,
 		inversedBy: 'emails',
 	)]
 	#[ORM\JoinColumn(
@@ -62,21 +62,21 @@ class Email implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	private Entities\Accounts\Account $account;
+	private AccountsEntities\Accounts\Account $account;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'email_address', type: 'string', length: 150, nullable: false)]
 	private string $address;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'email_default', type: 'boolean', length: 1, nullable: false, options: ['default' => false])]
 	private bool $default = false;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'email_verified', type: 'boolean', length: 1, nullable: false, options: ['default' => false])]
 	private bool $verified = false;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'email_verification_hash',
 		type: 'string',
@@ -86,7 +86,7 @@ class Email implements Entities\Entity,
 	)]
 	private string|null $verificationHash = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'email_verification_created',
 		type: 'datetime_immutable',
@@ -95,7 +95,7 @@ class Email implements Entities\Entity,
 	)]
 	private DateTimeImmutable|null $verificationCreated = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'email_verification_completed',
 		type: 'datetime_immutable',
@@ -104,7 +104,7 @@ class Email implements Entities\Entity,
 	)]
 	private DateTimeImmutable|null $verificationCompleted = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'email_visibility',
 		type: 'string',
@@ -118,7 +118,7 @@ class Email implements Entities\Entity,
 	 * @throws Exceptions\EmailIsNotValid
 	 */
 	public function __construct(
-		Entities\Accounts\Account $account,
+		AccountsEntities\Accounts\Account $account,
 		string $address,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -163,7 +163,7 @@ class Email implements Entities\Entity,
 		$this->verificationCompleted = $verificationCompleted;
 	}
 
-	public function getAccount(): Entities\Accounts\Account
+	public function getAccount(): AccountsEntities\Accounts\Account
 	{
 		return $this->account;
 	}

@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Ui\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Persistence\Entities;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Schemas;
 
@@ -30,7 +30,7 @@ use FastyBird\Module\Ui\Schemas;
 		'comment' => 'Widget generic data source',
 	],
 )]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Generic extends DataSource
 {
 
@@ -51,7 +51,7 @@ class Generic extends DataSource
 		return $relation === Schemas\Widgets\DataSources\Generic::RELATIONSHIPS_WIDGET;
 	}
 
-	public function getRelation(string $relation): DoctrineCrud\IEntity|null
+	public function getRelation(string $relation): Entities\CrudEntity|null
 	{
 		if ($relation === Schemas\Widgets\DataSources\Generic::RELATIONSHIPS_WIDGET) {
 			return $this->getWidget();

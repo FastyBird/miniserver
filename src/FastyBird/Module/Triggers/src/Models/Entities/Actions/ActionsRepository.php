@@ -18,8 +18,8 @@ namespace FastyBird\Module\Triggers\Models\Entities\Actions;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Queries;
 use Nette;
@@ -42,7 +42,7 @@ final class ActionsRepository
 	private array $repository = [];
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -79,7 +79,7 @@ final class ActionsRepository
 	{
 		return $this->database->query(
 			function () use ($queryObject, $type): array {
-				/** @var array<Entities\Actions\Action>|DoctrineOrmQuery\ResultSet<Entities\Actions\Action> $result */
+				/** @var array<Entities\Actions\Action>|Query\ResultSet<Entities\Actions\Action> $result */
 				$result = $queryObject->fetch($this->getRepository($type));
 
 				if (is_array($result)) {
@@ -98,18 +98,18 @@ final class ActionsRepository
 	 * @param Queries\Entities\FindActions<Entities\Actions\Action> $queryObject
 	 * @param class-string<Entities\Actions\Action> $type
 	 *
-	 * @return DoctrineOrmQuery\ResultSet<Entities\Actions\Action>
+	 * @return Query\ResultSet<Entities\Actions\Action>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindActions $queryObject,
 		string $type = Entities\Actions\Action::class,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		return $this->database->query(
-			function () use ($queryObject, $type): DoctrineOrmQuery\ResultSet {
-				/** @var DoctrineOrmQuery\ResultSet<Entities\Actions\Action> $result */
+			function () use ($queryObject, $type): Query\ResultSet {
+				/** @var Query\ResultSet<Entities\Actions\Action> $result */
 				$result = $queryObject->fetch($this->getRepository($type));
 
 				return $result;

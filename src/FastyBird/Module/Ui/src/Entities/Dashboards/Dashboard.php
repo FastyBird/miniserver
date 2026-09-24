@@ -18,11 +18,11 @@ namespace FastyBird\Module\Ui\Entities\Dashboards;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Entities as UiEntities;
 use FastyBird\Module\Ui\Entities\Dashboards\Tabs\Tab;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -38,41 +38,41 @@ use function array_map;
 	],
 )]
 #[ORM\Index(columns: ['dashboard_name'], name: 'dashboard_name_idx')]
-class Dashboard implements Entities\Entity,
-	Entities\EntityParams,
+class Dashboard implements UiEntities\Entity,
+	UiEntities\EntityParams,
 	SimpleAuthEntities\Owner,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
+	use UiEntities\TEntity;
+	use UiEntities\TEntityParams;
 	use SimpleAuthEntities\TOwner;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'dashboard_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	private Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'dashboard_identifier', type: 'string', nullable: false)]
 	private string $identifier;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'dashboard_name', type: 'string', nullable: true, options: ['default' => null])]
 	private string|null $name = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'dashboard_comment', type: 'text', nullable: true, options: ['default' => null])]
 	private string|null $comment = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'dashboard_priority', type: 'integer', nullable: false, options: ['default' => 0])]
 	private int $priority = 0;
 
 	/** @var Common\Collections\Collection<int, Tab> */
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'dashboard',
 		targetEntity: Tabs\Tab::class,

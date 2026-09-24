@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources\Actions;
 
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
@@ -42,9 +42,9 @@ final readonly class Action implements UiDocuments\Document
 	public function __construct(
 		#[ObjectMapper\Rules\BackedEnumValue(class: Types\DataSourceAction::class)]
 		private readonly Types\DataSourceAction $action,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $widget,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		#[ObjectMapper\Modifiers\FieldName('data_source')]
 		private readonly Uuid\UuidInterface $dataSource,
 		#[ObjectMapper\Rules\AnyOf([

@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Accounts\Entities\Details;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Accounts\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -30,14 +30,14 @@ use Ramsey\Uuid;
 		'comment' => 'Accounts details',
 	],
 )]
-class Details implements Entities\Entity,
-	DoctrineTimestampable\IEntityCreated,
-	DoctrineTimestampable\IEntityUpdated
+class Details implements AccountsEntities\Entity,
+	PersistenceEntities\EntityCreated,
+	PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use AccountsEntities\TEntity;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'detail_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
@@ -47,7 +47,7 @@ class Details implements Entities\Entity,
 	/** @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements.WriteOnlyProperty */
 	#[ORM\OneToOne(
 		inversedBy: 'details',
-		targetEntity: Entities\Accounts\Account::class,
+		targetEntity: AccountsEntities\Accounts\Account::class,
 	)]
 	#[ORM\JoinColumn(
 		name: 'account_id',
@@ -56,22 +56,22 @@ class Details implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	private Entities\Accounts\Account $account;
+	private AccountsEntities\Accounts\Account $account;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'detail_first_name', type: 'string', length: 100, nullable: false)]
 	private string $firstName;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'detail_last_name', type: 'string', length: 100, nullable: false)]
 	private string $lastName;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'detail_middle_name', type: 'string', nullable: true, options: ['default' => null])]
 	private string|null $middleName = null;
 
 	public function __construct(
-		Entities\Accounts\Account $account,
+		AccountsEntities\Accounts\Account $account,
 		string $firstName,
 		string $lastName,
 	)
@@ -84,7 +84,7 @@ class Details implements Entities\Entity,
 		$this->setLastName($lastName);
 	}
 
-	public function getAccount(): Entities\Accounts\Account
+	public function getAccount(): AccountsEntities\Accounts\Account
 	{
 		return $this->account;
 	}

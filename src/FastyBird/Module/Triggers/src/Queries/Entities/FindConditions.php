@@ -17,7 +17,7 @@ namespace FastyBird\Module\Triggers\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use Ramsey\Uuid;
 
@@ -25,13 +25,13 @@ use Ramsey\Uuid;
  * Find conditions entities query
  *
  * @template T of Entities\Conditions\Condition
- * @extends DoctrineOrmQuery\QueryObject<T>
+ * @extends Query\QueryObject<T>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindConditions extends DoctrineOrmQuery\QueryObject
+class FindConditions extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

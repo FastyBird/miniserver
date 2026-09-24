@@ -19,7 +19,7 @@ use DateTimeInterface;
 use FastyBird\Core\Constants\Constants as MetadataConstants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -60,7 +60,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BackedEnumValue(class: DevicesTypes\PropertyCategory::class),
@@ -173,14 +173,14 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 		])]
 		private readonly bool|float|int|string|null $default = null,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('value_transformer')]
 		private readonly Uuid\UuidInterface|string|null $valueTransformer = null,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		protected readonly Uuid\UuidInterface|null $owner = null,

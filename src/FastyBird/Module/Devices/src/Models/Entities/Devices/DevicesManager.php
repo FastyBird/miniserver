@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Devices\Models\Entities\Devices;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Crud;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Models;
@@ -40,14 +40,14 @@ final class DevicesManager
 
 	use Nette\SmartObject;
 
-	/** @var DoctrineCrudCrud\IEntityCrud<Entities\Devices\Device>|null */
-	private DoctrineCrudCrud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\IEntityCrud<Entities\Devices\Device>|null */
+	private Crud\IEntityCrud|null $entityCrud = null;
 
 	/**
-	 * @param DoctrineCrudCrud\IEntityCrudFactory<Entities\Devices\Device> $entityCrudFactory
+	 * @param Crud\CrudFactory<Entities\Devices\Device> $entityCrudFactory
 	 */
 	public function __construct(
-		private readonly DoctrineCrudCrud\IEntityCrudFactory $entityCrudFactory,
+		private readonly Crud\CrudFactory $entityCrudFactory,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
@@ -55,9 +55,9 @@ final class DevicesManager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Devices\Device
 	{
@@ -71,8 +71,8 @@ final class DevicesManager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function update(
 		Entities\Devices\Device $entity,
@@ -88,8 +88,8 @@ final class DevicesManager
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function delete(Entities\Devices\Device $entity): bool
 	{
@@ -104,9 +104,9 @@ final class DevicesManager
 	}
 
 	/**
-	 * @return DoctrineCrudCrud\IEntityCrud<Entities\Devices\Device>
+	 * @return Crud\IEntityCrud<Entities\Devices\Device>
 	 */
-	public function getEntityCrud(): DoctrineCrudCrud\IEntityCrud
+	public function getEntityCrud(): Crud\IEntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Devices\Device::class);

@@ -23,7 +23,7 @@ use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -49,7 +49,7 @@ final class StoreThirdPartyDevice implements Queue\Consumer
 		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly ToolsHelpers\Database $databaseHelper,
+		protected readonly Helpers\Database $databaseHelper,
 	)
 	{
 	}

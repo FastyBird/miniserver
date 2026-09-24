@@ -21,7 +21,7 @@ use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -37,7 +37,7 @@ final readonly class ChannelProperty
 		private DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
 		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		private ToolsHelpers\Database $databaseHelper,
+		private Helpers\Database $databaseHelper,
 		private Viera\Logger $logger,
 	)
 	{

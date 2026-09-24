@@ -13,14 +13,14 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
-use FastyBird\Core\Helpers as ToolsHelpers;
 use FastyBird\Core\Http as WebServerHttp;
 use FastyBird\Core\Middleware as WebServerMiddleware;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Services as SimpleAuthServices;
-use FastyBird\Core\Subscribers as DoctrineTimestampableSubscribers;
 use FastyBird\Core\Subscribers as HttpServerSubscribers;
 use FastyBird\Core\Subscribers as WsServerSubscribers;
 use FastyBird\Core\Tests;
@@ -80,7 +80,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * TOOLS -- from ToolsExtensionTest
 		 */
 
-		self::assertNotNull($container->getByType(ToolsHelpers\Tools\Database::class, false));
+		self::assertNotNull($container->getByType(Helpers\Database::class, false));
 		self::assertNotNull($container->getByType(Schemas\Validator::class, false));
 
 		/**
@@ -143,7 +143,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 			$container->getService('fbCore.phone.doctrinePhone.subscriber'),
 		);
 		self::assertInstanceOf(
-			DoctrineTimestampableSubscribers\DoctrineTimestampable\TimestampableSubscriber::class,
+			PersistenceSubscribers\TimestampableSubscriber::class,
 			$container->getService('fbCore.doctrineTimestampable.subscriber'),
 		);
 	}

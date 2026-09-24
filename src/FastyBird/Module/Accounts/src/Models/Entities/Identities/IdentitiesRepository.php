@@ -18,8 +18,8 @@ namespace FastyBird\Module\Accounts\Models\Entities\Identities;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Queries;
@@ -45,7 +45,7 @@ final class IdentitiesRepository
 	private ORM\EntityRepository|null $repository = null;
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -107,17 +107,17 @@ final class IdentitiesRepository
 	}
 
 	/**
-	 * @return DoctrineOrmQuery\ResultSet<Entities\Identities\Identity>
+	 * @return Query\ResultSet<Entities\Identities\Identity>
 	 *
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindIdentities $queryObject,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		$result = $this->database->query(
-			fn (): DoctrineOrmQuery\ResultSet|array => $queryObject->fetch($this->getRepository()),
+			fn (): Query\ResultSet|array => $queryObject->fetch($this->getRepository()),
 		);
 
 		if (is_array($result)) {

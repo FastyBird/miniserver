@@ -4,8 +4,8 @@ namespace FastyBird\Core\Mapping\SimpleAuth\Driver;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\SimpleAuth as Mapping;
+use FastyBird\Core\Persistence\Exceptions;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use ReflectionException;

@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Documents\Devices\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
@@ -72,7 +72,7 @@ final class Variable extends Property
 		])]
 		private readonly bool|float|int|string|null $value = null,
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $children = [],
 		Uuid\UuidInterface|null $owner = null,

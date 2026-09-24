@@ -17,7 +17,7 @@ namespace FastyBird\Automator\DevicesModule\Documents\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -40,9 +40,9 @@ final class DevicePropertyAction extends TriggersDocuments\Actions\Action
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $trigger,
 		bool $enabled,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $device,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\BoolValue()]
 		private readonly string $value,

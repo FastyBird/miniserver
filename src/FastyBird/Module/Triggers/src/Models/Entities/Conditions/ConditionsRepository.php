@@ -18,8 +18,8 @@ namespace FastyBird\Module\Triggers\Models\Entities\Conditions;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Queries;
 use Nette;
@@ -42,7 +42,7 @@ final class ConditionsRepository
 	private array $repository = [];
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -79,7 +79,7 @@ final class ConditionsRepository
 	{
 		return $this->database->query(
 			function () use ($queryObject, $type): array {
-				/** @var array<Entities\Conditions\Condition>|DoctrineOrmQuery\ResultSet<Entities\Conditions\Condition> $result */
+				/** @var array<Entities\Conditions\Condition>|Query\ResultSet<Entities\Conditions\Condition> $result */
 				$result = $queryObject->fetch($this->getRepository($type));
 
 				if (is_array($result)) {
@@ -98,18 +98,18 @@ final class ConditionsRepository
 	 * @param Queries\Entities\FindConditions<Entities\Conditions\Condition> $queryObject
 	 * @param class-string<Entities\Conditions\Condition> $type
 	 *
-	 * @return DoctrineOrmQuery\ResultSet<Entities\Conditions\Condition>
+	 * @return Query\ResultSet<Entities\Conditions\Condition>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindConditions $queryObject,
 		string $type = Entities\Conditions\Condition::class,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		return $this->database->query(
-			function () use ($queryObject, $type): DoctrineOrmQuery\ResultSet {
-				/** @var DoctrineOrmQuery\ResultSet<Entities\Conditions\Condition> $result */
+			function () use ($queryObject, $type): Query\ResultSet {
+				/** @var Query\ResultSet<Entities\Conditions\Condition> $result */
 				$result = $queryObject->fetch($this->getRepository($type));
 
 				return $result;

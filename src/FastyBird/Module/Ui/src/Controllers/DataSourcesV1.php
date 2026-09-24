@@ -18,14 +18,13 @@ namespace FastyBird\Module\Ui\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Controllers;
 use FastyBird\Module\Ui\Entities;
-use FastyBird\Module\Ui\Exceptions;
+use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Router;
@@ -136,7 +135,7 @@ final class DataSourcesV1 extends BaseV1
 
 			} catch (JsonApiExceptions\JsonApi $ex) {
 				throw $ex;
-			} catch (DoctrineCrudExceptions\MissingRequiredField $ex) {
+			} catch (PersistenceExceptions\MissingRequiredField $ex) {
 				throw new JsonApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
@@ -145,7 +144,7 @@ final class DataSourcesV1 extends BaseV1
 						'pointer' => '/data/attributes/' . Utilities\Api::fieldToJsonApi($ex->getField()),
 					],
 				);
-			} catch (DoctrineCrudExceptions\EntityCreation $ex) {
+			} catch (PersistenceExceptions\EntityCreation $ex) {
 				throw new JsonApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
@@ -315,9 +314,9 @@ final class DataSourcesV1 extends BaseV1
 	/**
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws PersistenceExceptions\Query
+	 * @throws UiExceptions\InvalidState
+	 * @throws UiExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws JsonApiExceptions\JsonApiError

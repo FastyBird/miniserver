@@ -3,11 +3,11 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Fixtures\Dummy;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class DummyConnectorEntity extends DevicesEntities\Connectors\Connector
 {
 

@@ -17,10 +17,10 @@ namespace FastyBird\Module\Triggers\Entities\Triggers;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Triggers\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 
@@ -40,62 +40,62 @@ use Ramsey\Uuid;
 // calls addDefaultDiscriminatorMap() before dispatching loadClassMetadata and only when the
 // map is empty, and that default keys entries on short class names. An explicit map skips
 // it, which is what the doctrine/orm patch used to do by deferring the call.
-#[ORM\DiscriminatorMap([Entities\Triggers\Manual::TYPE => Entities\Triggers\Manual::class])]
+#[ORM\DiscriminatorMap([TriggersEntities\Triggers\Manual::TYPE => TriggersEntities\Triggers\Manual::class])]
 #[ORM\MappedSuperclass]
-abstract class Trigger implements Entities\Entity,
-	Entities\EntityParams,
+abstract class Trigger implements TriggersEntities\Entity,
+	TriggersEntities\EntityParams,
 	SimpleAuthEntities\Owner,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
+	use TriggersEntities\TEntity;
+	use TriggersEntities\TEntityParams;
 	use SimpleAuthEntities\TOwner;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'trigger_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'trigger_name', type: 'string', length: 100, nullable: false)]
 	protected string $name;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'trigger_comment', type: 'text', nullable: true, options: ['default' => null])]
 	protected string|null $comment = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'trigger_enabled', type: 'boolean', length: 1, nullable: false, options: ['default' => true])]
 	protected bool $enabled = true;
 
-	/** @var Common\Collections\Collection<int, Entities\Actions\Action> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, TriggersEntities\Actions\Action> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'trigger',
-		targetEntity: Entities\Actions\Action::class,
+		targetEntity: TriggersEntities\Actions\Action::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $actions;
 
-	/** @var Common\Collections\Collection<int, Entities\Notifications\Notification> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, TriggersEntities\Notifications\Notification> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'trigger',
-		targetEntity: Entities\Notifications\Notification::class,
+		targetEntity: TriggersEntities\Notifications\Notification::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $notifications;
 
-	/** @var Common\Collections\Collection<int, Entities\Triggers\Controls\Control> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, TriggersEntities\Triggers\Controls\Control> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'trigger',
-		targetEntity: Entities\Triggers\Controls\Control::class,
+		targetEntity: TriggersEntities\Triggers\Controls\Control::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
@@ -113,7 +113,7 @@ abstract class Trigger implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Actions\Action>
+	 * @return array<TriggersEntities\Actions\Action>
 	 */
 	public function getActions(): array
 	{
@@ -121,7 +121,7 @@ abstract class Trigger implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Actions\Action> $actions
+	 * @param array<TriggersEntities\Actions\Action> $actions
 	 */
 	public function setActions(array $actions = []): void
 	{
@@ -132,7 +132,7 @@ abstract class Trigger implements Entities\Entity,
 		}
 	}
 
-	public function addAction(Entities\Actions\Action $action): void
+	public function addAction(TriggersEntities\Actions\Action $action): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->actions->contains($action)) {
@@ -141,15 +141,15 @@ abstract class Trigger implements Entities\Entity,
 		}
 	}
 
-	public function getAction(string $id): Entities\Actions\Action|null
+	public function getAction(string $id): TriggersEntities\Actions\Action|null
 	{
 		$found = $this->actions
-			->filter(static fn (Entities\Actions\Action $row): bool => $id === $row->getPlainId());
+			->filter(static fn (TriggersEntities\Actions\Action $row): bool => $id === $row->getPlainId());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
-	public function removeAction(Entities\Actions\Action $action): void
+	public function removeAction(TriggersEntities\Actions\Action $action): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->actions->contains($action)) {
@@ -159,7 +159,7 @@ abstract class Trigger implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Notifications\Notification>
+	 * @return array<TriggersEntities\Notifications\Notification>
 	 */
 	public function getNotifications(): array
 	{
@@ -167,7 +167,7 @@ abstract class Trigger implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Notifications\Notification> $notifications
+	 * @param array<TriggersEntities\Notifications\Notification> $notifications
 	 */
 	public function setNotifications(array $notifications = []): void
 	{
@@ -178,7 +178,7 @@ abstract class Trigger implements Entities\Entity,
 		}
 	}
 
-	public function addNotification(Entities\Notifications\Notification $notification): void
+	public function addNotification(TriggersEntities\Notifications\Notification $notification): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->notifications->contains($notification)) {
@@ -187,15 +187,15 @@ abstract class Trigger implements Entities\Entity,
 		}
 	}
 
-	public function getNotification(string $id): Entities\Notifications\Notification|null
+	public function getNotification(string $id): TriggersEntities\Notifications\Notification|null
 	{
 		$found = $this->notifications
-			->filter(static fn (Entities\Notifications\Notification $row): bool => $id === $row->getPlainId());
+			->filter(static fn (TriggersEntities\Notifications\Notification $row): bool => $id === $row->getPlainId());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
-	public function removeNotification(Entities\Notifications\Notification $notification): void
+	public function removeNotification(TriggersEntities\Notifications\Notification $notification): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->notifications->contains($notification)) {
@@ -205,7 +205,7 @@ abstract class Trigger implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Triggers\Controls\Control>
+	 * @return array<TriggersEntities\Triggers\Controls\Control>
 	 */
 	public function getControls(): array
 	{
@@ -213,7 +213,7 @@ abstract class Trigger implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Triggers\Controls\Control> $controls
+	 * @param array<TriggersEntities\Triggers\Controls\Control> $controls
 	 */
 	public function setControls(array $controls = []): void
 	{
@@ -224,7 +224,7 @@ abstract class Trigger implements Entities\Entity,
 		}
 	}
 
-	public function addControl(Entities\Triggers\Controls\Control $control): void
+	public function addControl(TriggersEntities\Triggers\Controls\Control $control): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->controls->contains($control)) {
@@ -233,15 +233,15 @@ abstract class Trigger implements Entities\Entity,
 		}
 	}
 
-	public function getControl(string $name): Entities\Triggers\Controls\Control|null
+	public function getControl(string $name): TriggersEntities\Triggers\Controls\Control|null
 	{
 		$found = $this->controls
-			->filter(static fn (Entities\Triggers\Controls\Control $row): bool => $name === $row->getName());
+			->filter(static fn (TriggersEntities\Triggers\Controls\Control $row): bool => $name === $row->getName());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
-	public function removeControl(Entities\Triggers\Controls\Control $control): void
+	public function removeControl(TriggersEntities\Triggers\Controls\Control $control): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->controls->contains($control)) {
@@ -255,10 +255,10 @@ abstract class Trigger implements Entities\Entity,
 		return $this->findControl($name) !== null;
 	}
 
-	public function findControl(string $name): Entities\Triggers\Controls\Control|null
+	public function findControl(string $name): TriggersEntities\Triggers\Controls\Control|null
 	{
 		$found = $this->controls
-			->filter(static fn (Entities\Triggers\Controls\Control $row): bool => $name === $row->getName());
+			->filter(static fn (TriggersEntities\Triggers\Controls\Control $row): bool => $name === $row->getName());
 
 		return $found->isEmpty() ? null : $found->first();
 	}

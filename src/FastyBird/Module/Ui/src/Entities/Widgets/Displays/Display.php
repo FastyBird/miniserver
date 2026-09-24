@@ -17,9 +17,9 @@ namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Entities as UiEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 
@@ -40,17 +40,17 @@ use Ramsey\Uuid;
 // calls addDefaultDiscriminatorMap() before dispatching loadClassMetadata and only when the
 // map is empty, and that default keys entries on short class names. An explicit map skips
 // it, which is what the doctrine/orm patch used to do by deferring the call.
-#[ORM\DiscriminatorMap([Entities\Widgets\Displays\Button::TYPE => Entities\Widgets\Displays\Button::class])]
+#[ORM\DiscriminatorMap([UiEntities\Widgets\Displays\Button::TYPE => UiEntities\Widgets\Displays\Button::class])]
 #[ORM\MappedSuperclass]
-abstract class Display implements Entities\Entity,
-	Entities\EntityParams,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+abstract class Display implements UiEntities\Entity,
+	UiEntities\EntityParams,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use UiEntities\TEntity;
+	use UiEntities\TEntityParams;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'display_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
@@ -59,7 +59,7 @@ abstract class Display implements Entities\Entity,
 
 	#[ORM\OneToOne(
 		inversedBy: 'display',
-		targetEntity: Entities\Widgets\Widget::class,
+		targetEntity: UiEntities\Widgets\Widget::class,
 		cascade: ['persist', 'remove'],
 	)]
 	#[ORM\JoinColumn(
@@ -68,10 +68,10 @@ abstract class Display implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	protected Entities\Widgets\Widget $widget;
+	protected UiEntities\Widgets\Widget $widget;
 
 	public function __construct(
-		Entities\Widgets\Widget $widget,
+		UiEntities\Widgets\Widget $widget,
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
@@ -82,7 +82,7 @@ abstract class Display implements Entities\Entity,
 
 	abstract public static function getType(): string;
 
-	public function getWidget(): Entities\Widgets\Widget
+	public function getWidget(): UiEntities\Widgets\Widget
 	{
 		return $this->widget;
 	}

@@ -21,14 +21,14 @@ use Exception;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
-use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
-use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Core\Persistence\Query;
+use FastyBird\Module\Accounts\Entities as AccountsEntities;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Router;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\RequestMethodInterface;
@@ -73,7 +73,7 @@ abstract class BaseV1
 
 	protected Router\Validator $routesValidator;
 
-	/** @var JsonApiHydrators\Container<DoctrineCrud\IEntity> */
+	/** @var JsonApiHydrators\Container<PersistenceEntities\CrudEntity> */
 	protected JsonApiHydrators\Container $hydratorsContainer;
 
 	protected Log\LoggerInterface $logger;
@@ -114,7 +114,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param JsonApiHydrators\Container<DoctrineCrud\IEntity> $hydratorsContainer
+	 * @param JsonApiHydrators\Container<PersistenceEntities\CrudEntity> $hydratorsContainer
 	 */
 	public function injectHydratorsContainer(JsonApiHydrators\Container $hydratorsContainer): void
 	{
@@ -210,7 +210,7 @@ abstract class BaseV1
 	 */
 	protected function validateAccountRelation(
 		Utils\ArrayHash $data,
-		Entities\Accounts\Account $account,
+		AccountsEntities\Accounts\Account $account,
 		bool $required = false,
 	): bool
 	{
@@ -219,7 +219,7 @@ abstract class BaseV1
 				$required && !$data->offsetExists('account')
 				|| $data->offsetExists('account')
 			) && (
-				!$data->offsetGet('account') instanceof Entities\Accounts\Account
+				!$data->offsetGet('account') instanceof AccountsEntities\Accounts\Account
 				|| !$account->getId()
 					->equals($data->offsetGet('account')
 						->getId())
@@ -239,7 +239,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\Runtime
 	 */
 	protected function getOrmConnection(): Connection
 	{
@@ -249,24 +249,24 @@ abstract class BaseV1
 			return $connection;
 		}
 
-		throw new Exceptions\Runtime('Transformer manager could not be loaded');
+		throw new AccountsExceptions\Runtime('Transformer manager could not be loaded');
 	}
 
 	/**
-	 * @param DoctrineCrud\IEntity|array<DoctrineCrud\IEntity>|ResultSet<Entities\Entity>|null $data
+	 * @param PersistenceEntities\CrudEntity|array<PersistenceEntities\CrudEntity>|Query\ResultSet<AccountsEntities\Entity>|null $data
 	 *
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 */
 	protected function buildResponse(
 		Message\ServerRequestInterface $request,
 		ResponseInterface $response,
-		DoctrineCrud\IEntity|ResultSet|array|null $data,
+		PersistenceEntities\CrudEntity|Query\ResultSet|array|null $data,
 	): ResponseInterface
 	{
 		$totalCount = null;
 
-		if ($data instanceof ResultSet) {
+		if ($data instanceof Query\ResultSet) {
 			if (array_key_exists('page', $request->getQueryParams())) {
 				$queryParams = $request->getQueryParams();
 
@@ -285,7 +285,7 @@ abstract class BaseV1
 			$request,
 			$response,
 			// @phpstan-ignore-next-line
-			$data instanceof ResultSet ? $data->toArray() : $data,
+			$data instanceof Query\ResultSet ? $data->toArray() : $data,
 			$totalCount,
 			fn (string $link): bool => $this->routesValidator->validate($link),
 		);

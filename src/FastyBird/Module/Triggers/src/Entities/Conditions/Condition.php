@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Triggers\Entities\Conditions;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Triggers\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 use function assert;
@@ -45,26 +45,26 @@ use function assert;
 // entirely, which is what the removed doctrine/orm patch achieved by deferring the call.
 #[ORM\DiscriminatorMap(['condition' => Condition::class])]
 #[ORM\MappedSuperclass]
-abstract class Condition implements Entities\Entity,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+abstract class Condition implements TriggersEntities\Entity,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use TriggersEntities\TEntity;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'condition_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'condition_enabled', type: 'boolean', length: 1, nullable: false, options: ['default' => true])]
 	protected bool $enabled = true;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Triggers\Automatic::class,
+		targetEntity: TriggersEntities\Triggers\Automatic::class,
 		inversedBy: 'conditions',
 	)]
 	#[ORM\JoinColumn(
@@ -72,10 +72,10 @@ abstract class Condition implements Entities\Entity,
 		referencedColumnName: 'trigger_id',
 		onDelete: 'CASCADE',
 	)]
-	protected Entities\Triggers\Automatic|null $trigger;
+	protected TriggersEntities\Triggers\Automatic|null $trigger;
 
 	public function __construct(
-		Entities\Triggers\Automatic $trigger,
+		TriggersEntities\Triggers\Automatic $trigger,
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
@@ -96,9 +96,9 @@ abstract class Condition implements Entities\Entity,
 		$this->enabled = $enabled;
 	}
 
-	public function getTrigger(): Entities\Triggers\Automatic
+	public function getTrigger(): TriggersEntities\Triggers\Automatic
 	{
-		assert($this->trigger instanceof Entities\Triggers\Automatic);
+		assert($this->trigger instanceof TriggersEntities\Triggers\Automatic);
 
 		return $this->trigger;
 	}

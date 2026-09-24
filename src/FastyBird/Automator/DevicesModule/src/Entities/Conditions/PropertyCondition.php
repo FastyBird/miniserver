@@ -17,7 +17,7 @@ namespace FastyBird\Automator\DevicesModule\Entities\Conditions;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
@@ -31,11 +31,11 @@ use function array_merge;
 abstract class PropertyCondition extends TriggersEntities\Conditions\Condition
 {
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'condition_device', type: Uuid\Doctrine\UuidBinaryType::NAME, nullable: true)]
 	protected Uuid\UuidInterface $device;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(
 		name: 'condition_operator',
 		type: 'string',
@@ -45,7 +45,7 @@ abstract class PropertyCondition extends TriggersEntities\Conditions\Condition
 	)]
 	protected TriggersTypes\ConditionOperator $operator;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'condition_operand', type: 'string', nullable: true, length: 20)]
 	protected string $operand;
 

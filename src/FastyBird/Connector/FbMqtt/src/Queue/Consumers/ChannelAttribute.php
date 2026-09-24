@@ -20,9 +20,9 @@ use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Entities;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -57,15 +57,15 @@ final class ChannelAttribute implements Queue\Consumer
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelPropertiesManager,
 		private readonly DevicesModels\Entities\Channels\Controls\ControlsRepository $channelControlsRepository,
 		private readonly DevicesModels\Entities\Channels\Controls\ControlsManager $channelControlsManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 	)
 	{
 	}
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{
@@ -173,9 +173,9 @@ final class ChannelAttribute implements Queue\Consumer
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function setChannelProperties(
 		DevicesEntities\Channels\Channel $channel,
@@ -215,9 +215,9 @@ final class ChannelAttribute implements Queue\Consumer
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function setChannelControls(
 		DevicesEntities\Channels\Channel $channel,

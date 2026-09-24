@@ -18,10 +18,10 @@ namespace FastyBird\Module\Devices\Entities\Channels;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices\Entities;
+use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -49,24 +49,24 @@ use function array_map;
 // entity the same, so it throws duplicate discriminator entry before any subscriber runs.
 // An explicit map skips it, which is what the doctrine/orm patch used to achieve by
 // deferring the call.
-#[ORM\DiscriminatorMap([Entities\Channels\Generic::TYPE => Entities\Channels\Generic::class])]
+#[ORM\DiscriminatorMap([DevicesEntities\Channels\Generic::TYPE => DevicesEntities\Channels\Generic::class])]
 #[ORM\MappedSuperclass]
-abstract class Channel implements Entities\Entity,
-	Entities\EntityParams,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+abstract class Channel implements DevicesEntities\Entity,
+	DevicesEntities\EntityParams,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use DevicesEntities\TEntity;
+	use DevicesEntities\TEntityParams;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'channel_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'channel_category',
 		type: 'string',
@@ -77,41 +77,41 @@ abstract class Channel implements Entities\Entity,
 	)]
 	protected Types\ChannelCategory $category;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'channel_identifier', type: 'string', length: 50, nullable: false)]
 	protected string $identifier;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'channel_name', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $name;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'channel_comment', type: 'text', nullable: true, options: ['default' => null])]
 	protected string|null $comment = null;
 
-	/** @var Common\Collections\Collection<int, Entities\Channels\Properties\Property> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, DevicesEntities\Channels\Properties\Property> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'channel',
-		targetEntity: Entities\Channels\Properties\Property::class,
+		targetEntity: DevicesEntities\Channels\Properties\Property::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $properties;
 
-	/** @var Common\Collections\Collection<int, Entities\Channels\Controls\Control> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, DevicesEntities\Channels\Controls\Control> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'channel',
-		targetEntity: Entities\Channels\Controls\Control::class,
+		targetEntity: DevicesEntities\Channels\Controls\Control::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $controls;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Devices\Device::class,
+		targetEntity: DevicesEntities\Devices\Device::class,
 		cascade: ['persist'],
 		inversedBy: 'channels',
 	)]
@@ -121,10 +121,10 @@ abstract class Channel implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	protected Entities\Devices\Device $device;
+	protected DevicesEntities\Devices\Device $device;
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		DevicesEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -187,13 +187,13 @@ abstract class Channel implements Entities\Entity,
 		$this->comment = $comment;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): DevicesEntities\Devices\Device
 	{
 		return $this->device;
 	}
 
 	/**
-	 * @return array<Entities\Channels\Properties\Property>
+	 * @return array<DevicesEntities\Channels\Properties\Property>
 	 */
 	public function getProperties(): array
 	{
@@ -201,7 +201,7 @@ abstract class Channel implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Channels\Properties\Property> $properties
+	 * @param array<DevicesEntities\Channels\Properties\Property> $properties
 	 */
 	public function setProperties(array $properties = []): void
 	{
@@ -214,7 +214,7 @@ abstract class Channel implements Entities\Entity,
 		}
 	}
 
-	public function addProperty(Entities\Channels\Properties\Property $property): void
+	public function addProperty(DevicesEntities\Channels\Properties\Property $property): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->properties->contains($property)) {
@@ -224,7 +224,7 @@ abstract class Channel implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Channels\Controls\Control>
+	 * @return array<DevicesEntities\Channels\Controls\Control>
 	 */
 	public function getControls(): array
 	{
@@ -232,7 +232,7 @@ abstract class Channel implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Channels\Controls\Control> $controls
+	 * @param array<DevicesEntities\Channels\Controls\Control> $controls
 	 */
 	public function setControls(array $controls = []): void
 	{
@@ -245,7 +245,7 @@ abstract class Channel implements Entities\Entity,
 		}
 	}
 
-	public function addControl(Entities\Channels\Controls\Control $control): void
+	public function addControl(DevicesEntities\Channels\Controls\Control $control): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->controls->contains($control)) {
@@ -268,11 +268,11 @@ abstract class Channel implements Entities\Entity,
 			'comment' => $this->getComment(),
 
 			'properties' => array_map(
-				static fn (Entities\Channels\Properties\Property $property): string => $property->getId()->toString(),
+				static fn (DevicesEntities\Channels\Properties\Property $property): string => $property->getId()->toString(),
 				$this->getProperties(),
 			),
 			'controls' => array_map(
-				static fn (Entities\Channels\Controls\Control $control): string => $control->getId()->toString(),
+				static fn (DevicesEntities\Channels\Controls\Control $control): string => $control->getId()->toString(),
 				$this->getControls(),
 			),
 			'device' => $this->getDevice()->getId()->toString(),

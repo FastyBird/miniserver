@@ -19,13 +19,13 @@ use Doctrine\DBAL;
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
-use FastyBird\Connector\NsPanel\Helpers;
+use FastyBird\Connector\NsPanel\Helpers as NsPanelHelpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -57,7 +57,7 @@ final class StoreSubDevice implements Queue\Consumer
 		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly ToolsHelpers\Database $databaseHelper,
+		protected readonly PersistenceHelpers\Database $databaseHelper,
 		private readonly Mapping\Builder $mappingBuilder,
 		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
@@ -215,7 +215,7 @@ final class StoreSubDevice implements Queue\Consumer
 
 		foreach ($message->getCapabilities() as $capability) {
 			$this->databaseHelper->transaction(function () use ($message, $device, $capability): bool {
-				$identifier = Helpers\Name::convertCapabilityToChannel(
+				$identifier = NsPanelHelpers\Name::convertCapabilityToChannel(
 					$capability->getCapability(),
 					$capability->getName(),
 				);
@@ -268,7 +268,10 @@ final class StoreSubDevice implements Queue\Consumer
 		}
 
 		foreach ($message->getState() as $state) {
-			$identifier = Helpers\Name::convertCapabilityToChannel($state->getCapability(), $state->getIdentifier());
+			$identifier = NsPanelHelpers\Name::convertCapabilityToChannel(
+				$state->getCapability(),
+				$state->getIdentifier(),
+			);
 
 			$findChannelQuery = new Queries\Entities\FindChannels();
 			$findChannelQuery->byIdentifier($identifier);
@@ -323,7 +326,9 @@ final class StoreSubDevice implements Queue\Consumer
 					}
 
 					$findPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
-					$findPropertyQuery->byIdentifier(Helpers\Name::convertAttributeToProperty($state->getAttribute()));
+					$findPropertyQuery->byIdentifier(
+						NsPanelHelpers\Name::convertAttributeToProperty($state->getAttribute()),
+					);
 					$findPropertyQuery->forChannel($channel);
 
 					$property = $this->channelsPropertiesRepository->findOneBy($findPropertyQuery);
@@ -332,7 +337,7 @@ final class StoreSubDevice implements Queue\Consumer
 						$property = $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 							'channel' => $channel,
-							'identifier' => Helpers\Name::convertAttributeToProperty($state->getAttribute()),
+							'identifier' => NsPanelHelpers\Name::convertAttributeToProperty($state->getAttribute()),
 							'dataType' => $attributeMetadata->getDataType(),
 							'format' => $format,
 							'invalid' => $attributeMetadata->getInvalidValue(),

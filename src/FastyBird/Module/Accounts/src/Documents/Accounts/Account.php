@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Documents\Accounts;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -48,7 +48,7 @@ final readonly class Account implements Documents\Document
 	 * @param array<int, Uuid\UuidInterface> $children
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		#[ObjectMapper\Modifiers\FieldName('first_name')]
@@ -86,12 +86,12 @@ final readonly class Account implements Documents\Document
 		#[ObjectMapper\Modifiers\FieldName('last_visit')]
 		private DateTimeInterface|null $lastVisit = null,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		private Uuid\UuidInterface|null $parent = null,
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private array $children = [],
 	)

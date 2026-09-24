@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Documents\Connectors;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -58,7 +58,7 @@ abstract class Connector implements DevicesDocuments\Document, CoreDocuments\Own
 	 * @param array<Uuid\UuidInterface> $devices
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BackedEnumValue(class: Types\ConnectorCategory::class),
@@ -80,19 +80,19 @@ abstract class Connector implements DevicesDocuments\Document, CoreDocuments\Own
 		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $enabled = false,
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $properties = [],
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $controls = [],
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $devices = [],
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		protected readonly Uuid\UuidInterface|null $owner = null,

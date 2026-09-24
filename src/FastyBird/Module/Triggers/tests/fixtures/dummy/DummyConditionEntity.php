@@ -3,25 +3,25 @@
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Types;
 use Ramsey\Uuid;
 use function array_merge;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class DummyConditionEntity extends Entities\Conditions\Condition
 {
 
 	public const TYPE = 'dummy';
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'condition_watch_item', type: Uuid\Doctrine\UuidBinaryType::NAME, nullable: true)]
 	private Uuid\UuidInterface $watchItem;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(
 		name: 'condition_operator',
 		type: 'string',
@@ -31,7 +31,7 @@ class DummyConditionEntity extends Entities\Conditions\Condition
 	)]
 	private Types\ConditionOperator $operator;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'condition_operand', type: 'string', length: 20, nullable: true)]
 	private string $operand;
 

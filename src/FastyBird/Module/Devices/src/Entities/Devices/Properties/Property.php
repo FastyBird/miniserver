@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Entities\Devices\Properties;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use Nette\Utils;
@@ -51,7 +51,7 @@ use function array_merge;
 abstract class Property extends Entities\Property
 {
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
 		targetEntity: Entities\Devices\Device::class,
 		cascade: ['persist'],
@@ -65,7 +65,7 @@ abstract class Property extends Entities\Property
 	)]
 	protected Entities\Devices\Device $device;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
 	#[ORM\JoinColumn(
 		name: 'parent_id',

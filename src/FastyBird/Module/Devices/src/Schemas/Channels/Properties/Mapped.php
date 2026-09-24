@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Schemas\Channels\Properties;
 use Exception;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -110,7 +110,7 @@ final class Mapped extends Property
 	 *
 	 * @return iterable<string, mixed>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidArgument

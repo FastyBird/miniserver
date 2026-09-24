@@ -19,14 +19,14 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 use function assert;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class State extends VirtualEntities\Channels\Channel
 {
 

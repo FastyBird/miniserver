@@ -4,8 +4,8 @@ namespace FastyBird\Core\Entities\SimpleAuth\Tokens;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineCrud;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Types\SimpleAuth as Types;
 use Override;
 use Ramsey\Uuid;
@@ -35,7 +35,7 @@ use Ramsey\Uuid;
 // entirely, which is what the removed doctrine/orm patch achieved by deferring the call.
 #[ORM\DiscriminatorMap(['token' => Token::class])]
 #[ORM\MappedSuperclass]
-abstract class Token implements DoctrineCrud\IEntity
+abstract class Token implements Entities\CrudEntity
 {
 
 	#[ORM\Id]
@@ -43,20 +43,20 @@ abstract class Token implements DoctrineCrud\IEntity
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
 	#[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'token_id', nullable: true, onDelete: 'set null')]
 	protected self|null $parent = null;
 
 	/** @var Common\Collections\Collection<int, Token> */
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
 	protected Common\Collections\Collection $children;
 
 	#[ORM\Column(name: 'token_token', type: 'text', nullable: false)]
 	protected string $token;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'token_state',
 		type: 'string',

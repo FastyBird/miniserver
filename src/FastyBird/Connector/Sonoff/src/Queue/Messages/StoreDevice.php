@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Sonoff\Queue\Messages;
 
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_map;
@@ -35,7 +35,7 @@ final readonly class StoreDevice implements Message
 	 * @param array<Parameters\DiscoveredDeviceParameter> $parameters
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $connector,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private string $id,

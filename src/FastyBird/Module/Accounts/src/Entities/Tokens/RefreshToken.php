@@ -17,32 +17,32 @@ namespace FastyBird\Module\Accounts\Entities\Tokens;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Accounts\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use Ramsey\Uuid;
 use function sprintf;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: 'refresh_token')]
+#[PersistenceMapping\DiscriminatorEntry(name: 'refresh_token')]
 class RefreshToken extends SimpleAuthEntities\Tokens\Token implements
-	Entities\Entity,
-	Entities\EntityParams,
-	DoctrineTimestampable\IEntityCreated,
-	DoctrineTimestampable\IEntityUpdated
+	AccountsEntities\Entity,
+	AccountsEntities\EntityParams,
+	PersistenceEntities\EntityCreated,
+	PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use AccountsEntities\TEntity;
+	use AccountsEntities\TEntityParams;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	public const TOKEN_EXPIRATION = '+3 days';
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'token_valid_till', type: 'datetime_immutable', nullable: false)]
 	private DateTimeInterface|null $validTill = null;
 

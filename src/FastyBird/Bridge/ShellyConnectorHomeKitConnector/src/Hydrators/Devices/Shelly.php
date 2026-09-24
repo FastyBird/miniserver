@@ -16,17 +16,17 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators\Devices;
 
 use Doctrine\Persistence;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities as ShellyConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiJsonApi;
-use FastyBird\Core\Entities\DoctrineCrud as DoctrineCrudEntities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -45,7 +45,7 @@ use function strval;
 /**
  * Shelly device entity hydrator
  *
- * @extends HomeKitHydrators\Devices\Device<Entities\Devices\Shelly>
+ * @extends HomeKitHydrators\Devices\Device<ShellyConnectorHomeKitConnectorEntities\Devices\Shelly>
  *
  * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
  * @subpackage     Hydrators
@@ -76,7 +76,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 			DevicesSchemas\Devices\Device::RELATIONSHIPS_PROPERTIES,
 		];
 
-	/** @var JsonApiJsonApi\SchemaContainer<DoctrineCrudEntities\IEntity>|null */
+	/** @var JsonApiJsonApi\SchemaContainer<PersistenceEntities\CrudEntity>|null */
 	private JsonApiJsonApi\SchemaContainer|null $jsonApiSchemaContainer = null;
 
 	/** @var array<DevicesHydrators\Devices\Properties\Property<DevicesEntities\Devices\Properties\Property>>|null  */
@@ -96,11 +96,11 @@ class Shelly extends HomeKitHydrators\Devices\Device
 
 	public function getEntityName(): string
 	{
-		return Entities\Devices\Shelly::class;
+		return ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class;
 	}
 
 	/**
-	 * @param Entities\Devices\Shelly|null $entity
+	 * @param ShellyConnectorHomeKitConnectorEntities\Devices\Shelly|null $entity
 	 *
 	 * @throws JsonApiExceptions\JsonApiError
 	 * @throws Exceptions\InvalidState
@@ -151,7 +151,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	protected function hydrateParentsRelationship(
 		JsonApi\Objects\IRelationshipObject $relationships,
 		JsonApi\Objects\IResourceObjectCollection|null $included,
-		Entities\Devices\Shelly|null $entity,
+		ShellyConnectorHomeKitConnectorEntities\Devices\Shelly|null $entity,
 	): array
 	{
 		if ($relationships->getData() instanceof JsonApi\Objects\ResourceIdentifierCollection) {
@@ -280,7 +280,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	}
 
 	/**
-	 * @return JsonApiJsonApi\SchemaContainer<DoctrineCrudEntities\IEntity>
+	 * @return JsonApiJsonApi\SchemaContainer<PersistenceEntities\CrudEntity>
 	 *
 	 * @throws DI\MissingServiceException
 	 */

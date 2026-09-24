@@ -3,8 +3,8 @@
 namespace FastyBird\Core\Entities\SimpleAuth\Policies;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineCrud;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Types\SimpleAuth as Types;
 use Ramsey\Uuid;
 
@@ -32,7 +32,7 @@ use Ramsey\Uuid;
 // the short name and once under its DiscriminatorEntry name. An explicit map skips the default
 // entirely, which is what the removed doctrine/orm patch achieved by deferring the call.
 #[ORM\DiscriminatorMap([Policy::TYPE => Policy::class])]
-class Policy implements DoctrineCrud\IEntity
+class Policy implements Entities\CrudEntity
 {
 
 	public const string TYPE = 'policy';
@@ -42,7 +42,7 @@ class Policy implements DoctrineCrud\IEntity
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(
 		name: 'ptype',
 		type: 'string',
@@ -51,27 +51,27 @@ class Policy implements DoctrineCrud\IEntity
 	)]
 	protected Types\PolicyType $type;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'v0', type: 'string', length: 150, nullable: true, options: ['default' => null])]
 	protected string|null $v0 = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'v1', type: 'string', length: 150, nullable: true, options: ['default' => null])]
 	protected string|null $v1 = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'v2', type: 'string', length: 150, nullable: true, options: ['default' => null])]
 	protected string|null $v2 = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'v3', type: 'string', length: 150, nullable: true, options: ['default' => null])]
 	protected string|null $v3 = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'v4', type: 'string', length: 150, nullable: true, options: ['default' => null])]
 	protected string|null $v4 = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'v5', type: 'string', length: 150, nullable: true, options: ['default' => null])]
 	protected string|null $v5 = null;
 

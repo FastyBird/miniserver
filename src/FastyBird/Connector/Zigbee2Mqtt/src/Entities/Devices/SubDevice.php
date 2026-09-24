@@ -19,8 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
@@ -33,7 +33,7 @@ use function is_bool;
 use function is_string;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class SubDevice extends Device
 {
 

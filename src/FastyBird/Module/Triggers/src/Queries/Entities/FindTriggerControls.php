@@ -17,7 +17,7 @@ namespace FastyBird\Module\Triggers\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use Ramsey\Uuid;
 use SortDirection;
@@ -25,13 +25,13 @@ use SortDirection;
 /**
  * Find trigger properties entities query
  *
- * @extends  DoctrineOrmQuery\QueryObject<Entities\Triggers\Controls\Control>
+ * @extends  Query\QueryObject<Entities\Triggers\Controls\Control>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindTriggerControls extends DoctrineOrmQuery\QueryObject
+class FindTriggerControls extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

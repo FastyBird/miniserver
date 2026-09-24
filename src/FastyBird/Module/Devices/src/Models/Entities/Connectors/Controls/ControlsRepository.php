@@ -18,8 +18,8 @@ namespace FastyBird\Module\Devices\Models\Entities\Connectors\Controls;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Queries;
@@ -45,7 +45,7 @@ final class ControlsRepository
 	private ORM\EntityRepository|null $repository = null;
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -105,17 +105,17 @@ final class ControlsRepository
 	}
 
 	/**
-	 * @return DoctrineOrmQuery\ResultSet<Entities\Connectors\Controls\Control>
+	 * @return Query\ResultSet<Entities\Connectors\Controls\Control>
 	 *
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindConnectorControls $queryObject,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		$result = $this->database->query(
-			fn (): DoctrineOrmQuery\ResultSet|array => $queryObject->fetch($this->getRepository()),
+			fn (): Query\ResultSet|array => $queryObject->fetch($this->getRepository()),
 		);
 
 		if (is_array($result)) {

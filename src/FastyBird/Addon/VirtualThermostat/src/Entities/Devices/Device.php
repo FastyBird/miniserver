@@ -20,8 +20,8 @@ use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Addon\VirtualThermostat\Exceptions;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -35,7 +35,7 @@ use function sprintf;
 use function str_starts_with;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Device extends VirtualEntities\Devices\Device
 {
 

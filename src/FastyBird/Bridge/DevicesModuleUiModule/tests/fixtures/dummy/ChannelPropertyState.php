@@ -3,7 +3,7 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Fixtures\Dummy;
 
 use DateTimeInterface;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
@@ -19,7 +19,7 @@ class ChannelPropertyState implements DevicesStates\ChannelProperty
 	public const UPDATED_AT_FIELD = 'updatedAt';
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),

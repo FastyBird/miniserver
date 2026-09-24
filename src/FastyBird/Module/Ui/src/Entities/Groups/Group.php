@@ -18,11 +18,11 @@ namespace FastyBird\Module\Ui\Entities\Groups;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Entities as UiEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 use function array_map;
@@ -37,42 +37,42 @@ use function array_map;
 	],
 )]
 #[ORM\Index(columns: ['group_name'], name: 'group_name_idx')]
-class Group implements Entities\Entity,
-	Entities\EntityParams,
+class Group implements UiEntities\Entity,
+	UiEntities\EntityParams,
 	SimpleAuthEntities\Owner,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
+	use UiEntities\TEntity;
+	use UiEntities\TEntityParams;
 	use SimpleAuthEntities\TOwner;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'group_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	private Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'group_identifier', type: 'string', nullable: false)]
 	private string $identifier;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'group_name', type: 'string', nullable: true, options: ['default' => null])]
 	private string|null $name = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'group_comment', type: 'text', nullable: true, options: ['default' => null])]
 	private string|null $comment = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'group_priority', type: 'integer', nullable: false, options: ['default' => 0])]
 	private int $priority = 0;
 
-	/** @var Common\Collections\Collection<int, Entities\Widgets\Widget> */
-	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\ManyToMany(targetEntity: Entities\Widgets\Widget::class, inversedBy: 'groups')]
+	/** @var Common\Collections\Collection<int, UiEntities\Widgets\Widget> */
+	#[Attribute\Crud(writable: true)]
+	#[ORM\ManyToMany(targetEntity: UiEntities\Widgets\Widget::class, inversedBy: 'groups')]
 	#[ORM\JoinTable(
 		name: 'fb_ui_module_widgets_groups',
 		joinColumns: [
@@ -140,7 +140,7 @@ class Group implements Entities\Entity,
 		$this->priority = $priority;
 	}
 
-	public function addWidget(Entities\Widgets\Widget $widget): void
+	public function addWidget(UiEntities\Widgets\Widget $widget): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->widgets->contains($widget)) {
@@ -150,7 +150,7 @@ class Group implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Widgets\Widget>
+	 * @return array<UiEntities\Widgets\Widget>
 	 */
 	public function getWidgets(): array
 	{
@@ -158,7 +158,7 @@ class Group implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Widgets\Widget> $widgets
+	 * @param array<UiEntities\Widgets\Widget> $widgets
 	 */
 	public function setWidgets(array $widgets = []): void
 	{
@@ -169,15 +169,15 @@ class Group implements Entities\Entity,
 		}
 	}
 
-	public function getWidget(string $id): Entities\Widgets\Widget|null
+	public function getWidget(string $id): UiEntities\Widgets\Widget|null
 	{
 		$found = $this->widgets
-			->filter(static fn (Entities\Widgets\Widget $row): bool => $id === $row->getId()->toString());
+			->filter(static fn (UiEntities\Widgets\Widget $row): bool => $id === $row->getId()->toString());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
-	public function removeWidget(Entities\Widgets\Widget $widget): void
+	public function removeWidget(UiEntities\Widgets\Widget $widget): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->widgets->contains($widget)) {
@@ -199,7 +199,7 @@ class Group implements Entities\Entity,
 			'priority' => $this->getPriority(),
 
 			'widgets' => array_map(
-				static fn (Entities\Widgets\Widget $widget): string => $widget->getId()->toString(),
+				static fn (UiEntities\Widgets\Widget $widget): string => $widget->getId()->toString(),
 				$this->getWidgets(),
 			),
 

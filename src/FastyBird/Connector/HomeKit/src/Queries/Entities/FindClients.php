@@ -18,7 +18,7 @@ namespace FastyBird\Connector\HomeKit\Queries\Entities;
 use Closure;
 use Doctrine\ORM;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 
@@ -26,13 +26,13 @@ use Ramsey\Uuid;
  * Find clients entities query
  *
  * @template T of Entities\Clients\Client
- * @extends  DoctrineOrmQuery\QueryObject<T>
+ * @extends  Query\QueryObject<T>
  *
  * @package        FastyBird:HomeKitConnector!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindClients extends DoctrineOrmQuery\QueryObject
+class FindClients extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

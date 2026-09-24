@@ -3,24 +3,24 @@
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities;
 use Ramsey\Uuid;
 use function array_merge;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class DummyActionEntity extends Entities\Actions\Action
 {
 
 	public const TYPE = 'dummy';
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'action_do_item', type: Uuid\Doctrine\UuidBinaryType::NAME, nullable: true)]
 	private Uuid\UuidInterface $doItem;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'action_value', type: 'string', length: 100, nullable: true)]
 	private string $value;
 

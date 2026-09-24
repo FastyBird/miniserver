@@ -16,8 +16,8 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Ui\Entities as UiEntities;
 use Ramsey\Uuid;
@@ -32,13 +32,13 @@ use function array_merge;
 		'comment' => 'Widget data source connection to channel',
 	],
 )]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class ChannelProperty extends Property
 {
 
 	public const TYPE = 'channel-property';
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\ManyToOne(targetEntity: DevicesEntities\Channels\Properties\Property::class)]
 	#[ORM\JoinColumn(
 		name: 'data_source_property',

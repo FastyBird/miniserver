@@ -17,46 +17,46 @@ namespace FastyBird\Module\Accounts\Entities\Tokens;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Accounts\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: 'access_token')]
+#[PersistenceMapping\DiscriminatorEntry(name: 'access_token')]
 class AccessToken extends SimpleAuthEntities\Tokens\Token implements
-	Entities\Entity,
-	Entities\EntityParams,
-	DoctrineTimestampable\IEntityCreated,
-	DoctrineTimestampable\IEntityUpdated
+	AccountsEntities\Entity,
+	AccountsEntities\EntityParams,
+	PersistenceEntities\EntityCreated,
+	PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use AccountsEntities\TEntity;
+	use AccountsEntities\TEntityParams;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	public const TOKEN_EXPIRATION = '+6 hours';
 
-	#[IPubDoctrine\Crud(required: true)]
-	#[ORM\ManyToOne(targetEntity: Entities\Identities\Identity::class)]
+	#[Attribute\Crud(required: true)]
+	#[ORM\ManyToOne(targetEntity: AccountsEntities\Identities\Identity::class)]
 	#[ORM\JoinColumn(
 		name: 'identity_id',
 		referencedColumnName: 'identity_id',
 		nullable: true,
 		onDelete: 'CASCADE',
 	)]
-	private Entities\Identities\Identity|null $identity = null;
+	private AccountsEntities\Identities\Identity|null $identity = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'token_valid_till', type: 'datetime_immutable', nullable: false)]
 	private DateTimeInterface|null $validTill = null;
 
 	public function __construct(
-		Entities\Identities\Identity $identity,
+		AccountsEntities\Identities\Identity $identity,
 		string $token,
 		DateTimeInterface|null $validTill,
 		Uuid\UuidInterface|null $id = null,
@@ -87,7 +87,7 @@ class AccessToken extends SimpleAuthEntities\Tokens\Token implements
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function getIdentity(): Entities\Identities\Identity
+	public function getIdentity(): AccountsEntities\Identities\Identity
 	{
 		if ($this->identity === null) {
 			throw new Exceptions\InvalidState('Identity is not set to token.');

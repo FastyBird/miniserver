@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\Documents\Roles;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -42,7 +42,7 @@ final readonly class Role implements Documents\Document
 {
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private string $name,
@@ -58,7 +58,7 @@ final readonly class Role implements Documents\Document
 		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
 		private bool $administrator = false,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		private Uuid\UuidInterface|null $parent = null,

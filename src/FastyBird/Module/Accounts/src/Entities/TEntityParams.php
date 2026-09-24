@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use Nette\Utils;
 use function array_key_exists;
 use function array_merge;
@@ -39,7 +39,7 @@ trait TEntityParams
 {
 
 	/** @var array<string, mixed>|null */
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'params', type: 'json', nullable: true)]
 	protected array|null $params = null;
 
