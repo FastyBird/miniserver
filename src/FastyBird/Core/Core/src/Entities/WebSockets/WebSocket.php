@@ -4,14 +4,14 @@ namespace FastyBird\Core\Entities\WebSockets;
 
 use FastyBird\Core\Encoding\WebSockets as Protocols;
 use Override;
-use TypeError;
+use function assert;
 
 final class WebSocket implements IWebSocket
 {
 
-	private Protocols\IMessage $message;
+	private Protocols\IMessage|null $message = null;
 
-	private Protocols\IFrame $frame;
+	private Protocols\IFrame|null $frame = null;
 
 	public function __construct(
 		private bool $established,
@@ -60,12 +60,11 @@ final class WebSocket implements IWebSocket
 	#[Override]
 	public function getMessage(): Protocols\IMessage
 	{
+		assert($this->message !== null);
+
 		return $this->message;
 	}
 
-	/**
-	 * @throws TypeError
-	 */
 	#[Override]
 	public function destroyMessage(): void
 	{
@@ -87,12 +86,11 @@ final class WebSocket implements IWebSocket
 	#[Override]
 	public function getFrame(): Protocols\IFrame
 	{
+		assert($this->frame !== null);
+
 		return $this->frame;
 	}
 
-	/**
-	 * @throws TypeError
-	 */
 	#[Override]
 	public function destroyFrame(): void
 	{

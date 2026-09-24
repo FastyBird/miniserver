@@ -4621,30 +4621,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/PushMessages/Message.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Entities\\WebSockets\\WebSocket\:\:\$frame \(FastyBird\\Core\\Encoding\\WebSockets\\IFrame\) does not accept null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Entities\\WebSockets\\WebSocket\:\:\$message \(FastyBird\\Core\\Encoding\\WebSockets\\IMessage\) does not accept null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between FastyBird\\Core\\Encoding\\WebSockets\\IFrame and null will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between FastyBird\\Core\\Encoding\\WebSockets\\IMessage and null will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php
-
-		-
 			message: '#^Cannot cast FastyBird\\Core\\Controllers\\WebSockets\\Responses\\IResponse to string\.$#'
 			identifier: cast.string
 			count: 1
