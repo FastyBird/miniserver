@@ -18,7 +18,8 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Exchange\Publisher;
+use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events as DevicesEvents;
@@ -49,8 +50,8 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 		private readonly UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,
 		private readonly UiCaching\Container $uiModuleCaching,
 		private readonly ApplicationEventLoop\Status $eventLoopStatus,
-		private readonly ExchangePublisher\Publisher $publisher,
-		private readonly ExchangePublisher\Async\Publisher $asyncPublisher,
+		private readonly Publisher\MessagePublisher $publisher,
+		private readonly Async\MessagePublisher $asyncPublisher,
 	)
 	{
 	}
@@ -145,7 +146,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 		);
 	}
 
-	private function getPublisher(bool $async): ExchangePublisher\Publisher|ExchangePublisher\Async\Publisher
+	private function getPublisher(bool $async): Publisher\MessagePublisher|Async\MessagePublisher
 	{
 		return $async ? $this->asyncPublisher : $this->publisher;
 	}

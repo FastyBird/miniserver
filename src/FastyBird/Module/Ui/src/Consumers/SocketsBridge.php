@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Ui\Consumers;
 
 use FastyBird\Core\Documents;
+use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as WebSocketsRouting;
 use FastyBird\Core\Topics\WsServer as WsServerTopics;
 use FastyBird\Core\Values\Types\Sources;
@@ -34,7 +34,7 @@ use function in_array;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final readonly class SocketsBridge implements ExchangeConsumers\Consumer
+final readonly class SocketsBridge implements Consumers\Consumer
 {
 
 	public function __construct(

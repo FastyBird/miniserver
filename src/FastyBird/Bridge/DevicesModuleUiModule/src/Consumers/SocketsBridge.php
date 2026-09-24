@@ -19,8 +19,8 @@ use FastyBird\Bridge\DevicesModuleUiModule;
 use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as WebSocketsRouting;
 use FastyBird\Core\Topics\WsServer as WsServerTopics;
 use FastyBird\Core\Values\Types\Sources;
@@ -43,7 +43,7 @@ use function in_array;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class SocketsBridge implements ExchangeConsumers\Consumer
+final class SocketsBridge implements Consumers\Consumer
 {
 
 	private const CONSUMER_ROUTING_KEYS = [

@@ -20,14 +20,14 @@ use DateTimeInterface;
 use Doctrine\DBAL;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Exchange;
+use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Connectors;
-use FastyBird\Module\Devices\Consumers;
+use FastyBird\Module\Devices\Consumers as DevicesConsumers;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions;
@@ -92,7 +92,7 @@ class Connector extends Console\Command\Command
 	private DateTimeInterface|null $executedAt = null;
 
 	/**
-	 * @param array<ExchangeExchange\Factory> $exchangeFactories
+	 * @param array<Exchange\Factory> $exchangeFactories
 	 */
 	public function __construct(
 		private readonly Connectors\ContainerFactory $serviceFactory,
@@ -271,7 +271,7 @@ class Connector extends Console\Command\Command
 
 		$this->dispatcher?->dispatch(new Events\ConnectorStartup($connector));
 
-		$this->consumer->enable(Consumers\ModuleEntities::class);
+		$this->consumer->enable(DevicesConsumers\ModuleEntities::class);
 
 		$service = $this->serviceFactory->create($connector);
 

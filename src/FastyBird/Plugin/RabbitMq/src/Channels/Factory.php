@@ -17,7 +17,7 @@ namespace FastyBird\Plugin\RabbitMq\Channels;
 
 use Bunny;
 use FastyBird\Core\Constants\Constants as MetadataConstants;
-use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
+use FastyBird\Core\Exchange;
 use FastyBird\Plugin\RabbitMq\Connections;
 use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Exceptions;
@@ -33,7 +33,7 @@ use function assert;
  * @subpackage     Channel
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Factory implements ExchangeExchange\Factory
+final class Factory implements Exchange\Factory
 {
 
 	private const EXCHANGE_TYPE = 'topic';

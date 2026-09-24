@@ -13,7 +13,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Tests;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -46,7 +46,7 @@ final class StoreBridgeDevicesTest extends Tests\Cases\Unit\DbTestCase
 	 */
 	public function testConsumeMessage(): void
 	{
-		$publisher = $this->createMock(ExchangePublisher\Container::class);
+		$publisher = $this->createMock(Publisher\Container::class);
 		$publisher
 			->expects(self::exactly(33))
 			->method('publish')
@@ -66,10 +66,7 @@ final class StoreBridgeDevicesTest extends Tests\Cases\Unit\DbTestCase
 				}),
 			);
 
-		$this->mockContainerService(
-			ExchangePublisher\Container::class,
-			$publisher,
-		);
+		$this->mockContainerService(Publisher\Container::class, $publisher);
 
 		$consumer = $this->getContainer()->getByType(
 			Queue\Consumers\StoreBridgeDevices::class,

@@ -10,9 +10,11 @@ use FastyBird\Core\Controllers as WebSocketsControllers;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Encoding as JsonApiEncoding;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exchange\Consumers;
+use FastyBird\Core\Exchange\Publisher;
+use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Helpers as ToolsHelpers;
 use FastyBird\Core\Http as WebServerHttp;
-use FastyBird\Core\Messaging as ExchangeMessaging;
 use FastyBird\Core\Middleware as WebServerMiddleware;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
@@ -70,9 +72,9 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 */
 
 		self::assertNotNull($container->getByType(Documents\RoutingDocumentFactory::class, false));
-		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Publisher\Container::class, false));
-		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Publisher\Async\Container::class, false));
-		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Consumers\Container::class, false));
+		self::assertNotNull($container->getByType(Publisher\Container::class, false));
+		self::assertNotNull($container->getByType(Async\Container::class, false));
+		self::assertNotNull($container->getByType(Consumers\Container::class, false));
 
 		/**
 		 * TOOLS -- from ToolsExtensionTest

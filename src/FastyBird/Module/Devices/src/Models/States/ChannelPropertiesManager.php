@@ -20,8 +20,8 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
@@ -74,7 +74,7 @@ final class ChannelPropertiesManager extends PropertiesManager
 		private readonly Caching\Container $moduleCaching,
 		private readonly Clock\Clock $clock,
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
-		private readonly ExchangePublisher\Publisher $publisher,
+		private readonly Publisher\MessagePublisher $publisher,
 		Devices\Logger $logger,
 		ObjectMapper\Processing\Processor $stateMapper,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,

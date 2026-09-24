@@ -18,7 +18,7 @@ namespace FastyBird\Module\Triggers\Models\States;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Entities;
@@ -45,7 +45,7 @@ final class ConditionsManager
 	public function __construct(
 		protected readonly CoreDocuments\DocumentFactory $documentFactory,
 		protected readonly IConditionsManager|null $manager = null,
-		protected readonly ExchangePublisher\Publisher|null $publisher = null,
+		protected readonly Publisher\MessagePublisher|null $publisher = null,
 	)
 	{
 	}

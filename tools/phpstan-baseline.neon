@@ -5461,10 +5461,10 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Mapping/SimpleAuth/Driver/Owner.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Messaging\\Exchange\\Publisher\\Async\\Container\:\:publish\(\) should return React\\Promise\\PromiseInterface\<bool\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
+			message: '#^Method FastyBird\\Core\\Exchange\\Publisher\\Async\\Container\:\:publish\(\) should return React\\Promise\\PromiseInterface\<bool\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Messaging/Exchange/Publisher/Async/Container.php
+			path: ../src/FastyBird/Core/Core/src/Exchange/Publisher/Async/Container.php
 
 		-
 			message: '#^Method FastyBird\\Core\\Messaging\\WebSockets\\PushMessages\\IPusher\:\:push\(\) has parameter \$context with no value type specified in iterable type array\.$#'

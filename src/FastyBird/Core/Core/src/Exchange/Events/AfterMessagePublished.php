@@ -1,15 +1,15 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Events;
+namespace FastyBird\Core\Exchange\Events;
 
 use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Sources;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * After message consumed event
+ * After message published event
  */
-final class AfterMessageConsumed extends EventDispatcher\Event
+final class AfterMessagePublished extends EventDispatcher\Event
 {
 
 	public function __construct(

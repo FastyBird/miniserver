@@ -5,8 +5,8 @@ namespace FastyBird\Core\Tests\Cases\Unit\Messaging;
 use ArrayObject;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Messaging\Exchange\Consumers;
-use FastyBird\Core\Messaging\Exchange\Publisher;
+use FastyBird\Core\Exchange\Consumers;
+use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Values\Types\Sources;
 use PHPUnit\Framework\TestCase;
 use function count;
@@ -197,11 +197,11 @@ final class ExchangeContainerTest extends TestCase
 	/**
 	 * @param ArrayObject<int, string> $log
 	 *
-	 * @return Publisher\Publisher&object{calls: list<array{0: Sources\Source, 1: string, 2: Documents\Document|null}>}
+	 * @return Publisher\MessagePublisher&object{calls: list<array{0: Sources\Source, 1: string, 2: Documents\Document|null}>}
 	 */
 	private function createRecordingPublisher(ArrayObject $log, string $label): object
 	{
-		return new class ($log, $label) implements Publisher\Publisher {
+		return new class ($log, $label) implements Publisher\MessagePublisher {
 
 			/** @var list<array{0: Sources\Source, 1: string, 2: Documents\Document|null}> */
 			public array $calls = [];

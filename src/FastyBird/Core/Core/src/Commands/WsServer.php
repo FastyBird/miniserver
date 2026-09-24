@@ -4,8 +4,8 @@ namespace FastyBird\Core\Commands;
 
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
+use FastyBird\Core\Exchange;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Server\WsServer as Server;
 use FastyBird\Core\Values\Types\Sources;
 use Psr\EventDispatcher;
@@ -26,7 +26,7 @@ final class WsServer extends Console\Command\Command
 	public const string NAME = 'fb:ws-server:start';
 
 	/**
-	 * @param array<ExchangeExchange\Factory> $exchangeFactories
+	 * @param array<Exchange\Factory> $exchangeFactories
 	 */
 	public function __construct(
 		private readonly Server\Configuration $configuration,
