@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
 use FastyBird\Core\Constants\Constants as MetadataConstants;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
@@ -31,8 +31,8 @@ use function array_merge;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document]
-final readonly class ActionValues implements ApplicationDocuments\Document
+#[Documents\Mapping\Document]
+final readonly class ActionValues implements Documents\Document
 {
 
 	public function __construct(

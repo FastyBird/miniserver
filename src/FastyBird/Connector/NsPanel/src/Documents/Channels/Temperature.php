@@ -17,10 +17,10 @@ namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Temperature::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Temperature::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Channels\Temperature::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Temperature::TYPE)]
 class Temperature extends Channel
 {
 

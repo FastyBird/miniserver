@@ -22,6 +22,7 @@ use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Schemas;
@@ -1114,7 +1115,7 @@ final class CloudApi
 				$body,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | DocumentsExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
 				throw new SonoffExceptions\CloudApiCall(
 					'Could not validate received response payload',

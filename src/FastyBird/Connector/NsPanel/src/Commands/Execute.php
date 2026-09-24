@@ -16,8 +16,9 @@
 namespace FastyBird\Connector\NsPanel\Commands;
 
 use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Queries;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -84,11 +85,11 @@ class Execute extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
@@ -223,7 +224,7 @@ class Execute extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new NsPanelExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -253,7 +254,7 @@ class Execute extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//ns-panel-connector.cmd.base.messages.answerNotValid',

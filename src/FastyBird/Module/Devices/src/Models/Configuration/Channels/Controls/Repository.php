@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Models\Configuration\Channels\Controls;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
@@ -42,7 +42,7 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Models\Configuration\Builder $builder,
 		private readonly Caching\Container $moduleCaching,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
@@ -52,7 +52,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-	): Documents\Channels\Controls\Control|null
+	): DevicesDocuments\Channels\Controls\Control|null
 	{
 		$queryObject = new Queries\Configuration\FindChannelControls();
 		$queryObject->byId($id);
@@ -61,19 +61,19 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @param Queries\Configuration\FindChannelControls<Documents\Channels\Controls\Control> $queryObject
+	 * @param Queries\Configuration\FindChannelControls<DevicesDocuments\Channels\Controls\Control> $queryObject
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindChannelControls $queryObject,
-	): Documents\Channels\Controls\Control|null
+	): DevicesDocuments\Channels\Controls\Control|null
 	{
 		try {
-			/** @phpstan-var Documents\Channels\Controls\Control|false $document */
+			/** @phpstan-var DevicesDocuments\Channels\Controls\Control|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject),
-				function (&$dependencies) use ($queryObject): Documents\Channels\Controls\Control|false {
+				function (&$dependencies) use ($queryObject): DevicesDocuments\Channels\Controls\Control|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::CHANNELS_CONTROLS);
 
@@ -84,7 +84,7 @@ final class Repository extends Models\Configuration\Repository
 					}
 
 					$document = $this->documentFactory->create(
-						Documents\Channels\Controls\Control::class,
+						DevicesDocuments\Channels\Controls\Control::class,
 						$result[0],
 					);
 
@@ -115,9 +115,9 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @param Queries\Configuration\FindChannelControls<Documents\Channels\Controls\Control> $queryObject
+	 * @param Queries\Configuration\FindChannelControls<DevicesDocuments\Channels\Controls\Control> $queryObject
 	 *
-	 * @return array<Documents\Channels\Controls\Control>
+	 * @return array<DevicesDocuments\Channels\Controls\Control>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
@@ -126,7 +126,7 @@ final class Repository extends Models\Configuration\Repository
 	): array
 	{
 		try {
-			/** @phpstan-var array<Documents\Channels\Controls\Control> $documents */
+			/** @phpstan-var array<DevicesDocuments\Channels\Controls\Control> $documents */
 			$documents = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyAll($queryObject),
 				function (&$dependencies) use ($queryObject): array {
@@ -140,8 +140,8 @@ final class Repository extends Models\Configuration\Repository
 					}
 
 					$documents = array_map(
-						fn (array $item): Documents\Channels\Controls\Control => $this->documentFactory->create(
-							Documents\Channels\Controls\Control::class,
+						fn (array $item): DevicesDocuments\Channels\Controls\Control => $this->documentFactory->create(
+							DevicesDocuments\Channels\Controls\Control::class,
 							$item,
 						),
 						$result,
@@ -153,7 +153,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::CHANNELS_CONTROLS->value,
 							],
 							array_map(
-								static fn (Documents\Channels\Controls\Control $document): string => $document->getId()->toString(),
+								static fn (DevicesDocuments\Channels\Controls\Control $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

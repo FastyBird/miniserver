@@ -16,8 +16,9 @@
 namespace FastyBird\Connector\Modbus\Commands;
 
 use FastyBird\Connector\Modbus\Documents;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -84,7 +85,7 @@ class Execute extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
@@ -217,7 +218,7 @@ class Execute extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new ModbusExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//modbus-connector.cmd.base.messages.answerNotValid',
@@ -247,7 +248,7 @@ class Execute extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new ModbusExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//modbus-connector.cmd.base.messages.answerNotValid',

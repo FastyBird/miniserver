@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Events;
+namespace FastyBird\Core\Documents\Events;
 
 use FastyBird\Core\Documents;
 use Symfony\Contracts\EventDispatcher;

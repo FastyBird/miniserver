@@ -19,12 +19,13 @@ use DateTimeInterface;
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Documents;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Helpers;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -108,13 +109,13 @@ class Tcp implements Client
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RandomException
 	 * @throws ApplicationExceptions\InvalidArgument
@@ -171,13 +172,13 @@ class Tcp implements Client
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RandomException
 	 * @throws ApplicationExceptions\InvalidArgument
@@ -242,13 +243,13 @@ class Tcp implements Client
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RandomException
 	 * @throws ApplicationExceptions\InvalidArgument
@@ -500,7 +501,7 @@ class Tcp implements Client
 				function (Throwable $ex) use ($request, $device): void {
 					$now = $this->clock->getNow();
 
-					if ($ex instanceof Exceptions\ModbusTcp) {
+					if ($ex instanceof ModbusExceptions\ModbusTcp) {
 						foreach ($request->getAddresses() as $requestAddress) {
 							if ($request instanceof Messages\Request\ReadCoils) {
 								$channel = $this->deviceHelper->findChannelByType(
@@ -589,7 +590,7 @@ class Tcp implements Client
 				}
 			})
 			->catch(function (Throwable $ex) use ($device, $now): void {
-				if (!$ex instanceof Exceptions\ModbusTcp) {
+				if (!$ex instanceof ModbusExceptions\ModbusTcp) {
 					$this->lostDevices[$device->getId()->toString()] = $now;
 
 					if ($this->deviceConnectionManager->getLostAt($device) === null) {
@@ -627,7 +628,7 @@ class Tcp implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -717,13 +718,13 @@ class Tcp implements Client
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RandomException
 	 * @throws ApplicationExceptions\InvalidArgument

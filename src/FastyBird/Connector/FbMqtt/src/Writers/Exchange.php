@@ -16,13 +16,14 @@
 namespace FastyBird\Connector\FbMqtt\Writers;
 
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Documents;
-use FastyBird\Connector\FbMqtt\Exceptions;
+use FastyBird\Connector\FbMqtt\Documents as FbMqttDocuments;
+use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Logging;
@@ -51,7 +52,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public const NAME = 'exchange';
 
 	public function __construct(
-		Documents\Connectors\Connector $connector,
+		FbMqttDocuments\Connectors\Connector $connector,
 		Helpers\MessageBuilder $messageBuilder,
 		Queue\Queue $queue,
 		FbMqtt\Logger $logger,
@@ -87,11 +88,11 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws FbMqttExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	public function connect(): void
@@ -114,7 +115,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		try {
@@ -136,7 +137,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$device = $this->devicesConfigurationRepository->findOneBy(
 					$findDeviceQuery,
-					Documents\Devices\Device::class,
+					FbMqttDocuments\Devices\Device::class,
 				);
 
 				if ($device === null) {
@@ -179,7 +180,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
 					$findChannelQuery,
-					Documents\Channels\Channel::class,
+					FbMqttDocuments\Channels\Channel::class,
 				);
 
 				if ($channel === null) {
@@ -192,7 +193,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$device = $this->devicesConfigurationRepository->findOneBy(
 					$findDeviceQuery,
-					Documents\Devices\Device::class,
+					FbMqttDocuments\Devices\Device::class,
 				);
 
 				if ($device === null) {

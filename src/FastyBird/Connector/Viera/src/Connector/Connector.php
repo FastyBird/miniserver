@@ -18,9 +18,10 @@ namespace FastyBird\Connector\Viera\Connector;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Clients;
 use FastyBird\Connector\Viera\Documents;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Writers;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -77,10 +78,10 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */

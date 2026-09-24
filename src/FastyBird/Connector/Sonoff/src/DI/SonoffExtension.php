@@ -31,7 +31,7 @@ use FastyBird\Connector\Sonoff\Subscribers;
 use FastyBird\Connector\Sonoff\Writers;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI;
@@ -383,7 +383,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 				);
 
 				$documentAttributeDriverChainService = $builder->getDefinitionByType(
-					ApplicationDocuments\Mapping\Driver\MappingDriverChain::class,
+					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
 				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {

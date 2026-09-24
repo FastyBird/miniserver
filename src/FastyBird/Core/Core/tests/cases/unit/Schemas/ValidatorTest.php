@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Schemas;
 
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Schemas;
@@ -18,7 +19,7 @@ final class ValidatorTest extends TestCase
 	 *
 	 * @throws ValuesExceptions\InvalidData
 	 * @throws CoreExceptions\Logic
-	 * @throws CoreExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	#[DataProvider('validateValidData')]
 	public function testValidateValidInput(
@@ -39,7 +40,7 @@ final class ValidatorTest extends TestCase
 	/**
 	 * @throws ValuesExceptions\InvalidData
 	 * @throws CoreExceptions\Logic
-	 * @throws CoreExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	#[DataProvider('validateInvalidData')]
 	public function testValidateDevicePropertyInvalid(

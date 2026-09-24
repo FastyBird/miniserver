@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
@@ -29,8 +29,8 @@ use Orisai\ObjectMapper;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document]
-final readonly class StateValues implements ApplicationDocuments\Document
+#[Documents\Mapping\Document]
+final readonly class StateValues implements Documents\Document
 {
 
 	public function __construct(

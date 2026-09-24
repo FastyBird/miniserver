@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Messaging\Exchange\Publisher;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Events;
 use FastyBird\Core\Values\Types\Sources;
 use Override;
@@ -29,7 +29,7 @@ class Container implements Publisher
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $entity,
+		Documents\Document|null $entity,
 	): bool
 	{
 		$this->dispatcher?->dispatch(new Events\BeforeMessagePublished($source, $routingKey, $entity));

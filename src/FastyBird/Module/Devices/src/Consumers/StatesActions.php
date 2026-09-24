@@ -16,14 +16,14 @@
 namespace FastyBird\Module\Devices\Consumers;
 
 use FastyBird\Core\Constants as Metadata;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
@@ -76,7 +76,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		if ($document === null) {
@@ -96,19 +96,19 @@ final class StatesActions implements ExchangeConsumers\Consumer
 	 * @throws ValueError
 	 */
 	private function handlePropertyStateAction(
-		ApplicationDocuments\Document $document,
+		CoreDocuments\Document $document,
 		Sources\Source $source,
 		string $routingKey,
 	): void
 	{
-		if ($document instanceof Documents\States\Connectors\Properties\Actions\Action) {
+		if ($document instanceof DevicesDocuments\States\Connectors\Properties\Actions\Action) {
 			if ($document->getAction() === Types\PropertyAction::SET) {
 				$findConnectorPropertyQuery = new Queries\Configuration\FindConnectorDynamicProperties();
 				$findConnectorPropertyQuery->byId($document->getProperty());
 
 				$property = $this->connectorPropertiesConfigurationRepository->findOneBy(
 					$findConnectorPropertyQuery,
-					Documents\Connectors\Properties\Dynamic::class,
+					DevicesDocuments\Connectors\Properties\Dynamic::class,
 				);
 
 				if ($property === null) {
@@ -183,7 +183,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 
 				$property = $this->connectorPropertiesConfigurationRepository->findOneBy(
 					$findConnectorPropertyQuery,
-					Documents\Connectors\Properties\Dynamic::class,
+					DevicesDocuments\Connectors\Properties\Dynamic::class,
 				);
 
 				if ($property === null) {
@@ -233,7 +233,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						);
 					});
 			}
-		} elseif ($document instanceof Documents\States\Devices\Properties\Actions\Action) {
+		} elseif ($document instanceof DevicesDocuments\States\Devices\Properties\Actions\Action) {
 			if ($document->getAction() === Types\PropertyAction::SET) {
 				$findConnectorPropertyQuery = new Queries\Configuration\FindDeviceProperties();
 				$findConnectorPropertyQuery->byId($document->getProperty());
@@ -241,8 +241,8 @@ final class StatesActions implements ExchangeConsumers\Consumer
 				$property = $this->devicePropertiesConfigurationRepository->findOneBy($findConnectorPropertyQuery);
 
 				if (
-					!$property instanceof Documents\Devices\Properties\Dynamic
-					&& !$property instanceof Documents\Devices\Properties\Mapped
+					!$property instanceof DevicesDocuments\Devices\Properties\Dynamic
+					&& !$property instanceof DevicesDocuments\Devices\Properties\Mapped
 				) {
 					return;
 				}
@@ -316,8 +316,8 @@ final class StatesActions implements ExchangeConsumers\Consumer
 				$property = $this->devicePropertiesConfigurationRepository->findOneBy($findConnectorPropertyQuery);
 
 				if (
-					!$property instanceof Documents\Devices\Properties\Dynamic
-					&& !$property instanceof Documents\Devices\Properties\Mapped
+					!$property instanceof DevicesDocuments\Devices\Properties\Dynamic
+					&& !$property instanceof DevicesDocuments\Devices\Properties\Mapped
 				) {
 					return;
 				}
@@ -365,7 +365,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						);
 					});
 			}
-		} elseif ($document instanceof Documents\States\Channels\Properties\Actions\Action) {
+		} elseif ($document instanceof DevicesDocuments\States\Channels\Properties\Actions\Action) {
 			if ($document->getAction() === Types\PropertyAction::SET) {
 				$findConnectorPropertyQuery = new Queries\Configuration\FindChannelProperties();
 				$findConnectorPropertyQuery->byId($document->getProperty());
@@ -373,8 +373,8 @@ final class StatesActions implements ExchangeConsumers\Consumer
 				$property = $this->channelPropertiesConfigurationRepository->findOneBy($findConnectorPropertyQuery);
 
 				if (
-					!$property instanceof Documents\Channels\Properties\Dynamic
-					&& !$property instanceof Documents\Channels\Properties\Mapped
+					!$property instanceof DevicesDocuments\Channels\Properties\Dynamic
+					&& !$property instanceof DevicesDocuments\Channels\Properties\Mapped
 				) {
 					return;
 				}
@@ -448,8 +448,8 @@ final class StatesActions implements ExchangeConsumers\Consumer
 				$property = $this->channelPropertiesConfigurationRepository->findOneBy($findConnectorPropertyQuery);
 
 				if (
-					!$property instanceof Documents\Channels\Properties\Dynamic
-					&& !$property instanceof Documents\Channels\Properties\Mapped
+					!$property instanceof DevicesDocuments\Channels\Properties\Dynamic
+					&& !$property instanceof DevicesDocuments\Channels\Properties\Mapped
 				) {
 					return;
 				}

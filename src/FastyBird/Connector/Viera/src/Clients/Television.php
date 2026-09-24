@@ -19,12 +19,13 @@ use DateTimeInterface;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
 use FastyBird\Connector\Viera\Documents;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Types;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -102,11 +103,11 @@ final class Television implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -201,11 +202,11 @@ final class Television implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -234,11 +235,11 @@ final class Television implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -284,7 +285,7 @@ final class Television implements Client
 						),
 					);
 
-				} catch (Exceptions\TelevisionApiCall $ex) {
+				} catch (VieraExceptions\TelevisionApiCall $ex) {
 					$this->logger->error(
 						'Calling device api failed',
 						[
@@ -301,7 +302,7 @@ final class Television implements Client
 					);
 
 					return false;
-				} catch (Exceptions\TelevisionApiError $ex) {
+				} catch (VieraExceptions\TelevisionApiError $ex) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -329,7 +330,7 @@ final class Television implements Client
 					);
 
 					return false;
-				} catch (Exceptions\InvalidState $ex) {
+				} catch (VieraExceptions\InvalidState $ex) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -429,7 +430,7 @@ final class Television implements Client
 
 						break;
 				}
-			} catch (Exceptions\TelevisionApiError $ex) {
+			} catch (VieraExceptions\TelevisionApiError $ex) {
 				$this->queue->append(
 					$this->messageBuilder->create(
 						Queue\Messages\StoreDeviceConnectionState::class,
@@ -457,7 +458,7 @@ final class Television implements Client
 				);
 
 				continue;
-			} catch (Exceptions\TelevisionApiCall $ex) {
+			} catch (VieraExceptions\TelevisionApiCall $ex) {
 				$this->logger->error(
 					'Calling device api failed',
 					[
@@ -474,7 +475,7 @@ final class Television implements Client
 				);
 
 				continue;
-			} catch (Exceptions\InvalidState $ex) {
+			} catch (VieraExceptions\InvalidState $ex) {
 				$this->queue->append(
 					$this->messageBuilder->create(
 						Queue\Messages\StoreDeviceConnectionState::class,
@@ -550,7 +551,7 @@ final class Television implements Client
 						],
 					);
 
-					if ($ex instanceof Exceptions\TelevisionApiError) {
+					if ($ex instanceof VieraExceptions\TelevisionApiError) {
 						$this->queue->append(
 							$this->messageBuilder->create(
 								Queue\Messages\StoreDeviceConnectionState::class,
@@ -581,7 +582,7 @@ final class Television implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -660,11 +661,11 @@ final class Television implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError

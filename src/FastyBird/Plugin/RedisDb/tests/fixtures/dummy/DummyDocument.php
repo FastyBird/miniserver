@@ -2,11 +2,11 @@
 
 namespace FastyBird\Plugin\RedisDb\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use Orisai\ObjectMapper;
 
-#[ApplicationDocuments\Mapping\Document]
-final readonly class DummyDocument implements ApplicationDocuments\Document
+#[Documents\Mapping\Document]
+final readonly class DummyDocument implements Documents\Document
 {
 
 	public function __construct(

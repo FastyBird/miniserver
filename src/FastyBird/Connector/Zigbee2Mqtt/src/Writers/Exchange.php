@@ -16,13 +16,14 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Writers;
 
 use FastyBird\Connector\Zigbee2Mqtt;
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Logging;
@@ -51,7 +52,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public const NAME = 'exchange';
 
 	public function __construct(
-		Documents\Connectors\Connector $connector,
+		Zigbee2MqttDocuments\Connectors\Connector $connector,
 		Helpers\MessageBuilder $messageBuilder,
 		Queue\Queue $queue,
 		Zigbee2Mqtt\Logger $logger,
@@ -83,12 +84,12 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws Zigbee2MqttExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	public function connect(): void
@@ -111,7 +112,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		try {
@@ -132,7 +133,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
 					$findChannelQuery,
-					Documents\Channels\Channel::class,
+					Zigbee2MqttDocuments\Channels\Channel::class,
 				);
 
 				if ($channel === null) {
@@ -145,7 +146,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$device = $this->devicesConfigurationRepository->findOneBy(
 					$findDeviceQuery,
-					Documents\Devices\SubDevice::class,
+					Zigbee2MqttDocuments\Devices\SubDevice::class,
 				);
 
 				if ($device === null) {

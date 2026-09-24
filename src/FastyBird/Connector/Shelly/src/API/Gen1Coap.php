@@ -21,6 +21,7 @@ use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Services;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Schemas;
@@ -319,7 +320,7 @@ final class Gen1Coap
 				$payload,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | DocumentsExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
 				throw new ShellyExceptions\CoapError(
 					'Could not validate received response payload',

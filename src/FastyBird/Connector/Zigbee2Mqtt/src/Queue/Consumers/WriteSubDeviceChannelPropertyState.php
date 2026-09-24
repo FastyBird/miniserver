@@ -19,13 +19,14 @@ use DateTimeInterface;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\API;
 use FastyBird\Connector\Zigbee2Mqtt\Documents;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Models;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -83,12 +84,12 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
+	 * @throws Zigbee2MqttExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ValueError
@@ -341,7 +342,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 						$value = $this->stateRepository->get($property->getId());
 
 						$writeData->{$property->getIdentifier()} = Utilities\Value::flattenValue($value);
-					} catch (Exceptions\MissingValue) {
+					} catch (Zigbee2MqttExceptions\MissingValue) {
 						// Could be ignored
 					}
 				}
@@ -386,7 +387,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 						$value = $this->stateRepository->get($property->getId());
 
 						$writeData->{$property->getIdentifier()} = Utilities\Value::flattenValue($value);
-					} catch (Exceptions\MissingValue) {
+					} catch (Zigbee2MqttExceptions\MissingValue) {
 						// Could be ignored
 					}
 				}
@@ -609,7 +610,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError

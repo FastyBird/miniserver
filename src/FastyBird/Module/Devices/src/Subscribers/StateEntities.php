@@ -17,7 +17,8 @@ namespace FastyBird\Module\Devices\Subscribers;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\EventLoop\Application\Status;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
@@ -25,7 +26,7 @@ use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\States;
@@ -53,7 +54,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	private const ACTION_DELETED = 'deleted';
 
 	public function __construct(
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly Caching\Container $moduleCaching,
 		private readonly Status $eventLoopStatus,
 		private readonly ExchangePublisher\Publisher $publisher,
@@ -79,7 +80,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ValuesExceptions\InvalidData
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	public function stateCreated(
 		Events\ConnectorPropertyStateEntityCreated|Events\DevicePropertyStateEntityCreated|Events\ChannelPropertyStateEntityCreated $event,
@@ -101,7 +102,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ValuesExceptions\InvalidData
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	public function stateUpdated(
 		Events\ConnectorPropertyStateEntityUpdated|Events\DevicePropertyStateEntityUpdated|Events\ChannelPropertyStateEntityUpdated $event,
@@ -119,7 +120,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	}
 
 	private function cleanCache(
-		Documents\Connectors\Properties\Property|Documents\Devices\Properties\Property|Documents\Channels\Properties\Property $document,
+		DevicesDocuments\Connectors\Properties\Property|DevicesDocuments\Devices\Properties\Property|DevicesDocuments\Channels\Properties\Property $document,
 	): void
 	{
 		$this->moduleCaching->getStateCache()->clean([
@@ -134,17 +135,17 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	 * @throws Exception
 	 * @throws ValuesExceptions\InvalidData
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	private function publishDocument(
 		Sources\Source $source,
-		Documents\Connectors\Properties\Dynamic|Documents\Devices\Properties\Dynamic|Documents\Channels\Properties\Dynamic|Documents\Devices\Properties\Mapped|Documents\Channels\Properties\Mapped $property,
+		DevicesDocuments\Connectors\Properties\Dynamic|DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped|DevicesDocuments\Channels\Properties\Mapped $property,
 		States\ConnectorProperty|States\ChannelProperty|States\DeviceProperty $readState,
 		States\ConnectorProperty|States\ChannelProperty|States\DeviceProperty|null $getState,
 		string $action,
 	): void
 	{
-		if ($property instanceof Documents\Connectors\Properties\Dynamic) {
+		if ($property instanceof DevicesDocuments\Connectors\Properties\Dynamic) {
 			switch ($action) {
 				case self::ACTION_CREATED:
 					$routingKey = Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY;
@@ -163,7 +164,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 			}
 
 			$document = $this->documentFactory->create(
-				Documents\States\Connectors\Properties\Property::class,
+				DevicesDocuments\States\Connectors\Properties\Property::class,
 				[
 					'id' => $property->getId()->toString(),
 					'connector' => $property->getConnector()->toString(),
@@ -179,8 +180,8 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 			);
 
 		} elseif (
-			$property instanceof Documents\Devices\Properties\Dynamic
-			|| $property instanceof Documents\Devices\Properties\Mapped
+			$property instanceof DevicesDocuments\Devices\Properties\Dynamic
+			|| $property instanceof DevicesDocuments\Devices\Properties\Mapped
 		) {
 			switch ($action) {
 				case self::ACTION_CREATED:
@@ -200,7 +201,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 			}
 
 			$document = $this->documentFactory->create(
-				Documents\States\Devices\Properties\Property::class,
+				DevicesDocuments\States\Devices\Properties\Property::class,
 				[
 					'id' => $property->getId()->toString(),
 					'device' => $property->getDevice()->toString(),
@@ -234,7 +235,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 			}
 
 			$document = $this->documentFactory->create(
-				Documents\States\Channels\Properties\Property::class,
+				DevicesDocuments\States\Channels\Properties\Property::class,
 				[
 					'id' => $property->getId()->toString(),
 					'channel' => $property->getChannel()->toString(),

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Messaging\Exchange\Publisher\Async;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Sources;
 use React\Promise;
 
@@ -18,7 +18,7 @@ interface Publisher
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $entity,
+		Documents\Document|null $entity,
 	): Promise\PromiseInterface;
 
 }

@@ -15,13 +15,13 @@
 
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Widgets\DataSources\Generic::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\Generic::TYPE)]
-class Generic extends Documents\Widgets\DataSources\DataSource
+#[CoreDocuments\Mapping\Document(entity: Entities\Widgets\DataSources\Generic::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\Generic::TYPE)]
+class Generic extends UiDocuments\Widgets\DataSources\DataSource
 {
 
 	public static function getType(): string

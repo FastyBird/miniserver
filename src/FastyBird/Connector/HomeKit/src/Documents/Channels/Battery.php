@@ -16,10 +16,10 @@
 namespace FastyBird\Connector\HomeKit\Documents\Channels;
 
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Battery::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Battery::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Channels\Battery::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Battery::TYPE)]
 class Battery extends Channel
 {
 

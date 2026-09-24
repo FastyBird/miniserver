@@ -15,8 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Documents\Triggers;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
@@ -31,20 +30,20 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Triggers\Trigger::class)]
-#[ApplicationDocuments\Mapping\InheritanceType('SINGLE_TABLE')]
-#[ApplicationDocuments\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ApplicationDocuments\Mapping\MappedSuperclass]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[Documents\Mapping\Document(entity: Entities\Triggers\Trigger::class)]
+#[Documents\Mapping\InheritanceType('SINGLE_TABLE')]
+#[Documents\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
+#[Documents\Mapping\MappedSuperclass]
+#[Documents\Mapping\RoutingMap([
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_DOCUMENT_REPORTED_ROUTING_KEY,
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_DOCUMENT_CREATED_ROUTING_KEY,
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_DOCUMENT_UPDATED_ROUTING_KEY,
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-abstract class Trigger implements ApplicationDocuments\Document, ApplicationDocuments\Owner
+abstract class Trigger implements Documents\Document, Documents\Owner
 {
 
-	use ApplicationDocuments\TOwner;
+	use Documents\HasOwner;
 
 	public function __construct(
 		#[ApplicationObjectMapper\UuidValue()]

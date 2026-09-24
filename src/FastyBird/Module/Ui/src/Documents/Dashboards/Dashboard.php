@@ -16,12 +16,11 @@
 namespace FastyBird\Module\Ui\Documents\Dashboards;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -35,19 +34,19 @@ use function array_map;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Dashboards\Dashboard::class)]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[CoreDocuments\Mapping\Document(entity: Entities\Dashboards\Dashboard::class)]
+#[CoreDocuments\Mapping\RoutingMap([
 	Ui\Constants::MESSAGE_BUS_DASHBOARD_DOCUMENT_REPORTED_ROUTING_KEY,
 	Ui\Constants::MESSAGE_BUS_DASHBOARD_DOCUMENT_CREATED_ROUTING_KEY,
 	Ui\Constants::MESSAGE_BUS_DASHBOARD_DOCUMENT_UPDATED_ROUTING_KEY,
 	Ui\Constants::MESSAGE_BUS_DASHBOARD_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-final class Dashboard implements Documents\Document, ApplicationDocuments\Owner, ApplicationDocuments\CreatedAt, ApplicationDocuments\UpdatedAt
+final class Dashboard implements UiDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {
 
-	use ApplicationDocuments\TOwner;
-	use ApplicationDocuments\TCreatedAt;
-	use ApplicationDocuments\TUpdatedAt;
+	use CoreDocuments\HasOwner;
+	use CoreDocuments\HasCreatedAt;
+	use CoreDocuments\HasUpdatedAt;
 
 	/**
 	 * @param array<Uuid\UuidInterface> $tabs

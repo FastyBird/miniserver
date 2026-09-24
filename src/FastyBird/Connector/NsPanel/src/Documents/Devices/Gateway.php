@@ -16,10 +16,10 @@
 namespace FastyBird\Connector\NsPanel\Documents\Devices;
 
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\Gateway::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Gateway::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Devices\Gateway::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Devices\Gateway::TYPE)]
 class Gateway extends Device
 {
 

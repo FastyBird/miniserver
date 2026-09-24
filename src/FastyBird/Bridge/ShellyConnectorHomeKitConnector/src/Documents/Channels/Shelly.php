@@ -16,9 +16,9 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents\Channels;
 
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 
-#[ApplicationDocuments\Mapping\MappedSuperclass()]
+#[CoreDocuments\Mapping\MappedSuperclass()]
 abstract class Shelly extends HomeKitDocuments\Channels\Channel
 {
 

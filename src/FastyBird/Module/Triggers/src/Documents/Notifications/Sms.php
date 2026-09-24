@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Documents\Notifications;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Phone\Entities as PhoneEntities;
 use FastyBird\Core\Phone\Exceptions;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
@@ -31,8 +31,8 @@ use function array_merge;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: TriggersEntities\Notifications\Sms::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: TriggersEntities\Notifications\Sms::TYPE)]
+#[Documents\Mapping\Document(entity: TriggersEntities\Notifications\Sms::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: TriggersEntities\Notifications\Sms::TYPE)]
 final class Sms extends Notification
 {
 

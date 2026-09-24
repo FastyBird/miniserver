@@ -19,13 +19,14 @@ use Doctrine\DBAL;
 use Exception;
 use FastyBird\Addon\VirtualThermostat;
 use FastyBird\Addon\VirtualThermostat\Entities;
-use FastyBird\Addon\VirtualThermostat\Exceptions;
+use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Queries;
 use FastyBird\Addon\VirtualThermostat\Types as VirtualThermostatTypes;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Types as VirtualTypes;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
@@ -125,9 +126,9 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -182,7 +183,7 @@ class Install extends Console\Command\Command
 				if (
 					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) !== null
 				) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.install.messages.identifier.device.used',
 						),
@@ -1047,8 +1048,8 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -1733,16 +1734,16 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -1764,7 +1765,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -1826,8 +1827,8 @@ class Install extends Console\Command\Command
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1924,8 +1925,8 @@ class Install extends Console\Command\Command
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2145,7 +2146,7 @@ class Install extends Console\Command\Command
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	private function createSensor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
 	{
@@ -2294,7 +2295,7 @@ class Install extends Console\Command\Command
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	private function editSensor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
 	{
@@ -2605,12 +2606,12 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -2840,7 +2841,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @return array<VirtualThermostatTypes\HvacMode>
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -2857,7 +2858,7 @@ class Install extends Console\Command\Command
 				|| !$property->getFormat() instanceof Formats\StringEnum
 			)
 		) {
-			throw new Exceptions\InvalidArgument('Provided property is not valid');
+			throw new VirtualThermostatExceptions\InvalidArgument('Provided property is not valid');
 		}
 
 		$format = $property?->getFormat();
@@ -2894,7 +2895,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer): array {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -2939,7 +2940,7 @@ class Install extends Console\Command\Command
 				return $modes;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualThermostatExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -2963,7 +2964,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -2981,7 +2982,7 @@ class Install extends Console\Command\Command
 				|| !$property->getFormat() instanceof Formats\StringEnum
 			)
 		) {
-			throw new Exceptions\InvalidArgument('Provided property is not valid');
+			throw new VirtualThermostatExceptions\InvalidArgument('Provided property is not valid');
 		}
 
 		$default = match ($property?->getValue() ?? VirtualThermostatTypes\Unit::CELSIUS->value) {
@@ -3010,7 +3011,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): VirtualThermostatTypes\Unit {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3038,7 +3039,7 @@ class Install extends Console\Command\Command
 				return VirtualThermostatTypes\Unit::FAHRENHEIT;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualThermostatExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3057,7 +3058,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @return array<VirtualThermostatTypes\Preset>
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -3074,7 +3075,7 @@ class Install extends Console\Command\Command
 				|| !$property->getFormat() instanceof Formats\StringEnum
 			)
 		) {
-			throw new Exceptions\InvalidArgument('Provided property is not valid');
+			throw new VirtualThermostatExceptions\InvalidArgument('Provided property is not valid');
 		}
 
 		$format = $property?->getFormat();
@@ -3133,7 +3134,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer): array {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3214,7 +3215,7 @@ class Install extends Console\Command\Command
 				return $presets;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualThermostatExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3231,7 +3232,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -3265,7 +3266,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($types): VirtualThermostatTypes\ChannelPropertyIdentifier {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3285,7 +3286,7 @@ class Install extends Console\Command\Command
 					return VirtualThermostatTypes\ChannelPropertyIdentifier::from($type);
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3389,7 +3390,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($types): VirtualThermostatTypes\ChannelPropertyIdentifier {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3409,7 +3410,7 @@ class Install extends Console\Command\Command
 					return VirtualThermostatTypes\ChannelPropertyIdentifier::from($type);
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3486,7 +3487,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
@@ -3504,7 +3505,7 @@ class Install extends Console\Command\Command
 	{
 		try {
 			$property = $device?->getTargetTemp($thermostatMode);
-		} catch (Exceptions\InvalidState) {
+		} catch (VirtualThermostatExceptions\InvalidState) {
 			$property = null;
 		}
 
@@ -3538,7 +3539,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer): float {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3552,7 +3553,7 @@ class Install extends Console\Command\Command
 				return floatval($answer);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualThermostatExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3569,7 +3570,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -3590,7 +3591,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer): float {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3604,7 +3605,7 @@ class Install extends Console\Command\Command
 				return floatval($answer);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualThermostatExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3621,7 +3622,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -3643,7 +3644,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer): float {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3657,7 +3658,7 @@ class Install extends Console\Command\Command
 				return floatval($answer);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualThermostatExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3674,7 +3675,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -3696,7 +3697,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer): float {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3710,7 +3711,7 @@ class Install extends Console\Command\Command
 				return floatval($answer);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualThermostatExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3901,7 +3902,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($devices): DevicesEntities\Devices\Device {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -3925,7 +3926,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualThermostatExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4061,7 +4062,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|null $answer) use ($channels): DevicesEntities\Channels\Channel {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4085,7 +4086,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4162,7 +4163,7 @@ class Install extends Console\Command\Command
 			// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 			function (string|null $answer) use ($properties): DevicesEntities\Channels\Properties\Dynamic|DevicesEntities\Channels\Properties\Variable {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4191,7 +4192,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4218,9 +4219,9 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -4312,7 +4313,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws Console\Exception\ExceptionInterface
@@ -4320,9 +4321,9 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -4512,7 +4513,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connectors): VirtualEntities\Connectors\Connector {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4542,7 +4543,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4603,7 +4604,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($devices): Entities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4633,7 +4634,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4651,7 +4652,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
@@ -4699,7 +4700,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($presets): VirtualThermostatTypes\Preset {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4719,7 +4720,7 @@ class Install extends Console\Command\Command
 					return VirtualThermostatTypes\Preset::from($preset);
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4801,7 +4802,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($channel, $actors): DevicesEntities\Channels\Properties\Mapped {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4832,7 +4833,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4914,7 +4915,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($channel, $sensors): DevicesEntities\Channels\Properties\Mapped {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4945,7 +4946,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon.cmd.base.messages.answerNotValid',
@@ -4997,7 +4998,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Query
@@ -5021,7 +5022,7 @@ class Install extends Console\Command\Command
 			}
 		}
 
-		throw new Exceptions\InvalidState('Channel property identifier could not be created');
+		throw new VirtualThermostatExceptions\InvalidState('Channel property identifier could not be created');
 	}
 
 }

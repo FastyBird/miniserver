@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Documents;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 
@@ -27,7 +27,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface Document extends ApplicationDocuments\Document
+interface Document extends Documents\Document
 {
 
 	public function getId(): Uuid\UuidInterface;

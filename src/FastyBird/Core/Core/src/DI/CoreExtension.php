@@ -13,8 +13,7 @@ use FastyBird\Core\Commands as HttpServerCommands;
 use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Controllers as WebSocketsControllers;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Encoding as JsonApiEncoding;
 use FastyBird\Core\Encoding as WebSocketsEncoding;
 use FastyBird\Core\EventLoop;
@@ -421,13 +420,13 @@ final class CoreExtension extends DI\CompilerExtension
 			->setAutowired(false);
 
 		$builder->addDefinition('document.factory', new DI\Definitions\ServiceDefinition())
-			->setType(ApplicationDocuments\DocumentFactory::class);
+			->setType(Documents\DocumentFactory::class);
 
 		$attributeDriver = $builder->addDefinition(
 			'document.mapping.attributeDriver',
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(ApplicationDocuments\Mapping\Driver\AttributeDriver::class)
+			->setType(Documents\Mapping\Driver\AttributeDriver::class)
 			->setArguments(['paths' => array_values($configuration->application->documents->mapping)])
 			->addSetup('addExcludePaths', [$configuration->application->documents->excludePaths])
 			->addTag(self::DRIVER_TAG)
@@ -437,10 +436,10 @@ final class CoreExtension extends DI\CompilerExtension
 			'document.mapping.mappingDriver',
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(ApplicationDocuments\Mapping\Driver\MappingDriverChain::class);
+			->setType(Documents\Mapping\Driver\MappingDriverChain::class);
 
 		$builder->addDefinition('document.mapping.classMetadataFactory', new DI\Definitions\ServiceDefinition())
-			->setType(ApplicationDocuments\Mapping\ClassMetadataFactory::class)
+			->setType(Documents\Mapping\ClassMetadataFactory::class)
 			->setArguments(['driver' => $mappingDriver, 'cache' => $metadataCache]);
 
 		foreach ($configuration->application->documents->mapping as $namespace => $path) {
@@ -465,7 +464,7 @@ final class CoreExtension extends DI\CompilerExtension
 			->setType(ExchangeMessaging\Exchange\Publisher\Async\Container::class);
 
 		$builder->addDefinition($this->prefix('exchange.entityFactory'), new DI\Definitions\ServiceDefinition())
-			->setType(ExchangeDocuments\RoutingDocumentFactory::class);
+			->setType(Documents\RoutingDocumentFactory::class);
 
 		/**
 		 * SIMPLE AUTH

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Events;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Sources;
 use Symfony\Contracts\EventDispatcher;
 
@@ -15,7 +15,7 @@ final class AfterMessageConsumed extends EventDispatcher\Event
 	public function __construct(
 		private readonly Sources\Source $source,
 		private readonly string $routingKey,
-		private readonly ApplicationDocuments\Document|null $entity,
+		private readonly Documents\Document|null $entity,
 	)
 	{
 	}
@@ -30,7 +30,7 @@ final class AfterMessageConsumed extends EventDispatcher\Event
 		return $this->routingKey;
 	}
 
-	public function getEntity(): ApplicationDocuments\Document|null
+	public function getEntity(): Documents\Document|null
 	{
 		return $this->entity;
 	}

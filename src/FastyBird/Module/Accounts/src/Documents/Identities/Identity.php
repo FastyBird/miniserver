@@ -15,8 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Documents\Identities;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
@@ -33,14 +32,14 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Identities\Identity::class)]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[Documents\Mapping\Document(entity: Entities\Identities\Identity::class)]
+#[Documents\Mapping\RoutingMap([
 	Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_REPORTED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_CREATED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_UPDATED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-final readonly class Identity implements ApplicationDocuments\Document
+final readonly class Identity implements Documents\Document
 {
 
 	public function __construct(

@@ -18,11 +18,12 @@ namespace FastyBird\Connector\Sonoff\Writers;
 use DateTimeInterface;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -95,10 +96,10 @@ abstract class Periodic implements Writer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	public function connect(): void
@@ -176,10 +177,10 @@ abstract class Periodic implements Writer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	private function handleCommunication(): void
@@ -204,10 +205,10 @@ abstract class Periodic implements Writer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	private function writeProperty(Documents\Devices\Device $device): bool
@@ -353,10 +354,10 @@ abstract class Periodic implements Writer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	private function registerLoopHandler(): void

@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Cases\Unit\Cont
 
 use Doctrine\DBAL;
 use Error;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
@@ -12,6 +12,7 @@ use FastyBird\Connector\HomeKit\Middleware as HomeKitMiddleware;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Servers as HomeKitServers;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http as SlimRouterHttp;
@@ -41,12 +42,12 @@ final class AccessoriesTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws HomeKitExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws SemVer\SemverException

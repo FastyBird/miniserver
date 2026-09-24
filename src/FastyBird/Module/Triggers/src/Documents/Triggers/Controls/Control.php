@@ -15,8 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
@@ -31,17 +30,17 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Triggers\Controls\Control::class)]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[Documents\Mapping\Document(entity: Entities\Triggers\Controls\Control::class)]
+#[Documents\Mapping\RoutingMap([
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_REPORTED_ROUTING_KEY,
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_CREATED_ROUTING_KEY,
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_UPDATED_ROUTING_KEY,
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-final class Control implements ApplicationDocuments\Document, ApplicationDocuments\Owner
+final class Control implements Documents\Document, Documents\Owner
 {
 
-	use ApplicationDocuments\TOwner;
+	use Documents\HasOwner;
 
 	public function __construct(
 		#[ApplicationObjectMapper\UuidValue()]

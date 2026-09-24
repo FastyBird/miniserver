@@ -5,12 +5,12 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Subscribers;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Subscribers;
 use FastyBird\Module\Devices\Tests;
@@ -51,7 +51,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$asyncChannelPropertiesStates = $this->createMock(Models\States\Async\ChannelPropertiesManager::class);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
+		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 
 		$eventLoopStatus = $this->createMock(ApplicationEventLoop\Status::class);
 
@@ -146,7 +146,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$asyncChannelPropertiesStates = $this->createMock(Models\States\Async\ChannelPropertiesManager::class);
 
-		$document = $this->createMock(Documents\Devices\Device::class);
+		$document = $this->createMock(DevicesDocuments\Devices\Device::class);
 		$document
 			->method('toArray')
 			->willReturn([
@@ -160,7 +160,7 @@ final class ModuleEntitiesTest extends TestCase
 				'children' => [],
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
+		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
@@ -267,7 +267,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$asyncChannelPropertiesStates = $this->createMock(Models\States\Async\ChannelPropertiesManager::class);
 
-		$document = $this->createMock(Documents\Devices\Device::class);
+		$document = $this->createMock(DevicesDocuments\Devices\Device::class);
 		$document
 			->method('toArray')
 			->willReturn([
@@ -281,7 +281,7 @@ final class ModuleEntitiesTest extends TestCase
 				'children' => [],
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
+		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
@@ -396,7 +396,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$asyncChannelPropertiesStates = $this->createMock(Models\States\Async\ChannelPropertiesManager::class);
 
-		$document = $this->createMock(Documents\Devices\Device::class);
+		$document = $this->createMock(DevicesDocuments\Devices\Device::class);
 		$document
 			->method('toArray')
 			->willReturn([
@@ -410,7 +410,7 @@ final class ModuleEntitiesTest extends TestCase
 				'children' => [],
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
+		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);

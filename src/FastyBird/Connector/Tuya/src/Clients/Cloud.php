@@ -19,11 +19,12 @@ use DateTimeInterface;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\API;
 use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -99,12 +100,12 @@ final class Cloud implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -282,7 +283,7 @@ final class Cloud implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws TuyaExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -309,12 +310,12 @@ final class Cloud implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -358,12 +359,12 @@ final class Cloud implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -382,12 +383,12 @@ final class Cloud implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -445,7 +446,7 @@ final class Cloud implements Client
 			->catch(function (Throwable $ex) use ($device): void {
 				$renderException = true;
 
-				if ($ex instanceof Exceptions\OpenApiError) {
+				if ($ex instanceof TuyaExceptions\OpenApiError) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -456,7 +457,7 @@ final class Cloud implements Client
 							],
 						),
 					);
-				} elseif ($ex instanceof Exceptions\OpenApiCall) {
+				} elseif ($ex instanceof TuyaExceptions\OpenApiCall) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -498,12 +499,12 @@ final class Cloud implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -575,7 +576,7 @@ final class Cloud implements Client
 					],
 				);
 
-				if ($ex instanceof Exceptions\OpenApiError) {
+				if ($ex instanceof TuyaExceptions\OpenApiError) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -586,7 +587,7 @@ final class Cloud implements Client
 							],
 						),
 					);
-				} elseif ($ex instanceof Exceptions\OpenApiCall) {
+				} elseif ($ex instanceof TuyaExceptions\OpenApiCall) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -614,12 +615,12 @@ final class Cloud implements Client
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError

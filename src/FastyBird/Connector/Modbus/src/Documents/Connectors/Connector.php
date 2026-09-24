@@ -16,11 +16,11 @@
 namespace FastyBird\Connector\Modbus\Documents\Connectors;
 
 use FastyBird\Connector\Modbus\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Connectors\Connector::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Connectors\Connector::TYPE)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Connectors\Connector::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Connectors\Connector::TYPE)]
 class Connector extends DevicesDocuments\Connectors\Connector
 {
 

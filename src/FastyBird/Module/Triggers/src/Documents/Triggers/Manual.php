@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Documents\Triggers;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Module\Triggers\Entities;
 
 /**
@@ -26,8 +26,8 @@ use FastyBird\Module\Triggers\Entities;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Triggers\Manual::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Triggers\Manual::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Triggers\Manual::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Triggers\Manual::TYPE)]
 final class Manual extends Trigger
 {
 

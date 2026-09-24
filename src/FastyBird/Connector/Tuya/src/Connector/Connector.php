@@ -18,10 +18,11 @@ namespace FastyBird\Connector\Tuya\Connector;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Clients;
 use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Writers;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -84,14 +85,14 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
-	 * @throws Exceptions\Runtime
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\InvalidState
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
+	 * @throws TuyaExceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -132,7 +133,7 @@ final class Connector implements DevicesConnectors\Connector
 			!$this->client instanceof Clients\Local
 			&& !$this->client instanceof Clients\Cloud
 		) {
-			return Promise\reject(new Exceptions\InvalidState('Connector client is not configured'));
+			return Promise\reject(new TuyaExceptions\InvalidState('Connector client is not configured'));
 		}
 
 		$this->client->connect();
@@ -222,7 +223,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws TuyaExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError

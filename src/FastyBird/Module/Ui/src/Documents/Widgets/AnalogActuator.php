@@ -15,13 +15,13 @@
 
 namespace FastyBird\Module\Ui\Documents\Widgets;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Widgets\AnalogActuator::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\AnalogActuator::TYPE)]
-class AnalogActuator extends Documents\Widgets\Widget
+#[CoreDocuments\Mapping\Document(entity: Entities\Widgets\AnalogActuator::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\AnalogActuator::TYPE)]
+class AnalogActuator extends UiDocuments\Widgets\Widget
 {
 
 	public static function getType(): string

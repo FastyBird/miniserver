@@ -18,10 +18,11 @@ namespace FastyBird\Connector\Shelly\Connector;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Clients;
 use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Writers;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -84,13 +85,13 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
+	 * @throws ShellyExceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws ApplicationExceptions\InvalidArgument
@@ -132,7 +133,7 @@ final class Connector implements DevicesConnectors\Connector
 			&& !$this->client instanceof Clients\Cloud
 			&& !$this->client instanceof Clients\Mqtt
 		) {
-			return Promise\reject(new Exceptions\InvalidState('Connector client is not configured'));
+			return Promise\reject(new ShellyExceptions\InvalidState('Connector client is not configured'));
 		}
 
 		$this->client->connect();
@@ -177,8 +178,8 @@ final class Connector implements DevicesConnectors\Connector
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError

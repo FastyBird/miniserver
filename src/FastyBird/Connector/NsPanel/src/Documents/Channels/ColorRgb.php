@@ -17,10 +17,10 @@ namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\ColorRgb::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\ColorRgb::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Channels\ColorRgb::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\ColorRgb::TYPE)]
 class ColorRgb extends Channel
 {
 

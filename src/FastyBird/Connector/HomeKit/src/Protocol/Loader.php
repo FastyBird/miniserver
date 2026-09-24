@@ -20,12 +20,13 @@ use Doctrine\DBAL;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
@@ -112,14 +113,14 @@ class Loader
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
 	 * @throws SemVer\SemverException
 	 * @throws ApplicationExceptions\InvalidArgument
@@ -333,7 +334,7 @@ class Loader
 								$characteristic->setExpectedValue($state->getGet()->getExpectedValue());
 								$characteristic->setValid($state->isValid());
 							}
-						} catch (Exceptions\InvalidState $ex) {
+						} catch (HomeKitExceptions\InvalidState $ex) {
 							$this->logger->warning(
 								'State value could not be set to characteristic',
 								[
@@ -375,7 +376,7 @@ class Loader
 									$characteristic->setExpectedValue($state->getRead()->getExpectedValue());
 									$characteristic->setValid($state->isValid());
 								}
-							} catch (Exceptions\InvalidState $ex) {
+							} catch (HomeKitExceptions\InvalidState $ex) {
 								$this->logger->warning(
 									'State value could not be set to characteristic',
 									[
@@ -435,8 +436,8 @@ class Loader
 	/**
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
 	 * @throws SemVer\SemverException
 	 * @throws ApplicationExceptions\InvalidArgument
@@ -456,13 +457,13 @@ class Loader
 
 		if ($category === HomeKitTypes\AccessoryCategory::BRIDGE) {
 			if (!$owner instanceof Documents\Connectors\Connector) {
-				throw new Exceptions\InvalidArgument('Bridge accessory owner have to be connector item instance');
+				throw new HomeKitExceptions\InvalidArgument('Bridge accessory owner have to be connector item instance');
 			}
 
 			$accessory = $this->bridgeAccessoryFactory->create($owner->getName() ?? $owner->getIdentifier(), $owner);
 		} else {
 			if (!$owner instanceof Documents\Devices\Device) {
-				throw new Exceptions\InvalidArgument('Device accessory owner have to be device item instance');
+				throw new HomeKitExceptions\InvalidArgument('Device accessory owner have to be device item instance');
 			}
 
 			$accessory = null;
@@ -481,7 +482,7 @@ class Loader
 			}
 
 			if ($accessory === null) {
-				throw new Exceptions\InvalidState('Accessory could not be created');
+				throw new HomeKitExceptions\InvalidState('Accessory could not be created');
 			}
 		}
 
@@ -721,8 +722,8 @@ class Loader
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
@@ -735,7 +736,7 @@ class Loader
 		$metadata = $this->loader->loadServices();
 
 		if (!$metadata->offsetExists(strval($type->value))) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$type->value,
 			));
@@ -750,7 +751,7 @@ class Loader
 			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
 			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
 		) {
-			throw new Exceptions\InvalidState('Service definition is missing required attributes');
+			throw new HomeKitExceptions\InvalidState('Service definition is missing required attributes');
 		}
 
 		foreach ($this->serviceFactories as $serviceFactory) {
@@ -783,14 +784,14 @@ class Loader
 			}
 		}
 
-		throw new Exceptions\InvalidState('Service could not be created');
+		throw new HomeKitExceptions\InvalidState('Service could not be created');
 	}
 
 	/**
 	 * @param array<int>|null $validValues
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -815,7 +816,7 @@ class Loader
 		$metadata = $this->loader->loadCharacteristics();
 
 		if (!$metadata->offsetExists($name)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$name,
 			));
@@ -833,7 +834,7 @@ class Loader
 			|| !$characteristicMetadata->offsetExists('Permissions')
 			|| !$characteristicMetadata->offsetGet('Permissions') instanceof Utils\ArrayHash
 		) {
-			throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+			throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 		}
 
 		if (
@@ -951,7 +952,7 @@ class Loader
 			}
 		}
 
-		throw new Exceptions\InvalidState('Characteristic could not be created');
+		throw new HomeKitExceptions\InvalidState('Characteristic could not be created');
 	}
 
 }

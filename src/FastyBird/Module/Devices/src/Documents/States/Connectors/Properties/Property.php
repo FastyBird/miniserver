@@ -16,11 +16,10 @@
 namespace FastyBird\Module\Devices\Documents\States\Connectors\Properties;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -32,8 +31,8 @@ use function array_merge;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[CoreDocuments\Mapping\Document]
+#[CoreDocuments\Mapping\RoutingMap([
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
@@ -46,8 +45,8 @@ final class Property extends Devices\Documents\States\Property
 		Uuid\UuidInterface $id,
 		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $connector,
-		Documents\States\StateValues $read,
-		Documents\States\StateValues $get,
+		DevicesDocuments\States\StateValues $read,
+		DevicesDocuments\States\StateValues $get,
 		bool|DateTimeInterface $pending = false,
 		bool $valid = false,
 		DateTimeInterface|null $createdAt = null,

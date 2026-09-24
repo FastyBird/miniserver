@@ -15,13 +15,13 @@
 
 namespace FastyBird\Module\Devices\Queries\Configuration;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use Flow\JSONPath;
 
 /**
  * Configuration query object
  *
- * @template T of ApplicationDocuments\Document
+ * @template T of Documents\Document
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Queries

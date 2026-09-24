@@ -17,7 +17,8 @@ namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
@@ -27,7 +28,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
@@ -51,7 +52,7 @@ use function strval;
 /**
  * Useful connector dynamic property state helpers
  *
- * @extends PropertiesManager<Documents\Connectors\Properties\Dynamic, null, States\ConnectorProperty>
+ * @extends PropertiesManager<DevicesDocuments\Connectors\Properties\Dynamic, null, States\ConnectorProperty>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Models
@@ -69,7 +70,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 		private readonly Models\States\Connectors\Manager $connectorPropertiesStatesManager,
 		private readonly Caching\Container $moduleCaching,
 		private readonly Clock\Clock $clock,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Publisher $publisher,
 		Devices\Logger $logger,
 		ObjectMapper\Processing\Processor $stateMapper,
@@ -84,7 +85,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -92,9 +93,9 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @throws TypeError
 	 */
 	public function read(
-		Documents\Connectors\Properties\Dynamic $property,
+		DevicesDocuments\Connectors\Properties\Dynamic $property,
 		Sources\Source|null $source,
-	): bool|Documents\States\Connectors\Properties\Property|null
+	): bool|DevicesDocuments\States\Connectors\Properties\Property|null
 	{
 		if ($this->useExchange) {
 			try {
@@ -102,7 +103,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Connectors\Properties\Actions\Action::class,
+						DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 						[
 							'action' => Types\PropertyAction::GET->value,
 							'connector' => $property->getConnector()->toString(),
@@ -125,7 +126,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 					NetteCaching\Cache::Tags => [$property->getId()->toString()],
 				],
 			);
-			assert($document instanceof Documents\States\Connectors\Properties\Property || $document === null);
+			assert($document instanceof DevicesDocuments\States\Connectors\Properties\Property || $document === null);
 
 			return $document;
 		}
@@ -140,7 +141,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @throws ValueError
 	 */
 	public function write(
-		Documents\Connectors\Properties\Dynamic $property,
+		DevicesDocuments\Connectors\Properties\Dynamic $property,
 		Utils\ArrayHash $data,
 		Sources\Source|null $source,
 	): void
@@ -151,7 +152,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Connectors\Properties\Actions\Action::class,
+						DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 						array_merge(
 							[
 								'action' => Types\PropertyAction::SET->value,
@@ -191,7 +192,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @throws ValueError
 	 */
 	public function set(
-		Documents\Connectors\Properties\Dynamic $property,
+		DevicesDocuments\Connectors\Properties\Dynamic $property,
 		Utils\ArrayHash $data,
 		Sources\Source|null $source,
 	): void
@@ -202,7 +203,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Connectors\Properties\Actions\Action::class,
+						DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 						array_merge(
 							[
 								'action' => Types\PropertyAction::SET->value,
@@ -234,7 +235,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	}
 
 	/**
-	 * @param Documents\Connectors\Properties\Dynamic|array<Documents\Connectors\Properties\Dynamic> $property
+	 * @param DevicesDocuments\Connectors\Properties\Dynamic|array<DevicesDocuments\Connectors\Properties\Dynamic> $property
 	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
@@ -244,7 +245,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @throws ValueError
 	 */
 	public function setValidState(
-		Documents\Connectors\Properties\Dynamic|array $property,
+		DevicesDocuments\Connectors\Properties\Dynamic|array $property,
 		bool $state,
 		Sources\Source|null $source,
 	): void
@@ -271,7 +272,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	}
 
 	/**
-	 * @param Documents\Connectors\Properties\Dynamic|array<Documents\Connectors\Properties\Dynamic> $property
+	 * @param DevicesDocuments\Connectors\Properties\Dynamic|array<DevicesDocuments\Connectors\Properties\Dynamic> $property
 	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
@@ -281,7 +282,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @throws ValueError
 	 */
 	public function setPendingState(
-		Documents\Connectors\Properties\Dynamic|array $property,
+		DevicesDocuments\Connectors\Properties\Dynamic|array $property,
 		bool $pending,
 		Sources\Source|null $source,
 	): void
@@ -374,7 +375,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -383,8 +384,8 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @interal
 	 */
 	public function readState(
-		Documents\Connectors\Properties\Dynamic $property,
-	): Documents\States\Connectors\Properties\Property|null
+		DevicesDocuments\Connectors\Properties\Dynamic $property,
+	): DevicesDocuments\States\Connectors\Properties\Property|null
 	{
 		try {
 			$state = $this->connectorPropertyStateRepository->find($property->getId());
@@ -410,7 +411,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 			$getValue = $this->convertStoredState($property, null, $state, false);
 
 			return $this->documentFactory->create(
-				Documents\States\Connectors\Properties\Property::class,
+				DevicesDocuments\States\Connectors\Properties\Property::class,
 				[
 					'id' => $property->getId()->toString(),
 					'connector' => $property->getConnector()->toString(),
@@ -516,7 +517,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 	 * @interal
 	 */
 	public function writeState(
-		Documents\Connectors\Properties\Dynamic $property,
+		DevicesDocuments\Connectors\Properties\Dynamic $property,
 		Utils\ArrayHash $data,
 		bool $forWriting,
 		Sources\Source|null $source,

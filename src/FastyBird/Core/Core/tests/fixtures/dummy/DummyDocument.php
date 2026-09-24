@@ -13,8 +13,8 @@ use Orisai\ObjectMapper;
 class DummyDocument implements Documents\Document, Documents\CreatedAt, Documents\UpdatedAt
 {
 
-	use Documents\TCreatedAt;
-	use Documents\TUpdatedAt;
+	use Documents\HasCreatedAt;
+	use Documents\HasUpdatedAt;
 
 	public function __construct(
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]

@@ -16,13 +16,14 @@
 namespace FastyBird\Connector\NsPanel\Writers;
 
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Logging;
@@ -54,7 +55,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public const NAME = 'exchange';
 
 	public function __construct(
-		Documents\Connectors\Connector $connector,
+		NsPanelDocuments\Connectors\Connector $connector,
 		Helpers\MessageBuilder $messageBuilder,
 		Helpers\Devices\ThirdPartyDevice $thirdPartyDeviceHelper,
 		Queue\Queue $queue,
@@ -88,12 +89,12 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -119,7 +120,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		try {
@@ -133,7 +134,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
 					$findChannelQuery,
-					Documents\Channels\Channel::class,
+					NsPanelDocuments\Channels\Channel::class,
 				);
 
 				if ($channel === null) {
@@ -146,14 +147,14 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$device = $this->devicesConfigurationRepository->findOneBy(
 					$findDeviceQuery,
-					Documents\Devices\Device::class,
+					NsPanelDocuments\Devices\Device::class,
 				);
 
 				if ($device === null) {
 					return;
 				}
 
-				if ($device instanceof Documents\Devices\SubDevice) {
+				if ($device instanceof NsPanelDocuments\Devices\SubDevice) {
 					if (
 						$document->getGet()->getExpectedValue() === null
 						|| $document->getPending() !== true
@@ -181,7 +182,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 						),
 					);
 
-				} elseif ($device instanceof Documents\Devices\ThirdPartyDevice) {
+				} elseif ($device instanceof NsPanelDocuments\Devices\ThirdPartyDevice) {
 					if ($this->thirdPartyDeviceHelper->getGatewayIdentifier($device) === null) {
 						$this->queue->append(
 							$this->messageBuilder->create(
@@ -227,7 +228,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
 					$findChannelQuery,
-					Documents\Channels\Channel::class,
+					NsPanelDocuments\Channels\Channel::class,
 				);
 
 				if ($channel === null) {
@@ -240,14 +241,14 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$device = $this->devicesConfigurationRepository->findOneBy(
 					$findDeviceQuery,
-					Documents\Devices\Device::class,
+					NsPanelDocuments\Devices\Device::class,
 				);
 
 				if ($device === null) {
 					return;
 				}
 
-				if ($device instanceof Documents\Devices\SubDevice) {
+				if ($device instanceof NsPanelDocuments\Devices\SubDevice) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\WriteSubDeviceState::class,
@@ -260,7 +261,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 						),
 					);
 
-				} elseif ($device instanceof Documents\Devices\ThirdPartyDevice) {
+				} elseif ($device instanceof NsPanelDocuments\Devices\ThirdPartyDevice) {
 					if ($this->thirdPartyDeviceHelper->getGatewayIdentifier($device) === null) {
 						$this->queue->append(
 							$this->messageBuilder->create(

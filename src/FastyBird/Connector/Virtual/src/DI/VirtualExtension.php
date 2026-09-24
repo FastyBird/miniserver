@@ -30,7 +30,7 @@ use FastyBird\Connector\Virtual\Subscribers;
 use FastyBird\Connector\Virtual\Writers;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI;
@@ -292,7 +292,7 @@ class VirtualExtension extends DI\CompilerExtension implements Translation\DI\Tr
 				);
 
 				$documentAttributeDriverChainService = $builder->getDefinitionByType(
-					ApplicationDocuments\Mapping\Driver\MappingDriverChain::class,
+					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
 				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {

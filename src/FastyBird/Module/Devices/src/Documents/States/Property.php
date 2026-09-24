@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -30,12 +30,12 @@ use function is_bool;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\MappedSuperclass]
-abstract class Property implements ApplicationDocuments\Document, ApplicationDocuments\CreatedAt, ApplicationDocuments\UpdatedAt
+#[Documents\Mapping\MappedSuperclass]
+abstract class Property implements Documents\Document, Documents\CreatedAt, Documents\UpdatedAt
 {
 
-	use ApplicationDocuments\TCreatedAt;
-	use ApplicationDocuments\TUpdatedAt;
+	use Documents\HasCreatedAt;
+	use Documents\HasUpdatedAt;
 
 	public function __construct(
 		#[ApplicationObjectMapper\UuidValue()]

@@ -15,14 +15,14 @@
 
 namespace FastyBird\Module\Devices\Consumers;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Types;
 use Nette\Caching as NetteCaching;
 
@@ -51,7 +51,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		if ($source === Sources\Module::DEVICES) {
@@ -60,7 +60,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 
 		$this->databaseHelper->clear();
 
-		if ($document instanceof Documents\Connectors\Connector) {
+		if ($document instanceof DevicesDocuments\Connectors\Connector) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::CONNECTORS->value],
 			]);
@@ -71,7 +71,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 					$document->getId()->toString(),
 				],
 			]);
-		} elseif ($document instanceof Documents\Connectors\Properties\Property) {
+		} elseif ($document instanceof DevicesDocuments\Connectors\Properties\Property) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::CONNECTORS_PROPERTIES->value],
 			]);
@@ -82,7 +82,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 					$document->getId()->toString(),
 				],
 			]);
-		} elseif ($document instanceof Documents\Connectors\Controls\Control) {
+		} elseif ($document instanceof DevicesDocuments\Connectors\Controls\Control) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::CONNECTORS_CONTROLS->value],
 			]);
@@ -93,7 +93,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 					$document->getId()->toString(),
 				],
 			]);
-		} elseif ($document instanceof Documents\Devices\Device) {
+		} elseif ($document instanceof DevicesDocuments\Devices\Device) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::DEVICES->value],
 			]);
@@ -104,7 +104,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 					$document->getId()->toString(),
 				],
 			]);
-		} elseif ($document instanceof Documents\Devices\Properties\Property) {
+		} elseif ($document instanceof DevicesDocuments\Devices\Properties\Property) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::DEVICES_PROPERTIES->value],
 			]);
@@ -115,7 +115,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 					$document->getId()->toString(),
 				],
 			]);
-		} elseif ($document instanceof Documents\Devices\Controls\Control) {
+		} elseif ($document instanceof DevicesDocuments\Devices\Controls\Control) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::DEVICES_CONTROLS->value],
 			]);
@@ -126,7 +126,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 					$document->getId()->toString(),
 				],
 			]);
-		} elseif ($document instanceof Documents\Channels\Channel) {
+		} elseif ($document instanceof DevicesDocuments\Channels\Channel) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::CHANNELS->value],
 			]);
@@ -137,7 +137,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 					$document->getId()->toString(),
 				],
 			]);
-		} elseif ($document instanceof Documents\Channels\Properties\Property) {
+		} elseif ($document instanceof DevicesDocuments\Channels\Properties\Property) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::CHANNELS_PROPERTIES->value],
 			]);
@@ -148,7 +148,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 					$document->getId()->toString(),
 				],
 			]);
-		} elseif ($document instanceof Documents\Channels\Controls\Control) {
+		} elseif ($document instanceof DevicesDocuments\Channels\Controls\Control) {
 			$this->moduleCaching->getConfigurationBuilderCache()->clean([
 				NetteCaching\Cache::Tags => [Types\ConfigurationType::CHANNELS_CONTROLS->value],
 			]);

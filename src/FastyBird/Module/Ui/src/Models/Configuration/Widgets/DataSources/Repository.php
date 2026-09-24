@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Models\Configuration\Widgets\DataSources;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Ui\Caching;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
@@ -44,14 +44,14 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Caching\Container $moduleCaching,
 		private readonly Models\Configuration\Builder $builder,
-		private readonly ApplicationDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
 
 	/**
-	 * @template T of Documents\Widgets\DataSources\DataSource
+	 * @template T of UiDocuments\Widgets\DataSources\DataSource
 	 *
 	 * @param class-string<T> $type
 	 *
@@ -61,8 +61,8 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-		string $type = Documents\Widgets\DataSources\DataSource::class,
-	): Documents\Widgets\DataSources\DataSource|null
+		string $type = UiDocuments\Widgets\DataSources\DataSource::class,
+	): UiDocuments\Widgets\DataSources\DataSource|null
 	{
 		$queryObject = new Queries\Configuration\FindWidgetDataSources();
 		$queryObject->byId($id);
@@ -77,7 +77,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Widgets\DataSources\DataSource
+	 * @template T of UiDocuments\Widgets\DataSources\DataSource
 	 *
 	 * @param Queries\Configuration\FindWidgetDataSources<T> $queryObject
 	 * @param class-string<T> $type
@@ -88,14 +88,14 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindWidgetDataSources $queryObject,
-		string $type = Documents\Widgets\DataSources\DataSource::class,
-	): Documents\Widgets\DataSources\DataSource|null
+		string $type = UiDocuments\Widgets\DataSources\DataSource::class,
+	): UiDocuments\Widgets\DataSources\DataSource|null
 	{
 		try {
 			/** @phpstan-var T|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject) . '_' . md5($type),
-				function (&$dependencies) use ($queryObject, $type): Documents\Widgets\DataSources\DataSource|false {
+				function (&$dependencies) use ($queryObject, $type): UiDocuments\Widgets\DataSources\DataSource|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::WIDGETS_DATA_SOURCES);
 
@@ -118,7 +118,7 @@ final class Repository extends Models\Configuration\Repository
 							$space = $space->find('.[?(@.type in [' . ('"' . implode('","', $types) . '"') . '])]');
 
 							// Reset type to root class
-							$type = Documents\Widgets\DataSources\DataSource::class;
+							$type = UiDocuments\Widgets\DataSources\DataSource::class;
 
 						} else {
 							$space = $space->find(
@@ -166,7 +166,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Widgets\DataSources\DataSource
+	 * @template T of UiDocuments\Widgets\DataSources\DataSource
 	 *
 	 * @param Queries\Configuration\FindWidgetDataSources<T> $queryObject
 	 * @param class-string<T> $type
@@ -177,7 +177,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findAllBy(
 		Queries\Configuration\FindWidgetDataSources $queryObject,
-		string $type = Documents\Widgets\DataSources\DataSource::class,
+		string $type = UiDocuments\Widgets\DataSources\DataSource::class,
 	): array
 	{
 		try {
@@ -210,7 +210,7 @@ final class Repository extends Models\Configuration\Repository
 
 					$documents = array_merge(
 						array_map(
-							fn (array $item): Documents\Widgets\DataSources\DataSource => $this->documentFactory->create(
+							fn (array $item): UiDocuments\Widgets\DataSources\DataSource => $this->documentFactory->create(
 								$type,
 								$item,
 							),
@@ -225,7 +225,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::WIDGETS_DATA_SOURCES->value,
 							],
 							array_map(
-								static fn (Documents\Widgets\DataSources\DataSource $document): string => $document->getId()->toString(),
+								static fn (UiDocuments\Widgets\DataSources\DataSource $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

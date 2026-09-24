@@ -17,10 +17,10 @@ namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Power::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Power::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Channels\Power::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Power::TYPE)]
 class Power extends Channel
 {
 

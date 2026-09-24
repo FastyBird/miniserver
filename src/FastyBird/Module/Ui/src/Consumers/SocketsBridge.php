@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Consumers;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as WebSocketsRouting;
@@ -48,7 +48,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		Documents\Document|null $document,
 	): void
 	{
 		if (!in_array($routingKey, Ui\Constants::MESSAGE_BUS_ROUTING_KEYS, true)) {

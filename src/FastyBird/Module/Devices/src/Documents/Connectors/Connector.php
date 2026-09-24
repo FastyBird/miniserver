@@ -16,12 +16,11 @@
 namespace FastyBird\Module\Devices\Documents\Connectors;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Types;
 use Orisai\ObjectMapper;
@@ -36,22 +35,22 @@ use function array_map;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Connectors\Connector::class)]
-#[ApplicationDocuments\Mapping\InheritanceType('SINGLE_TABLE')]
-#[ApplicationDocuments\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ApplicationDocuments\Mapping\MappedSuperclass]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[CoreDocuments\Mapping\Document(entity: Entities\Connectors\Connector::class)]
+#[CoreDocuments\Mapping\InheritanceType('SINGLE_TABLE')]
+#[CoreDocuments\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
+#[CoreDocuments\Mapping\MappedSuperclass]
+#[CoreDocuments\Mapping\RoutingMap([
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_DOCUMENT_REPORTED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_DOCUMENT_CREATED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_DOCUMENT_UPDATED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-abstract class Connector implements Documents\Document, ApplicationDocuments\Owner, ApplicationDocuments\CreatedAt, ApplicationDocuments\UpdatedAt
+abstract class Connector implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {
 
-	use ApplicationDocuments\TOwner;
-	use ApplicationDocuments\TCreatedAt;
-	use ApplicationDocuments\TUpdatedAt;
+	use CoreDocuments\HasOwner;
+	use CoreDocuments\HasCreatedAt;
+	use CoreDocuments\HasUpdatedAt;
 
 	/**
 	 * @param array<Uuid\UuidInterface> $properties

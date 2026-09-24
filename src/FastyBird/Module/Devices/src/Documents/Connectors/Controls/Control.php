@@ -16,12 +16,11 @@
 namespace FastyBird\Module\Devices\Documents\Connectors\Controls;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -34,19 +33,19 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Connectors\Controls\Control::class)]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[CoreDocuments\Mapping\Document(entity: Entities\Connectors\Controls\Control::class)]
+#[CoreDocuments\Mapping\RoutingMap([
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_DOCUMENT_REPORTED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_DOCUMENT_CREATED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_DOCUMENT_UPDATED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-final class Control implements Documents\Document, ApplicationDocuments\Owner, ApplicationDocuments\CreatedAt, ApplicationDocuments\UpdatedAt
+final class Control implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {
 
-	use ApplicationDocuments\TOwner;
-	use ApplicationDocuments\TCreatedAt;
-	use ApplicationDocuments\TUpdatedAt;
+	use CoreDocuments\HasOwner;
+	use CoreDocuments\HasCreatedAt;
+	use CoreDocuments\HasUpdatedAt;
 
 	public function __construct(
 		#[ApplicationObjectMapper\UuidValue()]

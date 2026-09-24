@@ -2,12 +2,12 @@
 
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
-#[ApplicationDocuments\Mapping\Document(entity: DummyDeviceEntity::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: DummyDeviceEntity::TYPE)]
-class DummyDeviceDocument extends Documents\Devices\Device
+#[CoreDocuments\Mapping\Document(entity: DummyDeviceEntity::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: DummyDeviceEntity::TYPE)]
+class DummyDeviceDocument extends DevicesDocuments\Devices\Device
 {
 
 	public static function getType(): string

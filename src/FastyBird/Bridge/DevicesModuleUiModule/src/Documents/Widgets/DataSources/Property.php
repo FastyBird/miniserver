@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Documents\Widgets\DataSources;
 
 use DateTimeInterface;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
@@ -26,7 +26,7 @@ use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
 
-#[ApplicationDocuments\Mapping\MappedSuperclass]
+#[CoreDocuments\Mapping\MappedSuperclass]
 abstract class Property extends UiDocuments\Widgets\DataSources\DataSource
 {
 

@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Models\Configuration\Dashboards;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Ui\Caching;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
@@ -43,7 +43,7 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Caching\Container $moduleCaching,
 		private readonly Models\Configuration\Builder $builder,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
@@ -53,7 +53,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-	): Documents\Dashboards\Dashboard|null
+	): UiDocuments\Dashboards\Dashboard|null
 	{
 		$queryObject = new Queries\Configuration\FindDashboards();
 		$queryObject->byId($id);
@@ -62,19 +62,19 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @param Queries\Configuration\FindDashboards<Documents\Dashboards\Dashboard> $queryObject
+	 * @param Queries\Configuration\FindDashboards<UiDocuments\Dashboards\Dashboard> $queryObject
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindDashboards $queryObject,
-	): Documents\Dashboards\Dashboard|null
+	): UiDocuments\Dashboards\Dashboard|null
 	{
 		try {
-			/** @phpstan-var Documents\Dashboards\Dashboard|false $document */
+			/** @phpstan-var UiDocuments\Dashboards\Dashboard|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject),
-				function (&$dependencies) use ($queryObject): Documents\Dashboards\Dashboard|false {
+				function (&$dependencies) use ($queryObject): UiDocuments\Dashboards\Dashboard|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::DASHBOARDS);
 
@@ -85,7 +85,7 @@ final class Repository extends Models\Configuration\Repository
 					}
 
 					$document = $this->documentFactory->create(
-						Documents\Dashboards\Dashboard::class,
+						UiDocuments\Dashboards\Dashboard::class,
 						$result[0],
 					);
 
@@ -116,9 +116,9 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @param Queries\Configuration\FindDashboards<Documents\Dashboards\Dashboard> $queryObject
+	 * @param Queries\Configuration\FindDashboards<UiDocuments\Dashboards\Dashboard> $queryObject
 	 *
-	 * @return array<Documents\Dashboards\Dashboard>
+	 * @return array<UiDocuments\Dashboards\Dashboard>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
@@ -127,7 +127,7 @@ final class Repository extends Models\Configuration\Repository
 	): array
 	{
 		try {
-			/** @phpstan-var array<Documents\Dashboards\Dashboard> $documents */
+			/** @phpstan-var array<UiDocuments\Dashboards\Dashboard> $documents */
 			$documents = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyAll($queryObject),
 				function (&$dependencies) use ($queryObject): array {
@@ -141,8 +141,8 @@ final class Repository extends Models\Configuration\Repository
 					}
 
 					$documents = array_map(
-						fn (array $item): Documents\Dashboards\Dashboard => $this->documentFactory->create(
-							Documents\Dashboards\Dashboard::class,
+						fn (array $item): UiDocuments\Dashboards\Dashboard => $this->documentFactory->create(
+							UiDocuments\Dashboards\Dashboard::class,
 							$item,
 						),
 						$result,
@@ -154,7 +154,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::DASHBOARDS->value,
 							],
 							array_map(
-								static fn (Documents\Dashboards\Dashboard $document): string => $document->getId()->toString(),
+								static fn (UiDocuments\Dashboards\Dashboard $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

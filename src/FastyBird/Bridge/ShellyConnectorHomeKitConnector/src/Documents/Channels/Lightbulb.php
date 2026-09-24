@@ -16,10 +16,10 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Lightbulb::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Lightbulb::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Channels\Lightbulb::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Lightbulb::TYPE)]
 class Lightbulb extends Shelly
 {
 

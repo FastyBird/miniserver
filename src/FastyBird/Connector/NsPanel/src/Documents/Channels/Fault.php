@@ -17,10 +17,10 @@ namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Fault::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Fault::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Channels\Fault::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Fault::TYPE)]
 class Fault extends Channel
 {
 

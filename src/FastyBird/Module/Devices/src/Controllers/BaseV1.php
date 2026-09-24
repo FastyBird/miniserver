@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Controllers;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
 use FastyBird\Core\Entities\DoctrineCrud;
@@ -209,14 +209,14 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param DoctrineCrud\IEntity|ApplicationDocuments\Document|ResultSet<DoctrineCrud\IEntity>|array<DoctrineCrud\IEntity> $data
+	 * @param DoctrineCrud\IEntity|Documents\Document|ResultSet<DoctrineCrud\IEntity>|array<DoctrineCrud\IEntity> $data
 	 *
 	 * @throws Exception
 	 */
 	protected function buildResponse(
 		Message\ServerRequestInterface $request,
 		ResponseInterface $response,
-		ResultSet|DoctrineCrud\IEntity|ApplicationDocuments\Document|array $data,
+		ResultSet|DoctrineCrud\IEntity|Documents\Document|array $data,
 	): ResponseInterface
 	{
 		$totalCount = null;

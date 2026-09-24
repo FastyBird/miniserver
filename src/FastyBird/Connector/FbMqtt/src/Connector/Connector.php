@@ -18,10 +18,11 @@ namespace FastyBird\Connector\FbMqtt\Connector;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Clients;
 use FastyBird\Connector\FbMqtt\Documents;
-use FastyBird\Connector\FbMqtt\Exceptions;
+use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Writers;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -83,10 +84,10 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws FbMqttExceptions\InvalidState
+	 * @throws FbMqttExceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws ApplicationExceptions\InvalidState
@@ -124,7 +125,7 @@ final class Connector implements DevicesConnectors\Connector
 		}
 
 		if ($this->client === null) {
-			return Promise\reject(new Exceptions\InvalidState('Connector protocol version is not configured'));
+			return Promise\reject(new FbMqttExceptions\InvalidState('Connector protocol version is not configured'));
 		}
 
 		$this->client->connect();
@@ -173,7 +174,7 @@ final class Connector implements DevicesConnectors\Connector
 		assert($this->connector instanceof Documents\Connectors\Connector);
 
 		return Promise\reject(
-			new Exceptions\InvalidState('Devices discovery is not allowed for FB MQTT connector type'),
+			new FbMqttExceptions\InvalidState('Devices discovery is not allowed for FB MQTT connector type'),
 		);
 	}
 

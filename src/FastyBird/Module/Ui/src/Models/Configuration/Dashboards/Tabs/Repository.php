@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Models\Configuration\Dashboards\Tabs;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Ui\Caching;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
@@ -42,7 +42,7 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Caching\Container $moduleCaching,
 		private readonly Models\Configuration\Builder $builder,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
@@ -52,7 +52,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-	): Documents\Dashboards\Tabs\Tab|null
+	): UiDocuments\Dashboards\Tabs\Tab|null
 	{
 		$queryObject = new Queries\Configuration\FindDashboardTabs();
 		$queryObject->byId($id);
@@ -61,19 +61,19 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @param Queries\Configuration\FindDashboardTabs<Documents\Dashboards\Tabs\Tab> $queryObject
+	 * @param Queries\Configuration\FindDashboardTabs<UiDocuments\Dashboards\Tabs\Tab> $queryObject
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindDashboardTabs $queryObject,
-	): Documents\Dashboards\Tabs\Tab|null
+	): UiDocuments\Dashboards\Tabs\Tab|null
 	{
 		try {
-			/** @phpstan-var Documents\Dashboards\Tabs\Tab|false $document */
+			/** @phpstan-var UiDocuments\Dashboards\Tabs\Tab|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject),
-				function (&$dependencies) use ($queryObject): Documents\Dashboards\Tabs\Tab|false {
+				function (&$dependencies) use ($queryObject): UiDocuments\Dashboards\Tabs\Tab|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::DASHBOARDS_TABS);
 
@@ -84,7 +84,7 @@ final class Repository extends Models\Configuration\Repository
 					}
 
 					$document = $this->documentFactory->create(
-						Documents\Dashboards\Tabs\Tab::class,
+						UiDocuments\Dashboards\Tabs\Tab::class,
 						$result[0],
 					);
 
@@ -115,9 +115,9 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @param Queries\Configuration\FindDashboardTabs<Documents\Dashboards\Tabs\Tab> $queryObject
+	 * @param Queries\Configuration\FindDashboardTabs<UiDocuments\Dashboards\Tabs\Tab> $queryObject
 	 *
-	 * @return array<Documents\Dashboards\Tabs\Tab>
+	 * @return array<UiDocuments\Dashboards\Tabs\Tab>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
@@ -126,7 +126,7 @@ final class Repository extends Models\Configuration\Repository
 	): array
 	{
 		try {
-			/** @phpstan-var array<Documents\Dashboards\Tabs\Tab> $documents */
+			/** @phpstan-var array<UiDocuments\Dashboards\Tabs\Tab> $documents */
 			$documents = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyAll($queryObject),
 				function (&$dependencies) use ($queryObject): array {
@@ -140,8 +140,8 @@ final class Repository extends Models\Configuration\Repository
 					}
 
 					$documents = array_map(
-						fn (array $item): Documents\Dashboards\Tabs\Tab => $this->documentFactory->create(
-							Documents\Dashboards\Tabs\Tab::class,
+						fn (array $item): UiDocuments\Dashboards\Tabs\Tab => $this->documentFactory->create(
+							UiDocuments\Dashboards\Tabs\Tab::class,
 							$item,
 						),
 						$result,
@@ -153,7 +153,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::DASHBOARDS_TABS->value,
 							],
 							array_map(
-								static fn (Documents\Dashboards\Tabs\Tab $document): string => $document->getId()->toString(),
+								static fn (UiDocuments\Dashboards\Tabs\Tab $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

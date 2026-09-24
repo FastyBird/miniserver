@@ -17,10 +17,10 @@ namespace FastyBird\Addon\VirtualThermostat\Documents\Channels;
 
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Actors::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Actors::TYPE)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Channels\Actors::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Actors::TYPE)]
 class Actors extends VirtualDocuments\Channels\Channel
 {
 

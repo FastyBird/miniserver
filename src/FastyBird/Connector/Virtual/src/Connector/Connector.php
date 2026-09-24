@@ -18,9 +18,10 @@ namespace FastyBird\Connector\Virtual\Connector;
 use FastyBird\Connector\Virtual;
 use FastyBird\Connector\Virtual\Devices;
 use FastyBird\Connector\Virtual\Documents;
-use FastyBird\Connector\Virtual\Exceptions;
+use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Connector\Virtual\Writers;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -77,13 +78,13 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VirtualExceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidState
+	 * @throws VirtualExceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -153,7 +154,7 @@ final class Connector implements DevicesConnectors\Connector
 		assert($this->connector instanceof Documents\Connectors\Connector);
 
 		return Promise\reject(
-			new Exceptions\InvalidState('Devices discovery is not allowed for Virtual connector type'),
+			new VirtualExceptions\InvalidState('Devices discovery is not allowed for Virtual connector type'),
 		);
 	}
 

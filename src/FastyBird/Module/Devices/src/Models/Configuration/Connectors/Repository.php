@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Models\Configuration\Connectors;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
@@ -45,14 +45,14 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Models\Configuration\Builder $builder,
 		private readonly Caching\Container $moduleCaching,
-		private readonly ApplicationDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
 
 	/**
-	 * @template T of Documents\Connectors\Connector
+	 * @template T of DevicesDocuments\Connectors\Connector
 	 *
 	 * @param class-string<T> $type
 	 *
@@ -62,8 +62,8 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-		string $type = Documents\Connectors\Connector::class,
-	): Documents\Connectors\Connector|null
+		string $type = DevicesDocuments\Connectors\Connector::class,
+	): DevicesDocuments\Connectors\Connector|null
 	{
 		$queryObject = new Queries\Configuration\FindConnectors();
 		$queryObject->byId($id);
@@ -78,7 +78,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Connectors\Connector
+	 * @template T of DevicesDocuments\Connectors\Connector
 	 *
 	 * @param Queries\Configuration\FindConnectors<T> $queryObject
 	 * @param class-string<T> $type
@@ -89,14 +89,14 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindConnectors $queryObject,
-		string $type = Documents\Connectors\Connector::class,
-	): Documents\Connectors\Connector|null
+		string $type = DevicesDocuments\Connectors\Connector::class,
+	): DevicesDocuments\Connectors\Connector|null
 	{
 		try {
 			/** @phpstan-var T|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject) . '_' . md5($type),
-				function (&$dependencies) use ($queryObject, $type): Documents\Connectors\Connector|false {
+				function (&$dependencies) use ($queryObject, $type): DevicesDocuments\Connectors\Connector|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::CONNECTORS);
 
@@ -119,7 +119,7 @@ final class Repository extends Models\Configuration\Repository
 							$space = $space->find('.[?(@.type in [' . ('"' . implode('","', $types) . '"') . '])]');
 
 							// Reset type to root class
-							$type = Documents\Connectors\Connector::class;
+							$type = DevicesDocuments\Connectors\Connector::class;
 
 						} else {
 							$space = $space->find(
@@ -167,7 +167,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Connectors\Connector
+	 * @template T of DevicesDocuments\Connectors\Connector
 	 *
 	 * @param Queries\Configuration\FindConnectors<T> $queryObject
 	 * @param class-string<T> $type
@@ -178,7 +178,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findAllBy(
 		Queries\Configuration\FindConnectors $queryObject,
-		string $type = Documents\Connectors\Connector::class,
+		string $type = DevicesDocuments\Connectors\Connector::class,
 	): array
 	{
 		try {
@@ -211,7 +211,7 @@ final class Repository extends Models\Configuration\Repository
 
 					$documents = array_merge(
 						array_map(
-							fn (array $item): Documents\Connectors\Connector => $this->documentFactory->create(
+							fn (array $item): DevicesDocuments\Connectors\Connector => $this->documentFactory->create(
 								$type,
 								$item,
 							),
@@ -226,7 +226,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::CONNECTORS->value,
 							],
 							array_map(
-								static fn (Documents\Connectors\Connector $document): string => $document->getId()->toString(),
+								static fn (DevicesDocuments\Connectors\Connector $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

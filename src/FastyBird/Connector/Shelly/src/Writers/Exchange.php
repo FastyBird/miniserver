@@ -16,13 +16,14 @@
 namespace FastyBird\Connector\Shelly\Writers;
 
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Documents as ShellyDocuments;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Logging;
@@ -51,7 +52,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public const NAME = 'exchange';
 
 	public function __construct(
-		Documents\Connectors\Connector $connector,
+		ShellyDocuments\Connectors\Connector $connector,
 		Helpers\MessageBuilder $messageBuilder,
 		Queue\Queue $queue,
 		Shelly\Logger $logger,
@@ -83,11 +84,11 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws ShellyExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */
 	public function connect(): void
@@ -110,7 +111,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		try {
@@ -131,7 +132,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
 					$findChannelQuery,
-					Documents\Channels\Channel::class,
+					ShellyDocuments\Channels\Channel::class,
 				);
 
 				if ($channel === null) {
@@ -144,7 +145,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$device = $this->devicesConfigurationRepository->findOneBy(
 					$findDeviceQuery,
-					Documents\Devices\Device::class,
+					ShellyDocuments\Devices\Device::class,
 				);
 
 				if ($device === null) {

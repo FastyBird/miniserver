@@ -18,7 +18,8 @@ namespace FastyBird\Module\Triggers\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\EventLoop\Application\Status;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
@@ -56,7 +57,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	public function __construct(
 		private readonly ORM\EntityManagerInterface $entityManager,
 		private readonly Status $eventLoopStatus,
-		private readonly ExchangeDocuments\RoutingDocumentFactory $documentFactory,
+		private readonly Documents\RoutingDocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Publisher $publisher,
 		private readonly ExchangePublisher\Async\Publisher $asyncPublisher,
 	)
@@ -100,7 +101,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ExchangeExceptions\InvalidState
 	 */
@@ -122,7 +123,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ExchangeExceptions\InvalidState
 	 */
@@ -158,7 +159,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ExchangeExceptions\InvalidState
 	 */
@@ -178,7 +179,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ExchangeExceptions\InvalidState
 	 */

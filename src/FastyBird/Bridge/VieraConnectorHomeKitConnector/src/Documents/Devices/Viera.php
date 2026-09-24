@@ -17,10 +17,10 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Documents\Devices;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\Viera::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Viera::TYPE)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Devices\Viera::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Viera::TYPE)]
 class Viera extends HomeKitDocuments\Devices\Device
 {
 

@@ -18,7 +18,7 @@ namespace FastyBird\Module\Triggers\DI;
 use Contributte\Translation;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Triggers\Commands;
 use FastyBird\Module\Triggers\Controllers;
@@ -232,7 +232,7 @@ class TriggersExtension extends DI\CompilerExtension implements Translation\DI\T
 				);
 
 				$documentAttributeDriverChainService = $builder->getDefinitionByType(
-					ApplicationDocuments\Mapping\Driver\MappingDriverChain::class,
+					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
 				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {

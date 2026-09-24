@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents\Devices\Properties;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -40,7 +40,7 @@ use function array_merge;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\Properties\Mapped::class)]
+#[Documents\Mapping\Document(entity: Entities\Devices\Properties\Mapped::class)]
 final class Mapped extends Property
 {
 

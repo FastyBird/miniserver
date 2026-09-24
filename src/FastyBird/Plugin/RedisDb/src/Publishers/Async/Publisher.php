@@ -17,7 +17,7 @@ namespace FastyBird\Plugin\RedisDb\Publishers\Async;
 
 use DateTimeInterface;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Values\Types\Sources;
@@ -61,7 +61,7 @@ final class Publisher implements ExchangePublisher\Async\Publisher
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $entity,
+		Documents\Document|null $entity,
 	): Promise\PromiseInterface
 	{
 		$deferred = new Promise\Deferred();

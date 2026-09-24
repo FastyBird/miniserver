@@ -5,12 +5,13 @@ namespace FastyBird\Connector\HomeKit\Tests\Cases\Unit\Controllers;
 use Doctrine\DBAL;
 use Error;
 use FastyBird\Connector\HomeKit\Documents;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Middleware;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Tests;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\EventLoop\Application\Wrapper;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http as SlimRouterHttp;
@@ -40,12 +41,12 @@ final class CharacteristicsTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws SemVer\SemverException
 	 * @throws RuntimeException

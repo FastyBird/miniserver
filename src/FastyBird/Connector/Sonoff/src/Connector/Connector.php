@@ -19,10 +19,11 @@ use BadMethodCallException;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Clients;
 use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Writers;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -86,12 +87,12 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws BadMethodCallException
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\CloudApiCall
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\CloudApiCall
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
@@ -136,7 +137,7 @@ final class Connector implements DevicesConnectors\Connector
 				&& !$this->client instanceof Clients\Auto
 			)
 		) {
-			return Promise\reject(new Exceptions\InvalidState('Connector client is not configured'));
+			return Promise\reject(new SonoffExceptions\InvalidState('Connector client is not configured'));
 		}
 
 		$this->client->connect();
@@ -224,7 +225,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError

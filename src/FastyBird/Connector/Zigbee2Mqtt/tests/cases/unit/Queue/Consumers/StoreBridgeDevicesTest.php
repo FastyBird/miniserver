@@ -11,7 +11,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Tests;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Values\Types\Sources;
@@ -59,7 +59,7 @@ final class StoreBridgeDevicesTest extends Tests\Cases\Unit\DbTestCase
 					},
 				),
 				self::callback(static fn (string $routingKey): bool => true),
-				self::callback(static function (ApplicationDocuments\Document|null $document): bool {
+				self::callback(static function (Documents\Document|null $document): bool {
 					self::assertTrue($document !== null);
 
 					return true;

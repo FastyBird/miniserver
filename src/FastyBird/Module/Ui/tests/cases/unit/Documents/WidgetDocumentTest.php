@@ -3,10 +3,11 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\Documents;
 
 use Error;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Tests;
 use Nette;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -17,12 +18,12 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
-	 * @param class-string<ApplicationDocuments\Document> $class
+	 * @param class-string<CoreDocuments\Document> $class
 	 * @param array<string, mixed> $fixture
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
@@ -30,7 +31,7 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	#[DataProvider('widget')]
 	public function testCreateDocument(string $data, string $class, array $fixture): void
 	{
-		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);
+		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
 
 		$document = $factory->create($class, $data);
 
@@ -41,11 +42,11 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * @param class-string<ApplicationDocuments\Document> $class
+	 * @param class-string<CoreDocuments\Document> $class
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
@@ -53,7 +54,7 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	#[DataProvider('widgetInvalid')]
 	public function testCreateDocumentInvalid(string $data, string $class): void
 	{
-		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);
+		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
 
 		$this->expectException(ApplicationExceptions\InvalidArgument::class);
 
@@ -68,10 +69,10 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 		return [
 			'analog-sensor' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/widget.json'),
-				Documents\Widgets\AnalogSensor::class,
+				UiDocuments\Widgets\AnalogSensor::class,
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
-					'type' => Documents\Widgets\AnalogSensor::getType(),
+					'type' => UiDocuments\Widgets\AnalogSensor::getType(),
 					'source' => Sources\Module::UI->value,
 					'identifier' => 'widget-identifier',
 					'name' => null,
@@ -101,7 +102,7 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 		return [
 			'missing' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/widget.missing.json'),
-				Documents\Widgets\AnalogSensor::class,
+				UiDocuments\Widgets\AnalogSensor::class,
 			],
 		];
 	}

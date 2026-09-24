@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Models\States\Async;
 
 use DateTimeInterface;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
@@ -27,7 +27,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
@@ -56,7 +56,7 @@ use function strval;
 /**
  * Useful device dynamic property state helpers
  *
- * @extends Models\States\PropertiesManager<Documents\Devices\Properties\Dynamic, Documents\Devices\Properties\Mapped | null, States\DeviceProperty>
+ * @extends Models\States\PropertiesManager<DevicesDocuments\Devices\Properties\Dynamic, DevicesDocuments\Devices\Properties\Mapped | null, States\DeviceProperty>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Models
@@ -75,7 +75,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 		private readonly Models\States\Devices\Async\Manager $devicePropertiesStatesManager,
 		private readonly Caching\Container $moduleCaching,
 		private readonly Clock\Clock $clock,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Async\Publisher $publisher,
 		Devices\Logger $logger,
 		ObjectMapper\Processing\Processor $stateMapper,
@@ -86,12 +86,12 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @return Promise\PromiseInterface<bool|Documents\States\Devices\Properties\Property|null>
+	 * @return Promise\PromiseInterface<bool|DevicesDocuments\States\Devices\Properties\Property|null>
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function read(
-		Documents\Devices\Properties\Dynamic|Documents\Devices\Properties\Mapped $property,
+		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped $property,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
 	{
@@ -101,7 +101,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Devices\Properties\Actions\Action::class,
+						DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 						[
 							'action' => Types\PropertyAction::GET->value,
 							'device' => $property->getDevice()->toString(),
@@ -117,7 +117,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 				));
 			}
 		} else {
-			/** @phpstan-var Documents\States\Devices\Properties\Property|null $document */
+			/** @phpstan-var DevicesDocuments\States\Devices\Properties\Property|null $document */
 			$document = $this->moduleCaching->getStateCache()->load('read_' . $property->getId()->toString());
 
 			if ($document !== null) {
@@ -128,14 +128,14 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 
 			$this->readState($property)
 				->then(
-					function (Documents\States\Devices\Properties\Property|null $document) use ($deferred, $property): void {
+					function (DevicesDocuments\States\Devices\Properties\Property|null $document) use ($deferred, $property): void {
 						$this->moduleCaching->getStateCache()->save(
 							'read_' . $property->getId()->toString(),
 							$document,
 							[
 								NetteCaching\Cache::Tags => array_merge(
 									[$property->getId()->toString()],
-									$property instanceof Documents\Devices\Properties\Mapped
+									$property instanceof DevicesDocuments\Devices\Properties\Mapped
 										? [$property->getParent()->toString()]
 										: [],
 								),
@@ -163,7 +163,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @throws TypeError
 	 */
 	public function write(
-		Documents\Devices\Properties\Dynamic|Documents\Devices\Properties\Mapped $property,
+		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped $property,
 		Utils\ArrayHash $data,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
@@ -174,7 +174,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Devices\Properties\Actions\Action::class,
+						DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 						array_merge(
 							[
 								'action' => Types\PropertyAction::SET->value,
@@ -215,7 +215,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @throws TypeError
 	 */
 	public function set(
-		Documents\Devices\Properties\Dynamic|Documents\Devices\Properties\Mapped $property,
+		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped $property,
 		Utils\ArrayHash $data,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
@@ -226,7 +226,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Devices\Properties\Actions\Action::class,
+						DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 						array_merge(
 							[
 								'action' => Types\PropertyAction::SET->value,
@@ -258,7 +258,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @param Documents\Devices\Properties\Dynamic|array<Documents\Devices\Properties\Dynamic> $property
+	 * @param DevicesDocuments\Devices\Properties\Dynamic|array<DevicesDocuments\Devices\Properties\Dynamic> $property
 	 *
 	 * @return Promise\PromiseInterface<bool>
 	 *
@@ -269,7 +269,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @throws TypeError
 	 */
 	public function setValidState(
-		Documents\Devices\Properties\Dynamic|array $property,
+		DevicesDocuments\Devices\Properties\Dynamic|array $property,
 		bool $state,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
@@ -310,7 +310,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @param Documents\Devices\Properties\Dynamic|array<Documents\Devices\Properties\Dynamic> $property
+	 * @param DevicesDocuments\Devices\Properties\Dynamic|array<DevicesDocuments\Devices\Properties\Dynamic> $property
 	 *
 	 * @return Promise\PromiseInterface<bool>
 	 *
@@ -321,7 +321,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @throws TypeError
 	 */
 	public function setPendingState(
-		Documents\Devices\Properties\Dynamic|array $property,
+		DevicesDocuments\Devices\Properties\Dynamic|array $property,
 		bool $pending,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
@@ -420,22 +420,22 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @return Promise\PromiseInterface<Documents\States\Devices\Properties\Property|null>
+	 * @return Promise\PromiseInterface<DevicesDocuments\States\Devices\Properties\Property|null>
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 *
 	 * @interal
 	 */
 	public function readState(
-		Documents\Devices\Properties\Dynamic|Documents\Devices\Properties\Mapped $property,
+		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped $property,
 	): Promise\PromiseInterface
 	{
 		$mappedProperty = null;
 
-		if ($property instanceof Documents\Devices\Properties\Mapped) {
+		if ($property instanceof DevicesDocuments\Devices\Properties\Mapped) {
 			$parent = $this->devicePropertiesConfigurationRepository->find($property->getParent());
 
-			if (!$parent instanceof Documents\Devices\Properties\Dynamic) {
+			if (!$parent instanceof DevicesDocuments\Devices\Properties\Dynamic) {
 				return Promise\reject(new DevicesExceptions\InvalidState('Mapped property parent could not be loaded'));
 			}
 
@@ -466,7 +466,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 						$getValue = $this->convertStoredState($property, $mappedProperty, $state, false);
 
 						$deferred->resolve($this->documentFactory->create(
-							Documents\States\Devices\Properties\Property::class,
+							DevicesDocuments\States\Devices\Properties\Property::class,
 							[
 								'id' => $property->getId()->toString(),
 								'device' => $property->getDevice()->toString(),
@@ -584,7 +584,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 * @interal
 	 */
 	public function writeState(
-		Documents\Devices\Properties\Dynamic|Documents\Devices\Properties\Mapped $property,
+		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped $property,
 		Utils\ArrayHash $data,
 		bool $forWriting,
 		Sources\Source|null $source,
@@ -592,10 +592,10 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	{
 		$mappedProperty = null;
 
-		if ($property instanceof Documents\Devices\Properties\Mapped) {
+		if ($property instanceof DevicesDocuments\Devices\Properties\Mapped) {
 			$parent = $this->devicePropertiesConfigurationRepository->find($property->getParent());
 
-			if (!$parent instanceof Documents\Devices\Properties\Dynamic) {
+			if (!$parent instanceof DevicesDocuments\Devices\Properties\Dynamic) {
 				return Promise\reject(new DevicesExceptions\InvalidState('Mapped property parent could not be loaded'));
 			}
 
@@ -908,7 +908,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @return array<Documents\Devices\Properties\Mapped>
+	 * @return array<DevicesDocuments\Devices\Properties\Mapped>
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 */
@@ -919,7 +919,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 
 		return $this->devicePropertiesConfigurationRepository->findAllBy(
 			$findPropertiesQuery,
-			Documents\Devices\Properties\Mapped::class,
+			DevicesDocuments\Devices\Properties\Mapped::class,
 		);
 	}
 

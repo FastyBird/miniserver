@@ -9,7 +9,7 @@ use Ramsey\Uuid;
  *
  * @property-read Uuid\UuidInterface|null $owner
  */
-trait TOwner
+trait HasOwner
 {
 
 	public function getOwner(): Uuid\UuidInterface|null

@@ -17,7 +17,7 @@ namespace FastyBird\Addon\VirtualThermostat\Drivers;
 
 use DateTimeInterface;
 use FastyBird\Addon\VirtualThermostat;
-use FastyBird\Addon\VirtualThermostat\Exceptions;
+use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Helpers;
 use FastyBird\Addon\VirtualThermostat\Types as VirtualThermostatTypes;
 use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
@@ -27,6 +27,7 @@ use FastyBird\Connector\Virtual\Helpers as VirtualHelpers;
 use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue as VirtualQueue;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
@@ -127,12 +128,12 @@ class Thermostat implements VirtualDrivers\Driver
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -149,7 +150,7 @@ class Thermostat implements VirtualDrivers\Driver
 			)
 		) {
 			return Promise\reject(
-				new Exceptions\InvalidState('Thermostat has not configured all required actors or sensors'),
+				new VirtualThermostatExceptions\InvalidState('Thermostat has not configured all required actors or sensors'),
 			);
 		}
 
@@ -414,8 +415,8 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -456,8 +457,8 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -467,7 +468,7 @@ class Thermostat implements VirtualDrivers\Driver
 	public function process(): Promise\PromiseInterface
 	{
 		if ($this->connected === false) {
-			return Promise\reject(new Exceptions\InvalidState('Thermostat device is not connected'));
+			return Promise\reject(new VirtualThermostatExceptions\InvalidState('Thermostat device is not connected'));
 		}
 
 		$this->lastProcessedTime = $this->clock->getNow();
@@ -497,7 +498,7 @@ class Thermostat implements VirtualDrivers\Driver
 
 			$this->connected = false;
 
-			return Promise\reject(new Exceptions\InvalidState('Target temperature boundaries are wrongly configured'));
+			return Promise\reject(new VirtualThermostatExceptions\InvalidState('Target temperature boundaries are wrongly configured'));
 		}
 
 		$measuredTemp = array_filter(
@@ -632,7 +633,7 @@ class Thermostat implements VirtualDrivers\Driver
 
 				$this->connected = false;
 
-				return Promise\reject(new Exceptions\InvalidState('Thermostat has not configured any heater actor'));
+				return Promise\reject(new VirtualThermostatExceptions\InvalidState('Thermostat has not configured any heater actor'));
 			}
 
 			if ($maxCurrentTemp >= $targetTempHigh) {
@@ -646,7 +647,7 @@ class Thermostat implements VirtualDrivers\Driver
 
 				$this->connected = false;
 
-				return Promise\reject(new Exceptions\InvalidState('Thermostat has not configured any cooler actor'));
+				return Promise\reject(new VirtualThermostatExceptions\InvalidState('Thermostat has not configured any cooler actor'));
 			}
 
 			if ($maxCurrentTemp >= $targetTempHigh) {
@@ -668,7 +669,7 @@ class Thermostat implements VirtualDrivers\Driver
 				$this->connected = false;
 
 				return Promise\reject(
-					new Exceptions\InvalidState('Heating and cooling threshold temperatures are wrongly configured'),
+					new VirtualThermostatExceptions\InvalidState('Heating and cooling threshold temperatures are wrongly configured'),
 				);
 			}
 
@@ -702,8 +703,8 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -718,7 +719,7 @@ class Thermostat implements VirtualDrivers\Driver
 		$deferred = new Promise\Deferred();
 
 		if ($this->connected === false) {
-			$deferred->reject(new Exceptions\InvalidArgument('Thermostat device is not connected'));
+			$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Thermostat device is not connected'));
 
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 			$findChannelQuery = new VirtualQueries\Configuration\FindChannels();
@@ -731,7 +732,7 @@ class Thermostat implements VirtualDrivers\Driver
 
 			if ($channel === null) {
 				$deferred->reject(
-					new Exceptions\InvalidArgument('Channel for provided property could not be found'),
+					new VirtualThermostatExceptions\InvalidArgument('Channel for provided property could not be found'),
 				);
 
 			} elseif ($channel->getIdentifier() === VirtualThermostatTypes\ChannelIdentifier::STATE->value) {
@@ -765,7 +766,7 @@ class Thermostat implements VirtualDrivers\Driver
 							});
 
 					} else {
-						$deferred->reject(new Exceptions\InvalidArgument('Provided value is not valid'));
+						$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided value is not valid'));
 					}
 				} elseif ($property->getIdentifier() === VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_MODE->value) {
 					if (
@@ -797,10 +798,10 @@ class Thermostat implements VirtualDrivers\Driver
 							});
 
 					} else {
-						$deferred->reject(new Exceptions\InvalidArgument('Provided value is not valid'));
+						$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided value is not valid'));
 					}
 				} else {
-					$deferred->reject(new Exceptions\InvalidArgument(sprintf(
+					$deferred->reject(new VirtualThermostatExceptions\InvalidArgument(sprintf(
 						'Provided property: %s is unsupported',
 						$property->getIdentifier(),
 					)));
@@ -845,13 +846,13 @@ class Thermostat implements VirtualDrivers\Driver
 						$deferred->resolve(true);
 					}
 				} else {
-					$deferred->reject(new Exceptions\InvalidArgument('Provided value is not valid'));
+					$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided value is not valid'));
 				}
 			} else {
-				$deferred->reject(new Exceptions\InvalidArgument('Provided property is unsupported'));
+				$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided property is unsupported'));
 			}
 		} else {
-			$deferred->reject(new Exceptions\InvalidArgument('Provided property type is unsupported'));
+			$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided property type is unsupported'));
 		}
 
 		return $deferred->promise();
@@ -863,8 +864,8 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -879,7 +880,7 @@ class Thermostat implements VirtualDrivers\Driver
 		$deferred = new Promise\Deferred();
 
 		if ($this->connected === false) {
-			$deferred->reject(new Exceptions\InvalidArgument('Thermostat device is not connected'));
+			$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Thermostat device is not connected'));
 
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
 			$findChannelQuery = new VirtualQueries\Configuration\FindChannels();
@@ -891,7 +892,7 @@ class Thermostat implements VirtualDrivers\Driver
 			);
 
 			if ($channel === null) {
-				$deferred->reject(new Exceptions\InvalidArgument('Channel for provided property could not be found'));
+				$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Channel for provided property could not be found'));
 
 			} elseif ($channel->getIdentifier() === VirtualThermostatTypes\ChannelIdentifier::ACTORS->value) {
 				if (
@@ -947,7 +948,7 @@ class Thermostat implements VirtualDrivers\Driver
 							});
 					}
 				} else {
-					$deferred->reject(new Exceptions\InvalidArgument(sprintf(
+					$deferred->reject(new VirtualThermostatExceptions\InvalidArgument(sprintf(
 						'Provided actor type: %s is unsupported',
 						$property->getIdentifier(),
 					)));
@@ -1008,7 +1009,7 @@ class Thermostat implements VirtualDrivers\Driver
 						}
 					} else {
 						$deferred->reject(
-							new Exceptions\InvalidArgument('Thermostat does not support floor temperature sensors'),
+							new VirtualThermostatExceptions\InvalidArgument('Thermostat does not support floor temperature sensors'),
 						);
 					}
 				} elseif (
@@ -1040,7 +1041,7 @@ class Thermostat implements VirtualDrivers\Driver
 						}
 					} else {
 						$deferred->reject(
-							new Exceptions\InvalidArgument('Thermostat does not support openings sensors'),
+							new VirtualThermostatExceptions\InvalidArgument('Thermostat does not support openings sensors'),
 						);
 					}
 				} elseif (
@@ -1072,20 +1073,20 @@ class Thermostat implements VirtualDrivers\Driver
 						}
 					} else {
 						$deferred->reject(
-							new Exceptions\InvalidArgument('Thermostat does not support humidity sensors sensors'),
+							new VirtualThermostatExceptions\InvalidArgument('Thermostat does not support humidity sensors sensors'),
 						);
 					}
 				} else {
-					$deferred->reject(new Exceptions\InvalidArgument(sprintf(
+					$deferred->reject(new VirtualThermostatExceptions\InvalidArgument(sprintf(
 						'Provided sensor type: %s is unsupported',
 						$property->getIdentifier(),
 					)));
 				}
 			} else {
-				$deferred->reject(new Exceptions\InvalidArgument('Provided property channel is unsupported'));
+				$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided property channel is unsupported'));
 			}
 		} else {
-			$deferred->reject(new Exceptions\InvalidArgument('Provided property type is unsupported'));
+			$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided property type is unsupported'));
 		}
 
 		return $deferred->promise();
@@ -1095,8 +1096,8 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -1143,8 +1144,8 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -1207,7 +1208,7 @@ class Thermostat implements VirtualDrivers\Driver
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualExceptions\Runtime
 	 */
 	private function setCoolerState(bool $state): void
@@ -1256,8 +1257,8 @@ class Thermostat implements VirtualDrivers\Driver
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -1312,8 +1313,8 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState

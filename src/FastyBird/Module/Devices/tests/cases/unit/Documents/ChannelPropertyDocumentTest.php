@@ -3,12 +3,13 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Documents;
 
 use Error;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
@@ -21,12 +22,12 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
-	 * @param class-string<ApplicationDocuments\Document> $class
+	 * @param class-string<CoreDocuments\Document> $class
 	 * @param array<string, mixed> $fixture
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
@@ -34,7 +35,7 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	#[DataProvider('channelProperty')]
 	public function testCreateDocument(string $data, string $class, array $fixture): void
 	{
-		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);
+		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
 
 		$document = $factory->create($class, $data);
 
@@ -45,11 +46,11 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * @param class-string<ApplicationDocuments\Document> $class
+	 * @param class-string<CoreDocuments\Document> $class
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
@@ -57,7 +58,7 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	#[DataProvider('channelPropertyInvalid')]
 	public function testCreateDocumentInvalid(string $data, string $class): void
 	{
-		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);
+		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
 
 		$this->expectException(ApplicationExceptions\InvalidArgument::class);
 
@@ -72,10 +73,10 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 		return [
 			'dynamic' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.dynamic.json'),
-				Documents\Channels\Properties\Dynamic::class,
+				DevicesDocuments\Channels\Properties\Dynamic::class,
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
-					'type' => Documents\Channels\Properties\Dynamic::getType(),
+					'type' => DevicesDocuments\Channels\Properties\Dynamic::getType(),
 					'source' => Sources\Module::DEVICES->value,
 					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
@@ -100,10 +101,10 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			'variable' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.variable.json'),
-				Documents\Channels\Properties\Variable::class,
+				DevicesDocuments\Channels\Properties\Variable::class,
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
-					'type' => Documents\Channels\Properties\Variable::getType(),
+					'type' => DevicesDocuments\Channels\Properties\Variable::getType(),
 					'source' => Sources\Module::DEVICES->value,
 					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
@@ -126,10 +127,10 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			'mapped' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.mapped.json'),
-				Documents\Channels\Properties\Mapped::class,
+				DevicesDocuments\Channels\Properties\Mapped::class,
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
-					'type' => Documents\Channels\Properties\Mapped::getType(),
+					'type' => DevicesDocuments\Channels\Properties\Mapped::getType(),
 					'source' => Sources\Module::DEVICES->value,
 					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
@@ -170,10 +171,10 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			'dynamic-created' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.dynamic.json'),
-				Documents\Channels\Properties\Dynamic::class,
+				DevicesDocuments\Channels\Properties\Dynamic::class,
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
-					'type' => Documents\Channels\Properties\Dynamic::getType(),
+					'type' => DevicesDocuments\Channels\Properties\Dynamic::getType(),
 					'source' => Sources\Module::DEVICES->value,
 					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
@@ -197,10 +198,10 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			'dynamic-updated' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.dynamic.json'),
-				Documents\Channels\Properties\Dynamic::class,
+				DevicesDocuments\Channels\Properties\Dynamic::class,
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
-					'type' => Documents\Channels\Properties\Dynamic::getType(),
+					'type' => DevicesDocuments\Channels\Properties\Dynamic::getType(),
 					'source' => Sources\Module::DEVICES->value,
 					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
@@ -224,10 +225,10 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			'dynamic-deleted' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.dynamic.json'),
-				Documents\Channels\Properties\Dynamic::class,
+				DevicesDocuments\Channels\Properties\Dynamic::class,
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
-					'type' => Documents\Channels\Properties\Dynamic::getType(),
+					'type' => DevicesDocuments\Channels\Properties\Dynamic::getType(),
 					'source' => Sources\Module::DEVICES->value,
 					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
@@ -260,11 +261,11 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 		return [
 			'missing' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.missing.json'),
-				Documents\Channels\Properties\Dynamic::class,
+				DevicesDocuments\Channels\Properties\Dynamic::class,
 			],
 			'type-mismatch' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.mismatch.json'),
-				Documents\Channels\Properties\Dynamic::class,
+				DevicesDocuments\Channels\Properties\Dynamic::class,
 			],
 		];
 	}
