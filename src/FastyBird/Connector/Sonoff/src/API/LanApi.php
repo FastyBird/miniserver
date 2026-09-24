@@ -144,7 +144,9 @@ final class LanApi
 			}
 
 			if ($response->tc) {
-				throw new SonoffExceptions\InvalidState('The server set the truncated bit although we issued a TCP request');
+				throw new SonoffExceptions\InvalidState(
+					'The server set the truncated bit although we issued a TCP request',
+				);
 			}
 
 			$deviceIpAddress = null;

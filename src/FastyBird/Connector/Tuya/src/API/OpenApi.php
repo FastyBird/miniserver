@@ -1572,7 +1572,11 @@ final class OpenApi
 			}
 
 			if (!is_array($decodedResponse)) {
-				$error = new TuyaExceptions\OpenApiCall('Received response body is not valid JSON', $request, $response);
+				$error = new TuyaExceptions\OpenApiCall(
+					'Received response body is not valid JSON',
+					$request,
+					$response,
+				);
 
 				$this->refreshTokenPromise->reject($error);
 				$this->refreshTokenPromise = null;
@@ -1634,7 +1638,13 @@ final class OpenApi
 
 			return Promise\resolve(true);
 		} catch (GuzzleHttp\Exception\GuzzleException | InvalidArgumentException $ex) {
-			$error = new TuyaExceptions\OpenApiCall('Could not refresh access token', $request, null, $ex->getCode(), $ex);
+			$error = new TuyaExceptions\OpenApiCall(
+				'Could not refresh access token',
+				$request,
+				null,
+				$ex->getCode(),
+				$ex,
+			);
 
 			$this->refreshTokenPromise->reject($error);
 			$this->refreshTokenPromise = null;
@@ -1737,7 +1747,9 @@ final class OpenApi
 				new ObjectMapper\Printers\TypeToStringConverter(),
 			);
 
-			throw new TuyaExceptions\OpenApiError('Request sign could not be created: ' . $errorPrinter->printError($ex));
+			throw new TuyaExceptions\OpenApiError(
+				'Request sign could not be created: ' . $errorPrinter->printError($ex),
+			);
 		}
 	}
 

@@ -321,7 +321,10 @@ class Thermostat implements VirtualDrivers\Driver
 				);
 			} else {
 				$this->presetMode = VirtualThermostatTypes\Preset::from(
-					Utilities\Value::toString($property->getDefault() ?? VirtualThermostatTypes\Preset::MANUAL->value, true),
+					Utilities\Value::toString(
+						$property->getDefault() ?? VirtualThermostatTypes\Preset::MANUAL->value,
+						true,
+					),
 				);
 
 				$this->queue->append(
@@ -368,7 +371,10 @@ class Thermostat implements VirtualDrivers\Driver
 				);
 			} else {
 				$this->hvacMode = VirtualThermostatTypes\HvacMode::from(
-					Utilities\Value::toString($property->getDefault() ?? VirtualThermostatTypes\HvacMode::OFF->value, true),
+					Utilities\Value::toString(
+						$property->getDefault() ?? VirtualThermostatTypes\HvacMode::OFF->value,
+						true,
+					),
 				);
 
 				$this->queue->append(
@@ -593,7 +599,9 @@ class Thermostat implements VirtualDrivers\Driver
 						'device' => $this->device->getId(),
 						'channel' => $this->deviceHelper->getState($this->device)->getId(),
 						'property' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_OPENINGS_STATE->value,
-						'value' => $this->isOpeningsClosed() ? VirtualThermostatTypes\OpeningStatePayload::CLOSED->value : VirtualThermostatTypes\OpeningStatePayload::OPENED->value,
+						'value' => $this->isOpeningsClosed()
+							? VirtualThermostatTypes\OpeningStatePayload::CLOSED->value
+							: VirtualThermostatTypes\OpeningStatePayload::OPENED->value,
 						'source' => Sources\Addon::VIRTUAL_THERMOSTAT,
 					],
 				),

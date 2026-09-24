@@ -286,7 +286,15 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBackedEnumFieldGetValueReturnsTheMatchingCaseForAValidBackingValue(): void
 	{
-		$field = new BackedEnumField($this->createTranslator(), Types\DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField(
+			$this->createTranslator(),
+			Types\DataType::class,
+			false,
+			'field',
+			'field',
+			true,
+			true,
+		);
 
 		$attributes = (new StandardObject())->set('field', 'char');
 
@@ -295,7 +303,15 @@ final class HydratorFieldsTest extends TestCase
 
 	public function testBackedEnumFieldGetValueThrowsJsonApiErrorForAnInvalidBackingValue(): void
 	{
-		$field = new BackedEnumField($this->createTranslator(), Types\DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField(
+			$this->createTranslator(),
+			Types\DataType::class,
+			false,
+			'field',
+			'field',
+			true,
+			true,
+		);
 
 		$attributes = (new StandardObject())->set('field', 'not-a-data-type');
 
@@ -318,7 +334,15 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBackedEnumFieldGetValueReturnsNullWhenAttributeIsAbsentRatherThanThrowing(): void
 	{
-		$field = new BackedEnumField($this->createTranslator(), Types\DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField(
+			$this->createTranslator(),
+			Types\DataType::class,
+			false,
+			'field',
+			'field',
+			true,
+			true,
+		);
 
 		$attributes = new StandardObject();
 

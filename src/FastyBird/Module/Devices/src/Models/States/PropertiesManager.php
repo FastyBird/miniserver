@@ -135,7 +135,9 @@ abstract class PropertiesManager
 				);
 
 				if ($expectedValue !== null && !$property->isSettable()) {
-					throw new DevicesExceptions\InvalidExpectedValue('Property is not settable but has stored expected value');
+					throw new DevicesExceptions\InvalidExpectedValue(
+						'Property is not settable but has stored expected value',
+					);
 				}
 
 				$updateValues[States\Property::EXPECTED_VALUE_FIELD] = $expectedValue;
@@ -484,7 +486,9 @@ abstract class PropertiesManager
 				new ObjectMapper\Printers\TypeToStringConverter(),
 			);
 
-			throw new DevicesExceptions\InvalidArgument('Could not map data to state: ' . $errorPrinter->printError($ex));
+			throw new DevicesExceptions\InvalidArgument(
+				'Could not map data to state: ' . $errorPrinter->printError($ex),
+			);
 		}
 	}
 

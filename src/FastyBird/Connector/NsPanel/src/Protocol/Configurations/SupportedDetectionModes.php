@@ -46,7 +46,9 @@ class SupportedDetectionModes extends Configuration
 	{
 		$value = array_filter(
 			explode(',', $value),
-			static fn ($item) => trim($item) !== '' && NsPanelTypes\Payloads\ThermostatDetectionMode::tryFrom($item) !== null,
+			static fn ($item) => trim($item) !== '' && NsPanelTypes\Payloads\ThermostatDetectionMode::tryFrom(
+				$item,
+			) !== null,
 		);
 
 		$allowedValues = [];

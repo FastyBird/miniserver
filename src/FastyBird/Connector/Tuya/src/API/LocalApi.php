@@ -938,7 +938,11 @@ final class LocalApi
 			$suffix = array_slice($buffer, -4);
 
 		} catch (Math\Exception\MathException $ex) {
-			throw new TuyaExceptions\LocalApiCall('Could not parse message parts - return code & crc', $ex->getCode(), $ex);
+			throw new TuyaExceptions\LocalApiCall(
+				'Could not parse message parts - return code & crc',
+				$ex->getCode(),
+				$ex,
+			);
 		}
 
 		$hasReturnCode = ($returnCode & 0xFFFFFF00) === 0;

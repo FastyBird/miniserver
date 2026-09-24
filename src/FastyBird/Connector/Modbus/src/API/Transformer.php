@@ -483,7 +483,12 @@ final class Transformer
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	private function packNumber(string $format, int|float $value, int $bytes, ModbusTypes\ByteOrder $byteOrder): array|null
+	private function packNumber(
+		string $format,
+		int|float $value,
+		int $bytes,
+		ModbusTypes\ByteOrder $byteOrder,
+	): array|null
 	{
 		$bytearray = unpack("C$bytes", pack($format, $value));
 

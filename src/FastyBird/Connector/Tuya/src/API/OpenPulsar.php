@@ -287,7 +287,12 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_SCHEMA_FILENAME),
 			);
 
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData | TuyaExceptions\OpenPulsarError $ex) {
+		} catch (
+			ApplicationExceptions\Logic
+			| ApplicationExceptions\MalformedInput
+			| ValuesExceptions\InvalidData
+			| TuyaExceptions\OpenPulsarError $ex
+		) {
 			throw new TuyaExceptions\OpenPulsarError('Could not decode received Tuya WS message', $ex->getCode(), $ex);
 		}
 
@@ -300,7 +305,11 @@ final class OpenPulsar
 				$this->wsConnection->send(Utils\Json::encode(['messageId' => $message->offsetGet('messageId')]));
 
 			} catch (Utils\JsonException $ex) {
-				throw new TuyaExceptions\OpenPulsarError('Could not confirm received Tuya WS message', $ex->getCode(), $ex);
+				throw new TuyaExceptions\OpenPulsarError(
+					'Could not confirm received Tuya WS message',
+					$ex->getCode(),
+					$ex,
+				);
 			}
 		}
 
@@ -334,7 +343,12 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_PAYLOAD_SCHEMA_FILENAME),
 			);
 
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData | TuyaExceptions\OpenPulsarError $ex) {
+		} catch (
+			ApplicationExceptions\Logic
+			| ApplicationExceptions\MalformedInput
+			| ValuesExceptions\InvalidData
+			| TuyaExceptions\OpenPulsarError $ex
+		) {
 			throw new TuyaExceptions\OpenPulsarError(
 				'Could not decode received Tuya WS message payload',
 				$ex->getCode(),
@@ -383,7 +397,12 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_PAYLOAD_DATA_SCHEMA_FILENAME),
 			);
 
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData | TuyaExceptions\OpenPulsarError $ex) {
+		} catch (
+			ApplicationExceptions\Logic
+			| ApplicationExceptions\MalformedInput
+			| ValuesExceptions\InvalidData
+			| TuyaExceptions\OpenPulsarError $ex
+		) {
 			throw new TuyaExceptions\OpenPulsarError(
 				'Could not decode received Tuya WS message payload data decrypted',
 				$ex->getCode(),

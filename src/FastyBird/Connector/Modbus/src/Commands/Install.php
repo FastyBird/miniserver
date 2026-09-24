@@ -2203,7 +2203,10 @@ class Install extends Console\Command\Command
 		$default = $connector?->getBaudRate()->value ?? ModbusTypes\BaudRate::RATE_9600->value;
 
 		$baudRates = array_combine(
-			array_map(static fn (ModbusTypes\BaudRate $item): int => $item->value, array_values(ModbusTypes\BaudRate::cases())),
+			array_map(
+				static fn (ModbusTypes\BaudRate $item): int => $item->value,
+				array_values(ModbusTypes\BaudRate::cases()),
+			),
 			array_map(
 				static fn (ModbusTypes\BaudRate $item): string => strval($item->value),
 				array_values(ModbusTypes\BaudRate::cases()),
@@ -2267,7 +2270,10 @@ class Install extends Console\Command\Command
 		$default = $connector?->getByteSize()->value ?? ModbusTypes\ByteSize::SIZE_8->value;
 
 		$byteSizes = array_combine(
-			array_map(static fn (ModbusTypes\ByteSize $item): int => $item->value, array_values(ModbusTypes\ByteSize::cases())),
+			array_map(
+				static fn (ModbusTypes\ByteSize $item): int => $item->value,
+				array_values(ModbusTypes\ByteSize::cases()),
+			),
 			array_map(
 				static fn (ModbusTypes\ByteSize $item): string => strval($item->value),
 				array_values(ModbusTypes\ByteSize::cases()),
@@ -2421,7 +2427,10 @@ class Install extends Console\Command\Command
 		$default = $connector?->getStopBits()->value ?? ModbusTypes\StopBits::ONE->value;
 
 		$stopBits = array_combine(
-			array_map(static fn (ModbusTypes\StopBits $item): int => $item->value, array_values(ModbusTypes\StopBits::cases())),
+			array_map(
+				static fn (ModbusTypes\StopBits $item): int => $item->value,
+				array_values(ModbusTypes\StopBits::cases()),
+			),
 			array_map(
 				static fn (ModbusTypes\StopBits $item): string => strval($item->value),
 				array_values(ModbusTypes\StopBits::cases()),

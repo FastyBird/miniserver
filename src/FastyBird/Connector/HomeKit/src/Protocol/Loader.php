@@ -267,7 +267,9 @@ class Loader
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'identifier' => HomeKitTypes\DevicePropertyIdentifier::AID->value,
-							'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::AID->value),
+							'name' => DevicesUtilities\Name::createName(
+								HomeKitTypes\DevicePropertyIdentifier::AID->value,
+							),
 							'dataType' => ValuesTypes\DataType::UCHAR,
 							'value' => $accessory->getAid(),
 							'device' => $device,
@@ -577,7 +579,9 @@ class Loader
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'identifier' => HomeKitTypes\DevicePropertyIdentifier::VERSION->value,
-							'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::VERSION->value),
+							'name' => DevicesUtilities\Name::createName(
+								HomeKitTypes\DevicePropertyIdentifier::VERSION->value,
+							),
 							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => strval($firmwareVersion),
 							'device' => $device,
@@ -664,7 +668,9 @@ class Loader
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
-							'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::MODEL->value),
+							'name' => DevicesUtilities\Name::createName(
+								HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
+							),
 							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => $model,
 							'device' => $device,

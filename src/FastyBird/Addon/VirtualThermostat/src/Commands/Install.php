@@ -768,7 +768,10 @@ class Install extends Console\Command\Command
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_OPENINGS_STATE->value,
 						'channel' => $stateChannel,
 						'dataType' => ValuesTypes\DataType::ENUM,
-						'format' => [VirtualThermostatTypes\OpeningStatePayload::OPENED->value, VirtualThermostatTypes\OpeningStatePayload::CLOSED->value],
+						'format' => [
+							VirtualThermostatTypes\OpeningStatePayload::OPENED->value,
+							VirtualThermostatTypes\OpeningStatePayload::CLOSED->value,
+						],
 						'unit' => null,
 						'invalid' => null,
 						'scale' => null,
@@ -862,7 +865,10 @@ class Install extends Console\Command\Command
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::PRESET_MODE->value,
 					'channel' => $stateChannel,
 					'dataType' => ValuesTypes\DataType::ENUM,
-					'format' => array_map(static fn (VirtualThermostatTypes\Preset $preset): string => $preset->value, $presets),
+					'format' => array_map(
+						static fn (VirtualThermostatTypes\Preset $preset): string => $preset->value,
+						$presets,
+					),
 					'unit' => null,
 					'invalid' => null,
 					'scale' => null,
@@ -1106,7 +1112,9 @@ class Install extends Console\Command\Command
 
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($configurationChannel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::MAXIMUM_FLOOR_TEMPERATURE->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::MAXIMUM_FLOOR_TEMPERATURE->value,
+			);
 
 			$maxFloorTempProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 		}
@@ -1119,7 +1127,9 @@ class Install extends Console\Command\Command
 		if ($stateChannel !== null) {
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($stateChannel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::PRESET_MODE->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::PRESET_MODE->value,
+			);
 
 			$presetModeProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 
@@ -1131,37 +1141,49 @@ class Install extends Console\Command\Command
 
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($stateChannel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_STATE->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_STATE->value,
+			);
 
 			$hvacStateProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($stateChannel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_TEMPERATURE->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_TEMPERATURE->value,
+			);
 
 			$currentRoomTempProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($stateChannel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_FLOOR_TEMPERATURE->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_FLOOR_TEMPERATURE->value,
+			);
 
 			$currentFloorTempProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($stateChannel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::FLOOR_OVERHEATING->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::FLOOR_OVERHEATING->value,
+			);
 
 			$floorOverheatingProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($stateChannel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_HUMIDITY->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_HUMIDITY->value,
+			);
 
 			$currentRoomHumProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($stateChannel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_OPENINGS_STATE->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_OPENINGS_STATE->value,
+			);
 
 			$currentOpeningsStateProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 		}
@@ -1325,7 +1347,10 @@ class Install extends Console\Command\Command
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_OPENINGS_STATE->value,
 						'channel' => $stateChannel,
 						'dataType' => ValuesTypes\DataType::ENUM,
-						'format' => [VirtualThermostatTypes\OpeningStatePayload::OPENED->value, VirtualThermostatTypes\OpeningStatePayload::CLOSED->value],
+						'format' => [
+							VirtualThermostatTypes\OpeningStatePayload::OPENED->value,
+							VirtualThermostatTypes\OpeningStatePayload::CLOSED->value,
+						],
 						'unit' => null,
 						'invalid' => null,
 						'scale' => null,
@@ -1440,7 +1465,10 @@ class Install extends Console\Command\Command
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::PRESET_MODE->value,
 					'channel' => $stateChannel,
 					'dataType' => ValuesTypes\DataType::ENUM,
-					'format' => array_map(static fn (VirtualThermostatTypes\Preset $preset): string => $preset->value, $presets),
+					'format' => array_map(
+						static fn (VirtualThermostatTypes\Preset $preset): string => $preset->value,
+						$presets,
+					),
 					'unit' => null,
 					'invalid' => null,
 					'scale' => null,
@@ -1455,7 +1483,9 @@ class Install extends Console\Command\Command
 			foreach (VirtualThermostatTypes\Preset::cases() as $preset) {
 				$findPresetChannelQuery = new Queries\Entities\FindPresetChannels();
 				$findPresetChannelQuery->forDevice($device);
-				$findPresetChannelQuery->byIdentifier(VirtualThermostatTypes\ChannelIdentifier::from('preset_' . $preset->value));
+				$findPresetChannelQuery->byIdentifier(
+					VirtualThermostatTypes\ChannelIdentifier::from('preset_' . $preset->value),
+				);
 
 				$presetChannel = $this->channelsRepository->findOneBy(
 					$findPresetChannelQuery,
@@ -2472,7 +2502,8 @@ class Install extends Console\Command\Command
 				VirtualThermostatTypes\ChannelPropertyIdentifier::FLOOR_TEMPERATURE_SENSOR->value,
 			)) {
 				$type = (string) $this->translator->translate(
-					'//virtual-thermostat-addon.cmd.install.data.' . VirtualThermostatTypes\ChannelPropertyIdentifier::FLOOR_TEMPERATURE_SENSOR->value,
+					'//virtual-thermostat-addon.cmd.install.data.'
+					. VirtualThermostatTypes\ChannelPropertyIdentifier::FLOOR_TEMPERATURE_SENSOR->value,
 				);
 			} elseif (str_starts_with(
 				$property->getIdentifier(),
@@ -2628,7 +2659,9 @@ class Install extends Console\Command\Command
 		if ($channel !== null) {
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($channel);
-			$findChannelPropertyQuery->byIdentifier(VirtualThermostatTypes\ChannelPropertyIdentifier::TARGET_ROOM_TEMPERATURE->value);
+			$findChannelPropertyQuery->byIdentifier(
+				VirtualThermostatTypes\ChannelPropertyIdentifier::TARGET_ROOM_TEMPERATURE->value,
+			);
 
 			$targetTempProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 

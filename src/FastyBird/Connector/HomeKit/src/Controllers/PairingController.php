@@ -390,7 +390,11 @@ final class PairingController extends BaseController
 				&& array_key_exists(HomeKitTypes\TlvCode::ENCRYPTED_DATA->value, $tlvEntry)
 				&& is_array($tlvEntry[HomeKitTypes\TlvCode::ENCRYPTED_DATA->value])
 			) {
-				$result = $this->verifyFinish($connector, $tlvEntry[HomeKitTypes\TlvCode::ENCRYPTED_DATA->value], $request);
+				$result = $this->verifyFinish(
+					$connector,
+					$tlvEntry[HomeKitTypes\TlvCode::ENCRYPTED_DATA->value],
+					$request,
+				);
 
 			} else {
 				throw new Exceptions\InvalidState('Unknown data received');

@@ -666,7 +666,9 @@ final class CloudWs
 			);
 
 			$deferred?->reject(
-				new SonoffExceptions\CloudWsCall('Request sign could not be created: ' . $errorPrinter->printError($ex)),
+				new SonoffExceptions\CloudWsCall(
+					'Request sign could not be created: ' . $errorPrinter->printError($ex),
+				),
 			);
 
 			return;

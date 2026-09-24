@@ -413,7 +413,11 @@ class Install extends Console\Command\Command
 					'identifier' => NsPanelTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 					'dataType' => ValuesTypes\DataType::ENUM,
 					'value' => $mode->value,
-					'format' => [NsPanelTypes\ClientMode::GATEWAY->value, NsPanelTypes\ClientMode::DEVICE->value, NsPanelTypes\ClientMode::BOTH->value],
+					'format' => [
+						NsPanelTypes\ClientMode::GATEWAY->value,
+						NsPanelTypes\ClientMode::DEVICE->value,
+						NsPanelTypes\ClientMode::BOTH->value,
+					],
 					'connector' => $connector,
 				]));
 			} elseif ($mode !== null) {

@@ -163,9 +163,7 @@ final readonly class Handler
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function validateSource(
-		string $source,
-	): Sources\Source|null
+	private function validateSource(string $source): Sources\Source|null
 	{
 		if (Sources\Module::tryFrom($source) !== null) {
 			return Sources\Module::from($source);
