@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Messaging\Exchange\Publisher;
+namespace FastyBird\Core\Exchange\Publisher;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Events;
+use FastyBird\Core\Exchange\Events;
 use FastyBird\Core\Values\Types\Sources;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -12,10 +12,10 @@ use SplObjectStorage;
 /**
  * Exchange publishers proxy
  */
-class Container implements Publisher
+class Container implements MessagePublisher
 {
 
-	/** @var SplObjectStorage<Publisher, null> */
+	/** @var SplObjectStorage<MessagePublisher, null> */
 	private SplObjectStorage $publishers;
 
 	public function __construct(
@@ -45,7 +45,7 @@ class Container implements Publisher
 		return true;
 	}
 
-	public function register(Publisher $publisher): void
+	public function register(MessagePublisher $publisher): void
 	{
 		if (!$this->publishers->offsetExists($publisher)) {
 			$this->publishers->offsetSet($publisher);

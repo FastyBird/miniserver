@@ -7,7 +7,8 @@ use Doctrine\Persistence;
 use Exception;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Exchange\Publisher;
+use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
@@ -22,9 +23,9 @@ final class ModuleEntitiesTest extends TestCase
 
 	public function testSubscriberEvents(): void
 	{
-		$publisher = $this->createMock(ExchangePublisher\Publisher::class);
+		$publisher = $this->createMock(Publisher\MessagePublisher::class);
 
-		$asyncPublisher = $this->createMock(ExchangePublisher\Async\Publisher::class);
+		$asyncPublisher = $this->createMock(Async\MessagePublisher::class);
 
 		$entityManager = $this->createMock(ORM\EntityManagerInterface::class);
 
@@ -53,7 +54,7 @@ final class ModuleEntitiesTest extends TestCase
 	 */
 	public function testPublishCreatedEntity(): void
 	{
-		$publisher = $this->createMock(ExchangePublisher\Publisher::class);
+		$publisher = $this->createMock(Publisher\MessagePublisher::class);
 		$publisher
 			->expects(self::once())
 			->method('publish')
@@ -90,7 +91,7 @@ final class ModuleEntitiesTest extends TestCase
 				}),
 			);
 
-		$asyncPublisher = $this->createMock(ExchangePublisher\Async\Publisher::class);
+		$asyncPublisher = $this->createMock(Async\MessagePublisher::class);
 
 		$entityManager = $this->getEntityManager();
 
@@ -137,7 +138,7 @@ final class ModuleEntitiesTest extends TestCase
 	 */
 	public function testPublishUpdatedEntity(): void
 	{
-		$publisher = $this->createMock(ExchangePublisher\Publisher::class);
+		$publisher = $this->createMock(Publisher\MessagePublisher::class);
 		$publisher
 			->expects(self::once())
 			->method('publish')
@@ -174,7 +175,7 @@ final class ModuleEntitiesTest extends TestCase
 				}),
 			);
 
-		$asyncPublisher = $this->createMock(ExchangePublisher\Async\Publisher::class);
+		$asyncPublisher = $this->createMock(Async\MessagePublisher::class);
 
 		$entityManager = $this->getEntityManager(true);
 
@@ -221,7 +222,7 @@ final class ModuleEntitiesTest extends TestCase
 	 */
 	public function testPublishDeletedEntity(): void
 	{
-		$publisher = $this->createMock(ExchangePublisher\Publisher::class);
+		$publisher = $this->createMock(Publisher\MessagePublisher::class);
 		$publisher
 			->expects(self::once())
 			->method('publish')
@@ -258,7 +259,7 @@ final class ModuleEntitiesTest extends TestCase
 				}),
 			);
 
-		$asyncPublisher = $this->createMock(ExchangePublisher\Async\Publisher::class);
+		$asyncPublisher = $this->createMock(Async\MessagePublisher::class);
 
 		$entity = new Entities\Triggers\Manual('Trigger name');
 

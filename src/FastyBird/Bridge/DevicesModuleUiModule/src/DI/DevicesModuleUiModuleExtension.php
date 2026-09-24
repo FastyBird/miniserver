@@ -16,14 +16,14 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\DI;
 
 use FastyBird\Bridge\DevicesModuleUiModule;
-use FastyBird\Bridge\DevicesModuleUiModule\Consumers;
+use FastyBird\Bridge\DevicesModuleUiModule\Consumers as DevicesModuleUiModuleConsumers;
 use FastyBird\Bridge\DevicesModuleUiModule\Hydrators;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as CoreRouting;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
 use FastyBird\Core\Topics\WsServer as TopicsWsServer;
@@ -155,7 +155,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 				$this->prefix('exchange.consumer.stateEntities'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(Consumers\SocketsBridge::class)
+				->setType(DevicesModuleUiModuleConsumers\SocketsBridge::class)
 				->setArguments([
 					'logger' => $logger,
 				])
@@ -232,7 +232,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 				[
 					'@self',
 					$consumerService,
-					Consumers\SocketsBridge::class,
+					DevicesModuleUiModuleConsumers\SocketsBridge::class,
 				],
 			);
 

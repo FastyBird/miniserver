@@ -20,8 +20,8 @@ use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\Controllers\WebSockets\Controller;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Exchange;
+use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
 use FastyBird\Core\Topics\WsServer as TopicsWsServer;
@@ -30,7 +30,7 @@ use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Commands;
 use FastyBird\Module\Devices\Connectors;
-use FastyBird\Module\Devices\Consumers;
+use FastyBird\Module\Devices\Consumers as DevicesConsumers;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Hydrators;
 use FastyBird\Module\Devices\Middleware;
@@ -891,7 +891,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('exchange.consumer.statesActions'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Consumers\StatesActions::class)
+			->setType(DevicesConsumers\StatesActions::class)
 			->setArguments([
 				'logger' => $logger,
 			])
@@ -901,7 +901,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('exchange.consumer.moduleEntities'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Consumers\ModuleEntities::class)
+			->setType(DevicesConsumers\ModuleEntities::class)
 			->setArguments([
 				'logger' => $logger,
 			])
@@ -915,7 +915,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 				$this->prefix('exchange.consumer.socketsBridge'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(Consumers\SocketsBridge::class)
+				->setType(DevicesConsumers\SocketsBridge::class)
 				->setArguments([
 					'logger' => $logger,
 				])
@@ -948,7 +948,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		assert($connectorCommandService instanceof DI\Definitions\ServiceDefinition);
 		$connectorCommandService->setArgument(
 			'exchangeFactories',
-			$builder->findByType(ExchangeExchange\Factory::class),
+			$builder->findByType(Exchange\Factory::class),
 		);
 
 		$exchangeCommandServiceName = $builder->getByType(Commands\Exchange::class);
@@ -957,7 +957,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		assert($exchangeCommandService instanceof DI\Definitions\ServiceDefinition);
 		$exchangeCommandService->setArgument(
 			'exchangeFactories',
-			$builder->findByType(ExchangeExchange\Factory::class),
+			$builder->findByType(Exchange\Factory::class),
 		);
 
 		/**
@@ -1092,7 +1092,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 				[
 					'@self',
 					$consumerService,
-					Consumers\SocketsBridge::class,
+					DevicesConsumers\SocketsBridge::class,
 				],
 			);
 

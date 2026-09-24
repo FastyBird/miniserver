@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Messaging\Exchange;
+namespace FastyBird\Core\Exchange;
 
 /**
  * Exchange factory interface

@@ -23,7 +23,8 @@ use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\EventLoop\Application\Status;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
+use FastyBird\Core\Exchange\Publisher;
+use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -57,8 +58,8 @@ final class ModuleEntities implements Common\EventSubscriber
 		private readonly ORM\EntityManagerInterface $entityManager,
 		private readonly Status $eventLoopStatus,
 		private readonly Documents\RoutingDocumentFactory $documentFactory,
-		private readonly ExchangePublisher\Publisher $publisher,
-		private readonly ExchangePublisher\Async\Publisher $asyncPublisher,
+		private readonly Publisher\MessagePublisher $publisher,
+		private readonly Async\MessagePublisher $asyncPublisher,
 	)
 	{
 	}
@@ -228,7 +229,7 @@ final class ModuleEntities implements Common\EventSubscriber
 		return false;
 	}
 
-	private function getPublisher(bool $async): ExchangePublisher\Publisher|ExchangePublisher\Async\Publisher
+	private function getPublisher(bool $async): Publisher\MessagePublisher|Async\MessagePublisher
 	{
 		return $async ? $this->asyncPublisher : $this->publisher;
 	}

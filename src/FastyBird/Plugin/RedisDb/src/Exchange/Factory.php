@@ -16,10 +16,10 @@
 namespace FastyBird\Plugin\RedisDb\Exchange;
 
 use Clue\React\Redis;
-use FastyBird\Core\Events as ExchangeEvents;
-use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
+use FastyBird\Core\Exchange;
+use FastyBird\Core\Exchange\Events as ExchangeEvents;
 use FastyBird\Plugin\RedisDb\Connections;
-use FastyBird\Plugin\RedisDb\Events;
+use FastyBird\Plugin\RedisDb\Events as RedisDbEvents;
 use InvalidArgumentException;
 use Psr\EventDispatcher;
 use React\EventLoop;
@@ -33,7 +33,7 @@ use Throwable;
  * @subpackage     Exchange
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final readonly class Factory implements ExchangeExchange\Factory
+final readonly class Factory implements Exchange\Factory
 {
 
 	public function __construct(
@@ -57,7 +57,7 @@ final readonly class Factory implements ExchangeExchange\Factory
 		);
 
 		$redis->on('close', function (): void {
-			$this->dispatcher?->dispatch(new Events\ConnectionClosed());
+			$this->dispatcher?->dispatch(new RedisDbEvents\ConnectionClosed());
 		});
 
 		$redis->on('error', function (Throwable $ex): void {

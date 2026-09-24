@@ -20,7 +20,7 @@ use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\Controllers\WebSockets\Controller;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
 use FastyBird\Core\Topics\WsServer as TopicsWsServer;
@@ -28,7 +28,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Caching;
 use FastyBird\Module\Ui\Commands;
-use FastyBird\Module\Ui\Consumers;
+use FastyBird\Module\Ui\Consumers as UiConsumers;
 use FastyBird\Module\Ui\Controllers;
 use FastyBird\Module\Ui\Hydrators;
 use FastyBird\Module\Ui\Middleware;
@@ -454,7 +454,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 				$this->prefix('exchange.consumer.socketsBridge'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(Consumers\SocketsBridge::class)
+				->setType(UiConsumers\SocketsBridge::class)
 				->setArguments([
 					'logger' => $logger,
 				])
@@ -558,7 +558,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 				[
 					'@self',
 					$consumerService,
-					Consumers\SocketsBridge::class,
+					UiConsumers\SocketsBridge::class,
 				],
 			);
 

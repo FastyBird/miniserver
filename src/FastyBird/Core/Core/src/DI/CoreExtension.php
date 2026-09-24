@@ -34,6 +34,10 @@ use FastyBird\Core\Events\PushEvent;
 use FastyBird\Core\Events\StartEvent;
 use FastyBird\Core\Events\StopEvent;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exchange;
+use FastyBird\Core\Exchange\Consumers;
+use FastyBird\Core\Exchange\Publisher;
+use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Helpers as DoctrineCrudHelpers;
 use FastyBird\Core\Helpers as JsonApiHelpers;
 use FastyBird\Core\Helpers as ToolsHelpers;
@@ -44,7 +48,6 @@ use FastyBird\Core\Logging\Subscribers as LoggingSubscribers;
 use FastyBird\Core\Mapping as DoctrineCrudMapping;
 use FastyBird\Core\Mapping as SimpleAuthMapping;
 use FastyBird\Core\Mapping\DoctrineTimestampable\Driver\Timestampable;
-use FastyBird\Core\Messaging as ExchangeMessaging;
 use FastyBird\Core\Messaging as WebSocketsMessaging;
 use FastyBird\Core\Middleware as SimpleAuthMiddleware;
 use FastyBird\Core\Middleware as WebServerMiddleware;
@@ -455,13 +458,13 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('exchange.consumer'), new DI\Definitions\ServiceDefinition())
-			->setType(ExchangeMessaging\Exchange\Consumers\Container::class);
+			->setType(Consumers\Container::class);
 
 		$builder->addDefinition($this->prefix('exchange.publisher'), new DI\Definitions\ServiceDefinition())
-			->setType(ExchangeMessaging\Exchange\Publisher\Container::class);
+			->setType(Publisher\Container::class);
 
 		$builder->addDefinition($this->prefix('exchange.publisher.async'), new DI\Definitions\ServiceDefinition())
-			->setType(ExchangeMessaging\Exchange\Publisher\Async\Container::class);
+			->setType(Async\Container::class);
 
 		$builder->addDefinition($this->prefix('exchange.entityFactory'), new DI\Definitions\ServiceDefinition())
 			->setType(Documents\RoutingDocumentFactory::class);
@@ -1064,7 +1067,7 @@ final class CoreExtension extends DI\CompilerExtension
 
 		$builder->addDefinition($this->prefix('wsServer.commands.wsServer'), new DI\Definitions\ServiceDefinition())
 			->setType(WsServerCommands\WsServer::class)
-			->setArguments(['exchangeFactories' => $builder->findByType(ExchangeMessaging\Exchange\Factory::class)]);
+			->setArguments(['exchangeFactories' => $builder->findByType(Exchange\Factory::class)]);
 
 		$builder->addDefinition($this->prefix('wsServer.subscribers.client'), new DI\Definitions\ServiceDefinition())
 			->setType(WsServerSubscribers\WsServer\Client::class)
@@ -1194,15 +1197,15 @@ final class CoreExtension extends DI\CompilerExtension
 		 * EXCHANGE -- consumer/publisher proxy assembly
 		 */
 
-		$consumerProxyServiceName = $builder->getByType(ExchangeMessaging\Exchange\Consumers\Container::class);
+		$consumerProxyServiceName = $builder->getByType(Consumers\Container::class);
 
 		if ($consumerProxyServiceName !== null) {
 			$consumerProxyService = $builder->getDefinition($consumerProxyServiceName);
 			assert($consumerProxyService instanceof DI\Definitions\ServiceDefinition);
 
-			foreach ($builder->findByType(ExchangeMessaging\Exchange\Consumers\Consumer::class) as $consumerService) {
+			foreach ($builder->findByType(Consumers\Consumer::class) as $consumerService) {
 				if (
-					$consumerService->getType() !== ExchangeMessaging\Exchange\Consumers\Container::class
+					$consumerService->getType() !== Consumers\Container::class
 					&& ($consumerService->getAutowired() === true || !is_bool($consumerService->getAutowired()))
 				) {
 					$consumerService->setAutowired(false);
@@ -1221,15 +1224,15 @@ final class CoreExtension extends DI\CompilerExtension
 			}
 		}
 
-		$publisherProxyServiceName = $builder->getByType(ExchangeMessaging\Exchange\Publisher\Container::class);
+		$publisherProxyServiceName = $builder->getByType(Publisher\Container::class);
 
 		if ($publisherProxyServiceName !== null) {
 			$publisherProxyService = $builder->getDefinition($publisherProxyServiceName);
 			assert($publisherProxyService instanceof DI\Definitions\ServiceDefinition);
 
-			foreach ($builder->findByType(ExchangeMessaging\Exchange\Publisher\Publisher::class) as $publisherService) {
+			foreach ($builder->findByType(Publisher\MessagePublisher::class) as $publisherService) {
 				if (
-					$publisherService->getType() !== ExchangeMessaging\Exchange\Publisher\Container::class
+					$publisherService->getType() !== Publisher\Container::class
 					&& ($publisherService->getAutowired() === true || !is_bool($publisherService->getAutowired()))
 				) {
 					$publisherService->setAutowired(false);
@@ -1239,7 +1242,7 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		$asyncPublisherProxyServiceName = $builder->getByType(
-			ExchangeMessaging\Exchange\Publisher\Async\Container::class,
+			Async\Container::class,
 		);
 
 		if ($asyncPublisherProxyServiceName !== null) {
@@ -1247,10 +1250,10 @@ final class CoreExtension extends DI\CompilerExtension
 			assert($asyncPublisherProxyService instanceof DI\Definitions\ServiceDefinition);
 
 			foreach ($builder->findByType(
-				ExchangeMessaging\Exchange\Publisher\Async\Publisher::class,
+				Async\MessagePublisher::class,
 			) as $publisherService) {
 				if (
-					$publisherService->getType() !== ExchangeMessaging\Exchange\Publisher\Async\Container::class
+					$publisherService->getType() !== Async\Container::class
 					&& ($publisherService->getAutowired() === true || !is_bool($publisherService->getAutowired()))
 				) {
 					$publisherService->setAutowired(false);

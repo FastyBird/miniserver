@@ -16,8 +16,8 @@
 namespace FastyBird\Plugin\RedisDb\Exchange;
 
 use FastyBird\Core\Documents;
+use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Events;
 use FastyBird\Plugin\RedisDb\Utilities;
@@ -46,7 +46,7 @@ final readonly class Handler
 	public function __construct(
 		private Utilities\IdentifierGenerator $identifier,
 		private Documents\RoutingDocumentFactory $documentFactory,
-		private ExchangeConsumers\Container $consumer,
+		private Consumers\Container $consumer,
 		private EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)

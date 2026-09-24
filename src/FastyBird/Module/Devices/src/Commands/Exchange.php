@@ -15,12 +15,12 @@
 
 namespace FastyBird\Module\Devices\Commands;
 
+use FastyBird\Core\Exchange as CoreExchange;
+use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Consumers;
+use FastyBird\Module\Devices\Consumers as DevicesConsumers;
 use FastyBird\Module\Devices\Events;
 use Nette;
 use Nette\Localization;
@@ -50,7 +50,7 @@ final class Exchange extends Console\Command\Command
 	public const NAME = 'fb:devices-module:exchange';
 
 	/**
-	 * @param array<ExchangeExchange\Factory> $exchangeFactories
+	 * @param array<CoreExchange\Factory> $exchangeFactories
 	 */
 	public function __construct(
 		private readonly Devices\Logger $logger,
@@ -119,7 +119,7 @@ final class Exchange extends Console\Command\Command
 				$exchangeFactory->create();
 			}
 
-			$this->consumer->enable(Consumers\StatesActions::class);
+			$this->consumer->enable(DevicesConsumers\StatesActions::class);
 
 			$this->eventLoop->addSignal(SIGTERM, function (): void {
 				$this->terminate();

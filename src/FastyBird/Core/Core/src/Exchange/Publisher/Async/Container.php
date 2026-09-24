@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Messaging\Exchange\Publisher\Async;
+namespace FastyBird\Core\Exchange\Publisher\Async;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Events;
+use FastyBird\Core\Exchange\Events;
 use FastyBird\Core\Values\Types\Sources;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -14,10 +14,10 @@ use Throwable;
 /**
  * Exchange async publishers proxy
  */
-final class Container implements Publisher
+final class Container implements MessagePublisher
 {
 
-	/** @var SplObjectStorage<Publisher, null> */
+	/** @var SplObjectStorage<MessagePublisher, null> */
 	private SplObjectStorage $publishers;
 
 	public function __construct(
@@ -62,7 +62,7 @@ final class Container implements Publisher
 		return $deferred->promise();
 	}
 
-	public function register(Publisher $publisher): void
+	public function register(MessagePublisher $publisher): void
 	{
 		if (!$this->publishers->offsetExists($publisher)) {
 			$this->publishers->offsetSet($publisher);

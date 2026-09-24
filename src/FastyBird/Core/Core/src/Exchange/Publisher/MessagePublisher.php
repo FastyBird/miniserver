@@ -1,24 +1,20 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Messaging\Exchange\Publisher\Async;
+namespace FastyBird\Core\Exchange\Publisher;
 
 use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Sources;
-use React\Promise;
 
 /**
- * Exchange asynchronous publisher interface
+ * Exchange publisher interface
  */
-interface Publisher
+interface MessagePublisher
 {
 
-	/**
-	 * @return Promise\PromiseInterface<bool>
-	 */
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,
 		Documents\Document|null $entity,
-	): Promise\PromiseInterface;
+	): bool;
 
 }

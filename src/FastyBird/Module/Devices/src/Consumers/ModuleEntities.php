@@ -17,8 +17,8 @@ namespace FastyBird\Module\Devices\Consumers;
 
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
@@ -34,7 +34,7 @@ use Nette\Caching as NetteCaching;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final readonly class ModuleEntities implements ExchangeConsumers\Consumer
+final readonly class ModuleEntities implements Consumers\Consumer
 {
 
 	public function __construct(

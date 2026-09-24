@@ -16,9 +16,9 @@
 namespace FastyBird\Plugin\RedisDb\Clients\Async;
 
 use Clue\React\Redis;
-use FastyBird\Core\Events as ExchangeEvents;
+use FastyBird\Core\Exchange\Events as ExchangeEvents;
 use FastyBird\Plugin\RedisDb\Connections;
-use FastyBird\Plugin\RedisDb\Events;
+use FastyBird\Plugin\RedisDb\Events as RedisDbEvents;
 use InvalidArgumentException;
 use Nette;
 use Psr\EventDispatcher;
@@ -146,7 +146,7 @@ class Client
 			);
 
 			$this->redis->on('close', function (): void {
-				$this->dispatcher?->dispatch(new Events\ConnectionClosed());
+				$this->dispatcher?->dispatch(new RedisDbEvents\ConnectionClosed());
 			});
 
 			$this->redis->on('error', function (Throwable $ex): void {

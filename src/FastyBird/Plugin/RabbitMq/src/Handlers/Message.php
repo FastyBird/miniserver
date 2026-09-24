@@ -17,8 +17,8 @@ namespace FastyBird\Plugin\RabbitMq\Handlers;
 
 use Bunny;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Exceptions;
@@ -55,7 +55,7 @@ final class Message
 	public function __construct(
 		private readonly Utilities\IdentifierGenerator $identifier,
 		private readonly Documents\RoutingDocumentFactory $documentFactory,
-		private readonly ExchangeConsumers\Container $consumer,
+		private readonly Consumers\Container $consumer,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)

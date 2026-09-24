@@ -26,8 +26,8 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Constants as DevicesConstants;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -46,7 +46,7 @@ use function str_starts_with;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
+class Exchange extends Periodic implements Writer, Consumers\Consumer
 {
 
 	public const NAME = 'exchange';
@@ -62,7 +62,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 		DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
 		Clock\Clock $clock,
 		EventLoop\LoopInterface $eventLoop,
-		private readonly ExchangeConsumers\Container $consumer,
+		private readonly Consumers\Container $consumer,
 	)
 	{
 		parent::__construct(

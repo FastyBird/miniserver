@@ -18,9 +18,9 @@ namespace FastyBird\Module\Devices\Consumers;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exchange\Consumers;
+use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -44,7 +44,7 @@ use function React\Async\await;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class StatesActions implements ExchangeConsumers\Consumer
+final class StatesActions implements Consumers\Consumer
 {
 
 	private const CONSUMER_ROUTING_KEYS = [
@@ -61,7 +61,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 		private readonly Models\States\Async\ConnectorPropertiesManager $connectorPropertiesStatesManager,
 		private readonly Models\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		private readonly Models\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly ExchangePublisher\Async\Publisher $publisher,
+		private readonly Async\MessagePublisher $publisher,
 	)
 	{
 	}
