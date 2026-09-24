@@ -1478,10 +1478,14 @@ function fbMoveRewritePhp(
 
 /**
  * Final aliases. A touched import (new, or normalized) is bare unless its short name collides;
- * then it takes the last two segments joined. Two imports sharing a short name, when either is
- * touched, BOTH take the two-segment alias -- never one bare and one aliased. An untouched
- * import is re-aliased only when a name the rewrite made relative would otherwise resolve
- * through it.
+ * then it takes the last two segments joined. Two imports of DIFFERENT namespaces sharing a
+ * short name, when either is bare (its alias is exactly that short name) and either is touched,
+ * BOTH take the two-segment alias -- never one bare and one aliased. This never fires for two
+ * imports of the SAME namespace under different explicit aliases (e.g. a shared namespace
+ * intentionally aliased once per consumer subsystem in one file): those are already
+ * unambiguous and are left as they are, even when a sibling import with a different namespace
+ * but the same short name is touched. An untouched import is re-aliased only when a name the
+ * rewrite made relative would otherwise resolve through it.
  *
  * @param array<string, array{name: string, alias: string, touched: bool}> $final
  * @param array<string, true> $reserved
@@ -1497,6 +1501,7 @@ function fbMoveAssignAliases(string $path, array &$final, array $reserved): void
 	foreach ($final as $id => $entry) {
 		$short = strtolower(fbMoveShortOf($entry['name']));
 		$sharesShortName = count($byShort[$short]) > 1;
+		$isBare = strcasecmp($entry['alias'], fbMoveShortOf($entry['name'])) === 0;
 		$groupTouched = false;
 
 		foreach ($final as $other) {
@@ -1506,7 +1511,7 @@ function fbMoveAssignAliases(string $path, array &$final, array $reserved): void
 		}
 
 		if (
-			($sharesShortName && $groupTouched)
+			($sharesShortName && $groupTouched && $isBare)
 			|| ($entry['touched'] && isset($reserved[strtolower($entry['alias'])]))
 			|| (!$entry['touched'] && isset($reserved[strtolower($entry['alias'])]))
 		) {
