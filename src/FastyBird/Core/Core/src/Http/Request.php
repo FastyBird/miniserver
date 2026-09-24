@@ -23,7 +23,7 @@ final class Request extends Http\Request implements IRequest
 		string $method = 'GET',
 		string|null $remoteAddress = null,
 		string|null $remoteHost = null,
-		null $rawBodyCallback = null,
+		callable|null $rawBodyCallback = null,
 	)
 	{
 		parent::__construct(
