@@ -55,7 +55,11 @@ final readonly class EntityMapper implements IEntityMapper
 	 * @throws ReflectionException
 	 */
 	#[Override]
-	public function fillEntity(Utils\ArrayHash $values, Entities\CrudEntity $entity, bool $isNew = false): Entities\CrudEntity
+	public function fillEntity(
+		Utils\ArrayHash $values,
+		Entities\CrudEntity $entity,
+		bool $isNew = false,
+	): Entities\CrudEntity
 	{
 		// This used to unwrap Doctrine\Common\Proxy\Proxy subclasses to reach the real entity class.
 		// That interface left with doctrine/common, and under ORM 3 with native lazy objects there

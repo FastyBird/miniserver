@@ -13,15 +13,6 @@ use FastyBird\Core\Persistence\Mapping;
 final class EntityCrudFactory
 {
 
-	/** @var Create\EntityCreatorFactory<T> */
-	private Create\EntityCreatorFactory $entityCreatorFactory;
-
-	/** @var Update\EntityUpdaterFactory<T> */
-	private Update\EntityUpdaterFactory $entityUpdaterFactory;
-
-	/** @var Delete\EntityDeleterFactory<T> */
-	private Delete\EntityDeleterFactory $entityDeleterFactory;
-
 	/**
 	 * @param Create\EntityCreatorFactory<T> $entityCreatorFactory
 	 * @param Update\EntityUpdaterFactory<T> $entityUpdaterFactory
@@ -29,15 +20,12 @@ final class EntityCrudFactory
 	 */
 	public function __construct(
 		private Mapping\IEntityMapper $entityMapper,
-		Create\EntityCreatorFactory $entityCreatorFactory,
-		Update\EntityUpdaterFactory $entityUpdaterFactory,
-		Delete\EntityDeleterFactory $entityDeleterFactory,
+		private Create\EntityCreatorFactory $entityCreatorFactory,
+		private Update\EntityUpdaterFactory $entityUpdaterFactory,
+		private Delete\EntityDeleterFactory $entityDeleterFactory,
 	)
 	{
 		// CRUD factories
-		$this->entityCreatorFactory = $entityCreatorFactory;
-		$this->entityUpdaterFactory = $entityUpdaterFactory;
-		$this->entityDeleterFactory = $entityDeleterFactory;
 	}
 
 	/**

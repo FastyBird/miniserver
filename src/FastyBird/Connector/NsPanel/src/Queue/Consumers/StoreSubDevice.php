@@ -268,7 +268,10 @@ final class StoreSubDevice implements Queue\Consumer
 		}
 
 		foreach ($message->getState() as $state) {
-			$identifier = NsPanelHelpers\Name::convertCapabilityToChannel($state->getCapability(), $state->getIdentifier());
+			$identifier = NsPanelHelpers\Name::convertCapabilityToChannel(
+				$state->getCapability(),
+				$state->getIdentifier(),
+			);
 
 			$findChannelQuery = new Queries\Entities\FindChannels();
 			$findChannelQuery->byIdentifier($identifier);
@@ -323,7 +326,9 @@ final class StoreSubDevice implements Queue\Consumer
 					}
 
 					$findPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
-					$findPropertyQuery->byIdentifier(NsPanelHelpers\Name::convertAttributeToProperty($state->getAttribute()));
+					$findPropertyQuery->byIdentifier(
+						NsPanelHelpers\Name::convertAttributeToProperty($state->getAttribute()),
+					);
 					$findPropertyQuery->forChannel($channel);
 
 					$property = $this->channelsPropertiesRepository->findOneBy($findPropertyQuery);
