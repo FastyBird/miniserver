@@ -22,10 +22,10 @@ use Doctrine\Persistence;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
-use FastyBird\Connector\Zigbee2Mqtt\Types;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -94,7 +94,7 @@ final class Properties implements Common\EventSubscriber
 	{
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE);
+		$findDevicePropertyQuery->byIdentifier(Zigbee2MqttTypes\DevicePropertyIdentifier::STATE);
 
 		$stateProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -106,7 +106,7 @@ final class Properties implements Common\EventSubscriber
 
 		if ($stateProperty !== null) {
 			$this->devicesPropertiesManager->update($stateProperty, Utils\ArrayHash::from([
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
 					DevicesTypes\ConnectionState::CONNECTED->value,
@@ -121,9 +121,9 @@ final class Properties implements Common\EventSubscriber
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'device' => $device,
 				'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
-				'identifier' => Types\DevicePropertyIdentifier::STATE->value,
-				'name' => DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::STATE->value),
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'identifier' => Zigbee2MqttTypes\DevicePropertyIdentifier::STATE->value,
+				'name' => DevicesUtilities\Name::createName(Zigbee2MqttTypes\DevicePropertyIdentifier::STATE->value),
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
 					DevicesTypes\ConnectionState::CONNECTED->value,

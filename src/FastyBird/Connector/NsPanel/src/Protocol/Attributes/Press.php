@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,13 +38,13 @@ class Press extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::PRESS,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::PRESS,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\Press::SINGLE_PRESS->value,
-				Types\Payloads\Press::DOUBLE_PRESS->value,
-				Types\Payloads\Press::LONG_PRESS->value,
+				NsPanelTypes\Payloads\Press::SINGLE_PRESS->value,
+				NsPanelTypes\Payloads\Press::DOUBLE_PRESS->value,
+				NsPanelTypes\Payloads\Press::LONG_PRESS->value,
 			],
 		);
 	}

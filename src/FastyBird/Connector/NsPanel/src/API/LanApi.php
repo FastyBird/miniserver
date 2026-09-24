@@ -16,13 +16,13 @@
 namespace FastyBird\Connector\NsPanel\API;
 
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Services;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
@@ -82,7 +82,7 @@ final class LanApi
 		private readonly Services\HttpClientFactory $httpClientFactory,
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly NsPanel\Logger $logger,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 	)
 	{
 	}
@@ -90,8 +90,8 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetGatewayInfo> : Messages\Response\GetGatewayInfo)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	public function getGatewayInfo(
 		string $ipAddress,
@@ -133,8 +133,8 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetGatewayAccessToken> : Messages\Response\GetGatewayAccessToken)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	public function getGatewayAccessToken(
 		string $name,
@@ -182,8 +182,8 @@ final class LanApi
 	 *
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\SyncDevices> : Messages\Response\SyncDevices)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	public function synchroniseDevices(
 		array $devices,
@@ -227,7 +227,7 @@ final class LanApi
 		} catch (Utils\JsonException $ex) {
 			if ($async) {
 				return Promise\reject(
-					new Exceptions\LanApiCall(
+					new NsPanelExceptions\LanApiCall(
 						'Could not prepare request',
 						null,
 						null,
@@ -237,7 +237,7 @@ final class LanApi
 				);
 			}
 
-			throw new Exceptions\LanApiError(
+			throw new NsPanelExceptions\LanApiError(
 				'Could not prepare request',
 				$ex->getCode(),
 				$ex,
@@ -268,8 +268,8 @@ final class LanApi
 	 *
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\ReportDeviceState> : Messages\Response\ReportDeviceState)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	public function reportDeviceState(
 		string $serialNumber,
@@ -317,7 +317,7 @@ final class LanApi
 		} catch (Utils\JsonException $ex) {
 			if ($async) {
 				return Promise\reject(
-					new Exceptions\LanApiCall(
+					new NsPanelExceptions\LanApiCall(
 						'Could not prepare request',
 						null,
 						null,
@@ -327,7 +327,7 @@ final class LanApi
 				);
 			}
 
-			throw new Exceptions\LanApiError(
+			throw new NsPanelExceptions\LanApiError(
 				'Could not prepare request',
 				$ex->getCode(),
 				$ex,
@@ -356,8 +356,8 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\ReportDeviceOnline> : Messages\Response\ReportDeviceOnline)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	public function reportDeviceOnline(
 		string $serialNumber,
@@ -405,7 +405,7 @@ final class LanApi
 		} catch (Utils\JsonException $ex) {
 			if ($async) {
 				return Promise\reject(
-					new Exceptions\LanApiCall(
+					new NsPanelExceptions\LanApiCall(
 						'Could not prepare request',
 						null,
 						null,
@@ -415,7 +415,7 @@ final class LanApi
 				);
 			}
 
-			throw new Exceptions\LanApiError(
+			throw new NsPanelExceptions\LanApiError(
 				'Could not prepare request',
 				$ex->getCode(),
 				$ex,
@@ -444,8 +444,8 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<true> : true)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	public function removeDevice(
 		string $serialNumber,
@@ -491,8 +491,8 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetSubDevices> : Messages\Response\GetSubDevices)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	public function getSubDevices(
 		string $ipAddress,
@@ -538,8 +538,8 @@ final class LanApi
 	 *
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\SetSubDeviceState> : Messages\Response\SetSubDeviceState)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	public function setSubDeviceState(
 		string $serialNumber,
@@ -575,7 +575,7 @@ final class LanApi
 		} catch (Utils\JsonException $ex) {
 			if ($async) {
 				return Promise\reject(
-					new Exceptions\LanApiCall(
+					new NsPanelExceptions\LanApiCall(
 						'Could not prepare request',
 						null,
 						null,
@@ -585,7 +585,7 @@ final class LanApi
 				);
 			}
 
-			throw new Exceptions\LanApiError(
+			throw new NsPanelExceptions\LanApiError(
 				'Could not prepare request',
 				$ex->getCode(),
 				$ex,
@@ -612,8 +612,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function parseGetGatewayInfo(
 		Message\RequestInterface $request,
@@ -630,7 +630,7 @@ final class LanApi
 		if ($error !== 0) {
 			$message = $body->offsetGet('message');
 
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Getting gateway info failed: %s', is_scalar($message) ? strval($message) : 'unknown'),
 				$request,
 				$response,
@@ -641,8 +641,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function parseGetGatewayAccessToken(
 		Message\RequestInterface $request,
@@ -663,7 +663,7 @@ final class LanApi
 		if ($error !== 0) {
 			$message = $body->offsetGet('message');
 
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Getting gateway access token failed: %s', is_scalar($message) ? strval($message) : 'unknown'),
 				$request,
 				$response,
@@ -674,8 +674,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function parseSynchroniseDevices(
 		Message\RequestInterface $request,
@@ -687,7 +687,7 @@ final class LanApi
 		if ($errorBody !== false) {
 			$error = $this->createMessage(Messages\Response\ErrorEvent::class, $errorBody);
 
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Synchronise third-party devices failed: %s', $error->getPayload()->getDescription()),
 				$request,
 				$response,
@@ -701,8 +701,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function parseReportDeviceState(
 		Message\RequestInterface $request,
@@ -714,7 +714,7 @@ final class LanApi
 		if ($errorBody !== false) {
 			$error = $this->createMessage(Messages\Response\ErrorEvent::class, $errorBody);
 
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Report third-party device state failed: %s', $error->getPayload()->getDescription()),
 				$request,
 				$response,
@@ -728,8 +728,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function parseReportDeviceOnline(
 		Message\RequestInterface $request,
@@ -741,7 +741,7 @@ final class LanApi
 		if ($errorBody !== false) {
 			$error = $this->createMessage(Messages\Response\ErrorEvent::class, $errorBody);
 
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Report third-party device state failed: %s', $error->getPayload()->getDescription()),
 				$request,
 				$response,
@@ -755,8 +755,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function parseGetSubDevices(
 		Message\RequestInterface $request,
@@ -773,7 +773,7 @@ final class LanApi
 		if ($error !== 0) {
 			$message = $body->offsetGet('message');
 
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Get sub-devices list failed: %s', is_scalar($message) ? strval($message) : 'unknown'),
 				$request,
 				$response,
@@ -784,8 +784,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function parseSetSubDeviceState(
 		Message\RequestInterface $request,
@@ -799,7 +799,7 @@ final class LanApi
 		if ($error !== 0) {
 			$message = $body->offsetGet('message');
 
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Set sub-device state failed: %s', is_scalar($message) ? strval($message) : 'unknown'),
 				$request,
 				$response,
@@ -812,8 +812,8 @@ final class LanApi
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function validateResponseBody(
 		Message\RequestInterface $request,
@@ -829,9 +829,9 @@ final class LanApi
 				$body,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\LanApiCall(
+				throw new NsPanelExceptions\LanApiCall(
 					'Could not validate received response payload',
 					$request,
 					$response,
@@ -845,7 +845,7 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiCall
 	 */
 	private function getResponseBody(
 		Message\RequestInterface $request,
@@ -857,7 +857,7 @@ final class LanApi
 
 			return $response->getBody()->getContents();
 		} catch (RuntimeException $ex) {
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				'Could not get content from response body',
 				$request,
 				$response,
@@ -874,7 +874,7 @@ final class LanApi
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
 	{
@@ -883,10 +883,10 @@ final class LanApi
 				$message,
 				(array) Utils\Json::decode(Utils\Json::encode($data), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\LanApiError('Could not map data to message', $ex->getCode(), $ex);
+		} catch (NsPanelExceptions\Runtime $ex) {
+			throw new NsPanelExceptions\LanApiError('Could not map data to message', $ex->getCode(), $ex);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\LanApiError(
+			throw new NsPanelExceptions\LanApiError(
 				'Could not create message from response',
 				$ex->getCode(),
 				$ex,
@@ -897,7 +897,7 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Message\ResponseInterface> : Message\ResponseInterface)
 	 *
-	 * @throws Exceptions\LanApiCall
+	 * @throws NsPanelExceptions\LanApiCall
 	 */
 	private function callRequest(
 		Request $request,
@@ -913,7 +913,7 @@ final class LanApi
 				$request->getUri(),
 			),
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'lan-api',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -940,7 +940,7 @@ final class LanApi
 								$response->getBody()->rewind();
 							} catch (RuntimeException $ex) {
 								$deferred->reject(
-									new Exceptions\LanApiCall(
+									new NsPanelExceptions\LanApiCall(
 										'Could not get content from response body',
 										$request,
 										$response,
@@ -955,7 +955,7 @@ final class LanApi
 							$this->logger->debug(
 								'Received response',
 								[
-									'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+									'source' => Sources\Connector::NS_PANEL->value,
 									'type' => 'lan-api',
 									'request' => [
 										'method' => $request->getMethod(),
@@ -977,7 +977,7 @@ final class LanApi
 						},
 						static function (Throwable $ex) use ($deferred, $request): void {
 							$deferred->reject(
-								new Exceptions\LanApiCall(
+								new NsPanelExceptions\LanApiCall(
 									'Calling api endpoint failed',
 									$request,
 									null,
@@ -1004,7 +1004,7 @@ final class LanApi
 
 				$response->getBody()->rewind();
 			} catch (RuntimeException $ex) {
-				throw new Exceptions\LanApiCall(
+				throw new NsPanelExceptions\LanApiCall(
 					'Could not get content from response body',
 					$request,
 					$response,
@@ -1016,7 +1016,7 @@ final class LanApi
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'lan-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -1036,7 +1036,7 @@ final class LanApi
 
 			return $response;
 		} catch (GuzzleHttp\Exception\GuzzleException | InvalidArgumentException $ex) {
-			throw new Exceptions\LanApiCall(
+			throw new NsPanelExceptions\LanApiCall(
 				'Calling api endpoint failed',
 				$request,
 				null,
@@ -1047,7 +1047,7 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -1060,7 +1060,7 @@ final class LanApi
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\LanApiError('Validation schema for response could not be loaded');
+				throw new NsPanelExceptions\LanApiError('Validation schema for response could not be loaded');
 			}
 		}
 
@@ -1071,7 +1071,7 @@ final class LanApi
 	 * @param array<string, string|array<string>>|null $headers
 	 * @param array<string, mixed> $params
 	 *
-	 * @throws Exceptions\LanApiError
+	 * @throws NsPanelExceptions\LanApiError
 	 */
 	private function createRequest(
 		string $method,
@@ -1088,8 +1088,8 @@ final class LanApi
 
 		try {
 			return new Request($method, $url, $headers, $body);
-		} catch (Exceptions\InvalidArgument $ex) {
-			throw new Exceptions\LanApiError('Could not create request instance', $ex->getCode(), $ex);
+		} catch (NsPanelExceptions\InvalidArgument $ex) {
+			throw new NsPanelExceptions\LanApiError('Could not create request instance', $ex->getCode(), $ex);
 		}
 	}
 

@@ -27,7 +27,7 @@ use FastyBird\Connector\Tuya\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -234,7 +234,7 @@ final class Local implements Client
 							$this->logger->debug(
 								'Connected to Tuya local cloud device',
 								[
-									'source' => MetadataTypes\Sources\Connector::TUYA->value,
+									'source' => Sources\Connector::TUYA->value,
 									'type' => 'local-client',
 									'connector' => [
 										'id' => $this->connector->getId()->toString(),
@@ -249,7 +249,7 @@ final class Local implements Client
 							$this->logger->error(
 								'Tuya local device client could not be created',
 								[
-									'source' => MetadataTypes\Sources\Connector::TUYA->value,
+									'source' => Sources\Connector::TUYA->value,
 									'type' => 'local-client',
 									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
@@ -367,7 +367,7 @@ final class Local implements Client
 					$this->logger->warning(
 						'Could not call local api',
 						[
-							'source' => MetadataTypes\Sources\Connector::TUYA->value,
+							'source' => Sources\Connector::TUYA->value,
 							'type' => 'local-client',
 							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
@@ -454,7 +454,7 @@ final class Local implements Client
 			$this->logger->debug(
 				'Connected to device',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'local-client',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
@@ -481,7 +481,7 @@ final class Local implements Client
 			$this->logger->warning(
 				'An error occurred in Tuya local device client',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'local-client',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [

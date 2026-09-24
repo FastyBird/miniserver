@@ -17,7 +17,7 @@ namespace FastyBird\Connector\HomeKit\Queue;
 
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Queue\Messages\Message;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use SplQueue;
 
@@ -49,7 +49,7 @@ final class Queue
 		$this->logger->debug(
 			'Appended new message into messages queue',
 			[
-				'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+				'source' => Sources\Connector::HOMEKIT->value,
 				'type' => 'queue',
 				'message' => $message->toArray(),
 			],

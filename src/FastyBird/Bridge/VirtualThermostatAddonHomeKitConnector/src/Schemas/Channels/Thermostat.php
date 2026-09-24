@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas\Channe
 
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Schemas as HomeKitSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 
 /**
  * Thermostat channel entity schema
@@ -36,7 +36,7 @@ final class Thermostat extends HomeKitSchemas\Channels\Channel
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/channel/' . Entities\Channels\Thermostat::TYPE;
+	public const SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/channel/' . Entities\Channels\Thermostat::TYPE;
 
 	public function getEntityClass(): string
 	{

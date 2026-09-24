@@ -26,7 +26,7 @@ use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -219,7 +219,7 @@ class Devices
 							$this->logger->debug(
 								'Connected to virtual device',
 								[
-									'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+									'source' => Sources\Connector::VIRTUAL->value,
 									'type' => 'devices-driver',
 									'connector' => [
 										'id' => $this->connector->getId()->toString(),
@@ -237,7 +237,7 @@ class Devices
 										'connector' => $device->getConnector(),
 										'device' => $device->getId(),
 										'state' => DevicesTypes\ConnectionState::CONNECTED,
-										'source' => MetadataTypes\Sources\Connector::VIRTUAL,
+										'source' => Sources\Connector::VIRTUAL,
 									],
 								),
 							);
@@ -246,7 +246,7 @@ class Devices
 							$this->logger->error(
 								'Virtual device service could not be created',
 								[
-									'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+									'source' => Sources\Connector::VIRTUAL->value,
 									'type' => 'devices-driver',
 									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
@@ -265,7 +265,7 @@ class Devices
 										'connector' => $device->getConnector(),
 										'device' => $device->getId(),
 										'state' => DevicesTypes\ConnectionState::ALERT,
-										'source' => MetadataTypes\Sources\Connector::VIRTUAL,
+										'source' => Sources\Connector::VIRTUAL,
 									],
 								),
 							);
@@ -279,7 +279,7 @@ class Devices
 								'connector' => $device->getConnector(),
 								'device' => $device->getId(),
 								'state' => DevicesTypes\ConnectionState::DISCONNECTED,
-								'source' => MetadataTypes\Sources\Connector::VIRTUAL,
+								'source' => Sources\Connector::VIRTUAL,
 							],
 						),
 					);
@@ -325,7 +325,7 @@ class Devices
 				$this->logger->warning(
 					'Could not call local api',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+						'source' => Sources\Connector::VIRTUAL->value,
 						'type' => 'devices-driver',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
@@ -344,7 +344,7 @@ class Devices
 							'connector' => $device->getConnector(),
 							'device' => $device->getId(),
 							'state' => DevicesTypes\ConnectionState::ALERT,
-							'source' => MetadataTypes\Sources\Connector::VIRTUAL,
+							'source' => Sources\Connector::VIRTUAL,
 						],
 					),
 				);

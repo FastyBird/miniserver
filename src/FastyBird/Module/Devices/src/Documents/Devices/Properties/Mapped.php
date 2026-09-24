@@ -18,13 +18,14 @@ namespace FastyBird\Module\Devices\Documents\Devices\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities;
-use FastyBird\Module\Devices\Exceptions;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use TypeError;
@@ -51,10 +52,10 @@ final class Mapped extends Property
 		Uuid\UuidInterface $device,
 		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $parent,
-		Types\PropertyCategory $category,
+		DevicesTypes\PropertyCategory $category,
 		string $identifier,
 		string|null $name,
-		MetadataTypes\DataType $dataType,
+		ValuesTypes\DataType $dataType,
 		string|null $unit = null,
 		string|array|null $format = null,
 		float|int|string|null $invalid = null,
@@ -131,21 +132,21 @@ final class Mapped extends Property
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		try {
-			return ToolsUtilities\Value::normalizeValue(
+			return Utilities\Value::normalizeValue(
 				$this->value,
 				$this->getDataType(),
 				$this->getFormat(),
 			);
-		} catch (ToolsExceptions\InvalidValue) {
+		} catch (ValuesExceptions\InvalidValue) {
 			return null;
 		}
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -156,7 +157,7 @@ final class Mapped extends Property
 		return array_merge(parent::toArray(), [
 			'settable' => $this->isSettable(),
 			'queryable' => $this->isQueryable(),
-			'value' => ToolsUtilities\Value::flattenValue($this->getValue()),
+			'value' => Utilities\Value::flattenValue($this->getValue()),
 
 			'parent' => $this->getParent()->toString(),
 		]);

@@ -24,7 +24,7 @@ use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -81,7 +81,7 @@ final class Discovery
 			$this->logger->debug(
 				'Starting sub-devices discovery for selected NS Panel',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'discovery-client',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
@@ -98,7 +98,7 @@ final class Discovery
 			$this->logger->debug(
 				'Starting sub-devices discovery for all registered NS Panels',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'discovery-client',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
@@ -123,7 +123,7 @@ final class Discovery
 			->then(function (): void {
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::NS_PANEL,
+						Sources\Connector::NS_PANEL,
 						'Devices discovery finished',
 					),
 				);
@@ -131,7 +131,7 @@ final class Discovery
 			->catch(function (Throwable $ex): void {
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::NS_PANEL,
+						Sources\Connector::NS_PANEL,
 						'Devices discovery failed',
 						$ex,
 					),
@@ -186,7 +186,7 @@ final class Discovery
 			$this->logger->error(
 				'Loading sub-devices from NS Panel failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'discovery-client',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -256,7 +256,7 @@ final class Discovery
 				$this->logger->error(
 					'Could not map discovered device to result',
 					[
-						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+						'source' => Sources\Connector::NS_PANEL->value,
 						'type' => 'discovery-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [

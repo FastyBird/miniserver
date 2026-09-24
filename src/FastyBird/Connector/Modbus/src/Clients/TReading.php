@@ -24,9 +24,9 @@ use FastyBird\Connector\Modbus\Helpers;
 use FastyBird\Connector\Modbus\Helpers\MessageBuilder;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Queue;
-use FastyBird\Connector\Modbus\Types;
+use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -163,14 +163,14 @@ trait TReading
 				$channel = $this->deviceHelper->findChannelByType(
 					$device,
 					$address,
-					Types\ChannelType::COIL,
+					ModbusTypes\ChannelType::COIL,
 				);
 
 			} elseif ($request instanceof Messages\Request\ReadDiscreteInputs) {
 				$channel = $this->deviceHelper->findChannelByType(
 					$device,
 					$address,
-					Types\ChannelType::DISCRETE_INPUT,
+					ModbusTypes\ChannelType::DISCRETE_INPUT,
 				);
 
 			} else {
@@ -185,7 +185,7 @@ trait TReading
 
 			$findChannelPropertyQuery = new Queries\Configuration\FindChannelDynamicProperties();
 			$findChannelPropertyQuery->forChannel($channel);
-			$findChannelPropertyQuery->byIdentifier(Types\ChannelPropertyIdentifier::VALUE);
+			$findChannelPropertyQuery->byIdentifier(ModbusTypes\ChannelPropertyIdentifier::VALUE);
 
 			$property = $this->channelsPropertiesConfigurationRepository->findOneBy(
 				$findChannelPropertyQuery,
@@ -236,13 +236,13 @@ trait TReading
 				$channel = $this->deviceHelper->findChannelByType(
 					$device,
 					$requestAddress->getAddress(),
-					Types\ChannelType::HOLDING_REGISTER,
+					ModbusTypes\ChannelType::HOLDING_REGISTER,
 				);
 			} elseif ($request instanceof Messages\Request\ReadInputsRegisters) {
 				$channel = $this->deviceHelper->findChannelByType(
 					$device,
 					$requestAddress->getAddress(),
-					Types\ChannelType::INPUT_REGISTER,
+					ModbusTypes\ChannelType::INPUT_REGISTER,
 				);
 			} else {
 				continue;
@@ -256,7 +256,7 @@ trait TReading
 
 			$findChannelPropertyQuery = new Queries\Configuration\FindChannelDynamicProperties();
 			$findChannelPropertyQuery->forChannel($channel);
-			$findChannelPropertyQuery->byIdentifier(Types\ChannelPropertyIdentifier::VALUE);
+			$findChannelPropertyQuery->byIdentifier(ModbusTypes\ChannelPropertyIdentifier::VALUE);
 
 			$property = $this->channelsPropertiesConfigurationRepository->findOneBy(
 				$findChannelPropertyQuery,
@@ -277,16 +277,16 @@ trait TReading
 			$registerBytes = [];
 
 			if (
-				$deviceExpectedDataType === MetadataTypes\DataType::CHAR
-				|| $deviceExpectedDataType === MetadataTypes\DataType::UCHAR
-				|| $deviceExpectedDataType === MetadataTypes\DataType::SHORT
-				|| $deviceExpectedDataType === MetadataTypes\DataType::USHORT
+				$deviceExpectedDataType === ValuesTypes\DataType::CHAR
+				|| $deviceExpectedDataType === ValuesTypes\DataType::UCHAR
+				|| $deviceExpectedDataType === ValuesTypes\DataType::SHORT
+				|| $deviceExpectedDataType === ValuesTypes\DataType::USHORT
 			) {
 				$registerBytes = array_splice($registersBytes, 0, 2);
 			} elseif (
-				$deviceExpectedDataType === MetadataTypes\DataType::INT
-				|| $deviceExpectedDataType === MetadataTypes\DataType::UINT
-				|| $deviceExpectedDataType === MetadataTypes\DataType::FLOAT
+				$deviceExpectedDataType === ValuesTypes\DataType::INT
+				|| $deviceExpectedDataType === ValuesTypes\DataType::UINT
+				|| $deviceExpectedDataType === ValuesTypes\DataType::FLOAT
 			) {
 				$registerBytes = array_splice($registersBytes, 0, 4);
 			}
@@ -294,24 +294,24 @@ trait TReading
 			$value = null;
 
 			if (
-				$deviceExpectedDataType === MetadataTypes\DataType::CHAR
-				|| $deviceExpectedDataType === MetadataTypes\DataType::SHORT
-				|| $deviceExpectedDataType === MetadataTypes\DataType::INT
+				$deviceExpectedDataType === ValuesTypes\DataType::CHAR
+				|| $deviceExpectedDataType === ValuesTypes\DataType::SHORT
+				|| $deviceExpectedDataType === ValuesTypes\DataType::INT
 			) {
 				$value = $this->transformer->unpackSignedInt(
 					$registerBytes,
 					$this->deviceHelper->getByteOrder($device),
 				);
 			} elseif (
-				$deviceExpectedDataType === MetadataTypes\DataType::UCHAR
-				|| $deviceExpectedDataType === MetadataTypes\DataType::USHORT
-				|| $deviceExpectedDataType === MetadataTypes\DataType::UINT
+				$deviceExpectedDataType === ValuesTypes\DataType::UCHAR
+				|| $deviceExpectedDataType === ValuesTypes\DataType::USHORT
+				|| $deviceExpectedDataType === ValuesTypes\DataType::UINT
 			) {
 				$value = $this->transformer->unpackUnsignedInt(
 					$registerBytes,
 					$this->deviceHelper->getByteOrder($device),
 				);
-			} elseif ($deviceExpectedDataType === MetadataTypes\DataType::FLOAT) {
+			} elseif ($deviceExpectedDataType === ValuesTypes\DataType::FLOAT) {
 				$value = $this->transformer->unpackFloat($registerBytes, $this->deviceHelper->getByteOrder($device));
 			}
 

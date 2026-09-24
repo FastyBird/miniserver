@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas\Devices;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Schemas as HomeKitSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 
 /**
  * Shelly device entity schema
@@ -36,7 +36,7 @@ final class Shelly extends HomeKitSchemas\Devices\Device
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value . '/device/' . Entities\Devices\Shelly::TYPE;
+	public const SCHEMA_TYPE = Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value . '/device/' . Entities\Devices\Shelly::TYPE;
 
 	public function getEntityClass(): string
 	{

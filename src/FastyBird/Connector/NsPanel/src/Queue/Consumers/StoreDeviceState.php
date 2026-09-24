@@ -22,8 +22,8 @@ use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -87,7 +87,7 @@ final class StoreDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'store-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -111,7 +111,7 @@ final class StoreDeviceState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'store-device-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),
@@ -168,10 +168,10 @@ final class StoreDeviceState implements Queue\Consumer
 					Utils\ArrayHash::from([
 						DevicesStates\Property::ACTUAL_VALUE_FIELD => $item->getValue(),
 					]),
-					MetadataTypes\Sources\Connector::NS_PANEL,
+					Sources\Connector::NS_PANEL,
 				));
 
-				$protocolAttribute->setActualValue(ToolsUtilities\Value::flattenValue($item->getValue()));
+				$protocolAttribute->setActualValue(Utilities\Value::flattenValue($item->getValue()));
 			}
 		}
 	}
@@ -216,7 +216,7 @@ final class StoreDeviceState implements Queue\Consumer
 				$this->writeThirdPartyProperty(
 					$protocolAttribute,
 					$property,
-					ToolsUtilities\Value::flattenValue($item->getValue()),
+					Utilities\Value::flattenValue($item->getValue()),
 				);
 			}
 		}
@@ -265,7 +265,7 @@ final class StoreDeviceState implements Queue\Consumer
 				Utils\ArrayHash::from([
 					DevicesStates\Property::ACTUAL_VALUE_FIELD => $value,
 				]),
-				MetadataTypes\Sources\Connector::NS_PANEL,
+				Sources\Connector::NS_PANEL,
 			));
 
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
@@ -274,7 +274,7 @@ final class StoreDeviceState implements Queue\Consumer
 				Utils\ArrayHash::from([
 					DevicesStates\Property::EXPECTED_VALUE_FIELD => $value,
 				]),
-				MetadataTypes\Sources\Connector::NS_PANEL,
+				Sources\Connector::NS_PANEL,
 			));
 		}
 

@@ -20,7 +20,7 @@ use FastyBird\Connector\NsPanel\Documents;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Middleware;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -69,7 +69,7 @@ final class Http implements Server
 			$this->logger->debug(
 				'Creating connector web server',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'http-server',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
@@ -90,7 +90,7 @@ final class Http implements Server
 			$this->logger->error(
 				'Connector web server could not be created',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'http-server',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -100,7 +100,7 @@ final class Http implements Server
 			);
 
 			$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(
-				MetadataTypes\Sources\Connector::NS_PANEL,
+				Sources\Connector::NS_PANEL,
 				'Socket server could not be created',
 				$ex,
 			));
@@ -126,7 +126,7 @@ final class Http implements Server
 			$this->logger->error(
 				'An error occurred during server handling',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'http-server',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -136,7 +136,7 @@ final class Http implements Server
 			);
 
 			$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(
-				MetadataTypes\Sources\Connector::NS_PANEL,
+				Sources\Connector::NS_PANEL,
 				'HTTP server was terminated',
 				$ex,
 			));
@@ -148,7 +148,7 @@ final class Http implements Server
 		$this->logger->debug(
 			'Closing connector web server',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'http-server',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),

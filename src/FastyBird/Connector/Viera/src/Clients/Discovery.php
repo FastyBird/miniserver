@@ -25,7 +25,7 @@ use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Services;
 use FastyBird\Connector\Viera\ValueObjects;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
 use Orisai\ObjectMapper;
@@ -103,7 +103,7 @@ final class Discovery
 		$this->logger->debug(
 			'Starting devices discovery',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIERA->value,
+				'source' => Sources\Connector::VIERA->value,
 				'type' => 'discovery-client',
 			],
 		);
@@ -115,7 +115,7 @@ final class Discovery
 			$this->logger->error(
 				'Could not create discovery server',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'discovery-client',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -153,7 +153,7 @@ final class Discovery
 						$this->logger->error(
 							'Received data could not be transformed to message',
 							[
-								'source' => MetadataTypes\Sources\Connector::VIERA->value,
+								'source' => Sources\Connector::VIERA->value,
 								'type' => 'discovery-client',
 								'exception' => Logging\Logger::buildException($ex),
 							],
@@ -191,7 +191,7 @@ final class Discovery
 
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::VIERA,
+						Sources\Connector::VIERA,
 						'Devices discovery finished',
 					),
 				);
@@ -238,7 +238,7 @@ final class Discovery
 				$this->logger->error(
 					'Checking TV status failed',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'discovery-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'device' => [
@@ -256,7 +256,7 @@ final class Discovery
 				$this->logger->error(
 					sprintf('The provided IP: %s:%d address is unreachable.', $host, $port),
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'discovery-client',
 						'device' => [
 							'id' => $id,
@@ -288,7 +288,7 @@ final class Discovery
 			$this->logger->error(
 				'Preparing api request failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'discovery-client',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -299,7 +299,7 @@ final class Discovery
 			$this->logger->error(
 				'Calling device api failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'discovery-client',
 					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
@@ -318,7 +318,7 @@ final class Discovery
 			$this->logger->error(
 				'Unhandled error occur',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'discovery-client',
 					'exception' => Logging\Logger::buildException($ex),
 				],

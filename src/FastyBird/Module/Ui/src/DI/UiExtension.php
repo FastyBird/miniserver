@@ -24,7 +24,7 @@ use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
 use FastyBird\Core\Topics\WsServer as TopicsWsServer;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Caching;
 use FastyBird\Module\Ui\Commands;
@@ -103,7 +103,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		)
 			->setType(NetteCaching\Cache::class)
 			->setArguments([
-				'namespace' => MetadataTypes\Sources\Module::UI->value . '_configuration_repository',
+				'namespace' => Sources\Module::UI->value . '_configuration_repository',
 			])
 			->setAutowired(false);
 
@@ -113,7 +113,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		)
 			->setType(NetteCaching\Cache::class)
 			->setArguments([
-				'namespace' => MetadataTypes\Sources\Module::UI->value . '_configuration_builder',
+				'namespace' => Sources\Module::UI->value . '_configuration_builder',
 			])
 			->setAutowired(false);
 

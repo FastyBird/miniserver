@@ -22,10 +22,10 @@ use Doctrine\Persistence;
 use FastyBird\Connector\Tuya\Entities;
 use FastyBird\Connector\Tuya\Exceptions;
 use FastyBird\Connector\Tuya\Queries;
-use FastyBird\Connector\Tuya\Types;
+use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -81,7 +81,7 @@ final class Properties implements Common\EventSubscriber
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($entity);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE);
+		$findDevicePropertyQuery->byIdentifier(TuyaTypes\DevicePropertyIdentifier::STATE);
 
 		$stateProperty = $this->propertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -93,7 +93,7 @@ final class Properties implements Common\EventSubscriber
 
 		if ($stateProperty !== null) {
 			$this->propertiesManager->update($stateProperty, Utils\ArrayHash::from([
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
 					DevicesTypes\ConnectionState::CONNECTED->value,
@@ -110,9 +110,9 @@ final class Properties implements Common\EventSubscriber
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'device' => $entity,
 				'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
-				'identifier' => Types\DevicePropertyIdentifier::STATE->value,
-				'name' => DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::STATE->value),
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'identifier' => TuyaTypes\DevicePropertyIdentifier::STATE->value,
+				'name' => DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::STATE->value),
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
 					DevicesTypes\ConnectionState::CONNECTED->value,

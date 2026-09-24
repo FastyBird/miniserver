@@ -24,10 +24,10 @@ use FastyBird\Connector\Virtual\Entities;
 use FastyBird\Connector\Virtual\Exceptions;
 use FastyBird\Connector\Virtual\Helpers;
 use FastyBird\Connector\Virtual\Queries;
-use FastyBird\Connector\Virtual\Types;
+use FastyBird\Connector\Virtual\Types as VirtualTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -82,7 +82,7 @@ final class Properties implements Common\EventSubscriber
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($entity);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE);
+		$findDevicePropertyQuery->byIdentifier(VirtualTypes\DevicePropertyIdentifier::STATE);
 
 		$stateProperty = $this->propertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -94,7 +94,7 @@ final class Properties implements Common\EventSubscriber
 
 		if ($stateProperty !== null) {
 			$this->propertiesManager->update($stateProperty, Utils\ArrayHash::from([
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
 					DevicesTypes\ConnectionState::CONNECTED->value,
@@ -110,8 +110,8 @@ final class Properties implements Common\EventSubscriber
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'device' => $entity,
 				'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
-				'identifier' => Types\DevicePropertyIdentifier::STATE->value,
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'identifier' => VirtualTypes\DevicePropertyIdentifier::STATE->value,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
 					DevicesTypes\ConnectionState::CONNECTED->value,
@@ -127,7 +127,7 @@ final class Properties implements Common\EventSubscriber
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($entity);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::MANUFACTURER);
+		$findDevicePropertyQuery->byIdentifier(VirtualTypes\DevicePropertyIdentifier::MANUFACTURER);
 
 		$manufacturerProperty = $this->propertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -144,8 +144,8 @@ final class Properties implements Common\EventSubscriber
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'device' => $entity,
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::MANUFACTURER->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => VirtualTypes\DevicePropertyIdentifier::MANUFACTURER->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'unit' => null,
 				'format' => null,
 				'value' => Virtual\Constants::MANUFACTURER,
@@ -154,7 +154,7 @@ final class Properties implements Common\EventSubscriber
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($entity);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::MAC_ADDRESS);
+		$findDevicePropertyQuery->byIdentifier(VirtualTypes\DevicePropertyIdentifier::MAC_ADDRESS);
 
 		$macAddressProperty = $this->propertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -171,8 +171,8 @@ final class Properties implements Common\EventSubscriber
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'device' => $entity,
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::MAC_ADDRESS->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => VirtualTypes\DevicePropertyIdentifier::MAC_ADDRESS->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'unit' => null,
 				'format' => null,
 				'value' => Helpers\Drivers::generateMacAddress(),

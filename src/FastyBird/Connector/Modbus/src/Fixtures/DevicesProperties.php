@@ -19,9 +19,9 @@ use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Exceptions;
-use FastyBird\Connector\Modbus\Types;
+use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use TypeError;
@@ -52,9 +52,9 @@ final class DevicesProperties extends DataFixtures\AbstractFixture implements Da
 
 		$addressProperty = new DevicesEntities\Devices\Properties\Variable(
 			$device,
-			Types\DevicePropertyIdentifier::ADDRESS->value,
+			ModbusTypes\DevicePropertyIdentifier::ADDRESS->value,
 		);
-		$addressProperty->setDataType(MetadataTypes\DataType::UINT);
+		$addressProperty->setDataType(ValuesTypes\DataType::UINT);
 		$addressProperty->setValue('1');
 
 		$manager->persist($addressProperty);

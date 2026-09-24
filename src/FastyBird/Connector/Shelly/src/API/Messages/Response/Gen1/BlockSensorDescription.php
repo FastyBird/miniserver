@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 
 use FastyBird\Connector\Shelly\API;
-use FastyBird\Connector\Shelly\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\Shelly\Types as ShellyTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
 
 /**
@@ -37,13 +37,13 @@ final readonly class BlockSensorDescription implements API\Messages\Message
 	public function __construct(
 		#[ObjectMapper\Rules\IntValue()]
 		private int $identifier,
-		#[ObjectMapper\Rules\BackedEnumValue(class: Types\SensorType::class)]
-		private Types\SensorType $type,
+		#[ObjectMapper\Rules\BackedEnumValue(class: ShellyTypes\SensorType::class)]
+		private ShellyTypes\SensorType $type,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private string $description,
-		#[ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\DataType::class)]
+		#[ObjectMapper\Rules\BackedEnumValue(class: ValuesTypes\DataType::class)]
 		#[ObjectMapper\Modifiers\FieldName('data_type')]
-		private MetadataTypes\DataType $dataType,
+		private ValuesTypes\DataType $dataType,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
@@ -93,7 +93,7 @@ final readonly class BlockSensorDescription implements API\Messages\Message
 		return $this->identifier;
 	}
 
-	public function getType(): Types\SensorType
+	public function getType(): ShellyTypes\SensorType
 	{
 		return $this->type;
 	}
@@ -103,7 +103,7 @@ final readonly class BlockSensorDescription implements API\Messages\Message
 		return $this->description;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		return $this->dataType;
 	}

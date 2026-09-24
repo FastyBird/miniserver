@@ -16,7 +16,7 @@
 namespace FastyBird\Plugin\CouchDb\Connections;
 
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use Nette;
 use PHPOnCouch;
@@ -95,7 +95,7 @@ final class Connection
 		} catch (Throwable $ex) {
 			// Log error action reason
 			$this->logger->error('Could not connect do database', [
-				'source' => MetadataTypes\Sources\Plugin::COUCHDB->value,
+				'source' => Sources\Plugin::COUCHDB->value,
 				'type' => 'connection',
 				'exception' => Logging\Logger::buildException($ex),
 			]);

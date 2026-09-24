@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Shelly\Clients;
 
 use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -45,7 +45,7 @@ final class Cloud implements Client
 	public function connect(): void
 	{
 		$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(
-			MetadataTypes\Sources\Connector::SHELLY,
+			Sources\Connector::SHELLY,
 			sprintf('Cloud client is not implemented for connector %s', $this->connector->getIdentifier()),
 		));
 	}
@@ -53,7 +53,7 @@ final class Cloud implements Client
 	public function disconnect(): void
 	{
 		$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(
-			MetadataTypes\Sources\Connector::SHELLY,
+			Sources\Connector::SHELLY,
 			sprintf('Cloud client is not implemented for connector %s', $this->connector->getIdentifier()),
 		));
 	}

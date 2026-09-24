@@ -21,10 +21,11 @@ use FastyBird\Connector\Shelly\Entities;
 use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
-use FastyBird\Connector\Shelly\Types;
+use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -112,7 +113,7 @@ final class StoreLocalDevice implements Queue\Consumer
 			$this->logger->debug(
 				'Device was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'store-local-device-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -130,59 +131,59 @@ final class StoreLocalDevice implements Queue\Consumer
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getSerialNumber(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::SERIAL_NUMBER,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::SERIAL_NUMBER->value),
+			ValuesTypes\DataType::STRING,
+			ShellyTypes\DevicePropertyIdentifier::SERIAL_NUMBER,
+			DevicesUtilities\Name::createName(ShellyTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getIpAddress(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::IP_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::IP_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			ShellyTypes\DevicePropertyIdentifier::IP_ADDRESS,
+			DevicesUtilities\Name::createName(ShellyTypes\DevicePropertyIdentifier::IP_ADDRESS->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getDomain(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::DOMAIN,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::DOMAIN->value),
+			ValuesTypes\DataType::STRING,
+			ShellyTypes\DevicePropertyIdentifier::DOMAIN,
+			DevicesUtilities\Name::createName(ShellyTypes\DevicePropertyIdentifier::DOMAIN->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getGeneration()->value,
-			MetadataTypes\DataType::ENUM,
-			Types\DevicePropertyIdentifier::GENERATION,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::GENERATION->value),
-			[Types\DeviceGeneration::GENERATION_1->value, Types\DeviceGeneration::GENERATION_2->value],
+			ValuesTypes\DataType::ENUM,
+			ShellyTypes\DevicePropertyIdentifier::GENERATION,
+			DevicesUtilities\Name::createName(ShellyTypes\DevicePropertyIdentifier::GENERATION->value),
+			[ShellyTypes\DeviceGeneration::GENERATION_1->value, ShellyTypes\DeviceGeneration::GENERATION_2->value],
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->isAuthEnabled(),
-			MetadataTypes\DataType::BOOLEAN,
-			Types\DevicePropertyIdentifier::AUTH_ENABLED,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::AUTH_ENABLED->value),
+			ValuesTypes\DataType::BOOLEAN,
+			ShellyTypes\DevicePropertyIdentifier::AUTH_ENABLED,
+			DevicesUtilities\Name::createName(ShellyTypes\DevicePropertyIdentifier::AUTH_ENABLED->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getModel(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MODEL,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MODEL->value),
+			ValuesTypes\DataType::STRING,
+			ShellyTypes\DevicePropertyIdentifier::MODEL,
+			DevicesUtilities\Name::createName(ShellyTypes\DevicePropertyIdentifier::MODEL->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getMacAddress(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MAC_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MAC_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			ShellyTypes\DevicePropertyIdentifier::MAC_ADDRESS,
+			DevicesUtilities\Name::createName(ShellyTypes\DevicePropertyIdentifier::MAC_ADDRESS->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getFirmwareVersion(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::FIRMWARE_VERSION,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::FIRMWARE_VERSION->value),
+			ValuesTypes\DataType::STRING,
+			ShellyTypes\DevicePropertyIdentifier::FIRMWARE_VERSION,
+			DevicesUtilities\Name::createName(ShellyTypes\DevicePropertyIdentifier::FIRMWARE_VERSION->value),
 		);
 
 		foreach ($message->getChannels() as $channelDescription) {
@@ -243,7 +244,7 @@ final class StoreLocalDevice implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device message',
 			[
-				'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+				'source' => Sources\Connector::SHELLY->value,
 				'type' => 'store-local-device-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

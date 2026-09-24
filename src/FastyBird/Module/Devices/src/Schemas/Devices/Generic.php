@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Schemas\Devices;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Schemas;
 
@@ -34,7 +34,7 @@ final class Generic extends Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::DEVICES->value . '/device/' . Entities\Devices\Generic::TYPE;
+	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/device/' . Entities\Devices\Generic::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -18,15 +18,15 @@ namespace FastyBird\Connector\Tuya\API;
 use Closure;
 use DateTimeInterface;
 use FastyBird\Connector\Tuya;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use Nette\Utils;
 use Ratchet;
@@ -109,7 +109,7 @@ final class OpenPulsar
 		private readonly Types\OpenPulsarEndpoint $endpoint,
 		private readonly Tuya\Logger $logger,
 		private readonly Services\WebSocketClientFactory $webSocketClientFactory,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 		private readonly Clock\Clock $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
@@ -153,7 +153,7 @@ final class OpenPulsar
 				$this->logger->debug(
 					'Connected to Tuya sockets server',
 					[
-						'source' => MetadataTypes\Sources\Connector::TUYA->value,
+						'source' => Sources\Connector::TUYA->value,
 						'type' => 'openpulsar-api',
 						'connector' => [
 							'identifier' => $this->identifier,
@@ -164,7 +164,7 @@ final class OpenPulsar
 				$connection->on('message', function (RFC6455\Messaging\MessageInterface $message): void {
 					try {
 						$this->handleWsMessage($message->getPayload());
-					} catch (Exceptions\OpenPulsarError $ex) {
+					} catch (TuyaExceptions\OpenPulsarError $ex) {
 						Utils\Arrays::invoke($this->onError, $ex);
 					}
 				});
@@ -179,7 +179,7 @@ final class OpenPulsar
 					$this->logger->debug(
 						'Connection to Tuya WS server was closed',
 						[
-							'source' => MetadataTypes\Sources\Connector::TUYA->value,
+							'source' => Sources\Connector::TUYA->value,
 							'type' => 'openpulsar-api',
 							'connection' => [
 								'code' => $code,
@@ -218,7 +218,7 @@ final class OpenPulsar
 				$this->connected = false;
 
 				$deferred->reject(
-					new Exceptions\OpenPulsarError('Connection to Tuya WS server failed', $ex->getCode(), $ex),
+					new TuyaExceptions\OpenPulsarError('Connection to Tuya WS server failed', $ex->getCode(), $ex),
 				);
 			});
 
@@ -277,7 +277,7 @@ final class OpenPulsar
 	}
 
 	/**
-	 * @throws Exceptions\OpenPulsarError
+	 * @throws TuyaExceptions\OpenPulsarError
 	 */
 	private function handleWsMessage(string $message): void
 	{
@@ -287,8 +287,13 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_SCHEMA_FILENAME),
 			);
 
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
-			throw new Exceptions\OpenPulsarError('Could not decode received Tuya WS message', $ex->getCode(), $ex);
+		} catch (
+			ApplicationExceptions\Logic
+			| ApplicationExceptions\MalformedInput
+			| ValuesExceptions\InvalidData
+			| TuyaExceptions\OpenPulsarError $ex
+		) {
+			throw new TuyaExceptions\OpenPulsarError('Could not decode received Tuya WS message', $ex->getCode(), $ex);
 		}
 
 		if ($this->wsConnection !== null && $message->offsetExists('messageId')) {
@@ -300,24 +305,28 @@ final class OpenPulsar
 				$this->wsConnection->send(Utils\Json::encode(['messageId' => $message->offsetGet('messageId')]));
 
 			} catch (Utils\JsonException $ex) {
-				throw new Exceptions\OpenPulsarError('Could not confirm received Tuya WS message', $ex->getCode(), $ex);
+				throw new TuyaExceptions\OpenPulsarError(
+					'Could not confirm received Tuya WS message',
+					$ex->getCode(),
+					$ex,
+				);
 			}
 		}
 
 		if (!$message->offsetExists('payload')) {
-			throw new Exceptions\OpenPulsarError('Received Tuya WS message is invalid');
+			throw new TuyaExceptions\OpenPulsarError('Received Tuya WS message is invalid');
 		}
 
 		$payload = base64_decode(strval($message->offsetGet('payload')), true);
 
 		if ($payload === false) {
-			throw new Exceptions\OpenPulsarError('Received Tuya WS message payload could not be decoded');
+			throw new TuyaExceptions\OpenPulsarError('Received Tuya WS message payload could not be decoded');
 		}
 
 		$this->logger->debug(
 			'Received message origin payload',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'openpulsar-api',
 				'data' => [
 					'payload' => $payload,
@@ -334,8 +343,13 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_PAYLOAD_SCHEMA_FILENAME),
 			);
 
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
-			throw new Exceptions\OpenPulsarError(
+		} catch (
+			ApplicationExceptions\Logic
+			| ApplicationExceptions\MalformedInput
+			| ValuesExceptions\InvalidData
+			| TuyaExceptions\OpenPulsarError $ex
+		) {
+			throw new TuyaExceptions\OpenPulsarError(
 				'Could not decode received Tuya WS message payload',
 				$ex->getCode(),
 				$ex,
@@ -343,13 +357,13 @@ final class OpenPulsar
 		}
 
 		if (!$payload->offsetExists('data')) {
-			throw new Exceptions\OpenPulsarError('Could not decode received Tuya WS message payload');
+			throw new TuyaExceptions\OpenPulsarError('Could not decode received Tuya WS message payload');
 		}
 
 		$data = base64_decode(strval($payload->offsetGet('data')), true);
 
 		if ($data === false) {
-			throw new Exceptions\OpenPulsarError('Received Tuya WS message payload data could not be decoded');
+			throw new TuyaExceptions\OpenPulsarError('Received Tuya WS message payload data could not be decoded');
 		}
 
 		$decodingKey = Utils\Strings::substring($this->accessSecret, 8, 16);
@@ -362,13 +376,13 @@ final class OpenPulsar
 		);
 
 		if ($decryptedData === false) {
-			throw new Exceptions\OpenPulsarError('Received Tuya WS message payload data could not be decrypted');
+			throw new TuyaExceptions\OpenPulsarError('Received Tuya WS message payload data could not be decrypted');
 		}
 
 		$this->logger->debug(
 			'Received message decrypted',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'openpulsar-api',
 				'data' => $decryptedData,
 				'connector' => [
@@ -383,8 +397,13 @@ final class OpenPulsar
 				$this->getSchema(self::WS_MESSAGE_PAYLOAD_DATA_SCHEMA_FILENAME),
 			);
 
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData | Exceptions\OpenPulsarError $ex) {
-			throw new Exceptions\OpenPulsarError(
+		} catch (
+			ApplicationExceptions\Logic
+			| ApplicationExceptions\MalformedInput
+			| ValuesExceptions\InvalidData
+			| TuyaExceptions\OpenPulsarError $ex
+		) {
+			throw new TuyaExceptions\OpenPulsarError(
 				'Could not decode received Tuya WS message payload data decrypted',
 				$ex->getCode(),
 				$ex,
@@ -435,8 +454,8 @@ final class OpenPulsar
 						],
 					),
 				);
-			} catch (Exceptions\Runtime $ex) {
-				throw new Exceptions\OpenPulsarError(
+			} catch (TuyaExceptions\Runtime $ex) {
+				throw new TuyaExceptions\OpenPulsarError(
 					'An error occurred, received device data points status could not be converted to message',
 					$ex->getCode(),
 					$ex,
@@ -466,8 +485,8 @@ final class OpenPulsar
 						],
 					),
 				);
-			} catch (Exceptions\Runtime $ex) {
-				throw new Exceptions\OpenPulsarError(
+			} catch (TuyaExceptions\Runtime $ex) {
+				throw new TuyaExceptions\OpenPulsarError(
 					'An error occurred, received device online status could not be converted to message',
 					$ex->getCode(),
 					$ex,
@@ -491,7 +510,7 @@ final class OpenPulsar
 	}
 
 	/**
-	 * @throws Exceptions\OpenPulsarError
+	 * @throws TuyaExceptions\OpenPulsarError
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -504,7 +523,7 @@ final class OpenPulsar
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\OpenPulsarError('Validation schema for response could not be loaded');
+				throw new TuyaExceptions\OpenPulsarError('Validation schema for response could not be loaded');
 			}
 		}
 

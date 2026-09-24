@@ -18,7 +18,7 @@ namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use Nette;
 use Orisai\ObjectMapper;
 use TypeError;
@@ -87,13 +87,13 @@ final class PropertyAttribute implements Message
 	}
 
 	/**
-	 * @return string|array<string>|array<float>|array<null>|bool|MetadataTypes\DataType|null
+	 * @return string|array<string>|array<float>|array<null>|bool|Types\DataType|null
 	 *
 	 * @throws Exceptions\ParseMessage
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getValue(): string|array|bool|MetadataTypes\DataType|null
+	public function getValue(): string|array|bool|Types\DataType|null
 	{
 		$value = $this->parseValue();
 
@@ -127,13 +127,13 @@ final class PropertyAttribute implements Message
 	}
 
 	/**
-	 * @return string|array<string>|array<float>|array<null>|MetadataTypes\DataType|null
+	 * @return string|array<string>|array<float>|array<null>|Types\DataType|null
 	 *
 	 * @throws Exceptions\ParseMessage
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function parseValue(): MetadataTypes\DataType|string|array|null
+	private function parseValue(): Types\DataType|string|array|null
 	{
 		if (
 			$this->getAttribute() === self::SETTABLE
@@ -145,11 +145,11 @@ final class PropertyAttribute implements Message
 		} elseif ($this->getAttribute() === self::NAME) {
 			return Helpers\Payload::cleanName($this->value);
 		} elseif ($this->getAttribute() === self::DATA_TYPE) {
-			if (MetadataTypes\DataType::tryFrom($this->value) === null) {
+			if (Types\DataType::tryFrom($this->value) === null) {
 				throw new Exceptions\ParseMessage('Provided payload is not valid');
 			}
 
-			return MetadataTypes\DataType::from($this->value);
+			return Types\DataType::from($this->value);
 		} elseif ($this->getAttribute() === self::FORMAT) {
 			if (str_contains($this->value, ':')) {
 				[$start, $end] = explode(':', $this->value) + [null, null];

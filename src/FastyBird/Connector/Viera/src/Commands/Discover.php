@@ -25,11 +25,12 @@ use FastyBird\Connector\Viera\Entities;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
-use FastyBird\Connector\Viera\Types;
+use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -497,7 +498,7 @@ class Discover extends Console\Command\Command
 					$this->logger->error(
 						'Creating api client failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'discovery-cmd',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -519,7 +520,7 @@ class Discover extends Console\Command\Command
 					$this->logger->error(
 						'Checking screen status failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'discovery-cmd',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -563,7 +564,7 @@ class Discover extends Console\Command\Command
 					$this->logger->error(
 						'Preparing api request failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'discovery-cmd',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -581,7 +582,7 @@ class Discover extends Console\Command\Command
 					$this->logger->error(
 						'Calling device api failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'discovery-cmd',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -596,18 +597,18 @@ class Discover extends Console\Command\Command
 					DevicesEntities\Devices\Properties\Variable::class,
 					$device->getId(),
 					$authorization->getAppId(),
-					MetadataTypes\DataType::STRING,
-					Types\DevicePropertyIdentifier::APP_ID,
-					DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::APP_ID->value),
+					ValuesTypes\DataType::STRING,
+					VieraTypes\DevicePropertyIdentifier::APP_ID,
+					DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::APP_ID->value),
 				);
 
 				$this->deviceProperty->create(
 					DevicesEntities\Devices\Properties\Variable::class,
 					$device->getId(),
 					$authorization->getEncryptionKey(),
-					MetadataTypes\DataType::STRING,
-					Types\DevicePropertyIdentifier::ENCRYPTION_KEY,
-					DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
+					ValuesTypes\DataType::STRING,
+					VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY,
+					DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
 				);
 
 				$io->success(

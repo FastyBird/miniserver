@@ -17,7 +17,7 @@ namespace FastyBird\Connector\HomeKit\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Transformers\Tools as ToolsTransformers;
+use FastyBird\Core\Values\Transformers;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use function is_float;
 use function is_int;
@@ -87,7 +87,7 @@ final class LightBulb extends Generic
 			&& is_int($greenCharacteristic?->getValue())
 			&& is_int($blueCharacteristic?->getValue())
 		) {
-			$rgb = new ToolsTransformers\RgbTransformer(
+			$rgb = new Transformers\RgbTransformer(
 				$redCharacteristic->getValue(),
 				$greenCharacteristic->getValue(),
 				$blueCharacteristic->getValue(),
@@ -97,7 +97,7 @@ final class LightBulb extends Generic
 			$hsb = $rgb->toHsb();
 
 		} else {
-			$hsb = new ToolsTransformers\HsbTransformer(0, 0, 0);
+			$hsb = new Transformers\HsbTransformer(0, 0, 0);
 		}
 
 		$hue = $this->findCharacteristic(Types\CharacteristicType::HUE);
@@ -177,7 +177,7 @@ final class LightBulb extends Generic
 				$brightness = 100;
 			}
 
-			$hsb = new ToolsTransformers\HsbTransformer(
+			$hsb = new Transformers\HsbTransformer(
 				$hueCharacteristic->getValue(),
 				$saturationCharacteristic->getValue(),
 				$brightness,
@@ -188,7 +188,7 @@ final class LightBulb extends Generic
 				: $hsb->toRgb();
 
 		} else {
-			$rgb = new ToolsTransformers\RgbTransformer(0, 0, 0);
+			$rgb = new Transformers\RgbTransformer(0, 0, 0);
 		}
 
 		$red = $this->findCharacteristic(Types\CharacteristicType::COLOR_RED);

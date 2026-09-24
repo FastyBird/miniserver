@@ -19,7 +19,7 @@ use FastyBird\Connector\Modbus\Documents;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Symfony\Component\EventDispatcher;
 use Throwable;
@@ -99,7 +99,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 			$this->logger->error(
 				'Characteristic value could not be prepared for writing',
 				[
-					'source' => MetadataTypes\Sources\Connector::MODBUS->value,
+					'source' => Sources\Connector::MODBUS->value,
 					'type' => 'event-writer',
 					'exception' => Logging\Logger::buildException($ex),
 				],

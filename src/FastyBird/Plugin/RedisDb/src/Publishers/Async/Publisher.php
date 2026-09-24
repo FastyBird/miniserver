@@ -20,7 +20,7 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\Utilities;
@@ -59,7 +59,7 @@ final class Publisher implements ExchangePublisher\Async\Publisher
 	 * @throws InvalidArgumentException
 	 */
 	public function publish(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $entity,
 	): Promise\PromiseInterface
@@ -81,7 +81,7 @@ final class Publisher implements ExchangePublisher\Async\Publisher
 					$this->logger->debug(
 						'Received message was pushed into data exchange',
 						[
-							'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
+							'source' => Sources\Plugin::REDISDB->value,
 							'type' => 'messages-async-publisher',
 							'message' => [
 								'routing_key' => $routingKey,
@@ -97,7 +97,7 @@ final class Publisher implements ExchangePublisher\Async\Publisher
 					$this->logger->error(
 						'Received message could not be pushed into data exchange',
 						[
-							'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
+							'source' => Sources\Plugin::REDISDB->value,
 							'type' => 'messages-async-publisher',
 							'exception' => Logging\Logger::buildException($ex),
 							'message' => [
@@ -120,7 +120,7 @@ final class Publisher implements ExchangePublisher\Async\Publisher
 			$this->logger->error(
 				'Data could not be converted to message',
 				[
-					'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
+					'source' => Sources\Plugin::REDISDB->value,
 					'type' => 'messages-async-publisher',
 					'exception' => Logging\Logger::buildException($ex),
 					'message' => [

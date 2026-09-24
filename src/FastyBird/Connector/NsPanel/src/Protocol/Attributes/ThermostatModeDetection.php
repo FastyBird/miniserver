@@ -17,8 +17,8 @@ namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 use function sprintf;
 
@@ -42,8 +42,8 @@ class ThermostatModeDetection extends Attribute
 	)
 	{
 		if (
-			$capability->getName() !== Types\ThermostatModeDetection::TEMPERATURE->value
-			&& $capability->getName() !== Types\ThermostatModeDetection::HUMIDITY->value
+			$capability->getName() !== NsPanelTypes\ThermostatModeDetection::TEMPERATURE->value
+			&& $capability->getName() !== NsPanelTypes\ThermostatModeDetection::HUMIDITY->value
 		) {
 			throw new Exceptions\InvalidArgument(
 				sprintf(
@@ -55,19 +55,19 @@ class ThermostatModeDetection extends Attribute
 
 		parent::__construct(
 			$id,
-			Types\Attribute::MODE,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::MODE,
+			ValuesTypes\DataType::ENUM,
 			$capability,
-			$capability->getName() === Types\ThermostatModeDetection::TEMPERATURE->value
+			$capability->getName() === NsPanelTypes\ThermostatModeDetection::TEMPERATURE->value
 				? [
-					Types\Payloads\ThermostatDetectionMode::COMFORT->value,
-					Types\Payloads\ThermostatDetectionMode::COLD->value,
-					Types\Payloads\ThermostatDetectionMode::HOT->value,
+					NsPanelTypes\Payloads\ThermostatDetectionMode::COMFORT->value,
+					NsPanelTypes\Payloads\ThermostatDetectionMode::COLD->value,
+					NsPanelTypes\Payloads\ThermostatDetectionMode::HOT->value,
 				]
 				: [
-					Types\Payloads\ThermostatDetectionMode::COMFORT->value,
-					Types\Payloads\ThermostatDetectionMode::WET->value,
-					Types\Payloads\ThermostatDetectionMode::DRY->value,
+					NsPanelTypes\Payloads\ThermostatDetectionMode::COMFORT->value,
+					NsPanelTypes\Payloads\ThermostatDetectionMode::WET->value,
+					NsPanelTypes\Payloads\ThermostatDetectionMode::DRY->value,
 				],
 		);
 	}

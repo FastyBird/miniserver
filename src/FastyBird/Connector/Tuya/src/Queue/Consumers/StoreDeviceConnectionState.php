@@ -21,7 +21,7 @@ use FastyBird\Connector\Tuya\Documents;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -93,7 +93,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'store-device-connection-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -136,7 +136,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					await($this->devicePropertiesStatesManager->setValidState(
 						$property,
 						false,
-						MetadataTypes\Sources\Connector::TUYA,
+						Sources\Connector::TUYA,
 					));
 				}
 
@@ -161,7 +161,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 						await($this->channelPropertiesStatesManager->setValidState(
 							$property,
 							false,
-							MetadataTypes\Sources\Connector::TUYA,
+							Sources\Connector::TUYA,
 						));
 					}
 				}
@@ -192,7 +192,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 						await($this->devicePropertiesStatesManager->setValidState(
 							$property,
 							false,
-							MetadataTypes\Sources\Connector::TUYA,
+							Sources\Connector::TUYA,
 						));
 					}
 
@@ -217,7 +217,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 							await($this->channelPropertiesStatesManager->setValidState(
 								$property,
 								false,
-								MetadataTypes\Sources\Connector::TUYA,
+								Sources\Connector::TUYA,
 							));
 						}
 					}
@@ -228,7 +228,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed device connection state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'store-device-connection-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

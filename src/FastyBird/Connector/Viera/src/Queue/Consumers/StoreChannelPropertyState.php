@@ -22,7 +22,8 @@ use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -89,7 +90,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'store-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -130,7 +131,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Channel could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'store-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -170,7 +171,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Channel property could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'store-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -191,19 +192,19 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		if ($property->getDataType() === MetadataTypes\DataType::BUTTON) {
+		if ($property->getDataType() === Types\DataType::BUTTON) {
 			await($this->channelPropertiesStatesManager->set(
 				$property,
 				Utils\ArrayHash::from([
 					DevicesStates\Property::ACTUAL_VALUE_FIELD => null,
 					DevicesStates\Property::VALID_FIELD => true,
 				]),
-				MetadataTypes\Sources\Connector::VIERA,
+				Sources\Connector::VIERA,
 			));
 			await($this->channelPropertiesStatesManager->setPendingState(
 				$property,
 				false,
-				MetadataTypes\Sources\Connector::VIERA,
+				Sources\Connector::VIERA,
 			));
 		} else {
 			await($this->channelPropertiesStatesManager->set(
@@ -211,14 +212,14 @@ final class StoreChannelPropertyState implements Queue\Consumer
 				Utils\ArrayHash::from([
 					DevicesStates\Property::ACTUAL_VALUE_FIELD => $message->getValue(),
 				]),
-				MetadataTypes\Sources\Connector::VIERA,
+				Sources\Connector::VIERA,
 			));
 		}
 
 		$this->logger->debug(
 			'Consumed store device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIERA->value,
+				'source' => Sources\Connector::VIERA->value,
 				'type' => 'store-channel-property-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

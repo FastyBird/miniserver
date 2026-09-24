@@ -22,7 +22,7 @@ use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -112,7 +112,7 @@ final class StoreParametersStates implements Queue\Consumer
 						Utils\ArrayHash::from([
 							DevicesStates\Property::ACTUAL_VALUE_FIELD => $parameter->getValue(),
 						]),
-						MetadataTypes\Sources\Connector::SONOFF,
+						Sources\Connector::SONOFF,
 					));
 				} elseif ($property instanceof DevicesDocuments\Devices\Properties\Variable) {
 					$this->databaseHelper->transaction(
@@ -155,7 +155,7 @@ final class StoreParametersStates implements Queue\Consumer
 							Utils\ArrayHash::from([
 								DevicesStates\Property::ACTUAL_VALUE_FIELD => $parameter->getValue(),
 							]),
-							MetadataTypes\Sources\Connector::SONOFF,
+							Sources\Connector::SONOFF,
 						));
 					} elseif ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
 						$this->databaseHelper->transaction(
@@ -182,7 +182,7 @@ final class StoreParametersStates implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'status-parameters-states-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

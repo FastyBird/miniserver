@@ -22,7 +22,7 @@ use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
@@ -219,7 +219,7 @@ final class ChannelsV1 extends BaseV1
 				$this->logger->error(
 					'An unhandled error occurred',
 					[
-						'source' => MetadataTypes\Sources\Module::DEVICES->value,
+						'source' => Sources\Module::DEVICES->value,
 						'type' => 'channels-controller',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -297,7 +297,7 @@ final class ChannelsV1 extends BaseV1
 				$this->logger->error(
 					'An unhandled error occurred',
 					[
-						'source' => MetadataTypes\Sources\Module::DEVICES->value,
+						'source' => Sources\Module::DEVICES->value,
 						'type' => 'channels-controller',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -370,7 +370,7 @@ final class ChannelsV1 extends BaseV1
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'type' => 'channels-controller',
 					'exception' => Logging\Logger::buildException($ex),
 				],

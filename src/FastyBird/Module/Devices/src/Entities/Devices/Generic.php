@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities;
 
 #[ORM\Entity]
@@ -32,9 +32,9 @@ class Generic extends Entities\Devices\Device
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Module
+	public function getSource(): Sources\Module
 	{
-		return MetadataTypes\Sources\Module::DEVICES;
+		return Sources\Module::DEVICES;
 	}
 
 }

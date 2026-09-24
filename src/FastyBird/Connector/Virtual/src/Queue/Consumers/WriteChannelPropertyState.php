@@ -25,7 +25,7 @@ use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -100,7 +100,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Connector could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+					'source' => Sources\Connector::VIRTUAL->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -134,7 +134,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+					'source' => Sources\Connector::VIRTUAL->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -168,7 +168,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Channel could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+					'source' => Sources\Connector::VIRTUAL->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -202,7 +202,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Channel property could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+					'source' => Sources\Connector::VIRTUAL->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -227,7 +227,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Channel property is not writable',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+					'source' => Sources\Connector::VIRTUAL->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -265,7 +265,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				await($this->channelPropertiesStatesManager->setPendingState(
 					$property,
 					false,
-					MetadataTypes\Sources\Connector::VIRTUAL,
+					Sources\Connector::VIRTUAL,
 				));
 			}
 
@@ -289,7 +289,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			await($this->channelPropertiesStatesManager->setPendingState(
 				$property,
 				true,
-				MetadataTypes\Sources\Connector::VIRTUAL,
+				Sources\Connector::VIRTUAL,
 			));
 		}
 
@@ -311,7 +311,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						'connector' => $connector->getId(),
 						'device' => $device->getId(),
 						'state' => DevicesTypes\ConnectionState::ALERT,
-						'source' => MetadataTypes\Sources\Connector::VIRTUAL,
+						'source' => Sources\Connector::VIRTUAL,
 					],
 				),
 			);
@@ -320,14 +320,14 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				await($this->channelPropertiesStatesManager->setPendingState(
 					$property,
 					false,
-					MetadataTypes\Sources\Connector::VIRTUAL,
+					Sources\Connector::VIRTUAL,
 				));
 			}
 
 			$this->logger->error(
 				'Device is not properly configured',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+					'source' => Sources\Connector::VIRTUAL->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -357,13 +357,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
 						DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 					]),
-					MetadataTypes\Sources\Connector::VIRTUAL,
+					Sources\Connector::VIRTUAL,
 				));
 
 				$this->logger->debug(
 					'Channel state was successfully sent to device',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+						'source' => Sources\Connector::VIRTUAL->value,
 						'type' => 'write-channel-property-state-message-consumer',
 						'connector' => [
 							'id' => $connector->getId()->toString(),
@@ -386,7 +386,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					await($this->channelPropertiesStatesManager->setPendingState(
 						$property,
 						false,
-						MetadataTypes\Sources\Connector::VIRTUAL,
+						Sources\Connector::VIRTUAL,
 					));
 				}
 
@@ -397,7 +397,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 							'connector' => $connector->getId(),
 							'device' => $device->getId(),
 							'state' => DevicesTypes\ConnectionState::ALERT,
-							'source' => MetadataTypes\Sources\Connector::VIRTUAL,
+							'source' => Sources\Connector::VIRTUAL,
 						],
 					),
 				);
@@ -405,7 +405,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				$this->logger->error(
 					'Could write state to device',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+						'source' => Sources\Connector::VIRTUAL->value,
 						'type' => 'write-channel-property-state-message-consumer',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
@@ -429,7 +429,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed write device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+				'source' => Sources\Connector::VIRTUAL->value,
 				'type' => 'write-channel-property-state-message-consumer',
 				'connector' => [
 					'id' => $connector->getId()->toString(),

@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Models;
 
 use DateTimeInterface;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Payloads;
 use Ramsey\Uuid;
 use function array_key_exists;
 
@@ -32,12 +32,12 @@ use function array_key_exists;
 class StateRepository
 {
 
-	/** @var array<string, bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null> */
+	/** @var array<string, bool|float|int|string|DateTimeInterface|Payloads\Payload|null> */
 	private array $states = [];
 
 	public function set(
 		Uuid\UuidInterface $id,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value,
 	): void
 	{
 		$this->states[$id->toString()] = $value;
@@ -48,7 +48,7 @@ class StateRepository
 	 */
 	public function get(
 		Uuid\UuidInterface $id,
-	): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		if (array_key_exists($id->toString(), $this->states)) {
 			return $this->states[$id->toString()];

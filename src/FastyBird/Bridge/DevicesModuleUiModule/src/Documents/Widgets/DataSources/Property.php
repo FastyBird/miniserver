@@ -19,8 +19,8 @@ use DateTimeInterface;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -37,16 +37,16 @@ abstract class Property extends UiDocuments\Widgets\DataSources\DataSource
 		private readonly Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\BoolValue(),
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\FloatValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
-		private readonly bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value = null,
+		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value = null,
 		Uuid\UuidInterface|null $owner = null,
 		DateTimeInterface|null $createdAt = null,
 		DateTimeInterface|null $updatedAt = null,
@@ -65,7 +65,7 @@ abstract class Property extends UiDocuments\Widgets\DataSources\DataSource
 		return $this->property;
 	}
 
-	public function getValue(): MetadataTypes\Payloads\Payload|float|DateTimeInterface|bool|int|string|null
+	public function getValue(): Payloads\Payload|float|DateTimeInterface|bool|int|string|null
 	{
 		return $this->value;
 	}
@@ -74,7 +74,7 @@ abstract class Property extends UiDocuments\Widgets\DataSources\DataSource
 	{
 		return array_merge(parent::toArray(), [
 			'property' => $this->getProperty()->toString(),
-			'value' => ToolsUtilities\Value::flattenValue($this->getValue()),
+			'value' => Utilities\Value::flattenValue($this->getValue()),
 		]);
 	}
 

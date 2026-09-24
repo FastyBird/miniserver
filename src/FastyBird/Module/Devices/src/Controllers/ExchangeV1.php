@@ -21,7 +21,7 @@ use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
@@ -72,7 +72,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 		$this->logger->debug(
 			'Client subscribed to topic',
 			[
-				'source' => MetadataTypes\Sources\Module::DEVICES->value,
+				'source' => Sources\Module::DEVICES->value,
 				'type' => 'exchange-controller',
 				'client' => $client->getId(),
 				'topic' => $topic->getId(),
@@ -99,7 +99,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'data' => $state->toArray(),
 							]),
 						]));
@@ -126,7 +126,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'data' => $state->toArray(),
 							]),
 						]));
@@ -150,7 +150,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'data' => $state->toArray(),
 							]),
 						]));
@@ -161,7 +161,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			$this->logger->error(
 				'State could not be sent to subscriber',
 				[
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'type' => 'exchange-controller',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -194,7 +194,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 		$this->logger->debug(
 			'Received RPC call from client',
 			[
-				'source' => MetadataTypes\Sources\Module::DEVICES->value,
+				'source' => Sources\Module::DEVICES->value,
 				'type' => 'exchange-controller',
 				'client' => $client->getId(),
 				'topic' => $topic->getId(),
@@ -292,7 +292,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 					$this->connectorPropertiesStatesManager->set(
 						$property,
 						Utils\ArrayHash::from($data),
-						MetadataTypes\Sources\Module::DEVICES,
+						Sources\Module::DEVICES,
 					);
 				}
 			} elseif ($entity->getWrite() !== null) {
@@ -310,7 +310,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 					$this->connectorPropertiesStatesManager->write(
 						$property,
 						Utils\ArrayHash::from($data),
-						MetadataTypes\Sources\Module::DEVICES,
+						Sources\Module::DEVICES,
 					);
 				}
 			}
@@ -334,7 +334,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'data' => $state->toArray(),
 				]),
 			]));
@@ -385,7 +385,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 					$this->devicePropertiesStatesManager->set(
 						$property,
 						Utils\ArrayHash::from($data),
-						MetadataTypes\Sources\Module::DEVICES,
+						Sources\Module::DEVICES,
 					);
 				}
 			} elseif ($entity->getWrite() !== null) {
@@ -403,7 +403,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 					$this->devicePropertiesStatesManager->write(
 						$property,
 						Utils\ArrayHash::from($data),
-						MetadataTypes\Sources\Module::DEVICES,
+						Sources\Module::DEVICES,
 					);
 				}
 			}
@@ -427,7 +427,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'data' => $state->toArray(),
 				]),
 			]));
@@ -478,7 +478,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 					$this->channelPropertiesStatesManager->set(
 						$property,
 						Utils\ArrayHash::from($data),
-						MetadataTypes\Sources\Module::DEVICES,
+						Sources\Module::DEVICES,
 					);
 				}
 			} elseif ($entity->getWrite() !== null) {
@@ -496,7 +496,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 					$this->channelPropertiesStatesManager->write(
 						$property,
 						Utils\ArrayHash::from($data),
-						MetadataTypes\Sources\Module::DEVICES,
+						Sources\Module::DEVICES,
 					);
 				}
 			}
@@ -520,7 +520,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'data' => $state->toArray(),
 				]),
 			]));

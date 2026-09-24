@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\HomeKit\Queue\Messages;
 
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 
@@ -47,11 +47,11 @@ final readonly class StoreChannelPropertyState implements Message
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\BoolValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 		])]
-		private float|int|string|bool|MetadataTypes\Payloads\Payload|null $value,
+		private float|int|string|bool|Payloads\Payload|null $value,
 	)
 	{
 	}
@@ -76,7 +76,7 @@ final readonly class StoreChannelPropertyState implements Message
 		return $this->property;
 	}
 
-	public function getValue(): float|int|string|bool|MetadataTypes\Payloads\Payload|null
+	public function getValue(): float|int|string|bool|Payloads\Payload|null
 	{
 		return $this->value;
 	}
@@ -91,7 +91,7 @@ final readonly class StoreChannelPropertyState implements Message
 			'device' => $this->getDevice()->toString(),
 			'channel' => $this->getChannel()->toString(),
 			'property' => $this->getProperty()->toString(),
-			'value' => ToolsUtilities\Value::flattenValue($this->getValue()),
+			'value' => Utilities\Value::flattenValue($this->getValue()),
 		];
 	}
 

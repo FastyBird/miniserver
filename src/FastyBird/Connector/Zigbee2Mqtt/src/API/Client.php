@@ -21,7 +21,7 @@ use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Clients;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
@@ -200,7 +200,7 @@ final class Client
 						$this->logger->info(
 							sprintf('Connected to MQTT broker with client id %s', $connection->getClientID()),
 							[
-								'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+								'source' => Sources\Connector::ZIGBEE2MQTT->value,
 								'type' => 'mqtt-api',
 								'credentials' => [
 									'username' => $connection->getUsername(),
@@ -263,7 +263,7 @@ final class Client
 					$this->logger->info(
 						sprintf('Disconnected from MQTT broker with client id %s', $connection->getClientID()),
 						[
-							'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+							'source' => Sources\Connector::ZIGBEE2MQTT->value,
 							'type' => 'mqtt-api',
 							'credentials' => [
 								'username' => $connection->getUsername(),
@@ -366,7 +366,7 @@ final class Client
 		$this->logger->info(
 			'Established connection to MQTT broker',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'mqtt-api',
 				'credentials' => [
 					'username' => $connection->getUsername(),
@@ -619,7 +619,7 @@ final class Client
 			$this->logger->info(
 				'Connection to MQTT broker has been closed',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'mqtt-api',
 					'credentials' => [
 						'username' => $connection->getUsername(),
@@ -641,7 +641,7 @@ final class Client
 		$this->logger->warning(
 			sprintf('There was an error %s', $error->getMessage()),
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'mqtt-api',
 				'error' => [
 					'message' => $error->getMessage(),
@@ -665,7 +665,7 @@ final class Client
 		$this->logger->error(
 			sprintf('There was an error %s', $error->getMessage()),
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'mqtt-api',
 				'error' => [
 					'message' => $error->getMessage(),
@@ -765,7 +765,7 @@ final class Client
 						$this->logger->info(
 							sprintf('Connected to MQTT broker with client id %s', $result->getClientID()),
 							[
-								'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+								'source' => Sources\Connector::ZIGBEE2MQTT->value,
 								'type' => 'mqtt-api',
 								'credentials' => [
 									'username' => $result->getUsername(),
@@ -785,7 +785,7 @@ final class Client
 						$this->logger->info(
 							sprintf('Disconnected from MQTT broker with client id %s', $result->getClientID()),
 							[
-								'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+								'source' => Sources\Connector::ZIGBEE2MQTT->value,
 								'type' => 'mqtt-api',
 								'credentials' => [
 									'username' => $result->getUsername(),
@@ -809,7 +809,7 @@ final class Client
 								$result->getPayload(),
 							),
 							[
-								'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+								'source' => Sources\Connector::ZIGBEE2MQTT->value,
 								'type' => 'mqtt-api',
 								'message' => [
 									'topic' => $result->getTopic(),

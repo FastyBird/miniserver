@@ -22,8 +22,8 @@ use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 use TypeError;
@@ -76,9 +76,9 @@ class Device extends VirtualEntities\Devices\Device
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Addon
+	public function getSource(): Sources\Addon
 	{
-		return MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT;
+		return Sources\Addon::VIRTUAL_THERMOSTAT;
 	}
 
 	/**
@@ -472,7 +472,7 @@ class Device extends VirtualEntities\Devices\Device
 
 		$format = $channel->getHvacMode()?->getFormat();
 
-		if (!$format instanceof ToolsFormats\StringEnum) {
+		if (!$format instanceof Formats\StringEnum) {
 			return [];
 		}
 
@@ -496,7 +496,7 @@ class Device extends VirtualEntities\Devices\Device
 
 		$format = $channel->getPresetMode()?->getFormat();
 
-		if (!$format instanceof ToolsFormats\StringEnum) {
+		if (!$format instanceof Formats\StringEnum) {
 			return [];
 		}
 

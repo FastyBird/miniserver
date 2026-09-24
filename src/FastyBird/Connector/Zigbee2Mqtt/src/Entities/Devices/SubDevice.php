@@ -21,7 +21,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -129,9 +129,9 @@ class SubDevice extends Device
 		if (
 			$property instanceof DevicesEntities\Devices\Properties\Variable
 			&& is_string($property->getValue())
-			&& Types\DeviceType::tryFrom(ToolsUtilities\Value::toString($property->getValue(), true)) !== null
+			&& Types\DeviceType::tryFrom(Utilities\Value::toString($property->getValue(), true)) !== null
 		) {
-			return Types\DeviceType::tryFrom(ToolsUtilities\Value::toString($property->getValue(), true));
+			return Types\DeviceType::tryFrom(Utilities\Value::toString($property->getValue(), true));
 		}
 
 		throw new ApplicationExceptions\InvalidState('Device hardware type is not configured');

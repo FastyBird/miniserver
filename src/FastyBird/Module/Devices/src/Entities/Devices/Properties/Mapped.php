@@ -18,11 +18,11 @@ namespace FastyBird\Module\Devices\Entities\Devices\Properties;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types;
 use Ramsey\Uuid;
 use TypeError;
@@ -55,12 +55,12 @@ class Mapped extends Property
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function getParent(): Dynamic|Variable
 	{
 		if ($this->parent === null) {
-			throw new Exceptions\InvalidState('Mapped property can\'t be without parent property');
+			throw new DevicesExceptions\InvalidState('Mapped property can\'t be without parent property');
 		}
 
 		assert($this->parent instanceof Dynamic || $this->parent instanceof Variable);
@@ -69,169 +69,169 @@ class Mapped extends Property
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function getChildren(): array
 	{
-		throw new Exceptions\InvalidState(
+		throw new DevicesExceptions\InvalidState(
 			sprintf('Reading children is not allowed for property type: %s', static::getType()),
 		);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function setChildren(array $children): void
 	{
-		throw new Exceptions\InvalidState(
+		throw new DevicesExceptions\InvalidState(
 			sprintf('Assigning children is not allowed for property type: %s', static::getType()),
 		);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function addChild(Property $child): void
 	{
-		throw new Exceptions\InvalidState(
+		throw new DevicesExceptions\InvalidState(
 			sprintf('Adding child is not allowed for property type: %s', static::getType()),
 		);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function removeChild(Property $child): void
 	{
-		throw new Exceptions\InvalidState(
+		throw new DevicesExceptions\InvalidState(
 			sprintf('Removing child is not allowed for property type: %s', static::getType()),
 		);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function setSettable(bool $settable): void
 	{
 		if (!$this->getParent() instanceof Dynamic) {
-			throw new Exceptions\InvalidState('Settable flag is allowed only for dynamic parent properties');
+			throw new DevicesExceptions\InvalidState('Settable flag is allowed only for dynamic parent properties');
 		}
 
 		parent::setSettable($settable);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function isSettable(): bool
 	{
 		if (!$this->getParent() instanceof Dynamic) {
-			throw new Exceptions\InvalidState('Settable flag is allowed only for dynamic parent properties');
+			throw new DevicesExceptions\InvalidState('Settable flag is allowed only for dynamic parent properties');
 		}
 
 		return parent::isSettable();
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function setQueryable(bool $queryable): void
 	{
 		if (!$this->getParent() instanceof Dynamic) {
-			throw new Exceptions\InvalidState('Queryable flag is allowed only for dynamic parent properties');
+			throw new DevicesExceptions\InvalidState('Queryable flag is allowed only for dynamic parent properties');
 		}
 
 		parent::setQueryable($queryable);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function isQueryable(): bool
 	{
 		if (!$this->getParent() instanceof Dynamic) {
-			throw new Exceptions\InvalidState('Queryable flag is allowed only for dynamic parent properties');
+			throw new DevicesExceptions\InvalidState('Queryable flag is allowed only for dynamic parent properties');
 		}
 
 		return parent::isQueryable();
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDefault(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getDefault(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		try {
-			return ToolsUtilities\Value::normalizeValue(
-				ToolsUtilities\Value::transformDataType(
-					ToolsUtilities\Value::flattenValue($this->getParent()->getDefault()),
+			return Utilities\Value::normalizeValue(
+				Utilities\Value::transformDataType(
+					Utilities\Value::flattenValue($this->getParent()->getDefault()),
 					$this->getDataType(),
 				),
 				$this->getDataType(),
 				$this->getFormat(),
 			);
-		} catch (ToolsExceptions\InvalidValue) {
+		} catch (ValuesExceptions\InvalidValue) {
 			return null;
 		}
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function setDefault(
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $default,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $default,
 	): void
 	{
-		throw new Exceptions\InvalidState('Default value setter is allowed only for parent');
+		throw new DevicesExceptions\InvalidState('Default value setter is allowed only for parent');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		if (!$this->getParent() instanceof Variable) {
-			throw new Exceptions\InvalidState('Reading value is allowed only for variable parent properties');
+			throw new DevicesExceptions\InvalidState('Reading value is allowed only for variable parent properties');
 		}
 
 		try {
-			return ToolsUtilities\Value::normalizeValue(
-				ToolsUtilities\Value::transformDataType(
-					ToolsUtilities\Value::flattenValue($this->getParent()->getValue()),
+			return Utilities\Value::normalizeValue(
+				Utilities\Value::transformDataType(
+					Utilities\Value::flattenValue($this->getParent()->getValue()),
 					$this->getDataType(),
 				),
 				$this->getDataType(),
 				$this->getFormat(),
 			);
-		} catch (ToolsExceptions\InvalidValue) {
+		} catch (ValuesExceptions\InvalidValue) {
 			return null;
 		}
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
-	public function setValue(bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value): void
+	public function setValue(bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value): void
 	{
 		if (!$this->getParent() instanceof Variable) {
-			throw new Exceptions\InvalidState('Setting value is allowed only for variable parent properties');
+			throw new DevicesExceptions\InvalidState('Setting value is allowed only for variable parent properties');
 		}
 
-		throw new Exceptions\InvalidState('Value setter is allowed only for parent');
+		throw new DevicesExceptions\InvalidState('Value setter is allowed only for parent');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -244,15 +244,15 @@ class Mapped extends Property
 			return array_merge(parent::toArray(), [
 				'parent' => $this->getParent()->getId()->toString(),
 
-				'default' => ToolsUtilities\Value::flattenValue($this->getDefault()),
-				'value' => ToolsUtilities\Value::flattenValue($this->getValue()),
+				'default' => Utilities\Value::flattenValue($this->getDefault()),
+				'value' => Utilities\Value::flattenValue($this->getValue()),
 			]);
 		}
 
 		return array_merge(parent::toArray(), [
 			'parent' => $this->getParent()->getId()->toString(),
 
-			'default' => ToolsUtilities\Value::flattenValue($this->getDefault()),
+			'default' => Utilities\Value::flattenValue($this->getDefault()),
 			'settable' => $this->isSettable(),
 			'queryable' => $this->isQueryable(),
 		]);

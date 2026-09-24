@@ -16,11 +16,12 @@
 namespace FastyBird\Connector\HomeKit\Protocol;
 
 use DateTimeInterface;
-use FastyBird\Connector\HomeKit\Types;
+use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Nette\Utils;
 use TypeError;
@@ -63,15 +64,15 @@ final class Transformer
 	 */
 	public static function fromClient(
 		DevicesDocuments\Channels\Properties\Property|null $property,
-		Types\DataType $dataType,
+		HomeKitTypes\DataType $dataType,
 		bool|float|int|string|null $value,
-	): bool|float|int|string|MetadataTypes\Payloads\Payload|null
+	): bool|float|int|string|Payloads\Payload|null
 	{
 		$transformedValue = null;
 
 		// HAP transformation
 
-		if ($dataType === Types\DataType::BOOLEAN) {
+		if ($dataType === HomeKitTypes\DataType::BOOLEAN) {
 			if ($value === null) {
 				$transformedValue = false;
 			} elseif (!is_bool($value)) {
@@ -86,7 +87,7 @@ final class Transformer
 			} else {
 				$transformedValue = $value;
 			}
-		} elseif ($dataType === Types\DataType::FLOAT) {
+		} elseif ($dataType === HomeKitTypes\DataType::FLOAT) {
 			if (is_float($value)) {
 				$transformedValue = $value;
 			} elseif (is_numeric($value)) {
@@ -101,11 +102,11 @@ final class Transformer
 				$transformedValue = (float) $transformedValue;
 			}
 		} elseif (
-			$dataType === Types\DataType::INT
-			|| $dataType === Types\DataType::UINT8
-			|| $dataType === Types\DataType::UINT16
-			|| $dataType === Types\DataType::UINT32
-			|| $dataType === Types\DataType::UINT64
+			$dataType === HomeKitTypes\DataType::INT
+			|| $dataType === HomeKitTypes\DataType::UINT8
+			|| $dataType === HomeKitTypes\DataType::UINT16
+			|| $dataType === HomeKitTypes\DataType::UINT32
+			|| $dataType === HomeKitTypes\DataType::UINT64
 		) {
 			if (is_int($value)) {
 				$transformedValue = $value;
@@ -115,7 +116,7 @@ final class Transformer
 				$transformedValue = preg_replace('~\s~', '', (string) $value);
 				$transformedValue = (int) $transformedValue;
 			}
-		} elseif ($dataType === Types\DataType::STRING) {
+		} elseif ($dataType === HomeKitTypes\DataType::STRING) {
 			$transformedValue = strval($value);
 		}
 
@@ -130,56 +131,56 @@ final class Transformer
 		}
 
 		if (
-			$property->getDataType() === MetadataTypes\DataType::ENUM
-			|| $property->getDataType() === MetadataTypes\DataType::SWITCH
-			|| $property->getDataType() === MetadataTypes\DataType::COVER
-			|| $property->getDataType() === MetadataTypes\DataType::BUTTON
+			$property->getDataType() === ValuesTypes\DataType::ENUM
+			|| $property->getDataType() === ValuesTypes\DataType::SWITCH
+			|| $property->getDataType() === ValuesTypes\DataType::COVER
+			|| $property->getDataType() === ValuesTypes\DataType::BUTTON
 		) {
-			if ($property->getFormat() instanceof ToolsFormats\StringEnum) {
+			if ($property->getFormat() instanceof Formats\StringEnum) {
 				$filtered = array_values(array_filter(
 					$property->getFormat()->getItems(),
 					static fn (string $item): bool => Utils\Strings::lower(strval($transformedValue)) === $item,
 				));
 
 				if (count($filtered) === 1) {
-					if ($property->getDataType() === MetadataTypes\DataType::SWITCH) {
-						return MetadataTypes\Payloads\Switcher::from(strval($transformedValue));
-					} elseif ($property->getDataType() === MetadataTypes\DataType::BUTTON) {
-						return MetadataTypes\Payloads\Button::from(strval($transformedValue));
-					} elseif ($property->getDataType() === MetadataTypes\DataType::COVER) {
-						return MetadataTypes\Payloads\Cover::from(strval($transformedValue));
+					if ($property->getDataType() === ValuesTypes\DataType::SWITCH) {
+						return Payloads\Switcher::from(strval($transformedValue));
+					} elseif ($property->getDataType() === ValuesTypes\DataType::BUTTON) {
+						return Payloads\Button::from(strval($transformedValue));
+					} elseif ($property->getDataType() === ValuesTypes\DataType::COVER) {
+						return Payloads\Cover::from(strval($transformedValue));
 					} else {
 						return strval($transformedValue);
 					}
 				}
 
 				return null;
-			} elseif ($property->getFormat() instanceof ToolsFormats\CombinedEnum) {
+			} elseif ($property->getFormat() instanceof Formats\CombinedEnum) {
 				$filtered = array_values(array_filter(
 					$property->getFormat()->getItems(),
 					static fn (array $item): bool => $item[1] !== null
-						&& Utils\Strings::lower(ToolsUtilities\Value::toString($item[1]->getValue(), true))
+						&& Utils\Strings::lower(Utilities\Value::toString($item[1]->getValue(), true))
 							=== Utils\Strings::lower(strval($transformedValue)),
 				));
 
 				if (
 					count($filtered) === 1
-					&& $filtered[0][0] instanceof ToolsFormats\CombinedEnumItem
+					&& $filtered[0][0] instanceof Formats\CombinedEnumItem
 				) {
-					if ($property->getDataType() === MetadataTypes\DataType::SWITCH) {
-						return MetadataTypes\Payloads\Switcher::from(
-							ToolsUtilities\Value::toString($filtered[0][0]->getValue(), true),
+					if ($property->getDataType() === ValuesTypes\DataType::SWITCH) {
+						return Payloads\Switcher::from(
+							Utilities\Value::toString($filtered[0][0]->getValue(), true),
 						);
-					} elseif ($property->getDataType() === MetadataTypes\DataType::BUTTON) {
-						return MetadataTypes\Payloads\Button::from(
-							ToolsUtilities\Value::toString($filtered[0][0]->getValue(), true),
+					} elseif ($property->getDataType() === ValuesTypes\DataType::BUTTON) {
+						return Payloads\Button::from(
+							Utilities\Value::toString($filtered[0][0]->getValue(), true),
 						);
-					} elseif ($property->getDataType() === MetadataTypes\DataType::COVER) {
-						return MetadataTypes\Payloads\Cover::from(
-							ToolsUtilities\Value::toString($filtered[0][0]->getValue(), true),
+					} elseif ($property->getDataType() === ValuesTypes\DataType::COVER) {
+						return Payloads\Cover::from(
+							Utilities\Value::toString($filtered[0][0]->getValue(), true),
 						);
 					} else {
-						return ToolsUtilities\Value::toString($filtered[0][0]->getValue(), true);
+						return Utilities\Value::toString($filtered[0][0]->getValue(), true);
 					}
 				}
 
@@ -200,13 +201,13 @@ final class Transformer
 	 */
 	public static function toClient(
 		DevicesDocuments\Channels\Properties\Property|null $property,
-		Types\DataType $dataType,
+		HomeKitTypes\DataType $dataType,
 		array|null $validValues,
 		int|null $maxLength,
 		float|null $minValue,
 		float|null $maxValue,
 		float|null $minStep,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value,
 	): bool|float|int|string|null
 	{
 		$transformedValue = null;
@@ -215,52 +216,52 @@ final class Transformer
 
 		if ($property !== null) {
 			if (
-				$property->getDataType() === MetadataTypes\DataType::ENUM
-				|| $property->getDataType() === MetadataTypes\DataType::SWITCH
-				|| $property->getDataType() === MetadataTypes\DataType::COVER
-				|| $property->getDataType() === MetadataTypes\DataType::BUTTON
+				$property->getDataType() === ValuesTypes\DataType::ENUM
+				|| $property->getDataType() === ValuesTypes\DataType::SWITCH
+				|| $property->getDataType() === ValuesTypes\DataType::COVER
+				|| $property->getDataType() === ValuesTypes\DataType::BUTTON
 			) {
-				if ($property->getFormat() instanceof ToolsFormats\StringEnum) {
+				if ($property->getFormat() instanceof Formats\StringEnum) {
 					$filtered = array_values(array_filter(
 						$property->getFormat()->getItems(),
 						static fn (string $item): bool => ($value !== null ? Utils\Strings::lower(
-							ToolsUtilities\Value::toString($value, true),
+							Utilities\Value::toString($value, true),
 						) : null) === $item,
 					));
 
 					if (count($filtered) === 1) {
-						$transformedValue = ToolsUtilities\Value::flattenValue($value);
+						$transformedValue = Utilities\Value::flattenValue($value);
 					}
-				} elseif ($property->getFormat() instanceof ToolsFormats\CombinedEnum) {
+				} elseif ($property->getFormat() instanceof Formats\CombinedEnum) {
 					$filtered = array_values(array_filter(
 						$property->getFormat()->getItems(),
 						static fn (array $item): bool => $item[0] !== null
 							&& Utils\Strings::lower(
-								ToolsUtilities\Value::toString($item[0]->getValue(), true),
+								Utilities\Value::toString($item[0]->getValue(), true),
 							) === ($value !== null ? Utils\Strings::lower(
-								ToolsUtilities\Value::toString($value, true),
+								Utilities\Value::toString($value, true),
 							) : null),
 					));
 
 					if (
 						count($filtered) === 1
-						&& $filtered[0][2] instanceof ToolsFormats\CombinedEnumItem
+						&& $filtered[0][2] instanceof Formats\CombinedEnumItem
 					) {
 						$transformedValue = is_scalar($filtered[0][2]->getValue())
 							? $filtered[0][2]->getValue()
-							: ToolsUtilities\Value::flattenValue($filtered[0][2]->getValue());
+							: Utilities\Value::flattenValue($filtered[0][2]->getValue());
 					}
 				} else {
 					if (
 						(
-							$property->getDataType() === MetadataTypes\DataType::SWITCH
-							&& $value instanceof MetadataTypes\Payloads\Switcher
+							$property->getDataType() === ValuesTypes\DataType::SWITCH
+							&& $value instanceof Payloads\Switcher
 						) || (
-							$property->getDataType() === MetadataTypes\DataType::BUTTON
-							&& $value instanceof MetadataTypes\Payloads\Button
+							$property->getDataType() === ValuesTypes\DataType::BUTTON
+							&& $value instanceof Payloads\Button
 						) || (
-							$property->getDataType() === MetadataTypes\DataType::COVER
-							&& $value instanceof MetadataTypes\Payloads\Cover
+							$property->getDataType() === ValuesTypes\DataType::COVER
+							&& $value instanceof Payloads\Cover
 						)
 					) {
 						$transformedValue = $value->value;
@@ -275,12 +276,12 @@ final class Transformer
 
 		// HAP transformation
 
-		if ($dataType === Types\DataType::BOOLEAN) {
+		if ($dataType === HomeKitTypes\DataType::BOOLEAN) {
 			if ($transformedValue === null) {
 				$transformedValue = false;
 			} elseif (!is_bool($transformedValue)) {
 				$transformedValue = in_array(
-					Utils\Strings::lower(ToolsUtilities\Value::toString($transformedValue, true)),
+					Utils\Strings::lower(Utilities\Value::toString($transformedValue, true)),
 					[
 						'true',
 						't',
@@ -292,14 +293,14 @@ final class Transformer
 					true,
 				);
 			}
-		} elseif ($dataType === Types\DataType::FLOAT) {
+		} elseif ($dataType === HomeKitTypes\DataType::FLOAT) {
 			if ($transformedValue === null) {
 				$transformedValue = 0.0;
 			} elseif (!is_numeric($transformedValue)) {
 				$transformedValue = str_replace(
 					[' ', ','],
 					['', '.'],
-					ToolsUtilities\Value::toString($transformedValue, true),
+					Utilities\Value::toString($transformedValue, true),
 				);
 
 				if (!is_numeric($transformedValue)) {
@@ -316,11 +317,11 @@ final class Transformer
 			$transformedValue = min($maxValue ?? $transformedValue, $transformedValue);
 			$transformedValue = max($minValue ?? $transformedValue, $transformedValue);
 		} elseif (
-			$dataType === Types\DataType::INT
-			|| $dataType === Types\DataType::UINT8
-			|| $dataType === Types\DataType::UINT16
-			|| $dataType === Types\DataType::UINT32
-			|| $dataType === Types\DataType::UINT64
+			$dataType === HomeKitTypes\DataType::INT
+			|| $dataType === HomeKitTypes\DataType::UINT8
+			|| $dataType === HomeKitTypes\DataType::UINT16
+			|| $dataType === HomeKitTypes\DataType::UINT32
+			|| $dataType === HomeKitTypes\DataType::UINT64
 		) {
 			if (is_bool($transformedValue)) {
 				$transformedValue = $transformedValue ? 1 : 0;
@@ -332,7 +333,7 @@ final class Transformer
 				$transformedValue = preg_replace(
 					'~\s~',
 					'',
-					ToolsUtilities\Value::toString($transformedValue, true),
+					Utilities\Value::toString($transformedValue, true),
 				);
 
 				if (!is_numeric($transformedValue)) {
@@ -348,22 +349,22 @@ final class Transformer
 
 			$transformedValue = (int) min($maxValue ?? $transformedValue, $transformedValue);
 			$transformedValue = (int) max($minValue ?? $transformedValue, $transformedValue);
-		} elseif ($dataType === Types\DataType::STRING) {
+		} elseif ($dataType === HomeKitTypes\DataType::STRING) {
 			$transformedValue = $value !== null ? substr(
-				ToolsUtilities\Value::toString($value, true),
+				Utilities\Value::toString($value, true),
 				0,
-				($maxLength ?? strlen(ToolsUtilities\Value::toString($value, true))),
+				($maxLength ?? strlen(Utilities\Value::toString($value, true))),
 			) : '';
 		}
 
 		if (
 			$validValues !== null
-			&& !in_array(intval(ToolsUtilities\Value::flattenValue($transformedValue)), $validValues, true)
+			&& !in_array(intval(Utilities\Value::flattenValue($transformedValue)), $validValues, true)
 		) {
 			$transformedValue = null;
 		}
 
-		return ToolsUtilities\Value::flattenValue($transformedValue);
+		return Utilities\Value::flattenValue($transformedValue);
 	}
 
 }

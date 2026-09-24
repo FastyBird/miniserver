@@ -18,8 +18,8 @@ namespace FastyBird\Automator\DevicesModule\Entities\Conditions;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
 use Ramsey\Uuid;
@@ -83,18 +83,18 @@ abstract class PropertyCondition extends TriggersEntities\Conditions\Condition
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getOperand(): string|MetadataTypes\Payloads\Payload
+	public function getOperand(): string|Payloads\Payload
 	{
-		if (MetadataTypes\Payloads\Button::tryFrom($this->operand) !== null) {
-			return MetadataTypes\Payloads\Button::from($this->operand);
+		if (Payloads\Button::tryFrom($this->operand) !== null) {
+			return Payloads\Button::from($this->operand);
 		}
 
-		if (MetadataTypes\Payloads\Switcher::tryFrom($this->operand) !== null) {
-			return MetadataTypes\Payloads\Switcher::from($this->operand);
+		if (Payloads\Switcher::tryFrom($this->operand) !== null) {
+			return Payloads\Switcher::from($this->operand);
 		}
 
-		if (MetadataTypes\Payloads\Cover::tryFrom($this->operand) !== null) {
-			return MetadataTypes\Payloads\Cover::from($this->operand);
+		if (Payloads\Cover::tryFrom($this->operand) !== null) {
+			return Payloads\Cover::from($this->operand);
 		}
 
 		return $this->operand;
@@ -130,7 +130,7 @@ abstract class PropertyCondition extends TriggersEntities\Conditions\Condition
 		return array_merge(parent::toArray(), [
 			'device' => $this->getDevice()->toString(),
 			'operator' => $this->getOperator()->value,
-			'operand' => ToolsUtilities\Value::toString($this->getOperand()),
+			'operand' => Utilities\Value::toString($this->getOperand()),
 		]);
 	}
 

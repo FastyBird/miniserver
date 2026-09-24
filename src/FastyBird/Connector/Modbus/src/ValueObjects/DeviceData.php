@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Modbus\ValueObjects;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use Nette;
 
 /**
@@ -31,14 +31,14 @@ class DeviceData
 
 	use Nette\SmartObject;
 
-	private MetadataTypes\DataType $dataType;
+	private Types\DataType $dataType;
 
 	public function __construct(
 		private readonly string|int|float|bool|null $value,
-		MetadataTypes\DataType|null $dataType,
+		Types\DataType|null $dataType,
 	)
 	{
-		$this->dataType = $dataType ?? MetadataTypes\DataType::STRING;
+		$this->dataType = $dataType ?? Types\DataType::STRING;
 	}
 
 	public function getValue(): float|bool|int|string|null
@@ -46,7 +46,7 @@ class DeviceData
 		return $this->value;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): Types\DataType
 	{
 		return $this->dataType;
 	}

@@ -21,11 +21,12 @@ use FastyBird\Connector\FbMqtt\Entities;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
-use FastyBird\Connector\FbMqtt\Types;
+use FastyBird\Connector\FbMqtt\Types as FbMqttTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -164,7 +165,7 @@ final class DeviceAttribute implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed device attribute message',
 			[
-				'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+				'source' => Sources\Connector::FB_MQTT->value,
 				'type' => 'device-attribute-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),
@@ -203,7 +204,7 @@ final class DeviceAttribute implements Queue\Consumer
 	): void
 	{
 		foreach ($properties as $propertyName) {
-			if ($propertyName === Types\DevicePropertyIdentifier::STATE->value) {
+			if ($propertyName === FbMqttTypes\DevicePropertyIdentifier::STATE->value) {
 				$this->deviceConnectionManager->setState(
 					$device,
 					DevicesTypes\ConnectionState::UNKNOWN,
@@ -211,12 +212,12 @@ final class DeviceAttribute implements Queue\Consumer
 			} else {
 				$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 				$findDevicePropertyQuery->forDevice($device);
-				$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::from($propertyName));
+				$findDevicePropertyQuery->byIdentifier(FbMqttTypes\DevicePropertyIdentifier::from($propertyName));
 
 				if ($this->devicePropertiesRepository->findOneBy($findDevicePropertyQuery) === null) {
 					if (in_array($propertyName, [
-						Types\DevicePropertyIdentifier::IP_ADDRESS->value,
-						Types\DevicePropertyIdentifier::STATUS_LED->value,
+						FbMqttTypes\DevicePropertyIdentifier::IP_ADDRESS->value,
+						FbMqttTypes\DevicePropertyIdentifier::STATUS_LED->value,
 					], true)) {
 						$this->devicePropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
@@ -225,15 +226,15 @@ final class DeviceAttribute implements Queue\Consumer
 							'name' => $propertyName,
 							'settable' => false,
 							'queryable' => false,
-							'dataType' => MetadataTypes\DataType::STRING,
+							'dataType' => ValuesTypes\DataType::STRING,
 						]));
 
 					} elseif (in_array($propertyName, [
-						Types\DevicePropertyIdentifier::UPTIME->value,
-						Types\DevicePropertyIdentifier::FREE_HEAP->value,
-						Types\DevicePropertyIdentifier::CPU_LOAD->value,
-						Types\DevicePropertyIdentifier::VCC->value,
-						Types\DevicePropertyIdentifier::RSSI->value,
+						FbMqttTypes\DevicePropertyIdentifier::UPTIME->value,
+						FbMqttTypes\DevicePropertyIdentifier::FREE_HEAP->value,
+						FbMqttTypes\DevicePropertyIdentifier::CPU_LOAD->value,
+						FbMqttTypes\DevicePropertyIdentifier::VCC->value,
+						FbMqttTypes\DevicePropertyIdentifier::RSSI->value,
 					], true)) {
 						$this->devicePropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
@@ -242,7 +243,7 @@ final class DeviceAttribute implements Queue\Consumer
 							'name' => $propertyName,
 							'settable' => false,
 							'queryable' => false,
-							'dataType' => MetadataTypes\DataType::UINT,
+							'dataType' => ValuesTypes\DataType::UINT,
 						]));
 
 					} else {
@@ -252,7 +253,7 @@ final class DeviceAttribute implements Queue\Consumer
 							'identifier' => $propertyName,
 							'settable' => false,
 							'queryable' => false,
-							'dataType' => MetadataTypes\DataType::UNKNOWN,
+							'dataType' => ValuesTypes\DataType::UNKNOWN,
 						]));
 					}
 				}
@@ -285,12 +286,12 @@ final class DeviceAttribute implements Queue\Consumer
 	): void
 	{
 		foreach ($extensions as $extensionName) {
-			if ($extensionName === Types\ExtensionType::FASTYBIRD_HARDWARE->value) {
+			if ($extensionName === FbMqttTypes\ExtensionType::FASTYBIRD_HARDWARE->value) {
 				foreach ([
-					Types\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS,
-					Types\DevicePropertyIdentifier::HARDWARE_MANUFACTURER,
-					Types\DevicePropertyIdentifier::HARDWARE_MODEL,
-					Types\DevicePropertyIdentifier::HARDWARE_VERSION,
+					FbMqttTypes\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS,
+					FbMqttTypes\DevicePropertyIdentifier::HARDWARE_MANUFACTURER,
+					FbMqttTypes\DevicePropertyIdentifier::HARDWARE_MODEL,
+					FbMqttTypes\DevicePropertyIdentifier::HARDWARE_VERSION,
 				] as $propertyName) {
 					$findPropertyQuery = new Queries\Entities\FindDeviceProperties();
 					$findPropertyQuery->forDevice($device);
@@ -301,15 +302,15 @@ final class DeviceAttribute implements Queue\Consumer
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'device' => $device,
 							'identifier' => $propertyName->value,
-							'dataType' => MetadataTypes\DataType::STRING,
+							'dataType' => ValuesTypes\DataType::STRING,
 						]));
 					}
 				}
-			} elseif ($extensionName === Types\ExtensionType::FASTYBIRD_FIRMWARE->value) {
+			} elseif ($extensionName === FbMqttTypes\ExtensionType::FASTYBIRD_FIRMWARE->value) {
 				foreach ([
-					Types\DevicePropertyIdentifier::FIRMWARE_MANUFACTURER,
-					Types\DevicePropertyIdentifier::FIRMWARE_NAME,
-					Types\DevicePropertyIdentifier::FIRMWARE_VERSION,
+					FbMqttTypes\DevicePropertyIdentifier::FIRMWARE_MANUFACTURER,
+					FbMqttTypes\DevicePropertyIdentifier::FIRMWARE_NAME,
+					FbMqttTypes\DevicePropertyIdentifier::FIRMWARE_VERSION,
 				] as $propertyName) {
 					$findPropertyQuery = new Queries\Entities\FindDeviceProperties();
 					$findPropertyQuery->forDevice($device);
@@ -320,7 +321,7 @@ final class DeviceAttribute implements Queue\Consumer
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'device' => $device,
 							'identifier' => $propertyName->value,
-							'dataType' => MetadataTypes\DataType::STRING,
+							'dataType' => ValuesTypes\DataType::STRING,
 						]));
 					}
 				}

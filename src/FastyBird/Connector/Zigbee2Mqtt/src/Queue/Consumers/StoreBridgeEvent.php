@@ -20,7 +20,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Documents;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -87,7 +87,7 @@ final class StoreBridgeEvent implements Queue\Consumer
 		$this->logger->info(
 			sprintf('Bridge published event: %s', $message->getType()->value),
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'bridge-event',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),
@@ -105,7 +105,7 @@ final class StoreBridgeEvent implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed bridge event message',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'store-bridge-event-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

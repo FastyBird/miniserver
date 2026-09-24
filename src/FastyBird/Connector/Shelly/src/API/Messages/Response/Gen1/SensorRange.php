@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 
 use FastyBird\Connector\Shelly\API;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use Orisai\ObjectMapper;
 
 /**
@@ -34,9 +34,9 @@ final readonly class SensorRange implements API\Messages\Message
 	 * @param array<string>|array<int>|array<float>|array<int, array<int, (array<int, bool|string>|null)>>|null $format
 	 */
 	public function __construct(
-		#[ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\DataType::class)]
+		#[ObjectMapper\Rules\BackedEnumValue(class: Types\DataType::class)]
 		#[ObjectMapper\Modifiers\FieldName('data_type')]
-		private MetadataTypes\DataType $dataType,
+		private Types\DataType $dataType,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayOf(new ObjectMapper\Rules\StringValue(notEmpty: true)),
 			new ObjectMapper\Rules\ArrayOf(new ObjectMapper\Rules\IntValue()),
@@ -72,7 +72,7 @@ final readonly class SensorRange implements API\Messages\Message
 	{
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): Types\DataType
 	{
 		return $this->dataType;
 	}

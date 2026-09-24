@@ -2,7 +2,7 @@
 
 namespace FastyBird\Addon\VirtualThermostat\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 
 final class DummyChannelSchema extends DevicesSchemas\Channels\Channel
@@ -11,7 +11,7 @@ final class DummyChannelSchema extends DevicesSchemas\Channels\Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value . '/channel/' . DummyChannelEntity::TYPE;
+	public const SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/channel/' . DummyChannelEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

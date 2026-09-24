@@ -19,7 +19,7 @@ use Evenement;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use React\Socket;
 use React\Stream;
@@ -231,7 +231,7 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 			$this->logger->error(
 				'Data decryption failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'secure-connection',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -283,7 +283,7 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 				$this->logger->error(
 					'Data encryption failed',
 					[
-						'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+						'source' => Sources\Connector::HOMEKIT->value,
 						'type' => 'secure-connection',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [

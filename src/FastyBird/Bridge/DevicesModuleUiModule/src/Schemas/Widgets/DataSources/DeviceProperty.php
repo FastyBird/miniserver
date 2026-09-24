@@ -18,8 +18,8 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Schemas\Widgets\DataSources;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -48,7 +48,7 @@ final class DeviceProperty extends Property
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value . '/data-source/' . Entities\Widgets\DataSources\DeviceProperty::TYPE;
+	public const SCHEMA_TYPE = Sources\Bridge::DEVICES_MODULE_UI_MODULE->value . '/data-source/' . Entities\Widgets\DataSources\DeviceProperty::TYPE;
 
 	/**
 	 * Define relationships names
@@ -110,7 +110,7 @@ final class DeviceProperty extends Property
 			return array_merge(
 				(array) $attributes,
 				[
-					'value' => $state !== null && $state->isValid() ? ToolsUtilities\Value::flattenValue(
+					'value' => $state !== null && $state->isValid() ? Utilities\Value::flattenValue(
 						$state->getRead()->getExpectedValue() ?? $state->getRead()->getActualValue(),
 					) : null,
 				],
@@ -127,7 +127,7 @@ final class DeviceProperty extends Property
 				return array_merge(
 					(array) $attributes,
 					[
-						'value' => $state !== null && $state->isValid() ? ToolsUtilities\Value::flattenValue(
+						'value' => $state !== null && $state->isValid() ? Utilities\Value::flattenValue(
 							$state->getRead()->getExpectedValue() ?? $state->getRead()->getActualValue(),
 						) : null,
 					],
@@ -136,7 +136,7 @@ final class DeviceProperty extends Property
 				return array_merge(
 					(array) $attributes,
 					[
-						'value' => ToolsUtilities\Value::flattenValue($resource->getProperty()->getValue()),
+						'value' => Utilities\Value::flattenValue($resource->getProperty()->getValue()),
 					],
 				);
 			}
@@ -144,7 +144,7 @@ final class DeviceProperty extends Property
 			return array_merge(
 				(array) $attributes,
 				[
-					'value' => ToolsUtilities\Value::flattenValue($resource->getProperty()->getValue()),
+					'value' => Utilities\Value::flattenValue($resource->getProperty()->getValue()),
 				],
 			);
 		}

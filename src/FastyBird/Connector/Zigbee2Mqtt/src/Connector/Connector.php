@@ -23,7 +23,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Writers;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -103,7 +103,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Starting Zigbee2MQTT connector service',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -139,7 +139,7 @@ final class Connector implements DevicesConnectors\Connector
 				$this->logger->error(
 					'Zigbee2MQTT connector failed to connect to server',
 					[
-						'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+						'source' => Sources\Connector::ZIGBEE2MQTT->value,
 						'type' => 'connector',
 						'error' => [
 							'message' => $ex->getMessage(),
@@ -177,7 +177,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Zigbee2MQTT connector service has been started',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -208,7 +208,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Starting Zigbee2MQTT connector discovery',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -230,7 +230,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Zigbee2MQTT connector discovery has been started',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -261,7 +261,7 @@ final class Connector implements DevicesConnectors\Connector
 					$this->logger->error(
 						'Zigbee2MQTT connector failed to disconnect from server',
 						[
-							'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+							'source' => Sources\Connector::ZIGBEE2MQTT->value,
 							'type' => 'connector',
 							'error' => [
 								'message' => $ex->getMessage(),
@@ -284,7 +284,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Zigbee2MQTT connector has been terminated',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),

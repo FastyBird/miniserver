@@ -23,7 +23,7 @@ use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Hydrators;
@@ -129,7 +129,7 @@ final class AccountV1 extends BaseV1
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
+					'source' => Sources\Module::ACCOUNTS->value,
 					'type' => 'account-controller',
 					'exception' => Logging\Logger::buildException($ex),
 				],

@@ -19,7 +19,7 @@ use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use FastyBird\Module\Devices\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
@@ -92,17 +92,17 @@ abstract class Property extends JsonApiHydrators\Hydrator
 	 */
 	protected function hydrateDataTypeAttribute(
 		JsonApi\Objects\IStandardObject $attributes,
-	): MetadataTypes\DataType|null
+	): Types\DataType|null
 	{
 		if (
 			!is_scalar($attributes->get('data_type'))
 			|| (string) $attributes->get('data_type') === ''
-			|| MetadataTypes\DataType::tryFrom((string) $attributes->get('data_type')) === null
+			|| Types\DataType::tryFrom((string) $attributes->get('data_type')) === null
 		) {
 			return null;
 		}
 
-		return MetadataTypes\DataType::from((string) $attributes->get('data_type'));
+		return Types\DataType::from((string) $attributes->get('data_type'));
 	}
 
 	protected function hydrateUnitAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
@@ -129,19 +129,19 @@ abstract class Property extends JsonApiHydrators\Hydrator
 
 		if (
 			!is_scalar($rawDataType)
-			|| MetadataTypes\DataType::tryFrom((string) $rawDataType) === null
+			|| Types\DataType::tryFrom((string) $rawDataType) === null
 		) {
 			return null;
 		}
 
-		$dataType = MetadataTypes\DataType::from((string) $rawDataType);
+		$dataType = Types\DataType::from((string) $rawDataType);
 
 		if (is_array($rawFormat)) {
 			if (
-				$dataType === MetadataTypes\DataType::ENUM
-				|| $dataType === MetadataTypes\DataType::BUTTON
-				|| $dataType === MetadataTypes\DataType::SWITCH
-				|| $dataType === MetadataTypes\DataType::COVER
+				$dataType === Types\DataType::ENUM
+				|| $dataType === Types\DataType::BUTTON
+				|| $dataType === Types\DataType::SWITCH
+				|| $dataType === Types\DataType::COVER
 			) {
 				$plainFormat = implode(',', array_map(static function ($item): string {
 					if (is_array($item) || $item instanceof Utils\ArrayHash) {
@@ -182,13 +182,13 @@ abstract class Property extends JsonApiHydrators\Hydrator
 				in_array(
 					$dataType,
 					[
-						MetadataTypes\DataType::CHAR,
-						MetadataTypes\DataType::UCHAR,
-						MetadataTypes\DataType::SHORT,
-						MetadataTypes\DataType::USHORT,
-						MetadataTypes\DataType::INT,
-						MetadataTypes\DataType::UINT,
-						MetadataTypes\DataType::FLOAT,
+						Types\DataType::CHAR,
+						Types\DataType::UCHAR,
+						Types\DataType::SHORT,
+						Types\DataType::USHORT,
+						Types\DataType::INT,
+						Types\DataType::UINT,
+						Types\DataType::FLOAT,
 					],
 					true,
 				)

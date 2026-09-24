@@ -21,9 +21,10 @@ use FastyBird\Connector\Tuya\Documents;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -98,7 +99,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'store-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -127,15 +128,15 @@ final class StoreChannelPropertyState implements Queue\Consumer
 						Utils\ArrayHash::from([
 							DevicesStates\Property::ACTUAL_VALUE_FIELD => $dataPoint->getValue(),
 						]),
-						MetadataTypes\Sources\Connector::TUYA,
+						Sources\Connector::TUYA,
 					));
 				} catch (ApplicationExceptions\InvalidArgument $ex) {
 					$format = $property->getFormat();
 
 					if (
-						$property->getDataType() === MetadataTypes\DataType::ENUM
+						$property->getDataType() === Types\DataType::ENUM
 						&& $dataPoint->getValue() !== null
-						&& $format instanceof ToolsFormats\StringEnum
+						&& $format instanceof Formats\StringEnum
 					) {
 						$property = $this->databaseHelper->transaction(
 							function () use ($dataPoint, $property, $format): DevicesEntities\Channels\Properties\Dynamic {
@@ -169,7 +170,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 						Utils\ArrayHash::from([
 							DevicesStates\Property::ACTUAL_VALUE_FIELD => $dataPoint->getValue(),
 						]),
-						MetadataTypes\Sources\Connector::TUYA,
+						Sources\Connector::TUYA,
 					));
 				}
 			}
@@ -178,7 +179,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'store-channel-property-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

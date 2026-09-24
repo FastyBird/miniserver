@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -39,11 +39,11 @@ class RangeMin extends Configuration
 		float $maxValue,
 	)
 	{
-		if ($capability->getType() === Types\Capability::TEMPERATURE) {
+		if ($capability->getType() === NsPanelTypes\Capability::TEMPERATURE) {
 			parent::__construct(
 				$id,
-				Types\Configuration::RANGE_MIN,
-				MetadataTypes\DataType::FLOAT,
+				NsPanelTypes\Configuration::RANGE_MIN,
+				ValuesTypes\DataType::FLOAT,
 				$capability,
 				$value,
 				[],
@@ -56,8 +56,8 @@ class RangeMin extends Configuration
 		} else {
 			parent::__construct(
 				$id,
-				Types\Configuration::RANGE_MIN,
-				MetadataTypes\DataType::CHAR,
+				NsPanelTypes\Configuration::RANGE_MIN,
+				ValuesTypes\DataType::CHAR,
 				$capability,
 				$value,
 				[],

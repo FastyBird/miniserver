@@ -5,7 +5,7 @@ namespace FastyBird\Module\Ui\Tests\Cases\Unit\Documents;
 use Error;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Tests;
 use Nette;
@@ -72,7 +72,7 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
 					'type' => Documents\Widgets\AnalogSensor::getType(),
-					'source' => MetadataTypes\Sources\Module::UI->value,
+					'source' => Sources\Module::UI->value,
 					'identifier' => 'widget-identifier',
 					'name' => null,
 					'display' => '1e19c996-a9fe-429a-8db0-ffdac4a5b6c3',

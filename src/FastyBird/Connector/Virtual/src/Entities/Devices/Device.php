@@ -20,7 +20,7 @@ use FastyBird\Connector\Virtual\Entities;
 use FastyBird\Connector\Virtual\Exceptions;
 use FastyBird\Connector\Virtual\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 use TypeError;
@@ -45,9 +45,9 @@ abstract class Device extends DevicesEntities\Devices\Device
 		parent::__construct($identifier, $connector, $name, $id);
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Connector::VIRTUAL;
+		return Sources\Connector::VIRTUAL;
 	}
 
 	public function getConnector(): Entities\Connectors\Connector

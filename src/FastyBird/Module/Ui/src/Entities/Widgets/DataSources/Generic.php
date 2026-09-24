@@ -18,7 +18,7 @@ namespace FastyBird\Module\Ui\Entities\Widgets\DataSources;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Entities\DoctrineCrud;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Schemas;
 
 #[ORM\Entity]
@@ -41,9 +41,9 @@ class Generic extends DataSource
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Module
+	public function getSource(): Sources\Module
 	{
-		return MetadataTypes\Sources\Module::UI;
+		return Sources\Module::UI;
 	}
 
 	public function hasRelation(string $relation): bool

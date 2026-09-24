@@ -15,11 +15,11 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
-use FastyBird\Connector\Zigbee2Mqtt\Types;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
 use TypeError;
 use ValueError;
@@ -37,7 +37,7 @@ final class NumericType extends Type
 {
 
 	public function __construct(
-		#[ObjectMapper\Rules\ArrayEnumValue(cases: [Types\ExposeType::NUMERIC->value])]
+		#[ObjectMapper\Rules\ArrayEnumValue(cases: [Zigbee2MqttTypes\ExposeType::NUMERIC->value])]
 		private readonly string $type,
 		string $name,
 		string $label,
@@ -75,9 +75,9 @@ final class NumericType extends Type
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getType(): Types\ExposeType
+	public function getType(): Zigbee2MqttTypes\ExposeType
 	{
-		return Types\ExposeType::from($this->type);
+		return Zigbee2MqttTypes\ExposeType::from($this->type);
 	}
 
 	/**
@@ -86,15 +86,15 @@ final class NumericType extends Type
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
-		return ToolsUtilities\DataType::inferNumberDataType(
-			new ToolsFormats\NumberRange([
+		return Utilities\DataType::inferNumberDataType(
+			new Formats\NumberRange([
 				$this->getValueMin(),
 				$this->getValueMax(),
 			]),
 			$this->getValueStep(),
-			MetadataTypes\DataType::FLOAT,
+			ValuesTypes\DataType::FLOAT,
 		);
 	}
 

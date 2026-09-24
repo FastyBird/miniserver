@@ -21,12 +21,13 @@ use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Entities;
 use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Queries;
-use FastyBird\Connector\Shelly\Types;
+use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -199,7 +200,7 @@ class Install extends Console\Command\Command
 		$cloudAuthKey = null;
 		$cloudServer = null;
 
-		if ($mode === Types\ClientMode::CLOUD) {
+		if ($mode === ShellyTypes\ClientMode::CLOUD) {
 			$cloudAuthKey = $this->askConnectorCloudAuthenticationKey($io);
 			$cloudServer = $this->askConnectorCloudServerAddress($io);
 		}
@@ -217,31 +218,31 @@ class Install extends Console\Command\Command
 
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'value' => $mode->value,
 				'format' => [
-					Types\ClientMode::LOCAL->value,
-					Types\ClientMode::CLOUD->value,
-					Types\ClientMode::MQTT->value,
-					Types\ClientMode::INTEGRATOR->value,
+					ShellyTypes\ClientMode::LOCAL->value,
+					ShellyTypes\ClientMode::CLOUD->value,
+					ShellyTypes\ClientMode::MQTT->value,
+					ShellyTypes\ClientMode::INTEGRATOR->value,
 				],
 				'connector' => $connector,
 			]));
 
-			if ($mode === Types\ClientMode::CLOUD) {
+			if ($mode === ShellyTypes\ClientMode::CLOUD) {
 				$this->propertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::CLOUD_AUTH_KEY->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLOUD_AUTH_KEY->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $cloudAuthKey,
 					'connector' => $connector,
 				]));
 
 				$this->propertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::CLOUD_SERVER->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLOUD_SERVER->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $cloudServer,
 					'connector' => $connector,
 				]));
@@ -261,7 +262,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -308,7 +309,7 @@ class Install extends Console\Command\Command
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::CLIENT_MODE);
+		$findConnectorPropertyQuery->byIdentifier(ShellyTypes\ConnectorPropertyIdentifier::CLIENT_MODE);
 
 		$modeProperty = $this->propertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -360,12 +361,12 @@ class Install extends Console\Command\Command
 		$cloudServerProperty = null;
 
 		if (
-			$modeProperty?->getValue() === Types\ClientMode::CLOUD->value
-			|| $mode === Types\ClientMode::CLOUD
+			$modeProperty?->getValue() === ShellyTypes\ClientMode::CLOUD->value
+			|| $mode === ShellyTypes\ClientMode::CLOUD
 		) {
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 			$findConnectorPropertyQuery->forConnector($connector);
-			$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::CLOUD_AUTH_KEY);
+			$findConnectorPropertyQuery->byIdentifier(ShellyTypes\ConnectorPropertyIdentifier::CLOUD_AUTH_KEY);
 
 			$cloudAuthKeyProperty = $this->propertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -388,7 +389,7 @@ class Install extends Console\Command\Command
 
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 			$findConnectorPropertyQuery->forConnector($connector);
-			$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::CLOUD_SERVER);
+			$findConnectorPropertyQuery->byIdentifier(ShellyTypes\ConnectorPropertyIdentifier::CLOUD_SERVER);
 
 			$cloudServerProperty = $this->propertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -427,14 +428,14 @@ class Install extends Console\Command\Command
 
 				$this->propertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
-					'dataType' => MetadataTypes\DataType::ENUM,
+					'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+					'dataType' => ValuesTypes\DataType::ENUM,
 					'value' => $mode->value,
 					'format' => [
-						Types\ClientMode::LOCAL->value,
-						Types\ClientMode::CLOUD->value,
-						Types\ClientMode::MQTT->value,
-						Types\ClientMode::INTEGRATOR->value,
+						ShellyTypes\ClientMode::LOCAL->value,
+						ShellyTypes\ClientMode::CLOUD->value,
+						ShellyTypes\ClientMode::MQTT->value,
+						ShellyTypes\ClientMode::INTEGRATOR->value,
 					],
 					'connector' => $connector,
 				]));
@@ -445,8 +446,8 @@ class Install extends Console\Command\Command
 			}
 
 			if (
-				$modeProperty?->getValue() === Types\ClientMode::CLOUD->value
-				|| $mode === Types\ClientMode::CLOUD
+				$modeProperty?->getValue() === ShellyTypes\ClientMode::CLOUD->value
+				|| $mode === ShellyTypes\ClientMode::CLOUD
 			) {
 				if ($cloudAuthKeyProperty !== null) {
 					$this->propertiesManager->update($cloudAuthKeyProperty, Utils\ArrayHash::from([
@@ -455,8 +456,8 @@ class Install extends Console\Command\Command
 				} else {
 					$this->propertiesManager->create(Utils\ArrayHash::from([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-						'identifier' => Types\ConnectorPropertyIdentifier::CLOUD_AUTH_KEY->value,
-						'dataType' => MetadataTypes\DataType::STRING,
+						'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLOUD_AUTH_KEY->value,
+						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $cloudAuthKey,
 						'connector' => $connector,
 					]));
@@ -469,8 +470,8 @@ class Install extends Console\Command\Command
 				} else {
 					$this->propertiesManager->create(Utils\ArrayHash::from([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-						'identifier' => Types\ConnectorPropertyIdentifier::CLOUD_SERVER->value,
-						'dataType' => MetadataTypes\DataType::STRING,
+						'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLOUD_SERVER->value,
+						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $cloudServer,
 						'connector' => $connector,
 					]));
@@ -491,7 +492,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -559,7 +560,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -691,7 +692,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -759,7 +760,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1092,7 +1093,7 @@ class Install extends Console\Command\Command
 		}
 	}
 
-	private function askConnectorMode(Style\SymfonyStyle $io): Types\ClientMode
+	private function askConnectorMode(Style\SymfonyStyle $io): ShellyTypes\ClientMode
 	{
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//shelly-connector.cmd.install.questions.select.connector.mode'),
@@ -1105,7 +1106,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//shelly-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|null $answer): Types\ClientMode {
+		$question->setValidator(function (string|null $answer): ShellyTypes\ClientMode {
 			if ($answer === null) {
 				throw new Exceptions\Runtime(
 					sprintf(
@@ -1121,7 +1122,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '0'
 			) {
-				return Types\ClientMode::LOCAL;
+				return ShellyTypes\ClientMode::LOCAL;
 			}
 
 			if (
@@ -1130,7 +1131,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '1'
 			) {
-				return Types\ClientMode::CLOUD;
+				return ShellyTypes\ClientMode::CLOUD;
 			}
 
 			throw new Exceptions\Runtime(
@@ -1142,7 +1143,7 @@ class Install extends Console\Command\Command
 		});
 
 		$answer = $io->askQuestion($question);
-		assert($answer instanceof Types\ClientMode);
+		assert($answer instanceof ShellyTypes\ClientMode);
 
 		return $answer;
 	}

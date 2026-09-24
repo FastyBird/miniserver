@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,12 +38,12 @@ class MotorCalibration extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::MOTOR_CALIBRATION,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::MOTOR_CALIBRATION,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\MotorCalibration::NORMAL->value,
-				Types\Payloads\MotorCalibration::CALIBRATION->value,
+				NsPanelTypes\Payloads\MotorCalibration::NORMAL->value,
+				NsPanelTypes\Payloads\MotorCalibration::CALIBRATION->value,
 			],
 		);
 	}

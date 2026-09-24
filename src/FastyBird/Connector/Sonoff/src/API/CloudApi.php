@@ -17,15 +17,15 @@ namespace FastyBird\Connector\Sonoff\API;
 
 use DateTimeInterface;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
@@ -116,7 +116,7 @@ final class CloudApi
 		private readonly Services\HttpClientFactory $httpClientFactory,
 		private readonly Helpers\MessageBuilder $entityHelper,
 		private readonly Sonoff\Logger $logger,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 		private readonly Clock\Clock $clock,
 		Types\Region|null $region = null,
 	)
@@ -125,8 +125,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -178,8 +178,8 @@ final class CloudApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\Cloud\Family> : Messages\Response\Cloud\Family)
 	 *
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -202,7 +202,7 @@ final class CloudApi
 					'Content-Type' => 'application/json',
 				],
 			);
-		} catch (Exceptions\CloudApiError $ex) {
+		} catch (SonoffExceptions\CloudApiError $ex) {
 			if ($async) {
 				return Promise\reject($ex);
 			}
@@ -234,8 +234,8 @@ final class CloudApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\Cloud\Things> : Messages\Response\Cloud\Things)
 	 *
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -263,7 +263,7 @@ final class CloudApi
 					'familyId' => $familyId,
 				],
 			);
-		} catch (Exceptions\CloudApiError $ex) {
+		} catch (SonoffExceptions\CloudApiError $ex) {
 			if ($async) {
 				return Promise\reject($ex);
 			}
@@ -295,8 +295,8 @@ final class CloudApi
 	/**
 	 * @return ($async is true ? ($itemType is 3 ? Promise\PromiseInterface<Messages\Response\Cloud\Group> : Promise\PromiseInterface<Messages\Response\Cloud\Device>) : ($itemType is 3 ? Messages\Response\Cloud\Group : Messages\Response\Cloud\Device))
 	 *
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -323,7 +323,7 @@ final class CloudApi
 			$body = Utils\Json::encode($payload);
 		} catch (Utils\JsonException $ex) {
 			if ($async) {
-				return Promise\reject(new Exceptions\CloudApiCall(
+				return Promise\reject(new SonoffExceptions\CloudApiCall(
 					'Message body could not be encoded',
 					null,
 					null,
@@ -332,7 +332,7 @@ final class CloudApi
 				));
 			}
 
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Message body could not be encoded',
 				null,
 				null,
@@ -352,7 +352,7 @@ final class CloudApi
 				[],
 				$body,
 			);
-		} catch (Exceptions\CloudApiError $ex) {
+		} catch (SonoffExceptions\CloudApiError $ex) {
 			if ($async) {
 				return Promise\reject($ex);
 			}
@@ -384,8 +384,8 @@ final class CloudApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\Cloud\DeviceState> : Messages\Response\Cloud\DeviceState)
 	 *
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -414,7 +414,7 @@ final class CloudApi
 					'id' => $id,
 				],
 			);
-		} catch (Exceptions\CloudApiError $ex) {
+		} catch (SonoffExceptions\CloudApiError $ex) {
 			if ($async) {
 				return Promise\reject($ex);
 			}
@@ -446,8 +446,8 @@ final class CloudApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<bool> : bool)
 	 *
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -491,7 +491,7 @@ final class CloudApi
 			$body = Utils\Json::encode($payload);
 		} catch (Utils\JsonException $ex) {
 			if ($async) {
-				return Promise\reject(new Exceptions\CloudApiCall(
+				return Promise\reject(new SonoffExceptions\CloudApiCall(
 					'Message body could not be encoded',
 					null,
 					null,
@@ -500,7 +500,7 @@ final class CloudApi
 				));
 			}
 
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Message body could not be encoded',
 				null,
 				null,
@@ -520,7 +520,7 @@ final class CloudApi
 				[],
 				$body,
 			);
-		} catch (Exceptions\CloudApiError $ex) {
+		} catch (SonoffExceptions\CloudApiError $ex) {
 			if ($async) {
 				return Promise\reject($ex);
 			}
@@ -552,8 +552,8 @@ final class CloudApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\Cloud\ThirdPartyDevice> : Messages\Response\Cloud\ThirdPartyDevice)
 	 *
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -581,7 +581,7 @@ final class CloudApi
 			$body = Utils\Json::encode($payload);
 		} catch (Utils\JsonException $ex) {
 			if ($async) {
-				return Promise\reject(new Exceptions\CloudApiCall(
+				return Promise\reject(new SonoffExceptions\CloudApiCall(
 					'Message body could not be encoded',
 					null,
 					null,
@@ -590,7 +590,7 @@ final class CloudApi
 				));
 			}
 
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Message body could not be encoded',
 				null,
 				null,
@@ -611,7 +611,7 @@ final class CloudApi
 				[],
 				$body,
 			);
-		} catch (Exceptions\CloudApiError $ex) {
+		} catch (SonoffExceptions\CloudApiError $ex) {
 			if ($async) {
 				return Promise\reject($ex);
 			}
@@ -641,8 +641,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -663,7 +663,7 @@ final class CloudApi
 		try {
 			$body = Utils\Json::encode($payload);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Could not create request data for user authentication',
 				null,
 				null,
@@ -697,7 +697,7 @@ final class CloudApi
 
 		if ($error === 10_004) {
 			if ($redirect) {
-				throw new Exceptions\CloudApiCall('Could not login to user region', $request, $response);
+				throw new SonoffExceptions\CloudApiCall('Could not login to user region', $request, $response);
 			}
 
 			$this->region = Types\Region::from(strval($data->offsetGet('region')));
@@ -706,7 +706,7 @@ final class CloudApi
 		}
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				sprintf('User authentication failed: %s', strval($data->offsetGet('msg'))),
 				$request,
 				$response,
@@ -717,8 +717,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function refreshToken(): Messages\Response\Cloud\UserRefresh
 	{
@@ -728,7 +728,7 @@ final class CloudApi
 		try {
 			$body = Utils\Json::encode($payload);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Could not create request data for user token refresh',
 				null,
 				null,
@@ -759,7 +759,7 @@ final class CloudApi
 		assert($data instanceof Utils\ArrayHash);
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				sprintf('Refreshing user access token failed: %s', strval($data->offsetGet('msg'))),
 				$request,
 				$response,
@@ -773,8 +773,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function parseGetFamily(
 		Message\RequestInterface $request,
@@ -786,7 +786,7 @@ final class CloudApi
 		$error = $body->offsetGet('error');
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				sprintf('Load family detail failed: %s', strval($body->offsetGet('msg'))),
 				$request,
 				$response,
@@ -800,8 +800,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function parseGetFamilyThings(
 		Message\RequestInterface $request,
@@ -813,7 +813,7 @@ final class CloudApi
 		$error = $body->offsetGet('error');
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				sprintf('Load family things failed: %s', strval($body->offsetGet('msg'))),
 				$request,
 				$response,
@@ -849,8 +849,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function parseGetThing(
 		Message\RequestInterface $request,
@@ -862,7 +862,7 @@ final class CloudApi
 		$error = $body->offsetGet('error');
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				sprintf('Load family specified thing failed: %s', strval($body->offsetGet('msg'))),
 				$request,
 				$response,
@@ -907,7 +907,7 @@ final class CloudApi
 			|| count($devices) > 1
 			|| count($groups) > 1
 		) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Load family specified thing failed. Specified thing could not be decoded from response',
 				$request,
 				$response,
@@ -922,7 +922,7 @@ final class CloudApi
 			return $groups[0];
 		}
 
-		throw new Exceptions\CloudApiCall(
+		throw new SonoffExceptions\CloudApiCall(
 			'Load family specified thing failed. Specified thing could not be decoded from response',
 			$request,
 			$response,
@@ -930,8 +930,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function parseGetThingState(
 		string $id,
@@ -944,7 +944,7 @@ final class CloudApi
 		$error = $body->offsetGet('error');
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				sprintf('Load family specified thing state failed: %s', strval($body->offsetGet('msg'))),
 				$request,
 				$response,
@@ -967,8 +967,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function parseSetThingState(
 		Message\RequestInterface $request,
@@ -980,7 +980,7 @@ final class CloudApi
 		$error = $body->offsetGet('error');
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				sprintf('Load family specified thing state failed: %s', strval($body->offsetGet('msg'))),
 				$request,
 				$response,
@@ -991,8 +991,8 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function parseAddThirdPartyDevice(
 		Message\RequestInterface $request,
@@ -1004,7 +1004,7 @@ final class CloudApi
 		$error = $body->offsetGet('error');
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				sprintf('Add third party device failed: %s', strval($body->offsetGet('msg'))),
 				$request,
 				$response,
@@ -1034,7 +1034,7 @@ final class CloudApi
 		}
 
 		if ($devices === [] || count($devices) > 1) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Add third party device failed. Specified device could not be decoded from response',
 				$request,
 				$response,
@@ -1045,7 +1045,7 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiCall
 	 */
 	private function getResponseBody(
 		Message\RequestInterface $request,
@@ -1057,7 +1057,7 @@ final class CloudApi
 
 			return $response->getBody()->getContents();
 		} catch (RuntimeException $ex) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Could not get content from response body',
 				$request,
 				$response,
@@ -1074,7 +1074,7 @@ final class CloudApi
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function createEntity(string $entity, Utils\ArrayHash $data): Messages\Message
 	{
@@ -1083,10 +1083,10 @@ final class CloudApi
 				$entity,
 				(array) Utils\Json::decode(Utils\Json::encode($data), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\CloudApiError('Could not map data to entity', $ex->getCode(), $ex);
+		} catch (SonoffExceptions\Runtime $ex) {
+			throw new SonoffExceptions\CloudApiError('Could not map data to entity', $ex->getCode(), $ex);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\CloudApiError(
+			throw new SonoffExceptions\CloudApiError(
 				'Could not create entity from response',
 				$ex->getCode(),
 				$ex,
@@ -1097,8 +1097,8 @@ final class CloudApi
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function validateResponseBody(
 		Message\RequestInterface $request,
@@ -1114,9 +1114,9 @@ final class CloudApi
 				$body,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\CloudApiCall(
+				throw new SonoffExceptions\CloudApiCall(
 					'Could not validate received response payload',
 					$request,
 					$response,
@@ -1132,8 +1132,8 @@ final class CloudApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Message\ResponseInterface> : Message\ResponseInterface)
 	 *
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function callRequest(
 		Request $request,
@@ -1149,7 +1149,7 @@ final class CloudApi
 		) {
 			try {
 				$this->refreshToken();
-			} catch (Exceptions\CloudApiCall $ex) {
+			} catch (SonoffExceptions\CloudApiCall $ex) {
 				if ($async) {
 					return Promise\reject($ex);
 				}
@@ -1165,7 +1165,7 @@ final class CloudApi
 				$request->getUri(),
 			),
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'cloud-api',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -1189,7 +1189,7 @@ final class CloudApi
 								$response->getBody()->rewind();
 							} catch (RuntimeException $ex) {
 								$deferred->reject(
-									new Exceptions\CloudApiCall(
+									new SonoffExceptions\CloudApiCall(
 										'Could not get content from response body',
 										$request,
 										$response,
@@ -1204,7 +1204,7 @@ final class CloudApi
 							$this->logger->debug(
 								'Received response',
 								[
-									'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+									'source' => Sources\Connector::SONOFF->value,
 									'type' => 'cloud-api',
 									'request' => [
 										'method' => $request->getMethod(),
@@ -1225,7 +1225,7 @@ final class CloudApi
 								$errorCode = $error->offsetGet('error');
 
 								if ($errorCode !== 0) {
-									$deferred->reject(new Exceptions\CloudApiCall(
+									$deferred->reject(new SonoffExceptions\CloudApiCall(
 										sprintf('Calling api endpoint failed: %s', strval($error->offsetGet('msg'))),
 										$request,
 										$response,
@@ -1239,7 +1239,7 @@ final class CloudApi
 						},
 						static function (Throwable $ex) use ($deferred, $request): void {
 							$deferred->reject(
-								new Exceptions\CloudApiCall(
+								new SonoffExceptions\CloudApiCall(
 									'Calling api endpoint failed',
 									$request,
 									null,
@@ -1270,7 +1270,7 @@ final class CloudApi
 					$errorCode = $error->offsetGet('error');
 
 					if ($errorCode !== 0) {
-						throw new Exceptions\CloudApiCall(
+						throw new SonoffExceptions\CloudApiCall(
 							sprintf('Calling api endpoint failed: %s', strval($error->offsetGet('msg'))),
 							$request,
 							$response,
@@ -1280,7 +1280,7 @@ final class CloudApi
 
 				$response->getBody()->rewind();
 			} catch (RuntimeException $ex) {
-				throw new Exceptions\CloudApiCall(
+				throw new SonoffExceptions\CloudApiCall(
 					'Could not get content from response body',
 					$request,
 					$response,
@@ -1292,7 +1292,7 @@ final class CloudApi
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'cloud-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -1309,7 +1309,7 @@ final class CloudApi
 
 			return $response;
 		} catch (GuzzleHttp\Exception\GuzzleException | InvalidArgumentException $ex) {
-			throw new Exceptions\CloudApiCall(
+			throw new SonoffExceptions\CloudApiCall(
 				'Calling api endpoint failed',
 				$request,
 				null,
@@ -1337,7 +1337,7 @@ final class CloudApi
 	}
 
 	/**
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -1350,7 +1350,7 @@ final class CloudApi
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\CloudApiError('Validation schema for response could not be loaded');
+				throw new SonoffExceptions\CloudApiError('Validation schema for response could not be loaded');
 			}
 		}
 
@@ -1361,7 +1361,7 @@ final class CloudApi
 	 * @param array<string, string|array<string>>|null $headers
 	 * @param array<string, mixed> $params
 	 *
-	 * @throws Exceptions\CloudApiError
+	 * @throws SonoffExceptions\CloudApiError
 	 */
 	private function createRequest(
 		string $method,
@@ -1380,8 +1380,8 @@ final class CloudApi
 
 		try {
 			return new Request($method, $url, $headers, $body);
-		} catch (Exceptions\InvalidArgument $ex) {
-			throw new Exceptions\CloudApiError('Could not create request instance', $ex->getCode(), $ex);
+		} catch (SonoffExceptions\InvalidArgument $ex) {
+			throw new SonoffExceptions\CloudApiError('Could not create request instance', $ex->getCode(), $ex);
 		}
 	}
 

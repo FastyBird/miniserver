@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Schemas\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 
 /**
  * NS Panel motor reverse channel entity schema
@@ -33,7 +33,7 @@ final class MotorReverse extends Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\MotorReverse::TYPE;
+	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\MotorReverse::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -17,16 +17,16 @@ namespace FastyBird\Connector\Tuya\API;
 
 use DateTimeInterface;
 use FastyBird\Connector\Tuya;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
@@ -155,7 +155,7 @@ final class OpenApi
 		private readonly Types\OpenApiEndpoint $endpoint,
 		private readonly Services\HttpClientFactory $httpClientFactory,
 		private readonly Tuya\Logger $logger,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
 		private readonly Clock\Clock $clock,
 	)
@@ -166,8 +166,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<bool> : true)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function connect(bool $async = true): Promise\PromiseInterface|bool
 	{
@@ -234,8 +234,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getUid(): string
 	{
@@ -244,7 +244,7 @@ final class OpenApi
 		}
 
 		if ($this->tokenInfo === null) {
-			throw new Exceptions\OpenApiError('Access token could not be created');
+			throw new TuyaExceptions\OpenApiError('Access token could not be created');
 		}
 
 		return $this->tokenInfo->getUid();
@@ -253,8 +253,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetUserDevices> : Messages\Response\GetUserDevices)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getUserDevices(
 		string $userId,
@@ -302,8 +302,8 @@ final class OpenApi
 	 *
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetUserDeviceFactoryInfos> : Messages\Response\GetUserDeviceFactoryInfos)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getUserDevicesFactoryInfos(
 		array $deviceIds,
@@ -352,8 +352,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetUserDeviceDetail> : Messages\Response\GetUserDeviceDetail)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getUserDeviceDetail(
 		string $deviceId,
@@ -399,8 +399,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetUserDeviceSpecifications> : Messages\Response\GetUserDeviceSpecifications)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getUserDeviceSpecifications(
 		string $deviceId,
@@ -446,8 +446,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetUserDeviceState> : Messages\Response\GetUserDeviceState)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getUserDeviceState(
 		string $deviceId,
@@ -493,8 +493,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetUserDeviceChildren> : Messages\Response\GetUserDeviceChildren)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getUserDeviceChildren(
 		string $deviceId,
@@ -542,8 +542,8 @@ final class OpenApi
 	 *
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetDevices> : Messages\Response\GetDevices)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getDevices(
 		array $params = [],
@@ -592,8 +592,8 @@ final class OpenApi
 	 *
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetDevicesFactoryInfos> : Messages\Response\GetDevicesFactoryInfos)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getDevicesFactoryInfos(
 		array $deviceIds,
@@ -642,8 +642,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetDevice> : Messages\Response\GetDevice)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getDeviceDetail(
 		string $deviceId,
@@ -689,8 +689,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetDeviceSpecification> : Messages\Response\GetDeviceSpecification)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getDeviceSpecification(
 		string $deviceId,
@@ -736,8 +736,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\GetDeviceState> : Messages\Response\GetDeviceState)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function getDeviceState(
 		string $deviceId,
@@ -783,8 +783,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<bool> : bool)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	public function setDeviceState(
 		string $deviceId,
@@ -813,7 +813,7 @@ final class OpenApi
 				],
 			]);
 		} catch (Utils\JsonException $ex) {
-			return Promise\reject(new Exceptions\OpenApiCall(
+			return Promise\reject(new TuyaExceptions\OpenApiCall(
 				'Message body could not be encoded',
 				null,
 				null,
@@ -851,8 +851,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetAccessToken(
 		Message\RequestInterface $request,
@@ -864,7 +864,7 @@ final class OpenApi
 		$result = $body->offsetGet('result');
 
 		if (!$result instanceof Utils\ArrayHash) {
-			throw new Exceptions\OpenApiCall('Received response is not valid', $request, $response);
+			throw new TuyaExceptions\OpenApiCall('Received response is not valid', $request, $response);
 		}
 
 		$result->offsetSet(
@@ -882,8 +882,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseRefreshAccessToken(
 		Message\RequestInterface $request,
@@ -895,7 +895,7 @@ final class OpenApi
 		$result = $body->offsetGet('result');
 
 		if (!$result instanceof Utils\ArrayHash) {
-			throw new Exceptions\OpenApiCall('Received response is not valid', $request, $response);
+			throw new TuyaExceptions\OpenApiCall('Received response is not valid', $request, $response);
 		}
 
 		$result->offsetSet(
@@ -913,8 +913,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetUserDevices(
 		Message\RequestInterface $request,
@@ -927,8 +927,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetUserDevicesFactoryInfos(
 		Message\RequestInterface $request,
@@ -945,8 +945,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetUserDeviceDetail(
 		Message\RequestInterface $request,
@@ -959,8 +959,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetUserDeviceSpecifications(
 		Message\RequestInterface $request,
@@ -977,8 +977,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetUserDeviceState(
 		Message\RequestInterface $request,
@@ -991,8 +991,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetUserDeviceChildren(
 		Message\RequestInterface $request,
@@ -1009,8 +1009,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetDevices(
 		Message\RequestInterface $request,
@@ -1023,8 +1023,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetDevicesFactoryInfos(
 		Message\RequestInterface $request,
@@ -1041,8 +1041,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetDeviceDetail(
 		Message\RequestInterface $request,
@@ -1055,8 +1055,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetDeviceSpecification(
 		Message\RequestInterface $request,
@@ -1073,8 +1073,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseGetDeviceState(
 		Message\RequestInterface $request,
@@ -1087,8 +1087,8 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function parseSetDeviceState(
 		Message\RequestInterface $request,
@@ -1107,7 +1107,7 @@ final class OpenApi
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
 	{
@@ -1116,10 +1116,10 @@ final class OpenApi
 				$message,
 				(array) Utils\Json::decode(Utils\Json::encode($data), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\OpenApiError('Could not map data to message', $ex->getCode(), $ex);
+		} catch (TuyaExceptions\Runtime $ex) {
+			throw new TuyaExceptions\OpenApiError('Could not map data to message', $ex->getCode(), $ex);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\OpenApiError(
+			throw new TuyaExceptions\OpenApiError(
 				'Could not create message from response',
 				$ex->getCode(),
 				$ex,
@@ -1130,8 +1130,8 @@ final class OpenApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Message\ResponseInterface> : Message\ResponseInterface)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function callRequest(
 		Request $request,
@@ -1149,7 +1149,7 @@ final class OpenApi
 				$this->refreshTokenFailed = $this->clock->getNow();
 
 				return Promise\reject(
-					new Exceptions\OpenApiCall(
+					new TuyaExceptions\OpenApiCall(
 						'Awaiting for refresh token promise failed',
 						$request,
 						null,
@@ -1171,7 +1171,7 @@ final class OpenApi
 				strval($request->getUri()),
 			),
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'openapi-api',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -1198,7 +1198,7 @@ final class OpenApi
 								$response->getBody()->rewind();
 							} catch (Throwable $ex) {
 								$deferred->reject(
-									new Exceptions\OpenApiCall(
+									new TuyaExceptions\OpenApiCall(
 										'Could not get content from response body',
 										$request,
 										$response,
@@ -1213,7 +1213,7 @@ final class OpenApi
 							$this->logger->debug(
 								'Received response',
 								[
-									'source' => MetadataTypes\Sources\Connector::TUYA->value,
+									'source' => Sources\Connector::TUYA->value,
 									'type' => 'openapi-api',
 									'request' => [
 										'method' => $request->getMethod(),
@@ -1241,7 +1241,7 @@ final class OpenApi
 						},
 						static function (Throwable $ex) use ($deferred, $request): void {
 							$deferred->reject(
-								new Exceptions\OpenApiCall(
+								new TuyaExceptions\OpenApiCall(
 									'Calling api endpoint failed',
 									$request,
 									null,
@@ -1268,7 +1268,7 @@ final class OpenApi
 
 				$response->getBody()->rewind();
 			} catch (RuntimeException $ex) {
-				throw new Exceptions\OpenApiCall(
+				throw new TuyaExceptions\OpenApiCall(
 					'Could not get content from response body',
 					$request,
 					$response,
@@ -1280,7 +1280,7 @@ final class OpenApi
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'openapi-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -1302,7 +1302,7 @@ final class OpenApi
 
 			return $response;
 		} catch (GuzzleHttp\Exception\GuzzleException | InvalidArgumentException $ex) {
-			throw new Exceptions\OpenApiCall(
+			throw new TuyaExceptions\OpenApiCall(
 				'Calling api endpoint failed',
 				$request,
 				null,
@@ -1315,7 +1315,7 @@ final class OpenApi
 	/**
 	 * @param array<string, mixed> $params
 	 *
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function createRequest(
 		string $method,
@@ -1335,14 +1335,14 @@ final class OpenApi
 			$headers = $this->buildRequestHeaders($method, $path, $params, $body);
 
 			return new Request($method, $url, $headers, $body);
-		} catch (Exceptions\InvalidArgument | Exceptions\Runtime $ex) {
-			throw new Exceptions\OpenApiError('Could not create request instance', $ex->getCode(), $ex);
+		} catch (TuyaExceptions\InvalidArgument | TuyaExceptions\Runtime $ex) {
+			throw new TuyaExceptions\OpenApiError('Could not create request instance', $ex->getCode(), $ex);
 		}
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function checkResponse(Request $request, Message\ResponseInterface $response): bool
 	{
@@ -1352,7 +1352,7 @@ final class OpenApi
 			$response->getBody()->rewind();
 
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\OpenApiCall(
+			throw new TuyaExceptions\OpenApiCall(
 				'Received response body is not valid JSON',
 				$request,
 				$response,
@@ -1360,7 +1360,7 @@ final class OpenApi
 				$ex,
 			);
 		} catch (RuntimeException $ex) {
-			throw new Exceptions\OpenApiCall(
+			throw new TuyaExceptions\OpenApiCall(
 				'Could not get content from response body',
 				$request,
 				$response,
@@ -1370,7 +1370,7 @@ final class OpenApi
 		}
 
 		if (!is_array($decodedResponse)) {
-			throw new Exceptions\OpenApiCall('Received response body is not valid JSON', $request, $response);
+			throw new TuyaExceptions\OpenApiCall('Received response body is not valid JSON', $request, $response);
 		}
 
 		$data = Utils\ArrayHash::from($decodedResponse);
@@ -1385,7 +1385,7 @@ final class OpenApi
 				$this->connect(false);
 
 			} else {
-				throw new Exceptions\OpenApiCall(
+				throw new TuyaExceptions\OpenApiCall(
 					'API token is not valid and can not be refreshed',
 					$request,
 					$response,
@@ -1398,10 +1398,10 @@ final class OpenApi
 			&& boolval($data->offsetGet('success')) !== true
 		) {
 			if ($data->offsetExists('msg')) {
-				throw new Exceptions\OpenApiCall(strval($data->offsetGet('msg')), $request, $response);
+				throw new TuyaExceptions\OpenApiCall(strval($data->offsetGet('msg')), $request, $response);
 			}
 
-			throw new Exceptions\OpenApiCall('Received response is not success', $request, $response);
+			throw new TuyaExceptions\OpenApiCall('Received response is not success', $request, $response);
 		}
 
 		return true;
@@ -1410,8 +1410,8 @@ final class OpenApi
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function validateResponseBody(
 		Message\RequestInterface $request,
@@ -1427,9 +1427,9 @@ final class OpenApi
 				$body,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\OpenApiCall(
+				throw new TuyaExceptions\OpenApiCall(
 					'Could not validate received response payload',
 					$request,
 					$response,
@@ -1443,7 +1443,7 @@ final class OpenApi
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiCall
 	 */
 	private function getResponseBody(
 		Message\RequestInterface $request,
@@ -1455,7 +1455,7 @@ final class OpenApi
 
 			return $response->getBody()->getContents();
 		} catch (RuntimeException $ex) {
-			throw new Exceptions\OpenApiCall(
+			throw new TuyaExceptions\OpenApiCall(
 				'Could not get content from response body',
 				$request,
 				$response,
@@ -1468,8 +1468,8 @@ final class OpenApi
 	/**
 	 * @return Promise\PromiseInterface<bool>|bool
 	 *
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function refreshAccessToken(Request $request): Promise\PromiseInterface|bool
 	{
@@ -1506,7 +1506,7 @@ final class OpenApi
 					strval($request->getUri()),
 				),
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'openapi-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -1524,7 +1524,7 @@ final class OpenApi
 			try {
 				$responseBody = $response->getBody()->getContents();
 			} catch (RuntimeException $ex) {
-				throw new Exceptions\OpenApiCall(
+				throw new TuyaExceptions\OpenApiCall(
 					'Could not get content from response body',
 					$request,
 					$response,
@@ -1536,7 +1536,7 @@ final class OpenApi
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'openapi-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -1557,7 +1557,7 @@ final class OpenApi
 				$decodedResponse = Utils\Json::decode($responseBody, forceArrays: true);
 
 			} catch (Utils\JsonException $ex) {
-				$error = new Exceptions\OpenApiCall(
+				$error = new TuyaExceptions\OpenApiCall(
 					'Received response body is not valid JSON',
 					$request,
 					$response,
@@ -1572,7 +1572,11 @@ final class OpenApi
 			}
 
 			if (!is_array($decodedResponse)) {
-				$error = new Exceptions\OpenApiCall('Received response body is not valid JSON', $request, $response);
+				$error = new TuyaExceptions\OpenApiCall(
+					'Received response body is not valid JSON',
+					$request,
+					$response,
+				);
 
 				$this->refreshTokenPromise->reject($error);
 				$this->refreshTokenPromise = null;
@@ -1603,7 +1607,7 @@ final class OpenApi
 					return Promise\resolve(true);
 				} else {
 					if ($data->offsetExists('msg')) {
-						$error = new Exceptions\OpenApiCall(strval($data->offsetGet('msg')), $request, $response);
+						$error = new TuyaExceptions\OpenApiCall(strval($data->offsetGet('msg')), $request, $response);
 
 						$this->refreshTokenPromise->reject($error);
 						$this->refreshTokenPromise = null;
@@ -1611,7 +1615,7 @@ final class OpenApi
 						return Promise\reject($error);
 					}
 
-					$error = new Exceptions\OpenApiCall('Received response is not success', $request, $response);
+					$error = new TuyaExceptions\OpenApiCall('Received response is not success', $request, $response);
 
 					$this->refreshTokenPromise->reject($error);
 					$this->refreshTokenPromise = null;
@@ -1622,7 +1626,7 @@ final class OpenApi
 
 			try {
 				$this->tokenInfo = $this->parseRefreshAccessToken($request, $response)->getResult();
-			} catch (Exceptions\OpenApiCall $ex) {
+			} catch (TuyaExceptions\OpenApiCall $ex) {
 				$this->refreshTokenPromise->reject($ex);
 				$this->refreshTokenPromise = null;
 
@@ -1634,7 +1638,13 @@ final class OpenApi
 
 			return Promise\resolve(true);
 		} catch (GuzzleHttp\Exception\GuzzleException | InvalidArgumentException $ex) {
-			$error = new Exceptions\OpenApiCall('Could not refresh access token', $request, null, $ex->getCode(), $ex);
+			$error = new TuyaExceptions\OpenApiCall(
+				'Could not refresh access token',
+				$request,
+				null,
+				$ex->getCode(),
+				$ex,
+			);
 
 			$this->refreshTokenPromise->reject($error);
 			$this->refreshTokenPromise = null;
@@ -1648,7 +1658,7 @@ final class OpenApi
 	 *
 	 * @return array<string, string|int>
 	 *
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function buildRequestHeaders(
 		string $method,
@@ -1685,7 +1695,7 @@ final class OpenApi
 	/**
 	 * @param array<string, mixed> $params
 	 *
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function calculateSign(
 		string $accessToken,
@@ -1737,12 +1747,14 @@ final class OpenApi
 				new ObjectMapper\Printers\TypeToStringConverter(),
 			);
 
-			throw new Exceptions\OpenApiError('Request sign could not be created: ' . $errorPrinter->printError($ex));
+			throw new TuyaExceptions\OpenApiError(
+				'Request sign could not be created: ' . $errorPrinter->printError($ex),
+			);
 		}
 	}
 
 	/**
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiError
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -1755,7 +1767,7 @@ final class OpenApi
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\OpenApiError('Validation schema for response could not be loaded');
+				throw new TuyaExceptions\OpenApiError('Validation schema for response could not be loaded');
 			}
 		}
 

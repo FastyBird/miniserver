@@ -5,7 +5,7 @@ namespace FastyBird\Core\Tests\Cases\Unit\Commands;
 use FastyBird\Core\Commands;
 use FastyBird\Core\Middleware\WebServer as Middleware;
 use FastyBird\Core\Server\HttpServer as Server;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher;
 use Psr\Log;
@@ -40,14 +40,14 @@ final class HttpServerCommandTest extends TestCase
 						[
 							'Starting HTTP Server',
 							[
-								'source' => MetadataTypes\Sources\Plugin::WEB_SERVER->value,
+								'source' => Sources\Plugin::WEB_SERVER->value,
 								'type' => 'server-command',
 							],
 						],
 						[
 							'Listening on "http://127.0.0.1:8001"',
 							[
-								'source' => MetadataTypes\Sources\Plugin::WEB_SERVER->value,
+								'source' => Sources\Plugin::WEB_SERVER->value,
 								'type' => 'factory',
 							],
 						],

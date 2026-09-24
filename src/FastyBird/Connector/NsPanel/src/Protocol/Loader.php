@@ -25,10 +25,10 @@ use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -176,7 +176,7 @@ readonly class Loader
 						$this->logger->warning(
 							'Channel property is not supported',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'protocol-loader',
 								'connector' => [
 									'id' => $connector->getId()->toString(),
@@ -236,20 +236,20 @@ readonly class Loader
 
 					if ($property !== null) {
 						$protocolAttribute->setActualValue(
-							ToolsUtilities\Value::flattenValue($property->getDefault()),
+							Utilities\Value::flattenValue($property->getDefault()),
 						);
 					}
 
 					if ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
 						$protocolAttribute->setActualValue(
-							ToolsUtilities\Value::flattenValue($property->getValue()),
+							Utilities\Value::flattenValue($property->getValue()),
 						);
 						$protocolAttribute->setValid(true);
 					} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 						try {
 							$state = $this->channelPropertiesStatesManager->read(
 								$property,
-								MetadataTypes\Sources\Connector::NS_PANEL,
+								Sources\Connector::NS_PANEL,
 							);
 
 							if ($state instanceof DevicesDocuments\States\Channels\Properties\Property) {
@@ -264,7 +264,7 @@ readonly class Loader
 												[
 													'capability' => $protocolCapability->getType()->value,
 													'attribute' => $protocolAttribute->getType()->value,
-													'value' => ToolsUtilities\Value::flattenValue(
+													'value' => Utilities\Value::flattenValue(
 														$state->getGet()->getExpectedValue() ?? $state->getGet()->getActualValue(),
 													),
 													'identifier' => $protocolCapability->getName(),
@@ -275,10 +275,10 @@ readonly class Loader
 								);
 
 								$protocolAttribute->setActualValue(
-									ToolsUtilities\Value::flattenValue($state->getGet()->getActualValue()),
+									Utilities\Value::flattenValue($state->getGet()->getActualValue()),
 								);
 								$protocolAttribute->setExpectedValue(
-									ToolsUtilities\Value::flattenValue($state->getGet()->getExpectedValue()),
+									Utilities\Value::flattenValue($state->getGet()->getExpectedValue()),
 								);
 								$protocolAttribute->setValid($state->isValid());
 							} else {
@@ -293,7 +293,7 @@ readonly class Loader
 												[
 													'capability' => $protocolCapability->getType()->value,
 													'attribute' => $protocolAttribute->getType()->value,
-													'value' => ToolsUtilities\Value::flattenValue(
+													'value' => Utilities\Value::flattenValue(
 														$property->getDefault(),
 													),
 													'identifier' => $protocolCapability->getName(),
@@ -304,7 +304,7 @@ readonly class Loader
 								);
 
 								$protocolAttribute->setActualValue(
-									ToolsUtilities\Value::flattenValue($property->getDefault()),
+									Utilities\Value::flattenValue($property->getDefault()),
 								);
 								$protocolAttribute->setValid(true);
 							}
@@ -312,7 +312,7 @@ readonly class Loader
 							$this->logger->warning(
 								'State value could not be set to attribute',
 								[
-									'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+									'source' => Sources\Connector::NS_PANEL->value,
 									'type' => 'protocol-loader',
 									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
@@ -342,15 +342,15 @@ readonly class Loader
 							try {
 								$state = $this->channelPropertiesStatesManager->read(
 									$property,
-									MetadataTypes\Sources\Connector::NS_PANEL,
+									Sources\Connector::NS_PANEL,
 								);
 
 								if ($state instanceof DevicesDocuments\States\Channels\Properties\Property) {
 									$protocolAttribute->setActualValue(
-										ToolsUtilities\Value::flattenValue($state->getGet()->getActualValue()),
+										Utilities\Value::flattenValue($state->getGet()->getActualValue()),
 									);
 									$protocolAttribute->setExpectedValue(
-										ToolsUtilities\Value::flattenValue($state->getGet()->getExpectedValue()),
+										Utilities\Value::flattenValue($state->getGet()->getExpectedValue()),
 									);
 									$protocolAttribute->setValid($state->isValid());
 								}
@@ -358,7 +358,7 @@ readonly class Loader
 								$this->logger->warning(
 									'State value could not be set to attribute',
 									[
-										'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+										'source' => Sources\Connector::NS_PANEL->value,
 										'type' => 'protocol-loader',
 										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
@@ -380,7 +380,7 @@ readonly class Loader
 							}
 						} elseif ($parent instanceof DevicesDocuments\Channels\Properties\Variable) {
 							$protocolAttribute->setActualValue(
-								ToolsUtilities\Value::flattenValue($parent->getValue()),
+								Utilities\Value::flattenValue($parent->getValue()),
 							);
 							$protocolAttribute->setValid(true);
 						}
@@ -445,7 +445,7 @@ readonly class Loader
 				);
 
 				$category = Types\Category::from(
-					ToolsUtilities\Value::toString($categoryProperty?->getValue()) ?? Types\Category::UNKNOWN->value,
+					Utilities\Value::toString($categoryProperty?->getValue()) ?? Types\Category::UNKNOWN->value,
 				);
 
 				$categoryMetadata = $metadata->findByCategory($category);
@@ -559,12 +559,12 @@ readonly class Loader
 					$attributeMetadata->getAttribute(),
 					$property->getDataType(),
 					$protocolCapability,
-					$format instanceof ToolsFormats\StringEnum ? $format->toArray() : null,
+					$format instanceof Formats\StringEnum ? $format->toArray() : null,
 					null,
-					$format instanceof ToolsFormats\NumberRange ? $format->getMin() : null,
-					$format instanceof ToolsFormats\NumberRange ? $format->getMax() : null,
+					$format instanceof Formats\NumberRange ? $format->getMin() : null,
+					$format instanceof Formats\NumberRange ? $format->getMax() : null,
 					$property->getStep(),
-					ToolsUtilities\Value::flattenValue($property->getDefault()),
+					Utilities\Value::flattenValue($property->getDefault()),
 					$property->getUnit(),
 				);
 			}
@@ -619,11 +619,11 @@ readonly class Loader
 					$configurationMetadata->getConfiguration(),
 					$property->getDataType(),
 					$protocolCapability,
-					ToolsUtilities\Value::flattenValue($property->getDefault()),
-					$format instanceof ToolsFormats\StringEnum ? $format->toArray() : null,
+					Utilities\Value::flattenValue($property->getDefault()),
+					$format instanceof Formats\StringEnum ? $format->toArray() : null,
 					null,
-					$format instanceof ToolsFormats\NumberRange ? $format->getMin() : null,
-					$format instanceof ToolsFormats\NumberRange ? $format->getMax() : null,
+					$format instanceof Formats\NumberRange ? $format->getMin() : null,
+					$format instanceof Formats\NumberRange ? $format->getMax() : null,
 					$property->getStep(),
 					$property->getUnit(),
 				);

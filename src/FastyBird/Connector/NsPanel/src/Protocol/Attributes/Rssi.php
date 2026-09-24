@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,8 +38,8 @@ class Rssi extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::RSSI,
-			MetadataTypes\DataType::CHAR,
+			NsPanelTypes\Attribute::RSSI,
+			ValuesTypes\DataType::CHAR,
 			$capability,
 			[],
 			null,

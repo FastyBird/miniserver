@@ -17,7 +17,7 @@ namespace FastyBird\Module\Ui\Schemas\Dashboards;
 
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
@@ -39,7 +39,7 @@ final class Dashboard extends JsonApiSchemas\JsonApi
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::UI->value . '/dashboard';
+	public const SCHEMA_TYPE = Sources\Module::UI->value . '/dashboard';
 
 	/**
 	 * Define relationships names

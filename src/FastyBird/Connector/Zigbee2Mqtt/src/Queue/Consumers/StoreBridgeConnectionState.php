@@ -23,7 +23,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -141,7 +141,7 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 					await($this->devicePropertiesStatesManager->setValidState(
 						$property,
 						false,
-						MetadataTypes\Sources\Connector::ZIGBEE2MQTT,
+						Sources\Connector::ZIGBEE2MQTT,
 					));
 				}
 
@@ -166,7 +166,7 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 						await($this->channelPropertiesStatesManager->setValidState(
 							$property,
 							false,
-							MetadataTypes\Sources\Connector::ZIGBEE2MQTT,
+							Sources\Connector::ZIGBEE2MQTT,
 						));
 					}
 				}
@@ -194,7 +194,7 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 						await($this->devicePropertiesStatesManager->setValidState(
 							$property,
 							false,
-							MetadataTypes\Sources\Connector::ZIGBEE2MQTT,
+							Sources\Connector::ZIGBEE2MQTT,
 						));
 					}
 
@@ -219,7 +219,7 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 							await($this->channelPropertiesStatesManager->setValidState(
 								$property,
 								false,
-								MetadataTypes\Sources\Connector::ZIGBEE2MQTT,
+								Sources\Connector::ZIGBEE2MQTT,
 							));
 						}
 					}
@@ -230,7 +230,7 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed bridge connection state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'store-bridge-connection-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

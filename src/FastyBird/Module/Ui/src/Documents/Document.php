@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Documents;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 
 /**
@@ -37,6 +37,6 @@ interface Document extends ApplicationDocuments\Document
 	 */
 	public function toArray(): array;
 
-	public function getSource(): MetadataTypes\Sources\Source;
+	public function getSource(): Sources\Source;
 
 }

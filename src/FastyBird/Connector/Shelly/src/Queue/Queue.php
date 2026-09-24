@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Shelly\Queue;
 
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Queue\Messages\Message;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use SplQueue;
 
@@ -49,7 +49,7 @@ final class Queue
 		$this->logger->debug(
 			'Appended new message into messages queue',
 			[
-				'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+				'source' => Sources\Connector::SHELLY->value,
 				'type' => 'queue',
 				'message' => $message->toArray(),
 			],

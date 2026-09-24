@@ -27,8 +27,8 @@ use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -106,7 +106,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -139,7 +139,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device assigned gateway could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -178,7 +178,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device owning NS Panel is not configured',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -205,7 +205,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device capability could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -233,7 +233,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device capability is not writable',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -260,7 +260,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device capability attribute could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -287,7 +287,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device capability attribute mapped property could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -315,7 +315,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->warning(
 				'Channel property is not writable',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -340,7 +340,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->warning(
 				'Channel property type is not supported to write value',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -371,7 +371,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			await($this->channelPropertiesStatesManager->setPendingState(
 				$propertyToUpdate,
 				false,
-				MetadataTypes\Sources\Connector::NS_PANEL,
+				Sources\Connector::NS_PANEL,
 			));
 
 			return true;
@@ -393,11 +393,11 @@ final class WriteSubDeviceState implements Queue\Consumer
 		await($this->channelPropertiesStatesManager->setPendingState(
 			$propertyToUpdate,
 			true,
-			MetadataTypes\Sources\Connector::NS_PANEL,
+			Sources\Connector::NS_PANEL,
 		));
 
 		$protocolAttribute->setExpectedValue(
-			ToolsUtilities\Value::flattenValue($state->getExpectedValue()),
+			Utilities\Value::flattenValue($state->getExpectedValue()),
 		);
 
 		$mapped = $protocolCapability->toState();
@@ -416,13 +416,13 @@ final class WriteSubDeviceState implements Queue\Consumer
 							DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
 							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 						]),
-						MetadataTypes\Sources\Connector::NS_PANEL,
+						Sources\Connector::NS_PANEL,
 					));
 
 					$this->logger->debug(
 						'Channel state was successfully sent to device',
 						[
-							'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+							'source' => Sources\Connector::NS_PANEL->value,
 							'type' => 'write-sub-device-state-message-consumer',
 							'connector' => [
 								'id' => $message->getConnector()->toString(),
@@ -446,7 +446,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 							await($this->channelPropertiesStatesManager->setPendingState(
 								$propertyToUpdate,
 								false,
-								MetadataTypes\Sources\Connector::NS_PANEL,
+								Sources\Connector::NS_PANEL,
 							));
 
 							$extra = [];
@@ -493,7 +493,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 								'Could write state to sub-device',
 								array_merge(
 									[
-										'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+										'source' => Sources\Connector::NS_PANEL->value,
 										'type' => 'write-sub-device-state-message-consumer',
 										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
@@ -520,7 +520,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -543,7 +543,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed write sub-device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'write-sub-device-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

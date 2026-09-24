@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Entities\Connectors\Properties;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
 use function sprintf;
@@ -36,7 +36,7 @@ class Dynamic extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function getValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		throw new Exceptions\InvalidState(
 			sprintf('Reading value is not allowed for property type: %s', static::getType()),
@@ -46,7 +46,7 @@ class Dynamic extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function setValue(bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value): void
+	public function setValue(bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value): void
 	{
 		throw new Exceptions\InvalidState(
 			sprintf(

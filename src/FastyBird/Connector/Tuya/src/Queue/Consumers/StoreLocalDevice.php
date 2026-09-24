@@ -21,10 +21,11 @@ use FastyBird\Connector\Tuya\Entities;
 use FastyBird\Connector\Tuya\Exceptions;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
-use FastyBird\Connector\Tuya\Types;
+use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
@@ -140,7 +141,7 @@ final class StoreLocalDevice implements Queue\Consumer
 			$this->logger->debug(
 				'Device was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'store-local-device-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -158,120 +159,120 @@ final class StoreLocalDevice implements Queue\Consumer
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getIpAddress(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::IP_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::IP_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::IP_ADDRESS,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::IP_ADDRESS->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getVersion(),
-			MetadataTypes\DataType::ENUM,
-			Types\DevicePropertyIdentifier::PROTOCOL_VERSION,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::PROTOCOL_VERSION->value),
+			ValuesTypes\DataType::ENUM,
+			TuyaTypes\DevicePropertyIdentifier::PROTOCOL_VERSION,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::PROTOCOL_VERSION->value),
 			[
-				Types\DeviceProtocolVersion::V31->value,
-				Types\DeviceProtocolVersion::V32->value,
-				Types\DeviceProtocolVersion::V33->value,
-				Types\DeviceProtocolVersion::V34->value,
-				Types\DeviceProtocolVersion::V32_PLUS->value,
+				TuyaTypes\DeviceProtocolVersion::V31->value,
+				TuyaTypes\DeviceProtocolVersion::V32->value,
+				TuyaTypes\DeviceProtocolVersion::V33->value,
+				TuyaTypes\DeviceProtocolVersion::V34->value,
+				TuyaTypes\DeviceProtocolVersion::V32_PLUS->value,
 			],
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getLocalKey(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::LOCAL_KEY,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::LOCAL_KEY->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::LOCAL_KEY,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::LOCAL_KEY->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getNodeId(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::NODE_ID,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::NODE_ID->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::NODE_ID,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::NODE_ID->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getGateway(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::GATEWAY_ID,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::GATEWAY_ID->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::GATEWAY_ID,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::GATEWAY_ID->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getCategory(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::CATEGORY,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::CATEGORY->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::CATEGORY,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::CATEGORY->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getIcon(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::ICON,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ICON->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::ICON,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::ICON->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getLatitude(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::LATITUDE,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::LATITUDE->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::LATITUDE,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::LATITUDE->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getLongitude(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::LONGITUDE,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::LONGITUDE->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::LONGITUDE,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::LONGITUDE->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getProductId(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::PRODUCT_ID,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::PRODUCT_ID->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::PRODUCT_ID,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::PRODUCT_ID->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getProductName(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::PRODUCT_NAME,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::PRODUCT_NAME->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::PRODUCT_NAME,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::PRODUCT_NAME->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->isEncrypted(),
-			MetadataTypes\DataType::BOOLEAN,
-			Types\DevicePropertyIdentifier::ENCRYPTED,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ENCRYPTED->value),
+			ValuesTypes\DataType::BOOLEAN,
+			TuyaTypes\DevicePropertyIdentifier::ENCRYPTED,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::ENCRYPTED->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getModel(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MODEL,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MODEL->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::MODEL,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::MODEL->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getMac(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MAC_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MAC_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::MAC_ADDRESS,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::MAC_ADDRESS->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getSn(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::SERIAL_NUMBER,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::SERIAL_NUMBER->value),
+			ValuesTypes\DataType::STRING,
+			TuyaTypes\DevicePropertyIdentifier::SERIAL_NUMBER,
+			DevicesUtilities\Name::createName(TuyaTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value),
 		);
 
 		if (count($message->getDataPoints()) > 0) {
 			$this->databaseHelper->transaction(function () use ($message, $device): bool {
 				$findChannelQuery = new Queries\Entities\FindChannels();
-				$findChannelQuery->byIdentifier(Types\DataPoint::LOCAL);
+				$findChannelQuery->byIdentifier(TuyaTypes\DataPoint::LOCAL);
 				$findChannelQuery->forDevice($device);
 
 				$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
@@ -280,13 +281,13 @@ final class StoreLocalDevice implements Queue\Consumer
 					$channel = $this->channelsManager->create(Utils\ArrayHash::from([
 						'entity' => Entities\Channels\Channel::class,
 						'device' => $device,
-						'identifier' => Types\DataPoint::LOCAL->value,
+						'identifier' => TuyaTypes\DataPoint::LOCAL->value,
 					]));
 
 					$this->logger->debug(
 						'Device channel was created',
 						[
-							'source' => MetadataTypes\Sources\Connector::TUYA->value,
+							'source' => Sources\Connector::TUYA->value,
 							'type' => 'store-local-device-message-consumer',
 							'connector' => [
 								'id' => $message->getConnector()->toString(),
@@ -326,7 +327,7 @@ final class StoreLocalDevice implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device message',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'store-local-device-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

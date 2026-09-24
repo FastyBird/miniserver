@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use DateTimeInterface;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -42,28 +42,28 @@ readonly class State implements Message
 			new ObjectMapper\Rules\FloatValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\ObjectValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName(DevicesStates\Property::ACTUAL_VALUE_FIELD)]
-		private bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $actualValue = null,
+		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\FloatValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\ObjectValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName(DevicesStates\Property::EXPECTED_VALUE_FIELD)]
-		private bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $expectedValue = null,
+		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\ObjectValue(),
@@ -83,12 +83,12 @@ readonly class State implements Message
 		return $this->id;
 	}
 
-	public function getActualValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getActualValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->actualValue;
 	}
 
-	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->expectedValue;
 	}
@@ -111,10 +111,10 @@ readonly class State implements Message
 	public function toArray(): array
 	{
 		return [
-			DevicesStates\Property::ACTUAL_VALUE_FIELD => ToolsUtilities\Value::flattenValue(
+			DevicesStates\Property::ACTUAL_VALUE_FIELD => Utilities\Value::flattenValue(
 				$this->getActualValue(),
 			),
-			DevicesStates\Property::EXPECTED_VALUE_FIELD => ToolsUtilities\Value::flattenValue(
+			DevicesStates\Property::EXPECTED_VALUE_FIELD => Utilities\Value::flattenValue(
 				$this->getExpectedValue(),
 			),
 			DevicesStates\Property::PENDING_FIELD => $this->getPending() instanceof DateTimeInterface

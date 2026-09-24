@@ -19,7 +19,7 @@ use DateTimeInterface;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
@@ -84,7 +84,7 @@ abstract class Property extends JsonApiSchemas\JsonApi
 			'invalid' => $resource->getInvalid(),
 			'scale' => $resource->getScale(),
 			'step' => $resource->getStep(),
-			'default' => ToolsUtilities\Value::flattenValue($resource->getDefault()),
+			'default' => Utilities\Value::flattenValue($resource->getDefault()),
 			'value_transformer' => $resource->getValueTransformer() !== null
 				? strval($resource->getValueTransformer())
 				: null,

@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Modbus\Schemas\Devices;
 
 use FastyBird\Connector\Modbus\Entities;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 
 /**
@@ -34,7 +34,7 @@ final class Device extends DevicesSchemas\Devices\Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Connector::MODBUS->value . '/device/' . Entities\Devices\Device::TYPE;
+	public const SCHEMA_TYPE = Sources\Connector::MODBUS->value . '/device/' . Entities\Devices\Device::TYPE;
 
 	public function getEntityClass(): string
 	{

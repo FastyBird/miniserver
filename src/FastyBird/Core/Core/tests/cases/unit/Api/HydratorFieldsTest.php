@@ -13,7 +13,7 @@ use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\MixedField;
 use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\NumberField;
 use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\SingleEntityField;
 use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\TextField;
-use FastyBird\Core\Types\Metadata\DataType;
+use FastyBird\Core\Values\Types;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -286,16 +286,32 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBackedEnumFieldGetValueReturnsTheMatchingCaseForAValidBackingValue(): void
 	{
-		$field = new BackedEnumField($this->createTranslator(), DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField(
+			$this->createTranslator(),
+			Types\DataType::class,
+			false,
+			'field',
+			'field',
+			true,
+			true,
+		);
 
 		$attributes = (new StandardObject())->set('field', 'char');
 
-		self::assertSame(DataType::CHAR, $field->getValue($attributes));
+		self::assertSame(Types\DataType::CHAR, $field->getValue($attributes));
 	}
 
 	public function testBackedEnumFieldGetValueThrowsJsonApiErrorForAnInvalidBackingValue(): void
 	{
-		$field = new BackedEnumField($this->createTranslator(), DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField(
+			$this->createTranslator(),
+			Types\DataType::class,
+			false,
+			'field',
+			'field',
+			true,
+			true,
+		);
 
 		$attributes = (new StandardObject())->set('field', 'not-a-data-type');
 
@@ -318,7 +334,15 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBackedEnumFieldGetValueReturnsNullWhenAttributeIsAbsentRatherThanThrowing(): void
 	{
-		$field = new BackedEnumField($this->createTranslator(), DataType::class, false, 'field', 'field', true, true);
+		$field = new BackedEnumField(
+			$this->createTranslator(),
+			Types\DataType::class,
+			false,
+			'field',
+			'field',
+			true,
+			true,
+		);
 
 		$attributes = new StandardObject();
 

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Notifications;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Entities;
 use Neomerx\JsonApi;
 use function array_merge;
@@ -35,7 +35,7 @@ final class Email extends Notification
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::TRIGGERS->value . '/notification/' . Entities\Notifications\Email::TYPE;
+	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/notification/' . Entities\Notifications\Email::TYPE;
 
 	public function getType(): string
 	{

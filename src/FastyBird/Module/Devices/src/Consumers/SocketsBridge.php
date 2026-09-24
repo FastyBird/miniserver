@@ -20,7 +20,7 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as WebSocketsRouting;
 use FastyBird\Core\Topics\WsServer as WsServerTopics;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use Nette\Utils;
 use Throwable;
@@ -45,12 +45,12 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 	}
 
 	public function consume(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $document,
 	): void
 	{
-		if ($source === MetadataTypes\Sources\Module::DEVICES) {
+		if ($source === Sources\Module::DEVICES) {
 			return;
 		}
 
@@ -66,7 +66,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 			$this->logger->debug(
 				'Successfully published message',
 				[
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'type' => 'sockets-consumer',
 					'message' => [
 						'routing_key' => $routingKey,
@@ -80,7 +80,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 			$this->logger->error(
 				'Message could not be published to exchange',
 				[
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'type' => 'sockets-consumer',
 					'message' => [
 						'routing_key' => $routingKey,
@@ -94,7 +94,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 		$this->logger->debug(
 			'Received message from exchange was pushed to WS clients',
 			[
-				'source' => MetadataTypes\Sources\Module::DEVICES->value,
+				'source' => Sources\Module::DEVICES->value,
 				'type' => 'sockets-consumer',
 				'message' => [
 					'routing_key' => $routingKey,
@@ -119,7 +119,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 				$this->logger->debug(
 					'Broadcasting message to topic',
 					[
-						'source' => MetadataTypes\Sources\Module::DEVICES->value,
+						'source' => Sources\Module::DEVICES->value,
 						'type' => 'sockets-consumer',
 						'link' => $link,
 					],
@@ -133,7 +133,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 			$this->logger->error(
 				'Data could not be converted to message',
 				[
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'type' => 'sockets-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -143,7 +143,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 			$this->logger->error(
 				'Data could not be broadcasts to clients',
 				[
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'type' => 'sockets-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 				],

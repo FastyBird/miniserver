@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Virtual\Drivers;
 
 use DateTimeInterface;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use React\Promise;
 
@@ -57,7 +57,7 @@ interface Driver
 	 */
 	public function writeState(
 		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Channels\Properties\Dynamic $property,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $expectedValue,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue,
 	): Promise\PromiseInterface;
 
 	/**
@@ -65,7 +65,7 @@ interface Driver
 	 */
 	public function notifyState(
 		DevicesDocuments\Devices\Properties\Mapped|DevicesDocuments\Channels\Properties\Mapped $property,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $actualValue,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue,
 	): Promise\PromiseInterface;
 
 }

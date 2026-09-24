@@ -18,8 +18,8 @@ namespace FastyBird\Module\Devices\Documents\States;
 use DateTimeInterface;
 use FastyBird\Core\Constants\Constants as MetadataConstants;
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
 use function array_merge;
 
@@ -38,9 +38,9 @@ final readonly class ActionValues implements ApplicationDocuments\Document
 	public function __construct(
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\BoolValue(),
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\FloatValue(),
@@ -48,12 +48,12 @@ final readonly class ActionValues implements ApplicationDocuments\Document
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('actual_value')]
-		private bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $actualValue = MetadataConstants::VALUE_NOT_SET,
+		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue = MetadataConstants::VALUE_NOT_SET,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\BoolValue(),
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\FloatValue(),
@@ -61,17 +61,17 @@ final readonly class ActionValues implements ApplicationDocuments\Document
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('expected_value')]
-		private bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $expectedValue = MetadataConstants::VALUE_NOT_SET,
+		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = MetadataConstants::VALUE_NOT_SET,
 	)
 	{
 	}
 
-	public function getActualValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getActualValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->actualValue;
 	}
 
-	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->expectedValue;
 	}
@@ -82,13 +82,13 @@ final readonly class ActionValues implements ApplicationDocuments\Document
 
 		if ($this->getActualValue() !== MetadataConstants::VALUE_NOT_SET) {
 			$data = array_merge($data, [
-				'actual_value' => ToolsUtilities\Value::flattenValue($this->getActualValue()),
+				'actual_value' => Utilities\Value::flattenValue($this->getActualValue()),
 			]);
 		}
 
 		if ($this->getExpectedValue() !== MetadataConstants::VALUE_NOT_SET) {
 			$data = array_merge($data, [
-				'expected_value' => ToolsUtilities\Value::flattenValue($this->getExpectedValue()),
+				'expected_value' => Utilities\Value::flattenValue($this->getExpectedValue()),
 			]);
 		}
 

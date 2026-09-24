@@ -8,7 +8,7 @@ use Doctrine\Persistence;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Psr\EventDispatcher;
 use Psr\Log;
 use Throwable;
@@ -240,7 +240,7 @@ final readonly class Database
 				$this->logger->error(
 					'An unhandled error occurred during closing entity manager',
 					[
-						'source' => MetadataTypes\Sources\Module::NOT_SPECIFIED,
+						'source' => Sources\Module::NOT_SPECIFIED,
 						'type' => 'helper',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -254,7 +254,7 @@ final readonly class Database
 				$this->logger->error(
 					'An unhandled error occurred during clearing entity manager',
 					[
-						'source' => MetadataTypes\Sources\Module::NOT_SPECIFIED,
+						'source' => Sources\Module::NOT_SPECIFIED,
 						'type' => 'helper',
 						'exception' => Logging\Logger::buildException($ex),
 					],

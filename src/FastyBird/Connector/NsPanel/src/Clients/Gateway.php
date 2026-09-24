@@ -27,7 +27,7 @@ use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -297,7 +297,7 @@ final class Gateway implements Client
 						$this->logger->error(
 							'Calling NS Panel API failed with error',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'gateway-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'connector' => [
@@ -323,7 +323,7 @@ final class Gateway implements Client
 						$this->logger->error(
 							'Could not NS Panel API',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'gateway-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'connector' => [
@@ -357,7 +357,7 @@ final class Gateway implements Client
 						$this->logger->error(
 							'Calling NS Panel API failed',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'gateway-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'connector' => [
@@ -371,7 +371,7 @@ final class Gateway implements Client
 
 						$this->dispatcher?->dispatch(
 							new DevicesEvents\TerminateConnector(
-								MetadataTypes\Sources\Connector::NS_PANEL,
+								Sources\Connector::NS_PANEL,
 								'Unhandled error occur',
 							),
 						);
@@ -381,7 +381,7 @@ final class Gateway implements Client
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'gateway-client',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -555,7 +555,7 @@ final class Gateway implements Client
 						$this->logger->error(
 							'Calling NS Panel API failed with error',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'gateway-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'connector' => [
@@ -581,7 +581,7 @@ final class Gateway implements Client
 						$this->logger->warning(
 							'Calling NS Panel API failed',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'gateway-client',
 								'error' => $ex->getMessage(),
 								'connector' => [
@@ -615,7 +615,7 @@ final class Gateway implements Client
 						$this->logger->error(
 							'Calling NS Panel API failed',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'gateway-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'connector' => [
@@ -629,7 +629,7 @@ final class Gateway implements Client
 
 						$this->dispatcher?->dispatch(
 							new DevicesEvents\TerminateConnector(
-								MetadataTypes\Sources\Connector::NS_PANEL,
+								Sources\Connector::NS_PANEL,
 								'Unhandled error occur',
 							),
 						);
@@ -639,7 +639,7 @@ final class Gateway implements Client
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'gateway-client',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [

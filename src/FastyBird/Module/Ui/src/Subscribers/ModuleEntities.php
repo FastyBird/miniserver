@@ -23,7 +23,7 @@ use FastyBird\Core\EventLoop\Application\Status;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use Nette;
@@ -197,7 +197,7 @@ final class ModuleEntities implements Common\EventSubscriber
 
 		if ($publishRoutingKey !== null) {
 			$this->getPublisher($this->eventLoopStatus->isRunning())->publish(
-				MetadataTypes\Sources\Module::DEVICES,
+				Sources\Module::DEVICES,
 				$publishRoutingKey,
 				$this->documentFactory->create(
 					Utils\ArrayHash::from($entity->toArray()),

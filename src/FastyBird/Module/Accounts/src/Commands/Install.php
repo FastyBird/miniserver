@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\Commands;
 
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette\Localization;
 use Psr\Log;
 use Symfony\Component\Console;
@@ -102,7 +102,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
+					'source' => Sources\Module::ACCOUNTS->value,
 					'type' => 'initialize-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],

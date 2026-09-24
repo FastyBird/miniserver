@@ -27,7 +27,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Constants as DevicesConstants;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -109,7 +109,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	}
 
 	public function consume(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $document,
 	): void
@@ -177,7 +177,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 			$this->logger->error(
 				'Characteristic value could not be prepared for writing',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'exchange-writer',
 					'exception' => Logging\Logger::buildException($ex),
 				],

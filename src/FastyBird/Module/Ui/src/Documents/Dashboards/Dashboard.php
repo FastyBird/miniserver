@@ -19,7 +19,7 @@ use DateTimeInterface;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Entities;
@@ -146,9 +146,9 @@ final class Dashboard implements Documents\Document, ApplicationDocuments\Owner,
 		];
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Module::UI;
+		return Sources\Module::UI;
 	}
 
 }

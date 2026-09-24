@@ -17,14 +17,15 @@ namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Transformers\Tools as ToolsTransformers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Transformers;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\States;
 use Orisai\ObjectMapper;
 use Throwable;
@@ -64,10 +65,10 @@ abstract class PropertiesManager
 	 *
 	 * @return TState
 	 *
-	 * @throws Exceptions\InvalidActualValue
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidExpectedValue
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidActualValue
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidExpectedValue
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -85,7 +86,7 @@ abstract class PropertiesManager
 					$mappedProperty,
 					$forReading,
 				);
-			} catch (ToolsExceptions\InvalidValue | ApplicationExceptions\InvalidState $ex) {
+			} catch (ValuesExceptions\InvalidValue | ApplicationExceptions\InvalidState $ex) {
 				if ($mappedProperty !== null) {
 					$updateValues[States\Property::ACTUAL_VALUE_FIELD] = null;
 					$updateValues[States\Property::VALID_FIELD] = false;
@@ -93,7 +94,7 @@ abstract class PropertiesManager
 					$this->logger->error(
 						'Property stored actual value could not be converted to mapped property',
 						[
-							'source' => MetadataTypes\Sources\Module::DEVICES->value,
+							'source' => Sources\Module::DEVICES->value,
 							'type' => 'properties-states',
 							'exception' => Logging\Logger::buildException($ex),
 							'property' => $property->getId()->toString(),
@@ -102,7 +103,7 @@ abstract class PropertiesManager
 					);
 
 				} else {
-					throw new Exceptions\InvalidActualValue('Property stored actual value was not valid');
+					throw new DevicesExceptions\InvalidActualValue('Property stored actual value was not valid');
 				}
 			} catch (Throwable $ex) {
 				if ($mappedProperty !== null) {
@@ -112,14 +113,14 @@ abstract class PropertiesManager
 					$this->logger->error(
 						'Property stored actual value could not be converted to mapped property',
 						[
-							'source' => MetadataTypes\Sources\Module::DEVICES->value,
+							'source' => Sources\Module::DEVICES->value,
 							'type' => 'properties-states',
 							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
 				} else {
-					throw new Exceptions\InvalidActualValue('Property stored actual value was not valid');
+					throw new DevicesExceptions\InvalidActualValue('Property stored actual value was not valid');
 				}
 			}
 		}
@@ -134,11 +135,13 @@ abstract class PropertiesManager
 				);
 
 				if ($expectedValue !== null && !$property->isSettable()) {
-					throw new Exceptions\InvalidExpectedValue('Property is not settable but has stored expected value');
+					throw new DevicesExceptions\InvalidExpectedValue(
+						'Property is not settable but has stored expected value',
+					);
 				}
 
 				$updateValues[States\Property::EXPECTED_VALUE_FIELD] = $expectedValue;
-			} catch (ToolsExceptions\InvalidValue $ex) {
+			} catch (ValuesExceptions\InvalidValue $ex) {
 				if ($mappedProperty !== null) {
 					$updateValues[States\Property::EXPECTED_VALUE_FIELD] = null;
 					$updateValues[States\Property::PENDING_FIELD] = false;
@@ -146,14 +149,14 @@ abstract class PropertiesManager
 					$this->logger->error(
 						'Property stored actual value could not be converted to mapped property',
 						[
-							'source' => MetadataTypes\Sources\Module::DEVICES->value,
+							'source' => Sources\Module::DEVICES->value,
 							'type' => 'properties-states',
 							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
 				} else {
-					throw new Exceptions\InvalidExpectedValue('Property stored expected value was not valid');
+					throw new DevicesExceptions\InvalidExpectedValue('Property stored expected value was not valid');
 				}
 			}
 		}
@@ -207,46 +210,46 @@ abstract class PropertiesManager
 	 * @param TParent $property
 	 * @param TChild $mappedProperty
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidValue
+	 * @throws ValuesExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
 	protected function convertReadValue(
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value,
 		$property,
 		$mappedProperty,
 		bool $forReading,
-	): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		/**
 		 * Transform value to property defined data type
 		 */
-		$value = ToolsUtilities\Value::transformDataType(
-			ToolsUtilities\Value::flattenValue($value),
+		$value = Utilities\Value::transformDataType(
+			Utilities\Value::flattenValue($value),
 			$property->getDataType(),
 		);
 
 		/**
 		 * Read value is now normalized and validated against property configuration
 		 */
-		$value = ToolsUtilities\Value::normalizeValue(
+		$value = Utilities\Value::normalizeValue(
 			$value,
 			$property->getDataType(),
 			$property->getFormat(),
 		);
 
 		if ($forReading || $mappedProperty !== null) {
-			$value = ToolsUtilities\Value::transformToScale(
+			$value = Utilities\Value::transformToScale(
 				$value,
 				$property->getDataType(),
 				$property->getScale(),
 			);
 
 			if (is_string($property->getValueTransformer())) {
-				$transformer = new ToolsTransformers\EquationTransformer($property->getValueTransformer());
+				$transformer = new Transformers\EquationTransformer($property->getValueTransformer());
 
 				if (is_int($value) || is_float($value)) {
 					$value = $transformer->calculateEquationTo(
@@ -258,7 +261,7 @@ abstract class PropertiesManager
 		}
 
 		if (!$forReading && $mappedProperty === null) {
-			$value = ToolsUtilities\Value::transformValueToDevice(
+			$value = Utilities\Value::transformValueToDevice(
 				$value,
 				$property->getDataType(),
 				$property->getFormat(),
@@ -267,7 +270,7 @@ abstract class PropertiesManager
 
 		if ($mappedProperty !== null) {
 			if (is_string($mappedProperty->getValueTransformer())) {
-				$transformer = new ToolsTransformers\EquationTransformer($mappedProperty->getValueTransformer());
+				$transformer = new Transformers\EquationTransformer($mappedProperty->getValueTransformer());
 
 				if (is_int($value) || is_float($value)) {
 					$value = $transformer->calculateEquationFrom(
@@ -280,25 +283,25 @@ abstract class PropertiesManager
 			/**
 			 * Transform value to mapped property defined data type
 			 */
-			$value = ToolsUtilities\Value::transformDataType(
-				ToolsUtilities\Value::flattenValue($value),
+			$value = Utilities\Value::transformDataType(
+				Utilities\Value::flattenValue($value),
 				$mappedProperty->getDataType(),
 			);
 
 			/**
 			 * Read value is now normalized and validated against mapped property configuration
 			 */
-			$value = ToolsUtilities\Value::normalizeValue(
+			$value = Utilities\Value::normalizeValue(
 				$value,
 				$mappedProperty->getDataType(),
 				$mappedProperty->getFormat(),
 			);
 
-			$value = $forReading ? ToolsUtilities\Value::transformToScale(
+			$value = $forReading ? Utilities\Value::transformToScale(
 				$value,
 				$mappedProperty->getDataType(),
 				$mappedProperty->getScale(),
-			) : ToolsUtilities\Value::transformValueToDevice(
+			) : Utilities\Value::transformValueToDevice(
 				$value,
 				$mappedProperty->getDataType(),
 				$mappedProperty->getFormat(),
@@ -313,20 +316,20 @@ abstract class PropertiesManager
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidValue
+	 * @throws ValuesExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
 	protected function convertWriteActualValue(
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value,
 		$property,
-	): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		/**
 		 * Convert value received from device to property defined data type
 		 */
-		$value = ToolsUtilities\Value::transformDataType(
-			ToolsUtilities\Value::flattenValue($value),
+		$value = Utilities\Value::transformDataType(
+			Utilities\Value::flattenValue($value),
 			$property->getDataType(),
 		);
 
@@ -334,7 +337,7 @@ abstract class PropertiesManager
 		 * Value received from device have to be converted to system acceptable value
 		 * It is mandatory for properties with combined enum format defined values
 		 */
-		$value = ToolsUtilities\Value::transformValueFromDevice(
+		$value = Utilities\Value::transformValueFromDevice(
 			$value,
 			$property->getDataType(),
 			$property->getFormat(),
@@ -343,7 +346,7 @@ abstract class PropertiesManager
 		/**
 		 * Value received from device is now normalized and validated against property configuration
 		 */
-		return ToolsUtilities\Value::normalizeValue(
+		return Utilities\Value::normalizeValue(
 			$value,
 			$property->getDataType(),
 			$property->getFormat(),
@@ -354,34 +357,34 @@ abstract class PropertiesManager
 	 * @param TParent $property
 	 * @param TChild $mappedProperty
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidValue
+	 * @throws ValuesExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
 	protected function convertWriteExpectedValue(
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value,
 		$property,
 		$mappedProperty,
 		bool $forWriting,
-	): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		if ($mappedProperty !== null) {
 			/**
 			 * Transform value to mapped property defined data type
 			 */
-			$value = ToolsUtilities\Value::transformDataType(
-				ToolsUtilities\Value::flattenValue($value),
+			$value = Utilities\Value::transformDataType(
+				Utilities\Value::flattenValue($value),
 				$mappedProperty->getDataType(),
 			);
 
-			$value = $forWriting ? ToolsUtilities\Value::transformFromScale(
+			$value = $forWriting ? Utilities\Value::transformFromScale(
 				$value,
 				$mappedProperty->getDataType(),
 				$mappedProperty->getScale(),
-			) : ToolsUtilities\Value::transformValueFromDevice(
+			) : Utilities\Value::transformValueFromDevice(
 				$value,
 				$mappedProperty->getDataType(),
 				$mappedProperty->getFormat(),
@@ -390,7 +393,7 @@ abstract class PropertiesManager
 			/**
 			 * Write value is now normalized and validated against property configuration
 			 */
-			$value = ToolsUtilities\Value::normalizeValue(
+			$value = Utilities\Value::normalizeValue(
 				$value,
 				$mappedProperty->getDataType(),
 				$mappedProperty->getFormat(),
@@ -400,7 +403,7 @@ abstract class PropertiesManager
 			 * If property has some value transformer, it is now applied
 			 */
 			if (is_string($mappedProperty->getValueTransformer())) {
-				$transformer = new ToolsTransformers\EquationTransformer($mappedProperty->getValueTransformer());
+				$transformer = new Transformers\EquationTransformer($mappedProperty->getValueTransformer());
 
 				if (is_int($value) || is_float($value)) {
 					$value = $transformer->calculateEquationTo($value, $mappedProperty->getDataType());
@@ -411,14 +414,14 @@ abstract class PropertiesManager
 		/**
 		 * Transform value to property defined data type
 		 */
-		$value = ToolsUtilities\Value::transformDataType(
-			ToolsUtilities\Value::flattenValue($value),
+		$value = Utilities\Value::transformDataType(
+			Utilities\Value::flattenValue($value),
 			$property->getDataType(),
 		);
 
 		if ($forWriting) {
 			if (is_string($property->getValueTransformer())) {
-				$transformer = new ToolsTransformers\EquationTransformer($property->getValueTransformer());
+				$transformer = new Transformers\EquationTransformer($property->getValueTransformer());
 
 				if (is_int($value) || is_float($value)) {
 					$value = $transformer->calculateEquationFrom(
@@ -430,7 +433,7 @@ abstract class PropertiesManager
 		}
 
 		if ($forWriting || $mappedProperty !== null) {
-			$value = ToolsUtilities\Value::transformFromScale(
+			$value = Utilities\Value::transformFromScale(
 				$value,
 				$property->getDataType(),
 				$property->getScale(),
@@ -440,7 +443,7 @@ abstract class PropertiesManager
 		/**
 		 * Write value is now normalized and validated against property configuration
 		 */
-		return ToolsUtilities\Value::normalizeValue(
+		return Utilities\Value::normalizeValue(
 			$value,
 			$property->getDataType(),
 			$property->getFormat(),
@@ -454,7 +457,7 @@ abstract class PropertiesManager
 	 *
 	 * @return TState
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
 	 */
 	protected function updateState($state, string $class, array $update)
 	{
@@ -483,7 +486,9 @@ abstract class PropertiesManager
 				new ObjectMapper\Printers\TypeToStringConverter(),
 			);
 
-			throw new Exceptions\InvalidArgument('Could not map data to state: ' . $errorPrinter->printError($ex));
+			throw new DevicesExceptions\InvalidArgument(
+				'Could not map data to state: ' . $errorPrinter->printError($ex),
+			);
 		}
 	}
 

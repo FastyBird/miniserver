@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Subscribers;
 
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions;
@@ -174,7 +174,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 			$this->connectorPropertiesStatesManager->setValidState(
 				$property,
 				false,
-				MetadataTypes\Sources\Module::DEVICES,
+				Sources\Module::DEVICES,
 			);
 		}
 
@@ -222,7 +222,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 			$this->devicePropertiesStatesManager->setValidState(
 				$property,
 				false,
-				MetadataTypes\Sources\Module::DEVICES,
+				Sources\Module::DEVICES,
 			);
 		}
 
@@ -258,7 +258,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 			$this->channelPropertiesStatesManager->setValidState(
 				$property,
 				false,
-				MetadataTypes\Sources\Module::DEVICES,
+				Sources\Module::DEVICES,
 			);
 		}
 	}

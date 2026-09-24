@@ -25,7 +25,7 @@ use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -266,7 +266,7 @@ abstract class Periodic
 
 		$state = await($this->devicePropertiesStatesManager->read(
 			$property,
-			MetadataTypes\Sources\Connector::FB_MQTT,
+			Sources\Connector::FB_MQTT,
 		));
 
 		if (is_bool($state)) {
@@ -317,7 +317,7 @@ abstract class Periodic
 				$this->logger->error(
 					'Characteristic value could not be prepared for writing',
 					[
-						'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+						'source' => Sources\Connector::FB_MQTT->value,
 						'type' => 'periodic-writer',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -348,7 +348,7 @@ abstract class Periodic
 
 		$state = await($this->channelPropertiesStatesManager->read(
 			$property,
-			MetadataTypes\Sources\Connector::FB_MQTT,
+			Sources\Connector::FB_MQTT,
 		));
 
 		if (is_bool($state)) {
@@ -400,7 +400,7 @@ abstract class Periodic
 				$this->logger->error(
 					'Characteristic value could not be prepared for writing',
 					[
-						'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+						'source' => Sources\Connector::FB_MQTT->value,
 						'type' => 'periodic-writer',
 						'exception' => Logging\Logger::buildException($ex),
 					],

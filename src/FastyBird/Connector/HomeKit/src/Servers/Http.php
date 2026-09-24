@@ -27,7 +27,7 @@ use FastyBird\Connector\HomeKit\Subscribers;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -100,7 +100,7 @@ final class Http implements Server
 			$this->logger->debug(
 				'Creating HAP web server',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'http-server',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
@@ -124,7 +124,7 @@ final class Http implements Server
 			$this->logger->error(
 				'Socket server could not be created',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'http-server',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -134,7 +134,7 @@ final class Http implements Server
 			);
 
 			$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(
-				MetadataTypes\Sources\Connector::HOMEKIT,
+				Sources\Connector::HOMEKIT,
 				'Socket server could not be created',
 				$ex,
 			));
@@ -146,7 +146,7 @@ final class Http implements Server
 			$this->logger->debug(
 				'New client has connected to server',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'http-server',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
@@ -163,7 +163,7 @@ final class Http implements Server
 				$this->logger->debug(
 					'Connected client has closed connection',
 					[
-						'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+						'source' => Sources\Connector::HOMEKIT->value,
 						'type' => 'http-server',
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
@@ -182,7 +182,7 @@ final class Http implements Server
 			$this->logger->error(
 				'An error occurred during socket handling',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'http-server',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -192,7 +192,7 @@ final class Http implements Server
 			);
 
 			$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(
-				MetadataTypes\Sources\Connector::HOMEKIT,
+				Sources\Connector::HOMEKIT,
 				'HTTP server was terminated',
 				$ex,
 			));
@@ -202,7 +202,7 @@ final class Http implements Server
 			$this->logger->info(
 				'Server was closed',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'http-server',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
@@ -229,7 +229,7 @@ final class Http implements Server
 			$this->logger->error(
 				'An error occurred during server handling',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'http-server',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -239,7 +239,7 @@ final class Http implements Server
 			);
 
 			$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(
-				MetadataTypes\Sources\Connector::HOMEKIT,
+				Sources\Connector::HOMEKIT,
 				'HTTP server was terminated',
 				$ex,
 			));
@@ -269,7 +269,7 @@ final class Http implements Server
 		$this->logger->debug(
 			'Closing HAP web server',
 			[
-				'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+				'source' => Sources\Connector::HOMEKIT->value,
 				'type' => 'http-server',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -314,7 +314,7 @@ final class Http implements Server
 			$this->logger->debug(
 				'Shared key has been updated',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'http-server',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),

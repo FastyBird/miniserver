@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Virtual\Entities;
 use FastyBird\Connector\Virtual\Exceptions;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 
 #[ORM\Entity]
@@ -34,9 +34,9 @@ class Connector extends DevicesEntities\Connectors\Connector
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Connector
+	public function getSource(): Sources\Connector
 	{
-		return MetadataTypes\Sources\Connector::VIRTUAL;
+		return Sources\Connector::VIRTUAL;
 	}
 
 	/**

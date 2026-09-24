@@ -18,7 +18,7 @@ namespace FastyBird\Module\Ui\Documents\Widgets\DataSources\Actions;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Types;
@@ -98,9 +98,9 @@ final readonly class Action implements Documents\Document
 		];
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Module::DEVICES;
+		return Sources\Module::DEVICES;
 	}
 
 }

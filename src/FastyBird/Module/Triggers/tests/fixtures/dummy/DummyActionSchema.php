@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Schemas;
 use Neomerx\JsonApi;
 use function array_merge;
@@ -13,7 +13,7 @@ final class DummyActionSchema extends Schemas\Actions\Action
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::TRIGGERS->value . '/action/' . DummyActionEntity::TYPE;
+	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/action/' . DummyActionEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

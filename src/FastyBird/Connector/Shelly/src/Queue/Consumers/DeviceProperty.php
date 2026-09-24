@@ -20,10 +20,11 @@ use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Entities;
 use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Queries;
-use FastyBird\Connector\Shelly\Types;
+use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Utils;
@@ -57,8 +58,8 @@ trait DeviceProperty
 	private function setDeviceProperty(
 		Uuid\UuidInterface $deviceId,
 		string|bool|int|null $value,
-		MetadataTypes\DataType $dataType,
-		Types\DevicePropertyIdentifier $identifier,
+		ValuesTypes\DataType $dataType,
+		ShellyTypes\DevicePropertyIdentifier $identifier,
 		string|null $name = null,
 		array|string|null $format = null,
 	): void
@@ -94,7 +95,7 @@ trait DeviceProperty
 			$this->logger->warning(
 				'Stored device property was not of valid type',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'message-consumer',
 					'device' => [
 						'id' => $deviceId->toString(),
@@ -119,7 +120,7 @@ trait DeviceProperty
 				$this->logger->error(
 					'Device was not found, property could not be configured',
 					[
-						'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+						'source' => Sources\Connector::SHELLY->value,
 						'type' => 'message-consumer',
 						'device' => [
 							'id' => $deviceId->toString(),
@@ -150,7 +151,7 @@ trait DeviceProperty
 			$this->logger->debug(
 				'Device variable property was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'message-consumer',
 					'device' => [
 						'id' => $deviceId->toString(),
@@ -177,7 +178,7 @@ trait DeviceProperty
 			$this->logger->debug(
 				'Device variable property was updated',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'message-consumer',
 					'device' => [
 						'id' => $deviceId->toString(),

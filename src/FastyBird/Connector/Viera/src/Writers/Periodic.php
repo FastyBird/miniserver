@@ -25,7 +25,7 @@ use FastyBird\Connector\Viera\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -217,7 +217,7 @@ abstract class Periodic implements Writer
 
 			$state = await($this->channelPropertiesStatesManager->read(
 				$property,
-				MetadataTypes\Sources\Connector::VIERA,
+				Sources\Connector::VIERA,
 			));
 
 			if (is_bool($state)) {
@@ -275,7 +275,7 @@ abstract class Periodic implements Writer
 					$this->logger->error(
 						'Characteristic value could not be prepared for writing',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'periodic-writer',
 							'exception' => Logging\Logger::buildException($ex),
 						],

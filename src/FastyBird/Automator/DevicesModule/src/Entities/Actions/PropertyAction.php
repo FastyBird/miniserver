@@ -18,8 +18,8 @@ namespace FastyBird\Automator\DevicesModule\Entities\Actions;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Ramsey\Uuid;
 use TypeError;
@@ -55,18 +55,18 @@ abstract class PropertyAction extends TriggersEntities\Actions\Action
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getValue(): string|MetadataTypes\Payloads\Payload
+	public function getValue(): string|Payloads\Payload
 	{
-		if (MetadataTypes\Payloads\Button::tryFrom($this->value) !== null) {
-			return MetadataTypes\Payloads\Button::from($this->value);
+		if (Payloads\Button::tryFrom($this->value) !== null) {
+			return Payloads\Button::from($this->value);
 		}
 
-		if (MetadataTypes\Payloads\Switcher::tryFrom($this->value) !== null) {
-			return MetadataTypes\Payloads\Switcher::from($this->value);
+		if (Payloads\Switcher::tryFrom($this->value) !== null) {
+			return Payloads\Switcher::from($this->value);
 		}
 
-		if (MetadataTypes\Payloads\Cover::tryFrom($this->value) !== null) {
-			return MetadataTypes\Payloads\Cover::from($this->value);
+		if (Payloads\Cover::tryFrom($this->value) !== null) {
+			return Payloads\Cover::from($this->value);
 		}
 
 		return $this->value;
@@ -93,7 +93,7 @@ abstract class PropertyAction extends TriggersEntities\Actions\Action
 	{
 		return array_merge(parent::toArray(), [
 			'device' => $this->getDevice()->toString(),
-			'value' => ToolsUtilities\Value::toString($this->getValue()),
+			'value' => Utilities\Value::toString($this->getValue()),
 		]);
 	}
 

@@ -20,7 +20,7 @@ use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 use TypeError;
@@ -48,9 +48,9 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
-	public function getSource(): MetadataTypes\Sources\Connector|MetadataTypes\Sources\Bridge
+	public function getSource(): Sources\Connector|Sources\Bridge
 	{
-		return MetadataTypes\Sources\Connector::HOMEKIT;
+		return Sources\Connector::HOMEKIT;
 	}
 
 	public function getDevice(): Entities\Devices\Device

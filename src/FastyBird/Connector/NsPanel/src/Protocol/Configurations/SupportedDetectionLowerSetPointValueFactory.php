@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 use function assert;
 use function is_float;
@@ -36,8 +36,8 @@ class SupportedDetectionLowerSetPointValueFactory implements ConfigurationFactor
 
 	public function create(
 		Uuid\UuidInterface $id,
-		Types\Configuration $type,
-		MetadataTypes\DataType $dataType,
+		NsPanelTypes\Configuration $type,
+		ValuesTypes\DataType $dataType,
 		Protocol\Capabilities\Capability $capability,
 		float|int|bool|string|array|null $value,
 		array|null $validValues = [],
@@ -57,9 +57,9 @@ class SupportedDetectionLowerSetPointValueFactory implements ConfigurationFactor
 		);
 	}
 
-	public function getType(): Types\Configuration
+	public function getType(): NsPanelTypes\Configuration
 	{
-		return Types\Configuration::SUPPORTED_LOWER_SET_POINT_VALUE_VALUE;
+		return NsPanelTypes\Configuration::SUPPORTED_LOWER_SET_POINT_VALUE_VALUE;
 	}
 
 }

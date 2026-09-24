@@ -21,7 +21,7 @@ use FastyBird\Addon\VirtualThermostat\Exceptions;
 use FastyBird\Addon\VirtualThermostat\Queries;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
+use FastyBird\Core\Values\Formats;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -658,7 +658,7 @@ final readonly class Device
 	{
 		$format = $this->getHvacMode($device)?->getFormat();
 
-		if (!$format instanceof ToolsFormats\StringEnum) {
+		if (!$format instanceof Formats\StringEnum) {
 			return [];
 		}
 
@@ -682,7 +682,7 @@ final readonly class Device
 	{
 		$format = $this->getPresetMode($device)?->getFormat();
 
-		if (!$format instanceof ToolsFormats\StringEnum) {
+		if (!$format instanceof Formats\StringEnum) {
 			return [];
 		}
 

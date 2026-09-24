@@ -21,12 +21,13 @@ use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Entities;
 use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Queries;
-use FastyBird\Connector\Sonoff\Types;
+use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -215,39 +216,39 @@ class Install extends Console\Command\Command
 
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'identifier' => SonoffTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'value' => $mode->value,
-				'format' => [Types\ClientMode::LAN->value, Types\ClientMode::CLOUD->value, Types\ClientMode::AUTO->value],
+				'format' => [SonoffTypes\ClientMode::LAN->value, SonoffTypes\ClientMode::CLOUD->value, SonoffTypes\ClientMode::AUTO->value],
 				'connector' => $connector,
 			]));
 
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::USERNAME->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => SonoffTypes\ConnectorPropertyIdentifier::USERNAME->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $username,
 				'connector' => $connector,
 			]));
 
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::PASSWORD->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => SonoffTypes\ConnectorPropertyIdentifier::PASSWORD->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $password,
 				'connector' => $connector,
 			]));
 
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::REGION->value,
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'identifier' => SonoffTypes\ConnectorPropertyIdentifier::REGION->value,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'value' => $dataCentre->value,
 				'format' => [
-					Types\CloudApiEndpoint::CHINA,
-					Types\CloudApiEndpoint::AMERICA,
-					Types\CloudApiEndpoint::EUROPE,
-					Types\CloudApiEndpoint::ASIA,
+					SonoffTypes\CloudApiEndpoint::CHINA,
+					SonoffTypes\CloudApiEndpoint::AMERICA,
+					SonoffTypes\CloudApiEndpoint::EUROPE,
+					SonoffTypes\CloudApiEndpoint::ASIA,
 				],
 				'connector' => $connector,
 			]));
@@ -266,7 +267,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -313,7 +314,7 @@ class Install extends Console\Command\Command
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::CLIENT_MODE);
+		$findConnectorPropertyQuery->byIdentifier(SonoffTypes\ConnectorPropertyIdentifier::CLIENT_MODE);
 
 		$modeProperty = $this->propertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -363,7 +364,7 @@ class Install extends Console\Command\Command
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::USERNAME);
+		$findConnectorPropertyQuery->byIdentifier(SonoffTypes\ConnectorPropertyIdentifier::USERNAME);
 
 		$usernameProperty = $this->propertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -385,7 +386,7 @@ class Install extends Console\Command\Command
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::PASSWORD);
+		$findConnectorPropertyQuery->byIdentifier(SonoffTypes\ConnectorPropertyIdentifier::PASSWORD);
 
 		$passwordProperty = $this->propertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -422,10 +423,10 @@ class Install extends Console\Command\Command
 
 				$this->propertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
-					'dataType' => MetadataTypes\DataType::ENUM,
+					'identifier' => SonoffTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+					'dataType' => ValuesTypes\DataType::ENUM,
 					'value' => $mode->value,
-					'format' => [Types\ClientMode::LAN->value, Types\ClientMode::CLOUD->value, Types\ClientMode::AUTO->value],
+					'format' => [SonoffTypes\ClientMode::LAN->value, SonoffTypes\ClientMode::CLOUD->value, SonoffTypes\ClientMode::AUTO->value],
 					'connector' => $connector,
 				]));
 			} elseif ($mode !== null) {
@@ -441,8 +442,8 @@ class Install extends Console\Command\Command
 
 				$this->propertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::USERNAME->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => SonoffTypes\ConnectorPropertyIdentifier::USERNAME->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $username,
 					'connector' => $connector,
 				]));
@@ -459,8 +460,8 @@ class Install extends Console\Command\Command
 
 				$this->propertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::PASSWORD->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => SonoffTypes\ConnectorPropertyIdentifier::PASSWORD->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $password,
 					'connector' => $connector,
 				]));
@@ -484,7 +485,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -552,7 +553,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -684,7 +685,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -752,7 +753,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1076,7 +1077,7 @@ class Install extends Console\Command\Command
 		}
 	}
 
-	private function askConnectorMode(Style\SymfonyStyle $io): Types\ClientMode
+	private function askConnectorMode(Style\SymfonyStyle $io): SonoffTypes\ClientMode
 	{
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//sonoff-connector.cmd.install.questions.select.connector.mode'),
@@ -1091,7 +1092,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|null $answer): Types\ClientMode {
+		$question->setValidator(function (string|null $answer): SonoffTypes\ClientMode {
 			if ($answer === null) {
 				throw new Exceptions\Runtime(
 					sprintf(
@@ -1107,7 +1108,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '0'
 			) {
-				return Types\ClientMode::AUTO;
+				return SonoffTypes\ClientMode::AUTO;
 			}
 
 			if (
@@ -1116,7 +1117,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '1'
 			) {
-				return Types\ClientMode::LAN;
+				return SonoffTypes\ClientMode::LAN;
 			}
 
 			if (
@@ -1125,7 +1126,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '2'
 			) {
-				return Types\ClientMode::CLOUD;
+				return SonoffTypes\ClientMode::CLOUD;
 			}
 
 			throw new Exceptions\Runtime(
@@ -1137,7 +1138,7 @@ class Install extends Console\Command\Command
 		});
 
 		$answer = $io->askQuestion($question);
-		assert($answer instanceof Types\ClientMode);
+		assert($answer instanceof SonoffTypes\ClientMode);
 
 		return $answer;
 	}
@@ -1213,7 +1214,7 @@ class Install extends Console\Command\Command
 		return strval($io->askQuestion($question));
 	}
 
-	private function askConnectorCloudApiEndpoint(Style\SymfonyStyle $io): Types\CloudApiEndpoint
+	private function askConnectorCloudApiEndpoint(Style\SymfonyStyle $io): SonoffTypes\CloudApiEndpoint
 	{
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate(
@@ -1230,7 +1231,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|null $answer): Types\CloudApiEndpoint {
+		$question->setValidator(function (string|null $answer): SonoffTypes\CloudApiEndpoint {
 			if ($answer === null) {
 				throw new Exceptions\Runtime(
 					sprintf(
@@ -1246,7 +1247,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '0'
 			) {
-				return Types\CloudApiEndpoint::EUROPE;
+				return SonoffTypes\CloudApiEndpoint::EUROPE;
 			}
 
 			if (
@@ -1255,7 +1256,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '1'
 			) {
-				return Types\CloudApiEndpoint::AMERICA;
+				return SonoffTypes\CloudApiEndpoint::AMERICA;
 			}
 
 			if (
@@ -1264,7 +1265,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '2'
 			) {
-				return Types\CloudApiEndpoint::CHINA;
+				return SonoffTypes\CloudApiEndpoint::CHINA;
 			}
 
 			if (
@@ -1273,7 +1274,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '3'
 			) {
-				return Types\CloudApiEndpoint::ASIA;
+				return SonoffTypes\CloudApiEndpoint::ASIA;
 			}
 
 			throw new Exceptions\Runtime(
@@ -1285,7 +1286,7 @@ class Install extends Console\Command\Command
 		});
 
 		$answer = $io->askQuestion($question);
-		assert($answer instanceof Types\CloudApiEndpoint);
+		assert($answer instanceof SonoffTypes\CloudApiEndpoint);
 
 		return $answer;
 	}

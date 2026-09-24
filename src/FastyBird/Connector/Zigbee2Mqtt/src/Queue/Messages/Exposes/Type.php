@@ -17,8 +17,8 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
-use FastyBird\Connector\Zigbee2Mqtt\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
 use TypeError;
 use ValueError;
@@ -57,14 +57,14 @@ abstract class Type implements Zigbee2Mqtt\Queue\Messages\Message
 	{
 	}
 
-	abstract public function getType(): Types\ExposeType;
+	abstract public function getType(): Zigbee2MqttTypes\ExposeType;
 
 	/**
 	 * @throws Exceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		if (
 			$this instanceof ClimateType
@@ -82,7 +82,7 @@ abstract class Type implements Zigbee2Mqtt\Queue\Messages\Message
 			);
 		}
 
-		return MetadataTypes\DataType::UNKNOWN;
+		return ValuesTypes\DataType::UNKNOWN;
 	}
 
 	/**

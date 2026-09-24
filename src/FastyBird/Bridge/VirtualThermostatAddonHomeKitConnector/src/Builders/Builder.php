@@ -28,9 +28,10 @@ use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -239,13 +240,13 @@ class Builder
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
-					'dataType' => MetadataTypes\DataType::UCHAR,
+					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => HomeKitTypes\AccessoryCategory::THERMOSTAT->value,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($categoryProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::UCHAR,
+					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => HomeKitTypes\AccessoryCategory::THERMOSTAT->value,
 				]));
 			}
@@ -254,13 +255,13 @@ class Builder
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => VirtualThermostatAddonHomeKitConnector\Constants::MODEL,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => VirtualThermostatAddonHomeKitConnector\Constants::MODEL,
 				]));
 			}
@@ -269,13 +270,13 @@ class Builder
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => VirtualThermostatAddonHomeKitConnector\Constants::MANUFACTURER,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => VirtualThermostatAddonHomeKitConnector\Constants::MANUFACTURER,
 				]));
 			}
@@ -285,7 +286,7 @@ class Builder
 			$this->logger->debug(
 				'Virtual thermostat accessory was created',
 				[
-					'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
+					'source' => Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 					'type' => 'builder',
 					'thermostat' => [
 						'id' => $thermostat->getId()->toString(),
@@ -380,7 +381,7 @@ class Builder
 				$this->logger->debug(
 					'Thermostat service for virtual thermostat accessory was created',
 					[
-						'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 						'type' => 'builder',
 						'thermostat' => [
 							'id' => $thermostat->getId()->toString(),
@@ -570,7 +571,7 @@ class Builder
 
 			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 				$dataTypes = array_map(
-					static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 					(array) $characteristicMetadata->offsetGet('DataType'),
 				);
 
@@ -578,7 +579,7 @@ class Builder
 					throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
 				}
 			} else {
-				$dataTypes = [MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
+				$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
 			}
 
 			if (!in_array($connectProperty->getDataType(), $dataTypes, true)) {
@@ -620,7 +621,7 @@ class Builder
 				$characteristicMetadata->offsetExists('ValidValues')
 				&& $characteristicMetadata->offsetGet('ValidValues') instanceof Utils\ArrayHash
 			) {
-				$format = new ToolsFormats\StringEnum(
+				$format = new Formats\StringEnum(
 					array_values((array) $characteristicMetadata->offsetGet('ValidValues')),
 				);
 				$default = array_values((array) $characteristicMetadata->offsetGet('ValidValues'))[0];
@@ -642,7 +643,7 @@ class Builder
 
 			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 				$dataTypes = array_map(
-					static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 					(array) $characteristicMetadata->offsetGet('DataType'),
 				);
 
@@ -652,7 +653,7 @@ class Builder
 
 				$dataType = $dataTypes[0];
 			} else {
-				$dataType = MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
+				$dataType = ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
 			}
 		}
 
@@ -719,7 +720,7 @@ class Builder
 				$this->logger->debug(
 					'Characteristic for thermostat service was created',
 					[
-						'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 						'type' => 'builder',
 						'thermostat' => [
 							'id' => $thermostat->getId()->toString(),
@@ -768,7 +769,7 @@ class Builder
 				$this->logger->debug(
 					'Characteristic for thermostat service was updated',
 					[
-						'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 						'type' => 'builder',
 						'thermostat' => [
 							'id' => $thermostat->getId()->toString(),
@@ -817,7 +818,7 @@ class Builder
 			$property->getIdentifier() === VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_STATE->value
 			&& $characteristicType === HomeKitTypes\CharacteristicType::CURRENT_HEATING_COOLING_STATE
 		) {
-			assert($property->getFormat() instanceof ToolsFormats\StringEnum);
+			assert($property->getFormat() instanceof Formats\StringEnum);
 
 			$format = [];
 
@@ -850,7 +851,7 @@ class Builder
 			$property->getIdentifier() === VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_MODE->value
 			&& $characteristicType === HomeKitTypes\CharacteristicType::TARGET_HEATING_COOLING_STATE
 		) {
-			assert($property->getFormat() instanceof ToolsFormats\StringEnum);
+			assert($property->getFormat() instanceof Formats\StringEnum);
 
 			$format = [];
 
@@ -909,7 +910,7 @@ class Builder
 			)
 		) {
 			assert(
-				$property->getFormat() instanceof ToolsFormats\NumberRange
+				$property->getFormat() instanceof Formats\NumberRange
 				|| $property->getFormat() === null,
 			);
 

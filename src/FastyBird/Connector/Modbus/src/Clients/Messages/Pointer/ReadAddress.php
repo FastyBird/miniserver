@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Clients\Messages\Pointer;
 
 use FastyBird\Connector\Modbus\Clients;
 use FastyBird\Connector\Modbus\Documents;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use Nette;
 
 /**
@@ -36,7 +36,7 @@ abstract class ReadAddress implements Clients\Messages\Message
 	public function __construct(
 		private readonly int $address,
 		private readonly Documents\Channels\Channel $channel,
-		private readonly MetadataTypes\DataType $dataType,
+		private readonly Types\DataType $dataType,
 	)
 	{
 	}
@@ -51,7 +51,7 @@ abstract class ReadAddress implements Clients\Messages\Message
 		return $this->channel;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): Types\DataType
 	{
 		return $this->dataType;
 	}
@@ -59,9 +59,9 @@ abstract class ReadAddress implements Clients\Messages\Message
 	public function getSize(): int
 	{
 		if (
-			$this->getDataType() === MetadataTypes\DataType::INT
-			|| $this->getDataType() === MetadataTypes\DataType::UINT
-			|| $this->getDataType() === MetadataTypes\DataType::FLOAT
+			$this->getDataType() === Types\DataType::INT
+			|| $this->getDataType() === Types\DataType::UINT
+			|| $this->getDataType() === Types\DataType::FLOAT
 		) {
 			return 2;
 		}

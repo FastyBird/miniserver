@@ -3,11 +3,12 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Utilities;
 
 use DateTimeInterface;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TypeError;
@@ -17,28 +18,28 @@ final class ValueTest extends TestCase
 {
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidValue
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws ValuesExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
 	#[DataProvider('normalizeValue')]
 	public function testNormalizeValue(
-		MetadataTypes\DataType $dataType,
+		Types\DataType $dataType,
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Button|MetadataTypes\Payloads\Switcher|MetadataTypes\Payloads\Cover|null $value,
-		ToolsFormats\StringEnum|ToolsFormats\NumberRange|ToolsFormats\CombinedEnum|null $format = null,
+		bool|float|int|string|DateTimeInterface|Payloads\Button|Payloads\Switcher|Payloads\Cover|null $value,
+		Formats\StringEnum|Formats\NumberRange|Formats\CombinedEnum|null $format = null,
 		float|int|string|null $invalid = null,
 		float|int|string|null $expected = null,
 		bool $throwError = false,
 	): void
 	{
 		if ($throwError) {
-			self::expectException(ToolsExceptions\InvalidValue::class);
+			self::expectException(ValuesExceptions\InvalidValue::class);
 		}
 
-		$normalized = ToolsUtilities\Value::normalizeValue($value, $dataType, $format);
+		$normalized = Utilities\Value::normalizeValue($value, $dataType, $format);
 
 		if (!$throwError) {
 			self::assertSame($expected, $normalized);
@@ -48,7 +49,7 @@ final class ValueTest extends TestCase
 	/**
 	 * @return array<string, array<mixed>>
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -56,7 +57,7 @@ final class ValueTest extends TestCase
 	{
 		return [
 			'integer_1' => [
-				MetadataTypes\DataType::CHAR,
+				Types\DataType::CHAR,
 				'10',
 				null,
 				null,
@@ -64,23 +65,23 @@ final class ValueTest extends TestCase
 				false,
 			],
 			'integer_2' => [
-				MetadataTypes\DataType::CHAR,
+				Types\DataType::CHAR,
 				'9',
-				new ToolsFormats\NumberRange([10, 20]),
+				new Formats\NumberRange([10, 20]),
 				null,
 				null,
 				true,
 			],
 			'integer_3' => [
-				MetadataTypes\DataType::CHAR,
+				Types\DataType::CHAR,
 				'30',
-				new ToolsFormats\NumberRange([10, 20]),
+				new Formats\NumberRange([10, 20]),
 				null,
 				null,
 				true,
 			],
 			'float_1' => [
-				MetadataTypes\DataType::FLOAT,
+				Types\DataType::FLOAT,
 				'30.3',
 				null,
 				null,

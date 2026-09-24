@@ -21,10 +21,11 @@ use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
-use FastyBird\Connector\Zigbee2Mqtt\Types;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
@@ -104,43 +105,43 @@ final class StoreBridgeInfo implements Queue\Consumer
 		$this->setDeviceProperty(
 			$bridge->getId(),
 			$message->getCoordinator()->getType(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MODEL,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MODEL->value),
+			ValuesTypes\DataType::STRING,
+			Zigbee2MqttTypes\DevicePropertyIdentifier::MODEL,
+			DevicesUtilities\Name::createName(Zigbee2MqttTypes\DevicePropertyIdentifier::MODEL->value),
 		);
 		$this->setDeviceProperty(
 			$bridge->getId(),
-			Types\DeviceType::COORDINATOR->value,
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::TYPE,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::TYPE->value),
+			Zigbee2MqttTypes\DeviceType::COORDINATOR->value,
+			ValuesTypes\DataType::STRING,
+			Zigbee2MqttTypes\DevicePropertyIdentifier::TYPE,
+			DevicesUtilities\Name::createName(Zigbee2MqttTypes\DevicePropertyIdentifier::TYPE->value),
 		);
 		$this->setDeviceProperty(
 			$bridge->getId(),
 			$message->getVersion(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::VERSION,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::VERSION->value),
+			ValuesTypes\DataType::STRING,
+			Zigbee2MqttTypes\DevicePropertyIdentifier::VERSION,
+			DevicesUtilities\Name::createName(Zigbee2MqttTypes\DevicePropertyIdentifier::VERSION->value),
 		);
 		$this->setDeviceProperty(
 			$bridge->getId(),
 			$message->getCommit(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::COMMIT,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::COMMIT->value),
+			ValuesTypes\DataType::STRING,
+			Zigbee2MqttTypes\DevicePropertyIdentifier::COMMIT,
+			DevicesUtilities\Name::createName(Zigbee2MqttTypes\DevicePropertyIdentifier::COMMIT->value),
 		);
 		$this->setDeviceProperty(
 			$bridge->getId(),
 			$message->getCoordinator()->getIeeeAddress(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::IEEE_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::IEEE_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			Zigbee2MqttTypes\DevicePropertyIdentifier::IEEE_ADDRESS,
+			DevicesUtilities\Name::createName(Zigbee2MqttTypes\DevicePropertyIdentifier::IEEE_ADDRESS->value),
 		);
 
 		$this->logger->debug(
 			'Consumed bridge info message',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'store-bridge-info-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

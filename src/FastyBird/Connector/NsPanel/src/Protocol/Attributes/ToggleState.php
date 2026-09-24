@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,13 +38,13 @@ class ToggleState extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::TOGGLE_STATE,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::TOGGLE_STATE,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\Toggle::ON->value,
-				Types\Payloads\Toggle::OFF->value,
-				Types\Payloads\Toggle::TOGGLE->value,
+				NsPanelTypes\Payloads\Toggle::ON->value,
+				NsPanelTypes\Payloads\Toggle::OFF->value,
+				NsPanelTypes\Payloads\Toggle::TOGGLE->value,
 			],
 		);
 	}

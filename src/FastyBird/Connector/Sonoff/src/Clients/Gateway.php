@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Sonoff\Clients;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Exceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use function sprintf;
 
@@ -50,7 +50,7 @@ final class Gateway implements Client
 		$this->logger->error(
 			'Trying to connect with gateway client',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'gateway-client',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -71,7 +71,7 @@ final class Gateway implements Client
 		$this->logger->error(
 			'Trying to disconnect with gateway client',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'gateway-client',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),

@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,8 +38,8 @@ class MotorReverse extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::MOTOR_REVERSE,
-			MetadataTypes\DataType::BOOLEAN,
+			NsPanelTypes\Attribute::MOTOR_REVERSE,
+			ValuesTypes\DataType::BOOLEAN,
 			$capability,
 			[],
 			null,

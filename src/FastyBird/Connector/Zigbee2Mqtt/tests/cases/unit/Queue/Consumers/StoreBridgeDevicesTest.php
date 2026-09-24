@@ -14,7 +14,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Tests;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
@@ -52,8 +52,8 @@ final class StoreBridgeDevicesTest extends Tests\Cases\Unit\DbTestCase
 			->method('publish')
 			->with(
 				self::callback(
-					static function (MetadataTypes\Sources\Source $source): bool {
-						self::assertTrue($source === MetadataTypes\Sources\Module::DEVICES);
+					static function (Sources\Source $source): bool {
+						self::assertTrue($source === Sources\Module::DEVICES);
 
 						return true;
 					},

@@ -27,7 +27,7 @@ use FastyBird\Connector\Viera\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -288,7 +288,7 @@ final class Television implements Client
 					$this->logger->error(
 						'Calling device api failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'television-client',
 							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
@@ -316,7 +316,7 @@ final class Television implements Client
 					$this->logger->error(
 						'Connection to device could not be created',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'television-client',
 							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
@@ -350,7 +350,7 @@ final class Television implements Client
 					$this->logger->error(
 						'Device is in invalid state and could not be handled',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'television-client',
 							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
@@ -444,7 +444,7 @@ final class Television implements Client
 				$this->logger->error(
 					'Preparing api request failed',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'television-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
@@ -461,7 +461,7 @@ final class Television implements Client
 				$this->logger->error(
 					'Calling device api failed',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'television-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
@@ -495,7 +495,7 @@ final class Television implements Client
 				$this->logger->error(
 					'Device is in invalid state and could not be handled',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'television-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
@@ -538,7 +538,7 @@ final class Television implements Client
 					$this->logger->warning(
 						'Could not call local api',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'television-client',
 							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
@@ -619,7 +619,7 @@ final class Television implements Client
 			$this->logger->warning(
 				'Event subscription with device failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'television-client',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [

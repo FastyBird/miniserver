@@ -25,7 +25,7 @@ use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Writers;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -111,7 +111,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Starting HomeKit connector service',
 			[
-				'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+				'source' => Sources\Connector::HOMEKIT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -162,7 +162,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'HomeKit connector service has been started',
 			[
-				'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+				'source' => Sources\Connector::HOMEKIT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -202,7 +202,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'HomeKit connector has been terminated',
 			[
-				'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+				'source' => Sources\Connector::HOMEKIT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),

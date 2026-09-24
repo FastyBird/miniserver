@@ -23,11 +23,12 @@ use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
-use FastyBird\Connector\NsPanel\Types;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -88,7 +89,7 @@ final class StoreSubDevice implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'store-sub-device-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -123,7 +124,7 @@ final class StoreSubDevice implements Queue\Consumer
 				$this->logger->error(
 					'Connector could not be loaded',
 					[
-						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+						'source' => Sources\Connector::NS_PANEL->value,
 						'type' => 'store-sub-device-message-consumer',
 						'connector' => [
 							'id' => $message->getConnector()->toString(),
@@ -159,7 +160,7 @@ final class StoreSubDevice implements Queue\Consumer
 			$this->logger->info(
 				'Sub-device was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'store-sub-device-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -179,37 +180,37 @@ final class StoreSubDevice implements Queue\Consumer
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getManufacturer(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MANUFACTURER,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MANUFACTURER->value),
+			ValuesTypes\DataType::STRING,
+			NsPanelTypes\DevicePropertyIdentifier::MANUFACTURER,
+			DevicesUtilities\Name::createName(NsPanelTypes\DevicePropertyIdentifier::MANUFACTURER->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getModel(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MODEL,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MODEL->value),
+			ValuesTypes\DataType::STRING,
+			NsPanelTypes\DevicePropertyIdentifier::MODEL,
+			DevicesUtilities\Name::createName(NsPanelTypes\DevicePropertyIdentifier::MODEL->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getFirmwareVersion(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::FIRMWARE_VERSION,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::FIRMWARE_VERSION->value),
+			ValuesTypes\DataType::STRING,
+			NsPanelTypes\DevicePropertyIdentifier::FIRMWARE_VERSION,
+			DevicesUtilities\Name::createName(NsPanelTypes\DevicePropertyIdentifier::FIRMWARE_VERSION->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getDisplayCategory()->value,
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::CATEGORY,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::CATEGORY->value),
+			ValuesTypes\DataType::STRING,
+			NsPanelTypes\DevicePropertyIdentifier::CATEGORY,
+			DevicesUtilities\Name::createName(NsPanelTypes\DevicePropertyIdentifier::CATEGORY->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getMacAddress(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MAC_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MAC_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			NsPanelTypes\DevicePropertyIdentifier::MAC_ADDRESS,
+			DevicesUtilities\Name::createName(NsPanelTypes\DevicePropertyIdentifier::MAC_ADDRESS->value),
 		);
 
 		foreach ($message->getCapabilities() as $capability) {
@@ -244,7 +245,7 @@ final class StoreSubDevice implements Queue\Consumer
 					$this->logger->debug(
 						'Device channel was created',
 						[
-							'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+							'source' => Sources\Connector::NS_PANEL->value,
 							'type' => 'store-sub-device-message-consumer',
 							'connector' => [
 								'id' => $message->getConnector()->toString(),
@@ -302,17 +303,17 @@ final class StoreSubDevice implements Queue\Consumer
 						$attributeMetadata->getMinValue() !== null
 						|| $attributeMetadata->getMaxValue() !== null
 					) {
-						$format = new ToolsFormats\NumberRange([
+						$format = new Formats\NumberRange([
 							$attributeMetadata->getMinValue(),
 							$attributeMetadata->getMaxValue(),
 						]);
 					}
 
 					if (
-						$attributeMetadata->getDataType() === MetadataTypes\DataType::ENUM
-						|| $attributeMetadata->getDataType() === MetadataTypes\DataType::SWITCH
-						|| $attributeMetadata->getDataType() === MetadataTypes\DataType::BUTTON
-						|| $attributeMetadata->getDataType() === MetadataTypes\DataType::COVER
+						$attributeMetadata->getDataType() === ValuesTypes\DataType::ENUM
+						|| $attributeMetadata->getDataType() === ValuesTypes\DataType::SWITCH
+						|| $attributeMetadata->getDataType() === ValuesTypes\DataType::BUTTON
+						|| $attributeMetadata->getDataType() === ValuesTypes\DataType::COVER
 					) {
 						if ($attributeMetadata->getMappedValues() !== []) {
 							$format = $attributeMetadata->getMappedValues();
@@ -337,12 +338,12 @@ final class StoreSubDevice implements Queue\Consumer
 							'invalid' => $attributeMetadata->getInvalidValue(),
 							'settable' => in_array(
 								$capabilityMetadata->getPermission(),
-								[Types\Permission::READ_WRITE, Types\Permission::WRITE],
+								[NsPanelTypes\Permission::READ_WRITE, NsPanelTypes\Permission::WRITE],
 								true,
 							),
 							'queryable' => in_array(
 								$capabilityMetadata->getPermission(),
-								[Types\Permission::READ_WRITE, Types\Permission::READ],
+								[NsPanelTypes\Permission::READ_WRITE, NsPanelTypes\Permission::READ],
 								true,
 							),
 						]));
@@ -350,7 +351,7 @@ final class StoreSubDevice implements Queue\Consumer
 						$this->logger->debug(
 							'Device channel property was created',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'store-sub-device-message-consumer',
 								'connector' => [
 									'id' => $message->getConnector()->toString(),
@@ -376,12 +377,12 @@ final class StoreSubDevice implements Queue\Consumer
 							'invalid' => $attributeMetadata->getInvalidValue(),
 							'settable' => in_array(
 								$capabilityMetadata->getPermission(),
-								[Types\Permission::READ_WRITE, Types\Permission::WRITE],
+								[NsPanelTypes\Permission::READ_WRITE, NsPanelTypes\Permission::WRITE],
 								true,
 							),
 							'queryable' => in_array(
 								$capabilityMetadata->getPermission(),
-								[Types\Permission::READ_WRITE, Types\Permission::READ],
+								[NsPanelTypes\Permission::READ_WRITE, NsPanelTypes\Permission::READ],
 								true,
 							),
 						]));
@@ -389,7 +390,7 @@ final class StoreSubDevice implements Queue\Consumer
 						$this->logger->debug(
 							'Device channel property was updated',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'store-sub-device-message-consumer',
 								'connector' => [
 									'id' => $message->getConnector()->toString(),
@@ -418,7 +419,7 @@ final class StoreSubDevice implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device message',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'store-sub-device-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

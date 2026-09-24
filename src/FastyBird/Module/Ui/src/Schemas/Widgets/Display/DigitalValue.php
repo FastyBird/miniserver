@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Schemas\Widgets\Display;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities;
 
 /**
@@ -34,7 +34,7 @@ final class DigitalValue extends Display
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::UI->value . '/display/' . Entities\Widgets\Displays\DigitalValue::TYPE;
+	public const SCHEMA_TYPE = Sources\Module::UI->value . '/display/' . Entities\Widgets\Displays\DigitalValue::TYPE;
 
 	public function getType(): string
 	{

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Devices\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas;
 
 final class DummyConnectorSchema extends Schemas\Connectors\Connector
@@ -11,7 +11,7 @@ final class DummyConnectorSchema extends Schemas\Connectors\Connector
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::DEVICES->value . '/connector/' . DummyConnectorEntity::TYPE;
+	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/connector/' . DummyConnectorEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

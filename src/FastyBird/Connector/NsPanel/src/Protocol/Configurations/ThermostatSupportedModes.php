@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 use function array_filter;
 use function assert;
@@ -45,13 +45,13 @@ class ThermostatSupportedModes extends Configuration
 	{
 		$value = array_filter(
 			explode(',', $value),
-			static fn ($item) => trim($item) !== '' && Types\Payloads\ThermostatMode::tryFrom($item) !== null,
+			static fn ($item) => trim($item) !== '' && NsPanelTypes\Payloads\ThermostatMode::tryFrom($item) !== null,
 		);
 
 		parent::__construct(
 			$id,
-			Types\Configuration::SUPPORTED_MODES,
-			MetadataTypes\DataType::STRING,
+			NsPanelTypes\Configuration::SUPPORTED_MODES,
+			ValuesTypes\DataType::STRING,
 			$capability,
 			implode(',', $value),
 		);

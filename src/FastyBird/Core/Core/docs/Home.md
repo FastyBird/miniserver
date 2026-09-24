@@ -192,7 +192,7 @@ namespace Your\CoolApp\Publishers;
 
 use FastyBird\Core\Exchange\Publisher\Publisher;
 use FastyBird\Core\Application\Documents;
-use FastyBird\Core\Types\Metadata as Types;
+use FastyBird\Core\Values\Types;
 
 class ModuleDataPublisher implements Publisher
 {
@@ -221,7 +221,7 @@ namespace Your\CoolApp\Publishers;
 
 use FastyBird\Core\Exchange\Publisher\Async\Publisher;
 use FastyBird\Core\Application\Documents;
-use FastyBird\Core\Types\Metadata as Types;
+use FastyBird\Core\Values\Types;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 
@@ -294,7 +294,7 @@ namespace Your\CoolApp\Publishers;
 
 use FastyBird\Core\Exchange\Consumers\Consumer;
 use FastyBird\Core\Application\Documents;
-use FastyBird\Core\Types\Metadata as Types;
+use FastyBird\Core\Values\Types;
 
 class DataConsumer implements Consumer
 {

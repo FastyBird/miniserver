@@ -19,9 +19,9 @@ use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Exceptions;
-use FastyBird\Connector\Modbus\Types;
+use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use TypeError;
@@ -52,16 +52,16 @@ final class ConnectorProperties extends DataFixtures\AbstractFixture implements 
 
 		$clientModeProperty = new DevicesEntities\Connectors\Properties\Variable(
 			$connector,
-			Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+			ModbusTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 		);
-		$clientModeProperty->setDataType(MetadataTypes\DataType::STRING);
-		$clientModeProperty->setValue(Types\ClientMode::RTU->value);
+		$clientModeProperty->setDataType(ValuesTypes\DataType::STRING);
+		$clientModeProperty->setValue(ModbusTypes\ClientMode::RTU->value);
 
 		$interfaceProperty = new DevicesEntities\Connectors\Properties\Variable(
 			$connector,
-			Types\ConnectorPropertyIdentifier::RTU_INTERFACE->value,
+			ModbusTypes\ConnectorPropertyIdentifier::RTU_INTERFACE->value,
 		);
-		$interfaceProperty->setDataType(MetadataTypes\DataType::STRING);
+		$interfaceProperty->setDataType(ValuesTypes\DataType::STRING);
 		$interfaceProperty->setValue('/dev/ttyUSB0');
 
 		$manager->persist($clientModeProperty);

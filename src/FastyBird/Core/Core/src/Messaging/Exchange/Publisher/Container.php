@@ -4,7 +4,7 @@ namespace FastyBird\Core\Messaging\Exchange\Publisher;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Events;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use SplObjectStorage;
@@ -27,7 +27,7 @@ class Container implements Publisher
 
 	#[Override]
 	public function publish(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $entity,
 	): bool

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Tuya\Queue\Messages;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use Orisai\ObjectMapper;
 
 /**
@@ -39,9 +39,9 @@ final readonly class CloudDeviceDataPoint implements Message
 		private string $code,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private string $name,
-		#[ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\DataType::class)]
+		#[ObjectMapper\Rules\BackedEnumValue(class: Types\DataType::class)]
 		#[ObjectMapper\Modifiers\FieldName('data_type')]
-		private MetadataTypes\DataType $dataType,
+		private Types\DataType $dataType,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
@@ -98,7 +98,7 @@ final readonly class CloudDeviceDataPoint implements Message
 		return $this->name;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): Types\DataType
 	{
 		return $this->dataType;
 	}
@@ -153,13 +153,13 @@ final readonly class CloudDeviceDataPoint implements Message
 	{
 		if (
 			(
-				$this->getDataType() === MetadataTypes\DataType::CHAR
-				|| $this->getDataType() === MetadataTypes\DataType::UCHAR
-				|| $this->getDataType() === MetadataTypes\DataType::SHORT
-				|| $this->getDataType() === MetadataTypes\DataType::USHORT
-				|| $this->getDataType() === MetadataTypes\DataType::INT
-				|| $this->getDataType() === MetadataTypes\DataType::UINT
-				|| $this->getDataType() === MetadataTypes\DataType::FLOAT
+				$this->getDataType() === Types\DataType::CHAR
+				|| $this->getDataType() === Types\DataType::UCHAR
+				|| $this->getDataType() === Types\DataType::SHORT
+				|| $this->getDataType() === Types\DataType::USHORT
+				|| $this->getDataType() === Types\DataType::INT
+				|| $this->getDataType() === Types\DataType::UINT
+				|| $this->getDataType() === Types\DataType::FLOAT
 			) && (
 				$this->getMin() !== null
 				|| $this->getMax() !== null
@@ -167,16 +167,16 @@ final readonly class CloudDeviceDataPoint implements Message
 		) {
 			return [
 				[
-					MetadataTypes\DataTypeShort::FLOAT->value,
+					Types\DataTypeShort::FLOAT->value,
 					$this->getMin(),
 				],
 				[
-					MetadataTypes\DataTypeShort::FLOAT->value,
+					Types\DataTypeShort::FLOAT->value,
 					$this->getMax(),
 				],
 			];
 		} elseif (
-			$this->getDataType() === MetadataTypes\DataType::ENUM
+			$this->getDataType() === Types\DataType::ENUM
 			&& $this->getRange() !== []
 		) {
 			return $this->getRange();

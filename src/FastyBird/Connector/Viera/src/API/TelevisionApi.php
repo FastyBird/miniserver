@@ -24,7 +24,7 @@ use FastyBird\Connector\Viera\Services;
 use FastyBird\Connector\Viera\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
@@ -1418,7 +1418,7 @@ final class TelevisionApi
 					$this->logger->error(
 						'Something went wrong with subscription socket',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'television-api',
 							'exception' => Logging\Logger::buildException($ex),
 							'device' => [
@@ -1445,7 +1445,7 @@ final class TelevisionApi
 			$this->logger->error(
 				'Could not get http client',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'television-api',
 					'exception' => Logging\Logger::buildException($ex),
 					'device' => [
@@ -1463,7 +1463,7 @@ final class TelevisionApi
 			$this->logger->error(
 				'Could not get connector local address',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'television-api',
 					'device' => [
 						'identifier' => $this->identifier,
@@ -1523,7 +1523,7 @@ final class TelevisionApi
 			$this->logger->error(
 				'Could not get http client',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'television-api',
 					'exception' => Logging\Logger::buildException($ex),
 					'device' => [
@@ -2048,7 +2048,7 @@ final class TelevisionApi
 				$request->getUri(),
 			),
 			[
-				'source' => MetadataTypes\Sources\Connector::VIERA->value,
+				'source' => Sources\Connector::VIERA->value,
 				'type' => 'television-api',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -2090,7 +2090,7 @@ final class TelevisionApi
 							$this->logger->debug(
 								'Received response',
 								[
-									'source' => MetadataTypes\Sources\Connector::VIERA->value,
+									'source' => Sources\Connector::VIERA->value,
 									'type' => 'television-api',
 									'request' => [
 										'method' => $request->getMethod(),
@@ -2151,7 +2151,7 @@ final class TelevisionApi
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'television-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -2200,7 +2200,7 @@ final class TelevisionApi
 				$request->getUri(),
 			),
 			[
-				'source' => MetadataTypes\Sources\Connector::VIERA->value,
+				'source' => Sources\Connector::VIERA->value,
 				'type' => 'television-api',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -2242,7 +2242,7 @@ final class TelevisionApi
 							$this->logger->debug(
 								'Received response',
 								[
-									'source' => MetadataTypes\Sources\Connector::VIERA->value,
+									'source' => Sources\Connector::VIERA->value,
 									'type' => 'television-api',
 									'request' => [
 										'method' => $request->getMethod(),
@@ -2303,7 +2303,7 @@ final class TelevisionApi
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'television-api',
 					'request' => [
 						'method' => $request->getMethod(),

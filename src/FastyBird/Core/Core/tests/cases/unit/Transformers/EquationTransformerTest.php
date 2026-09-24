@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Transformers;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Transformers\Tools as Transformers;
+use FastyBird\Core\Values\Transformers;
 use PHPUnit\Framework\TestCase;
 use function strval;
 

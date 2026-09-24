@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,12 +38,12 @@ class ThermostatAdaptiveRecoveryStatus extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::ADAPTIVE_RECOVERY_STATUS,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::ADAPTIVE_RECOVERY_STATUS,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\ThermostatAdaptiveRecoveryStatus::HEATING->value,
-				Types\Payloads\ThermostatAdaptiveRecoveryStatus::INACTIVE->value,
+				NsPanelTypes\Payloads\ThermostatAdaptiveRecoveryStatus::HEATING->value,
+				NsPanelTypes\Payloads\ThermostatAdaptiveRecoveryStatus::INACTIVE->value,
 			],
 		);
 	}

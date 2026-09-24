@@ -19,7 +19,7 @@ use BackedEnum;
 use DateTimeInterface;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
@@ -88,7 +88,7 @@ class StatesManager
 			$this->logger->error(
 				'State could not be created',
 				[
-					'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
+					'source' => Sources\Plugin::REDISDB->value,
 					'type' => 'states-manager',
 					'exception' => Logging\Logger::buildException($ex),
 					'record' => [
@@ -136,7 +136,7 @@ class StatesManager
 			$this->logger->error(
 				'State could not be updated',
 				[
-					'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
+					'source' => Sources\Plugin::REDISDB->value,
 					'type' => 'states-manager',
 					'exception' => Logging\Logger::buildException($ex),
 					'record' => [

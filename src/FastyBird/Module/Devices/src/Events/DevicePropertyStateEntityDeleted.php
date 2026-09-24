@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Events;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 use Symfony\Contracts\EventDispatcher;
 
@@ -32,7 +32,7 @@ class DevicePropertyStateEntityDeleted extends EventDispatcher\Event
 
 	public function __construct(
 		private readonly Uuid\UuidInterface $id,
-		private readonly MetadataTypes\Sources\Source $source,
+		private readonly Sources\Source $source,
 	)
 	{
 	}
@@ -42,7 +42,7 @@ class DevicePropertyStateEntityDeleted extends EventDispatcher\Event
 		return $this->id;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
 		return $this->source;
 	}

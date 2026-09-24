@@ -18,15 +18,15 @@ namespace FastyBird\Connector\Sonoff\API;
 use BadMethodCallException;
 use Closure;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
@@ -119,7 +119,7 @@ final class LanApi
 		private readonly Sonoff\Logger $logger,
 		private readonly Clock\Clock $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 	)
 	{
 		$this->parser = new Dns\Protocol\Parser();
@@ -128,7 +128,7 @@ final class LanApi
 
 	/**
 	 * @throws BadMethodCallException
-	 * @throws Exceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidState
 	 * @throws RuntimeException
 	 */
 	public function connect(): void
@@ -140,11 +140,13 @@ final class LanApi
 				$response = $this->parser->parseMessage($message);
 
 			} catch (InvalidArgumentException $ex) {
-				throw new Exceptions\InvalidState('Invalid mDNS question response received', $ex->getCode(), $ex);
+				throw new SonoffExceptions\InvalidState('Invalid mDNS question response received', $ex->getCode(), $ex);
 			}
 
 			if ($response->tc) {
-				throw new Exceptions\InvalidState('The server set the truncated bit although we issued a TCP request');
+				throw new SonoffExceptions\InvalidState(
+					'The server set the truncated bit although we issued a TCP request',
+				);
 			}
 
 			$deviceIpAddress = null;
@@ -299,8 +301,8 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\Lan\DeviceInfo> : Messages\Response\Lan\DeviceInfo)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
 	 */
 	public function getDeviceInfo(
 		string $id,
@@ -329,10 +331,10 @@ final class LanApi
 
 				if ($encrypted === false) {
 					if ($async) {
-						return Promise\reject(new Exceptions\LanApiCall('Could encode data for request'));
+						return Promise\reject(new SonoffExceptions\LanApiCall('Could encode data for request'));
 					}
 
-					throw new Exceptions\LanApiCall('Could encode data for request');
+					throw new SonoffExceptions\LanApiCall('Could encode data for request');
 				}
 
 				$payload->encrypt = true;
@@ -343,16 +345,16 @@ final class LanApi
 			$body = Utils\Json::encode($payload);
 		} catch (Utils\JsonException) {
 			if ($async) {
-				return Promise\reject(new Exceptions\LanApiCall('Could prepare data for request'));
+				return Promise\reject(new SonoffExceptions\LanApiCall('Could prepare data for request'));
 			}
 
-			throw new Exceptions\LanApiCall('Could prepare data for request');
+			throw new SonoffExceptions\LanApiCall('Could prepare data for request');
 		} catch (Throwable) {
 			if ($async) {
-				return Promise\reject(new Exceptions\LanApiCall('Could encode data for request'));
+				return Promise\reject(new SonoffExceptions\LanApiCall('Could encode data for request'));
 			}
 
-			throw new Exceptions\LanApiCall('Could encode data for request');
+			throw new SonoffExceptions\LanApiCall('Could encode data for request');
 		}
 
 		$request = $this->createRequest(
@@ -387,8 +389,8 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<bool> : bool)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
 	 */
 	public function setDeviceState(
 		string $id,
@@ -436,10 +438,10 @@ final class LanApi
 
 				if ($encrypted === false) {
 					if ($async) {
-						return Promise\reject(new Exceptions\LanApiCall('Could encode data for request'));
+						return Promise\reject(new SonoffExceptions\LanApiCall('Could encode data for request'));
 					}
 
-					throw new Exceptions\LanApiCall('Could encode data for request');
+					throw new SonoffExceptions\LanApiCall('Could encode data for request');
 				}
 
 				$payload->encrypt = true;
@@ -450,16 +452,16 @@ final class LanApi
 			$body = Utils\Json::encode($payload);
 		} catch (Utils\JsonException) {
 			if ($async) {
-				return Promise\reject(new Exceptions\LanApiCall('Could prepare data for request'));
+				return Promise\reject(new SonoffExceptions\LanApiCall('Could prepare data for request'));
 			}
 
-			throw new Exceptions\LanApiCall('Could prepare data for request');
+			throw new SonoffExceptions\LanApiCall('Could prepare data for request');
 		} catch (Throwable) {
 			if ($async) {
-				return Promise\reject(new Exceptions\LanApiCall('Could encode data for request'));
+				return Promise\reject(new SonoffExceptions\LanApiCall('Could encode data for request'));
 			}
 
-			throw new Exceptions\LanApiCall('Could encode data for request');
+			throw new SonoffExceptions\LanApiCall('Could encode data for request');
 		}
 
 		$request = $this->createRequest(
@@ -494,8 +496,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
 	 */
 	private function parseGetDeviceInfo(
 		Message\RequestInterface $request,
@@ -511,7 +513,7 @@ final class LanApi
 		assert($data instanceof Utils\ArrayHash);
 
 		if ($error !== 0) {
-			throw new Exceptions\LanApiCall(
+			throw new SonoffExceptions\LanApiCall(
 				sprintf('Reading device info failed: %s', strval($body->offsetGet('message'))),
 				$request,
 				$response,
@@ -523,8 +525,8 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
 	 */
 	private function parseSetDeviceState(
 		Message\RequestInterface $request,
@@ -540,7 +542,7 @@ final class LanApi
 		assert($data instanceof Utils\ArrayHash);
 
 		if ($error !== 0) {
-			throw new Exceptions\LanApiCall(
+			throw new SonoffExceptions\LanApiCall(
 				sprintf('Setting device state failed: %s', strval($body->offsetGet('message'))),
 				$request,
 				$response,
@@ -558,7 +560,7 @@ final class LanApi
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\LanApiError
+	 * @throws SonoffExceptions\LanApiError
 	 */
 	private function createEntity(string $entity, Utils\ArrayHash $data): Messages\Message
 	{
@@ -567,10 +569,10 @@ final class LanApi
 				$entity,
 				(array) Utils\Json::decode(Utils\Json::encode($data), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\LanApiError('Could not map data to entity', $ex->getCode(), $ex);
+		} catch (SonoffExceptions\Runtime $ex) {
+			throw new SonoffExceptions\LanApiError('Could not map data to entity', $ex->getCode(), $ex);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\LanApiError(
+			throw new SonoffExceptions\LanApiError(
 				'Could not create entity from response',
 				$ex->getCode(),
 				$ex,
@@ -581,8 +583,8 @@ final class LanApi
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
 	 */
 	private function validateResponseBody(
 		Message\RequestInterface $request,
@@ -598,9 +600,9 @@ final class LanApi
 				$body,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\LanApiCall(
+				throw new SonoffExceptions\LanApiCall(
 					'Could not validate received response payload',
 					$request,
 					$response,
@@ -614,7 +616,7 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiCall
 	 */
 	private function getResponseBody(
 		Message\RequestInterface $request,
@@ -626,7 +628,7 @@ final class LanApi
 
 			return $response->getBody()->getContents();
 		} catch (RuntimeException $ex) {
-			throw new Exceptions\LanApiCall(
+			throw new SonoffExceptions\LanApiCall(
 				'Could not get content from response body',
 				$request,
 				$response,
@@ -639,7 +641,7 @@ final class LanApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Message\ResponseInterface> : Message\ResponseInterface)
 	 *
-	 * @throws Exceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiCall
 	 */
 	private function callRequest(
 		Request $request,
@@ -655,7 +657,7 @@ final class LanApi
 				$request->getUri(),
 			),
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'lan-api',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -679,7 +681,7 @@ final class LanApi
 								$response->getBody()->rewind();
 							} catch (RuntimeException $ex) {
 								$deferred->reject(
-									new Exceptions\LanApiCall(
+									new SonoffExceptions\LanApiCall(
 										'Could not get content from response body',
 										$request,
 										$response,
@@ -694,7 +696,7 @@ final class LanApi
 							$this->logger->debug(
 								'Received response',
 								[
-									'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+									'source' => Sources\Connector::SONOFF->value,
 									'type' => 'lan-api',
 									'request' => [
 										'method' => $request->getMethod(),
@@ -713,7 +715,7 @@ final class LanApi
 						},
 						static function (Throwable $ex) use ($deferred, $request): void {
 							$deferred->reject(
-								new Exceptions\LanApiCall(
+								new SonoffExceptions\LanApiCall(
 									'Calling api endpoint failed',
 									$request,
 									null,
@@ -740,7 +742,7 @@ final class LanApi
 
 				$response->getBody()->rewind();
 			} catch (RuntimeException $ex) {
-				throw new Exceptions\LanApiCall(
+				throw new SonoffExceptions\LanApiCall(
 					'Could not get content from response body',
 					$request,
 					$response,
@@ -752,7 +754,7 @@ final class LanApi
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'lan-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -769,7 +771,7 @@ final class LanApi
 
 			return $response;
 		} catch (GuzzleHttp\Exception\GuzzleException | InvalidArgumentException $ex) {
-			throw new Exceptions\LanApiCall(
+			throw new SonoffExceptions\LanApiCall(
 				'Calling api endpoint failed',
 				$request,
 				null,
@@ -780,7 +782,7 @@ final class LanApi
 	}
 
 	/**
-	 * @throws Exceptions\LanApiError
+	 * @throws SonoffExceptions\LanApiError
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -793,7 +795,7 @@ final class LanApi
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\LanApiError('Validation schema for response could not be loaded');
+				throw new SonoffExceptions\LanApiError('Validation schema for response could not be loaded');
 			}
 		}
 
@@ -804,7 +806,7 @@ final class LanApi
 	 * @param array<string, string|array<string>>|null $headers
 	 * @param array<string, mixed> $params
 	 *
-	 * @throws Exceptions\LanApiError
+	 * @throws SonoffExceptions\LanApiError
 	 */
 	private function createRequest(
 		string $method,
@@ -821,8 +823,8 @@ final class LanApi
 
 		try {
 			return new Request($method, $url, $headers, $body);
-		} catch (Exceptions\InvalidArgument $ex) {
-			throw new Exceptions\LanApiError('Could not create request instance', $ex->getCode(), $ex);
+		} catch (SonoffExceptions\InvalidArgument $ex) {
+			throw new SonoffExceptions\LanApiError('Could not create request instance', $ex->getCode(), $ex);
 		}
 	}
 

@@ -19,10 +19,11 @@ use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Queries;
-use FastyBird\Connector\Viera\Types;
+use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Utils;
@@ -55,8 +56,8 @@ final readonly class ChannelProperty
 		string $type,
 		Uuid\UuidInterface $channelId,
 		string|bool|int|null $value,
-		MetadataTypes\DataType $dataType,
-		Types\ChannelPropertyIdentifier $identifier,
+		ValuesTypes\DataType $dataType,
+		VieraTypes\ChannelPropertyIdentifier $identifier,
 		string|null $name = null,
 		array|string|null $format = null,
 		bool $settable = false,
@@ -91,7 +92,7 @@ final readonly class ChannelProperty
 			$this->logger->warning(
 				'Stored channel property was not of valid type',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'channel-property-helper',
 					'channel' => [
 						'id' => $channelId->toString(),
@@ -113,7 +114,7 @@ final readonly class ChannelProperty
 				$this->logger->error(
 					'Channel was not found, property could not be configured',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'channel-property-helper',
 						'channel' => [
 							'id' => $channelId->toString(),
@@ -153,7 +154,7 @@ final readonly class ChannelProperty
 			$this->logger->debug(
 				'Channel property was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'channel-property-helper',
 					'channel' => [
 						'id' => $channelId->toString(),
@@ -189,7 +190,7 @@ final readonly class ChannelProperty
 			$this->logger->debug(
 				'Channel property was updated',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'channel-property-helper',
 					'channel' => [
 						'id' => $channelId->toString(),

@@ -21,7 +21,7 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Utilities;
 use Nette;
@@ -62,7 +62,7 @@ final class Publisher implements ExchangePublisher\Publisher
 	}
 
 	public function publish(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $entity,
 	): bool
@@ -75,7 +75,7 @@ final class Publisher implements ExchangePublisher\Publisher
 			$this->logger->error(
 				'Data could not be converted to message',
 				[
-					'source' => MetadataTypes\Sources\Plugin::RABBITMQ->value,
+					'source' => Sources\Plugin::RABBITMQ->value,
 					'type' => 'messages-publisher',
 					'message' => [
 						'routingKey' => $routingKey,
@@ -104,7 +104,7 @@ final class Publisher implements ExchangePublisher\Publisher
 			$this->logger->debug(
 				'Received message was pushed into data exchange',
 				[
-					'source' => MetadataTypes\Sources\Plugin::RABBITMQ->value,
+					'source' => Sources\Plugin::RABBITMQ->value,
 					'type' => 'messages-publisher',
 					'message' => [
 						'routingKey' => $routingKey,
@@ -118,7 +118,7 @@ final class Publisher implements ExchangePublisher\Publisher
 			$this->logger->error(
 				'Received message could not be pushed into data exchange',
 				[
-					'source' => MetadataTypes\Sources\Plugin::RABBITMQ->value,
+					'source' => Sources\Plugin::RABBITMQ->value,
 					'type' => 'messages-publisher',
 					'message' => [
 						'routingKey' => $routingKey,

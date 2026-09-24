@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,18 +38,18 @@ class PowerState extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::POWER_STATE,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::POWER_STATE,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\Power::ON->value,
-				Types\Payloads\Power::OFF->value,
+				NsPanelTypes\Payloads\Power::ON->value,
+				NsPanelTypes\Payloads\Power::OFF->value,
 			],
 			null,
 			null,
 			null,
 			null,
-			Types\Payloads\Power::OFF->value,
+			NsPanelTypes\Payloads\Power::OFF->value,
 		);
 	}
 

@@ -7,7 +7,7 @@ use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Server\WsServer as Server;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Psr\EventDispatcher;
 use Psr\Log;
 use React\EventLoop;
@@ -61,7 +61,7 @@ final class WsServer extends Console\Command\Command
 		$this->logger->info(
 			'Starting WS server',
 			[
-				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Plugin::WS_SERVER->value,
 				'type' => 'server-command',
 			],
 		);
@@ -81,7 +81,7 @@ final class WsServer extends Console\Command\Command
 				$this->logger->error(
 					'An error occurred during handling requests. Stopping WS server',
 					[
-						'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+						'source' => Sources\Plugin::WS_SERVER->value,
 						'type' => 'server-command',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -101,7 +101,7 @@ final class WsServer extends Console\Command\Command
 			$this->logger->error(
 				'WS server was forced to close',
 				[
-					'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+					'source' => Sources\Plugin::WS_SERVER->value,
 					'type' => 'server-command',
 					'exception' => Logging\Logger::buildException($ex),
 					'cmd' => $this->getName(),
@@ -115,7 +115,7 @@ final class WsServer extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred. Stopping WS server',
 				[
-					'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+					'source' => Sources\Plugin::WS_SERVER->value,
 					'type' => 'server-command',
 					'exception' => Logging\Logger::buildException($ex),
 					'cmd' => $this->getName(),

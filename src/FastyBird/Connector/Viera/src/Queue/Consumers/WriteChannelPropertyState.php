@@ -23,12 +23,13 @@ use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Queue;
-use FastyBird\Connector\Viera\Types;
+use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -109,7 +110,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Connector could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -143,7 +144,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -179,7 +180,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device is not configured',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -213,7 +214,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Channel could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -247,7 +248,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Channel property could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -272,7 +273,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			$this->logger->warning(
 				'Channel property is not writable',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -299,7 +300,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$expectedValue = ToolsUtilities\Value::flattenValue(
+		$expectedValue = Utilities\Value::flattenValue(
 			$state->getExpectedValue(),
 		);
 
@@ -307,7 +308,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			await($this->channelPropertiesStatesManager->setPendingState(
 				$property,
 				false,
-				MetadataTypes\Sources\Connector::VIERA,
+				Sources\Connector::VIERA,
 			));
 
 			return true;
@@ -329,7 +330,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 		await($this->channelPropertiesStatesManager->setPendingState(
 			$property,
 			true,
-			MetadataTypes\Sources\Connector::VIERA,
+			Sources\Connector::VIERA,
 		));
 
 		try {
@@ -340,50 +341,50 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			}
 
 			switch ($property->getIdentifier()) {
-				case Types\ChannelPropertyIdentifier::STATE->value:
+				case VieraTypes\ChannelPropertyIdentifier::STATE->value:
 					$result = $expectedValue === true ? $client->turnOn() : $client->turnOff();
 
 					break;
-				case Types\ChannelPropertyIdentifier::VOLUME->value:
+				case VieraTypes\ChannelPropertyIdentifier::VOLUME->value:
 					$result = $client->setVolume(intval($expectedValue));
 
 					break;
-				case Types\ChannelPropertyIdentifier::MUTE->value:
+				case VieraTypes\ChannelPropertyIdentifier::MUTE->value:
 					$result = $client->setMute(boolval($expectedValue));
 
 					break;
-				case Types\ChannelPropertyIdentifier::INPUT_SOURCE->value:
+				case VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value:
 					if (intval($expectedValue) < Viera\Constants::MAX_HDMI_CODE) {
 						$result = $client->sendKey('NRC_HDMI' . $expectedValue . '-ONOFF');
 					} elseif (intval($expectedValue) === Viera\Constants::TV_CODE) {
-						$result = $client->sendKey(Types\ActionKey::AD_CHANGE);
+						$result = $client->sendKey(VieraTypes\ActionKey::AD_CHANGE);
 					} else {
 						$result = $client->launchApplication(strval($expectedValue));
 					}
 
 					break;
-				case Types\ChannelPropertyIdentifier::APPLICATION->value:
+				case VieraTypes\ChannelPropertyIdentifier::APPLICATION->value:
 					$result = $client->launchApplication(strval($expectedValue));
 
 					break;
-				case Types\ChannelPropertyIdentifier::HDMI->value:
+				case VieraTypes\ChannelPropertyIdentifier::HDMI->value:
 					$result = $client->sendKey('NRC_HDMI' . $expectedValue . '-ONOFF');
 
 					break;
-				case Types\ChannelPropertyIdentifier::REMOTE->value:
-					$key = Types\ActionKey::tryFrom(strval($expectedValue));
+				case VieraTypes\ChannelPropertyIdentifier::REMOTE->value:
+					$key = VieraTypes\ActionKey::tryFrom(strval($expectedValue));
 
 					if ($key === null) {
 						await($this->channelPropertiesStatesManager->setPendingState(
 							$property,
 							false,
-							MetadataTypes\Sources\Connector::VIERA,
+							Sources\Connector::VIERA,
 						));
 
 						$this->logger->error(
 							'Provided property value is not valid',
 							[
-								'source' => MetadataTypes\Sources\Connector::VIERA->value,
+								'source' => Sources\Connector::VIERA->value,
 								'type' => 'write-channel-property-state-message-consumer',
 								'connector' => [
 									'id' => $connector->getId()->toString(),
@@ -409,21 +410,21 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					break;
 				default:
 					if (
-						Types\ChannelPropertyIdentifier::tryFrom($property->getIdentifier()) !== null
-						&& $property->getDataType() === MetadataTypes\DataType::BUTTON
+						VieraTypes\ChannelPropertyIdentifier::tryFrom($property->getIdentifier()) !== null
+						&& $property->getDataType() === ValuesTypes\DataType::BUTTON
 					) {
-						$result = $client->sendKey(Types\ActionKey::from(strval($expectedValue)));
+						$result = $client->sendKey(VieraTypes\ActionKey::from(strval($expectedValue)));
 					} else {
 						await($this->channelPropertiesStatesManager->setPendingState(
 							$property,
 							false,
-							MetadataTypes\Sources\Connector::VIERA,
+							Sources\Connector::VIERA,
 						));
 
 						$this->logger->error(
 							'Provided property is not supported for writing',
 							[
-								'source' => MetadataTypes\Sources\Connector::VIERA->value,
+								'source' => Sources\Connector::VIERA->value,
 								'type' => 'write-channel-property-state-message-consumer',
 								'connector' => [
 									'id' => $connector->getId()->toString(),
@@ -461,13 +462,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			await($this->channelPropertiesStatesManager->setPendingState(
 				$property,
 				false,
-				MetadataTypes\Sources\Connector::VIERA,
+				Sources\Connector::VIERA,
 			));
 
 			$this->logger->error(
 				'Device is not properly configured',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -502,13 +503,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			await($this->channelPropertiesStatesManager->setPendingState(
 				$property,
 				false,
-				MetadataTypes\Sources\Connector::VIERA,
+				Sources\Connector::VIERA,
 			));
 
 			$this->logger->error(
 				'Preparing api request failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -543,13 +544,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			await($this->channelPropertiesStatesManager->setPendingState(
 				$property,
 				false,
-				MetadataTypes\Sources\Connector::VIERA,
+				Sources\Connector::VIERA,
 			));
 
 			$this->logger->error(
 				'Calling device api failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'write-channel-property-state-message-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -584,7 +585,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				$this->logger->debug(
 					'Channel state was successfully sent to device',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'write-channel-property-state-message-consumer',
 						'connector' => [
 							'id' => $connector->getId()->toString(),
@@ -603,49 +604,49 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				);
 
 				switch ($property->getIdentifier()) {
-					case Types\ChannelPropertyIdentifier::STATE->value:
-					case Types\ChannelPropertyIdentifier::VOLUME->value:
-					case Types\ChannelPropertyIdentifier::MUTE->value:
-					case Types\ChannelPropertyIdentifier::INPUT_SOURCE->value:
-					case Types\ChannelPropertyIdentifier::HDMI->value:
-					case Types\ChannelPropertyIdentifier::APPLICATION->value:
+					case VieraTypes\ChannelPropertyIdentifier::STATE->value:
+					case VieraTypes\ChannelPropertyIdentifier::VOLUME->value:
+					case VieraTypes\ChannelPropertyIdentifier::MUTE->value:
+					case VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value:
+					case VieraTypes\ChannelPropertyIdentifier::HDMI->value:
+					case VieraTypes\ChannelPropertyIdentifier::APPLICATION->value:
 						await($this->channelPropertiesStatesManager->set(
 							$property,
 							Utils\ArrayHash::from([
 								DevicesStates\Property::ACTUAL_VALUE_FIELD => $expectedValue,
 								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 							]),
-							MetadataTypes\Sources\Connector::VIERA,
+							Sources\Connector::VIERA,
 						));
 
 						break;
-					case Types\ChannelPropertyIdentifier::REMOTE->value:
+					case VieraTypes\ChannelPropertyIdentifier::REMOTE->value:
 						await($this->channelPropertiesStatesManager->setPendingState(
 							$property,
 							false,
-							MetadataTypes\Sources\Connector::VIERA,
+							Sources\Connector::VIERA,
 						));
 
 						break;
 					default:
 						if (
-							Types\ChannelPropertyIdentifier::tryFrom($property->getIdentifier()) !== null
-							&& $property->getDataType() === MetadataTypes\DataType::BUTTON
+							VieraTypes\ChannelPropertyIdentifier::tryFrom($property->getIdentifier()) !== null
+							&& $property->getDataType() === ValuesTypes\DataType::BUTTON
 						) {
 							await($this->channelPropertiesStatesManager->setPendingState(
 								$property,
 								false,
-								MetadataTypes\Sources\Connector::VIERA,
+								Sources\Connector::VIERA,
 							));
 						}
 
 						break;
 				}
 
-				if ($property->getIdentifier() === Types\ChannelPropertyIdentifier::INPUT_SOURCE->value) {
+				if ($property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value) {
 					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
-					$findChannelPropertyQuery->byIdentifier(Types\ChannelPropertyIdentifier::APPLICATION);
+					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::APPLICATION);
 
 					$applicationProperty = $this->channelsPropertiesConfigurationRepository->findOneBy(
 						$findChannelPropertyQuery,
@@ -658,18 +659,18 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						Utils\ArrayHash::from([
 							DevicesStates\Property::ACTUAL_VALUE_FIELD =>
 								intval(
-									ToolsUtilities\Value::toString($expectedValue, true),
+									Utilities\Value::toString($expectedValue, true),
 								) > Viera\Constants::MIN_APPLICATION_CODE
 									? $expectedValue
 									: null,
 							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 						]),
-						MetadataTypes\Sources\Connector::VIERA,
+						Sources\Connector::VIERA,
 					));
 
 					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
-					$findChannelPropertyQuery->byIdentifier(Types\ChannelPropertyIdentifier::HDMI);
+					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::HDMI);
 
 					$hdmiProperty = $this->channelsPropertiesConfigurationRepository->findOneBy(
 						$findChannelPropertyQuery,
@@ -682,22 +683,22 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						Utils\ArrayHash::from([
 							DevicesStates\Property::ACTUAL_VALUE_FIELD =>
 								intval(
-									ToolsUtilities\Value::toString($expectedValue, true),
+									Utilities\Value::toString($expectedValue, true),
 								) < Viera\Constants::MAX_HDMI_CODE
 									? $expectedValue
 									: null,
 							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 						]),
-						MetadataTypes\Sources\Connector::VIERA,
+						Sources\Connector::VIERA,
 					));
 
 				} elseif (
-					$property->getIdentifier() === Types\ChannelPropertyIdentifier::APPLICATION->value
-					|| $property->getIdentifier() === Types\ChannelPropertyIdentifier::HDMI->value
+					$property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::APPLICATION->value
+					|| $property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::HDMI->value
 				) {
 					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
-					$findChannelPropertyQuery->byIdentifier(Types\ChannelPropertyIdentifier::INPUT_SOURCE);
+					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE);
 
 					$inputSourceProperty = $this->channelsPropertiesConfigurationRepository->findOneBy(
 						$findChannelPropertyQuery,
@@ -711,12 +712,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 							DevicesStates\Property::ACTUAL_VALUE_FIELD => $expectedValue,
 							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 						]),
-						MetadataTypes\Sources\Connector::VIERA,
+						Sources\Connector::VIERA,
 					));
 
 					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
-					$findChannelPropertyQuery->byIdentifier(Types\ChannelPropertyIdentifier::HDMI);
+					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::HDMI);
 
 					$hdmiProperty = $this->channelsPropertiesConfigurationRepository->findOneBy(
 						$findChannelPropertyQuery,
@@ -726,7 +727,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
-					$findChannelPropertyQuery->byIdentifier(Types\ChannelPropertyIdentifier::APPLICATION);
+					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::APPLICATION);
 
 					$applicationProperty = $this->channelsPropertiesConfigurationRepository->findOneBy(
 						$findChannelPropertyQuery,
@@ -734,24 +735,24 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					);
 					assert($applicationProperty instanceof DevicesDocuments\Channels\Properties\Dynamic);
 
-					if ($property->getIdentifier() === Types\ChannelPropertyIdentifier::APPLICATION->value) {
+					if ($property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::APPLICATION->value) {
 						await($this->channelPropertiesStatesManager->set(
 							$hdmiProperty,
 							Utils\ArrayHash::from([
 								DevicesStates\Property::ACTUAL_VALUE_FIELD => null,
 								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 							]),
-							MetadataTypes\Sources\Connector::VIERA,
+							Sources\Connector::VIERA,
 						));
 
-					} elseif ($property->getIdentifier() === Types\ChannelPropertyIdentifier::HDMI->value) {
+					} elseif ($property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::HDMI->value) {
 						await($this->channelPropertiesStatesManager->set(
 							$applicationProperty,
 							Utils\ArrayHash::from([
 								DevicesStates\Property::ACTUAL_VALUE_FIELD => null,
 								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 							]),
-							MetadataTypes\Sources\Connector::VIERA,
+							Sources\Connector::VIERA,
 						));
 					}
 				}
@@ -760,7 +761,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				await($this->channelPropertiesStatesManager->setPendingState(
 					$property,
 					false,
-					MetadataTypes\Sources\Connector::VIERA,
+					Sources\Connector::VIERA,
 				));
 
 				if ($ex instanceof Exceptions\TelevisionApiError) {
@@ -792,7 +793,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed write device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIERA->value,
+				'source' => Sources\Connector::VIERA->value,
 				'type' => 'write-channel-property-state-message-consumer',
 				'connector' => [
 					'id' => $connector->getId()->toString(),

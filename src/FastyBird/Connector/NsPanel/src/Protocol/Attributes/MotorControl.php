@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,14 +38,14 @@ class MotorControl extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::MOTOR_CONTROL,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::MOTOR_CONTROL,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\MotorControl::OPEN->value,
-				Types\Payloads\MotorControl::CLOSE->value,
-				Types\Payloads\MotorControl::STOP->value,
-				Types\Payloads\MotorControl::LOCK->value,
+				NsPanelTypes\Payloads\MotorControl::OPEN->value,
+				NsPanelTypes\Payloads\MotorControl::CLOSE->value,
+				NsPanelTypes\Payloads\MotorControl::STOP->value,
+				NsPanelTypes\Payloads\MotorControl::LOCK->value,
 			],
 		);
 	}

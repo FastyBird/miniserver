@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -39,8 +39,8 @@ class StreamUrl extends Configuration
 	{
 		parent::__construct(
 			$id,
-			Types\Configuration::STREAM_URL,
-			MetadataTypes\DataType::STRING,
+			NsPanelTypes\Configuration::STREAM_URL,
+			ValuesTypes\DataType::STRING,
 			$capability,
 			$value,
 		);

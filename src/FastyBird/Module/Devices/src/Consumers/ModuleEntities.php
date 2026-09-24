@@ -19,7 +19,7 @@ use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Documents;
@@ -49,12 +49,12 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 	 * @throws Exceptions\InvalidState
 	 */
 	public function consume(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $document,
 	): void
 	{
-		if ($source === MetadataTypes\Sources\Module::DEVICES) {
+		if ($source === Sources\Module::DEVICES) {
 			return;
 		}
 
@@ -164,7 +164,7 @@ final readonly class ModuleEntities implements ExchangeConsumers\Consumer
 		$this->logger->debug(
 			'Service cache was cleared',
 			[
-				'source' => MetadataTypes\Sources\Module::DEVICES->value,
+				'source' => Sources\Module::DEVICES->value,
 				'type' => 'module-entities-consumer',
 				'message' => [
 					'routing_key' => $routingKey,

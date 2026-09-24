@@ -5,7 +5,7 @@ namespace FastyBird\Plugin\RabbitMq\Tests\Cases\Unit\Publishers;
 use DateTime;
 use DateTimeInterface;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Publishers;
 use FastyBird\Plugin\RabbitMq\Tests;
@@ -36,7 +36,7 @@ final class PublisherTest extends TestCase
 				]),
 				[
 					'sender_id' => 'rabbitmq_client_identifier',
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'created' => $now->format(DateTimeInterface::ATOM),
 				],
 				'exchange_name',
@@ -75,7 +75,7 @@ final class PublisherTest extends TestCase
 		);
 
 		$publisher->publish(
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 			'testing.routing.key',
 			new Tests\Fixtures\Dummy\DummyDocument(
 				'someAttribute',

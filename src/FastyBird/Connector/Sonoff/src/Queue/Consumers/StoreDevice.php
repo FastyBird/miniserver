@@ -22,10 +22,11 @@ use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
-use FastyBird\Connector\Sonoff\Types;
+use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -111,7 +112,7 @@ final class StoreDevice implements Queue\Consumer
 			$this->logger->info(
 				'Device was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'store-device-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -129,83 +130,83 @@ final class StoreDevice implements Queue\Consumer
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getApiKey(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::API_KEY,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::API_KEY->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::API_KEY,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::API_KEY->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getDeviceKey(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::DEVICE_KEY,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::DEVICE_KEY->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::DEVICE_KEY,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::DEVICE_KEY->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getUiid(),
-			MetadataTypes\DataType::UCHAR,
-			Types\DevicePropertyIdentifier::UIID,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::UIID->value),
+			ValuesTypes\DataType::UCHAR,
+			SonoffTypes\DevicePropertyIdentifier::UIID,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::UIID->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getBrandName(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::BRAND_NAME,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::BRAND_NAME->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::BRAND_NAME,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::BRAND_NAME->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getBrandLogo(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::BRAND_LOGO,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::BRAND_LOGO->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::BRAND_LOGO,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::BRAND_LOGO->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getProductModel(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::PRODUCT_MODEL,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::PRODUCT_MODEL->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::PRODUCT_MODEL,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::PRODUCT_MODEL->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getModel(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::HARDWARE_MODEL,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::HARDWARE_MODEL->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::HARDWARE_MODEL,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::HARDWARE_MODEL->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getMac(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getIpAddress(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::IP_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::IP_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::IP_ADDRESS,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::IP_ADDRESS->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getDomain(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			SonoffTypes\DevicePropertyIdentifier::ADDRESS,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::ADDRESS->value),
 		);
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getPort(),
-			MetadataTypes\DataType::UINT,
-			Types\DevicePropertyIdentifier::PORT,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::PORT->value),
+			ValuesTypes\DataType::UINT,
+			SonoffTypes\DevicePropertyIdentifier::PORT,
+			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::PORT->value),
 		);
 
 		foreach ($message->getParameters() as $parameter) {
-			if ($parameter->getType() === Types\ParameterType::DEVICE) {
+			if ($parameter->getType() === SonoffTypes\ParameterType::DEVICE) {
 				$findDevicePropertyQuery = new DevicesQueries\Entities\FindDeviceProperties();
 				$findDevicePropertyQuery->forDevice($device);
 				$findDevicePropertyQuery->byIdentifier($parameter->getIdentifier());
@@ -245,7 +246,7 @@ final class StoreDevice implements Queue\Consumer
 					$this->logger->debug(
 						'Device dynamic property was created',
 						[
-							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'source' => Sources\Connector::SONOFF->value,
 							'type' => 'store-device-message-consumer',
 							'connector' => [
 								'id' => $message->getConnector()->toString(),
@@ -278,7 +279,7 @@ final class StoreDevice implements Queue\Consumer
 					$this->logger->debug(
 						'Device dynamic property was updated',
 						[
-							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'source' => Sources\Connector::SONOFF->value,
 							'type' => 'store-device-message-consumer',
 							'connector' => [
 								'id' => $message->getConnector()->toString(),
@@ -298,7 +299,7 @@ final class StoreDevice implements Queue\Consumer
 
 		$this->databaseHelper->transaction(function () use ($message, $device): bool {
 			foreach ($message->getParameters() as $parameter) {
-				if ($parameter->getType() === Types\ParameterType::CHANNEL) {
+				if ($parameter->getType() === SonoffTypes\ParameterType::CHANNEL) {
 					$findChannelQuery = new Queries\Entities\FindChannels();
 					$findChannelQuery->byIdentifier($parameter->getGroup());
 					$findChannelQuery->forDevice($device);
@@ -318,7 +319,7 @@ final class StoreDevice implements Queue\Consumer
 						$this->logger->debug(
 							'Device channel was created',
 							[
-								'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+								'source' => Sources\Connector::SONOFF->value,
 								'type' => 'store-device-message-consumer',
 								'connector' => [
 									'id' => $message->getConnector()->toString(),
@@ -356,7 +357,7 @@ final class StoreDevice implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device message',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'store-device-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

@@ -21,9 +21,10 @@ use FastyBird\Connector\Viera\Entities;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
-use FastyBird\Connector\Viera\Types;
+use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -92,7 +93,7 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 	{
 		$findChannelQuery = new Queries\Entities\FindChannels();
 		$findChannelQuery->forDevice($device);
-		$findChannelQuery->byIdentifier(Types\ChannelType::TELEVISION);
+		$findChannelQuery->byIdentifier(VieraTypes\ChannelType::TELEVISION);
 
 		$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
 
@@ -104,9 +105,9 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 			DevicesEntities\Channels\Properties\Dynamic::class,
 			$channel->getId(),
 			null,
-			MetadataTypes\DataType::BOOLEAN,
-			Types\ChannelPropertyIdentifier::STATE,
-			DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::STATE->value),
+			ValuesTypes\DataType::BOOLEAN,
+			VieraTypes\ChannelPropertyIdentifier::STATE,
+			DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::STATE->value),
 			null,
 			true,
 			true,
@@ -116,9 +117,9 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 			DevicesEntities\Channels\Properties\Dynamic::class,
 			$channel->getId(),
 			null,
-			MetadataTypes\DataType::UCHAR,
-			Types\ChannelPropertyIdentifier::VOLUME,
-			DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::VOLUME->value),
+			ValuesTypes\DataType::UCHAR,
+			VieraTypes\ChannelPropertyIdentifier::VOLUME,
+			DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::VOLUME->value),
 			[
 				0,
 				100,
@@ -131,9 +132,9 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 			DevicesEntities\Channels\Properties\Dynamic::class,
 			$channel->getId(),
 			null,
-			MetadataTypes\DataType::BOOLEAN,
-			Types\ChannelPropertyIdentifier::MUTE,
-			DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::MUTE->value),
+			ValuesTypes\DataType::BOOLEAN,
+			VieraTypes\ChannelPropertyIdentifier::MUTE,
+			DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::MUTE->value),
 			null,
 			true,
 			true,
@@ -143,16 +144,16 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 			DevicesEntities\Channels\Properties\Dynamic::class,
 			$channel->getId(),
 			null,
-			MetadataTypes\DataType::STRING,
-			Types\ChannelPropertyIdentifier::REMOTE,
-			DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::REMOTE->value),
+			ValuesTypes\DataType::STRING,
+			VieraTypes\ChannelPropertyIdentifier::REMOTE,
+			DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::REMOTE->value),
 			null,
 			true,
 		);
 
 		$findChannelProperty = new Queries\Entities\FindChannelProperties();
 		$findChannelProperty->forChannel($channel);
-		$findChannelProperty->byIdentifier(Types\ChannelPropertyIdentifier::HDMI);
+		$findChannelProperty->byIdentifier(VieraTypes\ChannelPropertyIdentifier::HDMI);
 
 		$hdmiProperty = $this->channelsPropertiesRepository->findOneBy(
 			$findChannelProperty,
@@ -164,9 +165,9 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::ENUM,
-				Types\ChannelPropertyIdentifier::HDMI,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::HDMI->value),
+				ValuesTypes\DataType::ENUM,
+				VieraTypes\ChannelPropertyIdentifier::HDMI,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::HDMI->value),
 				null,
 				true,
 			);
@@ -174,7 +175,7 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 
 		$findChannelProperty = new Queries\Entities\FindChannelProperties();
 		$findChannelProperty->forChannel($channel);
-		$findChannelProperty->byIdentifier(Types\ChannelPropertyIdentifier::APPLICATION);
+		$findChannelProperty->byIdentifier(VieraTypes\ChannelPropertyIdentifier::APPLICATION);
 
 		$appsProperty = $this->channelsPropertiesRepository->findOneBy(
 			$findChannelProperty,
@@ -186,9 +187,9 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::ENUM,
-				Types\ChannelPropertyIdentifier::APPLICATION,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::APPLICATION->value),
+				ValuesTypes\DataType::ENUM,
+				VieraTypes\ChannelPropertyIdentifier::APPLICATION,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::APPLICATION->value),
 				null,
 				true,
 			);
@@ -199,14 +200,14 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::BUTTON,
+				ValuesTypes\DataType::BUTTON,
 				$identifier,
 				DevicesUtilities\Name::createName($identifier->value),
 				[
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value,
-						Types\ActionKey::from($actionKey)->value,
-						Types\ActionKey::from($actionKey)->value,
+						Payloads\Button::CLICKED->value,
+						VieraTypes\ActionKey::from($actionKey)->value,
+						VieraTypes\ActionKey::from($actionKey)->value,
 					],
 				],
 				true,

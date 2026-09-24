@@ -21,7 +21,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
@@ -74,7 +74,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 	 * @throws ValueError
 	 */
 	public function consume(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $document,
 	): void
@@ -97,7 +97,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 	 */
 	private function handlePropertyStateAction(
 		ApplicationDocuments\Document $document,
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 	): void
 	{
@@ -159,7 +159,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->debug(
 							'Requested write value to connector property',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'state-consumer',
 								'connector' => [
 									'id' => $document->getConnector()->toString(),
@@ -197,7 +197,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 				}
 
 				$this->publisher->publish(
-					MetadataTypes\Sources\Module::DEVICES,
+					Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
 					$state,
 				)
@@ -205,7 +205,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->debug(
 							'Requested write value to channel property',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'state-consumer',
 								'connector' => [
 									'id' => $document->getConnector()->toString(),
@@ -226,7 +226,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->error(
 							'Requested action could not be published for write action',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'channel-properties-states',
 								'exception' => Logging\Logger::buildException($ex),
 							],
@@ -291,7 +291,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->debug(
 							'Requested write value to device property',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'state-consumer',
 								'device' => [
 									'id' => $document->getDevice()->toString(),
@@ -329,7 +329,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 				}
 
 				$this->publisher->publish(
-					MetadataTypes\Sources\Module::DEVICES,
+					Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
 					$state,
 				)
@@ -337,7 +337,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->debug(
 							'Requested write value to channel property',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'state-consumer',
 								'device' => [
 									'id' => $document->getDevice()->toString(),
@@ -358,7 +358,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->error(
 							'Requested action could not be published for write action',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'channel-properties-states',
 								'exception' => Logging\Logger::buildException($ex),
 							],
@@ -423,7 +423,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->debug(
 							'Requested write value to channel property',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'state-consumer',
 								'channel' => [
 									'id' => $document->getChannel()->toString(),
@@ -461,7 +461,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 				}
 
 				$this->publisher->publish(
-					MetadataTypes\Sources\Module::DEVICES,
+					Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
 					$state,
 				)
@@ -469,7 +469,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->debug(
 							'Requested write value to channel property',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'state-consumer',
 								'channel' => [
 									'id' => $document->getChannel()->toString(),
@@ -490,7 +490,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 						$this->logger->error(
 							'Requested action could not be published for write action',
 							[
-								'source' => MetadataTypes\Sources\Module::DEVICES->value,
+								'source' => Sources\Module::DEVICES->value,
 								'type' => 'channel-properties-states',
 								'exception' => Logging\Logger::buildException($ex),
 							],

@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Schemas\Identities;
 
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApis;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Router;
@@ -39,7 +39,7 @@ final class Identity extends JsonApis\JsonApi
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::ACCOUNTS->value . '/identity';
+	public const SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/identity';
 
 	/**
 	 * Define relationships names

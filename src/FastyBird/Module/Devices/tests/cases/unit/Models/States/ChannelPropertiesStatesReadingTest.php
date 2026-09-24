@@ -5,13 +5,15 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Models\States;
 use DateTimeInterface;
 use Error;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Tests;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\DI;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid;
@@ -36,8 +38,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
 		Documents\Channels\Properties\Dynamic|null $parent,
 		States\ChannelProperty $stored,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $actual,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $expected,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actual,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expected,
 	): void
 	{
 		$channelPropertiesConfigurationRepository = $this->createMock(
@@ -70,7 +72,7 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 
 		$state = $channelPropertiesStatesManager->read(
 			$property,
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 		);
 
 		self::assertInstanceOf(Documents\States\Channels\Properties\Property::class, $state);
@@ -95,8 +97,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
 		Documents\Channels\Properties\Dynamic|null $parent,
 		States\ChannelProperty $stored,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $actual,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $expected,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actual,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expected,
 	): void
 	{
 		$channelPropertiesConfigurationRepository = $this->createMock(
@@ -129,7 +131,7 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 
 		$state = $channelPropertiesStatesManager->read(
 			$property,
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 		);
 
 		self::assertInstanceOf(Documents\States\Channels\Properties\Property::class, $state);
@@ -138,7 +140,7 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 	}
 
 	/**
-	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null>>
+	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|bool|float|int|string|DateTimeInterface|Payloads\Payload|null>>
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function readStates(): array
@@ -157,10 +159,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-01',
 					'Testing Property 01',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -189,10 +191,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-02',
 					'Testing Property 02',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -221,10 +223,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-03',
 					'Testing Property 03',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -253,10 +255,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-04',
 					'Testing Property 04',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -285,10 +287,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-05',
 					'Child Property 05',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -301,10 +303,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-05',
 					'Testing Property 05',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -333,10 +335,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-06',
 					'Child Property 06',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -349,10 +351,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-06',
 					'Testing Property 06',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -381,10 +383,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-07',
 					'Child Property 07',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -397,10 +399,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-07',
 					'Testing Property 07',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -429,10 +431,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-08',
 					'Child Property 08',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 100],
 					null,
@@ -445,10 +447,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-08',
 					'Testing Property 08',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 254],
 					null,
@@ -478,10 +480,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-09',
 					'Child Property 09',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 100],
 					null,
@@ -494,10 +496,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-09',
 					'Testing Property 09',
-					MetadataTypes\DataType::INT,
+					ValuesTypes\DataType::INT,
 					null,
 					[10, 1_000],
 					null,
@@ -525,19 +527,19 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-10',
 					'Testing Property 10',
-					MetadataTypes\DataType::SWITCH,
+					ValuesTypes\DataType::SWITCH,
 					null,
 					[
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							'ON',
 							'true',
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							'OFF',
 							'false',
 						],
@@ -552,13 +554,13 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				null,
 				new Tests\Fixtures\Dummy\ChannelPropertyState(
 					$property01,
-					MetadataTypes\Payloads\Switcher::ON,
-					MetadataTypes\Payloads\Switcher::OFF,
+					Payloads\Switcher::ON,
+					Payloads\Switcher::OFF,
 					false,
 					true,
 				),
-				MetadataTypes\Payloads\Switcher::ON,
-				MetadataTypes\Payloads\Switcher::OFF,
+				Payloads\Switcher::ON,
+				Payloads\Switcher::OFF,
 			],
 			/**
 			 * Mapped property - no scale, no transformer.
@@ -569,31 +571,31 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-11',
 					'Child Property 11',
-					MetadataTypes\DataType::SWITCH,
+					ValuesTypes\DataType::SWITCH,
 					null,
 					[
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 						],
@@ -608,19 +610,19 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-11',
 					'Testing Property 11',
-					MetadataTypes\DataType::SWITCH,
+					ValuesTypes\DataType::SWITCH,
 					null,
 					[
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							'ON',
 							'true',
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							'OFF',
 							'false',
 						],
@@ -634,19 +636,19 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				),
 				new Tests\Fixtures\Dummy\ChannelPropertyState(
 					$property01,
-					MetadataTypes\Payloads\Switcher::ON,
-					MetadataTypes\Payloads\Switcher::OFF,
+					Payloads\Switcher::ON,
+					Payloads\Switcher::OFF,
 					false,
 					true,
 				),
-				MetadataTypes\Payloads\Switcher::ON,
-				MetadataTypes\Payloads\Switcher::OFF,
+				Payloads\Switcher::ON,
+				Payloads\Switcher::OFF,
 			],
 		];
 	}
 
 	/**
-	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null>>
+	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|bool|float|int|string|DateTimeInterface|Payloads\Payload|null>>
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function getStates(): array
@@ -665,10 +667,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-01',
 					'Testing Property 01',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -697,10 +699,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-02',
 					'Testing Property 02',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -729,10 +731,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-03',
 					'Testing Property 03',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -761,10 +763,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-04',
 					'Testing Property 04',
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::FLOAT,
 					null,
 					null,
 					null,
@@ -793,10 +795,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-05',
 					'Child Property 05',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					null,
 					null,
@@ -809,10 +811,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-05',
 					'Testing Property 05',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 254],
 					null,
@@ -841,10 +843,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-06',
 					'Child Property 06',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					null,
 					null,
@@ -857,10 +859,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-06',
 					'Testing Property 06',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 254],
 					null,
@@ -889,10 +891,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-07',
 					'Child Property 07',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					null,
 					null,
@@ -905,10 +907,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-07',
 					'Testing Property 07',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 254],
 					null,
@@ -937,10 +939,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-08',
 					'Child Property 08',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					null,
 					null,
@@ -953,10 +955,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-08',
 					'Testing Property 08',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 254],
 					null,
@@ -985,10 +987,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-09',
 					'Child Property 09',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 100],
 					null,
@@ -1001,10 +1003,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-09',
 					'Testing Property 09',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 254],
 					null,
@@ -1035,10 +1037,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-10',
 					'Child Property 10',
-					MetadataTypes\DataType::UCHAR,
+					ValuesTypes\DataType::UCHAR,
 					null,
 					[0, 100],
 					null,
@@ -1051,10 +1053,10 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-10',
 					'Testing Property 10',
-					MetadataTypes\DataType::INT,
+					ValuesTypes\DataType::INT,
 					null,
 					[10, 1_000],
 					null,
@@ -1082,19 +1084,19 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-11',
 					'Testing Property 11',
-					MetadataTypes\DataType::SWITCH,
+					ValuesTypes\DataType::SWITCH,
 					null,
 					[
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							'ON',
 							'true',
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							'OFF',
 							'false',
 						],
@@ -1109,8 +1111,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				null,
 				new Tests\Fixtures\Dummy\ChannelPropertyState(
 					$property01,
-					MetadataTypes\Payloads\Switcher::ON,
-					MetadataTypes\Payloads\Switcher::OFF,
+					Payloads\Switcher::ON,
+					Payloads\Switcher::OFF,
 					false,
 					true,
 				),
@@ -1125,25 +1127,25 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-12',
 					'Testing Property 12',
-					MetadataTypes\DataType::SWITCH,
+					ValuesTypes\DataType::SWITCH,
 					null,
 					[
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							'ON',
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							'OFF',
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 						],
@@ -1158,8 +1160,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				null,
 				new Tests\Fixtures\Dummy\ChannelPropertyState(
 					$property01,
-					MetadataTypes\Payloads\Switcher::ON,
-					MetadataTypes\Payloads\Switcher::OFF,
+					Payloads\Switcher::ON,
+					Payloads\Switcher::OFF,
 					false,
 					true,
 				),
@@ -1175,31 +1177,31 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 					$child01,
 					$channel02,
 					$property01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'child-property-13',
 					'Child Property 13',
-					MetadataTypes\DataType::SWITCH,
+					ValuesTypes\DataType::SWITCH,
 					null,
 					[
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 						],
@@ -1214,19 +1216,19 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				new Documents\Channels\Properties\Dynamic(
 					$property01,
 					$channel01,
-					Types\PropertyCategory::GENERIC,
+					DevicesTypes\PropertyCategory::GENERIC,
 					'test-property-13',
 					'Testing Property 13',
-					MetadataTypes\DataType::SWITCH,
+					ValuesTypes\DataType::SWITCH,
 					null,
 					[
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							'ON',
 							'true',
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							'OFF',
 							'false',
 						],
@@ -1240,8 +1242,8 @@ final class ChannelPropertiesStatesReadingTest extends Tests\Cases\Unit\BaseTest
 				),
 				new Tests\Fixtures\Dummy\ChannelPropertyState(
 					$property01,
-					MetadataTypes\Payloads\Switcher::ON,
-					MetadataTypes\Payloads\Switcher::OFF,
+					Payloads\Switcher::ON,
+					Payloads\Switcher::OFF,
 					false,
 					true,
 				),

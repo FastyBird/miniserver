@@ -24,11 +24,12 @@ use FastyBird\Connector\Viera\Entities;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
-use FastyBird\Connector\Viera\Types;
+use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -130,8 +131,8 @@ final class Properties implements Common\EventSubscriber
 			$entity instanceof DevicesEntities\Channels\Properties\Dynamic
 			&& $entity->getChannel()->getDevice() instanceof Entities\Devices\Device
 			&& (
-				$entity->getIdentifier() === Types\ChannelPropertyIdentifier::HDMI->value
-				|| $entity->getIdentifier() === Types\ChannelPropertyIdentifier::APPLICATION->value
+				$entity->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::HDMI->value
+				|| $entity->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::APPLICATION->value
 			)
 		) {
 			$this->configureDeviceInputSource($entity);
@@ -149,7 +150,7 @@ final class Properties implements Common\EventSubscriber
 	{
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE);
+		$findDevicePropertyQuery->byIdentifier(VieraTypes\DevicePropertyIdentifier::STATE);
 
 		$stateProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -161,7 +162,7 @@ final class Properties implements Common\EventSubscriber
 
 		if ($stateProperty !== null) {
 			$this->devicesPropertiesManager->update($stateProperty, Utils\ArrayHash::from([
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
 					DevicesTypes\ConnectionState::CONNECTED->value,
@@ -176,9 +177,9 @@ final class Properties implements Common\EventSubscriber
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'device' => $device,
 				'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
-				'identifier' => Types\DevicePropertyIdentifier::STATE->value,
-				'name' => DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::STATE->value),
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'identifier' => VieraTypes\DevicePropertyIdentifier::STATE->value,
+				'name' => DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::STATE->value),
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
 					DevicesTypes\ConnectionState::CONNECTED->value,
@@ -208,14 +209,14 @@ final class Properties implements Common\EventSubscriber
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::BUTTON,
+				ValuesTypes\DataType::BUTTON,
 				$identifier,
 				DevicesUtilities\Name::createName($identifier->value),
 				[
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value,
-						Types\ActionKey::from($actionKey)->value,
-						Types\ActionKey::from($actionKey)->value,
+						Payloads\Button::CLICKED->value,
+						VieraTypes\ActionKey::from($actionKey)->value,
+						VieraTypes\ActionKey::from($actionKey)->value,
 					],
 				],
 				true,
@@ -237,16 +238,16 @@ final class Properties implements Common\EventSubscriber
 	{
 		$channel = $property->getChannel();
 
-		if ($property->getIdentifier() === Types\ChannelPropertyIdentifier::HDMI->value) {
+		if ($property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::HDMI->value) {
 			$hdmiFormat = $property->getFormat();
 
-			$hdmiFormat = $hdmiFormat instanceof ToolsFormats\CombinedEnum
+			$hdmiFormat = $hdmiFormat instanceof Formats\CombinedEnum
 				? $hdmiFormat->toArray()
 				: [];
 		} else {
 			$findChannelProperty = new Queries\Entities\FindChannelProperties();
 			$findChannelProperty->forChannel($channel);
-			$findChannelProperty->byIdentifier(Types\ChannelPropertyIdentifier::HDMI);
+			$findChannelProperty->byIdentifier(VieraTypes\ChannelPropertyIdentifier::HDMI);
 
 			$hdmiProperty = $this->channelsPropertiesRepository->findOneBy(
 				$findChannelProperty,
@@ -255,21 +256,21 @@ final class Properties implements Common\EventSubscriber
 
 			$hdmiFormat = $hdmiProperty?->getFormat();
 
-			$hdmiFormat = $hdmiFormat instanceof ToolsFormats\CombinedEnum
+			$hdmiFormat = $hdmiFormat instanceof Formats\CombinedEnum
 				? $hdmiFormat->toArray()
 				: [];
 		}
 
-		if ($property->getIdentifier() === Types\ChannelPropertyIdentifier::APPLICATION->value) {
+		if ($property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::APPLICATION->value) {
 			$applicationFormat = $property->getFormat();
 
-			$applicationFormat = $applicationFormat instanceof ToolsFormats\CombinedEnum
+			$applicationFormat = $applicationFormat instanceof Formats\CombinedEnum
 				? $applicationFormat->toArray()
 				: [];
 		} else {
 			$findChannelProperty = new Queries\Entities\FindChannelProperties();
 			$findChannelProperty->forChannel($channel);
-			$findChannelProperty->byIdentifier(Types\ChannelPropertyIdentifier::APPLICATION);
+			$findChannelProperty->byIdentifier(VieraTypes\ChannelPropertyIdentifier::APPLICATION);
 
 			$applicationProperty = $this->channelsPropertiesRepository->findOneBy(
 				$findChannelProperty,
@@ -278,7 +279,7 @@ final class Properties implements Common\EventSubscriber
 
 			$applicationFormat = $applicationProperty?->getFormat();
 
-			$applicationFormat = $applicationFormat instanceof ToolsFormats\CombinedEnum
+			$applicationFormat = $applicationFormat instanceof Formats\CombinedEnum
 				? $applicationFormat->toArray()
 				: [];
 		}
@@ -287,9 +288,9 @@ final class Properties implements Common\EventSubscriber
 			DevicesEntities\Channels\Properties\Dynamic::class,
 			$channel->getId(),
 			null,
-			MetadataTypes\DataType::ENUM,
-			Types\ChannelPropertyIdentifier::INPUT_SOURCE,
-			DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::INPUT_SOURCE->value),
+			ValuesTypes\DataType::ENUM,
+			VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE,
+			DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value),
 			array_merge(
 				[
 					[

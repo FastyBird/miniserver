@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Shelly\Queue\Messages;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use Orisai\ObjectMapper;
 
 /**
@@ -40,9 +40,9 @@ final readonly class PropertyDescription implements Message
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		private string|null $name,
-		#[ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\DataType::class)]
+		#[ObjectMapper\Rules\BackedEnumValue(class: Types\DataType::class)]
 		#[ObjectMapper\Modifiers\FieldName('data_type')]
-		private MetadataTypes\DataType $dataType,
+		private Types\DataType $dataType,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
@@ -97,7 +97,7 @@ final readonly class PropertyDescription implements Message
 		return $this->name;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): Types\DataType
 	{
 		return $this->dataType;
 	}

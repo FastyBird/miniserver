@@ -21,8 +21,8 @@ use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use TypeError;
 use ValueError;
@@ -40,9 +40,9 @@ class Connector extends DevicesEntities\Connectors\Connector
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Connector
+	public function getSource(): Sources\Connector
 	{
-		return MetadataTypes\Sources\Connector::SHELLY;
+		return Sources\Connector::SHELLY;
 	}
 
 	/**
@@ -91,9 +91,9 @@ class Connector extends DevicesEntities\Connectors\Connector
 
 		if (
 			$property instanceof DevicesEntities\Connectors\Properties\Variable
-			&& Types\ClientMode::tryFrom(ToolsUtilities\Value::toString($property->getValue(), true)) !== null
+			&& Types\ClientMode::tryFrom(Utilities\Value::toString($property->getValue(), true)) !== null
 		) {
-			return Types\ClientMode::from(ToolsUtilities\Value::toString($property->getValue(), true));
+			return Types\ClientMode::from(Utilities\Value::toString($property->getValue(), true));
 		}
 
 		throw new Exceptions\InvalidState('Connector mode is not configured');

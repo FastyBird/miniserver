@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Commands;
 
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use Nette\Localization;
 use Symfony\Component\Console;
@@ -102,7 +102,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Module::UI->value,
+					'source' => Sources\Module::UI->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],

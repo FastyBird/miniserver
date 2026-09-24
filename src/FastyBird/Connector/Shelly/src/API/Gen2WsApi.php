@@ -19,16 +19,16 @@ use Closure;
 use DateTimeInterface;
 use DomainException;
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Connector\Shelly\ValueObjects;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp\Psr7 as gPsr;
 use InvalidArgumentException;
@@ -157,7 +157,7 @@ final class Gen2WsApi
 		private readonly Shelly\Logger $logger,
 		private readonly Clock\Clock $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
 	)
 	{
@@ -191,7 +191,7 @@ final class Gen2WsApi
 		}
 
 		if ($address === null) {
-			return Promise\reject(new Exceptions\InvalidState('Device ip address or domain is not configured'));
+			return Promise\reject(new ShellyExceptions\InvalidState('Device ip address or domain is not configured'));
 		}
 
 		try {
@@ -203,7 +203,7 @@ final class Gen2WsApi
 			);
 		} catch (InvalidArgumentException $ex) {
 			return Promise\reject(
-				new Exceptions\InvalidState('Socket connector could not be created', $ex->getCode(), $ex),
+				new ShellyExceptions\InvalidState('Socket connector could not be created', $ex->getCode(), $ex),
 			);
 		}
 
@@ -238,7 +238,7 @@ final class Gen2WsApi
 			}
 		} catch (Throwable $ex) {
 			return Promise\reject(
-				new Exceptions\InvalidState(
+				new ShellyExceptions\InvalidState(
 					'Device address to create WS connection could not be parsed',
 					$ex->getCode(),
 					$ex,
@@ -294,7 +294,7 @@ final class Gen2WsApi
 							$this->logger->error(
 								'Connection to device failed',
 								[
-									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+									'source' => Sources\Connector::SHELLY->value,
 									'type' => 'gen2-ws-api',
 									'device' => [
 										'id' => $this->id->toString(),
@@ -357,7 +357,7 @@ final class Gen2WsApi
 		$this->session = null;
 
 		foreach ($this->messages as $message) {
-			$message->getDeferred()?->reject(new Exceptions\WsCall('Closing connection to device'));
+			$message->getDeferred()?->reject(new ShellyExceptions\WsCall('Closing connection to device'));
 
 			if ($message->getTimer() !== null) {
 				$this->eventLoop->cancelTimer($message->getTimer());
@@ -416,13 +416,13 @@ final class Gen2WsApi
 			);
 
 			return Promise\reject(
-				new Exceptions\WsError('Message frame could not be created: ' . $errorPrinter->printError($ex)),
+				new ShellyExceptions\WsError('Message frame could not be created: ' . $errorPrinter->printError($ex)),
 			);
 		}
 
 		try {
 			$this->sendRequest($messageFrame, $deferred);
-		} catch (Exceptions\WsError $ex) {
+		} catch (ShellyExceptions\WsError $ex) {
 			return Promise\reject($ex);
 		}
 
@@ -441,7 +441,7 @@ final class Gen2WsApi
 
 		if ($this->connection === null) {
 			return Promise\reject(
-				new Exceptions\InvalidState('Connection with device is not established'),
+				new ShellyExceptions\InvalidState('Connection with device is not established'),
 			);
 		}
 
@@ -449,21 +449,21 @@ final class Gen2WsApi
 			preg_match(self::PROPERTY_COMPONENT, $component, $propertyMatches) !== 1
 			|| !array_key_exists('attribute', $propertyMatches)
 		) {
-			return Promise\reject(new Exceptions\InvalidState('Property identifier is not in expected format'));
+			return Promise\reject(new ShellyExceptions\InvalidState('Property identifier is not in expected format'));
 		}
 
 		try {
 			$componentMethod = $this->buildComponentMethod($component, $value);
 
-		} catch (Exceptions\InvalidState) {
-			return Promise\reject(new Exceptions\InvalidState('Component method could not be created'));
+		} catch (ShellyExceptions\InvalidState) {
+			return Promise\reject(new ShellyExceptions\InvalidState('Component method could not be created'));
 		}
 
 		try {
 			$componentAttribute = $this->buildComponentAttribute($component);
 
-		} catch (Exceptions\InvalidState) {
-			return Promise\reject(new Exceptions\InvalidState('Component attribute could not be created'));
+		} catch (ShellyExceptions\InvalidState) {
+			return Promise\reject(new ShellyExceptions\InvalidState('Component attribute could not be created'));
 		}
 
 		try {
@@ -497,13 +497,13 @@ final class Gen2WsApi
 			);
 
 			return Promise\reject(
-				new Exceptions\WsError('Message frame could not be created: ' . $errorPrinter->printError($ex)),
+				new ShellyExceptions\WsError('Message frame could not be created: ' . $errorPrinter->printError($ex)),
 			);
 		}
 
 		try {
 			$this->sendRequest($messageFrame, $deferred);
-		} catch (Exceptions\WsError $ex) {
+		} catch (ShellyExceptions\WsError $ex) {
 			return Promise\reject($ex);
 		}
 
@@ -522,7 +522,7 @@ final class Gen2WsApi
 		$this->logger->debug(
 			'Connected to device sockets server',
 			[
-				'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+				'source' => Sources\Connector::SHELLY->value,
 				'type' => 'gen2-ws-api',
 				'device' => [
 					'id' => $this->id->toString(),
@@ -540,7 +540,7 @@ final class Gen2WsApi
 					$this->logger->debug(
 						'Received message from device could not be decoded',
 						[
-							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+							'source' => Sources\Connector::SHELLY->value,
 							'type' => 'gen2-ws-api',
 							'exception' => Logging\Logger::buildException($ex),
 							'device' => [
@@ -572,15 +572,15 @@ final class Gen2WsApi
 							);
 
 							Utils\Arrays::invoke($this->onMessage, $message);
-						} catch (Exceptions\WsCall | Exceptions\WsError $ex) {
+						} catch (ShellyExceptions\WsCall | ShellyExceptions\WsError $ex) {
 							$this->logger->error(
 								'Could not handle received device status message',
 								[
-									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+									'source' => Sources\Connector::SHELLY->value,
 									'type' => 'gen2-ws-api',
 									'exception' => Logging\Logger::buildException(
 										$ex,
-										$ex instanceof Exceptions\WsError,
+										$ex instanceof ShellyExceptions\WsError,
 									),
 									'device' => [
 										'id' => $this->id->toString(),
@@ -601,15 +601,15 @@ final class Gen2WsApi
 							);
 
 							Utils\Arrays::invoke($this->onMessage, $message);
-						} catch (Exceptions\WsCall | Exceptions\WsError $ex) {
+						} catch (ShellyExceptions\WsCall | ShellyExceptions\WsError $ex) {
 							$this->logger->error(
 								'Could not handle received event message',
 								[
-									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+									'source' => Sources\Connector::SHELLY->value,
 									'type' => 'gen2-ws-api',
 									'exception' => Logging\Logger::buildException(
 										$ex,
-										$ex instanceof Exceptions\WsError,
+										$ex instanceof ShellyExceptions\WsError,
 									),
 									'device' => [
 										'id' => $this->id->toString(),
@@ -627,7 +627,7 @@ final class Gen2WsApi
 						$this->logger->warning(
 							'Device respond with unsupported method',
 							[
-								'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+								'source' => Sources\Connector::SHELLY->value,
 								'type' => 'gen2-ws-api',
 								'device' => [
 									'id' => $this->id->toString(),
@@ -656,15 +656,15 @@ final class Gen2WsApi
 							);
 
 							$this->messages[$payload->id]->getDeferred()?->resolve($message);
-						} catch (Exceptions\WsCall | Exceptions\WsError $ex) {
+						} catch (ShellyExceptions\WsCall | ShellyExceptions\WsError $ex) {
 							$this->logger->error(
 								'Could not handle received response device status message',
 								[
-									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+									'source' => Sources\Connector::SHELLY->value,
 									'type' => 'gen2-ws-api',
 									'exception' => Logging\Logger::buildException(
 										$ex,
-										$ex instanceof Exceptions\WsError,
+										$ex instanceof ShellyExceptions\WsError,
 									),
 									'device' => [
 										'id' => $this->id->toString(),
@@ -677,7 +677,7 @@ final class Gen2WsApi
 							);
 
 							$this->messages[$payload->id]->getDeferred()?->reject(
-								new Exceptions\WsError('Could not decode received payload'),
+								new ShellyExceptions\WsError('Could not decode received payload'),
 							);
 						}
 					} elseif (
@@ -688,7 +688,7 @@ final class Gen2WsApi
 						$this->messages[$payload->id]->getDeferred()?->resolve(true);
 					} else {
 						$this->messages[$payload->id]->getDeferred()?->reject(
-							new Exceptions\WsCall('Received response could not be processed'),
+							new ShellyExceptions\WsCall('Received response could not be processed'),
 						);
 					}
 
@@ -761,7 +761,7 @@ final class Gen2WsApi
 									new ObjectMapper\Printers\TypeToStringConverter(),
 								);
 
-								throw new Exceptions\WsError(
+								throw new ShellyExceptions\WsError(
 									'Connection session could not be created: ' . $errorPrinter->printError(
 										$ex,
 									),
@@ -784,7 +784,7 @@ final class Gen2WsApi
 									new ObjectMapper\Printers\TypeToStringConverter(),
 								);
 
-								throw new Exceptions\WsError(
+								throw new ShellyExceptions\WsError(
 									'Message frame could not be created: ' . $errorPrinter->printError($ex),
 								);
 							}
@@ -801,7 +801,7 @@ final class Gen2WsApi
 					$this->logger->warning(
 						'Device respond with error',
 						[
-							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+							'source' => Sources\Connector::SHELLY->value,
 							'type' => 'gen2-ws-api',
 							'device' => [
 								'id' => $this->id->toString(),
@@ -821,7 +821,7 @@ final class Gen2WsApi
 				}
 
 				$this->messages[$payload->id]->getDeferred()?->reject(
-					new Exceptions\WsError('Received device response could not be processed'),
+					new ShellyExceptions\WsError('Received device response could not be processed'),
 				);
 
 				if ($this->messages[$payload->id]->getTimer() !== null) {
@@ -842,7 +842,7 @@ final class Gen2WsApi
 			$this->logger->debug(
 				'Connection with device was closed',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'gen2-ws-api',
 					'connection' => [
 						'code' => $code,
@@ -874,14 +874,14 @@ final class Gen2WsApi
 	/**
 	 * @param Promise\Deferred<Messages\Response\Gen2\GetDeviceState|bool>|null $deferred
 	 *
-	 * @throws Exceptions\WsError
+	 * @throws ShellyExceptions\WsError
 	 */
 	private function sendRequest(ValueObjects\WsFrame $frame, Promise\Deferred|null $deferred = null): void
 	{
 		$timeout = $this->eventLoop->addTimer(
 			self::WAIT_FOR_REPLY_TIMEOUT,
 			async(function () use ($deferred, $frame): void {
-				$deferred?->reject(new Exceptions\WsCallTimeout('Sending command to device failed'));
+				$deferred?->reject(new ShellyExceptions\WsCallTimeout('Sending command to device failed'));
 
 				if (array_key_exists($frame->getId(), $this->messages)) {
 					if ($this->messages[$frame->getId()]->getTimer() !== null) {
@@ -907,14 +907,14 @@ final class Gen2WsApi
 				new ObjectMapper\Printers\TypeToStringConverter(),
 			);
 
-			throw new Exceptions\WsError('Message could not be created: ' . $errorPrinter->printError($ex));
+			throw new ShellyExceptions\WsError('Message could not be created: ' . $errorPrinter->printError($ex));
 		}
 
 		$this->connection?->send(strval($frame));
 	}
 
 	/**
-	 * @throws Exceptions\WsError
+	 * @throws ShellyExceptions\WsError
 	 */
 	private function parseDeviceStatusResponse(
 		string $payload,
@@ -1060,7 +1060,7 @@ final class Gen2WsApi
 	}
 
 	/**
-	 * @throws Exceptions\WsError
+	 * @throws ShellyExceptions\WsError
 	 */
 	private function parseDeviceEventsResponse(
 		string $payload,
@@ -1103,7 +1103,7 @@ final class Gen2WsApi
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\WsError
+	 * @throws ShellyExceptions\WsError
 	 */
 	protected function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
 	{
@@ -1112,17 +1112,17 @@ final class Gen2WsApi
 				$message,
 				(array) Utils\Json::decode(Utils\Json::encode($data), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\WsError('Could not map payload to message', $ex->getCode(), $ex);
+		} catch (ShellyExceptions\Runtime $ex) {
+			throw new ShellyExceptions\WsError('Could not map payload to message', $ex->getCode(), $ex);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\WsError('Could not create message from payload', $ex->getCode(), $ex);
+			throw new ShellyExceptions\WsError('Could not create message from payload', $ex->getCode(), $ex);
 		}
 	}
 
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\WsError
+	 * @throws ShellyExceptions\WsError
 	 */
 	protected function validatePayload(
 		string $payload,
@@ -1135,9 +1135,9 @@ final class Gen2WsApi
 				$payload,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\WsError(
+				throw new ShellyExceptions\WsError(
 					'Could not validate received payload',
 					$ex->getCode(),
 					$ex,
@@ -1149,7 +1149,7 @@ final class Gen2WsApi
 	}
 
 	/**
-	 * @throws Exceptions\WsError
+	 * @throws ShellyExceptions\WsError
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -1162,7 +1162,7 @@ final class Gen2WsApi
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\WsError('Validation schema for payload could not be loaded');
+				throw new ShellyExceptions\WsError('Validation schema for payload could not be loaded');
 			}
 		}
 
@@ -1170,7 +1170,7 @@ final class Gen2WsApi
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidState
 	 */
 	private function buildComponentMethod(string $component, int|float|string|bool $value): string
 	{
@@ -1178,7 +1178,7 @@ final class Gen2WsApi
 			preg_match(self::PROPERTY_COMPONENT, $component, $componentMatches) !== 1
 			|| !array_key_exists('attribute', $componentMatches)
 		) {
-			throw new Exceptions\InvalidState('Property identifier is not in expected format');
+			throw new ShellyExceptions\InvalidState('Property identifier is not in expected format');
 		}
 
 		if (
@@ -1220,11 +1220,11 @@ final class Gen2WsApi
 			return self::SMOKE_SET_METHOD;
 		}
 
-		throw new Exceptions\InvalidState('Property method could not be build');
+		throw new ShellyExceptions\InvalidState('Property method could not be build');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidState
 	 */
 	private function buildComponentAttribute(string $component): Types\ComponentActionAttribute|null
 	{
@@ -1232,7 +1232,7 @@ final class Gen2WsApi
 			preg_match(self::PROPERTY_COMPONENT, $component, $componentMatches) !== 1
 			|| !array_key_exists('attribute', $componentMatches)
 		) {
-			throw new Exceptions\InvalidState('Property identifier is not in expected format');
+			throw new ShellyExceptions\InvalidState('Property identifier is not in expected format');
 		}
 
 		if (
@@ -1277,7 +1277,7 @@ final class Gen2WsApi
 			return null;
 		}
 
-		throw new Exceptions\InvalidState('Property attribute could not be build');
+		throw new ShellyExceptions\InvalidState('Property attribute could not be build');
 	}
 
 	private function getClientIdentifier(): string
