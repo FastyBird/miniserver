@@ -20,8 +20,8 @@ use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Entities;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Types;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use TypeError;
@@ -30,7 +30,7 @@ use function is_int;
 use function is_string;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Connector extends DevicesEntities\Connectors\Connector
 {
 

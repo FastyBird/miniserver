@@ -5,8 +5,8 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Subscribers;
 use Doctrine\DBAL;
 use Error;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Tests;
@@ -26,8 +26,8 @@ final class EmailEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws AccountsExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

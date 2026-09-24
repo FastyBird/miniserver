@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Triggers\Entities\Triggers\Controls;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Triggers\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 
@@ -33,26 +33,26 @@ use Ramsey\Uuid;
 )]
 #[ORM\Index(columns: ['control_name'], name: 'control_name_idx')]
 #[ORM\UniqueConstraint(name: 'trigger_control_unique', columns: ['control_name', 'trigger_id'])]
-class Control implements Entities\Entity,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+class Control implements TriggersEntities\Entity,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use TriggersEntities\TEntity;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'control_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'control_name', type: 'string', length: 100, nullable: false)]
 	private string $name;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Triggers\Trigger::class,
+		targetEntity: TriggersEntities\Triggers\Trigger::class,
 		inversedBy: 'controls',
 	)]
 	#[ORM\JoinColumn(
@@ -61,9 +61,9 @@ class Control implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	private Entities\Triggers\Trigger $trigger;
+	private TriggersEntities\Triggers\Trigger $trigger;
 
-	public function __construct(string $name, Entities\Triggers\Trigger $trigger)
+	public function __construct(string $name, TriggersEntities\Triggers\Trigger $trigger)
 	{
 		$this->id = Uuid\Uuid::uuid4();
 
@@ -73,7 +73,7 @@ class Control implements Entities\Entity,
 		$trigger->addControl($this);
 	}
 
-	public function getTrigger(): Entities\Triggers\Trigger
+	public function getTrigger(): TriggersEntities\Triggers\Trigger
 	{
 		return $this->trigger;
 	}

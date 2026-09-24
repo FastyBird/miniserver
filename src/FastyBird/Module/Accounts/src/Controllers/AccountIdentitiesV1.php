@@ -19,13 +19,13 @@ use Doctrine;
 use Exception;
 use FastyBird\Core\Encoding\JsonApi\Objects as JsonAPIDocumentObjects;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;
@@ -64,7 +64,7 @@ final class AccountIdentitiesV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
 	 */
@@ -84,7 +84,7 @@ final class AccountIdentitiesV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -103,8 +103,8 @@ final class AccountIdentitiesV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\Runtime
+	 * @throws PersistenceExceptions\Query
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws RuntimeException
@@ -227,7 +227,7 @@ final class AccountIdentitiesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi

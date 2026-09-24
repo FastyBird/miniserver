@@ -8,8 +8,8 @@ use Error;
 use FastyBird\Connector\Viera\DI;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Persistence\Entities;
 use Nette;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -148,7 +148,7 @@ abstract class DbTestCase extends TestCase
 		if (!$this->isDatabaseSetUp) {
 			$db = $this->getDb();
 
-			/** @var list<ORM\Mapping\ClassMetadata<DoctrineCrud\IEntity>> $metadatas */
+			/** @var list<ORM\Mapping\ClassMetadata<Entities\CrudEntity>> $metadatas */
 			$metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
 			$schemaTool = new ORM\Tools\SchemaTool($this->getEntityManager());
 

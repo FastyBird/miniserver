@@ -20,8 +20,8 @@ use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Connector\Viera\Entities;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -59,9 +59,9 @@ final class Controls implements Common\EventSubscriber
 	 * @param Persistence\Event\LifecycleEventArgs<ORM\EntityManagerInterface> $eventArgs
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function postPersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{

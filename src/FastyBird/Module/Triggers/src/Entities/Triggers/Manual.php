@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\Entities\Triggers;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 
 #[ORM\Entity]
 #[ORM\Table(
@@ -27,7 +27,7 @@ use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 		'comment' => 'Manual triggers',
 	],
 )]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Manual extends Trigger
 {
 

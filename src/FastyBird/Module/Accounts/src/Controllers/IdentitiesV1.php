@@ -18,13 +18,12 @@ namespace FastyBird\Module\Accounts\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Controllers;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Hydrators;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
@@ -71,8 +70,8 @@ final class IdentitiesV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
@@ -93,7 +92,7 @@ final class IdentitiesV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -112,8 +111,8 @@ final class IdentitiesV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -155,7 +154,7 @@ final class IdentitiesV1 extends BaseV1
 			// Commit all changes into database
 			$this->getOrmConnection()->commit();
 
-		} catch (DoctrineCrudExceptions\EntityCreation $ex) {
+		} catch (PersistenceExceptions\EntityCreation $ex) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
@@ -243,8 +242,8 @@ final class IdentitiesV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -317,7 +316,7 @@ final class IdentitiesV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */

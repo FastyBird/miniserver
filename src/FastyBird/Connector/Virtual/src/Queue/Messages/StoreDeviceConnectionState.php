@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Virtual\Queue\Messages;
 
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
@@ -33,9 +33,9 @@ final readonly class StoreDeviceConnectionState implements Message
 {
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $connector,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $device,
 		#[ObjectMapper\Rules\InstanceOfValue(type: DevicesTypes\ConnectionState::class)]
 		private DevicesTypes\ConnectionState $state,

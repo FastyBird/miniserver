@@ -19,8 +19,8 @@ use DateTimeInterface;
 use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Automator\DateTime\Exceptions;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -32,18 +32,18 @@ use function is_array;
 use function method_exists;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class TimeCondition extends TriggersEntities\Conditions\Condition
 {
 
 	public const TYPE = 'time';
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'condition_time', type: 'time', nullable: true)]
 	private DateTimeInterface|null $time;
 
 	/** @var array<int>|null */
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'condition_days', type: 'simple_array', nullable: true)]
 	private array|null $days;
 

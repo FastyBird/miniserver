@@ -17,7 +17,7 @@ namespace FastyBird\Module\Ui\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Ui\Entities;
 use Ramsey\Uuid;
 
@@ -25,13 +25,13 @@ use Ramsey\Uuid;
  * Find dashboard entities query
  *
  * @template T of Entities\Dashboards\Dashboard
- * @extends  DoctrineOrmQuery\QueryObject<T>
+ * @extends  Query\QueryObject<T>
  *
  * @package          FastyBird:UIModule!
  * @subpackage       Queries
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindDashboards extends DoctrineOrmQuery\QueryObject
+class FindDashboards extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

@@ -16,10 +16,9 @@
 namespace FastyBird\Connector\HomeKit\Entities\Clients;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Core\Entities\DoctrineCrud;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use Ramsey\Uuid;
 use function is_resource;
 use function rewind;
@@ -36,21 +35,21 @@ use function strval;
 	],
 )]
 #[ORM\UniqueConstraint(name: 'client_uid_unique', columns: ['client_uid', 'connector_id'])]
-class Client implements DoctrineCrud\IEntity,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+class Client implements PersistenceEntities\CrudEntity,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'client_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Connectors\Connector::class,
+		targetEntity: HomeKitEntities\Connectors\Connector::class,
 		inversedBy: 'clients',
 	)]
 	#[ORM\JoinColumn(
@@ -59,25 +58,25 @@ class Client implements DoctrineCrud\IEntity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	private Entities\Connectors\Connector $connector;
+	private HomeKitEntities\Connectors\Connector $connector;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'client_uid', type: 'string', nullable: false, length: 255)]
 	private string $uid;
 
 	/** @var string|resource */
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'client_public_key', type: 'binary', length: 255, nullable: false)]
 	private $publicKey;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'client_admin', type: 'boolean', nullable: false, options: ['default' => true])]
 	private bool $admin = true;
 
 	public function __construct(
 		string $uid,
 		string $publicKey,
-		Entities\Connectors\Connector $connector,
+		HomeKitEntities\Connectors\Connector $connector,
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
@@ -94,7 +93,7 @@ class Client implements DoctrineCrud\IEntity,
 		return $this->id;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): HomeKitEntities\Connectors\Connector
 	{
 		return $this->connector;
 	}

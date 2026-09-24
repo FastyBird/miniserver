@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Triggers\Entities\Notifications;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Phone\Entities as PhoneEntities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Ramsey\Uuid;
@@ -32,13 +32,13 @@ use function array_merge;
 		'comment' => 'SMS notifications',
 	],
 )]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Sms extends Notification
 {
 
 	public const TYPE = 'sms';
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'notification_phone', type: 'phone', length: 150, nullable: false)]
 	private PhoneEntities\Phone $phone;
 

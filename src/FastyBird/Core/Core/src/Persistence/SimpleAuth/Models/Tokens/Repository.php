@@ -5,9 +5,9 @@ namespace FastyBird\Core\Persistence\SimpleAuth\Models\Tokens;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Entities\SimpleAuth as Entities;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Core\Persistence\SimpleAuth\Queries;
 use FastyBird\Core\Types\SimpleAuth as Types;
 use Ramsey\Uuid;
@@ -35,8 +35,8 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function findOneByIdentifier(
@@ -61,8 +61,8 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
 	 */
 	public function findOneByToken(
 		string $token,
@@ -87,8 +87,8 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
 	 */
 	public function findOneBy(
 		Queries\FindTokens $queryObject,
@@ -106,7 +106,7 @@ final class Repository
 	 *
 	 * @return array<T>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findAllBy(
 		Queries\FindTokens $queryObject,
@@ -119,7 +119,7 @@ final class Repository
 
 			return $result;
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
+			throw new CoreExceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
 		}
 	}
 
@@ -129,20 +129,20 @@ final class Repository
 	 * @param Queries\FindTokens<T> $queryObject
 	 * @param class-string<T> $type
 	 *
-	 * @return DoctrineOrmQuery\ResultSet<T>
+	 * @return Query\ResultSet<T>
 	 *
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\FindTokens $queryObject,
 		string $type = Entities\Tokens\Token::class,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		$result = $queryObject->fetch($this->getRepository($type));
 
 		if (is_array($result)) {
-			throw new Exceptions\InvalidState('Result set could not be created');
+			throw new CoreExceptions\InvalidState('Result set could not be created');
 		}
 
 		return $result;

@@ -18,7 +18,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Documents\Widgets\DataSources;
 use DateTimeInterface;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Payloads;
 use Ramsey\Uuid;
 use function array_merge;
@@ -31,7 +31,7 @@ class DeviceProperty extends Property
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $widget,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $device,
 		Uuid\UuidInterface $property,
 		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value = null,

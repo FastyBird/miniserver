@@ -4,12 +4,12 @@ namespace FastyBird\Connector\HomeKit\Tests\Cases\Unit\Models;
 
 use Error;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Models;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Tests;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -22,9 +22,9 @@ final class ClientsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -45,9 +45,9 @@ final class ClientsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

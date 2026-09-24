@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Triggers\Entities\Notifications;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Triggers\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 use function assert;
@@ -39,22 +39,22 @@ use function assert;
 // calls addDefaultDiscriminatorMap() before dispatching loadClassMetadata and only when the
 // map is empty, and that default keys entries on short class names. An explicit map skips
 // it, which is what the doctrine/orm patch used to do by deferring the call.
-#[ORM\DiscriminatorMap([Entities\Notifications\Email::TYPE => Entities\Notifications\Email::class])]
+#[ORM\DiscriminatorMap([TriggersEntities\Notifications\Email::TYPE => TriggersEntities\Notifications\Email::class])]
 #[ORM\MappedSuperclass]
-abstract class Notification implements Entities\Entity,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+abstract class Notification implements TriggersEntities\Entity,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use TriggersEntities\TEntity;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'notification_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'notification_enabled',
 		type: 'boolean',
@@ -64,9 +64,9 @@ abstract class Notification implements Entities\Entity,
 	)]
 	protected bool $enabled = true;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Triggers\Trigger::class,
+		targetEntity: TriggersEntities\Triggers\Trigger::class,
 		inversedBy: 'notifications',
 	)]
 	#[ORM\JoinColumn(
@@ -74,10 +74,10 @@ abstract class Notification implements Entities\Entity,
 		referencedColumnName: 'trigger_id',
 		onDelete: 'CASCADE',
 	)]
-	protected Entities\Triggers\Trigger|null $trigger;
+	protected TriggersEntities\Triggers\Trigger|null $trigger;
 
 	public function __construct(
-		Entities\Triggers\Trigger $trigger,
+		TriggersEntities\Triggers\Trigger $trigger,
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
@@ -98,9 +98,9 @@ abstract class Notification implements Entities\Entity,
 		$this->enabled = $enabled;
 	}
 
-	public function getTrigger(): Entities\Triggers\Trigger
+	public function getTrigger(): TriggersEntities\Triggers\Trigger
 	{
-		assert($this->trigger instanceof Entities\Triggers\Trigger);
+		assert($this->trigger instanceof TriggersEntities\Triggers\Trigger);
 
 		return $this->trigger;
 	}

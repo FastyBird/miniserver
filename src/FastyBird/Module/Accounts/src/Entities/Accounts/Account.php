@@ -19,9 +19,9 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Accounts\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Types;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -36,23 +36,23 @@ use function assert;
 		'comment' => 'Application accounts',
 	],
 )]
-class Account implements Entities\Entity,
-	Entities\EntityParams,
-	DoctrineTimestampable\IEntityCreated,
-	DoctrineTimestampable\IEntityUpdated
+class Account implements AccountsEntities\Entity,
+	AccountsEntities\EntityParams,
+	PersistenceEntities\EntityCreated,
+	PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use AccountsEntities\TEntity;
+	use AccountsEntities\TEntityParams;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'account_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'account_state',
 		type: 'string',
@@ -62,35 +62,35 @@ class Account implements Entities\Entity,
 	)]
 	protected Types\AccountState $state;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'account_request_hash', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $requestHash = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'account_last_visit', type: 'datetime_immutable', nullable: true, options: ['default' => null])]
 	protected DateTimeImmutable|null $lastVisit = null;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\OneToOne(
 		mappedBy: 'account',
-		targetEntity: Entities\Details\Details::class,
+		targetEntity: AccountsEntities\Details\Details::class,
 		cascade: ['persist', 'remove'],
 	)]
-	protected Entities\Details\Details|null $details;
+	protected AccountsEntities\Details\Details|null $details;
 
-	/** @var Common\Collections\Collection<int, Entities\Identities\Identity> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, AccountsEntities\Identities\Identity> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'account',
-		targetEntity: Entities\Identities\Identity::class,
+		targetEntity: AccountsEntities\Identities\Identity::class,
 	)]
 	protected Common\Collections\Collection $identities;
 
-	/** @var Common\Collections\Collection<int, Entities\Emails\Email> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, AccountsEntities\Emails\Email> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'account',
-		targetEntity: Entities\Emails\Email::class,
+		targetEntity: AccountsEntities\Emails\Email::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
@@ -143,14 +143,14 @@ class Account implements Entities\Entity,
 
 	public function getName(): string
 	{
-		assert($this->details instanceof Entities\Details\Details);
+		assert($this->details instanceof AccountsEntities\Details\Details);
 
 		return $this->details->getLastName() . ' ' . $this->details->getFirstName();
 	}
 
-	public function getDetails(): Entities\Details\Details
+	public function getDetails(): AccountsEntities\Details\Details
 	{
-		assert($this->details instanceof Entities\Details\Details);
+		assert($this->details instanceof AccountsEntities\Details\Details);
 
 		return $this->details;
 	}
@@ -176,7 +176,7 @@ class Account implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Identities\Identity>
+	 * @return array<AccountsEntities\Identities\Identity>
 	 */
 	public function getIdentities(): array
 	{
@@ -184,7 +184,7 @@ class Account implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Emails\Email>
+	 * @return array<AccountsEntities\Emails\Email>
 	 */
 	public function getEmails(): array
 	{
@@ -194,10 +194,10 @@ class Account implements Entities\Entity,
 	/**
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
-	public function getEmail(string|null $id = null): Entities\Emails\Email|null
+	public function getEmail(string|null $id = null): AccountsEntities\Emails\Email|null
 	{
 		$email = $this->emails
-			->filter(static fn (Entities\Emails\Email $row): bool => $id !== null && $id !== '' ? $row->getId()
+			->filter(static fn (AccountsEntities\Emails\Email $row): bool => $id !== null && $id !== '' ? $row->getId()
 				->equals(Uuid\Uuid::fromString($id)) : $row->isDefault())
 			->first();
 
@@ -205,7 +205,7 @@ class Account implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Emails\Email> $emails
+	 * @param array<AccountsEntities\Emails\Email> $emails
 	 */
 	public function setEmails(array $emails): void
 	{
@@ -216,7 +216,7 @@ class Account implements Entities\Entity,
 		}
 	}
 
-	public function addEmail(Entities\Emails\Email $email): void
+	public function addEmail(AccountsEntities\Emails\Email $email): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->emails->contains($email)) {
@@ -225,7 +225,7 @@ class Account implements Entities\Entity,
 		}
 	}
 
-	public function removeEmail(Entities\Emails\Email $email): void
+	public function removeEmail(AccountsEntities\Emails\Email $email): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->emails->contains($email)) {

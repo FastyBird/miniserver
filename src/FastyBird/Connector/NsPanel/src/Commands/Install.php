@@ -24,14 +24,14 @@ use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
-use FastyBird\Connector\NsPanel\Helpers;
+use FastyBird\Connector\NsPanel\Helpers as NsPanelHelpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
@@ -118,7 +118,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly PersistenceHelpers\Database $databaseHelper,
 		private readonly Clock\Clock $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
@@ -1843,7 +1843,7 @@ class Install extends Console\Command\Command
 			$identifier = $this->findNextChannelIdentifier($device, $capabilityType);
 
 		} else {
-			$identifier = Helpers\Name::convertCapabilityToChannel($capabilityType);
+			$identifier = NsPanelHelpers\Name::convertCapabilityToChannel($capabilityType);
 
 			$findChannelQuery = new Queries\Entities\FindChannels();
 			$findChannelQuery->forDevice($device);
@@ -1973,7 +1973,7 @@ class Install extends Console\Command\Command
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($channel);
 			$findChannelPropertyQuery->byIdentifier(
-				Helpers\Name::convertAttributeToProperty($attribute->getAttribute()),
+				NsPanelHelpers\Name::convertAttributeToProperty($attribute->getAttribute()),
 			);
 
 			$property = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
@@ -2188,7 +2188,7 @@ class Install extends Console\Command\Command
 					array_map(
 						fn (DevicesEntities\Channels\Properties\Property $property): string => (string) $this->translator->translate(
 							'//ns-panel-connector.cmd.base.attribute.'
-							. Helpers\Name::convertPropertyToAttribute($property->getIdentifier())->value,
+							. NsPanelHelpers\Name::convertPropertyToAttribute($property->getIdentifier())->value,
 						),
 						$this->channelsPropertiesRepository->findAllBy($findChannelPropertiesQuery),
 					),
@@ -2282,7 +2282,7 @@ class Install extends Console\Command\Command
 			return $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 				'parent' => $connectProperty,
-				'identifier' => Helpers\Name::convertAttributeToProperty($attributeType),
+				'identifier' => NsPanelHelpers\Name::convertAttributeToProperty($attributeType),
 				'name' => (string) $this->translator->translate(
 					'//ns-panel-connector.cmd.base.attribute.' . $attributeType->value,
 				),
@@ -2301,7 +2301,7 @@ class Install extends Console\Command\Command
 
 		return $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
 			'entity' => DevicesEntities\Channels\Properties\Variable::class,
-			'identifier' => Helpers\Name::convertAttributeToProperty($attributeType),
+			'identifier' => NsPanelHelpers\Name::convertAttributeToProperty($attributeType),
 			'name' => (string) $this->translator->translate(
 				'//ns-panel-connector.cmd.base.attribute.' . $attributeType->value,
 			),
@@ -2355,7 +2355,7 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$attributeType = Helpers\Name::convertPropertyToAttribute($property->getIdentifier());
+		$attributeType = NsPanelHelpers\Name::convertPropertyToAttribute($property->getIdentifier());
 
 		$attributeMetadata = $capabilityMetadata->findAttribute($attributeType);
 
@@ -2641,7 +2641,7 @@ class Install extends Console\Command\Command
 		);
 
 		foreach ($channelProperties as $index => $property) {
-			$type = Helpers\Name::convertPropertyToAttribute($property->getIdentifier());
+			$type = NsPanelHelpers\Name::convertPropertyToAttribute($property->getIdentifier());
 
 			$value = 'N/A';
 
@@ -2676,7 +2676,7 @@ class Install extends Console\Command\Command
 				$index + 1,
 				$property->getName() ?? $property->getIdentifier(),
 				(string) $this->translator->translate(
-					'//ns-panel-connector.cmd.base.attribute.' . Helpers\Name::convertPropertyToAttribute(
+					'//ns-panel-connector.cmd.base.attribute.' . NsPanelHelpers\Name::convertPropertyToAttribute(
 						$property->getIdentifier(),
 					)->value,
 				),
@@ -3524,7 +3524,7 @@ class Install extends Console\Command\Command
 				$findChannelQuery = new Queries\Entities\FindChannels();
 				$findChannelQuery->forDevice($device);
 				$findChannelQuery->byIdentifier(
-					Helpers\Name::convertCapabilityToChannel($capabilityMeta->getCapability()),
+					NsPanelHelpers\Name::convertCapabilityToChannel($capabilityMeta->getCapability()),
 				);
 
 				$channel = $this->channelsRepository->findOneBy(
@@ -3549,7 +3549,7 @@ class Install extends Console\Command\Command
 				$findChannelQuery = new Queries\Entities\FindChannels();
 				$findChannelQuery->forDevice($device);
 				$findChannelQuery->byIdentifier(
-					Helpers\Name::convertCapabilityToChannel($capabilityMeta->getCapability()),
+					NsPanelHelpers\Name::convertCapabilityToChannel($capabilityMeta->getCapability()),
 				);
 
 				$channel = $this->channelsRepository->findOneBy(
@@ -3651,7 +3651,7 @@ class Install extends Console\Command\Command
 			$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($channel);
 			$findChannelPropertyQuery->byIdentifier(
-				Helpers\Name::convertAttributeToProperty($attributeMetadata->getAttribute()),
+				NsPanelHelpers\Name::convertAttributeToProperty($attributeMetadata->getAttribute()),
 			);
 
 			$property = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
@@ -5025,7 +5025,7 @@ class Install extends Console\Command\Command
 	): string
 	{
 		for ($i = 1; $i <= 100; $i++) {
-			$identifier = Helpers\Name::convertCapabilityToChannel($type, $i);
+			$identifier = NsPanelHelpers\Name::convertCapabilityToChannel($type, $i);
 
 			$findChannelQuery = new Queries\Entities\FindChannels();
 			$findChannelQuery->forDevice($device);

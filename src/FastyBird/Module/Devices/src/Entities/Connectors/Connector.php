@@ -18,11 +18,11 @@ namespace FastyBird\Module\Devices\Entities\Connectors;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices\Entities;
+use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -52,26 +52,26 @@ use function array_map;
 // packages, so it throws duplicate discriminator entry before any subscriber can run. An
 // explicit map skips it. This is what the removed doctrine/orm patch used to do by deferring
 // the call, and unlike the patch it needs nothing from ORM internals.
-#[ORM\DiscriminatorMap([Entities\Connectors\Generic::TYPE => Entities\Connectors\Generic::class])]
+#[ORM\DiscriminatorMap([DevicesEntities\Connectors\Generic::TYPE => DevicesEntities\Connectors\Generic::class])]
 #[ORM\MappedSuperclass]
-abstract class Connector implements Entities\Entity,
-	Entities\EntityParams,
+abstract class Connector implements DevicesEntities\Entity,
+	DevicesEntities\EntityParams,
 	SimpleAuthEntities\Owner,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
+	use DevicesEntities\TEntity;
+	use DevicesEntities\TEntityParams;
 	use SimpleAuthEntities\TOwner;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'connector_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'connector_category',
 		type: 'string',
@@ -82,47 +82,47 @@ abstract class Connector implements Entities\Entity,
 	)]
 	protected Types\ConnectorCategory $category;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'connector_identifier', type: 'string', length: 50, nullable: false)]
 	protected string $identifier;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'connector_name', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $name = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'connector_comment', type: 'text', nullable: true, options: ['default' => null])]
 	protected string|null $comment = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'connector_enabled', type: 'boolean', length: 1, nullable: false, options: ['default' => true])]
 	protected bool $enabled = true;
 
-	/** @var Common\Collections\Collection<int, Entities\Devices\Device> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, DevicesEntities\Devices\Device> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'connector',
-		targetEntity: Entities\Devices\Device::class,
+		targetEntity: DevicesEntities\Devices\Device::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $devices;
 
-	/** @var Common\Collections\Collection<int, Entities\Connectors\Properties\Property> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, DevicesEntities\Connectors\Properties\Property> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'connector',
-		targetEntity: Entities\Connectors\Properties\Property::class,
+		targetEntity: DevicesEntities\Connectors\Properties\Property::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $properties;
 
-	/** @var Common\Collections\Collection<int, Entities\Connectors\Controls\Control> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, DevicesEntities\Connectors\Controls\Control> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'connector',
-		targetEntity: Entities\Connectors\Controls\Control::class,
+		targetEntity: DevicesEntities\Connectors\Controls\Control::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
@@ -192,7 +192,7 @@ abstract class Connector implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<DevicesEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
@@ -200,7 +200,7 @@ abstract class Connector implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Devices\Device> $devices
+	 * @param array<DevicesEntities\Devices\Device> $devices
 	 */
 	public function setDevices(array $devices = []): void
 	{
@@ -213,7 +213,7 @@ abstract class Connector implements Entities\Entity,
 		}
 	}
 
-	public function addDevice(Entities\Devices\Device $device): void
+	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->devices->contains($device)) {
@@ -223,7 +223,7 @@ abstract class Connector implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Connectors\Properties\Property>
+	 * @return array<DevicesEntities\Connectors\Properties\Property>
 	 */
 	public function getProperties(): array
 	{
@@ -231,7 +231,7 @@ abstract class Connector implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Connectors\Properties\Property> $properties
+	 * @param array<DevicesEntities\Connectors\Properties\Property> $properties
 	 */
 	public function setProperties(array $properties = []): void
 	{
@@ -244,7 +244,7 @@ abstract class Connector implements Entities\Entity,
 		}
 	}
 
-	public function addProperty(Entities\Connectors\Properties\Property $property): void
+	public function addProperty(DevicesEntities\Connectors\Properties\Property $property): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->properties->contains($property)) {
@@ -254,7 +254,7 @@ abstract class Connector implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Connectors\Controls\Control>
+	 * @return array<DevicesEntities\Connectors\Controls\Control>
 	 */
 	public function getControls(): array
 	{
@@ -262,7 +262,7 @@ abstract class Connector implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Connectors\Controls\Control> $controls
+	 * @param array<DevicesEntities\Connectors\Controls\Control> $controls
 	 */
 	public function setControls(array $controls = []): void
 	{
@@ -275,7 +275,7 @@ abstract class Connector implements Entities\Entity,
 		}
 	}
 
-	public function addControl(Entities\Connectors\Controls\Control $control): void
+	public function addControl(DevicesEntities\Connectors\Controls\Control $control): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->controls->contains($control)) {
@@ -299,15 +299,15 @@ abstract class Connector implements Entities\Entity,
 			'enabled' => $this->isEnabled(),
 
 			'properties' => array_map(
-				static fn (Entities\Connectors\Properties\Property $property): string => $property->getId()->toString(),
+				static fn (DevicesEntities\Connectors\Properties\Property $property): string => $property->getId()->toString(),
 				$this->getProperties(),
 			),
 			'controls' => array_map(
-				static fn (Entities\Connectors\Controls\Control $control): string => $control->getId()->toString(),
+				static fn (DevicesEntities\Connectors\Controls\Control $control): string => $control->getId()->toString(),
 				$this->getControls(),
 			),
 			'devices' => array_map(
-				static fn (Entities\Devices\Device $device): string => $device->getId()->toString(),
+				static fn (DevicesEntities\Devices\Device $device): string => $device->getId()->toString(),
 				$this->getDevices(),
 			),
 

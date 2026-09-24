@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Virtual\Queue\Messages;
 
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -33,14 +33,14 @@ final readonly class StoreChannelPropertyState implements Message
 {
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $connector,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $device,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $channel,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 		])]
 		private Uuid\UuidInterface|string $property,

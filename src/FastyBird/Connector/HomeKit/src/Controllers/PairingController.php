@@ -21,16 +21,16 @@ use Elliptic\EdDSA;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Exceptions;
-use FastyBird\Connector\HomeKit\Helpers;
+use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
 use FastyBird\Connector\HomeKit\Models;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http as SlimRouterHttp;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -173,12 +173,12 @@ final class PairingController extends BaseController
 		private readonly Protocol\Tlv $tlv,
 		private readonly Models\Entities\Clients\ClientsRepository $clientsRepository,
 		private readonly Models\Entities\Clients\ClientsManager $clientsManager,
-		private readonly Helpers\Connector $connectorHelper,
+		private readonly HomeKitHelpers\Connector $connectorHelper,
 		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
 		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		private readonly DevicesModels\Entities\Connectors\Properties\PropertiesRepository $propertiesRepository,
 		private readonly DevicesModels\Entities\Connectors\Properties\PropertiesManager $propertiesManagers,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly PersistenceHelpers\Database $databaseHelper,
 	)
 	{
 		$this->edDsa = new EdDSA('ed25519');

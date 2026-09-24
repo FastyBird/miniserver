@@ -18,10 +18,10 @@ namespace FastyBird\Module\Ui\Entities\Dashboards\Tabs;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Entities as UiEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 use function array_map;
@@ -37,40 +37,40 @@ use function array_map;
 )]
 #[ORM\Index(columns: ['tab_name'], name: 'tab_name_idx')]
 #[ORM\UniqueConstraint(name: 'tab_identifier_unique', columns: ['tab_identifier', 'dashboard_id'])]
-class Tab implements Entities\Entity,
-	Entities\EntityParams,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+class Tab implements UiEntities\Entity,
+	UiEntities\EntityParams,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use UiEntities\TEntity;
+	use UiEntities\TEntityParams;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'tab_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	private Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'tab_identifier', type: 'string', nullable: false)]
 	private string $identifier;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'tab_name', type: 'string', nullable: true, options: ['default' => null])]
 	private string|null $name = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'tab_comment', type: 'text', nullable: true, options: ['default' => null])]
 	private string|null $comment = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'tab_priority', type: 'integer', nullable: false, options: ['default' => 0])]
 	private int $priority = 0;
 
-	/** @var Common\Collections\Collection<int, Entities\Widgets\Widget> */
-	#[IPubDoctrine\Crud(writable: true)]
-	#[ORM\ManyToMany(targetEntity: Entities\Widgets\Widget::class, inversedBy: 'tabs')]
+	/** @var Common\Collections\Collection<int, UiEntities\Widgets\Widget> */
+	#[Attribute\Crud(writable: true)]
+	#[ORM\ManyToMany(targetEntity: UiEntities\Widgets\Widget::class, inversedBy: 'tabs')]
 	#[ORM\JoinTable(
 		name: 'fb_ui_module_widgets_tabs',
 		joinColumns: [
@@ -92,7 +92,7 @@ class Tab implements Entities\Entity,
 	private Common\Collections\Collection $widgets;
 
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Dashboards\Dashboard::class,
+		targetEntity: UiEntities\Dashboards\Dashboard::class,
 		cascade: ['persist'],
 		inversedBy: 'tabs',
 	)]
@@ -102,10 +102,10 @@ class Tab implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	protected Entities\Dashboards\Dashboard $dashboard;
+	protected UiEntities\Dashboards\Dashboard $dashboard;
 
 	public function __construct(
-		Entities\Dashboards\Dashboard $dashboard,
+		UiEntities\Dashboards\Dashboard $dashboard,
 		string $identifier,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -154,12 +154,12 @@ class Tab implements Entities\Entity,
 		$this->priority = $priority;
 	}
 
-	public function getDashboard(): Entities\Dashboards\Dashboard
+	public function getDashboard(): UiEntities\Dashboards\Dashboard
 	{
 		return $this->dashboard;
 	}
 
-	public function addWidget(Entities\Widgets\Widget $widget): void
+	public function addWidget(UiEntities\Widgets\Widget $widget): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->widgets->contains($widget)) {
@@ -169,7 +169,7 @@ class Tab implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Widgets\Widget>
+	 * @return array<UiEntities\Widgets\Widget>
 	 */
 	public function getWidgets(): array
 	{
@@ -177,7 +177,7 @@ class Tab implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Widgets\Widget> $widgets
+	 * @param array<UiEntities\Widgets\Widget> $widgets
 	 */
 	public function setWidgets(array $widgets = []): void
 	{
@@ -188,15 +188,15 @@ class Tab implements Entities\Entity,
 		}
 	}
 
-	public function getWidget(string $id): Entities\Widgets\Widget|null
+	public function getWidget(string $id): UiEntities\Widgets\Widget|null
 	{
 		$found = $this->widgets
-			->filter(static fn (Entities\Widgets\Widget $row): bool => $id === $row->getId()->toString());
+			->filter(static fn (UiEntities\Widgets\Widget $row): bool => $id === $row->getId()->toString());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
-	public function removeWidget(Entities\Widgets\Widget $widget): void
+	public function removeWidget(UiEntities\Widgets\Widget $widget): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->widgets->contains($widget)) {
@@ -219,7 +219,7 @@ class Tab implements Entities\Entity,
 
 			'dashboard' => $this->getDashboard()->getId()->toString(),
 			'widgets' => array_map(
-				static fn (Entities\Widgets\Widget $widget): string => $widget->getId()->toString(),
+				static fn (UiEntities\Widgets\Widget $widget): string => $widget->getId()->toString(),
 				$this->getWidgets(),
 			),
 

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Entities;
 
-use FastyBird\Core\Entities\DoctrineCrud;
+use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 
@@ -27,7 +27,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface Entity extends DoctrineCrud\IEntity
+interface Entity extends Entities\CrudEntity
 {
 
 	public function getId(): Uuid\UuidInterface;

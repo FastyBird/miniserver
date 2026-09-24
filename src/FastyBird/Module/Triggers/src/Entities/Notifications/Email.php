@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Triggers\Entities\Notifications;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities;
 use Ramsey\Uuid;
 use function array_merge;
@@ -31,13 +31,13 @@ use function array_merge;
 		'comment' => 'Emails notifications',
 	],
 )]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Email extends Notification
 {
 
 	public const TYPE = 'email';
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'notification_email', type: 'string', nullable: false)]
 	private string $email;
 

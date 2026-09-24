@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Documents\Devices;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -60,7 +60,7 @@ abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner,
 	 * @param array<Uuid\UuidInterface> $channels
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BackedEnumValue(class: Types\DeviceCategory::class),
@@ -69,7 +69,7 @@ abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner,
 		private readonly Types\DeviceCategory $category,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $identifier,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $connector,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
@@ -82,27 +82,27 @@ abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner,
 		])]
 		private readonly string|null $comment = null,
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $parents = [],
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $children = [],
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $properties = [],
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $controls = [],
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $channels = [],
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		protected readonly Uuid\UuidInterface|null $owner = null,

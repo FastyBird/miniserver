@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Entities\Widgets\Displays\Parameters;
 
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Ui\Types;
 use function is_string;
 
@@ -33,7 +33,7 @@ use function is_string;
 trait TIcon
 {
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	protected Types\WidgetIcon|null $icon = null;
 
 	public function getIcon(): Types\WidgetIcon|null

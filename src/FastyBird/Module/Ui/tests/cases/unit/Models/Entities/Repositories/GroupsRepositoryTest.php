@@ -4,8 +4,8 @@ namespace FastyBird\Module\Ui\Tests\Cases\Unit\Models\Entities\Repositories;
 
 use Error;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Module\Ui\Exceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Tests;
@@ -22,8 +22,8 @@ final class GroupsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws UiExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -41,8 +41,8 @@ final class GroupsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws UiExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -63,8 +63,8 @@ final class GroupsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws UiExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

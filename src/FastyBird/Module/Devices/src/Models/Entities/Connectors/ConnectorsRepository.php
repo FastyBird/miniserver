@@ -18,8 +18,8 @@ namespace FastyBird\Module\Devices\Models\Entities\Connectors;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Queries;
@@ -45,7 +45,7 @@ final class ConnectorsRepository
 	private array $repository = [];
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -137,7 +137,7 @@ final class ConnectorsRepository
 	 * @param Queries\Entities\FindConnectors<T> $queryObject
 	 * @param class-string<T> $type
 	 *
-	 * @return DoctrineOrmQuery\ResultSet<T>
+	 * @return Query\ResultSet<T>
 	 *
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidState
@@ -145,10 +145,10 @@ final class ConnectorsRepository
 	public function getResultSet(
 		Queries\Entities\FindConnectors $queryObject,
 		string $type = Entities\Connectors\Connector::class,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		$result = $this->database->query(
-			fn (): DoctrineOrmQuery\ResultSet|array => $queryObject->fetch($this->getRepository($type)),
+			fn (): Query\ResultSet|array => $queryObject->fetch($this->getRepository($type)),
 		);
 
 		if (is_array($result)) {

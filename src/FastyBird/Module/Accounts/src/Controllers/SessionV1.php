@@ -20,17 +20,17 @@ use Doctrine;
 use Exception;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Core\Types\SimpleAuth as SimpleAuthTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Router;
 use FastyBird\Module\Accounts\Schemas;
 use FastyBird\Module\Accounts\Security;
@@ -68,9 +68,9 @@ final class SessionV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws SimpleAuthExceptions\UnauthorizedAccess
 	 *
@@ -90,8 +90,8 @@ final class SessionV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 *
@@ -133,13 +133,13 @@ final class SessionV1 extends BaseV1
 			$this->user->login((string) $attributes->get('uid'), (string) $attributes->get('password'));
 
 		} catch (Throwable $ex) {
-			if ($ex instanceof Exceptions\AccountNotFound) {
+			if ($ex instanceof AccountsExceptions\AccountNotFound) {
 				throw new JsonApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.session.messages.unknownAccount.heading')),
 					strval($this->translator->translate('//accounts-module.session.messages.unknownAccount.message')),
 				);
-			} elseif ($ex instanceof Exceptions\AuthenticationFailed) {
+			} elseif ($ex instanceof AccountsExceptions\AuthenticationFailed) {
 				throw match ($ex->getCode()) {
 					// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 					Security\Authenticator::ACCOUNT_PROFILE_BLOCKED, Security\Authenticator::ACCOUNT_PROFILE_DELETED => new JsonApiExceptions\JsonApiError(
@@ -247,8 +247,8 @@ final class SessionV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 *
@@ -388,11 +388,11 @@ final class SessionV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws SimpleAuthExceptions\UnauthorizedAccess
@@ -482,8 +482,8 @@ final class SessionV1 extends BaseV1
 	/**
 	 * @throws SimpleAuthExceptions\UnauthorizedAccess
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 */
 	private function getToken(Message\ServerRequestInterface $request): Entities\Tokens\AccessToken

@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Ramsey\Uuid;
@@ -25,13 +25,13 @@ use Ramsey\Uuid;
 /**
  * Find identities entities query
  *
- * @extends  DoctrineOrmQuery\QueryObject<Entities\Identities\Identity>
+ * @extends  Query\QueryObject<Entities\Identities\Identity>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindIdentities extends DoctrineOrmQuery\QueryObject
+class FindIdentities extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

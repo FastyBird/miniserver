@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 use Doctrine\DBAL;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -39,7 +39,7 @@ use function array_merge;
  * @property-read DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository
  * @property-read DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository
  * @property-read DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager
- * @property-read ToolsHelpers\Database $databaseHelper
+ * @property-read Helpers\Database $databaseHelper
  * @property-read Zigbee2Mqtt\Logger $logger
  */
 trait ChannelProperty

@@ -42,7 +42,7 @@ nettrineDbal:
 				commented: false
 
 			utcdatetime:
-				class: FastyBird\Core\Types\DoctrineTimestampable\UTCDateTime
+				class: FastyBird\Core\Persistence\Types\UTCDateTime
 				commented: false
 
 		typesMapping:

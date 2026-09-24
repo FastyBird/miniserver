@@ -18,14 +18,13 @@ namespace FastyBird\Module\Devices\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Entities;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Router;
@@ -137,7 +136,7 @@ final class ConnectorPropertiesV1 extends BaseV1
 
 			} catch (JsonApiExceptions\JsonApi $ex) {
 				throw $ex;
-			} catch (DoctrineCrudExceptions\MissingRequiredField $ex) {
+			} catch (PersistenceExceptions\MissingRequiredField $ex) {
 				throw new JsonApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//devices-module.base.messages.missingAttribute.heading')),
@@ -146,7 +145,7 @@ final class ConnectorPropertiesV1 extends BaseV1
 						'pointer' => '/data/attributes/' . Utilities\Api::fieldToJsonApi($ex->getField()),
 					],
 				);
-			} catch (DoctrineCrudExceptions\EntityCreation $ex) {
+			} catch (PersistenceExceptions\EntityCreation $ex) {
 				throw new JsonApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//devices-module.base.messages.missingAttribute.heading')),
@@ -320,9 +319,9 @@ final class ConnectorPropertiesV1 extends BaseV1
 	/**
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws PersistenceExceptions\Query
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws DevicesExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws JsonApiExceptions\JsonApiError

@@ -19,7 +19,7 @@ use Doctrine\DBAL;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -43,7 +43,7 @@ use function React\Async\await;
  * @property-read DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager
  * @property-read DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository
  * @property-read DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager
- * @property-read ToolsHelpers\Database $databaseHelper
+ * @property-read Helpers\Database $databaseHelper
  * @property-read Tuya\Logger $logger
  */
 trait ChannelProperty

@@ -17,21 +17,21 @@ namespace FastyBird\Automator\DateTime\Entities\Conditions;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Ramsey\Uuid;
 use function array_merge;
 use function assert;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class DateCondition extends TriggersEntities\Conditions\Condition
 {
 
 	public const TYPE = 'date';
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'condition_date', type: 'datetime_immutable', nullable: true)]
 	private DateTimeInterface|null $date;
 

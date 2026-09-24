@@ -16,13 +16,13 @@
 namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Ui\Entities;
 use function array_merge;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class ChartGraph extends Display implements Entities\Widgets\Displays\Parameters\MinimumValue,
 	Entities\Widgets\Displays\Parameters\MaximumValue,
 	Entities\Widgets\Displays\Parameters\StepValue,
@@ -36,7 +36,7 @@ class ChartGraph extends Display implements Entities\Widgets\Displays\Parameters
 
 	public const TYPE = 'chart-graph';
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	protected bool $enableMinMax;
 
 	public static function getType(): string

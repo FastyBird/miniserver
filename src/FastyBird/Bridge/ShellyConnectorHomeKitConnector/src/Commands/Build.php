@@ -28,8 +28,8 @@ use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -79,7 +79,7 @@ class Build extends Console\Command\Command
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)

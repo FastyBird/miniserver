@@ -19,17 +19,16 @@ use Doctrine;
 use Exception;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Queries;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities as ValuesUtilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -172,7 +171,7 @@ class BridgesV1 extends BaseV1
 
 			} catch (JsonApiExceptions\JsonApi $ex) {
 				throw $ex;
-			} catch (DoctrineCrudExceptions\MissingRequiredField $ex) {
+			} catch (PersistenceExceptions\MissingRequiredField $ex) {
 				throw new JsonApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate(
@@ -185,7 +184,7 @@ class BridgesV1 extends BaseV1
 						'pointer' => '/data/attributes/' . DevicesUtilities\Api::fieldToJsonApi($ex->getField()),
 					],
 				);
-			} catch (DoctrineCrudExceptions\EntityCreation $ex) {
+			} catch (PersistenceExceptions\EntityCreation $ex) {
 				if ($ex->getField() === Schemas\Devices\Shelly::RELATIONSHIPS_PARENTS) {
 					throw new JsonApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -467,9 +466,9 @@ class BridgesV1 extends BaseV1
 	/**
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws PersistenceExceptions\Query
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws JsonApiExceptions\JsonApiError

@@ -18,8 +18,8 @@ namespace FastyBird\Module\Triggers\Models\Entities\Triggers\Controls;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Queries;
 use Nette;
@@ -42,7 +42,7 @@ final class ControlsRepository
 	private ORM\EntityRepository|null $repository = null;
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -69,7 +69,7 @@ final class ControlsRepository
 	{
 		return $this->database->query(
 			function () use ($queryObject): array {
-				/** @var array<Entities\Triggers\Controls\Control>|DoctrineOrmQuery\ResultSet<Entities\Triggers\Controls\Control> $result */
+				/** @var array<Entities\Triggers\Controls\Control>|Query\ResultSet<Entities\Triggers\Controls\Control> $result */
 				$result = $queryObject->fetch($this->getRepository());
 
 				if (is_array($result)) {
@@ -85,17 +85,17 @@ final class ControlsRepository
 	}
 
 	/**
-	 * @return DoctrineOrmQuery\ResultSet<Entities\Triggers\Controls\Control>
+	 * @return Query\ResultSet<Entities\Triggers\Controls\Control>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindTriggerControls $queryObject,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		return $this->database->query(
-			function () use ($queryObject): DoctrineOrmQuery\ResultSet {
-				/** @var DoctrineOrmQuery\ResultSet<Entities\Triggers\Controls\Control> $result */
+			function () use ($queryObject): Query\ResultSet {
+				/** @var Query\ResultSet<Entities\Triggers\Controls\Control> $result */
 				$result = $queryObject->fetch($this->getRepository());
 
 				return $result;

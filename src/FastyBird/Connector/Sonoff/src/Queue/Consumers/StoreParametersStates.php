@@ -21,7 +21,7 @@ use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -61,7 +61,7 @@ final class StoreParametersStates implements Queue\Consumer
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
 		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 	)
 	{
 	}

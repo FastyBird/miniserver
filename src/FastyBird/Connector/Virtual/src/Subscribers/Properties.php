@@ -21,12 +21,12 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Connector\Virtual;
 use FastyBird\Connector\Virtual\Entities;
-use FastyBird\Connector\Virtual\Exceptions;
+use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers;
 use FastyBird\Connector\Virtual\Queries;
 use FastyBird\Connector\Virtual\Types as VirtualTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -65,9 +65,9 @@ final class Properties implements Common\EventSubscriber
 	 * @param Persistence\Event\LifecycleEventArgs<ORM\EntityManagerInterface> $eventArgs
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
+	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function postPersist(Persistence\Event\LifecycleEventArgs $eventArgs): void

@@ -18,8 +18,8 @@ namespace FastyBird\Module\Triggers\Models\Entities\Triggers;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Queries;
 use Nette;
@@ -42,7 +42,7 @@ final class TriggersRepository
 	private array $repository = [];
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -77,7 +77,7 @@ final class TriggersRepository
 	{
 		return $this->database->query(
 			function () use ($queryObject, $type): array {
-				/** @var array<Entities\Triggers\Trigger>|DoctrineOrmQuery\ResultSet<Entities\Triggers\Trigger> $result */
+				/** @var array<Entities\Triggers\Trigger>|Query\ResultSet<Entities\Triggers\Trigger> $result */
 				$result = $queryObject->fetch($this->getRepository($type));
 
 				if (is_array($result)) {
@@ -95,18 +95,18 @@ final class TriggersRepository
 	/**
 	 * @param class-string<Entities\Triggers\Trigger> $type
 	 *
-	 * @return DoctrineOrmQuery\ResultSet<Entities\Triggers\Trigger>
+	 * @return Query\ResultSet<Entities\Triggers\Trigger>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindTriggers $queryObject,
 		string $type = Entities\Triggers\Trigger::class,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		return $this->database->query(
-			function () use ($queryObject, $type): DoctrineOrmQuery\ResultSet {
-				/** @var DoctrineOrmQuery\ResultSet<Entities\Triggers\Trigger> $result */
+			function () use ($queryObject, $type): Query\ResultSet {
+				/** @var Query\ResultSet<Entities\Triggers\Trigger> $result */
 				$result = $queryObject->fetch($this->getRepository($type));
 
 				return $result;

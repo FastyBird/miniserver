@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents\States\Devices\Properties\Actions;
 
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
@@ -44,9 +44,9 @@ final readonly class Action implements CoreDocuments\Document
 	public function __construct(
 		#[ObjectMapper\Rules\BackedEnumValue(class: Types\PropertyAction::class)]
 		private Types\PropertyAction $action,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $device,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: DevicesDocuments\States\ActionValues::class),

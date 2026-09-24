@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
-use FastyBird\Core\Entities\DoctrineCrud as DoctrineCrudEntities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Ui\Entities as UiEntities;
 use function array_merge;
@@ -41,7 +41,7 @@ abstract class Property extends UiEntities\Widgets\DataSources\DataSource
 		);
 	}
 
-	public function getRelation(string $relation): DoctrineCrudEntities\IEntity|null
+	public function getRelation(string $relation): PersistenceEntities\CrudEntity|null
 	{
 		if ($relation === Schemas\Widgets\DataSources\ChannelProperty::RELATIONSHIPS_WIDGET) {
 			return $this->getWidget();

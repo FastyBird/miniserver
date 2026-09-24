@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Helpers\JsonApi;
 
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use ReflectionAttribute;
 use ReflectionProperty;
 use function array_reduce;
@@ -22,7 +22,7 @@ final class CrudReader
 		$crudAttribute = array_reduce(
 			$rp->getAttributes(),
 			static function (ReflectionAttribute|null $carry, ReflectionAttribute $attribute): ReflectionAttribute|null {
-				if ($carry === null && $attribute->getName() === IPubDoctrine\Crud::class) {
+				if ($carry === null && $attribute->getName() === Attribute\Crud::class) {
 					return $attribute;
 				}
 
@@ -35,7 +35,7 @@ final class CrudReader
 		}
 
 		$crud = $crudAttribute->newInstance();
-		assert($crud instanceof IPubDoctrine\Crud);
+		assert($crud instanceof Attribute\Crud);
 
 		return [$crud->isRequired(), $crud->isWritable()];
 	}

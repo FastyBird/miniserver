@@ -20,16 +20,15 @@ use Doctrine;
 use Exception;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Hydrators;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
@@ -82,7 +81,7 @@ final class AccountsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function index(
@@ -100,7 +99,7 @@ final class AccountsV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -119,10 +118,10 @@ final class AccountsV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -160,7 +159,7 @@ final class AccountsV1 extends BaseV1
 
 		} catch (JsonApiExceptions\JsonApi $ex) {
 			throw $ex;
-		} catch (Exceptions\AccountRoleInvalid) {
+		} catch (AccountsExceptions\AccountRoleInvalid) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidRelation.heading')),
@@ -169,7 +168,7 @@ final class AccountsV1 extends BaseV1
 					'pointer' => '/data/relationships/roles/data/id',
 				],
 			);
-		} catch (DoctrineCrudExceptions\EntityCreation $ex) {
+		} catch (PersistenceExceptions\EntityCreation $ex) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
@@ -255,10 +254,10 @@ final class AccountsV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -299,7 +298,7 @@ final class AccountsV1 extends BaseV1
 
 		} catch (JsonApiExceptions\JsonApi $ex) {
 			throw $ex;
-		} catch (Exceptions\AccountRoleInvalid) {
+		} catch (AccountsExceptions\AccountRoleInvalid) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidRelation.heading')),
@@ -338,9 +337,9 @@ final class AccountsV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws PersistenceExceptions\Query
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
@@ -415,7 +414,7 @@ final class AccountsV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -497,8 +496,8 @@ final class AccountsV1 extends BaseV1
 	/**
 	 * @throws CasbinExceptions\CasbinException
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\AccountRoleInvalid
+	 * @throws PersistenceExceptions\Query
+	 * @throws AccountsExceptions\AccountRoleInvalid
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function assignAccountToRoles(JsonApi\IDocument $document, Entities\Accounts\Account $account): void
@@ -542,7 +541,7 @@ final class AccountsV1 extends BaseV1
 					in_array($assignRole->getName(), Accounts\Constants::SINGLE_ROLES, true)
 					&& count($assignRoles) > 1
 				) {
-					throw new Exceptions\AccountRoleInvalid(
+					throw new AccountsExceptions\AccountRoleInvalid(
 						sprintf('Role %s could not be combined with other roles', $assignRole->getName()),
 					);
 				}
@@ -552,7 +551,7 @@ final class AccountsV1 extends BaseV1
 				 * can not be assigned to account
 				 */
 				if (in_array($assignRole->getName(), Accounts\Constants::NOT_ASSIGNABLE_ROLES, true)) {
-					throw new Exceptions\AccountRoleInvalid(
+					throw new AccountsExceptions\AccountRoleInvalid(
 						sprintf('Role %s could not be assigned to account', $assignRole->getName()),
 					);
 				}

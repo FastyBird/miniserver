@@ -19,12 +19,12 @@ use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Entities;
 use FastyBird\Connector\Sonoff\Exceptions;
-use FastyBird\Connector\Sonoff\Helpers;
+use FastyBird\Connector\Sonoff\Helpers as SonoffHelpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -58,7 +58,7 @@ final class StoreDevice implements Queue\Consumer
 		protected readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
 		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		protected readonly ToolsHelpers\Database $databaseHelper,
+		protected readonly PersistenceHelpers\Database $databaseHelper,
 		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
@@ -230,7 +230,7 @@ final class StoreDevice implements Queue\Consumer
 							Utils\ArrayHash::from([
 								'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
 								'device' => $device,
-								'identifier' => Helpers\Transformer::deviceParameterToProperty(
+								'identifier' => SonoffHelpers\Transformer::deviceParameterToProperty(
 									$parameter->getIdentifier(),
 								),
 								'name' => $parameter->getName(),

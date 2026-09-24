@@ -19,11 +19,11 @@ use Contributte\Translation;
 use Doctrine\Persistence;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiJsonApi;
-use FastyBird\Core\Entities\DoctrineCrud as DoctrineCrudEntities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
-use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Entities as UiEntities;
 use FastyBird\Module\Ui\Hydrators;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
@@ -38,7 +38,7 @@ use function strval;
 /**
  * Widget entity hydrator
  *
- * @template  T of Entities\Widgets\Widget
+ * @template  T of UiEntities\Widgets\Widget
  * @extends   JsonApiHydrators\Hydrator<T>
  *
  * @package        FastyBird:UIModule!
@@ -69,10 +69,10 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 		Schemas\Widgets\Widget::RELATIONSHIPS_DATA_SOURCES => 'dataSources',
 	];
 
-	/** @var JsonApiJsonApi\SchemaContainer<DoctrineCrudEntities\IEntity>|null */
+	/** @var JsonApiJsonApi\SchemaContainer<PersistenceEntities\CrudEntity>|null */
 	private JsonApiJsonApi\SchemaContainer|null $jsonApiSchemaContainer = null;
 
-	/** @var array<Hydrators\Widgets\DataSources\DataSource<Entities\Widgets\DataSources\DataSource>>|null  */
+	/** @var array<Hydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>>|null  */
 	private array|null $dataSourcesHydrators = null;
 
 	public function __construct(
@@ -140,119 +140,119 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	{
 		switch ($type) {
 			case Schemas\Widgets\Display\AnalogValue::SCHEMA_TYPE:
-				$entityMapping = $this->mapEntity(Entities\Widgets\Displays\AnalogValue::class);
+				$entityMapping = $this->mapEntity(UiEntities\Widgets\Displays\AnalogValue::class);
 
 				$display = $this->hydrateAttributes(
-					Entities\Widgets\Displays\AnalogValue::class,
+					UiEntities\Widgets\Displays\AnalogValue::class,
 					$attributes,
 					$entityMapping,
 					null,
 					null,
 				);
 
-				$display['entity'] = Entities\Widgets\Displays\AnalogValue::class;
+				$display['entity'] = UiEntities\Widgets\Displays\AnalogValue::class;
 				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== ''
 					? Uuid\Uuid::fromString($identifier)
 					: $identifier;
 
 				return $display;
 			case Schemas\Widgets\Display\Button::SCHEMA_TYPE:
-				$entityMapping = $this->mapEntity(Entities\Widgets\Displays\Button::class);
+				$entityMapping = $this->mapEntity(UiEntities\Widgets\Displays\Button::class);
 
 				$display = $this->hydrateAttributes(
-					Entities\Widgets\Displays\Button::class,
+					UiEntities\Widgets\Displays\Button::class,
 					$attributes,
 					$entityMapping,
 					null,
 					null,
 				);
 
-				$display['entity'] = Entities\Widgets\Displays\Button::class;
+				$display['entity'] = UiEntities\Widgets\Displays\Button::class;
 				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== ''
 					? Uuid\Uuid::fromString($identifier)
 					: $identifier;
 
 				return $display;
 			case Schemas\Widgets\Display\ChartGraph::SCHEMA_TYPE:
-				$entityMapping = $this->mapEntity(Entities\Widgets\Displays\ChartGraph::class);
+				$entityMapping = $this->mapEntity(UiEntities\Widgets\Displays\ChartGraph::class);
 
 				$display = $this->hydrateAttributes(
-					Entities\Widgets\Displays\ChartGraph::class,
+					UiEntities\Widgets\Displays\ChartGraph::class,
 					$attributes,
 					$entityMapping,
 					null,
 					null,
 				);
 
-				$display['entity'] = Entities\Widgets\Displays\ChartGraph::class;
+				$display['entity'] = UiEntities\Widgets\Displays\ChartGraph::class;
 				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== ''
 					? Uuid\Uuid::fromString($identifier)
 					: $identifier;
 
 				return $display;
 			case Schemas\Widgets\Display\DigitalValue::SCHEMA_TYPE:
-				$entityMapping = $this->mapEntity(Entities\Widgets\Displays\DigitalValue::class);
+				$entityMapping = $this->mapEntity(UiEntities\Widgets\Displays\DigitalValue::class);
 
 				$display = $this->hydrateAttributes(
-					Entities\Widgets\Displays\DigitalValue::class,
+					UiEntities\Widgets\Displays\DigitalValue::class,
 					$attributes,
 					$entityMapping,
 					null,
 					null,
 				);
 
-				$display['entity'] = Entities\Widgets\Displays\DigitalValue::class;
+				$display['entity'] = UiEntities\Widgets\Displays\DigitalValue::class;
 				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== ''
 					? Uuid\Uuid::fromString($identifier)
 					: $identifier;
 
 				return $display;
 			case Schemas\Widgets\Display\Gauge::SCHEMA_TYPE:
-				$entityMapping = $this->mapEntity(Entities\Widgets\Displays\Gauge::class);
+				$entityMapping = $this->mapEntity(UiEntities\Widgets\Displays\Gauge::class);
 
 				$display = $this->hydrateAttributes(
-					Entities\Widgets\Displays\Gauge::class,
+					UiEntities\Widgets\Displays\Gauge::class,
 					$attributes,
 					$entityMapping,
 					null,
 					null,
 				);
 
-				$display['entity'] = Entities\Widgets\Displays\Gauge::class;
+				$display['entity'] = UiEntities\Widgets\Displays\Gauge::class;
 				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== ''
 					? Uuid\Uuid::fromString($identifier)
 					: $identifier;
 
 				return $display;
 			case Schemas\Widgets\Display\GroupedButton::SCHEMA_TYPE:
-				$entityMapping = $this->mapEntity(Entities\Widgets\Displays\GroupedButton::class);
+				$entityMapping = $this->mapEntity(UiEntities\Widgets\Displays\GroupedButton::class);
 
 				$display = $this->hydrateAttributes(
-					Entities\Widgets\Displays\GroupedButton::class,
+					UiEntities\Widgets\Displays\GroupedButton::class,
 					$attributes,
 					$entityMapping,
 					null,
 					null,
 				);
 
-				$display['entity'] = Entities\Widgets\Displays\GroupedButton::class;
+				$display['entity'] = UiEntities\Widgets\Displays\GroupedButton::class;
 				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== ''
 					? Uuid\Uuid::fromString($identifier)
 					: $identifier;
 
 				return $display;
 			case Schemas\Widgets\Display\Slider::SCHEMA_TYPE:
-				$entityMapping = $this->mapEntity(Entities\Widgets\Displays\Slider::class);
+				$entityMapping = $this->mapEntity(UiEntities\Widgets\Displays\Slider::class);
 
 				$display = $this->hydrateAttributes(
-					Entities\Widgets\Displays\Slider::class,
+					UiEntities\Widgets\Displays\Slider::class,
 					$attributes,
 					$entityMapping,
 					null,
 					null,
 				);
 
-				$display['entity'] = Entities\Widgets\Displays\Slider::class;
+				$display['entity'] = UiEntities\Widgets\Displays\Slider::class;
 				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== ''
 					? Uuid\Uuid::fromString($identifier)
 					: $identifier;
@@ -422,7 +422,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @return JsonApiJsonApi\SchemaContainer<DoctrineCrudEntities\IEntity>
+	 * @return JsonApiJsonApi\SchemaContainer<PersistenceEntities\CrudEntity>
 	 *
 	 * @throws DI\MissingServiceException
 	 */
@@ -438,7 +438,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @return array<Hydrators\Widgets\DataSources\DataSource<Entities\Widgets\DataSources\DataSource>>
+	 * @return array<Hydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>>
 	 *
 	 * @throws DI\MissingServiceException
 	 */

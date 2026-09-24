@@ -17,10 +17,9 @@ namespace FastyBird\Module\Ui\Entities\Widgets\DataSources;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineCrud;
-use FastyBird\Core\Entities\DoctrineTimestampable;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Entities as UiEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 
@@ -41,17 +40,17 @@ use Ramsey\Uuid;
 // calls addDefaultDiscriminatorMap() before dispatching loadClassMetadata and only when the
 // map is empty, and that default keys entries on short class names. An explicit map skips
 // it, which is what the doctrine/orm patch used to do by deferring the call.
-#[ORM\DiscriminatorMap([Entities\Widgets\DataSources\Generic::TYPE => Entities\Widgets\DataSources\Generic::class])]
+#[ORM\DiscriminatorMap([UiEntities\Widgets\DataSources\Generic::TYPE => UiEntities\Widgets\DataSources\Generic::class])]
 #[ORM\MappedSuperclass]
-abstract class DataSource implements Entities\Entity,
-	Entities\EntityParams,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+abstract class DataSource implements UiEntities\Entity,
+	UiEntities\EntityParams,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use UiEntities\TEntity;
+	use UiEntities\TEntityParams;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'data_source_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
@@ -59,7 +58,7 @@ abstract class DataSource implements Entities\Entity,
 	protected Uuid\UuidInterface $id;
 
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Widgets\Widget::class,
+		targetEntity: UiEntities\Widgets\Widget::class,
 		cascade: ['persist'],
 		inversedBy: 'dataSources',
 	)]
@@ -69,10 +68,10 @@ abstract class DataSource implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	protected Entities\Widgets\Widget $widget;
+	protected UiEntities\Widgets\Widget $widget;
 
 	public function __construct(
-		Entities\Widgets\Widget $widget,
+		UiEntities\Widgets\Widget $widget,
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
@@ -85,14 +84,14 @@ abstract class DataSource implements Entities\Entity,
 
 	abstract public static function getType(): string;
 
-	public function getWidget(): Entities\Widgets\Widget
+	public function getWidget(): UiEntities\Widgets\Widget
 	{
 		return $this->widget;
 	}
 
 	abstract public function hasRelation(string $relation): bool;
 
-	abstract public function getRelation(string $relation): DoctrineCrud\IEntity|null;
+	abstract public function getRelation(string $relation): PersistenceEntities\CrudEntity|null;
 
 	/**
 	 * {@inheritDoc}

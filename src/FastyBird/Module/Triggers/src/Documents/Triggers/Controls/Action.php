@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Types;
 use Orisai\ObjectMapper;
@@ -40,9 +40,9 @@ final readonly class Action implements Documents\Document
 	public function __construct(
 		#[ObjectMapper\Rules\BackedEnumValue(class: Types\TriggerAction::class)]
 		private Types\TriggerAction $action,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $trigger,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $control,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),

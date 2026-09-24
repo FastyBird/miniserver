@@ -16,10 +16,10 @@
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class TelevisionSpeaker extends Viera
 {
 

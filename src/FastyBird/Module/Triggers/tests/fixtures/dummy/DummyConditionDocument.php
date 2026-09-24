@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Types;
 use Orisai\ObjectMapper;
@@ -20,7 +20,7 @@ final class DummyConditionDocument extends TriggersDocuments\Conditions\Conditio
 		Uuid\UuidInterface $trigger,
 		string $type,
 		bool $enabled,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		#[ObjectMapper\Modifiers\FieldName('watch_item')]
 		private readonly Uuid\UuidInterface $watchItem,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]

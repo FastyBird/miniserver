@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Triggers\Models\Entities\Actions;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Crud;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Models;
 use Nette;
@@ -38,23 +38,23 @@ final class ActionsManager
 
 	use Nette\SmartObject;
 
-	/** @var DoctrineCrudCrud\IEntityCrud<Entities\Actions\Action>|null */
-	private DoctrineCrudCrud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\IEntityCrud<Entities\Actions\Action>|null */
+	private Crud\IEntityCrud|null $entityCrud = null;
 
 	/**
-	 * @param DoctrineCrudCrud\IEntityCrudFactory<Entities\Actions\Action> $entityCrudFactory
+	 * @param Crud\CrudFactory<Entities\Actions\Action> $entityCrudFactory
 	 */
 	public function __construct(
-		private readonly DoctrineCrudCrud\IEntityCrudFactory $entityCrudFactory,
+		private readonly Crud\CrudFactory $entityCrudFactory,
 	)
 	{
 	}
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Actions\Action
 	{
@@ -66,8 +66,8 @@ final class ActionsManager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function update(
 		Entities\Actions\Action $entity,
@@ -81,8 +81,8 @@ final class ActionsManager
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function delete(Entities\Actions\Action $entity): bool
 	{
@@ -91,9 +91,9 @@ final class ActionsManager
 	}
 
 	/**
-	 * @return DoctrineCrudCrud\IEntityCrud<Entities\Actions\Action>
+	 * @return Crud\IEntityCrud<Entities\Actions\Action>
 	 */
-	public function getEntityCrud(): DoctrineCrudCrud\IEntityCrud
+	public function getEntityCrud(): Crud\IEntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Actions\Action::class);

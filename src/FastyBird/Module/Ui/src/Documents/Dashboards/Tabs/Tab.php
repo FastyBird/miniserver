@@ -17,7 +17,7 @@ namespace FastyBird\Module\Ui\Documents\Dashboards\Tabs;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
@@ -52,9 +52,9 @@ final class Tab implements UiDocuments\Document, CoreDocuments\Owner, CoreDocume
 	 * @param array<Uuid\UuidInterface> $widgets
 	 */
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $dashboard,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $identifier,
@@ -71,11 +71,11 @@ final class Tab implements UiDocuments\Document, CoreDocuments\Owner, CoreDocume
 		#[ObjectMapper\Rules\IntValue()]
 		private readonly int $priority = 0,
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $widgets = [],
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		protected readonly Uuid\UuidInterface|null $owner = null,

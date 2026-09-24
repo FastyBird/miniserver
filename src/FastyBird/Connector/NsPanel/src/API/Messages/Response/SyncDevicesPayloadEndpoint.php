@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\API\Messages\Response;
 
 use FastyBird\Connector\NsPanel\API;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use stdClass;
@@ -33,7 +33,7 @@ final readonly class SyncDevicesPayloadEndpoint implements API\Messages\Message
 {
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		#[ObjectMapper\Modifiers\FieldName('third_serial_number')]
 		private Uuid\UuidInterface $thirdSerialNumber,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]

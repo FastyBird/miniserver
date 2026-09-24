@@ -22,7 +22,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -41,7 +41,7 @@ use Ramsey\Uuid;
  * @property-read DevicesModels\Entities\Devices\DevicesRepository $devicesRepository
  * @property-read DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository
  * @property-read DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager
- * @property-read ToolsHelpers\Database $databaseHelper
+ * @property-read Helpers\Database $databaseHelper
  * @property-read Zigbee2Mqtt\Logger $logger
  */
 trait DeviceProperty

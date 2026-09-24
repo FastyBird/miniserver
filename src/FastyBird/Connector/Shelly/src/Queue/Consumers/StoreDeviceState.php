@@ -23,7 +23,7 @@ use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -60,7 +60,7 @@ final class StoreDeviceState implements Queue\Consumer
 		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly ToolsHelpers\Database $databaseHelper,
+		protected readonly Helpers\Database $databaseHelper,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,

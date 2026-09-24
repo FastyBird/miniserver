@@ -5,8 +5,8 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Entities;
 use Doctrine\DBAL;
 use Error;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Tests;
@@ -24,8 +24,8 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -55,8 +55,8 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -92,8 +92,8 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -132,8 +132,8 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

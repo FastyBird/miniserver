@@ -24,8 +24,8 @@ use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
@@ -79,7 +79,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 		private readonly Clock\Clock $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,

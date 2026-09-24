@@ -17,7 +17,7 @@ namespace FastyBird\Automator\DevicesModule\Entities\Actions;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
@@ -30,11 +30,11 @@ use function array_merge;
 abstract class PropertyAction extends TriggersEntities\Actions\Action
 {
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'action_device', type: Uuid\Doctrine\UuidBinaryType::NAME, nullable: true)]
 	protected Uuid\UuidInterface $device;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'action_value', type: 'string', nullable: true, length: 100)]
 	protected string $value;
 

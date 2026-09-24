@@ -21,7 +21,7 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -57,7 +57,7 @@ final class StoreDeviceState implements Queue\Consumer
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 	)
 	{
 	}

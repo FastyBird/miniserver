@@ -18,11 +18,11 @@ namespace FastyBird\Module\Ui\Entities\Widgets;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Entities as UiEntities;
 use FastyBird\Module\Ui\Entities\Dashboards\Tabs\Tab;
 use FastyBird\Module\Ui\Exceptions;
 use Nette\Utils;
@@ -46,45 +46,45 @@ use function array_map;
 // calls addDefaultDiscriminatorMap() before dispatching loadClassMetadata and only when the
 // map is empty, and that default keys entries on short class names. An explicit map skips
 // it, which is what the doctrine/orm patch used to do by deferring the call.
-#[ORM\DiscriminatorMap([Entities\Widgets\AnalogSensor::TYPE => Entities\Widgets\AnalogSensor::class])]
+#[ORM\DiscriminatorMap([UiEntities\Widgets\AnalogSensor::TYPE => UiEntities\Widgets\AnalogSensor::class])]
 #[ORM\MappedSuperclass]
-abstract class Widget implements Entities\Entity,
-	Entities\EntityParams,
+abstract class Widget implements UiEntities\Entity,
+	UiEntities\EntityParams,
 	SimpleAuthEntities\Owner,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
+	use UiEntities\TEntity;
+	use UiEntities\TEntityParams;
 	use SimpleAuthEntities\TOwner;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'widget_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'widget_identifier', type: 'string', nullable: false)]
 	protected string $identifier;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'widget_name', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $name = null;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\OneToOne(
 		mappedBy: 'widget',
-		targetEntity: Entities\Widgets\Displays\Display::class,
+		targetEntity: UiEntities\Widgets\Displays\Display::class,
 		cascade: ['persist', 'remove'],
 	)]
 	protected Displays\Display $display;
 
 	/** @var Common\Collections\Collection<int, Tab> */
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\ManyToMany(
-		targetEntity: Entities\Dashboards\Tabs\Tab::class,
+		targetEntity: UiEntities\Dashboards\Tabs\Tab::class,
 		mappedBy: 'widgets',
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
@@ -92,10 +92,10 @@ abstract class Widget implements Entities\Entity,
 	#[ORM\OrderBy(['priority' => 'ASC'])]
 	protected Common\Collections\Collection $tabs;
 
-	/** @var Common\Collections\Collection<int, Entities\Groups\Group> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, UiEntities\Groups\Group> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\ManyToMany(
-		targetEntity: Entities\Groups\Group::class,
+		targetEntity: UiEntities\Groups\Group::class,
 		mappedBy: 'widgets',
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
@@ -103,11 +103,11 @@ abstract class Widget implements Entities\Entity,
 	#[ORM\OrderBy(['priority' => 'ASC'])]
 	protected Common\Collections\Collection $groups;
 
-	/** @var Common\Collections\Collection<int, Entities\Widgets\DataSources\DataSource> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, UiEntities\Widgets\DataSources\DataSource> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'widget',
-		targetEntity: Entities\Widgets\DataSources\DataSource::class,
+		targetEntity: UiEntities\Widgets\DataSources\DataSource::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
@@ -145,7 +145,7 @@ abstract class Widget implements Entities\Entity,
 		$this->name = $name;
 	}
 
-	public function getDisplay(): Entities\Widgets\Displays\Display
+	public function getDisplay(): UiEntities\Widgets\Displays\Display
 	{
 		return $this->display;
 	}
@@ -153,7 +153,7 @@ abstract class Widget implements Entities\Entity,
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function setDisplay(Entities\Widgets\Displays\Display $display): void
+	public function setDisplay(UiEntities\Widgets\Displays\Display $display): void
 	{
 		$isAllowed = false;
 
@@ -170,7 +170,7 @@ abstract class Widget implements Entities\Entity,
 		$this->display = $display;
 	}
 
-	public function addDataSource(Entities\Widgets\DataSources\DataSource $dataSource): void
+	public function addDataSource(UiEntities\Widgets\DataSources\DataSource $dataSource): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->dataSources->contains($dataSource)) {
@@ -180,7 +180,7 @@ abstract class Widget implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Widgets\DataSources\DataSource>
+	 * @return array<UiEntities\Widgets\DataSources\DataSource>
 	 */
 	public function getDataSources(): array
 	{
@@ -188,7 +188,7 @@ abstract class Widget implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Widgets\DataSources\DataSource> $dataSources
+	 * @param array<UiEntities\Widgets\DataSources\DataSource> $dataSources
 	 */
 	public function setDataSources(array $dataSources = []): void
 	{
@@ -199,7 +199,7 @@ abstract class Widget implements Entities\Entity,
 		}
 	}
 
-	public function removeDataSource(Entities\Widgets\DataSources\DataSource $dataSource): void
+	public function removeDataSource(UiEntities\Widgets\DataSources\DataSource $dataSource): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->dataSources->contains($dataSource)) {
@@ -208,7 +208,7 @@ abstract class Widget implements Entities\Entity,
 		}
 	}
 
-	public function addTab(Entities\Dashboards\Tabs\Tab $tab): void
+	public function addTab(UiEntities\Dashboards\Tabs\Tab $tab): void
 	{
 		$this->tabs = new Common\Collections\ArrayCollection();
 
@@ -243,15 +243,15 @@ abstract class Widget implements Entities\Entity,
 		}
 	}
 
-	public function getTab(string $id): Entities\Dashboards\Tabs\Tab|null
+	public function getTab(string $id): UiEntities\Dashboards\Tabs\Tab|null
 	{
 		$found = $this->tabs
-			->filter(static fn (Entities\Dashboards\Tabs\Tab $row): bool => $id === $row->getId()->toString());
+			->filter(static fn (UiEntities\Dashboards\Tabs\Tab $row): bool => $id === $row->getId()->toString());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
-	public function removeTab(Entities\Dashboards\Tabs\Tab $tab): void
+	public function removeTab(UiEntities\Dashboards\Tabs\Tab $tab): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->tabs->contains($tab)) {
@@ -260,7 +260,7 @@ abstract class Widget implements Entities\Entity,
 		}
 	}
 
-	public function addGroup(Entities\Groups\Group $group): void
+	public function addGroup(UiEntities\Groups\Group $group): void
 	{
 		$this->groups = new Common\Collections\ArrayCollection();
 
@@ -271,7 +271,7 @@ abstract class Widget implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Groups\Group>
+	 * @return array<UiEntities\Groups\Group>
 	 */
 	public function getGroups(): array
 	{
@@ -279,7 +279,7 @@ abstract class Widget implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Groups\Group> $groups
+	 * @param array<UiEntities\Groups\Group> $groups
 	 */
 	public function setGroups(array $groups = []): void
 	{
@@ -295,15 +295,15 @@ abstract class Widget implements Entities\Entity,
 		}
 	}
 
-	public function getGroup(string $id): Entities\Groups\Group|null
+	public function getGroup(string $id): UiEntities\Groups\Group|null
 	{
 		$found = $this->groups
-			->filter(static fn (Entities\Groups\Group $row): bool => $id === $row->getId()->toString());
+			->filter(static fn (UiEntities\Groups\Group $row): bool => $id === $row->getId()->toString());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
-	public function removeGroup(Entities\Groups\Group $group): void
+	public function removeGroup(UiEntities\Groups\Group $group): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->groups->contains($group)) {
@@ -324,15 +324,15 @@ abstract class Widget implements Entities\Entity,
 			'type' => static::getType(),
 
 			'tabs' => array_map(
-				static fn (Entities\Dashboards\Tabs\Tab $tab): string => $tab->getId()->toString(),
+				static fn (UiEntities\Dashboards\Tabs\Tab $tab): string => $tab->getId()->toString(),
 				$this->getTabs(),
 			),
 			'groups' => array_map(
-				static fn (Entities\Groups\Group $group): string => $group->getId()->toString(),
+				static fn (UiEntities\Groups\Group $group): string => $group->getId()->toString(),
 				$this->getGroups(),
 			),
 			'data_sources' => array_map(
-				static fn (Entities\Widgets\DataSources\DataSource $dataSource): string => $dataSource->getId()->toString(),
+				static fn (UiEntities\Widgets\DataSources\DataSource $dataSource): string => $dataSource->getId()->toString(),
 				$this->getDataSources(),
 			),
 			'display' => $this->getDisplay()->getId()->toString(),

@@ -17,10 +17,10 @@ namespace FastyBird\Module\Devices\Entities\Connectors\Controls;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices\Entities;
+use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
 
@@ -35,26 +35,26 @@ use Ramsey\Uuid;
 )]
 #[ORM\Index(columns: ['control_name'], name: 'control_name_idx')]
 #[ORM\UniqueConstraint(name: 'control_name_unique', columns: ['control_name', 'connector_id'])]
-class Control implements Entities\Entity,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+class Control implements DevicesEntities\Entity,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use DevicesEntities\TEntity;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'control_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'control_name', type: 'string', length: 100, nullable: false)]
 	private string $name;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Connectors\Connector::class,
+		targetEntity: DevicesEntities\Connectors\Connector::class,
 		cascade: ['persist'],
 		inversedBy: 'controls',
 	)]
@@ -64,9 +64,9 @@ class Control implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	private Entities\Connectors\Connector $connector;
+	private DevicesEntities\Connectors\Connector $connector;
 
-	public function __construct(string $name, Entities\Connectors\Connector $connector)
+	public function __construct(string $name, DevicesEntities\Connectors\Connector $connector)
 	{
 		$this->id = Uuid\Uuid::uuid4();
 
@@ -81,7 +81,7 @@ class Control implements Entities\Entity,
 		return $this->name;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): DevicesEntities\Connectors\Connector
 	{
 		return $this->connector;
 	}

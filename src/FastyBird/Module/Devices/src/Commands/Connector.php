@@ -22,8 +22,8 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Connectors;
@@ -99,7 +99,7 @@ class Connector extends Console\Command\Command
 		private readonly Models\Configuration\Connectors\Repository $connectorsConfigurationRepository,
 		private readonly Models\Configuration\Connectors\Controls\Repository $connectorsControlsConfigurationRepository,
 		private readonly Devices\Logger $logger,
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly ExchangeConsumers\Container $consumer,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly Clock\Clock $clock,

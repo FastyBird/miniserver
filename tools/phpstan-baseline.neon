@@ -4537,10 +4537,10 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Encoding/WebSockets/Validator.php
 
 		-
-			message: '#^Trait FastyBird\\Core\\Entities\\DoctrineTimestampable\\TEntityRemoved is used zero times and is not analysed\.$#'
+			message: '#^Trait FastyBird\\Core\\Persistence\\Entities\\TEntityRemoved is used zero times and is not analysed\.$#'
 			identifier: trait.unused
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/DoctrineTimestampable/TEntityRemoved.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Entities/TEntityRemoved.php
 
 		-
 			message: '#^Parameter \#1 \$timeZones of method FastyBird\\Core\\Phone\\Entities\\Phone\:\:setTimeZones\(\) expects array\<string\>, array given\.$#'
@@ -4711,10 +4711,10 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Exceptions/JsonApiError.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Exceptions\\Query\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Exceptions\\Query\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Exceptions/Query.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Exceptions/Query.php
 
 		-
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
@@ -4753,22 +4753,22 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Values/Formats/NumberRange.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Helpers\\DoctrineCrud\\Helpers\:\:getParameterType\(\) should return string\|null but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Helpers\\ConstructorAutowiring\:\:getParameterType\(\) should return string\|null but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Helpers/DoctrineCrud/Helpers.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Helpers/ConstructorAutowiring.php
 
 		-
 			message: '#^Parameter \#1 \$string of function strtolower expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Helpers/DoctrineCrud/Helpers.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Helpers/ConstructorAutowiring.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between ReflectionType and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Helpers/DoctrineCrud/Helpers.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Helpers/ConstructorAutowiring.php
 
 		-
 			message: '#^Call to an undefined method FastyBird\\Core\\Helpers\\WsServer\\Formatter\\IFormatter\:\:writeln\(\)\.$#'
@@ -5395,64 +5395,64 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/NElseAllowedNode.php
 
 		-
-			message: '#^PHPDoc tag @var with type Doctrine\\ORM\\Mapping\\ClassMetadata\<object\> is not subtype of type Doctrine\\Persistence\\Mapping\\ClassMetadata\<FastyBird\\Core\\Entities\\DoctrineCrud\\IEntity\>\.$#'
+			message: '#^PHPDoc tag @var with type Doctrine\\ORM\\Mapping\\ClassMetadata\<object\> is not subtype of type Doctrine\\Persistence\\Mapping\\ClassMetadata\<FastyBird\\Core\\Persistence\\Entities\\CrudEntity\>\.$#'
 			identifier: varTag.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineCrud/EntityMapper.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/EntityMapper.php
 
 		-
 			message: '#^Parameter \#1 \$class of function class_exists expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 4
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineCrud/EntityMapper.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/EntityMapper.php
 
 		-
 			message: '#^Call to an undefined method Psr\\Cache\\CacheItemPoolInterface\:\:fetch\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineTimestampable/Driver/Timestampable.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/Driver/Timestampable.php
 
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineTimestampable/Driver/Timestampable.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/Driver/Timestampable.php
 
 		-
 			message: '#^Cannot access an offset on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineTimestampable/Driver/Timestampable.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/Driver/Timestampable.php
 
 		-
 			message: '#^Cannot access offset ''useObjectClass'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineTimestampable/Driver/Timestampable.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/Driver/Timestampable.php
 
 		-
 			message: '#^Instanceof between Doctrine\\ORM\\Mapping\\ClassMetadata\<object\> and Doctrine\\ORM\\Mapping\\ClassMetadata will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineTimestampable/Driver/Timestampable.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/Driver/Timestampable.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Mapping\\DoctrineTimestampable\\Driver\\Timestampable\:\:getObjectConfigurations\(\) should return array\<mixed\> but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Mapping\\Driver\\Timestampable\:\:getObjectConfigurations\(\) should return array\<mixed\> but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineTimestampable/Driver/Timestampable.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/Driver/Timestampable.php
 
 		-
-			message: '#^Parameter \#2 \$class of method FastyBird\\Core\\Mapping\\DoctrineTimestampable\\Driver\\Timestampable\:\:getObjectConfigurations\(\) expects class\-string, mixed given\.$#'
+			message: '#^Parameter \#2 \$class of method FastyBird\\Core\\Persistence\\Mapping\\Driver\\Timestampable\:\:getObjectConfigurations\(\) expects class\-string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineTimestampable/Driver/Timestampable.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/Driver/Timestampable.php
 
 		-
 			message: '#^Using nullsafe method call on non\-nullable type Psr\\Cache\\CacheItemPoolInterface\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Mapping/DoctrineTimestampable/Driver/Timestampable.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Mapping/Driver/Timestampable.php
 
 		-
 			message: '#^Cannot access an offset on mixed\.$#'
@@ -5515,124 +5515,124 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Messaging/WebSockets/PushMessages/Pusher.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:fetch\(\) should return array\<mixed\>\|FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\<TEntityClass of object\> but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:fetch\(\) should return array\<mixed\>\|FastyBird\\Core\\Persistence\\Query\\ResultSet\<TEntityClass of object\> but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:fetchOne\(\) should return \(TEntityClass of object\)\|null but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:fetchOne\(\) should return \(TEntityClass of object\)\|null but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:getLastQuery\(\) return type with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:getLastQuery\(\) return type with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:getQuery\(\) return type with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:getQuery\(\) return type with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:toQuery\(\) return type with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:toQuery\(\) return type with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
 			message: '#^Parameter \#1 \$array of function array_shift expects array, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
 			message: '#^Parameter \#2 \$hydrationMode of method Doctrine\\ORM\\AbstractQuery\<mixed,mixed\>\:\:execute\(\) expects 1\|2\|3\|4\|5\|6\|string\|null, int\<min, 0\>\|int\<2, max\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:\$lastQuery with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
+			message: '#^Property FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:\$lastQuery with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\QueryObject\:\:\$onPostFetch type has no signature specified for Closure\.$#'
+			message: '#^Property FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:\$onPostFetch type has no signature specified for Closure\.$#'
 			identifier: missingType.callable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/QueryObject.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
 		-
 			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\ResultSet\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:createPaginatedQuery\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\ResultSet\:\:createPaginatedQuery\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:createPaginatedQuery\(\) should return Doctrine\\ORM\\Tools\\Pagination\\Paginator\<TEntityClass of object\> but returns Doctrine\\ORM\\Tools\\Pagination\\Paginator\<mixed\>\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\ResultSet\:\:createPaginatedQuery\(\) should return Doctrine\\ORM\\Tools\\Pagination\\Paginator\<TEntityClass of object\> but returns Doctrine\\ORM\\Tools\\Pagination\\Paginator\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:getIterator\(\) should return ArrayIterator\<int, TEntityClass of object\> but returns ArrayIterator\<\(int\|string\), mixed\>\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Query\\ResultSet\:\:getIterator\(\) should return ArrayIterator\<int, TEntityClass of object\> but returns ArrayIterator\<\(int\|string\), mixed\>\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
 			message: '#^Offset 1 might not exist on array\{\}\|array\{0\: non\-falsy\-string, 1\: non\-empty\-string, 2\: non\-falsy\-string, 3\?\: non\-falsy\-string\}\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
 			message: '#^Parameter \#1 \$array of class ArrayIterator constructor expects array\<TKey of \(int\|string\), TValue\>, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
 			message: '#^Parameter \#1 \$hydrationMode of method Doctrine\\ORM\\AbstractQuery\<mixed,mixed\>\:\:setHydrationMode\(\) expects 1\|2\|3\|4\|5\|6\|string, int given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
 			message: '#^Parameter \#1 \$string of function trim expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\:\:\$query with generic class Doctrine\\ORM\\AbstractQuery does not specify its types\: TKey, TResult$#'
+			message: '#^Property FastyBird\\Core\\Persistence\\Query\\ResultSet\:\:\$query with generic class Doctrine\\ORM\\AbstractQuery does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Persistence\\DoctrineOrmQuery\\ResultSet\<TEntityClass of object\>\:\:\$iterator \(ArrayIterator\<int, TEntityClass of object\>\|null\) does not accept ArrayIterator\<\(int\|string\), mixed\>\.$#'
+			message: '#^Property FastyBird\\Core\\Persistence\\Query\\ResultSet\<TEntityClass of object\>\:\:\$iterator \(ArrayIterator\<int, TEntityClass of object\>\|null\) does not accept ArrayIterator\<\(int\|string\), mixed\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/DoctrineOrmQuery/ResultSet.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Query/ResultSet.php
 
 		-
 			message: '#^Right side of && is always true\.$#'
@@ -6892,22 +6892,22 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Phone/Services/PhoneNumberHelper.php
 
 		-
-			message: '#^Parameter \#2 \$parentRc of method FastyBird\\Core\\Subscribers\\Application\\EntityDiscriminator\:\:detectFromChildren\(\) expects ReflectionClass\<object\>, ReflectionClass\<covariant object\> given\.$#'
+			message: '#^Parameter \#2 \$parentRc of method FastyBird\\Core\\Persistence\\Subscribers\\EntityDiscriminator\:\:detectFromChildren\(\) expects ReflectionClass\<object\>, ReflectionClass\<covariant object\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Application/EntityDiscriminator.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/EntityDiscriminator.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>value" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Application/EntityDiscriminator.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/EntityDiscriminator.php
 
 		-
 			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 4
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '''
@@ -6916,73 +6916,73 @@ parameters:
 			'''
 			identifier: method.deprecated
 			count: 3
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Cannot access offset ''field'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 3
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Cannot access offset ''trackedField'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Cannot access offset ''value'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Cannot call method getValue\(\) on ReflectionProperty\|null\.$#'
 			identifier: method.nonObject
 			count: 3
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Cannot call method setValue\(\) on ReflectionProperty\|null\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
-			message: '#^Parameter \#1 \$fields of method FastyBird\\Core\\Subscribers\\DoctrineTimestampable\\TimestampableSubscriber\:\:updateFields\(\) expects array\<string\>, mixed given\.$#'
+			message: '#^Parameter \#1 \$fields of method FastyBird\\Core\\Persistence\\Subscribers\\TimestampableSubscriber\:\:updateFields\(\) expects array\<string\>, mixed given\.$#'
 			identifier: argument.type
 			count: 3
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Parameter \#1 \$key of function array_key_exists expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 3
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Parameter \#2 \$string of function explode expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
-			message: '#^Parameter \#4 \$field of method FastyBird\\Core\\Subscribers\\DoctrineTimestampable\\TimestampableSubscriber\:\:updateField\(\) expects string, mixed given\.$#'
+			message: '#^Parameter \#4 \$field of method FastyBird\\Core\\Persistence\\Subscribers\\TimestampableSubscriber\:\:updateField\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 3
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Possibly invalid array key type mixed\.$#'
 			identifier: offsetAccess.invalidOffset
 			count: 5
-			path: ../src/FastyBird/Core/Core/src/Subscribers/DoctrineTimestampable/TimestampableSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Subscribers/TimestampableSubscriber.php
 
 		-
 			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
@@ -7159,31 +7159,31 @@ parameters:
 			message: '#^Cannot call method format\(\) on T of mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Types/DoctrineTimestampable/UTCDateTime.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
 
 		-
 			message: '#^Cannot call method setTimeZone\(\) on T of mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Types/DoctrineTimestampable/UTCDateTime.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Types\\DoctrineTimestampable\\UTCDateTime\:\:convertToDatabaseValue\(\) should return string\|null but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Persistence\\Types\\UTCDateTime\:\:convertToDatabaseValue\(\) should return string\|null but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Types/DoctrineTimestampable/UTCDateTime.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
 
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, T of mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Types/DoctrineTimestampable/UTCDateTime.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
 
 		-
 			message: '#^Parameter \#2 \$datetime of static method DateTime\:\:createFromFormat\(\) expects string, T of mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Types/DoctrineTimestampable/UTCDateTime.php
+			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
 
 		-
 			message: '#^Parameter \#1 \$number of static method FastyBird\\Core\\Phone\\Entities\\Phone\:\:fromNumber\(\) expects string, mixed given\.$#'

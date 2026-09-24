@@ -23,7 +23,7 @@ use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -60,7 +60,7 @@ final class StoreLocalDevice implements Queue\Consumer
 		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
 		protected readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		protected readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		protected readonly ToolsHelpers\Database $databaseHelper,
+		protected readonly Helpers\Database $databaseHelper,
 		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,

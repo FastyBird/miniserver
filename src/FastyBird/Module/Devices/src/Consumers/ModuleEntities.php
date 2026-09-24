@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Consumers;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange\Consumers;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
@@ -40,7 +40,7 @@ final readonly class ModuleEntities implements Consumers\Consumer
 	public function __construct(
 		private Devices\Logger $logger,
 		private Caching\Container $moduleCaching,
-		private ToolsHelpers\Database $databaseHelper,
+		private Helpers\Database $databaseHelper,
 	)
 	{
 	}

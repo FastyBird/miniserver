@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities;
 use Ramsey\Uuid;
 use SortDirection;
@@ -25,13 +25,13 @@ use SortDirection;
 /**
  * Find connector properties entities query
  *
- * @extends  DoctrineOrmQuery\QueryObject<Entities\Connectors\Controls\Control>
+ * @extends  Query\QueryObject<Entities\Connectors\Controls\Control>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindConnectorControls extends DoctrineOrmQuery\QueryObject
+class FindConnectorControls extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

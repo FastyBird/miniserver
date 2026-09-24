@@ -19,16 +19,15 @@ use Doctrine;
 use Exception;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Builders;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions as VirtualThermostatAddonHomeKitConnectorExceptions;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Hydrators;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Router;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -139,7 +138,7 @@ class BridgesV1 extends BaseV1
 
 			} catch (JsonApiExceptions\JsonApi $ex) {
 				throw $ex;
-			} catch (DoctrineCrudExceptions\MissingRequiredField $ex) {
+			} catch (PersistenceExceptions\MissingRequiredField $ex) {
 				throw new JsonApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate(
@@ -152,7 +151,7 @@ class BridgesV1 extends BaseV1
 						'pointer' => '/data/attributes/' . DevicesUtilities\Api::fieldToJsonApi($ex->getField()),
 					],
 				);
-			} catch (DoctrineCrudExceptions\EntityCreation $ex) {
+			} catch (PersistenceExceptions\EntityCreation $ex) {
 				if ($ex->getField() === Schemas\Devices\Thermostat::RELATIONSHIPS_PARENTS) {
 					throw new JsonApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -406,9 +405,9 @@ class BridgesV1 extends BaseV1
 	/**
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws PersistenceExceptions\Query
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws JsonApiExceptions\JsonApiError

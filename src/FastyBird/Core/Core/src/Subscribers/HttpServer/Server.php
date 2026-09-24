@@ -5,7 +5,7 @@ namespace FastyBird\Core\Subscribers\HttpServer;
 use Doctrine\DBAL;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use Override;
 use Symfony\Component\EventDispatcher;
 
@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher;
 final readonly class Server implements EventDispatcher\EventSubscriberInterface
 {
 
-	public function __construct(private ToolsHelpers\Database $database)
+	public function __construct(private Helpers\Database $database)
 	{
 	}
 

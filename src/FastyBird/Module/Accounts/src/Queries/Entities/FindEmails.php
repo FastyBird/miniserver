@@ -17,20 +17,20 @@ namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
 use Ramsey\Uuid;
 
 /**
  * Find accounts entities query
  *
- * @extends  DoctrineOrmQuery\QueryObject<Entities\Emails\Email>
+ * @extends  Query\QueryObject<Entities\Emails\Email>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindEmails extends DoctrineOrmQuery\QueryObject
+class FindEmails extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

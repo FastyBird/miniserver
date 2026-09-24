@@ -18,13 +18,13 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities\Chann
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 use function assert;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Thermostat extends HomeKitEntities\Channels\Channel
 {
 

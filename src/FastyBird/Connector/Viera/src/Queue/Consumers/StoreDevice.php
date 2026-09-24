@@ -19,12 +19,12 @@ use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Entities;
 use FastyBird\Connector\Viera\Exceptions;
-use FastyBird\Connector\Viera\Helpers;
+use FastyBird\Connector\Viera\Helpers as VieraHelpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -51,14 +51,14 @@ final class StoreDevice implements Queue\Consumer
 
 	public function __construct(
 		private readonly Viera\Logger $logger,
-		private readonly Helpers\DeviceProperty $deviceProperty,
-		private readonly Helpers\ChannelProperty $channelProperty,
+		private readonly VieraHelpers\DeviceProperty $deviceProperty,
+		private readonly VieraHelpers\ChannelProperty $channelProperty,
 		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
 		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly PersistenceHelpers\Database $databaseHelper,
 	)
 	{
 	}
@@ -288,7 +288,7 @@ final class StoreDevice implements Queue\Consumer
 				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::HDMI->value),
 				$message->getHdmi() !== [] ? array_map(
 					static fn (Queue\Messages\DeviceHdmi|Queue\Messages\DeviceApplication $item): array => [
-						Helpers\Name::sanitizeEnumName($item->getName()),
+						VieraHelpers\Name::sanitizeEnumName($item->getName()),
 						$item->getId(),
 						$item->getId(),
 					],
@@ -306,7 +306,7 @@ final class StoreDevice implements Queue\Consumer
 				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::APPLICATION->value),
 				$message->getApplications() !== [] ? array_map(
 					static fn (Queue\Messages\DeviceHdmi|Queue\Messages\DeviceApplication $item): array => [
-						Helpers\Name::sanitizeEnumName($item->getName()),
+						VieraHelpers\Name::sanitizeEnumName($item->getName()),
 						$item->getId(),
 						$item->getId(),
 					],
@@ -332,7 +332,7 @@ final class StoreDevice implements Queue\Consumer
 					],
 					array_map(
 						static fn (Queue\Messages\DeviceHdmi|Queue\Messages\DeviceApplication $item): array => [
-							Helpers\Name::sanitizeEnumName($item->getName()),
+							VieraHelpers\Name::sanitizeEnumName($item->getName()),
 							$item->getId(),
 							$item->getId(),
 						],

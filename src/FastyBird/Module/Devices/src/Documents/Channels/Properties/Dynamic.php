@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Documents\Channels\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
@@ -65,7 +65,7 @@ class Dynamic extends Property
 		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $queryable = false,
 		#[ObjectMapper\Rules\ArrayOf(
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 		)]
 		private readonly array $children = [],
 		Uuid\UuidInterface|null $owner = null,

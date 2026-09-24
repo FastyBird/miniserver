@@ -24,8 +24,8 @@ use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
@@ -76,7 +76,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Connectors\Properties\PropertiesManager $propertiesManager,
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 		private readonly Clock\Clock $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,

@@ -4,8 +4,8 @@ namespace FastyBird\Module\Triggers\Tests\Cases\Unit\Models\Repositories;
 
 use Error;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Queries;
 use FastyBird\Module\Triggers\Tests;
@@ -23,8 +23,8 @@ final class ActionsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws TriggersExceptions\InvalidArgument
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -45,9 +45,9 @@ final class ActionsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws DoctrineOrmQueryExceptions\Query
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws TriggersExceptions\InvalidArgument
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

@@ -29,7 +29,7 @@ use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -85,7 +85,7 @@ class Builder
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly PersistenceHelpers\Database $databaseHelper,
 		private readonly Localization\Translator $translator,
 	)
 	{

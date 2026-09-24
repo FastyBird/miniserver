@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Types;
@@ -27,13 +27,13 @@ use function in_array;
 /**
  * Find accounts entities query
  *
- * @extends  DoctrineOrmQuery\QueryObject<Entities\Accounts\Account>
+ * @extends  Query\QueryObject<Entities\Accounts\Account>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindAccounts extends DoctrineOrmQuery\QueryObject
+class FindAccounts extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

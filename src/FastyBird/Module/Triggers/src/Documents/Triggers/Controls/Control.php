@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
@@ -43,13 +43,13 @@ final class Control implements Documents\Document, Documents\Owner
 	use Documents\HasOwner;
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $trigger,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $name,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		protected readonly Uuid\UuidInterface|null $owner = null,
 	)
 	{

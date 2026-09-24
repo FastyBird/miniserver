@@ -18,8 +18,8 @@ namespace FastyBird\Module\Triggers\Models\Entities\Notifications;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Queries;
 use Nette;
@@ -42,7 +42,7 @@ final class NotificationsRepository
 	private array $repository = [];
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -77,7 +77,7 @@ final class NotificationsRepository
 	{
 		return $this->database->query(
 			function () use ($queryObject, $type): array {
-				/** @var array<Entities\Notifications\Notification>|DoctrineOrmQuery\ResultSet<Entities\Notifications\Notification> $result */
+				/** @var array<Entities\Notifications\Notification>|Query\ResultSet<Entities\Notifications\Notification> $result */
 				$result = $queryObject->fetch($this->getRepository($type));
 
 				if (is_array($result)) {
@@ -95,18 +95,18 @@ final class NotificationsRepository
 	/**
 	 * @param class-string<Entities\Notifications\Notification> $type
 	 *
-	 * @return DoctrineOrmQuery\ResultSet<Entities\Notifications\Notification>
+	 * @return Query\ResultSet<Entities\Notifications\Notification>
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindNotifications $queryObject,
 		string $type = Entities\Notifications\Notification::class,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		return $this->database->query(
-			function () use ($queryObject, $type): DoctrineOrmQuery\ResultSet {
-				/** @var DoctrineOrmQuery\ResultSet<Entities\Notifications\Notification> $result */
+			function () use ($queryObject, $type): Query\ResultSet {
+				/** @var Query\ResultSet<Entities\Notifications\Notification> $result */
 				$result = $queryObject->fetch($this->getRepository($type));
 
 				return $result;

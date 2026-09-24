@@ -24,8 +24,8 @@ use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types as FbMqttTypes;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -66,7 +66,7 @@ final class DeviceAttribute implements Queue\Consumer
 		private readonly DevicesModels\Entities\Devices\Controls\ControlsManager $deviceControlsManager,
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 	)
 	{
 	}
@@ -79,7 +79,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws DoctrineCrudExceptions\EntityCreation
+	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Runtime
@@ -191,7 +191,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws DoctrineCrudExceptions\EntityCreation
+	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws FbMqttExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -276,7 +276,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @param Utils\ArrayHash<string> $extensions
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
+	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws FbMqttExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -335,7 +335,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
+	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 */
@@ -375,7 +375,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
+	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 */

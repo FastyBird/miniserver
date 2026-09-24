@@ -22,8 +22,8 @@ use FastyBird\Connector\HomeKit\Entities\Clients\Client;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Persistence\Query;
 use Nette;
 use function is_array;
 
@@ -44,7 +44,7 @@ final class ClientsRepository
 	private ORM\EntityRepository|null $repository = null;
 
 	public function __construct(
-		private readonly ToolsHelpers\Database $database,
+		private readonly Helpers\Database $database,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 	)
 	{
@@ -67,17 +67,17 @@ final class ClientsRepository
 	/**
 	 * @param Queries\Entities\FindClients<Client> $queryObject
 	 *
-	 * @return DoctrineOrmQuery\ResultSet<Client>
+	 * @return Query\ResultSet<Client>
 	 *
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindClients $queryObject,
-	): DoctrineOrmQuery\ResultSet
+	): Query\ResultSet
 	{
 		$result = $this->database->query(
-			fn (): DoctrineOrmQuery\ResultSet|array => $queryObject->fetch($this->getRepository()),
+			fn (): Query\ResultSet|array => $queryObject->fetch($this->getRepository()),
 		);
 
 		if (is_array($result)) {

@@ -22,8 +22,8 @@ use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
@@ -89,7 +89,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)

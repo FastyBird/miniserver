@@ -17,20 +17,20 @@ namespace FastyBird\Module\Triggers\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use Ramsey\Uuid;
 
 /**
  * Find action entities query
  *
- * @extends DoctrineOrmQuery\QueryObject<Entities\Notifications\Notification>
+ * @extends Query\QueryObject<Entities\Notifications\Notification>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindNotifications extends DoctrineOrmQuery\QueryObject
+class FindNotifications extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

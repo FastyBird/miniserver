@@ -21,15 +21,15 @@ use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
 use FastyBird\Connector\Viera\Entities;
-use FastyBird\Connector\Viera\Exceptions;
-use FastyBird\Connector\Viera\Helpers;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
+use FastyBird\Connector\Viera\Helpers as VieraHelpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
@@ -88,8 +88,8 @@ class Install extends Console\Command\Command
 
 	public function __construct(
 		private readonly API\TelevisionApiFactory $televisionApiFactory,
-		private readonly Helpers\DeviceProperty $deviceProperty,
-		private readonly Helpers\ChannelProperty $channelProperty,
+		private readonly VieraHelpers\DeviceProperty $deviceProperty,
+		private readonly VieraHelpers\ChannelProperty $channelProperty,
 		private readonly Viera\Logger $logger,
 		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		private readonly DevicesModels\Entities\Connectors\ConnectorsManager $connectorsManager,
@@ -100,7 +100,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly PersistenceHelpers\Database $databaseHelper,
 		private readonly Clock\Clock $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
@@ -125,9 +125,9 @@ class Install extends Console\Command\Command
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidState
+	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
@@ -173,7 +173,7 @@ class Install extends Console\Command\Command
 					$findConnectorQuery,
 					Entities\Connectors\Connector::class,
 				) !== null) {
-					throw new Exceptions\Runtime(
+					throw new VieraExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//viera-connector.cmd.install.messages.identifier.connector.used',
 						),
@@ -279,8 +279,8 @@ class Install extends Console\Command\Command
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -463,9 +463,9 @@ class Install extends Console\Command\Command
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidState
+	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
@@ -549,7 +549,7 @@ class Install extends Console\Command\Command
 				Entities\Devices\Device::DEFAULT_PORT,
 			);
 			$televisionApi->connect();
-		} catch (Exceptions\TelevisionApiCall | Exceptions\TelevisionApiError | Exceptions\InvalidState $ex) {
+		} catch (VieraExceptions\TelevisionApiCall | VieraExceptions\TelevisionApiError | VieraExceptions\InvalidState $ex) {
 			$io->error(
 				(string) $this->translator->translate('//viera-connector.cmd.install.messages.device.connectionFailed'),
 			);
@@ -568,7 +568,7 @@ class Install extends Console\Command\Command
 
 		try {
 			$isOnline = $televisionApi->livenessProbe(1.5, true);
-		} catch (Exceptions\TelevisionApiError $ex) {
+		} catch (VieraExceptions\TelevisionApiError $ex) {
 			$io->error(
 				(string) $this->translator->translate('//viera-connector.cmd.install.messages.device.connectionFailed'),
 			);
@@ -598,7 +598,7 @@ class Install extends Console\Command\Command
 
 		try {
 			$specs = $televisionApi->getSpecs(false);
-		} catch (Exceptions\TelevisionApiError $ex) {
+		} catch (VieraExceptions\TelevisionApiError $ex) {
 			$io->error(
 				(string) $this->translator->translate(
 					'//viera-connector.cmd.install.messages.device.loadingSpecsFailed',
@@ -615,7 +615,7 @@ class Install extends Console\Command\Command
 			);
 
 			return;
-		} catch (Exceptions\TelevisionApiCall $ex) {
+		} catch (VieraExceptions\TelevisionApiCall $ex) {
 			$io->error(
 				(string) $this->translator->translate(
 					'//viera-connector.cmd.install.messages.device.loadingSpecsFailed',
@@ -646,7 +646,7 @@ class Install extends Console\Command\Command
 
 		try {
 			$isTurnedOn = $televisionApi->isTurnedOn(true);
-		} catch (Exceptions\TelevisionApiError $ex) {
+		} catch (VieraExceptions\TelevisionApiError $ex) {
 			$io->error(
 				(string) $this->translator->translate(
 					'//viera-connector.cmd.install.messages.device.checkStatusFailed',
@@ -702,7 +702,7 @@ class Install extends Console\Command\Command
 					$authorization->getEncryptionKey(),
 				);
 				$televisionApi->connect();
-			} catch (Exceptions\TelevisionApiCall | Exceptions\TelevisionApiError | Exceptions\InvalidState $ex) {
+			} catch (VieraExceptions\TelevisionApiCall | VieraExceptions\TelevisionApiError | VieraExceptions\InvalidState $ex) {
 				$io->error(
 					(string) $this->translator->translate(
 						'//viera-connector.cmd.install.messages.device.connectionFailed',
@@ -724,7 +724,7 @@ class Install extends Console\Command\Command
 
 		try {
 			$apps = $isTurnedOn ? $televisionApi->getApps(false) : null;
-		} catch (Exceptions\TelevisionApiError | Exceptions\TelevisionApiCall | Exceptions\InvalidState $ex) {
+		} catch (VieraExceptions\TelevisionApiError | VieraExceptions\TelevisionApiCall | VieraExceptions\InvalidState $ex) {
 			$io->error(
 				(string) $this->translator->translate(
 					'//viera-connector.cmd.install.messages.device.loadingAppsFailed',
@@ -763,7 +763,7 @@ class Install extends Console\Command\Command
 				$hdmiIndex = $this->askDeviceHdmiIndex($io, $hdmiName);
 
 				$hdmi[] = [
-					Helpers\Name::sanitizeEnumName($hdmiName),
+					VieraHelpers\Name::sanitizeEnumName($hdmiName),
 					$hdmiIndex,
 					$hdmiIndex,
 				];
@@ -969,7 +969,7 @@ class Install extends Console\Command\Command
 				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::APPLICATION->value),
 				$apps !== null ? array_map(
 					static fn (API\Messages\Response\Application $item): array => [
-						Helpers\Name::sanitizeEnumName($item->getName()),
+						VieraHelpers\Name::sanitizeEnumName($item->getName()),
 						$item->getId(),
 						$item->getId(),
 					],
@@ -996,7 +996,7 @@ class Install extends Console\Command\Command
 					$hdmi !== [] ? $hdmi : [],
 					$apps !== null ? array_map(
 						static fn (API\Messages\Response\Application $item): array => [
-							Helpers\Name::sanitizeEnumName($item->getName()),
+							VieraHelpers\Name::sanitizeEnumName($item->getName()),
 							$item->getId(),
 							$item->getId(),
 						],
@@ -1039,7 +1039,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -1224,7 +1224,7 @@ class Install extends Console\Command\Command
 				$device->getEncryptionKey(),
 			);
 			$televisionApi->connect();
-		} catch (Exceptions\TelevisionApiCall | Exceptions\TelevisionApiError | Exceptions\InvalidState $ex) {
+		} catch (VieraExceptions\TelevisionApiCall | VieraExceptions\TelevisionApiError | VieraExceptions\InvalidState $ex) {
 			$io->error(
 				(string) $this->translator->translate('//viera-connector.cmd.install.messages.device.connectionFailed'),
 			);
@@ -1243,7 +1243,7 @@ class Install extends Console\Command\Command
 
 		try {
 			$isOnline = $televisionApi->livenessProbe(1.5, true);
-		} catch (Exceptions\TelevisionApiError $ex) {
+		} catch (VieraExceptions\TelevisionApiError $ex) {
 			$io->error(
 				(string) $this->translator->translate('//viera-connector.cmd.install.messages.device.connectionFailed'),
 			);
@@ -1273,7 +1273,7 @@ class Install extends Console\Command\Command
 
 		try {
 			$specs = $televisionApi->getSpecs(false);
-		} catch (Exceptions\TelevisionApiError $ex) {
+		} catch (VieraExceptions\TelevisionApiError $ex) {
 			$io->error(
 				(string) $this->translator->translate(
 					'//viera-connector.cmd.install.messages.device.loadingSpecsFailed',
@@ -1290,7 +1290,7 @@ class Install extends Console\Command\Command
 			);
 
 			return;
-		} catch (Exceptions\TelevisionApiCall $ex) {
+		} catch (VieraExceptions\TelevisionApiCall $ex) {
 			$io->error(
 				(string) $this->translator->translate(
 					'//viera-connector.cmd.install.messages.device.loadingSpecsFailed',
@@ -1319,7 +1319,7 @@ class Install extends Console\Command\Command
 
 		try {
 			$isTurnedOn = $televisionApi->isTurnedOn(true);
-		} catch (Exceptions\TelevisionApiError $ex) {
+		} catch (VieraExceptions\TelevisionApiError $ex) {
 			$io->error(
 				(string) $this->translator->translate(
 					'//viera-connector.cmd.install.messages.device.checkStatusFailed',
@@ -1382,7 +1382,7 @@ class Install extends Console\Command\Command
 						$authorization->getEncryptionKey(),
 					);
 					$televisionApi->connect();
-				} catch (Exceptions\TelevisionApiCall | Exceptions\TelevisionApiError | Exceptions\InvalidState $ex) {
+				} catch (VieraExceptions\TelevisionApiCall | VieraExceptions\TelevisionApiError | VieraExceptions\InvalidState $ex) {
 					$io->error(
 						(string) $this->translator->translate(
 							'//viera-connector.cmd.install.messages.device.connectionFailed',
@@ -1405,7 +1405,7 @@ class Install extends Console\Command\Command
 
 		try {
 			$apps = $isTurnedOn ? $televisionApi->getApps(false) : null;
-		} catch (Exceptions\TelevisionApiError | Exceptions\TelevisionApiCall | Exceptions\InvalidState $ex) {
+		} catch (VieraExceptions\TelevisionApiError | VieraExceptions\TelevisionApiCall | VieraExceptions\InvalidState $ex) {
 			$io->error(
 				(string) $this->translator->translate(
 					'//viera-connector.cmd.install.messages.device.loadingAppsFailed',
@@ -1523,7 +1523,7 @@ class Install extends Console\Command\Command
 					VieraTypes\ChannelPropertyIdentifier::HDMI,
 					DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::HDMI->value),
 					array_map(static fn (string $name, int $index): array => [
-						Helpers\Name::sanitizeEnumName($name),
+						VieraHelpers\Name::sanitizeEnumName($name),
 						$index,
 						$index,
 					], array_values($hdmi), array_keys($hdmi)),
@@ -1541,7 +1541,7 @@ class Install extends Console\Command\Command
 					DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::APPLICATION->value),
 					$apps->getApps() !== [] ? array_map(
 						static fn (API\Messages\Response\Application $application): array => [
-							Helpers\Name::sanitizeEnumName($application->getName()),
+							VieraHelpers\Name::sanitizeEnumName($application->getName()),
 							$application->getId(),
 							$application->getId(),
 						],
@@ -1699,9 +1699,9 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Runtime
@@ -1711,7 +1711,7 @@ class Install extends Console\Command\Command
 	private function discoverDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
 		if ($this->output === null) {
-			throw new Exceptions\InvalidState('Something went wrong, console output is not configured');
+			throw new VieraExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
 		$executedTime = $this->clock->getNow();
@@ -1721,7 +1721,7 @@ class Install extends Console\Command\Command
 		$symfonyApp = $this->getApplication();
 
 		if ($symfonyApp === null) {
-			throw new Exceptions\InvalidState('Something went wrong, console app is not configured');
+			throw new VieraExceptions\InvalidState('Something went wrong, console app is not configured');
 		}
 
 		$serviceCmd = $symfonyApp->find(DevicesCommands\Connector::NAME);
@@ -1824,9 +1824,9 @@ class Install extends Console\Command\Command
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidState
+	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
@@ -1912,9 +1912,9 @@ class Install extends Console\Command\Command
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidState
+	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -2041,7 +2041,7 @@ class Install extends Console\Command\Command
 				return $answer;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VieraExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2071,7 +2071,7 @@ class Install extends Console\Command\Command
 				return intval($answer);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VieraExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2101,7 +2101,7 @@ class Install extends Console\Command\Command
 				return $answer;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VieraExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2128,12 +2128,12 @@ class Install extends Console\Command\Command
 				if ($answer !== null && $answer !== '') {
 					try {
 						return $televisionApi->authorizePinCode($answer, strval($this->challengeKey), false);
-					} catch (Exceptions\TelevisionApiCall) {
+					} catch (VieraExceptions\TelevisionApiCall) {
 						$this->challengeKey = $televisionApi
 							->requestPinCode($connector->getName() ?? $connector->getIdentifier(), false)
 							->getChallengeKey();
 
-						throw new Exceptions\Runtime(
+						throw new VieraExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//viera-connector.cmd.base.messages.answerNotValid',
@@ -2144,7 +2144,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VieraExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2169,7 +2169,7 @@ class Install extends Console\Command\Command
 				return $answer;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VieraExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2200,7 +2200,7 @@ class Install extends Console\Command\Command
 				return intval($answer);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VieraExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2252,7 +2252,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VieraExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2280,7 +2280,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VieraExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2338,7 +2338,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VieraExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 							$answer,
@@ -2367,7 +2367,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VieraExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2387,7 +2387,7 @@ class Install extends Console\Command\Command
 	 *
 	 * @throws DBAL\Exception
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Runtime
@@ -2438,7 +2438,7 @@ class Install extends Console\Command\Command
 						$device->getPort(),
 					);
 					$televisionApi->connect();
-				} catch (Exceptions\TelevisionApiCall | Exceptions\TelevisionApiError | Exceptions\InvalidState $ex) {
+				} catch (VieraExceptions\TelevisionApiCall | VieraExceptions\TelevisionApiError | VieraExceptions\InvalidState $ex) {
 					$io->error(
 						(string) $this->translator->translate(
 							'//viera-connector.cmd.install.messages.device.connectionFailed',
@@ -2515,7 +2515,7 @@ class Install extends Console\Command\Command
 						$authorization->getEncryptionKey(),
 					);
 					$televisionApi->connect();
-				} catch (Exceptions\TelevisionApiCall | Exceptions\TelevisionApiError | Exceptions\InvalidState $ex) {
+				} catch (VieraExceptions\TelevisionApiCall | VieraExceptions\TelevisionApiError | VieraExceptions\InvalidState $ex) {
 					$io->error(
 						(string) $this->translator->translate(
 							'//viera-connector.cmd.install.messages.device.connectionFailed',

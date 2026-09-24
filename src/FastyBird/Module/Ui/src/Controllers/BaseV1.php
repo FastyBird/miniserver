@@ -21,11 +21,11 @@ use Exception;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
-use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
+use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Router;
@@ -65,7 +65,7 @@ abstract class BaseV1
 
 	protected Router\Validator $routesValidator;
 
-	/** @var JsonApiHydrators\Container<DoctrineCrud\IEntity> */
+	/** @var JsonApiHydrators\Container<Entities\CrudEntity> */
 	protected JsonApiHydrators\Container $hydratorsContainer;
 
 	protected Ui\Logger $logger;
@@ -96,7 +96,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param JsonApiHydrators\Container<DoctrineCrud\IEntity> $hydratorsContainer
+	 * @param JsonApiHydrators\Container<Entities\CrudEntity> $hydratorsContainer
 	 */
 	public function injectHydratorsContainer(JsonApiHydrators\Container $hydratorsContainer): void
 	{
@@ -209,19 +209,19 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param DoctrineCrud\IEntity|Documents\Document|ResultSet<DoctrineCrud\IEntity>|array<DoctrineCrud\IEntity> $data
+	 * @param Entities\CrudEntity|Documents\Document|Query\ResultSet<Entities\CrudEntity>|array<Entities\CrudEntity> $data
 	 *
 	 * @throws Exception
 	 */
 	protected function buildResponse(
 		Message\ServerRequestInterface $request,
 		ResponseInterface $response,
-		ResultSet|DoctrineCrud\IEntity|Documents\Document|array $data,
+		Query\ResultSet|Entities\CrudEntity|Documents\Document|array $data,
 	): ResponseInterface
 	{
 		$totalCount = null;
 
-		if ($data instanceof ResultSet) {
+		if ($data instanceof Query\ResultSet) {
 			if (array_key_exists('page', $request->getQueryParams())) {
 				$queryParams = $request->getQueryParams();
 
@@ -235,11 +235,11 @@ abstract class BaseV1
 				}
 			}
 
-			/** @var array<DoctrineCrud\IEntity> $entity */
+			/** @var array<Entities\CrudEntity> $entity */
 			$entity = $data->toArray();
 
 		} elseif (is_array($data)) {
-			/** @var array<DoctrineCrud\IEntity> $entity */
+			/** @var array<Entities\CrudEntity> $entity */
 			$entity = $data;
 
 		} else {

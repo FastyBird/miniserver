@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\Documents\Identities;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -43,9 +43,9 @@ final readonly class Identity implements Documents\Document
 {
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $account,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BackedEnumValue(class: Types\IdentityState::class),

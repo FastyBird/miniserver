@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Documents\States\Devices\Properties;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Ramsey\Uuid;
@@ -43,7 +43,7 @@ final class Property extends Devices\Documents\States\Property
 
 	public function __construct(
 		Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $device,
 		DevicesDocuments\States\StateValues $read,
 		DevicesDocuments\States\StateValues $get,

@@ -6,8 +6,8 @@ use Doctrine\DBAL;
 use Doctrine\ORM;
 use Error;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Entities\DoctrineCrud;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Persistence\Entities;
 use FastyBird\Module\Triggers\DI;
 use FastyBird\Module\Triggers\Exceptions;
 use Nette;
@@ -164,7 +164,7 @@ abstract class DbTestCase extends TestCase
 		if (!$this->isDatabaseSetUp) {
 			$db = $this->getDb();
 
-			/** @var list<ORM\Mapping\ClassMetadata<DoctrineCrud\IEntity>> $metadatas */
+			/** @var list<ORM\Mapping\ClassMetadata<Entities\CrudEntity>> $metadatas */
 			$metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
 			$schemaTool = new ORM\Tools\SchemaTool($this->getEntityManager());
 

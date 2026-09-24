@@ -16,10 +16,10 @@
 namespace FastyBird\Module\Accounts\Entities\Identities;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
-use FastyBird\Module\Accounts\Entities;
+use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Types;
@@ -39,26 +39,26 @@ use function strval;
 #[ORM\Index(columns: ['identity_uid'], name: 'identity_uid_idx')]
 #[ORM\Index(columns: ['identity_state'], name: 'identity_state_idx')]
 #[ORM\UniqueConstraint(name: 'identity_uid_unique', columns: ['identity_uid'])]
-class Identity implements Entities\Entity,
+class Identity implements AccountsEntities\Entity,
 	SimpleAuthSecurity\IIdentity,
-	Entities\EntityParams,
-	DoctrineTimestampable\IEntityCreated,
-	DoctrineTimestampable\IEntityUpdated
+	AccountsEntities\EntityParams,
+	PersistenceEntities\EntityCreated,
+	PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use AccountsEntities\TEntity;
+	use AccountsEntities\TEntityParams;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'identity_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Accounts\Account::class,
+		targetEntity: AccountsEntities\Accounts\Account::class,
 		cascade: ['persist', 'remove'],
 		inversedBy: 'identities',
 	)]
@@ -68,19 +68,19 @@ class Identity implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	protected Entities\Accounts\Account $account;
+	protected AccountsEntities\Accounts\Account $account;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'identity_uid', type: 'string', length: 50, nullable: false)]
 	protected string $uid;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'identity_token', type: 'string', nullable: false)]
 	protected string $password;
 
 	protected string|null $plainPassword = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'identity_state',
 		type: 'string',
@@ -94,7 +94,7 @@ class Identity implements Entities\Entity,
 	 * @throws Exceptions\InvalidState
 	 */
 	public function __construct(
-		Entities\Accounts\Account $account,
+		AccountsEntities\Accounts\Account $account,
 		string $uid,
 		string $password,
 		Uuid\UuidInterface|null $id = null,
@@ -192,7 +192,7 @@ class Identity implements Entities\Entity,
 		$this->state = Types\IdentityState::INVALID;
 	}
 
-	public function getAccount(): Entities\Accounts\Account
+	public function getAccount(): AccountsEntities\Accounts\Account
 	{
 		return $this->account;
 	}

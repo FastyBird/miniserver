@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Accounts\Controllers\Finders;
 
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
@@ -36,8 +36,8 @@ trait TRole
 {
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */

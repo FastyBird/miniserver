@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities;
 use Ramsey\Uuid;
 use SortDirection;
@@ -25,13 +25,13 @@ use SortDirection;
 /**
  * Find channel controls entities query
  *
- * @extends  DoctrineOrmQuery\QueryObject<Entities\Channels\Controls\Control>
+ * @extends  Query\QueryObject<Entities\Channels\Controls\Control>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindChannelControls extends DoctrineOrmQuery\QueryObject
+class FindChannelControls extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

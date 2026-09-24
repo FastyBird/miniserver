@@ -23,7 +23,7 @@ use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -59,7 +59,7 @@ final class DeviceProperty implements Queue\Consumer
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
 		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly ToolsHelpers\Database $databaseHelper,
+		private readonly Helpers\Database $databaseHelper,
 	)
 	{
 	}

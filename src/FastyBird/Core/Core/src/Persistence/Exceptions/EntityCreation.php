@@ -1,0 +1,27 @@
+<?php declare(strict_types = 1);
+
+namespace FastyBird\Core\Persistence\Exceptions;
+
+use FastyBird\Core\Exceptions;
+use RuntimeException;
+use Throwable;
+
+final class EntityCreation extends RuntimeException implements Exceptions\Exception
+{
+
+	public function __construct(
+		private string $field,
+		string $message = '',
+		int $code = 0,
+		Throwable|null $previous = null,
+	)
+	{
+		parent::__construct($message, $code, $previous);
+	}
+
+	public function getField(): string
+	{
+		return $this->field;
+	}
+
+}

@@ -17,20 +17,20 @@ namespace FastyBird\Module\Triggers\Queries\Entities;
 
 use Closure;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\DoctrineOrmQuery;
+use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use Ramsey\Uuid;
 
 /**
  * Find trigger entities query
  *
- * @extends DoctrineOrmQuery\QueryObject<Entities\Triggers\Trigger>
+ * @extends Query\QueryObject<Entities\Triggers\Trigger>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindTriggers extends DoctrineOrmQuery\QueryObject
+class FindTriggers extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

@@ -18,11 +18,11 @@ namespace FastyBird\Module\Devices\Entities\Devices;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices\Entities;
+use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -51,26 +51,26 @@ use function array_map;
 // entity the same, so it throws duplicate discriminator entry before any subscriber runs.
 // An explicit map skips it, which is what the doctrine/orm patch used to achieve by
 // deferring the call.
-#[ORM\DiscriminatorMap([Entities\Devices\Generic::TYPE => Entities\Devices\Generic::class])]
+#[ORM\DiscriminatorMap([DevicesEntities\Devices\Generic::TYPE => DevicesEntities\Devices\Generic::class])]
 #[ORM\MappedSuperclass]
-abstract class Device implements Entities\Entity,
-	Entities\EntityParams,
+abstract class Device implements DevicesEntities\Entity,
+	DevicesEntities\EntityParams,
 	SimpleAuthEntities\Owner,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use Entities\TEntity;
-	use Entities\TEntityParams;
+	use DevicesEntities\TEntity;
+	use DevicesEntities\TEntityParams;
 	use SimpleAuthEntities\TOwner;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'device_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'device_category',
 		type: 'string',
@@ -81,12 +81,12 @@ abstract class Device implements Entities\Entity,
 	)]
 	protected Types\DeviceCategory $category;
 
-	#[IPubDoctrine\Crud(required: true)]
+	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'device_identifier', type: 'string', length: 50, nullable: false)]
 	protected string $identifier;
 
 	/** @var Common\Collections\Collection<int, Device> */
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'children')]
 	#[ORM\JoinTable(
 		name: 'fb_devices_module_devices_children',
@@ -116,47 +116,47 @@ abstract class Device implements Entities\Entity,
 	)]
 	protected Common\Collections\Collection $children;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'device_name', type: 'string', nullable: true, options: ['default' => null])]
 	protected string|null $name = null;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'device_comment', type: 'text', nullable: true, options: ['default' => null])]
 	protected string|null $comment = null;
 
-	/** @var Common\Collections\Collection<int, Entities\Channels\Channel> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, DevicesEntities\Channels\Channel> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'device',
-		targetEntity: Entities\Channels\Channel::class,
+		targetEntity: DevicesEntities\Channels\Channel::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $channels;
 
-	/** @var Common\Collections\Collection<int, Entities\Devices\Controls\Control> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, DevicesEntities\Devices\Controls\Control> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'device',
-		targetEntity: Entities\Devices\Controls\Control::class,
+		targetEntity: DevicesEntities\Devices\Controls\Control::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $controls;
 
-	/** @var Common\Collections\Collection<int, Entities\Devices\Properties\Property> */
-	#[IPubDoctrine\Crud(writable: true)]
+	/** @var Common\Collections\Collection<int, DevicesEntities\Devices\Properties\Property> */
+	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'device',
-		targetEntity: Entities\Devices\Properties\Property::class,
+		targetEntity: DevicesEntities\Devices\Properties\Property::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
 	protected Common\Collections\Collection $properties;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\ManyToOne(
-		targetEntity: Entities\Connectors\Connector::class,
+		targetEntity: DevicesEntities\Connectors\Connector::class,
 		cascade: ['persist'],
 		inversedBy: 'devices',
 	)]
@@ -166,11 +166,11 @@ abstract class Device implements Entities\Entity,
 		nullable: false,
 		onDelete: 'CASCADE',
 	)]
-	protected Entities\Connectors\Connector $connector;
+	protected DevicesEntities\Connectors\Connector $connector;
 
 	public function __construct(
 		string $identifier,
-		Entities\Connectors\Connector $connector,
+		DevicesEntities\Connectors\Connector $connector,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -228,12 +228,12 @@ abstract class Device implements Entities\Entity,
 		$this->comment = $comment;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): DevicesEntities\Connectors\Connector
 	{
 		return $this->connector;
 	}
 
-	public function setConnector(Entities\Connectors\Connector $connector): void
+	public function setConnector(DevicesEntities\Connectors\Connector $connector): void
 	{
 		$this->connector = $connector;
 	}
@@ -308,7 +308,7 @@ abstract class Device implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Channels\Channel>
+	 * @return array<DevicesEntities\Channels\Channel>
 	 */
 	public function getChannels(): array
 	{
@@ -316,7 +316,7 @@ abstract class Device implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Channels\Channel> $channels
+	 * @param array<DevicesEntities\Channels\Channel> $channels
 	 */
 	public function setChannels(array $channels = []): void
 	{
@@ -329,7 +329,7 @@ abstract class Device implements Entities\Entity,
 		}
 	}
 
-	public function addChannel(Entities\Channels\Channel $channel): void
+	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->channels->contains($channel)) {
@@ -339,7 +339,7 @@ abstract class Device implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Devices\Controls\Control>
+	 * @return array<DevicesEntities\Devices\Controls\Control>
 	 */
 	public function getControls(): array
 	{
@@ -347,7 +347,7 @@ abstract class Device implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Devices\Controls\Control> $controls
+	 * @param array<DevicesEntities\Devices\Controls\Control> $controls
 	 */
 	public function setControls(array $controls = []): void
 	{
@@ -360,7 +360,7 @@ abstract class Device implements Entities\Entity,
 		}
 	}
 
-	public function addControl(Entities\Devices\Controls\Control $control): void
+	public function addControl(DevicesEntities\Devices\Controls\Control $control): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->controls->contains($control)) {
@@ -370,7 +370,7 @@ abstract class Device implements Entities\Entity,
 	}
 
 	/**
-	 * @return array<Entities\Devices\Properties\Property>
+	 * @return array<DevicesEntities\Devices\Properties\Property>
 	 */
 	public function getProperties(): array
 	{
@@ -378,7 +378,7 @@ abstract class Device implements Entities\Entity,
 	}
 
 	/**
-	 * @param array<Entities\Devices\Properties\Property> $properties
+	 * @param array<DevicesEntities\Devices\Properties\Property> $properties
 	 */
 	public function setProperties(array $properties = []): void
 	{
@@ -391,7 +391,7 @@ abstract class Device implements Entities\Entity,
 		}
 	}
 
-	public function addProperty(Entities\Devices\Properties\Property $property): void
+	public function addProperty(DevicesEntities\Devices\Properties\Property $property): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->properties->contains($property)) {
@@ -425,15 +425,15 @@ abstract class Device implements Entities\Entity,
 			),
 
 			'properties' => array_map(
-				static fn (Entities\Devices\Properties\Property $property): string => $property->getId()->toString(),
+				static fn (DevicesEntities\Devices\Properties\Property $property): string => $property->getId()->toString(),
 				$this->getProperties(),
 			),
 			'controls' => array_map(
-				static fn (Entities\Devices\Controls\Control $control): string => $control->getId()->toString(),
+				static fn (DevicesEntities\Devices\Controls\Control $control): string => $control->getId()->toString(),
 				$this->getControls(),
 			),
 			'channels' => array_map(
-				static fn (Entities\Channels\Channel $channel): string => $channel->getId()->toString(),
+				static fn (DevicesEntities\Channels\Channel $channel): string => $channel->getId()->toString(),
 				$this->getChannels(),
 			),
 

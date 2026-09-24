@@ -7,11 +7,11 @@ use Doctrine\Persistence;
 use Error;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Module\Accounts\Commands;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
@@ -32,11 +32,11 @@ final class CreateAccountTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Console\Exception\CommandNotFoundException
 	 * @throws Console\Exception\LogicException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

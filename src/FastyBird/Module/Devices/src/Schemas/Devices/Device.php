@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Schemas\Devices;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
+use FastyBird\Core\Persistence\Exceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Devices;
@@ -115,7 +115,7 @@ abstract class Device extends JsonApiSchemas\JsonApi
 	 * @return iterable<string, mixed>
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\Query
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -162,7 +162,7 @@ abstract class Device extends JsonApiSchemas\JsonApi
 	 * @param T $resource
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\Query
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -311,7 +311,7 @@ abstract class Device extends JsonApiSchemas\JsonApi
 	 * @return array<Entities\Devices\Properties\Property>
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\Query
 	 */
 	private function getProperties(Entities\Devices\Device $device): array
 	{
@@ -325,7 +325,7 @@ abstract class Device extends JsonApiSchemas\JsonApi
 	 * @return array<Entities\Devices\Controls\Control>
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\Query
 	 */
 	private function getControls(Entities\Devices\Device $device): array
 	{
@@ -339,7 +339,7 @@ abstract class Device extends JsonApiSchemas\JsonApi
 	 * @return array<Entities\Channels\Channel>
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\Query
 	 */
 	private function getChannels(Entities\Devices\Device $device): array
 	{
@@ -353,7 +353,7 @@ abstract class Device extends JsonApiSchemas\JsonApi
 	 * @return array<Entities\Devices\Device>
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\Query
 	 */
 	private function getParents(Entities\Devices\Device $device): array
 	{
@@ -367,7 +367,7 @@ abstract class Device extends JsonApiSchemas\JsonApi
 	 * @return array<Entities\Devices\Device>
 	 *
 	 * @throws Exception
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws Exceptions\Query
 	 */
 	private function getChildren(Entities\Devices\Device $device): array
 	{

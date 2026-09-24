@@ -16,10 +16,9 @@
 namespace FastyBird\Plugin\ApiKey\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\DoctrineCrud;
-use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Plugin\ApiKey\Entities;
+use FastyBird\Core\Persistence\Entities as PersistenceEntities;
+use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Plugin\ApiKey\Entities as ApiKeyEntities;
 use FastyBird\Plugin\ApiKey\Types;
 use Ramsey\Uuid;
 
@@ -32,28 +31,28 @@ use Ramsey\Uuid;
 		'comment' => 'API Key plugin access keys',
 	],
 )]
-class Key implements Entities\Entity, DoctrineCrud\IEntity,
-	DoctrineTimestampable\IEntityCreated, DoctrineTimestampable\IEntityUpdated
+class Key implements ApiKeyEntities\Entity, PersistenceEntities\CrudEntity,
+	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
 	use TEntity;
-	use DoctrineTimestampable\TEntityCreated;
-	use DoctrineTimestampable\TEntityUpdated;
+	use PersistenceEntities\HasEntityCreated;
+	use PersistenceEntities\HasEntityUpdated;
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'key_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'key_name', type: 'string', length: 50, nullable: false)]
 	private string $name;
 
-	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'key_key', type: 'string', length: 150, nullable: false)]
 	private string $key;
 
-	#[IPubDoctrine\Crud(writable: true)]
+	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'key_state',
 		type: 'string',

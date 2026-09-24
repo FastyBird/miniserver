@@ -19,8 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Types;
-use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -33,7 +33,7 @@ use function is_int;
 use function is_string;
 
 #[ORM\Entity]
-#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+#[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Channel extends DevicesEntities\Channels\Channel
 {
 

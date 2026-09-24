@@ -18,14 +18,13 @@ namespace FastyBird\Module\Accounts\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Hydrators;
 use FastyBird\Module\Accounts\Models;
@@ -72,7 +71,7 @@ final class AccountEmailsV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
 	 */
@@ -92,7 +91,7 @@ final class AccountEmailsV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi
 	 */
@@ -111,9 +110,9 @@ final class AccountEmailsV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws RuntimeException
@@ -155,7 +154,7 @@ final class AccountEmailsV1 extends BaseV1
 			// Commit all changes into database
 			$this->getOrmConnection()->commit();
 
-		} catch (Exceptions\EmailIsNotValid) {
+		} catch (AccountsExceptions\EmailIsNotValid) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidAttribute.heading')),
@@ -164,7 +163,7 @@ final class AccountEmailsV1 extends BaseV1
 					'pointer' => '/data/attributes/address',
 				],
 			);
-		} catch (Exceptions\EmailAlreadyTaken) {
+		} catch (AccountsExceptions\EmailAlreadyTaken) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.emails.messages.taken.heading')),
@@ -173,7 +172,7 @@ final class AccountEmailsV1 extends BaseV1
 					'pointer' => '/data/attributes/address',
 				],
 			);
-		} catch (DoctrineCrudExceptions\EntityCreation $ex) {
+		} catch (PersistenceExceptions\EntityCreation $ex) {
 			throw new JsonApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
@@ -261,9 +260,9 @@ final class AccountEmailsV1 extends BaseV1
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws RuntimeException
@@ -334,8 +333,8 @@ final class AccountEmailsV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws JsonApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
@@ -391,7 +390,7 @@ final class AccountEmailsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws DoctrineOrmQueryExceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Exception
 	 * @throws JsonApiExceptions\JsonApi

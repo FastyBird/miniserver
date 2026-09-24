@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\Exception\TypesException;
 use Doctrine\Migrations\Metadata\Storage\TableMetadataStorageConfiguration;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
-use FastyBird\Core\Subscribers\DoctrineMigrations\SchemaSubscriber;
+use FastyBird\Core\Persistence\Subscribers;
 use PHPUnit\Framework\TestCase;
 use function array_map;
 
@@ -31,7 +31,7 @@ final class SchemaSubscriberTest extends TestCase
 		$tableStorage->setVersionColumnName('version');
 		$tableStorage->setVersionColumnLength(191);
 
-		$subscriber = new SchemaSubscriber($tableStorage);
+		$subscriber = new Subscribers\SchemaSubscriber($tableStorage);
 
 		$schema = new Schema();
 		$event = new GenerateSchemaEventArgs($this->createMock(EntityManagerInterface::class), $schema);
@@ -62,7 +62,7 @@ final class SchemaSubscriberTest extends TestCase
 		$tableStorage = new TableMetadataStorageConfiguration();
 		$tableStorage->setTableName('doctrine_migrations');
 
-		$subscriber = new SchemaSubscriber($tableStorage);
+		$subscriber = new Subscribers\SchemaSubscriber($tableStorage);
 
 		$schema = new Schema();
 		$schema->createTable('doctrine_migrations');

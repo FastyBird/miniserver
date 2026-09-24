@@ -17,7 +17,7 @@ namespace FastyBird\Automator\DevicesModule\Documents\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
 use Orisai\ObjectMapper;
@@ -41,9 +41,9 @@ final class DevicePropertyCondition extends TriggersDocuments\Conditions\Conditi
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $trigger,
 		bool $enabled,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $device,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $operand,

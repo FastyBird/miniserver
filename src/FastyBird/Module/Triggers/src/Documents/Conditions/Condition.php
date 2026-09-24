@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\Documents\Conditions;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
+use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
@@ -46,9 +46,9 @@ abstract class Condition implements Documents\Document, Documents\Owner
 	use Documents\HasOwner;
 
 	public function __construct(
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ApplicationObjectMapper\UuidValue()]
+		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $trigger,
 		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $enabled,
@@ -59,7 +59,7 @@ abstract class Condition implements Documents\Document, Documents\Owner
 		#[ObjectMapper\Modifiers\FieldName('is_fulfilled')]
 		private readonly bool|null $isFulfilled = null,
 		#[ObjectMapper\Rules\AnyOf([
-			new ApplicationObjectMapper\UuidValue(),
+			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		protected readonly Uuid\UuidInterface|null $owner = null,

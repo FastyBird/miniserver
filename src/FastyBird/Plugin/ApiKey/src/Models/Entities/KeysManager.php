@@ -16,9 +16,9 @@
 namespace FastyBird\Plugin\ApiKey\Models\Entities;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Persistence\DoctrineCrud\Crud as DoctrineCrudCrud;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Crud;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Plugin\ApiKey\Entities;
 use Nette;
 use Nette\Utils;
@@ -37,23 +37,23 @@ final class KeysManager
 
 	use Nette\SmartObject;
 
-	/** @var DoctrineCrudCrud\IEntityCrud<Entities\Key>|null */
-	private DoctrineCrudCrud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\IEntityCrud<Entities\Key>|null */
+	private Crud\IEntityCrud|null $entityCrud = null;
 
 	/**
-	 * @param DoctrineCrudCrud\IEntityCrudFactory<Entities\Key> $entityCrudFactory
+	 * @param Crud\CrudFactory<Entities\Key> $entityCrudFactory
 	 */
 	public function __construct(
-		private readonly DoctrineCrudCrud\IEntityCrudFactory $entityCrudFactory,
+		private readonly Crud\CrudFactory $entityCrudFactory,
 	)
 	{
 	}
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DoctrineCrudExceptions\EntityCreation
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Key
 	{
@@ -65,8 +65,8 @@ final class KeysManager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function update(
 		Entities\Key $entity,
@@ -80,8 +80,8 @@ final class KeysManager
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function delete(Entities\Key $entity): bool
 	{
@@ -90,9 +90,9 @@ final class KeysManager
 	}
 
 	/**
-	 * @return DoctrineCrudCrud\IEntityCrud<Entities\Key>
+	 * @return Crud\IEntityCrud<Entities\Key>
 	 */
-	public function getEntityCrud(): DoctrineCrudCrud\IEntityCrud
+	public function getEntityCrud(): Crud\IEntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Key::class);
