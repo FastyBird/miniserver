@@ -187,7 +187,7 @@ services:
   # MYSQL DATABASE STORAGE
   database:
     container_name: fastybird-database
-    image: mariadb:10.11
+    image: mariadb:13.0
     environment:
       # Container specific environment variables
       TZ: ${APP_TZ:-UTC}
