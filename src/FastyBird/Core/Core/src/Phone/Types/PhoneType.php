@@ -1,17 +1,17 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Types\Phone;
+namespace FastyBird\Core\Phone\Types;
 
 use Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Types;
-use FastyBird\Core\Entities\Phone as Entities;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Phone\Entities;
+use FastyBird\Core\Phone\Exceptions;
 use Override;
 
 /**
  * Doctrine phone data type
  */
-final class Phone extends Types\StringType
+final class PhoneType extends Types\StringType
 {
 
 	// Data type name

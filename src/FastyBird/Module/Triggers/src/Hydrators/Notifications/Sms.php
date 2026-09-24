@@ -18,11 +18,11 @@ namespace FastyBird\Module\Triggers\Hydrators\Notifications;
 use Doctrine\Persistence;
 use Error;
 use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Entities\Phone as PhoneEntities;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Exceptions as PhoneExceptions;
-use FastyBird\Core\Services\Phone;
-use FastyBird\Module\Triggers\Entities;
+use FastyBird\Core\Phone\Entities as PhoneEntities;
+use FastyBird\Core\Phone\Exceptions as PhoneExceptions;
+use FastyBird\Core\Phone\Services;
+use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
 use function is_scalar;
@@ -31,7 +31,7 @@ use function strval;
 /**
  * SMS notification entity hydrator
  *
- * @extends Notification<Entities\Notifications\Sms>
+ * @extends Notification<TriggersEntities\Notifications\Sms>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Hydrators
@@ -47,7 +47,7 @@ final class Sms extends Notification
 	];
 
 	public function __construct(
-		private readonly Phone\Phone $phone,
+		private readonly Services\PhoneNumberHelper $phone,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
 	)
@@ -57,7 +57,7 @@ final class Sms extends Notification
 
 	public function getEntityName(): string
 	{
-		return Entities\Notifications\Sms::class;
+		return TriggersEntities\Notifications\Sms::class;
 	}
 
 	/**

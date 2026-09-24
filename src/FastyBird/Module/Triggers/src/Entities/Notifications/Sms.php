@@ -17,9 +17,9 @@ namespace FastyBird\Module\Triggers\Entities\Notifications;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Entities\Phone as PhoneEntities;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Module\Triggers\Entities;
+use FastyBird\Core\Phone\Entities as PhoneEntities;
+use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -44,7 +44,7 @@ class Sms extends Notification
 
 	public function __construct(
 		PhoneEntities\Phone $phone,
-		Entities\Triggers\Trigger $trigger,
+		TriggersEntities\Triggers\Trigger $trigger,
 		Uuid\UuidInterface|null $id = null,
 	)
 	{

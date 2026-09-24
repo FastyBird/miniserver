@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Subscribers\Phone;
+namespace FastyBird\Core\Phone\Subscribers;
 
 use Doctrine\Common;
 use Doctrine\ORM;
-use FastyBird\Core\Entities\Phone as Entities;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Types\Phone as Types;
+use FastyBird\Core\Phone\Entities;
+use FastyBird\Core\Phone\Exceptions;
+use FastyBird\Core\Phone\Types;
 use Override;
 use ReflectionClass;
 use ReflectionException;
@@ -216,7 +216,7 @@ final class PhoneObjectSubscriber implements Common\EventSubscriber
 		foreach ($classMetadata->getFieldNames() as $fieldName) {
 			$mapping = $classMetadata->getFieldMapping($fieldName);
 
-			if ($mapping['type'] !== Types\Phone::PHONE) {
+			if ($mapping['type'] !== Types\PhoneType::PHONE) {
 				continue;
 			}
 
