@@ -6,11 +6,12 @@ use DateTimeInterface;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Api\Hydrators\Fields;
+use FastyBird\Core\Tests;
 use FastyBird\Core\Values\Types;
 use Fig\Http\Message\StatusCodeInterface;
+use Nette;
 use Nette\Localization;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 use ValueError;
 
@@ -22,7 +23,7 @@ use ValueError;
  * decided 2026-09-22) rather than silently coercing it -- the tests named accordingly
  * document that reversal rather than the original defect.
  */
-final class HydratorFieldsTest extends TestCase
+final class HydratorFieldsTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	public function testFieldIsRequiredAndIsWritableReturnConstructorArgumentsUnchanged(): void
@@ -115,6 +116,43 @@ final class HydratorFieldsTest extends TestCase
 		} catch (Exceptions\JsonApiError $ex) {
 			self::assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $ex->getCode());
 			self::assertSame(['pointer' => '/data/attributes/field'], $ex->getSource());
+		}
+	}
+
+	/**
+	 * The other tests in this file build their `NumberField`/`BooleanField`/`ArrayField`/
+	 * `BackedEnumField` through {@see self::createTranslator()}, a mock whose `translate()`
+	 * returns its argument unchanged -- so they never notice whether the real translation
+	 * catalogue actually resolves `//jsonApi.hydrator.*` to text. If the `jsonApi` domain's
+	 * translations failed to load (wrong `contributteTranslation.dirs` entry after the E3 Api
+	 * move, wrong domain, wrong locale), `Translator::translate()` falls back to returning the
+	 * key verbatim, and a `JsonApiError` would silently carry `//jsonApi.hydrator.
+	 * invalidAttribute.heading` as its "heading" instead of "Invalid attribute" -- a client-
+	 * facing regression no other test here would catch. This one resolves the translator from
+	 * a real container built off `tests/common.neon` (the config this test suite actually
+	 * loads translations through, not a hand-picked directory), and asserts against the exact
+	 * strings in `src/Api/Translations/jsonApi.en_US.neon`.
+	 *
+	 * @throws Exceptions\JsonApiError
+	 * @throws Nette\DI\MissingServiceException
+	 */
+	public function testNumberFieldGetValueOnNonNumericStringCarriesTranslatedTextNotTheRawKey(): void
+	{
+		$translator = $this->container->getByType(Localization\Translator::class);
+
+		$field = new Fields\NumberField($translator, false, false, 'field', 'field', true, true);
+
+		$attributes = (new Objects\StandardObject())->set('field', 'not a number');
+
+		try {
+			$field->getValue($attributes);
+
+			self::fail('NumberField::getValue() did not reject a non-numeric string.');
+		} catch (Exceptions\JsonApiError $ex) {
+			self::assertSame('Invalid attribute', $ex->getMessage());
+			self::assertSame('Provided attribute value is not valid', $ex->getDetail());
+			self::assertStringNotContainsString('//jsonApi.hydrator', $ex->getMessage());
+			self::assertStringNotContainsString('//jsonApi.hydrator', $ex->getDetail());
 		}
 	}
 
