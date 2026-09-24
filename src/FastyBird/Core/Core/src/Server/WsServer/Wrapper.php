@@ -230,6 +230,13 @@ final class Wrapper implements IWrapper
 			// Call service event
 			Utils\Arrays::invoke($this->onIncomingMessage, $client, $client->getRequest(), $message);
 
+			// A subscriber that rejects the client -- e.g. its access token has expired or was
+			// revoked since the handshake -- closes it, and the message must not reach the
+			// application. Read back through the client, which is what the subscribers acted on.
+			if ($client->getWebSocket()->isClosing()) {
+				return;
+			}
+
 			$webSocket->getProtocol()->handleMessage($client, $this->application, $message);
 
 			// Call service event

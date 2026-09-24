@@ -3,18 +3,28 @@
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
 use DateTimeImmutable;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use FastyBird\Core\Clients\WsServer as ClientsWsServer;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Controllers\WebSockets as ControllersWebSockets;
 use FastyBird\Core\Controllers\WebSockets\Responses;
+use FastyBird\Core\Encoding\WebSockets as EncodingWebSockets;
+use FastyBird\Core\Entities\WebSockets as EntitiesWebSockets;
 use FastyBird\Core\Entities\WsServer as EntitiesWsServer;
 use FastyBird\Core\Events;
 use FastyBird\Core\Helpers\Tools\Database;
 use FastyBird\Core\Http;
 use FastyBird\Core\Security\SimpleAuth;
+use FastyBird\Core\Server\WsServer\Wrapper;
 use FastyBird\Core\Subscribers\WsServer\Client;
 use Lcobucci\JWT;
 use Override;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use React\Socket;
 use Stringable;
 use Throwable;
 use function in_array;
@@ -102,9 +112,69 @@ final class ClientAuthenticationTest extends TestCase
 			},
 		);
 
+		// Only the per-message path pings the database, before it re-checks the token; the
+		// ping's dummy select just has to succeed
+		$platform = $this->createMock(AbstractPlatform::class);
+		$platform->method('getDummySelectSQL')->willReturn('SELECT 1');
+
+		$connection = $this->createMock(Connection::class);
+		$connection->method('getDatabasePlatform')->willReturn($platform);
+
+		$entityManager = $this->createMock(EntityManagerInterface::class);
+		$entityManager->method('isOpen')->willReturn(true);
+		$entityManager->method('getConnection')->willReturn($connection);
+
+		$managerRegistry = $this->createMock(ManagerRegistry::class);
+		$managerRegistry->method('getManager')->willReturn($entityManager);
+
+		$database = new Database($managerRegistry);
+
 		return $configured
-			? new Client(new Database(), new SimpleAuth\TokenReader($validator), $validator, $identityFactory, $logger)
-			: new Client(new Database(), null, null, null, $logger);
+			? new Client($database, new SimpleAuth\TokenReader($validator), $validator, $identityFactory, $logger)
+			: new Client($database, null, null, null, $logger);
+	}
+
+	/**
+	 * Drives an incoming frame through the server wrapper with the subscriber registered the way
+	 * CoreExtension registers it, over a real client entity and a real RFC6455 protocol, so
+	 * rejection goes through the actual closeSession() -> IClient::close() -> protocol close.
+	 * Only the protocol's frame handling -- the step that reaches the WAMP application and its
+	 * controllers -- is replaced, to count whether the frame got there.
+	 *
+	 * @throws Throwable
+	 */
+	private function deliverFrame(
+		Client $subscriber,
+		Http\IRequest $request,
+		int $expectedDeliveries,
+	): EntitiesWebSockets\IWebSocket
+	{
+		$protocol = $this->getMockBuilder(EncodingWebSockets\RFC6455::class)
+			->onlyMethods(['handleMessage'])
+			->getMock();
+		$protocol->expects(self::exactly($expectedDeliveries))->method('handleMessage');
+
+		$webSocket = new EntitiesWebSockets\WebSocket(true, false, $protocol);
+
+		$client = new EntitiesWsServer\Client(1, $this->createMock(Socket\ConnectionInterface::class));
+		$client->setRequest($request);
+		$client->setHttpHeadersReceived(true);
+		$client->setWebSocket($webSocket);
+
+		$wrapper = new Wrapper(
+			$this->createMock(ControllersWebSockets\IApplication::class),
+			$this->createMock(ClientsWsServer\IStorage::class),
+		);
+		$wrapper->onIncomingMessage[] = static function (
+			EntitiesWsServer\IClient $client,
+			Http\IRequest $request,
+		) use ($subscriber): void {
+			$subscriber->incomingMessage(new Events\IncomingMessage($client, $request));
+		};
+
+		$wrapper->handleMessage($client, '[2,"call-1","/devices-module/v1/exchange",{}]');
+
+		return $webSocket;
 	}
 
 	/**
@@ -328,6 +398,42 @@ final class ClientAuthenticationTest extends TestCase
 			->checkSecurity($client, $this->handshake(['Authorization' => 'Bearer ' . $token]), [], []);
 
 		self::assertFalse($accepted);
+	}
+
+	/**
+	 * The token is re-checked on every incoming message. Once it no longer resolves -- here it
+	 * was revoked after the handshake -- the client is closed and the message that triggered
+	 * the check must not be processed: it could be a property SET.
+	 *
+	 * @throws Throwable
+	 */
+	public function testAMessageFromAClientWhoseTokenWasRevokedIsNotProcessed(): void
+	{
+		$token = $this->issue();
+
+		$webSocket = $this->deliverFrame(
+			$this->subscriber([]),
+			$this->handshake(['Authorization' => 'Bearer ' . $token]),
+			0,
+		);
+
+		self::assertTrue($webSocket->isClosing());
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testAMessageFromAnAuthenticatedClientIsProcessed(): void
+	{
+		$token = $this->issue();
+
+		$webSocket = $this->deliverFrame(
+			$this->subscriber([$token]),
+			$this->handshake(['Authorization' => 'Bearer ' . $token]),
+			1,
+		);
+
+		self::assertFalse($webSocket->isClosing());
 	}
 
 	/**
