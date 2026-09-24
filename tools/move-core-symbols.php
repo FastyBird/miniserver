@@ -454,6 +454,28 @@ function fbMoveIsClassPosition(array $tokens, int $index, bool $attributeTop): b
 		return false;
 	}
 
+	// A typed class constant's own name (`const TYPE NAME = ...`, PHP 8.3+): the type, if any,
+	// sits between T_CONST and this token and is itself still a class position (resolved on its
+	// own pass through this same function); only the token directly followed by `=` is the
+	// constant's name, and it is never a class reference, however many letters it happens to
+	// share -- case-insensitively -- with a class in scope (e.g. a `PHONE` constant beside a
+	// `Phone` class in the same namespace).
+	if ($nextToken?->text === '=') {
+		for ($i = $index - 1; $i >= 0; $i--) {
+			if ($tokens[$i]->is([T_WHITESPACE, T_COMMENT, T_DOC_COMMENT])) {
+				continue;
+			}
+
+			if (in_array($tokens[$i]->text, [';', '{', '}'], true)) {
+				break;
+			}
+
+			if ($tokens[$i]->is(T_CONST)) {
+				return false;
+			}
+		}
+	}
+
 	if ($nextToken?->text === '(') {
 		return $prevToken?->is(T_NEW) === true || $attributeTop;
 	}
