@@ -26,7 +26,7 @@ use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -381,7 +381,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				[
 					'source' => MetadataTypes\Sources\Connector::TUYA->value,
 					'type' => 'write-channel-property-state-message-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $connector->getId()->toString(),
 					],
@@ -422,7 +422,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				[
 					'source' => MetadataTypes\Sources\Connector::TUYA->value,
 					'type' => 'write-channel-property-state-message-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $connector->getId()->toString(),
 					],
@@ -479,7 +479,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					[
 						'source' => MetadataTypes\Sources\Connector::TUYA->value,
 						'type' => 'write-channel-property-state-message-consumer',
-						'exception' => ToolsHelpers\Logger::buildException($ex, false),
+						'exception' => Logging\Logger::buildException($ex, false),
 						'connector' => [
 							'id' => $connector->getId()->toString(),
 						],
@@ -602,7 +602,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						[
 							'source' => MetadataTypes\Sources\Connector::TUYA->value,
 							'type' => 'write-channel-property-state-message-consumer',
-							'exception' => ToolsHelpers\Logger::buildException($ex, $renderException),
+							'exception' => Logging\Logger::buildException($ex, $renderException),
 							'connector' => [
 								'id' => $connector->getId()->toString(),
 							],

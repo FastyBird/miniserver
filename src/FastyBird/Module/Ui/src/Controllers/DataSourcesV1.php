@@ -21,7 +21,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Controllers;
 use FastyBird\Module\Ui\Entities;
@@ -206,7 +206,7 @@ final class DataSourcesV1 extends BaseV1
 					[
 						'source' => MetadataTypes\Sources\Module::DEVICES->value,
 						'type' => 'dataSources-controller',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -283,7 +283,7 @@ final class DataSourcesV1 extends BaseV1
 					[
 						'source' => MetadataTypes\Sources\Module::DEVICES->value,
 						'type' => 'dataSources-controller',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -352,7 +352,7 @@ final class DataSourcesV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Module::DEVICES->value,
 					'type' => 'dataSources-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

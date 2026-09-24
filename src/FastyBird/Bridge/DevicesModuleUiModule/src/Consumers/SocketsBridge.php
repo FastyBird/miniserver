@@ -19,7 +19,7 @@ use FastyBird\Bridge\DevicesModuleUiModule;
 use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as WebSocketsRouting;
 use FastyBird\Core\Topics\WsServer as WsServerTopics;
@@ -200,7 +200,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 				[
 					'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 					'type' => 'state-entities-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -210,7 +210,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 				[
 					'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 					'type' => 'state-entities-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 		}

@@ -18,7 +18,7 @@ namespace FastyBird\Connector\FbMqtt\Writers;
 use FastyBird\Connector\FbMqtt\Documents;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Symfony\Component\EventDispatcher;
@@ -134,7 +134,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 				[
 					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
 					'type' => 'event-writer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 		}

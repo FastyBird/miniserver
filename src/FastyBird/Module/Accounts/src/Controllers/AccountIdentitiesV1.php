@@ -21,7 +21,7 @@ use FastyBird\Core\Encoding\JsonApi\Objects as JsonAPIDocumentObjects;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Entities;
@@ -207,7 +207,7 @@ final class AccountIdentitiesV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
 					'type' => 'account-identities-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

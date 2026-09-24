@@ -18,7 +18,7 @@ namespace FastyBird\Plugin\RedisDb\Models\States\Async;
 use BackedEnum;
 use DateTimeInterface;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
@@ -101,7 +101,7 @@ class StatesManager
 								'id' => $id->toString(),
 								'data' => $raw,
 							],
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
@@ -122,7 +122,7 @@ class StatesManager
 					[
 						'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
 						'type' => 'states-async-manager',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'record' => [
 							'id' => $id->toString(),
 						],
@@ -164,7 +164,7 @@ class StatesManager
 								'id' => $id->toString(),
 								'data' => $raw,
 							],
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
@@ -197,7 +197,7 @@ class StatesManager
 											'id' => $id->toString(),
 											'data' => $raw,
 										],
-										'exception' => ToolsHelpers\Logger::buildException($ex),
+										'exception' => Logging\Logger::buildException($ex),
 									],
 								);
 
@@ -218,7 +218,7 @@ class StatesManager
 								[
 									'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
 									'type' => 'states-async-manager',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 									'record' => [
 										'id' => $id->toString(),
 									],
@@ -235,7 +235,7 @@ class StatesManager
 						[
 							'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
 							'type' => 'states-async-manager',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'record' => [
 								'id' => $id->toString(),
 							],

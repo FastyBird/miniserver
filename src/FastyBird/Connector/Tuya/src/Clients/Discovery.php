@@ -25,7 +25,7 @@ use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -254,7 +254,7 @@ final class Discovery
 								[
 									'source' => MetadataTypes\Sources\Connector::TUYA->value,
 									'type' => 'discovery-client',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 								],
 							);
 
@@ -282,7 +282,7 @@ final class Discovery
 						[
 							'source' => MetadataTypes\Sources\Connector::TUYA->value,
 							'type' => 'discovery-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'protocol' => $protocolVersion->value,
 						],
 					);
@@ -309,7 +309,7 @@ final class Discovery
 							[
 								'source' => MetadataTypes\Sources\Connector::TUYA->value,
 								'type' => 'discovery-client',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 								'device' => [
 									'identifier' => $localDeviceInfo->getId(),
 									'ip_address' => $localDeviceInfo->getIpAddress(),
@@ -385,7 +385,7 @@ final class Discovery
 						[
 							'source' => MetadataTypes\Sources\Connector::TUYA->value,
 							'type' => 'discovery-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
@@ -414,7 +414,7 @@ final class Discovery
 						[
 							'source' => MetadataTypes\Sources\Connector::TUYA->value,
 							'type' => 'discovery-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
@@ -437,7 +437,7 @@ final class Discovery
 							[
 								'source' => MetadataTypes\Sources\Connector::TUYA->value,
 								'type' => 'discovery-client',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 								'device' => [
 									'identifier' => $device->getId(),
 									'ip_address' => $device->getIp(),
@@ -462,7 +462,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::TUYA->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -615,7 +615,7 @@ final class Discovery
 								[
 									'source' => MetadataTypes\Sources\Connector::TUYA->value,
 									'type' => 'discovery-client',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 									'device' => [
 										'identifier' => $child->getId(),
 										'ip_address' => $ipAddress,
@@ -680,7 +680,7 @@ final class Discovery
 								[
 									'source' => MetadataTypes\Sources\Connector::TUYA->value,
 									'type' => 'discovery-client',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 								],
 							);
 
@@ -904,7 +904,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::TUYA->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'device' => [
 						'identifier' => $id,
 						'ip_address' => $ipAddress,
@@ -975,7 +975,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::TUYA->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'device' => [
 						'identifier' => $id,
 						'ip_address' => $ipAddress,

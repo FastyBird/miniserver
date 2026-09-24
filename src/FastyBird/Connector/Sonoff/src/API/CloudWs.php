@@ -26,7 +26,7 @@ use FastyBird\Connector\Sonoff\ValueObjects;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Schemas\Tools as ToolsSchemas;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\RequestMethodInterface;
@@ -471,7 +471,7 @@ final class CloudWs
 				[
 					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
 					'type' => 'cloud-ws-api',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Helpers\Tools;
+namespace FastyBird\Core\Logging;
 
 use Sentry\ClientInterface;
 

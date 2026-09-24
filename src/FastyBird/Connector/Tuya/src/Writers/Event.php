@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Tuya\Writers;
 use FastyBird\Connector\Tuya\Documents;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Symfony\Component\EventDispatcher;
@@ -102,7 +102,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 				[
 					'source' => MetadataTypes\Sources\Connector::TUYA->value,
 					'type' => 'event-writer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 		}

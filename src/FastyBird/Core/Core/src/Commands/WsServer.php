@@ -4,7 +4,7 @@ namespace FastyBird\Core\Commands;
 
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Server\WsServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -83,7 +83,7 @@ final class WsServer extends Console\Command\Command
 					[
 						'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
 						'type' => 'server-command',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 			});
@@ -103,7 +103,7 @@ final class WsServer extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
 					'type' => 'server-command',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'cmd' => $this->getName(),
 				],
 			);
@@ -117,7 +117,7 @@ final class WsServer extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
 					'type' => 'server-command',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'cmd' => $this->getName(),
 				],
 			);

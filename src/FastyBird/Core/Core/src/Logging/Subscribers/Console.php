@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Subscribers\Application;
+namespace FastyBird\Core\Logging\Subscribers;
 
 use Monolog;
 use Override;

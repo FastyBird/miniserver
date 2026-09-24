@@ -25,7 +25,7 @@ use FastyBird\Connector\Shelly\Services;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Connector\Shelly\ValueObjects;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -152,7 +152,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
 					],
@@ -403,7 +403,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -439,7 +439,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -457,7 +457,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -665,7 +665,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
 					],

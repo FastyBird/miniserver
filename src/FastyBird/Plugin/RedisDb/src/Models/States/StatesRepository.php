@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\RedisDb\Models\States;
 
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
@@ -76,7 +76,7 @@ class StatesRepository
 						'id' => $id->toString(),
 						'data' => $raw,
 					],
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -108,7 +108,7 @@ class StatesRepository
 					'record' => [
 						'id' => $id->toString(),
 					],
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

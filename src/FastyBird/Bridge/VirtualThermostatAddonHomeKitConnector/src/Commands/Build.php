@@ -26,6 +26,7 @@ use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -152,7 +153,7 @@ class Build extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -213,7 +214,7 @@ class Build extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -280,7 +281,7 @@ class Build extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

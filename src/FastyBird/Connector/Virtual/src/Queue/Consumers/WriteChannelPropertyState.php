@@ -24,7 +24,7 @@ use FastyBird\Connector\Virtual\Queries;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -329,7 +329,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				[
 					'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
 					'type' => 'write-channel-property-state-message-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $connector->getId()->toString(),
 					],
@@ -407,7 +407,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					[
 						'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
 						'type' => 'write-channel-property-state-message-consumer',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $connector->getId()->toString(),
 						],

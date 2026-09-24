@@ -7,6 +7,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Psr\EventDispatcher;
 use Psr\Log;
@@ -241,7 +242,7 @@ final readonly class Database
 					[
 						'source' => MetadataTypes\Sources\Module::NOT_SPECIFIED,
 						'type' => 'helper',
-						'exception' => Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 			}
@@ -255,7 +256,7 @@ final readonly class Database
 					[
 						'source' => MetadataTypes\Sources\Module::NOT_SPECIFIED,
 						'type' => 'helper',
-						'exception' => Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 			}

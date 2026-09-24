@@ -28,7 +28,7 @@ use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -499,7 +499,7 @@ class Discover extends Console\Command\Command
 						[
 							'source' => MetadataTypes\Sources\Connector::VIERA->value,
 							'type' => 'discovery-cmd',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
@@ -521,7 +521,7 @@ class Discover extends Console\Command\Command
 						[
 							'source' => MetadataTypes\Sources\Connector::VIERA->value,
 							'type' => 'discovery-cmd',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
@@ -565,7 +565,7 @@ class Discover extends Console\Command\Command
 						[
 							'source' => MetadataTypes\Sources\Connector::VIERA->value,
 							'type' => 'discovery-cmd',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
@@ -583,7 +583,7 @@ class Discover extends Console\Command\Command
 						[
 							'source' => MetadataTypes\Sources\Connector::VIERA->value,
 							'type' => 'discovery-cmd',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 

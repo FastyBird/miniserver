@@ -4,7 +4,7 @@ namespace FastyBird\Core\Commands;
 
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Server\HttpServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Psr\EventDispatcher;
@@ -103,7 +103,7 @@ final class HttpServer extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Plugin::WEB_SERVER->value,
 					'type' => 'server-command',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'cmd' => $this->getName(),
 				],
 			);

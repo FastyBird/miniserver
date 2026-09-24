@@ -26,7 +26,7 @@ use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -291,7 +291,7 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 					[
 						'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
 						'type' => 'write-v1-property-state-message-consumer',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $connector->getId()->toString(),
 						],

@@ -21,7 +21,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Exceptions;
@@ -210,7 +210,7 @@ final class DevicePropertiesV1 extends BaseV1
 					[
 						'source' => MetadataTypes\Sources\Module::DEVICES->value,
 						'type' => 'device-properties-controller',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -284,7 +284,7 @@ final class DevicePropertiesV1 extends BaseV1
 					[
 						'source' => MetadataTypes\Sources\Module::DEVICES->value,
 						'type' => 'device-properties-controller',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -353,7 +353,7 @@ final class DevicePropertiesV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Module::DEVICES->value,
 					'type' => 'device-properties-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

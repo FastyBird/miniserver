@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Models\States;
 use DateTimeInterface;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Transformers\Tools as ToolsTransformers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
@@ -95,7 +95,7 @@ abstract class PropertiesManager
 						[
 							'source' => MetadataTypes\Sources\Module::DEVICES->value,
 							'type' => 'properties-states',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'property' => $property->getId()->toString(),
 							'mapped_property' => $mappedProperty->getId()->toString(),
 						],
@@ -114,7 +114,7 @@ abstract class PropertiesManager
 						[
 							'source' => MetadataTypes\Sources\Module::DEVICES->value,
 							'type' => 'properties-states',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 
@@ -148,7 +148,7 @@ abstract class PropertiesManager
 						[
 							'source' => MetadataTypes\Sources\Module::DEVICES->value,
 							'type' => 'properties-states',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 						],
 					);
 

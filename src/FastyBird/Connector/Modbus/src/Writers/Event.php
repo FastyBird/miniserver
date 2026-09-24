@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Modbus\Writers;
 use FastyBird\Connector\Modbus\Documents;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Queue;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Symfony\Component\EventDispatcher;
@@ -101,7 +101,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 				[
 					'source' => MetadataTypes\Sources\Connector::MODBUS->value,
 					'type' => 'event-writer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 		}
