@@ -22,6 +22,7 @@ use function array_slice;
 use function escapeshellarg;
 use function implode;
 use function is_array;
+use function is_bool;
 use function is_int;
 use function is_string;
 use function json_decode;
@@ -130,7 +131,33 @@ final class EntityMappingTest extends TestCase
 	}
 
 	/**
-	 * @return array{metadataClasses: int, classesInError: int, errors: list<string>, errorText: list<string>, discriminators: array<string, int>}
+	 * Doctrine Migrations' own bookkeeping table is not ORM-mapped entity metadata. Core's
+	 * SchemaSubscriber adds it to the generated schema on postGenerateSchema so schema-tool
+	 * stops proposing to drop it (#511, then #515: the subscriber compiled into the container
+	 * but was never actually registered on the event because the compile-time condition guarding
+	 * it could never be true in production -- see CoreExtension::loadConfiguration()).
+	 *
+	 * @throws JsonException
+	 * @throws RuntimeException
+	 */
+	public function testGeneratedSchemaContainsTheMigrationsTable(): void
+	{
+		$result = $this->bootProductionScope();
+
+		self::assertTrue(
+			$result['schemaHasMigrationsTable'],
+			sprintf(
+				'The ORM-generated schema should contain the "%s" table Doctrine Migrations '
+				. 'manages. If this fails, SchemaSubscriber is not registered on '
+				. 'postGenerateSchema at production scope, and schema-tool will propose '
+				. 'dropping the table.',
+				$result['migrationsTableName'],
+			),
+		);
+	}
+
+	/**
+	 * @return array{metadataClasses: int, classesInError: int, errors: list<string>, errorText: list<string>, discriminators: array<string, int>, migrationsTableName: string, schemaHasMigrationsTable: bool}
 	 *
 	 * @throws JsonException
 	 * @throws RuntimeException
@@ -180,6 +207,8 @@ final class EntityMappingTest extends TestCase
 			'errors' => $this->stringListField($decoded, 'errors'),
 			'errorText' => $this->stringListField($decoded, 'errorText'),
 			'discriminators' => $discriminators,
+			'migrationsTableName' => $this->stringField($decoded, 'migrationsTableName'),
+			'schemaHasMigrationsTable' => $this->boolField($decoded, 'schemaHasMigrationsTable'),
 		];
 	}
 
@@ -194,6 +223,38 @@ final class EntityMappingTest extends TestCase
 
 		if (!is_int($value)) {
 			throw new RuntimeException(sprintf('Production-scope boot reported no integer "%s"', $field));
+		}
+
+		return $value;
+	}
+
+	/**
+	 * @param array<mixed> $payload
+	 *
+	 * @throws RuntimeException
+	 */
+	private function stringField(array $payload, string $field): string
+	{
+		$value = $payload[$field] ?? null;
+
+		if (!is_string($value)) {
+			throw new RuntimeException(sprintf('Production-scope boot reported no string "%s"', $field));
+		}
+
+		return $value;
+	}
+
+	/**
+	 * @param array<mixed> $payload
+	 *
+	 * @throws RuntimeException
+	 */
+	private function boolField(array $payload, string $field): bool
+	{
+		$value = $payload[$field] ?? null;
+
+		if (!is_bool($value)) {
+			throw new RuntimeException(sprintf('Production-scope boot reported no boolean "%s"', $field));
 		}
 
 		return $value;

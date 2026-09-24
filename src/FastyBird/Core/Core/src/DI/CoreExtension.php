@@ -80,6 +80,7 @@ use Nette\Caching;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
+use Nettrine\Migrations as NettrineMigrations;
 use Nettrine\ORM as NettrineORM;
 use Override;
 use Psr\EventDispatcher as WsServerEventDispatcher;
@@ -813,11 +814,14 @@ final class CoreExtension extends DI\CompilerExtension
 		 * declares that extension, so its Doctrine\Migrations\Metadata\Storage\
 		 * TableMetadataStorageConfiguration service the subscriber is autowired against would
 		 * otherwise never exist for them to compile against.
+		 *
+		 * This keys on the extension being registered, not on findByType() against that service:
+		 * MigrationsExtension declares it with setFactory() and no setType(), so at this point in
+		 * loadConfiguration() the definition carries no resolvable type yet and findByType() always
+		 * returns [], which left the subscriber never registered in production (#515).
 		 */
 
-		if (
-			$builder->findByType(Doctrine\Migrations\Metadata\Storage\TableMetadataStorageConfiguration::class) !== []
-		) {
+		if ($this->compiler->getExtensions(NettrineMigrations\DI\MigrationsExtension::class) !== []) {
 			$builder->addDefinition($this->prefix('doctrineMigrations.subscriber'))
 				->setType(Subscribers\DoctrineMigrations\SchemaSubscriber::class);
 		}
