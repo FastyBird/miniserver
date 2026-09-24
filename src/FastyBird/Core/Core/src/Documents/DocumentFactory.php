@@ -127,7 +127,9 @@ final readonly class DocumentFactory
 				new ObjectMapper\Printers\TypeToStringConverter(),
 			);
 
-			throw new CoreExceptions\InvalidArgument('Could not map data to document: ' . $errorPrinter->printError($ex));
+			throw new CoreExceptions\InvalidArgument(
+				'Could not map data to document: ' . $errorPrinter->printError($ex),
+			);
 		}
 	}
 

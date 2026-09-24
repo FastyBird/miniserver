@@ -457,7 +457,9 @@ class Loader
 
 		if ($category === HomeKitTypes\AccessoryCategory::BRIDGE) {
 			if (!$owner instanceof Documents\Connectors\Connector) {
-				throw new HomeKitExceptions\InvalidArgument('Bridge accessory owner have to be connector item instance');
+				throw new HomeKitExceptions\InvalidArgument(
+					'Bridge accessory owner have to be connector item instance',
+				);
 			}
 
 			$accessory = $this->bridgeAccessoryFactory->create($owner->getName() ?? $owner->getIdentifier(), $owner);

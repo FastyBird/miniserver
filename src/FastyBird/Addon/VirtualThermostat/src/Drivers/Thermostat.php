@@ -150,7 +150,9 @@ class Thermostat implements VirtualDrivers\Driver
 			)
 		) {
 			return Promise\reject(
-				new VirtualThermostatExceptions\InvalidState('Thermostat has not configured all required actors or sensors'),
+				new VirtualThermostatExceptions\InvalidState(
+					'Thermostat has not configured all required actors or sensors',
+				),
 			);
 		}
 
@@ -498,7 +500,9 @@ class Thermostat implements VirtualDrivers\Driver
 
 			$this->connected = false;
 
-			return Promise\reject(new VirtualThermostatExceptions\InvalidState('Target temperature boundaries are wrongly configured'));
+			return Promise\reject(
+				new VirtualThermostatExceptions\InvalidState('Target temperature boundaries are wrongly configured'),
+			);
 		}
 
 		$measuredTemp = array_filter(
@@ -633,7 +637,9 @@ class Thermostat implements VirtualDrivers\Driver
 
 				$this->connected = false;
 
-				return Promise\reject(new VirtualThermostatExceptions\InvalidState('Thermostat has not configured any heater actor'));
+				return Promise\reject(
+					new VirtualThermostatExceptions\InvalidState('Thermostat has not configured any heater actor'),
+				);
 			}
 
 			if ($maxCurrentTemp >= $targetTempHigh) {
@@ -647,7 +653,9 @@ class Thermostat implements VirtualDrivers\Driver
 
 				$this->connected = false;
 
-				return Promise\reject(new VirtualThermostatExceptions\InvalidState('Thermostat has not configured any cooler actor'));
+				return Promise\reject(
+					new VirtualThermostatExceptions\InvalidState('Thermostat has not configured any cooler actor'),
+				);
 			}
 
 			if ($maxCurrentTemp >= $targetTempHigh) {
@@ -669,7 +677,9 @@ class Thermostat implements VirtualDrivers\Driver
 				$this->connected = false;
 
 				return Promise\reject(
-					new VirtualThermostatExceptions\InvalidState('Heating and cooling threshold temperatures are wrongly configured'),
+					new VirtualThermostatExceptions\InvalidState(
+						'Heating and cooling threshold temperatures are wrongly configured',
+					),
 				);
 			}
 
@@ -766,7 +776,9 @@ class Thermostat implements VirtualDrivers\Driver
 							});
 
 					} else {
-						$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided value is not valid'));
+						$deferred->reject(
+							new VirtualThermostatExceptions\InvalidArgument('Provided value is not valid'),
+						);
 					}
 				} elseif ($property->getIdentifier() === VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_MODE->value) {
 					if (
@@ -798,7 +810,9 @@ class Thermostat implements VirtualDrivers\Driver
 							});
 
 					} else {
-						$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided value is not valid'));
+						$deferred->reject(
+							new VirtualThermostatExceptions\InvalidArgument('Provided value is not valid'),
+						);
 					}
 				} else {
 					$deferred->reject(new VirtualThermostatExceptions\InvalidArgument(sprintf(
@@ -892,7 +906,9 @@ class Thermostat implements VirtualDrivers\Driver
 			);
 
 			if ($channel === null) {
-				$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Channel for provided property could not be found'));
+				$deferred->reject(
+					new VirtualThermostatExceptions\InvalidArgument('Channel for provided property could not be found'),
+				);
 
 			} elseif ($channel->getIdentifier() === VirtualThermostatTypes\ChannelIdentifier::ACTORS->value) {
 				if (
@@ -1009,7 +1025,9 @@ class Thermostat implements VirtualDrivers\Driver
 						}
 					} else {
 						$deferred->reject(
-							new VirtualThermostatExceptions\InvalidArgument('Thermostat does not support floor temperature sensors'),
+							new VirtualThermostatExceptions\InvalidArgument(
+								'Thermostat does not support floor temperature sensors',
+							),
 						);
 					}
 				} elseif (
@@ -1041,7 +1059,9 @@ class Thermostat implements VirtualDrivers\Driver
 						}
 					} else {
 						$deferred->reject(
-							new VirtualThermostatExceptions\InvalidArgument('Thermostat does not support openings sensors'),
+							new VirtualThermostatExceptions\InvalidArgument(
+								'Thermostat does not support openings sensors',
+							),
 						);
 					}
 				} elseif (
@@ -1073,7 +1093,9 @@ class Thermostat implements VirtualDrivers\Driver
 						}
 					} else {
 						$deferred->reject(
-							new VirtualThermostatExceptions\InvalidArgument('Thermostat does not support humidity sensors sensors'),
+							new VirtualThermostatExceptions\InvalidArgument(
+								'Thermostat does not support humidity sensors sensors',
+							),
 						);
 					}
 				} else {
@@ -1083,7 +1105,9 @@ class Thermostat implements VirtualDrivers\Driver
 					)));
 				}
 			} else {
-				$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided property channel is unsupported'));
+				$deferred->reject(
+					new VirtualThermostatExceptions\InvalidArgument('Provided property channel is unsupported'),
+				);
 			}
 		} else {
 			$deferred->reject(new VirtualThermostatExceptions\InvalidArgument('Provided property type is unsupported'));
