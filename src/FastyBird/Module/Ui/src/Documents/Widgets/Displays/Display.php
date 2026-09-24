@@ -16,12 +16,11 @@
 namespace FastyBird\Module\Ui\Documents\Widgets\Displays;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -34,22 +33,22 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Widgets\Displays\Display::class)]
-#[ApplicationDocuments\Mapping\InheritanceType('SINGLE_TABLE')]
-#[ApplicationDocuments\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ApplicationDocuments\Mapping\MappedSuperclass]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\Display::class)]
+#[CoreDocuments\Mapping\InheritanceType('SINGLE_TABLE')]
+#[CoreDocuments\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
+#[CoreDocuments\Mapping\MappedSuperclass]
+#[CoreDocuments\Mapping\RoutingMap([
 	Ui\Constants::MESSAGE_BUS_WIDGET_DISPLAY_DOCUMENT_REPORTED_ROUTING_KEY,
 	Ui\Constants::MESSAGE_BUS_WIDGET_DISPLAY_DOCUMENT_CREATED_ROUTING_KEY,
 	Ui\Constants::MESSAGE_BUS_WIDGET_DISPLAY_DOCUMENT_UPDATED_ROUTING_KEY,
 	Ui\Constants::MESSAGE_BUS_WIDGET_DISPLAY_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-abstract class Display implements Documents\Document, ApplicationDocuments\Owner, ApplicationDocuments\CreatedAt, ApplicationDocuments\UpdatedAt
+abstract class Display implements UiDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {
 
-	use ApplicationDocuments\TOwner;
-	use ApplicationDocuments\TCreatedAt;
-	use ApplicationDocuments\TUpdatedAt;
+	use CoreDocuments\HasOwner;
+	use CoreDocuments\HasCreatedAt;
+	use CoreDocuments\HasUpdatedAt;
 
 	public function __construct(
 		#[ApplicationObjectMapper\UuidValue()]

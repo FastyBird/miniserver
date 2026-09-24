@@ -18,9 +18,10 @@ namespace FastyBird\Connector\HomeKit\Commands;
 use Endroid\QrCode;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Queries;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -92,12 +93,12 @@ class Execute extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -234,7 +235,7 @@ class Execute extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new HomeKitExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -264,7 +265,7 @@ class Execute extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new HomeKitExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//homekit-connector.cmd.base.messages.answerNotValid',

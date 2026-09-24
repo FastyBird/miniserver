@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Models\States\Async;
 
 use DateTimeInterface;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
@@ -27,7 +27,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
@@ -56,7 +56,7 @@ use function strval;
 /**
  * Useful channel dynamic property state helpers
  *
- * @extends Models\States\PropertiesManager<Documents\Channels\Properties\Dynamic, Documents\Channels\Properties\Mapped | null, States\ChannelProperty>
+ * @extends Models\States\PropertiesManager<DevicesDocuments\Channels\Properties\Dynamic, DevicesDocuments\Channels\Properties\Mapped | null, States\ChannelProperty>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Models
@@ -75,7 +75,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 		private readonly Models\States\Channels\Async\Manager $channelPropertiesStatesManager,
 		private readonly Caching\Container $moduleCaching,
 		private readonly Clock\Clock $clock,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Async\Publisher $publisher,
 		Devices\Logger $logger,
 		ObjectMapper\Processing\Processor $stateMapper,
@@ -86,12 +86,12 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @return Promise\PromiseInterface<bool|Documents\States\Channels\Properties\Property|null>
+	 * @return Promise\PromiseInterface<bool|DevicesDocuments\States\Channels\Properties\Property|null>
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function read(
-		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
+		DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped $property,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
 	{
@@ -101,7 +101,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Channels\Properties\Actions\Action::class,
+						DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 						[
 							'action' => Types\PropertyAction::GET->value,
 							'channel' => $property->getChannel()->toString(),
@@ -117,7 +117,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 				));
 			}
 		} else {
-			/** @phpstan-var Documents\States\Channels\Properties\Property|null $document */
+			/** @phpstan-var DevicesDocuments\States\Channels\Properties\Property|null $document */
 			$document = $this->moduleCaching->getStateCache()->load('read_' . $property->getId()->toString());
 
 			if ($document !== null) {
@@ -128,14 +128,14 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 
 			$this->readState($property)
 				->then(
-					function (Documents\States\Channels\Properties\Property|null $document) use ($deferred, $property): void {
+					function (DevicesDocuments\States\Channels\Properties\Property|null $document) use ($deferred, $property): void {
 						$this->moduleCaching->getStateCache()->save(
 							'read_' . $property->getId()->toString(),
 							$document,
 							[
 								NetteCaching\Cache::Tags => array_merge(
 									[$property->getId()->toString()],
-									$property instanceof Documents\Channels\Properties\Mapped
+									$property instanceof DevicesDocuments\Channels\Properties\Mapped
 										? [$property->getParent()->toString()]
 										: [],
 								),
@@ -163,7 +163,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	 * @throws TypeError
 	 */
 	public function write(
-		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
+		DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped $property,
 		Utils\ArrayHash $data,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
@@ -174,7 +174,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Channels\Properties\Actions\Action::class,
+						DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 						array_merge(
 							[
 								'action' => Types\PropertyAction::SET->value,
@@ -215,7 +215,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	 * @throws TypeError
 	 */
 	public function set(
-		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
+		DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped $property,
 		Utils\ArrayHash $data,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
@@ -226,7 +226,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 					$source ?? Sources\Module::DEVICES,
 					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
 					$this->documentFactory->create(
-						Documents\States\Channels\Properties\Actions\Action::class,
+						DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 						array_merge(
 							[
 								'action' => Types\PropertyAction::SET->value,
@@ -258,7 +258,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @param Documents\Channels\Properties\Dynamic|array<Documents\Channels\Properties\Dynamic> $property
+	 * @param DevicesDocuments\Channels\Properties\Dynamic|array<DevicesDocuments\Channels\Properties\Dynamic> $property
 	 *
 	 * @return Promise\PromiseInterface<bool>
 	 *
@@ -269,7 +269,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	 * @throws TypeError
 	 */
 	public function setValidState(
-		Documents\Channels\Properties\Dynamic|array $property,
+		DevicesDocuments\Channels\Properties\Dynamic|array $property,
 		bool $state,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
@@ -310,7 +310,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @param Documents\Channels\Properties\Dynamic|array<Documents\Channels\Properties\Dynamic> $property
+	 * @param DevicesDocuments\Channels\Properties\Dynamic|array<DevicesDocuments\Channels\Properties\Dynamic> $property
 	 *
 	 * @return Promise\PromiseInterface<bool>
 	 *
@@ -321,7 +321,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	 * @throws TypeError
 	 */
 	public function setPendingState(
-		Documents\Channels\Properties\Dynamic|array $property,
+		DevicesDocuments\Channels\Properties\Dynamic|array $property,
 		bool $pending,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
@@ -420,22 +420,22 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @return Promise\PromiseInterface<Documents\States\Channels\Properties\Property|null>
+	 * @return Promise\PromiseInterface<DevicesDocuments\States\Channels\Properties\Property|null>
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 *
 	 * @interal
 	 */
 	public function readState(
-		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
+		DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped $property,
 	): Promise\PromiseInterface
 	{
 		$mappedProperty = null;
 
-		if ($property instanceof Documents\Channels\Properties\Mapped) {
+		if ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
 			$parent = $this->channelPropertiesConfigurationRepository->find($property->getParent());
 
-			if (!$parent instanceof Documents\Channels\Properties\Dynamic) {
+			if (!$parent instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 				return Promise\reject(new DevicesExceptions\InvalidState('Mapped property parent could not be loaded'));
 			}
 
@@ -466,7 +466,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 						$getValue = $this->convertStoredState($property, $mappedProperty, $state, false);
 
 						$deferred->resolve($this->documentFactory->create(
-							Documents\States\Channels\Properties\Property::class,
+							DevicesDocuments\States\Channels\Properties\Property::class,
 							[
 								'id' => $property->getId()->toString(),
 								'channel' => $property->getChannel()->toString(),
@@ -586,7 +586,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	 * @interal
 	 */
 	public function writeState(
-		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
+		DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped $property,
 		Utils\ArrayHash $data,
 		bool $forWriting,
 		Sources\Source|null $source,
@@ -594,10 +594,10 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	{
 		$mappedProperty = null;
 
-		if ($property instanceof Documents\Channels\Properties\Mapped) {
+		if ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
 			$parent = $this->channelPropertiesConfigurationRepository->find($property->getParent());
 
-			if (!$parent instanceof Documents\Channels\Properties\Dynamic) {
+			if (!$parent instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 				return Promise\reject(new DevicesExceptions\InvalidState('Mapped property parent could not be loaded'));
 			}
 
@@ -910,7 +910,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 	}
 
 	/**
-	 * @return array<Documents\Channels\Properties\Mapped>
+	 * @return array<DevicesDocuments\Channels\Properties\Mapped>
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 */
@@ -921,7 +921,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 
 		return $this->channelPropertiesConfigurationRepository->findAllBy(
 			$findPropertiesQuery,
-			Documents\Channels\Properties\Mapped::class,
+			DevicesDocuments\Channels\Properties\Mapped::class,
 		);
 	}
 

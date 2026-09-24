@@ -15,11 +15,10 @@
 
 namespace FastyBird\Module\Devices\Documents\States\Channels\Properties\Actions;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
 use Orisai\ObjectMapper;
@@ -35,11 +34,11 @@ use function sprintf;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[CoreDocuments\Mapping\Document]
+#[CoreDocuments\Mapping\RoutingMap([
 	Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
 ])]
-final readonly class Action implements ApplicationDocuments\Document
+final readonly class Action implements CoreDocuments\Document
 {
 
 	public function __construct(
@@ -50,15 +49,15 @@ final readonly class Action implements ApplicationDocuments\Document
 		#[ApplicationObjectMapper\UuidValue()]
 		private Uuid\UuidInterface $property,
 		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\MappedObjectValue(class: Documents\States\ActionValues::class),
+			new ObjectMapper\Rules\MappedObjectValue(class: DevicesDocuments\States\ActionValues::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private Documents\States\ActionValues|null $set = null,
+		private DevicesDocuments\States\ActionValues|null $set = null,
 		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\MappedObjectValue(class: Documents\States\ActionValues::class),
+			new ObjectMapper\Rules\MappedObjectValue(class: DevicesDocuments\States\ActionValues::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private Documents\States\ActionValues|null $write = null,
+		private DevicesDocuments\States\ActionValues|null $write = null,
 	)
 	{
 	}
@@ -86,7 +85,7 @@ final readonly class Action implements ApplicationDocuments\Document
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function getSet(): Documents\States\ActionValues|null
+	public function getSet(): DevicesDocuments\States\ActionValues|null
 	{
 		if ($this->getAction() !== Types\PropertyAction::SET) {
 			throw new Exceptions\InvalidState(
@@ -100,7 +99,7 @@ final readonly class Action implements ApplicationDocuments\Document
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function getWrite(): Documents\States\ActionValues|null
+	public function getWrite(): DevicesDocuments\States\ActionValues|null
 	{
 		if ($this->getAction() !== Types\PropertyAction::SET) {
 			throw new Exceptions\InvalidState(

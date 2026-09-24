@@ -16,9 +16,9 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Consumers;
 
 use FastyBird\Bridge\DevicesModuleUiModule;
-use FastyBird\Bridge\DevicesModuleUiModule\Documents;
+use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as WebSocketsRouting;
@@ -78,7 +78,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		if (
@@ -98,7 +98,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 
 			$dataSources = $this->configurationDataSourcesRepository->findAllBy(
 				$findDataSources,
-				Documents\Widgets\DataSources\ConnectorProperty::class,
+				DevicesModuleUiModuleDocuments\Widgets\DataSources\ConnectorProperty::class,
 			);
 
 		} elseif ($document instanceof DevicesDocuments\States\Devices\Properties\Property) {
@@ -107,7 +107,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 
 			$dataSources = $this->configurationDataSourcesRepository->findAllBy(
 				$findDataSources,
-				Documents\Widgets\DataSources\DeviceProperty::class,
+				DevicesModuleUiModuleDocuments\Widgets\DataSources\DeviceProperty::class,
 			);
 
 		} elseif ($document instanceof DevicesDocuments\States\Channels\Properties\Property) {
@@ -116,7 +116,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 
 			$dataSources = $this->configurationDataSourcesRepository->findAllBy(
 				$findDataSources,
-				Documents\Widgets\DataSources\ChannelProperty::class,
+				DevicesModuleUiModuleDocuments\Widgets\DataSources\ChannelProperty::class,
 			);
 		}
 

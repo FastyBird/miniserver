@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Models\Configuration\Widgets;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Ui\Caching;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
@@ -45,14 +45,14 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Caching\Container $moduleCaching,
 		private readonly Models\Configuration\Builder $builder,
-		private readonly ApplicationDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
 
 	/**
-	 * @template T of Documents\Widgets\Widget
+	 * @template T of UiDocuments\Widgets\Widget
 	 *
 	 * @param class-string<T> $type
 	 *
@@ -62,8 +62,8 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-		string $type = Documents\Widgets\Widget::class,
-	): Documents\Widgets\Widget|null
+		string $type = UiDocuments\Widgets\Widget::class,
+	): UiDocuments\Widgets\Widget|null
 	{
 		$queryObject = new Queries\Configuration\FindWidgets();
 		$queryObject->byId($id);
@@ -78,7 +78,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Widgets\Widget
+	 * @template T of UiDocuments\Widgets\Widget
 	 *
 	 * @param Queries\Configuration\FindWidgets<T> $queryObject
 	 * @param class-string<T> $type
@@ -89,14 +89,14 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindWidgets $queryObject,
-		string $type = Documents\Widgets\Widget::class,
-	): Documents\Widgets\Widget|null
+		string $type = UiDocuments\Widgets\Widget::class,
+	): UiDocuments\Widgets\Widget|null
 	{
 		try {
 			/** @phpstan-var T|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject) . '_' . md5($type),
-				function (&$dependencies) use ($queryObject, $type): Documents\Widgets\Widget|false {
+				function (&$dependencies) use ($queryObject, $type): UiDocuments\Widgets\Widget|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::WIDGETS);
 
@@ -119,7 +119,7 @@ final class Repository extends Models\Configuration\Repository
 							$space = $space->find('.[?(@.type in [' . ('"' . implode('","', $types) . '"') . '])]');
 
 							// Reset type to root class
-							$type = Documents\Widgets\Widget::class;
+							$type = UiDocuments\Widgets\Widget::class;
 
 						} else {
 							$space = $space->find(
@@ -167,7 +167,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Widgets\Widget
+	 * @template T of UiDocuments\Widgets\Widget
 	 *
 	 * @param Queries\Configuration\FindWidgets<T> $queryObject
 	 * @param class-string<T> $type
@@ -178,7 +178,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findAllBy(
 		Queries\Configuration\FindWidgets $queryObject,
-		string $type = Documents\Widgets\Widget::class,
+		string $type = UiDocuments\Widgets\Widget::class,
 	): array
 	{
 		try {
@@ -211,7 +211,7 @@ final class Repository extends Models\Configuration\Repository
 
 					$documents = array_merge(
 						array_map(
-							fn (array $item): Documents\Widgets\Widget => $this->documentFactory->create(
+							fn (array $item): UiDocuments\Widgets\Widget => $this->documentFactory->create(
 								$type,
 								$item,
 							),
@@ -226,7 +226,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::WIDGETS->value,
 							],
 							array_map(
-								static fn (Documents\Widgets\Widget $document): string => $document->getId()->toString(),
+								static fn (UiDocuments\Widgets\Widget $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

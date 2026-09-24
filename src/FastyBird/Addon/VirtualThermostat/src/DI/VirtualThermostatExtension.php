@@ -24,7 +24,7 @@ use FastyBird\Addon\VirtualThermostat\Hydrators;
 use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nettrine\ORM as NettrineORM;
@@ -214,7 +214,7 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 				);
 
 				$documentAttributeDriverChainService = $builder->getDefinitionByType(
-					ApplicationDocuments\Mapping\Driver\MappingDriverChain::class,
+					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
 				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {

@@ -9,7 +9,7 @@ use DateTimeInterface;
  *
  * @property-read DateTimeInterface|null $updatedAt
  */
-trait TUpdatedAt
+trait HasUpdatedAt
 {
 
 	public function getUpdatedAt(): DateTimeInterface|null

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Messaging\Exchange\Consumers;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Sources;
 
 /**
@@ -14,7 +14,7 @@ interface Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		Documents\Document|null $document,
 	): void;
 
 }

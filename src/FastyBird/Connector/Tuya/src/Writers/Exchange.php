@@ -16,13 +16,14 @@
 namespace FastyBird\Connector\Tuya\Writers;
 
 use FastyBird\Connector\Tuya;
-use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Logging;
@@ -51,7 +52,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public const NAME = 'exchange';
 
 	public function __construct(
-		Documents\Connectors\Connector $connector,
+		TuyaDocuments\Connectors\Connector $connector,
 		Helpers\MessageBuilder $messageBuilder,
 		Queue\Queue $queue,
 		Tuya\Logger $logger,
@@ -83,10 +84,10 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws TuyaExceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 */
@@ -110,7 +111,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		try {
@@ -131,7 +132,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
 					$findChannelQuery,
-					Documents\Channels\Channel::class,
+					TuyaDocuments\Channels\Channel::class,
 				);
 
 				if ($channel === null) {
@@ -144,7 +145,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 				$device = $this->devicesConfigurationRepository->findOneBy(
 					$findDeviceQuery,
-					Documents\Devices\Device::class,
+					TuyaDocuments\Devices\Device::class,
 				);
 
 				if ($device === null) {

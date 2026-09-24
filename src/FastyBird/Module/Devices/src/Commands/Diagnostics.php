@@ -15,11 +15,12 @@
 
 namespace FastyBird\Module\Devices\Commands;
 
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use Nette;
@@ -95,12 +96,12 @@ final class Diagnostics extends Console\Command\Command
 
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -125,12 +126,12 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -201,12 +202,12 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -268,12 +269,12 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -380,7 +381,7 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	private function listChannels(Style\SymfonyStyle $io, Output\OutputInterface $output): void
 	{
@@ -507,11 +508,11 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -570,11 +571,11 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -699,11 +700,11 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -876,11 +877,11 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -1127,7 +1128,7 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	private function askWhichConnector(Style\SymfonyStyle $io): Documents\Connectors\Connector|false|null
 	{
@@ -1175,7 +1176,7 @@ final class Diagnostics extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector|null {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new DevicesExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//devices-module.cmd.base.messages.answerNotValid',
@@ -1211,7 +1212,7 @@ final class Diagnostics extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new DevicesExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//devices-module.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1235,7 +1236,7 @@ final class Diagnostics extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	private function askWhichDevice(
 		Style\SymfonyStyle $io,
@@ -1285,7 +1286,7 @@ final class Diagnostics extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $devices): Documents\Devices\Device|null {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new DevicesExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//devices-module.cmd.base.messages.answerNotValid',
@@ -1325,7 +1326,7 @@ final class Diagnostics extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new DevicesExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//devices-module.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1342,7 +1343,7 @@ final class Diagnostics extends Console\Command\Command
 
 	/**
 	 * @param array<Documents\Devices\Device> $devices
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	private function askWhichChannel(
 		Style\SymfonyStyle $io,
@@ -1392,7 +1393,7 @@ final class Diagnostics extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($devices, $channels): Documents\Channels\Channel|null {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new DevicesExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//devices-module.cmd.base.messages.answerNotValid',
@@ -1432,7 +1433,7 @@ final class Diagnostics extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new DevicesExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//devices-module.cmd.base.messages.answerNotValid'),
 						$answer,

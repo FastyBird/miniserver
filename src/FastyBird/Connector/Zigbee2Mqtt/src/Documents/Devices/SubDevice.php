@@ -16,10 +16,10 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Documents\Devices;
 
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\SubDevice::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\SubDevice::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Devices\SubDevice::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Devices\SubDevice::TYPE)]
 class SubDevice extends Device
 {
 

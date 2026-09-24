@@ -16,15 +16,16 @@
 namespace FastyBird\Module\Ui\Controllers;
 
 use FastyBird\Core\Controllers\WebSockets as WebSocketsControllers;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Events;
-use FastyBird\Module\Ui\Exceptions;
+use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Types;
@@ -48,7 +49,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	public function __construct(
 		private readonly Models\Configuration\Widgets\DataSources\Repository $dataSourcesConfigurationRepository,
 		private readonly Ui\Logger $logger,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
@@ -105,12 +106,12 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	 * @param array<string, mixed> $args
 	 * @param WsServerEntities\Topics\ITopic<mixed> $topic
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws UiExceptions\InvalidArgument
+	 * @throws UiExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws Utils\JsonException
 	 */
 	public function actionCall(
@@ -131,7 +132,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 		);
 
 		if (!array_key_exists('routing_key', $args) || !array_key_exists('source', $args)) {
-			throw new Exceptions\InvalidArgument('Provided message has invalid format');
+			throw new UiExceptions\InvalidArgument('Provided message has invalid format');
 		}
 
 		switch ($args['routing_key']) {
@@ -141,7 +142,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 				if ($data !== null) {
 					$document = $this->documentFactory->create(
-						Documents\Widgets\DataSources\Actions\Action::class,
+						UiDocuments\Widgets\DataSources\Actions\Action::class,
 						$data,
 					);
 
@@ -150,7 +151,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 				break;
 			default:
-				throw new Exceptions\InvalidArgument('Provided message has unsupported routing key');
+				throw new UiExceptions\InvalidArgument('Provided message has unsupported routing key');
 		}
 
 		$this->getPayload()->data = [
@@ -159,13 +160,13 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws UiExceptions\InvalidState
 	 * @throws Utils\JsonException
 	 */
 	private function handleDataSourceAction(
 		WsServerEntities\IClient $client,
 		WsServerEntities\Topics\ITopic $topic,
-		Documents\Widgets\DataSources\Actions\Action $entity,
+		UiDocuments\Widgets\DataSources\Actions\Action $entity,
 	): void
 	{
 		if ($entity->getAction() === Types\DataSourceAction::SET) {

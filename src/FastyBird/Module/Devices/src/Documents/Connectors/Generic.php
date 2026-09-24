@@ -15,13 +15,13 @@
 
 namespace FastyBird\Module\Devices\Documents\Connectors;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Connectors\Generic::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Connectors\Generic::TYPE)]
-class Generic extends Documents\Connectors\Connector
+#[CoreDocuments\Mapping\Document(entity: Entities\Connectors\Generic::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Connectors\Generic::TYPE)]
+class Generic extends DevicesDocuments\Connectors\Connector
 {
 
 	public static function getType(): string

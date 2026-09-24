@@ -16,8 +16,7 @@
 namespace FastyBird\Module\Accounts\Documents\Accounts;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
@@ -35,14 +34,14 @@ use function array_map;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Accounts\Account::class)]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[Documents\Mapping\Document(entity: Entities\Accounts\Account::class)]
+#[Documents\Mapping\RoutingMap([
 	Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_REPORTED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_CREATED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_UPDATED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-final readonly class Account implements ApplicationDocuments\Document
+final readonly class Account implements Documents\Document
 {
 
 	/**

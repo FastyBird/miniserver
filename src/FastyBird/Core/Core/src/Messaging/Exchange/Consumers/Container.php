@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Messaging\Exchange\Consumers;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -30,7 +30,7 @@ final class Container implements Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		Documents\Document|null $document,
 	): void
 	{
 		$this->dispatcher?->dispatch(new Events\BeforeMessageConsumed($source, $routingKey, $document));

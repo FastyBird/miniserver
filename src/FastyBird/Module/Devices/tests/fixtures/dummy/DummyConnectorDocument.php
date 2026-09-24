@@ -2,12 +2,12 @@
 
 namespace FastyBird\Module\Devices\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
-#[ApplicationDocuments\Mapping\Document(entity: DummyConnectorEntity::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: DummyConnectorEntity::TYPE)]
-class DummyConnectorDocument extends Documents\Connectors\Connector
+#[CoreDocuments\Mapping\Document(entity: DummyConnectorEntity::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: DummyConnectorEntity::TYPE)]
+class DummyConnectorDocument extends DevicesDocuments\Connectors\Connector
 {
 
 	public static function getType(): string

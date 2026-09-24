@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Documents;
 
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette\Utils;
 use ReflectionClass;
 use function array_key_exists;
@@ -32,10 +32,10 @@ final class RoutingDocumentFactory
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Exceptions\MalformedInput
-	 * @throws Exceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 */
 	public function create(Utils\ArrayHash $data, string $routingKey): Document
 	{
@@ -48,7 +48,7 @@ final class RoutingDocumentFactory
 	/**
 	 * @return class-string<Document>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function loadDocument(string $routingKey): string
 	{
@@ -60,13 +60,13 @@ final class RoutingDocumentFactory
 			return $this->routingMap[$routingKey];
 		}
 
-		throw new Exceptions\InvalidState(
+		throw new CoreExceptions\InvalidState(
 			sprintf('Document class was not found for provided message and routing key: %s', $routingKey),
 		);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function initialize(): void
 	{
@@ -85,7 +85,7 @@ final class RoutingDocumentFactory
 
 				foreach ($routingMapAttribute->value as $route) {
 					if (array_key_exists($route, $this->routingMap)) {
-						throw new Exceptions\InvalidState(sprintf(
+						throw new CoreExceptions\InvalidState(sprintf(
 							'Found duplicate route definition: "%s" for document class: "%s"',
 							$route,
 							$className,

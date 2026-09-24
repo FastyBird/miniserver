@@ -17,13 +17,14 @@ namespace FastyBird\Connector\NsPanel\Protocol;
 
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Formats;
@@ -80,13 +81,13 @@ readonly class Loader
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -308,7 +309,7 @@ readonly class Loader
 								);
 								$protocolAttribute->setValid(true);
 							}
-						} catch (Exceptions\InvalidState $ex) {
+						} catch (NsPanelExceptions\InvalidState $ex) {
 							$this->logger->warning(
 								'State value could not be set to attribute',
 								[
@@ -354,7 +355,7 @@ readonly class Loader
 									);
 									$protocolAttribute->setValid($state->isValid());
 								}
-							} catch (Exceptions\InvalidState $ex) {
+							} catch (NsPanelExceptions\InvalidState $ex) {
 								$this->logger->warning(
 									'State value could not be set to attribute',
 									[
@@ -415,9 +416,9 @@ readonly class Loader
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -466,16 +467,16 @@ readonly class Loader
 		}
 
 		if ($protocolDevice === null) {
-			throw new Exceptions\InvalidState('Device could not be created');
+			throw new NsPanelExceptions\InvalidState('Device could not be created');
 		}
 
 		return $protocolDevice;
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -492,7 +493,7 @@ readonly class Loader
 		);
 
 		if ($capabilityMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for capability: %s was not found',
 				$this->channelHelper->getCapability($channel)->value,
 			));
@@ -508,13 +509,13 @@ readonly class Loader
 			}
 		}
 
-		throw new Exceptions\InvalidState('Capability could not be created');
+		throw new NsPanelExceptions\InvalidState('Capability could not be created');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -533,7 +534,7 @@ readonly class Loader
 		);
 
 		if ($capabilityMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for capability: %s was not found',
 				$protocolCapability->getType()->value,
 			));
@@ -544,7 +545,7 @@ readonly class Loader
 		);
 
 		if ($attributeMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for attribute: %s was not found',
 				$property->getIdentifier(),
 			));
@@ -570,13 +571,13 @@ readonly class Loader
 			}
 		}
 
-		throw new Exceptions\InvalidState('Attribute could not be created');
+		throw new NsPanelExceptions\InvalidState('Attribute could not be created');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -595,7 +596,7 @@ readonly class Loader
 		);
 
 		if ($capabilityMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for capability: %s was not found',
 				$protocolCapability->getType()->value,
 			));
@@ -604,7 +605,7 @@ readonly class Loader
 		$configurationMetadata = $capabilityMetadata->findConfiguration($property->getIdentifier());
 
 		if ($configurationMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for configuration: %s was not found',
 				$property->getIdentifier(),
 			));
@@ -630,7 +631,7 @@ readonly class Loader
 			}
 		}
 
-		throw new Exceptions\InvalidState('Configuration could not be created');
+		throw new NsPanelExceptions\InvalidState('Configuration could not be created');
 	}
 
 }

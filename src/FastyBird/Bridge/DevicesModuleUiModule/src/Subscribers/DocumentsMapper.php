@@ -15,9 +15,10 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
-use FastyBird\Bridge\DevicesModuleUiModule\Documents;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Events as ApplicationEvents;
+use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Events;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -58,16 +59,16 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			ApplicationEvents\PreLoad::class => 'preLoad',
+			Events\PreLoad::class => 'preLoad',
 		];
 	}
 
 	/**
-	 * @param ApplicationEvents\PreLoad<ApplicationDocuments\Document> $event
+	 * @param Events\PreLoad<CoreDocuments\Document> $event
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
@@ -76,15 +77,15 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function preLoad(ApplicationEvents\PreLoad $event): void
+	public function preLoad(Events\PreLoad $event): void
 	{
 		if (
 			!in_array(
 				$event->getClass(),
 				[
-					Documents\Widgets\DataSources\ConnectorProperty::class,
-					Documents\Widgets\DataSources\DeviceProperty::class,
-					Documents\Widgets\DataSources\ChannelProperty::class,
+					DevicesModuleUiModuleDocuments\Widgets\DataSources\ConnectorProperty::class,
+					DevicesModuleUiModuleDocuments\Widgets\DataSources\DeviceProperty::class,
+					DevicesModuleUiModuleDocuments\Widgets\DataSources\ChannelProperty::class,
 				],
 				true,
 			)
@@ -96,7 +97,7 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 
 		$state = null;
 
-		if ($event->getClass() === Documents\Widgets\DataSources\ConnectorProperty::class) {
+		if ($event->getClass() === DevicesModuleUiModuleDocuments\Widgets\DataSources\ConnectorProperty::class) {
 			$findPropertyQuery = new DevicesQueries\Configuration\FindConnectorProperties();
 			$findPropertyQuery->byId($event->getData()['property']);
 
@@ -113,7 +114,7 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 					return;
 				}
 			}
-		} elseif ($event->getClass() === Documents\Widgets\DataSources\DeviceProperty::class) {
+		} elseif ($event->getClass() === DevicesModuleUiModuleDocuments\Widgets\DataSources\DeviceProperty::class) {
 			$findPropertyQuery = new DevicesQueries\Configuration\FindDeviceProperties();
 			$findPropertyQuery->byId($event->getData()['property']);
 

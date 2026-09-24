@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Models\Configuration\Channels;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
@@ -45,14 +45,14 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Models\Configuration\Builder $builder,
 		private readonly Caching\Container $moduleCaching,
-		private readonly ApplicationDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
 
 	/**
-	 * @template T of Documents\Channels\Channel
+	 * @template T of DevicesDocuments\Channels\Channel
 	 *
 	 * @param class-string<T> $type
 	 *
@@ -62,8 +62,8 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-		string $type = Documents\Channels\Channel::class,
-	): Documents\Channels\Channel|null
+		string $type = DevicesDocuments\Channels\Channel::class,
+	): DevicesDocuments\Channels\Channel|null
 	{
 		$queryObject = new Queries\Configuration\FindChannels();
 		$queryObject->byId($id);
@@ -78,7 +78,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Channels\Channel
+	 * @template T of DevicesDocuments\Channels\Channel
 	 *
 	 * @param Queries\Configuration\FindChannels<T> $queryObject
 	 * @param class-string<T> $type
@@ -89,14 +89,14 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindChannels $queryObject,
-		string $type = Documents\Channels\Channel::class,
-	): Documents\Channels\Channel|null
+		string $type = DevicesDocuments\Channels\Channel::class,
+	): DevicesDocuments\Channels\Channel|null
 	{
 		try {
 			/** @phpstan-var T|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject) . '_' . md5($type),
-				function (&$dependencies) use ($queryObject, $type): Documents\Channels\Channel|false {
+				function (&$dependencies) use ($queryObject, $type): DevicesDocuments\Channels\Channel|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::CHANNELS);
 
@@ -119,7 +119,7 @@ final class Repository extends Models\Configuration\Repository
 							$space = $space->find('.[?(@.type in [' . ('"' . implode('","', $types) . '"') . '])]');
 
 							// Reset type to root class
-							$type = Documents\Channels\Channel::class;
+							$type = DevicesDocuments\Channels\Channel::class;
 
 						} else {
 							$space = $space->find(
@@ -167,7 +167,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Channels\Channel
+	 * @template T of DevicesDocuments\Channels\Channel
 	 *
 	 * @param Queries\Configuration\FindChannels<T> $queryObject
 	 * @param class-string<T> $type
@@ -178,7 +178,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findAllBy(
 		Queries\Configuration\FindChannels $queryObject,
-		string $type = Documents\Channels\Channel::class,
+		string $type = DevicesDocuments\Channels\Channel::class,
 	): array
 	{
 		try {
@@ -211,7 +211,7 @@ final class Repository extends Models\Configuration\Repository
 
 					$documents = array_merge(
 						array_map(
-							fn (array $item): Documents\Channels\Channel => $this->documentFactory->create(
+							fn (array $item): DevicesDocuments\Channels\Channel => $this->documentFactory->create(
 								$type,
 								$item,
 							),
@@ -226,7 +226,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::CHANNELS->value,
 							],
 							array_map(
-								static fn (Documents\Channels\Channel $document): string => $document->getId()->toString(),
+								static fn (DevicesDocuments\Channels\Channel $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

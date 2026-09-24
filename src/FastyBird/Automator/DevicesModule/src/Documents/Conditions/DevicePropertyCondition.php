@@ -16,7 +16,7 @@
 namespace FastyBird\Automator\DevicesModule\Documents\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
@@ -32,8 +32,8 @@ use function array_merge;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Conditions\DevicePropertyCondition::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Conditions\DevicePropertyCondition::TYPE)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Conditions\DevicePropertyCondition::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Conditions\DevicePropertyCondition::TYPE)]
 final class DevicePropertyCondition extends TriggersDocuments\Conditions\Condition
 {
 

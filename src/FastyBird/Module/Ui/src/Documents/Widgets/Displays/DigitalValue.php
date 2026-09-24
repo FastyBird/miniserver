@@ -15,13 +15,13 @@
 
 namespace FastyBird\Module\Ui\Documents\Widgets\Displays;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Widgets\Displays\DigitalValue::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\DigitalValue::TYPE)]
-class DigitalValue extends Documents\Widgets\Displays\Display
+#[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\DigitalValue::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\DigitalValue::TYPE)]
+class DigitalValue extends UiDocuments\Widgets\Displays\Display
 {
 
 	public static function getType(): string

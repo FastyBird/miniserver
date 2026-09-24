@@ -16,11 +16,11 @@
 namespace FastyBird\Connector\Sonoff\Documents\Devices;
 
 use FastyBird\Connector\Sonoff\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Devices\Device::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Device::TYPE)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Devices\Device::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Device::TYPE)]
 class Device extends DevicesDocuments\Devices\Device
 {
 

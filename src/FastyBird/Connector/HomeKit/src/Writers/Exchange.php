@@ -17,15 +17,16 @@ namespace FastyBird\Connector\HomeKit\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Documents;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Logging;
@@ -59,7 +60,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public const NAME = 'exchange';
 
 	public function __construct(
-		Documents\Connectors\Connector $connector,
+		HomeKitDocuments\Connectors\Connector $connector,
 		Helpers\MessageBuilder $messageBuilder,
 		Queue\Queue $queue,
 		Protocol\Driver $accessoryDriver,
@@ -98,11 +99,11 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -128,7 +129,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,
-		ApplicationDocuments\Document|null $document,
+		CoreDocuments\Document|null $document,
 	): void
 	{
 		try {
@@ -147,7 +148,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 					$device = $this->devicesConfigurationRepository->findOneBy(
 						$findDeviceQuery,
-						Documents\Devices\Device::class,
+						HomeKitDocuments\Devices\Device::class,
 					);
 
 					if ($device === null) {
@@ -213,7 +214,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 					$channel = $this->channelsConfigurationRepository->findOneBy(
 						$findChannelQuery,
-						Documents\Channels\Channel::class,
+						HomeKitDocuments\Channels\Channel::class,
 					);
 
 					if ($channel === null) {
@@ -226,7 +227,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 					$device = $this->devicesConfigurationRepository->findOneBy(
 						$findDeviceQuery,
-						Documents\Devices\Device::class,
+						HomeKitDocuments\Devices\Device::class,
 					);
 
 					if ($device === null) {
@@ -304,7 +305,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 					$device = $this->devicesConfigurationRepository->findOneBy(
 						$findDeviceQuery,
-						Documents\Devices\Device::class,
+						HomeKitDocuments\Devices\Device::class,
 					);
 
 					if ($device === null) {
@@ -328,7 +329,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 					$channel = $this->channelsConfigurationRepository->findOneBy(
 						$findChannelQuery,
-						Documents\Channels\Channel::class,
+						HomeKitDocuments\Channels\Channel::class,
 					);
 
 					if ($channel === null) {
@@ -341,7 +342,7 @@ class Exchange extends Periodic implements Writer, ExchangeConsumers\Consumer
 
 					$device = $this->devicesConfigurationRepository->findOneBy(
 						$findDeviceQuery,
-						Documents\Devices\Device::class,
+						HomeKitDocuments\Devices\Device::class,
 					);
 
 					if ($device === null) {

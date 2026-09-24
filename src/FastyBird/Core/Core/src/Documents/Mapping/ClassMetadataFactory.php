@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Documents\Mapping;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Events;
+use FastyBird\Core\Documents\Events;
 use FastyBird\Core\Exceptions;
 use Nette\Caching;
 use Psr\EventDispatcher;

@@ -15,10 +15,10 @@
 
 namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
-#[ApplicationDocuments\Mapping\MappedSuperclass()]
+#[CoreDocuments\Mapping\MappedSuperclass()]
 abstract class Channel extends DevicesDocuments\Channels\Channel
 {
 

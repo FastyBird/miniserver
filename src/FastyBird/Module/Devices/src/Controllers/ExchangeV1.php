@@ -17,14 +17,15 @@ namespace FastyBird\Module\Devices\Controllers;
 
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Controllers\WebSockets as WebSocketsControllers;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Documents;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
@@ -55,7 +56,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 		private readonly Models\States\DevicePropertiesManager $devicePropertiesStatesManager,
 		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
 		private readonly Devices\Logger $logger,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 		parent::__construct();
@@ -88,8 +89,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 			foreach ($devicesProperties as $deviceProperty) {
 				if (
-					$deviceProperty instanceof Documents\Devices\Properties\Dynamic
-					|| $deviceProperty instanceof Documents\Devices\Properties\Mapped
+					$deviceProperty instanceof DevicesDocuments\Devices\Properties\Dynamic
+					|| $deviceProperty instanceof DevicesDocuments\Devices\Properties\Mapped
 				) {
 					$state = $this->devicePropertiesStatesManager->readState($deviceProperty);
 
@@ -115,8 +116,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 			foreach ($channelsProperties as $channelProperty) {
 				if (
-					$channelProperty instanceof Documents\Channels\Properties\Dynamic
-					|| $channelProperty instanceof Documents\Channels\Properties\Mapped
+					$channelProperty instanceof DevicesDocuments\Channels\Properties\Dynamic
+					|| $channelProperty instanceof DevicesDocuments\Channels\Properties\Mapped
 				) {
 					$state = $this->channelPropertiesStatesManager->readState($channelProperty);
 
@@ -141,7 +142,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			);
 
 			foreach ($connectorsProperties as $connectorProperty) {
-				if ($connectorProperty instanceof Documents\Connectors\Properties\Dynamic) {
+				if ($connectorProperty instanceof DevicesDocuments\Connectors\Properties\Dynamic) {
 					$state = $this->connectorPropertiesStatesManager->readState($connectorProperty);
 
 					if ($state !== null) {
@@ -173,12 +174,12 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	 * @param array<string, mixed> $args
 	 * @param WsServerEntities\Topics\ITopic<mixed> $topic
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Utils\JsonException
@@ -203,7 +204,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 		);
 
 		if (!array_key_exists('routing_key', $args) || !array_key_exists('source', $args)) {
-			throw new Exceptions\InvalidArgument('Provided message has invalid format');
+			throw new DevicesExceptions\InvalidArgument('Provided message has invalid format');
 		}
 
 		switch ($args['routing_key']) {
@@ -219,21 +220,21 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				if ($data !== null) {
 					if ($args['routing_key'] === Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY) {
 						$document = $this->documentFactory->create(
-							Documents\States\Connectors\Properties\Actions\Action::class,
+							DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 							$data,
 						);
 
 						$this->handleConnectorAction($client, $topic, $document);
 					} elseif ($args['routing_key'] === Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY) {
 						$document = $this->documentFactory->create(
-							Documents\States\Devices\Properties\Actions\Action::class,
+							DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 							$data,
 						);
 
 						$this->handleDeviceAction($client, $topic, $document);
 					} elseif ($args['routing_key'] === Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY) {
 						$document = $this->documentFactory->create(
-							Documents\States\Channels\Properties\Actions\Action::class,
+							DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 							$data,
 						);
 
@@ -243,7 +244,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 				break;
 			default:
-				throw new Exceptions\InvalidArgument('Provided message has unsupported routing key');
+				throw new DevicesExceptions\InvalidArgument('Provided message has unsupported routing key');
 		}
 
 		$this->getPayload()->data = [
@@ -252,12 +253,12 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Utils\JsonException
@@ -267,13 +268,13 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	private function handleConnectorAction(
 		WsServerEntities\IClient $client,
 		WsServerEntities\Topics\ITopic $topic,
-		Documents\States\Connectors\Properties\Actions\Action $entity,
+		DevicesDocuments\States\Connectors\Properties\Actions\Action $entity,
 	): void
 	{
 		if ($entity->getAction() === Types\PropertyAction::SET) {
 			$property = $this->connectorPropertiesConfigurationRepository->find($entity->getProperty());
 
-			if (!$property instanceof Documents\Connectors\Properties\Dynamic) {
+			if (!$property instanceof DevicesDocuments\Connectors\Properties\Dynamic) {
 				return;
 			}
 
@@ -321,7 +322,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				return;
 			}
 
-			$state = $property instanceof Documents\Connectors\Properties\Dynamic
+			$state = $property instanceof DevicesDocuments\Connectors\Properties\Dynamic
 				? $this->connectorPropertiesStatesManager->readState($property)
 				: null;
 
@@ -342,12 +343,12 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Utils\JsonException
@@ -357,15 +358,15 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	private function handleDeviceAction(
 		WsServerEntities\IClient $client,
 		WsServerEntities\Topics\ITopic $topic,
-		Documents\States\Devices\Properties\Actions\Action $entity,
+		DevicesDocuments\States\Devices\Properties\Actions\Action $entity,
 	): void
 	{
 		if ($entity->getAction() === Types\PropertyAction::SET) {
 			$property = $this->devicePropertiesConfigurationRepository->find($entity->getProperty());
 
 			if (
-				!$property instanceof Documents\Devices\Properties\Dynamic
-				&& !$property instanceof Documents\Devices\Properties\Mapped
+				!$property instanceof DevicesDocuments\Devices\Properties\Dynamic
+				&& !$property instanceof DevicesDocuments\Devices\Properties\Mapped
 			) {
 				return;
 			}
@@ -414,8 +415,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				return;
 			}
 
-			$state = $property instanceof Documents\Devices\Properties\Dynamic
-			|| $property instanceof Documents\Devices\Properties\Mapped
+			$state = $property instanceof DevicesDocuments\Devices\Properties\Dynamic
+			|| $property instanceof DevicesDocuments\Devices\Properties\Mapped
 				? $this->devicePropertiesStatesManager->readState($property) : null;
 
 			if ($state === null) {
@@ -435,12 +436,12 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Utils\JsonException
@@ -450,15 +451,15 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	private function handleChannelAction(
 		WsServerEntities\IClient $client,
 		WsServerEntities\Topics\ITopic $topic,
-		Documents\States\Channels\Properties\Actions\Action $entity,
+		DevicesDocuments\States\Channels\Properties\Actions\Action $entity,
 	): void
 	{
 		if ($entity->getAction() === Types\PropertyAction::SET) {
 			$property = $this->channelPropertiesConfigurationRepository->find($entity->getProperty());
 
 			if (
-				!$property instanceof Documents\Channels\Properties\Dynamic
-				&& !$property instanceof Documents\Channels\Properties\Mapped
+				!$property instanceof DevicesDocuments\Channels\Properties\Dynamic
+				&& !$property instanceof DevicesDocuments\Channels\Properties\Mapped
 			) {
 				return;
 			}
@@ -507,8 +508,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				return;
 			}
 
-			$state = $property instanceof Documents\Channels\Properties\Dynamic
-			|| $property instanceof Documents\Channels\Properties\Mapped
+			$state = $property instanceof DevicesDocuments\Channels\Properties\Dynamic
+			|| $property instanceof DevicesDocuments\Channels\Properties\Mapped
 				? $this->channelPropertiesStatesManager->readState($property) : null;
 
 			if ($state === null) {

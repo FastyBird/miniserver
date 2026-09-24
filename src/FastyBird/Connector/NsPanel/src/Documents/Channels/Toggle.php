@@ -19,12 +19,12 @@ use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use function array_key_exists;
 use function preg_match;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Toggle::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Toggle::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Channels\Toggle::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Toggle::TYPE)]
 class Toggle extends Channel
 {
 

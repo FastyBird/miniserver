@@ -5,12 +5,12 @@ namespace FastyBird\Module\Triggers\Tests\Cases\Unit\Subscribers;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers;
-use FastyBird\Module\Triggers\Documents;
+use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Subscribers;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -28,7 +28,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$entityManager = $this->createMock(ORM\EntityManagerInterface::class);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
+		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 
 		$eventLoopStatus = $this->createMock(ApplicationEventLoop\Status::class);
 
@@ -94,7 +94,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$entityManager = $this->getEntityManager();
 
-		$document = $this->createMock(Documents\Triggers\Manual::class);
+		$document = $this->createMock(TriggersDocuments\Triggers\Manual::class);
 		$document
 			->method('toArray')
 			->willReturn([
@@ -106,7 +106,7 @@ final class ModuleEntitiesTest extends TestCase
 				'is_triggered' => false,
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
+		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
@@ -178,7 +178,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$entityManager = $this->getEntityManager(true);
 
-		$document = $this->createMock(Documents\Triggers\Manual::class);
+		$document = $this->createMock(TriggersDocuments\Triggers\Manual::class);
 		$document
 			->method('toArray')
 			->willReturn([
@@ -190,7 +190,7 @@ final class ModuleEntitiesTest extends TestCase
 				'is_triggered' => false,
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
+		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);
@@ -264,7 +264,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$entityManager = $this->getEntityManager();
 
-		$document = $this->createMock(Documents\Triggers\Manual::class);
+		$document = $this->createMock(TriggersDocuments\Triggers\Manual::class);
 		$document
 			->method('toArray')
 			->willReturn([
@@ -276,7 +276,7 @@ final class ModuleEntitiesTest extends TestCase
 				'is_triggered' => false,
 			]);
 
-		$documentFactory = $this->createMock(ExchangeDocuments\RoutingDocumentFactory::class);
+		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 		$documentFactory
 			->method('create')
 			->willReturn($document);

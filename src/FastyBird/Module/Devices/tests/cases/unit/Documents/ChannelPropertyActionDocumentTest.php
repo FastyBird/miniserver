@@ -3,9 +3,10 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Documents;
 
 use Error;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Tests;
 use Nette;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -17,7 +18,7 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
@@ -25,9 +26,9 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 	#[DataProvider('channelProperty')]
 	public function testCreateDocument(string $data, string $class): void
 	{
-		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);
+		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
 
-		$document = $factory->create(Documents\States\Channels\Properties\Actions\Action::class, $data);
+		$document = $factory->create(DevicesDocuments\States\Channels\Properties\Actions\Action::class, $data);
 
 		self::assertTrue($document instanceof $class);
 	}
@@ -35,7 +36,7 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
@@ -43,11 +44,11 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 	#[DataProvider('channelPropertyInvalid')]
 	public function testCreateDocumentInvalid(string $data): void
 	{
-		$factory = $this->getContainer()->getByType(ApplicationDocuments\DocumentFactory::class);
+		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
 
 		$this->expectException(ApplicationExceptions\InvalidArgument::class);
 
-		$factory->create(Documents\States\Channels\Properties\Actions\Action::class, $data);
+		$factory->create(DevicesDocuments\States\Channels\Properties\Actions\Action::class, $data);
 	}
 
 	/**
@@ -58,11 +59,11 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 		return [
 			'get' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.action.get.json'),
-				Documents\States\Channels\Properties\Actions\Action::class,
+				DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 			],
 			'set' => [
 				file_get_contents(__DIR__ . '/../../../fixtures/Documents/channel.property.action.set.json'),
-				Documents\States\Channels\Properties\Actions\Action::class,
+				DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 			],
 		];
 	}

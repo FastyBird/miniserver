@@ -9,7 +9,7 @@ use DateTimeInterface;
  *
  * @property-read DateTimeInterface|null $createdAt
  */
-trait TCreatedAt
+trait HasCreatedAt
 {
 
 	public function getCreatedAt(): DateTimeInterface|null

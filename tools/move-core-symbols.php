@@ -1216,6 +1216,7 @@ function fbMoveRewritePhp(
 
 	$bindings = []; // ref key => binding
 	$origin = []; // ref key => the import it resolved through
+	$originalRest = []; // ref key => the text after the import's alias, as it was written
 
 	foreach ($analysis['refs'] as $refKey => $ref) {
 		$resolved = fbMoveResolve($ref['text'], $oldNamespace, $imports, $aliasIndex);
@@ -1244,6 +1245,7 @@ function fbMoveRewritePhp(
 
 			$before[$key]++;
 			$origin[$refKey] = $key;
+			$originalRest[$refKey] = $resolved['rest'];
 			$bindings[$refKey] = $changed || $sameNamespace[$key]
 				? $express($target)
 				: ['imp', (string) ($mergedInto[$key] >= 0 ? $mergedInto[$key] : $key), $resolved['rest']];
@@ -1389,9 +1391,13 @@ function fbMoveRewritePhp(
 		if (
 			$binding[0] === 'imp'
 			&& ($origin[$refKey] ?? -1) === (int) $binding[1]
+			&& ($originalRest[$refKey] ?? null) === $binding[2]
 			&& $final['e' . $binding[1]]['alias'] === $imports[(int) $binding[1]]['alias']
 		) {
-			continue; // unchanged, through an unchanged import: keep it as written (PHP names are case-insensitive)
+			continue; // unchanged, through an unchanged import, to the same short name: keep it as
+			// written (PHP names are case-insensitive). When the short name itself changed -- a
+			// rename that keeps the class in the same, already-imported namespace -- this must not
+			// take the shortcut: $binding[2] is then the class's new short name, not what was typed.
 		}
 
 		$text = match ($binding[0]) {

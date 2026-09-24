@@ -23,6 +23,7 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Schemas;
@@ -289,7 +290,7 @@ final class OpenPulsar
 
 		} catch (
 			ApplicationExceptions\Logic
-			| ApplicationExceptions\MalformedInput
+			| DocumentsExceptions\MalformedInput
 			| ValuesExceptions\InvalidData
 			| TuyaExceptions\OpenPulsarError $ex
 		) {
@@ -345,7 +346,7 @@ final class OpenPulsar
 
 		} catch (
 			ApplicationExceptions\Logic
-			| ApplicationExceptions\MalformedInput
+			| DocumentsExceptions\MalformedInput
 			| ValuesExceptions\InvalidData
 			| TuyaExceptions\OpenPulsarError $ex
 		) {
@@ -399,7 +400,7 @@ final class OpenPulsar
 
 		} catch (
 			ApplicationExceptions\Logic
-			| ApplicationExceptions\MalformedInput
+			| DocumentsExceptions\MalformedInput
 			| ValuesExceptions\InvalidData
 			| TuyaExceptions\OpenPulsarError $ex
 		) {

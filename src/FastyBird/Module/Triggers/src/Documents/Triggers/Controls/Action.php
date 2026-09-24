@@ -15,8 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Types;
@@ -31,11 +30,11 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[Documents\Mapping\Document]
+#[Documents\Mapping\RoutingMap([
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_ACTION_ROUTING_KEY,
 ])]
-final readonly class Action implements ApplicationDocuments\Document
+final readonly class Action implements Documents\Document
 {
 
 	public function __construct(

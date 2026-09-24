@@ -16,7 +16,7 @@
 namespace FastyBird\Automator\DevicesModule\Documents\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use Orisai\ObjectMapper;
@@ -31,8 +31,8 @@ use function array_merge;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Actions\ChannelPropertyAction::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Actions\ChannelPropertyAction::TYPE)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Actions\ChannelPropertyAction::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Actions\ChannelPropertyAction::TYPE)]
 final class ChannelPropertyAction extends TriggersDocuments\Actions\Action
 {
 

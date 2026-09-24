@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Models\Configuration\Widgets\Displays;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Ui\Caching;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
@@ -44,14 +44,14 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Caching\Container $moduleCaching,
 		private readonly Models\Configuration\Builder $builder,
-		private readonly ApplicationDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
 
 	/**
-	 * @template T of Documents\Widgets\Displays\Display
+	 * @template T of UiDocuments\Widgets\Displays\Display
 	 *
 	 * @param class-string<T> $type
 	 *
@@ -59,8 +59,8 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-		string $type = Documents\Widgets\Displays\Display::class,
-	): Documents\Widgets\Displays\Display|null
+		string $type = UiDocuments\Widgets\Displays\Display::class,
+	): UiDocuments\Widgets\Displays\Display|null
 	{
 		$queryObject = new Queries\Configuration\FindWidgetDisplays();
 		$queryObject->byId($id);
@@ -75,7 +75,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Widgets\Displays\Display
+	 * @template T of UiDocuments\Widgets\Displays\Display
 	 *
 	 * @param Queries\Configuration\FindWidgetDisplays<T> $queryObject
 	 * @param class-string<T> $type
@@ -84,14 +84,14 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindWidgetDisplays $queryObject,
-		string $type = Documents\Widgets\Displays\Display::class,
-	): Documents\Widgets\Displays\Display|null
+		string $type = UiDocuments\Widgets\Displays\Display::class,
+	): UiDocuments\Widgets\Displays\Display|null
 	{
 		try {
 			/** @phpstan-var T|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject) . '_' . md5($type),
-				function (&$dependencies) use ($queryObject, $type): Documents\Widgets\Displays\Display|false {
+				function (&$dependencies) use ($queryObject, $type): UiDocuments\Widgets\Displays\Display|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::WIDGETS_DISPLAY);
 
@@ -114,7 +114,7 @@ final class Repository extends Models\Configuration\Repository
 							$space = $space->find('.[?(@.type in [' . ('"' . implode('","', $types) . '"') . '])]');
 
 							// Reset type to root class
-							$type = Documents\Widgets\Displays\Display::class;
+							$type = UiDocuments\Widgets\Displays\Display::class;
 
 						} else {
 							$space = $space->find(
@@ -162,7 +162,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Widgets\Displays\Display
+	 * @template T of UiDocuments\Widgets\Displays\Display
 	 *
 	 * @param Queries\Configuration\FindWidgetDisplays<T> $queryObject
 	 * @param class-string<T> $type
@@ -173,7 +173,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findAllBy(
 		Queries\Configuration\FindWidgetDisplays $queryObject,
-		string $type = Documents\Widgets\Displays\Display::class,
+		string $type = UiDocuments\Widgets\Displays\Display::class,
 	): array
 	{
 		try {
@@ -206,7 +206,7 @@ final class Repository extends Models\Configuration\Repository
 
 					$documents = array_merge(
 						array_map(
-							fn (array $item): Documents\Widgets\Displays\Display => $this->documentFactory->create(
+							fn (array $item): UiDocuments\Widgets\Displays\Display => $this->documentFactory->create(
 								$type,
 								$item,
 							),
@@ -221,7 +221,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::WIDGETS_DISPLAY->value,
 							],
 							array_map(
-								static fn (Documents\Widgets\Displays\Display $document): string => $document->getId()->toString(),
+								static fn (UiDocuments\Widgets\Displays\Display $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

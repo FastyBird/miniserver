@@ -3,8 +3,9 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Documents;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Events;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Documents\Events;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Tests;
 use Nette;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -20,10 +21,10 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @param class-string<Documents\Document> $class
 	 * @param array<string, mixed> $fixture
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\MalformedInput
-	 * @throws Exceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws DocumentsExceptions\MalformedInput
+	 * @throws CoreExceptions\Logic
 	 * @throws Nette\DI\MissingServiceException
 	 */
 	#[DataProvider('channelProperty')]
@@ -40,10 +41,10 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 	/**
 	 * @param class-string<Documents\Document> $class
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\MalformedInput
-	 * @throws Exceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws DocumentsExceptions\MalformedInput
+	 * @throws CoreExceptions\Logic
 	 * @throws Nette\DI\MissingServiceException
 	 */
 	#[DataProvider('channelPropertyInvalid')]
@@ -52,7 +53,7 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 		$factory = $this->container->getByType(Documents\DocumentFactory::class);
 
 		/** @var class-string<Throwable> $exception */
-		$exception = Exceptions\Exception::class;
+		$exception = CoreExceptions\Exception::class;
 
 		$this->expectException($exception);
 
@@ -64,10 +65,10 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @param class-string<Documents\Document> $class
 	 * @param array<string, mixed> $fixture
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\MalformedInput
-	 * @throws Exceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws DocumentsExceptions\MalformedInput
+	 * @throws CoreExceptions\Logic
 	 * @throws Nette\DI\MissingServiceException
 	 */
 	#[DataProvider('preLoadEvent')]

@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Values\Schemas;
 
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use Nette\Utils;
@@ -23,7 +24,7 @@ final class Validator
 	/**
 	 * @throws ValuesExceptions\InvalidData
 	 * @throws CoreExceptions\Logic
-	 * @throws CoreExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	public function validate(string $data, string $schema): Utils\ArrayHash
 	{
@@ -31,7 +32,7 @@ final class Validator
 			$jsonData = Utils\Json::decode($data);
 
 		} catch (Utils\JsonException $ex) {
-			throw new CoreExceptions\MalformedInput('Failed to decode input data', 0, $ex);
+			throw new DocumentsExceptions\MalformedInput('Failed to decode input data', 0, $ex);
 		}
 
 		$validator = new JsonSchema\Validator();

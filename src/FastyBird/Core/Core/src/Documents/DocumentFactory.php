@@ -3,8 +3,7 @@
 namespace FastyBird\Core\Documents;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Events;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette\Utils;
 use Orisai\ObjectMapper;
 use Psr\EventDispatcher;
@@ -37,10 +36,10 @@ final readonly class DocumentFactory
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Exceptions\MalformedInput
-	 * @throws Exceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 */
 	public function create(string $documentClass, array|string|object $data): Documents\Document
 	{
@@ -72,7 +71,7 @@ final readonly class DocumentFactory
 				|| !array_key_exists('name', $discriminatorColumnSettings)
 				|| !array_key_exists('type', $discriminatorColumnSettings)
 			) {
-				throw new Exceptions\InvalidState(sprintf(
+				throw new CoreExceptions\InvalidState(sprintf(
 					'Discriminator column configuration is missing on class: "%s"',
 					$metadata->getName(),
 				));
@@ -81,7 +80,7 @@ final readonly class DocumentFactory
 			$discriminatorColumn = $discriminatorColumnSettings['name'];
 
 			if (!array_key_exists($discriminatorColumn, $data)) {
-				throw new Exceptions\InvalidArgument(sprintf(
+				throw new CoreExceptions\InvalidArgument(sprintf(
 					'Discriminator column: "%s" is missing in data',
 					$discriminatorColumn,
 				));
@@ -93,7 +92,7 @@ final readonly class DocumentFactory
 			$discriminatorMap = $metadata->getDiscriminatorMap();
 
 			if (!array_key_exists($type, $discriminatorMap)) {
-				throw new Exceptions\InvalidArgument(sprintf(
+				throw new CoreExceptions\InvalidArgument(sprintf(
 					'Missing discriminator map record for key: "%s" in class: "%s"',
 					$type,
 					$metadata->getName(),
@@ -103,7 +102,7 @@ final readonly class DocumentFactory
 			if ($metadata->isRootDocument() || $metadata->isAbstract()) {
 				$documentClass = $discriminatorMap[$type];
 			} elseif ($metadata->getDiscriminatorValue() !== $type) {
-				throw new Exceptions\InvalidArgument(sprintf(
+				throw new CoreExceptions\InvalidArgument(sprintf(
 					'Provided document class is different than discriminator value: "%s"',
 					$metadata->getName(),
 				));
@@ -128,7 +127,9 @@ final readonly class DocumentFactory
 				new ObjectMapper\Printers\TypeToStringConverter(),
 			);
 
-			throw new Exceptions\InvalidArgument('Could not map data to document: ' . $errorPrinter->printError($ex));
+			throw new CoreExceptions\InvalidArgument(
+				'Could not map data to document: ' . $errorPrinter->printError($ex),
+			);
 		}
 	}
 

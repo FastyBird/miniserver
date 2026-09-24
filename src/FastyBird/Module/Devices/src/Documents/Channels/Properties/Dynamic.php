@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents\Channels\Properties;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -38,7 +38,7 @@ use function array_merge;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\Properties\Dynamic::class)]
+#[Documents\Mapping\Document(entity: Entities\Channels\Properties\Dynamic::class)]
 class Dynamic extends Property
 {
 

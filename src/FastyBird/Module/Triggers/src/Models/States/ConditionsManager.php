@@ -15,13 +15,14 @@
 
 namespace FastyBird\Module\Triggers\Models\States;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Module\Triggers;
-use FastyBird\Module\Triggers\Documents;
+use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Entities;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\States;
 use Nette;
@@ -42,7 +43,7 @@ final class ConditionsManager
 	use Nette\SmartObject;
 
 	public function __construct(
-		protected readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		protected readonly CoreDocuments\DocumentFactory $documentFactory,
 		protected readonly IConditionsManager|null $manager = null,
 		protected readonly ExchangePublisher\Publisher|null $publisher = null,
 	)
@@ -50,10 +51,10 @@ final class ConditionsManager
 	}
 
 	/**
-	 * @throws Exceptions\NotImplemented
+	 * @throws TriggersExceptions\NotImplemented
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 */
 	public function create(
@@ -62,7 +63,7 @@ final class ConditionsManager
 	): States\Condition
 	{
 		if ($this->manager === null) {
-			throw new Exceptions\NotImplemented('Condition state manager is not registered');
+			throw new TriggersExceptions\NotImplemented('Condition state manager is not registered');
 		}
 
 		$createdState = $this->manager->create($condition->getId(), $values);
@@ -73,10 +74,10 @@ final class ConditionsManager
 	}
 
 	/**
-	 * @throws Exceptions\NotImplemented
+	 * @throws TriggersExceptions\NotImplemented
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 */
 	public function update(
@@ -86,7 +87,7 @@ final class ConditionsManager
 	): States\Condition
 	{
 		if ($this->manager === null) {
-			throw new Exceptions\NotImplemented('Condition state manager is not registered');
+			throw new TriggersExceptions\NotImplemented('Condition state manager is not registered');
 		}
 
 		$updatedState = $this->manager->update($condition->getId(), $values);
@@ -101,10 +102,10 @@ final class ConditionsManager
 	}
 
 	/**
-	 * @throws Exceptions\NotImplemented
+	 * @throws TriggersExceptions\NotImplemented
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 */
 	public function delete(
@@ -113,7 +114,7 @@ final class ConditionsManager
 	): bool
 	{
 		if ($this->manager === null) {
-			throw new Exceptions\NotImplemented('Condition state manager is not registered');
+			throw new TriggersExceptions\NotImplemented('Condition state manager is not registered');
 		}
 
 		$result = $this->manager->delete($condition->getId());
@@ -128,7 +129,7 @@ final class ConditionsManager
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\Logic
 	 */
 	private function publishEntity(
@@ -144,7 +145,7 @@ final class ConditionsManager
 			$condition->getSource(),
 			Triggers\Constants::MESSAGE_BUS_CONDITION_DOCUMENT_UPDATED_ROUTING_KEY,
 			$this->documentFactory->create(
-				Documents\Conditions\Condition::class,
+				TriggersDocuments\Conditions\Condition::class,
 				array_merge(
 					$condition->toArray(),
 					[

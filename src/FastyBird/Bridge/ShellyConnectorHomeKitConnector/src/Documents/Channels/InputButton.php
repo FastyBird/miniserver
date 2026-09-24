@@ -16,10 +16,10 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Channels\InputButton::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\InputButton::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Channels\InputButton::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\InputButton::TYPE)]
 class InputButton extends Shelly
 {
 

@@ -7,8 +7,7 @@ use FastyBird\Core\Commands as HttpServerCommands;
 use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Controllers as WebSocketsControllers;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Encoding as JsonApiEncoding;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers as ToolsHelpers;
@@ -60,9 +59,9 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertNotNull($container->getByType(Monolog\Handler\RotatingFileHandler::class, false));
 		self::assertNull($container->getByType(SymfonyMonolog\Handler\ConsoleHandler::class, false));
-		self::assertNotNull($container->getByType(ApplicationDocuments\DocumentFactory::class, false));
+		self::assertNotNull($container->getByType(Documents\DocumentFactory::class, false));
 		self::assertInstanceOf(
-			ApplicationDocuments\DocumentFactory::class,
+			Documents\DocumentFactory::class,
 			$container->getService('document.factory'),
 		);
 
@@ -70,7 +69,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * EXCHANGE -- from ExchangeExtensionTest
 		 */
 
-		self::assertNotNull($container->getByType(ExchangeDocuments\RoutingDocumentFactory::class, false));
+		self::assertNotNull($container->getByType(Documents\RoutingDocumentFactory::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Publisher\Container::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Publisher\Async\Container::class, false));
 		self::assertNotNull($container->getByType(ExchangeMessaging\Exchange\Consumers\Container::class, false));

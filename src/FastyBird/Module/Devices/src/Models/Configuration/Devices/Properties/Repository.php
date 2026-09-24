@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Models\Configuration\Devices\Properties;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
@@ -45,14 +45,14 @@ final class Repository extends Models\Configuration\Repository
 	public function __construct(
 		private readonly Models\Configuration\Builder $builder,
 		private readonly Caching\Container $moduleCaching,
-		private readonly ApplicationDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
-		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
+		private readonly CoreDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
+		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)
 	{
 	}
 
 	/**
-	 * @template T of Documents\Devices\Properties\Property
+	 * @template T of DevicesDocuments\Devices\Properties\Property
 	 *
 	 * @param class-string<T> $type
 	 *
@@ -62,8 +62,8 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
-		string $type = Documents\Devices\Properties\Property::class,
-	): Documents\Devices\Properties\Property|null
+		string $type = DevicesDocuments\Devices\Properties\Property::class,
+	): DevicesDocuments\Devices\Properties\Property|null
 	{
 		$queryObject = new Queries\Configuration\FindDeviceProperties();
 		$queryObject->byId($id);
@@ -78,7 +78,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Devices\Properties\Property
+	 * @template T of DevicesDocuments\Devices\Properties\Property
 	 *
 	 * @param Queries\Configuration\FindDeviceProperties<T> $queryObject
 	 * @param class-string<T> $type
@@ -89,14 +89,14 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findOneBy(
 		Queries\Configuration\FindDeviceProperties $queryObject,
-		string $type = Documents\Devices\Properties\Property::class,
-	): Documents\Devices\Properties\Property|null
+		string $type = DevicesDocuments\Devices\Properties\Property::class,
+	): DevicesDocuments\Devices\Properties\Property|null
 	{
 		try {
 			/** @phpstan-var T|false $document */
 			$document = $this->moduleCaching->getConfigurationRepositoryCache()->load(
 				$this->createKeyOne($queryObject) . '_' . md5($type),
-				function (&$dependencies) use ($queryObject, $type): Documents\Devices\Properties\Property|false {
+				function (&$dependencies) use ($queryObject, $type): DevicesDocuments\Devices\Properties\Property|false {
 					$space = $this->builder
 						->load(Types\ConfigurationType::DEVICES_PROPERTIES);
 
@@ -114,9 +114,9 @@ final class Repository extends Models\Configuration\Repository
 
 					foreach (
 						[
-							Documents\Devices\Properties\Dynamic::class,
-							Documents\Devices\Properties\Variable::class,
-							Documents\Devices\Properties\Mapped::class,
+							DevicesDocuments\Devices\Properties\Dynamic::class,
+							DevicesDocuments\Devices\Properties\Variable::class,
+							DevicesDocuments\Devices\Properties\Mapped::class,
 						] as $class
 					) {
 						try {
@@ -156,7 +156,7 @@ final class Repository extends Models\Configuration\Repository
 	}
 
 	/**
-	 * @template T of Documents\Devices\Properties\Property
+	 * @template T of DevicesDocuments\Devices\Properties\Property
 	 *
 	 * @param Queries\Configuration\FindDeviceProperties<T> $queryObject
 	 * @param class-string<T> $type
@@ -167,7 +167,7 @@ final class Repository extends Models\Configuration\Repository
 	 */
 	public function findAllBy(
 		Queries\Configuration\FindDeviceProperties $queryObject,
-		string $type = Documents\Devices\Properties\Property::class,
+		string $type = DevicesDocuments\Devices\Properties\Property::class,
 	): array
 	{
 		try {
@@ -192,12 +192,12 @@ final class Repository extends Models\Configuration\Repository
 
 					$documents = array_filter(
 						array_map(
-							function (array $item): Documents\Devices\Properties\Property|null {
+							function (array $item): DevicesDocuments\Devices\Properties\Property|null {
 								foreach (
 									[
-										Documents\Devices\Properties\Dynamic::class,
-										Documents\Devices\Properties\Variable::class,
-										Documents\Devices\Properties\Mapped::class,
+										DevicesDocuments\Devices\Properties\Dynamic::class,
+										DevicesDocuments\Devices\Properties\Variable::class,
+										DevicesDocuments\Devices\Properties\Mapped::class,
 									] as $class
 								) {
 									try {
@@ -220,7 +220,7 @@ final class Repository extends Models\Configuration\Repository
 								Types\ConfigurationType::DEVICES_PROPERTIES->value,
 							],
 							array_map(
-								static fn (Documents\Devices\Properties\Property $document): string => $document->getId()->toString(),
+								static fn (DevicesDocuments\Devices\Properties\Property $document): string => $document->getId()->toString(),
 								$documents,
 							),
 						),

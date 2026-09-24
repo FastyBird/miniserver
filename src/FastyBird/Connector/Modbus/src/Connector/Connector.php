@@ -18,10 +18,11 @@ namespace FastyBird\Connector\Modbus\Connector;
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Clients;
 use FastyBird\Connector\Modbus\Documents;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Helpers;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Writers;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -82,12 +83,12 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
 	 * @throws ExchangeExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
@@ -125,7 +126,7 @@ final class Connector implements DevicesConnectors\Connector
 		}
 
 		if ($this->client === null) {
-			return Promise\reject(new Exceptions\InvalidState('Connector client is not configured'));
+			return Promise\reject(new ModbusExceptions\InvalidState('Connector client is not configured'));
 		}
 
 		$this->client->connect();
@@ -174,7 +175,7 @@ final class Connector implements DevicesConnectors\Connector
 		assert($this->connector instanceof Documents\Connectors\Connector);
 
 		return Promise\reject(
-			new Exceptions\InvalidState('Devices discovery is not allowed for Modbus connector type'),
+			new ModbusExceptions\InvalidState('Devices discovery is not allowed for Modbus connector type'),
 		);
 	}
 

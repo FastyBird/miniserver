@@ -16,8 +16,9 @@
 namespace FastyBird\Connector\Virtual\Commands;
 
 use FastyBird\Connector\Virtual\Documents;
-use FastyBird\Connector\Virtual\Exceptions;
+use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Queries;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -84,11 +85,11 @@ class Execute extends Console\Command\Command
 	/**
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\MalformedInput
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
@@ -221,7 +222,7 @@ class Execute extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new VirtualExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//virtual-connector.cmd.base.messages.answerNotValid',
@@ -251,7 +252,7 @@ class Execute extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new VirtualExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//virtual-connector.cmd.base.messages.answerNotValid',

@@ -17,14 +17,14 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Documents\Widgets\DataSources;
 
 use DateTimeInterface;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
-use FastyBird\Core\Documents as ApplicationDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Payloads;
 use Ramsey\Uuid;
 use function array_merge;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Widgets\DataSources\DeviceProperty::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\DeviceProperty::TYPE)]
+#[Documents\Mapping\Document(entity: Entities\Widgets\DataSources\DeviceProperty::class)]
+#[Documents\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\DeviceProperty::TYPE)]
 class DeviceProperty extends Property
 {
 

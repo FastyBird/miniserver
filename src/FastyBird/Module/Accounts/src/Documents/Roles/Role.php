@@ -15,8 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Documents\Roles;
 
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Documents as ExchangeDocuments;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
@@ -32,14 +31,14 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Roles\Role::class)]
-#[ExchangeDocuments\Mapping\RoutingMap([
+#[Documents\Mapping\Document(entity: Entities\Roles\Role::class)]
+#[Documents\Mapping\RoutingMap([
 	Accounts\Constants::MESSAGE_BUS_ROLE_DOCUMENT_REPORTED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_ROLE_DOCUMENT_CREATED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_ROLE_DOCUMENT_UPDATED_ROUTING_KEY,
 	Accounts\Constants::MESSAGE_BUS_ROLE_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-final readonly class Role implements ApplicationDocuments\Document
+final readonly class Role implements Documents\Document
 {
 
 	public function __construct(

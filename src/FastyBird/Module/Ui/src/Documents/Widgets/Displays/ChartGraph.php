@@ -16,16 +16,16 @@
 namespace FastyBird\Module\Ui\Documents\Widgets\Displays;
 
 use DateTimeInterface;
-use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Module\Ui\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
 
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Widgets\Displays\ChartGraph::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\ChartGraph::TYPE)]
-class ChartGraph extends Documents\Widgets\Displays\Display
+#[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\ChartGraph::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\ChartGraph::TYPE)]
+class ChartGraph extends UiDocuments\Widgets\Displays\Display
 {
 
 	public function __construct(
