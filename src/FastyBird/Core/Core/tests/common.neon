@@ -33,6 +33,7 @@ contributteTranslation:
     localeResolvers: []
     dirs:
         - %appDir%/../src/Translations
+        - %appDir%/../src/Api/Translations
 
 nettrineDbal:
     connections:
