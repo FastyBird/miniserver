@@ -136,28 +136,29 @@ final class Handlers
 		IWrapper $application,
 	): void
 	{
+		$context = [
+			'code' => $ex->getCode(),
+			'file' => $ex->getFile(),
+			'client' => (int) $connection->stream,
+		];
+
 		try {
 			$client = $this->clientStorage->getClient((int) $connection->stream);
 
-			$context = [
-				'code' => $ex->getCode(),
-				'file' => $ex->getFile(),
-				'client' => (int) $connection->stream,
-				'request' => $client->getRequest(),
-			];
+			try {
+				$context['request'] = $client->getRequest();
+			} catch (Throwable) {
+				// Connection failed before an HTTP request was captured for this client
+			}
 
 			$this->logger->error($ex->getMessage(), $context);
 
 			$application->handleError($client, $ex);
 
-		} catch (Throwable $ex) {
-			$context = [
-				'code' => $ex->getCode(),
-				'file' => $ex->getFile(),
-				'client' => (int) $connection->stream,
-			];
+		} catch (Throwable $secondaryEx) {
+			$context['previous'] = $ex->getMessage();
 
-			$this->logger->error($ex->getMessage(), $context);
+			$this->logger->error($secondaryEx->getMessage(), $context);
 
 			$connection->end();
 		}

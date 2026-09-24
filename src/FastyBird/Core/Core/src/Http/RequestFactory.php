@@ -329,7 +329,7 @@ final class RequestFactory
 			$method,
 			$remoteAddr,
 			$remoteHost,
-			static fn (): string|null => $rawBody,
+			static fn (): string => $rawBody ?? '',
 		);
 
 		$request->setProtocolVersion($httpVersion);
