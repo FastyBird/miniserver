@@ -3,6 +3,12 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets\Controller;
 
 use FastyBird\Core\Controllers\WebSockets\Controller\Controller;
+use FastyBird\Core\Controllers\WebSockets\Controller\IControllerFactory;
+use FastyBird\Core\Exceptions;
+use FastyBird\Core\Routing\IWampRouter;
+use FastyBird\Core\Routing\LinkGenerator;
+use Nette\DI\Container;
+use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,12 +20,14 @@ use PHPUnit\Framework\TestCase;
  * accessor returns the same stdClass instance sendPayload() reads from, which is what makes the
  * accessor a safe substitute for the direct (now impossible) property write.
  *
- * Controller::$user is also documented with the same @property-read tag this issue targets, but
- * its declared type, Nette\Security\User, belongs to nette/security, which this project does not
- * require (only nette/http is installed) -- class_exists(Nette\Security\User::class) is false at
- * runtime. getUser()/injectPrimary()'s $user parameter were already unreachable dead code before
- * this epic; a test exercising them would have to fabricate a production class that does not
- * exist, so it is intentionally not covered here.
+ * Controller::$controllerFactory and $user used to be non-nullable typed properties with no
+ * default, and injectPrimary() read $controllerFactory via `!== null` (which throws on an
+ * uninitialized typed property, same as a direct read) before ever assigning it, then
+ * unconditionally assigned $user -- always null in this deployment, since nette/security is not
+ * installed and no Nette\Security\User service exists to autowire -- onto the non-nullable $user
+ * property (a TypeError). Every single controller creation hit one or the other, unconditionally:
+ * DI's callInjects() calls injectPrimary() immediately after instantiating any controller, so
+ * every WAMP SUBSCRIBE/CALL/PUBLISH dispatch crashed before the controller's own action ever ran.
  */
 final class ControllerTest extends TestCase
 {
@@ -34,6 +42,50 @@ final class ControllerTest extends TestCase
 		$controller->getPayload()->data = ['response' => 'accepted'];
 
 		self::assertSame(['response' => 'accepted'], $controller->getPayload()->data);
+	}
+
+	/**
+	 * @throws InvalidStateException
+	 */
+	public function testInjectPrimarySucceedsOnceAndRejectsASecondCall(): void
+	{
+		$controller = new class extends Controller
+		{
+
+		};
+
+		$controllerFactory = $this->createMock(IControllerFactory::class);
+		$router = $this->createMock(IWampRouter::class);
+		$linkGenerator = new LinkGenerator($router);
+
+		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
+
+		self::expectException(InvalidStateException::class);
+
+		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
+	}
+
+	/**
+	 * @throws Exceptions\InvalidState
+	 * @throws InvalidStateException
+	 */
+	public function testGetUserThrowsInvalidStateWhenNoUserServiceWasInjected(): void
+	{
+		$controller = new class extends Controller
+		{
+
+		};
+
+		$controllerFactory = $this->createMock(IControllerFactory::class);
+		$router = $this->createMock(IWampRouter::class);
+		$linkGenerator = new LinkGenerator($router);
+
+		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
+
+		self::expectException(Exceptions\InvalidState::class);
+		self::expectExceptionMessage('Service User has not been set.');
+
+		$controller->getUser();
 	}
 
 }

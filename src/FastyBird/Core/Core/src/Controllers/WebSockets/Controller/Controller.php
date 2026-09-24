@@ -18,6 +18,7 @@ use Reflector;
 use stdClass;
 use TypeError;
 use function array_key_exists;
+use function assert;
 use function call_user_func;
 use function get_class;
 use function gettype;
@@ -68,15 +69,15 @@ abstract class Controller implements IController
 
 	private string $name;
 
-	private Nette\DI\Container $context;
+	private Nette\DI\Container|null $context = null;
 
-	private IControllerFactory $controllerFactory;
+	private IControllerFactory|null $controllerFactory = null;
 
-	private Router\IWampRouter $router;
+	private Router\IWampRouter|null $router = null;
 
-	private Router\LinkGenerator $linkGenerator;
+	private Router\LinkGenerator|null $linkGenerator = null;
 
-	private NS\User $user;
+	private NS\User|null $user = null;
 
 	public function __construct()
 	{
@@ -94,7 +95,9 @@ abstract class Controller implements IController
 		NS\User|null $user = null,
 	): void
 	{
-		if ($this->controllerFactory !== null) {
+		// $controllerFactory is a typed property with no default; isset() is the only read that
+		// does not throw before the first injectPrimary() call ever assigns it.
+		if (isset($this->controllerFactory)) {
 			throw new Nette\InvalidStateException(
 				sprintf(
 					'Method "%s" is intended for initialization and should not be called more than once.',
@@ -232,6 +235,8 @@ abstract class Controller implements IController
 	 */
 	public function link(string $destination, array $args = []): string
 	{
+		assert($this->linkGenerator !== null);
+
 		return $this->linkGenerator->link($destination, $args);
 	}
 
@@ -258,7 +263,7 @@ abstract class Controller implements IController
 	 */
 	public function getUser(): Nette\Security\User
 	{
-		if (!$this->user) {
+		if ($this->user === null) {
 			throw new Exceptions\InvalidState('Service User has not been set.');
 		}
 
