@@ -5,7 +5,8 @@
  *
  * Boots the application exactly as public/index.php does -- Bootstrap::boot() with
  * FB_APP_DIR pointing at the repository root, so config/common.neon and all 45 extension
- * registrations load -- and reports the Doctrine metadata as JSON on stdout.
+ * registrations load -- and reports the Doctrine metadata, plus whether the ORM-generated
+ * schema carries Doctrine Migrations' own bookkeeping table, as JSON on stdout.
  *
  * Run as a child process by EntityMappingTest; see the comment there for why it cannot
  * happen in-process.
@@ -27,7 +28,9 @@ ini_set('display_errors', '0');
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
+use Doctrine\Migrations\Metadata\Storage\TableMetadataStorageConfiguration;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\SchemaValidator;
 use FastyBird\Core\Boot;
 
@@ -72,12 +75,25 @@ try {
 		$discriminators[$class] = count($entityManager->getClassMetadata($class)->discriminatorMap);
 	}
 
+	// Doctrine Migrations' own bookkeeping table is not ORM-mapped entity metadata, so
+	// schema-tool does not know it is supposed to exist unless Core\Subscribers\
+	// DoctrineMigrations\SchemaSubscriber is registered on the postGenerateSchema event (see
+	// FastyBird\Core\DI\CoreExtension). getSchemaFromMetadata() dispatches that event, so this
+	// is the only place a regression like #515 -- the subscriber compiling into the container
+	// yet never firing -- would be visible: every other check in this file reads metadata, not
+	// a generated schema.
+	$tableStorage = $container->getByType(TableMetadataStorageConfiguration::class);
+	$migrationsTableName = $tableStorage->getTableName();
+	$schema = (new SchemaTool($entityManager))->getSchemaFromMetadata($metadata);
+
 	$report([
 		'metadataClasses' => count($metadata),
 		'classesInError' => count($errors),
 		'errors' => array_keys($errors),
 		'errorText' => $errorText,
 		'discriminators' => $discriminators,
+		'migrationsTableName' => $migrationsTableName,
+		'schemaHasMigrationsTable' => $schema->hasTable($migrationsTableName),
 	]);
 } catch (Throwable $ex) {
 	$report([
@@ -86,5 +102,7 @@ try {
 		'errors' => [$ex::class],
 		'errorText' => [$ex::class . ': ' . $ex->getMessage()],
 		'discriminators' => [],
+		'migrationsTableName' => '',
+		'schemaHasMigrationsTable' => false,
 	]);
 }
