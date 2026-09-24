@@ -11,6 +11,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http;
+use FastyBird\Core\Security\SimpleAuth;
 use FastyBird\Core\Server\WsServer as Server;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Override;
@@ -18,6 +19,7 @@ use Psr\Log;
 use Symfony\Component\EventDispatcher;
 use function explode;
 use function in_array;
+use function is_string;
 
 /**
  * WS client events subscriber
@@ -31,8 +33,16 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	/** @var array<string> */
 	private array $allowedOrigins;
 
+	/**
+	 * The token services are registered only when an application signature is configured,
+	 * and the identity factory only by whatever provides identities (the accounts module).
+	 * Without them no token can be validated, so every client is refused.
+	 */
 	public function __construct(
 		private readonly ToolsHelpers\Database $database,
+		private readonly SimpleAuth\TokenReader|null $tokenReader = null,
+		private readonly SimpleAuth\TokenValidator|null $tokenValidator = null,
+		private readonly SimpleAuth\IIdentityFactory|null $identityFactory = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 		string|null $wsKeys = null,
 		string|null $allowedOrigins = null,
@@ -130,21 +140,56 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			return false;
 		}
 
-		$authToken = $httpRequest->getHeader(WsServer\Constants::WS_HEADER_AUTHORIZATION);
+		$headerToken = $httpRequest->getHeader(WsServer\Constants::WS_HEADER_AUTHORIZATION);
+		$cookieToken = $httpRequest->getCookie(WsServer\Constants::ACCESS_TOKEN_COOKIE);
 
-		if ($authToken === null) {
-			$cookieToken = $httpRequest->getCookie('token');
+		if ($headerToken === null && $cookieToken === null) {
+			$this->logger->warning('Client access token is missing', [
+				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'type' => 'subscriber',
+			]);
 
-			if ($cookieToken === null) {
-				$this->logger->warning('Client access token is missing', [
-					'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
-					'type' => 'subscriber',
-				]);
+			$this->closeSession($client);
 
-				$this->closeSession($client);
+			return false;
+		}
 
-				return false;
-			}
+		if ($this->tokenReader === null || $this->tokenValidator === null || $this->identityFactory === null) {
+			$this->logger->warning('Client access token can not be validated, authentication is not configured', [
+				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'type' => 'subscriber',
+			]);
+
+			$this->closeSession($client);
+
+			return false;
+		}
+
+		// The same criteria the HTTP side applies: the bearer header exactly as the JSON:API
+		// user middleware reads it (TokenReader), the cookie exactly as the presenter
+		// subscriber reads it (TokenValidator on the raw value), and in both cases the token
+		// has to resolve to an identity -- which is where the accounts module checks that the
+		// token is still persisted, i.e. was issued and has not been revoked since.
+		try {
+			$token = $headerToken !== null
+				? $this->tokenReader->readHeader($headerToken)
+				: (is_string($cookieToken) ? $this->tokenValidator->validate($cookieToken) : null);
+		} catch (Exceptions\UnauthorizedAccess) {
+			$token = null;
+		}
+
+		$identity = $token !== null ? $this->identityFactory->create($token) : null;
+
+		if ($identity === null) {
+			$this->logger->warning('Client access token is not valid', [
+				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'type' => 'subscriber',
+				'token_source' => $headerToken !== null ? 'header' : 'cookie',
+			]);
+
+			$this->closeSession($client);
+
+			return false;
 		}
 
 		return true;

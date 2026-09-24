@@ -3271,20 +3271,8 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
 		-
-			message: '#^Negated boolean expression is always false\.$#'
-			identifier: booleanNot.alwaysFalse
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
-
-		-
 			message: '#^Only booleans are allowed in &&, list\<string\>\|null given on the right side\.$#'
 			identifier: booleanAnd.rightNotBoolean
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
-
-		-
-			message: '#^Only booleans are allowed in a negated boolean, Nette\\Security\\User given\.$#'
-			identifier: booleanNot.exprNotBoolean
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
@@ -3361,14 +3349,8 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Controller\\Controller\:\:\$context is unused\.$#'
-			identifier: property.unused
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Controller\\Controller\:\:\$controllerFactory is never written, only read\.$#'
-			identifier: property.onlyRead
+			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Controller\\Controller\:\:\$context is never read, only written\.$#'
+			identifier: property.onlyWritten
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
@@ -3385,12 +3367,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Controller\\Controller\:\:\$linkGenerator is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
-
-		-
 			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Controller\\Controller\:\:\$params type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -3403,8 +3379,8 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Controller\\Controller\:\:\$router is unused\.$#'
-			identifier: property.unused
+			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Controller\\Controller\:\:\$router is never read, only written\.$#'
+			identifier: property.onlyWritten
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
@@ -3415,26 +3391,8 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Controllers\\WebSockets\\Controller\\Controller\:\:\$user is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between FastyBird\\Core\\Controllers\\WebSockets\\Controller\\IControllerFactory and null will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
-
-		-
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php
 
@@ -4619,30 +4577,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/PushMessages/Message.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Entities\\WebSockets\\WebSocket\:\:\$frame \(FastyBird\\Core\\Encoding\\WebSockets\\IFrame\) does not accept null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Entities\\WebSockets\\WebSocket\:\:\$message \(FastyBird\\Core\\Encoding\\WebSockets\\IMessage\) does not accept null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between FastyBird\\Core\\Encoding\\WebSockets\\IFrame and null will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between FastyBird\\Core\\Encoding\\WebSockets\\IMessage and null will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php
 
 		-
 			message: '#^Cannot cast FastyBird\\Core\\Controllers\\WebSockets\\Responses\\IResponse to string\.$#'
