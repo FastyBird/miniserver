@@ -19,7 +19,7 @@ use Bunny;
 use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Exceptions;
 use FastyBird\Plugin\RabbitMq\Utilities;
@@ -83,7 +83,7 @@ final class Message
 			} else {
 				// Log error action reason
 				$this->logger->warning('Received message is not in valid format', [
-					'source' => MetadataTypes\Sources\Plugin::RABBITMQ->value,
+					'source' => Sources\Plugin::RABBITMQ->value,
 					'type' => 'messages-handler',
 				]);
 
@@ -92,7 +92,7 @@ final class Message
 		} catch (Utils\JsonException $ex) {
 			// Log error action reason
 			$this->logger->warning('Received message is not valid json', [
-				'source' => MetadataTypes\Sources\Plugin::RABBITMQ->value,
+				'source' => Sources\Plugin::RABBITMQ->value,
 				'type' => 'messages-handler',
 				'exception' => Logging\Logger::buildException($ex),
 			]);
@@ -133,7 +133,7 @@ final class Message
 
 		} catch (Throwable $ex) {
 			$this->logger->error('Message could not be transformed into entity', [
-				'source' => MetadataTypes\Sources\Plugin::RABBITMQ->value,
+				'source' => Sources\Plugin::RABBITMQ->value,
 				'type' => 'messages-handler',
 				'exception' => Logging\Logger::buildException($ex),
 				'data' => $data,
@@ -160,7 +160,7 @@ final class Message
 		} catch (Exceptions\UnprocessableMessage $ex) {
 			// Log error consume reason
 			$this->logger->error('Message could not be handled', [
-				'source' => MetadataTypes\Sources\Plugin::RABBITMQ->value,
+				'source' => Sources\Plugin::RABBITMQ->value,
 				'type' => 'messages-handler',
 				'exception' => Logging\Logger::buildException($ex),
 			]);
@@ -177,30 +177,30 @@ final class Message
 	 */
 	private function validateSource(
 		string $source,
-	): MetadataTypes\Sources\Source|null
+	): Sources\Source|null
 	{
-		if (MetadataTypes\Sources\Module::tryFrom($source) !== null) {
-			return MetadataTypes\Sources\Module::from($source);
+		if (Sources\Module::tryFrom($source) !== null) {
+			return Sources\Module::from($source);
 		}
 
-		if (MetadataTypes\Sources\Plugin::tryFrom($source) !== null) {
-			return MetadataTypes\Sources\Plugin::from($source);
+		if (Sources\Plugin::tryFrom($source) !== null) {
+			return Sources\Plugin::from($source);
 		}
 
-		if (MetadataTypes\Sources\Connector::tryFrom($source) !== null) {
-			return MetadataTypes\Sources\Connector::from($source);
+		if (Sources\Connector::tryFrom($source) !== null) {
+			return Sources\Connector::from($source);
 		}
 
-		if (MetadataTypes\Sources\Automator::tryFrom($source) !== null) {
-			return MetadataTypes\Sources\Automator::from($source);
+		if (Sources\Automator::tryFrom($source) !== null) {
+			return Sources\Automator::from($source);
 		}
 
-		if (MetadataTypes\Sources\Addon::tryFrom($source) !== null) {
-			return MetadataTypes\Sources\Addon::from($source);
+		if (Sources\Addon::tryFrom($source) !== null) {
+			return Sources\Addon::from($source);
 		}
 
-		if (MetadataTypes\Sources\Bridge::tryFrom($source) !== null) {
-			return MetadataTypes\Sources\Bridge::from($source);
+		if (Sources\Bridge::tryFrom($source) !== null) {
+			return Sources\Bridge::from($source);
 		}
 
 		return null;

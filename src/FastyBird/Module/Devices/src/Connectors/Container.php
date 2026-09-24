@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Connectors;
 
 use Closure;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions;
@@ -37,10 +37,10 @@ use function array_key_exists;
 class Container implements Connector, EventDispatcher\EventSubscriberInterface
 {
 
-	/** @var array<Closure(MetadataTypes\Sources\Source $source, string|null $reason, Throwable|null $ex): void> */
+	/** @var array<Closure(Sources\Source $source, string|null $reason, Throwable|null $ex): void> */
 	public array $onTerminate = [];
 
-	/** @var array<Closure(MetadataTypes\Sources\Source $source, string|null $reason, Throwable|null $ex): void> */
+	/** @var array<Closure(Sources\Source $source, string|null $reason, Throwable|null $ex): void> */
 	public array $onRestart = [];
 
 	private Connector|null $service = null;

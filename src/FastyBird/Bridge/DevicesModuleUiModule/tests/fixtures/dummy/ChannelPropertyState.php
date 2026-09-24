@@ -4,8 +4,8 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Fixtures\Dummy;
 
 use DateTimeInterface;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -27,30 +27,30 @@ class ChannelPropertyState implements DevicesStates\ChannelProperty
 			new ObjectMapper\Rules\FloatValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\ObjectValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName(self::ACTUAL_VALUE_FIELD)]
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-		private readonly bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $actualValue = null,
+		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\FloatValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\ObjectValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName(self::EXPECTED_VALUE_FIELD)]
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-		private readonly bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $expectedValue = null,
+		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\ObjectValue(),
@@ -94,12 +94,12 @@ class ChannelPropertyState implements DevicesStates\ChannelProperty
 		return $this->updatedAt;
 	}
 
-	public function getActualValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getActualValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->actualValue;
 	}
 
-	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->expectedValue;
 	}
@@ -123,8 +123,8 @@ class ChannelPropertyState implements DevicesStates\ChannelProperty
 	{
 		return [
 			'id' => $this->getId()->toString(),
-			'actual_value' => ToolsUtilities\Value::flattenValue($this->getActualValue()),
-			'expected_value' => ToolsUtilities\Value::flattenValue($this->getExpectedValue()),
+			'actual_value' => Utilities\Value::flattenValue($this->getActualValue()),
+			'expected_value' => Utilities\Value::flattenValue($this->getExpectedValue()),
 			'pending' => $this->getPending() instanceof DateTimeInterface
 				? $this->getPending()->format(DateTimeInterface::ATOM)
 				: $this->getPending(),

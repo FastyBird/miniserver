@@ -20,7 +20,7 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -100,7 +100,7 @@ final readonly class SubDevice
 			return Types\Category::UNKNOWN;
 		}
 
-		return Types\Category::from(ToolsUtilities\Value::toString($property->getValue(), true));
+		return Types\Category::from(Utilities\Value::toString($property->getValue(), true));
 	}
 
 	/**

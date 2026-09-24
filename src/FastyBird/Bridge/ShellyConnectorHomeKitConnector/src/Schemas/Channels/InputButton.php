@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 
 /**
  * Input button type channel entity schema
@@ -35,7 +35,7 @@ final class InputButton extends Shelly
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value . '/channel/' . Entities\Channels\InputButton::TYPE;
+	public const SCHEMA_TYPE = Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value . '/channel/' . Entities\Channels\InputButton::TYPE;
 
 	public function getEntityClass(): string
 	{

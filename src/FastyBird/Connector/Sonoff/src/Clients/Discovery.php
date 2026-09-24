@@ -25,7 +25,7 @@ use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
@@ -113,7 +113,7 @@ final class Discovery
 
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::SONOFF,
+						Sources\Connector::SONOFF,
 						'Devices discovery finished',
 					),
 				);
@@ -121,7 +121,7 @@ final class Discovery
 			->catch(function (): void {
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::SONOFF,
+						Sources\Connector::SONOFF,
 						'Devices discovery failed',
 					),
 				);
@@ -166,7 +166,7 @@ final class Discovery
 		$this->logger->debug(
 			'Starting cloud devices discovery',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'discovery-client',
 			],
 		);
@@ -180,7 +180,7 @@ final class Discovery
 			$this->logger->error(
 				'Log into eWelink account failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'discovery-client',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -201,7 +201,7 @@ final class Discovery
 						$this->logger->error(
 							'Loading devices from cloud failed',
 							[
-								'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+								'source' => Sources\Connector::SONOFF->value,
 								'type' => 'discovery-client',
 								'exception' => Logging\Logger::buildException($ex),
 							],
@@ -214,7 +214,7 @@ final class Discovery
 				$this->logger->error(
 					'Loading homes from cloud failed',
 					[
-						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+						'source' => Sources\Connector::SONOFF->value,
 						'type' => 'discovery-client',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -238,7 +238,7 @@ final class Discovery
 		$this->logger->debug(
 			'Starting lan devices discovery',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'discovery-client',
 			],
 		);
@@ -282,7 +282,7 @@ final class Discovery
 				$this->logger->error(
 					'Params mapping for device UIID could not be loaded',
 					[
-						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+						'source' => Sources\Connector::SONOFF->value,
 						'type' => 'discovery-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'device' => [
@@ -297,7 +297,7 @@ final class Discovery
 				$this->logger->error(
 					'Device params mapping could not be prepared for mapping',
 					[
-						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+						'source' => Sources\Connector::SONOFF->value,
 						'type' => 'discovery-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'device' => [
@@ -451,7 +451,7 @@ final class Discovery
 				$this->logger->error(
 					'Found device could not be attached to processing queue',
 					[
-						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+						'source' => Sources\Connector::SONOFF->value,
 						'type' => 'discovery-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'device' => $device->toArray(),

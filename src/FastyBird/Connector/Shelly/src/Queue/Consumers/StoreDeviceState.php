@@ -21,10 +21,11 @@ use FastyBird\Connector\Shelly\Documents;
 use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
-use FastyBird\Connector\Shelly\Types;
+use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -110,8 +111,8 @@ final class StoreDeviceState implements Queue\Consumer
 			$this->setDeviceProperty(
 				$device->getId(),
 				$message->getIpAddress(),
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::IP_ADDRESS,
+				ValuesTypes\DataType::STRING,
+				ShellyTypes\DevicePropertyIdentifier::IP_ADDRESS,
 			);
 		}
 
@@ -137,7 +138,7 @@ final class StoreDeviceState implements Queue\Consumer
 							Utils\ArrayHash::from([
 								DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getValue(),
 							]),
-							MetadataTypes\Sources\Connector::SHELLY,
+							Sources\Connector::SHELLY,
 						));
 					} elseif ($property instanceof DevicesDocuments\Devices\Properties\Variable) {
 						$this->databaseHelper->transaction(
@@ -189,7 +190,7 @@ final class StoreDeviceState implements Queue\Consumer
 									Utils\ArrayHash::from([
 										DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getValue(),
 									]),
-									MetadataTypes\Sources\Connector::SHELLY,
+									Sources\Connector::SHELLY,
 								));
 							} elseif ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
 								$this->databaseHelper->transaction(
@@ -254,7 +255,7 @@ final class StoreDeviceState implements Queue\Consumer
 								Utils\ArrayHash::from([
 									DevicesStates\Property::ACTUAL_VALUE_FIELD => $sensor->getValue(),
 								]),
-								MetadataTypes\Sources\Connector::SHELLY,
+								Sources\Connector::SHELLY,
 							));
 						} elseif ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
 							$this->databaseHelper->transaction(
@@ -282,7 +283,7 @@ final class StoreDeviceState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+				'source' => Sources\Connector::SHELLY->value,
 				'type' => 'store-device-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

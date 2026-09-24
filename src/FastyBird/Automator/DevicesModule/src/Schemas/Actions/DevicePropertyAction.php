@@ -17,8 +17,8 @@ namespace FastyBird\Automator\DevicesModule\Schemas\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Triggers\Schemas as TriggersSchemas;
 use Neomerx\JsonApi;
 use TypeError;
@@ -40,7 +40,7 @@ final class DevicePropertyAction extends TriggersSchemas\Actions\Action
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Automator::DEVICE_MODULE->value . '/action/' . Entities\Actions\DevicePropertyAction::TYPE;
+	public const SCHEMA_TYPE = Sources\Automator::DEVICE_MODULE->value . '/action/' . Entities\Actions\DevicePropertyAction::TYPE;
 
 	public function getType(): string
 	{
@@ -69,7 +69,7 @@ final class DevicePropertyAction extends TriggersSchemas\Actions\Action
 		return array_merge((array) parent::getAttributes($resource, $context), [
 			'device' => $resource->getDevice()->toString(),
 			'property' => $resource->getProperty()->toString(),
-			'value' => ToolsUtilities\Value::toString($resource->getValue()),
+			'value' => Utilities\Value::toString($resource->getValue()),
 		]);
 	}
 

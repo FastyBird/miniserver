@@ -18,7 +18,7 @@ namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\DoctrineTimestampable;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -104,9 +104,9 @@ abstract class Display implements Entities\Entity,
 		];
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Module::UI;
+		return Sources\Module::UI;
 	}
 
 	/**

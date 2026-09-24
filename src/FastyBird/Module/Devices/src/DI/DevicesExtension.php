@@ -25,7 +25,7 @@ use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
 use FastyBird\Core\Topics\WsServer as TopicsWsServer;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Commands;
@@ -111,7 +111,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		)
 			->setType(NetteCaching\Cache::class)
 			->setArguments([
-				'namespace' => MetadataTypes\Sources\Module::DEVICES->value . '_configuration_repository',
+				'namespace' => Sources\Module::DEVICES->value . '_configuration_repository',
 			])
 			->setAutowired(false);
 
@@ -121,7 +121,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		)
 			->setType(NetteCaching\Cache::class)
 			->setArguments([
-				'namespace' => MetadataTypes\Sources\Module::DEVICES->value . '_configuration_builder',
+				'namespace' => Sources\Module::DEVICES->value . '_configuration_builder',
 			])
 			->setAutowired(false);
 
@@ -131,7 +131,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		)
 			->setType(NetteCaching\Cache::class)
 			->setArguments([
-				'namespace' => MetadataTypes\Sources\Module::DEVICES->value . '_state',
+				'namespace' => Sources\Module::DEVICES->value . '_state',
 			])
 			->setAutowired(false);
 
@@ -141,7 +141,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		)
 			->setType(NetteCaching\Cache::class)
 			->setArguments([
-				'namespace' => MetadataTypes\Sources\Module::DEVICES->value . '_state_storage',
+				'namespace' => Sources\Module::DEVICES->value . '_state_storage',
 			])
 			->setAutowired(false);
 

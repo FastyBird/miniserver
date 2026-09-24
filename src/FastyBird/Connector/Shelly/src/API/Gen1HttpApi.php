@@ -16,8 +16,10 @@
 namespace FastyBird\Connector\Shelly\API;
 
 use FastyBird\Connector\Shelly\Exceptions;
-use FastyBird\Connector\Shelly\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\Shelly\Types as ShellyTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette;
@@ -90,17 +92,17 @@ final class Gen1HttpApi extends HttpApi
 	];
 
 	private const WRITABLE_SENSORS = [
-		Types\SensorDescription::MODE->value,
-		Types\SensorDescription::OUTPUT->value,
-		Types\SensorDescription::ROLLER->value,
-		Types\SensorDescription::RED->value,
-		Types\SensorDescription::GREEN->value,
-		Types\SensorDescription::BLUE->value,
-		Types\SensorDescription::WHITE->value,
-		Types\SensorDescription::WHITE_LEVEL->value,
-		Types\SensorDescription::GAIN->value,
-		Types\SensorDescription::BRIGHTNESS->value,
-		Types\SensorDescription::COLOR_TEMP->value,
+		ShellyTypes\SensorDescription::MODE->value,
+		ShellyTypes\SensorDescription::OUTPUT->value,
+		ShellyTypes\SensorDescription::ROLLER->value,
+		ShellyTypes\SensorDescription::RED->value,
+		ShellyTypes\SensorDescription::GREEN->value,
+		ShellyTypes\SensorDescription::BLUE->value,
+		ShellyTypes\SensorDescription::WHITE->value,
+		ShellyTypes\SensorDescription::WHITE_LEVEL->value,
+		ShellyTypes\SensorDescription::GAIN->value,
+		ShellyTypes\SensorDescription::BRIGHTNESS->value,
+		ShellyTypes\SensorDescription::COLOR_TEMP->value,
 	];
 
 	/**
@@ -355,7 +357,7 @@ final class Gen1HttpApi extends HttpApi
 					$this->logger->debug(
 						'Received device block description is not in valid format',
 						[
-							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+							'source' => Sources\Connector::SHELLY->value,
 							'type' => 'gen1-http-api',
 							'description' => (array) $block,
 						],
@@ -381,7 +383,7 @@ final class Gen1HttpApi extends HttpApi
 						$this->logger->debug(
 							'Received block sensor description is not in valid format',
 							[
-								'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+								'source' => Sources\Connector::SHELLY->value,
 								'type' => 'gen1-http-api',
 								'description' => (array) $sensor,
 							],
@@ -612,7 +614,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::UNKNOWN,
+						ValuesTypes\DataType::UNKNOWN,
 					)->value,
 					'format' => $this->adjustSensorFormat($block, $description, null),
 					'invalid' => null,
@@ -627,7 +629,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::BOOLEAN,
+						ValuesTypes\DataType::BOOLEAN,
 					)->value,
 					'format' => $this->adjustSensorFormat($block, $description, null),
 					'invalid' => $invalidValue,
@@ -642,7 +644,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::UCHAR,
+						ValuesTypes\DataType::UCHAR,
 					)->value,
 					'format' => $this->adjustSensorFormat($block, $description, null),
 					'invalid' => $invalidValue,
@@ -657,7 +659,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::USHORT,
+						ValuesTypes\DataType::USHORT,
 					)->value,
 					'format' => $this->adjustSensorFormat($block, $description, null),
 					'invalid' => $invalidValue,
@@ -672,7 +674,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::UINT,
+						ValuesTypes\DataType::UINT,
 					)->value,
 					'format' => $this->adjustSensorFormat($block, $description, null),
 					'invalid' => $invalidValue,
@@ -687,7 +689,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::CHAR,
+						ValuesTypes\DataType::CHAR,
 					)->value,
 					'format' => $this->adjustSensorFormat($block, $description, null),
 					'invalid' => $invalidValue,
@@ -702,7 +704,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::SHORT,
+						ValuesTypes\DataType::SHORT,
 					)->value,
 					'format' => $this->adjustSensorFormat($block, $description, null),
 					'invalid' => $invalidValue,
@@ -717,7 +719,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::INT,
+						ValuesTypes\DataType::INT,
 					)->value,
 					'format' => $this->adjustSensorFormat($block, $description, null),
 					'invalid' => $invalidValue,
@@ -739,7 +741,7 @@ final class Gen1HttpApi extends HttpApi
 						'data_type' => $this->adjustSensorDataType(
 							$block,
 							$description,
-							MetadataTypes\DataType::INT,
+							ValuesTypes\DataType::INT,
 						)->value,
 						'format' => $this->adjustSensorFormat(
 							$block,
@@ -762,7 +764,7 @@ final class Gen1HttpApi extends HttpApi
 						'data_type' => $this->adjustSensorDataType(
 							$block,
 							$description,
-							MetadataTypes\DataType::FLOAT,
+							ValuesTypes\DataType::FLOAT,
 						)->value,
 						'format' => $this->adjustSensorFormat(
 							$block,
@@ -780,7 +782,7 @@ final class Gen1HttpApi extends HttpApi
 					'data_type' => $this->adjustSensorDataType(
 						$block,
 						$description,
-						MetadataTypes\DataType::ENUM,
+						ValuesTypes\DataType::ENUM,
 					)->value,
 					'format' => $this->adjustSensorFormat(
 						$block,
@@ -798,7 +800,7 @@ final class Gen1HttpApi extends HttpApi
 				'data_type' => $this->adjustSensorDataType(
 					$block,
 					$description,
-					MetadataTypes\DataType::UNKNOWN,
+					ValuesTypes\DataType::UNKNOWN,
 				)->value,
 				'format' => $this->adjustSensorFormat($block, $description, null),
 				'invalid' => null,
@@ -809,21 +811,21 @@ final class Gen1HttpApi extends HttpApi
 	private function adjustSensorDataType(
 		string $block,
 		string $description,
-		MetadataTypes\DataType $dataType,
-	): MetadataTypes\DataType
+		ValuesTypes\DataType $dataType,
+	): ValuesTypes\DataType
 	{
 		if (
-			str_starts_with($block, Types\BlockDescription::RELAY->value)
-			&& Utils\Strings::lower($description) === Types\SensorDescription::OUTPUT->value
+			str_starts_with($block, ShellyTypes\BlockDescription::RELAY->value)
+			&& Utils\Strings::lower($description) === ShellyTypes\SensorDescription::OUTPUT->value
 		) {
-			return MetadataTypes\DataType::SWITCH;
+			return ValuesTypes\DataType::SWITCH;
 		}
 
 		if (
-			str_starts_with($block, Types\BlockDescription::LIGHT->value)
-			&& Utils\Strings::lower($description) === Types\SensorDescription::OUTPUT->value
+			str_starts_with($block, ShellyTypes\BlockDescription::LIGHT->value)
+			&& Utils\Strings::lower($description) === ShellyTypes\SensorDescription::OUTPUT->value
 		) {
-			return MetadataTypes\DataType::SWITCH;
+			return ValuesTypes\DataType::SWITCH;
 		}
 
 		return $dataType;
@@ -841,80 +843,80 @@ final class Gen1HttpApi extends HttpApi
 	): array|null
 	{
 		if (
-			str_starts_with($block, Types\BlockDescription::RELAY->value)
-			&& Utils\Strings::lower($description) === Types\SensorDescription::OUTPUT->value
+			str_starts_with($block, ShellyTypes\BlockDescription::RELAY->value)
+			&& Utils\Strings::lower($description) === ShellyTypes\SensorDescription::OUTPUT->value
 		) {
 			return [
 				[
-					[MetadataTypes\DataTypeShort::SWITCH->value, MetadataTypes\Payloads\Switcher::ON->value],
-					[MetadataTypes\DataTypeShort::BOOLEAN->value, true],
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\RelayPayload::ON->value],
+					[ValuesTypes\DataTypeShort::SWITCH->value, Payloads\Switcher::ON->value],
+					[ValuesTypes\DataTypeShort::BOOLEAN->value, true],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\RelayPayload::ON->value],
 				],
 				[
-					[MetadataTypes\DataTypeShort::SWITCH->value, MetadataTypes\Payloads\Switcher::OFF->value],
-					[MetadataTypes\DataTypeShort::BOOLEAN->value, false],
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\RelayPayload::OFF->value],
+					[ValuesTypes\DataTypeShort::SWITCH->value, Payloads\Switcher::OFF->value],
+					[ValuesTypes\DataTypeShort::BOOLEAN->value, false],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\RelayPayload::OFF->value],
 				],
 				[
-					[MetadataTypes\DataTypeShort::SWITCH->value, MetadataTypes\Payloads\Switcher::TOGGLE->value],
+					[ValuesTypes\DataTypeShort::SWITCH->value, Payloads\Switcher::TOGGLE->value],
 					null,
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\RelayPayload::TOGGLE->value],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\RelayPayload::TOGGLE->value],
 				],
 			];
 		}
 
 		if (
-			str_starts_with($block, Types\BlockDescription::ROLLER->value)
-			&& Utils\Strings::lower($description) === Types\SensorDescription::ROLLER->value
+			str_starts_with($block, ShellyTypes\BlockDescription::ROLLER->value)
+			&& Utils\Strings::lower($description) === ShellyTypes\SensorDescription::ROLLER->value
 		) {
 			return [
 				[
-					[MetadataTypes\DataTypeShort::COVER->value, MetadataTypes\Payloads\Cover::OPEN->value],
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\RollerPayload::OPEN->value],
+					[ValuesTypes\DataTypeShort::COVER->value, Payloads\Cover::OPEN->value],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\RollerPayload::OPEN->value],
 					null,
 				],
 				[
-					[MetadataTypes\DataTypeShort::COVER->value, MetadataTypes\Payloads\Cover::OPENED->value],
+					[ValuesTypes\DataTypeShort::COVER->value, Payloads\Cover::OPENED->value],
 					null,
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\RollerPayload::OPEN->value],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\RollerPayload::OPEN->value],
 				],
 				[
-					[MetadataTypes\DataTypeShort::COVER->value, MetadataTypes\Payloads\Cover::CLOSE->value],
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\RollerPayload::CLOSE->value],
+					[ValuesTypes\DataTypeShort::COVER->value, Payloads\Cover::CLOSE->value],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\RollerPayload::CLOSE->value],
 					null,
 				],
 				[
-					[MetadataTypes\DataTypeShort::COVER->value, MetadataTypes\Payloads\Cover::CLOSED->value],
+					[ValuesTypes\DataTypeShort::COVER->value, Payloads\Cover::CLOSED->value],
 					null,
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\RollerPayload::CLOSE->value],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\RollerPayload::CLOSE->value],
 				],
 				[
-					[MetadataTypes\DataTypeShort::COVER->value, MetadataTypes\Payloads\Cover::STOP->value],
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\RollerPayload::STOP->value],
+					[ValuesTypes\DataTypeShort::COVER->value, Payloads\Cover::STOP->value],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\RollerPayload::STOP->value],
 					null,
 				],
 			];
 		}
 
 		if (
-			str_starts_with($block, Types\BlockDescription::LIGHT->value)
-			&& Utils\Strings::lower($description) === Types\SensorDescription::OUTPUT->value
+			str_starts_with($block, ShellyTypes\BlockDescription::LIGHT->value)
+			&& Utils\Strings::lower($description) === ShellyTypes\SensorDescription::OUTPUT->value
 		) {
 			return [
 				[
-					[MetadataTypes\DataTypeShort::SWITCH->value, MetadataTypes\Payloads\Switcher::ON->value],
-					[MetadataTypes\DataTypeShort::BOOLEAN->value, true],
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\LightSwitchPayload::ON->value],
+					[ValuesTypes\DataTypeShort::SWITCH->value, Payloads\Switcher::ON->value],
+					[ValuesTypes\DataTypeShort::BOOLEAN->value, true],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\LightSwitchPayload::ON->value],
 				],
 				[
-					[MetadataTypes\DataTypeShort::SWITCH->value, MetadataTypes\Payloads\Switcher::OFF->value],
-					[MetadataTypes\DataTypeShort::BOOLEAN->value, false],
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\LightSwitchPayload::OFF->value],
+					[ValuesTypes\DataTypeShort::SWITCH->value, Payloads\Switcher::OFF->value],
+					[ValuesTypes\DataTypeShort::BOOLEAN->value, false],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\LightSwitchPayload::OFF->value],
 				],
 				[
-					[MetadataTypes\DataTypeShort::SWITCH->value, MetadataTypes\Payloads\Switcher::TOGGLE->value],
+					[ValuesTypes\DataTypeShort::SWITCH->value, Payloads\Switcher::TOGGLE->value],
 					null,
-					[MetadataTypes\DataTypeShort::STRING->value, Types\Payloads\LightSwitchPayload::TOGGLE->value],
+					[ValuesTypes\DataTypeShort::STRING->value, ShellyTypes\Payloads\LightSwitchPayload::TOGGLE->value],
 				],
 			];
 		}
@@ -931,19 +933,19 @@ final class Gen1HttpApi extends HttpApi
 			throw new Exceptions\InvalidState('Property identifier is not valid');
 		}
 
-		if ($propertyMatches['description'] === Types\SensorDescription::OUTPUT->value) {
+		if ($propertyMatches['description'] === ShellyTypes\SensorDescription::OUTPUT->value) {
 			return 'turn';
 		}
 
-		if ($propertyMatches['description'] === Types\SensorDescription::ROLLER->value) {
+		if ($propertyMatches['description'] === ShellyTypes\SensorDescription::ROLLER->value) {
 			return 'go';
 		}
 
-		if ($propertyMatches['description'] === Types\SensorDescription::COLOR_TEMP->value) {
+		if ($propertyMatches['description'] === ShellyTypes\SensorDescription::COLOR_TEMP->value) {
 			return 'temp';
 		}
 
-		if ($propertyMatches['description'] === Types\SensorDescription::WHITE_LEVEL->value) {
+		if ($propertyMatches['description'] === ShellyTypes\SensorDescription::WHITE_LEVEL->value) {
 			return 'white';
 		}
 

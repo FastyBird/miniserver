@@ -15,8 +15,8 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
-use FastyBird\Connector\Zigbee2Mqtt\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
 use TypeError;
 use ValueError;
@@ -37,7 +37,7 @@ final class EnumType extends Type
 	 * @param array<int, string> $values
 	 */
 	public function __construct(
-		#[ObjectMapper\Rules\ArrayEnumValue(cases: [Types\ExposeType::ENUM->value])]
+		#[ObjectMapper\Rules\ArrayEnumValue(cases: [Zigbee2MqttTypes\ExposeType::ENUM->value])]
 		private readonly string $type,
 		string $name,
 		string $label,
@@ -57,14 +57,14 @@ final class EnumType extends Type
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getType(): Types\ExposeType
+	public function getType(): Zigbee2MqttTypes\ExposeType
 	{
-		return Types\ExposeType::from($this->type);
+		return Zigbee2MqttTypes\ExposeType::from($this->type);
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
-		return MetadataTypes\DataType::ENUM;
+		return ValuesTypes\DataType::ENUM;
 	}
 
 	/**

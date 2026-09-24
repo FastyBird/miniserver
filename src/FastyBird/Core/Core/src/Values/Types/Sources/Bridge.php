@@ -1,0 +1,27 @@
+<?php declare(strict_types = 1);
+
+namespace FastyBird\Core\Values\Types\Sources;
+
+use FastyBird\Core\Constants as Metadata;
+
+/**
+ * Bridges sources types
+ */
+enum Bridge: string implements Source
+{
+
+	case NOT_SPECIFIED = Metadata\Constants::NOT_SPECIFIED_SOURCE;
+
+	case REDISDB_PLUGIN_DEVICES_MODULE = Metadata\Constants::BRIDGE_REDISDB_PLUGIN_DEVICES_MODULE_SOURCE;
+
+	case REDISDB_PLUGIN_TRIGGERS_MODULE = Metadata\Constants::BRIDGE_REDISDB_PLUGIN_TRIGGERS_MODULE_SOURCE;
+
+	case VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR = Metadata\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_SOURCE;
+
+	case SHELLY_CONNECTOR_HOMEKIT_CONNECTOR = Metadata\Constants::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_SOURCE;
+
+	case VIERA_CONNECTOR_HOMEKIT_CONNECTOR = Metadata\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_SOURCE;
+
+	case DEVICES_MODULE_UI_MODULE = Metadata\Constants::BRIDGE_DEVICES_MODULE_UI_MODULE_SOURCE;
+
+}

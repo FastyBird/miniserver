@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;
@@ -317,9 +317,9 @@ abstract class Connector implements Entities\Entity,
 		];
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Module::DEVICES;
+		return Sources\Module::DEVICES;
 	}
 
 	/**

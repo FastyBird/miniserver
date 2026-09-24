@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,8 +38,8 @@ class ColorRed extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::COLOR_RED,
-			MetadataTypes\DataType::UCHAR,
+			NsPanelTypes\Attribute::COLOR_RED,
+			ValuesTypes\DataType::UCHAR,
 			$capability,
 			[],
 			null,

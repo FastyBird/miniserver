@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Characteristics;
 
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
 
 /**
@@ -75,7 +75,7 @@ readonly class BasicCharacteristic implements Characteristic
 							item: new ObjectMapper\Rules\AnyOf([
 								new ObjectMapper\Rules\ArrayEnumValue(
 									// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-									cases: [MetadataTypes\DataTypeShort::CHAR->value, MetadataTypes\DataTypeShort::UCHAR->value, MetadataTypes\DataTypeShort::SHORT->value, MetadataTypes\DataTypeShort::USHORT->value, MetadataTypes\DataTypeShort::INT->value, MetadataTypes\DataTypeShort::UINT->value, MetadataTypes\DataTypeShort::FLOAT->value, MetadataTypes\DataTypeShort::BOOLEAN->value, MetadataTypes\DataTypeShort::STRING->value, MetadataTypes\DataTypeShort::BUTTON->value, MetadataTypes\DataTypeShort::SWITCH->value, MetadataTypes\DataTypeShort::COVER->value],
+									cases: [ValuesTypes\DataTypeShort::CHAR->value, ValuesTypes\DataTypeShort::UCHAR->value, ValuesTypes\DataTypeShort::SHORT->value, ValuesTypes\DataTypeShort::USHORT->value, ValuesTypes\DataTypeShort::INT->value, ValuesTypes\DataTypeShort::UINT->value, ValuesTypes\DataTypeShort::FLOAT->value, ValuesTypes\DataTypeShort::BOOLEAN->value, ValuesTypes\DataTypeShort::STRING->value, ValuesTypes\DataTypeShort::BUTTON->value, ValuesTypes\DataTypeShort::SWITCH->value, ValuesTypes\DataTypeShort::COVER->value],
 								),
 								new ObjectMapper\Rules\StringValue(notEmpty: true),
 								new ObjectMapper\Rules\IntValue(),
@@ -102,7 +102,7 @@ readonly class BasicCharacteristic implements Characteristic
 						item: new ObjectMapper\Rules\AnyOf([
 							new ObjectMapper\Rules\ArrayEnumValue(
 								// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-								cases: [MetadataTypes\DataTypeShort::CHAR->value, MetadataTypes\DataTypeShort::UCHAR->value, MetadataTypes\DataTypeShort::SHORT->value, MetadataTypes\DataTypeShort::USHORT->value, MetadataTypes\DataTypeShort::INT->value, MetadataTypes\DataTypeShort::UINT->value, MetadataTypes\DataTypeShort::FLOAT->value],
+								cases: [ValuesTypes\DataTypeShort::CHAR->value, ValuesTypes\DataTypeShort::UCHAR->value, ValuesTypes\DataTypeShort::SHORT->value, ValuesTypes\DataTypeShort::USHORT->value, ValuesTypes\DataTypeShort::INT->value, ValuesTypes\DataTypeShort::UINT->value, ValuesTypes\DataTypeShort::FLOAT->value],
 							),
 							new ObjectMapper\Rules\IntValue(),
 							new ObjectMapper\Rules\FloatValue(),

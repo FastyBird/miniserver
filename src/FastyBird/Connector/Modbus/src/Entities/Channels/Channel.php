@@ -21,8 +21,8 @@ use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Types;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 use TypeError;
@@ -54,9 +54,9 @@ class Channel extends DevicesEntities\Channels\Channel
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Connector
+	public function getSource(): Sources\Connector
 	{
-		return MetadataTypes\Sources\Connector::MODBUS;
+		return Sources\Connector::MODBUS;
 	}
 
 	public function getDevice(): Entities\Devices\Device
@@ -109,9 +109,9 @@ class Channel extends DevicesEntities\Channels\Channel
 		if (
 			$property instanceof DevicesEntities\Channels\Properties\Variable
 			&& is_string($property->getValue())
-			&& Types\ChannelType::tryFrom(ToolsUtilities\Value::toString($property->getValue(), true)) !== null
+			&& Types\ChannelType::tryFrom(Utilities\Value::toString($property->getValue(), true)) !== null
 		) {
-			return Types\ChannelType::from(ToolsUtilities\Value::toString($property->getValue(), true));
+			return Types\ChannelType::from(Utilities\Value::toString($property->getValue(), true));
 		}
 
 		return null;

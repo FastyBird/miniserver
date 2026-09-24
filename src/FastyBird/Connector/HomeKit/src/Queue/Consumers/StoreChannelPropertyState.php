@@ -22,7 +22,7 @@ use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -95,7 +95,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'store-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -129,7 +129,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device channel could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'store-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -160,7 +160,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device channel property could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'store-channel-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -205,12 +205,12 @@ final class StoreChannelPropertyState implements Queue\Consumer
 				Utils\ArrayHash::from([
 					DevicesStates\Property::ACTUAL_VALUE_FIELD => $message->getValue(),
 				]),
-				MetadataTypes\Sources\Connector::HOMEKIT,
+				Sources\Connector::HOMEKIT,
 			));
 			await($this->channelPropertiesStatesManager->setValidState(
 				$property,
 				true,
-				MetadataTypes\Sources\Connector::HOMEKIT,
+				Sources\Connector::HOMEKIT,
 			));
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
 			$findChannelPropertyQuery = new DevicesQueries\Configuration\FindChannelProperties();
@@ -224,7 +224,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 					Utils\ArrayHash::from([
 						DevicesStates\Property::EXPECTED_VALUE_FIELD => $message->getValue(),
 					]),
-					MetadataTypes\Sources\Connector::HOMEKIT,
+					Sources\Connector::HOMEKIT,
 				));
 			} elseif ($parent instanceof DevicesDocuments\Channels\Properties\Variable) {
 				$this->databaseHelper->transaction(
@@ -245,7 +245,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 							$this->logger->error(
 								'Mapped variable property could not be updated',
 								[
-									'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+									'source' => Sources\Connector::HOMEKIT->value,
 									'type' => 'store-channel-property-state-message-consumer',
 									'connector' => [
 										'id' => $message->getConnector()->toString(),
@@ -271,7 +271,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+				'source' => Sources\Connector::HOMEKIT->value,
 				'type' => 'store-channel-property-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

@@ -20,7 +20,7 @@ use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Events;
@@ -66,7 +66,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 		$this->logger->debug(
 			'Client subscribed to topic',
 			[
-				'source' => MetadataTypes\Sources\Module::UI->value,
+				'source' => Sources\Module::UI->value,
 				'type' => 'exchange-controller',
 				'client' => $client->getId(),
 				'topic' => $topic->getId(),
@@ -84,7 +84,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 					$topic->getId(),
 					Utils\Json::encode([
 						'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
-						'source' => MetadataTypes\Sources\Module::UI->value,
+						'source' => Sources\Module::UI->value,
 						'data' => $dataSource->toArray(),
 					]),
 				]));
@@ -93,7 +93,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			$this->logger->error(
 				'State could not be sent to subscriber',
 				[
-					'source' => MetadataTypes\Sources\Module::UI->value,
+					'source' => Sources\Module::UI->value,
 					'type' => 'exchange-controller',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -122,7 +122,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 		$this->logger->debug(
 			'Received RPC call from client',
 			[
-				'source' => MetadataTypes\Sources\Module::UI->value,
+				'source' => Sources\Module::UI->value,
 				'type' => 'exchange-controller',
 				'client' => $client->getId(),
 				'topic' => $topic->getId(),
@@ -191,7 +191,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
-					'source' => MetadataTypes\Sources\Module::UI->value,
+					'source' => Sources\Module::UI->value,
 					'data' => $dataSource->toArray(),
 				]),
 			]));

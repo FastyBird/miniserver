@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\Entities;
 
 use FastyBird\Core\Entities\DoctrineCrud;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 
 /**
@@ -39,6 +39,6 @@ interface Entity extends DoctrineCrud\IEntity
 	 */
 	public function toArray(): array;
 
-	public function getSource(): MetadataTypes\Sources\Source;
+	public function getSource(): Sources\Source;
 
 }

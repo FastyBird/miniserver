@@ -22,7 +22,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Caching as UiCaching;
@@ -151,7 +151,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	): void
 	{
 		$this->getPublisher($this->eventLoopStatus->isRunning())->publish(
-			MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE,
+			Sources\Bridge::DEVICES_MODULE_UI_MODULE,
 			Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
 			$dataSource,
 		);

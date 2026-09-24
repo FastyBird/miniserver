@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Mapping\Attributes;
 
 use FastyBird\Connector\NsPanel\Mapping;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
 use function array_filter;
 
@@ -37,11 +37,11 @@ readonly class Attribute implements Mapping\Mapping
 	 * @param array<int, array<int, string>> $mappedValues
 	 */
 	public function __construct(
-		#[ObjectMapper\Rules\BackedEnumValue(class: Types\Attribute::class)]
-		private Types\Attribute $attribute,
-		#[ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\DataType::class)]
+		#[ObjectMapper\Rules\BackedEnumValue(class: NsPanelTypes\Attribute::class)]
+		private NsPanelTypes\Attribute $attribute,
+		#[ObjectMapper\Rules\BackedEnumValue(class: ValuesTypes\DataType::class)]
 		#[ObjectMapper\Modifiers\FieldName('data_type')]
-		private MetadataTypes\DataType $dataType,
+		private ValuesTypes\DataType $dataType,
 		#[ObjectMapper\Rules\ArrayOf(
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\IntValue(unsigned: true),
@@ -105,12 +105,12 @@ readonly class Attribute implements Mapping\Mapping
 	{
 	}
 
-	public function getAttribute(): Types\Attribute
+	public function getAttribute(): NsPanelTypes\Attribute
 	{
 		return $this->attribute;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		return $this->dataType;
 	}

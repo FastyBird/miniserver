@@ -16,8 +16,8 @@
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
 use Orisai\ObjectMapper;
@@ -44,28 +44,28 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 			new ObjectMapper\Rules\FloatValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\ObjectValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName(self::ACTUAL_VALUE_FIELD)]
-		private readonly bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $actualValue = null,
+		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\FloatValue(),
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\Payloads\Cover::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
 			new ObjectMapper\Rules\ObjectValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName(self::EXPECTED_VALUE_FIELD)]
-		private readonly bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $expectedValue = null,
+		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\ObjectValue(),
@@ -105,12 +105,12 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 		return $this->updatedAt;
 	}
 
-	public function getActualValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getActualValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->actualValue;
 	}
 
-	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->expectedValue;
 	}
@@ -157,8 +157,8 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [
-			self::ACTUAL_VALUE_FIELD => ToolsUtilities\Value::flattenValue($this->getActualValue()),
-			self::EXPECTED_VALUE_FIELD => ToolsUtilities\Value::flattenValue($this->getExpectedValue()),
+			self::ACTUAL_VALUE_FIELD => Utilities\Value::flattenValue($this->getActualValue()),
+			self::EXPECTED_VALUE_FIELD => Utilities\Value::flattenValue($this->getExpectedValue()),
 			self::PENDING_FIELD => $this->getPending() instanceof DateTimeInterface
 				? $this->getPending()->format(DateTimeInterface::ATOM)
 				: $this->getPending(),

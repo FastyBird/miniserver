@@ -26,7 +26,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Models;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -131,7 +131,7 @@ final class Mqtt implements Client
 				foreach ($properties as $property) {
 					$state = $this->devicePropertiesStatesManager->read(
 						$property,
-						MetadataTypes\Sources\Connector::ZIGBEE2MQTT,
+						Sources\Connector::ZIGBEE2MQTT,
 					);
 
 					if ($state instanceof DevicesDocuments\States\Devices\Properties\Property) {
@@ -159,7 +159,7 @@ final class Mqtt implements Client
 					foreach ($properties as $property) {
 						$state = $this->channelPropertiesStatesManager->read(
 							$property,
-							MetadataTypes\Sources\Connector::ZIGBEE2MQTT,
+							Sources\Connector::ZIGBEE2MQTT,
 						);
 
 						if ($state instanceof DevicesDocuments\States\Channels\Properties\Property) {
@@ -221,7 +221,7 @@ final class Mqtt implements Client
 						$this->logger->info(
 							sprintf('Subscribed to: %s', $subscription->getFilter()),
 							[
-								'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+								'source' => Sources\Connector::ZIGBEE2MQTT->value,
 								'type' => 'mqtt-client',
 								'connector' => [
 									'id' => $this->connector->getId()->toString(),
@@ -233,7 +233,7 @@ final class Mqtt implements Client
 						$this->logger->error(
 							$ex->getMessage(),
 							[
-								'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+								'source' => Sources\Connector::ZIGBEE2MQTT->value,
 								'type' => 'mqtt-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'connector' => [

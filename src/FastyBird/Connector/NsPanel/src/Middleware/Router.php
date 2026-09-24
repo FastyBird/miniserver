@@ -24,7 +24,7 @@ use FastyBird\Core\Exceptions as SlimRouterExceptions;
 use FastyBird\Core\Http as SlimRouterHttp;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
@@ -102,7 +102,7 @@ final class Router
 			$this->logger->warning(
 				'Request ended with error',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'router-middleware',
 					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
@@ -131,7 +131,7 @@ final class Router
 			$this->logger->warning(
 				'Received invalid HTTP request',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'router-middleware',
 					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
@@ -160,7 +160,7 @@ final class Router
 			$this->logger->error(
 				'An unhandled error occurred during handling server HTTP request',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'router-middleware',
 					'exception' => Logging\Logger::buildException($ex),
 				],

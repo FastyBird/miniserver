@@ -30,8 +30,8 @@ use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities as ValuesUtilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -159,7 +159,7 @@ class BridgesV1 extends BaseV1
 					);
 				}
 
-				$category = ToolsUtilities\Value::toString($categoryProperty->getValue(), true);
+				$category = ValuesUtilities\Value::toString($categoryProperty->getValue(), true);
 
 				$device = $this->bridgeBuilder->build(
 					$device->getParent(),
@@ -279,7 +279,7 @@ class BridgesV1 extends BaseV1
 				$this->logger->error(
 					'An unhandled error occurred',
 					[
-						'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 						'type' => 'bridges-controller',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -375,7 +375,7 @@ class BridgesV1 extends BaseV1
 					);
 				}
 
-				$category = ToolsUtilities\Value::toString($categoryProperty->getValue(), true);
+				$category = ValuesUtilities\Value::toString($categoryProperty->getValue(), true);
 
 				$device = $this->bridgeBuilder->build(
 					$device->getParent(),
@@ -425,7 +425,7 @@ class BridgesV1 extends BaseV1
 				$this->logger->error(
 					'An unhandled error occurred',
 					[
-						'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 						'type' => 'bridges-controller',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -507,7 +507,7 @@ class BridgesV1 extends BaseV1
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
+					'source' => Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'bridges-controller',
 					'exception' => Logging\Logger::buildException($ex),
 				],

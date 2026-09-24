@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Messaging\Exchange\Publisher\Async;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use React\Promise;
 
 /**
@@ -16,7 +16,7 @@ interface Publisher
 	 * @return Promise\PromiseInterface<bool>
 	 */
 	public function publish(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $entity,
 	): Promise\PromiseInterface;

@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Formats;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Formats\Tools as Formats;
+use FastyBird\Core\Values\Formats;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 use ValueError;

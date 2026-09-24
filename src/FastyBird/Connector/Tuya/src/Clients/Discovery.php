@@ -22,11 +22,12 @@ use FastyBird\Connector\Tuya\Exceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Services;
-use FastyBird\Connector\Tuya\Types;
+use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Connector\Tuya\ValueObjects;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
@@ -78,8 +79,8 @@ final class Discovery
 	private const UDP_BIND_IP = '0.0.0.0';
 
 	private const UDP_PORT = [
-		Types\DeviceProtocolVersion::V31->value => 6_666,
-		Types\DeviceProtocolVersion::V32_PLUS->value => 6_667,
+		TuyaTypes\DeviceProtocolVersion::V31->value => 6_666,
+		TuyaTypes\DeviceProtocolVersion::V32_PLUS->value => 6_667,
 	];
 
 	private const UDP_TIMEOUT = 5;
@@ -130,10 +131,10 @@ final class Discovery
 	{
 		$mode = $this->connectorHelper->getClientMode($this->connector);
 
-		if ($mode === Types\ClientMode::CLOUD) {
+		if ($mode === TuyaTypes\ClientMode::CLOUD) {
 			$this->discoverCloudDevices();
 
-		} elseif ($mode === Types\ClientMode::LOCAL) {
+		} elseif ($mode === TuyaTypes\ClientMode::LOCAL) {
 			$this->discoverLocalDevices();
 		}
 	}
@@ -162,8 +163,8 @@ final class Discovery
 		$promises = [];
 
 		$knownProtocolsVersions = [
-			Types\DeviceProtocolVersion::V31,
-			Types\DeviceProtocolVersion::V32_PLUS,
+			TuyaTypes\DeviceProtocolVersion::V31,
+			TuyaTypes\DeviceProtocolVersion::V32_PLUS,
 		];
 
 		// Process all known protocols
@@ -171,7 +172,7 @@ final class Discovery
 			$this->logger->debug(
 				'Starting local devices discovery',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'discovery-client',
 					'protocol' => $protocolVersion->value,
 				],
@@ -195,7 +196,7 @@ final class Discovery
 							$this->logger->error(
 								'Received invalid packet. Received data could not be decrypted',
 								[
-									'source' => MetadataTypes\Sources\Connector::TUYA->value,
+									'source' => Sources\Connector::TUYA->value,
 									'type' => 'discovery-client',
 								],
 							);
@@ -210,7 +211,7 @@ final class Discovery
 								$this->logger->error(
 									'Decoded discovered local message has invalid format',
 									[
-										'source' => MetadataTypes\Sources\Connector::TUYA->value,
+										'source' => Sources\Connector::TUYA->value,
 										'type' => 'discovery-client',
 									],
 								);
@@ -230,7 +231,7 @@ final class Discovery
 								$this->logger->error(
 									'Decoded discovered local message has invalid format',
 									[
-										'source' => MetadataTypes\Sources\Connector::TUYA->value,
+										'source' => Sources\Connector::TUYA->value,
 										'type' => 'discovery-client',
 									],
 								);
@@ -252,7 +253,7 @@ final class Discovery
 							$this->logger->error(
 								'Received data could not be transformed to message',
 								[
-									'source' => MetadataTypes\Sources\Connector::TUYA->value,
+									'source' => Sources\Connector::TUYA->value,
 									'type' => 'discovery-client',
 									'exception' => Logging\Logger::buildException($ex),
 								],
@@ -280,7 +281,7 @@ final class Discovery
 					$this->logger->error(
 						'Could not create local discovery server',
 						[
-							'source' => MetadataTypes\Sources\Connector::TUYA->value,
+							'source' => Sources\Connector::TUYA->value,
 							'type' => 'discovery-client',
 							'exception' => Logging\Logger::buildException($ex),
 							'protocol' => $protocolVersion->value,
@@ -307,7 +308,7 @@ final class Discovery
 						$this->logger->error(
 							'Discovered local device could not be assigned to system',
 							[
-								'source' => MetadataTypes\Sources\Connector::TUYA->value,
+								'source' => Sources\Connector::TUYA->value,
 								'type' => 'discovery-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'device' => [
@@ -321,7 +322,7 @@ final class Discovery
 
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::TUYA,
+						Sources\Connector::TUYA,
 						'Devices discovery finished',
 					),
 				);
@@ -329,7 +330,7 @@ final class Discovery
 			->catch(function (): void {
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::TUYA,
+						Sources\Connector::TUYA,
 						'Devices discovery failed',
 					),
 				);
@@ -358,7 +359,7 @@ final class Discovery
 		$this->logger->debug(
 			'Starting cloud devices discovery',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'discovery-client',
 			],
 		);
@@ -383,7 +384,7 @@ final class Discovery
 					$this->logger->error(
 						'Could not load devices from Tuya cloud',
 						[
-							'source' => MetadataTypes\Sources\Connector::TUYA->value,
+							'source' => Sources\Connector::TUYA->value,
 							'type' => 'discovery-client',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -391,7 +392,7 @@ final class Discovery
 
 					$this->dispatcher?->dispatch(
 						new DevicesEvents\TerminateConnector(
-							MetadataTypes\Sources\Connector::TUYA,
+							Sources\Connector::TUYA,
 							'Devices discovery failed',
 						),
 					);
@@ -412,7 +413,7 @@ final class Discovery
 					$this->logger->error(
 						'Could not load device factory infos from Tuya cloud',
 						[
-							'source' => MetadataTypes\Sources\Connector::TUYA->value,
+							'source' => Sources\Connector::TUYA->value,
 							'type' => 'discovery-client',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -420,7 +421,7 @@ final class Discovery
 
 					$this->dispatcher?->dispatch(
 						new DevicesEvents\TerminateConnector(
-							MetadataTypes\Sources\Connector::TUYA,
+							Sources\Connector::TUYA,
 							'Devices discovery failed',
 						),
 					);
@@ -435,7 +436,7 @@ final class Discovery
 						$this->logger->error(
 							'Discovered cloud device could not be assigned to system',
 							[
-								'source' => MetadataTypes\Sources\Connector::TUYA->value,
+								'source' => Sources\Connector::TUYA->value,
 								'type' => 'discovery-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'device' => [
@@ -449,7 +450,7 @@ final class Discovery
 
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::TUYA,
+						Sources\Connector::TUYA,
 						'Devices discovery finished',
 					),
 				);
@@ -460,7 +461,7 @@ final class Discovery
 				$this->logger->error(
 					'Could not connect to cloud api',
 					[
-						'source' => MetadataTypes\Sources\Connector::TUYA->value,
+						'source' => Sources\Connector::TUYA->value,
 						'type' => 'discovery-client',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -468,7 +469,7 @@ final class Discovery
 
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::TUYA,
+						Sources\Connector::TUYA,
 						'Devices discovery failed',
 					),
 				);
@@ -538,7 +539,7 @@ final class Discovery
 					$deviceInformation->getId(),
 					$deviceInformation->getLocalKey(),
 					$ipAddress,
-					Types\DeviceProtocolVersion::from($version),
+					TuyaTypes\DeviceProtocolVersion::from($version),
 				);
 
 				try {
@@ -613,7 +614,7 @@ final class Discovery
 							$this->logger->error(
 								'Could not load child device basic information from Tuya cloud',
 								[
-									'source' => MetadataTypes\Sources\Connector::TUYA->value,
+									'source' => Sources\Connector::TUYA->value,
 									'type' => 'discovery-client',
 									'exception' => Logging\Logger::buildException($ex),
 									'device' => [
@@ -630,7 +631,7 @@ final class Discovery
 							$child->getId(),
 							$deviceInformation->getLocalKey(),
 							$ipAddress,
-							Types\DeviceProtocolVersion::from($version),
+							TuyaTypes\DeviceProtocolVersion::from($version),
 							$id,
 							$child->getNodeId(),
 						);
@@ -678,7 +679,7 @@ final class Discovery
 							$this->logger->error(
 								'Could not create child device description message',
 								[
-									'source' => MetadataTypes\Sources\Connector::TUYA->value,
+									'source' => Sources\Connector::TUYA->value,
 									'type' => 'discovery-client',
 									'exception' => Logging\Logger::buildException($ex),
 								],
@@ -767,7 +768,7 @@ final class Discovery
 						}
 
 						$dataPointCode = null;
-						$dataPointDataType = MetadataTypes\DataType::UNKNOWN;
+						$dataPointDataType = ValuesTypes\DataType::UNKNOWN;
 
 						if ($dataPointFunction !== null) {
 							$dataPointCode = $dataPointFunction->getCode();
@@ -781,11 +782,11 @@ final class Discovery
 						}
 
 						if ($dataPointType === 'boolean') {
-							$dataPointDataType = MetadataTypes\DataType::BOOLEAN;
+							$dataPointDataType = ValuesTypes\DataType::BOOLEAN;
 						} elseif ($dataPointType === 'integer') {
-							$dataPointDataType = MetadataTypes\DataType::INT;
+							$dataPointDataType = ValuesTypes\DataType::INT;
 						} elseif ($dataPointType === 'enum') {
-							$dataPointDataType = MetadataTypes\DataType::ENUM;
+							$dataPointDataType = ValuesTypes\DataType::ENUM;
 						}
 
 						try {
@@ -880,7 +881,7 @@ final class Discovery
 		string $id,
 		string $localKey,
 		string $ipAddress,
-		Types\DeviceProtocolVersion $version,
+		TuyaTypes\DeviceProtocolVersion $version,
 		string|null $gatewayId = null,
 		string|null $nodeId = null,
 	): array
@@ -902,7 +903,7 @@ final class Discovery
 			$this->logger->error(
 				'Could not establish local connection with device',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'discovery-client',
 					'exception' => Logging\Logger::buildException($ex),
 					'device' => [
@@ -919,23 +920,23 @@ final class Discovery
 
 		try {
 			if ($localApi->isConnected()) {
-				/** @var array<API\Messages\Response\DeviceDataPointState>|Types\LocalDeviceError $deviceStatuses */
+				/** @var array<API\Messages\Response\DeviceDataPointState>|TuyaTypes\LocalDeviceError $deviceStatuses */
 				$deviceStatuses = await($localApi->readStates());
 
 				$localApi->disconnect();
 
 				if (is_array($deviceStatuses)) {
 					foreach ($deviceStatuses as $status) {
-						$dataType = MetadataTypes\DataType::UNKNOWN;
+						$dataType = ValuesTypes\DataType::UNKNOWN;
 
 						if (is_bool($status->getValue())) {
-							$dataType = MetadataTypes\DataType::BOOLEAN;
+							$dataType = ValuesTypes\DataType::BOOLEAN;
 						} elseif (is_float($status->getValue())) {
-							$dataType = MetadataTypes\DataType::FLOAT;
+							$dataType = ValuesTypes\DataType::FLOAT;
 						} elseif (is_numeric($status->getValue())) {
-							$dataType = MetadataTypes\DataType::INT;
+							$dataType = ValuesTypes\DataType::INT;
 						} elseif (is_string($status->getValue())) {
-							$dataType = MetadataTypes\DataType::STRING;
+							$dataType = ValuesTypes\DataType::STRING;
 						}
 
 						$dataPoints[] = [
@@ -958,7 +959,7 @@ final class Discovery
 				$this->logger->error(
 					'Local connection with device failed',
 					[
-						'source' => MetadataTypes\Sources\Connector::TUYA->value,
+						'source' => Sources\Connector::TUYA->value,
 						'type' => 'discovery-client',
 						'device' => [
 							'identifier' => $id,
@@ -973,7 +974,7 @@ final class Discovery
 			$this->logger->error(
 				'Could not read device data points states',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'discovery-client',
 					'exception' => Logging\Logger::buildException($ex),
 					'device' => [

@@ -23,7 +23,7 @@ use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Connector\Virtual\Writers;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -97,7 +97,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Starting Virtual connector service',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+				'source' => Sources\Connector::VIRTUAL->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -134,7 +134,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Virtual connector service has been started',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+				'source' => Sources\Connector::VIRTUAL->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -172,7 +172,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Virtual connector has been terminated',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIRTUAL->value,
+				'source' => Sources\Connector::VIRTUAL->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),

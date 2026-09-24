@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\Sonoff\Queue\Messages\Parameters;
 
 use FastyBird\Connector\Sonoff\Queue;
-use FastyBird\Connector\Sonoff\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\Sonoff\Types as SonoffTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
 
 /**
@@ -41,10 +41,10 @@ final readonly class DiscoveredDeviceParameter implements Queue\Messages\Message
 		private string $identifier,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private string $name,
-		#[ObjectMapper\Rules\BackedEnumValue(class: Types\ParameterType::class)]
-		private Types\ParameterType $type,
-		#[ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\DataType::class)]
-		private MetadataTypes\DataType $dataType,
+		#[ObjectMapper\Rules\BackedEnumValue(class: SonoffTypes\ParameterType::class)]
+		private SonoffTypes\ParameterType $type,
+		#[ObjectMapper\Rules\BackedEnumValue(class: ValuesTypes\DataType::class)]
+		private ValuesTypes\DataType $dataType,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayOf(
 				new ObjectMapper\Rules\StringValue(),
@@ -97,12 +97,12 @@ final readonly class DiscoveredDeviceParameter implements Queue\Messages\Message
 		return $this->name;
 	}
 
-	public function getType(): Types\ParameterType
+	public function getType(): SonoffTypes\ParameterType
 	{
 		return $this->type;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		return $this->dataType;
 	}

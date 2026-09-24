@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Commands;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
@@ -669,8 +669,8 @@ final class Diagnostics extends Console\Command\Command
 					$propertyConnector->getName() ?? $propertyConnector->getIdentifier(),
 					$property->getName() ?? $property->getIdentifier(),
 					$property instanceof Documents\Connectors\Properties\Dynamic ? 'dynamic' : 'variable',
-					ToolsUtilities\Value::flattenValue($property->getDefault()),
-					ToolsUtilities\Value::flattenValue(
+					Utilities\Value::flattenValue($property->getDefault()),
+					Utilities\Value::flattenValue(
 						$state === false ? $property->getValue() : $state?->getGet()->getActualValue(),
 					),
 					$state !== false && $state !== null ? ($state->isValid() ? '<bg=green>Yes</>' : '<bg=red;fg=white>No</>') : 'N/A',
@@ -680,8 +680,8 @@ final class Diagnostics extends Console\Command\Command
 					$index + 1,
 					$property->getName() ?? $property->getIdentifier(),
 					$property instanceof Documents\Connectors\Properties\Dynamic ? 'dynamic' : 'variable',
-					ToolsUtilities\Value::flattenValue($property->getDefault()),
-					ToolsUtilities\Value::flattenValue(
+					Utilities\Value::flattenValue($property->getDefault()),
+					Utilities\Value::flattenValue(
 						$state === false ? $property->getValue() : $state?->getGet()->getActualValue(),
 					),
 					$state !== false && $state !== null ? ($state->isValid() ? '<bg=green>Yes</>' : '<bg=red;fg=white>No</>') : 'N/A',
@@ -840,8 +840,8 @@ final class Diagnostics extends Console\Command\Command
 					$property instanceof Documents\Devices\Properties\Dynamic
 						? 'dynamic'
 						: ($property instanceof Documents\Devices\Properties\Variable ? 'variable' : 'mapped'),
-					ToolsUtilities\Value::flattenValue($property->getDefault()),
-					ToolsUtilities\Value::flattenValue(
+					Utilities\Value::flattenValue($property->getDefault()),
+					Utilities\Value::flattenValue(
 						$state === false
 							? ($property instanceof Documents\Devices\Properties\Variable ? $property->getValue() : 'N/A')
 							: $state?->getGet()->getActualValue(),
@@ -855,8 +855,8 @@ final class Diagnostics extends Console\Command\Command
 					$property instanceof Documents\Devices\Properties\Dynamic
 						? 'dynamic'
 						: ($property instanceof Documents\Devices\Properties\Variable ? 'variable' : 'mapped'),
-					ToolsUtilities\Value::flattenValue($property->getDefault()),
-					ToolsUtilities\Value::flattenValue(
+					Utilities\Value::flattenValue($property->getDefault()),
+					Utilities\Value::flattenValue(
 						$state === false
 							? ($property instanceof Documents\Devices\Properties\Variable ? $property->getValue() : 'N/A')
 							: $state?->getGet()->getActualValue(),
@@ -1091,8 +1091,8 @@ final class Diagnostics extends Console\Command\Command
 					$property instanceof Documents\Channels\Properties\Dynamic
 						? 'dynamic'
 						: ($property instanceof Documents\Channels\Properties\Variable ? 'variable' : 'mapped'),
-					ToolsUtilities\Value::flattenValue($property->getDefault()),
-					ToolsUtilities\Value::flattenValue(
+					Utilities\Value::flattenValue($property->getDefault()),
+					Utilities\Value::flattenValue(
 						$state === false
 							? ($property instanceof Documents\Channels\Properties\Variable ? $property->getValue() : 'N/A')
 							: $state?->getGet()->getActualValue(),
@@ -1106,8 +1106,8 @@ final class Diagnostics extends Console\Command\Command
 					$property instanceof Documents\Channels\Properties\Dynamic
 						? 'dynamic'
 						: ($property instanceof Documents\Channels\Properties\Variable ? 'variable' : 'mapped'),
-					ToolsUtilities\Value::flattenValue($property->getDefault()),
-					ToolsUtilities\Value::flattenValue(
+					Utilities\Value::flattenValue($property->getDefault()),
+					Utilities\Value::flattenValue(
 						$state === false
 							? ($property instanceof Documents\Channels\Properties\Variable ? $property->getValue() : 'N/A')
 							: $state?->getGet()->getActualValue(),

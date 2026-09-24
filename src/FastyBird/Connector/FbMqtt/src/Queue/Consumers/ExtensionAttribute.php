@@ -24,7 +24,7 @@ use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
 use Nette\Utils;
@@ -75,7 +75,7 @@ final class ExtensionAttribute implements Queue\Consumer
 			$this->logger->warning(
 				sprintf('Device "%s" is not registered', $message->getDevice()),
 				[
-					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+					'source' => Sources\Connector::FB_MQTT->value,
 					'type' => 'extension-attribute-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -150,7 +150,7 @@ final class ExtensionAttribute implements Queue\Consumer
 			$this->logger->warning(
 				sprintf('Device property "%s" is not registered', $message->getParameter()),
 				[
-					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+					'source' => Sources\Connector::FB_MQTT->value,
 					'type' => 'extension-attribute-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -178,7 +178,7 @@ final class ExtensionAttribute implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed extension property message',
 			[
-				'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+				'source' => Sources\Connector::FB_MQTT->value,
 				'type' => 'extension-attribute-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

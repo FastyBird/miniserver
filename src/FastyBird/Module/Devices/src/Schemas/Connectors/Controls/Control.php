@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Schemas\Connectors\Controls;
 use DateTimeInterface;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
@@ -41,7 +41,7 @@ final class Control extends JsonApiSchemas\JsonApi
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::DEVICES->value . '/control/connector';
+	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/control/connector';
 
 	/**
 	 * Define relationships names

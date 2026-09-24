@@ -24,13 +24,14 @@ use FastyBird\Connector\Viera\Entities;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
-use FastyBird\Connector\Viera\Types;
+use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -240,7 +241,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -355,7 +356,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -442,7 +443,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -556,7 +557,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Creating api client failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -575,7 +576,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Checking TV status failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -607,7 +608,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Loading TV specification failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -624,7 +625,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Loading TV specification failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
@@ -655,7 +656,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Checking screen status failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -711,7 +712,7 @@ class Install extends Console\Command\Command
 				$this->logger->error(
 					'Pin code pairing failed',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'install-cmd',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -733,7 +734,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Loading apps failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -813,63 +814,63 @@ class Install extends Console\Command\Command
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$ipAddress,
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::IP_ADDRESS,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::IP_ADDRESS->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::IP_ADDRESS,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::IP_ADDRESS->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				Entities\Devices\Device::DEFAULT_PORT,
-				MetadataTypes\DataType::UINT,
-				Types\DevicePropertyIdentifier::PORT,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::PORT->value),
+				ValuesTypes\DataType::UINT,
+				VieraTypes\DevicePropertyIdentifier::PORT,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::PORT->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				trim(sprintf('%s %s', $specs->getModelName(), $specs->getModelNumber())),
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::MODEL,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MODEL->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::MODEL,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MODEL->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$specs->getManufacturer(),
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::MANUFACTURER,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MANUFACTURER->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::MANUFACTURER,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MANUFACTURER->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$specs->getSerialNumber(),
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::SERIAL_NUMBER,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::SERIAL_NUMBER->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::SERIAL_NUMBER,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$macAddress,
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::MAC_ADDRESS,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MAC_ADDRESS->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::MAC_ADDRESS,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MAC_ADDRESS->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$specs->isRequiresEncryption(),
-				MetadataTypes\DataType::BOOLEAN,
-				Types\DevicePropertyIdentifier::ENCRYPTED,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ENCRYPTED->value),
+				ValuesTypes\DataType::BOOLEAN,
+				VieraTypes\DevicePropertyIdentifier::ENCRYPTED,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::ENCRYPTED->value),
 			);
 
 			if ($authorization !== null) {
@@ -877,34 +878,34 @@ class Install extends Console\Command\Command
 					DevicesEntities\Devices\Properties\Variable::class,
 					$device->getId(),
 					$authorization->getAppId(),
-					MetadataTypes\DataType::STRING,
-					Types\DevicePropertyIdentifier::APP_ID,
-					DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::APP_ID->value),
+					ValuesTypes\DataType::STRING,
+					VieraTypes\DevicePropertyIdentifier::APP_ID,
+					DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::APP_ID->value),
 				);
 
 				$this->deviceProperty->create(
 					DevicesEntities\Devices\Properties\Variable::class,
 					$device->getId(),
 					$authorization->getEncryptionKey(),
-					MetadataTypes\DataType::STRING,
-					Types\DevicePropertyIdentifier::ENCRYPTION_KEY,
-					DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
+					ValuesTypes\DataType::STRING,
+					VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY,
+					DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
 				);
 			}
 
 			$channel = $this->channelsManager->create(Utils\ArrayHash::from([
 				'entity' => Entities\Channels\Channel::class,
 				'device' => $device,
-				'identifier' => Types\ChannelType::TELEVISION->value,
+				'identifier' => VieraTypes\ChannelType::TELEVISION->value,
 			]));
 
 			$this->channelProperty->create(
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::BOOLEAN,
-				Types\ChannelPropertyIdentifier::STATE,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::STATE->value),
+				ValuesTypes\DataType::BOOLEAN,
+				VieraTypes\ChannelPropertyIdentifier::STATE,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::STATE->value),
 				null,
 				true,
 				true,
@@ -914,9 +915,9 @@ class Install extends Console\Command\Command
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::UCHAR,
-				Types\ChannelPropertyIdentifier::VOLUME,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::VOLUME->value),
+				ValuesTypes\DataType::UCHAR,
+				VieraTypes\ChannelPropertyIdentifier::VOLUME,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::VOLUME->value),
 				[
 					0,
 					100,
@@ -929,9 +930,9 @@ class Install extends Console\Command\Command
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::BOOLEAN,
-				Types\ChannelPropertyIdentifier::MUTE,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::MUTE->value),
+				ValuesTypes\DataType::BOOLEAN,
+				VieraTypes\ChannelPropertyIdentifier::MUTE,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::MUTE->value),
 				null,
 				true,
 				true,
@@ -941,9 +942,9 @@ class Install extends Console\Command\Command
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::STRING,
-				Types\ChannelPropertyIdentifier::REMOTE,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::REMOTE->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\ChannelPropertyIdentifier::REMOTE,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::REMOTE->value),
 				null,
 				true,
 			);
@@ -952,9 +953,9 @@ class Install extends Console\Command\Command
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::ENUM,
-				Types\ChannelPropertyIdentifier::HDMI,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::HDMI->value),
+				ValuesTypes\DataType::ENUM,
+				VieraTypes\ChannelPropertyIdentifier::HDMI,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::HDMI->value),
 				$hdmi !== [] ? $hdmi : null,
 				true,
 			);
@@ -963,9 +964,9 @@ class Install extends Console\Command\Command
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::ENUM,
-				Types\ChannelPropertyIdentifier::APPLICATION,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::APPLICATION->value),
+				ValuesTypes\DataType::ENUM,
+				VieraTypes\ChannelPropertyIdentifier::APPLICATION,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::APPLICATION->value),
 				$apps !== null ? array_map(
 					static fn (API\Messages\Response\Application $item): array => [
 						Helpers\Name::sanitizeEnumName($item->getName()),
@@ -981,9 +982,9 @@ class Install extends Console\Command\Command
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::ENUM,
-				Types\ChannelPropertyIdentifier::INPUT_SOURCE,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::INPUT_SOURCE->value),
+				ValuesTypes\DataType::ENUM,
+				VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value),
 				array_merge(
 					[
 						[
@@ -1019,7 +1020,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1068,7 +1069,7 @@ class Install extends Console\Command\Command
 
 		$findChannel = new Queries\Entities\FindChannels();
 		$findChannel->forDevice($device);
-		$findChannel->byIdentifier(Types\ChannelType::TELEVISION);
+		$findChannel->byIdentifier(VieraTypes\ChannelType::TELEVISION);
 
 		$channel = $this->channelsRepository->findOneBy($findChannel, Entities\Channels\Channel::class);
 
@@ -1078,7 +1079,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::IP_ADDRESS);
+		$findDevicePropertyQuery->byIdentifier(VieraTypes\DevicePropertyIdentifier::IP_ADDRESS);
 
 		$ipAddressProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -1102,7 +1103,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::PORT);
+		$findDevicePropertyQuery->byIdentifier(VieraTypes\DevicePropertyIdentifier::PORT);
 
 		$portProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -1129,7 +1130,7 @@ class Install extends Console\Command\Command
 		if ($channel !== null) {
 			$findChannelPropertyQuery = new Queries\Entities\FindChannelProperties();
 			$findChannelPropertyQuery->forChannel($channel);
-			$findChannelPropertyQuery->byIdentifier(Types\ChannelPropertyIdentifier::HDMI);
+			$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::HDMI);
 
 			$hdmiProperty = $this->channelsPropertiesRepository->findOneBy($findChannelPropertyQuery);
 		}
@@ -1175,19 +1176,19 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::APP_ID);
+		$findDevicePropertyQuery->byIdentifier(VieraTypes\DevicePropertyIdentifier::APP_ID);
 
 		$appIdProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::ENCRYPTION_KEY);
+		$findDevicePropertyQuery->byIdentifier(VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY);
 
 		$encryptionKeyProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::MAC_ADDRESS);
+		$findDevicePropertyQuery->byIdentifier(VieraTypes\DevicePropertyIdentifier::MAC_ADDRESS);
 
 		$macAddressProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -1231,7 +1232,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Creating api client failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1250,7 +1251,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Checking TV status failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1282,7 +1283,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Loading TV specification failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1299,7 +1300,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Loading TV specification failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
@@ -1328,7 +1329,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Checking screen status failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1391,7 +1392,7 @@ class Install extends Console\Command\Command
 					$this->logger->error(
 						'Pin code pairing failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'install-cmd',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -1414,7 +1415,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'Loading apps failed',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1436,18 +1437,18 @@ class Install extends Console\Command\Command
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$ipAddress,
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::IP_ADDRESS,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::IP_ADDRESS->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::IP_ADDRESS,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::IP_ADDRESS->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$port,
-				MetadataTypes\DataType::UINT,
-				Types\DevicePropertyIdentifier::PORT,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::PORT->value),
+				ValuesTypes\DataType::UINT,
+				VieraTypes\DevicePropertyIdentifier::PORT,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::PORT->value),
 			);
 
 			if ($authorization !== null && $authorization !== false) {
@@ -1455,18 +1456,18 @@ class Install extends Console\Command\Command
 					DevicesEntities\Devices\Properties\Variable::class,
 					$device->getId(),
 					$authorization->getAppId(),
-					MetadataTypes\DataType::STRING,
-					Types\DevicePropertyIdentifier::APP_ID,
-					DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::APP_ID->value),
+					ValuesTypes\DataType::STRING,
+					VieraTypes\DevicePropertyIdentifier::APP_ID,
+					DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::APP_ID->value),
 				);
 
 				$this->deviceProperty->create(
 					DevicesEntities\Devices\Properties\Variable::class,
 					$device->getId(),
 					$authorization->getEncryptionKey(),
-					MetadataTypes\DataType::STRING,
-					Types\DevicePropertyIdentifier::ENCRYPTION_KEY,
-					DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
+					ValuesTypes\DataType::STRING,
+					VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY,
+					DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
 				);
 			}
 
@@ -1482,34 +1483,34 @@ class Install extends Console\Command\Command
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				trim(sprintf('%s %s', $specs->getModelName(), $specs->getModelNumber())),
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::MODEL,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MODEL->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::MODEL,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MODEL->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$specs->getManufacturer(),
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::MANUFACTURER,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MANUFACTURER->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::MANUFACTURER,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MANUFACTURER->value),
 			);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
 				$macAddress,
-				MetadataTypes\DataType::STRING,
-				Types\DevicePropertyIdentifier::MAC_ADDRESS,
-				DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MAC_ADDRESS->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\DevicePropertyIdentifier::MAC_ADDRESS,
+				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MAC_ADDRESS->value),
 			);
 
 			if ($channel === null) {
 				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
 					'entity' => Entities\Channels\Channel::class,
 					'device' => $device,
-					'identifier' => Types\ChannelType::TELEVISION,
+					'identifier' => VieraTypes\ChannelType::TELEVISION,
 				]));
 			}
 
@@ -1518,9 +1519,9 @@ class Install extends Console\Command\Command
 					DevicesEntities\Channels\Properties\Dynamic::class,
 					$channel->getId(),
 					null,
-					MetadataTypes\DataType::ENUM,
-					Types\ChannelPropertyIdentifier::HDMI,
-					DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::HDMI->value),
+					ValuesTypes\DataType::ENUM,
+					VieraTypes\ChannelPropertyIdentifier::HDMI,
+					DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::HDMI->value),
 					array_map(static fn (string $name, int $index): array => [
 						Helpers\Name::sanitizeEnumName($name),
 						$index,
@@ -1535,9 +1536,9 @@ class Install extends Console\Command\Command
 					DevicesEntities\Channels\Properties\Dynamic::class,
 					$channel->getId(),
 					null,
-					MetadataTypes\DataType::ENUM,
-					Types\ChannelPropertyIdentifier::APPLICATION,
-					DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::APPLICATION->value),
+					ValuesTypes\DataType::ENUM,
+					VieraTypes\ChannelPropertyIdentifier::APPLICATION,
+					DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::APPLICATION->value),
 					$apps->getApps() !== [] ? array_map(
 						static fn (API\Messages\Response\Application $application): array => [
 							Helpers\Name::sanitizeEnumName($application->getName()),
@@ -1564,7 +1565,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1632,7 +1633,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -2448,7 +2449,7 @@ class Install extends Console\Command\Command
 					$this->logger->error(
 						'Creating api client failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'install-cmd',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -2470,7 +2471,7 @@ class Install extends Console\Command\Command
 					$this->logger->error(
 						'Checking screen status failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'install-cmd',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -2524,7 +2525,7 @@ class Install extends Console\Command\Command
 					$this->logger->error(
 						'Pin code pairing failed',
 						[
-							'source' => MetadataTypes\Sources\Connector::VIERA->value,
+							'source' => Sources\Connector::VIERA->value,
 							'type' => 'install-cmd',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -2537,18 +2538,18 @@ class Install extends Console\Command\Command
 					DevicesEntities\Devices\Properties\Variable::class,
 					$device->getId(),
 					$authorization->getAppId(),
-					MetadataTypes\DataType::STRING,
-					Types\DevicePropertyIdentifier::APP_ID,
-					DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::APP_ID->value),
+					ValuesTypes\DataType::STRING,
+					VieraTypes\DevicePropertyIdentifier::APP_ID,
+					DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::APP_ID->value),
 				);
 
 				$this->deviceProperty->create(
 					DevicesEntities\Devices\Properties\Variable::class,
 					$device->getId(),
 					$authorization->getEncryptionKey(),
-					MetadataTypes\DataType::STRING,
-					Types\DevicePropertyIdentifier::ENCRYPTION_KEY,
-					DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
+					ValuesTypes\DataType::STRING,
+					VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY,
+					DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
 				);
 
 				$io->success(

@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Messaging\Exchange\Consumers;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 
 /**
  * Exchange consumer interface
@@ -12,7 +12,7 @@ interface Consumer
 {
 
 	public function consume(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $document,
 	): void;

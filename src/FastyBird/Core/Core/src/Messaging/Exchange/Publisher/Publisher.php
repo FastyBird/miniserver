@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Messaging\Exchange\Publisher;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 
 /**
  * Exchange publisher interface
@@ -12,7 +12,7 @@ interface Publisher
 {
 
 	public function publish(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $entity,
 	): bool;

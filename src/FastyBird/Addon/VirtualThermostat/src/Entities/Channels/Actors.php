@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
 use function assert;
@@ -46,9 +46,9 @@ class Actors extends VirtualEntities\Channels\Channel
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Addon
+	public function getSource(): Sources\Addon
 	{
-		return MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT;
+		return Sources\Addon::VIRTUAL_THERMOSTAT;
 	}
 
 	public function getDevice(): Entities\Devices\Device

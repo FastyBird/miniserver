@@ -20,12 +20,12 @@ use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -64,10 +64,10 @@ abstract class Property extends Documents\Property
 		Uuid\UuidInterface $id,
 		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $channel,
-		Types\PropertyCategory $category,
+		DevicesTypes\PropertyCategory $category,
 		string $identifier,
 		string|null $name,
-		MetadataTypes\DataType $dataType,
+		ValuesTypes\DataType $dataType,
 		string|null $unit = null,
 		string|array|null $format = null,
 		float|int|string|null $invalid = null,

@@ -21,8 +21,8 @@ use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Nette;
 use Ramsey\Uuid;
@@ -71,9 +71,9 @@ class Characteristic
 			'00000073-0000-1000-8000-0026BB765291', // PROGRAMMABLE SWITCH
 		];
 
-	private bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $actualValue = null;
+	private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue = null;
 
-	private bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $expectedValue = null;
+	private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = null;
 
 	private DateTimeInterface|bool $pending = false;
 
@@ -172,18 +172,18 @@ class Characteristic
 		return $this->property;
 	}
 
-	public function getValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->expectedValue ?? $this->actualValue;
 	}
 
-	public function getActualValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getActualValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->actualValue;
 	}
 
 	public function setActualValue(
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value,
 	): void
 	{
 		if ($value !== null) {
@@ -217,13 +217,13 @@ class Characteristic
 		}
 	}
 
-	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->expectedValue;
 	}
 
 	public function setExpectedValue(
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value,
 	): void
 	{
 		if ($value !== null) {
@@ -423,7 +423,7 @@ class Characteristic
 		return sprintf(
 			'<characteristic name=%s value=%s properties=%s>',
 			$this->name,
-			ToolsUtilities\Value::flattenValue($this->isValid() ? $this->getValue() : $this->getDefault()),
+			Utilities\Value::flattenValue($this->isValid() ? $this->getValue() : $this->getDefault()),
 			Nette\Utils\Json::encode($properties),
 		);
 	}

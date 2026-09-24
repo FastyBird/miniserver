@@ -22,8 +22,8 @@ use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -155,7 +155,7 @@ final class Channel
 	public function getConfiguration(
 		Documents\Channels\Channel $channel,
 		Types\ChannelPropertyIdentifier $type,
-	): float|bool|int|string|MetadataTypes\Payloads\Payload|DateTimeInterface|null
+	): float|bool|int|string|Payloads\Payload|DateTimeInterface|null
 	{
 		$findChannelPropertyQuery = new Queries\Configuration\FindChannelVariableProperties();
 		$findChannelPropertyQuery->forChannel($channel);
@@ -173,9 +173,9 @@ final class Channel
 
 			if ($type === Types\ChannelPropertyIdentifier::TYPE) {
 				if (Types\ChannelType::tryFrom(
-					ToolsUtilities\Value::toString($configuration->getValue(), true),
+					Utilities\Value::toString($configuration->getValue(), true),
 				) !== null) {
-					return ToolsUtilities\Value::flattenValue($configuration->getValue());
+					return Utilities\Value::flattenValue($configuration->getValue());
 				}
 
 				return null;

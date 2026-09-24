@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Events;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Symfony\Contracts\EventDispatcher;
 use Throwable;
 
@@ -31,14 +31,14 @@ class RestartConnector extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private readonly MetadataTypes\Sources\Source $source,
+		private readonly Sources\Source $source,
 		private readonly string|null $reason = null,
 		private readonly Throwable|null $exception = null,
 	)
 	{
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
 		return $this->source;
 	}

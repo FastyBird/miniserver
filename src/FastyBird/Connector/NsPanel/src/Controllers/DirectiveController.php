@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Controllers;
 
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Router;
@@ -24,10 +24,10 @@ use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette\Utils;
 use Psr\Http\Message;
@@ -56,7 +56,7 @@ final class DirectiveController extends BaseController
 		private readonly Queue\Queue $queue,
 		private readonly Protocol\Driver $devicesDriver,
 		private readonly NsPanel\Helpers\MessageBuilder $messageBuilder,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 	)
 	{
 	}
@@ -65,7 +65,7 @@ final class DirectiveController extends BaseController
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\ServerRequestError
+	 * @throws NsPanelExceptions\ServerRequestError
 	 * @throws ExchangeExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Uuid\Exception\InvalidArgumentException
@@ -78,7 +78,7 @@ final class DirectiveController extends BaseController
 		$this->logger->debug(
 			'Requested updating of characteristics of selected accessories',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'directive-controller',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -94,7 +94,7 @@ final class DirectiveController extends BaseController
 		$connectorId = is_scalar($connectorId) ? strval($connectorId) : null;
 
 		if ($connectorId === null || !Uuid\Uuid::isValid($connectorId)) {
-			throw new Exceptions\ServerRequestError(
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INTERNAL_ERROR,
 				'Connector id could not be determined',
@@ -111,7 +111,7 @@ final class DirectiveController extends BaseController
 		$gatewayId = is_scalar($gatewayId) ? strval($gatewayId) : null;
 
 		if ($gatewayId === null || !Uuid\Uuid::isValid($gatewayId)) {
-			throw new Exceptions\ServerRequestError(
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INTERNAL_ERROR,
 				'Gateway id could not be determined',
@@ -126,7 +126,7 @@ final class DirectiveController extends BaseController
 			$deviceId = is_scalar($deviceId) ? strval($deviceId) : null;
 
 			if ($deviceId === null || !Uuid\Uuid::isValid($deviceId)) {
-				throw new Exceptions\ServerRequestError(
+				throw new NsPanelExceptions\ServerRequestError(
 					$request,
 					Types\ServerStatus::ENDPOINT_UNREACHABLE,
 					'Device could could not be found',
@@ -136,7 +136,7 @@ final class DirectiveController extends BaseController
 			$protocolDevice = $this->devicesDriver->findDevice(Uuid\Uuid::fromString($deviceId));
 
 		} catch (Uuid\Exception\InvalidUuidStringException) {
-			throw new Exceptions\ServerRequestError(
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::ENDPOINT_UNREACHABLE,
 				'Device could could not be found',
@@ -148,7 +148,7 @@ final class DirectiveController extends BaseController
 			|| !$protocolDevice->getConnector()->equals($connectorId)
 			|| !$protocolDevice->getParent()->equals($gatewayId)
 		) {
-			throw new Exceptions\ServerRequestError(
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::ENDPOINT_UNREACHABLE,
 				'Device could could not be found',
@@ -160,16 +160,16 @@ final class DirectiveController extends BaseController
 				$body,
 				$this->getSchema(self::SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
-			throw new Exceptions\ServerRequestError(
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INVALID_DIRECTIVE,
 				'Could not validate received response payload',
 				$ex->getCode(),
 				$ex,
 			);
-		} catch (Exceptions\InvalidArgument $ex) {
-			throw new Exceptions\ServerRequestError(
+		} catch (NsPanelExceptions\InvalidArgument $ex) {
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INTERNAL_ERROR,
 				'Could not validate received response payload',
@@ -183,8 +183,8 @@ final class DirectiveController extends BaseController
 				NsPanel\API\Messages\Request\SetDeviceState::class,
 				(array) Utils\Json::decode(Utils\Json::encode($body), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\ServerRequestError(
+		} catch (NsPanelExceptions\Runtime $ex) {
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INVALID_DIRECTIVE,
 				'Could not map data to request message',
@@ -192,7 +192,7 @@ final class DirectiveController extends BaseController
 				$ex,
 			);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\ServerRequestError(
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INVALID_DIRECTIVE,
 				'Request data are not valid JSON data',
@@ -218,7 +218,7 @@ final class DirectiveController extends BaseController
 				$state[] = [
 					'capability' => $item->getType()->value,
 					'attribute' => $attribute,
-					'value' => ToolsUtilities\Value::flattenValue($value),
+					'value' => Utilities\Value::flattenValue($value),
 					'identifier' => $identifier,
 				];
 			}
@@ -251,8 +251,8 @@ final class DirectiveController extends BaseController
 			);
 
 			$response->getBody()->write(Utils\Json::encode($responseData->toJson()));
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\ServerRequestError(
+		} catch (NsPanelExceptions\Runtime $ex) {
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INTERNAL_ERROR,
 				'Could not map data to response message',
@@ -260,7 +260,7 @@ final class DirectiveController extends BaseController
 				$ex,
 			);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\ServerRequestError(
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INTERNAL_ERROR,
 				'Response data are not valid JSON data',
@@ -268,7 +268,7 @@ final class DirectiveController extends BaseController
 				$ex,
 			);
 		} catch (RuntimeException $ex) {
-			throw new Exceptions\ServerRequestError(
+			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INTERNAL_ERROR,
 				'Could not write data to response',

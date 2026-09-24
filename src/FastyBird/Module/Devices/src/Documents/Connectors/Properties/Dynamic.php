@@ -18,10 +18,10 @@ namespace FastyBird\Module\Devices\Documents\Connectors\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use TypeError;
@@ -46,10 +46,10 @@ final class Dynamic extends Property
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $connector,
-		Types\PropertyCategory $category,
+		DevicesTypes\PropertyCategory $category,
 		string $identifier,
 		string|null $name,
-		MetadataTypes\DataType $dataType,
+		ValuesTypes\DataType $dataType,
 		string|null $unit = null,
 		string|array|null $format = null,
 		float|int|string|null $invalid = null,

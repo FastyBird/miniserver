@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 use function array_filter;
 use function assert;
@@ -46,29 +46,29 @@ class SupportedDetectionModes extends Configuration
 	{
 		$value = array_filter(
 			explode(',', $value),
-			static fn ($item) => trim($item) !== '' && Types\Payloads\ThermostatDetectionMode::tryFrom($item) !== null,
+			static fn ($item) => trim($item) !== '' && NsPanelTypes\Payloads\ThermostatDetectionMode::tryFrom($item) !== null,
 		);
 
 		$allowedValues = [];
 
-		if ($capability->getName() === Types\ThermostatModeDetection::TEMPERATURE->value) {
+		if ($capability->getName() === NsPanelTypes\ThermostatModeDetection::TEMPERATURE->value) {
 			$allowedValues = [
-				Types\Payloads\ThermostatDetectionMode::COMFORT->value,
-				Types\Payloads\ThermostatDetectionMode::COLD->value,
-				Types\Payloads\ThermostatDetectionMode::HOT->value,
+				NsPanelTypes\Payloads\ThermostatDetectionMode::COMFORT->value,
+				NsPanelTypes\Payloads\ThermostatDetectionMode::COLD->value,
+				NsPanelTypes\Payloads\ThermostatDetectionMode::HOT->value,
 			];
-		} elseif ($capability->getName() === Types\ThermostatModeDetection::HUMIDITY->value) {
+		} elseif ($capability->getName() === NsPanelTypes\ThermostatModeDetection::HUMIDITY->value) {
 			$allowedValues = [
-				Types\Payloads\ThermostatDetectionMode::COMFORT->value,
-				Types\Payloads\ThermostatDetectionMode::DRY->value,
-				Types\Payloads\ThermostatDetectionMode::WET->value,
+				NsPanelTypes\Payloads\ThermostatDetectionMode::COMFORT->value,
+				NsPanelTypes\Payloads\ThermostatDetectionMode::DRY->value,
+				NsPanelTypes\Payloads\ThermostatDetectionMode::WET->value,
 			];
 		}
 
 		parent::__construct(
 			$id,
-			Types\Configuration::SUPPORTED_MODES,
-			MetadataTypes\DataType::STRING,
+			NsPanelTypes\Configuration::SUPPORTED_MODES,
+			ValuesTypes\DataType::STRING,
 			$capability,
 			implode(',', array_filter($value, static fn (string $item): bool => in_array($item, $allowedValues, true))),
 		);

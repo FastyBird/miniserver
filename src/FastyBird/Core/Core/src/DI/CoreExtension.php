@@ -57,7 +57,6 @@ use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Phone\Types;
 use FastyBird\Core\Routing;
 use FastyBird\Core\Schemas as JsonApiSchemas;
-use FastyBird\Core\Schemas as ToolsSchemas;
 use FastyBird\Core\Security as SimpleAuthSecurity;
 use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Server as WsServerServer;
@@ -72,6 +71,7 @@ use FastyBird\Core\Topics\WsServer\Drivers\InMemory;
 use FastyBird\Core\Topics\WsServer\Storage;
 use FastyBird\Core\UI;
 use FastyBird\Core\Utilities\Tools\DateTimeProvider;
+use FastyBird\Core\Values\Schemas as ValuesSchemas;
 use libphonenumber;
 use Monolog;
 use Nette;
@@ -657,7 +657,7 @@ final class CoreExtension extends DI\CompilerExtension
 			->setType(DateTimeProvider::class);
 
 		$builder->addDefinition($this->prefix('tools.schemas.validator'), new DI\Definitions\ServiceDefinition())
-			->setType(ToolsSchemas\Tools\Validator::class);
+			->setType(ValuesSchemas\Validator::class);
 
 		if (interface_exists('\Sentry\ClientInterface')) {
 			$builder->addDefinition($this->prefix('tools.helpers.sentry'), new DI\Definitions\ServiceDefinition())

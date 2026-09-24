@@ -22,10 +22,11 @@ use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Queue;
-use FastyBird\Connector\Viera\Types;
+use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
@@ -107,7 +108,7 @@ final class StoreDevice implements Queue\Consumer
 			$this->logger->debug(
 				'Device was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::VIERA->value,
+					'source' => Sources\Connector::VIERA->value,
 					'type' => 'store-device-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -126,78 +127,78 @@ final class StoreDevice implements Queue\Consumer
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->getIpAddress(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::IP_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::IP_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			VieraTypes\DevicePropertyIdentifier::IP_ADDRESS,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::IP_ADDRESS->value),
 		);
 		$this->deviceProperty->create(
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->getPort(),
-			MetadataTypes\DataType::UINT,
-			Types\DevicePropertyIdentifier::PORT,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::PORT->value),
+			ValuesTypes\DataType::UINT,
+			VieraTypes\DevicePropertyIdentifier::PORT,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::PORT->value),
 		);
 		$this->deviceProperty->create(
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->getModel(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MODEL,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MODEL->value),
+			ValuesTypes\DataType::STRING,
+			VieraTypes\DevicePropertyIdentifier::MODEL,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MODEL->value),
 		);
 		$this->deviceProperty->create(
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->getManufacturer(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MANUFACTURER,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MANUFACTURER->value),
+			ValuesTypes\DataType::STRING,
+			VieraTypes\DevicePropertyIdentifier::MANUFACTURER,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MANUFACTURER->value),
 		);
 		$this->deviceProperty->create(
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->getSerialNumber(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::SERIAL_NUMBER,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::SERIAL_NUMBER->value),
+			ValuesTypes\DataType::STRING,
+			VieraTypes\DevicePropertyIdentifier::SERIAL_NUMBER,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value),
 		);
 		$this->deviceProperty->create(
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->getMacAddress(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::MAC_ADDRESS,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MAC_ADDRESS->value),
+			ValuesTypes\DataType::STRING,
+			VieraTypes\DevicePropertyIdentifier::MAC_ADDRESS,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::MAC_ADDRESS->value),
 		);
 		$this->deviceProperty->create(
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->isEncrypted(),
-			MetadataTypes\DataType::BOOLEAN,
-			Types\DevicePropertyIdentifier::ENCRYPTED,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ENCRYPTED->value),
+			ValuesTypes\DataType::BOOLEAN,
+			VieraTypes\DevicePropertyIdentifier::ENCRYPTED,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::ENCRYPTED->value),
 		);
 		$this->deviceProperty->create(
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->getAppId(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::APP_ID,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::APP_ID->value),
+			ValuesTypes\DataType::STRING,
+			VieraTypes\DevicePropertyIdentifier::APP_ID,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::APP_ID->value),
 		);
 		$this->deviceProperty->create(
 			DevicesEntities\Devices\Properties\Variable::class,
 			$device->getId(),
 			$message->getEncryptionKey(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::ENCRYPTION_KEY,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
+			ValuesTypes\DataType::STRING,
+			VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY,
+			DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::ENCRYPTION_KEY->value),
 		);
 
 		$this->databaseHelper->transaction(function () use ($message, $device): bool {
 			$findChannelQuery = new Queries\Entities\FindChannels();
-			$findChannelQuery->byIdentifier(Types\ChannelType::TELEVISION);
+			$findChannelQuery->byIdentifier(VieraTypes\ChannelType::TELEVISION);
 			$findChannelQuery->forDevice($device);
 
 			$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
@@ -206,13 +207,13 @@ final class StoreDevice implements Queue\Consumer
 				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
 					'entity' => Entities\Channels\Channel::class,
 					'device' => $device,
-					'identifier' => Types\ChannelType::TELEVISION->value,
+					'identifier' => VieraTypes\ChannelType::TELEVISION->value,
 				]));
 
 				$this->logger->debug(
 					'Device channel was created',
 					[
-						'source' => MetadataTypes\Sources\Connector::VIERA->value,
+						'source' => Sources\Connector::VIERA->value,
 						'type' => 'store-device-message-consumer',
 						'connector' => [
 							'id' => $message->getConnector()->toString(),
@@ -232,9 +233,9 @@ final class StoreDevice implements Queue\Consumer
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::BOOLEAN,
-				Types\ChannelPropertyIdentifier::STATE,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::STATE->value),
+				ValuesTypes\DataType::BOOLEAN,
+				VieraTypes\ChannelPropertyIdentifier::STATE,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::STATE->value),
 				null,
 				true,
 				true,
@@ -244,9 +245,9 @@ final class StoreDevice implements Queue\Consumer
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::UCHAR,
-				Types\ChannelPropertyIdentifier::VOLUME,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::VOLUME->value),
+				ValuesTypes\DataType::UCHAR,
+				VieraTypes\ChannelPropertyIdentifier::VOLUME,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::VOLUME->value),
 				[
 					0,
 					100,
@@ -259,9 +260,9 @@ final class StoreDevice implements Queue\Consumer
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::BOOLEAN,
-				Types\ChannelPropertyIdentifier::MUTE,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::MUTE->value),
+				ValuesTypes\DataType::BOOLEAN,
+				VieraTypes\ChannelPropertyIdentifier::MUTE,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::MUTE->value),
 				null,
 				true,
 				true,
@@ -271,9 +272,9 @@ final class StoreDevice implements Queue\Consumer
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::STRING,
-				Types\ChannelPropertyIdentifier::REMOTE,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::REMOTE->value),
+				ValuesTypes\DataType::STRING,
+				VieraTypes\ChannelPropertyIdentifier::REMOTE,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::REMOTE->value),
 				null,
 				true,
 			);
@@ -282,9 +283,9 @@ final class StoreDevice implements Queue\Consumer
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::ENUM,
-				Types\ChannelPropertyIdentifier::HDMI,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::HDMI->value),
+				ValuesTypes\DataType::ENUM,
+				VieraTypes\ChannelPropertyIdentifier::HDMI,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::HDMI->value),
 				$message->getHdmi() !== [] ? array_map(
 					static fn (Queue\Messages\DeviceHdmi|Queue\Messages\DeviceApplication $item): array => [
 						Helpers\Name::sanitizeEnumName($item->getName()),
@@ -300,9 +301,9 @@ final class StoreDevice implements Queue\Consumer
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::ENUM,
-				Types\ChannelPropertyIdentifier::APPLICATION,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::APPLICATION->value),
+				ValuesTypes\DataType::ENUM,
+				VieraTypes\ChannelPropertyIdentifier::APPLICATION,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::APPLICATION->value),
 				$message->getApplications() !== [] ? array_map(
 					static fn (Queue\Messages\DeviceHdmi|Queue\Messages\DeviceApplication $item): array => [
 						Helpers\Name::sanitizeEnumName($item->getName()),
@@ -318,9 +319,9 @@ final class StoreDevice implements Queue\Consumer
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
 				null,
-				MetadataTypes\DataType::ENUM,
-				Types\ChannelPropertyIdentifier::INPUT_SOURCE,
-				DevicesUtilities\Name::createName(Types\ChannelPropertyIdentifier::INPUT_SOURCE->value),
+				ValuesTypes\DataType::ENUM,
+				VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE,
+				DevicesUtilities\Name::createName(VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value),
 				array_merge(
 					[
 						[
@@ -347,7 +348,7 @@ final class StoreDevice implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed store device message',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIERA->value,
+				'source' => Sources\Connector::VIERA->value,
 				'type' => 'store-device-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

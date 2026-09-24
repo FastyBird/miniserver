@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Events;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\States;
 use Symfony\Contracts\EventDispatcher;
@@ -35,7 +35,7 @@ class ConnectorPropertyStateEntityCreated extends EventDispatcher\Event
 		private readonly Documents\Connectors\Properties\Dynamic $property,
 		private readonly States\ConnectorProperty $read,
 		private readonly States\ConnectorProperty $get,
-		private readonly MetadataTypes\Sources\Source $source,
+		private readonly Sources\Source $source,
 	)
 	{
 	}
@@ -55,7 +55,7 @@ class ConnectorPropertyStateEntityCreated extends EventDispatcher\Event
 		return $this->get;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
 		return $this->source;
 	}

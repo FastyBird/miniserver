@@ -5,7 +5,7 @@ namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit\Publishers;
 use DateTime;
 use DateTimeInterface;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Publishers;
 use FastyBird\Plugin\RedisDb\Tests;
@@ -30,7 +30,7 @@ final class PublisherTest extends TestCase
 			->method('publish')
 			->with('exchange_channel', Nette\Utils\Json::encode([
 				'sender_id' => 'redis_client_identifier',
-				'source' => MetadataTypes\Sources\Module::DEVICES->value,
+				'source' => Sources\Module::DEVICES->value,
 				'routing_key' => 'testing.routing.key',
 				'created' => $now->format(DateTimeInterface::ATOM),
 				'data' => [
@@ -60,7 +60,7 @@ final class PublisherTest extends TestCase
 		);
 
 		$publisher->publish(
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 			'testing.routing.key',
 			new Tests\Fixtures\Dummy\DummyDocument(
 				'someAttribute',

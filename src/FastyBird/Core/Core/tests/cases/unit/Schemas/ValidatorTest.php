@@ -2,9 +2,9 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Schemas;
 
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as Schemas;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -16,9 +16,9 @@ final class ValidatorTest extends TestCase
 	/**
 	 * @param array<string|bool|array<string, bool|float|int|string|null>> $expected
 	 *
-	 * @throws ToolsExceptions\InvalidData
-	 * @throws Exceptions\Logic
-	 * @throws Exceptions\MalformedInput
+	 * @throws ValuesExceptions\InvalidData
+	 * @throws CoreExceptions\Logic
+	 * @throws CoreExceptions\MalformedInput
 	 */
 	#[DataProvider('validateValidData')]
 	public function testValidateValidInput(
@@ -37,9 +37,9 @@ final class ValidatorTest extends TestCase
 	}
 
 	/**
-	 * @throws ToolsExceptions\InvalidData
-	 * @throws Exceptions\Logic
-	 * @throws Exceptions\MalformedInput
+	 * @throws ValuesExceptions\InvalidData
+	 * @throws CoreExceptions\Logic
+	 * @throws CoreExceptions\MalformedInput
 	 */
 	#[DataProvider('validateInvalidData')]
 	public function testValidateDevicePropertyInvalid(
@@ -49,7 +49,7 @@ final class ValidatorTest extends TestCase
 	{
 		$validator = new Schemas\Validator();
 
-		$this->expectException(ToolsExceptions\InvalidData::class);
+		$this->expectException(ValuesExceptions\InvalidData::class);
 
 		$validator->validate($data, $schema);
 	}

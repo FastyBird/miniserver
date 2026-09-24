@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,13 +38,13 @@ class Startup extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::STARTUP,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::STARTUP,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\Startup::ON->value,
-				Types\Payloads\Startup::OFF->value,
-				Types\Payloads\Startup::STAY->value,
+				NsPanelTypes\Payloads\Startup::ON->value,
+				NsPanelTypes\Payloads\Startup::OFF->value,
+				NsPanelTypes\Payloads\Startup::STAY->value,
 			],
 		);
 	}

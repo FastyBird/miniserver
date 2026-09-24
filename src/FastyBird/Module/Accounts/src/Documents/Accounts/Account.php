@@ -19,7 +19,7 @@ use DateTimeInterface;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Documents as ExchangeDocuments;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
@@ -157,9 +157,9 @@ final readonly class Account implements ApplicationDocuments\Document
 		return $this->children;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Module::ACCOUNTS;
+		return Sources\Module::ACCOUNTS;
 	}
 
 	public function toArray(): array

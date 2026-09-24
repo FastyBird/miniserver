@@ -27,7 +27,7 @@ use FastyBird\Connector\Viera\Queries as VieraQueries;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Localization;
@@ -167,7 +167,7 @@ class Build extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+					'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -226,7 +226,7 @@ class Build extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+					'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -293,7 +293,7 @@ class Build extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+					'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],

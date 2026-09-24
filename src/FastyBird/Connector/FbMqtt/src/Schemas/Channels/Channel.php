@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\FbMqtt\Schemas\Channels;
 
 use FastyBird\Connector\FbMqtt\Entities;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 
 /**
@@ -34,7 +34,7 @@ final class Channel extends DevicesSchemas\Channels\Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Connector::FB_MQTT->value . '/channel/' . Entities\Channels\Channel::TYPE;
+	public const SCHEMA_TYPE = Sources\Connector::FB_MQTT->value . '/channel/' . Entities\Channels\Channel::TYPE;
 
 	public function getEntityClass(): string
 	{

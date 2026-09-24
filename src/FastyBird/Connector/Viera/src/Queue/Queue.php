@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Viera\Queue;
 
 use FastyBird\Connector\Viera;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use SplQueue;
 
@@ -48,7 +48,7 @@ final class Queue
 		$this->logger->debug(
 			'Appended new message into messages queue',
 			[
-				'source' => MetadataTypes\Sources\Connector::VIERA->value,
+				'source' => Sources\Connector::VIERA->value,
 				'type' => 'queue',
 				'message' => $message->toArray(),
 			],

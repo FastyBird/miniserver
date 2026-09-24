@@ -25,13 +25,14 @@ use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Queue;
-use FastyBird\Connector\HomeKit\Types;
+use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities as ValuesUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -133,7 +134,7 @@ class Loader
 		$bridge = $this->buildAccessory(
 			$connector,
 			null,
-			Types\AccessoryCategory::BRIDGE,
+			HomeKitTypes\AccessoryCategory::BRIDGE,
 		);
 		assert($bridge instanceof Protocol\Accessories\Bridge);
 
@@ -153,7 +154,7 @@ class Loader
 		foreach ($devices as $device) {
 			$findDevicePropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 			$findDevicePropertyQuery->forDevice($device);
-			$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::AID);
+			$findDevicePropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::AID);
 
 			$aidProperty = $this->devicesPropertiesConfigurationRepository->findOneBy(
 				$findDevicePropertyQuery,
@@ -163,7 +164,7 @@ class Loader
 			$aid = $aidProperty?->getValue() ?? null;
 
 			if ($aid !== null) {
-				$aid = intval(ToolsUtilities\Value::flattenValue($aid));
+				$aid = intval(ValuesUtilities\Value::flattenValue($aid));
 			}
 
 			$accessory = $this->buildAccessory(
@@ -197,20 +198,20 @@ class Loader
 					$format = $property->getFormat();
 
 					$characteristic = $this->buildCharacteristic(
-						Types\ChannelPropertyIdentifier::from($property->getIdentifier()),
+						HomeKitTypes\ChannelPropertyIdentifier::from($property->getIdentifier()),
 						$service,
 						$property,
-						$format instanceof ToolsFormats\StringEnum
+						$format instanceof Formats\StringEnum
 							? array_map(static fn (string $item): int => intval($item), $format->toArray())
 							: null,
 						null,
-						$format instanceof ToolsFormats\NumberRange ? $format->getMin() : null,
-						$format instanceof ToolsFormats\NumberRange ? $format->getMax() : null,
+						$format instanceof Formats\NumberRange ? $format->getMin() : null,
+						$format instanceof Formats\NumberRange ? $format->getMax() : null,
 						$property->getStep(),
-						$property->getUnit() !== null && Types\CharacteristicUnit::tryFrom(
+						$property->getUnit() !== null && HomeKitTypes\CharacteristicUnit::tryFrom(
 							$property->getUnit(),
 						) !== null
-							? Types\CharacteristicUnit::from($property->getUnit())
+							? HomeKitTypes\CharacteristicUnit::from($property->getUnit())
 							: null,
 					);
 
@@ -247,7 +248,7 @@ class Loader
 
 			$findDevicePropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 			$findDevicePropertyQuery->forDevice($accessory->getDevice());
-			$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::AID);
+			$findDevicePropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::AID);
 
 			$aidProperty = $this->devicesPropertiesConfigurationRepository->findOneBy(
 				$findDevicePropertyQuery,
@@ -265,9 +266,9 @@ class Loader
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
-							'identifier' => Types\DevicePropertyIdentifier::AID->value,
-							'name' => DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::AID->value),
-							'dataType' => MetadataTypes\DataType::UCHAR,
+							'identifier' => HomeKitTypes\DevicePropertyIdentifier::AID->value,
+							'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::AID->value),
+							'dataType' => ValuesTypes\DataType::UCHAR,
 							'value' => $accessory->getAid(),
 							'device' => $device,
 						]));
@@ -290,7 +291,7 @@ class Loader
 						try {
 							$state = $this->channelPropertiesStatesManager->read(
 								$property,
-								MetadataTypes\Sources\Connector::HOMEKIT,
+								Sources\Connector::HOMEKIT,
 							);
 
 							if (
@@ -334,7 +335,7 @@ class Loader
 							$this->logger->warning(
 								'State value could not be set to characteristic',
 								[
-									'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+									'source' => Sources\Connector::HOMEKIT->value,
 									'type' => 'http-server',
 									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
@@ -364,7 +365,7 @@ class Loader
 							try {
 								$state = $this->channelPropertiesStatesManager->read(
 									$property,
-									MetadataTypes\Sources\Connector::HOMEKIT,
+									Sources\Connector::HOMEKIT,
 								);
 
 								if ($state instanceof DevicesDocuments\States\Channels\Properties\Property) {
@@ -376,7 +377,7 @@ class Loader
 								$this->logger->warning(
 									'State value could not be set to characteristic',
 									[
-										'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+										'source' => Sources\Connector::HOMEKIT->value,
 										'type' => 'http-server',
 										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
@@ -419,7 +420,7 @@ class Loader
 									'device' => $accessory->getDevice()->getId(),
 									'channel' => $service->getChannel()->getId(),
 									'property' => $characteristic->getProperty()->getId(),
-									'value' => ToolsUtilities\Value::flattenValue($characteristic->getValue()),
+									'value' => ValuesUtilities\Value::flattenValue($characteristic->getValue()),
 								],
 							),
 						);
@@ -446,12 +447,12 @@ class Loader
 	private function buildAccessory(
 		Documents\Connectors\Connector|Documents\Devices\Device $owner,
 		int|null $aid = null,
-		Types\AccessoryCategory|null $category = null,
+		HomeKitTypes\AccessoryCategory|null $category = null,
 	): Protocol\Accessories\Accessory
 	{
-		$category ??= Types\AccessoryCategory::OTHER;
+		$category ??= HomeKitTypes\AccessoryCategory::OTHER;
 
-		if ($category === Types\AccessoryCategory::BRIDGE) {
+		if ($category === HomeKitTypes\AccessoryCategory::BRIDGE) {
 			if (!$owner instanceof Documents\Connectors\Connector) {
 				throw new Exceptions\InvalidArgument('Bridge accessory owner have to be connector item instance');
 			}
@@ -487,13 +488,13 @@ class Loader
 		 */
 
 		$accessoryInformation = $this->buildService(
-			Types\ServiceType::ACCESSORY_INFORMATION,
+			HomeKitTypes\ServiceType::ACCESSORY_INFORMATION,
 			$accessory,
 		);
 
 		// NAME CHARACTERISTIC
 		$accessoryName = $this->buildCharacteristic(
-			Types\ChannelPropertyIdentifier::NAME,
+			HomeKitTypes\ChannelPropertyIdentifier::NAME,
 			$accessoryInformation,
 		);
 		$accessoryName->setActualValue($owner->getName() ?? $owner->getIdentifier());
@@ -502,7 +503,7 @@ class Loader
 
 		// SERIAL NUMBER
 		$accessorySerialNumber = $this->buildCharacteristic(
-			Types\ChannelPropertyIdentifier::SERIAL_NUMBER,
+			HomeKitTypes\ChannelPropertyIdentifier::SERIAL_NUMBER,
 			$accessoryInformation,
 		);
 
@@ -527,11 +528,11 @@ class Loader
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
-							'identifier' => Types\DevicePropertyIdentifier::SERIAL_NUMBER->value,
+							'identifier' => HomeKitTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value,
 							'name' => DevicesUtilities\Name::createName(
-								Types\DevicePropertyIdentifier::SERIAL_NUMBER->value,
+								HomeKitTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value,
 							),
-							'dataType' => MetadataTypes\DataType::STRING,
+							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => $serialNumber,
 							'device' => $device,
 						]));
@@ -555,7 +556,7 @@ class Loader
 
 		// FIRMWARE REVISION
 		$accessoryFirmwareRevision = $this->buildCharacteristic(
-			Types\ChannelPropertyIdentifier::FIRMWARE_REVISION,
+			HomeKitTypes\ChannelPropertyIdentifier::FIRMWARE_REVISION,
 			$accessoryInformation,
 		);
 
@@ -575,9 +576,9 @@ class Loader
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
-							'identifier' => Types\DevicePropertyIdentifier::VERSION->value,
-							'name' => DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::VERSION->value),
-							'dataType' => MetadataTypes\DataType::STRING,
+							'identifier' => HomeKitTypes\DevicePropertyIdentifier::VERSION->value,
+							'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::VERSION->value),
+							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => strval($firmwareVersion),
 							'device' => $device,
 						]));
@@ -601,7 +602,7 @@ class Loader
 
 		// MANUFACTURER
 		$accessoryManufacturer = $this->buildCharacteristic(
-			Types\ChannelPropertyIdentifier::MANUFACTURER,
+			HomeKitTypes\ChannelPropertyIdentifier::MANUFACTURER,
 			$accessoryInformation,
 		);
 
@@ -621,11 +622,11 @@ class Loader
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
-							'identifier' => Types\DevicePropertyIdentifier::MANUFACTURER->value,
+							'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 							'name' => DevicesUtilities\Name::createName(
-								Types\DevicePropertyIdentifier::MANUFACTURER->value,
+								HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 							),
-							'dataType' => MetadataTypes\DataType::STRING,
+							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => $manufacturer,
 							'device' => $device,
 						]));
@@ -642,7 +643,7 @@ class Loader
 
 		// MODEL NAME
 		$accessoryModel = $this->buildCharacteristic(
-			Types\ChannelPropertyIdentifier::MODEL,
+			HomeKitTypes\ChannelPropertyIdentifier::MODEL,
 			$accessoryInformation,
 		);
 
@@ -662,9 +663,9 @@ class Loader
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
-							'identifier' => Types\DevicePropertyIdentifier::MODEL->value,
-							'name' => DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::MODEL->value),
-							'dataType' => MetadataTypes\DataType::STRING,
+							'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
+							'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::MODEL->value),
+							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => $model,
 							'device' => $device,
 						]));
@@ -681,7 +682,7 @@ class Loader
 
 		// IDENTIFY SUPPORT
 		$accessoryIdentify = $this->buildCharacteristic(
-			Types\ChannelPropertyIdentifier::IDENTIFY,
+			HomeKitTypes\ChannelPropertyIdentifier::IDENTIFY,
 			$accessoryInformation,
 		);
 		$accessoryIdentify->setActualValue(false);
@@ -693,14 +694,14 @@ class Loader
 		if ($accessory instanceof Protocol\Accessories\Bridge) {
 			$accessoryProtocolInformation = new Protocol\Services\Service(
 				Uuid\Uuid::fromString(Protocol\Services\Service::HAP_PROTOCOL_INFORMATION_SERVICE_UUID),
-				Types\ServiceType::PROTOCOL_INFORMATION,
+				HomeKitTypes\ServiceType::PROTOCOL_INFORMATION,
 				$accessory,
 				null,
 				['Version'],
 			);
 
 			$accessoryProtocolVersion = $this->buildCharacteristic(
-				Types\ChannelPropertyIdentifier::VERSION,
+				HomeKitTypes\ChannelPropertyIdentifier::VERSION,
 				$accessoryProtocolInformation,
 			);
 			$accessoryProtocolVersion->setActualValue(HomeKit\Constants::HAP_PROTOCOL_VERSION);
@@ -720,7 +721,7 @@ class Loader
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildService(
-		Types\ServiceType $type,
+		HomeKitTypes\ServiceType $type,
 		Protocol\Accessories\Accessory $accessory,
 		Documents\Channels\Channel|null $channel = null,
 	): Protocol\Services\Service
@@ -752,7 +753,7 @@ class Loader
 					$channel !== null
 					&& $channel::getType() === $serviceFactory->getEntityClass()::getType()
 				) || (
-					$type === Types\ServiceType::ACCESSORY_INFORMATION
+					$type === HomeKitTypes\ServiceType::ACCESSORY_INFORMATION
 					&& $serviceFactory instanceof Protocol\Services\GenericFactory
 				)
 			) {
@@ -792,7 +793,7 @@ class Loader
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildCharacteristic(
-		Types\ChannelPropertyIdentifier $identifier,
+		HomeKitTypes\ChannelPropertyIdentifier $identifier,
 		Protocol\Services\Service $service,
 		DevicesDocuments\Channels\Properties\Property|null $property = null,
 		array|null $validValues = [],
@@ -800,7 +801,7 @@ class Loader
 		float|null $minValue = null,
 		float|null $maxValue = null,
 		float|null $minStep = null,
-		Types\CharacteristicUnit|null $unit = null,
+		HomeKitTypes\CharacteristicUnit|null $unit = null,
 	): Protocol\Characteristics\Characteristic
 	{
 		$name = str_replace(' ', '', ucwords(str_replace('_', ' ', $identifier->value)));
@@ -822,7 +823,7 @@ class Loader
 			|| !is_string($characteristicMetadata->offsetGet('UUID'))
 			|| !$characteristicMetadata->offsetExists('Format')
 			|| !is_string($characteristicMetadata->offsetGet('Format'))
-			|| Types\DataType::tryFrom($characteristicMetadata->offsetGet('Format')) === null
+			|| HomeKitTypes\DataType::tryFrom($characteristicMetadata->offsetGet('Format')) === null
 			|| !$characteristicMetadata->offsetExists('Permissions')
 			|| !$characteristicMetadata->offsetGet('Permissions') instanceof Utils\ArrayHash
 		) {
@@ -832,9 +833,9 @@ class Loader
 		if (
 			$unit === null
 			&& $characteristicMetadata->offsetExists('Unit')
-			&& Types\CharacteristicUnit::tryFrom(strval($characteristicMetadata->offsetGet('Unit'))) !== null
+			&& HomeKitTypes\CharacteristicUnit::tryFrom(strval($characteristicMetadata->offsetGet('Unit'))) !== null
 		) {
-			$unit = Types\CharacteristicUnit::from(strval($characteristicMetadata->offsetGet('Unit')));
+			$unit = HomeKitTypes\CharacteristicUnit::from(strval($characteristicMetadata->offsetGet('Unit')));
 		}
 
 		if ($minValue === null && $characteristicMetadata->offsetExists('MinValue')) {
@@ -875,12 +876,12 @@ class Loader
 
 		if ($property !== null) {
 			if (
-				$property->getFormat() instanceof ToolsFormats\StringEnum
-				|| $property->getFormat() instanceof ToolsFormats\CombinedEnum
+				$property->getFormat() instanceof Formats\StringEnum
+				|| $property->getFormat() instanceof Formats\CombinedEnum
 			) {
 				$validValues = [];
 
-				if ($property->getFormat() instanceof ToolsFormats\StringEnum) {
+				if ($property->getFormat() instanceof Formats\StringEnum) {
 					$validValues = array_map(
 						static fn (string $item): int => intval($item),
 						$property->getFormat()->toArray(),
@@ -888,12 +889,12 @@ class Loader
 
 				} else {
 					foreach ($property->getFormat()->getItems() as $item) {
-						if ($item[1] instanceof ToolsFormats\CombinedEnumItem) {
-							$validValues[] = intval(ToolsUtilities\Value::flattenValue($item[1]->getValue()));
+						if ($item[1] instanceof Formats\CombinedEnumItem) {
+							$validValues[] = intval(ValuesUtilities\Value::flattenValue($item[1]->getValue()));
 						}
 					}
 				}
-			} elseif ($property->getFormat() instanceof ToolsFormats\NumberRange) {
+			} elseif ($property->getFormat() instanceof Formats\NumberRange) {
 				$minValue = $property->getFormat()->getMin() ?? $minValue;
 				$maxValue = $property->getFormat()->getMax() ?? $maxValue;
 			}
@@ -924,9 +925,9 @@ class Loader
 				return $characteristicFactory->create(
 					Helpers\Protocol::hapTypeToUuid(strval($characteristicMetadata->offsetGet('UUID'))),
 					$name,
-					Types\DataType::from($characteristicMetadata->offsetGet('Format')),
+					HomeKitTypes\DataType::from($characteristicMetadata->offsetGet('Format')),
 					array_map(
-						static fn (string $permission): Types\CharacteristicPermission => Types\CharacteristicPermission::from(
+						static fn (string $permission): HomeKitTypes\CharacteristicPermission => HomeKitTypes\CharacteristicPermission::from(
 							$permission,
 						),
 						(array) $characteristicMetadata->offsetGet('Permissions'),
@@ -938,7 +939,7 @@ class Loader
 					$minValue,
 					$maxValue,
 					$minStep,
-					ToolsUtilities\Value::flattenValue($property?->getDefault() ?? $default),
+					ValuesUtilities\Value::flattenValue($property?->getDefault() ?? $default),
 					$unit,
 				);
 			}

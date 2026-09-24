@@ -23,7 +23,7 @@ use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
@@ -190,7 +190,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 			$this->logger->error(
 				'Characteristic value could not be prepared for writing',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'event-writer',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -213,7 +213,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 			) {
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\RestartConnector(
-						MetadataTypes\Sources\Connector::HOMEKIT,
+						Sources\Connector::HOMEKIT,
 						'Connector configuration changed, services have to be restarted',
 					),
 				);
@@ -222,7 +222,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 			if ($entity->getIdentifier() === Types\ConnectorPropertyIdentifier::SHARED_KEY->value) {
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\RestartConnector(
-						MetadataTypes\Sources\Connector::HOMEKIT,
+						Sources\Connector::HOMEKIT,
 						'Connector shared key changed, services have to be restarted',
 					),
 				);

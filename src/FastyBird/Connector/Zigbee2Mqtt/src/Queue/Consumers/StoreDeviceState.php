@@ -22,7 +22,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Models;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -149,7 +149,7 @@ final class StoreDeviceState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'store-device-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),
@@ -209,7 +209,7 @@ final class StoreDeviceState implements Queue\Consumer
 					$this->logger->debug(
 						'Channel for storing device state could not be loaded',
 						[
-							'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+							'source' => Sources\Connector::ZIGBEE2MQTT->value,
 							'type' => 'store-device-state-message-consumer',
 							'connector' => [
 								'id' => $device->getConnector()->toString(),
@@ -240,7 +240,7 @@ final class StoreDeviceState implements Queue\Consumer
 					$this->logger->warning(
 						'Channel property for storing device state could not be loaded',
 						[
-							'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+							'source' => Sources\Connector::ZIGBEE2MQTT->value,
 							'type' => 'store-device-state-message-consumer',
 							'connector' => [
 								'id' => $device->getConnector()->toString(),
@@ -263,14 +263,14 @@ final class StoreDeviceState implements Queue\Consumer
 					Utils\ArrayHash::from([
 						DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getValue(),
 					]),
-					MetadataTypes\Sources\Connector::ZIGBEE2MQTT,
+					Sources\Connector::ZIGBEE2MQTT,
 				));
 
 				if ($this->deviceConnectionManager->getState($device) !== DevicesTypes\ConnectionState::CONNECTED) {
 					await($this->channelPropertiesStatesManager->setValidState(
 						$property,
 						false,
-						MetadataTypes\Sources\Connector::ZIGBEE2MQTT,
+						Sources\Connector::ZIGBEE2MQTT,
 					));
 				}
 

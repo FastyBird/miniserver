@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Modbus\Queue;
 
 use FastyBird\Connector\Modbus;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use SplQueue;
 
@@ -48,7 +48,7 @@ final class Queue
 		$this->logger->debug(
 			'Appended new message into messages queue',
 			[
-				'source' => MetadataTypes\Sources\Connector::MODBUS->value,
+				'source' => Sources\Connector::MODBUS->value,
 				'type' => 'queue',
 				'message' => $message->toArray(),
 			],

@@ -20,10 +20,11 @@ use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
-use FastyBird\Connector\Zigbee2Mqtt\Types;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Utils;
@@ -57,8 +58,8 @@ trait DeviceProperty
 	private function setDeviceProperty(
 		Uuid\UuidInterface $deviceId,
 		string|bool|int|null $value,
-		MetadataTypes\DataType $dataType,
-		Types\DevicePropertyIdentifier $identifier,
+		ValuesTypes\DataType $dataType,
+		Zigbee2MqttTypes\DevicePropertyIdentifier $identifier,
 		string|null $name = null,
 		array|string|null $format = null,
 	): void
@@ -97,7 +98,7 @@ trait DeviceProperty
 				$this->logger->warning(
 					'Stored device property was not of valid type',
 					[
-						'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+						'source' => Sources\Connector::ZIGBEE2MQTT->value,
 						'type' => 'message-consumer',
 						'device' => [
 							'id' => $deviceId->toString(),
@@ -123,7 +124,7 @@ trait DeviceProperty
 				$this->logger->error(
 					'Device was not found, property could not be configured',
 					[
-						'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+						'source' => Sources\Connector::ZIGBEE2MQTT->value,
 						'type' => 'message-consumer',
 						'device' => [
 							'id' => $deviceId->toString(),
@@ -154,7 +155,7 @@ trait DeviceProperty
 			$this->logger->debug(
 				'Device variable property was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'message-consumer',
 					'device' => [
 						'id' => $deviceId->toString(),
@@ -181,7 +182,7 @@ trait DeviceProperty
 			$this->logger->debug(
 				'Device variable property was updated',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'message-consumer',
 					'device' => [
 						'id' => $deviceId->toString(),

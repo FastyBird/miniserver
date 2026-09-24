@@ -19,8 +19,8 @@ use DateTimeInterface;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
@@ -49,7 +49,7 @@ final class State extends JsonApiSchemas\JsonApi
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::DYNAMIC->value . '/state';
+	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::DYNAMIC->value . '/state';
 
 	/**
 	 * Define relationships names
@@ -92,8 +92,8 @@ final class State extends JsonApiSchemas\JsonApi
 
 		return [
 			'channel' => $property->getChannel()->getId()->toString(),
-			'actual_value' => ToolsUtilities\Value::flattenValue($resource->getActualValue()),
-			'expected_value' => ToolsUtilities\Value::flattenValue($resource->getExpectedValue()),
+			'actual_value' => Utilities\Value::flattenValue($resource->getActualValue()),
+			'expected_value' => Utilities\Value::flattenValue($resource->getExpectedValue()),
 			'pending' => is_bool($resource->getPending())
 				? $resource->getPending()
 				: $resource->getPending()->format(DateTimeInterface::ATOM),

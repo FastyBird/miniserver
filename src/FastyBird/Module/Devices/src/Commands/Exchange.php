@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Commands;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Consumers;
 use FastyBird\Module\Devices\Events;
@@ -108,7 +108,7 @@ final class Exchange extends Console\Command\Command
 			$this->logger->info(
 				'Starting devices exchange...',
 				[
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'type' => 'exchange-cmd',
 				],
 			);
@@ -136,7 +136,7 @@ final class Exchange extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
+					'source' => Sources\Module::DEVICES->value,
 					'type' => 'exchange-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -157,7 +157,7 @@ final class Exchange extends Console\Command\Command
 		$this->logger->info(
 			'Stopping devices exchange...',
 			[
-				'source' => MetadataTypes\Sources\Module::DEVICES->value,
+				'source' => Sources\Module::DEVICES->value,
 				'type' => 'exchange-cmd',
 			],
 		);

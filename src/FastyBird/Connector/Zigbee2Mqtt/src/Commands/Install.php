@@ -21,12 +21,13 @@ use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
-use FastyBird\Connector\Zigbee2Mqtt\Types;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -223,32 +224,32 @@ class Install extends Console\Command\Command
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
-				'dataType' => MetadataTypes\DataType::STRING,
-				'value' => Types\ClientMode::MQTT->value,
+				'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+				'dataType' => ValuesTypes\DataType::STRING,
+				'value' => Zigbee2MqttTypes\ClientMode::MQTT->value,
 				'connector' => $connector,
 			]));
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::SERVER->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::SERVER->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $serverAddress,
 				'connector' => $connector,
 			]));
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::PORT->value,
-				'dataType' => MetadataTypes\DataType::UINT,
+				'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::PORT->value,
+				'dataType' => ValuesTypes\DataType::UINT,
 				'value' => $serverPort,
 				'connector' => $connector,
 			]));
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::SECURED_PORT->value,
-				'dataType' => MetadataTypes\DataType::UINT,
+				'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::SECURED_PORT->value,
+				'dataType' => ValuesTypes\DataType::UINT,
 				'value' => $serverSecuredPort,
 				'connector' => $connector,
 			]));
@@ -256,8 +257,8 @@ class Install extends Console\Command\Command
 			if ($username !== null) {
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::USERNAME->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::USERNAME->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $username,
 					'connector' => $connector,
 				]));
@@ -266,8 +267,8 @@ class Install extends Console\Command\Command
 			if ($password !== null) {
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::PASSWORD->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::PASSWORD->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $password,
 					'connector' => $connector,
 				]));
@@ -287,7 +288,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -391,37 +392,37 @@ class Install extends Console\Command\Command
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::CLIENT_MODE);
+		$findConnectorPropertyQuery->byIdentifier(Zigbee2MqttTypes\ConnectorPropertyIdentifier::CLIENT_MODE);
 
 		$clientModeProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::SERVER);
+		$findConnectorPropertyQuery->byIdentifier(Zigbee2MqttTypes\ConnectorPropertyIdentifier::SERVER);
 
 		$serverAddressProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::PORT);
+		$findConnectorPropertyQuery->byIdentifier(Zigbee2MqttTypes\ConnectorPropertyIdentifier::PORT);
 
 		$serverPortProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::SECURED_PORT);
+		$findConnectorPropertyQuery->byIdentifier(Zigbee2MqttTypes\ConnectorPropertyIdentifier::SECURED_PORT);
 
 		$serverSecuredProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::USERNAME);
+		$findConnectorPropertyQuery->byIdentifier(Zigbee2MqttTypes\ConnectorPropertyIdentifier::USERNAME);
 
 		$usernameProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::PASSWORD);
+		$findConnectorPropertyQuery->byIdentifier(Zigbee2MqttTypes\ConnectorPropertyIdentifier::PASSWORD);
 
 		$passwordProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -438,9 +439,9 @@ class Install extends Console\Command\Command
 			if ($clientModeProperty === null) {
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
-					'dataType' => MetadataTypes\DataType::STRING,
-					'value' => Types\ClientMode::MQTT->value,
+					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+					'dataType' => ValuesTypes\DataType::STRING,
+					'value' => Zigbee2MqttTypes\ClientMode::MQTT->value,
 					'connector' => $connector,
 				]));
 			}
@@ -448,8 +449,8 @@ class Install extends Console\Command\Command
 			if ($serverAddressProperty === null) {
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::SERVER->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::SERVER->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $serverAddress,
 					'connector' => $connector,
 				]));
@@ -462,8 +463,8 @@ class Install extends Console\Command\Command
 			if ($serverPortProperty === null) {
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::PORT->value,
-					'dataType' => MetadataTypes\DataType::UINT,
+					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::PORT->value,
+					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $serverPort,
 					'connector' => $connector,
 				]));
@@ -476,8 +477,8 @@ class Install extends Console\Command\Command
 			if ($serverSecuredProperty === null) {
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::SECURED_PORT->value,
-					'dataType' => MetadataTypes\DataType::UINT,
+					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::SECURED_PORT->value,
+					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $serverSecuredPort,
 					'connector' => $connector,
 				]));
@@ -491,8 +492,8 @@ class Install extends Console\Command\Command
 				if ($usernameProperty === null) {
 					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-						'identifier' => Types\ConnectorPropertyIdentifier::USERNAME->value,
-						'dataType' => MetadataTypes\DataType::STRING,
+						'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::USERNAME->value,
+						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $username,
 						'connector' => $connector,
 					]));
@@ -509,8 +510,8 @@ class Install extends Console\Command\Command
 				if ($passwordProperty === null) {
 					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-						'identifier' => Types\ConnectorPropertyIdentifier::PASSWORD->value,
-						'dataType' => MetadataTypes\DataType::STRING,
+						'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::PASSWORD->value,
+						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $password,
 						'connector' => $connector,
 					]));
@@ -537,7 +538,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -626,7 +627,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -747,8 +748,8 @@ class Install extends Console\Command\Command
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::BASE_TOPIC->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => Zigbee2MqttTypes\DevicePropertyIdentifier::BASE_TOPIC->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $baseTopic,
 				'device' => $bridge,
 			]));
@@ -767,7 +768,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -841,7 +842,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceVariableProperties();
 		$findDevicePropertyQuery->forDevice($bridge);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::BASE_TOPIC);
+		$findDevicePropertyQuery->byIdentifier(Zigbee2MqttTypes\DevicePropertyIdentifier::BASE_TOPIC);
 
 		$baseTopicProperty = $this->devicesPropertiesRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -860,8 +861,8 @@ class Install extends Console\Command\Command
 			if ($baseTopicProperty === null) {
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
-					'identifier' => Types\DevicePropertyIdentifier::BASE_TOPIC->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => Zigbee2MqttTypes\DevicePropertyIdentifier::BASE_TOPIC->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $baseTopic,
 					'device' => $bridge,
 				]));
@@ -885,7 +886,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -971,7 +972,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1046,7 +1047,7 @@ class Install extends Console\Command\Command
 		foreach ($devices as $index => $device) {
 			$findDevicePropertyQuery = new Queries\Entities\FindDeviceVariableProperties();
 			$findDevicePropertyQuery->forDevice($device);
-			$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::BASE_TOPIC);
+			$findDevicePropertyQuery->byIdentifier(Zigbee2MqttTypes\DevicePropertyIdentifier::BASE_TOPIC);
 
 			$baseTopicProperty = $this->devicesPropertiesRepository->findOneBy(
 				$findDevicePropertyQuery,
@@ -1242,7 +1243,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1314,7 +1315,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+					'source' => Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],

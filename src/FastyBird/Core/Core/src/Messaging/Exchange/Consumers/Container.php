@@ -5,7 +5,7 @@ namespace FastyBird\Core\Messaging\Exchange\Consumers;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use SplObjectStorage;
@@ -28,7 +28,7 @@ final class Container implements Consumer
 
 	#[Override]
 	public function consume(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $document,
 	): void

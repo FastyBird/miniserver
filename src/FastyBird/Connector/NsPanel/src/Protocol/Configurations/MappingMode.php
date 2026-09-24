@@ -17,8 +17,8 @@ namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -41,14 +41,14 @@ class MappingMode extends Configuration
 		string $value,
 	)
 	{
-		if (Types\Payloads\ThermostatMode::tryFrom($value) === null) {
+		if (NsPanelTypes\Payloads\ThermostatMode::tryFrom($value) === null) {
 			throw new Exceptions\InvalidState('Configuration mapping mode value is not valid.');
 		}
 
 		parent::__construct(
 			$id,
-			Types\Configuration::MAPPING_MODE,
-			MetadataTypes\DataType::STRING,
+			NsPanelTypes\Configuration::MAPPING_MODE,
+			ValuesTypes\DataType::STRING,
 			$capability,
 			$value,
 		);

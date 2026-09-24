@@ -5,10 +5,12 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Documents;
 use Error;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Tests;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid;
@@ -74,15 +76,15 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
 					'type' => Documents\Channels\Properties\Dynamic::getType(),
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
-					'category' => Types\PropertyCategory::GENERIC->value,
+					'source' => Sources\Module::DEVICES->value,
+					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
 					'name' => null,
 					'queryable' => false,
 					'settable' => true,
-					'data_type' => MetadataTypes\DataType::INT->value,
+					'data_type' => ValuesTypes\DataType::INT->value,
 					'unit' => '%',
-					'format' => [[MetadataTypes\DataTypeShort::UCHAR->value, 10], 50.0],
+					'format' => [[ValuesTypes\DataTypeShort::UCHAR->value, 10], 50.0],
 					'invalid' => 99,
 					'scale' => 0,
 					'step' => null,
@@ -102,11 +104,11 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
 					'type' => Documents\Channels\Properties\Variable::getType(),
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
-					'category' => Types\PropertyCategory::GENERIC->value,
+					'source' => Sources\Module::DEVICES->value,
+					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
 					'name' => null,
-					'data_type' => MetadataTypes\DataType::ENUM->value,
+					'data_type' => ValuesTypes\DataType::ENUM->value,
 					'unit' => null,
 					'format' => ['one','two','three'],
 					'invalid' => 99,
@@ -128,27 +130,27 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
 					'type' => Documents\Channels\Properties\Mapped::getType(),
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
-					'category' => Types\PropertyCategory::GENERIC->value,
+					'source' => Sources\Module::DEVICES->value,
+					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
 					'name' => null,
 					'queryable' => false,
 					'settable' => true,
-					'data_type' => MetadataTypes\DataType::SWITCH->value,
+					'data_type' => ValuesTypes\DataType::SWITCH->value,
 					'unit' => null,
 					'format' => [
 						[
-							['sw', MetadataTypes\Payloads\Switcher::ON->value],
+							['sw', Payloads\Switcher::ON->value],
 							'1000',
 							['s', 'on'],
 						],
 						[
-							['sw', MetadataTypes\Payloads\Switcher::OFF->value],
+							['sw', Payloads\Switcher::OFF->value],
 							'2000',
 							['s', 'off'],
 						],
 						[
-							['sw', MetadataTypes\Payloads\Switcher::TOGGLE->value],
+							['sw', Payloads\Switcher::TOGGLE->value],
 							null,
 							['s', 'toggle'],
 						],
@@ -172,15 +174,15 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
 					'type' => Documents\Channels\Properties\Dynamic::getType(),
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
-					'category' => Types\PropertyCategory::GENERIC->value,
+					'source' => Sources\Module::DEVICES->value,
+					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
 					'name' => null,
 					'queryable' => false,
 					'settable' => true,
-					'data_type' => MetadataTypes\DataType::INT->value,
+					'data_type' => ValuesTypes\DataType::INT->value,
 					'unit' => '%',
-					'format' => [[MetadataTypes\DataTypeShort::UCHAR->value, 10], 50.0],
+					'format' => [[ValuesTypes\DataTypeShort::UCHAR->value, 10], 50.0],
 					'invalid' => 99,
 					'scale' => 0,
 					'step' => null,
@@ -199,15 +201,15 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
 					'type' => Documents\Channels\Properties\Dynamic::getType(),
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
-					'category' => Types\PropertyCategory::GENERIC->value,
+					'source' => Sources\Module::DEVICES->value,
+					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
 					'name' => null,
 					'queryable' => false,
 					'settable' => true,
-					'data_type' => MetadataTypes\DataType::INT->value,
+					'data_type' => ValuesTypes\DataType::INT->value,
 					'unit' => '%',
-					'format' => [[MetadataTypes\DataTypeShort::UCHAR->value, 10], 50.0],
+					'format' => [[ValuesTypes\DataTypeShort::UCHAR->value, 10], 50.0],
 					'invalid' => 99,
 					'scale' => 0,
 					'step' => null,
@@ -226,15 +228,15 @@ final class ChannelPropertyDocumentTest extends Tests\Cases\Unit\BaseTestCase
 				[
 					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
 					'type' => Documents\Channels\Properties\Dynamic::getType(),
-					'source' => MetadataTypes\Sources\Module::DEVICES->value,
-					'category' => Types\PropertyCategory::GENERIC->value,
+					'source' => Sources\Module::DEVICES->value,
+					'category' => DevicesTypes\PropertyCategory::GENERIC->value,
 					'identifier' => 'property-identifier',
 					'name' => null,
 					'queryable' => false,
 					'settable' => true,
-					'data_type' => MetadataTypes\DataType::INT->value,
+					'data_type' => ValuesTypes\DataType::INT->value,
 					'unit' => '%',
-					'format' => [[MetadataTypes\DataTypeShort::UCHAR->value, 10], 50.0],
+					'format' => [[ValuesTypes\DataTypeShort::UCHAR->value, 10], 50.0],
 					'invalid' => 99,
 					'scale' => 0,
 					'step' => null,

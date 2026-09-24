@@ -29,10 +29,11 @@ use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities as ValuesUtilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -328,7 +329,7 @@ class Builder
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
 					'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value),
-					'dataType' => MetadataTypes\DataType::UCHAR,
+					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $category->value,
 					'device' => $accessory,
 				]));
@@ -341,7 +342,7 @@ class Builder
 				}
 
 				$this->devicesPropertiesManager->update($categoryProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::UCHAR,
+					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $category->value,
 				]));
 			}
@@ -351,13 +352,13 @@ class Builder
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
 					'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::MODEL->value),
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $shellyModelProperty?->getValue() ?? ShellyConnectorHomeKitConnector\Constants::MODEL,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $shellyModelProperty?->getValue() ?? ShellyConnectorHomeKitConnector\Constants::MODEL,
 				]));
 			}
@@ -369,13 +370,13 @@ class Builder
 					'name' => DevicesUtilities\Name::createName(
 						HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 					),
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => ShellyConnectorHomeKitConnector\Constants::MANUFACTURER,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => ShellyConnectorHomeKitConnector\Constants::MANUFACTURER,
 				]));
 			}
@@ -388,13 +389,13 @@ class Builder
 						'name' => DevicesUtilities\Name::createName(
 							HomeKitTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value,
 						),
-						'dataType' => MetadataTypes\DataType::STRING,
+						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $shellySerialNumberProperty->getValue(),
 						'device' => $accessory,
 					]));
 				} else {
 					$this->devicesPropertiesManager->update($serialNumberProperty, Utils\ArrayHash::from([
-						'dataType' => MetadataTypes\DataType::STRING,
+						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $shellySerialNumberProperty->getValue(),
 					]));
 				}
@@ -408,7 +409,7 @@ class Builder
 			$this->logger->debug(
 				'Shelly device accessory was created',
 				[
-					'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
+					'source' => Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'builder',
 					'shelly' => [
 						'id' => $shelly->getId()->toString(),
@@ -544,7 +545,7 @@ class Builder
 					$this->logger->debug(
 						'Shelly service for shelly connector accessory was created',
 						[
-							'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
+							'source' => Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 							'type' => 'builder',
 							'shelly' => [
 								'id' => $shelly->getId()->toString(),
@@ -798,7 +799,7 @@ class Builder
 
 			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 				$dataTypes = array_map(
-					static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 					(array) $characteristicMetadata->offsetGet('DataType'),
 				);
 
@@ -806,7 +807,7 @@ class Builder
 					throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
 				}
 			} else {
-				$dataTypes = [MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
+				$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
 			}
 
 			if (!in_array($connectProperty->getDataType(), $dataTypes, true) && $format === null) {
@@ -852,7 +853,7 @@ class Builder
 
 			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 				$dataTypes = array_map(
-					static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 					(array) $characteristicMetadata->offsetGet('DataType'),
 				);
 
@@ -862,7 +863,7 @@ class Builder
 
 				$dataType = $dataTypes[0];
 			} else {
-				$dataType = MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
+				$dataType = ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
 			}
 		}
 
@@ -929,7 +930,7 @@ class Builder
 				$this->logger->debug(
 					'Characteristic for shelly service was created',
 					[
-						'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 						'type' => 'builder',
 						'shelly' => [
 							'id' => $shelly->getId()->toString(),
@@ -978,7 +979,7 @@ class Builder
 				$this->logger->debug(
 					'Characteristic for shelly service was updated',
 					[
-						'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 						'type' => 'builder',
 						'shelly' => [
 							'id' => $shelly->getId()->toString(),
@@ -1013,9 +1014,9 @@ class Builder
 	}
 
 	/**
-	 * @return ToolsFormats\StringEnum|array<int, float|null>|null
+	 * @return Formats\StringEnum|array<int, float|null>|null
 	 */
-	private function buildFormat(Utils\ArrayHash $characteristicMetadata): ToolsFormats\StringEnum|array|null
+	private function buildFormat(Utils\ArrayHash $characteristicMetadata): Formats\StringEnum|array|null
 	{
 		$format = null;
 
@@ -1023,7 +1024,7 @@ class Builder
 			$characteristicMetadata->offsetExists('ValidValues')
 			&& $characteristicMetadata->offsetGet('ValidValues') instanceof Utils\ArrayHash
 		) {
-			$format = new ToolsFormats\StringEnum(
+			$format = new Formats\StringEnum(
 				array_values((array) $characteristicMetadata->offsetGet('ValidValues')),
 			);
 		}
@@ -1087,7 +1088,7 @@ class Builder
 			$shelliesMapping = $this->mappingBuilder->getGen1Mapping();
 
 			return $shelliesMapping->findForModel(
-				ToolsUtilities\Value::toString($shellyModelProperty->getValue(), true),
+				ValuesUtilities\Value::toString($shellyModelProperty->getValue(), true),
 			);
 		}
 
@@ -1095,7 +1096,7 @@ class Builder
 			$shelliesMapping = $this->mappingBuilder->getGen2Mapping();
 
 			return $shelliesMapping->findForModel(
-				ToolsUtilities\Value::toString($shellyModelProperty->getValue(), true),
+				ValuesUtilities\Value::toString($shellyModelProperty->getValue(), true),
 			);
 		}
 

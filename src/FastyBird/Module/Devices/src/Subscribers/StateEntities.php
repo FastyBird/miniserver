@@ -20,14 +20,14 @@ use Exception;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\EventLoop\Application\Status;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Events;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\States;
 use Nette;
 use Nette\Caching as NetteCaching;
@@ -76,8 +76,8 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidData
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws ValuesExceptions\InvalidData
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 */
@@ -98,8 +98,8 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws ToolsExceptions\InvalidData
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws ValuesExceptions\InvalidData
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 */
@@ -132,12 +132,12 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 
 	/**
 	 * @throws Exception
-	 * @throws ToolsExceptions\InvalidData
+	 * @throws ValuesExceptions\InvalidData
 	 * @throws ApplicationExceptions\Logic
 	 * @throws ApplicationExceptions\MalformedInput
 	 */
 	private function publishDocument(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		Documents\Connectors\Properties\Dynamic|Documents\Devices\Properties\Dynamic|Documents\Channels\Properties\Dynamic|Documents\Devices\Properties\Mapped|Documents\Channels\Properties\Mapped $property,
 		States\ConnectorProperty|States\ChannelProperty|States\DeviceProperty $readState,
 		States\ConnectorProperty|States\ChannelProperty|States\DeviceProperty|null $getState,

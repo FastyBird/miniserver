@@ -19,8 +19,9 @@ use DateTimeInterface;
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
@@ -28,7 +29,7 @@ use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
 use TypeError;
@@ -76,7 +77,7 @@ final class DeviceConnection
 	 */
 	public function setState(
 		Entities\Devices\Device|Documents\Devices\Device $device,
-		Types\ConnectionState $state,
+		DevicesTypes\ConnectionState $state,
 	): bool
 	{
 		$currentState = $this->getState($device);
@@ -87,7 +88,7 @@ final class DeviceConnection
 
 		$findDevicePropertyQuery = new Queries\Configuration\FindDeviceDynamicProperties();
 		$findDevicePropertyQuery->byDeviceId($device->getId());
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE->value);
+		$findDevicePropertyQuery->byIdentifier(DevicesTypes\DevicePropertyIdentifier::STATE->value);
 
 		$property = $this->devicesPropertiesConfigurationRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -105,18 +106,18 @@ final class DeviceConnection
 					$property = $this->devicesPropertiesEntitiesManager->create(Utils\ArrayHash::from([
 						'device' => $device,
 						'entity' => Entities\Devices\Properties\Dynamic::class,
-						'identifier' => Types\ConnectorPropertyIdentifier::STATE->value,
-						'dataType' => MetadataTypes\DataType::ENUM,
+						'identifier' => DevicesTypes\ConnectorPropertyIdentifier::STATE->value,
+						'dataType' => ValuesTypes\DataType::ENUM,
 						'unit' => null,
 						'format' => [
-							Types\ConnectionState::CONNECTED->value,
-							Types\ConnectionState::DISCONNECTED->value,
-							Types\ConnectionState::RUNNING->value,
-							Types\ConnectionState::SLEEPING->value,
-							Types\ConnectionState::STOPPED->value,
-							Types\ConnectionState::LOST->value,
-							Types\ConnectionState::ALERT->value,
-							Types\ConnectionState::UNKNOWN->value,
+							DevicesTypes\ConnectionState::CONNECTED->value,
+							DevicesTypes\ConnectionState::DISCONNECTED->value,
+							DevicesTypes\ConnectionState::RUNNING->value,
+							DevicesTypes\ConnectionState::SLEEPING->value,
+							DevicesTypes\ConnectionState::STOPPED->value,
+							DevicesTypes\ConnectionState::LOST->value,
+							DevicesTypes\ConnectionState::ALERT->value,
+							DevicesTypes\ConnectionState::UNKNOWN->value,
 						],
 						'settable' => false,
 						'queryable' => false,
@@ -137,13 +138,13 @@ final class DeviceConnection
 				States\Property::ACTUAL_VALUE_FIELD => $state->value,
 				States\Property::EXPECTED_VALUE_FIELD => null,
 			]),
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 		);
 
 		$this->logger->info(
 			sprintf('Device state was changed to: %s', $state->value),
 			[
-				'source' => MetadataTypes\Sources\Module::DEVICES->value,
+				'source' => Sources\Module::DEVICES->value,
 				'type' => 'device-connection-helper',
 				'device' => $device->getId()->toString(),
 				'state' => $state->value,
@@ -167,11 +168,11 @@ final class DeviceConnection
 	 */
 	public function getState(
 		Entities\Devices\Device|Documents\Devices\Device $device,
-	): Types\ConnectionState
+	): DevicesTypes\ConnectionState
 	{
 		$findDevicePropertyQuery = new Queries\Configuration\FindDeviceDynamicProperties();
 		$findDevicePropertyQuery->byDeviceId($device->getId());
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE->value);
+		$findDevicePropertyQuery->byIdentifier(DevicesTypes\DevicePropertyIdentifier::STATE->value);
 
 		$property = $this->devicesPropertiesConfigurationRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -183,17 +184,17 @@ final class DeviceConnection
 
 			if (
 				$state?->getRead()->getActualValue() !== null
-				&& Types\ConnectionState::tryFrom(
-					ToolsUtilities\Value::toString($state->getRead()->getActualValue(), true),
+				&& DevicesTypes\ConnectionState::tryFrom(
+					Utilities\Value::toString($state->getRead()->getActualValue(), true),
 				) !== null
 			) {
-				return Types\ConnectionState::from(
-					ToolsUtilities\Value::toString($state->getRead()->getActualValue(), true),
+				return DevicesTypes\ConnectionState::from(
+					Utilities\Value::toString($state->getRead()->getActualValue(), true),
 				);
 			}
 		}
 
-		return Types\ConnectionState::UNKNOWN;
+		return DevicesTypes\ConnectionState::UNKNOWN;
 	}
 
 	/**
@@ -214,7 +215,7 @@ final class DeviceConnection
 	{
 		$findDevicePropertyQuery = new Queries\Configuration\FindDeviceDynamicProperties();
 		$findDevicePropertyQuery->byDeviceId($device->getId());
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE->value);
+		$findDevicePropertyQuery->byIdentifier(DevicesTypes\DevicePropertyIdentifier::STATE->value);
 
 		$property = $this->devicesPropertiesConfigurationRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -226,8 +227,8 @@ final class DeviceConnection
 
 			if (
 				$state?->getRead()->getActualValue() !== null
-				&& Types\ConnectionState::tryFrom(
-					ToolsUtilities\Value::toString($state->getRead()->getActualValue(), true),
+				&& DevicesTypes\ConnectionState::tryFrom(
+					Utilities\Value::toString($state->getRead()->getActualValue(), true),
 				) !== null
 			) {
 				return $state->getUpdatedAt();
@@ -255,7 +256,7 @@ final class DeviceConnection
 	{
 		$findDevicePropertyQuery = new Queries\Configuration\FindDeviceDynamicProperties();
 		$findDevicePropertyQuery->byDeviceId($device->getId());
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE->value);
+		$findDevicePropertyQuery->byIdentifier(DevicesTypes\DevicePropertyIdentifier::STATE->value);
 
 		$property = $this->devicesPropertiesConfigurationRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -267,10 +268,10 @@ final class DeviceConnection
 
 			if (
 				$state?->getRead()->getActualValue() !== null
-				&& Types\ConnectionState::tryFrom(
-					ToolsUtilities\Value::toString($state->getRead()->getActualValue(), true),
+				&& DevicesTypes\ConnectionState::tryFrom(
+					Utilities\Value::toString($state->getRead()->getActualValue(), true),
 				) !== null
-				&& $state->getRead()->getActualValue() === Types\ConnectionState::LOST->value
+				&& $state->getRead()->getActualValue() === DevicesTypes\ConnectionState::LOST->value
 			) {
 				return $state->getUpdatedAt();
 			}

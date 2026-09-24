@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Schemas\Widgets\DataSources;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 
@@ -34,7 +34,7 @@ final class Generic extends DataSource
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::UI->value . '/data-source/' . Entities\Widgets\DataSources\Generic::TYPE;
+	public const SCHEMA_TYPE = Sources\Module::UI->value . '/data-source/' . Entities\Widgets\DataSources\Generic::TYPE;
 
 	public function getEntityClass(): string
 	{

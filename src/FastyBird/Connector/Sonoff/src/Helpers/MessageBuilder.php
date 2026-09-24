@@ -17,11 +17,11 @@ namespace FastyBird\Connector\Sonoff\Helpers;
 
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
 use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
@@ -51,7 +51,7 @@ final class MessageBuilder
 
 	public function __construct(
 		private readonly ObjectMapper\Processing\Processor $processor,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 	)
 	{
 	}
@@ -64,7 +64,7 @@ final class MessageBuilder
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 */
 	public function create(
 		string $message,
@@ -93,14 +93,14 @@ final class MessageBuilder
 				new ObjectMapper\Printers\TypeToStringConverter(),
 			);
 
-			throw new Exceptions\Runtime('Could not map data to message: ' . $errorPrinter->printError($ex));
+			throw new SonoffExceptions\Runtime('Could not map data to message: ' . $errorPrinter->printError($ex));
 		}
 	}
 
 	/**
 	 * @param array<mixed> $data
 	 *
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 */
 	private function createUuid(array $data): API\Messages\Uiid\Uuid
 	{
@@ -108,10 +108,10 @@ final class MessageBuilder
 			try {
 				$validated = $this->schemaValidator->validate(Utils\Json::encode($data), $this->getSchema($type));
 
-			} catch (ToolsExceptions\InvalidData) {
+			} catch (ValuesExceptions\InvalidData) {
 				continue;
 			} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | Utils\JsonException $ex) {
-				throw new Exceptions\Runtime('Could not validate received response payload', $ex->getCode(), $ex);
+				throw new SonoffExceptions\Runtime('Could not validate received response payload', $ex->getCode(), $ex);
 			}
 
 			$entity = sprintf('\FastyBird\Connector\Sonoff\API\Messages\Uiid\Uiid%s', $type);
@@ -122,18 +122,18 @@ final class MessageBuilder
 					$entity,
 					(array) Utils\Json::decode(Utils\Json::encode($validated), forceArrays: true),
 				);
-			} catch (Exceptions\Runtime $ex) {
-				throw new Exceptions\Runtime('Could not map data to entity', $ex->getCode(), $ex);
+			} catch (SonoffExceptions\Runtime $ex) {
+				throw new SonoffExceptions\Runtime('Could not map data to entity', $ex->getCode(), $ex);
 			} catch (Utils\JsonException $ex) {
-				throw new Exceptions\Runtime('Could not create entity from data', $ex->getCode(), $ex);
+				throw new SonoffExceptions\Runtime('Could not create entity from data', $ex->getCode(), $ex);
 			}
 		}
 
-		throw new Exceptions\Runtime('Could not map data to entity, unsupported type');
+		throw new SonoffExceptions\Runtime('Could not map data to entity, unsupported type');
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 */
 	private function getSchema(int $type): string
 	{
@@ -149,7 +149,7 @@ final class MessageBuilder
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\Runtime('Validation schema for UUID could not be loaded');
+				throw new SonoffExceptions\Runtime('Validation schema for UUID could not be loaded');
 			}
 		}
 

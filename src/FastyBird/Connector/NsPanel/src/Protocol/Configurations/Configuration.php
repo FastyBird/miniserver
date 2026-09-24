@@ -17,8 +17,8 @@ namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Nette;
 use Ramsey\Uuid;
 use function array_pop;
@@ -49,8 +49,8 @@ class Configuration
 	 */
 	public function __construct(
 		protected readonly Uuid\UuidInterface $id,
-		protected readonly Types\Configuration $type,
-		protected readonly MetadataTypes\DataType $dataType,
+		protected readonly NsPanelTypes\Configuration $type,
+		protected readonly ValuesTypes\DataType $dataType,
 		protected readonly Protocol\Capabilities\Capability $capability,
 		protected readonly float|int|bool|string|array|null $value,
 		protected readonly array|null $validValues = [],
@@ -68,12 +68,12 @@ class Configuration
 		return $this->id;
 	}
 
-	public function getType(): Types\Configuration
+	public function getType(): NsPanelTypes\Configuration
 	{
 		return $this->type;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		return $this->dataType;
 	}

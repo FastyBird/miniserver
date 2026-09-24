@@ -17,8 +17,8 @@ namespace FastyBird\Automator\DevicesModule\Schemas\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Triggers\Schemas as TriggersSchemas;
 use Neomerx\JsonApi;
 use TypeError;
@@ -41,7 +41,7 @@ final class ChannelPropertyCondition extends TriggersSchemas\Conditions\Conditio
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Automator::DEVICE_MODULE->value . '/condition/' . Entities\Conditions\ChannelPropertyCondition::TYPE;
+	public const SCHEMA_TYPE = Sources\Automator::DEVICE_MODULE->value . '/condition/' . Entities\Conditions\ChannelPropertyCondition::TYPE;
 
 	public function getType(): string
 	{
@@ -72,7 +72,7 @@ final class ChannelPropertyCondition extends TriggersSchemas\Conditions\Conditio
 			'channel' => $resource->getChannel()->toString(),
 			'property' => $resource->getProperty()->toString(),
 			'operator' => $resource->getOperator()->value,
-			'operand' => ToolsUtilities\Value::toString($resource->getOperand()),
+			'operand' => Utilities\Value::toString($resource->getOperand()),
 		]);
 	}
 

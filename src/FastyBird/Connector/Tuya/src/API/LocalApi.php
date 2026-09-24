@@ -19,16 +19,16 @@ use Brick\Math;
 use Closure;
 use DateTimeInterface;
 use FastyBird\Connector\Tuya;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use Nette\Utils;
 use React\EventLoop;
@@ -178,7 +178,7 @@ final class LocalApi
 		private readonly Services\SocketClientFactory $socketClientFactory,
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly Tuya\Logger $logger,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 		private readonly Clock\Clock $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
@@ -245,7 +245,7 @@ final class LocalApi
 								$this->logger->debug(
 									'Rebuilding payload for device22',
 									[
-										'source' => MetadataTypes\Sources\Connector::TUYA->value,
+										'source' => Sources\Connector::TUYA->value,
 										'type' => 'local-api',
 										'device' => [
 											'identifier' => $this->identifier,
@@ -279,7 +279,7 @@ final class LocalApi
 								$this->logger->debug(
 									'Device has replied to heartbeat',
 									[
-										'source' => MetadataTypes\Sources\Connector::TUYA->value,
+										'source' => Sources\Connector::TUYA->value,
 										'type' => 'local-api',
 										'device' => [
 											'identifier' => $this->identifier,
@@ -292,7 +292,7 @@ final class LocalApi
 								$this->logger->debug(
 									'Device has reported its state',
 									[
-										'source' => MetadataTypes\Sources\Connector::TUYA->value,
+										'source' => Sources\Connector::TUYA->value,
 										'type' => 'local-api',
 										'device' => [
 											'identifier' => $this->identifier,
@@ -311,7 +311,7 @@ final class LocalApi
 					$this->connection->on('error', function (Throwable $ex): void {
 						Utils\Arrays::invoke(
 							$this->onError,
-							new Exceptions\LocalApiError(
+							new TuyaExceptions\LocalApiError(
 								'An error occurred on device connection',
 								$ex->getCode(),
 								$ex,
@@ -325,7 +325,7 @@ final class LocalApi
 						$this->logger->debug(
 							'Connection with device was closed',
 							[
-								'source' => MetadataTypes\Sources\Connector::TUYA->value,
+								'source' => Sources\Connector::TUYA->value,
 								'type' => 'local-api',
 								'device' => [
 									'identifier' => $this->identifier,
@@ -353,7 +353,7 @@ final class LocalApi
 								$this->logger->debug(
 									'Sending ping to device',
 									[
-										'source' => MetadataTypes\Sources\Connector::TUYA->value,
+										'source' => Sources\Connector::TUYA->value,
 										'type' => 'local-api',
 										'device' => [
 											'identifier' => $this->identifier,
@@ -396,7 +396,7 @@ final class LocalApi
 			$this->connecting = false;
 			$this->connected = false;
 
-			$deferred->reject(new Exceptions\LocalApiError('Could not create connector', $ex->getCode(), $ex));
+			$deferred->reject(new TuyaExceptions\LocalApiError('Could not create connector', $ex->getCode(), $ex));
 		}
 
 		return $deferred->promise();
@@ -421,7 +421,7 @@ final class LocalApi
 		}
 
 		foreach ($this->messagesListeners as $listener) {
-			$listener->reject(new Exceptions\LocalApiCall('Closing connection to device'));
+			$listener->reject(new TuyaExceptions\LocalApiCall('Closing connection to device'));
 		}
 	}
 
@@ -467,7 +467,7 @@ final class LocalApi
 		$deferred = new Promise\Deferred();
 
 		if ($this->waitingForReading) {
-			Promise\reject(new Exceptions\LocalApiBusy('Client is waiting for device reply'));
+			Promise\reject(new TuyaExceptions\LocalApiBusy('Client is waiting for device reply'));
 		}
 
 		$localChild = null;
@@ -479,7 +479,7 @@ final class LocalApi
 
 			if ($localChild === false) {
 				return Promise\reject(
-					new Exceptions\LocalApiError('Provided child identifier is not registered under parent'),
+					new TuyaExceptions\LocalApiError('Provided child identifier is not registered under parent'),
 				);
 			}
 		}
@@ -491,7 +491,7 @@ final class LocalApi
 				null,
 				$localChild,
 			);
-		} catch (Exceptions\LocalApiCall | Exceptions\LocalApiError $ex) {
+		} catch (TuyaExceptions\LocalApiCall | TuyaExceptions\LocalApiError $ex) {
 			return Promise\reject($ex);
 		}
 
@@ -502,7 +502,7 @@ final class LocalApi
 		$this->messagesListenersTimers[$sequenceNr] = $this->eventLoop->addTimer(
 			self::WAIT_FOR_REPLY_TIMEOUT,
 			async(function () use ($deferred, $sequenceNr): void {
-				$deferred->reject(new Exceptions\LocalApiTimeout('Sending command to device failed'));
+				$deferred->reject(new TuyaExceptions\LocalApiTimeout('Sending command to device failed'));
 
 				$this->eventLoop->cancelTimer($this->messagesListenersTimers[$sequenceNr]);
 
@@ -549,7 +549,7 @@ final class LocalApi
 
 			if ($localChild === false) {
 				return Promise\reject(
-					new Exceptions\LocalApiError('Provided child identifier is not registered under parent'),
+					new TuyaExceptions\LocalApiError('Provided child identifier is not registered under parent'),
 				);
 			}
 		}
@@ -561,7 +561,7 @@ final class LocalApi
 				null,
 				$localChild,
 			);
-		} catch (Exceptions\LocalApiCall | Exceptions\LocalApiError $ex) {
+		} catch (TuyaExceptions\LocalApiCall | TuyaExceptions\LocalApiError $ex) {
 			return Promise\reject($ex);
 		}
 
@@ -570,7 +570,7 @@ final class LocalApi
 		$this->messagesListenersTimers[$sequenceNr] = $this->eventLoop->addTimer(
 			self::WAIT_FOR_REPLY_TIMEOUT,
 			async(function () use ($deferred, $sequenceNr): void {
-				$deferred->reject(new Exceptions\LocalApiTimeout('Sending command to device failed'));
+				$deferred->reject(new TuyaExceptions\LocalApiTimeout('Sending command to device failed'));
 
 				$this->eventLoop->cancelTimer($this->messagesListenersTimers[$sequenceNr]);
 
@@ -603,7 +603,7 @@ final class LocalApi
 	 *
 	 * @return array<string, int|float|string|null>
 	 *
-	 * @throws Exceptions\LocalApiCall
+	 * @throws TuyaExceptions\LocalApiCall
 	 */
 	public function detectAvailableDps(): array
 	{
@@ -618,7 +618,7 @@ final class LocalApi
 				/** @var array<Messages\Response\DeviceDataPointState>|Types\LocalDeviceError $deviceStates */
 				$deviceStates = await($this->readStates());
 			} catch (Throwable $ex) {
-				throw new Exceptions\LocalApiCall('Reading state from device failed', $ex->getCode(), $ex);
+				throw new TuyaExceptions\LocalApiCall('Reading state from device failed', $ex->getCode(), $ex);
 			}
 
 			if (is_array($deviceStates)) {
@@ -639,7 +639,7 @@ final class LocalApi
 		$this->logger->debug(
 			'Detected device DPS',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'local-api',
 				'device' => [
 					'identifier' => $this->identifier,
@@ -678,7 +678,7 @@ final class LocalApi
 	/**
 	 * @param array<string, int|float|string|bool>|null $data
 	 *
-	 * @throws Exceptions\LocalApiError
+	 * @throws TuyaExceptions\LocalApiError
 	 */
 	private function sendRequest(
 		Types\LocalDeviceCommand $command,
@@ -701,7 +701,7 @@ final class LocalApi
 		$this->logger->debug(
 			'Sending message to device',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'local-api',
 				'device' => [
 					'identifier' => $this->identifier,
@@ -724,7 +724,7 @@ final class LocalApi
 	 *
 	 * @return array<int>
 	 *
-	 * @throws Exceptions\LocalApiError
+	 * @throws TuyaExceptions\LocalApiError
 	 */
 	private function buildPayload(
 		int $sequenceNr,
@@ -745,7 +745,7 @@ final class LocalApi
 			$message = $this->generateData($command, $deviceId, $gatewayId, $deviceType, $nodeId, $data);
 
 			if ($message->getPayload() === null) {
-				throw new Exceptions\LocalApiError('Payload could not be prepared');
+				throw new TuyaExceptions\LocalApiError('Payload could not be prepared');
 			}
 
 			if ($message->getCommand() === Types\LocalDeviceCommand::CONTROL) {
@@ -757,7 +757,7 @@ final class LocalApi
 				);
 
 				if ($payload === false) {
-					throw new Exceptions\LocalApiError('Payload could not be encrypted');
+					throw new TuyaExceptions\LocalApiError('Payload could not be encrypted');
 				}
 
 				$payload = base64_encode($payload);
@@ -786,7 +786,7 @@ final class LocalApi
 			}
 
 			if ($payload === false) {
-				throw new Exceptions\LocalApiError('Payload could not be build');
+				throw new TuyaExceptions\LocalApiError('Payload could not be build');
 			}
 
 			return $this->stitchPayload($sequenceNr, $payload, $command, $hmacKey);
@@ -798,7 +798,7 @@ final class LocalApi
 			$message = $this->generateData($command, $deviceId, $gatewayId, $deviceType, $nodeId, $data);
 
 			if ($message->getPayload() === null) {
-				throw new Exceptions\LocalApiError('Payload could not be prepared');
+				throw new TuyaExceptions\LocalApiError('Payload could not be prepared');
 			}
 
 			if ($this->protocolVersion === Types\DeviceProtocolVersion::V34) {
@@ -819,7 +819,7 @@ final class LocalApi
 				);
 
 				if ($payload === false) {
-					throw new Exceptions\LocalApiError('Payload could not be encrypted');
+					throw new TuyaExceptions\LocalApiError('Payload could not be encrypted');
 				}
 
 				$payload = (array) unpack('C*', $payload);
@@ -835,7 +835,7 @@ final class LocalApi
 				);
 
 				if ($payload === false) {
-					throw new Exceptions\LocalApiError('Payload could not be encrypted');
+					throw new TuyaExceptions\LocalApiError('Payload could not be encrypted');
 				}
 
 				if (!in_array($message->getCommand(), self::NO_PROTOCOL_HEADER_COMMANDS, true)) {
@@ -851,14 +851,14 @@ final class LocalApi
 			return $this->stitchPayload($sequenceNr, $payload, $message->getCommand(), $hmacKey);
 		}
 
-		throw new Exceptions\LocalApiError(
+		throw new TuyaExceptions\LocalApiError(
 			sprintf('Unknown protocol %s', $this->protocolVersion->value),
 		);
 	}
 
 	/**
-	 * @throws Exceptions\LocalApiCall
-	 * @throws Exceptions\LocalApiError
+	 * @throws TuyaExceptions\LocalApiCall
+	 * @throws TuyaExceptions\LocalApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -899,7 +899,7 @@ final class LocalApi
 			$dataLength = [$buffer[12], $buffer[13], $buffer[14], $buffer[15]];
 			$dataLength = Math\BigInteger::fromBytes(pack('C*', ...$dataLength), false)->toInt();
 		} catch (Math\Exception\MathException $ex) {
-			throw new Exceptions\LocalApiCall(
+			throw new TuyaExceptions\LocalApiCall(
 				'Could not parse message parts - sequence nr, command & length',
 				$ex->getCode(),
 				$ex,
@@ -907,23 +907,23 @@ final class LocalApi
 		}
 
 		if ($prefix !== self::MESSAGE_PREFIX) {
-			throw new Exceptions\LocalApiCall('Message prefix is not as expected');
+			throw new TuyaExceptions\LocalApiCall('Message prefix is not as expected');
 		}
 
 		if ($dataLength > 1_000) {
-			throw new Exceptions\LocalApiCall(
+			throw new TuyaExceptions\LocalApiCall(
 				'Header claims the packet size is over 1000 bytes!  It is most likely corrupt',
 			);
 		}
 
 		if (Types\LocalDeviceCommand::tryFrom($command) === null) {
-			throw new Exceptions\LocalApiCall('Received unknown command');
+			throw new TuyaExceptions\LocalApiCall('Received unknown command');
 		}
 
 		$command = Types\LocalDeviceCommand::from($command);
 
 		if (count($buffer) < $headerLength + $footerLength) {
-			throw new Exceptions\LocalApiCall('Not enough data to unpack payload');
+			throw new TuyaExceptions\LocalApiCall('Not enough data to unpack payload');
 		}
 
 		try {
@@ -938,7 +938,7 @@ final class LocalApi
 			$suffix = array_slice($buffer, -4);
 
 		} catch (Math\Exception\MathException $ex) {
-			throw new Exceptions\LocalApiCall('Could not parse message parts - return code & crc', $ex->getCode(), $ex);
+			throw new TuyaExceptions\LocalApiCall('Could not parse message parts - return code & crc', $ex->getCode(), $ex);
 		}
 
 		$hasReturnCode = ($returnCode & 0xFFFFFF00) === 0;
@@ -950,11 +950,11 @@ final class LocalApi
 			: crc32(pack('C*', ...$headerWithDataPart));
 
 		if ($calculatedCrc !== $crc) {
-			throw new Exceptions\LocalApiCall($useHmac ? 'HMAC checksum is wrong' : 'CRC checksum is wrong');
+			throw new TuyaExceptions\LocalApiCall($useHmac ? 'HMAC checksum is wrong' : 'CRC checksum is wrong');
 		}
 
 		if ($suffix !== self::MESSAGE_SUFFIX) {
-			throw new Exceptions\LocalApiCall('Message suffix is not as expected');
+			throw new TuyaExceptions\LocalApiCall('Message suffix is not as expected');
 		}
 
 		$dataPart = array_values(array_slice($buffer, 20, $dataLength + $footerLength - 20));
@@ -968,7 +968,7 @@ final class LocalApi
 			);
 
 			if ($dataPart === false) {
-				throw new Exceptions\LocalApiCall('Received message data could not be decoded');
+				throw new TuyaExceptions\LocalApiCall('Received message data could not be decoded');
 			}
 
 			$dataPart = (array) unpack('C*', $dataPart);
@@ -989,7 +989,7 @@ final class LocalApi
 				$this->logger->info(
 					'Received message from device in version 3.1. This code is untested',
 					[
-						'source' => MetadataTypes\Sources\Connector::TUYA->value,
+						'source' => Sources\Connector::TUYA->value,
 						'type' => 'local-api',
 						'device' => [
 							'identifier' => $this->identifier,
@@ -1010,7 +1010,7 @@ final class LocalApi
 				);
 
 				if ($payload === false) {
-					throw new Exceptions\LocalApiCall('Received message payload could not be decoded');
+					throw new TuyaExceptions\LocalApiCall('Received message payload could not be decoded');
 				}
 			}
 		} elseif (
@@ -1053,7 +1053,7 @@ final class LocalApi
 					);
 
 					if ($payload === false) {
-						throw new Exceptions\LocalApiCall('Received message payload could not be decoded');
+						throw new TuyaExceptions\LocalApiCall('Received message payload could not be decoded');
 					}
 				}
 			}
@@ -1075,7 +1075,7 @@ final class LocalApi
 							$this->deviceType->value,
 						),
 						[
-							'source' => MetadataTypes\Sources\Connector::TUYA->value,
+							'source' => Sources\Connector::TUYA->value,
 							'type' => 'local-api',
 							'device' => [
 								'identifier' => $this->identifier,
@@ -1120,7 +1120,7 @@ final class LocalApi
 			$this->logger->warning(
 				'Received message from device with unsupported version',
 				[
-					'source' => MetadataTypes\Sources\Connector::TUYA->value,
+					'source' => Sources\Connector::TUYA->value,
 					'type' => 'local-api',
 					'device' => [
 						'identifier' => $this->identifier,
@@ -1139,7 +1139,7 @@ final class LocalApi
 		$this->logger->debug(
 			'Received message from device',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'local-api',
 				'device' => [
 					'identifier' => $this->identifier,
@@ -1218,7 +1218,7 @@ final class LocalApi
 	 *
 	 * @param array<string, string|int|float|bool>|null $data
 	 *
-	 * @throws Exceptions\LocalApiError
+	 * @throws TuyaExceptions\LocalApiError
 	 */
 	private function generateData(
 		Types\LocalDeviceCommand $command,
@@ -1409,7 +1409,7 @@ final class LocalApi
 				]),
 			);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\LocalApiError('Message payload could not be build', $ex->getCode(), $ex);
+			throw new TuyaExceptions\LocalApiError('Message payload could not be build', $ex->getCode(), $ex);
 		}
 	}
 
@@ -1420,7 +1420,7 @@ final class LocalApi
 	 *
 	 * @return array<int>
 	 *
-	 * @throws Exceptions\LocalApiError
+	 * @throws TuyaExceptions\LocalApiError
 	 */
 	private function stitchPayload(
 		int $sequenceNr,
@@ -1462,7 +1462,7 @@ final class LocalApi
 			$crcHb = unpack('C*', $crc);
 
 			if ($crcHb === false) {
-				throw new Exceptions\LocalApiError('Payload CRC check could not be converted to bytes');
+				throw new TuyaExceptions\LocalApiError('Payload CRC check could not be converted to bytes');
 			}
 		} else {
 			// Calc the CRC of everything except where the CRC goes and the suffix
@@ -1483,7 +1483,7 @@ final class LocalApi
 	 * @param array<int, int> $needle
 	 * @param array<int, int> $haystack
 	 *
-	 * @throws Exceptions\LocalApiCall
+	 * @throws TuyaExceptions\LocalApiCall
 	 */
 	private function findPrefixIndexInMessage(array $needle, array $haystack): int
 	{
@@ -1491,7 +1491,7 @@ final class LocalApi
 		$needleCount = count($needle);
 
 		if ($needleCount > $haystackCount) {
-			throw new Exceptions\LocalApiCall('Needle array must be smaller than haystack array');
+			throw new TuyaExceptions\LocalApiCall('Needle array must be smaller than haystack array');
 		}
 
 		for ($i = 1; $i <= $haystackCount - $needleCount; $i++) {
@@ -1518,7 +1518,7 @@ final class LocalApi
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\LocalApiError
+	 * @throws TuyaExceptions\LocalApiError
 	 */
 	private function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
 	{
@@ -1527,10 +1527,10 @@ final class LocalApi
 				$message,
 				(array) Utils\Json::decode(Utils\Json::encode($data), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\LocalApiError('Could not map data to message', $ex->getCode(), $ex);
+		} catch (TuyaExceptions\Runtime $ex) {
+			throw new TuyaExceptions\LocalApiError('Could not map data to message', $ex->getCode(), $ex);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\LocalApiError(
+			throw new TuyaExceptions\LocalApiError(
 				'Could not create message from data',
 				$ex->getCode(),
 				$ex,
@@ -1541,7 +1541,7 @@ final class LocalApi
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\LocalApiCall
+	 * @throws TuyaExceptions\LocalApiCall
 	 */
 	private function validateData(
 		string $data,
@@ -1554,9 +1554,9 @@ final class LocalApi
 				$data,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\LocalApiCall(
+				throw new TuyaExceptions\LocalApiCall(
 					'Could not validate received response payload',
 					$ex->getCode(),
 					$ex,
@@ -1568,7 +1568,7 @@ final class LocalApi
 	}
 
 	/**
-	 * @throws Exceptions\LocalApiCall
+	 * @throws TuyaExceptions\LocalApiCall
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -1581,7 +1581,7 @@ final class LocalApi
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\LocalApiCall('Validation schema for data could not be loaded');
+				throw new TuyaExceptions\LocalApiCall('Validation schema for data could not be loaded');
 			}
 		}
 

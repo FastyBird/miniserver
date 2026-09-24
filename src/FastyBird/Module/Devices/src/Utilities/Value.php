@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Utilities;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use function in_array;
 
 /**
@@ -30,8 +30,8 @@ final class Value
 {
 
 	public static function compareDataTypes(
-		MetadataTypes\DataType $left,
-		MetadataTypes\DataType $right,
+		Types\DataType $left,
+		Types\DataType $right,
 	): bool
 	{
 		if ($left === $right) {
@@ -41,26 +41,26 @@ final class Value
 		return in_array(
 			$left,
 			[
-				MetadataTypes\DataType::CHAR,
-				MetadataTypes\DataType::UCHAR,
-				MetadataTypes\DataType::SHORT,
-				MetadataTypes\DataType::USHORT,
-				MetadataTypes\DataType::INT,
-				MetadataTypes\DataType::UINT,
-				MetadataTypes\DataType::FLOAT,
+				Types\DataType::CHAR,
+				Types\DataType::UCHAR,
+				Types\DataType::SHORT,
+				Types\DataType::USHORT,
+				Types\DataType::INT,
+				Types\DataType::UINT,
+				Types\DataType::FLOAT,
 			],
 			true,
 		)
 			&& in_array(
 				$right,
 				[
-					MetadataTypes\DataType::CHAR,
-					MetadataTypes\DataType::UCHAR,
-					MetadataTypes\DataType::SHORT,
-					MetadataTypes\DataType::USHORT,
-					MetadataTypes\DataType::INT,
-					MetadataTypes\DataType::UINT,
-					MetadataTypes\DataType::FLOAT,
+					Types\DataType::CHAR,
+					Types\DataType::UCHAR,
+					Types\DataType::SHORT,
+					Types\DataType::USHORT,
+					Types\DataType::INT,
+					Types\DataType::UINT,
+					Types\DataType::FLOAT,
 				],
 				true,
 			);

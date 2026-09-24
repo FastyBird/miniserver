@@ -22,7 +22,7 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use TypeError;
 use ValueError;
@@ -41,9 +41,9 @@ class Connector extends DevicesEntities\Connectors\Connector
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Connector
+	public function getSource(): Sources\Connector
 	{
-		return MetadataTypes\Sources\Connector::NS_PANEL;
+		return Sources\Connector::NS_PANEL;
 	}
 
 	/**

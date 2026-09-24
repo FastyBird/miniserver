@@ -17,8 +17,8 @@ namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 use function assert;
 use function is_string;
@@ -39,8 +39,8 @@ class MappingModeFactory implements ConfigurationFactory
 	 */
 	public function create(
 		Uuid\UuidInterface $id,
-		Types\Configuration $type,
-		MetadataTypes\DataType $dataType,
+		NsPanelTypes\Configuration $type,
+		ValuesTypes\DataType $dataType,
 		Protocol\Capabilities\Capability $capability,
 		float|int|bool|string|array|null $value,
 		array|null $validValues = [],
@@ -56,9 +56,9 @@ class MappingModeFactory implements ConfigurationFactory
 		return new MappingMode($id, $capability, $value);
 	}
 
-	public function getType(): Types\Configuration
+	public function getType(): NsPanelTypes\Configuration
 	{
-		return Types\Configuration::MAPPING_MODE;
+		return NsPanelTypes\Configuration::MAPPING_MODE;
 	}
 
 }

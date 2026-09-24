@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Entities;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 
 /**
@@ -36,9 +36,9 @@ trait TEntity
 		return $this->id;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Module::ACCOUNTS;
+		return Sources\Module::ACCOUNTS;
 	}
 
 }

@@ -25,7 +25,7 @@ use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Writers;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -105,7 +105,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Starting Sonoff connector service',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -166,7 +166,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Sonoff connector service has been started',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -189,7 +189,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Starting Sonoff connector discovery',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -209,7 +209,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Sonoff connector discovery has been started',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -245,7 +245,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Sonoff connector has been terminated',
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),

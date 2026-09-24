@@ -16,7 +16,7 @@
 namespace FastyBird\Plugin\CouchDb\Models\States;
 
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\States;
@@ -103,7 +103,7 @@ class StatesRepository
 			return null;
 		} catch (Throwable $ex) {
 			$this->logger->error('Content could not be loaded', [
-				'source' => MetadataTypes\Sources\Plugin::COUCHDB->value,
+				'source' => Sources\Plugin::COUCHDB->value,
 				'type' => 'state-repository',
 				'record' => [
 					'id' => $id->toString(),

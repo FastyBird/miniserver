@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -33,8 +33,8 @@ class RssiFactory implements AttributeFactory
 
 	public function create(
 		Uuid\UuidInterface $id,
-		Types\Attribute $type,
-		MetadataTypes\DataType $dataType,
+		NsPanelTypes\Attribute $type,
+		ValuesTypes\DataType $dataType,
 		Protocol\Capabilities\Capability $capability,
 		array|null $validValues = [],
 		int|null $maxLength = null,
@@ -48,9 +48,9 @@ class RssiFactory implements AttributeFactory
 		return new Rssi($id, $capability);
 	}
 
-	public function getType(): Types\Attribute
+	public function getType(): NsPanelTypes\Attribute
 	{
-		return Types\Attribute::RSSI;
+		return NsPanelTypes\Attribute::RSSI;
 	}
 
 }

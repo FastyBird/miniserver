@@ -29,7 +29,7 @@ use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
@@ -246,7 +246,7 @@ class BridgesV1 extends BaseV1
 				$this->logger->error(
 					'An unhandled error occurred',
 					[
-						'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 						'type' => 'bridges-controller',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -364,7 +364,7 @@ class BridgesV1 extends BaseV1
 				$this->logger->error(
 					'An unhandled error occurred',
 					[
-						'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 						'type' => 'bridges-controller',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -446,7 +446,7 @@ class BridgesV1 extends BaseV1
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+					'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'bridges-controller',
 					'exception' => Logging\Logger::buildException($ex),
 				],

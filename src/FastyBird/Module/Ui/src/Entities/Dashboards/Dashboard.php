@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Entities\Dashboards\Tabs\Tab;
 use Nette\Utils;
@@ -183,9 +183,9 @@ class Dashboard implements Entities\Entity,
 		];
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Module::UI;
+		return Sources\Module::UI;
 	}
 
 	/**

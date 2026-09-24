@@ -25,7 +25,7 @@ use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -147,7 +147,7 @@ final class Cloud extends ClientProcess implements Client
 				$this->logger->error(
 					'An error occurred in eWelink cloud websockets client',
 					[
-						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+						'source' => Sources\Connector::SONOFF->value,
 						'type' => 'cloud-client',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
@@ -158,7 +158,7 @@ final class Cloud extends ClientProcess implements Client
 
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
-						MetadataTypes\Sources\Connector::SONOFF,
+						Sources\Connector::SONOFF,
 						'An error occurred in eWelink cloud websockets client',
 						$ex,
 					),
@@ -170,7 +170,7 @@ final class Cloud extends ClientProcess implements Client
 					$this->logger->debug(
 						'Created eWelink cloud websockets client',
 						[
-							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'source' => Sources\Connector::SONOFF->value,
 							'type' => 'cloud-client',
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
@@ -182,7 +182,7 @@ final class Cloud extends ClientProcess implements Client
 					$this->logger->error(
 						'eWelink cloud websockets client could not be created',
 						[
-							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'source' => Sources\Connector::SONOFF->value,
 							'type' => 'cloud-client',
 							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
@@ -193,7 +193,7 @@ final class Cloud extends ClientProcess implements Client
 
 					$this->dispatcher?->dispatch(
 						new DevicesEvents\TerminateConnector(
-							MetadataTypes\Sources\Connector::SONOFF,
+							Sources\Connector::SONOFF,
 							'eWelink cloud websockets client could not be created',
 							$ex,
 						),
@@ -203,7 +203,7 @@ final class Cloud extends ClientProcess implements Client
 			$this->logger->error(
 				'Could not create connection to sockets server',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'cloud-client',
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
@@ -213,7 +213,7 @@ final class Cloud extends ClientProcess implements Client
 
 			$this->dispatcher?->dispatch(
 				new DevicesEvents\TerminateConnector(
-					MetadataTypes\Sources\Connector::SONOFF,
+					Sources\Connector::SONOFF,
 					'Could not create connection to sockets server',
 				),
 			);
@@ -283,7 +283,7 @@ final class Cloud extends ClientProcess implements Client
 					$this->logger->error(
 						'Could not call cloud openapi',
 						[
-							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'source' => Sources\Connector::SONOFF->value,
 							'type' => 'cloud-client',
 							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
@@ -314,7 +314,7 @@ final class Cloud extends ClientProcess implements Client
 					) {
 					$this->dispatcher?->dispatch(
 						new DevicesEvents\TerminateConnector(
-							MetadataTypes\Sources\Connector::SONOFF,
+							Sources\Connector::SONOFF,
 							'Could not call eWelink api',
 							$ex,
 						),
@@ -374,7 +374,7 @@ final class Cloud extends ClientProcess implements Client
 									$this->logger->error(
 										'Calling eWelink cloud failed',
 										[
-											'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+											'source' => Sources\Connector::SONOFF->value,
 											'type' => 'cloud-client',
 											'exception' => Logging\Logger::buildException($ex),
 											'connector' => [
@@ -405,7 +405,7 @@ final class Cloud extends ClientProcess implements Client
 									) {
 									$this->dispatcher?->dispatch(
 										new DevicesEvents\TerminateConnector(
-											MetadataTypes\Sources\Connector::SONOFF,
+											Sources\Connector::SONOFF,
 											'Could not call eWelink api',
 											$ex,
 										),
@@ -428,7 +428,7 @@ final class Cloud extends ClientProcess implements Client
 						$this->logger->error(
 							'Calling eWelink cloud failed',
 							[
-								'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+								'source' => Sources\Connector::SONOFF->value,
 								'type' => 'cloud-client',
 								'exception' => Logging\Logger::buildException($ex),
 								'connector' => [
@@ -443,7 +443,7 @@ final class Cloud extends ClientProcess implements Client
 					if (!$ex instanceof Exceptions\CloudApiCall) {
 						$this->dispatcher?->dispatch(
 							new DevicesEvents\TerminateConnector(
-								MetadataTypes\Sources\Connector::SONOFF,
+								Sources\Connector::SONOFF,
 								'Could not call eWelink api',
 								$ex,
 							),

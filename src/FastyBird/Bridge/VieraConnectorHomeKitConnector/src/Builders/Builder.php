@@ -31,9 +31,11 @@ use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Queries as VieraQueries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -284,13 +286,13 @@ class Builder
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
-					'dataType' => MetadataTypes\DataType::UCHAR,
+					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => HomeKitTypes\AccessoryCategory::TELEVISION->value,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($categoryProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::UCHAR,
+					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => HomeKitTypes\AccessoryCategory::TELEVISION->value,
 				]));
 			}
@@ -299,13 +301,13 @@ class Builder
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $vieraModelProperty?->getValue() ?? VieraConnectorHomeKitConnector\Constants::MODEL,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $vieraModelProperty?->getValue() ?? VieraConnectorHomeKitConnector\Constants::MODEL,
 				]));
 			}
@@ -314,13 +316,13 @@ class Builder
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => VieraConnectorHomeKitConnector\Constants::MANUFACTURER,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => VieraConnectorHomeKitConnector\Constants::MANUFACTURER,
 				]));
 			}
@@ -329,13 +331,13 @@ class Builder
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $vieraSerialNumberProperty->getValue(),
 					'device' => $accessory,
 				]));
 			} elseif ($serialNumberProperty !== null && $vieraSerialNumberProperty !== null) {
 				$this->devicesPropertiesManager->update($serialNumberProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::STRING,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $vieraSerialNumberProperty->getValue(),
 				]));
 			}
@@ -345,7 +347,7 @@ class Builder
 			$this->logger->debug(
 				'Viera accessory was created',
 				[
-					'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+					'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'builder',
 					'thermostat' => [
 						'id' => $viera->getId()->toString(),
@@ -436,7 +438,7 @@ class Builder
 				throw new Exceptions\InvalidState('Viera input source channel property could not be loaded');
 			}
 
-			if (!$inputSourceProperty->getFormat() instanceof ToolsFormats\CombinedEnum) {
+			if (!$inputSourceProperty->getFormat() instanceof Formats\CombinedEnum) {
 				throw new Exceptions\InvalidState(
 					'Viera input source channel property is wrongly configured. This service could not be mapped',
 				);
@@ -453,9 +455,9 @@ class Builder
 			foreach ($inputSourceProperty->getFormat()->getItems() as $item) {
 				assert(
 					count($item) === 3
-					&& $item[0] instanceof ToolsFormats\CombinedEnumItem
+					&& $item[0] instanceof Formats\CombinedEnumItem
 					&& is_string($item[0]->getValue())
-					&& $item[1] instanceof ToolsFormats\CombinedEnumItem
+					&& $item[1] instanceof Formats\CombinedEnumItem
 					&& is_numeric($item[1]->getValue()),
 				);
 
@@ -559,7 +561,7 @@ class Builder
 					$this->logger->debug(
 						'Viera service for viera connector accessory was created',
 						[
-							'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+							'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 							'type' => 'builder',
 							'viera' => [
 								'id' => $viera->getId()->toString(),
@@ -672,14 +674,14 @@ class Builder
 				$inputSourcesNames = $inputSourcesValues = [];
 				$inputIndex = 1;
 
-				assert($characteristic->getFormat() instanceof ToolsFormats\CombinedEnum);
+				assert($characteristic->getFormat() instanceof Formats\CombinedEnum);
 
 				foreach ($characteristic->getFormat()->getItems() as $item) {
 					assert(
 						count($item) === 3
-						&& $item[0] instanceof ToolsFormats\CombinedEnumItem
+						&& $item[0] instanceof Formats\CombinedEnumItem
 						&& is_string($item[0]->getValue())
-						&& $item[1] instanceof ToolsFormats\CombinedEnumItem
+						&& $item[1] instanceof Formats\CombinedEnumItem
 						&& is_numeric($item[1]->getValue()),
 					);
 
@@ -1058,13 +1060,13 @@ class Builder
 				) && $connectProperty->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value
 			) {
 				$inputSourceFormat = $connectProperty->getFormat();
-				assert($inputSourceFormat instanceof ToolsFormats\CombinedEnum);
+				assert($inputSourceFormat instanceof Formats\CombinedEnum);
 
 				$format = array_map(static function (array $items): array {
 					assert(
 						count($items) === 3
-						&& $items[0] instanceof ToolsFormats\CombinedEnumItem
-						&& $items[1] instanceof ToolsFormats\CombinedEnumItem,
+						&& $items[0] instanceof Formats\CombinedEnumItem
+						&& $items[1] instanceof Formats\CombinedEnumItem,
 					);
 
 					return [$items[0]->getValue(), $items[1]->getValue(), $items[1]->getValue()];
@@ -1074,164 +1076,164 @@ class Builder
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::POWER_MODE_SELECTION) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 0, 0,
+						Payloads\Button::CLICKED->value, 0, 0,
 					],
 					[
-						MetadataTypes\Payloads\Button::RELEASED->value, 1, 1,
+						Payloads\Button::RELEASED->value, 1, 1,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::ENUM;
+				$dataType = ValuesTypes\DataType::ENUM;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_REWIND) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 0, 0,
+						Payloads\Button::CLICKED->value, 0, 0,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_FAST_FORWARD) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 1, 1,
+						Payloads\Button::CLICKED->value, 1, 1,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_NEXT_TRACK) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 2, 2,
+						Payloads\Button::CLICKED->value, 2, 2,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_PREVIOUS_TRACK) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 3, 3,
+						Payloads\Button::CLICKED->value, 3, 3,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_ARROW_UP) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 4, 4,
+						Payloads\Button::CLICKED->value, 4, 4,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_ARROW_DOWN) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 5, 5,
+						Payloads\Button::CLICKED->value, 5, 5,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_ARROW_LEFT) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 6, 6,
+						Payloads\Button::CLICKED->value, 6, 6,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_ARROW_RIGHT) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 7, 7,
+						Payloads\Button::CLICKED->value, 7, 7,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_SELECT) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 8, 8,
+						Payloads\Button::CLICKED->value, 8, 8,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_BACK) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 9, 9,
+						Payloads\Button::CLICKED->value, 9, 9,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_EXIT) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 10, 10,
+						Payloads\Button::CLICKED->value, 10, 10,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_PLAY_PAUSE) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 11, 11,
+						Payloads\Button::CLICKED->value, 11, 11,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_INFORMATION) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 15, 15,
+						Payloads\Button::CLICKED->value, 15, 15,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_VOLUME_UP) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 0, 0,
+						Payloads\Button::CLICKED->value, 0, 0,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMapping->getType() === HomeKitTypes\CharacteristicType::REMOTE_KEY_VOLUME_DOWN) {
 				$format = [
 					[
-						MetadataTypes\Payloads\Button::CLICKED->value, 1, 1,
+						Payloads\Button::CLICKED->value, 1, 1,
 					],
 				];
 
-				$dataType = MetadataTypes\DataType::BUTTON;
+				$dataType = ValuesTypes\DataType::BUTTON;
 			}
 
 			if ($characteristicMetadata->offsetExists('Default')) {
@@ -1241,7 +1243,7 @@ class Builder
 			if ($dataType === null) {
 				if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 					$dataTypes = array_map(
-						static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+						static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 						(array) $characteristicMetadata->offsetGet('DataType'),
 					);
 
@@ -1249,7 +1251,7 @@ class Builder
 						throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
 					}
 				} else {
-					$dataTypes = [MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
+					$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
 				}
 
 				if (!in_array($connectProperty->getDataType(), $dataTypes, true) && $format === null) {
@@ -1335,7 +1337,7 @@ class Builder
 
 			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 				$dataTypes = array_map(
-					static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 					(array) $characteristicMetadata->offsetGet('DataType'),
 				);
 
@@ -1345,7 +1347,7 @@ class Builder
 
 				$dataType = $dataTypes[0];
 			} else {
-				$dataType = MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
+				$dataType = ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
 			}
 		}
 
@@ -1412,7 +1414,7 @@ class Builder
 				$this->logger->debug(
 					'Characteristic for viera service was created',
 					[
-						'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 						'type' => 'builder',
 						'viera' => [
 							'id' => $viera->getId()->toString(),
@@ -1461,7 +1463,7 @@ class Builder
 				$this->logger->debug(
 					'Characteristic for viera service was updated',
 					[
-						'source' => MetadataTypes\Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
+						'source' => Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value,
 						'type' => 'builder',
 						'viera' => [
 							'id' => $viera->getId()->toString(),
@@ -1496,9 +1498,9 @@ class Builder
 	}
 
 	/**
-	 * @return ToolsFormats\StringEnum|array<int, float|null>|null
+	 * @return Formats\StringEnum|array<int, float|null>|null
 	 */
-	private function buildFormat(Utils\ArrayHash $characteristicMetadata): ToolsFormats\StringEnum|array|null
+	private function buildFormat(Utils\ArrayHash $characteristicMetadata): Formats\StringEnum|array|null
 	{
 		$format = null;
 
@@ -1506,7 +1508,7 @@ class Builder
 			$characteristicMetadata->offsetExists('ValidValues')
 			&& $characteristicMetadata->offsetGet('ValidValues') instanceof Utils\ArrayHash
 		) {
-			$format = new ToolsFormats\StringEnum(
+			$format = new Formats\StringEnum(
 				array_values((array) $characteristicMetadata->offsetGet('ValidValues')),
 			);
 		}

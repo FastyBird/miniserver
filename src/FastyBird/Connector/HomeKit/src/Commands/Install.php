@@ -24,13 +24,15 @@ use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Queries;
-use FastyBird\Connector\HomeKit\Types;
+use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -241,8 +243,8 @@ class Install extends Console\Command\Command
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::PORT->value,
-				'dataType' => MetadataTypes\DataType::UCHAR,
+				'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::PORT->value,
+				'dataType' => ValuesTypes\DataType::UCHAR,
 				'value' => $port,
 				'connector' => $connector,
 			]));
@@ -260,7 +262,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -355,7 +357,7 @@ class Install extends Console\Command\Command
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::PORT);
+		$findConnectorPropertyQuery->byIdentifier(HomeKitTypes\ConnectorPropertyIdentifier::PORT);
 
 		$portProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -372,8 +374,8 @@ class Install extends Console\Command\Command
 			if ($portProperty === null) {
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::PORT->value,
-					'dataType' => MetadataTypes\DataType::UCHAR,
+					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::PORT->value,
+					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $port,
 					'connector' => $connector,
 				]));
@@ -396,7 +398,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -481,7 +483,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -655,8 +657,8 @@ class Install extends Console\Command\Command
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::CATEGORY->value,
-				'dataType' => MetadataTypes\DataType::UCHAR,
+				'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
+				'dataType' => ValuesTypes\DataType::UCHAR,
 				'value' => $category->value,
 				'device' => $device,
 			]));
@@ -674,7 +676,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -734,7 +736,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::CATEGORY);
+		$findDevicePropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::CATEGORY);
 
 		$categoryProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -752,8 +754,8 @@ class Install extends Console\Command\Command
 			if ($categoryProperty === null) {
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
-					'identifier' => Types\DevicePropertyIdentifier::CATEGORY->value,
-					'dataType' => MetadataTypes\DataType::UCHAR,
+					'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
+					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $category->value,
 					'device' => $device,
 				]));
@@ -776,7 +778,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -859,7 +861,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1049,7 +1051,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1230,7 +1232,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1319,7 +1321,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1486,7 +1488,7 @@ class Install extends Console\Command\Command
 
 			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 				$dataTypes = array_map(
-					static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 					(array) $characteristicMetadata->offsetGet('DataType'),
 				);
 
@@ -1496,7 +1498,7 @@ class Install extends Console\Command\Command
 
 				$dataType = $dataTypes[0];
 			} else {
-				$dataType = MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
+				$dataType = ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
 			}
 
 			$format = $this->askFormat($io, $characteristic);
@@ -1514,7 +1516,7 @@ class Install extends Console\Command\Command
 				$connectProperty = $this->askProperty(
 					$io,
 					null,
-					in_array(Types\CharacteristicPermission::WRITE->value, $permissions, true),
+					in_array(HomeKitTypes\CharacteristicPermission::WRITE->value, $permissions, true),
 				);
 
 				$format = $this->askFormat($io, $characteristic, $connectProperty);
@@ -1529,38 +1531,38 @@ class Install extends Console\Command\Command
 
 				if (
 					(
-						$dataType === MetadataTypes\DataType::BOOLEAN
+						$dataType === ValuesTypes\DataType::BOOLEAN
 						|| in_array(
-							MetadataTypes\DataType::BOOLEAN,
+							ValuesTypes\DataType::BOOLEAN,
 							$dataTypes ?? [],
 							true,
 						)
 					)
 					&& $connectProperty !== null
-					&& $connectProperty->getDataType() === MetadataTypes\DataType::SWITCH
+					&& $connectProperty->getDataType() === ValuesTypes\DataType::SWITCH
 				) {
-					$dataType = MetadataTypes\DataType::SWITCH;
+					$dataType = ValuesTypes\DataType::SWITCH;
 
 					$format = [
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 						],
@@ -1670,7 +1672,7 @@ class Install extends Console\Command\Command
 
 			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 				$dataTypes = array_map(
-					static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 					(array) $characteristicMetadata->offsetGet('DataType'),
 				);
 
@@ -1680,7 +1682,7 @@ class Install extends Console\Command\Command
 
 				$dataType = $dataTypes[0];
 			} else {
-				$dataType = MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
+				$dataType = ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
 			}
 
 			$format = $this->askFormat($io, $type);
@@ -1703,7 +1705,7 @@ class Install extends Console\Command\Command
 							? $property->getParent()
 							: null
 					),
-					in_array(Types\CharacteristicPermission::WRITE->value, $permissions, true),
+					in_array(HomeKitTypes\CharacteristicPermission::WRITE->value, $permissions, true),
 				);
 
 				$format = $this->askFormat($io, $type, $connectProperty);
@@ -1724,38 +1726,38 @@ class Install extends Console\Command\Command
 
 				if (
 					(
-						$dataType === MetadataTypes\DataType::BOOLEAN
+						$dataType === ValuesTypes\DataType::BOOLEAN
 						|| in_array(
-							MetadataTypes\DataType::BOOLEAN,
+							ValuesTypes\DataType::BOOLEAN,
 							$dataTypes ?? [],
 							true,
 						)
 					)
 					&& $connectProperty !== null
-					&& $connectProperty->getDataType() === MetadataTypes\DataType::SWITCH
+					&& $connectProperty->getDataType() === ValuesTypes\DataType::SWITCH
 				) {
-					$dataType = MetadataTypes\DataType::SWITCH;
+					$dataType = ValuesTypes\DataType::SWITCH;
 
 					$format = [
 						[
-							MetadataTypes\Payloads\Switcher::ON->value,
+							Payloads\Switcher::ON->value,
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'true',
 							],
 						],
 						[
-							MetadataTypes\Payloads\Switcher::OFF->value,
+							Payloads\Switcher::OFF->value,
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 							[
-								MetadataTypes\DataTypeShort::BOOLEAN->value,
+								ValuesTypes\DataTypeShort::BOOLEAN->value,
 								'false',
 							],
 						],
@@ -1824,7 +1826,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1899,7 +1901,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1953,14 +1955,14 @@ class Install extends Console\Command\Command
 			$value = $property instanceof DevicesEntities\Channels\Properties\Variable ? $property->getValue() : 'N/A';
 
 			if (
-				$property->getDataType() === MetadataTypes\DataType::ENUM
+				$property->getDataType() === ValuesTypes\DataType::ENUM
 				&& $metadata->offsetExists($type)
 				&& $metadata->offsetGet($type) instanceof Utils\ArrayHash
 				&& $metadata->offsetGet($type)->offsetExists('ValidValues')
 				&& $metadata->offsetGet($type)->offsetGet('ValidValues') instanceof Utils\ArrayHash
 			) {
 				$enumValue = array_search(
-					intval(ToolsUtilities\Value::flattenValue($value)),
+					intval(Utilities\Value::flattenValue($value)),
 					(array) $metadata->offsetGet($type)->offsetGet('ValidValues'),
 					true,
 				);
@@ -2371,7 +2373,7 @@ class Install extends Console\Command\Command
 			}
 
 			$findConnectorPropertiesQuery = new Queries\Entities\FindConnectorProperties();
-			$findConnectorPropertiesQuery->byIdentifier(Types\ConnectorPropertyIdentifier::PORT);
+			$findConnectorPropertiesQuery->byIdentifier(HomeKitTypes\ConnectorPropertyIdentifier::PORT);
 
 			$properties = $this->connectorsPropertiesRepository->findAllBy(
 				$findConnectorPropertiesQuery,
@@ -2422,24 +2424,24 @@ class Install extends Console\Command\Command
 	private function askDeviceCategory(
 		Style\SymfonyStyle $io,
 		Entities\Devices\Device|null $device = null,
-	): Types\AccessoryCategory
+	): HomeKitTypes\AccessoryCategory
 	{
 		$categories = array_combine(
 			array_map(
-				static fn (Types\AccessoryCategory $category): int => $category->value,
-				Types\AccessoryCategory::cases(),
+				static fn (HomeKitTypes\AccessoryCategory $category): int => $category->value,
+				HomeKitTypes\AccessoryCategory::cases(),
 			),
 			array_map(
-				fn (Types\AccessoryCategory $category): string => (string) $this->translator->translate(
+				fn (HomeKitTypes\AccessoryCategory $category): string => (string) $this->translator->translate(
 					'//homekit-connector.cmd.base.category.' . $category->value,
 				),
-				Types\AccessoryCategory::cases(),
+				HomeKitTypes\AccessoryCategory::cases(),
 			),
 		);
 		$categories = array_filter(
 			$categories,
 			fn (string $category): bool => $category !== (string) $this->translator->translate(
-				'//homekit-connector.cmd.base.category.' . Types\AccessoryCategory::BRIDGE->value,
+				'//homekit-connector.cmd.base.category.' . HomeKitTypes\AccessoryCategory::BRIDGE->value,
 			),
 		);
 		asort($categories);
@@ -2452,7 +2454,7 @@ class Install extends Console\Command\Command
 			true,
 		) : array_search(
 			(string) $this->translator->translate(
-				'//homekit-connector.cmd.base.category.' . Types\AccessoryCategory::OTHER->value,
+				'//homekit-connector.cmd.base.category.' . HomeKitTypes\AccessoryCategory::OTHER->value,
 			),
 			array_values($categories),
 			true,
@@ -2466,7 +2468,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($categories): Types\AccessoryCategory {
+		$question->setValidator(function (string|int|null $answer) use ($categories): HomeKitTypes\AccessoryCategory {
 			if ($answer === null) {
 				throw new Exceptions\Runtime(
 					sprintf(
@@ -2483,7 +2485,7 @@ class Install extends Console\Command\Command
 			$category = array_search($answer, $categories, true);
 
 			if ($category !== false) {
-				return Types\AccessoryCategory::from(intval($category));
+				return HomeKitTypes\AccessoryCategory::from(intval($category));
 			}
 
 			throw new Exceptions\Runtime(
@@ -2495,7 +2497,7 @@ class Install extends Console\Command\Command
 		});
 
 		$answer = $io->askQuestion($question);
-		assert($answer instanceof Types\AccessoryCategory);
+		assert($answer instanceof HomeKitTypes\AccessoryCategory);
 
 		return $answer;
 	}
@@ -2516,7 +2518,7 @@ class Install extends Console\Command\Command
 	{
 		$findPropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findPropertyQuery->forDevice($device);
-		$findPropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::CATEGORY);
+		$findPropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::CATEGORY);
 
 		$category = $this->devicesPropertiesRepository->findOneBy(
 			$findPropertyQuery,
@@ -2527,22 +2529,22 @@ class Install extends Console\Command\Command
 			throw new Exceptions\InvalidState('Device category is not configured');
 		}
 
-		if ($category->getValue() === Types\AccessoryCategory::OTHER->value) {
+		if ($category->getValue() === HomeKitTypes\AccessoryCategory::OTHER->value) {
 			$metadata = $this->loader->loadServices();
 
 			$services = array_values(array_keys((array) $metadata));
 		} else {
 			$metadata = $this->loader->loadAccessories();
 
-			if (!$metadata->offsetExists(ToolsUtilities\Value::toString($category->getValue(), true))) {
+			if (!$metadata->offsetExists(Utilities\Value::toString($category->getValue(), true))) {
 				throw new Exceptions\InvalidArgument(sprintf(
 					'Definition for accessory category: %s was not found',
-					ToolsUtilities\Value::toString($category->getValue()),
+					Utilities\Value::toString($category->getValue()),
 				));
 			}
 
 			$accessoryMetadata = $metadata->offsetGet(
-				ToolsUtilities\Value::toString($category->getValue(), true),
+				Utilities\Value::toString($category->getValue(), true),
 			);
 
 			if (
@@ -2597,7 +2599,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askCharacteristic(
 		Style\SymfonyStyle $io,
-		Types\ServiceType $service,
+		HomeKitTypes\ServiceType $service,
 		bool $required = true,
 		array $characteristics = [],
 		array $ignore = [],
@@ -3018,7 +3020,7 @@ class Install extends Console\Command\Command
 		Style\SymfonyStyle $io,
 		string $characteristic,
 		DevicesEntities\Channels\Properties\Dynamic|null $connectProperty = null,
-	): ToolsFormats\NumberRange|ToolsFormats\StringEnum|ToolsFormats\CombinedEnum|null
+	): Formats\NumberRange|Formats\StringEnum|Formats\CombinedEnum|null
 	{
 		$metadata = $this->loader->loadCharacteristics();
 
@@ -3046,7 +3048,7 @@ class Install extends Console\Command\Command
 
 		if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 			$dataTypes = array_map(
-				static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+				static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 				(array) $characteristicMetadata->offsetGet('DataType'),
 			);
 
@@ -3054,7 +3056,7 @@ class Install extends Console\Command\Command
 				throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
 			}
 		} else {
-			$dataTypes = [MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
+			$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
 		}
 
 		$format = null;
@@ -3063,7 +3065,7 @@ class Install extends Console\Command\Command
 			$characteristicMetadata->offsetExists('MinValue')
 			|| $characteristicMetadata->offsetExists('MaxValue')
 		) {
-			$format = new ToolsFormats\NumberRange([
+			$format = new Formats\NumberRange([
 				$characteristicMetadata->offsetExists('MinValue')
 					? floatval($characteristicMetadata->offsetGet('MinValue'))
 					: null,
@@ -3075,32 +3077,32 @@ class Install extends Console\Command\Command
 
 		if (
 			(
-				in_array(MetadataTypes\DataType::ENUM, $dataTypes, true)
-				|| in_array(MetadataTypes\DataType::SWITCH, $dataTypes, true)
-				|| in_array(MetadataTypes\DataType::BUTTON, $dataTypes, true)
+				in_array(ValuesTypes\DataType::ENUM, $dataTypes, true)
+				|| in_array(ValuesTypes\DataType::SWITCH, $dataTypes, true)
+				|| in_array(ValuesTypes\DataType::BUTTON, $dataTypes, true)
 			)
 			&& $characteristicMetadata->offsetExists('ValidValues')
 			&& $characteristicMetadata->offsetGet('ValidValues') instanceof Utils\ArrayHash
 		) {
-			$format = new ToolsFormats\StringEnum(
+			$format = new Formats\StringEnum(
 				array_values((array) $characteristicMetadata->offsetGet('ValidValues')),
 			);
 
 			if (
 				$connectProperty !== null
 				&& (
-					$connectProperty->getDataType() === MetadataTypes\DataType::ENUM
-					|| $connectProperty->getDataType() === MetadataTypes\DataType::SWITCH
-					|| $connectProperty->getDataType() === MetadataTypes\DataType::BUTTON
+					$connectProperty->getDataType() === ValuesTypes\DataType::ENUM
+					|| $connectProperty->getDataType() === ValuesTypes\DataType::SWITCH
+					|| $connectProperty->getDataType() === ValuesTypes\DataType::BUTTON
 				) && (
-					$connectProperty->getFormat() instanceof ToolsFormats\StringEnum
-					|| $connectProperty->getFormat() instanceof ToolsFormats\CombinedEnum
+					$connectProperty->getFormat() instanceof Formats\StringEnum
+					|| $connectProperty->getFormat() instanceof Formats\CombinedEnum
 				)
 			) {
 				$mappedFormat = [];
 
 				foreach ($characteristicMetadata->offsetGet('ValidValues') as $name => $item) {
-					$options = $connectProperty->getFormat() instanceof ToolsFormats\StringEnum
+					$options = $connectProperty->getFormat() instanceof Formats\StringEnum
 						? $connectProperty->getFormat()->toArray()
 						: array_map(
 							static function (array $items): array|null {
@@ -3110,7 +3112,7 @@ class Install extends Console\Command\Command
 
 								return [
 									$items[0]->getDataType(),
-									ToolsUtilities\Value::toString($items[0]->getValue()),
+									Utilities\Value::toString($items[0]->getValue()),
 								];
 							},
 							$connectProperty->getFormat()->getItems(),
@@ -3178,24 +3180,24 @@ class Install extends Console\Command\Command
 					$valueDataType = is_array($value) ? strval($value[0]) : null;
 					$value = is_array($value) ? $value[1] : $value;
 
-					if (MetadataTypes\Payloads\Switcher::tryFrom($value) !== null) {
-						$valueDataType = MetadataTypes\DataTypeShort::SWITCH->value;
+					if (Payloads\Switcher::tryFrom($value) !== null) {
+						$valueDataType = ValuesTypes\DataTypeShort::SWITCH->value;
 
-					} elseif (MetadataTypes\Payloads\Button::tryFrom($value) !== null) {
-						$valueDataType = MetadataTypes\DataTypeShort::BUTTON->value;
+					} elseif (Payloads\Button::tryFrom($value) !== null) {
+						$valueDataType = ValuesTypes\DataTypeShort::BUTTON->value;
 
-					} elseif (MetadataTypes\Payloads\Cover::tryFrom($value) !== null) {
-						$valueDataType = MetadataTypes\DataTypeShort::COVER->value;
+					} elseif (Payloads\Cover::tryFrom($value) !== null) {
+						$valueDataType = ValuesTypes\DataTypeShort::COVER->value;
 					}
 
 					$mappedFormat[] = [
 						[$valueDataType, strval($value)],
-						[MetadataTypes\DataTypeShort::UCHAR->value, strval($item)],
-						[MetadataTypes\DataTypeShort::UCHAR->value, strval($item)],
+						[ValuesTypes\DataTypeShort::UCHAR->value, strval($item)],
+						[ValuesTypes\DataTypeShort::UCHAR->value, strval($item)],
 					];
 				}
 
-				$format = new ToolsFormats\CombinedEnum($mappedFormat);
+				$format = new Formats\CombinedEnum($mappedFormat);
 			}
 		}
 
@@ -3213,7 +3215,7 @@ class Install extends Console\Command\Command
 	private function provideCharacteristicValue(
 		Style\SymfonyStyle $io,
 		string $characteristic,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value = null,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value = null,
 	): string|int|bool|float
 	{
 		$metadata = $this->loader->loadCharacteristics();
@@ -3240,7 +3242,7 @@ class Install extends Console\Command\Command
 
 		if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
 			$dataTypes = array_map(
-				static fn (string $type): MetadataTypes\DataType => MetadataTypes\DataType::from($type),
+				static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
 				(array) $characteristicMetadata->offsetGet('DataType'),
 			);
 
@@ -3248,7 +3250,7 @@ class Install extends Console\Command\Command
 				throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
 			}
 		} else {
-			$dataTypes = [MetadataTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
+			$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
 		}
 
 		if (
@@ -3264,7 +3266,7 @@ class Install extends Console\Command\Command
 				(string) $this->translator->translate('//homekit-connector.cmd.install.questions.select.device.value'),
 				$options,
 				$value !== null ? array_key_exists(
-					ToolsUtilities\Value::toString($value, true),
+					Utilities\Value::toString($value, true),
 					$options,
 				) : null,
 			);
@@ -3309,7 +3311,7 @@ class Install extends Console\Command\Command
 
 		if (
 			count($dataTypes) === 1
-			&& in_array(MetadataTypes\DataType::BOOLEAN, $dataTypes, true)
+			&& in_array(ValuesTypes\DataType::BOOLEAN, $dataTypes, true)
 		) {
 			$question = new Console\Question\ChoiceQuestion(
 				(string) $this->translator->translate('//homekit-connector.cmd.install.questions.select.device.value'),
@@ -3361,7 +3363,7 @@ class Install extends Console\Command\Command
 
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//homekit-connector.cmd.install.questions.provide.value'),
-			is_object($value) ? ToolsUtilities\Value::toString($value) : $value,
+			is_object($value) ? Utilities\Value::toString($value) : $value,
 		);
 		$question->setValidator(
 			function (string|int|null $answer) use ($dataTypes, $minValue, $maxValue, $step): string|int|float {
@@ -3378,14 +3380,14 @@ class Install extends Console\Command\Command
 
 				if (
 					count($dataTypes) === 1
-					&& in_array(MetadataTypes\DataType::STRING, $dataTypes, true)
+					&& in_array(ValuesTypes\DataType::STRING, $dataTypes, true)
 				) {
 					return strval($answer);
 				}
 
 				if (
 					count($dataTypes) === 1
-					&& in_array(MetadataTypes\DataType::FLOAT, $dataTypes, true)
+					&& in_array(ValuesTypes\DataType::FLOAT, $dataTypes, true)
 				) {
 					if ($minValue !== null && floatval($answer) < $minValue) {
 						throw new Exceptions\Runtime(
@@ -3431,12 +3433,12 @@ class Install extends Console\Command\Command
 				if (
 					count($dataTypes) === 1
 					&& (
-						in_array(MetadataTypes\DataType::CHAR, $dataTypes, true)
-						|| in_array(MetadataTypes\DataType::UCHAR, $dataTypes, true)
-						|| in_array(MetadataTypes\DataType::SHORT, $dataTypes, true)
-						|| in_array(MetadataTypes\DataType::USHORT, $dataTypes, true)
-						|| in_array(MetadataTypes\DataType::INT, $dataTypes, true)
-						|| in_array(MetadataTypes\DataType::UINT, $dataTypes, true)
+						in_array(ValuesTypes\DataType::CHAR, $dataTypes, true)
+						|| in_array(ValuesTypes\DataType::UCHAR, $dataTypes, true)
+						|| in_array(ValuesTypes\DataType::SHORT, $dataTypes, true)
+						|| in_array(ValuesTypes\DataType::USHORT, $dataTypes, true)
+						|| in_array(ValuesTypes\DataType::INT, $dataTypes, true)
+						|| in_array(ValuesTypes\DataType::UINT, $dataTypes, true)
 					)
 				) {
 					if ($minValue !== null && intval($answer) < $minValue) {
@@ -3691,7 +3693,7 @@ class Install extends Console\Command\Command
 			$this->logger->alert(
 				'Could not read service identifier from console answer',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 				],
 			);
@@ -3713,7 +3715,7 @@ class Install extends Console\Command\Command
 			$this->logger->alert(
 				'Channel was not found',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 				],
 			);
@@ -3757,7 +3759,7 @@ class Install extends Console\Command\Command
 			$this->logger->alert(
 				'Could not read characteristic identifier from console answer',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 				],
 			);
@@ -3781,7 +3783,7 @@ class Install extends Console\Command\Command
 			$this->logger->alert(
 				'Property was not found',
 				[
-					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+					'source' => Sources\Connector::HOMEKIT->value,
 					'type' => 'install-cmd',
 				],
 			);

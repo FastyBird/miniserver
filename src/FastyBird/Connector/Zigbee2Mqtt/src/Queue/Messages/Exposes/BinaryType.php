@@ -15,8 +15,9 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
-use FastyBird\Connector\Zigbee2Mqtt\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
 use Orisai\ObjectMapper;
 use TypeError;
 use ValueError;
@@ -35,7 +36,7 @@ final class BinaryType extends Type
 {
 
 	public function __construct(
-		#[ObjectMapper\Rules\ArrayEnumValue(cases: [Types\ExposeType::BINARY->value])]
+		#[ObjectMapper\Rules\ArrayEnumValue(cases: [Zigbee2MqttTypes\ExposeType::BINARY->value])]
 		private readonly string $type,
 		string $name,
 		string $label,
@@ -69,18 +70,18 @@ final class BinaryType extends Type
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getType(): Types\ExposeType
+	public function getType(): Zigbee2MqttTypes\ExposeType
 	{
-		return Types\ExposeType::from($this->type);
+		return Zigbee2MqttTypes\ExposeType::from($this->type);
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		if (is_bool($this->getValueOn()) && is_bool($this->getValueOff())) {
-			return MetadataTypes\DataType::BOOLEAN;
+			return ValuesTypes\DataType::BOOLEAN;
 		}
 
-		return MetadataTypes\DataType::SWITCH;
+		return ValuesTypes\DataType::SWITCH;
 	}
 
 	public function getValueOn(): bool|string
@@ -107,12 +108,12 @@ final class BinaryType extends Type
 		return array_merge(
 			[
 				[
-					MetadataTypes\Payloads\Switcher::ON->value,
+					Payloads\Switcher::ON->value,
 					$this->getValueOn(),
 					$this->getValueOn(),
 				],
 				[
-					MetadataTypes\Payloads\Switcher::OFF->value,
+					Payloads\Switcher::OFF->value,
 					$this->getValueOff(),
 					$this->getValueOff(),
 				],
@@ -120,7 +121,7 @@ final class BinaryType extends Type
 			[
 				$this->getValueToggle() !== null
 					? [
-						MetadataTypes\Payloads\Switcher::TOGGLE->value,
+						Payloads\Switcher::TOGGLE->value,
 						$this->getValueToggle(),
 						$this->getValueToggle(),
 					]

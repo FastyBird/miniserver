@@ -18,7 +18,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -128,7 +128,7 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 		$this->connectorPropertiesStatesManager->write(
 			$property,
 			Utils\ArrayHash::from($data),
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 		);
 	}
 
@@ -159,7 +159,7 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 		$this->devicePropertiesStatesManager->write(
 			$property,
 			Utils\ArrayHash::from($data),
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 		);
 	}
 
@@ -190,7 +190,7 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 		$this->channelPropertiesStatesManager->write(
 			$property,
 			Utils\ArrayHash::from($data),
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 		);
 	}
 

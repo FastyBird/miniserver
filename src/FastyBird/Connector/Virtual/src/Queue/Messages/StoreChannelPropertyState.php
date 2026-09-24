@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Virtual\Queue\Messages;
 
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function is_string;
@@ -53,10 +53,10 @@ final readonly class StoreChannelPropertyState implements Message
 		])]
 		private float|int|string|bool|null $value,
 		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\InstanceOfValue(type: MetadataTypes\Sources\Connector::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: MetadataTypes\Sources\Addon::class),
+			new ObjectMapper\Rules\InstanceOfValue(type: Sources\Connector::class),
+			new ObjectMapper\Rules\InstanceOfValue(type: Sources\Addon::class),
 		])]
-		private MetadataTypes\Sources\Connector|MetadataTypes\Sources\Addon $source,
+		private Sources\Connector|Sources\Addon $source,
 	)
 	{
 	}
@@ -93,7 +93,7 @@ final readonly class StoreChannelPropertyState implements Message
 		return $this->value;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Connector|MetadataTypes\Sources\Addon
+	public function getSource(): Sources\Connector|Sources\Addon
 	{
 		return $this->source;
 	}

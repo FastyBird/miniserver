@@ -18,17 +18,17 @@ namespace FastyBird\Connector\Sonoff\API;
 use Closure;
 use DateTimeInterface;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Connector\Sonoff\ValueObjects;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
@@ -134,7 +134,7 @@ final class CloudWs
 		private readonly Services\WebSocketClientFactory $webSocketClientFactory,
 		private readonly Helpers\MessageBuilder $entityHelper,
 		private readonly Sonoff\Logger $logger,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 		private readonly Clock\Clock $clock,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
 		private readonly EventLoop\LoopInterface $eventLoop,
@@ -158,11 +158,11 @@ final class CloudWs
 		try {
 			$socketsSettings = $this->login();
 
-		} catch (Exceptions\CloudWsCall $ex) {
+		} catch (SonoffExceptions\CloudWsCall $ex) {
 			return Promise\reject($ex);
 		} catch (Throwable $ex) {
 			return Promise\reject(
-				new Exceptions\CloudWsCall('Sockets connector could not be created', $ex->getCode(), $ex),
+				new SonoffExceptions\CloudWsCall('Sockets connector could not be created', $ex->getCode(), $ex),
 			);
 		}
 
@@ -185,7 +185,7 @@ final class CloudWs
 							$this->logger->debug(
 								'Connected to Sonoff sockets server',
 								[
-									'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+									'source' => Sources\Connector::SONOFF->value,
 									'type' => 'cloud-ws-api',
 								],
 							);
@@ -211,7 +211,7 @@ final class CloudWs
 
 							Utils\Arrays::invoke(
 								$this->onError,
-								new Exceptions\InvalidState(
+								new SonoffExceptions\InvalidState(
 									'Handshake with Sonoff sockets server failed',
 									$ex->getCode(),
 									$ex,
@@ -229,7 +229,7 @@ final class CloudWs
 
 					Utils\Arrays::invoke(
 						$this->onError,
-						new Exceptions\InvalidState(
+						new SonoffExceptions\InvalidState(
 							'An error occurred on Sonoff sockets server connection',
 							$ex->getCode(),
 							$ex,
@@ -241,7 +241,7 @@ final class CloudWs
 					$this->logger->debug(
 						'Connection to Sonoff sockets server was closed',
 						[
-							'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+							'source' => Sources\Connector::SONOFF->value,
 							'type' => 'cloud-ws-api',
 							'connection' => [
 								'code' => $code,
@@ -268,7 +268,7 @@ final class CloudWs
 				Utils\Arrays::invoke($this->onError, $ex);
 
 				$deferred->reject(
-					new Exceptions\InvalidState(
+					new SonoffExceptions\InvalidState(
 						'Connection to Sonoff sockets server failed',
 						$ex->getCode(),
 						$ex,
@@ -386,7 +386,7 @@ final class CloudWs
 	}
 
 	/**
-	 * @throws Exceptions\CloudWsCall
+	 * @throws SonoffExceptions\CloudWsCall
 	 * @throws RuntimeException
 	 */
 	private function login(): Messages\Response\Sockets\ApplicationLogin
@@ -410,7 +410,7 @@ final class CloudWs
 		assert($data instanceof Utils\ArrayHash);
 
 		if ($error !== 0) {
-			throw new Exceptions\CloudWsCall(
+			throw new SonoffExceptions\CloudWsCall(
 				sprintf('User authentication failed: %s', strval($data->offsetGet('msg'))),
 			);
 		}
@@ -427,7 +427,7 @@ final class CloudWs
 
 		if ($this->connection === null) {
 			return Promise\reject(
-				new Exceptions\InvalidState('Connection with Sonoff sockets server is not established'),
+				new SonoffExceptions\InvalidState('Connection with Sonoff sockets server is not established'),
 			);
 		}
 
@@ -459,7 +459,7 @@ final class CloudWs
 	}
 
 	/**
-	 * @throws Exceptions\CloudWsError
+	 * @throws SonoffExceptions\CloudWsError
 	 */
 	private function handleMessage(string $content): void
 	{
@@ -469,7 +469,7 @@ final class CloudWs
 			$this->logger->debug(
 				'Received message from Sonoff sockets server not be parsed',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'cloud-ws-api',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -518,7 +518,7 @@ final class CloudWs
 
 		if ($error !== 0) {
 			$message?->getDeferred()?->reject(
-				new Exceptions\CloudWsCall('An error was received from Sonoff sockets server', $error),
+				new SonoffExceptions\CloudWsCall('An error was received from Sonoff sockets server', $error),
 			);
 
 			return;
@@ -598,7 +598,7 @@ final class CloudWs
 	 *
 	 * @return T|null
 	 *
-	 * @throws Exceptions\CloudWsError
+	 * @throws SonoffExceptions\CloudWsError
 	 */
 	private function parseEntity(
 		string $message,
@@ -616,7 +616,7 @@ final class CloudWs
 			$deferred?->resolve($entity);
 
 			return $entity;
-		} catch (Exceptions\CloudWsCall $ex) {
+		} catch (SonoffExceptions\CloudWsCall $ex) {
 			$deferred?->reject($ex);
 		}
 
@@ -637,7 +637,7 @@ final class CloudWs
 			self::WAIT_FOR_REPLY_TIMEOUT,
 			async(function () use ($deferred, $seqId): void {
 				$deferred?->reject(
-					new Exceptions\CloudWsCallTimeout('Sending command to cloud through sockets failed'),
+					new SonoffExceptions\CloudWsCallTimeout('Sending command to cloud through sockets failed'),
 				);
 
 				if (array_key_exists($seqId, $this->messages)) {
@@ -666,7 +666,7 @@ final class CloudWs
 			);
 
 			$deferred?->reject(
-				new Exceptions\CloudWsCall('Request sign could not be created: ' . $errorPrinter->printError($ex)),
+				new SonoffExceptions\CloudWsCall('Request sign could not be created: ' . $errorPrinter->printError($ex)),
 			);
 
 			return;
@@ -675,12 +675,12 @@ final class CloudWs
 		try {
 			$this->connection?->send(Utils\Json::encode($payload));
 		} catch (Utils\JsonException) {
-			$deferred?->reject(new Exceptions\CloudWsCallTimeout('Message could not be converted for sending'));
+			$deferred?->reject(new SonoffExceptions\CloudWsCallTimeout('Message could not be converted for sending'));
 		}
 	}
 
 	/**
-	 * @throws Exceptions\CloudWsCall
+	 * @throws SonoffExceptions\CloudWsCall
 	 */
 	private function getHttpResponseBody(
 		Message\ResponseInterface $response,
@@ -691,7 +691,7 @@ final class CloudWs
 
 			return $response->getBody()->getContents();
 		} catch (RuntimeException $ex) {
-			throw new Exceptions\CloudWsCall(
+			throw new SonoffExceptions\CloudWsCall(
 				'Could not get content from response body',
 				$ex->getCode(),
 				$ex,
@@ -706,7 +706,7 @@ final class CloudWs
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\CloudWsError
+	 * @throws SonoffExceptions\CloudWsError
 	 */
 	private function createEntity(string $entity, Utils\ArrayHash $data): Messages\Message
 	{
@@ -715,10 +715,10 @@ final class CloudWs
 				$entity,
 				(array) Utils\Json::decode(Utils\Json::encode($data), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\CloudWsError('Could not map data to entity', $ex->getCode(), $ex);
+		} catch (SonoffExceptions\Runtime $ex) {
+			throw new SonoffExceptions\CloudWsError('Could not map data to entity', $ex->getCode(), $ex);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\CloudWsError(
+			throw new SonoffExceptions\CloudWsError(
 				'Could not create entity from payload',
 				$ex->getCode(),
 				$ex,
@@ -729,8 +729,8 @@ final class CloudWs
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\CloudWsCall
-	 * @throws Exceptions\CloudWsError
+	 * @throws SonoffExceptions\CloudWsCall
+	 * @throws SonoffExceptions\CloudWsError
 	 */
 	private function validateData(
 		string $payload,
@@ -743,9 +743,9 @@ final class CloudWs
 				$payload,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\CloudWsCall(
+				throw new SonoffExceptions\CloudWsCall(
 					'Could not validate received payload',
 					$ex->getCode(),
 					$ex,
@@ -759,7 +759,7 @@ final class CloudWs
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Message\ResponseInterface> : Message\ResponseInterface)
 	 *
-	 * @throws Exceptions\CloudWsCall
+	 * @throws SonoffExceptions\CloudWsCall
 	 */
 	private function callHttpRequest(
 		Request $request,
@@ -775,7 +775,7 @@ final class CloudWs
 				$request->getUri(),
 			),
 			[
-				'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+				'source' => Sources\Connector::SONOFF->value,
 				'type' => 'cloud-ws-api',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -799,7 +799,7 @@ final class CloudWs
 								$response->getBody()->rewind();
 							} catch (RuntimeException $ex) {
 								$deferred->reject(
-									new Exceptions\CloudWsCall(
+									new SonoffExceptions\CloudWsCall(
 										'Could not get content from response body',
 										$ex->getCode(),
 										$ex,
@@ -812,7 +812,7 @@ final class CloudWs
 							$this->logger->debug(
 								'Received response',
 								[
-									'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+									'source' => Sources\Connector::SONOFF->value,
 									'type' => 'cloud-ws-api',
 									'request' => [
 										'method' => $request->getMethod(),
@@ -831,7 +831,7 @@ final class CloudWs
 						},
 						static function (Throwable $ex) use ($deferred): void {
 							$deferred->reject(
-								new Exceptions\CloudWsCall(
+								new SonoffExceptions\CloudWsCall(
 									'Calling api endpoint failed',
 									$ex->getCode(),
 									$ex,
@@ -856,7 +856,7 @@ final class CloudWs
 
 				$response->getBody()->rewind();
 			} catch (RuntimeException $ex) {
-				throw new Exceptions\CloudWsCall(
+				throw new SonoffExceptions\CloudWsCall(
 					'Could not get content from response body',
 					$ex->getCode(),
 					$ex,
@@ -866,7 +866,7 @@ final class CloudWs
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'cloud-ws-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -883,7 +883,7 @@ final class CloudWs
 
 			return $response;
 		} catch (GuzzleHttp\Exception\GuzzleException | InvalidArgumentException $ex) {
-			throw new Exceptions\CloudWsCall(
+			throw new SonoffExceptions\CloudWsCall(
 				'Calling api endpoint failed',
 				$ex->getCode(),
 				$ex,
@@ -909,7 +909,7 @@ final class CloudWs
 	}
 
 	/**
-	 * @throws Exceptions\CloudWsError
+	 * @throws SonoffExceptions\CloudWsError
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -922,7 +922,7 @@ final class CloudWs
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\CloudWsError('Validation schema for response could not be loaded');
+				throw new SonoffExceptions\CloudWsError('Validation schema for response could not be loaded');
 			}
 		}
 
@@ -933,7 +933,7 @@ final class CloudWs
 	 * @param array<string, string|array<string>>|null $headers
 	 * @param array<string, mixed> $params
 	 *
-	 * @throws Exceptions\CloudWsError
+	 * @throws SonoffExceptions\CloudWsError
 	 */
 	private function createHttpRequest(
 		string $method,
@@ -952,8 +952,8 @@ final class CloudWs
 
 		try {
 			return new Request($method, $url, $headers, $body);
-		} catch (Exceptions\InvalidArgument $ex) {
-			throw new Exceptions\CloudWsError('Could not create request instance', $ex->getCode(), $ex);
+		} catch (SonoffExceptions\InvalidArgument $ex) {
+			throw new SonoffExceptions\CloudWsError('Could not create request instance', $ex->getCode(), $ex);
 		}
 	}
 

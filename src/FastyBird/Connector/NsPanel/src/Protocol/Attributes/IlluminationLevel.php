@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,12 +38,12 @@ class IlluminationLevel extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::LEVEL,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::LEVEL,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\IlluminationLevel::BRIGHTER->value,
-				Types\Payloads\IlluminationLevel::DARKER->value,
+				NsPanelTypes\Payloads\IlluminationLevel::BRIGHTER->value,
+				NsPanelTypes\Payloads\IlluminationLevel::DARKER->value,
 			],
 		);
 	}

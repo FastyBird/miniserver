@@ -27,8 +27,8 @@ use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -100,7 +100,7 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Connector could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+					'source' => Sources\Connector::FB_MQTT->value,
 					'type' => 'write-v1-property-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -135,7 +135,7 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+					'source' => Sources\Connector::FB_MQTT->value,
 					'type' => 'write-v1-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -166,7 +166,7 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 			$this->logger->error(
 				'Device property could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+					'source' => Sources\Connector::FB_MQTT->value,
 					'type' => 'write-v1-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -188,7 +188,7 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 			$this->logger->warning(
 				'Property is not writable',
 				[
-					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+					'source' => Sources\Connector::FB_MQTT->value,
 					'type' => 'write-v1-property-state-message-consumer',
 					'connector' => [
 						'id' => $connector->getId()->toString(),
@@ -212,13 +212,13 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$expectedValue = ToolsUtilities\Value::flattenValue($state->getExpectedValue());
+		$expectedValue = Utilities\Value::flattenValue($state->getExpectedValue());
 
 		if ($expectedValue === null) {
 			await($this->devicePropertiesStatesManager->setPendingState(
 				$property,
 				false,
-				MetadataTypes\Sources\Connector::FB_MQTT,
+				Sources\Connector::FB_MQTT,
 			));
 
 			return true;
@@ -240,7 +240,7 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 		await($this->devicePropertiesStatesManager->setPendingState(
 			$property,
 			true,
-			MetadataTypes\Sources\Connector::FB_MQTT,
+			Sources\Connector::FB_MQTT,
 		));
 
 		$topic = API\V1Builder::buildDevicePropertyTopic($device, $property);
@@ -258,13 +258,13 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 						DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
 						DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 					]),
-					MetadataTypes\Sources\Connector::FB_MQTT,
+					Sources\Connector::FB_MQTT,
 				));
 
 				$this->logger->debug(
 					'Channel state was successfully sent to device',
 					[
-						'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+						'source' => Sources\Connector::FB_MQTT->value,
 						'type' => 'write-v1-property-state-message-consumer',
 						'connector' => [
 							'id' => $connector->getId()->toString(),
@@ -283,13 +283,13 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 				await($this->devicePropertiesStatesManager->setPendingState(
 					$property,
 					false,
-					MetadataTypes\Sources\Connector::FB_MQTT,
+					Sources\Connector::FB_MQTT,
 				));
 
 				$this->logger->error(
 					'Could write state to device',
 					[
-						'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+						'source' => Sources\Connector::FB_MQTT->value,
 						'type' => 'write-v1-property-state-message-consumer',
 						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
@@ -309,7 +309,7 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed write device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+				'source' => Sources\Connector::FB_MQTT->value,
 				'type' => 'write-v1-property-state-message-consumer',
 				'connector' => [
 					'id' => $connector->getId()->toString(),

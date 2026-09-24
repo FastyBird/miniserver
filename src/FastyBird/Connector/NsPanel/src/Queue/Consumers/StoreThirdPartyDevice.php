@@ -21,10 +21,11 @@ use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
-use FastyBird\Connector\NsPanel\Types;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
@@ -75,7 +76,7 @@ final class StoreThirdPartyDevice implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'store-third-party-device-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -96,15 +97,15 @@ final class StoreThirdPartyDevice implements Queue\Consumer
 		$this->setDeviceProperty(
 			$device->getId(),
 			$message->getGatewayIdentifier(),
-			MetadataTypes\DataType::STRING,
-			Types\DevicePropertyIdentifier::GATEWAY_IDENTIFIER,
-			DevicesUtilities\Name::createName(Types\DevicePropertyIdentifier::GATEWAY_IDENTIFIER->value),
+			ValuesTypes\DataType::STRING,
+			NsPanelTypes\DevicePropertyIdentifier::GATEWAY_IDENTIFIER,
+			DevicesUtilities\Name::createName(NsPanelTypes\DevicePropertyIdentifier::GATEWAY_IDENTIFIER->value),
 		);
 
 		$this->logger->debug(
 			'Consumed store device message',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'store-third-party-device-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

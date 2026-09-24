@@ -19,7 +19,7 @@ use FastyBird\Connector\NsPanel\Documents;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -132,7 +132,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 			$this->logger->error(
 				'Characteristic value could not be prepared for writing',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'event-writer',
 					'exception' => Logging\Logger::buildException($ex),
 				],

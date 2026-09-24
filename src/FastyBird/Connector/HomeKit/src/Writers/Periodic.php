@@ -26,7 +26,7 @@ use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -244,7 +244,7 @@ abstract class Periodic
 			if ($property instanceof DevicesDocuments\Devices\Properties\Mapped) {
 				$state = await($this->devicePropertiesStatesManager->read(
 					$property,
-					MetadataTypes\Sources\Connector::HOMEKIT,
+					Sources\Connector::HOMEKIT,
 				));
 
 				if (is_bool($state)) {
@@ -265,7 +265,7 @@ abstract class Periodic
 			} elseif ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
 				$state = await($this->channelPropertiesStatesManager->read(
 					$property,
-					MetadataTypes\Sources\Connector::HOMEKIT,
+					Sources\Connector::HOMEKIT,
 				));
 
 				if (is_bool($state)) {
@@ -286,7 +286,7 @@ abstract class Periodic
 			} elseif ($property instanceof DevicesDocuments\Devices\Properties\Dynamic) {
 				$state = await($this->devicePropertiesStatesManager->read(
 					$property,
-					MetadataTypes\Sources\Connector::HOMEKIT,
+					Sources\Connector::HOMEKIT,
 				));
 
 				if (is_bool($state)) {
@@ -307,7 +307,7 @@ abstract class Periodic
 			} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 				$state = await($this->channelPropertiesStatesManager->read(
 					$property,
-					MetadataTypes\Sources\Connector::HOMEKIT,
+					Sources\Connector::HOMEKIT,
 				));
 
 				if (is_bool($state)) {
@@ -496,7 +496,7 @@ abstract class Periodic
 							$this->logger->error(
 								'Characteristic value could not be prepared for writing',
 								[
-									'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
+									'source' => Sources\Connector::HOMEKIT->value,
 									'type' => 'periodic-writer',
 									'exception' => Logging\Logger::buildException($ex),
 								],

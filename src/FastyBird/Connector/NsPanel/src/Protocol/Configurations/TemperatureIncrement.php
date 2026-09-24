@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -41,8 +41,8 @@ class TemperatureIncrement extends Configuration
 	{
 		parent::__construct(
 			$id,
-			Types\Configuration::TEMPERATURE_INCREMENT,
-			MetadataTypes\DataType::FLOAT,
+			NsPanelTypes\Configuration::TEMPERATURE_INCREMENT,
+			ValuesTypes\DataType::FLOAT,
 			$capability,
 			$value,
 			[],

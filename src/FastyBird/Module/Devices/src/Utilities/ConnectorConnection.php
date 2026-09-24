@@ -18,8 +18,9 @@ namespace FastyBird\Module\Devices\Utilities;
 use Doctrine\DBAL;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
@@ -27,7 +28,7 @@ use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
 use TypeError;
@@ -75,7 +76,7 @@ final class ConnectorConnection
 	 */
 	public function setState(
 		Entities\Connectors\Connector|Documents\Connectors\Connector $connector,
-		Types\ConnectionState $state,
+		DevicesTypes\ConnectionState $state,
 	): bool
 	{
 		$currentState = $this->getState($connector);
@@ -86,7 +87,7 @@ final class ConnectorConnection
 
 		$findConnectorPropertyQuery = new Queries\Configuration\FindConnectorDynamicProperties();
 		$findConnectorPropertyQuery->byConnectorId($connector->getId());
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::STATE->value);
+		$findConnectorPropertyQuery->byIdentifier(DevicesTypes\ConnectorPropertyIdentifier::STATE->value);
 
 		$property = $this->connectorsPropertiesConfigurationRepository->findOneBy(
 			$findConnectorPropertyQuery,
@@ -104,15 +105,15 @@ final class ConnectorConnection
 					$property = $this->connectorsPropertiesEntitiesManager->create(Utils\ArrayHash::from([
 						'connector' => $connector,
 						'entity' => Entities\Connectors\Properties\Dynamic::class,
-						'identifier' => Types\ConnectorPropertyIdentifier::STATE->value,
-						'dataType' => MetadataTypes\DataType::ENUM,
+						'identifier' => DevicesTypes\ConnectorPropertyIdentifier::STATE->value,
+						'dataType' => ValuesTypes\DataType::ENUM,
 						'unit' => null,
 						'format' => [
-							Types\ConnectionState::RUNNING->value,
-							Types\ConnectionState::STOPPED->value,
-							Types\ConnectionState::UNKNOWN->value,
-							Types\ConnectionState::SLEEPING->value,
-							Types\ConnectionState::ALERT->value,
+							DevicesTypes\ConnectionState::RUNNING->value,
+							DevicesTypes\ConnectionState::STOPPED->value,
+							DevicesTypes\ConnectionState::UNKNOWN->value,
+							DevicesTypes\ConnectionState::SLEEPING->value,
+							DevicesTypes\ConnectionState::ALERT->value,
 						],
 						'settable' => false,
 						'queryable' => false,
@@ -133,13 +134,13 @@ final class ConnectorConnection
 				States\Property::ACTUAL_VALUE_FIELD => $state->value,
 				States\Property::EXPECTED_VALUE_FIELD => null,
 			]),
-			MetadataTypes\Sources\Module::DEVICES,
+			Sources\Module::DEVICES,
 		);
 
 		$this->logger->info(
 			sprintf('Connector state was changed to: %s', $state->value),
 			[
-				'source' => MetadataTypes\Sources\Module::DEVICES->value,
+				'source' => Sources\Module::DEVICES->value,
 				'type' => 'connector-connection-helper',
 				'connector' => $connector->getId()->toString(),
 				'state' => $state->value,
@@ -163,11 +164,11 @@ final class ConnectorConnection
 	 */
 	public function getState(
 		Entities\Connectors\Connector|Documents\Connectors\Connector $connector,
-	): Types\ConnectionState
+	): DevicesTypes\ConnectionState
 	{
 		$findConnectorPropertyQuery = new Queries\Configuration\FindConnectorDynamicProperties();
 		$findConnectorPropertyQuery->byConnectorId($connector->getId());
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::STATE->value);
+		$findConnectorPropertyQuery->byIdentifier(DevicesTypes\ConnectorPropertyIdentifier::STATE->value);
 
 		$property = $this->connectorsPropertiesConfigurationRepository->findOneBy(
 			$findConnectorPropertyQuery,
@@ -179,17 +180,17 @@ final class ConnectorConnection
 
 			if (
 				$state?->getRead()->getActualValue() !== null
-				&& Types\ConnectionState::tryFrom(
-					ToolsUtilities\Value::toString($state->getRead()->getActualValue(), true),
+				&& DevicesTypes\ConnectionState::tryFrom(
+					Utilities\Value::toString($state->getRead()->getActualValue(), true),
 				) !== null
 			) {
-				return Types\ConnectionState::from(
-					ToolsUtilities\Value::toString($state->getRead()->getActualValue(), true),
+				return DevicesTypes\ConnectionState::from(
+					Utilities\Value::toString($state->getRead()->getActualValue(), true),
 				);
 			}
 		}
 
-		return Types\ConnectionState::UNKNOWN;
+		return DevicesTypes\ConnectionState::UNKNOWN;
 	}
 
 	/**
@@ -210,7 +211,7 @@ final class ConnectorConnection
 	{
 		$findDevicePropertyQuery = new Queries\Configuration\FindConnectorProperties();
 		$findDevicePropertyQuery->byConnectorId($connector->getId());
-		$findDevicePropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::STATE->value);
+		$findDevicePropertyQuery->byIdentifier(DevicesTypes\ConnectorPropertyIdentifier::STATE->value);
 
 		$property = $this->connectorsPropertiesConfigurationRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -222,10 +223,10 @@ final class ConnectorConnection
 
 			if (
 				$state?->getRead()->getActualValue() !== null
-				&& Types\ConnectionState::tryFrom(
-					ToolsUtilities\Value::toString($state->getRead()->getActualValue(), true),
+				&& DevicesTypes\ConnectionState::tryFrom(
+					Utilities\Value::toString($state->getRead()->getActualValue(), true),
 				) !== null
-				&& $state->getRead()->getActualValue() === Types\ConnectionState::RUNNING->value
+				&& $state->getRead()->getActualValue() === DevicesTypes\ConnectionState::RUNNING->value
 			) {
 				return true;
 			}

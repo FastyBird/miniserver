@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 
 /**
@@ -46,7 +46,7 @@ final class StoreBridgeGroups implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed bridge groups list message',
 			[
-				'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
+				'source' => Sources\Connector::ZIGBEE2MQTT->value,
 				'type' => 'store-bridge-groups-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

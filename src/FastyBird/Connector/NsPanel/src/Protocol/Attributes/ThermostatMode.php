@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -38,13 +38,13 @@ class ThermostatMode extends Attribute
 	{
 		parent::__construct(
 			$id,
-			Types\Attribute::THERMOSTAT_MODE,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Attribute::THERMOSTAT_MODE,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			[
-				Types\Payloads\ThermostatMode::MANUAL->value,
-				Types\Payloads\ThermostatMode::AUTO->value,
-				Types\Payloads\ThermostatMode::ECO->value,
+				NsPanelTypes\Payloads\ThermostatMode::MANUAL->value,
+				NsPanelTypes\Payloads\ThermostatMode::AUTO->value,
+				NsPanelTypes\Payloads\ThermostatMode::ECO->value,
 			],
 		);
 	}

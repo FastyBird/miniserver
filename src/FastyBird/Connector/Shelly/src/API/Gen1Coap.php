@@ -18,13 +18,13 @@ namespace FastyBird\Connector\Shelly\API;
 use BadMethodCallException;
 use Closure;
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Services;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use Nette\Utils;
 use React\Datagram;
@@ -81,7 +81,7 @@ final class Gen1Coap
 		private readonly Services\MulticastFactory $multicastFactory,
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly Shelly\Logger $logger,
-		private readonly ToolsSchemas\Validator $schemaValidator,
+		private readonly Schemas\Validator $schemaValidator,
 	)
 	{
 	}
@@ -109,7 +109,7 @@ final class Gen1Coap
 			$this->logger->debug(
 				'CoAP connection was successfully closed',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'gen1-coap-api',
 				],
 			);
@@ -212,7 +212,7 @@ final class Gen1Coap
 					str_replace(' ', '', $message),
 				),
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'gen1-coap-api',
 				],
 			);
@@ -224,7 +224,7 @@ final class Gen1Coap
 			) {
 				try {
 					$this->handleStatusMessage($deviceIdentifier, $message, $remote);
-				} catch (Exceptions\CoapError | Exceptions\InvalidState $ex) {
+				} catch (ShellyExceptions\CoapError | ShellyExceptions\InvalidState $ex) {
 					Utils\Arrays::invoke($this->onError, $ex);
 				}
 			}
@@ -236,7 +236,7 @@ final class Gen1Coap
 		try {
 			$this->validatePayload($message, self::STATE_MESSAGE_SCHEMA_FILENAME);
 
-		} catch (Exceptions\CoapError | Exceptions\InvalidState) {
+		} catch (ShellyExceptions\CoapError | ShellyExceptions\InvalidState) {
 			return false;
 		}
 
@@ -244,8 +244,8 @@ final class Gen1Coap
 	}
 
 	/**
-	 * @throws Exceptions\CoapError
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\CoapError
+	 * @throws ShellyExceptions\InvalidState
 	 */
 	private function handleStatusMessage(
 		string $deviceIdentifier,
@@ -268,7 +268,7 @@ final class Gen1Coap
 			!$parsedMessage->offsetExists('G')
 			|| !$parsedMessage['G'] instanceof Utils\ArrayHash
 		) {
-			throw new Exceptions\CoapError('Provided message is not valid');
+			throw new ShellyExceptions\CoapError('Provided message is not valid');
 		}
 
 		$statuses = [];
@@ -297,16 +297,16 @@ final class Gen1Coap
 					],
 				),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\InvalidState('Could not map payload to message', $ex->getCode(), $ex);
+		} catch (ShellyExceptions\Runtime $ex) {
+			throw new ShellyExceptions\InvalidState('Could not map payload to message', $ex->getCode(), $ex);
 		}
 	}
 
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\CoapError
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\CoapError
+	 * @throws ShellyExceptions\InvalidState
 	 */
 	private function validatePayload(
 		string $payload,
@@ -319,9 +319,9 @@ final class Gen1Coap
 				$payload,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\CoapError(
+				throw new ShellyExceptions\CoapError(
 					'Could not validate received response payload',
 					$ex->getCode(),
 					$ex,
@@ -333,7 +333,7 @@ final class Gen1Coap
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidState
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -346,7 +346,7 @@ final class Gen1Coap
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\InvalidState('Validation schema for payload could not be loaded');
+				throw new ShellyExceptions\InvalidState('Validation schema for payload could not be loaded');
 			}
 		}
 

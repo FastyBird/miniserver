@@ -18,7 +18,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities\Channels;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 use function assert;
 
@@ -36,9 +36,9 @@ abstract class Shelly extends HomeKitEntities\Channels\Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
-	public function getSource(): MetadataTypes\Sources\Bridge
+	public function getSource(): Sources\Bridge
 	{
-		return MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR;
+		return Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR;
 	}
 
 	public function getDevice(): Entities\Devices\Shelly

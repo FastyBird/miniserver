@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Schemas\Devices;
 
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 
 /**
  * NS Panel third-party device entity schema
@@ -33,7 +33,7 @@ final class ThirdPartyDevice extends Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\ThirdPartyDevice::TYPE;
+	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\ThirdPartyDevice::TYPE;
 
 	public function getEntityClass(): string
 	{

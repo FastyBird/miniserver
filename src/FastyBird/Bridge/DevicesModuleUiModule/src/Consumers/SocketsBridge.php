@@ -23,8 +23,8 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as WebSocketsRouting;
 use FastyBird\Core\Topics\WsServer as WsServerTopics;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Ui;
@@ -76,7 +76,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 	 * @throws UiExceptions\InvalidState
 	 */
 	public function consume(
-		MetadataTypes\Sources\Source $source,
+		Sources\Source $source,
 		string $routingKey,
 		ApplicationDocuments\Document|null $document,
 	): void
@@ -123,11 +123,11 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 		foreach ($dataSources as $dataSource) {
 			$message = [
 				'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
-				'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
+				'source' => Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 				'data' => array_merge(
 					$dataSource->toArray(),
 					[
-						'value' => ToolsUtilities\Value::flattenValue($document->getRead()->getActualValue()),
+						'value' => Utilities\Value::flattenValue($document->getRead()->getActualValue()),
 					],
 				),
 			];
@@ -138,7 +138,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 				$this->logger->debug(
 					'Successfully published message',
 					[
-						'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
+						'source' => Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 						'type' => 'state-entities-consumer',
 						'message' => $message,
 					],
@@ -148,7 +148,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 				$this->logger->error(
 					'Message could not be published to exchange',
 					[
-						'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
+						'source' => Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 						'type' => 'state-entities-consumer',
 						'message' => $message,
 					],
@@ -159,7 +159,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 		$this->logger->debug(
 			'Received message from exchange was pushed to WS clients',
 			[
-				'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
+				'source' => Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 				'type' => 'state-entities-consumer',
 				'message' => [
 					'routing_key' => $routingKey,
@@ -184,7 +184,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 				$this->logger->debug(
 					'Broadcasting message to topic',
 					[
-						'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
+						'source' => Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 						'type' => 'state-entities-consumer',
 						'link' => $link,
 					],
@@ -198,7 +198,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 			$this->logger->error(
 				'Data could not be converted to message',
 				[
-					'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
+					'source' => Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 					'type' => 'state-entities-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -208,7 +208,7 @@ final class SocketsBridge implements ExchangeConsumers\Consumer
 			$this->logger->error(
 				'Data could not be broadcasts to clients',
 				[
-					'source' => MetadataTypes\Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
+					'source' => Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 					'type' => 'state-entities-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 				],

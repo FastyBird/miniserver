@@ -16,13 +16,13 @@
 namespace FastyBird\Connector\Shelly\API;
 
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Services;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
@@ -75,7 +75,7 @@ abstract class HttpApi
 		protected readonly Services\HttpClientFactory $httpClientFactory,
 		protected readonly Helpers\MessageBuilder $messageBuilder,
 		protected readonly Shelly\Logger $logger,
-		protected readonly ToolsSchemas\Validator $schemaValidator,
+		protected readonly Schemas\Validator $schemaValidator,
 	)
 	{
 	}
@@ -87,7 +87,7 @@ abstract class HttpApi
 	 *
 	 * @return T
 	 *
-	 * @throws Exceptions\HttpApiError
+	 * @throws ShellyExceptions\HttpApiError
 	 */
 	protected function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
 	{
@@ -96,10 +96,10 @@ abstract class HttpApi
 				$message,
 				(array) Utils\Json::decode(Utils\Json::encode($data), forceArrays: true),
 			);
-		} catch (Exceptions\Runtime $ex) {
-			throw new Exceptions\HttpApiError('Could not map data to message', $ex->getCode(), $ex);
+		} catch (ShellyExceptions\Runtime $ex) {
+			throw new ShellyExceptions\HttpApiError('Could not map data to message', $ex->getCode(), $ex);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\HttpApiError(
+			throw new ShellyExceptions\HttpApiError(
 				'Could not create message from response',
 				$ex->getCode(),
 				$ex,
@@ -110,7 +110,7 @@ abstract class HttpApi
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Message\ResponseInterface> : Message\ResponseInterface)
 	 *
-	 * @throws Exceptions\HttpApiCall
+	 * @throws ShellyExceptions\HttpApiCall
 	 */
 	protected function callRequest(
 		Request $request,
@@ -130,7 +130,7 @@ abstract class HttpApi
 				strval($request->getUri()),
 			),
 			[
-				'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+				'source' => Sources\Connector::SHELLY->value,
 				'type' => 'http-api',
 				'request' => [
 					'method' => $request->getMethod(),
@@ -161,7 +161,7 @@ abstract class HttpApi
 								$response->getBody()->rewind();
 							} catch (RuntimeException $ex) {
 								$deferred->reject(
-									new Exceptions\HttpApiCall(
+									new ShellyExceptions\HttpApiCall(
 										'Could not get content from response body',
 										$request,
 										$response,
@@ -176,7 +176,7 @@ abstract class HttpApi
 							$this->logger->debug(
 								'Received response',
 								[
-									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+									'source' => Sources\Connector::SHELLY->value,
 									'type' => 'http-api',
 									'request' => [
 										'method' => $request->getMethod(),
@@ -243,7 +243,7 @@ abstract class HttpApi
 											->catch(
 												static function (Throwable $ex) use ($deferred, $request): void {
 													$deferred->reject(
-														new Exceptions\HttpApiCall(
+														new ShellyExceptions\HttpApiCall(
 															'Calling api endpoint failed',
 															$request,
 															null,
@@ -262,7 +262,7 @@ abstract class HttpApi
 							}
 
 							$deferred->reject(
-								new Exceptions\HttpApiCall(
+								new ShellyExceptions\HttpApiCall(
 									'Calling api endpoint failed',
 									$request,
 									null,
@@ -297,7 +297,7 @@ abstract class HttpApi
 
 				$response->getBody()->rewind();
 			} catch (RuntimeException $ex) {
-				throw new Exceptions\HttpApiCall(
+				throw new ShellyExceptions\HttpApiCall(
 					'Could not get content from response body',
 					$request,
 					$response,
@@ -309,7 +309,7 @@ abstract class HttpApi
 			$this->logger->debug(
 				'Received response',
 				[
-					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
+					'source' => Sources\Connector::SHELLY->value,
 					'type' => 'http-api',
 					'request' => [
 						'method' => $request->getMethod(),
@@ -326,7 +326,7 @@ abstract class HttpApi
 
 			return $response;
 		} catch (GuzzleHttp\Exception\GuzzleException | InvalidArgumentException $ex) {
-			throw new Exceptions\HttpApiCall(
+			throw new ShellyExceptions\HttpApiCall(
 				'Calling api endpoint failed',
 				$request,
 				null,
@@ -340,7 +340,7 @@ abstract class HttpApi
 	 * @param array<string, mixed> $params
 	 * @param array<string, int|string|array<string>> $headers
 	 *
-	 * @throws Exceptions\HttpApiError
+	 * @throws ShellyExceptions\HttpApiError
 	 */
 	protected function createRequest(
 		string $method,
@@ -357,8 +357,8 @@ abstract class HttpApi
 
 		try {
 			return new Request($method, $url, $headers, $body);
-		} catch (Exceptions\InvalidArgument | Exceptions\Runtime $ex) {
-			throw new Exceptions\HttpApiError('Could not create request instance', $ex->getCode(), $ex);
+		} catch (ShellyExceptions\InvalidArgument | ShellyExceptions\Runtime $ex) {
+			throw new ShellyExceptions\HttpApiError('Could not create request instance', $ex->getCode(), $ex);
 		}
 	}
 
@@ -439,8 +439,8 @@ abstract class HttpApi
 	/**
 	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
 	 *
-	 * @throws Exceptions\HttpApiCall
-	 * @throws Exceptions\HttpApiError
+	 * @throws ShellyExceptions\HttpApiCall
+	 * @throws ShellyExceptions\HttpApiError
 	 */
 	protected function validateResponseBody(
 		Message\RequestInterface $request,
@@ -456,9 +456,9 @@ abstract class HttpApi
 				$body,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ToolsExceptions\InvalidData $ex) {
+		} catch (ApplicationExceptions\Logic | ApplicationExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
-				throw new Exceptions\HttpApiCall(
+				throw new ShellyExceptions\HttpApiCall(
 					'Could not validate received response payload',
 					$request,
 					$response,
@@ -472,7 +472,7 @@ abstract class HttpApi
 	}
 
 	/**
-	 * @throws Exceptions\HttpApiCall
+	 * @throws ShellyExceptions\HttpApiCall
 	 */
 	private function getResponseBody(
 		Message\RequestInterface $request,
@@ -484,7 +484,7 @@ abstract class HttpApi
 
 			return $response->getBody()->getContents();
 		} catch (RuntimeException $ex) {
-			throw new Exceptions\HttpApiCall(
+			throw new ShellyExceptions\HttpApiCall(
 				'Could not get content from response body',
 				$request,
 				$response,
@@ -495,7 +495,7 @@ abstract class HttpApi
 	}
 
 	/**
-	 * @throws Exceptions\HttpApiError
+	 * @throws ShellyExceptions\HttpApiError
 	 */
 	private function getSchema(string $schemaFilename): string
 	{
@@ -508,7 +508,7 @@ abstract class HttpApi
 				);
 
 			} catch (Nette\IOException) {
-				throw new Exceptions\HttpApiError('Validation schema for response could not be loaded');
+				throw new ShellyExceptions\HttpApiError('Validation schema for response could not be loaded');
 			}
 		}
 

@@ -19,14 +19,16 @@ use DateTimeInterface;
 use FastyBird\Core\Constants\Constants as MetadataConstants;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents;
-use FastyBird\Module\Devices\Exceptions;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use TypeError;
@@ -61,10 +63,10 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 		#[ApplicationObjectMapper\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: Types\PropertyCategory::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: Types\PropertyCategory::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: DevicesTypes\PropertyCategory::class),
+			new ObjectMapper\Rules\InstanceOfValue(type: DevicesTypes\PropertyCategory::class),
 		])]
-		private readonly Types\PropertyCategory $category,
+		private readonly DevicesTypes\PropertyCategory $category,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $identifier,
 		#[ObjectMapper\Rules\AnyOf([
@@ -73,11 +75,11 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 		])]
 		private readonly string|null $name,
 		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: MetadataTypes\DataType::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: MetadataTypes\DataType::class),
+			new ObjectMapper\Rules\BackedEnumValue(class: ValuesTypes\DataType::class),
+			new ObjectMapper\Rules\InstanceOfValue(type: ValuesTypes\DataType::class),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('data_type')]
-		private readonly MetadataTypes\DataType $dataType,
+		private readonly ValuesTypes\DataType $dataType,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
@@ -99,7 +101,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 							item: new ObjectMapper\Rules\AnyOf([
 								new ObjectMapper\Rules\ArrayEnumValue(
 									// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-									cases: [MetadataTypes\DataTypeShort::CHAR->value, MetadataTypes\DataTypeShort::UCHAR->value, MetadataTypes\DataTypeShort::SHORT->value, MetadataTypes\DataTypeShort::USHORT->value, MetadataTypes\DataTypeShort::INT->value, MetadataTypes\DataTypeShort::UINT->value, MetadataTypes\DataTypeShort::FLOAT->value, MetadataTypes\DataTypeShort::BOOLEAN->value, MetadataTypes\DataTypeShort::STRING->value, MetadataTypes\DataTypeShort::BUTTON->value, MetadataTypes\DataTypeShort::SWITCH->value, MetadataTypes\DataTypeShort::COVER->value],
+									cases: [ValuesTypes\DataTypeShort::CHAR->value, ValuesTypes\DataTypeShort::UCHAR->value, ValuesTypes\DataTypeShort::SHORT->value, ValuesTypes\DataTypeShort::USHORT->value, ValuesTypes\DataTypeShort::INT->value, ValuesTypes\DataTypeShort::UINT->value, ValuesTypes\DataTypeShort::FLOAT->value, ValuesTypes\DataTypeShort::BOOLEAN->value, ValuesTypes\DataTypeShort::STRING->value, ValuesTypes\DataTypeShort::BUTTON->value, ValuesTypes\DataTypeShort::SWITCH->value, ValuesTypes\DataTypeShort::COVER->value],
 								),
 								new ObjectMapper\Rules\StringValue(notEmpty: true),
 								new ObjectMapper\Rules\IntValue(),
@@ -126,7 +128,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 						item: new ObjectMapper\Rules\AnyOf([
 							new ObjectMapper\Rules\ArrayEnumValue(
 								// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-								cases: [MetadataTypes\DataTypeShort::CHAR->value, MetadataTypes\DataTypeShort::UCHAR->value, MetadataTypes\DataTypeShort::SHORT->value, MetadataTypes\DataTypeShort::USHORT->value, MetadataTypes\DataTypeShort::INT->value, MetadataTypes\DataTypeShort::UINT->value, MetadataTypes\DataTypeShort::FLOAT->value],
+								cases: [ValuesTypes\DataTypeShort::CHAR->value, ValuesTypes\DataTypeShort::UCHAR->value, ValuesTypes\DataTypeShort::SHORT->value, ValuesTypes\DataTypeShort::USHORT->value, ValuesTypes\DataTypeShort::INT->value, ValuesTypes\DataTypeShort::UINT->value, ValuesTypes\DataTypeShort::FLOAT->value],
 							),
 							new ObjectMapper\Rules\IntValue(),
 							new ObjectMapper\Rules\FloatValue(),
@@ -205,7 +207,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 
 	abstract public static function getType(): string;
 
-	public function getCategory(): Types\PropertyCategory
+	public function getCategory(): DevicesTypes\PropertyCategory
 	{
 		return $this->category;
 	}
@@ -220,7 +222,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 		return $this->name;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		return $this->dataType;
 	}
@@ -235,7 +237,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getFormat(): ToolsFormats\StringEnum|ToolsFormats\NumberRange|ToolsFormats\CombinedEnum|null
+	public function getFormat(): Formats\StringEnum|Formats\NumberRange|Formats\CombinedEnum|null
 	{
 		return $this->buildFormat($this->format);
 	}
@@ -261,21 +263,21 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDefault(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getDefault(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		try {
-				return ToolsUtilities\Value::normalizeValue(
+				return Utilities\Value::normalizeValue(
 					$this->default,
 					$this->getDataType(),
 					$this->getFormat(),
 				);
-		} catch (ToolsExceptions\InvalidValue) {
+		} catch (ValuesExceptions\InvalidValue) {
 			return null;
 		}
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function getValueTransformer(): Uuid\UuidInterface|string|null
 	{
@@ -292,13 +294,13 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 				in_array(
 					$this->dataType,
 					[
-						MetadataTypes\DataType::CHAR,
-						MetadataTypes\DataType::UCHAR,
-						MetadataTypes\DataType::SHORT,
-						MetadataTypes\DataType::USHORT,
-						MetadataTypes\DataType::INT,
-						MetadataTypes\DataType::UINT,
-						MetadataTypes\DataType::FLOAT,
+						ValuesTypes\DataType::CHAR,
+						ValuesTypes\DataType::UCHAR,
+						ValuesTypes\DataType::SHORT,
+						ValuesTypes\DataType::USHORT,
+						ValuesTypes\DataType::INT,
+						ValuesTypes\DataType::UINT,
+						ValuesTypes\DataType::FLOAT,
 					],
 					true,
 				)
@@ -306,14 +308,14 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 				return $this->valueTransformer;
 			}
 
-			throw new Exceptions\InvalidState('Equation transformer is allowed only for numeric data type');
+			throw new DevicesExceptions\InvalidState('Equation transformer is allowed only for numeric data type');
 		}
 
 		return null;
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
@@ -334,7 +336,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 			'invalid' => $this->getInvalid(),
 			'scale' => $this->getScale(),
 			'step' => $this->getStep(),
-			'default' => ToolsUtilities\Value::flattenValue($this->getDefault()),
+			'default' => Utilities\Value::flattenValue($this->getDefault()),
 			'value_transformer' => $this->getValueTransformer() !== null ? strval($this->getValueTransformer()) : null,
 
 			'owner' => $this->getOwner()?->toString(),
@@ -343,9 +345,9 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 		];
 	}
 
-	public function getSource(): MetadataTypes\Sources\Source
+	public function getSource(): Sources\Source
 	{
-		return MetadataTypes\Sources\Module::DEVICES;
+		return Sources\Module::DEVICES;
 	}
 
 	/**
@@ -357,7 +359,7 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 	 */
 	private function buildFormat(
 		array|string|null $format,
-	): ToolsFormats\StringEnum|ToolsFormats\NumberRange|ToolsFormats\CombinedEnum|null
+	): Formats\StringEnum|Formats\NumberRange|Formats\CombinedEnum|null
 	{
 		if ($format === null) {
 			return null;
@@ -367,13 +369,13 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 			in_array(
 				$this->dataType,
 				[
-					MetadataTypes\DataType::CHAR,
-					MetadataTypes\DataType::UCHAR,
-					MetadataTypes\DataType::SHORT,
-					MetadataTypes\DataType::USHORT,
-					MetadataTypes\DataType::INT,
-					MetadataTypes\DataType::UINT,
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::CHAR,
+					ValuesTypes\DataType::UCHAR,
+					ValuesTypes\DataType::SHORT,
+					ValuesTypes\DataType::USHORT,
+					ValuesTypes\DataType::INT,
+					ValuesTypes\DataType::UINT,
+					ValuesTypes\DataType::FLOAT,
 				],
 				true,
 			)
@@ -397,16 +399,16 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 			}
 
 			if (preg_match(MetadataConstants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
-				return new ToolsFormats\NumberRange($format);
+				return new Formats\NumberRange($format);
 			}
 		} elseif (
 			in_array(
 				$this->dataType,
 				[
-					MetadataTypes\DataType::ENUM,
-					MetadataTypes\DataType::BUTTON,
-					MetadataTypes\DataType::SWITCH,
-					MetadataTypes\DataType::COVER,
+					ValuesTypes\DataType::ENUM,
+					ValuesTypes\DataType::BUTTON,
+					ValuesTypes\DataType::SWITCH,
+					ValuesTypes\DataType::COVER,
 				],
 				true,
 			)
@@ -428,9 +430,9 @@ abstract class Property implements Documents\Document, ApplicationDocuments\Owne
 			}
 
 			if (preg_match(MetadataConstants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
-				return new ToolsFormats\CombinedEnum($format);
+				return new Formats\CombinedEnum($format);
 			} elseif (preg_match(MetadataConstants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
-				return new ToolsFormats\StringEnum($format);
+				return new Formats\StringEnum($format);
 			}
 		}
 

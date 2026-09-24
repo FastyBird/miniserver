@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Payloads;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 
@@ -45,9 +45,9 @@ interface Property extends ObjectMapper\MappedObject
 
 	public function getId(): Uuid\UuidInterface;
 
-	public function getActualValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null;
+	public function getActualValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null;
 
-	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null;
+	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null;
 
 	public function getPending(): bool|DateTimeInterface;
 

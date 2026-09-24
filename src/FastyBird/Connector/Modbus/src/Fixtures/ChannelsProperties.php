@@ -21,7 +21,7 @@ use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Types\ChannelPropertyIdentifier;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use TypeError;
@@ -56,14 +56,14 @@ final class ChannelsProperties extends DataFixtures\AbstractFixture implements D
 				$channel,
 				ChannelPropertyIdentifier::ADDRESS->value,
 			);
-			$addressProperty->setDataType(MetadataTypes\DataType::UINT);
+			$addressProperty->setDataType(Types\DataType::UINT);
 			$addressProperty->setValue(strval($i));
 
 			$switchProperty = new DevicesEntities\Channels\Properties\Dynamic(
 				$channel,
 				'switch',
 			);
-			$switchProperty->setDataType(MetadataTypes\DataType::SWITCH);
+			$switchProperty->setDataType(Types\DataType::SWITCH);
 			$switchProperty->setSettable(true);
 			$switchProperty->setQueryable(true);
 			$switchProperty->setFormat(

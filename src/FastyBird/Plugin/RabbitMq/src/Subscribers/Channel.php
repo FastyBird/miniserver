@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\RabbitMq\Subscribers;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Publishers;
 use Psr\Log;
@@ -53,7 +53,7 @@ readonly class Channel implements EventDispatcher\EventSubscriberInterface
 		$this->logger->debug(
 			'Rabbit MQ channel from async client was assigned to publisher service',
 			[
-				'source' => MetadataTypes\Sources\Plugin::RABBITMQ->value,
+				'source' => Sources\Plugin::RABBITMQ->value,
 				'type' => 'subscriber',
 			],
 		);

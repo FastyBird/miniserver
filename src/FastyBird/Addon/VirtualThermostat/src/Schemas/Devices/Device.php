@@ -18,7 +18,7 @@ namespace FastyBird\Addon\VirtualThermostat\Schemas\Devices;
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Connector\Virtual\Schemas as VirtualSchemas;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 
 /**
  * Thermostat device entity schema
@@ -36,7 +36,7 @@ final class Device extends VirtualSchemas\Devices\Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value . '/device/' . Entities\Devices\Device::TYPE;
+	public const SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/device/' . Entities\Devices\Device::TYPE;
 
 	public function getEntityClass(): string
 	{

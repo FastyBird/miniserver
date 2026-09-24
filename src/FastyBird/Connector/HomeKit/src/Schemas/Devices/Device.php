@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Schemas\Devices;
 
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 
 /**
@@ -35,7 +35,7 @@ class Device extends DevicesSchemas\Devices\Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Connector::HOMEKIT->value . '/device/' . Entities\Devices\Device::TYPE;
+	public const SCHEMA_TYPE = Sources\Connector::HOMEKIT->value . '/device/' . Entities\Devices\Device::TYPE;
 
 	public function getEntityClass(): string
 	{

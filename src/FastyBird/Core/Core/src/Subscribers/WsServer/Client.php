@@ -13,7 +13,7 @@ use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http;
 use FastyBird\Core\Security\SimpleAuth;
 use FastyBird\Core\Server\WsServer as Server;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Override;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
@@ -115,7 +115,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			$this->closeSession($client);
 
 			$this->logger->warning('Client used invalid WS key', [
-				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Plugin::WS_SERVER->value,
 				'type' => 'subscriber',
 				'ws_key' => $wsKey,
 			]);
@@ -132,7 +132,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			$this->closeSession($client);
 
 			$this->logger->warning('Client is connecting from not allowed origin', [
-				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Plugin::WS_SERVER->value,
 				'type' => 'subscriber',
 				'origin' => $origin,
 			]);
@@ -145,7 +145,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 
 		if ($headerToken === null && $cookieToken === null) {
 			$this->logger->warning('Client access token is missing', [
-				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Plugin::WS_SERVER->value,
 				'type' => 'subscriber',
 			]);
 
@@ -156,7 +156,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 
 		if ($this->tokenReader === null || $this->tokenValidator === null || $this->identityFactory === null) {
 			$this->logger->warning('Client access token can not be validated, authentication is not configured', [
-				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Plugin::WS_SERVER->value,
 				'type' => 'subscriber',
 			]);
 
@@ -182,7 +182,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 
 		if ($identity === null) {
 			$this->logger->warning('Client access token is not valid', [
-				'source' => MetadataTypes\Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Plugin::WS_SERVER->value,
 				'type' => 'subscriber',
 				'token_source' => $headerToken !== null ? 'header' : 'cookie',
 			]);

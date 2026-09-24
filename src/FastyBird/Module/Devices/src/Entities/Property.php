@@ -20,14 +20,16 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Entities\DoctrineTimestampable;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Mapping\DoctrineCrud\Attribute as IPubDoctrine;
-use FastyBird\Core\Transformers\Tools as ToolsTransformers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
-use FastyBird\Module\Devices\Exceptions;
-use FastyBird\Module\Devices\Types;
+use FastyBird\Core\Values\Exceptions as ValuesExceptions;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Transformers;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Utils;
 use Ramsey\Uuid;
 use TypeError;
@@ -75,10 +77,10 @@ abstract class Property implements Entity,
 		type: 'string',
 		length: 100,
 		nullable: false,
-		enumType: Types\PropertyCategory::class,
-		options: ['default' => Types\PropertyCategory::GENERIC],
+		enumType: DevicesTypes\PropertyCategory::class,
+		options: ['default' => DevicesTypes\PropertyCategory::GENERIC],
 	)]
-	protected Types\PropertyCategory $category;
+	protected DevicesTypes\PropertyCategory $category;
 
 	#[IPubDoctrine\Crud(required: true)]
 	#[ORM\Column(name: 'property_identifier', type: 'string', length: 50, nullable: false)]
@@ -108,10 +110,10 @@ abstract class Property implements Entity,
 		type: 'string',
 		length: 100,
 		nullable: false,
-		enumType: MetadataTypes\DataType::class,
-		options: ['default' => MetadataTypes\DataType::UNKNOWN],
+		enumType: ValuesTypes\DataType::class,
+		options: ['default' => ValuesTypes\DataType::UNKNOWN],
 	)]
-	protected MetadataTypes\DataType $dataType;
+	protected ValuesTypes\DataType $dataType;
 
 	#[IPubDoctrine\Crud(writable: true)]
 	#[ORM\Column(name: 'property_unit', type: 'string', length: 20, nullable: true, options: ['default' => null])]
@@ -154,11 +156,11 @@ abstract class Property implements Entity,
 
 		$this->identifier = $identifier;
 
-		$this->category = Types\PropertyCategory::GENERIC;
-		$this->dataType = MetadataTypes\DataType::UNKNOWN;
+		$this->category = DevicesTypes\PropertyCategory::GENERIC;
+		$this->dataType = ValuesTypes\DataType::UNKNOWN;
 
 		// Static property can not be set or read from device/channel property
-		if (static::getType() === Types\PropertyType::VARIABLE->value) {
+		if (static::getType() === DevicesTypes\PropertyType::VARIABLE->value) {
 			$this->settable = false;
 			$this->queryable = false;
 		}
@@ -166,12 +168,12 @@ abstract class Property implements Entity,
 
 	abstract public static function getType(): string;
 
-	public function getCategory(): Types\PropertyCategory
+	public function getCategory(): DevicesTypes\PropertyCategory
 	{
 		return $this->category;
 	}
 
-	public function setCategory(Types\PropertyCategory $category): void
+	public function setCategory(DevicesTypes\PropertyCategory $category): void
 	{
 		$this->category = $category;
 	}
@@ -211,12 +213,12 @@ abstract class Property implements Entity,
 		$this->queryable = $queryable;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		return $this->dataType;
 	}
 
-	public function setDataType(MetadataTypes\DataType $dataType): void
+	public function setDataType(ValuesTypes\DataType $dataType): void
 	{
 		$this->dataType = $dataType;
 	}
@@ -236,7 +238,7 @@ abstract class Property implements Entity,
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getFormat(): ToolsFormats\StringEnum|ToolsFormats\NumberRange|ToolsFormats\CombinedEnum|null
+	public function getFormat(): Formats\StringEnum|Formats\NumberRange|Formats\CombinedEnum|null
 	{
 		return $this->buildFormat($this->format);
 	}
@@ -244,27 +246,27 @@ abstract class Property implements Entity,
 	/**
 	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|Utils\ArrayHash|null>|array<int, array<int, string|array<int, string|int|float|bool>|Utils\ArrayHash|null>>|null $format
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
 	public function setFormat(
-		array|string|ToolsFormats\StringEnum|ToolsFormats\NumberRange|ToolsFormats\CombinedEnum|null $format,
+		array|string|Formats\StringEnum|Formats\NumberRange|Formats\CombinedEnum|null $format,
 	): void
 	{
 		if (
-			$format instanceof ToolsFormats\StringEnum
-			|| $format instanceof ToolsFormats\NumberRange
-			|| $format instanceof ToolsFormats\CombinedEnum
+			$format instanceof Formats\StringEnum
+			|| $format instanceof Formats\NumberRange
+			|| $format instanceof Formats\CombinedEnum
 		) {
 			$format = $format->toArray();
 		}
 
 		if (is_string($format)) {
 			if ($this->buildFormat($format) === null) {
-				throw new Exceptions\InvalidArgument('Provided property format is not valid');
+				throw new DevicesExceptions\InvalidArgument('Provided property format is not valid');
 			}
 
 			$this->format = $format;
@@ -275,13 +277,13 @@ abstract class Property implements Entity,
 				in_array(
 					$this->dataType,
 					[
-						MetadataTypes\DataType::CHAR,
-						MetadataTypes\DataType::UCHAR,
-						MetadataTypes\DataType::SHORT,
-						MetadataTypes\DataType::USHORT,
-						MetadataTypes\DataType::INT,
-						MetadataTypes\DataType::UINT,
-						MetadataTypes\DataType::FLOAT,
+						ValuesTypes\DataType::CHAR,
+						ValuesTypes\DataType::UCHAR,
+						ValuesTypes\DataType::SHORT,
+						ValuesTypes\DataType::USHORT,
+						ValuesTypes\DataType::INT,
+						ValuesTypes\DataType::UINT,
+						ValuesTypes\DataType::FLOAT,
 					],
 					true,
 				)
@@ -306,15 +308,15 @@ abstract class Property implements Entity,
 					return;
 				}
 
-				throw new Exceptions\InvalidArgument('Provided property format is not valid');
+				throw new DevicesExceptions\InvalidArgument('Provided property format is not valid');
 			} elseif (
 				in_array(
 					$this->dataType,
 					[
-						MetadataTypes\DataType::ENUM,
-						MetadataTypes\DataType::BUTTON,
-						MetadataTypes\DataType::SWITCH,
-						MetadataTypes\DataType::COVER,
+						ValuesTypes\DataType::ENUM,
+						ValuesTypes\DataType::BUTTON,
+						ValuesTypes\DataType::SWITCH,
+						ValuesTypes\DataType::COVER,
 					],
 					true,
 				)
@@ -348,7 +350,7 @@ abstract class Property implements Entity,
 					return;
 				}
 
-				throw new Exceptions\InvalidArgument('Provided property format is not valid');
+				throw new DevicesExceptions\InvalidArgument('Provided property format is not valid');
 			}
 		}
 
@@ -362,19 +364,19 @@ abstract class Property implements Entity,
 		}
 
 		if (
-			$this->dataType === MetadataTypes\DataType::CHAR
-			|| $this->dataType === MetadataTypes\DataType::UCHAR
-			|| $this->dataType === MetadataTypes\DataType::SHORT
-			|| $this->dataType === MetadataTypes\DataType::USHORT
-			|| $this->dataType === MetadataTypes\DataType::INT
-			|| $this->dataType === MetadataTypes\DataType::UINT
+			$this->dataType === ValuesTypes\DataType::CHAR
+			|| $this->dataType === ValuesTypes\DataType::UCHAR
+			|| $this->dataType === ValuesTypes\DataType::SHORT
+			|| $this->dataType === ValuesTypes\DataType::USHORT
+			|| $this->dataType === ValuesTypes\DataType::INT
+			|| $this->dataType === ValuesTypes\DataType::UINT
 		) {
 			if (is_numeric($this->invalid)) {
 				return intval($this->invalid);
 			}
 
 			return null;
-		} elseif ($this->dataType === MetadataTypes\DataType::FLOAT) {
+		} elseif ($this->dataType === ValuesTypes\DataType::FLOAT) {
 			if (is_numeric($this->invalid)) {
 				return floatval($this->invalid);
 			}
@@ -417,16 +419,16 @@ abstract class Property implements Entity,
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getValue(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		if ($this->value === null) {
 			return null;
 		}
 
 		try {
-			return ToolsUtilities\Value::transformToScale(
-				ToolsUtilities\Value::normalizeValue(
-					ToolsUtilities\Value::transformDataType(
+			return Utilities\Value::transformToScale(
+				Utilities\Value::normalizeValue(
+					Utilities\Value::transformDataType(
 						$this->value,
 						$this->getDataType(),
 					),
@@ -436,27 +438,27 @@ abstract class Property implements Entity,
 				$this->getDataType(),
 				$this->getScale(),
 			);
-		} catch (Exceptions\InvalidArgument | ToolsExceptions\InvalidValue) {
+		} catch (DevicesExceptions\InvalidArgument | ValuesExceptions\InvalidValue) {
 			return null;
 		}
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function setValue(bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value): void
+	public function setValue(bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value): void
 	{
 		try {
-			$value = ToolsUtilities\Value::flattenValue(
-				ToolsUtilities\Value::normalizeValue(
-					ToolsUtilities\Value::transformFromScale(
-						ToolsUtilities\Value::transformDataType(
-							ToolsUtilities\Value::flattenValue($value),
+			$value = Utilities\Value::flattenValue(
+				Utilities\Value::normalizeValue(
+					Utilities\Value::transformFromScale(
+						Utilities\Value::transformDataType(
+							Utilities\Value::flattenValue($value),
 							$this->getDataType(),
 						),
 						$this->getDataType(),
@@ -466,13 +468,13 @@ abstract class Property implements Entity,
 					$this->getFormat(),
 				),
 			);
-		} catch (ToolsExceptions\InvalidValue) {
+		} catch (ValuesExceptions\InvalidValue) {
 			$value = null;
 		}
 
-		if ($value !== null && $this->getIdentifier() === Types\DevicePropertyIdentifier::IP_ADDRESS->value) {
+		if ($value !== null && $this->getIdentifier() === DevicesTypes\DevicePropertyIdentifier::IP_ADDRESS->value) {
 			if (!is_string($value)) {
-				throw new Exceptions\InvalidArgument(
+				throw new DevicesExceptions\InvalidArgument(
 					'Provided property value is not valid value for IP address property',
 				);
 			}
@@ -480,16 +482,16 @@ abstract class Property implements Entity,
 			if (preg_match(self::MATCH_IP_ADDRESS, $value) === 1) {
 				$this->value = $value;
 			} else {
-				throw new Exceptions\InvalidArgument(
+				throw new DevicesExceptions\InvalidArgument(
 					'Provided property value is not valid value for IP address property',
 				);
 			}
 		} elseif (
 			$value !== null
-			&& $this->getIdentifier() === Types\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS->value
+			&& $this->getIdentifier() === DevicesTypes\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS->value
 		) {
 			if (!is_string($value)) {
-				throw new Exceptions\InvalidArgument(
+				throw new DevicesExceptions\InvalidArgument(
 					'Provided property value is not valid value for MAC address property',
 				);
 			}
@@ -502,7 +504,7 @@ abstract class Property implements Entity,
 			if (preg_match(self::MATCH_MAC_ADDRESS, $value) === 1) {
 				$this->value = strtolower($value);
 			} else {
-				throw new Exceptions\InvalidArgument(
+				throw new DevicesExceptions\InvalidArgument(
 					'Provided property value is not valid value for MAC address property',
 				);
 			}
@@ -526,16 +528,16 @@ abstract class Property implements Entity,
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDefault(): bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null
+	public function getDefault(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		if ($this->default === null) {
 			return null;
 		}
 
 		try {
-			return ToolsUtilities\Value::transformToScale(
-				ToolsUtilities\Value::normalizeValue(
-					ToolsUtilities\Value::transformDataType(
+			return Utilities\Value::transformToScale(
+				Utilities\Value::normalizeValue(
+					Utilities\Value::transformDataType(
 						$this->default,
 						$this->getDataType(),
 					),
@@ -545,7 +547,7 @@ abstract class Property implements Entity,
 				$this->getDataType(),
 				$this->getScale(),
 			);
-		} catch (Exceptions\InvalidArgument | ToolsExceptions\InvalidValue) {
+		} catch (DevicesExceptions\InvalidArgument | ValuesExceptions\InvalidValue) {
 			return null;
 		}
 	}
@@ -558,15 +560,15 @@ abstract class Property implements Entity,
 	 * @throws ValueError
 	 */
 	public function setDefault(
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $default,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $default,
 	): void
 	{
 		try {
-			$default = ToolsUtilities\Value::flattenValue(
-				ToolsUtilities\Value::normalizeValue(
-					ToolsUtilities\Value::transformFromScale(
-						ToolsUtilities\Value::transformDataType(
-							ToolsUtilities\Value::flattenValue($default),
+			$default = Utilities\Value::flattenValue(
+				Utilities\Value::normalizeValue(
+					Utilities\Value::transformFromScale(
+						Utilities\Value::transformDataType(
+							Utilities\Value::flattenValue($default),
 							$this->getDataType(),
 						),
 						$this->getDataType(),
@@ -576,7 +578,7 @@ abstract class Property implements Entity,
 					$this->getFormat(),
 				),
 			);
-		} catch (ToolsExceptions\InvalidValue) {
+		} catch (ValuesExceptions\InvalidValue) {
 			$default = null;
 		}
 
@@ -592,7 +594,7 @@ abstract class Property implements Entity,
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function getValueTransformer(): Uuid\UuidInterface|string|null
@@ -610,13 +612,13 @@ abstract class Property implements Entity,
 				in_array(
 					$this->dataType,
 					[
-						MetadataTypes\DataType::CHAR,
-						MetadataTypes\DataType::UCHAR,
-						MetadataTypes\DataType::SHORT,
-						MetadataTypes\DataType::USHORT,
-						MetadataTypes\DataType::INT,
-						MetadataTypes\DataType::UINT,
-						MetadataTypes\DataType::FLOAT,
+						ValuesTypes\DataType::CHAR,
+						ValuesTypes\DataType::UCHAR,
+						ValuesTypes\DataType::SHORT,
+						ValuesTypes\DataType::USHORT,
+						ValuesTypes\DataType::INT,
+						ValuesTypes\DataType::UINT,
+						ValuesTypes\DataType::FLOAT,
 					],
 					true,
 				)
@@ -624,30 +626,30 @@ abstract class Property implements Entity,
 				return $this->valueTransformer;
 			}
 
-			throw new Exceptions\InvalidState('Equation transformer is allowed only for numeric data type');
+			throw new DevicesExceptions\InvalidState('Equation transformer is allowed only for numeric data type');
 		}
 
 		return null;
 	}
 
 	public function setValueTransformer(
-		string|ToolsTransformers\EquationTransformer|Uuid\UuidInterface|null $valueTransformer,
+		string|Transformers\EquationTransformer|Uuid\UuidInterface|null $valueTransformer,
 	): void
 	{
 		if ($valueTransformer instanceof Uuid\UuidInterface) {
 			$this->valueTransformer = $valueTransformer->toString();
 
-		} elseif ($valueTransformer instanceof ToolsTransformers\EquationTransformer) {
+		} elseif ($valueTransformer instanceof Transformers\EquationTransformer) {
 			$this->valueTransformer = in_array(
 				$this->dataType,
 				[
-					MetadataTypes\DataType::CHAR,
-					MetadataTypes\DataType::UCHAR,
-					MetadataTypes\DataType::SHORT,
-					MetadataTypes\DataType::USHORT,
-					MetadataTypes\DataType::INT,
-					MetadataTypes\DataType::UINT,
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::CHAR,
+					ValuesTypes\DataType::UCHAR,
+					ValuesTypes\DataType::SHORT,
+					ValuesTypes\DataType::USHORT,
+					ValuesTypes\DataType::INT,
+					ValuesTypes\DataType::UINT,
+					ValuesTypes\DataType::FLOAT,
 				],
 				true,
 			) ? $valueTransformer->getValue() : null;
@@ -661,13 +663,13 @@ abstract class Property implements Entity,
 				&& in_array(
 					$this->dataType,
 					[
-						MetadataTypes\DataType::CHAR,
-						MetadataTypes\DataType::UCHAR,
-						MetadataTypes\DataType::SHORT,
-						MetadataTypes\DataType::USHORT,
-						MetadataTypes\DataType::INT,
-						MetadataTypes\DataType::UINT,
-						MetadataTypes\DataType::FLOAT,
+						ValuesTypes\DataType::CHAR,
+						ValuesTypes\DataType::UCHAR,
+						ValuesTypes\DataType::SHORT,
+						ValuesTypes\DataType::USHORT,
+						ValuesTypes\DataType::INT,
+						ValuesTypes\DataType::UINT,
+						ValuesTypes\DataType::FLOAT,
 					],
 					true,
 				)
@@ -682,7 +684,7 @@ abstract class Property implements Entity,
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidArgument
@@ -704,17 +706,17 @@ abstract class Property implements Entity,
 			'invalid' => $this->getInvalid(),
 			'scale' => $this->getScale(),
 			'step' => $this->getStep(),
-			'default' => ToolsUtilities\Value::flattenValue($this->getDefault()),
+			'default' => Utilities\Value::flattenValue($this->getDefault()),
 			'value_transformer' => $this->getValueTransformer() !== null ? strval($this->getValueTransformer()) : null,
 			'created_at' => $this->getCreatedAt()?->format(DateTimeInterface::ATOM),
 			'updated_at' => $this->getUpdatedAt()?->format(DateTimeInterface::ATOM),
 		];
 
-		if (static::getType() === Types\PropertyType::VARIABLE->value) {
+		if (static::getType() === DevicesTypes\PropertyType::VARIABLE->value) {
 			return array_merge($data, [
-				'value' => ToolsUtilities\Value::flattenValue($this->getValue()),
+				'value' => Utilities\Value::flattenValue($this->getValue()),
 			]);
-		} elseif (static::getType() === Types\PropertyType::DYNAMIC->value) {
+		} elseif (static::getType() === DevicesTypes\PropertyType::DYNAMIC->value) {
 			return array_merge($data, [
 				'settable' => $this->isSettable(),
 				'queryable' => $this->isQueryable(),
@@ -731,7 +733,7 @@ abstract class Property implements Entity,
 	 */
 	private function buildFormat(
 		string|null $format,
-	): ToolsFormats\StringEnum|ToolsFormats\NumberRange|ToolsFormats\CombinedEnum|null
+	): Formats\StringEnum|Formats\NumberRange|Formats\CombinedEnum|null
 	{
 		if ($format === null) {
 			return null;
@@ -741,45 +743,45 @@ abstract class Property implements Entity,
 			in_array(
 				$this->dataType,
 				[
-					MetadataTypes\DataType::CHAR,
-					MetadataTypes\DataType::UCHAR,
-					MetadataTypes\DataType::SHORT,
-					MetadataTypes\DataType::USHORT,
-					MetadataTypes\DataType::INT,
-					MetadataTypes\DataType::UINT,
-					MetadataTypes\DataType::FLOAT,
+					ValuesTypes\DataType::CHAR,
+					ValuesTypes\DataType::UCHAR,
+					ValuesTypes\DataType::SHORT,
+					ValuesTypes\DataType::USHORT,
+					ValuesTypes\DataType::INT,
+					ValuesTypes\DataType::UINT,
+					ValuesTypes\DataType::FLOAT,
 				],
 				true,
 			)
 		) {
 			if (preg_match(Metadata\Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
-				return new ToolsFormats\NumberRange($format);
+				return new Formats\NumberRange($format);
 			}
 		} elseif (
 			in_array(
 				$this->dataType,
 				[
-					MetadataTypes\DataType::ENUM,
-					MetadataTypes\DataType::BUTTON,
-					MetadataTypes\DataType::SWITCH,
-					MetadataTypes\DataType::COVER,
+					ValuesTypes\DataType::ENUM,
+					ValuesTypes\DataType::BUTTON,
+					ValuesTypes\DataType::SWITCH,
+					ValuesTypes\DataType::COVER,
 				],
 				true,
 			)
 		) {
 			if (preg_match(Metadata\Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
-				return new ToolsFormats\CombinedEnum($format);
+				return new Formats\CombinedEnum($format);
 			} elseif (preg_match(Metadata\Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
-				return new ToolsFormats\StringEnum($format);
+				return new Formats\StringEnum($format);
 			}
 		}
 
 		return null;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Module
+	public function getSource(): Sources\Module
 	{
-		return MetadataTypes\Sources\Module::DEVICES;
+		return Sources\Module::DEVICES;
 	}
 
 }

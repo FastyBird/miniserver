@@ -127,13 +127,13 @@ parameters:
 			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Types\\Metadata\\DataType given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Values\\Types\\DataType given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Values\\Formats\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src/Builders/Builder.php
@@ -187,13 +187,13 @@ parameters:
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Types\\Metadata\\DataType given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Values\\Types\\DataType given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Values\\Formats\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Builders/Builder.php
@@ -247,13 +247,13 @@ parameters:
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Controllers/BridgesV1.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Types\\Metadata\\DataType given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Values\\Types\\DataType given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/src/Builders/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Values\\Formats\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/src/Builders/Builder.php
@@ -397,7 +397,7 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Types\\Metadata\\DataType given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: FastyBird\\Core\\Values\\Types\\DataType given\.$#'
 			identifier: argument.type
 			count: 4
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
@@ -409,7 +409,7 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Values\\Formats\\StringEnum constructor expects array\<int, string\>\|string, list given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
@@ -445,19 +445,19 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Button\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Values\\Types\\Payloads\\Button\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Cover\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Values\\Types\\Payloads\\Cover\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Switcher\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Values\\Types\\Payloads\\Switcher\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
@@ -487,7 +487,7 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
 
 		-
-			message: '#^Strict comparison using \!\=\= between array\{FastyBird\\Core\\Types\\Metadata\\DataTypeShort\|null, string\|null\}\|string and null will always evaluate to true\.$#'
+			message: '#^Strict comparison using \!\=\= between array\{FastyBird\\Core\\Values\\Types\\DataTypeShort\|null, string\|null\}\|string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Commands/Install.php
@@ -667,13 +667,13 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Controllers/PairingController.php
 
 		-
-			message: '#^Method FastyBird\\Connector\\HomeKit\\Entities\\Channels\\Channel\:\:getSource\(\) never returns FastyBird\\Core\\Types\\Metadata\\Sources\\Bridge so it can be removed from the return type\.$#'
+			message: '#^Method FastyBird\\Connector\\HomeKit\\Entities\\Channels\\Channel\:\:getSource\(\) never returns FastyBird\\Core\\Values\\Types\\Sources\\Bridge so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Entities/Channels/Channel.php
 
 		-
-			message: '#^Method FastyBird\\Connector\\HomeKit\\Entities\\Devices\\Device\:\:getSource\(\) never returns FastyBird\\Core\\Types\\Metadata\\Sources\\Bridge so it can be removed from the return type\.$#'
+			message: '#^Method FastyBird\\Connector\\HomeKit\\Entities\\Devices\\Device\:\:getSource\(\) never returns FastyBird\\Core\\Values\\Types\\Sources\\Bridge so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Entities/Devices/Device.php
@@ -1027,7 +1027,7 @@ parameters:
 			path: ../src/FastyBird/Connector/Modbus/src/API/Transformer.php
 
 		-
-			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, list\<FastyBird\\Core\\Types\\Metadata\\DataTypeShort\> given\.$#'
+			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, list\<FastyBird\\Core\\Values\\Types\\DataTypeShort\> given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Connector/Modbus/src/API/Transformer.php
@@ -1231,7 +1231,7 @@ parameters:
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Formats\\Tools\\CombinedEnum constructor expects array\<int, array\<int, array\<int, bool\|float\|int\|string\|null\>\|string\|null\>\>\|string, list\<array\<int, array\<int, mixed\>\>\> given\.$#'
+			message: '#^Parameter \#1 \$items of class FastyBird\\Core\\Values\\Formats\\CombinedEnum constructor expects array\<int, array\<int, array\<int, bool\|float\|int\|string\|null\>\|string\|null\>\>\|string, list\<array\<int, array\<int, mixed\>\>\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
@@ -1243,25 +1243,25 @@ parameters:
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Button\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Values\\Types\\Payloads\\Button\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Cover\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Values\\Types\\Payloads\\Cover\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Types\\Metadata\\Payloads\\Switcher\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
+			message: '#^Parameter \#1 \$value of static method FastyBird\\Core\\Values\\Types\\Payloads\\Switcher\:\:tryFrom\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
 		-
-			message: '#^Strict comparison using \!\=\= between array\{FastyBird\\Core\\Types\\Metadata\\DataTypeShort\|null, string\}\|string and null will always evaluate to true\.$#'
+			message: '#^Strict comparison using \!\=\= between array\{FastyBird\\Core\\Values\\Types\\DataTypeShort\|null, string\}\|string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
@@ -4720,37 +4720,37 @@ parameters:
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Formats/Tools/CombinedEnumItem.php
+			path: ../src/FastyBird/Core/Core/src/Values/Formats/CombinedEnumItem.php
 
 		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+			path: ../src/FastyBird/Core/Core/src/Values/Formats/NumberRange.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Formats\\Tools\\NumberRange\:\:\$max \(float\|int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			message: '#^Property FastyBird\\Core\\Values\\Formats\\NumberRange\:\:\$max \(float\|int\|null\) is never assigned int so it can be removed from the property type\.$#'
 			identifier: property.unusedType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+			path: ../src/FastyBird/Core/Core/src/Values/Formats/NumberRange.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Formats\\Tools\\NumberRange\:\:\$min \(float\|int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			message: '#^Property FastyBird\\Core\\Values\\Formats\\NumberRange\:\:\$min \(float\|int\|null\) is never assigned int so it can be removed from the property type\.$#'
 			identifier: property.unusedType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+			path: ../src/FastyBird/Core/Core/src/Values/Formats/NumberRange.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+			path: ../src/FastyBird/Core/Core/src/Values/Formats/NumberRange.php
 
 		-
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Formats/Tools/NumberRange.php
+			path: ../src/FastyBird/Core/Core/src/Values/Formats/NumberRange.php
 
 		-
 			message: '#^Method FastyBird\\Core\\Helpers\\DoctrineCrud\\Helpers\:\:getParameterType\(\) should return string\|null but returns mixed\.$#'
@@ -6628,31 +6628,31 @@ parameters:
 			message: '#^Cannot call method args\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+			path: ../src/FastyBird/Core/Core/src/Values/Schemas/Validator.php
 
 		-
 			message: '#^Cannot call method data\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+			path: ../src/FastyBird/Core/Core/src/Values/Schemas/Validator.php
 
 		-
 			message: '#^Cannot call method keyword\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+			path: ../src/FastyBird/Core/Core/src/Values/Schemas/Validator.php
 
 		-
 			message: '#^Cannot call method path\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+			path: ../src/FastyBird/Core/Core/src/Values/Schemas/Validator.php
 
 		-
 			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Schemas/Tools/Validator.php
+			path: ../src/FastyBird/Core/Core/src/Values/Schemas/Validator.php
 
 		-
 			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
@@ -7147,13 +7147,13 @@ parameters:
 			message: '#^Parameter \#1 \$array of function implode expects array\<string\>, array given\.$#'
 			identifier: argument.type
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Transformers/Tools/EquationTransformer.php
+			path: ../src/FastyBird/Core/Core/src/Values/Transformers/EquationTransformer.php
 
 		-
 			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
 			identifier: argument.type
 			count: 4
-			path: ../src/FastyBird/Core/Core/src/Transformers/Tools/EquationTransformer.php
+			path: ../src/FastyBird/Core/Core/src/Values/Transformers/EquationTransformer.php
 
 		-
 			message: '#^Cannot call method format\(\) on T of mixed\.$#'
@@ -7738,7 +7738,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/ChannelPropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Values\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/ChannelPropertiesManager.php
@@ -7780,7 +7780,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/ConnectorPropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Values\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/ConnectorPropertiesManager.php
@@ -7822,13 +7822,13 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/DevicePropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Values\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Async/DevicePropertiesManager.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Values\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/ChannelPropertiesManager.php
@@ -7852,7 +7852,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Channels/Repository.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Values\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/ConnectorPropertiesManager.php
@@ -7876,7 +7876,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Connectors/Repository.php
 
 		-
-			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Types\\Metadata\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|DateTimeInterface\|FastyBird\\Core\\Values\\Types\\Payloads\\Payload\|float\|int\|string\|null\)\: \(bool\|float\|int\|string\|null\) given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Module/Devices/src/Models/States/DevicePropertiesManager.php

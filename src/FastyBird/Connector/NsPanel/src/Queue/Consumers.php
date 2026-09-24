@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Queue;
 
 use FastyBird\Connector\NsPanel;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use SplObjectStorage;
 
@@ -59,7 +59,7 @@ final class Consumers
 		$this->logger->debug(
 			'Appended new messages consumer',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'consumers',
 			],
 		);
@@ -79,7 +79,7 @@ final class Consumers
 			$this->logger->error(
 				'No consumer is registered, message could not be consumed',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'consumers',
 				],
 			);
@@ -96,7 +96,7 @@ final class Consumers
 		$this->logger->error(
 			'Message could not be consumed',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'consumers',
 				'message' => $message->toArray(),
 			],

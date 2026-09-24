@@ -21,7 +21,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;
@@ -260,7 +260,7 @@ final class ConditionsV1 extends BaseV1
 					$this->logger->error(
 						'An unhandled error occurred',
 						[
-							'source' => MetadataTypes\Sources\Module::TRIGGERS->value,
+							'source' => Sources\Module::TRIGGERS->value,
 							'type' => 'conditions-controller',
 							'exception' => Logging\Logger::buildException($ex),
 						],
@@ -352,7 +352,7 @@ final class ConditionsV1 extends BaseV1
 				$this->logger->error(
 					'An unhandled error occurred',
 					[
-						'source' => MetadataTypes\Sources\Module::TRIGGERS->value,
+						'source' => Sources\Module::TRIGGERS->value,
 						'type' => 'conditions-controller',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -426,7 +426,7 @@ final class ConditionsV1 extends BaseV1
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Module::TRIGGERS->value,
+					'source' => Sources\Module::TRIGGERS->value,
 					'type' => 'conditions-controller',
 					'exception' => Logging\Logger::buildException($ex),
 				],

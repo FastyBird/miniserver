@@ -22,11 +22,11 @@ use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Queries;
-use FastyBird\Connector\Modbus\Types;
+use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -86,7 +86,7 @@ final class Properties implements Common\EventSubscriber
 		if ($entity instanceof Entities\Devices\Device) {
 			$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 			$findDevicePropertyQuery->forDevice($entity);
-			$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::STATE);
+			$findDevicePropertyQuery->byIdentifier(ModbusTypes\DevicePropertyIdentifier::STATE);
 
 			$stateProperty = $this->propertiesRepository->findOneBy($findDevicePropertyQuery);
 
@@ -98,7 +98,7 @@ final class Properties implements Common\EventSubscriber
 
 			if ($stateProperty !== null) {
 				$this->propertiesManager->update($stateProperty, Utils\ArrayHash::from([
-					'dataType' => MetadataTypes\DataType::ENUM,
+					'dataType' => ValuesTypes\DataType::ENUM,
 					'unit' => null,
 					'format' => [
 						DevicesTypes\ConnectionState::CONNECTED->value,
@@ -114,8 +114,8 @@ final class Properties implements Common\EventSubscriber
 				$this->propertiesManager->create(Utils\ArrayHash::from([
 					'device' => $entity,
 					'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
-					'identifier' => Types\DevicePropertyIdentifier::STATE->value,
-					'dataType' => MetadataTypes\DataType::ENUM,
+					'identifier' => ModbusTypes\DevicePropertyIdentifier::STATE->value,
+					'dataType' => ValuesTypes\DataType::ENUM,
 					'unit' => null,
 					'format' => [
 						DevicesTypes\ConnectionState::CONNECTED->value,
@@ -134,27 +134,27 @@ final class Properties implements Common\EventSubscriber
 		) {
 			if (
 				(
-					$entity->getIdentifier() === Types\ConnectorPropertyIdentifier::CLIENT_MODE->value
-					&& Types\ClientMode::tryFrom(ToolsUtilities\Value::toString($entity->getValue(), true)) === null
+					$entity->getIdentifier() === ModbusTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value
+					&& ModbusTypes\ClientMode::tryFrom(Utilities\Value::toString($entity->getValue(), true)) === null
 				) || (
-					$entity->getIdentifier() === Types\ConnectorPropertyIdentifier::RTU_BYTE_SIZE->value
-					&& Types\ByteSize::tryFrom(
-						intval(ToolsUtilities\Value::flattenValue($entity->getValue())),
+					$entity->getIdentifier() === ModbusTypes\ConnectorPropertyIdentifier::RTU_BYTE_SIZE->value
+					&& ModbusTypes\ByteSize::tryFrom(
+						intval(Utilities\Value::flattenValue($entity->getValue())),
 					) === null
 				) || (
-					$entity->getIdentifier() === Types\ConnectorPropertyIdentifier::RTU_BAUD_RATE->value
-					&& Types\BaudRate::tryFrom(
-						intval(ToolsUtilities\Value::flattenValue($entity->getValue())),
+					$entity->getIdentifier() === ModbusTypes\ConnectorPropertyIdentifier::RTU_BAUD_RATE->value
+					&& ModbusTypes\BaudRate::tryFrom(
+						intval(Utilities\Value::flattenValue($entity->getValue())),
 					) === null
 				) || (
-					$entity->getIdentifier() === Types\ConnectorPropertyIdentifier::RTU_PARITY->value
-					&& Types\Parity::tryFrom(
-						intval(ToolsUtilities\Value::flattenValue($entity->getValue())),
+					$entity->getIdentifier() === ModbusTypes\ConnectorPropertyIdentifier::RTU_PARITY->value
+					&& ModbusTypes\Parity::tryFrom(
+						intval(Utilities\Value::flattenValue($entity->getValue())),
 					) === null
 				) || (
-					$entity->getIdentifier() === Types\ConnectorPropertyIdentifier::RTU_STOP_BITS->value
-					&& Types\StopBits::tryFrom(
-						intval(ToolsUtilities\Value::flattenValue($entity->getValue())),
+					$entity->getIdentifier() === ModbusTypes\ConnectorPropertyIdentifier::RTU_STOP_BITS->value
+					&& ModbusTypes\StopBits::tryFrom(
+						intval(Utilities\Value::flattenValue($entity->getValue())),
 					) === null
 				)
 			) {
@@ -169,8 +169,8 @@ final class Properties implements Common\EventSubscriber
 		) {
 			if (
 				(
-					$entity->getIdentifier() === Types\DevicePropertyIdentifier::BYTE_ORDER->value
-					&& Types\ByteOrder::tryFrom(ToolsUtilities\Value::toString($entity->getValue(), true)) === null
+					$entity->getIdentifier() === ModbusTypes\DevicePropertyIdentifier::BYTE_ORDER->value
+					&& ModbusTypes\ByteOrder::tryFrom(Utilities\Value::toString($entity->getValue(), true)) === null
 				)
 			) {
 				throw new DevicesExceptions\InvalidArgument(sprintf(

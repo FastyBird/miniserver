@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Core\Entities\Application\Mapping as ApplicationMapping;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
 use function assert;
 
@@ -45,9 +45,9 @@ class Thermostat extends HomeKitEntities\Channels\Channel
 		return self::TYPE;
 	}
 
-	public function getSource(): MetadataTypes\Sources\Bridge
+	public function getSource(): Sources\Bridge
 	{
-		return MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR;
+		return Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR;
 	}
 
 	public function getDevice(): Entities\Devices\Thermostat

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 
 final class DummyDeviceSchema extends DevicesSchemas\Devices\Device
@@ -11,7 +11,7 @@ final class DummyDeviceSchema extends DevicesSchemas\Devices\Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::DEVICES->value . '/device/' . DummyDeviceEntity::TYPE;
+	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/device/' . DummyDeviceEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

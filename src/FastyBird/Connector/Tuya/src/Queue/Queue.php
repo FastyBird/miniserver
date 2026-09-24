@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Tuya\Queue;
 
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Queue\Messages\Message;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use SplQueue;
 
@@ -49,7 +49,7 @@ final class Queue
 		$this->logger->debug(
 			'Appended new message into messages queue',
 			[
-				'source' => MetadataTypes\Sources\Connector::TUYA->value,
+				'source' => Sources\Connector::TUYA->value,
 				'type' => 'queue',
 				'message' => $message->toArray(),
 			],

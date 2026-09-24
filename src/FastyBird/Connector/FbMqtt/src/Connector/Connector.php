@@ -24,7 +24,7 @@ use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Writers;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -100,7 +100,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'Starting FB MQTT connector service',
 			[
-				'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+				'source' => Sources\Connector::FB_MQTT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -154,7 +154,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'FB MQTT connector service has been started',
 			[
-				'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+				'source' => Sources\Connector::FB_MQTT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),
@@ -192,7 +192,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->logger->info(
 			'FB MQTT connector has been terminated',
 			[
-				'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+				'source' => Sources\Connector::FB_MQTT->value,
 				'type' => 'connector',
 				'connector' => [
 					'id' => $this->connector->getId()->toString(),

@@ -27,14 +27,16 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Queries;
-use FastyBird\Connector\NsPanel\Types;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -251,13 +253,13 @@ class Install extends Console\Command\Command
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-				'identifier' => Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
-				'dataType' => MetadataTypes\DataType::ENUM,
+				'identifier' => NsPanelTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+				'dataType' => ValuesTypes\DataType::ENUM,
 				'value' => $mode->value,
 				'format' => [
-					Types\ClientMode::GATEWAY->value,
-					Types\ClientMode::DEVICE->value,
-					Types\ClientMode::BOTH->value,
+					NsPanelTypes\ClientMode::GATEWAY->value,
+					NsPanelTypes\ClientMode::DEVICE->value,
+					NsPanelTypes\ClientMode::BOTH->value,
 				],
 				'connector' => $connector,
 			]));
@@ -276,7 +278,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -345,7 +347,7 @@ class Install extends Console\Command\Command
 
 		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
-		$findConnectorPropertyQuery->byIdentifier(Types\ConnectorPropertyIdentifier::CLIENT_MODE);
+		$findConnectorPropertyQuery->byIdentifier(NsPanelTypes\ConnectorPropertyIdentifier::CLIENT_MODE);
 
 		$modeProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
@@ -408,10 +410,10 @@ class Install extends Console\Command\Command
 
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
-					'identifier' => Types\ConnectorPropertyIdentifier::CLIENT_MODE->value,
-					'dataType' => MetadataTypes\DataType::ENUM,
+					'identifier' => NsPanelTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
+					'dataType' => ValuesTypes\DataType::ENUM,
 					'value' => $mode->value,
-					'format' => [Types\ClientMode::GATEWAY->value, Types\ClientMode::DEVICE->value, Types\ClientMode::BOTH->value],
+					'format' => [NsPanelTypes\ClientMode::GATEWAY->value, NsPanelTypes\ClientMode::DEVICE->value, NsPanelTypes\ClientMode::BOTH->value],
 					'connector' => $connector,
 				]));
 			} elseif ($mode !== null) {
@@ -434,7 +436,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -520,7 +522,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -752,40 +754,40 @@ class Install extends Console\Command\Command
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::IP_ADDRESS->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => NsPanelTypes\DevicePropertyIdentifier::IP_ADDRESS->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $panelInfo->getData()->getIpAddress(),
 				'device' => $gateway,
 			]));
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::DOMAIN->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => NsPanelTypes\DevicePropertyIdentifier::DOMAIN->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $panelInfo->getData()->getDomain(),
 				'device' => $gateway,
 			]));
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::MAC_ADDRESS->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => NsPanelTypes\DevicePropertyIdentifier::MAC_ADDRESS->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $panelInfo->getData()->getMacAddress(),
 				'device' => $gateway,
 			]));
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::FIRMWARE_VERSION->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => NsPanelTypes\DevicePropertyIdentifier::FIRMWARE_VERSION->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $panelInfo->getData()->getFirmwareVersion(),
 				'device' => $gateway,
 			]));
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::ACCESS_TOKEN->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => NsPanelTypes\DevicePropertyIdentifier::ACCESS_TOKEN->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $accessToken->getData()->getAccessToken(),
 				'device' => $gateway,
 			]));
@@ -804,7 +806,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -820,8 +822,8 @@ class Install extends Console\Command\Command
 		}
 
 		if (
-			$connector->getClientMode() === Types\ClientMode::DEVICE
-			|| $connector->getClientMode() === Types\ClientMode::BOTH
+			$connector->getClientMode() === NsPanelTypes\ClientMode::DEVICE
+			|| $connector->getClientMode() === NsPanelTypes\ClientMode::BOTH
 		) {
 			$question = new Console\Question\ConfirmationQuestion(
 				(string) $this->translator->translate('//ns-panel-connector.cmd.install.questions.create.devices'),
@@ -885,7 +887,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceVariableProperties();
 		$findDevicePropertyQuery->forDevice($gateway);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::IP_ADDRESS);
+		$findDevicePropertyQuery->byIdentifier(NsPanelTypes\DevicePropertyIdentifier::IP_ADDRESS);
 
 		$ipAddressProperty = $this->devicesPropertiesRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -894,7 +896,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceVariableProperties();
 		$findDevicePropertyQuery->forDevice($gateway);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::DOMAIN);
+		$findDevicePropertyQuery->byIdentifier(NsPanelTypes\DevicePropertyIdentifier::DOMAIN);
 
 		$domainProperty = $this->devicesPropertiesRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -903,7 +905,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceVariableProperties();
 		$findDevicePropertyQuery->forDevice($gateway);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::MAC_ADDRESS);
+		$findDevicePropertyQuery->byIdentifier(NsPanelTypes\DevicePropertyIdentifier::MAC_ADDRESS);
 
 		$macAddressProperty = $this->devicesPropertiesRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -912,7 +914,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceVariableProperties();
 		$findDevicePropertyQuery->forDevice($gateway);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::FIRMWARE_VERSION);
+		$findDevicePropertyQuery->byIdentifier(NsPanelTypes\DevicePropertyIdentifier::FIRMWARE_VERSION);
 
 		$firmwareVersionProperty = $this->devicesPropertiesRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -975,7 +977,7 @@ class Install extends Console\Command\Command
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceVariableProperties();
 		$findDevicePropertyQuery->forDevice($gateway);
-		$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::ACCESS_TOKEN);
+		$findDevicePropertyQuery->byIdentifier(NsPanelTypes\DevicePropertyIdentifier::ACCESS_TOKEN);
 
 		$accessTokenProperty = $this->devicesPropertiesRepository->findOneBy(
 			$findDevicePropertyQuery,
@@ -994,8 +996,8 @@ class Install extends Console\Command\Command
 			if ($ipAddressProperty === null) {
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
-					'identifier' => Types\DevicePropertyIdentifier::IP_ADDRESS->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => NsPanelTypes\DevicePropertyIdentifier::IP_ADDRESS->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $panelInfo->getData()->getIpAddress(),
 					'device' => $gateway,
 				]));
@@ -1008,8 +1010,8 @@ class Install extends Console\Command\Command
 			if ($domainProperty === null) {
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
-					'identifier' => Types\DevicePropertyIdentifier::DOMAIN->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => NsPanelTypes\DevicePropertyIdentifier::DOMAIN->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $panelInfo->getData()->getDomain(),
 					'device' => $gateway,
 				]));
@@ -1022,8 +1024,8 @@ class Install extends Console\Command\Command
 			if ($macAddressProperty === null) {
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
-					'identifier' => Types\DevicePropertyIdentifier::MAC_ADDRESS->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => NsPanelTypes\DevicePropertyIdentifier::MAC_ADDRESS->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $panelInfo->getData()->getMacAddress(),
 					'device' => $gateway,
 				]));
@@ -1036,8 +1038,8 @@ class Install extends Console\Command\Command
 			if ($firmwareVersionProperty === null) {
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
-					'identifier' => Types\DevicePropertyIdentifier::FIRMWARE_VERSION->value,
-					'dataType' => MetadataTypes\DataType::STRING,
+					'identifier' => NsPanelTypes\DevicePropertyIdentifier::FIRMWARE_VERSION->value,
+					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $panelInfo->getData()->getFirmwareVersion(),
 					'device' => $gateway,
 				]));
@@ -1051,8 +1053,8 @@ class Install extends Console\Command\Command
 				if ($accessTokenProperty === null) {
 					$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 						'entity' => DevicesEntities\Devices\Properties\Variable::class,
-						'identifier' => Types\DevicePropertyIdentifier::ACCESS_TOKEN->value,
-						'dataType' => MetadataTypes\DataType::STRING,
+						'identifier' => NsPanelTypes\DevicePropertyIdentifier::ACCESS_TOKEN->value,
+						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $accessToken->getData()->getAccessToken(),
 						'device' => $gateway,
 					]));
@@ -1077,7 +1079,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1164,7 +1166,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1246,7 +1248,7 @@ class Install extends Console\Command\Command
 		foreach ($devices as $index => $device) {
 			$findDevicePropertyQuery = new Queries\Entities\FindDeviceVariableProperties();
 			$findDevicePropertyQuery->forDevice($device);
-			$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::IP_ADDRESS);
+			$findDevicePropertyQuery->byIdentifier(NsPanelTypes\DevicePropertyIdentifier::IP_ADDRESS);
 
 			$ipAddressProperty = $this->devicesPropertiesRepository->findOneBy(
 				$findDevicePropertyQuery,
@@ -1469,8 +1471,8 @@ class Install extends Console\Command\Command
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
-				'identifier' => Types\DevicePropertyIdentifier::CATEGORY->value,
-				'dataType' => MetadataTypes\DataType::STRING,
+				'identifier' => NsPanelTypes\DevicePropertyIdentifier::CATEGORY->value,
+				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $category->value,
 				'device' => $device,
 			]));
@@ -1489,7 +1491,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1574,7 +1576,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1648,7 +1650,7 @@ class Install extends Console\Command\Command
 				$this->logger->error(
 					'Calling NS Panel api failed',
 					[
-						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+						'source' => Sources\Connector::NS_PANEL->value,
 						'type' => 'install-cmd',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -1684,7 +1686,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -1892,7 +1894,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -2008,7 +2010,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -2125,7 +2127,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -2256,7 +2258,7 @@ class Install extends Console\Command\Command
 				null,
 				in_array(
 					$capabilityPermission,
-					[Types\Permission::WRITE, Types\Permission::READ_WRITE],
+					[NsPanelTypes\Permission::WRITE, NsPanelTypes\Permission::READ_WRITE],
 					true,
 				),
 			);
@@ -2381,7 +2383,7 @@ class Install extends Console\Command\Command
 						: null,
 					in_array(
 						$capabilityPermission,
-						[Types\Permission::WRITE, Types\Permission::READ_WRITE],
+						[NsPanelTypes\Permission::WRITE, NsPanelTypes\Permission::READ_WRITE],
 						true,
 					),
 				);
@@ -2489,7 +2491,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -2573,7 +2575,7 @@ class Install extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
 					'exception' => Logging\Logger::buildException($ex),
 				],
@@ -2652,11 +2654,11 @@ class Install extends Console\Command\Command
 			$attributeMetadata = $capabilityMetadata?->findAttribute($type) ?? null;
 
 			if (
-				$property->getDataType() === MetadataTypes\DataType::ENUM
+				$property->getDataType() === ValuesTypes\DataType::ENUM
 				&& $attributeMetadata?->getValidValues() !== []
 			) {
 				$enumValue = array_search(
-					ToolsUtilities\Value::toString($value),
+					Utilities\Value::toString($value),
 					$attributeMetadata?->getValidValues() ?? [],
 					true,
 				);
@@ -2790,8 +2792,8 @@ class Install extends Console\Command\Command
 	): void
 	{
 		$question
-			= $connector->getClientMode() === Types\ClientMode::GATEWAY
-			|| $connector->getClientMode() === Types\ClientMode::BOTH
+			= $connector->getClientMode() === NsPanelTypes\ClientMode::GATEWAY
+			|| $connector->getClientMode() === NsPanelTypes\ClientMode::BOTH
 		? new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//ns-panel-connector.cmd.base.questions.whatToDo'),
 			[
@@ -2876,8 +2878,8 @@ class Install extends Console\Command\Command
 		}
 
 		if (
-			$connector->getClientMode() === Types\ClientMode::GATEWAY
-			|| $connector->getClientMode() === Types\ClientMode::BOTH
+			$connector->getClientMode() === NsPanelTypes\ClientMode::GATEWAY
+			|| $connector->getClientMode() === NsPanelTypes\ClientMode::BOTH
 		) {
 			if (
 				$whatToDo === (string) $this->translator->translate(
@@ -2913,7 +2915,7 @@ class Install extends Console\Command\Command
 		Entities\Devices\Gateway $gateway,
 	): void
 	{
-		if ($connector->getClientMode() === Types\ClientMode::DEVICE) {
+		if ($connector->getClientMode() === NsPanelTypes\ClientMode::DEVICE) {
 			$question = new Console\Question\ChoiceQuestion(
 				(string) $this->translator->translate('//ns-panel-connector.cmd.base.questions.whatToDo'),
 				[
@@ -2935,7 +2937,7 @@ class Install extends Console\Command\Command
 				5,
 			);
 
-		} elseif ($connector->getClientMode() === Types\ClientMode::GATEWAY) {
+		} elseif ($connector->getClientMode() === NsPanelTypes\ClientMode::GATEWAY) {
 			$question = new Console\Question\ChoiceQuestion(
 				(string) $this->translator->translate('//ns-panel-connector.cmd.base.questions.whatToDo'),
 				[
@@ -2983,7 +2985,7 @@ class Install extends Console\Command\Command
 
 		$whatToDo = $io->askQuestion($question);
 
-		if ($connector->getClientMode() === Types\ClientMode::DEVICE) {
+		if ($connector->getClientMode() === NsPanelTypes\ClientMode::DEVICE) {
 			if (
 				$whatToDo === (string) $this->translator->translate(
 					'//ns-panel-connector.cmd.install.actions.create.device',
@@ -3046,7 +3048,7 @@ class Install extends Console\Command\Command
 
 				$this->askManageGatewayAction($io, $connector, $gateway);
 			}
-		} elseif ($connector->getClientMode() === Types\ClientMode::GATEWAY) {
+		} elseif ($connector->getClientMode() === NsPanelTypes\ClientMode::GATEWAY) {
 			if (
 				$whatToDo === (string) $this->translator->translate(
 					'//ns-panel-connector.cmd.install.actions.update.device',
@@ -3331,7 +3333,7 @@ class Install extends Console\Command\Command
 		}
 	}
 
-	private function askConnectorMode(Style\SymfonyStyle $io): Types\ClientMode
+	private function askConnectorMode(Style\SymfonyStyle $io): NsPanelTypes\ClientMode
 	{
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//ns-panel-connector.cmd.install.questions.select.connector.mode'),
@@ -3346,7 +3348,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|null $answer): Types\ClientMode {
+		$question->setValidator(function (string|null $answer): NsPanelTypes\ClientMode {
 			if ($answer === null) {
 				throw new Exceptions\Runtime(
 					sprintf(
@@ -3362,7 +3364,7 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '0'
 			) {
-				return Types\ClientMode::GATEWAY;
+				return NsPanelTypes\ClientMode::GATEWAY;
 			}
 
 			if (
@@ -3371,14 +3373,14 @@ class Install extends Console\Command\Command
 				)
 				|| $answer === '1'
 			) {
-				return Types\ClientMode::DEVICE;
+				return NsPanelTypes\ClientMode::DEVICE;
 			}
 
 			if (
 				$answer === (string) $this->translator->translate('//ns-panel-connector.cmd.install.answers.mode.both')
 				|| $answer === '2'
 			) {
-				return Types\ClientMode::BOTH;
+				return NsPanelTypes\ClientMode::BOTH;
 			}
 
 			throw new Exceptions\Runtime(
@@ -3390,7 +3392,7 @@ class Install extends Console\Command\Command
 		});
 
 		$answer = $io->askQuestion($question);
-		assert($answer instanceof Types\ClientMode);
+		assert($answer instanceof NsPanelTypes\ClientMode);
 
 		return $answer;
 	}
@@ -3426,7 +3428,7 @@ class Install extends Console\Command\Command
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
 	 */
-	private function askDeviceCategory(Style\SymfonyStyle $io): Types\Category
+	private function askDeviceCategory(Style\SymfonyStyle $io): NsPanelTypes\Category
 	{
 		$categoriesMetadata = $this->mappingBuilder->getCategoriesMapping()->getCategories();
 
@@ -3449,7 +3451,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($categories): Types\Category {
+		$question->setValidator(function (string|int|null $answer) use ($categories): NsPanelTypes\Category {
 			if ($answer === null) {
 				throw new Exceptions\Runtime(
 					sprintf(
@@ -3466,7 +3468,7 @@ class Install extends Console\Command\Command
 			$category = array_search($answer, $categories, true);
 
 			if ($category !== false) {
-				return Types\Category::from($category);
+				return NsPanelTypes\Category::from($category);
 			}
 
 			throw new Exceptions\Runtime(
@@ -3478,7 +3480,7 @@ class Install extends Console\Command\Command
 		});
 
 		$answer = $io->askQuestion($question);
-		assert($answer instanceof Types\Category);
+		assert($answer instanceof NsPanelTypes\Category);
 
 		return $answer;
 	}
@@ -3494,7 +3496,7 @@ class Install extends Console\Command\Command
 	private function askCapabilityType(
 		Style\SymfonyStyle $io,
 		Entities\Devices\ThirdPartyDevice $device,
-	): Types\Capability|null
+	): NsPanelTypes\Capability|null
 	{
 		$categoryMetadata = $this->mappingBuilder->getCategoriesMapping()->findByCategory(
 			$device->getDisplayCategory(),
@@ -3576,7 +3578,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|null $answer) use ($capabilities): Types\Capability|null {
+		$question->setValidator(function (string|null $answer) use ($capabilities): NsPanelTypes\Capability|null {
 			if ($answer === null) {
 				throw new Exceptions\Runtime(
 					sprintf(
@@ -3597,7 +3599,7 @@ class Install extends Console\Command\Command
 			}
 
 			if ($capability !== false) {
-				return Types\Capability::from($capability);
+				return NsPanelTypes\Capability::from($capability);
 			}
 
 			throw new Exceptions\Runtime(
@@ -3609,7 +3611,7 @@ class Install extends Console\Command\Command
 		});
 
 		$answer = $io->askQuestion($question);
-		assert($answer instanceof Types\Capability || $answer === null);
+		assert($answer instanceof NsPanelTypes\Capability || $answer === null);
 
 		return $answer;
 	}
@@ -3623,7 +3625,7 @@ class Install extends Console\Command\Command
 	private function askAttribute(
 		Style\SymfonyStyle $io,
 		Entities\Channels\Channel $channel,
-	): Types\Attribute|null
+	): NsPanelTypes\Attribute|null
 	{
 		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
@@ -3672,7 +3674,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|null $answer) use ($attributes): Types\Attribute {
+		$question->setValidator(function (string|null $answer) use ($attributes): NsPanelTypes\Attribute {
 			if ($answer === null) {
 				throw new Exceptions\Runtime(
 					sprintf(
@@ -3689,7 +3691,7 @@ class Install extends Console\Command\Command
 			$attribute = array_search($answer, $attributes, true);
 
 			if ($attribute !== false) {
-				return Types\Attribute::from($attribute);
+				return NsPanelTypes\Attribute::from($attribute);
 			}
 
 			throw new Exceptions\Runtime(
@@ -3701,7 +3703,7 @@ class Install extends Console\Command\Command
 		});
 
 		$answer = $io->askQuestion($question);
-		assert($answer instanceof Types\Attribute);
+		assert($answer instanceof NsPanelTypes\Attribute);
 
 		return $answer;
 	}
@@ -4078,7 +4080,7 @@ class Install extends Console\Command\Command
 		Style\SymfonyStyle $io,
 		Mapping\Attributes\Attribute $attributeMetadata,
 		DevicesEntities\Channels\Properties\Dynamic|DevicesEntities\Channels\Properties\Variable|null $connectProperty = null,
-	): ToolsFormats\NumberRange|ToolsFormats\StringEnum|ToolsFormats\CombinedEnum|null
+	): Formats\NumberRange|Formats\StringEnum|Formats\CombinedEnum|null
 	{
 		$format = null;
 
@@ -4086,7 +4088,7 @@ class Install extends Console\Command\Command
 			$attributeMetadata->getMinValue() !== null
 			|| $attributeMetadata->getMaxValue() !== null
 		) {
-			$format = new ToolsFormats\NumberRange([
+			$format = new Formats\NumberRange([
 				$attributeMetadata->getMinValue(),
 				$attributeMetadata->getMaxValue(),
 			]);
@@ -4094,16 +4096,16 @@ class Install extends Console\Command\Command
 
 		if (
 			(
-				$attributeMetadata->getDataType() === MetadataTypes\DataType::ENUM
-				|| $attributeMetadata->getDataType() === MetadataTypes\DataType::SWITCH
-				|| $attributeMetadata->getDataType() === MetadataTypes\DataType::BUTTON
-				|| $attributeMetadata->getDataType() === MetadataTypes\DataType::COVER
+				$attributeMetadata->getDataType() === ValuesTypes\DataType::ENUM
+				|| $attributeMetadata->getDataType() === ValuesTypes\DataType::SWITCH
+				|| $attributeMetadata->getDataType() === ValuesTypes\DataType::BUTTON
+				|| $attributeMetadata->getDataType() === ValuesTypes\DataType::COVER
 			)
 		) {
 			if ($attributeMetadata->getMappedValues() !== []) {
-				$format = new ToolsFormats\CombinedEnum($attributeMetadata->getMappedValues());
+				$format = new Formats\CombinedEnum($attributeMetadata->getMappedValues());
 			} elseif ($attributeMetadata->getValidValues() !== []) {
-				$format = new ToolsFormats\StringEnum($attributeMetadata->getValidValues());
+				$format = new Formats\StringEnum($attributeMetadata->getValidValues());
 			}
 
 			if (
@@ -4111,33 +4113,33 @@ class Install extends Console\Command\Command
 				&& (
 					(
 						(
-							$connectProperty->getDataType() === MetadataTypes\DataType::ENUM
-							|| $connectProperty->getDataType() === MetadataTypes\DataType::SWITCH
-							|| $connectProperty->getDataType() === MetadataTypes\DataType::BUTTON
-							|| $connectProperty->getDataType() === MetadataTypes\DataType::COVER
+							$connectProperty->getDataType() === ValuesTypes\DataType::ENUM
+							|| $connectProperty->getDataType() === ValuesTypes\DataType::SWITCH
+							|| $connectProperty->getDataType() === ValuesTypes\DataType::BUTTON
+							|| $connectProperty->getDataType() === ValuesTypes\DataType::COVER
 						) && (
-							$connectProperty->getFormat() instanceof ToolsFormats\StringEnum
-							|| $connectProperty->getFormat() instanceof ToolsFormats\CombinedEnum
+							$connectProperty->getFormat() instanceof Formats\StringEnum
+							|| $connectProperty->getFormat() instanceof Formats\CombinedEnum
 						)
 					)
-					|| $connectProperty->getDataType() === MetadataTypes\DataType::BOOLEAN
+					|| $connectProperty->getDataType() === ValuesTypes\DataType::BOOLEAN
 				)
 			) {
 				$mappedFormat = [];
 
 				foreach ($attributeMetadata->getValidValues() as $name) {
-					if ($connectProperty->getDataType() === MetadataTypes\DataType::BOOLEAN) {
+					if ($connectProperty->getDataType() === ValuesTypes\DataType::BOOLEAN) {
 						$options = [
 							'true',
 							'false',
 						];
 					} else {
 						assert(
-							$connectProperty->getFormat() instanceof ToolsFormats\StringEnum
-							|| $connectProperty->getFormat() instanceof ToolsFormats\CombinedEnum,
+							$connectProperty->getFormat() instanceof Formats\StringEnum
+							|| $connectProperty->getFormat() instanceof Formats\CombinedEnum,
 						);
 
-						$options = $connectProperty->getFormat() instanceof ToolsFormats\StringEnum
+						$options = $connectProperty->getFormat() instanceof Formats\StringEnum
 							? $connectProperty->getFormat()->toArray()
 							: array_map(
 								static function (array $items): array|null {
@@ -4147,7 +4149,7 @@ class Install extends Console\Command\Command
 
 									return [
 										$items[0]->getDataType(),
-										ToolsUtilities\Value::toString($items[0]->getValue(), true),
+										Utilities\Value::toString($items[0]->getValue(), true),
 									];
 								},
 								$connectProperty->getFormat()->getItems(),
@@ -4216,24 +4218,24 @@ class Install extends Console\Command\Command
 					$valueDataType = is_array($value) ? $value[0]->value : null;
 					$value = is_array($value) ? $value[1] : $value;
 
-					if (MetadataTypes\Payloads\Switcher::tryFrom($value) !== null) {
-						$valueDataType = MetadataTypes\DataTypeShort::SWITCH->value;
+					if (Payloads\Switcher::tryFrom($value) !== null) {
+						$valueDataType = ValuesTypes\DataTypeShort::SWITCH->value;
 
-					} elseif (MetadataTypes\Payloads\Button::tryFrom($value) !== null) {
-						$valueDataType = MetadataTypes\DataTypeShort::BUTTON->value;
+					} elseif (Payloads\Button::tryFrom($value) !== null) {
+						$valueDataType = ValuesTypes\DataTypeShort::BUTTON->value;
 
-					} elseif (MetadataTypes\Payloads\Cover::tryFrom($value) !== null) {
-						$valueDataType = MetadataTypes\DataTypeShort::COVER->value;
+					} elseif (Payloads\Cover::tryFrom($value) !== null) {
+						$valueDataType = ValuesTypes\DataTypeShort::COVER->value;
 					}
 
 					$mappedFormat[] = [
 						[$valueDataType, strval($value)],
-						[MetadataTypes\DataTypeShort::STRING->value, $name],
-						[MetadataTypes\DataTypeShort::STRING->value, $name],
+						[ValuesTypes\DataTypeShort::STRING->value, $name],
+						[ValuesTypes\DataTypeShort::STRING->value, $name],
 					];
 				}
 
-				$format = new ToolsFormats\CombinedEnum($mappedFormat);
+				$format = new Formats\CombinedEnum($mappedFormat);
 			}
 		}
 
@@ -4246,7 +4248,7 @@ class Install extends Console\Command\Command
 	private function provideAttributeValue(
 		Style\SymfonyStyle $io,
 		Mapping\Attributes\Attribute $attributeMetadata,
-		bool|float|int|string|DateTimeInterface|MetadataTypes\Payloads\Payload|null $value = null,
+		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value = null,
 	): string|int|bool|float
 	{
 		if ($attributeMetadata->getValidValues() !== []) {
@@ -4259,7 +4261,7 @@ class Install extends Console\Command\Command
 				(string) $this->translator->translate('//ns-panel-connector.cmd.install.questions.select.device.value'),
 				$options,
 				$value !== null ? array_key_exists(
-					ToolsUtilities\Value::toString($value, true),
+					Utilities\Value::toString($value, true),
 					$options,
 				) : null,
 			);
@@ -4302,7 +4304,7 @@ class Install extends Console\Command\Command
 			return $value;
 		}
 
-		if ($attributeMetadata->getDataType() === MetadataTypes\DataType::BOOLEAN) {
+		if ($attributeMetadata->getDataType() === ValuesTypes\DataType::BOOLEAN) {
 			$question = new Console\Question\ChoiceQuestion(
 				(string) $this->translator->translate('//ns-panel-connector.cmd.install.questions.select.value'),
 				[
@@ -4341,7 +4343,7 @@ class Install extends Console\Command\Command
 
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//ns-panel-connector.cmd.install.questions.provide.value'),
-			is_object($value) ? ToolsUtilities\Value::toString($value) : $value,
+			is_object($value) ? Utilities\Value::toString($value) : $value,
 		);
 		$question->setValidator(
 			function (string|int|null $answer) use ($attributeMetadata, $minValue, $maxValue, $step): string|int|float {
@@ -4356,11 +4358,11 @@ class Install extends Console\Command\Command
 					);
 				}
 
-				if ($attributeMetadata->getDataType() === MetadataTypes\DataType::STRING) {
+				if ($attributeMetadata->getDataType() === ValuesTypes\DataType::STRING) {
 					return strval($answer);
 				}
 
-				if ($attributeMetadata->getDataType() === MetadataTypes\DataType::FLOAT) {
+				if ($attributeMetadata->getDataType() === ValuesTypes\DataType::FLOAT) {
 					if ($minValue !== null && floatval($answer) < $minValue) {
 						throw new Exceptions\Runtime(
 							sprintf(
@@ -4403,12 +4405,12 @@ class Install extends Console\Command\Command
 				}
 
 				if (
-					$attributeMetadata->getDataType() === MetadataTypes\DataType::CHAR
-					|| $attributeMetadata->getDataType() === MetadataTypes\DataType::UCHAR
-					|| $attributeMetadata->getDataType() === MetadataTypes\DataType::SHORT
-					|| $attributeMetadata->getDataType() === MetadataTypes\DataType::USHORT
-					|| $attributeMetadata->getDataType() === MetadataTypes\DataType::INT
-					|| $attributeMetadata->getDataType() === MetadataTypes\DataType::UINT
+					$attributeMetadata->getDataType() === ValuesTypes\DataType::CHAR
+					|| $attributeMetadata->getDataType() === ValuesTypes\DataType::UCHAR
+					|| $attributeMetadata->getDataType() === ValuesTypes\DataType::SHORT
+					|| $attributeMetadata->getDataType() === ValuesTypes\DataType::USHORT
+					|| $attributeMetadata->getDataType() === ValuesTypes\DataType::INT
+					|| $attributeMetadata->getDataType() === ValuesTypes\DataType::UINT
 				) {
 					if ($minValue !== null && intval($answer) < $minValue) {
 						throw new Exceptions\Runtime(
@@ -4569,7 +4571,7 @@ class Install extends Console\Command\Command
 						$this->logger->error(
 							'Could not get NS Panel basic information',
 							[
-								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+								'source' => Sources\Connector::NS_PANEL->value,
 								'type' => 'install-cmd',
 								'exception' => Logging\Logger::buildException($ex),
 								'request' => [
@@ -5015,7 +5017,7 @@ class Install extends Console\Command\Command
 	 */
 	private function findNextChannelIdentifier(
 		Entities\Devices\ThirdPartyDevice $device,
-		Types\Capability $type,
+		NsPanelTypes\Capability $type,
 	): string
 	{
 		for ($i = 1; $i <= 100; $i++) {

@@ -20,7 +20,8 @@ use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Entities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -57,7 +58,7 @@ trait ChannelProperty
 		string $type,
 		Uuid\UuidInterface $channelId,
 		string|bool|int|null $value,
-		MetadataTypes\DataType $dataType,
+		Types\DataType $dataType,
 		string $identifier,
 		string|null $name = null,
 		array|string|null $format = null,
@@ -96,7 +97,7 @@ trait ChannelProperty
 			$this->logger->warning(
 				'Stored channel property was not of valid type',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'message-consumer',
 					'channel' => [
 						'id' => $channelId->toString(),
@@ -118,7 +119,7 @@ trait ChannelProperty
 				$this->logger->error(
 					'Channel was not found, property could not be configured',
 					[
-						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+						'source' => Sources\Connector::SONOFF->value,
 						'type' => 'message-consumer',
 						'channel' => [
 							'id' => $channelId->toString(),
@@ -161,7 +162,7 @@ trait ChannelProperty
 			$this->logger->debug(
 				'Channel property was created',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'message-consumer',
 					'channel' => [
 						'id' => $channelId->toString(),
@@ -200,7 +201,7 @@ trait ChannelProperty
 			$this->logger->debug(
 				'Channel property was updated',
 				[
-					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
+					'source' => Sources\Connector::SONOFF->value,
 					'type' => 'message-consumer',
 					'channel' => [
 						'id' => $channelId->toString(),

@@ -25,7 +25,7 @@ use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -283,7 +283,7 @@ abstract class Periodic implements Writer
 
 		$state = await($this->channelPropertiesStatesManager->read(
 			$property,
-			MetadataTypes\Sources\Connector::NS_PANEL,
+			Sources\Connector::NS_PANEL,
 		));
 
 		if (is_bool($state)) {
@@ -337,7 +337,7 @@ abstract class Periodic implements Writer
 				$this->logger->error(
 					'Characteristic value could not be prepared for writing',
 					[
-						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+						'source' => Sources\Connector::NS_PANEL->value,
 						'type' => 'periodic-writer',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -405,7 +405,7 @@ abstract class Periodic implements Writer
 		if ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
 			$state = await($this->channelPropertiesStatesManager->read(
 				$property,
-				MetadataTypes\Sources\Connector::NS_PANEL,
+				Sources\Connector::NS_PANEL,
 			));
 
 			if (is_bool($state)) {
@@ -449,7 +449,7 @@ abstract class Periodic implements Writer
 				$this->logger->error(
 					'Characteristic value could not be prepared for writing',
 					[
-						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+						'source' => Sources\Connector::NS_PANEL->value,
 						'type' => 'periodic-writer',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -460,7 +460,7 @@ abstract class Periodic implements Writer
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 			$state = await($this->channelPropertiesStatesManager->read(
 				$property,
-				MetadataTypes\Sources\Connector::NS_PANEL,
+				Sources\Connector::NS_PANEL,
 			));
 
 			if (is_bool($state)) {
@@ -504,7 +504,7 @@ abstract class Periodic implements Writer
 				$this->logger->error(
 					'Characteristic value could not be prepared for writing',
 					[
-						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+						'source' => Sources\Connector::NS_PANEL->value,
 						'type' => 'periodic-writer',
 						'exception' => Logging\Logger::buildException($ex),
 					],
@@ -531,7 +531,7 @@ abstract class Periodic implements Writer
 				$this->logger->error(
 					'Characteristic value could not be prepared for writing',
 					[
-						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+						'source' => Sources\Connector::NS_PANEL->value,
 						'type' => 'periodic-writer',
 						'exception' => Logging\Logger::buildException($ex),
 					],

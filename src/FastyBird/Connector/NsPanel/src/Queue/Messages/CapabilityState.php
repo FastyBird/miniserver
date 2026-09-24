@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
 use DateTimeInterface;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
 
 /**
@@ -89,7 +89,7 @@ final readonly class CapabilityState implements Message
 		return [
 			'capability' => $this->getCapability()->value,
 			'attribute' => $this->getAttribute()->value,
-			'value' => ToolsUtilities\Value::flattenValue($this->getValue()),
+			'value' => Utilities\Value::flattenValue($this->getValue()),
 			'identifier' => $this->getIdentifier(),
 		];
 	}

@@ -17,13 +17,13 @@ use FastyBird\Core\Messaging as ExchangeMessaging;
 use FastyBird\Core\Middleware as WebServerMiddleware;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
-use FastyBird\Core\Schemas as ToolsSchemas;
 use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Services as SimpleAuthServices;
 use FastyBird\Core\Subscribers as DoctrineTimestampableSubscribers;
 use FastyBird\Core\Subscribers as HttpServerSubscribers;
 use FastyBird\Core\Subscribers as WsServerSubscribers;
 use FastyBird\Core\Tests;
+use FastyBird\Core\Values\Schemas;
 use Monolog;
 use Nette;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
@@ -80,7 +80,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 */
 
 		self::assertNotNull($container->getByType(ToolsHelpers\Tools\Database::class, false));
-		self::assertNotNull($container->getByType(ToolsSchemas\Tools\Validator::class, false));
+		self::assertNotNull($container->getByType(Schemas\Validator::class, false));
 
 		/**
 		 * HTTP SERVER (formerly Plugin/WebServer) -- from WebServerExtensionTest

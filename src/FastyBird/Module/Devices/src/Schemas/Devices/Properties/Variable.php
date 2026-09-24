@@ -18,8 +18,8 @@ namespace FastyBird\Module\Devices\Schemas\Devices\Properties;
 use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
@@ -49,7 +49,7 @@ final class Variable extends Property
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = MetadataTypes\Sources\Module::DEVICES->value . '/property/device/' . Types\PropertyType::VARIABLE->value;
+	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/device/' . Types\PropertyType::VARIABLE->value;
 
 	public function getEntityClass(): string
 	{
@@ -81,7 +81,7 @@ final class Variable extends Property
 	): iterable
 	{
 		return array_merge((array) parent::getAttributes($resource, $context), [
-			'value' => ToolsUtilities\Value::flattenValue($resource->getValue()),
+			'value' => Utilities\Value::flattenValue($resource->getValue()),
 		]);
 	}
 

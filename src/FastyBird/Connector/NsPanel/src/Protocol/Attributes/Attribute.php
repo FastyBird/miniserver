@@ -18,8 +18,8 @@ namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 use DateTimeInterface;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Nette;
 use Ramsey\Uuid;
 use function implode;
@@ -60,8 +60,8 @@ class Attribute
 	 */
 	public function __construct(
 		protected readonly Uuid\UuidInterface $id,
-		protected readonly Types\Attribute $type,
-		protected readonly MetadataTypes\DataType $dataType,
+		protected readonly NsPanelTypes\Attribute $type,
+		protected readonly ValuesTypes\DataType $dataType,
 		protected readonly Protocol\Capabilities\Capability $capability,
 		protected readonly array|null $validValues = null,
 		protected readonly int|null $maxLength = null,
@@ -79,12 +79,12 @@ class Attribute
 		return $this->id;
 	}
 
-	public function getType(): Types\Attribute
+	public function getType(): NsPanelTypes\Attribute
 	{
 		return $this->type;
 	}
 
-	public function getDataType(): MetadataTypes\DataType
+	public function getDataType(): ValuesTypes\DataType
 	{
 		return $this->dataType;
 	}

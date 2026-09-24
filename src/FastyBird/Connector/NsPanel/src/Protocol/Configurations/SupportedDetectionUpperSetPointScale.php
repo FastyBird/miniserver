@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
+use FastyBird\Core\Values\Types as ValuesTypes;
 use Ramsey\Uuid;
 
 /**
@@ -39,13 +39,13 @@ class SupportedDetectionUpperSetPointScale extends Configuration
 	{
 		parent::__construct(
 			$id,
-			Types\Configuration::SUPPORTED_UPPER_SET_POINT_VALUE_SCALE,
-			MetadataTypes\DataType::ENUM,
+			NsPanelTypes\Configuration::SUPPORTED_UPPER_SET_POINT_VALUE_SCALE,
+			ValuesTypes\DataType::ENUM,
 			$capability,
 			$value,
 			[
-				Types\Payloads\TemperatureScale::CELSIUS->value,
-				Types\Payloads\TemperatureScale::FAHRENHEIT->value,
+				NsPanelTypes\Payloads\TemperatureScale::CELSIUS->value,
+				NsPanelTypes\Payloads\TemperatureScale::FAHRENHEIT->value,
 			],
 		);
 	}

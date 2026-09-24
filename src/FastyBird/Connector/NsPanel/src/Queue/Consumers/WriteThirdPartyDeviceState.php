@@ -25,8 +25,8 @@ use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
-use FastyBird\Core\Utilities\Tools as ToolsUtilities;
+use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -100,7 +100,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -125,7 +125,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->warning(
 				'Device is not correctly configured therefore could not be updated on NS Panel',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -158,7 +158,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device assigned gateway could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -197,7 +197,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device owning NS Panel is not configured',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -235,7 +235,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device is not synchronised with NS Panel',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -262,7 +262,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device capability could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -289,7 +289,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device capability attribute could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -316,7 +316,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'Device capability attribute mapped property could not be loaded',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -341,7 +341,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 
 		if ($propertyToUpdate instanceof DevicesDocuments\Channels\Properties\Variable) {
 			$protocolAttribute->setActualValue(
-				ToolsUtilities\Value::flattenValue($propertyToUpdate->getValue()),
+				Utilities\Value::flattenValue($propertyToUpdate->getValue()),
 			);
 			$protocolAttribute->setExpectedValue(null);
 			$protocolAttribute->setValid(true);
@@ -362,11 +362,11 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 					DevicesStates\Property::PENDING_FIELD => false,
 					DevicesStates\Property::VALID_FIELD => true,
 				]),
-				MetadataTypes\Sources\Connector::NS_PANEL,
+				Sources\Connector::NS_PANEL,
 			));
 
 			$protocolAttribute->setActualValue(
-				ToolsUtilities\Value::flattenValue($state->getExpectedValue() ?? $state->getActualValue()),
+				Utilities\Value::flattenValue($state->getExpectedValue() ?? $state->getActualValue()),
 			);
 			$protocolAttribute->setExpectedValue(null);
 			$protocolAttribute->setValid(true);
@@ -381,7 +381,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 
 			if ($parent instanceof DevicesDocuments\Channels\Properties\Variable) {
 				$protocolAttribute->setActualValue(
-					ToolsUtilities\Value::flattenValue($parent->getValue()),
+					Utilities\Value::flattenValue($parent->getValue()),
 				);
 				$protocolAttribute->setExpectedValue(null);
 				$protocolAttribute->setValid(true);
@@ -395,10 +395,10 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 				}
 
 				$protocolAttribute->setActualValue(
-					ToolsUtilities\Value::flattenValue($state->getActualValue()),
+					Utilities\Value::flattenValue($state->getActualValue()),
 				);
 				$protocolAttribute->setExpectedValue(
-					ToolsUtilities\Value::flattenValue($state->getExpectedValue()),
+					Utilities\Value::flattenValue($state->getExpectedValue()),
 				);
 				$protocolAttribute->setValid($state->isValid());
 				$protocolAttribute->setPending($state->getPending());
@@ -426,14 +426,14 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 								DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
 								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
 							]),
-							MetadataTypes\Sources\Connector::NS_PANEL,
+							Sources\Connector::NS_PANEL,
 						));
 					}
 
 					$this->logger->debug(
 						'Channel state was successfully sent to device',
 						[
-							'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+							'source' => Sources\Connector::NS_PANEL->value,
 							'type' => 'write-third-party-device-state-message-consumer',
 							'connector' => [
 								'id' => $message->getConnector()->toString(),
@@ -460,7 +460,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 							await($this->channelPropertiesStatesManager->setPendingState(
 								$propertyToUpdate,
 								false,
-								MetadataTypes\Sources\Connector::NS_PANEL,
+								Sources\Connector::NS_PANEL,
 							));
 						}
 
@@ -506,7 +506,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 							'Could not report device state to NS Panel',
 							array_merge(
 								[
-									'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+									'source' => Sources\Connector::NS_PANEL->value,
 									'type' => 'write-third-party-device-state-message-consumer',
 									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
@@ -532,7 +532,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			$this->logger->error(
 				'An unhandled error occurred',
 				[
-					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+					'source' => Sources\Connector::NS_PANEL->value,
 					'type' => 'write-third-party-device-state-message-consumer',
 					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
@@ -555,7 +555,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed write third-party device state message',
 			[
-				'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
+				'source' => Sources\Connector::NS_PANEL->value,
 				'type' => 'write-third-party-device-state-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

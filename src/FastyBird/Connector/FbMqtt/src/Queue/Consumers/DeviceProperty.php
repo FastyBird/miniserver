@@ -24,7 +24,7 @@ use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -94,7 +94,7 @@ final class DeviceProperty implements Queue\Consumer
 			$this->logger->warning(
 				sprintf('Device "%s" is not registered', $message->getDevice()),
 				[
-					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+					'source' => Sources\Connector::FB_MQTT->value,
 					'type' => 'device-property-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -118,7 +118,7 @@ final class DeviceProperty implements Queue\Consumer
 			$this->logger->warning(
 				sprintf('Property "%s" is not registered', $message->getProperty()),
 				[
-					'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+					'source' => Sources\Connector::FB_MQTT->value,
 					'type' => 'device-property-message-consumer',
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
@@ -154,7 +154,7 @@ final class DeviceProperty implements Queue\Consumer
 					Utils\ArrayHash::from([
 						DevicesStates\Property::ACTUAL_VALUE_FIELD => $message->getValue(),
 					]),
-					MetadataTypes\Sources\Connector::FB_MQTT,
+					Sources\Connector::FB_MQTT,
 				));
 			}
 		} else {
@@ -175,7 +175,7 @@ final class DeviceProperty implements Queue\Consumer
 		$this->logger->debug(
 			'Consumed channel property message',
 			[
-				'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
+				'source' => Sources\Connector::FB_MQTT->value,
 				'type' => 'device-property-message-consumer',
 				'connector' => [
 					'id' => $message->getConnector()->toString(),

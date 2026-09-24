@@ -6,7 +6,7 @@ use FastyBird\Core\Events;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Server\HttpServer as Server;
-use FastyBird\Core\Types\Metadata as MetadataTypes;
+use FastyBird\Core\Values\Types\Sources;
 use Psr\EventDispatcher;
 use Psr\Log;
 use React\EventLoop;
@@ -60,7 +60,7 @@ final class HttpServer extends Console\Command\Command
 		$this->logger->info(
 			'Starting HTTP Server',
 			[
-				'source' => MetadataTypes\Sources\Plugin::WEB_SERVER->value,
+				'source' => Sources\Plugin::WEB_SERVER->value,
 				'type' => 'server-command',
 			],
 		);
@@ -101,7 +101,7 @@ final class HttpServer extends Console\Command\Command
 			$this->logger->error(
 				'An unhandled error occurred. Stopping HTTP server',
 				[
-					'source' => MetadataTypes\Sources\Plugin::WEB_SERVER->value,
+					'source' => Sources\Plugin::WEB_SERVER->value,
 					'type' => 'server-command',
 					'exception' => Logging\Logger::buildException($ex),
 					'cmd' => $this->getName(),
