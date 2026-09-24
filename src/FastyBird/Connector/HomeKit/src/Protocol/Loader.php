@@ -29,6 +29,7 @@ use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -335,7 +336,7 @@ class Loader
 								[
 									'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
 									'type' => 'http-server',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
 										'id' => $connector->getId()->toString(),
 									],
@@ -377,7 +378,7 @@ class Loader
 									[
 										'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
 										'type' => 'http-server',
-										'exception' => ToolsHelpers\Logger::buildException($ex),
+										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
 											'id' => $connector->getId()->toString(),
 										],

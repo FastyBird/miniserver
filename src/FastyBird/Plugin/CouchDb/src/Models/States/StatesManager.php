@@ -18,7 +18,7 @@ namespace FastyBird\Plugin\CouchDb\Models\States;
 use BackedEnum;
 use DateTimeInterface;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Events;
@@ -95,7 +95,7 @@ class StatesManager
 				'document' => [
 					'id' => $id->toString(),
 				],
-				'exception' => ToolsHelpers\Logger::buildException($ex),
+				'exception' => Logging\Logger::buildException($ex),
 			]);
 
 			throw new Exceptions\InvalidState('State could not be created', $ex->getCode(), $ex);
@@ -128,7 +128,7 @@ class StatesManager
 				'document' => [
 					'id' => $state->getId()->toString(),
 				],
-				'exception' => ToolsHelpers\Logger::buildException($ex),
+				'exception' => Logging\Logger::buildException($ex),
 			]);
 
 			throw new Exceptions\InvalidState('State could not be updated', $ex->getCode(), $ex);
@@ -173,7 +173,7 @@ class StatesManager
 				'document' => [
 					'id' => $id,
 				],
-				'exception' => ToolsHelpers\Logger::buildException($ex),
+				'exception' => Logging\Logger::buildException($ex),
 			]);
 
 			throw new Exceptions\InvalidState('Document could not found.', $ex->getCode(), $ex);
@@ -252,7 +252,7 @@ class StatesManager
 				'document' => [
 					'id' => $id->toString(),
 				],
-				'exception' => ToolsHelpers\Logger::buildException($ex),
+				'exception' => Logging\Logger::buildException($ex),
 			]);
 
 			throw new Exceptions\InvalidState('State could not be created', $ex->getCode(), $ex);
@@ -341,7 +341,7 @@ class StatesManager
 				'document' => [
 					'id' => $state->getId()->toString(),
 				],
-				'exception' => ToolsHelpers\Logger::buildException($ex),
+				'exception' => Logging\Logger::buildException($ex),
 			]);
 
 			throw new Exceptions\InvalidState('State could not be updated', $ex->getCode(), $ex);
@@ -354,7 +354,7 @@ class StatesManager
 				'document' => [
 					'id' => $state->getId()->toString(),
 				],
-				'exception' => ToolsHelpers\Logger::buildException($ex),
+				'exception' => Logging\Logger::buildException($ex),
 			]);
 
 			throw new Exceptions\InvalidState('State could not be updated', $ex->getCode(), $ex);
@@ -381,7 +381,7 @@ class StatesManager
 				'document' => [
 					'id' => $id->toString(),
 				],
-				'exception' => ToolsHelpers\Logger::buildException($ex),
+				'exception' => Logging\Logger::buildException($ex),
 			]);
 		}
 

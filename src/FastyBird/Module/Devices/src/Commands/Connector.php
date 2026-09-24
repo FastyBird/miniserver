@@ -21,6 +21,7 @@ use Doctrine\DBAL;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -206,7 +207,7 @@ class Connector extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Module::DEVICES->value,
 					'type' => 'connector-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -289,7 +290,7 @@ class Connector extends Console\Command\Command
 					[
 						'source' => MetadataTypes\Sources\Module::DEVICES->value,
 						'type' => 'connector-cmd',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'reason' => [
 							'source' => $source->value,
 							'message' => $reason,
@@ -328,7 +329,7 @@ class Connector extends Console\Command\Command
 					[
 						'source' => MetadataTypes\Sources\Module::DEVICES->value,
 						'type' => 'connector-cmd',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'reason' => [
 							'source' => $source->value,
 							'message' => $reason,
@@ -388,7 +389,7 @@ class Connector extends Console\Command\Command
 							[
 								'source' => MetadataTypes\Sources\Module::DEVICES->value,
 								'type' => 'connector-cmd',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 
@@ -416,7 +417,7 @@ class Connector extends Console\Command\Command
 							[
 								'source' => MetadataTypes\Sources\Module::DEVICES->value,
 								'type' => 'connector-cmd',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 
@@ -530,7 +531,7 @@ class Connector extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Module::DEVICES->value,
 					'type' => 'connector-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

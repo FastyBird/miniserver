@@ -25,7 +25,7 @@ use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -157,7 +157,7 @@ final class Cloud implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::TUYA->value,
 						'type' => 'cloud-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -229,7 +229,7 @@ final class Cloud implements Client
 				[
 					'source' => MetadataTypes\Sources\Connector::TUYA->value,
 					'type' => 'cloud-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
 					],
@@ -264,7 +264,7 @@ final class Cloud implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::TUYA->value,
 						'type' => 'cloud-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -483,7 +483,7 @@ final class Cloud implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::TUYA->value,
 						'type' => 'cloud-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex, $renderException),
+						'exception' => Logging\Logger::buildException($ex, $renderException),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],

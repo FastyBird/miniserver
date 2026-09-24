@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Writers;
 use FastyBird\Connector\Zigbee2Mqtt\Documents;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Symfony\Component\EventDispatcher;
@@ -101,7 +101,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 				[
 					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'event-writer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 		}

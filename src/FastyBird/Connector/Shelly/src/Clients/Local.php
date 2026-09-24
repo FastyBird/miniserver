@@ -26,7 +26,7 @@ use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events as DevicesEvents;
@@ -142,7 +142,7 @@ final class Local implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 						'type' => 'local-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -164,7 +164,7 @@ final class Local implements Client
 				[
 					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 					'type' => 'local-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
 					],
@@ -241,7 +241,7 @@ final class Local implements Client
 								[
 									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 									'type' => 'local-client',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
 										'id' => $this->connector->getId()->toString(),
 									],
@@ -257,7 +257,7 @@ final class Local implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 							'type' => 'local-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -399,7 +399,7 @@ final class Local implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 							'type' => 'local-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -444,7 +444,7 @@ final class Local implements Client
 									[
 										'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 										'type' => 'local-client',
-										'exception' => ToolsHelpers\Logger::buildException($ex),
+										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
 											'id' => $this->connector->getId()->toString(),
 										],
@@ -490,7 +490,7 @@ final class Local implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 							'type' => 'local-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex, $renderException),
+							'exception' => Logging\Logger::buildException($ex, $renderException),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -608,7 +608,7 @@ final class Local implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 							'type' => 'local-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex, $renderException),
+							'exception' => Logging\Logger::buildException($ex, $renderException),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -653,7 +653,7 @@ final class Local implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 						'type' => 'local-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -671,7 +671,7 @@ final class Local implements Client
 				[
 					'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 					'type' => 'local-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
 					],
@@ -746,7 +746,7 @@ final class Local implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 							'type' => 'local-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex, $renderException),
+							'exception' => Logging\Logger::buildException($ex, $renderException),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],

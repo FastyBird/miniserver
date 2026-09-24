@@ -19,7 +19,7 @@ use FastyBird\Core\Controllers\WebSockets as WebSocketsControllers;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents;
@@ -95,7 +95,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 				[
 					'source' => MetadataTypes\Sources\Module::UI->value,
 					'type' => 'exchange-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 		}

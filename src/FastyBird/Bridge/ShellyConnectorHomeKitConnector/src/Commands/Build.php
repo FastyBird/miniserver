@@ -29,6 +29,7 @@ use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -200,7 +201,7 @@ class Build extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -280,7 +281,7 @@ class Build extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -347,7 +348,7 @@ class Build extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value,
 					'type' => 'build-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

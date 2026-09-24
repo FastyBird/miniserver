@@ -32,6 +32,7 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
@@ -277,7 +278,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -435,7 +436,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -521,7 +522,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -805,7 +806,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1078,7 +1079,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1165,7 +1166,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1490,7 +1491,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1575,7 +1576,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1649,7 +1650,7 @@ class Install extends Console\Command\Command
 					[
 						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 						'type' => 'install-cmd',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -1685,7 +1686,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1893,7 +1894,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2009,7 +2010,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2126,7 +2127,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2490,7 +2491,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2574,7 +2575,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -4570,7 +4571,7 @@ class Install extends Console\Command\Command
 							[
 								'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 								'type' => 'install-cmd',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 								'request' => [
 									'method' => $ex->getRequest()?->getMethod(),
 									'url' => $ex->getRequest() !== null ? strval($ex->getRequest()->getUri()) : null,

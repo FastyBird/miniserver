@@ -18,7 +18,7 @@ namespace FastyBird\Module\Ui\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Ui\Controllers;
 use FastyBird\Module\Ui\Models;
@@ -110,7 +110,7 @@ final class DisplayV1 extends BaseV1
 					[
 						'source' => MetadataTypes\Sources\Module::DEVICES->value,
 						'type' => 'display-controller',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 

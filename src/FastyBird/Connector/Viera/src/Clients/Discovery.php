@@ -24,7 +24,7 @@ use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Services;
 use FastyBird\Connector\Viera\ValueObjects;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
@@ -117,7 +117,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::VIERA->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -155,7 +155,7 @@ final class Discovery
 							[
 								'source' => MetadataTypes\Sources\Connector::VIERA->value,
 								'type' => 'discovery-client',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 					}
@@ -240,7 +240,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::VIERA->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'device' => [
 							'id' => $id,
 							'host' => $host,
@@ -290,7 +290,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::VIERA->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -301,7 +301,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::VIERA->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
 						'method' => $ex->getRequest()?->getMethod(),
 						'url' => $ex->getRequest() !== null ? strval($ex->getRequest()->getUri()) : null,
@@ -320,7 +320,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::VIERA->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

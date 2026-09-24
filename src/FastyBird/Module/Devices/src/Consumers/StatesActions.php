@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Consumers;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -228,7 +228,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 							[
 								'source' => MetadataTypes\Sources\Module::DEVICES->value,
 								'type' => 'channel-properties-states',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 					});
@@ -360,7 +360,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 							[
 								'source' => MetadataTypes\Sources\Module::DEVICES->value,
 								'type' => 'channel-properties-states',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 					});
@@ -492,7 +492,7 @@ final class StatesActions implements ExchangeConsumers\Consumer
 							[
 								'source' => MetadataTypes\Sources\Module::DEVICES->value,
 								'type' => 'channel-properties-states',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 					});

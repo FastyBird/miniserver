@@ -40,6 +40,8 @@ use FastyBird\Core\Helpers as JsonApiHelpers;
 use FastyBird\Core\Helpers as ToolsHelpers;
 use FastyBird\Core\Helpers as WsServerHelpers;
 use FastyBird\Core\Http as WebServerHttp;
+use FastyBird\Core\Logging;
+use FastyBird\Core\Logging\Subscribers as LoggingSubscribers;
 use FastyBird\Core\Mapping as DoctrineCrudMapping;
 use FastyBird\Core\Mapping as SimpleAuthMapping;
 use FastyBird\Core\Mapping\DoctrineTimestampable\Driver\Timestampable;
@@ -58,7 +60,7 @@ use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Server as WsServerServer;
 use FastyBird\Core\Services as PhoneServices;
 use FastyBird\Core\Services as SimpleAuthServices;
-use FastyBird\Core\Subscribers;
+use FastyBird\Core\Subscribers as CoreSubscribers;
 use FastyBird\Core\Subscribers as ApplicationSubscribers;
 use FastyBird\Core\Subscribers as DoctrineTimestampableSubscribers;
 use FastyBird\Core\Subscribers as HttpServerSubscribers;
@@ -383,7 +385,7 @@ final class CoreExtension extends DI\CompilerExtension
 				$this->prefix('application.subscribers.console'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(ApplicationSubscribers\Application\Console::class)
+				->setType(LoggingSubscribers\Console::class)
 				->setArguments([
 					'handler' => $consoleHandler,
 					'level' => $configuration->application->logging->console->level,
@@ -659,7 +661,7 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if (interface_exists('\Sentry\ClientInterface')) {
 			$builder->addDefinition($this->prefix('tools.helpers.sentry'), new DI\Definitions\ServiceDefinition())
-				->setType(ToolsHelpers\Tools\Sentry::class);
+				->setType(Logging\Sentry::class);
 		}
 
 		// Preserved from ToolsExtension::loadConfiguration() -- the DSN can come from the OS
@@ -823,7 +825,7 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if ($this->compiler->getExtensions(NettrineMigrations\DI\MigrationsExtension::class) !== []) {
 			$builder->addDefinition($this->prefix('doctrineMigrations.subscriber'))
-				->setType(Subscribers\DoctrineMigrations\SchemaSubscriber::class);
+				->setType(CoreSubscribers\DoctrineMigrations\SchemaSubscriber::class);
 		}
 
 		/**

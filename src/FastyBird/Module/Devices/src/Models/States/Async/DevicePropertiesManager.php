@@ -20,7 +20,7 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
@@ -512,7 +512,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 							[
 								'source' => MetadataTypes\Sources\Module::DEVICES->value,
 								'type' => 'async-device-properties-states',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 					} catch (Exceptions\InvalidExpectedValue $ex) {
@@ -548,7 +548,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 							[
 								'source' => MetadataTypes\Sources\Module::DEVICES->value,
 								'type' => 'async-device-properties-states',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 					}
@@ -682,7 +682,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 								[
 									'source' => MetadataTypes\Sources\Module::DEVICES->value,
 									'type' => 'async-device-properties-states',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 								],
 							);
 						}
@@ -740,7 +740,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 									[
 										'source' => MetadataTypes\Sources\Module::DEVICES->value,
 										'type' => 'async-device-properties-states',
-										'exception' => ToolsHelpers\Logger::buildException($ex),
+										'exception' => Logging\Logger::buildException($ex),
 									],
 								);
 							}

@@ -20,7 +20,7 @@ use Exception;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts\Controllers;
@@ -147,7 +147,7 @@ final class RolesV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
 					'type' => 'roles-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

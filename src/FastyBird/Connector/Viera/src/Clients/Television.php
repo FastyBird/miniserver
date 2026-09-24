@@ -26,7 +26,7 @@ use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -290,7 +290,7 @@ final class Television implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::VIERA->value,
 							'type' => 'television-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -318,7 +318,7 @@ final class Television implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::VIERA->value,
 							'type' => 'television-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -352,7 +352,7 @@ final class Television implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::VIERA->value,
 							'type' => 'television-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -446,7 +446,7 @@ final class Television implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::VIERA->value,
 						'type' => 'television-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -463,7 +463,7 @@ final class Television implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::VIERA->value,
 						'type' => 'television-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -497,7 +497,7 @@ final class Television implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::VIERA->value,
 						'type' => 'television-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],
@@ -540,7 +540,7 @@ final class Television implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::VIERA->value,
 							'type' => 'television-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -621,7 +621,7 @@ final class Television implements Client
 				[
 					'source' => MetadataTypes\Sources\Connector::VIERA->value,
 					'type' => 'television-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
 					],

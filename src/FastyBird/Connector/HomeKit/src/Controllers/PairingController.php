@@ -30,6 +30,7 @@ use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http as SlimRouterHttp;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -958,7 +959,7 @@ final class PairingController extends BaseController
 				[
 					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
 					'type' => 'pairing-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
 						'client_address' => strval($request->getServerParams()['REMOTE_ADDR']),
 					],
@@ -1224,7 +1225,7 @@ final class PairingController extends BaseController
 				[
 					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
 					'type' => 'pairing-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
 						'client_address' => strval($request->getServerParams()['REMOTE_ADDR']),
 					],
@@ -1400,7 +1401,7 @@ final class PairingController extends BaseController
 				[
 					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
 					'type' => 'pairing-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
 						'client_address' => strval($request->getServerParams()['REMOTE_ADDR']),
 					],
@@ -1554,7 +1555,7 @@ final class PairingController extends BaseController
 				[
 					'source' => MetadataTypes\Sources\Connector::HOMEKIT->value,
 					'type' => 'pairing-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
 						'client_address' => strval($request->getServerParams()['REMOTE_ADDR']),
 					],

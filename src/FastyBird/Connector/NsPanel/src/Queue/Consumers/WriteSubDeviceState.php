@@ -26,7 +26,7 @@ use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -495,7 +495,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 									[
 										'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 										'type' => 'write-sub-device-state-message-consumer',
-										'exception' => ToolsHelpers\Logger::buildException($ex),
+										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
 											'id' => $message->getConnector()->toString(),
 										],
@@ -522,7 +522,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'write-sub-device-state-message-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $message->getConnector()->toString(),
 					],

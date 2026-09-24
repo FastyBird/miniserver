@@ -21,8 +21,8 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as SlimRouterExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Http as SlimRouterHttp;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\StatusCodeInterface;
@@ -104,7 +104,7 @@ final class Router
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'router-middleware',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
 						'method' => $request->getMethod(),
 						'path' => $request->getUri()->getPath(),
@@ -133,7 +133,7 @@ final class Router
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'router-middleware',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'request' => [
 						'method' => $request->getMethod(),
 						'path' => $request->getUri()->getPath(),
@@ -162,7 +162,7 @@ final class Router
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'router-middleware',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

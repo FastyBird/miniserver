@@ -24,7 +24,7 @@ use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -220,7 +220,7 @@ final class Device implements Client
 									[
 										'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 										'type' => 'device-client',
-										'exception' => ToolsHelpers\Logger::buildException($ex),
+										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
 											'id' => $gateway->getConnector()->toString(),
 										],
@@ -347,7 +347,7 @@ final class Device implements Client
 														[
 															'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 															'type' => 'device-client',
-															'exception' => ToolsHelpers\Logger::buildException(
+															'exception' => Logging\Logger::buildException(
 																$ex,
 															),
 															'connector' => [
@@ -414,7 +414,7 @@ final class Device implements Client
 										[
 											'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 											'type' => 'device-client',
-											'exception' => ToolsHelpers\Logger::buildException($ex),
+											'exception' => Logging\Logger::buildException($ex),
 											'connector' => [
 												'id' => $gateway->getConnector()->toString(),
 											],
@@ -474,7 +474,7 @@ final class Device implements Client
 								[
 									'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 									'type' => 'device-client',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
 										'id' => $gateway->getConnector()->toString(),
 									],
@@ -493,7 +493,7 @@ final class Device implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 						'type' => 'device-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $gateway->getConnector()->toString(),
 						],
@@ -629,7 +629,7 @@ final class Device implements Client
 									[
 										'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 										'type' => 'device-client',
-										'exception' => ToolsHelpers\Logger::buildException($ex),
+										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
 											'id' => $gateway->getConnector()->toString(),
 										],
@@ -647,7 +647,7 @@ final class Device implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 							'type' => 'device-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
 								'id' => $gateway->getConnector()->toString(),
 							],

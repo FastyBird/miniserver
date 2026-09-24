@@ -26,7 +26,7 @@ use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -314,7 +314,7 @@ readonly class Loader
 								[
 									'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 									'type' => 'protocol-loader',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
 										'id' => $connector->getId()->toString(),
 									],
@@ -360,7 +360,7 @@ readonly class Loader
 									[
 										'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 										'type' => 'protocol-loader',
-										'exception' => ToolsHelpers\Logger::buildException($ex),
+										'exception' => Logging\Logger::buildException($ex),
 										'connector' => [
 											'id' => $connector->getId()->toString(),
 										],

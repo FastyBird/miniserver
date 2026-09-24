@@ -28,7 +28,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -248,7 +248,7 @@ class BridgesV1 extends BaseV1
 					[
 						'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 						'type' => 'bridges-controller',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -366,7 +366,7 @@ class BridgesV1 extends BaseV1
 					[
 						'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 						'type' => 'bridges-controller',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -448,7 +448,7 @@ class BridgesV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value,
 					'type' => 'bridges-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

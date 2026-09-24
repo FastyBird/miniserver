@@ -30,6 +30,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineCrudExceptions;
 use FastyBird\Core\Formats\Tools as ToolsFormats;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -970,7 +971,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1564,7 +1565,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1684,7 +1685,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'initialize-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1871,7 +1872,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -1964,7 +1965,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2095,7 +2096,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2242,7 +2243,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2402,7 +2403,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2555,7 +2556,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -2757,7 +2758,7 @@ class Install extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Addon::VIRTUAL_THERMOSTAT->value,
 					'type' => 'install-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

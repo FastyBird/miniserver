@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Commands;
 
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange as ExchangeExchange;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
@@ -138,7 +138,7 @@ final class Exchange extends Console\Command\Command
 				[
 					'source' => MetadataTypes\Sources\Module::DEVICES->value,
 					'type' => 'exchange-cmd',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

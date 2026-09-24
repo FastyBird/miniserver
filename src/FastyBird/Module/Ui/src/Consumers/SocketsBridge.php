@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Consumers;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Routing as WebSocketsRouting;
 use FastyBird\Core\Topics\WsServer as WsServerTopics;
@@ -136,7 +136,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 				[
 					'source' => MetadataTypes\Sources\Module::DEVICES->value,
 					'type' => 'sockets-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -146,7 +146,7 @@ final readonly class SocketsBridge implements ExchangeConsumers\Consumer
 				[
 					'source' => MetadataTypes\Sources\Module::DEVICES->value,
 					'type' => 'sockets-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 		}

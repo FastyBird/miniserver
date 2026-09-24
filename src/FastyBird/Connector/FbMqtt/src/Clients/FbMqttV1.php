@@ -23,7 +23,7 @@ use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use InvalidArgumentException;
@@ -143,7 +143,7 @@ final class FbMqttV1 implements Client
 						[
 							'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
 							'type' => 'fb-mqtt-v1-client',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'connector' => [
 								'id' => $this->connector->getId()->toString(),
 							],
@@ -179,7 +179,7 @@ final class FbMqttV1 implements Client
 							[
 								'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
 								'type' => 'fb-mqtt-v1-client',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 								'connector' => [
 									'id' => $this->connector->getId()->toString(),
 								],
@@ -340,7 +340,7 @@ final class FbMqttV1 implements Client
 					[
 						'source' => MetadataTypes\Sources\Connector::FB_MQTT->value,
 						'type' => 'fb-mqtt-v1-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'connector' => [
 							'id' => $this->connector->getId()->toString(),
 						],

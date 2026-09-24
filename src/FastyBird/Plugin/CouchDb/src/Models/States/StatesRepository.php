@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\CouchDb\Models\States;
 
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Exceptions;
@@ -108,7 +108,7 @@ class StatesRepository
 				'record' => [
 					'id' => $id->toString(),
 				],
-				'exception' => ToolsHelpers\Logger::buildException($ex),
+				'exception' => Logging\Logger::buildException($ex),
 			]);
 
 			throw new Exceptions\InvalidState(

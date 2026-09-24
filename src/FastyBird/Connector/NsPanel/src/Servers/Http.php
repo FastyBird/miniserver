@@ -19,7 +19,7 @@ use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Documents;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Middleware;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
@@ -92,7 +92,7 @@ final class Http implements Server
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'http-server',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
 					],
@@ -128,7 +128,7 @@ final class Http implements Server
 				[
 					'source' => MetadataTypes\Sources\Connector::NS_PANEL->value,
 					'type' => 'http-server',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $this->connector->getId()->toString(),
 					],

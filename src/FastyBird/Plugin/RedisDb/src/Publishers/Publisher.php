@@ -18,7 +18,7 @@ namespace FastyBird\Plugin\RedisDb\Publishers;
 use DateTimeInterface;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
@@ -104,7 +104,7 @@ final class Publisher implements ExchangePublisher\Publisher
 				[
 					'source' => MetadataTypes\Sources\Plugin::REDISDB->value,
 					'type' => 'messages-publisher',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'message' => [
 						'routing_key' => $routingKey,
 						'source' => $source->value,

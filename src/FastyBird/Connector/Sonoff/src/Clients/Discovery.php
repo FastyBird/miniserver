@@ -24,7 +24,7 @@ use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -182,7 +182,7 @@ final class Discovery
 				[
 					'source' => MetadataTypes\Sources\Connector::SONOFF->value,
 					'type' => 'discovery-client',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -203,7 +203,7 @@ final class Discovery
 							[
 								'source' => MetadataTypes\Sources\Connector::SONOFF->value,
 								'type' => 'discovery-client',
-								'exception' => ToolsHelpers\Logger::buildException($ex),
+								'exception' => Logging\Logger::buildException($ex),
 							],
 						);
 
@@ -216,7 +216,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -284,7 +284,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'device' => [
 							'id' => $device->getDeviceId(),
 							'uiid' => $device->getExtra()->getUiid(),
@@ -299,7 +299,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'device' => [
 							'id' => $device->getDeviceId(),
 							'uiid' => $device->getExtra()->getUiid(),
@@ -453,7 +453,7 @@ final class Discovery
 					[
 						'source' => MetadataTypes\Sources\Connector::SONOFF->value,
 						'type' => 'discovery-client',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 						'device' => $device->toArray(),
 					],
 				);

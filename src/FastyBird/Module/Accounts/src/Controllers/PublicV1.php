@@ -19,7 +19,7 @@ use Doctrine;
 use Exception;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Helpers;
@@ -186,7 +186,7 @@ final class PublicV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
 					'type' => 'public-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

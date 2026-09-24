@@ -27,7 +27,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -525,7 +525,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 								[
 									'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
 									'type' => 'write-sub-device-channel-property-state-message-consumer',
-									'exception' => ToolsHelpers\Logger::buildException($ex),
+									'exception' => Logging\Logger::buildException($ex),
 									'connector' => [
 										'id' => $connector->getId()->toString(),
 									],
@@ -559,7 +559,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 				[
 					'source' => MetadataTypes\Sources\Connector::ZIGBEE2MQTT->value,
 					'type' => 'write-sub-device-channel-property-state-message-consumer',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 					'connector' => [
 						'id' => $connector->getId()->toString(),
 					],

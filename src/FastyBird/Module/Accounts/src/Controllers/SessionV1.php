@@ -23,7 +23,7 @@ use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
@@ -164,7 +164,7 @@ final class SessionV1 extends BaseV1
 					[
 						'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
 						'type' => 'session-controller',
-						'exception' => ToolsHelpers\Logger::buildException($ex),
+						'exception' => Logging\Logger::buildException($ex),
 					],
 				);
 
@@ -222,7 +222,7 @@ final class SessionV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
 					'type' => 'session-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -361,7 +361,7 @@ final class SessionV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
 					'type' => 'session-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 
@@ -428,7 +428,7 @@ final class SessionV1 extends BaseV1
 				[
 					'source' => MetadataTypes\Sources\Module::ACCOUNTS->value,
 					'type' => 'session-controller',
-					'exception' => ToolsHelpers\Logger::buildException($ex),
+					'exception' => Logging\Logger::buildException($ex),
 				],
 			);
 

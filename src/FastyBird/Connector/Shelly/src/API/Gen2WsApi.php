@@ -26,7 +26,7 @@ use FastyBird\Connector\Shelly\ValueObjects;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
-use FastyBird\Core\Helpers\Tools as ToolsHelpers;
+use FastyBird\Core\Logging;
 use FastyBird\Core\Schemas\Tools as ToolsSchemas;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\StatusCodeInterface;
@@ -542,7 +542,7 @@ final class Gen2WsApi
 						[
 							'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 							'type' => 'gen2-ws-api',
-							'exception' => ToolsHelpers\Logger::buildException($ex),
+							'exception' => Logging\Logger::buildException($ex),
 							'device' => [
 								'id' => $this->id->toString(),
 							],
@@ -578,7 +578,7 @@ final class Gen2WsApi
 								[
 									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 									'type' => 'gen2-ws-api',
-									'exception' => ToolsHelpers\Logger::buildException(
+									'exception' => Logging\Logger::buildException(
 										$ex,
 										$ex instanceof Exceptions\WsError,
 									),
@@ -607,7 +607,7 @@ final class Gen2WsApi
 								[
 									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 									'type' => 'gen2-ws-api',
-									'exception' => ToolsHelpers\Logger::buildException(
+									'exception' => Logging\Logger::buildException(
 										$ex,
 										$ex instanceof Exceptions\WsError,
 									),
@@ -662,7 +662,7 @@ final class Gen2WsApi
 								[
 									'source' => MetadataTypes\Sources\Connector::SHELLY->value,
 									'type' => 'gen2-ws-api',
-									'exception' => ToolsHelpers\Logger::buildException(
+									'exception' => Logging\Logger::buildException(
 										$ex,
 										$ex instanceof Exceptions\WsError,
 									),
