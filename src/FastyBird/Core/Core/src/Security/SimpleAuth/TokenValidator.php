@@ -3,10 +3,10 @@
 namespace FastyBird\Core\Security\SimpleAuth;
 
 use DateTimeImmutable;
+use FastyBird\Core\Clock as CoreClock;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Services\DateTimeFactory;
-use Lcobucci\Clock;
+use Lcobucci\Clock as LcobucciClock;
 use Lcobucci\JWT;
 use Ramsey\Uuid;
 use Throwable;
@@ -26,7 +26,7 @@ final readonly class TokenValidator
 	public function __construct(
 		private readonly string $tokenSignature,
 		private readonly string $tokenIssuer,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly CoreClock\Clock $clock,
 	)
 	{
 	}
@@ -48,7 +48,7 @@ final readonly class TokenValidator
 
 		$configuration->setValidationConstraints(
 			new JWT\Validation\Constraint\IssuedBy($this->tokenIssuer),
-			new JWT\Validation\Constraint\LooseValidAt(new Clock\FrozenClock($now)),
+			new JWT\Validation\Constraint\LooseValidAt(new LcobucciClock\FrozenClock($now)),
 			new JWT\Validation\Constraint\SignedWith(
 				$configuration->signer(),
 				JWT\Signer\Key\InMemory::plainText($this->tokenSignature),

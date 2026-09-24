@@ -3,8 +3,8 @@
 namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit\Models;
 
 use DateTimeImmutable;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Persistence\Application\Rules as ApplicationObjectMapper;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\Models;
@@ -174,7 +174,7 @@ final class StatesManagerTest extends TestCase
 
 		$factory = new States\StateFactory($processor);
 
-		$systemClock = $this->createMock(DateTimeFactory\SystemClock::class);
+		$systemClock = $this->createMock(Clock\SystemClock::class);
 		$systemClock
 			->method('getNow')
 			->willReturn(new DateTimeImmutable('2020-04-01T12:00:00+00:00'));

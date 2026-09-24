@@ -4,7 +4,7 @@ namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit\Publishers;
 
 use DateTime;
 use DateTimeInterface;
-use FastyBird\Core\Services\DateTimeFactory;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Publishers;
@@ -40,7 +40,7 @@ final class PublisherTest extends TestCase
 			]))
 			->willReturn(true);
 
-		$systemClock = $this->createMock(DateTimeFactory\SystemClock::class);
+		$systemClock = $this->createMock(Clock\SystemClock::class);
 		$systemClock
 			->expects(self::once())
 			->method('getNow')

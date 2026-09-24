@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Helpers;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use Exception;
-use FastyBird\Core\Services\DateTimeFactory;
+use FastyBird\Core\Clock;
 use Nette;
 use Nette\Utils;
 use function assert;
@@ -42,7 +42,7 @@ final class SecurityHash
 
 	private const SEPARATOR = '##';
 
-	public function __construct(private readonly DateTimeFactory\Clock $clock)
+	public function __construct(private readonly Clock\Clock $clock)
 	{
 	}
 

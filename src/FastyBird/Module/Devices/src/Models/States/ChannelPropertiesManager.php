@@ -16,12 +16,12 @@
 namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices;
@@ -70,7 +70,7 @@ final class ChannelPropertiesManager extends PropertiesManager
 		private readonly Models\States\Channels\Repository $channelPropertyStateRepository,
 		private readonly Models\States\Channels\Manager $channelPropertiesStatesManager,
 		private readonly Caching\Container $moduleCaching,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Publisher $publisher,
 		Devices\Logger $logger,

@@ -22,10 +22,10 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Schemas\Tools as ToolsSchemas;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
@@ -157,7 +157,7 @@ final class OpenApi
 		private readonly Tuya\Logger $logger,
 		private readonly ToolsSchemas\Validator $schemaValidator,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 	)
 	{
 		$this->nonce = Uuid\Uuid::uuid1();

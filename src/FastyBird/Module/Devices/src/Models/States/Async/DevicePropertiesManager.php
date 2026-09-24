@@ -16,12 +16,12 @@
 namespace FastyBird\Module\Devices\Models\States\Async;
 
 use DateTimeInterface;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ToolsExceptions;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Core\Utilities\Tools as ToolsUtilities;
 use FastyBird\Module\Devices;
@@ -73,7 +73,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 		private readonly Models\States\Devices\Async\Repository $devicePropertyStateRepository,
 		private readonly Models\States\Devices\Async\Manager $devicePropertiesStatesManager,
 		private readonly Caching\Container $moduleCaching,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly ApplicationDocuments\DocumentFactory $documentFactory,
 		private readonly ExchangePublisher\Async\Publisher $publisher,
 		Devices\Logger $logger,

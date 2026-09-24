@@ -18,6 +18,7 @@ namespace FastyBird\Module\Accounts\Controllers;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use Exception;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Encoding\JsonApi;
 use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
 use FastyBird\Core\Entities\DoctrineCrud;
@@ -26,7 +27,6 @@ use FastyBird\Core\Exceptions as DoctrineOrmQueryExceptions;
 use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Persistence\DoctrineOrmQuery\ResultSet;
 use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Router;
@@ -63,7 +63,7 @@ abstract class BaseV1
 
 	protected Security\User $user;
 
-	protected DateTimeFactory\Clock $clock;
+	protected Clock\Clock $clock;
 
 	protected Localization\Translator $translator;
 
@@ -83,7 +83,7 @@ abstract class BaseV1
 		$this->user = $user;
 	}
 
-	public function injectClock(DateTimeFactory\Clock $clock): void
+	public function injectClock(Clock\Clock $clock): void
 	{
 		$this->clock = $clock;
 	}

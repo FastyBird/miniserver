@@ -17,10 +17,10 @@ namespace FastyBird\Plugin\RabbitMq\Publishers;
 
 use Bunny;
 use DateTimeInterface;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as ApplicationDocuments;
 use FastyBird\Core\Helpers\Tools as ToolsHelpers;
 use FastyBird\Core\Messaging\Exchange\Publisher as ExchangePublisher;
-use FastyBird\Core\Services\DateTimeFactory;
 use FastyBird\Core\Types\Metadata as MetadataTypes;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Utilities;
@@ -47,7 +47,7 @@ final class Publisher implements ExchangePublisher\Publisher
 		private readonly string $exchangeName,
 		private readonly Channels\Channel $channel,
 		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly DateTimeFactory\Clock $clock,
+		private readonly Clock\Clock $clock,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
