@@ -80,7 +80,7 @@ use Nette\Caching;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
-use Nettrine\Migrations\DI\MigrationsExtension;
+use Nettrine\Migrations as NettrineMigrations;
 use Nettrine\ORM as NettrineORM;
 use Override;
 use Psr\EventDispatcher as WsServerEventDispatcher;
@@ -821,7 +821,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * returns [], which left the subscriber never registered in production (#515).
 		 */
 
-		if ($this->compiler->getExtensions(MigrationsExtension::class) !== []) {
+		if ($this->compiler->getExtensions(NettrineMigrations\DI\MigrationsExtension::class) !== []) {
 			$builder->addDefinition($this->prefix('doctrineMigrations.subscriber'))
 				->setType(Subscribers\DoctrineMigrations\SchemaSubscriber::class);
 		}
