@@ -3,12 +3,12 @@
 namespace FastyBird\Core\Tests\Cases\Unit\DI;
 
 use Error;
+use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Commands as HttpServerCommands;
 use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Controllers as WebSocketsControllers;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Encoding as JsonApiEncoding;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
@@ -114,7 +114,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 			$container->getService('fbCore.simpleAuth.auth'),
 		);
 		self::assertInstanceOf(
-			JsonApiEncoding\JsonApi\Builder::class,
+			Encoding\Builder::class,
 			$container->getService('fbCore.jsonApi.builder'),
 		);
 		self::assertInstanceOf(

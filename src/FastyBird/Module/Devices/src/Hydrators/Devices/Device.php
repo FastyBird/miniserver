@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Devices\Hydrators\Devices;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Schemas;
 use function is_scalar;
@@ -25,13 +25,13 @@ use function is_scalar;
  * Device entity hydrator
  *
  * @template  T of Entities\Devices\Device
- * @extends   JsonApiHydrators\Hydrator<T>
+ * @extends   Hydrators\Hydrator<T>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Device extends JsonApiHydrators\Hydrator
+abstract class Device extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -51,7 +51,7 @@ abstract class Device extends JsonApiHydrators\Hydrator
 			Schemas\Devices\Device::RELATIONSHIPS_PARENTS,
 		];
 
-	protected function hydrateNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -63,7 +63,7 @@ abstract class Device extends JsonApiHydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateCommentAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))

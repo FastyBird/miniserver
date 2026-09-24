@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Schemas\Groups;
 
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
@@ -27,13 +27,13 @@ use Neomerx\JsonApi;
  * Group entity schema
  *
  * @template T of Entities\Groups\Group
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  Schemas\JsonApiSchema<T>
  *
  * @package          FastyBird:UIModule!
  * @subpackage       Schemas
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Group extends JsonApiSchemas\JsonApi
+final class Group extends Schemas\JsonApiSchema
 {
 
 	/**

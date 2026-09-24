@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Controllers;
 
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Module\Accounts\Controllers;
@@ -49,7 +49,7 @@ final class RoleChildrenV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws InvalidArgumentException
 	 */
 	public function index(

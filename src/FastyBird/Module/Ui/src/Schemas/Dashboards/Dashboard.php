@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Schemas\Dashboards;
 
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
@@ -27,13 +27,13 @@ use Neomerx\JsonApi;
  * Dashboard entity schema
  *
  * @template T of Entities\Dashboards\Dashboard
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  Schemas\JsonApiSchema<T>
  *
  * @package          FastyBird:UIModule!
  * @subpackage       Schemas
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Dashboard extends JsonApiSchemas\JsonApi
+final class Dashboard extends Schemas\JsonApiSchema
 {
 
 	/**

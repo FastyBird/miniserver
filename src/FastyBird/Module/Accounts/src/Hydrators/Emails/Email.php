@@ -15,20 +15,20 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Emails;
 
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Schemas;
 
 /**
  * Email entity hydrator
  *
- * @extends JsonApiHydrators\Hydrator<Entities\Emails\Email>
+ * @extends Hydrators\Hydrator<Entities\Emails\Email>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Email extends JsonApiHydrators\Hydrator
+final class Email extends Hydrators\Hydrator
 {
 
 	use TEmail;

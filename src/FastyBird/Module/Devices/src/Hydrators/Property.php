@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Devices\Hydrators;
 
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Constants as Metadata;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Core\Values\Types;
 use FastyBird\Module\Devices\Entities;
 use Fig\Http\Message\StatusCodeInterface;
@@ -38,13 +38,13 @@ use function strval;
  * Property entity hydrator
  *
  * @template T of Entities\Property
- * @extends  JsonApiHydrators\Hydrator<T>
+ * @extends  Hydrators\Hydrator<T>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Property extends JsonApiHydrators\Hydrator
+abstract class Property extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -64,7 +64,7 @@ abstract class Property extends JsonApiHydrators\Hydrator
 			'scale' => 'scale',
 		];
 
-	protected function hydrateNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -76,12 +76,12 @@ abstract class Property extends JsonApiHydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateSettableAttribute(JsonApi\Objects\IStandardObject $attributes): bool
+	protected function hydrateSettableAttribute(Objects\IStandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('settable')) && boolval($attributes->get('settable'));
 	}
 
-	protected function hydrateQueryableAttribute(JsonApi\Objects\IStandardObject $attributes): bool
+	protected function hydrateQueryableAttribute(Objects\IStandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('queryable')) && boolval($attributes->get('queryable'));
 	}
@@ -91,7 +91,7 @@ abstract class Property extends JsonApiHydrators\Hydrator
 	 * @throws ValueError
 	 */
 	protected function hydrateDataTypeAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Types\DataType|null
 	{
 		if (
@@ -105,7 +105,7 @@ abstract class Property extends JsonApiHydrators\Hydrator
 		return Types\DataType::from((string) $attributes->get('data_type'));
 	}
 
-	protected function hydrateUnitAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateUnitAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('unit'))
@@ -118,11 +118,11 @@ abstract class Property extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	protected function hydrateFormatAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateFormatAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		$rawFormat = $attributes->get('format');
 		$rawDataType = $attributes->get('data_type');
@@ -170,7 +170,7 @@ abstract class Property extends JsonApiHydrators\Hydrator
 					return $plainFormat;
 				}
 
-				throw new JsonApiExceptions\JsonApiError(
+				throw new Exceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//devices-module.base.messages.invalidAttribute.heading')),
 					strval($this->translator->translate('//devices-module.base.messages.invalidAttribute.message')),
@@ -211,7 +211,7 @@ abstract class Property extends JsonApiHydrators\Hydrator
 					return $plainFormat;
 				}
 
-				throw new JsonApiExceptions\JsonApiError(
+				throw new Exceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//devices-module.base.messages.invalidAttribute.heading')),
 					strval($this->translator->translate('//devices-module.base.messages.invalidAttribute.message')),
@@ -229,7 +229,7 @@ abstract class Property extends JsonApiHydrators\Hydrator
 		return (string) $rawFormat;
 	}
 
-	protected function hydrateInvalidAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateInvalidAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('invalid'))
@@ -241,7 +241,7 @@ abstract class Property extends JsonApiHydrators\Hydrator
 		return (string) $attributes->get('invalid');
 	}
 
-	protected function hydrateScaleAttribute(JsonApi\Objects\IStandardObject $attributes): int|null
+	protected function hydrateScaleAttribute(Objects\IStandardObject $attributes): int|null
 	{
 		if (
 			!is_scalar($attributes->get('scale'))
@@ -253,7 +253,7 @@ abstract class Property extends JsonApiHydrators\Hydrator
 		return (int) $attributes->get('scale');
 	}
 
-	protected function hydrateValueAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateValueAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('value'))

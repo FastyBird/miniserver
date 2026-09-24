@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Accounts;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Fig\Http\Message\StatusCodeInterface;
@@ -48,12 +48,12 @@ trait TAccount
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateFirstNameAttribute(JsonApi\Objects\IStandardObject $attributes): string
+	protected function hydrateFirstNameAttribute(Objects\IStandardObject $attributes): string
 	{
 		if (!$attributes->has('first_name') || !is_scalar($attributes->get('first_name'))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -67,12 +67,12 @@ trait TAccount
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
-	protected function hydrateLastNameAttribute(JsonApi\Objects\IStandardObject $attributes): string
+	protected function hydrateLastNameAttribute(Objects\IStandardObject $attributes): string
 	{
 		if (!$attributes->has('last_name') || !is_scalar($attributes->get('last_name'))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -85,7 +85,7 @@ trait TAccount
 		return (string) $attributes->get('last_name');
 	}
 
-	protected function hydrateMiddleNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateMiddleNameAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		return $attributes->has('middle_name') && is_scalar(
 			$attributes->get('middle_name'),
@@ -93,15 +93,15 @@ trait TAccount
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 */
 	protected function hydrateDetailsAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Utils\ArrayHash|null
 	{
 		if (
 			$attributes->has('details')
-			&& $attributes->get('details') instanceof JsonApi\Objects\IStandardObject
+			&& $attributes->get('details') instanceof Objects\IStandardObject
 		) {
 			$details = $attributes->get('details');
 
@@ -112,7 +112,7 @@ trait TAccount
 				$update->offsetSet('firstName', $details->get('first_name'));
 
 			} else {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new Exceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -126,7 +126,7 @@ trait TAccount
 				$update->offsetSet('lastName', $details->get('last_name'));
 
 			} else {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new Exceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -150,7 +150,7 @@ trait TAccount
 	}
 
 	protected function hydrateParamsAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Utils\ArrayHash
 	{
 		$params = Utils\ArrayHash::from([
@@ -166,7 +166,7 @@ trait TAccount
 
 		if (
 			$attributes->has('datetime')
-			&& $attributes->get('datetime') instanceof JsonApi\Objects\IStandardObject
+			&& $attributes->get('datetime') instanceof Objects\IStandardObject
 		) {
 			$datetime = $attributes->get('datetime');
 
@@ -189,12 +189,12 @@ trait TAccount
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
 	protected function hydrateStateAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Types\AccountState
 	{
 		if (
@@ -206,7 +206,7 @@ trait TAccount
 				true,
 			)
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.invalidAttribute.message')),

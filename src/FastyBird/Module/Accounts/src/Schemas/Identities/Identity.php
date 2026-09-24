@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Schemas\Identities;
 
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApis;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -27,13 +27,13 @@ use Neomerx\JsonApi;
  * Identity entity schema
  *
  * @template T of Entities\Identities\Identity
- * @extends JsonApis\JsonApi<T>
+ * @extends Schemas\JsonApiSchema<T>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Identity extends JsonApis\JsonApi
+final class Identity extends Schemas\JsonApiSchema
 {
 
 	/**

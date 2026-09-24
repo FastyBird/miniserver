@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Triggers\Hydrators\Triggers;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Schemas;
 use function is_scalar;
@@ -25,13 +25,13 @@ use function is_scalar;
  * Trigger entity hydrator
  *
  * @template T of Entities\Triggers\Trigger
- * @extends  JsonApiHydrators\Hydrator<T>
+ * @extends  Hydrators\Hydrator<T>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Trigger extends JsonApiHydrators\Hydrator
+abstract class Trigger extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -47,7 +47,7 @@ abstract class Trigger extends JsonApiHydrators\Hydrator
 		Schemas\Triggers\Trigger::RELATIONSHIPS_NOTIFICATIONS,
 	];
 
-	protected function hydrateEnabledAttribute(JsonApi\Objects\IStandardObject $attributes): bool
+	protected function hydrateEnabledAttribute(Objects\IStandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('enabled')) && (bool) $attributes->get('enabled');
 	}

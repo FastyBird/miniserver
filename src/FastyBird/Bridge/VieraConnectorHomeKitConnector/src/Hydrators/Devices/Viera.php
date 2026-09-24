@@ -21,10 +21,10 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Helpers;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
@@ -60,7 +60,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		JsonApiHelpers\CrudReader|null $crudReader = null,
+		Helpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($connectorsRepository, $managerRegistry, $translator, $crudReader);
@@ -74,18 +74,18 @@ class Viera extends HomeKitHydrators\Devices\Device
 	/**
 	 * @param Entities\Devices\Viera|null $entity
 	 *
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 		HomeKitEntities\Devices\Device|null $entity,
 	): HomeKitEntities\Connectors\Connector
 	{
 		if (
-			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {
@@ -99,7 +99,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate(
 				'//viera-connector-homekit-connector-bridge.base.messages.invalidRelation.heading',
@@ -116,17 +116,17 @@ class Viera extends HomeKitHydrators\Devices\Device
 	/**
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
-		JsonApi\Objects\IRelationshipObject $relationships,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationships,
+		Objects\IResourceObjectCollection|null $included,
 		Entities\Devices\Viera|null $entity,
 	): array
 	{
-		if ($relationships->getData() instanceof JsonApi\Objects\ResourceIdentifierCollection) {
+		if ($relationships->getData() instanceof Objects\ResourceIdentifierCollection) {
 			$parents = [];
 			$foundValidParent = false;
 
@@ -154,7 +154,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate(
 				'//viera-connector-homekit-connector-bridge.base.messages.missingRelation.heading',

@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Triggers\Hydrators\Notifications;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Triggers\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
@@ -47,10 +47,10 @@ final class Email extends Notification
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateEmailAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): string
 	{
 		// Condition operator have to be set
@@ -59,7 +59,7 @@ final class Email extends Notification
 			|| !$attributes->has('email')
 			|| !Utils\Validators::isEmail((string) $attributes->get('email'))
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval(
 					$this->translator->translate(

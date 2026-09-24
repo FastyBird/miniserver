@@ -17,8 +17,8 @@ namespace FastyBird\Module\Ui\Controllers;
 
 use Doctrine;
 use Exception;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -81,7 +81,7 @@ final class DashboardsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
@@ -96,8 +96,8 @@ final class DashboardsV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws ApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApiError
 	 *
 	 * @Secured\Role(manager,administrator)
 	 */
@@ -120,10 +120,10 @@ final class DashboardsV1 extends BaseV1
 				// Commit all changes into database
 				$this->getOrmConnection()->commit();
 
-			} catch (JsonApiExceptions\JsonApi $ex) {
+			} catch (ApiExceptions\JsonApi $ex) {
 				throw $ex;
 			} catch (PersistenceExceptions\MissingRequiredField $ex) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.missingAttribute.message')),
@@ -132,7 +132,7 @@ final class DashboardsV1 extends BaseV1
 					],
 				);
 			} catch (PersistenceExceptions\EntityCreation $ex) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.missingAttribute.message')),
@@ -144,7 +144,7 @@ final class DashboardsV1 extends BaseV1
 				// ORM 3 detects a client-supplied duplicate id while adding to the identity
 				// map, which happens before the INSERT that used to surface this as a DBAL
 				// unique constraint violation on PRIMARY. Same condition, reported earlier.
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.uniqueIdentifier.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.uniqueIdentifier.message')),
@@ -154,7 +154,7 @@ final class DashboardsV1 extends BaseV1
 				);
 			} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
 				if (preg_match("%PRIMARY'%", $ex->getMessage(), $match) === 1) {
-					throw new JsonApiExceptions\JsonApiError(
+					throw new ApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 						strval($this->translator->translate('//ui-module.base.messages.uniqueIdentifier.heading')),
 						strval($this->translator->translate('//ui-module.base.messages.uniqueIdentifier.message')),
@@ -167,7 +167,7 @@ final class DashboardsV1 extends BaseV1
 					$columnKey = end($columnParts);
 
 					if (str_starts_with($columnKey, 'dashboard_')) {
-						throw new JsonApiExceptions\JsonApiError(
+						throw new ApiExceptions\JsonApiError(
 							StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 							strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.heading')),
 							strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.message')),
@@ -180,7 +180,7 @@ final class DashboardsV1 extends BaseV1
 					}
 				}
 
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.message')),
@@ -196,7 +196,7 @@ final class DashboardsV1 extends BaseV1
 					],
 				);
 
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.notCreated.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.notCreated.message')),
@@ -213,7 +213,7 @@ final class DashboardsV1 extends BaseV1
 			return $response->withStatus(StatusCodeInterface::STATUS_CREATED);
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate('//ui-module.base.messages.invalidType.heading')),
 			strval($this->translator->translate('//ui-module.base.messages.invalidType.message')),
@@ -226,8 +226,8 @@ final class DashboardsV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws ApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApiError
 	 *
 	 * @Secured\Role(manager,administrator)
 	 */
@@ -254,7 +254,7 @@ final class DashboardsV1 extends BaseV1
 				// Commit all changes into database
 				$this->getOrmConnection()->commit();
 
-			} catch (JsonApiExceptions\JsonApi $ex) {
+			} catch (ApiExceptions\JsonApi $ex) {
 				throw $ex;
 			} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
 				if (preg_match("%key '(?P<key>.+)_unique'%", $ex->getMessage(), $match) !== false) {
@@ -262,7 +262,7 @@ final class DashboardsV1 extends BaseV1
 					$columnKey = end($columnParts);
 
 					if (str_starts_with($columnKey, 'dashboard_')) {
-						throw new JsonApiExceptions\JsonApiError(
+						throw new ApiExceptions\JsonApiError(
 							StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 							strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.heading')),
 							strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.message')),
@@ -275,7 +275,7 @@ final class DashboardsV1 extends BaseV1
 					}
 				}
 
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.message')),
@@ -291,7 +291,7 @@ final class DashboardsV1 extends BaseV1
 					],
 				);
 
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.notUpdated.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.notUpdated.message')),
@@ -306,7 +306,7 @@ final class DashboardsV1 extends BaseV1
 			return $this->buildResponse($request, $response, $dashboard);
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate('//ui-module.base.messages.invalidType.heading')),
 			strval($this->translator->translate('//ui-module.base.messages.invalidType.message')),
@@ -323,8 +323,8 @@ final class DashboardsV1 extends BaseV1
 	 * @throws UiExceptions\InvalidState
 	 * @throws UiExceptions\Runtime
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws ApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApiError
 	 * @throws ApplicationExceptions\InvalidState
 	 *
 	 * @Secured\Role(manager,administrator)
@@ -357,7 +357,7 @@ final class DashboardsV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.notDeleted.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.notDeleted.message')),
@@ -376,7 +376,7 @@ final class DashboardsV1 extends BaseV1
 	 * @throws Exception
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,

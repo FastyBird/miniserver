@@ -4216,121 +4216,121 @@ parameters:
 			message: '#^Cannot access offset ''limit'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Builder.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Builder.php
 
 		-
 			message: '#^Cannot access offset ''offset'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Builder.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Builder.php
 
 		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Builder.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Builder.php
 
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Builder.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Builder.php
 
 		-
 			message: '#^Parameter \#2 \$array of function array_key_exists expects array, mixed given\.$#'
 			identifier: argument.type
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Builder.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Builder.php
 
 		-
 			message: '#^Parameter \#2 \$string of function explode expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Builder.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Builder.php
 
 		-
-			message: '#^Parameter \#1 \$data of class FastyBird\\Core\\Encoding\\JsonApi\\Document constructor expects stdClass, mixed given\.$#'
+			message: '#^Parameter \#1 \$data of class FastyBird\\Core\\Api\\Encoding\\Document constructor expects stdClass, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Document.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Document.php
 
 		-
-			message: '#^Generator expects value type array\<mixed\>\|bool\|FastyBird\\Core\\Encoding\\JsonApi\\Objects\\IStandardObject\|float\|int\|string\|null, mixed given\.$#'
+			message: '#^Generator expects value type array\<mixed\>\|bool\|FastyBird\\Core\\Api\\Encoding\\Objects\\IStandardObject\|float\|int\|string\|null, mixed given\.$#'
 			identifier: generator.valueType
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/Obj.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/Obj.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\Obj\:\:get\(\) should return array\<mixed\>\|bool\|\(FastyBird\\Core\\Encoding\\JsonApi\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\Obj\:\:get\(\) should return array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null but returns mixed\.$#'
 			identifier: return.type
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/Obj.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/Obj.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\Obj\:\:toArray\(\) should return array\<string, array\<mixed\>\|bool\|float\|int\|string\|null\> but returns array\.$#'
+			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\Obj\:\:toArray\(\) should return array\<string, array\<mixed\>\|bool\|float\|int\|string\|null\> but returns array\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/Obj.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/Obj.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\SourceObject\:\:getParameter\(\) never returns null so it can be removed from the return type\.$#'
+			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\SourceObject\:\:getParameter\(\) never returns null so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/SourceObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/SourceObject.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\SourceObject\:\:getPointer\(\) never returns null so it can be removed from the return type\.$#'
+			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\SourceObject\:\:getPointer\(\) never returns null so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/SourceObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/SourceObject.php
 
 		-
 			message: '#^Interface IteratorAggregate specifies template type TKey of interface Traversable as mixed but it''s already specified as string\.$#'
 			identifier: generics.interfaceConflict
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/StandardObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject\:\:get\(\) should return array\<mixed\>\|bool\|FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject\|float\|int\|string\|null but returns array\<mixed\>\|bool\|\(FastyBird\\Core\\Encoding\\JsonApi\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null\.$#'
+			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:get\(\) should return array\<mixed\>\|bool\|FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\|float\|int\|string\|null but returns array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/StandardObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject\:\:getMany\(\) should return array\<array\<mixed\>\|bool\|\(FastyBird\\Core\\Encoding\\JsonApi\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\> but returns array\<string, mixed\>\.$#'
+			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:getMany\(\) should return array\<array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\> but returns array\<string, mixed\>\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/StandardObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject\:\:normalizeKeys\(\) should return array\<string\> but returns array\<mixed, mixed\>\.$#'
+			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:normalizeKeys\(\) should return array\<string\> but returns array\<mixed, mixed\>\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/StandardObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
 
 		-
-			message: '#^Parameter \#1 \.\.\.\$keys of method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject\:\:remove\(\) expects array\<string\>, string given\.$#'
+			message: '#^Parameter \#1 \.\.\.\$keys of method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:remove\(\) expects array\<string\>, string given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/StandardObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
 
 		-
-			message: '#^Parameter \#2 \$value of method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject\:\:set\(\) expects array\<mixed\>\|bool\|\(FastyBird\\Core\\Encoding\\JsonApi\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null, mixed given\.$#'
+			message: '#^Parameter \#2 \$value of method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:set\(\) expects array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/StandardObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
 
 		-
-			message: '#^Return type \(array\<mixed\>\|bool\|FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject\|float\|int\|string\|null\) of method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject\:\:get\(\) should be covariant with return type \(array\<mixed\>\|bool\|\(FastyBird\\Core\\Encoding\\JsonApi\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null\) of method FastyBird\\Core\\Encoding\\JsonApi\\Objects\\IStandardObject\:\:get\(\)$#'
+			message: '#^Return type \(array\<mixed\>\|bool\|FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\|float\|int\|string\|null\) of method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:get\(\) should be covariant with return type \(array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\IStandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null\) of method FastyBird\\Core\\Api\\Encoding\\Objects\\IStandardObject\:\:get\(\)$#'
 			identifier: method.childReturnType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/StandardObject.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
 
 		-
-			message: '#^Parameter \#1 \$proxy of class FastyBird\\Core\\Encoding\\JsonApi\\Objects\\StandardObject constructor expects stdClass\|null, mixed given\.$#'
+			message: '#^Parameter \#1 \$proxy of class FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject constructor expects stdClass\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Encoding/JsonApi/Objects/StandardObjectCollection.php
+			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObjectCollection.php
 
 		-
 			message: '#^Method FastyBird\\Core\\Encoding\\WebSockets\\PushMessageSerializer\:\:deserialize\(\) should return FastyBird\\Core\\Entities\\WebSockets\\PushMessages\\IMessage but returns mixed\.$#'
@@ -4708,7 +4708,7 @@ parameters:
 			message: '#^Cannot cast mixed to string\.$#'
 			identifier: cast.string
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Exceptions/JsonApiError.php
+			path: ../src/FastyBird/Core/Core/src/Api/Exceptions/JsonApiError.php
 
 		-
 			message: '#^Method FastyBird\\Core\\Persistence\\Exceptions\\Query\:\:__construct\(\) has parameter \$query with generic class Doctrine\\ORM\\AbstractQuery but does not specify its types\: TKey, TResult$#'
@@ -5638,13 +5638,13 @@ parameters:
 			message: '#^Right side of && is always true\.$#'
 			identifier: booleanAnd.rightAlwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/JsonApi/Hydrators/Hydrator.php
+			path: ../src/FastyBird/Core/Core/src/Api/Hydrators/Hydrator.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between class\-string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/JsonApi/Hydrators/Hydrator.php
+			path: ../src/FastyBird/Core/Core/src/Api/Hydrators/Hydrator.php
 
 		-
 			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
@@ -6622,7 +6622,7 @@ parameters:
 			message: '#^Cannot cast mixed to string\.$#'
 			identifier: cast.string
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Schemas/JsonApi/JsonApi.php
+			path: ../src/FastyBird/Core/Core/src/Api/Schemas/JsonApiSchema.php
 
 		-
 			message: '#^Cannot call method args\(\) on mixed\.$#'

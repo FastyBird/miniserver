@@ -17,8 +17,8 @@ namespace FastyBird\Module\Triggers\Hydrators\Notifications;
 
 use Doctrine\Persistence;
 use Error;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Phone\Entities as PhoneEntities;
 use FastyBird\Core\Phone\Exceptions as PhoneExceptions;
 use FastyBird\Core\Phone\Services;
@@ -61,14 +61,14 @@ final class Sms extends Notification
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws PhoneExceptions\NoValidCountry
 	 * @throws PhoneExceptions\NoValidPhone
 	 * @throws PhoneExceptions\NoValidType
 	 * @throws Error
 	 */
 	protected function hydratePhoneAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): PhoneEntities\Phone
 	{
 		// Condition operator have to be set
@@ -77,7 +77,7 @@ final class Sms extends Notification
 			|| !$attributes->has('phone')
 			|| !$this->phone->isValid((string) $attributes->get('phone'), 'CZ')
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.notifications.messages.invalidPhone.heading')),
 				strval($this->translator->translate('//triggers-module.notifications.messages.invalidPhone.message')),

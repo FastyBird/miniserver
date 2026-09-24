@@ -16,8 +16,8 @@
 namespace FastyBird\Automator\DevicesModule\Hydrators\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use Ramsey\Uuid;
@@ -48,11 +48,11 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	];
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -61,7 +61,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 			|| $attributes->get('device') === ''
 			|| !Uuid\Uuid::isValid((string) $attributes->get('device'))
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.message')),
@@ -75,11 +75,11 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -88,7 +88,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 			|| $attributes->get('property') === ''
 			|| !Uuid\Uuid::isValid((string) $attributes->get('property'))
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.message')),
@@ -102,10 +102,10 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateValueAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): string
 	{
 		if (
@@ -113,7 +113,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 			|| !$attributes->has('value')
 			|| $attributes->get('value') === ''
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.message')),

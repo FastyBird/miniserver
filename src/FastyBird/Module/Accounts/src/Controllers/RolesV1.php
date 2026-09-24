@@ -17,8 +17,8 @@ namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
 use Exception;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
@@ -81,7 +81,7 @@ final class RolesV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
@@ -100,7 +100,7 @@ final class RolesV1 extends BaseV1
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 *
 	 * @Secured\Role(manager,administrator)
 	 */
@@ -123,7 +123,7 @@ final class RolesV1 extends BaseV1
 				$updateRoleData = $this->roleHydrator->hydrate($document, $role);
 
 			} else {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.base.messages.invalidType.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.invalidType.message')),
@@ -138,7 +138,7 @@ final class RolesV1 extends BaseV1
 			// Commit all changes into database
 			$this->getOrmConnection()->commit();
 
-		} catch (JsonApiExceptions\JsonApi $ex) {
+		} catch (ApiExceptions\JsonApi $ex) {
 			throw $ex;
 		} catch (Throwable $ex) {
 			// Log caught exception
@@ -151,7 +151,7 @@ final class RolesV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.notUpdated.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notUpdated.message')),
@@ -170,7 +170,7 @@ final class RolesV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,

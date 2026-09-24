@@ -15,20 +15,20 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Accounts;
 
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Schemas;
 
 /**
  * Profile account entity hydrator
  *
- * @extends JsonApiHydrators\Hydrator<Entities\Accounts\Account>
+ * @extends Hydrators\Hydrator<Entities\Accounts\Account>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class ProfileAccount extends JsonApiHydrators\Hydrator
+final class ProfileAccount extends Hydrators\Hydrator
 {
 
 	use TAccount;

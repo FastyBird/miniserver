@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Middleware;
 
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
@@ -41,20 +41,20 @@ final class Access implements MiddlewareInterface
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws ApiExceptions\JsonApiError
 	 */
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 	{
 		try {
 			return $handler->handle($request);
 		} catch (SimpleAuthExceptions\UnauthorizedAccess) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				strval($this->translator->translate('//ui-module.base.messages.unauthorized.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.unauthorized.message')),
 			);
 		} catch (SimpleAuthExceptions\ForbiddenAccess) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				strval($this->translator->translate('//ui-module.base.messages.forbidden.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.forbidden.message')),

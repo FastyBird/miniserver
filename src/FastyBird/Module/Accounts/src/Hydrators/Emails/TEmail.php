@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Emails;
 
-use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 
@@ -36,7 +36,7 @@ trait TEmail
 	}
 
 	protected function hydrateVisibilityAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Types\EmailVisibility
 	{
 		$isPrivate = (bool) $attributes->get('private');

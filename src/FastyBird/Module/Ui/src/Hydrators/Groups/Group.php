@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Groups;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 use function is_scalar;
@@ -24,13 +24,13 @@ use function is_scalar;
 /**
  * Group entity hydrator
  *
- * @extends JsonApiHydrators\Hydrator<Entities\Groups\Group>
+ * @extends Hydrators\Hydrator<Entities\Groups\Group>
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Group extends JsonApiHydrators\Hydrator
+final class Group extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -50,7 +50,7 @@ final class Group extends JsonApiHydrators\Hydrator
 		return Entities\Groups\Group::class;
 	}
 
-	protected function hydrateNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -62,7 +62,7 @@ final class Group extends JsonApiHydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateCommentAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))

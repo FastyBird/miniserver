@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Controllers;
 
 use Exception;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
@@ -50,7 +50,7 @@ final class ChannelPropertyChildrenV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,

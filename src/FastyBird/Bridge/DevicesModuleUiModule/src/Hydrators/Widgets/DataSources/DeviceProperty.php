@@ -18,10 +18,10 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Hydrators\Widgets\DataSources;
 use Doctrine\Persistence;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Helpers;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Ui\Hydrators as UiHydrators;
@@ -53,7 +53,7 @@ final class DeviceProperty extends UiHydrators\Widgets\DataSources\DataSource
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		JsonApiHelpers\CrudReader|null $crudReader = null,
+		Helpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($managerRegistry, $translator, $crudReader);
@@ -65,18 +65,18 @@ final class DeviceProperty extends UiHydrators\Widgets\DataSources\DataSource
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 		Entities\Widgets\DataSources\DeviceProperty|null $entity,
 	): DevicesEntities\Devices\Properties\Property
 	{
 		if (
-			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {
@@ -89,7 +89,7 @@ final class DeviceProperty extends UiHydrators\Widgets\DataSources\DataSource
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval(
 				$this->translator->translate('//devices-module-ui-module-bridge.base.messages.invalidRelation.heading'),

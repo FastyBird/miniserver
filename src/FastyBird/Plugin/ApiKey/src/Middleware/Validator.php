@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\ApiKey\Middleware;
 
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Plugin\ApiKey\Models;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
@@ -53,7 +53,7 @@ final class Validator implements MiddlewareInterface
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 */
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 	{
@@ -68,7 +68,7 @@ final class Validator implements MiddlewareInterface
 				$apiKey = $this->keyRepository->findOneByKey($headerApiKey);
 
 				if ($apiKey === null) {
-					throw new JsonApiExceptions\JsonApiError(
+					throw new Exceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNAUTHORIZED,
 						strval($this->translator->translate('//apikey-plugin.base.messages.unauthorized.heading')),
 						strval($this->translator->translate('//apikey-plugin.base.messages.unauthorized.message')),
@@ -79,7 +79,7 @@ final class Validator implements MiddlewareInterface
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new Exceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNAUTHORIZED,
 			strval($this->translator->translate('//apikey-plugin.base.messages.unauthorized.heading')),
 			strval($this->translator->translate('//apikey-plugin.base.messages.unauthorized.message')),

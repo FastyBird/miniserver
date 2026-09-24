@@ -16,11 +16,11 @@
 namespace FastyBird\Module\Triggers\Controllers;
 
 use Exception;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Triggers\Controllers;
 use FastyBird\Module\Triggers\Entities;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Queries;
 use FastyBird\Module\Triggers\Router;
@@ -55,8 +55,8 @@ final class TriggerControlsV1 extends BaseV1
 
 	/**
 	 * @throws ApplicationExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws TriggersExceptions\InvalidState
+	 * @throws ApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
@@ -69,7 +69,7 @@ final class TriggerControlsV1 extends BaseV1
 		$trigger = $this->findTrigger(strval($request->getAttribute(Router\ApiRoutes::URL_TRIGGER_ID)));
 
 		if (!$trigger instanceof Entities\Triggers\Manual) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//triggers-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.notFound.message')),
@@ -87,8 +87,8 @@ final class TriggerControlsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws TriggersExceptions\InvalidState
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
@@ -99,7 +99,7 @@ final class TriggerControlsV1 extends BaseV1
 		$trigger = $this->findTrigger(strval($request->getAttribute(Router\ApiRoutes::URL_TRIGGER_ID)));
 
 		if (!$trigger instanceof Entities\Triggers\Manual) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//triggers-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.notFound.message')),
@@ -119,7 +119,7 @@ final class TriggerControlsV1 extends BaseV1
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_NOT_FOUND,
 			strval($this->translator->translate('//triggers-module.base.messages.notFound.heading')),
 			strval($this->translator->translate('//triggers-module.base.messages.notFound.message')),
@@ -128,8 +128,8 @@ final class TriggerControlsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws TriggersExceptions\InvalidState
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
@@ -140,7 +140,7 @@ final class TriggerControlsV1 extends BaseV1
 		$trigger = $this->findTrigger(strval($request->getAttribute(Router\ApiRoutes::URL_TRIGGER_ID)));
 
 		if (!$trigger instanceof Entities\Triggers\Manual) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//triggers-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.notFound.message')),
@@ -163,7 +163,7 @@ final class TriggerControlsV1 extends BaseV1
 					return $this->buildResponse($request, $response, $control->getTrigger());
 				}
 			} else {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_NOT_FOUND,
 					strval($this->translator->translate('//triggers-module.base.messages.notFound.heading')),
 					strval($this->translator->translate('//triggers-module.base.messages.notFound.message')),

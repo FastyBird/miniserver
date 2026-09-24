@@ -15,25 +15,25 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Notifications;
 
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Router;
-use FastyBird\Module\Triggers\Schemas;
+use FastyBird\Module\Triggers\Schemas as TriggersSchemas;
 use Neomerx\JsonApi;
 
 /**
  * Notification entity schema
  *
  * @template T of Entities\Notifications\Notification
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Notification extends JsonApiSchemas\JsonApi
+abstract class Notification extends ApiSchemas\JsonApiSchema
 {
 
 	/**

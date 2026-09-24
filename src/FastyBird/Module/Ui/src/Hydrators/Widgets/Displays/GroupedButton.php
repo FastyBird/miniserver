@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Types;
 use Fig\Http\Message\StatusCodeInterface;
@@ -48,17 +48,17 @@ final class GroupedButton extends Display
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	protected function hydrateIconAttribute(JsonApi\Objects\IStandardObject $attributes): Types\WidgetIcon
+	protected function hydrateIconAttribute(Objects\IStandardObject $attributes): Types\WidgetIcon
 	{
 		if (
 			!is_scalar($attributes->get('icon'))
 			|| (string) $attributes->get('icon') === ''
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.message')),
@@ -69,7 +69,7 @@ final class GroupedButton extends Display
 		}
 
 		if (Types\WidgetIcon::tryFrom((string) $attributes->get('icon')) === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.invalidAttribute.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.invalidAttribute.message')),

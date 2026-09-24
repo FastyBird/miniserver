@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Controllers;
 
 use Exception;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
@@ -54,7 +54,7 @@ final class ChannelControlsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -82,7 +82,7 @@ final class ChannelControlsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
@@ -109,7 +109,7 @@ final class ChannelControlsV1 extends BaseV1
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new Exceptions\JsonApiError(
 			StatusCodeInterface::STATUS_NOT_FOUND,
 			strval($this->translator->translate('//devices-module.base.messages.notFound.heading')),
 			strval($this->translator->translate('//devices-module.base.messages.notFound.message')),
@@ -118,7 +118,7 @@ final class ChannelControlsV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
@@ -147,7 +147,7 @@ final class ChannelControlsV1 extends BaseV1
 					return $this->buildResponse($request, $response, $control->getChannel());
 				}
 			} else {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new Exceptions\JsonApiError(
 					StatusCodeInterface::STATUS_NOT_FOUND,
 					strval($this->translator->translate('//devices-module.base.messages.notFound.heading')),
 					strval($this->translator->translate('//devices-module.base.messages.notFound.message')),

@@ -16,15 +16,15 @@
 namespace FastyBird\Module\Devices\Schemas\Connectors\Properties;
 
 use DateTimeInterface;
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas;
+use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 use Neomerx\JsonApi;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
@@ -35,13 +35,13 @@ use function strval;
  * Connector property entity schema
  *
  * @template T of Entities\Connectors\Properties\Property
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Property extends JsonApiSchemas\JsonApi
+abstract class Property extends ApiSchemas\JsonApiSchema
 {
 
 	/**

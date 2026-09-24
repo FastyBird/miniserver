@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Schemas\Widgets\Display;
 
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
@@ -26,13 +26,13 @@ use Neomerx\JsonApi;
  * Widget display entity schema constructor
  *
  * @template T of Entities\Widgets\Displays\Display
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  Schemas\JsonApiSchema<T>
  *
  * @package          FastyBird:UIModule!
  * @subpackage       Schemas
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Display extends JsonApiSchemas\JsonApi
+abstract class Display extends Schemas\JsonApiSchema
 {
 
 	/**
