@@ -21,7 +21,6 @@ use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 use Neomerx\JsonApi;
 use function count;
 

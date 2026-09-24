@@ -26,7 +26,6 @@ use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;

@@ -1162,10 +1162,7 @@ abstract class Hydrator
 	): object|null
 	{
 		// Find relationship field
-		if (
-			$field instanceof Fields\EntityField
-			&& $field->isRelationship()
-		) {
+		if ($field instanceof Fields\EntityField && $field->isRelationship()) {
 			if ($field->isWritable() || ($entity === null && $field->isRequired())) {
 				if ($relationship->hasIdentifier()) {
 					$relationEntity = $this->findRelated($field->getClassName(), $relationship->getIdentifier());
@@ -1243,10 +1240,7 @@ abstract class Hydrator
 		$relations = [];
 
 		// Find relationship field
-		if (
-			$field instanceof Fields\EntityField
-			&& $field->isRelationship()
-		) {
+		if ($field instanceof Fields\EntityField && $field->isRelationship()) {
 			if ($field->isWritable() || ($entity === null && $field->isRequired())) {
 				if ($relationship->isHasMany()) {
 					foreach ($relationship->getIdentifiers() as $identifier) {

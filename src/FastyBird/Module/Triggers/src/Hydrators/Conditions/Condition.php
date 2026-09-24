@@ -18,7 +18,6 @@ namespace FastyBird\Module\Triggers\Hydrators\Conditions;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Hydrators as ApiHydrators;
 use FastyBird\Module\Triggers\Entities;
-use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use FastyBird\Module\Triggers\Schemas;
 use function is_scalar;
 

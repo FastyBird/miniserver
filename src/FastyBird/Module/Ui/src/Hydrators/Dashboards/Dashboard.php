@@ -18,7 +18,6 @@ namespace FastyBird\Module\Ui\Hydrators\Dashboards;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Hydrators as ApiHydrators;
 use FastyBird\Module\Ui\Entities;
-use FastyBird\Module\Ui\Hydrators as UiHydrators;
 use FastyBird\Module\Ui\Schemas;
 use function is_scalar;
 
