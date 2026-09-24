@@ -32,9 +32,20 @@ final readonly class TokenReader
 
 		$headerJWT = is_array($headerJWT) ? reset($headerJWT) : $headerJWT;
 
+		return is_string($headerJWT) ? $this->readHeader($headerJWT) : null;
+	}
+
+	/**
+	 * Reads the token from an authorization header value, for callers that do not hold a PSR-7
+	 * request -- the WebSocket handshake. A value that carries no bearer token yields null; a
+	 * bearer token that fails validation throws.
+	 *
+	 * @throws Exceptions\UnauthorizedAccess
+	 */
+	public function readHeader(string $header): JWT\UnencryptedToken|null
+	{
 		if (
-			is_string($headerJWT)
-			&& preg_match(SimpleAuth\Constants::TOKEN_HEADER_REGEXP, $headerJWT, $matches) === 1
+			preg_match(SimpleAuth\Constants::TOKEN_HEADER_REGEXP, $header, $matches) === 1
 			&& $matches[1] !== ''
 		) {
 			$token = $this->tokenValidator->validate($matches[1]);
