@@ -66,10 +66,7 @@ final class StoreBridgeDevicesTest extends Tests\Cases\Unit\DbTestCase
 				}),
 			);
 
-		$this->mockContainerService(
-			Publisher\Container::class,
-			$publisher,
-		);
+		$this->mockContainerService(Publisher\Container::class, $publisher);
 
 		$consumer = $this->getContainer()->getByType(
 			Queue\Consumers\StoreBridgeDevices::class,
