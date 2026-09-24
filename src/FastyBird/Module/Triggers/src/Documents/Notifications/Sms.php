@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Triggers\Documents\Notifications;
 
 use FastyBird\Core\Documents as ApplicationDocuments;
-use FastyBird\Core\Entities\Phone as PhoneEntities;
-use FastyBird\Core\Exceptions as PhoneExceptions;
-use FastyBird\Module\Triggers\Entities;
+use FastyBird\Core\Phone\Entities as PhoneEntities;
+use FastyBird\Core\Phone\Exceptions;
+use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
@@ -31,8 +31,8 @@ use function array_merge;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-#[ApplicationDocuments\Mapping\Document(entity: Entities\Notifications\Sms::class)]
-#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: Entities\Notifications\Sms::TYPE)]
+#[ApplicationDocuments\Mapping\Document(entity: TriggersEntities\Notifications\Sms::class)]
+#[ApplicationDocuments\Mapping\DiscriminatorEntry(name: TriggersEntities\Notifications\Sms::TYPE)]
 final class Sms extends Notification
 {
 
@@ -50,8 +50,8 @@ final class Sms extends Notification
 	}
 
 	/**
-	 * @throws PhoneExceptions\NoValidCountry
-	 * @throws PhoneExceptions\NoValidPhone
+	 * @throws Exceptions\NoValidCountry
+	 * @throws Exceptions\NoValidPhone
 	 */
 	public function getPhone(): PhoneEntities\Phone
 	{
@@ -59,8 +59,8 @@ final class Sms extends Notification
 	}
 
 	/**
-	 * @throws PhoneExceptions\NoValidCountry
-	 * @throws PhoneExceptions\NoValidPhone
+	 * @throws Exceptions\NoValidCountry
+	 * @throws Exceptions\NoValidPhone
 	 */
 	public function toArray(): array
 	{

@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Services\Phone;
+namespace FastyBird\Core\Phone\Services;
 
 use Error;
-use FastyBird\Core\Entities\Phone as Entities;
-use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
+use FastyBird\Core\Phone\Entities;
+use FastyBird\Core\Phone\Exceptions;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
 use Nette\Localization;
@@ -21,7 +21,7 @@ use function strtoupper;
 /**
  * Phone number helpers
  */
-final class Phone
+final class PhoneNumberHelper
 {
 
 	// Define phone number types

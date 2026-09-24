@@ -4585,16 +4585,16 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Entities/DoctrineTimestampable/TEntityRemoved.php
 
 		-
-			message: '#^Parameter \#1 \$timeZones of method FastyBird\\Core\\Entities\\Phone\\Phone\:\:setTimeZones\(\) expects array\<string\>, array given\.$#'
+			message: '#^Parameter \#1 \$timeZones of method FastyBird\\Core\\Phone\\Entities\\Phone\:\:setTimeZones\(\) expects array\<string\>, array given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/Phone/Phone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Entities/Phone.php
 
 		-
-			message: '#^Trait FastyBird\\Core\\Entities\\Phone\\TPhone is used zero times and is not analysed\.$#'
+			message: '#^Trait FastyBird\\Core\\Phone\\Entities\\TPhone is used zero times and is not analysed\.$#'
 			identifier: trait.unused
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Entities/Phone/TPhone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Entities/TPhone.php
 
 		-
 			message: '#^Method FastyBird\\Core\\Entities\\WebSockets\\PushMessages\\IMessage\:\:getData\(\) return type has no value type specified in iterable type array\.$#'
@@ -6925,43 +6925,43 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Services\\Phone\\Phone\:\:getSupportedCountries\(\) should return array\<string\> but returns array\.$#'
+			message: '#^Method FastyBird\\Core\\Phone\\Services\\PhoneNumberHelper\:\:getSupportedCountries\(\) should return array\<string\> but returns array\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Services/Phone/Phone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Services/PhoneNumberHelper.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Services\\Phone\\Phone\:\:validateType\(\) should return int but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Phone\\Services\\PhoneNumberHelper\:\:validateType\(\) should return int but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Services/Phone/Phone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Services/PhoneNumberHelper.php
 
 		-
 			message: '#^Parameter \#2 \$locale of method libphonenumber\\geocoding\\PhoneNumberOfflineGeocoder\:\:getDescriptionForNumber\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Services/Phone/Phone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Services/PhoneNumberHelper.php
 
 		-
 			message: '''
-				#^Parameter \$translator of method FastyBird\\Core\\Services\\Phone\\Phone\:\:__construct\(\) has typehint with deprecated interface Nette\\Localization\\ITranslator\:
+				#^Parameter \$translator of method FastyBird\\Core\\Phone\\Services\\PhoneNumberHelper\:\:__construct\(\) has typehint with deprecated interface Nette\\Localization\\ITranslator\:
 				use Nette\\Localization\\Translator$#
 			'''
 			identifier: parameter.deprecatedInterface
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Services/Phone/Phone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Services/PhoneNumberHelper.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Services\\Phone\\Phone\:\:\$carrierMapper is never read, only written\.$#'
+			message: '#^Property FastyBird\\Core\\Phone\\Services\\PhoneNumberHelper\:\:\$carrierMapper is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Services/Phone/Phone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Services/PhoneNumberHelper.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Services\\Phone\\Phone\:\:\$timeZonesMapper is never read, only written\.$#'
+			message: '#^Property FastyBird\\Core\\Phone\\Services\\PhoneNumberHelper\:\:\$timeZonesMapper is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Services/Phone/Phone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Services/PhoneNumberHelper.php
 
 		-
 			message: '#^Parameter \#2 \$parentRc of method FastyBird\\Core\\Subscribers\\Application\\EntityDiscriminator\:\:detectFromChildren\(\) expects ReflectionClass\<object\>, ReflectionClass\<covariant object\> given\.$#'
@@ -7060,67 +7060,67 @@ parameters:
 			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '#^Cannot access offset ''class'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '#^Cannot access offset ''fields'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '#^Cannot call method getFieldValue\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '#^Cannot call method setFieldValue\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '#^Instanceof between Doctrine\\ORM\\EntityManagerInterface and Doctrine\\ORM\\EntityManagerInterface will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Subscribers\\Phone\\PhoneObjectSubscriber\:\:getEntityPhoneFields\(\) should return array\<mixed\> but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\Phone\\Subscribers\\PhoneObjectSubscriber\:\:getEntityPhoneFields\(\) should return array\<mixed\> but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '#^Parameter \#1 \$className of method Doctrine\\ORM\\EntityManagerInterface\:\:getClassMetadata\(\) expects class\-string\<object\>, string given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
-			message: '#^Parameter \#1 \$number of static method FastyBird\\Core\\Entities\\Phone\\Phone\:\:fromNumber\(\) expects string, mixed given\.$#'
+			message: '#^Parameter \#1 \$number of static method FastyBird\\Core\\Phone\\Entities\\Phone\:\:fromNumber\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '#^Unable to resolve the template type T in call to method Doctrine\\ORM\\EntityManagerInterface\:\:getClassMetadata\(\)$#'
 			identifier: argument.templateType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/Phone/PhoneObjectSubscriber.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Subscribers/PhoneObjectSubscriber.php
 
 		-
 			message: '''
@@ -7258,10 +7258,10 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Types/DoctrineTimestampable/UTCDateTime.php
 
 		-
-			message: '#^Parameter \#1 \$number of static method FastyBird\\Core\\Entities\\Phone\\Phone\:\:fromNumber\(\) expects string, mixed given\.$#'
+			message: '#^Parameter \#1 \$number of static method FastyBird\\Core\\Phone\\Entities\\Phone\:\:fromNumber\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Types/Phone/Phone.php
+			path: ../src/FastyBird/Core/Core/src/Phone/Types/PhoneType.php
 
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'

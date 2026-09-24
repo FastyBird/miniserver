@@ -52,24 +52,24 @@ use FastyBird\Core\Middleware as WebServerMiddleware;
 use FastyBird\Core\Middleware\JsonApi\JsonApi;
 use FastyBird\Core\Persistence as DoctrineCrudPersistence;
 use FastyBird\Core\Persistence as JsonApiPersistence;
+use FastyBird\Core\Phone\Services as PhoneServices;
+use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
+use FastyBird\Core\Phone\Types;
 use FastyBird\Core\Routing;
 use FastyBird\Core\Schemas as JsonApiSchemas;
 use FastyBird\Core\Schemas as ToolsSchemas;
 use FastyBird\Core\Security as SimpleAuthSecurity;
 use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Server as WsServerServer;
-use FastyBird\Core\Services as PhoneServices;
 use FastyBird\Core\Services as SimpleAuthServices;
 use FastyBird\Core\Subscribers as CoreSubscribers;
 use FastyBird\Core\Subscribers as ApplicationSubscribers;
 use FastyBird\Core\Subscribers as DoctrineTimestampableSubscribers;
 use FastyBird\Core\Subscribers as HttpServerSubscribers;
-use FastyBird\Core\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Subscribers as SimpleAuthSubscribers;
 use FastyBird\Core\Subscribers as WsServerSubscribers;
 use FastyBird\Core\Topics\WsServer\Drivers\InMemory;
 use FastyBird\Core\Topics\WsServer\Storage;
-use FastyBird\Core\Types\Phone\Phone;
 use FastyBird\Core\UI;
 use FastyBird\Core\Utilities\Tools\DateTimeProvider;
 use libphonenumber;
@@ -876,10 +876,10 @@ final class CoreExtension extends DI\CompilerExtension
 			->setFactory('libphonenumber\PhoneNumberToTimeZonesMapper::getInstance');
 
 		$builder->addDefinition($this->prefix('phone.phone'))
-			->setType(PhoneServices\Phone\Phone::class);
+			->setType(PhoneServices\PhoneNumberHelper::class);
 
 		$builder->addDefinition($this->prefix('phone.doctrinePhone.subscriber'))
-			->setType(PhoneSubscribers\Phone\PhoneObjectSubscriber::class);
+			->setType(PhoneSubscribers\PhoneObjectSubscriber::class);
 
 		/**
 		 * WEBSOCKETS (base + WAMP)
@@ -1587,9 +1587,9 @@ final class CoreExtension extends DI\CompilerExtension
 		// so without this every test that loads the Triggers metadata fails.
 		$initialize = $class->getMethod('initialize');
 		$initialize->addBody(
-			'if (!Doctrine\DBAL\Types\Type::hasType(\'' . Phone::PHONE . '\')) {'
+			'if (!Doctrine\DBAL\Types\Type::hasType(\'' . Types\PhoneType::PHONE . '\')) {'
 			. ' Doctrine\DBAL\Types\Type::addType('
-			. '\'' . Phone::PHONE . '\', \'' . Phone::class . '\''
+			. '\'' . Types\PhoneType::PHONE . '\', \'' . Types\PhoneType::class . '\''
 			. '); }',
 		);
 	}

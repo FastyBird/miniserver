@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Entities\Phone;
+namespace FastyBird\Core\Phone\Entities;
 
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Services\Phone\Phone as PhoneHelper;
+use FastyBird\Core\Phone\Exceptions;
+use FastyBird\Core\Phone\Services;
 use libphonenumber;
 use libphonenumber\PhoneNumberFormat;
 use Override;
@@ -193,35 +193,35 @@ final class Phone
 
 		switch ($phoneNumberUtil->getNumberType($parsed)) {
 			case libphonenumber\PhoneNumberType::MOBILE:
-				$numberType = PhoneHelper::TYPE_MOBILE;
+				$numberType = Services\PhoneNumberHelper::TYPE_MOBILE;
 
 				break;
 			case libphonenumber\PhoneNumberType::FIXED_LINE:
-				$numberType = PhoneHelper::TYPE_FIXED_LINE;
+				$numberType = Services\PhoneNumberHelper::TYPE_FIXED_LINE;
 
 				break;
 			case libphonenumber\PhoneNumberType::FIXED_LINE_OR_MOBILE:
-				$numberType = PhoneHelper::TYPE_FIXED_LINE_OR_MOBILE;
+				$numberType = Services\PhoneNumberHelper::TYPE_FIXED_LINE_OR_MOBILE;
 
 				break;
 			case libphonenumber\PhoneNumberType::VOIP:
-				$numberType = PhoneHelper::TYPE_VOIP;
+				$numberType = Services\PhoneNumberHelper::TYPE_VOIP;
 
 				break;
 			case libphonenumber\PhoneNumberType::PAGER:
-				$numberType = PhoneHelper::TYPE_PAGER;
+				$numberType = Services\PhoneNumberHelper::TYPE_PAGER;
 
 				break;
 			case libphonenumber\PhoneNumberType::EMERGENCY:
-				$numberType = PhoneHelper::TYPE_EMERGENCY;
+				$numberType = Services\PhoneNumberHelper::TYPE_EMERGENCY;
 
 				break;
 			case libphonenumber\PhoneNumberType::VOICEMAIL:
-				$numberType = PhoneHelper::TYPE_VOICEMAIL;
+				$numberType = Services\PhoneNumberHelper::TYPE_VOICEMAIL;
 
 				break;
 			default:
-				$numberType = PhoneHelper::TYPE_UNKNOWN;
+				$numberType = Services\PhoneNumberHelper::TYPE_UNKNOWN;
 
 				break;
 		}

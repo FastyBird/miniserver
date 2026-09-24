@@ -15,13 +15,13 @@ use FastyBird\Core\Helpers as ToolsHelpers;
 use FastyBird\Core\Http as WebServerHttp;
 use FastyBird\Core\Messaging as ExchangeMessaging;
 use FastyBird\Core\Middleware as WebServerMiddleware;
+use FastyBird\Core\Phone\Services as PhoneServices;
+use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Schemas as ToolsSchemas;
 use FastyBird\Core\Server as HttpServerServer;
-use FastyBird\Core\Services as PhoneServices;
 use FastyBird\Core\Services as SimpleAuthServices;
 use FastyBird\Core\Subscribers as DoctrineTimestampableSubscribers;
 use FastyBird\Core\Subscribers as HttpServerSubscribers;
-use FastyBird\Core\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Subscribers as WsServerSubscribers;
 use FastyBird\Core\Tests;
 use Monolog;
@@ -120,8 +120,8 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 			WebSocketsControllers\WebSockets\Controller\IControllerFactory::class,
 			$container->getService('fbCore.webSockets.controllers.factory'),
 		);
-		self::assertNotNull($container->getByType(PhoneServices\Phone\Phone::class, false));
-		self::assertNotNull($container->getByType(PhoneSubscribers\Phone\PhoneObjectSubscriber::class, false));
+		self::assertNotNull($container->getByType(PhoneServices\PhoneNumberHelper::class, false));
+		self::assertNotNull($container->getByType(PhoneSubscribers\PhoneObjectSubscriber::class, false));
 
 		/**
 		 * The service-key collision this task's own investigation found (Flagged
@@ -138,7 +138,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertSame($mergedConfiguration, $container->getByType(Configuration\Configuration::class, false));
 
 		self::assertInstanceOf(
-			PhoneSubscribers\Phone\PhoneObjectSubscriber::class,
+			PhoneSubscribers\PhoneObjectSubscriber::class,
 			$container->getService('fbCore.phone.doctrinePhone.subscriber'),
 		);
 		self::assertInstanceOf(
