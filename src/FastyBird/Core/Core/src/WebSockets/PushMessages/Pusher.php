@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\WebSockets\PushMessages;
 
-use FastyBird\Core\Exceptions as WebSocketsExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities\PushMessages;
@@ -28,7 +28,7 @@ abstract class Pusher implements IPusher
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws WebSocketsExceptions\InvalidLink
+	 * @throws Exceptions\InvalidLink
 	 * @throws ReflectionException
 	 */
 	#[Override]

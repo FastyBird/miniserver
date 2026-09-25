@@ -25,8 +25,7 @@ use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Writers;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -91,18 +90,18 @@ final class Connector implements DevicesConnectors\Connector
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws NsPanelExceptions\InvalidArgument
 	 * @throws NsPanelExceptions\InvalidState
 	 * @throws NsPanelExceptions\Runtime
-	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -200,8 +199,8 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws NsPanelExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

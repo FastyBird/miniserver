@@ -17,9 +17,9 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -40,7 +40,7 @@ class SubDevice extends Device
 	public const TYPE = 'zigbee2mqtt-connector-sub-device';
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws Zigbee2MqttExceptions\InvalidState
 	 */
 	public function __construct(
 		string $identifier,
@@ -61,7 +61,7 @@ class SubDevice extends Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws Zigbee2MqttExceptions\InvalidState
 	 */
 	public function getBridge(): Bridge
 	{
@@ -71,24 +71,26 @@ class SubDevice extends Device
 			}
 		}
 
-		throw new Exceptions\InvalidState('Sub-device have to have parent bridge defined');
+		throw new Zigbee2MqttExceptions\InvalidState('Sub-device have to have parent bridge defined');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws Zigbee2MqttExceptions\InvalidState
 	 */
 	public function setParents(array|Utils\ArrayHash $parents): void
 	{
 		if (count($parents) !== 1 || !$parents[0] instanceof Bridge) {
-			throw new Exceptions\InvalidState('Sub-device could have only one parent and it have to be gateway');
+			throw new Zigbee2MqttExceptions\InvalidState(
+				'Sub-device could have only one parent and it have to be gateway',
+			);
 		}
 
 		parent::setParents($parents);
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -108,12 +110,12 @@ class SubDevice extends Device
 			return $property->getValue();
 		}
 
-		throw new ApplicationExceptions\InvalidState('Device IEEE addrress is not configured');
+		throw new CoreExceptions\InvalidState('Device IEEE addrress is not configured');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -134,12 +136,12 @@ class SubDevice extends Device
 			return Types\DeviceType::tryFrom(Utilities\Value::toString($property->getValue(), true));
 		}
 
-		throw new ApplicationExceptions\InvalidState('Device hardware type is not configured');
+		throw new CoreExceptions\InvalidState('Device hardware type is not configured');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -163,8 +165,8 @@ class SubDevice extends Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -188,8 +190,8 @@ class SubDevice extends Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -213,8 +215,8 @@ class SubDevice extends Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

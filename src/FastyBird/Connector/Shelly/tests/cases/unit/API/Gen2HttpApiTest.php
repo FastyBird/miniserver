@@ -5,10 +5,10 @@ namespace FastyBird\Connector\Shelly\Tests\Cases\Unit\API;
 use Error;
 use Exception;
 use FastyBird\Connector\Shelly\API;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Services;
 use FastyBird\Connector\Shelly\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp;
@@ -28,12 +28,12 @@ final class Gen2HttpApiTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\HttpApiCall
-	 * @throws Exceptions\HttpApiError
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\HttpApiCall
+	 * @throws ShellyExceptions\HttpApiError
 	 * @throws Utils\JsonException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -100,12 +100,12 @@ final class Gen2HttpApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\HttpApiCall
-	 * @throws Exceptions\HttpApiError
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\HttpApiCall
+	 * @throws ShellyExceptions\HttpApiError
 	 * @throws Utils\JsonException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -172,12 +172,12 @@ final class Gen2HttpApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\HttpApiCall
-	 * @throws Exceptions\HttpApiError
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\HttpApiCall
+	 * @throws ShellyExceptions\HttpApiError
 	 * @throws Utils\JsonException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -245,12 +245,12 @@ final class Gen2HttpApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\HttpApiCall
-	 * @throws Exceptions\HttpApiError
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\HttpApiCall
+	 * @throws ShellyExceptions\HttpApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */

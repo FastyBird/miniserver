@@ -18,13 +18,13 @@ namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 use Doctrine\DBAL;
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers as NsPanelHelpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -70,12 +70,12 @@ final class StoreSubDevice implements Queue\Consumer
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws DBAL\Exception
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

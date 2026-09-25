@@ -17,10 +17,10 @@ namespace FastyBird\Module\Devices\Entities\Devices\Properties;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Devices\Entities;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette\Utils;
 use Ramsey\Uuid;
 use TypeError;
@@ -172,9 +172,9 @@ abstract class Property extends Entities\Property
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Utils\JsonException
 	 * @throws TypeError
 	 * @throws ValueError

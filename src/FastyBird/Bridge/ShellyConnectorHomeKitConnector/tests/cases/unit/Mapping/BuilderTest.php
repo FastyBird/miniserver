@@ -3,10 +3,10 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Cases\Unit\Mapping;
 
 use Error;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette\DI;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -19,12 +19,12 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidArgument
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
 	 * @throws Error
 	 * @throws RuntimeException
 	 */

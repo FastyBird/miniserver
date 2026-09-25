@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Viera\Helpers;
 
 use FastyBird\Connector\Viera\Documents;
 use FastyBird\Connector\Viera\Entities;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -52,9 +52,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -81,9 +81,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -110,9 +110,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -139,9 +139,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -168,9 +168,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -197,9 +197,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -226,9 +226,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -255,9 +255,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -284,9 +284,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -313,9 +313,9 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

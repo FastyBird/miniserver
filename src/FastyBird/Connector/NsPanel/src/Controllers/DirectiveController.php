@@ -23,8 +23,7 @@ use FastyBird\Connector\NsPanel\Router;
 use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Schemas;
 use FastyBird\Core\Values\Types\Sources;
@@ -63,11 +62,11 @@ final class DirectiveController extends BaseController
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws NsPanelExceptions\ServerRequestError
-	 * @throws ExchangeExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
@@ -161,7 +160,7 @@ final class DirectiveController extends BaseController
 				$body,
 				$this->getSchema(self::SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME),
 			);
-		} catch (ApplicationExceptions\Logic | DocumentsExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
+		} catch (CoreExceptions\Logic | DocumentsExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			throw new NsPanelExceptions\ServerRequestError(
 				$request,
 				Types\ServerStatus::INVALID_DIRECTIVE,

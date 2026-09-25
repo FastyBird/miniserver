@@ -19,13 +19,13 @@ use DateTimeInterface;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\API;
 use FastyBird\Connector\FbMqtt\Documents;
-use FastyBird\Connector\FbMqtt\Exceptions;
+use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -72,14 +72,14 @@ final class WriteV1ChannelPropertyState implements Queue\Consumer
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws FbMqttExceptions\InvalidState
+	 * @throws FbMqttExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

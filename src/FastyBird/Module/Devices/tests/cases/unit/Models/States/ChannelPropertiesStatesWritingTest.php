@@ -3,12 +3,12 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Models\States;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Tests;
@@ -25,14 +25,14 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 	/**
 	 * @param class-string<Throwable>|null $exception
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	#[DataProvider('writeStates')]
 	public function testWriteState(
@@ -140,14 +140,14 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 	/**
 	 * @param class-string<Throwable>|null $exception
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	#[DataProvider('setStates')]
 	public function testSetState(
@@ -674,7 +674,7 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					States\Property::ACTUAL_VALUE_FIELD => 10,
 					States\Property::PENDING_FIELD => false,
 				]),
-				Exceptions\InvalidArgument::class,
+				DevicesExceptions\InvalidArgument::class,
 			],
 		];
 	}
@@ -1314,7 +1314,7 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					States\Property::ACTUAL_VALUE_FIELD => 127,
 					States\Property::VALID_FIELD => true,
 				]),
-				Exceptions\InvalidArgument::class,
+				DevicesExceptions\InvalidArgument::class,
 			],
 			'set_16' => [
 				new Documents\Channels\Properties\Mapped(

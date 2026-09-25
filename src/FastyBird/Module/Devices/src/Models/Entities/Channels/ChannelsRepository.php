@@ -17,11 +17,11 @@ namespace FastyBird\Module\Devices\Models\Entities\Channels;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Queries;
 use Nette;
 use Ramsey\Uuid;
@@ -58,7 +58,7 @@ final class ChannelsRepository
 	 *
 	 * @return T|null
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
@@ -78,7 +78,7 @@ final class ChannelsRepository
 	 *
 	 * @return T|null
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindChannels $queryObject,
@@ -97,7 +97,7 @@ final class ChannelsRepository
 	 *
 	 * @return array<T>
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findAll(string $type = Entities\Channels\Channel::class): array
 	{
@@ -114,7 +114,7 @@ final class ChannelsRepository
 	 *
 	 * @return array<T>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function findAllBy(
 		Queries\Entities\FindChannels $queryObject,
@@ -127,7 +127,7 @@ final class ChannelsRepository
 
 			return $result;
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
+			throw new DevicesExceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
 		}
 	}
 
@@ -139,8 +139,8 @@ final class ChannelsRepository
 	 *
 	 * @return Query\ResultSet<T>
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindChannels $queryObject,
@@ -152,7 +152,7 @@ final class ChannelsRepository
 		);
 
 		if (is_array($result)) {
-			throw new Exceptions\InvalidState('Result set could not be created');
+			throw new DevicesExceptions\InvalidState('Result set could not be created');
 		}
 
 		return $result;

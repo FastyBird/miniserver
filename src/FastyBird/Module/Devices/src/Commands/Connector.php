@@ -19,7 +19,7 @@ use BadMethodCallException;
 use DateTimeInterface;
 use Doctrine\DBAL;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Logging;
@@ -30,7 +30,7 @@ use FastyBird\Module\Devices\Connectors;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Events;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Types;
@@ -225,10 +225,10 @@ class Connector extends Console\Command\Command
 	 * @throws BadMethodCallException
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws ExchangeExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws DevicesExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function prepare(
@@ -459,7 +459,7 @@ class Connector extends Console\Command\Command
 
 						// ...and ping again
 						if (!$this->database->ping()) {
-							throw new Exceptions\Runtime('Connection to database could not be re-established');
+							throw new DevicesExceptions\Runtime('Connection to database could not be re-established');
 						}
 					}
 				}));
@@ -472,7 +472,7 @@ class Connector extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws DevicesExceptions\Runtime
 	 */
 	private function terminate(
 		Documents\Connectors\Connector $connector,
@@ -535,7 +535,7 @@ class Connector extends Console\Command\Command
 				],
 			);
 
-			throw new Exceptions\Runtime(
+			throw new DevicesExceptions\Runtime(
 				'Error during connector termination process',
 				$ex->getCode(),
 				$ex,
@@ -545,7 +545,7 @@ class Connector extends Console\Command\Command
 
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function whichConnector(
@@ -652,7 +652,7 @@ class Connector extends Console\Command\Command
 			$question->setValidator(
 				function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 					if ($answer === null) {
-						throw new Exceptions\Runtime(
+						throw new DevicesExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//devices-module.cmd.base.messages.answerNotValid',
@@ -679,7 +679,7 @@ class Connector extends Console\Command\Command
 						}
 					}
 
-					throw new Exceptions\Runtime(
+					throw new DevicesExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate('//devices-module.cmd.base.messages.answerNotValid'),
 							$answer,

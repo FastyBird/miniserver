@@ -19,7 +19,7 @@ use DateTimeInterface;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -85,12 +85,12 @@ final class DevicePropertiesManager extends PropertiesManager
 	/**
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws ValueError
 	 * @throws TypeError
 	 */
@@ -142,8 +142,8 @@ final class DevicePropertiesManager extends PropertiesManager
 	/**
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -193,8 +193,8 @@ final class DevicePropertiesManager extends PropertiesManager
 	/**
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -246,8 +246,8 @@ final class DevicePropertiesManager extends PropertiesManager
 	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -283,8 +283,8 @@ final class DevicePropertiesManager extends PropertiesManager
 	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -386,12 +386,12 @@ final class DevicePropertiesManager extends PropertiesManager
 	/**
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 *
@@ -537,8 +537,8 @@ final class DevicePropertiesManager extends PropertiesManager
 	/**
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 *

@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Transformers;
@@ -69,8 +69,8 @@ abstract class PropertiesManager
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidExpectedValue
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -86,7 +86,7 @@ abstract class PropertiesManager
 					$mappedProperty,
 					$forReading,
 				);
-			} catch (ValuesExceptions\InvalidValue | ApplicationExceptions\InvalidState $ex) {
+			} catch (ValuesExceptions\InvalidValue | CoreExceptions\InvalidState $ex) {
 				if ($mappedProperty !== null) {
 					$updateValues[States\Property::ACTUAL_VALUE_FIELD] = null;
 					$updateValues[States\Property::VALID_FIELD] = false;
@@ -211,8 +211,8 @@ abstract class PropertiesManager
 	 * @param TChild $mappedProperty
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws ValuesExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
@@ -314,8 +314,8 @@ abstract class PropertiesManager
 	/**
 	 * @param TParent $property
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws ValuesExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError
@@ -358,8 +358,8 @@ abstract class PropertiesManager
 	 * @param TChild $mappedProperty
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws ValuesExceptions\InvalidValue
 	 * @throws TypeError
 	 * @throws ValueError

@@ -4,7 +4,7 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit;
 
 use Error;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Module\Devices\DI;
 use Nette;
 use PHPUnit\Framework\TestCase;
@@ -23,8 +23,8 @@ abstract class BaseTestCase extends TestCase
 
 	/**
 	 * @param class-string $serviceType
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
 	protected function mockContainerService(
@@ -41,8 +41,8 @@ abstract class BaseTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
 	protected function getContainer(): Nette\DI\Container
@@ -55,8 +55,8 @@ abstract class BaseTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
 	private function createContainer(): Nette\DI\Container
@@ -90,8 +90,8 @@ abstract class BaseTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
 	private function replaceContainerService(string $serviceName, object $service): void

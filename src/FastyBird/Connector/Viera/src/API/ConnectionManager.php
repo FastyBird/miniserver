@@ -16,9 +16,9 @@
 namespace FastyBird\Connector\Viera\API;
 
 use FastyBird\Connector\Viera\Documents;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
 use Throwable;
@@ -53,9 +53,9 @@ final class ConnectionManager
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

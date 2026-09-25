@@ -17,11 +17,11 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Commands;
 
 use DateTimeInterface;
 use FastyBird\Connector\Zigbee2Mqtt\Documents;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -103,11 +103,11 @@ class Discover extends Console\Command\Command
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
@@ -240,7 +240,7 @@ class Discover extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new Zigbee2MqttExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//zigbee2mqtt-connector.cmd.base.messages.answerNotValid',
@@ -270,7 +270,7 @@ class Discover extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new Zigbee2MqttExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//zigbee2mqtt-connector.cmd.base.messages.answerNotValid',
@@ -326,9 +326,9 @@ class Discover extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

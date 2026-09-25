@@ -19,11 +19,11 @@ use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use Nette;
 use function array_merge;
 use function count;
@@ -63,8 +63,8 @@ final class AccountEntity implements Common\EventSubscriber
 	/**
 	 * @param Persistence\Event\LifecycleEventArgs<ORM\EntityManagerInterface> $eventArgs
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function prePersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{
@@ -83,14 +83,14 @@ final class AccountEntity implements Common\EventSubscriber
 					Constants::ROLE_ADMINISTRATOR,
 				)
 			) {
-				throw new Exceptions\InvalidState('First account have to be an administrator account');
+				throw new AccountsExceptions\InvalidState('First account have to be an administrator account');
 			}
 		}
 	}
 
 	/**
-	 * @throws Exceptions\AccountRoleInvalid
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws AccountsExceptions\AccountRoleInvalid
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function onFlush(ORM\Event\OnFlushEventArgs $eventArgs): void
 	{
@@ -125,7 +125,7 @@ final class AccountEntity implements Common\EventSubscriber
 					in_array($role, Accounts\Constants::SINGLE_ROLES, true)
 					&& count($roles) > 1
 				) {
-					throw new Exceptions\AccountRoleInvalid(
+					throw new AccountsExceptions\AccountRoleInvalid(
 						sprintf('Role %s could not be combined with other roles', $role),
 					);
 				}
@@ -135,7 +135,7 @@ final class AccountEntity implements Common\EventSubscriber
 				 * can not be assigned to account
 				 */
 				if (in_array($role, Accounts\Constants::NOT_ASSIGNABLE_ROLES, true)) {
-					throw new Exceptions\AccountRoleInvalid(
+					throw new AccountsExceptions\AccountRoleInvalid(
 						sprintf('Role %s could not be assigned to account', $role),
 					);
 				}

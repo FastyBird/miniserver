@@ -19,13 +19,13 @@ use DateTimeInterface;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -81,12 +81,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws Throwable
 	 * @throws TypeError
@@ -390,7 +390,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				);
 			} elseif ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::LAN) {
 				if ($this->deviceHelper->getIpAddress($device) === null) {
-					throw new Exceptions\InvalidState('Device IP address is not configured');
+					throw new SonoffExceptions\InvalidState('Device IP address is not configured');
 				}
 
 				$client = $this->connectionManager->getLanConnection();
@@ -413,7 +413,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 				return true;
 			}
-		} catch (Exceptions\InvalidState $ex) {
+		} catch (SonoffExceptions\InvalidState $ex) {
 			$this->queue->append(
 				$this->entityHelper->create(
 					Queue\Messages\StoreDeviceConnectionState::class,
@@ -454,7 +454,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			);
 
 			return true;
-		} catch (Exceptions\CloudApiCall | Exceptions\LanApiCall $ex) {
+		} catch (SonoffExceptions\CloudApiCall | SonoffExceptions\LanApiCall $ex) {
 			$this->queue->append(
 				$this->entityHelper->create(
 					Queue\Messages\StoreDeviceConnectionState::class,
@@ -474,7 +474,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 			$extra = [];
 
-			if ($ex instanceof Exceptions\CloudApiCall) {
+			if ($ex instanceof SonoffExceptions\CloudApiCall) {
 				$extra = [
 					'request' => [
 						'method' => $ex->getRequest()?->getMethod(),
@@ -556,7 +556,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 				$extra = [];
 
-				if ($ex instanceof Exceptions\CloudApiCall || $ex instanceof Exceptions\LanApiCall) {
+				if ($ex instanceof SonoffExceptions\CloudApiCall || $ex instanceof SonoffExceptions\LanApiCall) {
 					$extra = [
 						'request' => [
 							'method' => $ex->getRequest()?->getMethod(),
@@ -579,7 +579,10 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						),
 					);
 
-				} elseif ($ex instanceof Exceptions\CloudApiError || $ex instanceof Exceptions\LanApiError) {
+				} elseif (
+					$ex instanceof SonoffExceptions\CloudApiError
+					|| $ex instanceof SonoffExceptions\LanApiError
+				) {
 					$this->queue->append(
 						$this->entityHelper->create(
 							Queue\Messages\StoreDeviceConnectionState::class,

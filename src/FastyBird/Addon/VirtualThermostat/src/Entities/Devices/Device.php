@@ -17,10 +17,10 @@ namespace FastyBird\Addon\VirtualThermostat\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Addon\VirtualThermostat\Entities;
-use FastyBird\Addon\VirtualThermostat\Exceptions;
+use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types\Sources;
@@ -82,7 +82,7 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getConfiguration(): Entities\Channels\Configuration
 	{
@@ -93,7 +93,7 @@ class Device extends VirtualEntities\Devices\Device
 			);
 
 		if ($channels->count() !== 1) {
-			throw new Exceptions\InvalidState('Configuration channel is not configured');
+			throw new VirtualThermostatExceptions\InvalidState('Configuration channel is not configured');
 		}
 
 		$channel = $channels->first();
@@ -103,7 +103,7 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getState(): Entities\Channels\State
 	{
@@ -113,7 +113,7 @@ class Device extends VirtualEntities\Devices\Device
 			);
 
 		if ($channels->count() !== 1) {
-			throw new Exceptions\InvalidState('State channel is not configured');
+			throw new VirtualThermostatExceptions\InvalidState('State channel is not configured');
 		}
 
 		$channel = $channels->first();
@@ -123,7 +123,7 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getPreset(Types\ChannelIdentifier $preset): Entities\Channels\Preset
 	{
@@ -133,7 +133,9 @@ class Device extends VirtualEntities\Devices\Device
 			);
 
 		if ($channels->count() !== 1) {
-			throw new Exceptions\InvalidState(sprintf('Preset channel: %s is not configured', $preset->value));
+			throw new VirtualThermostatExceptions\InvalidState(
+				sprintf('Preset channel: %s is not configured', $preset->value),
+			);
 		}
 
 		$channel = $channels->first();
@@ -143,7 +145,7 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getHvacMode(): DevicesEntities\Channels\Properties\Dynamic|null
 	{
@@ -151,7 +153,7 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getPresetMode(): DevicesEntities\Channels\Properties\Dynamic|null
 	{
@@ -159,7 +161,7 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getTargetTemp(Types\Preset $preset): DevicesEntities\Channels\Properties\Dynamic|null
 	{
@@ -195,9 +197,9 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -235,9 +237,9 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -275,9 +277,9 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -287,9 +289,9 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -299,9 +301,9 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -311,9 +313,9 @@ class Device extends VirtualEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -461,8 +463,8 @@ class Device extends VirtualEntities\Devices\Device
 	/**
 	 * @return array<Types\HvacMode>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -485,8 +487,8 @@ class Device extends VirtualEntities\Devices\Device
 	/**
 	 * @return array<Types\Preset>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

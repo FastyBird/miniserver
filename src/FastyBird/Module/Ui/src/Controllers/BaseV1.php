@@ -22,7 +22,7 @@ use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Ui;
@@ -156,7 +156,7 @@ abstract class BaseV1
 				strval($this->translator->translate('//ui-module.base.messages.notValidJson.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.notValidJson.message')),
 			);
-		} catch (ApplicationExceptions\Runtime) {
+		} catch (CoreExceptions\Runtime) {
 			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//ui-module.base.messages.notValidJsonApi.heading')),

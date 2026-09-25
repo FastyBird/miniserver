@@ -18,11 +18,11 @@ namespace FastyBird\Connector\Tuya\Commands;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -94,14 +94,14 @@ class Discover extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
@@ -234,7 +234,7 @@ class Discover extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new TuyaExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//tuya-connector.cmd.base.messages.answerNotValid',
@@ -264,7 +264,7 @@ class Discover extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new TuyaExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//tuya-connector.cmd.base.messages.answerNotValid',
@@ -316,9 +316,9 @@ class Discover extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

@@ -17,12 +17,12 @@ namespace FastyBird\Connector\Tuya\API;
 
 use FastyBird\Connector\Tuya\Documents;
 use FastyBird\Connector\Tuya\Entities;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
@@ -69,11 +69,11 @@ final class ConnectionManager
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\InvalidState
+	 * @throws TuyaExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -115,7 +115,7 @@ final class ConnectionManager
 								ValueObjects\LocalChild::class,
 							);
 						} catch (Throwable $ex) {
-							throw new Exceptions\Runtime('Connection could not be configured', $ex->getCode(), $ex);
+							throw new TuyaExceptions\Runtime('Connection could not be configured', $ex->getCode(), $ex);
 						}
 					},
 					$children,
@@ -130,9 +130,9 @@ final class ConnectionManager
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -155,9 +155,9 @@ final class ConnectionManager
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Models\Configuration;
 
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Ui\Caching;
-use FastyBird\Module\Ui\Exceptions;
+use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Types;
 use Flow\JSONPath;
@@ -49,7 +49,7 @@ final readonly class Builder
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws UiExceptions\InvalidState
 	 */
 	public function load(Types\ConfigurationType $type, bool $force = false): JSONPath\JSONPath
 	{
@@ -69,14 +69,14 @@ final readonly class Builder
 
 			return $data;
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Module configuration could not be read', $ex->getCode(), $ex);
+			throw new UiExceptions\InvalidState('Module configuration could not be read', $ex->getCode(), $ex);
 		}
 	}
 
 	/**
 	 * @return array<mixed>
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function build(Types\ConfigurationType $type): array
 	{

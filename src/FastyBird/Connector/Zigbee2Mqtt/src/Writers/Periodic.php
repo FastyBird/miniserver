@@ -24,7 +24,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -92,13 +92,13 @@ abstract class Periodic
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Zigbee2MqttExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	public function connect(): void
 	{
@@ -162,13 +162,13 @@ abstract class Periodic
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Zigbee2MqttExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	private function handleCommunication(): void
 	{
@@ -190,13 +190,13 @@ abstract class Periodic
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Zigbee2MqttExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	private function writeProperty(Documents\Devices\Device $device): bool
 	{
@@ -295,13 +295,13 @@ abstract class Periodic
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Zigbee2MqttExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	private function registerLoopHandler(): void
 	{

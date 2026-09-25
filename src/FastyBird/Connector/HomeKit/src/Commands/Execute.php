@@ -22,7 +22,7 @@ use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -91,16 +91,16 @@ class Execute extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws HomeKitExceptions\InvalidArgument
 	 * @throws HomeKitExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException

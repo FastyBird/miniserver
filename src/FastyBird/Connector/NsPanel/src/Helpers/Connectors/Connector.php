@@ -17,10 +17,10 @@ namespace FastyBird\Connector\NsPanel\Helpers\Connectors;
 
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -49,10 +49,10 @@ final readonly class Connector
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -73,14 +73,14 @@ final readonly class Connector
 			return Types\ClientMode::from($value);
 		}
 
-		throw new Exceptions\InvalidState('Connector mode is not configured');
+		throw new NsPanelExceptions\InvalidState('Connector mode is not configured');
 	}
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

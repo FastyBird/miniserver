@@ -3,10 +3,10 @@
 namespace FastyBird\Connector\NsPanel\Tests\Cases\Unit\Mapping;
 
 use Error;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette;
 use Nette\Utils;
 use RuntimeException;
@@ -16,9 +16,9 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Utils\JsonException
@@ -43,9 +43,9 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Utils\JsonException

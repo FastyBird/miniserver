@@ -27,8 +27,7 @@ use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -97,15 +96,15 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ExchangeExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws HomeKitExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -117,7 +116,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 	}
 
 	/**
-	 * @throws ExchangeExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	public function disconnect(): void
 	{

@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Entities;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers as SonoffHelpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types as SonoffTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -68,9 +68,9 @@ final class StoreDevice implements Queue\Consumer
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

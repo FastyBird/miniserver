@@ -5,9 +5,9 @@ namespace FastyBird\Automator\DateTime\Tests\Cases\Unit\Entities\Conditions;
 use DateTime;
 use Error;
 use FastyBird\Automator\DateTime\Entities;
-use FastyBird\Automator\DateTime\Exceptions;
+use FastyBird\Automator\DateTime\Exceptions as DateTimeExceptions;
 use FastyBird\Automator\DateTime\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Triggers\Models as TriggersModels;
 use FastyBird\Module\Triggers\Queries as TriggersQueries;
 use Nette;
@@ -22,8 +22,8 @@ final class ConditionTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DateTimeExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

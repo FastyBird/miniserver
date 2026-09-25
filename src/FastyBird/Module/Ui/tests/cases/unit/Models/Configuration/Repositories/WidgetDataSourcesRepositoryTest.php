@@ -3,9 +3,9 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\Models\Configuration\Repositories;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Ui\Documents;
-use FastyBird\Module\Ui\Exceptions;
+use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Tests;
@@ -21,8 +21,8 @@ final class WidgetDataSourcesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws UiExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -57,8 +57,8 @@ final class WidgetDataSourcesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws UiExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -75,8 +75,8 @@ final class WidgetDataSourcesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws UiExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

@@ -19,10 +19,10 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -105,9 +105,9 @@ final class System implements Common\EventSubscriber
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException

@@ -19,9 +19,9 @@ use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
@@ -76,12 +76,12 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidArgument
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		if (!$device instanceof Entities\Devices\Device) {
-			throw new Exceptions\InvalidArgument('Provided device type is not valid');
+			throw new HomeKitExceptions\InvalidArgument('Provided device type is not valid');
 		}
 
 		parent::addDevice($device);
@@ -96,8 +96,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -121,9 +121,9 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -143,12 +143,12 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		throw new Exceptions\InvalidState('Connector MAC address is not configured');
+		throw new HomeKitExceptions\InvalidState('Connector MAC address is not configured');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -172,9 +172,9 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -194,13 +194,13 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		throw new Exceptions\InvalidState('Connector setup ID is not configured');
+		throw new HomeKitExceptions\InvalidState('Connector setup ID is not configured');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -220,13 +220,13 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		throw new Exceptions\InvalidState('Connector PIN code is not configured');
+		throw new HomeKitExceptions\InvalidState('Connector PIN code is not configured');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -246,12 +246,12 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		throw new Exceptions\InvalidState('Connector XHM uri is not created');
+		throw new HomeKitExceptions\InvalidState('Connector XHM uri is not created');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -275,9 +275,9 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -297,13 +297,13 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		throw new Exceptions\InvalidState('Connector hashing key is not configured');
+		throw new HomeKitExceptions\InvalidState('Connector hashing key is not configured');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -323,13 +323,13 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		throw new Exceptions\InvalidState('Connector client public key is not configured');
+		throw new HomeKitExceptions\InvalidState('Connector client public key is not configured');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -349,12 +349,12 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		throw new Exceptions\InvalidState('Connector shared key is not configured');
+		throw new HomeKitExceptions\InvalidState('Connector shared key is not configured');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

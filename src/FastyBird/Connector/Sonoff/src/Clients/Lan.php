@@ -19,13 +19,13 @@ use BadMethodCallException;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
@@ -78,16 +78,16 @@ final class Lan extends ClientProcess implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws BadMethodCallException
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -182,12 +182,12 @@ final class Lan extends ClientProcess implements Client
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
+	 * @throws SonoffExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -207,7 +207,7 @@ final class Lan extends ClientProcess implements Client
 				),
 			);
 
-			return Promise\reject(new Exceptions\InvalidState('Device ip address is not configured'));
+			return Promise\reject(new SonoffExceptions\InvalidState('Device ip address is not configured'));
 		}
 
 		$deferred = new Promise\Deferred();
@@ -236,7 +236,7 @@ final class Lan extends ClientProcess implements Client
 					$deferred->resolve(true);
 			})
 			->catch(function (Throwable $ex) use ($deferred, $device): void {
-				if ($ex instanceof Exceptions\LanApiError) {
+				if ($ex instanceof SonoffExceptions\LanApiError) {
 					$this->queue->append(
 						$this->entityHelper->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -262,7 +262,7 @@ final class Lan extends ClientProcess implements Client
 							],
 						],
 					);
-				} elseif ($ex instanceof Exceptions\LanApiCall) {
+				} elseif ($ex instanceof SonoffExceptions\LanApiCall) {
 					$this->checkError($ex, $device);
 
 					$this->logger->warning(
@@ -320,7 +320,7 @@ final class Lan extends ClientProcess implements Client
 	}
 
 	private function checkError(
-		Exceptions\LanApiCall $ex,
+		SonoffExceptions\LanApiCall $ex,
 		Documents\Devices\Device $device,
 	): void
 	{
@@ -343,7 +343,7 @@ final class Lan extends ClientProcess implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 */
 	private function handleDeviceEvent(
 		Documents\Devices\Device $device,
@@ -517,7 +517,7 @@ final class Lan extends ClientProcess implements Client
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 */
 	private function handleDeviceInfo(API\Messages\Response\Lan\DeviceInfo $info): void
 	{

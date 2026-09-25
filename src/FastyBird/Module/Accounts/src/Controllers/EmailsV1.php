@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -71,10 +71,10 @@ final class EmailsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
 	 */
 	public function index(
@@ -92,7 +92,7 @@ final class EmailsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
@@ -404,7 +404,7 @@ final class EmailsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi

@@ -3,12 +3,12 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Cases\Unit\DI;
 
 use Error;
-use FastyBird\Bridge\DevicesModuleUiModule\Exceptions;
+use FastyBird\Bridge\DevicesModuleUiModule\Exceptions as DevicesModuleUiModuleExceptions;
 use FastyBird\Bridge\DevicesModuleUiModule\Hydrators;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Bridge\DevicesModuleUiModule\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -20,8 +20,8 @@ final class DevicesModuleUiModuleExtensionTest extends Tests\Cases\Unit\DbTestCa
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesModuleUiModuleExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

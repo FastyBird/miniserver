@@ -18,11 +18,11 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 use Doctrine\DBAL;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -59,9 +59,9 @@ final class StoreBridgeInfo implements Queue\Consumer
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

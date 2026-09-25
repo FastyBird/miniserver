@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Presenters;
 
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Documents;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use Nette\Application;
@@ -44,9 +44,9 @@ trait TConnectors
 {
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Utils\JsonException
 	 * @throws TypeError
 	 * @throws ValueError
@@ -94,9 +94,9 @@ trait TConnectors
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Utils\JsonException
 	 * @throws TypeError
 	 * @throws ValueError

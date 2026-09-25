@@ -16,9 +16,9 @@
 namespace FastyBird\Connector\FbMqtt\API;
 
 use FastyBird\Connector\FbMqtt\Documents;
-use FastyBird\Connector\FbMqtt\Exceptions;
+use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
 use TypeError;
@@ -48,9 +48,9 @@ final class ConnectionManager
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

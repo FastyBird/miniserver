@@ -26,7 +26,7 @@ use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -107,10 +107,10 @@ class Rtu implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ModbusExceptions\InvalidArgument
@@ -118,8 +118,8 @@ class Rtu implements Client
 	 * @throws ModbusExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RandomException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -166,8 +166,8 @@ class Rtu implements Client
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws ModbusExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -183,10 +183,10 @@ class Rtu implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ModbusExceptions\InvalidArgument
@@ -194,8 +194,8 @@ class Rtu implements Client
 	 * @throws ModbusExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RandomException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -254,10 +254,10 @@ class Rtu implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ModbusExceptions\InvalidArgument
@@ -265,8 +265,8 @@ class Rtu implements Client
 	 * @throws ModbusExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RandomException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -560,16 +560,16 @@ class Rtu implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws ModbusExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -701,10 +701,10 @@ class Rtu implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ModbusExceptions\InvalidArgument
@@ -712,8 +712,8 @@ class Rtu implements Client
 	 * @throws ModbusExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RandomException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

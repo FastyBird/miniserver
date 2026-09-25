@@ -28,7 +28,7 @@ use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue as VirtualQueue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
@@ -126,16 +126,16 @@ class Thermostat implements VirtualDrivers\Driver
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws VirtualExceptions\Runtime
@@ -414,14 +414,14 @@ class Thermostat implements VirtualDrivers\Driver
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -456,14 +456,14 @@ class Thermostat implements VirtualDrivers\Driver
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -710,14 +710,14 @@ class Thermostat implements VirtualDrivers\Driver
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -875,14 +875,14 @@ class Thermostat implements VirtualDrivers\Driver
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1117,14 +1117,14 @@ class Thermostat implements VirtualDrivers\Driver
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1165,14 +1165,14 @@ class Thermostat implements VirtualDrivers\Driver
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1283,8 +1283,8 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1334,14 +1334,14 @@ class Thermostat implements VirtualDrivers\Driver
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

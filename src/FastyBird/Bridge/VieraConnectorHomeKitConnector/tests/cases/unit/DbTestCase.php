@@ -6,9 +6,9 @@ use Doctrine\DBAL;
 use Doctrine\ORM;
 use Error;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\DI;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions as VieraConnectorHomeKitConnectorExceptions;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Entities;
 use Nette;
 use PHPUnit\Framework\TestCase;
@@ -76,8 +76,8 @@ abstract class DbTestCase extends TestCase
 
 	/**
 	 * @param class-string $serviceType
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -96,8 +96,8 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -112,8 +112,8 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -153,8 +153,8 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -198,8 +198,8 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -210,8 +210,8 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -222,7 +222,7 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 */
 	private function loadFromFile(DBAL\Connection $db, string $file): void
 	{
@@ -231,7 +231,9 @@ abstract class DbTestCase extends TestCase
 		$handle = @fopen($file, 'r'); // intentionally @
 
 		if ($handle === false) {
-			throw new Exceptions\InvalidArgument(sprintf('Cannot open file "%s".', $file));
+			throw new VieraConnectorHomeKitConnectorExceptions\InvalidArgument(
+				sprintf('Cannot open file "%s".', $file),
+			);
 		}
 
 		$delimiter = ';';
@@ -272,7 +274,7 @@ abstract class DbTestCase extends TestCase
 	 * statement both vanished and took the rest of the file with it, the next line being
 	 * concatenated onto the broken SQL.
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 */
 	private function executeFixtureStatement(DBAL\Connection $db, string $file, string $sql): void
 	{
@@ -288,7 +290,7 @@ abstract class DbTestCase extends TestCase
 				? substr($statement, 0, 260) . ' [...] ' . substr($statement, -260)
 				: $statement;
 
-			throw new Exceptions\InvalidArgument(
+			throw new VieraConnectorHomeKitConnectorExceptions\InvalidArgument(
 				sprintf(
 					'Fixture "%s" could not be loaded: %s%sFailing statement: %s',
 					$file,
@@ -303,8 +305,8 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -325,8 +327,8 @@ abstract class DbTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws Error
 	 */

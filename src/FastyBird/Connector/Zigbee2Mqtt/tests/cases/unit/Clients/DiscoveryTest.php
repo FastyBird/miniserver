@@ -9,11 +9,11 @@ use FastyBird\Connector\Zigbee2Mqtt\API;
 use FastyBird\Connector\Zigbee2Mqtt\Clients;
 use FastyBird\Connector\Zigbee2Mqtt\Documents;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use InvalidArgumentException;
@@ -33,16 +33,16 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
+	 * @throws Zigbee2MqttExceptions\InvalidState
 	 * @throws InvalidArgumentException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws RuntimeException
 	 */
 	public function testDiscover(): void

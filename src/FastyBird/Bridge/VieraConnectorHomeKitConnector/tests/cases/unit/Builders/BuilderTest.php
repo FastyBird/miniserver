@@ -5,11 +5,11 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Cases\Unit\Build
 use Error;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Builders;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions as VieraConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette\DI;
@@ -26,16 +26,16 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidState
 	 * @throws Error
 	 * @throws Utils\JsonException
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 *
 	 * @throws InvalidArgumentException
 	 */

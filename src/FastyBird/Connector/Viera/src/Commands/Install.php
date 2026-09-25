@@ -26,7 +26,7 @@ use FastyBird\Connector\Viera\Helpers as VieraHelpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
@@ -120,8 +120,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
@@ -129,7 +129,7 @@ class Install extends Console\Command\Command
 	 * @throws VieraExceptions\InvalidState
 	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -152,7 +152,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -275,15 +275,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VieraExceptions\InvalidArgument
 	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -393,7 +393,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteConnector(Style\SymfonyStyle $io): void
 	{
@@ -458,8 +458,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
@@ -467,7 +467,7 @@ class Install extends Console\Command\Command
 	 * @throws VieraExceptions\InvalidState
 	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -528,11 +528,11 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1037,12 +1037,12 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VieraExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1583,7 +1583,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -1649,8 +1649,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1692,9 +1692,9 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception
@@ -1702,9 +1702,9 @@ class Install extends Console\Command\Command
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws VieraExceptions\InvalidArgument
 	 * @throws VieraExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1819,8 +1819,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
@@ -1828,7 +1828,7 @@ class Install extends Console\Command\Command
 	 * @throws VieraExceptions\InvalidState
 	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1906,9 +1906,9 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
@@ -1916,8 +1916,8 @@ class Install extends Console\Command\Command
 	 * @throws VieraExceptions\InvalidState
 	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2025,8 +2025,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2055,8 +2055,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2085,8 +2085,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2388,9 +2388,9 @@ class Install extends Console\Command\Command
 	 * @throws DBAL\Exception
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws VieraExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

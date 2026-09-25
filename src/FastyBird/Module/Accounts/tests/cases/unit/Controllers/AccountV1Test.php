@@ -4,10 +4,10 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Controllers;
 
 use Error;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Schemas;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -28,8 +28,8 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws AccountsExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -168,8 +168,8 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws AccountsExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException

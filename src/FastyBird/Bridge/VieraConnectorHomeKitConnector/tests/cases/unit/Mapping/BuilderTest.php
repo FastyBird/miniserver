@@ -3,10 +3,10 @@
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Cases\Unit\Mapping;
 
 use Error;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions as VieraConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette\DI;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -18,12 +18,12 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidArgument
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidState
 	 * @throws Error
 	 * @throws RuntimeException
 	 */

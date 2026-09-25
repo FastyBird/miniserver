@@ -4,9 +4,9 @@ namespace FastyBird\Module\Triggers\Tests\Cases\Unit\Router;
 
 use Error;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -35,8 +35,8 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws TriggersExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException

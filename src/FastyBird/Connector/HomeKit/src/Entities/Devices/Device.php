@@ -17,9 +17,9 @@ namespace FastyBird\Connector\HomeKit\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -80,20 +80,20 @@ class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidArgument
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof Entities\Channels\Channel) {
-			throw new Exceptions\InvalidArgument('Provided channel type is not valid');
+			throw new HomeKitExceptions\InvalidArgument('Provided channel type is not valid');
 		}
 
 		parent::addChannel($channel);
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -118,8 +118,8 @@ class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -146,7 +146,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @return array<Entities\Channels\Channel>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

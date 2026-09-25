@@ -69,7 +69,10 @@ alone was aliased 11 different ways, one per library the importing file happened
   2  as PhoneExceptions             1  as Exceptions (redundant -- import it bare)
 ```
 
-The baseline may only shrink. A stale entry in it fails the gate.
+The baseline may only shrink. A stale entry in it fails the gate. **As of E3.15 (#508), the
+last capability PR of the Core identity refactor's Epic E3, the baseline holds 0 entries** --
+every alias of a Core namespace anywhere in the repository is legal. The table above is kept
+as history, not current state.
 
 ## Namespace layout
 
@@ -77,18 +80,25 @@ The baseline may only shrink. A stale entry in it fails the gate.
 was the type-first layout PRs #454/#455 produced: `Middleware`, `Subscribers`, `Entities`,
 `Controllers`, `Providers`, `Presenters`, `Helpers`, `Services`, `Types`, `Utilities` and more
 all sat at the top level, with paths like the pre-#507 `Subscribers\Application\
-EventLoopLifeCycle` (under the `FastyBird\Core\` root) that this section's target contradicted.
+EventLoopLifeCycle` (under the `FastyBird\Core\` root) that this layout contradicted.
 
-Core is now **capability-first**, following Symfony's component convention: `Security\`,
-`WebSockets\`, `Api\`, `Http\`, `Persistence\`, `Values\`, `Documents\`, `Exchange\`, `Phone\`,
-`Clock\`, `Logging\`, and `Exceptions\` -- plus `Boot\`, `DI\`, `Caching\`, `EventLoop\`,
-`Presenters\` and `UI\`, the other allowed root namespaces.
+Core is now **capability-first**, following Symfony's component convention.
+`src/FastyBird/Core/Core/src` holds, at its top level, only:
 
-`Exceptions\` is the odd one out — it is a shared root holding only the handful of
-genuinely cross-cutting exceptions, not a capability. Layer names — `Middleware`,
-`Subscribers`, `Entities`, `Controllers` — appear only *inside* a capability, never at the
-top level. Exceptions and events live inside their capability too; only genuinely
-cross-cutting exceptions sit at the root.
+- the **11 capabilities**: `Api\`, `Clock\`, `Documents\`, `Exchange\`, `Http\`, `Logging\`,
+  `Persistence\`, `Phone\`, `Security\`, `Values\`, `WebSockets\`;
+- `Exceptions\`, the odd one out — a **shared root**, not a capability, holding only the
+  handful of genuinely cross-cutting exceptions (`Exception`, `InvalidArgument`,
+  `InvalidController`, `InvalidLink`, `InvalidState`, `Logic`, `Runtime`, `UnexpectedValue`).
+  Layer names — `Middleware`, `Subscribers`, `Entities`, `Controllers` — appear only *inside*
+  a capability, never at the top level. Exceptions and events live inside their owning
+  capability too; only these 8 genuinely cross-cutting exceptions sit at the shared root;
+- the dissolved runtime namespaces: `Boot\`, `Caching\`, `DI\`, `EventLoop\`, `Presenters\`,
+  `UI\`;
+- two root-level classes, `FastyBird\Core\Configuration` and `FastyBird\Core\Constants`,
+  flattened out of their own one-class sub-namespace (a single-class namespace collapses into
+  a root-level class rather than keeping a stuttering `Configuration\Configuration` /
+  `Constants\Constants` shape).
 
 ## Docblocks
 
@@ -121,7 +131,7 @@ via a shrink-only `<exclude-pattern>` list in `tools/phpcs.xml`, owned by E7 (#4
   maintainer's ruling: name by role, no suffix either direction.
 - No stuttering: not `Middleware\JsonApi\JsonApi`, not `Services\Phone\Phone`.
 
-Core's `Routing/` already shows why a name is needed rather than a mechanical drop of the `I`:
+Core's `Http\Routing\` already shows why a name is needed rather than a mechanical drop of the `I`:
 `IRoute`, `IRouteCollector`, `IRouteGroup`, `IRouteParser`, `IRouter` sit beside concrete
 `Route`, `RouteCollector`, `RouteGroup`, `RouteParser`, `Router`. Simply deleting the `I` would
 collide with the concrete class of the same name, so each interface needs a role name instead

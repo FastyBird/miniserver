@@ -17,9 +17,9 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -69,21 +69,21 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		if (!$device instanceof Entities\Devices\Device) {
-			throw new Exceptions\InvalidArgument('Provided device type is not valid');
+			throw new Zigbee2MqttExceptions\InvalidArgument('Provided device type is not valid');
 		}
 
 		parent::addDevice($device);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Zigbee2MqttExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -103,12 +103,12 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return Types\ClientMode::from(Utilities\Value::toString($property->getValue(), true));
 		}
 
-		throw new Exceptions\InvalidState('Connector mode is not configured');
+		throw new Zigbee2MqttExceptions\InvalidState('Connector mode is not configured');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -132,8 +132,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -157,8 +157,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -182,8 +182,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -207,8 +207,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

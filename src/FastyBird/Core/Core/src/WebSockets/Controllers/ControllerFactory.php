@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\WebSockets\Controllers;
 
-use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions;
 use Nette;
 use Nette\DI;
@@ -145,14 +144,14 @@ final class ControllerFactory implements IControllerFactory
 	/**
 	 * Sets mapping as pairs [module => mask]
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidState
 	 */
 	public function setMapping(array $mapping): void
 	{
 		foreach ($mapping as $module => $mask) {
 			if (is_string($mask)) {
 				if (!preg_match('#^\\\\?([\w\\\\]*\\\\)?(\w*\*\w*?\\\\)?([\w\\\\]*\*\w*)\z#', $mask, $m)) {
-					throw new ApplicationExceptions\InvalidState(sprintf('Invalid mapping mask "%s".', $mask));
+					throw new Exceptions\InvalidState(sprintf('Invalid mapping mask "%s".', $mask));
 				}
 
 				$this->mapping[$module] = [$m[1], $m[2] !== '' ? $m[2] : '*Module\\', $m[3]];
@@ -161,7 +160,7 @@ final class ControllerFactory implements IControllerFactory
 				$this->mapping[$module] = [$mask[0] ? $mask[0] . '\\' : '', $mask[1] . '\\', $mask[2]];
 
 			} else {
-				throw new ApplicationExceptions\InvalidState(sprintf('Invalid mapping mask for module "%s".', $module));
+				throw new Exceptions\InvalidState(sprintf('Invalid mapping mask for module "%s".', $module));
 			}
 		}
 	}

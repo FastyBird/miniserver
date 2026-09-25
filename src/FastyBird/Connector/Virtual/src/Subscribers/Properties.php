@@ -25,7 +25,7 @@ use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers;
 use FastyBird\Connector\Virtual\Queries;
 use FastyBird\Connector\Virtual\Types as VirtualTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -66,9 +66,9 @@ final class Properties implements Common\EventSubscriber
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws VirtualExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function postPersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{

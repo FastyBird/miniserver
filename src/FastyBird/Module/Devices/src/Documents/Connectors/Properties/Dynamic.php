@@ -17,10 +17,10 @@ namespace FastyBird\Module\Devices\Documents\Connectors\Properties;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
@@ -102,9 +102,9 @@ final class Dynamic extends Property
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

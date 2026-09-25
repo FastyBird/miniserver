@@ -27,7 +27,7 @@ use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Types as VirtualTypes;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\Helpers;
@@ -118,8 +118,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DBAL\Exception
@@ -129,7 +129,7 @@ class Install extends Console\Command\Command
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws VirtualExceptions\InvalidArgument
@@ -148,12 +148,12 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1043,14 +1043,14 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws VirtualExceptions\InvalidArgument
@@ -1664,7 +1664,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteDevice(Style\SymfonyStyle $io): void
 	{
@@ -1732,10 +1732,10 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
@@ -1744,7 +1744,7 @@ class Install extends Console\Command\Command
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1766,7 +1766,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1823,8 +1823,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 * @throws VirtualThermostatExceptions\InvalidArgument
@@ -1921,8 +1921,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 * @throws VirtualThermostatExceptions\InvalidArgument
@@ -2075,7 +2075,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteActor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
 	{
@@ -2143,7 +2143,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 * @throws VirtualThermostatExceptions\InvalidArgument
@@ -2292,7 +2292,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 * @throws VirtualThermostatExceptions\InvalidArgument
@@ -2536,7 +2536,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteSensor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
 	{
@@ -2604,16 +2604,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2842,7 +2842,7 @@ class Install extends Console\Command\Command
 	 * @return array<VirtualThermostatTypes\HvacMode>
 	 *
 	 * @throws VirtualThermostatExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2965,8 +2965,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3059,7 +3059,7 @@ class Install extends Console\Command\Command
 	 * @return array<VirtualThermostatTypes\Preset>
 	 *
 	 * @throws VirtualThermostatExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3233,7 +3233,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3324,7 +3324,7 @@ class Install extends Console\Command\Command
 	 * @param array<string> $ignoredIds
 	 * @param array<ValuesTypes\DataType>|null $allowedDataTypes
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 */
@@ -3448,7 +3448,7 @@ class Install extends Console\Command\Command
 	 * @param array<string> $ignoredIds
 	 * @param array<ValuesTypes\DataType>|null $allowedDataTypes
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 */
@@ -3485,14 +3485,14 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3571,8 +3571,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3623,8 +3623,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3676,8 +3676,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3732,7 +3732,7 @@ class Install extends Console\Command\Command
 	 * @param array<ValuesTypes\DataType>|null $allowedDataTypes
 	 * @param class-string<DevicesEntities\Channels\Properties\Dynamic|DevicesEntities\Channels\Properties\Variable> $onlyType
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 */
@@ -4212,8 +4212,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
@@ -4222,7 +4222,7 @@ class Install extends Console\Command\Command
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws VirtualExceptions\InvalidArgument
@@ -4311,10 +4311,10 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
@@ -4324,7 +4324,7 @@ class Install extends Console\Command\Command
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -4653,7 +4653,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -4739,7 +4739,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askWhichActor(
 		Style\SymfonyStyle $io,
@@ -4852,7 +4852,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askWhichSensor(
 		Style\SymfonyStyle $io,
@@ -4972,8 +4972,8 @@ class Install extends Console\Command\Command
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function createOrUpdateProperty(
 		string $propertyType,
@@ -4999,8 +4999,8 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws VirtualThermostatExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 */
 	private function findChannelPropertyIdentifier(

@@ -17,14 +17,14 @@ namespace FastyBird\Connector\HomeKit\Controllers;
 
 use FastyBird\Connector\HomeKit\Clients;
 use FastyBird\Connector\HomeKit\Constants;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -71,11 +71,11 @@ final class CharacteristicsController extends BaseController
 	}
 
 	/**
-	 * @throws Exceptions\HapRequestError
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\HapRequestError
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws InvalidArgumentException
 	 * @throws Utils\JsonException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws TypeError
 	 * @throws ValueError
@@ -101,7 +101,7 @@ final class CharacteristicsController extends BaseController
 		$connectorId = strval($request->getAttribute(Servers\Http::REQUEST_ATTRIBUTE_CONNECTOR));
 
 		if (!Uuid\Uuid::isValid($connectorId)) {
-			throw new Exceptions\InvalidState('Connector id could not be determined');
+			throw new HomeKitExceptions\InvalidState('Connector id could not be determined');
 		}
 
 		$connectorId = Uuid\Uuid::fromString($connectorId);
@@ -109,7 +109,7 @@ final class CharacteristicsController extends BaseController
 		$queryParams = $request->getQueryParams();
 
 		if (!array_key_exists('id', $queryParams)) {
-			throw new Exceptions\HapRequestError(
+			throw new HomeKitExceptions\HapRequestError(
 				$request,
 				Types\ServerStatus::INVALID_VALUE_IN_REQUEST,
 				'Request query does not have required parameters',
@@ -140,7 +140,7 @@ final class CharacteristicsController extends BaseController
 			[$aid, $iid] = explode('.', $id) + [null, null];
 
 			if ($aid === null || $iid === null) {
-				throw new Exceptions\HapRequestError(
+				throw new HomeKitExceptions\HapRequestError(
 					$request,
 					Types\ServerStatus::INVALID_VALUE_IN_REQUEST,
 					'Request query has invalid format pro ID parameter',
@@ -191,9 +191,9 @@ final class CharacteristicsController extends BaseController
 	}
 
 	/**
-	 * @throws Exceptions\HapRequestError
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\HapRequestError
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws Utils\JsonException
@@ -222,7 +222,7 @@ final class CharacteristicsController extends BaseController
 		$connectorId = strval($request->getAttribute(Servers\Http::REQUEST_ATTRIBUTE_CONNECTOR));
 
 		if (!Uuid\Uuid::isValid($connectorId)) {
-			throw new Exceptions\InvalidState('Connector id could not be determined');
+			throw new HomeKitExceptions\InvalidState('Connector id could not be determined');
 		}
 
 		$connectorId = Uuid\Uuid::fromString($connectorId);
@@ -234,7 +234,7 @@ final class CharacteristicsController extends BaseController
 		try {
 			$body = Utils\Json::decode($body, forceArrays: true);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\HapRequestError(
+			throw new HomeKitExceptions\HapRequestError(
 				$request,
 				Types\ServerStatus::INVALID_VALUE_IN_REQUEST,
 				'Request body could not be decoded',
@@ -248,7 +248,7 @@ final class CharacteristicsController extends BaseController
 			|| !array_key_exists(Types\Representation::CHARS->value, $body)
 			|| !is_array($body[Types\Representation::CHARS->value])
 		) {
-			throw new Exceptions\HapRequestError(
+			throw new HomeKitExceptions\HapRequestError(
 				$request,
 				Types\ServerStatus::INVALID_VALUE_IN_REQUEST,
 				'Request body does not have required attributes',
@@ -325,7 +325,7 @@ final class CharacteristicsController extends BaseController
 				);
 
 			} else {
-				throw new Exceptions\HapRequestError(
+				throw new HomeKitExceptions\HapRequestError(
 					$request,
 					Types\ServerStatus::INVALID_VALUE_IN_REQUEST,
 					'Request body does not have required attributes',
@@ -360,7 +360,7 @@ final class CharacteristicsController extends BaseController
 	/**
 	 * Handles a client request to prepare to write
 	 *
-	 * @throws Exceptions\HapRequestError
+	 * @throws HomeKitExceptions\HapRequestError
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws Utils\JsonException
@@ -375,7 +375,7 @@ final class CharacteristicsController extends BaseController
 		try {
 			$body = Utils\Json::decode($body, forceArrays: true);
 		} catch (Utils\JsonException $ex) {
-			throw new Exceptions\HapRequestError(
+			throw new HomeKitExceptions\HapRequestError(
 				$request,
 				Types\ServerStatus::INVALID_VALUE_IN_REQUEST,
 				'Request body could not be decoded',
@@ -389,7 +389,7 @@ final class CharacteristicsController extends BaseController
 			|| !array_key_exists(Types\Representation::TTL->value, $body)
 			|| !array_key_exists(Types\Representation::PID->value, $body)
 		) {
-			throw new Exceptions\HapRequestError(
+			throw new HomeKitExceptions\HapRequestError(
 				$request,
 				Types\ServerStatus::INVALID_VALUE_IN_REQUEST,
 				'Request body does not have required attributes',
@@ -422,8 +422,8 @@ final class CharacteristicsController extends BaseController
 	/**
 	 * @return array<string, (bool|int|array<int>|float|string|array<string>|null)>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -509,9 +509,9 @@ final class CharacteristicsController extends BaseController
 	/**
 	 * @return array<string, bool|float|int|string|null>
 	 *
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -767,7 +767,7 @@ final class CharacteristicsController extends BaseController
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\Runtime
 	 */
 	private function storeCharacteristic(
 		Uuid\UuidInterface $connectorId,

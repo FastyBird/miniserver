@@ -16,10 +16,10 @@
 namespace FastyBird\Connector\Modbus\API;
 
 use DateTimeInterface;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Connector\Modbus\ValueObjects;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
@@ -60,8 +60,8 @@ final class Transformer
 	private bool|null $machineUsingLittleEndian = null;
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -261,7 +261,7 @@ final class Transformer
 	/**
 	 * @param array<int> $bytes
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	public function unpackSignedInt(array $bytes, ModbusTypes\ByteOrder $byteOrder): int|null
 	{
@@ -287,7 +287,7 @@ final class Transformer
 	/**
 	 * @param array<int> $bytes
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	public function unpackUnsignedInt(array $bytes, ModbusTypes\ByteOrder $byteOrder): int|null
 	{
@@ -313,7 +313,7 @@ final class Transformer
 	/**
 	 * @param array<int> $bytes
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	public function unpackFloat(array $bytes, ModbusTypes\ByteOrder $byteOrder): float|null
 	{
@@ -336,7 +336,7 @@ final class Transformer
 	/**
 	 * @return array<int>|null
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	public function packSignedInt(int $value, int $bytes, ModbusTypes\ByteOrder $byteOrder): array|null
 	{
@@ -352,7 +352,7 @@ final class Transformer
 	/**
 	 * @return array<int>|null
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	public function packUnsignedInt(int $value, int $bytes, ModbusTypes\ByteOrder $byteOrder): array|null
 	{
@@ -368,7 +368,7 @@ final class Transformer
 	/**
 	 * @return array<int>|null
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	public function packFloat(float $value, ModbusTypes\ByteOrder $byteOrder): array|null
 	{
@@ -400,7 +400,7 @@ final class Transformer
 	/**
 	 * @param array<int> $bytes
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	private function unpackNumber(string $format, array $bytes, ModbusTypes\ByteOrder $byteOrder): int|float|null
 	{
@@ -481,7 +481,7 @@ final class Transformer
 	/**
 	 * @return array<int>|null
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	private function packNumber(
 		string $format,
@@ -538,7 +538,7 @@ final class Transformer
 	/**
 	 * Detect machine byte order configuration
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 */
 	private function isLittleEndian(): bool
 	{
@@ -549,7 +549,7 @@ final class Transformer
 		$testUnpacked = unpack('S', "\x01\x00");
 
 		if ($testUnpacked === false) {
-			throw new Exceptions\InvalidState('Machine endian order could not be determined');
+			throw new ModbusExceptions\InvalidState('Machine endian order could not be determined');
 		}
 
 		$this->machineUsingLittleEndian = current($testUnpacked) === 1;

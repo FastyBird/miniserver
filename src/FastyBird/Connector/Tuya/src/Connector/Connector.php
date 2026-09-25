@@ -23,8 +23,7 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Writers;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as ExchangeExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -82,9 +81,9 @@ final class Connector implements DevicesConnectors\Connector
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
@@ -93,9 +92,9 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws TuyaExceptions\OpenApiCall
 	 * @throws TuyaExceptions\OpenApiError
 	 * @throws TuyaExceptions\Runtime
-	 * @throws ExchangeExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -177,8 +176,8 @@ final class Connector implements DevicesConnectors\Connector
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function discover(): Promise\PromiseInterface
@@ -224,8 +223,8 @@ final class Connector implements DevicesConnectors\Connector
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws TuyaExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

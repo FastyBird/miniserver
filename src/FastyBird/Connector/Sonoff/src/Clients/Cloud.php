@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Sonoff\Clients;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
@@ -76,11 +76,11 @@ final class Cloud extends ClientProcess implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiCall
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws TypeError
@@ -222,10 +222,10 @@ final class Cloud extends ClientProcess implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -246,11 +246,11 @@ final class Cloud extends ClientProcess implements Client
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -295,7 +295,7 @@ final class Cloud extends ClientProcess implements Client
 						],
 					);
 
-				if ($ex instanceof Exceptions\CloudApiError) {
+				if ($ex instanceof SonoffExceptions\CloudApiError) {
 					$this->queue->append(
 						$this->entityHelper->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -309,8 +309,8 @@ final class Cloud extends ClientProcess implements Client
 				}
 
 				if (
-						!$ex instanceof Exceptions\CloudApiCall
-						&& !$ex instanceof Exceptions\CloudApiError
+						!$ex instanceof SonoffExceptions\CloudApiCall
+						&& !$ex instanceof SonoffExceptions\CloudApiError
 					) {
 					$this->dispatcher?->dispatch(
 						new DevicesEvents\TerminateConnector(
@@ -331,12 +331,12 @@ final class Cloud extends ClientProcess implements Client
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -386,7 +386,7 @@ final class Cloud extends ClientProcess implements Client
 										],
 									);
 
-								if ($ex instanceof Exceptions\CloudApiError) {
+								if ($ex instanceof SonoffExceptions\CloudApiError) {
 									$this->queue->append(
 										$this->entityHelper->create(
 											Queue\Messages\StoreDeviceConnectionState::class,
@@ -400,8 +400,8 @@ final class Cloud extends ClientProcess implements Client
 								}
 
 								if (
-										!$ex instanceof Exceptions\CloudApiCall
-										&& !$ex instanceof Exceptions\CloudApiError
+										!$ex instanceof SonoffExceptions\CloudApiCall
+										&& !$ex instanceof SonoffExceptions\CloudApiError
 									) {
 									$this->dispatcher?->dispatch(
 										new DevicesEvents\TerminateConnector(
@@ -440,7 +440,7 @@ final class Cloud extends ClientProcess implements Client
 							],
 						);
 
-					if (!$ex instanceof Exceptions\CloudApiCall) {
+					if (!$ex instanceof SonoffExceptions\CloudApiCall) {
 						$this->dispatcher?->dispatch(
 							new DevicesEvents\TerminateConnector(
 								Sources\Connector::SONOFF,
@@ -459,7 +459,7 @@ final class Cloud extends ClientProcess implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws SonoffExceptions\Runtime
 	 */
 	private function handleDeviceState(
 		API\Messages\Response\Cloud\DeviceState|API\Messages\Response\Sockets\DeviceStateEvent $message,

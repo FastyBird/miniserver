@@ -5,14 +5,14 @@ namespace FastyBird\Connector\NsPanel\Tests\Cases\Unit\Clients;
 use Error;
 use FastyBird\Connector\NsPanel\Clients;
 use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Services;
 use FastyBird\Connector\NsPanel\Tests;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\DI;
@@ -30,14 +30,14 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testDiscover(): void

@@ -5,9 +5,9 @@ namespace FastyBird\Connector\FbMqtt\Tests\Cases\Unit\Connector;
 use Error;
 use FastyBird\Connector\FbMqtt\Connector;
 use FastyBird\Connector\FbMqtt\Documents;
-use FastyBird\Connector\FbMqtt\Exceptions;
+use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -21,8 +21,8 @@ final class ConnectorFactoryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws FbMqttExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

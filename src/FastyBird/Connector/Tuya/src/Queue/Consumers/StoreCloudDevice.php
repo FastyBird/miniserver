@@ -18,11 +18,11 @@ namespace FastyBird\Connector\Tuya\Queue\Consumers;
 use Doctrine\DBAL;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Entities;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Types as TuyaTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -68,9 +68,9 @@ final class StoreCloudDevice implements Queue\Consumer
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

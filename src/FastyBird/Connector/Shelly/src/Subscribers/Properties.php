@@ -23,7 +23,7 @@ use FastyBird\Connector\Shelly\Entities;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -65,9 +65,9 @@ final class Properties implements Common\EventSubscriber
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws ShellyExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function postPersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{

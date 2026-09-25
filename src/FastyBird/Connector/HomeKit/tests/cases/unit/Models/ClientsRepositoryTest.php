@@ -8,7 +8,7 @@ use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Models;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -21,7 +21,7 @@ final class ClientsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws PersistenceExceptions\Query
 	 * @throws HomeKitExceptions\InvalidArgument
 	 * @throws HomeKitExceptions\InvalidState
@@ -44,7 +44,7 @@ final class ClientsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws PersistenceExceptions\Query
 	 * @throws HomeKitExceptions\InvalidArgument
 	 * @throws HomeKitExceptions\InvalidState

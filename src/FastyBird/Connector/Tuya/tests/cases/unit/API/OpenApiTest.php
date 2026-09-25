@@ -4,11 +4,11 @@ namespace FastyBird\Connector\Tuya\Tests\Cases\Unit\API;
 
 use Error;
 use FastyBird\Connector\Tuya\API;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Tests;
 use FastyBird\Connector\Tuya\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use GuzzleHttp;
 use Nette\DI;
 use Nette\Utils;
@@ -31,11 +31,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	private const UID = 'Bjhq01pE7q4ijNMN';
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -256,11 +256,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -364,11 +364,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -486,11 +486,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -603,11 +603,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -705,11 +705,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -813,11 +813,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -1015,11 +1015,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -1123,11 +1123,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -1238,11 +1238,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -1359,11 +1359,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -1461,11 +1461,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -1550,11 +1550,11 @@ final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws RuntimeException
 	 * @throws Error
 	 */

@@ -5,7 +5,7 @@ namespace FastyBird\Connector\Virtual\Tests\Cases\Unit;
 use Error;
 use FastyBird\Connector\Virtual\DI;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 use PHPUnit\Framework\TestCase;
 use function constant;
@@ -19,8 +19,8 @@ abstract class BaseTestCase extends TestCase
 	protected Nette\DI\Container $container;
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
 	protected function setUp(): void
@@ -31,8 +31,8 @@ abstract class BaseTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
 	protected function createContainer(string|null $additionalConfig = null): Nette\DI\Container

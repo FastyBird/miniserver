@@ -18,13 +18,13 @@ namespace FastyBird\Connector\Shelly\Clients;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Services;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Connector\Shelly\ValueObjects;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
@@ -118,10 +118,10 @@ final class Discovery
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -431,7 +431,7 @@ final class Discovery
 			}
 		} catch (Throwable $ex) {
 			if (
-				$ex instanceof Exceptions\HttpApiCall
+				$ex instanceof ShellyExceptions\HttpApiCall
 				&& $ex->getCode() === StatusCodeInterface::STATUS_UNAUTHORIZED
 			) {
 				$this->logger->error(

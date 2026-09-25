@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Entities\Channels\Properties;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
@@ -158,8 +158,8 @@ class Mapped extends Property
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -191,8 +191,8 @@ class Mapped extends Property
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -232,8 +232,8 @@ class Mapped extends Property
 	 * {@inheritDoc}
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException

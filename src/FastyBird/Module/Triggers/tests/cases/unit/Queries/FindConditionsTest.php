@@ -3,8 +3,8 @@
 namespace FastyBird\Module\Triggers\Tests\Cases\Unit\Queries;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Queries;
 use FastyBird\Module\Triggers\Tests;
@@ -21,9 +21,9 @@ final class FindConditionsTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws TriggersExceptions\InvalidArgument
+	 * @throws TriggersExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

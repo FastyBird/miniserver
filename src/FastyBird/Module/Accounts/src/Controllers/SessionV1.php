@@ -20,7 +20,7 @@ use Doctrine;
 use Exception;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
@@ -67,7 +67,7 @@ final class SessionV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws AccountsExceptions\InvalidState
@@ -387,7 +387,7 @@ final class SessionV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
@@ -481,7 +481,7 @@ final class SessionV1 extends BaseV1
 
 	/**
 	 * @throws SecurityExceptions\UnauthorizedAccess
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi

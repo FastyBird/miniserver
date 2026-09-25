@@ -18,13 +18,13 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Commands;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Builders;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions as VieraConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Queries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Queries as VieraQueries;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
@@ -84,12 +84,12 @@ class Build extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidState
+	 * @throws VieraConnectorHomeKitConnectorExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -116,7 +116,7 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function createBridge(Style\SymfonyStyle $io): void
 	{
@@ -183,7 +183,7 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function editBridge(Style\SymfonyStyle $io): void
 	{
@@ -242,7 +242,7 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteBridge(Style\SymfonyStyle $io): void
 	{
@@ -311,7 +311,7 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidState
 	 */
 	private function listBridges(Style\SymfonyStyle $io): void
 	{
@@ -354,12 +354,12 @@ class Build extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidState
+	 * @throws VieraConnectorHomeKitConnectorExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -483,7 +483,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connectors): HomeKitEntities\Connectors\Connector {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VieraConnectorHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//viera-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -513,7 +513,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VieraConnectorHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//viera-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -576,7 +576,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($devices): VieraEntities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VieraConnectorHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//viera-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -606,7 +606,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VieraConnectorHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//viera-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -669,7 +669,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($devices): Entities\Devices\Viera {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VieraConnectorHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//viera-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -699,7 +699,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VieraConnectorHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//viera-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',

@@ -17,9 +17,9 @@ namespace FastyBird\Connector\Virtual\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Virtual\Entities;
-use FastyBird\Connector\Virtual\Exceptions;
+use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
@@ -74,20 +74,20 @@ abstract class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidArgument
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof Entities\Channels\Channel) {
-			throw new Exceptions\InvalidArgument('Provided channel type is not valid');
+			throw new VirtualExceptions\InvalidArgument('Provided channel type is not valid');
 		}
 
 		parent::addChannel($channel);
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

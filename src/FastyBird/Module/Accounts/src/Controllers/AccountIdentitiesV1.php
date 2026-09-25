@@ -19,7 +19,7 @@ use Doctrine;
 use Exception;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -63,10 +63,10 @@ final class AccountIdentitiesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -83,7 +83,7 @@ final class AccountIdentitiesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
@@ -102,7 +102,7 @@ final class AccountIdentitiesV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
@@ -228,7 +228,7 @@ final class AccountIdentitiesV1 extends BaseV1
 
 	/**
 	 * @throws PersistenceExceptions\Query
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
 	 */

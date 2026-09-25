@@ -19,11 +19,11 @@ use DateTimeInterface;
 use FastyBird\Connector\Virtual;
 use FastyBird\Connector\Virtual\Documents;
 use FastyBird\Connector\Virtual\Drivers;
-use FastyBird\Connector\Virtual\Exceptions;
+use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Queries;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -71,15 +71,15 @@ final class WriteDevicePropertyState implements Queue\Consumer
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VirtualExceptions\InvalidState
+	 * @throws VirtualExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws ValueError
 	 * @throws TypeError
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{
@@ -256,7 +256,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 			$result = $property instanceof DevicesDocuments\Devices\Properties\Mapped
 				? $driver->notifyState($property, $valueToWrite)
 				: $driver->writeState($property, $valueToWrite);
-		} catch (Exceptions\InvalidState $ex) {
+		} catch (VirtualExceptions\InvalidState $ex) {
 			$this->queue->append(
 				$this->messageBuilder->create(
 					Queue\Messages\StoreDeviceConnectionState::class,

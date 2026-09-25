@@ -18,10 +18,10 @@ namespace FastyBird\Connector\Modbus\Commands;
 use Doctrine\DBAL;
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Formats;
@@ -108,14 +108,14 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -133,16 +133,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -167,7 +167,7 @@ class Install extends Console\Command\Command
 				);
 
 				if ($connector !== null) {
-					throw new Exceptions\Runtime(
+					throw new ModbusExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//modbus-connector.cmd.install.messages.identifier.connector.used',
 						),
@@ -328,16 +328,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -628,7 +628,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteConnector(Style\SymfonyStyle $io): void
 	{
@@ -693,13 +693,13 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -718,9 +718,9 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -769,14 +769,14 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -794,7 +794,7 @@ class Install extends Console\Command\Command
 				$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
 
 				if ($device !== null) {
-					throw new Exceptions\Runtime(
+					throw new ModbusExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//modbus-connector.cmd.install.messages.identifier.device.used',
 						),
@@ -961,14 +961,14 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1194,7 +1194,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -1259,15 +1259,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1286,9 +1286,9 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1357,15 +1357,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1503,15 +1503,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1687,8 +1687,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1755,10 +1755,10 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1815,15 +1815,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1901,13 +1901,13 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1988,15 +1988,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2066,9 +2066,9 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2101,7 +2101,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): ModbusTypes\ClientMode {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2127,7 +2127,7 @@ class Install extends Console\Command\Command
 				return ModbusTypes\ClientMode::TCP;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2157,8 +2157,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2175,7 +2175,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): string {
 			if ($answer === '' || $answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2190,8 +2190,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2224,7 +2224,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($baudRates): ModbusTypes\BaudRate {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2242,7 +2242,7 @@ class Install extends Console\Command\Command
 				return ModbusTypes\BaudRate::from(intval($baudRate));
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2257,8 +2257,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2291,7 +2291,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($byteSizes): ModbusTypes\ByteSize {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2309,7 +2309,7 @@ class Install extends Console\Command\Command
 				return ModbusTypes\ByteSize::from(intval($byteSize));
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2324,8 +2324,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2364,7 +2364,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): ModbusTypes\Parity {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2399,7 +2399,7 @@ class Install extends Console\Command\Command
 				return ModbusTypes\Parity::EVEN;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2414,8 +2414,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2448,7 +2448,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($stopBits): ModbusTypes\StopBits {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2466,7 +2466,7 @@ class Install extends Console\Command\Command
 				return ModbusTypes\StopBits::from(intval($stopBit));
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2493,8 +2493,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2512,7 +2512,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($connector, $device) {
 			if (strval(intval($answer)) !== strval($answer)) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2533,7 +2533,7 @@ class Install extends Console\Command\Command
 					$connectorDevice->getAddress() === intval($answer)
 					&& ($device === null || !$device->getId()->equals($connectorDevice->getId()))
 				) {
-					throw new Exceptions\Runtime(
+					throw new ModbusExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//modbus-connector.cmd.install.messages.deviceStationAddressTaken',
 						),
@@ -2548,8 +2548,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2571,7 +2571,7 @@ class Install extends Console\Command\Command
 				return $matches['address'];
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2583,8 +2583,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2599,7 +2599,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) {
 			if (strval(intval($answer)) !== strval($answer)) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2614,8 +2614,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2633,7 +2633,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($connector, $device) {
 			if (strval(intval($answer)) !== strval($answer)) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2654,7 +2654,7 @@ class Install extends Console\Command\Command
 					$connectorDevice->getUnitId() === intval($answer)
 					&& ($device === null || !$device->getId()->equals($connectorDevice->getId()))
 				) {
-					throw new Exceptions\Runtime(
+					throw new ModbusExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//modbus-connector.cmd.install.messages.unitIdentifierTaken',
 						),
@@ -2669,8 +2669,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2707,7 +2707,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): ModbusTypes\ByteOrder {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2749,7 +2749,7 @@ class Install extends Console\Command\Command
 				return ModbusTypes\ByteOrder::LITTLE_SWAP;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2764,8 +2764,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2831,7 +2831,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): ModbusTypes\ChannelType {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2875,7 +2875,7 @@ class Install extends Console\Command\Command
 				return ModbusTypes\ChannelType::HOLDING_REGISTER;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2892,8 +2892,8 @@ class Install extends Console\Command\Command
 	/**
 	 * @return int|array<int>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2934,7 +2934,7 @@ class Install extends Console\Command\Command
 							|| !$channel->getId()->equals($deviceChannel->getId())
 						)
 					) {
-						throw new Exceptions\Runtime(
+						throw new ModbusExceptions\Runtime(
 							(string) $this->translator->translate(
 								'//modbus-connector.cmd.install.messages.registerAddressTaken',
 								['address' => intval($address)],
@@ -2964,7 +2964,7 @@ class Install extends Console\Command\Command
 							$address = $deviceChannel->getAddress();
 
 							if (intval($address) >= $start && intval($address) <= $end) {
-								throw new Exceptions\Runtime(
+								throw new ModbusExceptions\Runtime(
 									(string) $this->translator->translate(
 										'//modbus-connector.cmd.install.messages.registerAddressTaken',
 										['address' => intval($address)],
@@ -2978,7 +2978,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3008,8 +3008,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3031,8 +3031,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askRegisterDataType(
 		Style\SymfonyStyle $io,
@@ -3131,7 +3131,7 @@ class Install extends Console\Command\Command
 				}
 			}
 		} else {
-			throw new Exceptions\InvalidArgument('Unknown register type');
+			throw new ModbusExceptions\InvalidArgument('Unknown register type');
 		}
 
 		$question = new Console\Question\ChoiceQuestion(
@@ -3145,7 +3145,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($dataTypes): ValuesTypes\DataType {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3161,7 +3161,7 @@ class Install extends Console\Command\Command
 				return ValuesTypes\DataType::from($dataTypes[$answer]);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3178,9 +3178,9 @@ class Install extends Console\Command\Command
 	/**
 	 * @return array<int, array<int, array<int, string>>>|null
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3232,9 +3232,9 @@ class Install extends Console\Command\Command
 	/**
 	 * @return array<int, array<int, string>>|null
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3292,7 +3292,7 @@ class Install extends Console\Command\Command
 				'//modbus-connector.cmd.install.questions.switch.hasToggle',
 			);
 		} else {
-			throw new Exceptions\InvalidArgument('Provided payload type is not valid');
+			throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
 		}
 
 		$question = new Console\Question\ConfirmationQuestion($questionText, $hasSupport);
@@ -3350,7 +3350,7 @@ class Install extends Console\Command\Command
 					'//modbus-connector.cmd.install.messages.provide.switch.readToggleValueError',
 				);
 			} else {
-				throw new Exceptions\InvalidArgument('Provided payload type is not valid');
+				throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
 			}
 		} else {
 			if ($payload === Payloads\Switcher::ON) {
@@ -3375,7 +3375,7 @@ class Install extends Console\Command\Command
 					'//modbus-connector.cmd.install.messages.provide.switch.writeToggleValueError',
 				);
 			} else {
-				throw new Exceptions\InvalidArgument('Provided payload type is not valid');
+				throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
 			}
 		}
 
@@ -3393,7 +3393,7 @@ class Install extends Console\Command\Command
 					return null;
 				}
 
-				throw new Exceptions\Runtime($questionError);
+				throw new ModbusExceptions\Runtime($questionError);
 			}
 
 			return strval($answer);
@@ -3453,7 +3453,7 @@ class Install extends Console\Command\Command
 			);
 			$question->setValidator(function (string|null $answer) use ($dataTypes): string {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new ModbusExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//modbus-connector.cmd.base.messages.answerNotValid',
@@ -3471,7 +3471,7 @@ class Install extends Console\Command\Command
 					return $dataTypes[$answer];
 				}
 
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3496,9 +3496,9 @@ class Install extends Console\Command\Command
 	/**
 	 * @return array<int, array<int, string>>|null
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3572,7 +3572,7 @@ class Install extends Console\Command\Command
 				'//modbus-connector.cmd.install.questions.button.hasExtraLongClick',
 			);
 		} else {
-			throw new Exceptions\InvalidArgument('Provided payload type is not valid');
+			throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
 		}
 
 		$question = new Console\Question\ConfirmationQuestion($questionText, $hasSupport);
@@ -3658,7 +3658,7 @@ class Install extends Console\Command\Command
 					'//modbus-connector.cmd.install.messages.provide.button.readExtraLongClickValueError',
 				);
 			} else {
-				throw new Exceptions\InvalidArgument('Provided payload type is not valid');
+				throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
 			}
 		} else {
 			if ($payload === Payloads\Button::PRESSED) {
@@ -3711,7 +3711,7 @@ class Install extends Console\Command\Command
 					'//modbus-connector.cmd.install.messages.provide.button.writeExtraLongClickValueError',
 				);
 			} else {
-				throw new Exceptions\InvalidArgument('Provided payload type is not valid');
+				throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
 			}
 		}
 
@@ -3729,7 +3729,7 @@ class Install extends Console\Command\Command
 					return null;
 				}
 
-				throw new Exceptions\Runtime($questionError);
+				throw new ModbusExceptions\Runtime($questionError);
 			}
 
 			return $answer;
@@ -3786,7 +3786,7 @@ class Install extends Console\Command\Command
 			);
 			$question->setValidator(function (string|null $answer) use ($dataTypes): string {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new ModbusExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//modbus-connector.cmd.base.messages.answerNotValid',
@@ -3804,7 +3804,7 @@ class Install extends Console\Command\Command
 					return $dataTypes[$answer];
 				}
 
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3865,7 +3865,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3893,7 +3893,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ModbusExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3951,7 +3951,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new ModbusExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//modbus-connector.cmd.base.messages.answerNotValid',
@@ -3982,7 +3982,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3999,8 +3999,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -4050,7 +4050,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($device, $channels): Entities\Channels\Channel {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new ModbusExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//modbus-connector.cmd.base.messages.answerNotValid',
@@ -4081,7 +4081,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,

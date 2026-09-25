@@ -3,9 +3,9 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\DI;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Ui\Controllers;
-use FastyBird\Module\Ui\Exceptions;
+use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Hydrators;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Schemas;
@@ -22,8 +22,8 @@ final class UiExtensionTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws UiExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

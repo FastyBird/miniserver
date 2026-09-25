@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Triggers\Tests\Cases\Unit\DI;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Triggers\Commands;
 use FastyBird\Module\Triggers\Controllers;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Hydrators;
 use FastyBird\Module\Triggers\Middleware;
 use FastyBird\Module\Triggers\Models;
@@ -25,8 +25,8 @@ final class TriggersModuleExtensionTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws TriggersExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

@@ -17,11 +17,11 @@ namespace FastyBird\Module\Devices\Models\Entities\Devices\Controls;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Queries;
 use Nette;
 use Ramsey\Uuid;
@@ -52,7 +52,7 @@ final class ControlsRepository
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
@@ -64,7 +64,7 @@ final class ControlsRepository
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findOneBy(Queries\Entities\FindDeviceControls $queryObject): Entities\Devices\Controls\Control|null
 	{
@@ -76,7 +76,7 @@ final class ControlsRepository
 	/**
 	 * @return array<Entities\Devices\Controls\Control>
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findAll(): array
 	{
@@ -88,7 +88,7 @@ final class ControlsRepository
 	/**
 	 * @return array<Entities\Devices\Controls\Control>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function findAllBy(Queries\Entities\FindDeviceControls $queryObject): array
 	{
@@ -98,15 +98,15 @@ final class ControlsRepository
 
 			return $result;
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
+			throw new DevicesExceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
 		}
 	}
 
 	/**
 	 * @return Query\ResultSet<Entities\Devices\Controls\Control>
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindDeviceControls $queryObject,
@@ -117,7 +117,7 @@ final class ControlsRepository
 		);
 
 		if (is_array($result)) {
-			throw new Exceptions\InvalidState('Result set could not be created');
+			throw new DevicesExceptions\InvalidState('Result set could not be created');
 		}
 
 		return $result;

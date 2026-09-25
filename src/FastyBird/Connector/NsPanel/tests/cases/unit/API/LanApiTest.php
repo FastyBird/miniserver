@@ -5,11 +5,11 @@ namespace FastyBird\Connector\NsPanel\Tests\Cases\Unit\API;
 use Error;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Services;
 use FastyBird\Connector\NsPanel\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use GuzzleHttp;
@@ -29,12 +29,12 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
@@ -114,12 +114,12 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
@@ -203,12 +203,12 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -277,7 +277,7 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 
 		$lanApi = $lanApiFactory->create($connector->getId());
 
-		$this->expectException(Exceptions\LanApiCall::class);
+		$this->expectException(NsPanelExceptions\LanApiCall::class);
 		$this->expectExceptionMessage('Getting gateway access token failed: link button not pressed');
 
 		$lanApi->getGatewayAccessToken(
@@ -289,12 +289,12 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
@@ -439,12 +439,12 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
@@ -564,12 +564,12 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
@@ -685,12 +685,12 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException
@@ -778,12 +778,12 @@ final class LanApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Utils\JsonException

@@ -23,7 +23,7 @@ use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Utilities;
@@ -72,8 +72,8 @@ final class Properties implements Common\EventSubscriber
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

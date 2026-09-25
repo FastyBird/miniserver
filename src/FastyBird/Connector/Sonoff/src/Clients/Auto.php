@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Sonoff\Clients;
 
 use BadMethodCallException;
 use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
@@ -70,12 +70,12 @@ final class Auto extends ClientProcess implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws BadMethodCallException
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiCall
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws TypeError
@@ -104,10 +104,10 @@ final class Auto extends ClientProcess implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -127,14 +127,14 @@ final class Auto extends ClientProcess implements Client
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
-	 * @throws Exceptions\LanApiCall
-	 * @throws Exceptions\LanApiError
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
+	 * @throws SonoffExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -178,12 +178,12 @@ final class Auto extends ClientProcess implements Client
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

@@ -5,7 +5,7 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Documents;
 use Error;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Tests;
 use Nette;
@@ -16,10 +16,10 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
@@ -34,10 +34,10 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
@@ -46,7 +46,7 @@ final class ChannelPropertyActionDocumentTest extends Tests\Cases\Unit\BaseTestC
 	{
 		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
 
-		$this->expectException(ApplicationExceptions\InvalidArgument::class);
+		$this->expectException(CoreExceptions\InvalidArgument::class);
 
 		$factory->create(DevicesDocuments\States\Channels\Properties\Actions\Action::class, $data);
 	}

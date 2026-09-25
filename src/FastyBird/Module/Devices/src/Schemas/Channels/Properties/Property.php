@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Schemas\Channels\Properties;
 use DateTimeInterface;
 use Exception;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Utilities;
@@ -71,8 +71,8 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	 * @return iterable<string, (string|bool|int|float|array<string>|array<int, (int|float|array<int, (string|int|float|null)>|null)>|array<int, array<int, (string|array<int, (string|int|float|bool)>|null)>>|null)>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 *

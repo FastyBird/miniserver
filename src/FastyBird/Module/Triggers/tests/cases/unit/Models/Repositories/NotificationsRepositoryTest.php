@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Triggers\Tests\Cases\Unit\Models\Repositories;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
@@ -22,7 +22,7 @@ final class NotificationsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TriggersExceptions\InvalidArgument
 	 * @throws TriggersExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
@@ -52,7 +52,7 @@ final class NotificationsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws PersistenceExceptions\Query
 	 * @throws TriggersExceptions\InvalidArgument
 	 * @throws TriggersExceptions\InvalidState

@@ -5,7 +5,7 @@ namespace FastyBird\Module\Ui\Tests\Cases\Unit\Documents;
 use Error;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Tests;
@@ -21,10 +21,10 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	 * @param class-string<CoreDocuments\Document> $class
 	 * @param array<string, mixed> $fixture
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
@@ -44,10 +44,10 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	/**
 	 * @param class-string<CoreDocuments\Document> $class
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 */
@@ -56,7 +56,7 @@ final class WidgetDocumentTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
 
-		$this->expectException(ApplicationExceptions\InvalidArgument::class);
+		$this->expectException(CoreExceptions\InvalidArgument::class);
 
 		$factory->create($class, $data);
 	}

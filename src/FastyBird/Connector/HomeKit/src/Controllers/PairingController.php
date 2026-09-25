@@ -20,14 +20,14 @@ use Doctrine\DBAL;
 use Elliptic\EdDSA;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
 use FastyBird\Connector\HomeKit\Models;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
@@ -187,12 +187,12 @@ final class PairingController extends BaseController
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws TypeError
@@ -217,7 +217,7 @@ final class PairingController extends BaseController
 		$connectorId = strval($request->getAttribute(Servers\Http::REQUEST_ATTRIBUTE_CONNECTOR));
 
 		if (!Uuid\Uuid::isValid($connectorId)) {
-			throw new Exceptions\InvalidState('Connector id could not be determined');
+			throw new HomeKitExceptions\InvalidState('Connector id could not be determined');
 		}
 
 		$connectorId = Uuid\Uuid::fromString($connectorId);
@@ -231,7 +231,7 @@ final class PairingController extends BaseController
 		);
 
 		if ($connector === null) {
-			throw new Exceptions\InvalidState('Connector could not be loaded');
+			throw new HomeKitExceptions\InvalidState('Connector could not be loaded');
 		}
 
 		if ($this->connectorHelper->isPaired($connector)) {
@@ -245,7 +245,7 @@ final class PairingController extends BaseController
 			$tlv = $this->tlv->decode($request->getBody()->getContents());
 
 			if ($tlv === []) {
-				throw new Exceptions\InvalidArgument('Provided TLV content is not valid');
+				throw new HomeKitExceptions\InvalidArgument('Provided TLV content is not valid');
 			}
 
 			$tlvEntry = array_pop($tlv);
@@ -293,7 +293,7 @@ final class PairingController extends BaseController
 				$this->expectedState = HomeKitTypes\TlvState::M1;
 
 			} else {
-				throw new Exceptions\InvalidState('Unknown data received');
+				throw new HomeKitExceptions\InvalidState('Unknown data received');
 			}
 		}
 
@@ -311,12 +311,12 @@ final class PairingController extends BaseController
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws TypeError
@@ -341,7 +341,7 @@ final class PairingController extends BaseController
 		$connectorId = strval($request->getAttribute(Servers\Http::REQUEST_ATTRIBUTE_CONNECTOR));
 
 		if (!Uuid\Uuid::isValid($connectorId)) {
-			throw new Exceptions\InvalidState('Connector id could not be determined');
+			throw new HomeKitExceptions\InvalidState('Connector id could not be determined');
 		}
 
 		$connectorId = Uuid\Uuid::fromString($connectorId);
@@ -355,7 +355,7 @@ final class PairingController extends BaseController
 		);
 
 		if ($connector === null) {
-			throw new Exceptions\InvalidState('Connector could not be loaded');
+			throw new HomeKitExceptions\InvalidState('Connector could not be loaded');
 		}
 
 		if (!$this->connectorHelper->isPaired($connector)) {
@@ -369,7 +369,7 @@ final class PairingController extends BaseController
 			$tlv = $this->tlv->decode($request->getBody()->getContents());
 
 			if ($tlv === []) {
-				throw new Exceptions\InvalidArgument('Provided TLV content is not valid');
+				throw new HomeKitExceptions\InvalidArgument('Provided TLV content is not valid');
 			}
 
 			$tlvEntry = array_pop($tlv);
@@ -397,7 +397,7 @@ final class PairingController extends BaseController
 				);
 
 			} else {
-				throw new Exceptions\InvalidState('Unknown data received');
+				throw new HomeKitExceptions\InvalidState('Unknown data received');
 			}
 		}
 
@@ -409,9 +409,9 @@ final class PairingController extends BaseController
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 * @throws TypeError
@@ -436,7 +436,7 @@ final class PairingController extends BaseController
 		$connectorId = strval($request->getAttribute(Servers\Http::REQUEST_ATTRIBUTE_CONNECTOR));
 
 		if (!Uuid\Uuid::isValid($connectorId)) {
-			throw new Exceptions\InvalidState('Connector id could not be determined');
+			throw new HomeKitExceptions\InvalidState('Connector id could not be determined');
 		}
 
 		$connectorId = Uuid\Uuid::fromString($connectorId);
@@ -450,7 +450,7 @@ final class PairingController extends BaseController
 		);
 
 		if ($connector === null) {
-			throw new Exceptions\InvalidState('Connector could not be loaded');
+			throw new HomeKitExceptions\InvalidState('Connector could not be loaded');
 		}
 
 		if (!$this->connectorHelper->isPaired($connector)) {
@@ -464,7 +464,7 @@ final class PairingController extends BaseController
 			$tlv = $this->tlv->decode($request->getBody()->getContents());
 
 			if ($tlv === []) {
-				throw new Exceptions\InvalidArgument('Provided TLV content is not valid');
+				throw new HomeKitExceptions\InvalidArgument('Provided TLV content is not valid');
 			}
 
 			$tlvEntry = array_pop($tlv);
@@ -511,7 +511,7 @@ final class PairingController extends BaseController
 					$request,
 				);
 			} else {
-				throw new Exceptions\InvalidState('Unknown data received');
+				throw new HomeKitExceptions\InvalidState('Unknown data received');
 			}
 		}
 
@@ -525,15 +525,15 @@ final class PairingController extends BaseController
 	/**
 	 * @return array<int, array<int, (int|array<int>|string)>>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws InvalidArgumentException
 	 * @throws Math\Exception\MathException
 	 * @throws Math\Exception\NegativeNumberException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -902,11 +902,11 @@ final class PairingController extends BaseController
 	 *
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -997,7 +997,7 @@ final class PairingController extends BaseController
 
 		try {
 			$tlv = $this->tlv->decode($decryptedData);
-		} catch (Exceptions\InvalidArgument) {
+		} catch (HomeKitExceptions\InvalidArgument) {
 			$this->logger->error(
 				'Unable to decode decrypted tlv data',
 				[
@@ -1320,11 +1320,11 @@ final class PairingController extends BaseController
 	 *
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1535,9 +1535,9 @@ final class PairingController extends BaseController
 	 * @return array<int, array<int, (int|array<int>|string)>>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1593,7 +1593,7 @@ final class PairingController extends BaseController
 
 		try {
 			$tlv = $this->tlv->decode($decryptedData);
-		} catch (Exceptions\InvalidArgument) {
+		} catch (HomeKitExceptions\InvalidArgument) {
 			$this->logger->error(
 				'Unable to decode decrypted tlv data',
 				[
@@ -2074,10 +2074,10 @@ final class PairingController extends BaseController
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 */
 	private function setConfiguration(
 		Documents\Connectors\Connector $connector,
@@ -2123,7 +2123,7 @@ final class PairingController extends BaseController
 					},
 				);
 			} else {
-				throw new Exceptions\InvalidState('Connector property could not be configured');
+				throw new HomeKitExceptions\InvalidState('Connector property could not be configured');
 			}
 		} else {
 			$this->databaseHelper->transaction(

@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Accounts\Presenters;
 
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use Nette\Application;
@@ -50,9 +50,9 @@ class AccountPresenter extends BasePresenter
 
 	/**
 	 * @throws Application\BadRequestException
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws Utils\JsonException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionDefault(): void
@@ -63,9 +63,9 @@ class AccountPresenter extends BasePresenter
 
 	/**
 	 * @throws Application\BadRequestException
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws Utils\JsonException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionProfile(): void
@@ -76,9 +76,9 @@ class AccountPresenter extends BasePresenter
 
 	/**
 	 * @throws Application\BadRequestException
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws Utils\JsonException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function actionPassword(): void
@@ -90,7 +90,7 @@ class AccountPresenter extends BasePresenter
 	/**
 	 * @throws Application\BadRequestException
 	 * @throws Utils\JsonException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function loadAccount(): void
@@ -112,9 +112,9 @@ class AccountPresenter extends BasePresenter
 
 	/**
 	 * @throws Application\BadRequestException
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 * @throws Utils\JsonException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	protected function loadEmails(): void
 	{

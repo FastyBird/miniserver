@@ -20,14 +20,14 @@ use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Types as VirtualThermostatTypes;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions as VirtualThermostatAddonHomeKitConnectorExceptions;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -85,10 +85,10 @@ class Builder
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
 	 */
 	public function build(
 		VirtualThermostatEntities\Devices\Device $thermostat,
@@ -132,7 +132,7 @@ class Builder
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
 	 */
 	private function createAccessory(
 		VirtualThermostatEntities\Devices\Device $thermostat,
@@ -174,7 +174,9 @@ class Builder
 				}
 
 				if ($identifier === null) {
-					throw new Exceptions\InvalidState('Device identifier could not be calculated');
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+						'Device identifier could not be calculated',
+					);
 				}
 
 				$categoryProperty = $modelProperty = $manufacturerProperty = null;
@@ -297,19 +299,23 @@ class Builder
 				],
 			);
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('HomeKit device could not be created', $ex->getCode(), $ex);
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+				'HomeKit device could not be created',
+				$ex->getCode(),
+				$ex,
+			);
 		}
 
 		return $accessory;
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidArgument
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
 	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws VirtualThermostatExceptions\InvalidState
@@ -323,7 +329,7 @@ class Builder
 		$metadata = $this->loader->loadServices();
 
 		if (!$metadata->offsetExists($type->value)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$type->value,
 			));
@@ -338,7 +344,9 @@ class Builder
 			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
 			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
 		) {
-			throw new Exceptions\InvalidState('Service definition is missing required attributes');
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+				'Service definition is missing required attributes',
+			);
 		}
 
 		try {
@@ -396,7 +404,7 @@ class Builder
 				);
 			}
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState(
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
 				sprintf(
 					'HomeKit service: %s could not be created',
 					$type->value,
@@ -458,12 +466,12 @@ class Builder
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidArgument
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
 	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws VirtualThermostatExceptions\InvalidState
@@ -537,7 +545,7 @@ class Builder
 		$metadata = $this->loader->loadCharacteristics();
 
 		if (!$metadata->offsetExists($characteristicType->value)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$characteristicType->value,
 			));
@@ -555,7 +563,9 @@ class Builder
 				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
 			)
 		) {
-			throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+				'Characteristic definition is missing required attributes',
+			);
 		}
 
 		$value = null;
@@ -576,14 +586,16 @@ class Builder
 				);
 
 				if ($dataTypes === []) {
-					throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 			} else {
 				$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
 			}
 
 			if (!in_array($connectProperty->getDataType(), $dataTypes, true)) {
-				throw new Exceptions\InvalidState(sprintf(
+				throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(sprintf(
 					'Provided thermostat property: %s could not be mapped to HomeKit characteristic',
 					$connectProperty->getIdentifier(),
 				));
@@ -648,7 +660,9 @@ class Builder
 				);
 
 				if ($dataTypes === []) {
-					throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 
 				$dataType = $dataTypes[0];
@@ -790,7 +804,7 @@ class Builder
 
 			$this->databaseHelper->commitTransaction();
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState(
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
 				sprintf(
 					'HomeKit service: %s could not be created',
 					$characteristicType->value,
@@ -804,8 +818,8 @@ class Builder
 	/**
 	 * @return array<int, int|float|array<int, int|float|string|null>|null>|null
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

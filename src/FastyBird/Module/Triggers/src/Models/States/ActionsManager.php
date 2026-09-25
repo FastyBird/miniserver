@@ -17,7 +17,7 @@ namespace FastyBird\Module\Triggers\Models\States;
 
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
@@ -52,10 +52,10 @@ final class ActionsManager
 
 	/**
 	 * @throws TriggersExceptions\NotImplemented
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 */
 	public function create(
 		Entities\Actions\Action $action,
@@ -75,10 +75,10 @@ final class ActionsManager
 
 	/**
 	 * @throws TriggersExceptions\NotImplemented
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 */
 	public function update(
 		Entities\Actions\Action $action,
@@ -103,10 +103,10 @@ final class ActionsManager
 
 	/**
 	 * @throws TriggersExceptions\NotImplemented
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 */
 	public function delete(
 		Entities\Actions\Action $action,
@@ -127,10 +127,10 @@ final class ActionsManager
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 */
 	private function publishEntity(
 		Entities\Actions\Action $action,

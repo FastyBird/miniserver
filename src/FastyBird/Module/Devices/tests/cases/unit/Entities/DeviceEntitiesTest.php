@@ -5,7 +5,7 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Entities;
 use DateTimeInterface;
 use Doctrine\DBAL;
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
@@ -23,8 +23,8 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
@@ -53,9 +53,9 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
@@ -97,9 +97,9 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	 * stamped -- so this asserts the actual, frozen (tests/common.neon `dateTimeFactory.
 	 * frozen`) value, not just that the field is non-null.
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
@@ -137,8 +137,8 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
@@ -177,8 +177,8 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException

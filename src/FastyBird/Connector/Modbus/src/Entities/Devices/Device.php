@@ -18,9 +18,9 @@ namespace FastyBird\Connector\Modbus\Entities\Devices;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -82,20 +82,20 @@ class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof Entities\Channels\Channel) {
-			throw new Exceptions\InvalidArgument('Provided channel type is not valid');
+			throw new ModbusExceptions\InvalidArgument('Provided channel type is not valid');
 		}
 
 		parent::addChannel($channel);
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -119,8 +119,8 @@ class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -144,8 +144,8 @@ class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -169,8 +169,8 @@ class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -195,8 +195,8 @@ class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

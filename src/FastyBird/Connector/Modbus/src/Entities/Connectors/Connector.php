@@ -18,9 +18,9 @@ namespace FastyBird\Connector\Modbus\Entities\Connectors;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -65,21 +65,21 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidArgument
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		if (!$device instanceof Entities\Devices\Device) {
-			throw new Exceptions\InvalidArgument('Provided device type is not valid');
+			throw new ModbusExceptions\InvalidArgument('Provided device type is not valid');
 		}
 
 		parent::addDevice($device);
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -100,12 +100,12 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return Types\ClientMode::from(Utilities\Value::toString($property->getValue(), true));
 		}
 
-		throw new Exceptions\InvalidState('Connector mode is not configured');
+		throw new ModbusExceptions\InvalidState('Connector mode is not configured');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -130,8 +130,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -156,8 +156,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -182,8 +182,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -208,8 +208,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

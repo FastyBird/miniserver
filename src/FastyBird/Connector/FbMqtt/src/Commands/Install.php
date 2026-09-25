@@ -18,10 +18,10 @@ namespace FastyBird\Connector\FbMqtt\Commands;
 use Doctrine\DBAL;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Entities;
-use FastyBird\Connector\FbMqtt\Exceptions;
+use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Types as FbMqttTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -88,15 +88,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws FbMqttExceptions\InvalidState
+	 * @throws FbMqttExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -114,8 +114,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -140,7 +140,7 @@ class Install extends Console\Command\Command
 				);
 
 				if ($connector !== null) {
-					throw new Exceptions\Runtime(
+					throw new FbMqttExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//fb-mqtt-connector.cmd.install.messages.identifier.connector.used',
 						),
@@ -301,14 +301,14 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws FbMqttExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -573,7 +573,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteConnector(Style\SymfonyStyle $io): void
 	{
@@ -640,13 +640,13 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws FbMqttExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function manageConnector(Style\SymfonyStyle $io): void
 	{
@@ -663,9 +663,9 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -714,7 +714,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function createDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -732,7 +732,7 @@ class Install extends Console\Command\Command
 				if (
 					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) !== null
 				) {
-					throw new Exceptions\Runtime(
+					throw new FbMqttExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//fb-mqtt-connector.cmd.install.messages.identifier.device.used',
 						),
@@ -816,7 +816,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function editDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -879,7 +879,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -978,15 +978,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws FbMqttExceptions\InvalidState
+	 * @throws FbMqttExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1064,13 +1064,13 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws FbMqttExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askManageConnectorAction(
 		Style\SymfonyStyle $io,
@@ -1153,7 +1153,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): FbMqttTypes\ProtocolVersion {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new FbMqttExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1170,7 +1170,7 @@ class Install extends Console\Command\Command
 				return FbMqttTypes\ProtocolVersion::VERSION_1;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new FbMqttExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -1200,8 +1200,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1218,7 +1218,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): string {
 			if ($answer === '' || $answer === null) {
-				throw new Exceptions\Runtime(
+				throw new FbMqttExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1233,8 +1233,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1249,7 +1249,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): string {
 			if ($answer === '' || $answer === null) {
-				throw new Exceptions\Runtime(
+				throw new FbMqttExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1264,8 +1264,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1282,7 +1282,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): string {
 			if ($answer === '' || $answer === null) {
-				throw new Exceptions\Runtime(
+				throw new FbMqttExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1297,8 +1297,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1320,8 +1320,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1393,7 +1393,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new FbMqttExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1421,7 +1421,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new FbMqttExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -1479,7 +1479,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new FbMqttExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//fb-mqtt-connector.cmd.base.messages.answerNotValid',
@@ -1510,7 +1510,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new FbMqttExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 						$answer,

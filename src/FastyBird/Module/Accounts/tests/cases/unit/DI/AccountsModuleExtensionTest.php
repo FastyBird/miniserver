@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\DI;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Accounts\Commands;
 use FastyBird\Module\Accounts\Controllers;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Hydrators;
 use FastyBird\Module\Accounts\Middleware;
 use FastyBird\Module\Accounts\Models;
@@ -25,8 +25,8 @@ final class AccountsModuleExtensionTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws AccountsExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

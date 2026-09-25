@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Viera\Queue\Consumers;
 use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Entities;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers as VieraHelpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Types as VieraTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -65,9 +65,9 @@ final class StoreDevice implements Queue\Consumer
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{

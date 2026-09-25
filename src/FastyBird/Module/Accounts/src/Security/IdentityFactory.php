@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Security;
 
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Models\Tokens;
@@ -40,7 +40,7 @@ readonly class IdentityFactory implements Identity\IdentityProvider
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\InvalidState
 	 */

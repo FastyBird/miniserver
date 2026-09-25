@@ -18,11 +18,11 @@ namespace FastyBird\Connector\NsPanel\Clients;
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
@@ -67,9 +67,9 @@ final class Discovery
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -148,9 +148,9 @@ final class Discovery
 	 * @return Promise\PromiseInterface<true>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -166,7 +166,7 @@ final class Discovery
 			$this->gatewayHelper->getIpAddress($gateway) === null
 			|| $this->gatewayHelper->getAccessToken($gateway) === null
 		) {
-			return Promise\reject(new Exceptions\InvalidArgument('NS Panel is not configured'));
+			return Promise\reject(new NsPanelExceptions\InvalidArgument('NS Panel is not configured'));
 		}
 
 		try {
@@ -182,7 +182,7 @@ final class Discovery
 				->catch(static function (Throwable $ex) use ($deferred): void {
 					$deferred->reject($ex);
 				});
-		} catch (Exceptions\LanApiCall | Exceptions\LanApiError $ex) {
+		} catch (NsPanelExceptions\LanApiCall | NsPanelExceptions\LanApiError $ex) {
 			$this->logger->error(
 				'Loading sub-devices from NS Panel failed',
 				[
@@ -252,7 +252,7 @@ final class Discovery
 						),
 					),
 				);
-			} catch (Exceptions\Runtime $ex) {
+			} catch (NsPanelExceptions\Runtime $ex) {
 				$this->logger->error(
 					'Could not map discovered device to result',
 					[

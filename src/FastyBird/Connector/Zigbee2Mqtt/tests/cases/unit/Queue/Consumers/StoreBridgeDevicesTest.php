@@ -6,13 +6,13 @@ use Doctrine\DBAL;
 use Error;
 use Exception;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Tests;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -31,14 +31,14 @@ final class StoreBridgeDevicesTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DevicesExceptions\Runtime
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
+	 * @throws Zigbee2MqttExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

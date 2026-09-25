@@ -18,9 +18,9 @@ namespace FastyBird\Connector\Virtual\Commands;
 use Doctrine\DBAL;
 use FastyBird\Connector\Virtual;
 use FastyBird\Connector\Virtual\Entities;
-use FastyBird\Connector\Virtual\Exceptions;
+use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Queries;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
@@ -84,15 +84,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualExceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidState
+	 * @throws VirtualExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 */
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
@@ -111,7 +111,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function createConnector(Style\SymfonyStyle $io): void
 	{
@@ -130,7 +130,7 @@ class Install extends Console\Command\Command
 					$findConnectorQuery,
 					Entities\Connectors\Connector::class,
 				) !== null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//virtual-connector.cmd.install.messages.identifier.connector.used',
 						),
@@ -217,15 +217,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualExceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidState
+	 * @throws VirtualExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function editConnector(Style\SymfonyStyle $io): void
 	{
@@ -335,7 +335,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteConnector(Style\SymfonyStyle $io): void
 	{
@@ -402,15 +402,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualExceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidState
+	 * @throws VirtualExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function manageConnector(Style\SymfonyStyle $io): void
 	{
@@ -470,7 +470,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -571,15 +571,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualExceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidState
+	 * @throws VirtualExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askInstallAction(Style\SymfonyStyle $io): void
 	{
@@ -655,15 +655,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualExceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askManageConnectorAction(
 		Style\SymfonyStyle $io,
@@ -762,7 +762,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new VirtualExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//virtual-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -790,7 +790,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new VirtualExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//virtual-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -848,7 +848,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-connector.cmd.base.messages.answerNotValid',
@@ -879,7 +879,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//virtual-connector.cmd.base.messages.answerNotValid'),
 						$answer,

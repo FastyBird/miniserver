@@ -21,7 +21,7 @@ use Exception;
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Identity;
@@ -83,7 +83,7 @@ final class AccountsV1 extends BaseV1
 
 	/**
 	 * @throws AccountsExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -99,7 +99,7 @@ final class AccountsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
@@ -118,7 +118,7 @@ final class AccountsV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws AccountsExceptions\InvalidState
@@ -254,7 +254,7 @@ final class AccountsV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws AccountsExceptions\InvalidState
@@ -335,7 +335,7 @@ final class AccountsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws PersistenceExceptions\Query
@@ -343,7 +343,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws ApiExceptions\JsonApi
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function delete(
 		Message\ServerRequestInterface $request,
@@ -414,7 +414,7 @@ final class AccountsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
@@ -463,7 +463,7 @@ final class AccountsV1 extends BaseV1
 
 	/**
 	 * @throws ApiExceptions\JsonApi
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function findAccount(
@@ -496,7 +496,7 @@ final class AccountsV1 extends BaseV1
 
 	/**
 	 * @throws CasbinExceptions\CasbinException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\AccountRoleInvalid
 	 * @throws Uuid\Exception\InvalidArgumentException

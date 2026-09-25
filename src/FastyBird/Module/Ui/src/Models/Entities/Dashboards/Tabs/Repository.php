@@ -17,11 +17,11 @@ namespace FastyBird\Module\Ui\Models\Entities\Dashboards\Tabs;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Ui\Entities;
-use FastyBird\Module\Ui\Exceptions;
+use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Queries;
 use Nette;
 use Ramsey\Uuid;
@@ -58,7 +58,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function find(
 		Uuid\UuidInterface $id,
@@ -78,7 +78,7 @@ final class Repository
 	 *
 	 * @return T|null
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindDashboardTabs $queryObject,
@@ -97,7 +97,7 @@ final class Repository
 	 *
 	 * @return array<T>
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findAll(string $type = Entities\Dashboards\Tabs\Tab::class): array
 	{
@@ -114,7 +114,7 @@ final class Repository
 	 *
 	 * @return array<T>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws UiExceptions\InvalidState
 	 */
 	public function findAllBy(
 		Queries\Entities\FindDashboardTabs $queryObject,
@@ -127,7 +127,7 @@ final class Repository
 
 			return $result;
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
+			throw new UiExceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
 		}
 	}
 
@@ -139,8 +139,8 @@ final class Repository
 	 *
 	 * @return Query\ResultSet<T>
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws UiExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindDashboardTabs $queryObject,
@@ -152,7 +152,7 @@ final class Repository
 		);
 
 		if (is_array($result)) {
-			throw new Exceptions\InvalidState('Result set could not be created');
+			throw new UiExceptions\InvalidState('Result set could not be created');
 		}
 
 		return $result;
