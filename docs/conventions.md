@@ -43,6 +43,18 @@ use FastyBird\Core\Documents as CoreDocuments;       // legal
 use FastyBird\Core\Documents as ExchangeDocuments;   // rejected by make naming
 ```
 
+Two different imports can still collide at two segments — `FastyBird\Core\Persistence\Mapping\Driver`
+and `FastyBird\Core\Security\Mapping\Driver` both reduce to `MappingDriver`. When that happens, the
+alias climbs to the smallest `k >= 2` that is unique among that file's imports, one segment at a time,
+and it applies symmetrically: both colliding imports climb together, never just one of them. A longer
+alias is legal only when a sibling import in the same file collides at `k - 1`; a stray `k > 2` alias
+with no such sibling is still rejected.
+
+```php
+use FastyBird\Core\Persistence\Mapping\Driver as PersistenceMappingDriver; // legal (collides
+use FastyBird\Core\Security\Mapping\Driver as SecurityMappingDriver;      // at 2 segments)
+```
+
 This is a positive rule, not a denylist. A denylist can only ban the names someone already
 thought of; this bans every name not derived from where the symbol actually lives.
 
