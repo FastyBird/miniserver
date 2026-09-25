@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\WebSockets\Entities;
 
+use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Controllers\Responses;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Handshake;
@@ -45,5 +46,20 @@ interface ConnectedClient
 	public function setUser(NS\User $user): void;
 
 	public function getUser(): NS\User|null;
+
+	/**
+	 * Keeps the identity the client's access token resolved to at its latest check, with the
+	 * role names the HTTP API would check for it. A failed check stores null, and no roles.
+	 *
+	 * @param array<string> $roles
+	 */
+	public function setIdentity(Identity\UserIdentity|null $identity, array $roles = []): void;
+
+	public function getIdentity(): Identity\UserIdentity|null;
+
+	/**
+	 * @return array<string>
+	 */
+	public function getRoles(): array;
 
 }

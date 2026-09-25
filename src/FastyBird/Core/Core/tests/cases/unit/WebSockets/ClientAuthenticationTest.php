@@ -2,12 +2,14 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
+use Casbin;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use FastyBird\Core\Clock;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Clients;
@@ -26,9 +28,18 @@ use Psr\Log\LoggerInterface;
 use React\Socket;
 use Stringable;
 use Throwable;
+use function assert;
+use function file_put_contents;
+use function implode;
 use function in_array;
+use function is_file;
+use function is_string;
 use function json_encode;
 use function str_contains;
+use function sys_get_temp_dir;
+use function tempnam;
+use function unlink;
+use const PHP_EOL;
 
 /**
  * The WebSocket handshake has to authenticate the client with the same services and the same
@@ -49,15 +60,36 @@ final class ClientAuthenticationTest extends TestCase
 
 	private const string USER = '9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a';
 
+	private const string OTHER_USER = '3f6c1a2b-7d4e-4c5f-8a9b-0c1d2e3f4a5b';
+
 	/** @var list<array{message: string, context: array<mixed>}> */
 	private array $logged = [];
+
+	/** @var list<string> */
+	private array $policyFiles = [];
+
+	#[Override]
+	protected function tearDown(): void
+	{
+		foreach ($this->policyFiles as $policy) {
+			if (is_file($policy)) {
+				unlink($policy);
+			}
+		}
+
+		parent::tearDown();
+	}
 
 	/**
 	 * @param non-empty-string $signature
 	 *
 	 * @throws Throwable
 	 */
-	private function issue(DateTimeImmutable|null $expiration = null, string $signature = self::SIGNATURE): string
+	private function issue(
+		DateTimeImmutable|null $expiration = null,
+		string $signature = self::SIGNATURE,
+		string $userId = self::USER,
+	): string
 	{
 		$builder = new Identity\TokenBuilder(
 			$signature,
@@ -65,7 +97,7 @@ final class ClientAuthenticationTest extends TestCase
 			new Clock\FrozenClock(new DateTimeImmutable(self::NOW)),
 		);
 
-		return $builder->build(self::USER, ['user'], $expiration)->toString();
+		return $builder->build($userId, ['user'], $expiration)->toString();
 	}
 
 	/**
@@ -74,7 +106,11 @@ final class ClientAuthenticationTest extends TestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function subscriber(array $persistedTokens, bool $configured = true): Subscribers\Client
+	private function subscriber(
+		array $persistedTokens,
+		bool $configured = true,
+		Identity\User|null $user = null,
+	): Subscribers\Client
 	{
 		$validator = new Identity\TokenValidator(
 			self::SIGNATURE,
@@ -82,12 +118,12 @@ final class ClientAuthenticationTest extends TestCase
 			new Clock\FrozenClock(new DateTimeImmutable('2026-09-21T13:00:00+00:00')),
 		);
 
-		$identityFactory = new class ($persistedTokens, self::USER) implements Identity\IdentityProvider {
+		$identityFactory = new class ($persistedTokens) implements Identity\IdentityProvider {
 
 			/**
 			 * @param list<string> $persistedTokens
 			 */
-			public function __construct(private readonly array $persistedTokens, private readonly string $userId)
+			public function __construct(private readonly array $persistedTokens)
 			{
 			}
 
@@ -97,8 +133,11 @@ final class ClientAuthenticationTest extends TestCase
 			#[Override]
 			public function create(JWT\UnencryptedToken $token): Identity\UserIdentity|null
 			{
+				$userId = $token->claims()->get(Constants::TOKEN_CLAIM_USER);
+				assert(is_string($userId));
+
 				return in_array($token->toString(), $this->persistedTokens, true)
-					? new Identity\PlainIdentity($this->userId, ['user'])
+					? new Identity\PlainIdentity($userId, ['user'])
 					: null;
 			}
 
@@ -135,8 +174,62 @@ final class ClientAuthenticationTest extends TestCase
 				$validator,
 				$identityFactory,
 				$logger,
+				user: $user,
 			)
 			: new Subscribers\Client($database, null, null, null, $logger);
+	}
+
+	/**
+	 * The user service the HTTP side checks roles through, over Core's shipped Casbin model
+	 * and the role assignments given here per user ID -- deliberately not the roles a token
+	 * claims, which the HTTP side does not consult either
+	 *
+	 * @param array<string, list<string>> $assignedRoles
+	 *
+	 * @throws Throwable
+	 */
+	private function user(array $assignedRoles): Identity\User
+	{
+		$policy = tempnam(sys_get_temp_dir(), 'ws-roles-');
+		self::assertIsString($policy);
+
+		$this->policyFiles[] = $policy;
+
+		$lines = [];
+
+		foreach ($assignedRoles as $userId => $roles) {
+			foreach ($roles as $role) {
+				$lines[] = 'g, ' . $userId . ', ' . $role;
+			}
+		}
+
+		file_put_contents($policy, implode(PHP_EOL, $lines) . PHP_EOL);
+
+		$enforcerFactory = new Identity\EnforcerFactory(
+			__DIR__ . '/../../../../resources/model.conf',
+			new Casbin\Persist\Adapters\FileAdapter($policy),
+		);
+
+		return new Identity\User(new Identity\UserStorage(), $enforcerFactory);
+	}
+
+	private static function identityOf(Entities\ConnectedClient $client): string|null
+	{
+		return $client->getIdentity()?->getId()->toString();
+	}
+
+	/**
+	 * A real client entity, so what the subscriber stores on it is read back through the same
+	 * object the WAMP controllers receive
+	 *
+	 * @throws Throwable
+	 */
+	private function client(): Entities\Client
+	{
+		$client = new Entities\Client(1, $this->createMock(Socket\ConnectionInterface::class));
+		$client->setWebSocket(new Entities\WebSocket(true, false, $this->createMock(Encoding\IProtocol::class)));
+
+		return $client;
 	}
 
 	/**
@@ -439,6 +532,111 @@ final class ClientAuthenticationTest extends TestCase
 		);
 
 		self::assertFalse($webSocket->isClosing());
+	}
+
+	/**
+	 * The client keeps the identity its token resolved to, and the role names come from the
+	 * same user service the HTTP side checks them through -- not from the token's own claim,
+	 * which says "user" here.
+	 *
+	 * @throws Throwable
+	 */
+	public function testAnAcceptedClientKeepsItsIdentityAndTheRolesTheHttpSideWouldCheck(): void
+	{
+		$token = $this->issue();
+
+		$client = $this->client();
+
+		$accepted = $this->subscriber([$token], true, $this->user([self::USER => ['manager']]))
+			->checkSecurity($client, $this->handshake(['Authorization' => 'Bearer ' . $token]), [], []);
+
+		self::assertTrue($accepted);
+		self::assertSame(self::USER, self::identityOf($client));
+		self::assertSame(['manager'], $client->getRoles());
+	}
+
+	/**
+	 * Resolving the roles signs the identity in to the process-wide user service; it must
+	 * not stay signed in there once the client has been checked.
+	 *
+	 * @throws Throwable
+	 */
+	public function testResolvingTheRolesLeavesTheUserServiceSignedOut(): void
+	{
+		$token = $this->issue();
+
+		$user = $this->user([self::USER => ['administrator']]);
+
+		$this->subscriber([$token], true, $user)
+			->checkSecurity($this->client(), $this->handshake(['Authorization' => 'Bearer ' . $token]), [], []);
+
+		self::assertFalse($user->isLoggedIn());
+	}
+
+	/**
+	 * Without the user service nothing can say which roles an identity holds, so it holds
+	 * none: it stays authenticated, but not for anything that needs a role.
+	 *
+	 * @throws Throwable
+	 */
+	public function testWithoutTheUserServiceAnAcceptedClientHoldsNoRoles(): void
+	{
+		$token = $this->issue();
+
+		$client = $this->client();
+
+		$accepted = $this->subscriber([$token])
+			->checkSecurity($client, $this->handshake(['Authorization' => 'Bearer ' . $token]), [], []);
+
+		self::assertTrue($accepted);
+		self::assertNotNull($client->getIdentity());
+		self::assertSame([], $client->getRoles());
+	}
+
+	/**
+	 * Every message re-runs the check, and what the client holds follows the latest one: a
+	 * message carrying another user's token replaces the identity and its roles, and a
+	 * message whose token no longer resolves clears both.
+	 *
+	 * @throws Throwable
+	 */
+	public function testEachMessageRefreshesTheIdentityAndRolesTheClientHolds(): void
+	{
+		$managerToken = $this->issue();
+		$userToken = $this->issue(null, self::SIGNATURE, self::OTHER_USER);
+		$expiredToken = $this->issue(new DateTimeImmutable('2026-09-21T12:59:00+00:00'));
+
+		$subscriber = $this->subscriber(
+			[$managerToken, $userToken],
+			true,
+			$this->user([self::USER => ['manager'], self::OTHER_USER => ['user']]),
+		);
+
+		$client = $this->client();
+
+		$subscriber->incomingMessage(new Events\IncomingMessage(
+			$client,
+			$this->handshake(['Authorization' => 'Bearer ' . $managerToken]),
+		));
+
+		self::assertSame(self::USER, self::identityOf($client));
+		self::assertSame(['manager'], $client->getRoles());
+
+		$subscriber->incomingMessage(new Events\IncomingMessage(
+			$client,
+			$this->handshake(['Authorization' => 'Bearer ' . $userToken]),
+		));
+
+		self::assertSame(self::OTHER_USER, self::identityOf($client));
+		self::assertSame(['user'], $client->getRoles());
+
+		$subscriber->incomingMessage(new Events\IncomingMessage(
+			$client,
+			$this->handshake(['Authorization' => 'Bearer ' . $expiredToken]),
+		));
+
+		self::assertNull($client->getIdentity());
+		self::assertSame([], $client->getRoles());
 	}
 
 	/**

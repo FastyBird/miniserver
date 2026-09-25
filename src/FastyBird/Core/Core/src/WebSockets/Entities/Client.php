@@ -3,6 +3,7 @@
 namespace FastyBird\Core\WebSockets\Entities;
 
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Controllers\Responses;
 use FastyBird\Core\WebSockets\Handshake;
 use Nette\Security as NS;
@@ -17,6 +18,11 @@ class Client implements ConnectedClient
 {
 
 	private NS\User|null $user = null;
+
+	private Identity\UserIdentity|null $identity = null;
+
+	/** @var array<string> */
+	private array $roles = [];
 
 	private bool $httpHeadersReceived = false;
 
@@ -145,6 +151,31 @@ class Client implements ConnectedClient
 	public function getUser(): NS\User|null
 	{
 		return $this->user;
+	}
+
+	/**
+	 * @param array<string> $roles
+	 */
+	#[Override]
+	public function setIdentity(Identity\UserIdentity|null $identity, array $roles = []): void
+	{
+		$this->identity = $identity;
+		$this->roles = $identity !== null ? $roles : [];
+	}
+
+	#[Override]
+	public function getIdentity(): Identity\UserIdentity|null
+	{
+		return $this->identity;
+	}
+
+	/**
+	 * @return array<string>
+	 */
+	#[Override]
+	public function getRoles(): array
+	{
+		return $this->roles;
 	}
 
 }

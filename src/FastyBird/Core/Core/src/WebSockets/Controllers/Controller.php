@@ -4,6 +4,7 @@ namespace FastyBird\Core\WebSockets\Controllers;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing as HttpRouting;
+use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Wamp;
 use Fig\Http;
@@ -16,6 +17,7 @@ use ReflectionMethod;
 use Reflector;
 use stdClass;
 use TypeError;
+use function array_intersect;
 use function array_key_exists;
 use function assert;
 use function call_user_func;
@@ -358,6 +360,30 @@ abstract class Controller implements RequestController
 		if (array_key_exists($i, $args)) {
 			throw new CoreExceptions\InvalidLink(
 				sprintf('Passed more parameters than method %s::%s() expects.', $class, $rm->getName()),
+			);
+		}
+	}
+
+	/**
+	 * Applies an HTTP API access rule to the client of an RPC call: the client has to hold an
+	 * authenticated identity and, when roles are given, at least one of them. A refusal fails
+	 * the call, which reaches the caller as a WAMP call error like any other failure.
+	 *
+	 * @throws WebSocketsExceptions\ForbiddenRequest
+	 */
+	protected function authorize(Entities\ConnectedClient $client, string ...$roles): void
+	{
+		if ($client->getIdentity() === null) {
+			throw new WebSocketsExceptions\ForbiddenRequest(
+				'Client is not authenticated',
+				Http\Message\StatusCodeInterface::STATUS_UNAUTHORIZED,
+			);
+		}
+
+		if ($roles !== [] && array_intersect($roles, $client->getRoles()) === []) {
+			throw new WebSocketsExceptions\ForbiddenRequest(
+				'Client is not allowed to perform this action',
+				Http\Message\StatusCodeInterface::STATUS_FORBIDDEN,
 			);
 		}
 	}

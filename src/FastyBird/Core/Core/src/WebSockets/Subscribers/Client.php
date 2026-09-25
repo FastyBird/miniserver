@@ -37,7 +37,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	/**
 	 * The token services are registered only when an application signature is configured,
 	 * and the identity factory only by whatever provides identities (the accounts module).
-	 * Without them no token can be validated, so every client is refused.
+	 * Without them no token can be validated, so every client is refused. Without the user
+	 * service no roles can be resolved, so an accepted client holds none.
 	 */
 	public function __construct(
 		private readonly Helpers\Database $database,
@@ -47,6 +48,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 		string|null $wsKeys = null,
 		string|null $allowedOrigins = null,
+		private readonly Identity\User|null $user = null,
 	)
 	{
 		$this->wsKeys = $wsKeys !== null ? explode(',', $wsKeys) : [];
@@ -193,7 +195,42 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			return false;
 		}
 
+		// Kept for the whole connection and replaced on every check, so the WAMP controllers
+		// always see what the client's token resolves to right now
+		$client->setIdentity($identity, $this->resolveRoles($identity));
+
 		return true;
+	}
+
+	/**
+	 * The role names the HTTP API checks for this identity. They come from the same user
+	 * service, because only it knows which user an identity stands for -- the accounts module
+	 * maps it to its account, whose roles are the ones assigned. That service is shared by the
+	 * whole process, so the identity is signed out of it again straight away.
+	 *
+	 * @return array<string>
+	 */
+	private function resolveRoles(Identity\UserIdentity $identity): array
+	{
+		if ($this->user === null) {
+			return [];
+		}
+
+		try {
+			$this->user->login($identity);
+
+			return $this->user->getRoles();
+		} catch (CoreExceptions\InvalidState | SecurityExceptions\Authentication $ex) {
+			$this->logger->warning('Client roles could not be resolved', [
+				'source' => Sources\Plugin::WS_SERVER->value,
+				'type' => 'subscriber',
+				'error' => $ex->getMessage(),
+			]);
+
+			return [];
+		} finally {
+			$this->user->logout();
+		}
 	}
 
 	/**
@@ -201,6 +238,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 */
 	private function closeSession(Entities\ConnectedClient $client): void
 	{
+		$client->setIdentity(null);
+
 		$headers = [
 			'X-Powered-By' => Server\ServerRuntime::VERSION,
 		];
