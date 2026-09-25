@@ -45,7 +45,7 @@ class User
 	}
 
 	/**
-	 * @param string|Security\IIdentity $user name or instance of Security\IIdentity
+	 * @param string|Security\IIdentity $user name or instance of UserIdentity
 	 *
 	 * @throws SimpleAuthExceptions\Authentication
 	 * @throws Exceptions\InvalidState

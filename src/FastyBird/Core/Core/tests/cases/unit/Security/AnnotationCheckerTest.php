@@ -19,7 +19,7 @@ use Throwable;
  * test suite exercised it before this. `EnforcerFactory` is `final`, so it is built for real
  * against the fixture model/policy this package already ships for exactly this purpose
  * (`resources/model.conf`, `tests/policy.csv`) rather than mocked; only the interface
- * `SimpleAuth\IUserStorage` is a test double.
+ * `Identity\IUserStorage` is a test double.
  */
 final class AnnotationCheckerTest extends TestCase
 {
