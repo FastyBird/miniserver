@@ -13,22 +13,12 @@ use Psr\Http\Message\ServerRequestInterface;
 final class Auth
 {
 
-	private Identity\TokenReader $tokenReader;
-
-	private Identity\IdentityProvider $identityFactory;
-
-	private Identity\User $user;
-
 	public function __construct(
-		Identity\TokenReader $tokenReader,
-		Identity\IdentityProvider $identityFactory,
-		Identity\User $user,
+		private Identity\TokenReader $tokenReader,
+		private Identity\IdentityProvider $identityFactory,
+		private Identity\User $user,
 	)
 	{
-		$this->tokenReader = $tokenReader;
-		$this->identityFactory = $identityFactory;
-
-		$this->user = $user;
 	}
 
 	/**

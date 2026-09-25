@@ -35,9 +35,7 @@ use Lcobucci\JWT;
 readonly class IdentityFactory implements Identity\IdentityProvider
 {
 
-	public function __construct(
-		private Tokens\Repository $tokensRepository,
-	)
+	public function __construct(private Tokens\Repository $tokensRepository)
 	{
 	}
 
