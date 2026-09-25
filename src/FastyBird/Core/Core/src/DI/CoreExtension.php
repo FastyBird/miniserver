@@ -1280,8 +1280,8 @@ final class CoreExtension extends DI\CompilerExtension
 		) {
 			NettrineORM\DI\Helpers\MappingHelper::of($this)->addAttribute(
 				'default',
-				'FastyBird\Core\Entities\SimpleAuth',
-				__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Entities' . DIRECTORY_SEPARATOR . 'SimpleAuth',
+				'FastyBird\Core\Security\Entities',
+				__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Security' . DIRECTORY_SEPARATOR . 'Entities',
 			);
 		}
 
