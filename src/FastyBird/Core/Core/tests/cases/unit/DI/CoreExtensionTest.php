@@ -130,7 +130,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * assert both halves of the collision survive as distinct services, not one silently
 		 * overwriting the other. SimpleAuth and DoctrineTimestampable used to collide the same
 		 * way over `configuration` -- the 2026-09-21 core cleanup merged those two into the one
-		 * combined FastyBird\Core\Configuration\Configuration below, so this instead asserts
+		 * combined FastyBird\Core\Configuration below, so this instead asserts
 		 * that single service is reachable both by type and by its service name.
 		 */
 
