@@ -2,13 +2,13 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
-use FastyBird\Core\Encoding\WebSockets\RFC6455\Frame;
-use FastyBird\Core\Encoding\WebSockets\RFC6455\Message;
-use FastyBird\Core\Encoding\WebSockets\Validator;
-use FastyBird\Core\Entities\WsServer\Topics\Topic;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Topics\WsServer\Drivers\InMemory;
-use FastyBird\Core\Topics\WsServer\Storage;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\WebSockets\Encoding;
+use FastyBird\Core\WebSockets\Encoding\RFC6455;
+use FastyBird\Core\WebSockets\Entities\Topics as EntitiesTopics;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
+use FastyBird\Core\WebSockets\Topics as WebSocketsTopics;
+use FastyBird\Core\WebSockets\Topics\Drivers;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 use UnderflowException;
@@ -31,7 +31,7 @@ final class FrameTest extends TestCase
 	 */
 	public function testConstructorSetsFinalPayloadLengthAndCoalescedFlag(): void
 	{
-		$frame = new Frame('Hello', true, Frame::OP_TEXT);
+		$frame = new RFC6455\Frame('Hello', true, RFC6455\Frame::OP_TEXT);
 
 		self::assertTrue($frame->isFinal());
 		self::assertSame('Hello', $frame->getPayload());
@@ -44,13 +44,13 @@ final class FrameTest extends TestCase
 	 * getPayload() transparently demasks them. unMaskPayload() must restore the exact original
 	 * bytes, not merely an equal-looking payload.
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws OutOfBoundsException
 	 * @throws UnderflowException
 	 */
 	public function testMaskPayloadThenUnMaskPayloadRoundTripsAndMasksIntermediateBytes(): void
 	{
-		$frame = new Frame('Hello', true, Frame::OP_TEXT);
+		$frame = new RFC6455\Frame('Hello', true, RFC6455\Frame::OP_TEXT);
 		$originalContents = $frame->getContents();
 
 		$frame->maskPayload('abcd');
@@ -74,7 +74,7 @@ final class FrameTest extends TestCase
 	 */
 	public function testGetContentsOfUnmaskedTextFrameStartsWithFinBitAndTextOpCode(): void
 	{
-		$frame = new Frame('Hello', true, Frame::OP_TEXT);
+		$frame = new RFC6455\Frame('Hello', true, RFC6455\Frame::OP_TEXT);
 
 		self::assertSame(0x81, ord(substr($frame->getContents(), 0, 1)));
 	}
@@ -84,11 +84,11 @@ final class FrameTest extends TestCase
 	 */
 	public function testAddBufferInTwoChunksCoalescesOnlyOnceComplete(): void
 	{
-		$source = new Frame('Chunked', true, Frame::OP_TEXT);
+		$source = new RFC6455\Frame('Chunked', true, RFC6455\Frame::OP_TEXT);
 		$contents = $source->getContents();
 		$midPoint = intdiv(strlen($contents), 2);
 
-		$rebuilt = new Frame();
+		$rebuilt = new RFC6455\Frame();
 		$rebuilt->addBuffer(substr($contents, 0, $midPoint));
 
 		self::assertFalse($rebuilt->isCoalesced());
@@ -114,7 +114,7 @@ final class FrameTest extends TestCase
 	{
 		$payload = str_repeat('A', 200);
 
-		$source = new Frame($payload, true, Frame::OP_TEXT);
+		$source = new RFC6455\Frame($payload, true, RFC6455\Frame::OP_TEXT);
 
 		self::assertSame(200, $source->getPayloadLength());
 		self::assertSame(4, $source->getPayloadStartingByte());
@@ -123,7 +123,7 @@ final class FrameTest extends TestCase
 
 		self::assertSame(126, ord(substr($contents, 1, 1)));
 
-		$rebuilt = new Frame();
+		$rebuilt = new RFC6455\Frame();
 		$rebuilt->addBuffer($contents);
 
 		self::assertSame(200, $rebuilt->getPayloadLength());
@@ -143,7 +143,7 @@ final class FrameTest extends TestCase
 	{
 		$payload = str_repeat('B', 70_000);
 
-		$source = new Frame($payload, true, Frame::OP_TEXT);
+		$source = new RFC6455\Frame($payload, true, RFC6455\Frame::OP_TEXT);
 
 		self::assertSame(70_000, $source->getPayloadLength());
 		self::assertSame(10, $source->getPayloadStartingByte());
@@ -152,7 +152,7 @@ final class FrameTest extends TestCase
 
 		self::assertSame(127, ord(substr($contents, 1, 1)));
 
-		$rebuilt = new Frame();
+		$rebuilt = new RFC6455\Frame();
 		$rebuilt->addBuffer($contents);
 
 		self::assertSame(70_000, $rebuilt->getPayloadLength());
@@ -165,10 +165,10 @@ final class FrameTest extends TestCase
 	 */
 	public function testExtractOverflowReturnsBytesBeyondFirstFrameAndLeavesItIntact(): void
 	{
-		$frameA = new Frame('First', true, Frame::OP_TEXT);
-		$frameB = new Frame('Second', true, Frame::OP_TEXT);
+		$frameA = new RFC6455\Frame('First', true, RFC6455\Frame::OP_TEXT);
+		$frameB = new RFC6455\Frame('Second', true, RFC6455\Frame::OP_TEXT);
 
-		$combined = new Frame();
+		$combined = new RFC6455\Frame();
 		$combined->addBuffer($frameA->getContents() . $frameB->getContents());
 
 		$overflow = $combined->extractOverflow();
@@ -176,7 +176,7 @@ final class FrameTest extends TestCase
 		self::assertNotSame('', $overflow);
 		self::assertSame('First', $combined->getPayload());
 
-		$overflowFrame = new Frame();
+		$overflowFrame = new RFC6455\Frame();
 		$overflowFrame->addBuffer($overflow);
 
 		self::assertSame('Second', $overflowFrame->getPayload());
@@ -187,9 +187,9 @@ final class FrameTest extends TestCase
 	 */
 	public function testExtractOverflowReturnsEmptyStringWhenThereIsNoOverflow(): void
 	{
-		$single = new Frame('Solo', true, Frame::OP_TEXT);
+		$single = new RFC6455\Frame('Solo', true, RFC6455\Frame::OP_TEXT);
 
-		$frame = new Frame();
+		$frame = new RFC6455\Frame();
 		$frame->addBuffer($single->getContents());
 
 		self::assertSame('', $frame->extractOverflow());
@@ -204,17 +204,17 @@ final class FrameTest extends TestCase
 	 */
 	public function testMessageAddFrameTwiceConcatenatesPayloadAndCountsFrames(): void
 	{
-		$message = new Message();
+		$message = new RFC6455\Message();
 
 		self::assertCount(0, $message);
 
-		$first = new Frame('Hello ', false, Frame::OP_CONTINUE);
+		$first = new RFC6455\Frame('Hello ', false, RFC6455\Frame::OP_CONTINUE);
 		$message->addFrame($first);
 
 		self::assertCount(1, $message);
 		self::assertFalse($message->isCoalesced());
 
-		$second = new Frame('World', true, Frame::OP_CONTINUE);
+		$second = new RFC6455\Frame('World', true, RFC6455\Frame::OP_CONTINUE);
 		$message->addFrame($second);
 
 		self::assertCount(2, $message);
@@ -233,7 +233,7 @@ final class FrameTest extends TestCase
 	 */
 	public function testValidatorCheckEncodingAcceptsValidUtf8AndRejectsInvalidByteSequence(): void
 	{
-		$validator = new Validator();
+		$validator = new Encoding\Validator();
 
 		self::assertTrue($validator->checkEncoding('valid utf8', 'UTF-8'));
 		self::assertFalse($validator->checkEncoding("\xC3\x28", 'UTF-8'));
@@ -241,8 +241,8 @@ final class FrameTest extends TestCase
 
 	public function testInMemoryDriverSaveFetchContainsDeleteAndFetchAllRoundTrip(): void
 	{
-		$driver = new InMemory();
-		$topic = new Topic('topic-1');
+		$driver = new Drivers\InMemory();
+		$topic = new EntitiesTopics\Topic('topic-1');
 
 		self::assertFalse($driver->contains('topic-1'));
 
@@ -260,16 +260,16 @@ final class FrameTest extends TestCase
 	}
 
 	/**
-	 * @throws Exceptions\Storage
-	 * @throws Exceptions\TopicNotFound
+	 * @throws WebSocketsExceptions\Storage
+	 * @throws WebSocketsExceptions\TopicNotFound
 	 */
 	public function testTopicsStorageAddHasGetRemoveAndIterate(): void
 	{
-		$storage = new Storage();
-		$storage->setStorageDriver(new InMemory());
+		$storage = new WebSocketsTopics\Storage();
+		$storage->setStorageDriver(new Drivers\InMemory());
 
-		$topicA = new Topic('topic-a');
-		$topicB = new Topic('topic-b');
+		$topicA = new EntitiesTopics\Topic('topic-a');
+		$topicB = new EntitiesTopics\Topic('topic-b');
 
 		$storage->addTopic('topic-a', $topicA);
 		$storage->addTopic('topic-b', $topicB);
@@ -283,7 +283,7 @@ final class FrameTest extends TestCase
 		$ids = [];
 
 		foreach ($storage->getIterator() as $topic) {
-			self::assertInstanceOf(Topic::class, $topic);
+			self::assertInstanceOf(EntitiesTopics\Topic::class, $topic);
 
 			$ids[] = $topic->getId();
 		}

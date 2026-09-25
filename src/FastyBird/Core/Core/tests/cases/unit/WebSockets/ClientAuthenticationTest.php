@@ -7,19 +7,18 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use FastyBird\Core\Clients\WsServer as ClientsWsServer;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Controllers\WebSockets as ControllersWebSockets;
-use FastyBird\Core\Controllers\WebSockets\Responses;
-use FastyBird\Core\Encoding\WebSockets as EncodingWebSockets;
-use FastyBird\Core\Entities\WebSockets as EntitiesWebSockets;
-use FastyBird\Core\Entities\WsServer as EntitiesWsServer;
-use FastyBird\Core\Events;
-use FastyBird\Core\Http;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Security\SimpleAuth;
-use FastyBird\Core\Server\WsServer\Wrapper;
-use FastyBird\Core\Subscribers\WsServer\Client;
+use FastyBird\Core\WebSockets\Clients;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Controllers\Responses;
+use FastyBird\Core\WebSockets\Encoding;
+use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Events;
+use FastyBird\Core\WebSockets\Handshake;
+use FastyBird\Core\WebSockets\Server;
+use FastyBird\Core\WebSockets\Subscribers;
 use Lcobucci\JWT;
 use Override;
 use PHPUnit\Framework\TestCase;
@@ -75,7 +74,7 @@ final class ClientAuthenticationTest extends TestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function subscriber(array $persistedTokens, bool $configured = true): Client
+	private function subscriber(array $persistedTokens, bool $configured = true): Subscribers\Client
 	{
 		$validator = new SimpleAuth\TokenValidator(
 			self::SIGNATURE,
@@ -130,8 +129,8 @@ final class ClientAuthenticationTest extends TestCase
 		$database = new Helpers\Database($managerRegistry);
 
 		return $configured
-			? new Client($database, new SimpleAuth\TokenReader($validator), $validator, $identityFactory, $logger)
-			: new Client($database, null, null, null, $logger);
+			? new Subscribers\Client($database, new SimpleAuth\TokenReader($validator), $validator, $identityFactory, $logger)
+			: new Subscribers\Client($database, null, null, null, $logger);
 	}
 
 	/**
@@ -144,30 +143,30 @@ final class ClientAuthenticationTest extends TestCase
 	 * @throws Throwable
 	 */
 	private function deliverFrame(
-		Client $subscriber,
-		Http\IRequest $request,
+		Subscribers\Client $subscriber,
+		Handshake\IRequest $request,
 		int $expectedDeliveries,
-	): EntitiesWebSockets\IWebSocket
+	): Entities\IWebSocket
 	{
-		$protocol = $this->getMockBuilder(EncodingWebSockets\RFC6455::class)
+		$protocol = $this->getMockBuilder(Encoding\RFC6455::class)
 			->onlyMethods(['handleMessage'])
 			->getMock();
 		$protocol->expects(self::exactly($expectedDeliveries))->method('handleMessage');
 
-		$webSocket = new EntitiesWebSockets\WebSocket(true, false, $protocol);
+		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
-		$client = new EntitiesWsServer\Client(1, $this->createMock(Socket\ConnectionInterface::class));
+		$client = new Entities\Client(1, $this->createMock(Socket\ConnectionInterface::class));
 		$client->setRequest($request);
 		$client->setHttpHeadersReceived(true);
 		$client->setWebSocket($webSocket);
 
-		$wrapper = new Wrapper(
-			$this->createMock(ControllersWebSockets\IApplication::class),
-			$this->createMock(ClientsWsServer\IStorage::class),
+		$wrapper = new Server\Wrapper(
+			$this->createMock(Controllers\Dispatcher::class),
+			$this->createMock(Clients\IStorage::class),
 		);
 		$wrapper->onIncomingMessage[] = static function (
-			EntitiesWsServer\IClient $client,
-			Http\IRequest $request,
+			Entities\ConnectedClient $client,
+			Handshake\IRequest $request,
 		) use ($subscriber): void {
 			$subscriber->incomingMessage(new Events\IncomingMessage($client, $request));
 		};
@@ -182,7 +181,7 @@ final class ClientAuthenticationTest extends TestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function handshake(array $headers): Http\IRequest
+	private function handshake(array $headers): Handshake\IRequest
 	{
 		$packet = "GET / HTTP/1.1\r\n"
 			. "Host: example.test:8888\r\n"
@@ -195,7 +194,7 @@ final class ClientAuthenticationTest extends TestCase
 			$packet .= $name . ': ' . $value . "\r\n";
 		}
 
-		$request = (new Http\RequestFactory())->createHttpRequest($packet . "\r\n");
+		$request = (new Handshake\RequestFactory())->createHttpRequest($packet . "\r\n");
 
 		self::assertNotNull($request);
 
@@ -205,9 +204,9 @@ final class ClientAuthenticationTest extends TestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function acceptedClient(): EntitiesWsServer\IClient
+	private function acceptedClient(): Entities\ConnectedClient
 	{
-		$client = $this->createMock(EntitiesWsServer\IClient::class);
+		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->expects(self::never())->method('send');
 		$client->expects(self::never())->method('close');
 
@@ -217,9 +216,9 @@ final class ClientAuthenticationTest extends TestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function rejectedClient(): EntitiesWsServer\IClient
+	private function rejectedClient(): Entities\ConnectedClient
 	{
-		$client = $this->createMock(EntitiesWsServer\IClient::class);
+		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->expects(self::once())
 			->method('send')
 			->with(self::callback(

@@ -17,19 +17,19 @@ namespace FastyBird\Module\Ui\DI;
 
 use Contributte\Translation;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Controllers\WebSockets\Controller;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Server\WsServer as ServerWsServer;
-use FastyBird\Core\Topics\WsServer as TopicsWsServer;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
+use FastyBird\Core\WebSockets\Server;
+use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Caching;
 use FastyBird\Module\Ui\Commands;
 use FastyBird\Module\Ui\Consumers as UiConsumers;
-use FastyBird\Module\Ui\Controllers;
+use FastyBird\Module\Ui\Controllers as UiControllers;
 use FastyBird\Module\Ui\Hydrators;
 use FastyBird\Module\Ui\Middleware;
 use FastyBird\Module\Ui\Models;
@@ -278,32 +278,32 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 */
 
 		$builder->addDefinition($this->prefix('controllers.dashboards'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\DashboardsV1::class)
+			->setType(UiControllers\DashboardsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
 		$builder->addDefinition($this->prefix('controllers.tabs'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\TabsV1::class)
+			->setType(UiControllers\TabsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
 		$builder->addDefinition($this->prefix('controllers.groups'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\GroupsV1::class)
+			->setType(UiControllers\GroupsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
 		$builder->addDefinition($this->prefix('controllers.widgets'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\WidgetsV1::class)
+			->setType(UiControllers\WidgetsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
 		$builder->addDefinition($this->prefix('controllers.dataSources'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\DataSourcesV1::class)
+			->setType(UiControllers\DataSourcesV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
 		$builder->addDefinition($this->prefix('controllers.display'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\DisplayV1::class)
+			->setType(UiControllers\DisplayV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -312,7 +312,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 */
 
 		$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\ExchangeV1::class)
+			->setType(UiControllers\ExchangeV1::class)
 			->setArguments([
 				'logger' => $logger,
 			])
@@ -448,7 +448,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 		if (
 			$builder->findByType(Routing\LinkGenerator::class) !== []
-			&& $builder->findByType(TopicsWsServer\IStorage::class) !== []
+			&& $builder->findByType(Topics\IStorage::class) !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.socketsBridge'),
@@ -534,7 +534,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 		try {
 			$wsControllerFactoryService = $builder->getDefinitionByType(
-				Controller\IControllerFactory::class,
+				WebSocketsControllers\IControllerFactory::class,
 			);
 			assert($wsControllerFactoryService instanceof DI\Definitions\ServiceDefinition);
 
@@ -550,7 +550,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 			$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
 			assert($consumerService instanceof DI\Definitions\ServiceDefinition);
 
-			$wsServerService = $builder->getDefinitionByType(ServerWsServer\Server::class);
+			$wsServerService = $builder->getDefinitionByType(Server\ServerRuntime::class);
 			assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
 
 			$wsServerService->addSetup(

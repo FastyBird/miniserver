@@ -3,9 +3,7 @@
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
 use BadMethodCallException;
-use FastyBird\Core\Server\WsServer\Configuration;
-use FastyBird\Core\Server\WsServer\Handlers;
-use FastyBird\Core\Server\WsServer\Server;
+use FastyBird\Core\WebSockets\Server;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use React\EventLoop;
@@ -28,12 +26,12 @@ final class ServerTest extends TestCase
 	public function testOnCreateFiresRegisteredHandlerWithServerInstance(): void
 	{
 		$loop = $this->createMock(EventLoop\LoopInterface::class);
-		$handlers = $this->createMock(Handlers::class);
+		$handlers = $this->createMock(Server\Handlers::class);
 
-		$server = new Server($handlers, $loop, new Configuration());
+		$server = new Server\ServerRuntime($handlers, $loop, new Server\Configuration());
 
 		$received = null;
-		$server->onCreate[] = static function (Server $s) use (&$received): void {
+		$server->onCreate[] = static function (Server\ServerRuntime $s) use (&$received): void {
 			$received = $s;
 		};
 
@@ -51,15 +49,15 @@ final class ServerTest extends TestCase
 		$loop->expects(self::once())
 			->method('run');
 
-		$handlers = $this->createMock(Handlers::class);
+		$handlers = $this->createMock(Server\Handlers::class);
 
-		$server = new Server($handlers, $loop, new Configuration());
+		$server = new Server\ServerRuntime($handlers, $loop, new Server\Configuration());
 
 		$receivedLoop = null;
 		$receivedServer = null;
 		$server->onStart[] = static function (
 			EventLoop\LoopInterface $l,
-			Server $s,
+			Server\ServerRuntime $s,
 		) use (
 			&$receivedLoop,
 			&$receivedServer,
@@ -80,15 +78,15 @@ final class ServerTest extends TestCase
 		$loop->expects(self::once())
 			->method('stop');
 
-		$handlers = $this->createMock(Handlers::class);
+		$handlers = $this->createMock(Server\Handlers::class);
 
-		$server = new Server($handlers, $loop, new Configuration());
+		$server = new Server\ServerRuntime($handlers, $loop, new Server\Configuration());
 
 		$receivedLoop = null;
 		$receivedServer = null;
 		$server->onStop[] = static function (
 			EventLoop\LoopInterface $l,
-			Server $s,
+			Server\ServerRuntime $s,
 		) use (
 			&$receivedLoop,
 			&$receivedServer,

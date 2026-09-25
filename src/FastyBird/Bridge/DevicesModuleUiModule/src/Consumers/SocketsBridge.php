@@ -22,9 +22,9 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Topics\WsServer as WsServerTopics;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
+use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Ui;
@@ -67,7 +67,7 @@ final class SocketsBridge implements Consumers\Consumer
 		private readonly UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
 		private readonly DevicesModuleUiModule\Logger $logger,
 		private readonly Routing\LinkGenerator $linkGenerator,
-		private readonly WsServerTopics\IStorage $topicsStorage,
+		private readonly Topics\IStorage $topicsStorage,
 	)
 	{
 	}

@@ -4,9 +4,7 @@ namespace FastyBird\Core\Tests\Cases\Unit\DI;
 
 use Error;
 use FastyBird\Core\Api\Encoding;
-use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
-use FastyBird\Core\Controllers as WebSocketsControllers;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange\Consumers;
@@ -22,9 +20,11 @@ use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Services as SimpleAuthServices;
-use FastyBird\Core\Subscribers as WsServerSubscribers;
 use FastyBird\Core\Tests;
 use FastyBird\Core\Values\Schemas;
+use FastyBird\Core\WebSockets\Commands as WebSocketsCommands;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Subscribers as WebSocketsSubscribers;
 use Monolog;
 use Nette;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
@@ -101,8 +101,8 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * WS SERVER (Plugin/WsServer's own registrations) -- from WsServerExtensionTest
 		 */
 
-		self::assertNotNull($container->getByType(WsServerCommands\WsServer::class, false));
-		self::assertNotNull($container->getByType(WsServerSubscribers\WsServer\Client::class, false));
+		self::assertNotNull($container->getByType(WebSocketsCommands\WsServer::class, false));
+		self::assertNotNull($container->getByType(WebSocketsSubscribers\Client::class, false));
 
 		/**
 		 * Domains none of the five surviving tests covered -- SimpleAuth, JSON:API, Phone and
@@ -118,7 +118,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 			$container->getService('fbCore.jsonApi.builder'),
 		);
 		self::assertInstanceOf(
-			WebSocketsControllers\WebSockets\Controller\IControllerFactory::class,
+			Controllers\IControllerFactory::class,
 			$container->getService('fbCore.webSockets.controllers.factory'),
 		);
 		self::assertNotNull($container->getByType(PhoneServices\PhoneNumberHelper::class, false));

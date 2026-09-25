@@ -2,10 +2,9 @@
 
 namespace FastyBird\Core\Http\Routing;
 
-use FastyBird\Core\Controllers\WebSockets as Application;
-use FastyBird\Core\Controllers\WebSockets\Controller;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Routing;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Wamp;
 use ReflectionException;
 use ReflectionParameter;
 use function array_key_exists;
@@ -24,8 +23,8 @@ final class LinkGenerator
 {
 
 	public function __construct(
-		private Routing\IWampRouter $router,
-		private Controller\IControllerFactory|null $controllerFactory = null,
+		private Wamp\WampRouter $router,
+		private Controllers\IControllerFactory|null $controllerFactory = null,
 	)
 	{
 	}
@@ -53,11 +52,11 @@ final class LinkGenerator
 			throw new Exceptions\InvalidLink($ex->getMessage(), 0, $ex);
 		}
 
-		if (is_subclass_of($class, Controller\Controller::class)) {
+		if (is_subclass_of($class, Controllers\Controller::class)) {
 			if (method_exists($class, $method = $class::formatActionMethod($action))) {
 				$missing = [];
 
-				Controller\Controller::argsToParams($class, $method, $params, [], $missing);
+				Controllers\Controller::argsToParams($class, $method, $params, [], $missing);
 
 				if ($missing !== []) {
 					$rp = $missing[0];
@@ -84,13 +83,13 @@ final class LinkGenerator
 		}
 
 		if ($action !== '') {
-			$params[Controller\Controller::ACTION_KEY] = $action;
+			$params[Controllers\Controller::ACTION_KEY] = $action;
 		}
 
-		$url = $this->router->constructUrl(new Application\Request($controller, $params));
+		$url = $this->router->constructUrl(new Controllers\Request($controller, $params));
 
 		if ($url === null) {
-			unset($params[Controller\Controller::ACTION_KEY]);
+			unset($params[Controllers\Controller::ACTION_KEY]);
 
 			$params = urldecode(http_build_query($params, '', ', '));
 

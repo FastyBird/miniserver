@@ -19,8 +19,8 @@ use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Topics\WsServer as WsServerTopics;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
 use Nette\Utils;
 use Throwable;
@@ -39,7 +39,7 @@ final readonly class SocketsBridge implements Consumers\Consumer
 	public function __construct(
 		private Devices\Logger $logger,
 		private Routing\LinkGenerator $linkGenerator,
-		private WsServerTopics\IStorage $topicsStorage,
+		private Topics\IStorage $topicsStorage,
 	)
 	{
 	}

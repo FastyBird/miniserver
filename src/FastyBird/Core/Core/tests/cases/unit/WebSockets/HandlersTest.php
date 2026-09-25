@@ -2,14 +2,13 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
-use FastyBird\Core\Clients\WsServer as ClientsWsServer;
-use FastyBird\Core\Controllers\WebSockets as ControllersWebSockets;
-use FastyBird\Core\Entities\WsServer as EntitiesWsServer;
-use FastyBird\Core\Server\WsServer\FlashWrapper;
-use FastyBird\Core\Server\WsServer\Handlers;
-use FastyBird\Core\Server\WsServer\IWrapper;
-use FastyBird\Core\Server\WsServer\Wrapper;
+use FastyBird\Core\WebSockets\Server\Handlers;
 use FastyBird\Core\Tests\Fixtures\Dummy\DummyWsConnection;
+use FastyBird\Core\WebSockets\Clients;
+use FastyBird\Core\WebSockets\Clients\Drivers;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Server;
 use PHPUnit\Framework\TestCase;
 use Psr\Log;
 use ReflectionMethod;
@@ -34,12 +33,12 @@ final class HandlersTest extends TestCase
 	{
 		$connection = new DummyWsConnection();
 
-		$client = new EntitiesWsServer\Client(1, $connection);
+		$client = new Entities\Client(1, $connection);
 		// Deliberately never calls setRequest() -- getRequest() throws on the uninitialized
 		// typed property, exactly as it does the moment a handshake fails before it completes.
 
-		$storage = new ClientsWsServer\Storage();
-		$storage->setStorageDriver(new ClientsWsServer\Drivers\InMemory());
+		$storage = new Clients\Storage();
+		$storage->setStorageDriver(new Drivers\InMemory());
 		$storage->addClient(1, $client);
 
 		$logged = [];
@@ -51,25 +50,25 @@ final class HandlersTest extends TestCase
 				$logged[] = [$message, $context];
 			});
 
-		$wrapper = new Wrapper(
-			$this->createMock(ControllersWebSockets\IApplication::class),
-			$this->createMock(ClientsWsServer\IStorage::class),
+		$wrapper = new Server\Wrapper(
+			$this->createMock(Controllers\Dispatcher::class),
+			$this->createMock(Clients\IStorage::class),
 		);
 
-		$wsApplication = $this->createMock(IWrapper::class);
+		$wsApplication = $this->createMock(Server\ServerWrapper::class);
 		$wsApplication->expects(self::once())
 			->method('handleError')
 			->with($client, self::isInstanceOf(RuntimeException::class));
 
-		$handlers = new Handlers(
+		$handlers = new Server\Handlers(
 			$wrapper,
-			new FlashWrapper(),
+			new Server\FlashWrapper(),
 			$storage,
-			$this->createMock(ClientsWsServer\IClientFactory::class),
+			$this->createMock(Clients\ClientProvider::class),
 			$logger,
 		);
 
-		$method = new ReflectionMethod(Handlers::class, 'handleError');
+		$method = new ReflectionMethod(Server\Handlers::class, 'handleError');
 
 		$method->invoke($handlers, new RuntimeException('original failure'), $connection, $wsApplication);
 
@@ -86,7 +85,7 @@ final class HandlersTest extends TestCase
 		$connection = new DummyWsConnection();
 
 		// No driver is attached, so Storage::getClient() itself throws and the outer catch runs.
-		$storage = new ClientsWsServer\Storage();
+		$storage = new Clients\Storage();
 
 		$logged = [];
 
@@ -97,24 +96,24 @@ final class HandlersTest extends TestCase
 				$logged[] = [$message, $context];
 			});
 
-		$wrapper = new Wrapper(
-			$this->createMock(ControllersWebSockets\IApplication::class),
-			$this->createMock(ClientsWsServer\IStorage::class),
+		$wrapper = new Server\Wrapper(
+			$this->createMock(Controllers\Dispatcher::class),
+			$this->createMock(Clients\IStorage::class),
 		);
 
-		$wsApplication = $this->createMock(IWrapper::class);
+		$wsApplication = $this->createMock(Server\ServerWrapper::class);
 		$wsApplication->expects(self::never())
 			->method('handleError');
 
-		$handlers = new Handlers(
+		$handlers = new Server\Handlers(
 			$wrapper,
-			new FlashWrapper(),
+			new Server\FlashWrapper(),
 			$storage,
-			$this->createMock(ClientsWsServer\IClientFactory::class),
+			$this->createMock(Clients\ClientProvider::class),
 			$logger,
 		);
 
-		$method = new ReflectionMethod(Handlers::class, 'handleError');
+		$method = new ReflectionMethod(Server\Handlers::class, 'handleError');
 
 		$method->invoke($handlers, new RuntimeException('original failure'), $connection, $wsApplication);
 

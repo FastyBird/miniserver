@@ -2,7 +2,8 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Http;
 
-use FastyBird\Core\Http\RequestFactory;
+use FastyBird\Core\WebSockets\Handshake\RequestFactory;
+use FastyBird\Core\WebSockets\Handshake;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -28,7 +29,7 @@ final class RequestFactoryTest extends TestCase
 			. "\r\n"
 			. 'buffered-body';
 
-		$factory = new RequestFactory();
+		$factory = new Handshake\RequestFactory();
 
 		$request = $factory->createHttpRequest($packet);
 

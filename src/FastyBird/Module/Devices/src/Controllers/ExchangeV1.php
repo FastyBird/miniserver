@@ -16,13 +16,14 @@
 namespace FastyBird\Module\Devices\Controllers;
 
 use FastyBird\Core\Constants as Metadata;
-use FastyBird\Core\Controllers\WebSockets as WebSocketsControllers;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Entities\Topics;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -45,7 +46,7 @@ use function is_array;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
+final class ExchangeV1 extends Controllers\Controller
 {
 
 	public function __construct(
@@ -63,11 +64,11 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	}
 
 	/**
-	 * @param WsServerEntities\Topics\ITopic<mixed> $topic
+	 * @param Topics\ITopic<mixed> $topic
 	 */
 	public function actionSubscribe(
-		WsServerEntities\IClient $client,
-		WsServerEntities\Topics\ITopic $topic,
+		Entities\ConnectedClient $client,
+		Topics\ITopic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -96,7 +97,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 					if ($state !== null) {
 						$client->send(Utils\Json::encode([
-							WebSocketsControllers\WampApplication::MSG_EVENT,
+							Controllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -123,7 +124,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 					if ($state !== null) {
 						$client->send(Utils\Json::encode([
-							WebSocketsControllers\WampApplication::MSG_EVENT,
+							Controllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -147,7 +148,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 					if ($state !== null) {
 						$client->send(Utils\Json::encode([
-							WebSocketsControllers\WampApplication::MSG_EVENT,
+							Controllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
 								'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -172,7 +173,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 	/**
 	 * @param array<string, mixed> $args
-	 * @param WsServerEntities\Topics\ITopic<mixed> $topic
+	 * @param Topics\ITopic<mixed> $topic
 	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
@@ -188,8 +189,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	 */
 	public function actionCall(
 		array $args,
-		WsServerEntities\IClient $client,
-		WsServerEntities\Topics\ITopic $topic,
+		Entities\ConnectedClient $client,
+		Topics\ITopic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -266,8 +267,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	 * @throws ValueError
 	 */
 	private function handleConnectorAction(
-		WsServerEntities\IClient $client,
-		WsServerEntities\Topics\ITopic $topic,
+		Entities\ConnectedClient $client,
+		Topics\ITopic $topic,
 		DevicesDocuments\States\Connectors\Properties\Actions\Action $entity,
 	): void
 	{
@@ -331,7 +332,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			}
 
 			$client->send(Utils\Json::encode([
-				WebSocketsControllers\WampApplication::MSG_EVENT,
+				Controllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -356,8 +357,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	 * @throws ValueError
 	 */
 	private function handleDeviceAction(
-		WsServerEntities\IClient $client,
-		WsServerEntities\Topics\ITopic $topic,
+		Entities\ConnectedClient $client,
+		Topics\ITopic $topic,
 		DevicesDocuments\States\Devices\Properties\Actions\Action $entity,
 	): void
 	{
@@ -424,7 +425,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			}
 
 			$client->send(Utils\Json::encode([
-				WebSocketsControllers\WampApplication::MSG_EVENT,
+				Controllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -449,8 +450,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	 * @throws ValueError
 	 */
 	private function handleChannelAction(
-		WsServerEntities\IClient $client,
-		WsServerEntities\Topics\ITopic $topic,
+		Entities\ConnectedClient $client,
+		Topics\ITopic $topic,
 		DevicesDocuments\States\Channels\Properties\Actions\Action $entity,
 	): void
 	{
@@ -517,7 +518,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			}
 
 			$client->send(Utils\Json::encode([
-				WebSocketsControllers\WampApplication::MSG_EVENT,
+				Controllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,

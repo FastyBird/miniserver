@@ -2,7 +2,8 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets;
 
-use FastyBird\Core\Controllers\WebSockets\Request;
+use FastyBird\Core\WebSockets\Controllers\Request;
+use FastyBird\Core\WebSockets\Controllers;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,7 +17,7 @@ final class RequestTest extends TestCase
 
 	public function testSetControllerNameChangesGetControllerName(): void
 	{
-		$request = new Request('module:module:controller');
+		$request = new Controllers\Request('module:module:controller');
 
 		$request->setControllerName('other:other:controller');
 
@@ -25,7 +26,7 @@ final class RequestTest extends TestCase
 
 	public function testSetParametersChangesGetParameters(): void
 	{
-		$request = new Request('module:module:controller', ['id' => '1']);
+		$request = new Controllers\Request('module:module:controller', ['id' => '1']);
 
 		$request->setParameters(['id' => '2', 'action' => 'default']);
 

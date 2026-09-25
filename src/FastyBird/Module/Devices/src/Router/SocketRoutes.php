@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Router;
 
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Routing as WebSocketsRouting;
+use FastyBird\Core\WebSockets\Wamp;
 use Nette;
 
 /**
@@ -35,10 +35,10 @@ class SocketRoutes
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Nette\OutOfRangeException
 	 */
-	public static function createRouter(): WebSocketsRouting\RouteList
+	public static function createRouter(): Wamp\RouteList
 	{
-		$router = new WebSocketsRouting\RouteList();
-		$router[] = new WebSocketsRouting\WampRoute(
+		$router = new Wamp\RouteList();
+		$router[] = new Wamp\WampRoute(
 			'/' . Metadata\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
 			'DevicesModule:Exchange:',
 		);

@@ -3,13 +3,13 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets;
 
 use Exception;
-use FastyBird\Core\Clients\WsServer as ClientsWsServer;
-use FastyBird\Core\Controllers\WebSockets\Application;
-use FastyBird\Core\Controllers\WebSockets\Controller;
-use FastyBird\Core\Entities\WsServer as EntitiesWsServer;
+use FastyBird\Core\WebSockets\Controllers\Application;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Http;
-use FastyBird\Core\Routing as CoreRouting;
+use FastyBird\Core\WebSockets\Clients;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Handshake;
+use FastyBird\Core\WebSockets\Wamp;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -21,17 +21,17 @@ use Throwable;
 final class ApplicationTest extends TestCase
 {
 
-	private function createApplication(): Application
+	private function createApplication(): Controllers\Application
 	{
-		$router = $this->createMock(CoreRouting\IWampRouter::class);
-		$controllerFactory = $this->createMock(Controller\IControllerFactory::class);
-		$clientsStorage = $this->createMock(ClientsWsServer\IStorage::class);
+		$router = $this->createMock(Wamp\WampRouter::class);
+		$controllerFactory = $this->createMock(Controllers\IControllerFactory::class);
+		$clientsStorage = $this->createMock(Clients\IStorage::class);
 
 		return new class(
 			$router,
 			$controllerFactory,
 			$clientsStorage,
-		) extends Application
+		) extends Controllers\Application
 		{
 
 			/**
@@ -48,16 +48,16 @@ final class ApplicationTest extends TestCase
 	public function testOnOpenFiresRegisteredHandlerWithApplicationClientAndRequest(): void
 	{
 		$application = $this->createApplication();
-		$client = $this->createMock(EntitiesWsServer\IClient::class);
+		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('getId')
 			->willReturn(1);
-		$httpRequest = $this->createMock(Http\IRequest::class);
+		$httpRequest = $this->createMock(Handshake\IRequest::class);
 
 		$received = [];
 		$application->onOpen[] = static function (
-			Application $a,
-			EntitiesWsServer\IClient $c,
-			Http\IRequest $r,
+			Controllers\Application $a,
+			Entities\ConnectedClient $c,
+			Handshake\IRequest $r,
 		) use (&$received): void {
 			$received = [$a, $c, $r];
 		};
@@ -70,16 +70,16 @@ final class ApplicationTest extends TestCase
 	public function testOnCloseFiresRegisteredHandlerWithApplicationClientAndRequest(): void
 	{
 		$application = $this->createApplication();
-		$client = $this->createMock(EntitiesWsServer\IClient::class);
+		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('getId')
 			->willReturn(1);
-		$httpRequest = $this->createMock(Http\IRequest::class);
+		$httpRequest = $this->createMock(Handshake\IRequest::class);
 
 		$received = [];
 		$application->onClose[] = static function (
-			Application $a,
-			EntitiesWsServer\IClient $c,
-			Http\IRequest $r,
+			Controllers\Application $a,
+			Entities\ConnectedClient $c,
+			Handshake\IRequest $r,
 		) use (&$received): void {
 			$received = [$a, $c, $r];
 		};
@@ -92,14 +92,14 @@ final class ApplicationTest extends TestCase
 	public function testOnMessageFiresRegisteredHandlerWithApplicationClientRequestAndMessage(): void
 	{
 		$application = $this->createApplication();
-		$client = $this->createMock(EntitiesWsServer\IClient::class);
-		$httpRequest = $this->createMock(Http\IRequest::class);
+		$client = $this->createMock(Entities\ConnectedClient::class);
+		$httpRequest = $this->createMock(Handshake\IRequest::class);
 
 		$received = [];
 		$application->onMessage[] = static function (
-			Application $a,
-			EntitiesWsServer\IClient $c,
-			Http\IRequest $r,
+			Controllers\Application $a,
+			Entities\ConnectedClient $c,
+			Handshake\IRequest $r,
 			string $m,
 		) use (&$received): void {
 			$received = [$a, $c, $r, $m];
@@ -116,10 +116,10 @@ final class ApplicationTest extends TestCase
 	public function testOnErrorFiresRegisteredHandlerWithApplicationClientRequestAndException(): void
 	{
 		$application = $this->createApplication();
-		$client = $this->createMock(EntitiesWsServer\IClient::class);
+		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->expects(self::once())
 			->method('close');
-		$httpRequest = $this->createMock(Http\IRequest::class);
+		$httpRequest = $this->createMock(Handshake\IRequest::class);
 		$exception = new class('boom', 0) extends Exception
 		{
 
@@ -127,9 +127,9 @@ final class ApplicationTest extends TestCase
 
 		$received = [];
 		$application->onError[] = static function (
-			Application $a,
-			EntitiesWsServer\IClient $c,
-			Http\IRequest $r,
+			Controllers\Application $a,
+			Entities\ConnectedClient $c,
+			Handshake\IRequest $r,
 			Throwable $e,
 		) use (&$received): void {
 			$received = [$a, $c, $r, $e];
