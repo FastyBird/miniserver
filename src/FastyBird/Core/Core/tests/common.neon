@@ -32,7 +32,6 @@ contributteTranslation:
         fallback: [en_US, en]
     localeResolvers: []
     dirs:
-        - %appDir%/../src/Translations
         - %appDir%/../src/Api/Translations
 
 nettrineDbal:
