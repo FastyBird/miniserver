@@ -392,7 +392,9 @@ final class Client
 		$timer = $this->eventLoop->addTimer(
 			$timeout,
 			static function () use ($deferred, $timeout, &$future): void {
-				$exception = new Zigbee2MqttExceptions\Runtime(sprintf('Connection timed out after %d seconds', $timeout));
+				$exception = new Zigbee2MqttExceptions\Runtime(
+					sprintf('Connection timed out after %d seconds', $timeout),
+				);
 				$deferred->reject($exception);
 
 				// @phpstan-ignore-next-line
@@ -554,7 +556,9 @@ final class Client
 				break;
 			default:
 				$this->handleWarning(
-					new Zigbee2MqttExceptions\Logic(sprintf('Cannot handle packet of type %d', $packet->getPacketType())),
+					new Zigbee2MqttExceptions\Logic(
+						sprintf('Cannot handle packet of type %d', $packet->getPacketType()),
+					),
 				);
 		}
 	}

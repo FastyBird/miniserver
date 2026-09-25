@@ -582,7 +582,11 @@ final class Discovery
 
 				} catch (Throwable $ex) {
 					$deferred->reject(
-						new TuyaExceptions\InvalidState('Could not create device description message', $ex->getCode(), $ex),
+						new TuyaExceptions\InvalidState(
+							'Could not create device description message',
+							$ex->getCode(),
+							$ex,
+						),
 					);
 
 					return;
@@ -836,7 +840,11 @@ final class Discovery
 					}
 				} catch (Throwable $ex) {
 					$deferred->reject(
-						new TuyaExceptions\InvalidState('Device specification could not be loaded', $ex->getCode(), $ex),
+						new TuyaExceptions\InvalidState(
+							'Device specification could not be loaded',
+							$ex->getCode(),
+							$ex,
+						),
 					);
 
 					return;

@@ -156,7 +156,9 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 						return $httpAsyncClient;
 					}
 
-					throw new ShellyExceptions\InvalidState('Sync clients should not be called when doing devices discovery');
+					throw new ShellyExceptions\InvalidState(
+						'Sync clients should not be called when doing devices discovery',
+					);
 				},
 			);
 
@@ -370,7 +372,9 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 						return $httpAsyncClient;
 					}
 
-					throw new ShellyExceptions\InvalidState('Sync clients should not be called when doing devices discovery');
+					throw new ShellyExceptions\InvalidState(
+						'Sync clients should not be called when doing devices discovery',
+					);
 				},
 			);
 

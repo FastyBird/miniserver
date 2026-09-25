@@ -116,7 +116,9 @@ class Driver
 			}
 		}
 
-		throw new HomeKitExceptions\InvalidState('Bridge for given device accessory is not registered. Register it first');
+		throw new HomeKitExceptions\InvalidState(
+			'Bridge for given device accessory is not registered. Register it first',
+		);
 	}
 
 	/**

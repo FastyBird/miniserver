@@ -133,7 +133,9 @@ class Device extends VirtualEntities\Devices\Device
 			);
 
 		if ($channels->count() !== 1) {
-			throw new VirtualThermostatExceptions\InvalidState(sprintf('Preset channel: %s is not configured', $preset->value));
+			throw new VirtualThermostatExceptions\InvalidState(
+				sprintf('Preset channel: %s is not configured', $preset->value),
+			);
 		}
 
 		$channel = $channels->first();

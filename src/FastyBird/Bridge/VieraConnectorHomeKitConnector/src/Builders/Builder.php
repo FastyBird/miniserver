@@ -187,7 +187,9 @@ class Builder
 				}
 
 				if ($identifier === null) {
-					throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Device identifier could not be calculated');
+					throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+						'Device identifier could not be calculated',
+					);
 				}
 
 				$categoryProperty = $modelProperty = $manufacturerProperty = $serialNumberProperty = null;
@@ -358,7 +360,11 @@ class Builder
 				],
 			);
 		} catch (Throwable $ex) {
-			throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('HomeKit device could not be created', $ex->getCode(), $ex);
+			throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+				'HomeKit device could not be created',
+				$ex->getCode(),
+				$ex,
+			);
 		}
 
 		return $accessory;
@@ -399,7 +405,9 @@ class Builder
 			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
 			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
 		) {
-			throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Service definition is missing required attributes');
+			throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+				'Service definition is missing required attributes',
+			);
 		}
 
 		$serviceIndex = 1;
@@ -409,7 +417,9 @@ class Builder
 
 		if ($serviceMapping instanceof Mapping\Services\InputSource) {
 			if ($serviceMapping->getChannel() === null) {
-				throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Viera input source channel mapping is not provided');
+				throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+					'Viera input source channel mapping is not provided',
+				);
 			}
 
 			$findChannelQuery = new VieraQueries\Entities\FindChannels();
@@ -422,7 +432,9 @@ class Builder
 			);
 
 			if ($channel === null) {
-				throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Viera input source channel could not be loaded');
+				throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+					'Viera input source channel could not be loaded',
+				);
 			}
 
 			$findPropertyQuery = new DevicesQueries\Entities\FindChannelDynamicProperties();
@@ -435,7 +447,9 @@ class Builder
 			);
 
 			if ($inputSourceProperty === null) {
-				throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Viera input source channel property could not be loaded');
+				throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+					'Viera input source channel property could not be loaded',
+				);
 			}
 
 			if (!$inputSourceProperty->getFormat() instanceof Formats\CombinedEnum) {
@@ -499,7 +513,9 @@ class Builder
 				);
 
 				if ($channel === null) {
-					throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Viera device channel for mapping property could not be loaded');
+					throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+						'Viera device channel for mapping property could not be loaded',
+					);
 				}
 			}
 
@@ -998,7 +1014,9 @@ class Builder
 			}
 
 			if ($channel === null) {
-				throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Viera device channel for mapping property could not be loaded');
+				throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+					'Viera device channel for mapping property could not be loaded',
+				);
 			}
 
 			$findPropertyQuery = new DevicesQueries\Entities\FindChannelDynamicProperties();
@@ -1040,7 +1058,9 @@ class Builder
 				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
 			)
 		) {
-			throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+			throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+				'Characteristic definition is missing required attributes',
+			);
 		}
 
 		if ($connectProperty !== null) {
@@ -1248,7 +1268,9 @@ class Builder
 					);
 
 					if ($dataTypes === []) {
-						throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+						throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+							'Characteristic definition is missing required attributes',
+						);
 					}
 				} else {
 					$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
@@ -1342,7 +1364,9 @@ class Builder
 				);
 
 				if ($dataTypes === []) {
-					throw new VieraConnectorHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 
 				$dataType = $dataTypes[0];

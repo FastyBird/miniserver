@@ -244,7 +244,9 @@ final readonly class Device
 		);
 
 		if ($property?->getValue() === null) {
-			throw new SonoffExceptions\InvalidState('Device UIID protocol is not defined. Device have to be re-discovered');
+			throw new SonoffExceptions\InvalidState(
+				'Device UIID protocol is not defined. Device have to be re-discovered',
+			);
 		}
 
 		$value = $property->getValue();

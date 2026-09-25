@@ -794,7 +794,9 @@ class Build extends Console\Command\Command
 		);
 
 		if ($shellyGenerationProperty === null) {
-			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device generation info could not be loaded');
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+				'Shelly device generation info could not be loaded',
+			);
 		}
 
 		$findDevicePropertyQuery = new DevicesQueries\Entities\FindDeviceProperties();
@@ -807,7 +809,9 @@ class Build extends Console\Command\Command
 		);
 
 		if ($shellyModelProperty === null) {
-			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device model info could not be loaded');
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+				'Shelly device model info could not be loaded',
+			);
 		}
 
 		$supportedCategories = [];

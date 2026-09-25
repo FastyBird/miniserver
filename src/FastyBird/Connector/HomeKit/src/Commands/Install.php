@@ -1493,7 +1493,9 @@ class Install extends Console\Command\Command
 				);
 
 				if ($dataTypes === []) {
-					throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new HomeKitExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 
 				$dataType = $dataTypes[0];
@@ -1677,7 +1679,9 @@ class Install extends Console\Command\Command
 				);
 
 				if ($dataTypes === []) {
-					throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new HomeKitExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 
 				$dataType = $dataTypes[0];

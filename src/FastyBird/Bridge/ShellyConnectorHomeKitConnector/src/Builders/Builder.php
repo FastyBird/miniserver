@@ -202,7 +202,9 @@ class Builder
 				}
 
 				if ($identifier === null) {
-					throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Device identifier could not be calculated');
+					throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+						'Device identifier could not be calculated',
+					);
 				}
 
 				$categoryProperty = $modelProperty = $manufacturerProperty = $serialNumberProperty = null;
@@ -284,7 +286,9 @@ class Builder
 			);
 
 			if ($shellyGenerationProperty === null) {
-				throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device generation info could not be loaded');
+				throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+					'Shelly device generation info could not be loaded',
+				);
 			}
 
 			$findDevicePropertyQuery = new DevicesQueries\Entities\FindDeviceProperties();
@@ -420,7 +424,11 @@ class Builder
 				],
 			);
 		} catch (Throwable $ex) {
-			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('HomeKit device could not be created', $ex->getCode(), $ex);
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+				'HomeKit device could not be created',
+				$ex->getCode(),
+				$ex,
+			);
 		}
 
 		return $accessory;
@@ -460,7 +468,9 @@ class Builder
 			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
 			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
 		) {
-			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Service definition is missing required attributes');
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+				'Service definition is missing required attributes',
+			);
 		}
 
 		$channelIndex = $serviceMapping->getIndexStart();
@@ -499,7 +509,9 @@ class Builder
 						break;
 					}
 
-					throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device channel for mapping property could not be loaded');
+					throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+						'Shelly device channel for mapping property could not be loaded',
+					);
 				}
 			}
 
@@ -729,7 +741,9 @@ class Builder
 			}
 
 			if ($channel === null) {
-				throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device channel for mapping property could not be loaded');
+				throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+					'Shelly device channel for mapping property could not be loaded',
+				);
 			}
 
 			$propertyIdentifiers = is_array($characteristicMapping->getProperty())
@@ -779,7 +793,9 @@ class Builder
 				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
 			)
 		) {
-			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+				'Characteristic definition is missing required attributes',
+			);
 		}
 
 		$value = null;
@@ -804,7 +820,9 @@ class Builder
 				);
 
 				if ($dataTypes === []) {
-					throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 			} else {
 				$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
@@ -858,7 +876,9 @@ class Builder
 				);
 
 				if ($dataTypes === []) {
-					throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 
 				$dataType = $dataTypes[0];
@@ -1068,7 +1088,9 @@ class Builder
 		);
 
 		if ($shellyGenerationProperty === null) {
-			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device generation info could not be loaded');
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+				'Shelly device generation info could not be loaded',
+			);
 		}
 
 		$findDevicePropertyQuery = new DevicesQueries\Entities\FindDeviceProperties();
@@ -1081,7 +1103,9 @@ class Builder
 		);
 
 		if ($shellyModelProperty === null) {
-			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device model info could not be loaded');
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+				'Shelly device model info could not be loaded',
+			);
 		}
 
 		if ($shellyGenerationProperty->getValue() === ShellyTypes\DeviceGeneration::GENERATION_1->value) {
@@ -1100,7 +1124,9 @@ class Builder
 			);
 		}
 
-		throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device mapping configuration could not be loaded');
+		throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState(
+			'Shelly device mapping configuration could not be loaded',
+		);
 	}
 
 }

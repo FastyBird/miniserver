@@ -135,7 +135,9 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 						return $httpAsyncClient;
 					}
 
-					throw new TuyaExceptions\InvalidState('Sync clients should not be called when doing devices discovery');
+					throw new TuyaExceptions\InvalidState(
+						'Sync clients should not be called when doing devices discovery',
+					);
 				},
 			);
 
@@ -430,7 +432,9 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 						return $httpAsyncClient;
 					}
 
-					throw new TuyaExceptions\InvalidState('Sync clients should not be called when doing devices discovery');
+					throw new TuyaExceptions\InvalidState(
+						'Sync clients should not be called when doing devices discovery',
+					);
 				},
 			);
 

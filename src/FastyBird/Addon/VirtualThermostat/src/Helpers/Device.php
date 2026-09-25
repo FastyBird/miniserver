@@ -122,7 +122,9 @@ final readonly class Device
 		);
 
 		if ($channel === null) {
-			throw new VirtualThermostatExceptions\InvalidState(sprintf('Preset channel: %s is not configured', $preset->value));
+			throw new VirtualThermostatExceptions\InvalidState(
+				sprintf('Preset channel: %s is not configured', $preset->value),
+			);
 		}
 
 		return $channel;

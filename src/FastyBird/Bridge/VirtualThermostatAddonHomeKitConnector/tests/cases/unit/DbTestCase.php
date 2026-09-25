@@ -231,7 +231,9 @@ abstract class DbTestCase extends TestCase
 		$handle = @fopen($file, 'r'); // intentionally @
 
 		if ($handle === false) {
-			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidArgument(sprintf('Cannot open file "%s".', $file));
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidArgument(
+				sprintf('Cannot open file "%s".', $file),
+			);
 		}
 
 		$delimiter = ';';

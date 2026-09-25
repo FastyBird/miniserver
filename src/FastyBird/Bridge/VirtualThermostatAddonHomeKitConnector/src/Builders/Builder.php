@@ -174,7 +174,9 @@ class Builder
 				}
 
 				if ($identifier === null) {
-					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState('Device identifier could not be calculated');
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+						'Device identifier could not be calculated',
+					);
 				}
 
 				$categoryProperty = $modelProperty = $manufacturerProperty = null;
@@ -297,7 +299,11 @@ class Builder
 				],
 			);
 		} catch (Throwable $ex) {
-			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState('HomeKit device could not be created', $ex->getCode(), $ex);
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+				'HomeKit device could not be created',
+				$ex->getCode(),
+				$ex,
+			);
 		}
 
 		return $accessory;
@@ -338,7 +344,9 @@ class Builder
 			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
 			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
 		) {
-			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState('Service definition is missing required attributes');
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+				'Service definition is missing required attributes',
+			);
 		}
 
 		try {
@@ -555,7 +563,9 @@ class Builder
 				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
 			)
 		) {
-			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+				'Characteristic definition is missing required attributes',
+			);
 		}
 
 		$value = null;
@@ -576,7 +586,9 @@ class Builder
 				);
 
 				if ($dataTypes === []) {
-					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 			} else {
 				$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
@@ -648,7 +660,9 @@ class Builder
 				);
 
 				if ($dataTypes === []) {
-					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
+						'Characteristic definition is missing required attributes',
+					);
 				}
 
 				$dataType = $dataTypes[0];

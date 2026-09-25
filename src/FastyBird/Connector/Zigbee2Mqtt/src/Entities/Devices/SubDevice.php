@@ -80,7 +80,9 @@ class SubDevice extends Device
 	public function setParents(array|Utils\ArrayHash $parents): void
 	{
 		if (count($parents) !== 1 || !$parents[0] instanceof Bridge) {
-			throw new Zigbee2MqttExceptions\InvalidState('Sub-device could have only one parent and it have to be gateway');
+			throw new Zigbee2MqttExceptions\InvalidState(
+				'Sub-device could have only one parent and it have to be gateway',
+			);
 		}
 
 		parent::setParents($parents);

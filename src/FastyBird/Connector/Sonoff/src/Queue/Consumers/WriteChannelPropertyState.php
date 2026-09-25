@@ -579,7 +579,10 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						),
 					);
 
-				} elseif ($ex instanceof SonoffExceptions\CloudApiError || $ex instanceof SonoffExceptions\LanApiError) {
+				} elseif (
+					$ex instanceof SonoffExceptions\CloudApiError
+					|| $ex instanceof SonoffExceptions\LanApiError
+				) {
 					$this->queue->append(
 						$this->entityHelper->create(
 							Queue\Messages\StoreDeviceConnectionState::class,

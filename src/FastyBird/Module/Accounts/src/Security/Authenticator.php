@@ -67,21 +67,33 @@ final class Authenticator implements Identity\Authenticator
 		[$username, $password] = $credentials + [null, null];
 
 		if (!is_string($username)) {
-			throw new AccountsExceptions\AccountNotFound('The identity identifier is incorrect', self::IDENTITY_UID_NOT_FOUND);
+			throw new AccountsExceptions\AccountNotFound(
+				'The identity identifier is incorrect',
+				self::IDENTITY_UID_NOT_FOUND,
+			);
 		}
 
 		$identity = $this->identitiesRepository->findOneByUid($username);
 
 		if ($identity === null) {
-			throw new AccountsExceptions\AccountNotFound('The identity identifier is incorrect', self::IDENTITY_UID_NOT_FOUND);
+			throw new AccountsExceptions\AccountNotFound(
+				'The identity identifier is incorrect',
+				self::IDENTITY_UID_NOT_FOUND,
+			);
 		}
 
 		if (!is_string($password)) {
-			throw new AccountsExceptions\AuthenticationFailed('The password is incorrect', self::INVALID_CREDENTIAL_FOR_UID);
+			throw new AccountsExceptions\AuthenticationFailed(
+				'The password is incorrect',
+				self::INVALID_CREDENTIAL_FOR_UID,
+			);
 		}
 
 		if (!$identity->verifyPassword($password)) {
-			throw new AccountsExceptions\AuthenticationFailed('The password is incorrect', self::INVALID_CREDENTIAL_FOR_UID);
+			throw new AccountsExceptions\AuthenticationFailed(
+				'The password is incorrect',
+				self::INVALID_CREDENTIAL_FOR_UID,
+			);
 		}
 
 		$account = $identity->getAccount();
