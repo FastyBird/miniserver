@@ -12,36 +12,16 @@ use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Api\Middleware as ApiMiddleware;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Clients as WsServerClients;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
-use FastyBird\Core\Controllers as WebSocketsControllers;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Encoding as WebSocketsEncoding;
 use FastyBird\Core\EventLoop;
 use FastyBird\Core\Events as SimpleAuthEvents;
-use FastyBird\Core\Events\AfterIncommingMessageEvent;
-use FastyBird\Core\Events\ClientConnected;
-use FastyBird\Core\Events\ClientConnectEvent;
-use FastyBird\Core\Events\ClientDisconnectEvent;
-use FastyBird\Core\Events\ClientErrorEvent;
-use FastyBird\Core\Events\CloseEvent;
-use FastyBird\Core\Events\CreateEvent;
-use FastyBird\Core\Events\ErrorEvent;
-use FastyBird\Core\Events\IncomingMessage;
-use FastyBird\Core\Events\IncommingMessageEvent;
-use FastyBird\Core\Events\MessageEvent;
-use FastyBird\Core\Events\OpenEvent;
-use FastyBird\Core\Events\PushEvent;
-use FastyBird\Core\Events\StartEvent;
-use FastyBird\Core\Events\StopEvent;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
-use FastyBird\Core\Helpers as WsServerHelpers;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Commands as HttpCommands;
 use FastyBird\Core\Http\Middleware as HttpMiddleware;
@@ -51,7 +31,6 @@ use FastyBird\Core\Http\Subscribers as HttpSubscribers;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Logging\Subscribers as LoggingSubscribers;
 use FastyBird\Core\Mapping as SimpleAuthMapping;
-use FastyBird\Core\Messaging as WebSocketsMessaging;
 use FastyBird\Core\Middleware as SimpleAuthMiddleware;
 use FastyBird\Core\Persistence as DoctrineCrudPersistence;
 use FastyBird\Core\Persistence\Crud;
@@ -69,15 +48,24 @@ use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Phone\Types;
 use FastyBird\Core\Routing as CoreRouting;
 use FastyBird\Core\Security as SimpleAuthSecurity;
-use FastyBird\Core\Server as WsServerServer;
 use FastyBird\Core\Services as SimpleAuthServices;
 use FastyBird\Core\Subscribers as ApplicationSubscribers;
 use FastyBird\Core\Subscribers as SimpleAuthSubscribers;
-use FastyBird\Core\Subscribers as WsServerSubscribers;
-use FastyBird\Core\Topics\WsServer\Drivers\InMemory;
-use FastyBird\Core\Topics\WsServer\Storage;
 use FastyBird\Core\UI;
 use FastyBird\Core\Values\Schemas as ValuesSchemas;
+use FastyBird\Core\WebSockets\Clients;
+use FastyBird\Core\WebSockets\Clients\Drivers as ClientsDrivers;
+use FastyBird\Core\WebSockets\Commands as WebSocketsCommands;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Encoding as WebSocketsEncoding;
+use FastyBird\Core\WebSockets\Events as WebSocketsEvents;
+use FastyBird\Core\WebSockets\Helpers as WebSocketsHelpers;
+use FastyBird\Core\WebSockets\PushMessages;
+use FastyBird\Core\WebSockets\Server as WebSocketsServer;
+use FastyBird\Core\WebSockets\Subscribers as WebSocketsSubscribers;
+use FastyBird\Core\WebSockets\Topics;
+use FastyBird\Core\WebSockets\Topics\Drivers as TopicsDrivers;
+use FastyBird\Core\WebSockets\Wamp;
 use libphonenumber;
 use Monolog;
 use Nette;
@@ -892,27 +880,27 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$controllerFactory = $builder->addDefinition($this->prefix('webSockets.controllers.factory'))
-			->setType(WebSocketsControllers\WebSockets\Controller\IControllerFactory::class)
-			->setFactory(WebSocketsControllers\WebSockets\Controller\ControllerFactory::class);
+			->setType(Controllers\IControllerFactory::class)
+			->setFactory(Controllers\ControllerFactory::class);
 
 		if ($configuration->webSockets->mapping) {
 			$controllerFactory->addSetup('setMapping', [$configuration->webSockets->mapping]);
 		}
 
-		if ($builder->getByType(WsServerClients\WsServer\IClientFactory::class) === null) {
+		if ($builder->getByType(Clients\ClientProvider::class) === null) {
 			$builder->addDefinition($this->prefix('wsServer.clients.factory'))
-				->setType(WsServerClients\WsServer\ClientFactory::class);
+				->setType(Clients\ClientFactory::class);
 		}
 
 		$builder->addDefinition($this->prefix('wsServer.clients.driver.memory'))
-			->setType(WsServerClients\WsServer\Drivers\InMemory::class);
+			->setType(ClientsDrivers\InMemory::class);
 
 		$clientsStorageDriver = $configuration->webSockets->storage->clients->driver === '@wsServer.clients.driver.memory'
 			? $builder->getDefinition($this->prefix('wsServer.clients.driver.memory'))
 			: $builder->getDefinition($configuration->webSockets->storage->clients->driver);
 
 		$builder->addDefinition($this->prefix('wsServer.clients.storage'))
-			->setType(WsServerClients\WsServer\Storage::class)
+			->setType(Clients\Storage::class)
 			->setArguments(['ttl' => $configuration->webSockets->storage->clients->ttl])
 			->addSetup(
 				'?->setStorageDriver(?)',
@@ -920,12 +908,12 @@ final class CoreExtension extends DI\CompilerExtension
 			);
 
 		$router = $builder->addDefinition($this->prefix('webSockets.routing.router'))
-			->setType(CoreRouting\IWampRouter::class)
-			->setFactory(CoreRouting\RouteList::class);
+			->setType(Wamp\WampRouter::class)
+			->setFactory(Wamp\RouteList::class);
 
 		foreach ($configuration->webSockets->routes as $mask => $action) {
 			$router->addSetup(
-				sprintf('$service[] = new %s(?, ?);', CoreRouting\WampRoute::class),
+				sprintf('$service[] = new %s(?, ?);', Wamp\WampRoute::class),
 				[$mask, $action],
 			);
 		}
@@ -934,10 +922,10 @@ final class CoreExtension extends DI\CompilerExtension
 			->setType(HttpRouting\LinkGenerator::class);
 
 		$builder->addDefinition($this->prefix('wsServer.server.wrapper'))
-			->setType(WsServerServer\WsServer\Wrapper::class);
+			->setType(WebSocketsServer\Wrapper::class);
 
 		$flashApplication = $builder->addDefinition($this->prefix('wsServer.server.flashWrapper'))
-			->setType(WsServerServer\WsServer\FlashWrapper::class);
+			->setType(WebSocketsServer\FlashWrapper::class);
 
 		$flashApplication->addSetup('?->addAllowedAccess(?, \'80\')', [
 			$flashApplication,
@@ -950,7 +938,7 @@ final class CoreExtension extends DI\CompilerExtension
 		]);
 
 		$handlers = $builder->addDefinition($this->prefix('wsServer.server.handlers'))
-			->setType(WsServerServer\WsServer\Handlers::class);
+			->setType(WebSocketsServer\Handlers::class);
 
 		if ($configuration->webSockets->loop === null) {
 			$loop = $builder->getByType(React\EventLoop\LoopInterface::class) === null
@@ -965,7 +953,7 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		$serverConfiguration = $builder->addDefinition($this->prefix('wsServer.server.configuration'))
-			->setType(WsServerServer\WsServer\Configuration::class)
+			->setType(WebSocketsServer\Configuration::class)
 			->setArguments([
 				'port' => $configuration->webSockets->server->port,
 				'address' => $configuration->webSockets->server->address,
@@ -975,20 +963,20 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if ($builder->findByType(Log\LoggerInterface::class) === []) {
 			$builder->addDefinition($this->prefix('wsServer.server.logger'))
-				->setType(WsServerHelpers\WsServer\Console::class);
+				->setType(WebSocketsHelpers\Console::class);
 		}
 
 		$builder->addDefinition($this->prefix('wsServer.server.server'))
-			->setType(WsServerServer\WsServer\Server::class)
+			->setType(WebSocketsServer\ServerRuntime::class)
 			->setArguments([$handlers, $loop, $serverConfiguration]);
 
 		$wampStorageDriver = $configuration->webSockets->storage->topics->driver === '@wsServer.wamp.topics.driver.memory'
 			? $builder->addDefinition($this->prefix('wsServer.wamp.topics.driver.memory'))
-			->setType(InMemory::class)
+			->setType(TopicsDrivers\InMemory::class)
 			: $builder->getDefinition($this->prefix('wsServer.wamp.topics.driver.memory'));
 
 		$builder->addDefinition($this->prefix('wsServer.wamp.topics.storage'))
-			->setType(Storage::class)
+			->setType(Topics\Storage::class)
 			->setArguments(['ttl' => $configuration->webSockets->storage->topics->ttl])
 			->addSetup(
 				'?->setStorageDriver(?)',
@@ -996,23 +984,23 @@ final class CoreExtension extends DI\CompilerExtension
 			);
 
 		$builder->addDefinition($this->prefix('webSockets.wamp.application'))
-			->setType(WebSocketsControllers\WebSockets\WampApplication::class);
+			->setType(Controllers\WampApplication::class);
 
 		$builder->addDefinition($this->prefix('webSockets.wamp.serializer'))
-			->setType(WebSocketsEncoding\WebSockets\PushMessageSerializer::class);
+			->setType(WebSocketsEncoding\PushMessageSerializer::class);
 
 		$builder->addDefinition($this->prefix('webSockets.wamp.pushRegistry'))
-			->setType(WebSocketsMessaging\WebSockets\PushMessages\ConsumersRegistry::class);
+			->setType(PushMessages\ConsumersRegistry::class);
 
-		if ($builder->getByType(WsServerClients\WsServer\IClientFactory::class) !== null) {
-			$builder->removeDefinition($builder->getByType(WsServerClients\WsServer\IClientFactory::class));
+		if ($builder->getByType(Clients\ClientProvider::class) !== null) {
+			$builder->removeDefinition($builder->getByType(Clients\ClientProvider::class));
 		}
 
 		$builder->addDefinition($this->prefix('wsServer.wamp.clientsFactory'))
-			->setType(WsServerClients\WsServer\WampClientFactory::class);
+			->setType(Clients\WampClientFactory::class);
 
 		$builder->addDefinition($this->prefix('wsServer.wamp.subscribers.onServerStart'))
-			->setType(WsServerSubscribers\WsServer\OnServerStartHandler::class);
+			->setType(WebSocketsSubscribers\OnServerStartHandler::class);
 
 		/**
 		 * HTTP SERVER
@@ -1070,11 +1058,11 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('wsServer.commands.wsServer'), new DI\Definitions\ServiceDefinition())
-			->setType(WsServerCommands\WsServer::class)
+			->setType(WebSocketsCommands\WsServer::class)
 			->setArguments(['exchangeFactories' => $builder->findByType(Exchange\Factory::class)]);
 
 		$builder->addDefinition($this->prefix('wsServer.subscribers.client'), new DI\Definitions\ServiceDefinition())
-			->setType(WsServerSubscribers\WsServer\Client::class)
+			->setType(WebSocketsSubscribers\Client::class)
 			->setArgument('wsKeys', $configuration->wsServer->access->keys)
 			->setArgument('allowedOrigins', $configuration->wsServer->access->origins);
 	}
@@ -1442,7 +1430,7 @@ final class CoreExtension extends DI\CompilerExtension
 
 		$allControllers = [];
 
-		foreach ($builder->findByType(WebSocketsControllers\WebSockets\Controller\IController::class) as $def) {
+		foreach ($builder->findByType(Controllers\RequestController::class) as $def) {
 			$allControllers[$def->getType()] = $def;
 		}
 
@@ -1463,65 +1451,65 @@ final class CoreExtension extends DI\CompilerExtension
 			// nothing in this extension registers it directly, only whichever extension embeds
 			// the WAMP controller-dispatch framework does. Wiring events onto a service that was
 			// never defined would be a hard MissingServiceException at compile time.
-			$applicationType = $builder->getByType(WebSocketsControllers\WebSockets\Application::class);
+			$applicationType = $builder->getByType(Controllers\Application::class);
 
 			if ($applicationType !== null) {
 				$application = $builder->getDefinition($applicationType);
 				assert($application instanceof DI\Definitions\ServiceDefinition);
 
 				$application->addSetup('?->onOpen[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(OpenEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\OpenEvent::class),
 				]);
 				$application->addSetup('?->onClose[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(CloseEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\CloseEvent::class),
 				]);
 				$application->addSetup('?->onMessage[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 					'@self', $dispatcher, new PhpGenerator\Literal(
-						MessageEvent::class,
+						WebSocketsEvents\MessageEvent::class,
 					),
 				]);
 				$application->addSetup('?->onError[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(ErrorEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\ErrorEvent::class),
 				]);
 			}
 
-			$server = $builder->getDefinition($builder->getByType(WsServerServer\WsServer\Server::class));
+			$server = $builder->getDefinition($builder->getByType(WebSocketsServer\ServerRuntime::class));
 			assert($server instanceof DI\Definitions\ServiceDefinition);
 			$server->addSetup('?->onCreate[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(CreateEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\CreateEvent::class),
 			]);
 			$server->addSetup('?->onStart[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(StartEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\StartEvent::class),
 			]);
 			$server->addSetup('?->onStop[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(StopEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\StopEvent::class),
 			]);
 
-			$serverWrapper = $builder->getDefinition($builder->getByType(WsServerServer\WsServer\Wrapper::class));
+			$serverWrapper = $builder->getDefinition($builder->getByType(WebSocketsServer\Wrapper::class));
 			assert($serverWrapper instanceof DI\Definitions\ServiceDefinition);
 			$serverWrapper->addSetup('?->onClientConnected[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 				'@self', $dispatcher, new PhpGenerator\Literal(
-					ClientConnectEvent::class,
+					WebSocketsEvents\ClientConnectEvent::class,
 				),
 			]);
 			$serverWrapper->addSetup(
 				'?->onClientDisconnected[] = function() {?->dispatch(new ?(...func_get_args()));}',
 				[
-					'@self', $dispatcher, new PhpGenerator\Literal(ClientDisconnectEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\ClientDisconnectEvent::class),
 				],
 			);
 			$serverWrapper->addSetup('?->onClientError[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(ClientErrorEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\ClientErrorEvent::class),
 			]);
 			$serverWrapper->addSetup('?->onIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 				'@self', $dispatcher, new PhpGenerator\Literal(
-					IncommingMessageEvent::class,
+					WebSocketsEvents\IncommingMessageEvent::class,
 				),
 			]);
 			$serverWrapper->addSetup(
 				'?->onAfterIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}',
 				[
-					'@self', $dispatcher, new PhpGenerator\Literal(AfterIncommingMessageEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\AfterIncommingMessageEvent::class),
 				],
 			);
 
@@ -1529,23 +1517,23 @@ final class CoreExtension extends DI\CompilerExtension
 			// extension (unlike base Application above), so no presence guard is needed here;
 			// preserved from WebSocketsWAMPExtension::beforeCompile().
 			$wampApplication = $builder->getDefinition(
-				$builder->getByType(WebSocketsControllers\WebSockets\WampApplication::class),
+				$builder->getByType(Controllers\WampApplication::class),
 			);
 			assert($wampApplication instanceof DI\Definitions\ServiceDefinition);
 			$wampApplication->addSetup('?->onPush[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(PushEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(WebSocketsEvents\PushEvent::class),
 			]);
 		}
 
 		$pushRegistry = $builder->getDefinition(
-			$builder->getByType(WebSocketsMessaging\WebSockets\PushMessages\ConsumersRegistry::class),
+			$builder->getByType(PushMessages\ConsumersRegistry::class),
 		);
 
-		foreach ($builder->findByType(WebSocketsMessaging\WebSockets\PushMessages\IConsumer::class) as $consumer) {
+		foreach ($builder->findByType(PushMessages\IConsumer::class) as $consumer) {
 			$pushRegistry->addSetup('?->addConsumer(?)', [$pushRegistry, $consumer]);
 		}
 
-		$wsServerServer = $builder->getDefinitionByType(WsServerServer\WsServer\Server::class);
+		$wsServerServer = $builder->getDefinitionByType(WebSocketsServer\ServerRuntime::class);
 		$wsServerServer->addSetup('$service->onStart[] = ?', [
 			'@' . $this->prefix('wsServer.wamp.subscribers.onServerStart'),
 		]);
@@ -1565,7 +1553,7 @@ final class CoreExtension extends DI\CompilerExtension
 		$wsServerDispatcher = $builder->getDefinition(
 			$builder->getByType(WsServerEventDispatcher\EventDispatcherInterface::class),
 		);
-		$socketWrapperServiceName = $builder->getByType(WsServerServer\WsServer\Wrapper::class);
+		$socketWrapperServiceName = $builder->getByType(WebSocketsServer\Wrapper::class);
 		assert(is_string($socketWrapperServiceName));
 		$socketWrapperService = $builder->getDefinition($socketWrapperServiceName);
 		assert($socketWrapperService instanceof DI\Definitions\ServiceDefinition);
@@ -1573,13 +1561,13 @@ final class CoreExtension extends DI\CompilerExtension
 		$socketWrapperService->addSetup(
 			'?->onClientConnected[] = function() {?->dispatch(new ?(...func_get_args()));}',
 			[
-				'@self', $wsServerDispatcher, new PhpGenerator\Literal(ClientConnected::class),
+				'@self', $wsServerDispatcher, new PhpGenerator\Literal(WebSocketsEvents\ClientConnected::class),
 			],
 		);
 		$socketWrapperService->addSetup(
 			'?->onIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}',
 			[
-				'@self', $wsServerDispatcher, new PhpGenerator\Literal(IncomingMessage::class),
+				'@self', $wsServerDispatcher, new PhpGenerator\Literal(WebSocketsEvents\IncomingMessage::class),
 			],
 		);
 	}

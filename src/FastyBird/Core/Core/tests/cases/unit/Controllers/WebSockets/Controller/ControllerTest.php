@@ -2,11 +2,10 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets\Controller;
 
-use FastyBird\Core\Controllers\WebSockets\Controller\Controller;
-use FastyBird\Core\Controllers\WebSockets\Controller\IControllerFactory;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Routing\IWampRouter;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Wamp;
 use Nette\DI\Container;
 use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +33,7 @@ final class ControllerTest extends TestCase
 
 	public function testGetPayloadReturnsSameInstanceSendPayloadReads(): void
 	{
-		$controller = new class extends Controller
+		$controller = new class extends Controllers\Controller
 		{
 
 		};
@@ -49,13 +48,13 @@ final class ControllerTest extends TestCase
 	 */
 	public function testInjectPrimarySucceedsOnceAndRejectsASecondCall(): void
 	{
-		$controller = new class extends Controller
+		$controller = new class extends Controllers\Controller
 		{
 
 		};
 
-		$controllerFactory = $this->createMock(IControllerFactory::class);
-		$router = $this->createMock(IWampRouter::class);
+		$controllerFactory = $this->createMock(Controllers\IControllerFactory::class);
+		$router = $this->createMock(Wamp\WampRouter::class);
 		$linkGenerator = new Routing\LinkGenerator($router);
 
 		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
@@ -71,13 +70,13 @@ final class ControllerTest extends TestCase
 	 */
 	public function testGetUserThrowsInvalidStateWhenNoUserServiceWasInjected(): void
 	{
-		$controller = new class extends Controller
+		$controller = new class extends Controllers\Controller
 		{
 
 		};
 
-		$controllerFactory = $this->createMock(IControllerFactory::class);
-		$router = $this->createMock(IWampRouter::class);
+		$controllerFactory = $this->createMock(Controllers\IControllerFactory::class);
+		$router = $this->createMock(Wamp\WampRouter::class);
 		$linkGenerator = new Routing\LinkGenerator($router);
 
 		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);

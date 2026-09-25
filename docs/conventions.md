@@ -65,7 +65,7 @@ The baseline may only shrink. A stale entry in it fails the gate.
 `src/FastyBird/Core/Core/src` is still the type-first layout PRs #454/#455 produced:
 `Middleware`, `Subscribers`, `Entities`, `Controllers`, `Providers`, `Presenters`, `Helpers`,
 `Services`, `Types`, `Utilities` and more all sit at the top level, and epic test files import
-paths like `FastyBird\Core\Entities\WsServer\Topics\Topic` that this section's target
+paths like `FastyBird\Core\Middleware\SimpleAuth\Authorization` that this section's target
 contradicts.
 
 Once E3 lands, Core will be **capability-first**, following Symfony's component convention:

@@ -1,0 +1,40 @@
+<?php declare(strict_types = 1);
+
+namespace FastyBird\Core\WebSockets\Entities\PushMessages;
+
+use Override;
+
+/**
+ * A push message
+ */
+final class Message implements IMessage
+{
+
+	public function __construct(private string $topic, private array $data)
+	{
+	}
+
+	#[Override]
+	public function getTopic(): string
+	{
+		return $this->topic;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	#[Override]
+	public function getData(): array
+	{
+		return $this->data;
+	}
+
+	public function jsonSerialize(): array
+	{
+		return [
+			'topic' => $this->topic,
+			'data' => $this->data,
+		];
+	}
+
+}

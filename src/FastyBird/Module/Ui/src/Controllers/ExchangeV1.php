@@ -15,13 +15,14 @@
 
 namespace FastyBird\Module\Ui\Controllers;
 
-use FastyBird\Core\Controllers\WebSockets as WebSocketsControllers;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Entities\WsServer as WsServerEntities;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Entities\Topics;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Events;
@@ -43,7 +44,7 @@ use function is_array;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
+final class ExchangeV1 extends Controllers\Controller
 {
 
 	public function __construct(
@@ -57,11 +58,11 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	}
 
 	/**
-	 * @param WsServerEntities\Topics\ITopic<mixed> $topic
+	 * @param Topics\ITopic<mixed> $topic
 	 */
 	public function actionSubscribe(
-		WsServerEntities\IClient $client,
-		WsServerEntities\Topics\ITopic $topic,
+		Entities\ConnectedClient $client,
+		Topics\ITopic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -81,7 +82,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 			foreach ($dataSources as $dataSource) {
 				$client->send(Utils\Json::encode([
-					WebSocketsControllers\WampApplication::MSG_EVENT,
+					Controllers\WampApplication::MSG_EVENT,
 					$topic->getId(),
 					Utils\Json::encode([
 						'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
@@ -104,7 +105,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 
 	/**
 	 * @param array<string, mixed> $args
-	 * @param WsServerEntities\Topics\ITopic<mixed> $topic
+	 * @param Topics\ITopic<mixed> $topic
 	 *
 	 * @throws UiExceptions\InvalidArgument
 	 * @throws UiExceptions\InvalidState
@@ -116,8 +117,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	 */
 	public function actionCall(
 		array $args,
-		WsServerEntities\IClient $client,
-		WsServerEntities\Topics\ITopic $topic,
+		Entities\ConnectedClient $client,
+		Topics\ITopic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -164,8 +165,8 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 	 * @throws Utils\JsonException
 	 */
 	private function handleDataSourceAction(
-		WsServerEntities\IClient $client,
-		WsServerEntities\Topics\ITopic $topic,
+		Entities\ConnectedClient $client,
+		Topics\ITopic $topic,
 		UiDocuments\Widgets\DataSources\Actions\Action $entity,
 	): void
 	{
@@ -188,7 +189,7 @@ final class ExchangeV1 extends WebSocketsControllers\Controller\Controller
 			$this->dispatcher?->dispatch(new Events\ActionCommandReceived($entity, $dataSource));
 
 			$client->send(Utils\Json::encode([
-				WebSocketsControllers\WampApplication::MSG_EVENT,
+				Controllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
 					'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,

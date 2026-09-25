@@ -17,21 +17,21 @@ namespace FastyBird\Module\Devices\DI;
 
 use Contributte\Translation;
 use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Controllers\WebSockets\Controller;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Server\WsServer as ServerWsServer;
-use FastyBird\Core\Topics\WsServer as TopicsWsServer;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
+use FastyBird\Core\WebSockets\Server;
+use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Commands;
 use FastyBird\Module\Devices\Connectors;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
-use FastyBird\Module\Devices\Controllers;
+use FastyBird\Module\Devices\Controllers as DevicesControllers;
 use FastyBird\Module\Devices\Hydrators;
 use FastyBird\Module\Devices\Middleware;
 use FastyBird\Module\Devices\Models;
@@ -523,7 +523,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.connectors'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ConnectorsV1::class)
+			->setType(DevicesControllers\ConnectorsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -531,7 +531,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.connectorProperties'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ConnectorPropertiesV1::class)
+			->setType(DevicesControllers\ConnectorPropertiesV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -539,7 +539,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.connectorPropertyState'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ConnectorPropertyStateV1::class)
+			->setType(DevicesControllers\ConnectorPropertyStateV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -547,7 +547,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.connectorsControls'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ConnectorControlsV1::class)
+			->setType(DevicesControllers\ConnectorControlsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -556,7 +556,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.devices'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\DevicesV1::class)
+			->setType(DevicesControllers\DevicesV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -564,7 +564,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.deviceChildren'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\DeviceChildrenV1::class)
+			->setType(DevicesControllers\DeviceChildrenV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -572,7 +572,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.deviceParents'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\DeviceParentsV1::class)
+			->setType(DevicesControllers\DeviceParentsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -580,7 +580,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.deviceProperties'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\DevicePropertiesV1::class)
+			->setType(DevicesControllers\DevicePropertiesV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -588,7 +588,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.devicePropertyChildren'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\DevicePropertyChildrenV1::class)
+			->setType(DevicesControllers\DevicePropertyChildrenV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -596,7 +596,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.devicePropertyState'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\DevicePropertyStateV1::class)
+			->setType(DevicesControllers\DevicePropertyStateV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -604,7 +604,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.deviceControls'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\DeviceControlsV1::class)
+			->setType(DevicesControllers\DeviceControlsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -613,7 +613,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.channels'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ChannelsV1::class)
+			->setType(DevicesControllers\ChannelsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -621,7 +621,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.channelProperties'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ChannelPropertiesV1::class)
+			->setType(DevicesControllers\ChannelPropertiesV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -629,7 +629,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.channelPropertyChildren'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ChannelPropertyChildrenV1::class)
+			->setType(DevicesControllers\ChannelPropertyChildrenV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -637,7 +637,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.channelPropertyState'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ChannelPropertyStateV1::class)
+			->setType(DevicesControllers\ChannelPropertyStateV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -645,7 +645,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('controllers.channelControls'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(Controllers\ChannelControlsV1::class)
+			->setType(DevicesControllers\ChannelControlsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
@@ -654,7 +654,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 */
 
 		$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
-			->setType(Controllers\ExchangeV1::class)
+			->setType(DevicesControllers\ExchangeV1::class)
 			->setArguments([
 				'logger' => $logger,
 			])
@@ -909,7 +909,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		if (
 			$builder->findByType(Routing\LinkGenerator::class) !== []
-			&& $builder->findByType(TopicsWsServer\IStorage::class) !== []
+			&& $builder->findByType(Topics\IStorage::class) !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.socketsBridge'),
@@ -1068,7 +1068,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		try {
 			$wsControllerFactoryService = $builder->getDefinitionByType(
-				Controller\IControllerFactory::class,
+				WebSocketsControllers\IControllerFactory::class,
 			);
 			assert($wsControllerFactoryService instanceof DI\Definitions\ServiceDefinition);
 
@@ -1084,7 +1084,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
 			assert($consumerService instanceof DI\Definitions\ServiceDefinition);
 
-			$wsServerService = $builder->getDefinitionByType(ServerWsServer\Server::class);
+			$wsServerService = $builder->getDefinitionByType(Server\ServerRuntime::class);
 			assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
 
 			$wsServerService->addSetup(

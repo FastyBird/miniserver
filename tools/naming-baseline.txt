@@ -26,7 +26,6 @@ alias	src/FastyBird/Automator/DevicesModule/tests/cases/unit/Entities/Actions/Ac
 alias	src/FastyBird/Automator/DevicesModule/tests/cases/unit/Entities/Conditions/ConditionTest.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Automator/DevicesModule/tests/cases/unit/Queries/FindActionsTest.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Automator/DevicesModule/tests/cases/unit/Queries/FindConditionsTest.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
-alias	src/FastyBird/Bridge/DevicesModuleUiModule/src/Consumers/SocketsBridge.php	FastyBird\Core\Topics\WsServer as WsServerTopics (expected TopicsWsServer)
 alias	src/FastyBird/Bridge/DevicesModuleUiModule/src/DI/DevicesModuleUiModuleExtension.php	FastyBird\Core\Boot as ApplicationBoot (expected CoreBoot)
 alias	src/FastyBird/Bridge/DevicesModuleUiModule/src/Schemas/Widgets/DataSources/ChannelProperty.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Bridge/DevicesModuleUiModule/src/Schemas/Widgets/DataSources/ConnectorProperty.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
@@ -423,89 +422,18 @@ alias	src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/DbTestCase.php	FastyB
 alias	src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/DbTestCase.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/Queue/Consumers/StoreBridgeDevicesTest.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit/Queue/Consumers/StoreBridgeInfoTest.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
-alias	src/FastyBird/Core/Core/src/Clients/WsServer/ClientFactory.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Clients/WsServer/Drivers/IDriver.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Clients/WsServer/Drivers/InMemory.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Clients/WsServer/IClientFactory.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Clients/WsServer/IStorage.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Clients/WsServer/Storage.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Clients/WsServer/WampClientFactory.php	FastyBird\Core\Entities\WsServer as WebSocketsEntities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Commands/WsServer.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
-alias	src/FastyBird/Core/Core/src/Commands/WsServer.php	FastyBird\Core\Server\WsServer as Server (expected ServerWsServer)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php	FastyBird\Core\Clients\WsServer as Clients (expected ClientsWsServer)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php	FastyBird\Core\Routing as Router (expected CoreRouting)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Application.php	FastyBird\Core\Server\WsServer as Server (expected ServerWsServer)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/Controller.php	FastyBird\Core\Routing as Router (expected CoreRouting)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/ControllerFactory.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Controller/IController.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/IApplication.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/Responses/ErrorResponse.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php	FastyBird\Core\Clients\WsServer as WebSocketsClients (expected ClientsWsServer)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php	FastyBird\Core\Entities\WsServer as WebSocketsEntities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php	FastyBird\Core\Entities\WsServer\Topics as TopicEntities (expected WsServerTopics)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php	FastyBird\Core\Routing as WebSocketsRouter (expected CoreRouting)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php	FastyBird\Core\Server\WsServer as WebSocketsServer (expected ServerWsServer)
-alias	src/FastyBird/Core/Core/src/Controllers/WebSockets/WampApplication.php	FastyBird\Core\Topics\WsServer as Topics (expected TopicsWsServer)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Clients as WsServerClients (expected CoreClients)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Commands as WsServerCommands (expected CoreCommands)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Controllers as WebSocketsControllers (expected CoreControllers)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Encoding as WebSocketsEncoding (expected CoreEncoding)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Events as SimpleAuthEvents (expected CoreEvents)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Helpers as WsServerHelpers (expected CoreHelpers)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Mapping as SimpleAuthMapping (expected CoreMapping)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Messaging as WebSocketsMessaging (expected CoreMessaging)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Middleware as SimpleAuthMiddleware (expected CoreMiddleware)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Persistence as DoctrineCrudPersistence (expected CorePersistence)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Security as SimpleAuthSecurity (expected CoreSecurity)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Server as WsServerServer (expected CoreServer)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Services as SimpleAuthServices (expected CoreServices)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Subscribers as ApplicationSubscribers (expected CoreSubscribers)
 alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Subscribers as SimpleAuthSubscribers (expected CoreSubscribers)
-alias	src/FastyBird/Core/Core/src/DI/CoreExtension.php	FastyBird\Core\Subscribers as WsServerSubscribers (expected CoreSubscribers)
-alias	src/FastyBird/Core/Core/src/Encoding/WebSockets/IProtocol.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Encoding/WebSockets/IProtocol.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Encoding/WebSockets/PushMessageSerializer.php	FastyBird\Core\Entities\WebSockets\PushMessages as Entities (expected WebSocketsPushMessages)
-alias	src/FastyBird/Core/Core/src/Encoding/WebSockets/RFC6455.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Encoding/WebSockets/RFC6455.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Encoding/WebSockets/RFC6455/Frame.php	FastyBird\Core\Encoding\WebSockets as Protocols (expected EncodingWebSockets)
-alias	src/FastyBird/Core/Core/src/Encoding/WebSockets/RFC6455/Message.php	FastyBird\Core\Encoding\WebSockets as Protocols (expected EncodingWebSockets)
 alias	src/FastyBird/Core/Core/src/Entities/SimpleAuth/Policies/Policy.php	FastyBird\Core\Types\SimpleAuth as Types (expected TypesSimpleAuth)
 alias	src/FastyBird/Core/Core/src/Entities/SimpleAuth/TOwner.php	FastyBird\Core\Mapping\SimpleAuth\Attribute as FB (expected SimpleAuthAttribute)
 alias	src/FastyBird/Core/Core/src/Entities/SimpleAuth/Tokens/Token.php	FastyBird\Core\Types\SimpleAuth as Types (expected TypesSimpleAuth)
-alias	src/FastyBird/Core/Core/src/Entities/WebSockets/IWebSocket.php	FastyBird\Core\Encoding\WebSockets as Protocols (expected EncodingWebSockets)
-alias	src/FastyBird/Core/Core/src/Entities/WebSockets/WebSocket.php	FastyBird\Core\Encoding\WebSockets as Protocols (expected EncodingWebSockets)
-alias	src/FastyBird/Core/Core/src/Entities/WsServer/IClient.php	FastyBird\Core\Encoding\WebSockets as Protocols (expected EncodingWebSockets)
-alias	src/FastyBird/Core/Core/src/Entities/WsServer/Topics/ITopic.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Entities/WsServer/Topics/Topic.php	FastyBird\Core\Entities\WsServer as WebSocketsEntities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/AfterIncommingMessageEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/ClientConnectEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/ClientConnected.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/ClientDisconnectEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/ClientErrorEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/CloseEvent.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Events/CloseEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/CreateEvent.php	FastyBird\Core\Server\WsServer as Server (expected ServerWsServer)
-alias	src/FastyBird/Core/Core/src/Events/ErrorEvent.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Events/ErrorEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/IncomingMessage.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/IncommingMessageEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/MessageEvent.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Events/MessageEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/OpenEvent.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Events/OpenEvent.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Events/PushEvent.php	FastyBird\Core\Entities\WsServer\Topics as TopicEntities (expected WsServerTopics)
-alias	src/FastyBird/Core/Core/src/Events/StartEvent.php	FastyBird\Core\Server\WsServer as Server (expected ServerWsServer)
-alias	src/FastyBird/Core/Core/src/Events/StopEvent.php	FastyBird\Core\Server\WsServer as Server (expected ServerWsServer)
-alias	src/FastyBird/Core/Core/src/Http/Routing/LinkGenerator.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
 alias	src/FastyBird/Core/Core/src/Mapping/SimpleAuth/Driver/Owner.php	FastyBird\Core\Mapping\SimpleAuth as Mapping (expected MappingSimpleAuth)
-alias	src/FastyBird/Core/Core/src/Messaging/WebSockets/PushMessages/Pusher.php	FastyBird\Core\Encoding\WebSockets as Serializers (expected EncodingWebSockets)
-alias	src/FastyBird/Core/Core/src/Messaging/WebSockets/PushMessages/Pusher.php	FastyBird\Core\Entities\WebSockets\PushMessages as Entities (expected WebSocketsPushMessages)
-alias	src/FastyBird/Core/Core/src/Messaging/WebSockets/PushMessages/Pusher.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
 alias	src/FastyBird/Core/Core/src/Middleware/SimpleAuth/Authorization.php	FastyBird\Core\Exceptions as SimpleAuthExceptions (expected CoreExceptions)
 alias	src/FastyBird/Core/Core/src/Middleware/SimpleAuth/User.php	FastyBird\Core\Exceptions as SimpleAuthExceptions (expected CoreExceptions)
 alias	src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php	FastyBird\Core\Types\SimpleAuth as Types (expected TypesSimpleAuth)
@@ -521,9 +449,6 @@ alias	src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Queries/FindTokens.php	
 alias	src/FastyBird/Core/Core/src/Presenters/Application/BasePresenter.php	FastyBird\Core\Presenters\SimpleAuth as SimpleAuthApplication (expected PresentersSimpleAuth)
 alias	src/FastyBird/Core/Core/src/Presenters/Application/BasePresenter.php	FastyBird\Core\UI\Application as UI (expected UIApplication)
 alias	src/FastyBird/Core/Core/src/Presenters/SimpleAuth/TSimpleAuth.php	FastyBird\Core\Security\SimpleAuth as Security (expected SecuritySimpleAuth)
-alias	src/FastyBird/Core/Core/src/Routing/IWampRouter.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Routing/RouteList.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Routing/WampRoute.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
 alias	src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/AnnotationChecker.php	FastyBird\Core\Constants as SimpleAuth (expected CoreConstants)
 alias	src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/AnnotationChecker.php	FastyBird\Core\Security\SimpleAuth as Security (expected SecuritySimpleAuth)
 alias	src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/LatteChecker.php	FastyBird\Core\Constants as SimpleAuth (expected CoreConstants)
@@ -539,15 +464,6 @@ alias	src/FastyBird/Core/Core/src/Security/SimpleAuth/User.php	FastyBird\Core\Co
 alias	src/FastyBird/Core/Core/src/Security/SimpleAuth/User.php	FastyBird\Core\Exceptions as SimpleAuthExceptions (expected CoreExceptions)
 alias	src/FastyBird/Core/Core/src/Security/SimpleAuth/User.php	FastyBird\Core\Security\SimpleAuth as Security (expected SecuritySimpleAuth)
 alias	src/FastyBird/Core/Core/src/Security/SimpleAuth/UserStorage.php	FastyBird\Core\Security\SimpleAuth as Security (expected SecuritySimpleAuth)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/FlashWrapper.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/Handlers.php	FastyBird\Core\Clients\WsServer as Clients (expected ClientsWsServer)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/IWrapper.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php	FastyBird\Core\Clients\WsServer as Clients (expected ClientsWsServer)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php	FastyBird\Core\Controllers\WebSockets as Application (expected ControllersWebSockets)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php	FastyBird\Core\Encoding\WebSockets as Protocols (expected EncodingWebSockets)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php	FastyBird\Core\Entities\WebSockets as WebSocketEntities (expected EntitiesWebSockets)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
 alias	src/FastyBird/Core/Core/src/Services/SimpleAuth/Auth.php	FastyBird\Core\Exceptions as SimpleAuthExceptions (expected CoreExceptions)
 alias	src/FastyBird/Core/Core/src/Services/SimpleAuth/Auth.php	FastyBird\Core\Security\SimpleAuth as Security (expected SecuritySimpleAuth)
 alias	src/FastyBird/Core/Core/src/Services/SimpleAuth/Auth.php	FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity (expected SecuritySimpleAuth)
@@ -558,14 +474,6 @@ alias	src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/Policy.php	FastyBird\Co
 alias	src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/Policy.php	FastyBird\Core\Security\SimpleAuth as Security (expected SecuritySimpleAuth)
 alias	src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/User.php	FastyBird\Core\Mapping\SimpleAuth as Mapping (expected MappingSimpleAuth)
 alias	src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/User.php	FastyBird\Core\Security\SimpleAuth as Security (expected SecuritySimpleAuth)
-alias	src/FastyBird/Core/Core/src/Subscribers/WsServer/Client.php	FastyBird\Core\Constants as WsServer (expected CoreConstants)
-alias	src/FastyBird/Core/Core/src/Subscribers/WsServer/Client.php	FastyBird\Core\Entities\WsServer as Entities (expected EntitiesWsServer)
-alias	src/FastyBird/Core/Core/src/Subscribers/WsServer/Client.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
-alias	src/FastyBird/Core/Core/src/Subscribers/WsServer/Client.php	FastyBird\Core\Server\WsServer as Server (expected ServerWsServer)
-alias	src/FastyBird/Core/Core/src/Topics/WsServer/Drivers/IDriver.php	FastyBird\Core\Entities\WsServer\Topics as Entities (expected WsServerTopics)
-alias	src/FastyBird/Core/Core/src/Topics/WsServer/Drivers/InMemory.php	FastyBird\Core\Entities\WsServer\Topics as Entities (expected WsServerTopics)
-alias	src/FastyBird/Core/Core/src/Topics/WsServer/IStorage.php	FastyBird\Core\Entities\WsServer\Topics as Entities (expected WsServerTopics)
-alias	src/FastyBird/Core/Core/src/Topics/WsServer/Storage.php	FastyBird\Core\Entities\WsServer\Topics as Entities (expected WsServerTopics)
 alias	src/FastyBird/Core/Core/src/Values/Transformers/EquationTransformer.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
 alias	src/FastyBird/Core/Core/src/Values/Types/Sources/Addon.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
 alias	src/FastyBird/Core/Core/src/Values/Types/Sources/Automator.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
@@ -573,10 +481,10 @@ alias	src/FastyBird/Core/Core/src/Values/Types/Sources/Bridge.php	FastyBird\Core
 alias	src/FastyBird/Core/Core/src/Values/Types/Sources/Connector.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
 alias	src/FastyBird/Core/Core/src/Values/Types/Sources/Module.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
 alias	src/FastyBird/Core/Core/src/Values/Types/Sources/Plugin.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
-alias	src/FastyBird/Core/Core/tests/cases/unit/DI/CoreExtensionTest.php	FastyBird\Core\Commands as WsServerCommands (expected CoreCommands)
-alias	src/FastyBird/Core/Core/tests/cases/unit/DI/CoreExtensionTest.php	FastyBird\Core\Controllers as WebSocketsControllers (expected CoreControllers)
+alias	src/FastyBird/Core/Core/src/WebSockets/Controllers/ControllerFactory.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
+alias	src/FastyBird/Core/Core/src/WebSockets/PushMessages/Pusher.php	FastyBird\Core\Exceptions as WebSocketsExceptions (expected CoreExceptions)
+alias	src/FastyBird/Core/Core/src/WebSockets/Subscribers/Client.php	FastyBird\Core\Constants as WsServer (expected CoreConstants)
 alias	src/FastyBird/Core/Core/tests/cases/unit/DI/CoreExtensionTest.php	FastyBird\Core\Services as SimpleAuthServices (expected CoreServices)
-alias	src/FastyBird/Core/Core/tests/cases/unit/DI/CoreExtensionTest.php	FastyBird\Core\Subscribers as WsServerSubscribers (expected CoreSubscribers)
 alias	src/FastyBird/Module/Accounts/src/Commands/Accounts/Create.php	FastyBird\Core\Constants as SimpleAuth (expected CoreConstants)
 alias	src/FastyBird/Module/Accounts/src/Commands/Accounts/Create.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Accounts/src/Commands/Accounts/Create.php	FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity (expected SecuritySimpleAuth)
@@ -660,7 +568,6 @@ alias	src/FastyBird/Module/Accounts/tests/cases/unit/Subscribers/EmailEntityTest
 alias	src/FastyBird/Module/Devices/src/Commands/Connector.php	FastyBird\Core\Exceptions as ExchangeExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Devices/src/Commands/Diagnostics.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Devices/src/Constants.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
-alias	src/FastyBird/Module/Devices/src/Consumers/SocketsBridge.php	FastyBird\Core\Topics\WsServer as WsServerTopics (expected TopicsWsServer)
 alias	src/FastyBird/Module/Devices/src/Consumers/StatesActions.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
 alias	src/FastyBird/Module/Devices/src/Consumers/StatesActions.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Devices/src/Controllers/BaseV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
@@ -674,8 +581,6 @@ alias	src/FastyBird/Module/Devices/src/Controllers/DevicePropertiesV1.php	FastyB
 alias	src/FastyBird/Module/Devices/src/Controllers/DevicePropertyStateV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Devices/src/Controllers/DevicesV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Devices/src/Controllers/ExchangeV1.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
-alias	src/FastyBird/Module/Devices/src/Controllers/ExchangeV1.php	FastyBird\Core\Controllers\WebSockets as WebSocketsControllers (expected ControllersWebSockets)
-alias	src/FastyBird/Module/Devices/src/Controllers/ExchangeV1.php	FastyBird\Core\Entities\WsServer as WsServerEntities (expected EntitiesWsServer)
 alias	src/FastyBird/Module/Devices/src/Controllers/ExchangeV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Devices/src/DI/DevicesExtension.php	FastyBird\Core\Boot as ApplicationBoot (expected CoreBoot)
 alias	src/FastyBird/Module/Devices/src/Documents/Channels/Properties/Dynamic.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
@@ -731,7 +636,6 @@ alias	src/FastyBird/Module/Devices/src/Presenters/TDevices.php	FastyBird\Core\Ex
 alias	src/FastyBird/Module/Devices/src/Router/ApiRoutes.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
 alias	src/FastyBird/Module/Devices/src/Router/ApiRoutes.php	FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware (expected MiddlewareSimpleAuth)
 alias	src/FastyBird/Module/Devices/src/Router/SocketRoutes.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
-alias	src/FastyBird/Module/Devices/src/Router/SocketRoutes.php	FastyBird\Core\Routing as WebSocketsRouting (expected CoreRouting)
 alias	src/FastyBird/Module/Devices/src/Schemas/Channels/Properties/Dynamic.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Devices/src/Schemas/Channels/Properties/Mapped.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Devices/src/Schemas/Channels/Properties/Property.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
@@ -835,12 +739,9 @@ alias	src/FastyBird/Module/Triggers/tests/cases/unit/Router/RouterTest.php	Fasty
 alias	src/FastyBird/Module/Triggers/tests/cases/unit/Router/RouterTest.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Triggers/tests/cases/unit/Subscribers/ModuleEntitiesTest.php	FastyBird\Core\EventLoop\Application as ApplicationEventLoop (expected EventLoopApplication)
 alias	src/FastyBird/Module/Ui/src/Constants.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
-alias	src/FastyBird/Module/Ui/src/Consumers/SocketsBridge.php	FastyBird\Core\Topics\WsServer as WsServerTopics (expected TopicsWsServer)
 alias	src/FastyBird/Module/Ui/src/Controllers/BaseV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Ui/src/Controllers/DashboardsV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Ui/src/Controllers/DataSourcesV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
-alias	src/FastyBird/Module/Ui/src/Controllers/ExchangeV1.php	FastyBird\Core\Controllers\WebSockets as WebSocketsControllers (expected ControllersWebSockets)
-alias	src/FastyBird/Module/Ui/src/Controllers/ExchangeV1.php	FastyBird\Core\Entities\WsServer as WsServerEntities (expected EntitiesWsServer)
 alias	src/FastyBird/Module/Ui/src/Controllers/ExchangeV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Ui/src/Controllers/GroupsV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Ui/src/Controllers/TabsV1.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
@@ -860,7 +761,6 @@ alias	src/FastyBird/Module/Ui/src/Models/Entities/Widgets/Repository.php	FastyBi
 alias	src/FastyBird/Module/Ui/src/Router/ApiRoutes.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
 alias	src/FastyBird/Module/Ui/src/Router/ApiRoutes.php	FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware (expected MiddlewareSimpleAuth)
 alias	src/FastyBird/Module/Ui/src/Router/SocketRoutes.php	FastyBird\Core\Constants as Metadata (expected CoreConstants)
-alias	src/FastyBird/Module/Ui/src/Router/SocketRoutes.php	FastyBird\Core\Routing as WebSocketsRouting (expected CoreRouting)
 alias	src/FastyBird/Module/Ui/src/Subscribers/ModuleEntities.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Ui/src/Subscribers/ModuleEntities.php	FastyBird\Core\Exceptions as ExchangeExceptions (expected CoreExceptions)
 alias	src/FastyBird/Module/Ui/tests/cases/unit/BaseTestCase.php	FastyBird\Core\Boot as ApplicationBoot (expected CoreBoot)
@@ -911,28 +811,12 @@ alias	src/FastyBird/Plugin/RedisDbCache/tests/cases/unit/BaseTestCase.php	FastyB
 alias	src/FastyBird/Plugin/RedisDbCache/tests/cases/unit/BaseTestCase.php	FastyBird\Core\Exceptions as ApplicationExceptions (expected CoreExceptions)
 namespace	src/FastyBird/Core/Core/src/Caching/Application/MemoryAdapterStorage.php	Application in FastyBird\Core\Caching\Application
 namespace	src/FastyBird/Core/Core/src/Caching/Application/MemoryStorage.php	Application in FastyBird\Core\Caching\Application
-namespace	src/FastyBird/Core/Core/src/Clients/WsServer/ClientFactory.php	WsServer in FastyBird\Core\Clients\WsServer
-namespace	src/FastyBird/Core/Core/src/Clients/WsServer/Drivers/IDriver.php	WsServer in FastyBird\Core\Clients\WsServer\Drivers
-namespace	src/FastyBird/Core/Core/src/Clients/WsServer/Drivers/InMemory.php	WsServer in FastyBird\Core\Clients\WsServer\Drivers
-namespace	src/FastyBird/Core/Core/src/Clients/WsServer/IClientFactory.php	WsServer in FastyBird\Core\Clients\WsServer
-namespace	src/FastyBird/Core/Core/src/Clients/WsServer/IStorage.php	WsServer in FastyBird\Core\Clients\WsServer
-namespace	src/FastyBird/Core/Core/src/Clients/WsServer/Storage.php	WsServer in FastyBird\Core\Clients\WsServer
-namespace	src/FastyBird/Core/Core/src/Clients/WsServer/WampClientFactory.php	WsServer in FastyBird\Core\Clients\WsServer
 namespace	src/FastyBird/Core/Core/src/Entities/SimpleAuth/Owner.php	SimpleAuth in FastyBird\Core\Entities\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Entities/SimpleAuth/Policies/Policy.php	SimpleAuth in FastyBird\Core\Entities\SimpleAuth\Policies
 namespace	src/FastyBird/Core/Core/src/Entities/SimpleAuth/TOwner.php	SimpleAuth in FastyBird\Core\Entities\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Entities/SimpleAuth/Tokens/Token.php	SimpleAuth in FastyBird\Core\Entities\SimpleAuth\Tokens
-namespace	src/FastyBird/Core/Core/src/Entities/WsServer/Client.php	WsServer in FastyBird\Core\Entities\WsServer
-namespace	src/FastyBird/Core/Core/src/Entities/WsServer/IClient.php	WsServer in FastyBird\Core\Entities\WsServer
-namespace	src/FastyBird/Core/Core/src/Entities/WsServer/IWampClient.php	WsServer in FastyBird\Core\Entities\WsServer
-namespace	src/FastyBird/Core/Core/src/Entities/WsServer/Topics/ITopic.php	WsServer in FastyBird\Core\Entities\WsServer\Topics
-namespace	src/FastyBird/Core/Core/src/Entities/WsServer/Topics/Topic.php	WsServer in FastyBird\Core\Entities\WsServer\Topics
-namespace	src/FastyBird/Core/Core/src/Entities/WsServer/WampClient.php	WsServer in FastyBird\Core\Entities\WsServer
 namespace	src/FastyBird/Core/Core/src/EventLoop/Application/Status.php	Application in FastyBird\Core\EventLoop\Application
 namespace	src/FastyBird/Core/Core/src/EventLoop/Application/Wrapper.php	Application in FastyBird\Core\EventLoop\Application
-namespace	src/FastyBird/Core/Core/src/Helpers/WsServer/Console.php	WsServer in FastyBird\Core\Helpers\WsServer
-namespace	src/FastyBird/Core/Core/src/Helpers/WsServer/Formatter/IFormatter.php	WsServer in FastyBird\Core\Helpers\WsServer\Formatter
-namespace	src/FastyBird/Core/Core/src/Helpers/WsServer/Formatter/Symfony.php	WsServer in FastyBird\Core\Helpers\WsServer\Formatter
 namespace	src/FastyBird/Core/Core/src/Latte/SimpleAuth/AccessExtension.php	SimpleAuth in FastyBird\Core\Latte\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/AllowedHrefNode.php	SimpleAuth in FastyBird\Core\Latte\SimpleAuth\Nodes
 namespace	src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php	SimpleAuth in FastyBird\Core\Latte\SimpleAuth\Nodes
@@ -969,23 +853,11 @@ namespace	src/FastyBird/Core/Core/src/Security/SimpleAuth/TokenReader.php	Simple
 namespace	src/FastyBird/Core/Core/src/Security/SimpleAuth/TokenValidator.php	SimpleAuth in FastyBird\Core\Security\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Security/SimpleAuth/User.php	SimpleAuth in FastyBird\Core\Security\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Security/SimpleAuth/UserStorage.php	SimpleAuth in FastyBird\Core\Security\SimpleAuth
-namespace	src/FastyBird/Core/Core/src/Server/WsServer/Configuration.php	WsServer in FastyBird\Core\Server\WsServer
-namespace	src/FastyBird/Core/Core/src/Server/WsServer/FlashWrapper.php	WsServer in FastyBird\Core\Server\WsServer
-namespace	src/FastyBird/Core/Core/src/Server/WsServer/Handlers.php	WsServer in FastyBird\Core\Server\WsServer
-namespace	src/FastyBird/Core/Core/src/Server/WsServer/IWrapper.php	WsServer in FastyBird\Core\Server\WsServer
-namespace	src/FastyBird/Core/Core/src/Server/WsServer/Server.php	WsServer in FastyBird\Core\Server\WsServer
-namespace	src/FastyBird/Core/Core/src/Server/WsServer/Wrapper.php	WsServer in FastyBird\Core\Server\WsServer
 namespace	src/FastyBird/Core/Core/src/Services/SimpleAuth/Auth.php	SimpleAuth in FastyBird\Core\Services\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Subscribers/Application/EventLoopLifeCycle.php	Application in FastyBird\Core\Subscribers\Application
 namespace	src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/Application.php	SimpleAuth in FastyBird\Core\Subscribers\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/Policy.php	SimpleAuth in FastyBird\Core\Subscribers\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/User.php	SimpleAuth in FastyBird\Core\Subscribers\SimpleAuth
-namespace	src/FastyBird/Core/Core/src/Subscribers/WsServer/Client.php	WsServer in FastyBird\Core\Subscribers\WsServer
-namespace	src/FastyBird/Core/Core/src/Subscribers/WsServer/OnServerStartHandler.php	WsServer in FastyBird\Core\Subscribers\WsServer
-namespace	src/FastyBird/Core/Core/src/Topics/WsServer/Drivers/IDriver.php	WsServer in FastyBird\Core\Topics\WsServer\Drivers
-namespace	src/FastyBird/Core/Core/src/Topics/WsServer/Drivers/InMemory.php	WsServer in FastyBird\Core\Topics\WsServer\Drivers
-namespace	src/FastyBird/Core/Core/src/Topics/WsServer/IStorage.php	WsServer in FastyBird\Core\Topics\WsServer
-namespace	src/FastyBird/Core/Core/src/Topics/WsServer/Storage.php	WsServer in FastyBird\Core\Topics\WsServer
 namespace	src/FastyBird/Core/Core/src/Types/SimpleAuth/PolicyType.php	SimpleAuth in FastyBird\Core\Types\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/Types/SimpleAuth/TokenState.php	SimpleAuth in FastyBird\Core\Types\SimpleAuth
 namespace	src/FastyBird/Core/Core/src/UI/Application/TemplateFactory.php	Application in FastyBird\Core\UI\Application
