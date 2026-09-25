@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\WebSockets\Controllers;
 
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing as HttpRouting;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Wamp;
@@ -116,7 +116,7 @@ abstract class Controller implements RequestController
 	 * @throws WebSocketsExceptions\BadRequest
 	 * @throws WebSocketsExceptions\BadSignal
 	 * @throws WebSocketsExceptions\ForbiddenRequest
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 * @throws TypeError
 	 */
@@ -138,7 +138,7 @@ abstract class Controller implements RequestController
 			if (!$this->startupCheck) {
 				$class = (new ReflectionClass($this))->getMethod('startup')->getDeclaringClass()->getName();
 
-				throw new Exceptions\InvalidState(
+				throw new CoreExceptions\InvalidState(
 					sprintf('Method %s::startup() or its descendant doesn\'t call parent::startup().', $class),
 				);
 			}
@@ -176,7 +176,7 @@ abstract class Controller implements RequestController
 	 * Checks authorization
 	 *
 	 * @throws WebSocketsExceptions\ForbiddenRequest
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function checkRequirements(mixed $element): void
 	{
@@ -229,7 +229,7 @@ abstract class Controller implements RequestController
 	}
 
 	/**
-	 * @throws Exceptions\InvalidLink
+	 * @throws CoreExceptions\InvalidLink
 	 * @throws ReflectionException
 	 */
 	public function link(string $destination, array $args = []): string
@@ -258,12 +258,12 @@ abstract class Controller implements RequestController
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function getUser(): Nette\Security\User
 	{
 		if ($this->user === null) {
-			throw new Exceptions\InvalidState('Service User has not been set.');
+			throw new CoreExceptions\InvalidState('Service User has not been set.');
 		}
 
 		return $this->user;
@@ -293,7 +293,7 @@ abstract class Controller implements RequestController
 	 * @param array $supplemental supplemental arguments
 	 * @param array $missing      missing arguments
 	 *
-	 * @throws Exceptions\InvalidLink
+	 * @throws CoreExceptions\InvalidLink
 	 * @throws ReflectionException
 	 *
 	 * @internal
@@ -340,7 +340,7 @@ abstract class Controller implements RequestController
 			}
 
 			if (!Reflection::convertType($args[$name], $type, $isClass)) {
-				throw new Exceptions\InvalidLink(sprintf(
+				throw new CoreExceptions\InvalidLink(sprintf(
 					'Argument $%s passed to %s() must be %s, %s given.',
 					$name,
 					$rm->getDeclaringClass()->getName() . '::' . $rm->getName(),
@@ -356,7 +356,7 @@ abstract class Controller implements RequestController
 		}
 
 		if (array_key_exists($i, $args)) {
-			throw new Exceptions\InvalidLink(
+			throw new CoreExceptions\InvalidLink(
 				sprintf('Passed more parameters than method %s::%s() expects.', $class, $rm->getName()),
 			);
 		}
@@ -377,7 +377,7 @@ abstract class Controller implements RequestController
 	 *
 	 * @throws WebSocketsExceptions\BadRequest
 	 * @throws WebSocketsExceptions\ForbiddenRequest
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
 	protected function tryCall(string $method, array $params): bool

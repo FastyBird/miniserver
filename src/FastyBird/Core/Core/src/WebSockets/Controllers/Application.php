@@ -3,7 +3,7 @@
 namespace FastyBird\Core\WebSockets\Controllers;
 
 use Closure;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
@@ -69,7 +69,7 @@ abstract class Application implements Dispatcher
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	#[Override]
 	public function handleError(Entities\ConnectedClient $client, Handshake\IRequest $httpRequest, Throwable $ex): void
@@ -100,7 +100,7 @@ abstract class Application implements Dispatcher
 
 	/**
 	 * @throws WebSocketsExceptions\BadRequest
-	 * @throws Exceptions\InvalidController
+	 * @throws CoreExceptions\InvalidController
 	 */
 	protected function processMessage(
 		Handshake\IRequest $httpRequest,
@@ -135,7 +135,7 @@ abstract class Application implements Dispatcher
 	 *
 	 * @param int $code HTTP status code
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	protected function close(Entities\ConnectedClient $client, int $code = 400, array $additionalHeaders = []): void
 	{
