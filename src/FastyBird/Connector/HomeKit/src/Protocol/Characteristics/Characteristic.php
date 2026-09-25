@@ -16,11 +16,11 @@
 namespace FastyBird\Connector\HomeKit\Protocol\Characteristics;
 
 use DateTimeInterface;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -83,7 +83,7 @@ class Characteristic
 	 * @param array<Types\CharacteristicPermission> $permissions
 	 * @param array<int>|null $validValues
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidArgument
 	 */
 	public function __construct(
 		private readonly Uuid\UuidInterface $typeId,
@@ -102,7 +102,7 @@ class Characteristic
 	)
 	{
 		if ($maxLength !== null && $maxLength > self::ABSOLUTE_MAX_LENGTH) {
-			throw new Exceptions\InvalidArgument('Characteristic max length exceeded allowed maximum');
+			throw new HomeKitExceptions\InvalidArgument('Characteristic max length exceeded allowed maximum');
 		}
 	}
 
@@ -346,8 +346,8 @@ class Characteristic
 	 *
 	 * @return array<string, (bool|float|int|array<int>|string|array<string>|null)>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

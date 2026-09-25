@@ -21,11 +21,11 @@ use Doctrine\DBAL;
 use Exception;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Formats;
@@ -128,16 +128,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -155,16 +155,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -185,7 +185,7 @@ class Install extends Console\Command\Command
 					$findConnectorQuery,
 					Entities\Connectors\Connector::class,
 				) !== null) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//homekit-connector.cmd.install.messages.identifier.connector.used',
 						),
@@ -295,16 +295,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -434,7 +434,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteConnector(Style\SymfonyStyle $io): void
 	{
@@ -500,16 +500,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -570,16 +570,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -599,7 +599,7 @@ class Install extends Console\Command\Command
 				if (
 					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) !== null
 				) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//homekit-connector.cmd.install.messages.identifier.device.used',
 						),
@@ -698,16 +698,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -812,7 +812,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -876,16 +876,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -904,8 +904,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -945,16 +945,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -983,7 +983,7 @@ class Install extends Console\Command\Command
 		$metadata = $this->loader->loadServices();
 
 		if (!$metadata->offsetExists($type)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$type,
 			));
@@ -998,7 +998,7 @@ class Install extends Console\Command\Command
 			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
 			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
 		) {
-			throw new Exceptions\InvalidState('Service definition is missing required attributes');
+			throw new HomeKitExceptions\InvalidState('Service definition is missing required attributes');
 		}
 
 		$requiredCharacteristics = (array) $serviceMetadata->offsetGet('RequiredCharacteristics');
@@ -1084,16 +1084,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1129,7 +1129,7 @@ class Install extends Console\Command\Command
 		$metadata = $this->loader->loadServices();
 
 		if (!$metadata->offsetExists($type->value)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$type->value,
 			));
@@ -1144,7 +1144,7 @@ class Install extends Console\Command\Command
 			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
 			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
 		) {
-			throw new Exceptions\InvalidState('Service definition is missing required attributes');
+			throw new HomeKitExceptions\InvalidState('Service definition is missing required attributes');
 		}
 
 		$requiredCharacteristics = (array) $serviceMetadata->offsetGet('RequiredCharacteristics');
@@ -1266,7 +1266,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteService(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
 	{
@@ -1336,16 +1336,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1372,7 +1372,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1427,12 +1427,12 @@ class Install extends Console\Command\Command
 	/**
 	 * @param array<string> $characteristics
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
 	 * @throws TypeError
 	 * @throws ValueError
@@ -1475,7 +1475,7 @@ class Install extends Console\Command\Command
 				|| !$characteristicMetadata->offsetExists('Permissions')
 				|| !$characteristicMetadata->offsetGet('Permissions') instanceof Utils\ArrayHash
 			) {
-				throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+				throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 			}
 
 			$permissions = (array) $characteristicMetadata->offsetGet('Permissions');
@@ -1493,7 +1493,7 @@ class Install extends Console\Command\Command
 				);
 
 				if ($dataTypes === []) {
-					throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 				}
 
 				$dataType = $dataTypes[0];
@@ -1613,10 +1613,10 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function editCharacteristic(Style\SymfonyStyle $io, Entities\Channels\Channel $channel): void
 	{
@@ -1641,7 +1641,7 @@ class Install extends Console\Command\Command
 		$metadata = $this->loader->loadCharacteristics();
 
 		if (!$metadata->offsetExists($type)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$type,
 			));
@@ -1661,7 +1661,7 @@ class Install extends Console\Command\Command
 			|| !$characteristicMetadata->offsetExists('Permissions')
 			|| !$characteristicMetadata->offsetGet('Permissions') instanceof Utils\ArrayHash
 		) {
-			throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+			throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 		}
 
 		try {
@@ -1677,7 +1677,7 @@ class Install extends Console\Command\Command
 				);
 
 				if ($dataTypes === []) {
-					throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+					throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 				}
 
 				$dataType = $dataTypes[0];
@@ -1844,7 +1844,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteCharacteristic(Style\SymfonyStyle $io, Entities\Channels\Channel $channel): void
 	{
@@ -1919,10 +1919,10 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1986,16 +1986,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2073,16 +2073,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2166,16 +2166,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2259,16 +2259,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws HomeKitExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2351,8 +2351,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2364,7 +2364,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($connector): string {
 			if ($answer === '' || $answer === null) {
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2388,7 +2388,7 @@ class Install extends Console\Command\Command
 						$connector === null || !$property->getConnector()->getId()->equals($connector->getId())
 					)
 				) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//homekit-connector.cmd.install.messages.portUsed',
 							['connector' => $property->getConnector()->getIdentifier()],
@@ -2416,8 +2416,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2470,7 +2470,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($categories): HomeKitTypes\AccessoryCategory {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2488,7 +2488,7 @@ class Install extends Console\Command\Command
 				return HomeKitTypes\AccessoryCategory::from(intval($category));
 			}
 
-			throw new Exceptions\Runtime(
+			throw new HomeKitExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2503,11 +2503,11 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2526,7 +2526,7 @@ class Install extends Console\Command\Command
 		);
 
 		if (!$category instanceof DevicesEntities\Devices\Properties\Variable) {
-			throw new Exceptions\InvalidState('Device category is not configured');
+			throw new HomeKitExceptions\InvalidState('Device category is not configured');
 		}
 
 		if ($category->getValue() === HomeKitTypes\AccessoryCategory::OTHER->value) {
@@ -2537,7 +2537,7 @@ class Install extends Console\Command\Command
 			$metadata = $this->loader->loadAccessories();
 
 			if (!$metadata->offsetExists(Utilities\Value::toString($category->getValue(), true))) {
-				throw new Exceptions\InvalidArgument(sprintf(
+				throw new HomeKitExceptions\InvalidArgument(sprintf(
 					'Definition for accessory category: %s was not found',
 					Utilities\Value::toString($category->getValue()),
 				));
@@ -2554,7 +2554,7 @@ class Install extends Console\Command\Command
 				|| !$accessoryMetadata->offsetExists('services')
 				|| !$accessoryMetadata->offsetGet('services') instanceof Utils\ArrayHash
 			) {
-				throw new Exceptions\InvalidState('Accessory definition is missing required attributes');
+				throw new HomeKitExceptions\InvalidState('Accessory definition is missing required attributes');
 			}
 
 			$services = array_values((array) $accessoryMetadata->offsetGet('services'));
@@ -2571,7 +2571,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($services): string {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2593,8 +2593,8 @@ class Install extends Console\Command\Command
 	 * @param array<string> $characteristics
 	 * @param array<string> $ignore
 	 *
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
 	 */
 	private function askCharacteristic(
@@ -2608,7 +2608,7 @@ class Install extends Console\Command\Command
 		$metadata = $this->loader->loadServices();
 
 		if (!$metadata->offsetExists($service->value)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$service->value,
 			));
@@ -2639,7 +2639,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($required, $characteristics): string|null {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2670,7 +2670,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 */
@@ -2778,7 +2778,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($devices): DevicesEntities\Devices\Device {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2800,7 +2800,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new HomeKitExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -2876,7 +2876,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|null $answer) use ($channels): DevicesEntities\Channels\Channel {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -2900,7 +2900,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -2965,7 +2965,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|null $answer) use ($properties): DevicesEntities\Channels\Properties\Dynamic {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -2992,7 +2992,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3008,11 +3008,11 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3025,7 +3025,7 @@ class Install extends Console\Command\Command
 		$metadata = $this->loader->loadCharacteristics();
 
 		if (!$metadata->offsetExists($characteristic)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$characteristic,
 			));
@@ -3043,7 +3043,7 @@ class Install extends Console\Command\Command
 				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
 			)
 		) {
-			throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+			throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 		}
 
 		if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
@@ -3053,7 +3053,7 @@ class Install extends Console\Command\Command
 			);
 
 			if ($dataTypes === []) {
-				throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+				throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 			}
 		} else {
 			$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
@@ -3134,7 +3134,7 @@ class Install extends Console\Command\Command
 					);
 					$question->setValidator(function (string|null $answer) use ($options): string|array {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new HomeKitExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3164,7 +3164,7 @@ class Install extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new HomeKitExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3205,10 +3205,10 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3221,7 +3221,7 @@ class Install extends Console\Command\Command
 		$metadata = $this->loader->loadCharacteristics();
 
 		if (!$metadata->offsetExists($characteristic)) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$characteristic,
 			));
@@ -3237,7 +3237,7 @@ class Install extends Console\Command\Command
 				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
 			)
 		) {
-			throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+			throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 		}
 
 		if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
@@ -3247,7 +3247,7 @@ class Install extends Console\Command\Command
 			);
 
 			if ($dataTypes === []) {
-				throw new Exceptions\InvalidState('Characteristic definition is missing required attributes');
+				throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 			}
 		} else {
 			$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
@@ -3275,7 +3275,7 @@ class Install extends Console\Command\Command
 			);
 			$question->setValidator(function (string|int|null $answer) use ($options): string|int {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3295,7 +3295,7 @@ class Install extends Console\Command\Command
 					return $value;
 				}
 
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3326,7 +3326,7 @@ class Install extends Console\Command\Command
 			);
 			$question->setValidator(function (string|int|null $answer): bool {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3368,7 +3368,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($dataTypes, $minValue, $maxValue, $step): string|int|float {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3390,7 +3390,7 @@ class Install extends Console\Command\Command
 					&& in_array(ValuesTypes\DataType::FLOAT, $dataTypes, true)
 				) {
 					if ($minValue !== null && floatval($answer) < $minValue) {
-						throw new Exceptions\Runtime(
+						throw new HomeKitExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3401,7 +3401,7 @@ class Install extends Console\Command\Command
 					}
 
 					if ($maxValue !== null && floatval($answer) > $maxValue) {
-						throw new Exceptions\Runtime(
+						throw new HomeKitExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3417,7 +3417,7 @@ class Install extends Console\Command\Command
 							Math\BigDecimal::of(strval($step)),
 						)->toFloat() !== 0.0
 					) {
-						throw new Exceptions\Runtime(
+						throw new HomeKitExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3442,7 +3442,7 @@ class Install extends Console\Command\Command
 					)
 				) {
 					if ($minValue !== null && intval($answer) < $minValue) {
-						throw new Exceptions\Runtime(
+						throw new HomeKitExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3453,7 +3453,7 @@ class Install extends Console\Command\Command
 					}
 
 					if ($maxValue !== null && intval($answer) > $maxValue) {
-						throw new Exceptions\Runtime(
+						throw new HomeKitExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3464,7 +3464,7 @@ class Install extends Console\Command\Command
 					}
 
 					if ($step !== null && intval($answer) % $step !== 0) {
-						throw new Exceptions\Runtime(
+						throw new HomeKitExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3477,7 +3477,7 @@ class Install extends Console\Command\Command
 					return intval($answer);
 				}
 
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3531,7 +3531,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3559,7 +3559,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new HomeKitExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3617,7 +3617,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new HomeKitExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//homekit-connector.cmd.base.messages.answerNotValid',
@@ -3648,7 +3648,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3666,7 +3666,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @param array<string, string> $channels
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askWhichService(
 		Style\SymfonyStyle $io,
@@ -3729,7 +3729,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @param array<string, string> $properties
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askWhichCharacteristic(
 		Style\SymfonyStyle $io,

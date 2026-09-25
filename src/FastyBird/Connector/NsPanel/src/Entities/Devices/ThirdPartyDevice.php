@@ -17,9 +17,9 @@ namespace FastyBird\Connector\NsPanel\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
@@ -53,7 +53,7 @@ class ThirdPartyDevice extends Entities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
 	 */
 	public function getGateway(): Gateway
 	{
@@ -63,12 +63,12 @@ class ThirdPartyDevice extends Entities\Devices\Device
 			}
 		}
 
-		throw new Exceptions\InvalidState('Third-party device have to have parent gateway defined');
+		throw new NsPanelExceptions\InvalidState('Third-party device have to have parent gateway defined');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -93,8 +93,8 @@ class ThirdPartyDevice extends Entities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -118,8 +118,8 @@ class ThirdPartyDevice extends Entities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -143,8 +143,8 @@ class ThirdPartyDevice extends Entities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -168,8 +168,8 @@ class ThirdPartyDevice extends Entities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

@@ -19,13 +19,13 @@ use DateTimeInterface;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
 use FastyBird\Connector\Viera\Documents;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -81,12 +81,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\InvalidState
+	 * @throws VieraExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws Throwable
 	 * @throws TypeError
@@ -447,7 +447,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 					break;
 			}
-		} catch (Exceptions\InvalidState $ex) {
+		} catch (VieraExceptions\InvalidState $ex) {
 			$this->queue->append(
 				$this->messageBuilder->create(
 					Queue\Messages\StoreDeviceConnectionState::class,
@@ -488,7 +488,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			);
 
 			return true;
-		} catch (Exceptions\TelevisionApiError $ex) {
+		} catch (VieraExceptions\TelevisionApiError $ex) {
 			$this->queue->append(
 				$this->messageBuilder->create(
 					Queue\Messages\StoreDeviceConnectionState::class,
@@ -529,7 +529,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			);
 
 			return true;
-		} catch (Exceptions\TelevisionApiCall $ex) {
+		} catch (VieraExceptions\TelevisionApiCall $ex) {
 			$this->queue->append(
 				$this->messageBuilder->create(
 					Queue\Messages\StoreDeviceConnectionState::class,
@@ -764,7 +764,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					Sources\Connector::VIERA,
 				));
 
-				if ($ex instanceof Exceptions\TelevisionApiError) {
+				if ($ex instanceof VieraExceptions\TelevisionApiError) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,

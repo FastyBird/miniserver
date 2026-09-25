@@ -20,7 +20,7 @@ use Exception;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\EventLoop;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -80,7 +80,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	 * @throws Exception
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ValuesExceptions\InvalidData
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	public function stateCreated(
@@ -102,7 +102,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	 * @throws Exception
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ValuesExceptions\InvalidData
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	public function stateUpdated(
@@ -135,7 +135,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	/**
 	 * @throws Exception
 	 * @throws ValuesExceptions\InvalidData
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\Logic
 	 * @throws DocumentsExceptions\MalformedInput
 	 */
 	private function publishDocument(

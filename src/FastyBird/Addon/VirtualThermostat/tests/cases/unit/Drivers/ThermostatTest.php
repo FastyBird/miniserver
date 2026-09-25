@@ -4,13 +4,13 @@ namespace FastyBird\Addon\VirtualThermostat\Tests\Cases\Unit\Drivers;
 
 use Error;
 use FastyBird\Addon\VirtualThermostat\Documents;
-use FastyBird\Addon\VirtualThermostat\Exceptions;
+use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Queries;
 use FastyBird\Addon\VirtualThermostat\Tests;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Drivers as VirtualDrivers;
 use FastyBird\Connector\Virtual\Queue as VirtualQueue;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -27,11 +27,11 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 * @throws RuntimeException
 	 */
 	public function testConnect(): void
@@ -62,10 +62,10 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 	 * @param array<string, int|float|bool|string> $readInitialStates
 	 * @param array<mixed> $expectedWriteEntities
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 */
 	#[DataProvider('processThermostatData')]

@@ -20,7 +20,7 @@ use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Documents;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types;
@@ -71,13 +71,13 @@ final class StoreChannelPropertyState implements Queue\Consumer
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Throwable
 	 */
 	public function consume(Queue\Messages\Message $message): bool
@@ -130,7 +130,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 						]),
 						Sources\Connector::TUYA,
 					));
-				} catch (ApplicationExceptions\InvalidArgument $ex) {
+				} catch (CoreExceptions\InvalidArgument $ex) {
 					$format = $property->getFormat();
 
 					if (

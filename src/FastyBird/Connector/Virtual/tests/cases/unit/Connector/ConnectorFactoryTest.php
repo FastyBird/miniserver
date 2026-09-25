@@ -5,9 +5,9 @@ namespace FastyBird\Connector\Virtual\Tests\Cases\Unit\Connector;
 use Error;
 use FastyBird\Connector\Virtual\Connector;
 use FastyBird\Connector\Virtual\Documents;
-use FastyBird\Connector\Virtual\Exceptions;
+use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -21,8 +21,8 @@ final class ConnectorFactoryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws VirtualExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

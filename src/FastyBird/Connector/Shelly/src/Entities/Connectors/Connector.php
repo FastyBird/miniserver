@@ -17,9 +17,9 @@ namespace FastyBird\Connector\Shelly\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Shelly\Entities;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -62,21 +62,21 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidArgument
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		if (!$device instanceof Entities\Devices\Device) {
-			throw new Exceptions\InvalidArgument('Provided device type is not valid');
+			throw new ShellyExceptions\InvalidArgument('Provided device type is not valid');
 		}
 
 		parent::addDevice($device);
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -96,12 +96,12 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return Types\ClientMode::from(Utilities\Value::toString($property->getValue(), true));
 		}
 
-		throw new Exceptions\InvalidState('Connector mode is not configured');
+		throw new ShellyExceptions\InvalidState('Connector mode is not configured');
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -125,8 +125,8 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

@@ -19,13 +19,13 @@ use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Clients\Messages\Pointer\ReadAddress;
 use FastyBird\Connector\Modbus\Clients\Messages\Request\Read;
 use FastyBird\Connector\Modbus\Documents;
-use FastyBird\Connector\Modbus\Exceptions;
+use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Helpers;
 use FastyBird\Connector\Modbus\Helpers\MessageBuilder;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -144,11 +144,11 @@ trait TReading
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -178,7 +178,7 @@ trait TReading
 			}
 
 			if ($channel === null) {
-				throw new Exceptions\InvalidState(
+				throw new ModbusExceptions\InvalidState(
 					'Register could not be loaded. Received data could not be handled',
 				);
 			}
@@ -193,7 +193,7 @@ trait TReading
 			);
 
 			if (!$property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
-				throw new Exceptions\InvalidState(
+				throw new ModbusExceptions\InvalidState(
 					'Register value storage could not be loaded. Received data could not be handled',
 				);
 			}
@@ -215,11 +215,11 @@ trait TReading
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ModbusExceptions\InvalidArgument
+	 * @throws ModbusExceptions\InvalidState
+	 * @throws ModbusExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -249,7 +249,7 @@ trait TReading
 			}
 
 			if ($channel === null) {
-				throw new Exceptions\InvalidState(
+				throw new ModbusExceptions\InvalidState(
 					'Register could not be loaded. Received data could not be handled',
 				);
 			}
@@ -264,7 +264,7 @@ trait TReading
 			);
 
 			if (!$property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
-				throw new Exceptions\InvalidState(
+				throw new ModbusExceptions\InvalidState(
 					'Register value storage could not be loaded. Received data could not be handled',
 				);
 			}

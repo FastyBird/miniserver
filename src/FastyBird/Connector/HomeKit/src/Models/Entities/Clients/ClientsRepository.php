@@ -19,9 +19,9 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Entities\Clients\Client;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Queries;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Query;
 use Nette;
@@ -53,7 +53,7 @@ final class ClientsRepository
 	/**
 	 * @param Queries\Entities\FindClients<Client> $queryObject
 	 *
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindClients $queryObject,
@@ -69,8 +69,8 @@ final class ClientsRepository
 	 *
 	 * @return Query\ResultSet<Client>
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindClients $queryObject,
@@ -81,7 +81,7 @@ final class ClientsRepository
 		);
 
 		if (is_array($result)) {
-			throw new Exceptions\InvalidState('Result set could not be created');
+			throw new HomeKitExceptions\InvalidState('Result set could not be created');
 		}
 
 		return $result;

@@ -15,12 +15,12 @@
 
 namespace FastyBird\Connector\HomeKit\Controllers;
 
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -58,10 +58,10 @@ final class AccessoriesController extends BaseController
 	/**
 	 * Handles a client request to get the accessories
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws InvalidArgumentException
 	 * @throws Utils\JsonException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws RuntimeException
 	 * @throws TypeError
 	 * @throws ValueError
@@ -86,7 +86,7 @@ final class AccessoriesController extends BaseController
 		$connectorId = strval($request->getAttribute(Servers\Http::REQUEST_ATTRIBUTE_CONNECTOR));
 
 		if (!Uuid\Uuid::isValid($connectorId)) {
-			throw new Exceptions\InvalidState('Connector id could not be determined');
+			throw new HomeKitExceptions\InvalidState('Connector id could not be determined');
 		}
 
 		$connectorId = Uuid\Uuid::fromString($connectorId);
@@ -104,10 +104,10 @@ final class AccessoriesController extends BaseController
 	 * Help user to locate accessory
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\HapRequestError
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\HapRequestError
+	 * @throws HomeKitExceptions\InvalidState
 	 * @throws InvalidArgumentException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -131,7 +131,7 @@ final class AccessoriesController extends BaseController
 		$connectorId = strval($request->getAttribute(Servers\Http::REQUEST_ATTRIBUTE_CONNECTOR));
 
 		if (!Uuid\Uuid::isValid($connectorId)) {
-			throw new Exceptions\InvalidState('Connector id could not be determined');
+			throw new HomeKitExceptions\InvalidState('Connector id could not be determined');
 		}
 
 		$connectorId = Uuid\Uuid::fromString($connectorId);
@@ -158,7 +158,7 @@ final class AccessoriesController extends BaseController
 				],
 			);
 
-			throw new Exceptions\HapRequestError(
+			throw new HomeKitExceptions\HapRequestError(
 				$request,
 				Types\ServerStatus::INSUFFICIENT_PRIVILEGES,
 				'Connector is already paired with client',

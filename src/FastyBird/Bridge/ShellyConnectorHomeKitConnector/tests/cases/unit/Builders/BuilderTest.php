@@ -5,12 +5,12 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Cases\Unit\Buil
 use Error;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette\DI;
@@ -29,15 +29,15 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 	 * @param array<mixed> $expectedChannels
 	 * @param array<mixed> $expectedChannelsProperties
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidArgument
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
 	 * @throws Error
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 *
 	 * @throws InvalidArgumentException
 	 */

@@ -19,13 +19,13 @@ use DateTimeInterface;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\API;
 use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -79,15 +79,15 @@ final class WriteChannelPropertyState implements Queue\Consumer
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\InvalidState
+	 * @throws TuyaExceptions\Runtime
 	 * @throws RuntimeException
 	 * @throws Throwable
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -358,7 +358,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					$this->deviceHelper->getGateway($device) !== null ? $device->getIdentifier() : null,
 				);
 			}
-		} catch (Exceptions\InvalidState $ex) {
+		} catch (TuyaExceptions\InvalidState $ex) {
 			$this->queue->append(
 				$this->messageBuilder->create(
 					Queue\Messages\StoreDeviceConnectionState::class,
@@ -399,7 +399,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			);
 
 			return true;
-		} catch (Exceptions\OpenApiError | Exceptions\LocalApiError $ex) {
+		} catch (TuyaExceptions\OpenApiError | TuyaExceptions\LocalApiError $ex) {
 			$this->queue->append(
 				$this->messageBuilder->create(
 					Queue\Messages\StoreDeviceConnectionState::class,
@@ -440,7 +440,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			);
 
 			return true;
-		} catch (Exceptions\OpenApiCall | Exceptions\LocalApiCall $ex) {
+		} catch (TuyaExceptions\OpenApiCall | TuyaExceptions\LocalApiCall $ex) {
 			$this->queue->append(
 				$this->messageBuilder->create(
 					Queue\Messages\StoreDeviceConnectionState::class,
@@ -460,7 +460,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 			$extra = [];
 
-			if ($ex instanceof Exceptions\OpenApiCall) {
+			if ($ex instanceof TuyaExceptions\OpenApiCall) {
 				$extra = [
 					'request' => [
 						'method' => $ex->getRequest()?->getMethod(),
@@ -544,8 +544,8 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 				$renderException = true;
 
-				if ($ex instanceof Exceptions\OpenApiCall || $ex instanceof Exceptions\LocalApiCall) {
-					if ($ex instanceof Exceptions\OpenApiCall) {
+				if ($ex instanceof TuyaExceptions\OpenApiCall || $ex instanceof TuyaExceptions\LocalApiCall) {
+					if ($ex instanceof TuyaExceptions\OpenApiCall) {
 						$extra = [
 							'request' => [
 								'method' => $ex->getRequest()?->getMethod(),
@@ -571,7 +571,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 					$renderException = false;
 
-				} elseif ($ex instanceof Exceptions\OpenApiError || $ex instanceof Exceptions\LocalApiError) {
+				} elseif ($ex instanceof TuyaExceptions\OpenApiError || $ex instanceof TuyaExceptions\LocalApiError) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,

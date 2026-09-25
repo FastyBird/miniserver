@@ -17,9 +17,9 @@ namespace FastyBird\Connector\NsPanel\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
@@ -37,7 +37,7 @@ class SubDevice extends Entities\Devices\Device
 	public const TYPE = 'ns-panel-connector-sub-device';
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
 	 */
 	public function __construct(
 		string $identifier,
@@ -58,7 +58,7 @@ class SubDevice extends Entities\Devices\Device
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
 	 */
 	public function getGateway(): Gateway
 	{
@@ -68,24 +68,24 @@ class SubDevice extends Entities\Devices\Device
 			}
 		}
 
-		throw new Exceptions\InvalidState('Sub-device have to have parent gateway defined');
+		throw new NsPanelExceptions\InvalidState('Sub-device have to have parent gateway defined');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
 	 */
 	public function setParents(array|Utils\ArrayHash $parents): void
 	{
 		if (count($parents) !== 1 || !$parents[0] instanceof Gateway) {
-			throw new Exceptions\InvalidState('Sub-device could have only one parent and it have to be gateway');
+			throw new NsPanelExceptions\InvalidState('Sub-device could have only one parent and it have to be gateway');
 		}
 
 		parent::setParents($parents);
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -110,8 +110,8 @@ class SubDevice extends Entities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -135,8 +135,8 @@ class SubDevice extends Entities\Devices\Device
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

@@ -20,11 +20,11 @@ use FastyBird\Addon\VirtualThermostat\Queries as VirtualThermostatQueries;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Builders;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions as VirtualThermostatAddonHomeKitConnectorExceptions;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
@@ -82,10 +82,10 @@ class Build extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
@@ -228,7 +228,7 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteBridge(Style\SymfonyStyle $io): void
 	{
@@ -297,7 +297,7 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
 	 */
 	private function listBridges(Style\SymfonyStyle $io): void
 	{
@@ -340,10 +340,10 @@ class Build extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askBuildAction(Style\SymfonyStyle $io): void
 	{
@@ -465,7 +465,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connectors): HomeKitEntities\Connectors\Connector {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -495,7 +495,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatAddonHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -558,7 +558,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($devices): VirtualThermostatEntities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -588,7 +588,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatAddonHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -651,7 +651,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($devices): Entities\Devices\Thermostat {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new VirtualThermostatAddonHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//virtual-thermostat-addon-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -681,7 +681,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VirtualThermostatAddonHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//virtual-thermostat-addon-homekit-connector-bridge.cmd.base.messages.answerNotValid',

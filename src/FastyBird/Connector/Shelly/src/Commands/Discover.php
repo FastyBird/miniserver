@@ -18,11 +18,11 @@ namespace FastyBird\Connector\Shelly\Commands;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -94,15 +94,15 @@ class Discover extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
@@ -239,7 +239,7 @@ class Discover extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new ShellyExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//shelly-connector.cmd.base.messages.answerNotValid',
@@ -269,7 +269,7 @@ class Discover extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new ShellyExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//shelly-connector.cmd.base.messages.answerNotValid',
@@ -321,10 +321,10 @@ class Discover extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

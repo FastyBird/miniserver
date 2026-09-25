@@ -18,9 +18,9 @@ namespace FastyBird\Module\Accounts\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use Nette;
 use function array_key_exists;
@@ -59,8 +59,8 @@ final class EmailEntity implements Common\EventSubscriber
 	/**
 	 * @param Persistence\Event\LifecycleEventArgs<ORM\EntityManagerInterface> $eventArgs
 	 *
-	 * @throws Exceptions\EmailAlreadyTaken
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws AccountsExceptions\EmailAlreadyTaken
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function prePersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{
@@ -76,13 +76,13 @@ final class EmailEntity implements Common\EventSubscriber
 			$foundEmail = $this->emailsRepository->findOneByAddress($object->getAddress());
 
 			if ($foundEmail !== null && !$foundEmail->getId()->equals($object->getId())) {
-				throw new Exceptions\EmailAlreadyTaken('Given email is already taken');
+				throw new AccountsExceptions\EmailAlreadyTaken('Given email is already taken');
 			}
 		}
 	}
 
 	/**
-	 * @throws Exceptions\EmailHaveToBeDefault
+	 * @throws AccountsExceptions\EmailHaveToBeDefault
 	 */
 	public function onFlush(ORM\Event\OnFlushEventArgs $eventArgs): void
 	{
@@ -99,7 +99,7 @@ final class EmailEntity implements Common\EventSubscriber
 				&& $changeSet['default'][0] === true
 				&& $changeSet['default'][1] === false
 			) {
-				throw new Exceptions\EmailHaveToBeDefault('Default email address can not be made not default');
+				throw new AccountsExceptions\EmailHaveToBeDefault('Default email address can not be made not default');
 			}
 
 			if ($object instanceof Entities\Emails\Email && $object->isDefault()) {

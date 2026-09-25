@@ -18,14 +18,14 @@ namespace FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Clients;
 use FastyBird\Connector\HomeKit\Documents;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Middleware;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Subscribers;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -92,7 +92,7 @@ final class Http implements Server
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\Runtime
 	 */
 	public function connect(): void
 	{
@@ -262,7 +262,7 @@ final class Http implements Server
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws HomeKitExceptions\Runtime
 	 */
 	public function disconnect(): void
 	{
@@ -298,8 +298,8 @@ final class Http implements Server
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

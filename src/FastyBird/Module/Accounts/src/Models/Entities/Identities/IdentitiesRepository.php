@@ -17,11 +17,11 @@ namespace FastyBird\Module\Accounts\Models\Entities\Identities;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Types;
 use Nette;
@@ -52,7 +52,7 @@ final class IdentitiesRepository
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findOneForAccount(
 		Entities\Accounts\Account $account,
@@ -66,7 +66,7 @@ final class IdentitiesRepository
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findOneByUid(string $uid): Entities\Identities\Identity|null
 	{
@@ -78,7 +78,7 @@ final class IdentitiesRepository
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function findOneBy(
 		Queries\Entities\FindIdentities $queryObject,
@@ -92,7 +92,7 @@ final class IdentitiesRepository
 	/**
 	 * @return array<Entities\Identities\Identity>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 */
 	public function findAllBy(Queries\Entities\FindIdentities $queryObject): array
 	{
@@ -102,15 +102,15 @@ final class IdentitiesRepository
 
 			return $result;
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
+			throw new AccountsExceptions\InvalidState('Fetch all data by query failed', $ex->getCode(), $ex);
 		}
 	}
 
 	/**
 	 * @return Query\ResultSet<Entities\Identities\Identity>
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function getResultSet(
 		Queries\Entities\FindIdentities $queryObject,
@@ -121,7 +121,7 @@ final class IdentitiesRepository
 		);
 
 		if (is_array($result)) {
-			throw new Exceptions\InvalidState('Result set could not be created');
+			throw new AccountsExceptions\InvalidState('Result set could not be created');
 		}
 
 		return $result;

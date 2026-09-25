@@ -5,14 +5,14 @@ namespace FastyBird\Connector\Shelly\Tests\Cases\Unit\Clients;
 use Error;
 use FastyBird\Connector\Shelly\Clients;
 use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Services;
 use FastyBird\Connector\Shelly\Tests;
 use FastyBird\Connector\Shelly\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\DI;
@@ -34,13 +34,13 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testDiscoverGen1LocalDevices(): void
@@ -132,7 +132,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 							);
 
 					} else {
-						throw new Exceptions\InvalidState(
+						throw new ShellyExceptions\InvalidState(
 							'This api call should not occur: ' . strval($request->getUri()),
 						);
 					}
@@ -156,7 +156,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 						return $httpAsyncClient;
 					}
 
-					throw new Exceptions\InvalidState('Sync clients should not be called when doing devices discovery');
+					throw new ShellyExceptions\InvalidState('Sync clients should not be called when doing devices discovery');
 				},
 			);
 
@@ -239,13 +239,13 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testDiscoverGen2LocalDevices(): void
@@ -346,7 +346,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 							);
 
 					} else {
-						throw new Exceptions\InvalidState(
+						throw new ShellyExceptions\InvalidState(
 							'This api call should not occur: ' . strval($request->getUri()),
 						);
 					}
@@ -370,7 +370,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 						return $httpAsyncClient;
 					}
 
-					throw new Exceptions\InvalidState('Sync clients should not be called when doing devices discovery');
+					throw new ShellyExceptions\InvalidState('Sync clients should not be called when doing devices discovery');
 				},
 			);
 

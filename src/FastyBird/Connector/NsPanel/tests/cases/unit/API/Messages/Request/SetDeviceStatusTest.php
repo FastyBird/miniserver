@@ -5,7 +5,7 @@ namespace FastyBird\Connector\NsPanel\Tests\Cases\Unit\API\Messages\Request;
 use Error;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
@@ -15,8 +15,8 @@ final class SetDeviceStatusTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws Nette\IOException
 	 * @throws ObjectMapper\Exception\InvalidData

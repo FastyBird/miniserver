@@ -6,14 +6,14 @@ use Error;
 use FastyBird\Connector\Tuya\API;
 use FastyBird\Connector\Tuya\Clients;
 use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Tests;
 use FastyBird\Connector\Tuya\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\DI;
@@ -37,13 +37,13 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws TuyaExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testDiscoverCloudDevices(): void
@@ -117,7 +117,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 							);
 
 					} else {
-						throw new Exceptions\InvalidState(
+						throw new TuyaExceptions\InvalidState(
 							'This api call should not occur: ' . strval($request->getUri()),
 						);
 					}
@@ -135,7 +135,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 						return $httpAsyncClient;
 					}
 
-					throw new Exceptions\InvalidState('Sync clients should not be called when doing devices discovery');
+					throw new TuyaExceptions\InvalidState('Sync clients should not be called when doing devices discovery');
 				},
 			);
 
@@ -219,13 +219,13 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws TuyaExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
 	 */
 	public function testDiscoverLocalDevices(): void
@@ -406,7 +406,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 							);
 
 					} else {
-						throw new Exceptions\InvalidState(
+						throw new TuyaExceptions\InvalidState(
 							'This api call should not occur: ' . strval($request->getUri()),
 						);
 					}
@@ -430,7 +430,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 						return $httpAsyncClient;
 					}
 
-					throw new Exceptions\InvalidState('Sync clients should not be called when doing devices discovery');
+					throw new TuyaExceptions\InvalidState('Sync clients should not be called when doing devices discovery');
 				},
 			);
 

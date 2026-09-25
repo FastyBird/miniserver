@@ -18,7 +18,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Commands;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Queries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
@@ -27,7 +27,7 @@ use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
@@ -98,13 +98,13 @@ class Build extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -131,10 +131,10 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -215,10 +215,10 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -295,7 +295,7 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteBridge(Style\SymfonyStyle $io): void
 	{
@@ -364,7 +364,7 @@ class Build extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
 	 */
 	private function listBridges(Style\SymfonyStyle $io): void
 	{
@@ -407,13 +407,13 @@ class Build extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -537,7 +537,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connectors): HomeKitEntities\Connectors\Connector {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//shelly-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -567,7 +567,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//shelly-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -630,7 +630,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($devices): ShellyEntities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//shelly-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -660,7 +660,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//shelly-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -723,7 +723,7 @@ class Build extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($devices): Entities\Devices\Shelly {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//shelly-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -753,7 +753,7 @@ class Build extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//shelly-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -771,10 +771,10 @@ class Build extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\InvalidState
+	 * @throws ShellyConnectorHomeKitConnectorExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -794,7 +794,7 @@ class Build extends Console\Command\Command
 		);
 
 		if ($shellyGenerationProperty === null) {
-			throw new Exceptions\InvalidState('Shelly device generation info could not be loaded');
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device generation info could not be loaded');
 		}
 
 		$findDevicePropertyQuery = new DevicesQueries\Entities\FindDeviceProperties();
@@ -807,7 +807,7 @@ class Build extends Console\Command\Command
 		);
 
 		if ($shellyModelProperty === null) {
-			throw new Exceptions\InvalidState('Shelly device model info could not be loaded');
+			throw new ShellyConnectorHomeKitConnectorExceptions\InvalidState('Shelly device model info could not be loaded');
 		}
 
 		$supportedCategories = [];
@@ -876,7 +876,7 @@ class Build extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($categories): HomeKitTypes\AccessoryCategory {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
 							'//shelly-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',
@@ -896,7 +896,7 @@ class Build extends Console\Command\Command
 				return HomeKitTypes\AccessoryCategory::from(intval($category));
 			}
 
-			throw new Exceptions\Runtime(
+			throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate(
 						'//shelly-connector-homekit-connector-bridge.cmd.base.messages.answerNotValid',

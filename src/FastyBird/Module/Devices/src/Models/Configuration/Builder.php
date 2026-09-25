@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Models\Configuration;
 
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Caching;
-use FastyBird\Module\Devices\Exceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Types;
 use Flow\JSONPath;
@@ -55,7 +55,7 @@ final class Builder
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function load(Types\ConfigurationType $type, bool $force = false): JSONPath\JSONPath
 	{
@@ -75,16 +75,16 @@ final class Builder
 
 			return $data;
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Module configuration could not be read', $ex->getCode(), $ex);
+			throw new DevicesExceptions\InvalidState('Module configuration could not be read', $ex->getCode(), $ex);
 		}
 	}
 
 	/**
 	 * @return array<mixed>
 	 *
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws InvalidArgumentException

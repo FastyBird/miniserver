@@ -16,9 +16,9 @@
 namespace FastyBird\Connector\Viera\Commands;
 
 use FastyBird\Connector\Viera\Documents;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Queries;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -82,8 +82,8 @@ class Execute extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
@@ -214,7 +214,7 @@ class Execute extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new VieraExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//viera-connector.cmd.base.messages.answerNotValid',
@@ -244,7 +244,7 @@ class Execute extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new VieraExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//viera-connector.cmd.base.messages.answerNotValid',

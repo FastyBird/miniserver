@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Models\Entities\Repositories;
 
 use Error;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
@@ -21,7 +21,7 @@ final class ChannelsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws PersistenceExceptions\Query
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
@@ -40,7 +40,7 @@ final class ChannelsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws PersistenceExceptions\Query
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
@@ -61,7 +61,7 @@ final class ChannelsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws PersistenceExceptions\Query
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException

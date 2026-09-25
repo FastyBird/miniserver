@@ -16,11 +16,11 @@
 namespace FastyBird\Connector\HomeKit\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Documents;
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette;
 use Ramsey\Uuid;
 use SplObjectStorage;
@@ -130,7 +130,7 @@ class Service
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidArgument
 	 */
 	public function addCharacteristic(Protocol\Characteristics\Characteristic $characteristic): void
 	{
@@ -139,7 +139,7 @@ class Service
 			&& !in_array($characteristic->getName(), $this->optionalCharacteristics, true)
 			&& !in_array($characteristic->getName(), $this->virtualCharacteristics, true)
 		) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Characteristics: %s is not allowed for service: %s',
 				$characteristic->getName(),
 				$this->getName(),
@@ -216,8 +216,8 @@ class Service
 	 *
 	 * @return array<string, array<array<string, array<int|string>|bool|float|int|string|null>|int|null>|bool|int|string|null>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

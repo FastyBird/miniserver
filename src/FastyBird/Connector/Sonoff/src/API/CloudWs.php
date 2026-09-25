@@ -25,7 +25,7 @@ use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Connector\Sonoff\ValueObjects;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Schemas;
@@ -746,7 +746,7 @@ final class CloudWs
 				$payload,
 				$this->getSchema($schemaFilename),
 			);
-		} catch (ApplicationExceptions\Logic | DocumentsExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
+		} catch (CoreExceptions\Logic | DocumentsExceptions\MalformedInput | ValuesExceptions\InvalidData $ex) {
 			if ($throw) {
 				throw new SonoffExceptions\CloudWsCall(
 					'Could not validate received payload',

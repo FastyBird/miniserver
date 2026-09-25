@@ -23,13 +23,13 @@ use Exception;
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Entities;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers as NsPanelHelpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Formats;
@@ -138,14 +138,14 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -167,10 +167,10 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -195,7 +195,7 @@ class Install extends Console\Command\Command
 				);
 
 				if ($connector !== null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//ns-panel-connector.cmd.install.messages.identifier.connector.used',
 						),
@@ -311,16 +311,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -476,7 +476,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteConnector(Style\SymfonyStyle $io): void
 	{
@@ -543,15 +543,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -570,9 +570,9 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -635,14 +635,14 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -665,7 +665,7 @@ class Install extends Console\Command\Command
 				if (
 					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) !== null
 				) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//ns-panel-connector.cmd.install.messages.identifier.device.used',
 						),
@@ -735,7 +735,7 @@ class Install extends Console\Command\Command
 				API\LanApi::GATEWAY_PORT,
 				false,
 			);
-		} catch (Exceptions\LanApiCall) {
+		} catch (NsPanelExceptions\LanApiCall) {
 			$io->error(
 				(string) $this->translator->translate('//ns-panel-connector.cmd.install.messages.accessToken.error'),
 			);
@@ -846,18 +846,18 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -970,7 +970,7 @@ class Install extends Console\Command\Command
 					API\LanApi::GATEWAY_PORT,
 					false,
 				);
-			} catch (Exceptions\LanApiCall) {
+			} catch (NsPanelExceptions\LanApiCall) {
 				$io->error(
 					(string) $this->translator->translate(
 						'//ns-panel-connector.cmd.install.messages.accessToken.error',
@@ -1117,7 +1117,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteGateway(
 		Style\SymfonyStyle $io,
@@ -1185,18 +1185,18 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1221,9 +1221,9 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1278,20 +1278,20 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
 	private function discoverDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
 		if ($this->output === null) {
-			throw new Exceptions\InvalidState('Something went wrong, console output is not configured');
+			throw new NsPanelExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
 		$executedTime = $this->clock->getNow();
@@ -1301,7 +1301,7 @@ class Install extends Console\Command\Command
 		$symfonyApp = $this->getApplication();
 
 		if ($symfonyApp === null) {
-			throw new Exceptions\InvalidState('Something went wrong, console app is not configured');
+			throw new NsPanelExceptions\InvalidState('Something went wrong, console app is not configured');
 		}
 
 		$serviceCmd = $symfonyApp->find(DevicesCommands\Connector::NAME);
@@ -1394,11 +1394,11 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1425,7 +1425,7 @@ class Install extends Console\Command\Command
 				if (
 					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) !== null
 				) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//ns-panel-connector.cmd.install.messages.identifier.device.used',
 						),
@@ -1523,11 +1523,11 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1596,8 +1596,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1705,16 +1705,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1750,8 +1750,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1809,11 +1809,11 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1831,7 +1831,7 @@ class Install extends Console\Command\Command
 		$capabilityMetadata = $this->mappingBuilder->getCapabilitiesMapping()->findByCapabilityName($capabilityType);
 
 		if ($capabilityMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for capability: %s was not found',
 				$capabilityType->value,
 			));
@@ -1923,11 +1923,11 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1961,7 +1961,7 @@ class Install extends Console\Command\Command
 		$capabilityMetadata = $this->mappingBuilder->getCapabilitiesMapping()->findByCapabilityName($capabilityType);
 
 		if ($capabilityMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for capability: %s was not found',
 				$capabilityType->value,
 			));
@@ -2031,16 +2031,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2077,7 +2077,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteCapability(Style\SymfonyStyle $io, Entities\Devices\ThirdPartyDevice $device): void
 	{
@@ -2149,7 +2149,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidArgument
 	 */
 	private function listCapabilities(Style\SymfonyStyle $io, Entities\Devices\ThirdPartyDevice $device): void
 	{
@@ -2202,12 +2202,12 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
 	 * @throws Nette\IOException
 	 * @throws TypeError
 	 * @throws ValueError
@@ -2226,7 +2226,7 @@ class Install extends Console\Command\Command
 		);
 
 		if ($capabilityMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for capability: %s was not found',
 				$channel->getCapability()->value,
 			));
@@ -2241,7 +2241,7 @@ class Install extends Console\Command\Command
 		$attributeMetadata = $capabilityMetadata->findAttribute($attributeType);
 
 		if ($attributeMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for attribute: %s was not found',
 				$attributeType->value,
 			));
@@ -2314,16 +2314,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2341,7 +2341,7 @@ class Install extends Console\Command\Command
 		);
 
 		if ($capabilityMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for capability: %s was not found',
 				$channel->getCapability()->value,
 			));
@@ -2360,7 +2360,7 @@ class Install extends Console\Command\Command
 		$attributeMetadata = $capabilityMetadata->findAttribute($attributeType);
 
 		if ($attributeMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for attribute: %s was not found',
 				$attributeType->value,
 			));
@@ -2514,16 +2514,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2603,12 +2603,12 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2690,17 +2690,17 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2778,15 +2778,15 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidArgument
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -2899,17 +2899,17 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3169,16 +3169,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3269,16 +3269,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 * @throws Nette\IOException
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3354,7 +3354,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): NsPanelTypes\ClientMode {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3387,7 +3387,7 @@ class Install extends Console\Command\Command
 				return NsPanelTypes\ClientMode::BOTH;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new NsPanelExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3429,8 +3429,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
 	 */
 	private function askDeviceCategory(Style\SymfonyStyle $io): NsPanelTypes\Category
 	{
@@ -3457,7 +3457,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($categories): NsPanelTypes\Category {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3475,7 +3475,7 @@ class Install extends Console\Command\Command
 				return NsPanelTypes\Category::from($category);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new NsPanelExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3490,10 +3490,10 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -3584,7 +3584,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($capabilities): NsPanelTypes\Capability|null {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3606,7 +3606,7 @@ class Install extends Console\Command\Command
 				return NsPanelTypes\Capability::from($capability);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new NsPanelExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3621,10 +3621,10 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws NsPanelExceptions\Runtime
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function askAttribute(
 		Style\SymfonyStyle $io,
@@ -3639,7 +3639,7 @@ class Install extends Console\Command\Command
 		);
 
 		if ($capabilityMetadata === null) {
-			throw new Exceptions\InvalidArgument(sprintf(
+			throw new NsPanelExceptions\InvalidArgument(sprintf(
 				'Definition for capability: %s was not found',
 				$channel->getCapability()->value,
 			));
@@ -3680,7 +3680,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($attributes): NsPanelTypes\Attribute {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3698,7 +3698,7 @@ class Install extends Console\Command\Command
 				return NsPanelTypes\Attribute::from($attribute);
 			}
 
-			throw new Exceptions\Runtime(
+			throw new NsPanelExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3713,7 +3713,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Exception
 	 */
@@ -3828,7 +3828,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer) use ($devices): DevicesEntities\Devices\Device {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -3850,7 +3850,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new NsPanelExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -3933,7 +3933,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|null $answer) use ($channels): DevicesEntities\Channels\Channel {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -3957,7 +3957,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4029,7 +4029,7 @@ class Install extends Console\Command\Command
 				string|null $answer,
 			) use ($properties): DevicesEntities\Channels\Properties\Dynamic|DevicesEntities\Channels\Properties\Variable {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4056,7 +4056,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4075,8 +4075,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -4176,7 +4176,7 @@ class Install extends Console\Command\Command
 					);
 					$question->setValidator(function (string|null $answer) use ($options): string|array {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new NsPanelExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4206,7 +4206,7 @@ class Install extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4247,7 +4247,7 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	private function provideAttributeValue(
 		Style\SymfonyStyle $io,
@@ -4274,7 +4274,7 @@ class Install extends Console\Command\Command
 			);
 			$question->setValidator(function (string|int|null $answer) use ($options): string {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4294,7 +4294,7 @@ class Install extends Console\Command\Command
 					return $value;
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4322,7 +4322,7 @@ class Install extends Console\Command\Command
 			);
 			$question->setValidator(function (string|int|null $answer): bool {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4352,7 +4352,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($attributeMetadata, $minValue, $maxValue, $step): string|int|float {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4368,7 +4368,7 @@ class Install extends Console\Command\Command
 
 				if ($attributeMetadata->getDataType() === ValuesTypes\DataType::FLOAT) {
 					if ($minValue !== null && floatval($answer) < $minValue) {
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4379,7 +4379,7 @@ class Install extends Console\Command\Command
 					}
 
 					if ($maxValue !== null && floatval($answer) > $maxValue) {
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4395,7 +4395,7 @@ class Install extends Console\Command\Command
 							Math\BigDecimal::of(strval($step)),
 						)->toFloat() !== 0.0
 					) {
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4417,7 +4417,7 @@ class Install extends Console\Command\Command
 					|| $attributeMetadata->getDataType() === ValuesTypes\DataType::UINT
 				) {
 					if ($minValue !== null && intval($answer) < $minValue) {
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4428,7 +4428,7 @@ class Install extends Console\Command\Command
 					}
 
 					if ($maxValue !== null && intval($answer) > $maxValue) {
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4439,7 +4439,7 @@ class Install extends Console\Command\Command
 					}
 
 					if ($step !== null && intval($answer) % $step !== 0) {
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4452,7 +4452,7 @@ class Install extends Console\Command\Command
 					return intval($answer);
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4506,7 +4506,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4534,7 +4534,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new NsPanelExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -4549,8 +4549,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -4571,7 +4571,7 @@ class Install extends Console\Command\Command
 
 					try {
 						return $panelApi->getGatewayInfo($answer, API\LanApi::GATEWAY_PORT, false);
-					} catch (Exceptions\LanApiCall $ex) {
+					} catch (NsPanelExceptions\LanApiCall $ex) {
 						$this->logger->error(
 							'Could not get NS Panel basic information',
 							[
@@ -4589,7 +4589,7 @@ class Install extends Console\Command\Command
 							],
 						);
 
-						throw new Exceptions\Runtime(
+						throw new NsPanelExceptions\Runtime(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.install.messages.addressNotReachable',
 								['address' => $answer],
@@ -4598,7 +4598,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4654,7 +4654,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $gateways): Entities\Devices\Gateway {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4682,7 +4682,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4753,7 +4753,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $gateway, $devices): Entities\Devices\ThirdPartyDevice|Entities\Devices\SubDevice {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4788,7 +4788,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4848,7 +4848,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($device, $channels): Entities\Channels\Channel|false {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4883,7 +4883,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4939,7 +4939,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($channel, $properties): DevicesEntities\Channels\Properties\Property {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new NsPanelExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//ns-panel-connector.cmd.base.messages.answerNotValid',
@@ -4973,7 +4973,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new NsPanelExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//ns-panel-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -4993,8 +4993,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function findNextDeviceIdentifier(Entities\Connectors\Connector $connector, string $pattern): string
 	{
@@ -5012,12 +5012,12 @@ class Install extends Console\Command\Command
 			}
 		}
 
-		throw new Exceptions\InvalidState('Could not find free device identifier');
+		throw new NsPanelExceptions\InvalidState('Could not find free device identifier');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function findNextChannelIdentifier(
 		Entities\Devices\ThirdPartyDevice $device,
@@ -5038,7 +5038,7 @@ class Install extends Console\Command\Command
 			}
 		}
 
-		throw new Exceptions\InvalidState('Could not find free channel identifier');
+		throw new NsPanelExceptions\InvalidState('Could not find free channel identifier');
 	}
 
 }

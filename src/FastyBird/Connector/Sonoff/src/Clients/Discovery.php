@@ -19,11 +19,11 @@ use BadMethodCallException;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
@@ -92,10 +92,10 @@ final class Discovery
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidState
 	 * @throws Throwable
 	 */
 	public function discover(): void
@@ -130,9 +130,9 @@ final class Discovery
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -151,11 +151,11 @@ final class Discovery
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\CloudApiCall
-	 * @throws Exceptions\CloudApiError
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\CloudApiCall
+	 * @throws SonoffExceptions\CloudApiError
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -176,7 +176,7 @@ final class Discovery
 		try {
 			$apiClient->connect();
 
-		} catch (Exceptions\CloudApiCall $ex) {
+		} catch (SonoffExceptions\CloudApiCall $ex) {
 			$this->logger->error(
 				'Log into eWelink account failed',
 				[
@@ -230,7 +230,7 @@ final class Discovery
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws BadMethodCallException
-	 * @throws Exceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidState
 	 * @throws RuntimeException
 	 */
 	private function discoverLanDevices(): Promise\PromiseInterface
@@ -278,7 +278,7 @@ final class Discovery
 			try {
 				$mappingConfiguration = Utils\Json::decode($this->getUiidMapping($device->getExtra()->getUiid()));
 				assert($mappingConfiguration instanceof stdClass);
-			} catch (Exceptions\InvalidState $ex) {
+			} catch (SonoffExceptions\InvalidState $ex) {
 				$this->logger->error(
 					'Params mapping for device UIID could not be loaded',
 					[
@@ -447,7 +447,7 @@ final class Discovery
 						],
 					),
 				);
-			} catch (Exceptions\Runtime $ex) {
+			} catch (SonoffExceptions\Runtime $ex) {
 				$this->logger->error(
 					'Found device could not be attached to processing queue',
 					[
@@ -462,7 +462,7 @@ final class Discovery
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidState
 	 */
 	private function getUiidMapping(int $uiid): string
 	{
@@ -475,7 +475,7 @@ final class Discovery
 			);
 
 		} catch (Nette\IOException) {
-			throw new Exceptions\InvalidState('Validation schema for response could not be loaded');
+			throw new SonoffExceptions\InvalidState('Validation schema for response could not be loaded');
 		}
 
 		return $mapping;
@@ -483,9 +483,9 @@ final class Discovery
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

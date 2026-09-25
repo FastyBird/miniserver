@@ -19,8 +19,8 @@ use BinSoul\Net\Mqtt;
 use Closure;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Clients\Flow;
-use FastyBird\Connector\FbMqtt\Exceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use InvalidArgumentException;
 use Nette;
@@ -154,7 +154,7 @@ final class Client
 	 *
 	 * @return Promise\PromiseInterface<mixed>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 */
 	public function connect(int $timeout = 5): Promise\PromiseInterface
@@ -162,7 +162,7 @@ final class Client
 		$deferred = new Promise\Deferred();
 
 		if ($this->isConnected || $this->isConnecting) {
-			return Promise\reject(new Exceptions\Logic('The client is already connected'));
+			return Promise\reject(new FbMqttExceptions\Logic('The client is already connected'));
 		}
 
 		$this->isConnecting = true;
@@ -237,7 +237,7 @@ final class Client
 	public function disconnect(int $timeout = 5): Promise\PromiseInterface
 	{
 		if (!$this->isConnected || $this->isDisconnecting || $this->connection === null) {
-			return Promise\reject(new Exceptions\Logic('The client is not connected'));
+			return Promise\reject(new FbMqttExceptions\Logic('The client is not connected'));
 		}
 
 		$this->isDisconnecting = true;
@@ -305,7 +305,7 @@ final class Client
 	public function subscribe(Mqtt\Subscription $subscription): Promise\PromiseInterface
 	{
 		if (!$this->isConnected) {
-			return Promise\reject(new Exceptions\Logic('The client is not connected'));
+			return Promise\reject(new FbMqttExceptions\Logic('The client is not connected'));
 		}
 
 		return $this->startFlow($this->flowFactory->buildOutgoingSubscribeFlow([$subscription]));
@@ -319,7 +319,7 @@ final class Client
 	public function unsubscribe(Mqtt\Subscription $subscription): Promise\PromiseInterface
 	{
 		if (!$this->isConnected) {
-			return Promise\reject(new Exceptions\Logic('The client is not connected'));
+			return Promise\reject(new FbMqttExceptions\Logic('The client is not connected'));
 		}
 
 		$deferred = new Promise\Deferred();
@@ -349,7 +349,7 @@ final class Client
 		$message = new Mqtt\DefaultMessage($topic, ($payload ?? ''), $qos, $retain);
 
 		if (!$this->isConnected) {
-			return Promise\reject(new Exceptions\Logic('The client is not connected'));
+			return Promise\reject(new FbMqttExceptions\Logic('The client is not connected'));
 		}
 
 		return $this->startFlow($this->flowFactory->buildOutgoingPublishFlow($message));
@@ -387,7 +387,7 @@ final class Client
 		$timer = $this->eventLoop->addTimer(
 			$timeout,
 			static function () use ($deferred, $timeout, &$future): void {
-				$exception = new Exceptions\Runtime(sprintf('Connection timed out after %d seconds', $timeout));
+				$exception = new FbMqttExceptions\Runtime(sprintf('Connection timed out after %d seconds', $timeout));
 				$deferred->reject($exception);
 
 				// @phpstan-ignore-next-line
@@ -439,7 +439,7 @@ final class Client
 		$responseTimer = $this->eventLoop->addTimer(
 			$timeout,
 			static function () use ($deferred, $timeout): void {
-				$exception = new Exceptions\Runtime(sprintf('No response after %d seconds', $timeout));
+				$exception = new FbMqttExceptions\Runtime(sprintf('No response after %d seconds', $timeout));
 				$deferred->reject($exception);
 			},
 		);
@@ -468,7 +468,7 @@ final class Client
 	/**
 	 * Handles incoming data
 	 *
-	 * @throws Exceptions\Runtime
+	 * @throws FbMqttExceptions\Runtime
 	 */
 	private function handleReceive(string $data): void
 	{
@@ -494,14 +494,14 @@ final class Client
 	/**
 	 * Handles an incoming packet
 	 *
-	 * @throws Exceptions\Runtime
+	 * @throws FbMqttExceptions\Runtime
 	 */
 	private function handlePacket(Mqtt\Packet $packet): void
 	{
 		switch ($packet->getPacketType()) {
 			case Mqtt\Packet::TYPE_PUBLISH:
 				if (!($packet instanceof Mqtt\Packet\PublishRequestPacket)) {
-					throw new Exceptions\Runtime(
+					throw new FbMqttExceptions\Runtime(
 						sprintf('Expected %s but got %s', Mqtt\Packet\PublishRequestPacket::class, $packet::class),
 					);
 				}
@@ -540,7 +540,7 @@ final class Client
 
 				if (!$flowFound) {
 					$this->handleWarning(
-						new Exceptions\Logic(
+						new FbMqttExceptions\Logic(
 							sprintf('Received unexpected packet of type %d', $packet->getPacketType()),
 						),
 					);
@@ -549,7 +549,7 @@ final class Client
 				break;
 			default:
 				$this->handleWarning(
-					new Exceptions\Logic(sprintf('Cannot handle packet of type %d', $packet->getPacketType())),
+					new FbMqttExceptions\Logic(sprintf('Cannot handle packet of type %d', $packet->getPacketType())),
 				);
 		}
 	}
@@ -848,7 +848,7 @@ final class Client
 			$flow->getDeferred()->resolve($flow->getResult());
 
 		} else {
-			$ex = new Exceptions\Runtime($flow->getErrorMessage());
+			$ex = new FbMqttExceptions\Runtime($flow->getErrorMessage());
 
 			$flow->getDeferred()->reject($ex);
 

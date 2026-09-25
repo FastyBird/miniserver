@@ -15,10 +15,10 @@
 
 namespace FastyBird\Connector\HomeKit\Protocol;
 
-use FastyBird\Connector\HomeKit\Exceptions;
+use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette;
 use Ramsey\Uuid;
 use SplObjectStorage;
@@ -66,8 +66,8 @@ class Driver
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 */
 	public function addBridge(Accessories\Bridge $accessory): void
 	{
@@ -76,7 +76,7 @@ class Driver
 		foreach ($this->accessories as $existingAccessory) {
 			if ($existingAccessory->getCategory() === Types\AccessoryCategory::BRIDGE) {
 				if (!$existingAccessory->getId()->equals($accessory->getId())) {
-					throw new Exceptions\InvalidState('There is already registered bridge');
+					throw new HomeKitExceptions\InvalidState('There is already registered bridge');
 				}
 			}
 
@@ -89,8 +89,8 @@ class Driver
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws HomeKitExceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidState
 	 */
 	public function addBridgedAccessory(Accessories\Generic $accessory): void
 	{
@@ -99,7 +99,7 @@ class Driver
 		foreach ($this->accessories as $existingAccessory) {
 			if ($existingAccessory->getCategory() === Types\AccessoryCategory::BRIDGE) {
 				if (!$existingAccessory instanceof Accessories\Bridge) {
-					throw new Exceptions\InvalidState(
+					throw new HomeKitExceptions\InvalidState(
 						'Registered device in bridge category is not instance of bridge accessory',
 					);
 				}
@@ -116,11 +116,11 @@ class Driver
 			}
 		}
 
-		throw new Exceptions\InvalidState('Bridge for given device accessory is not registered. Register it first');
+		throw new HomeKitExceptions\InvalidState('Bridge for given device accessory is not registered. Register it first');
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws HomeKitExceptions\InvalidArgument
 	 */
 	public function addAccessory(Accessories\Accessory $accessory): void
 	{
@@ -156,7 +156,7 @@ class Driver
 
 		foreach ($this->accessories as $existingAccessory) {
 			if ($existingAccessory->getAid() === $accessory->getAid()) {
-				throw new Exceptions\InvalidArgument('Duplicate AID found when attempting to add accessory');
+				throw new HomeKitExceptions\InvalidArgument('Duplicate AID found when attempting to add accessory');
 			}
 		}
 
@@ -203,8 +203,8 @@ class Driver
 	/**
 	 * @return array<string, array<int<0, max>, array<string, array<int, array<string, array<array<string, array<int|string>|bool|float|int|string|null>|int|null>|bool|int|string|null>>|int|null>>>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

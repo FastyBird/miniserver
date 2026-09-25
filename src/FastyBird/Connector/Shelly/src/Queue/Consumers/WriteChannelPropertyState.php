@@ -19,13 +19,13 @@ use DateTimeInterface;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -78,13 +78,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
+	 * @throws ShellyExceptions\InvalidState
+	 * @throws ShellyExceptions\Runtime
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -462,7 +462,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 
 				$extra = [];
 
-				if ($ex instanceof Exceptions\HttpApiCall) {
+				if ($ex instanceof ShellyExceptions\HttpApiCall) {
 					$extra = [
 						'request' => [
 							'method' => $ex->getRequest()?->getMethod(),
@@ -520,7 +520,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 							),
 						);
 					}
-				} elseif ($ex instanceof Exceptions\HttpApiError) {
+				} elseif ($ex instanceof ShellyExceptions\HttpApiError) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,

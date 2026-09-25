@@ -18,13 +18,13 @@ namespace FastyBird\Connector\Tuya\Clients;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\API;
 use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Exceptions;
+use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Connector\Tuya\ValueObjects;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -119,12 +119,12 @@ final class Discovery
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\InvalidState
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws Throwable
 	 */
 	public function discover(): void
@@ -141,9 +141,9 @@ final class Discovery
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -347,11 +347,11 @@ final class Discovery
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
 	 * @throws Throwable
 	 */
 	private function discoverCloudDevices(): void
@@ -482,11 +482,11 @@ final class Discovery
 	 * @return Promise\PromiseInterface<bool>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\OpenApiCall
-	 * @throws Exceptions\OpenApiError
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws TuyaExceptions\OpenApiCall
+	 * @throws TuyaExceptions\OpenApiError
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -509,7 +509,7 @@ final class Discovery
 
 				} catch (Throwable $ex) {
 					$deferred->reject(
-						new Exceptions\InvalidState(
+						new TuyaExceptions\InvalidState(
 							'Loading device factory infos from cloud failed',
 							$ex->getCode(),
 							$ex,
@@ -525,7 +525,7 @@ final class Discovery
 					$deviceInformation = $response->getResult();
 				} catch (Throwable $ex) {
 					$deferred->reject(
-						new Exceptions\InvalidState(
+						new TuyaExceptions\InvalidState(
 							'Could not load device basic information from Tuya cloud',
 							$ex->getCode(),
 							$ex,
@@ -582,7 +582,7 @@ final class Discovery
 
 				} catch (Throwable $ex) {
 					$deferred->reject(
-						new Exceptions\InvalidState('Could not create device description message', $ex->getCode(), $ex),
+						new TuyaExceptions\InvalidState('Could not create device description message', $ex->getCode(), $ex),
 					);
 
 					return;
@@ -595,7 +595,7 @@ final class Discovery
 						$children = $response->getResult();
 					} catch (Throwable $ex) {
 						$deferred->reject(
-							new Exceptions\InvalidState(
+							new TuyaExceptions\InvalidState(
 								'Could not load device children from Tuya cloud',
 								$ex->getCode(),
 								$ex,
@@ -704,8 +704,8 @@ final class Discovery
 	 *
 	 * @return Promise\PromiseInterface<bool>
 	 *
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Throwable
 	 */
@@ -836,7 +836,7 @@ final class Discovery
 					}
 				} catch (Throwable $ex) {
 					$deferred->reject(
-						new Exceptions\InvalidState('Device specification could not be loaded', $ex->getCode(), $ex),
+						new TuyaExceptions\InvalidState('Device specification could not be loaded', $ex->getCode(), $ex),
 					);
 
 					return;
@@ -992,9 +992,9 @@ final class Discovery
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws TuyaExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

@@ -4,10 +4,10 @@ namespace FastyBird\Connector\Viera\Tests\Cases\Unit\API;
 
 use Error;
 use FastyBird\Connector\Viera\API;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Services;
 use FastyBird\Connector\Viera\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use Nette\DI;
@@ -24,10 +24,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -102,10 +102,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -267,10 +267,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -360,10 +360,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -454,10 +454,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -546,10 +546,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -640,10 +640,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -732,10 +732,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -824,10 +824,10 @@ final class TelevisionApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\TelevisionApiCall
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws VieraExceptions\TelevisionApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */

@@ -18,12 +18,12 @@ namespace FastyBird\Connector\NsPanel\Clients;
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -68,10 +68,10 @@ final class Device implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -303,7 +303,7 @@ final class Device implements Client
 											->catch(function (Throwable $ex) use ($gateway, $subDevice): void {
 												$extra = [];
 
-												if ($ex instanceof Exceptions\LanApiCall) {
+												if ($ex instanceof NsPanelExceptions\LanApiCall) {
 													$extra = [
 														'request' => [
 															'method' => $ex->getRequest()?->getMethod(),
@@ -370,7 +370,7 @@ final class Device implements Client
 							->catch(function (Throwable $ex) use ($gateway): void {
 								$extra = [];
 
-								if ($ex instanceof Exceptions\LanApiCall) {
+								if ($ex instanceof NsPanelExceptions\LanApiCall) {
 									$extra = [
 										'request' => [
 											'method' => $ex->getRequest()?->getMethod(),
@@ -430,7 +430,7 @@ final class Device implements Client
 					->catch(function (Throwable $ex) use ($gateway): void {
 						$extra = [];
 
-						if ($ex instanceof Exceptions\LanApiCall) {
+						if ($ex instanceof NsPanelExceptions\LanApiCall) {
 							$extra = [
 								'request' => [
 									'method' => $ex->getRequest()?->getMethod(),
@@ -519,10 +519,10 @@ final class Device implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws NsPanelExceptions\InvalidArgument
+	 * @throws NsPanelExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -608,7 +608,7 @@ final class Device implements Client
 						->catch(function (Throwable $ex) use ($gateway): void {
 							$extra = [];
 
-							if ($ex instanceof Exceptions\LanApiCall) {
+							if ($ex instanceof NsPanelExceptions\LanApiCall) {
 								$extra = [
 									'request' => [
 										'method' => $ex->getRequest()?->getMethod(),

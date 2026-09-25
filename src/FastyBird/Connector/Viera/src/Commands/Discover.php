@@ -22,12 +22,12 @@ use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
 use FastyBird\Connector\Viera\Documents;
 use FastyBird\Connector\Viera\Entities;
-use FastyBird\Connector\Viera\Exceptions;
+use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
@@ -112,18 +112,18 @@ class Discover extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws Console\Exception\InvalidArgumentException
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
@@ -256,7 +256,7 @@ class Discover extends Console\Command\Command
 				$question->setValidator(
 					function (string|int|null $answer) use ($connectors): Documents\Connectors\Connector {
 						if ($answer === null) {
-							throw new Exceptions\Runtime(
+							throw new VieraExceptions\Runtime(
 								sprintf(
 									(string) $this->translator->translate(
 										'//viera-connector.cmd.base.messages.answerNotValid',
@@ -286,7 +286,7 @@ class Discover extends Console\Command\Command
 							}
 						}
 
-						throw new Exceptions\Runtime(
+						throw new VieraExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//viera-connector.cmd.base.messages.answerNotValid',
@@ -340,10 +340,10 @@ class Discover extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -433,10 +433,10 @@ class Discover extends Console\Command\Command
 	 *
 	 * @throws DBAL\Exception
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Runtime
+	 * @throws VieraExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -487,7 +487,7 @@ class Discover extends Console\Command\Command
 						$device->getPort(),
 					);
 					$televisionApi->connect();
-				} catch (Exceptions\TelevisionApiCall | Exceptions\TelevisionApiError | Exceptions\InvalidState $ex) {
+				} catch (VieraExceptions\TelevisionApiCall | VieraExceptions\TelevisionApiError | VieraExceptions\InvalidState $ex) {
 					$io->error(
 						(string) $this->translator->translate(
 							'//viera-connector.cmd.discover.messages.device.connectionFailed',
@@ -553,7 +553,7 @@ class Discover extends Console\Command\Command
 					$this->challengeKey = $televisionApi
 						->requestPinCode($connector->getName() ?? $connector->getIdentifier(), false)
 						->getChallengeKey();
-				} catch (Exceptions\TelevisionApiError $ex) {
+				} catch (VieraExceptions\TelevisionApiError $ex) {
 					$io->error(
 						(string) $this->translator->translate(
 							'//viera-connector.cmd.discover.messages.pairing.failed',
@@ -571,7 +571,7 @@ class Discover extends Console\Command\Command
 					);
 
 					continue;
-				} catch (Exceptions\TelevisionApiCall $ex) {
+				} catch (VieraExceptions\TelevisionApiCall $ex) {
 					$io->error(
 						(string) $this->translator->translate(
 							'//viera-connector.cmd.discover.messages.pairing.failed',
@@ -635,12 +635,12 @@ class Discover extends Console\Command\Command
 				if ($answer !== null && $answer !== '') {
 					try {
 						return $televisionApi->authorizePinCode($answer, strval($this->challengeKey), false);
-					} catch (Exceptions\TelevisionApiCall) {
+					} catch (VieraExceptions\TelevisionApiCall) {
 						$this->challengeKey = $televisionApi
 							->requestPinCode($connector->getName() ?? $connector->getIdentifier(), false)
 							->getChallengeKey();
 
-						throw new Exceptions\Runtime(
+						throw new VieraExceptions\Runtime(
 							sprintf(
 								(string) $this->translator->translate(
 									'//viera-connector.cmd.base.messages.answerNotValid',
@@ -651,7 +651,7 @@ class Discover extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new VieraExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 						$answer,

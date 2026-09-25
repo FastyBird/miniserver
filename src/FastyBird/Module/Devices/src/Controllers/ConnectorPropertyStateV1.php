@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Controllers;
 use Exception;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -62,7 +62,7 @@ final class ConnectorPropertyStateV1 extends BaseV1
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi
 	 * @throws DocumentsExceptions\MalformedInput
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

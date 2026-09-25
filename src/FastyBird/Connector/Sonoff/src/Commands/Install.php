@@ -19,11 +19,11 @@ use DateTimeImmutable;
 use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Entities;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -96,16 +96,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -126,8 +126,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -152,7 +152,7 @@ class Install extends Console\Command\Command
 				);
 
 				if ($connector !== null) {
-					throw new Exceptions\Runtime(
+					throw new SonoffExceptions\Runtime(
 						(string) $this->translator->translate(
 							'//sonoff-connector.cmd.install.messages.identifier.connector.used',
 						),
@@ -285,9 +285,9 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -503,7 +503,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteConnector(Style\SymfonyStyle $io): void
 	{
@@ -568,16 +568,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -596,9 +596,9 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -648,7 +648,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function editDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -703,7 +703,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
@@ -769,8 +769,8 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -810,20 +810,20 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
 	private function discoverDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
 	{
 		if ($this->output === null) {
-			throw new Exceptions\InvalidState('Something went wrong, console output is not configured');
+			throw new SonoffExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
 		$executedTime = $this->clock->getNow();
@@ -833,7 +833,7 @@ class Install extends Console\Command\Command
 		$symfonyApp = $this->getApplication();
 
 		if ($symfonyApp === null) {
-			throw new Exceptions\InvalidState('Something went wrong, console app is not configured');
+			throw new SonoffExceptions\InvalidState('Something went wrong, console app is not configured');
 		}
 
 		$serviceCmd = $symfonyApp->find(DevicesCommands\Connector::NAME);
@@ -912,16 +912,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -999,16 +999,16 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Console\Exception\ExceptionInterface
 	 * @throws DBAL\Exception
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1094,7 +1094,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): SonoffTypes\ClientMode {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new SonoffExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1129,7 +1129,7 @@ class Install extends Console\Command\Command
 				return SonoffTypes\ClientMode::CLOUD;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new SonoffExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -1159,8 +1159,8 @@ class Install extends Console\Command\Command
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1177,7 +1177,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): string {
 			if ($answer === '' || $answer === null) {
-				throw new Exceptions\Runtime(
+				throw new SonoffExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1200,7 +1200,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): string {
 			if ($answer === '' || $answer === null) {
-				throw new Exceptions\Runtime(
+				throw new SonoffExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1233,7 +1233,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|null $answer): SonoffTypes\CloudApiEndpoint {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new SonoffExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1277,7 +1277,7 @@ class Install extends Console\Command\Command
 				return SonoffTypes\CloudApiEndpoint::ASIA;
 			}
 
-			throw new Exceptions\Runtime(
+			throw new SonoffExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -1342,7 +1342,7 @@ class Install extends Console\Command\Command
 		);
 		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
 			if ($answer === null) {
-				throw new Exceptions\Runtime(
+				throw new SonoffExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 						$answer,
@@ -1370,7 +1370,7 @@ class Install extends Console\Command\Command
 				}
 			}
 
-			throw new Exceptions\Runtime(
+			throw new SonoffExceptions\Runtime(
 				sprintf(
 					(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 					$answer,
@@ -1428,7 +1428,7 @@ class Install extends Console\Command\Command
 		$question->setValidator(
 			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
 				if ($answer === null) {
-					throw new Exceptions\Runtime(
+					throw new SonoffExceptions\Runtime(
 						sprintf(
 							(string) $this->translator->translate(
 								'//sonoff-connector.cmd.base.messages.answerNotValid',
@@ -1459,7 +1459,7 @@ class Install extends Console\Command\Command
 					}
 				}
 
-				throw new Exceptions\Runtime(
+				throw new SonoffExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 						$answer,

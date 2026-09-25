@@ -11,15 +11,15 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions;
 use Nette;
 
 final class VieraConnectorHomeKitConnectorExtensionTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws Error
 	 */

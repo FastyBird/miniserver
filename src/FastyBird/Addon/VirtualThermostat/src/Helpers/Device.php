@@ -17,10 +17,10 @@ namespace FastyBird\Addon\VirtualThermostat\Helpers;
 
 use FastyBird\Addon\VirtualThermostat\Documents;
 use FastyBird\Addon\VirtualThermostat\Entities;
-use FastyBird\Addon\VirtualThermostat\Exceptions;
+use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Queries;
 use FastyBird\Addon\VirtualThermostat\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -56,8 +56,8 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getConfiguration(
 		DevicesDocuments\Devices\Device $device,
@@ -73,7 +73,7 @@ final readonly class Device
 		);
 
 		if ($channel === null) {
-			throw new Exceptions\InvalidState('Configuration channel is not configured');
+			throw new VirtualThermostatExceptions\InvalidState('Configuration channel is not configured');
 		}
 
 		return $channel;
@@ -81,8 +81,8 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getState(DevicesDocuments\Devices\Device $device): DevicesDocuments\Channels\Channel
 	{
@@ -96,7 +96,7 @@ final readonly class Device
 		);
 
 		if ($channel === null) {
-			throw new Exceptions\InvalidState('State channel is not configured');
+			throw new VirtualThermostatExceptions\InvalidState('State channel is not configured');
 		}
 
 		return $channel;
@@ -104,8 +104,8 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getPreset(
 		DevicesDocuments\Devices\Device $device,
@@ -122,7 +122,7 @@ final readonly class Device
 		);
 
 		if ($channel === null) {
-			throw new Exceptions\InvalidState(sprintf('Preset channel: %s is not configured', $preset->value));
+			throw new VirtualThermostatExceptions\InvalidState(sprintf('Preset channel: %s is not configured', $preset->value));
 		}
 
 		return $channel;
@@ -130,8 +130,8 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getHvacMode(
 		DevicesDocuments\Devices\Device $device,
@@ -151,8 +151,8 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getPresetMode(
 		DevicesDocuments\Devices\Device $device,
@@ -172,8 +172,8 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
 	public function getTargetTemp(
 		DevicesDocuments\Devices\Device $device,
@@ -199,7 +199,7 @@ final readonly class Device
 		} elseif ($preset === Types\Preset::ANTI_FREEZE) {
 			$channel = $this->getPreset($device, Types\ChannelIdentifier::PRESET_ANTI_FREEZE);
 		} else {
-			throw new Exceptions\InvalidState('Provided preset is not configured');
+			throw new VirtualThermostatExceptions\InvalidState('Provided preset is not configured');
 		}
 
 		$findPropertyQuery = new DevicesQueries\Configuration\FindChannelDynamicProperties();
@@ -214,10 +214,10 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -245,7 +245,7 @@ final readonly class Device
 		} elseif ($preset === Types\Preset::ANTI_FREEZE) {
 			$channel = $this->getPreset($device, Types\ChannelIdentifier::PRESET_ANTI_FREEZE);
 		} else {
-			throw new Exceptions\InvalidState('Provided preset is not configured');
+			throw new VirtualThermostatExceptions\InvalidState('Provided preset is not configured');
 		}
 
 		$findPropertyQuery = new DevicesQueries\Configuration\FindChannelVariableProperties();
@@ -269,10 +269,10 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -300,7 +300,7 @@ final readonly class Device
 		} elseif ($preset === Types\Preset::ANTI_FREEZE) {
 			$channel = $this->getPreset($device, Types\ChannelIdentifier::PRESET_ANTI_FREEZE);
 		} else {
-			throw new Exceptions\InvalidState('Provided preset is not configured');
+			throw new VirtualThermostatExceptions\InvalidState('Provided preset is not configured');
 		}
 
 		$findPropertyQuery = new DevicesQueries\Configuration\FindChannelVariableProperties();
@@ -324,10 +324,10 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -356,10 +356,10 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -391,10 +391,10 @@ final readonly class Device
 	 * For example, if the target temperature is 25 and the tolerance is 0.5 the heater will start when the sensor equals or goes below 24.5
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -426,10 +426,10 @@ final readonly class Device
 	 * For example, if the target temperature is 25 and the tolerance is 0.5 the heater will stop when the sensor equals or goes above 25.5
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -460,7 +460,7 @@ final readonly class Device
 	 * @return array<int, DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	public function getActors(DevicesDocuments\Devices\Device $device): array
 	{
@@ -503,7 +503,7 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	public function hasHeaters(DevicesDocuments\Devices\Device $device): bool
 	{
@@ -518,7 +518,7 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	public function hasCoolers(DevicesDocuments\Devices\Device $device): bool
 	{
@@ -535,7 +535,7 @@ final readonly class Device
 	 * @return array<int, DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	public function getSensors(DevicesDocuments\Devices\Device $device): array
 	{
@@ -586,7 +586,7 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	public function hasRoomTemperatureSensors(DevicesDocuments\Devices\Device $device): bool
 	{
@@ -601,7 +601,7 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	public function hasFloorTemperatureSensors(DevicesDocuments\Devices\Device $device): bool
 	{
@@ -616,7 +616,7 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	public function hasOpeningsSensors(DevicesDocuments\Devices\Device $device): bool
 	{
@@ -631,7 +631,7 @@ final readonly class Device
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
 	public function hasRoomHumiditySensors(DevicesDocuments\Devices\Device $device): bool
 	{
@@ -648,9 +648,9 @@ final readonly class Device
 	 * @return array<Types\HvacMode>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -672,9 +672,9 @@ final readonly class Device
 	 * @return array<Types\Preset>
 	 *
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidArgument
+	 * @throws VirtualThermostatExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

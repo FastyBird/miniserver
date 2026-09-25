@@ -6,7 +6,7 @@ use Contributte\Translation;
 use Doctrine\Persistence;
 use Error;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Models\Policies;
@@ -30,8 +30,8 @@ final class CreateAccountTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Console\Exception\CommandNotFoundException
 	 * @throws Console\Exception\LogicException

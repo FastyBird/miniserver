@@ -19,7 +19,7 @@ use Doctrine;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Models\Policies;
@@ -110,7 +110,7 @@ class Create extends Console\Command\Command
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int

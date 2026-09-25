@@ -4,7 +4,7 @@ namespace FastyBird\Plugin\RedisDbCache\Tests\Cases\Unit;
 
 use Error;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions;
 use FastyBird\Plugin\RedisDbCache;
 use Nette;
 use Nette\DI;
@@ -20,8 +20,8 @@ abstract class BaseTestCase extends TestCase
 	protected DI\Container $container;
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
 	protected function setUp(): void
@@ -32,8 +32,8 @@ abstract class BaseTestCase extends TestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
 	protected function createContainer(string|null $additionalConfig = null): Nette\DI\Container

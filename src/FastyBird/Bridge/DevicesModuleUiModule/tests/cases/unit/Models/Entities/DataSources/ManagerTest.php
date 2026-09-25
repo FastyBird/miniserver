@@ -5,10 +5,10 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Cases\Unit\Models\Entitie
 use Doctrine\DBAL;
 use Error;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
-use FastyBird\Bridge\DevicesModuleUiModule\Exceptions;
+use FastyBird\Bridge\DevicesModuleUiModule\Exceptions as DevicesModuleUiModuleExceptions;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Bridge\DevicesModuleUiModule\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
@@ -28,12 +28,12 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DI\MissingServiceException
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
+	 * @throws DevicesModuleUiModuleExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
@@ -79,12 +79,12 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws DI\MissingServiceException
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
+	 * @throws DevicesModuleUiModuleExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */

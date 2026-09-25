@@ -19,13 +19,13 @@ use DateTimeInterface;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Documents;
-use FastyBird\Connector\Shelly\Exceptions;
+use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -106,15 +106,15 @@ final class Local implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -149,7 +149,7 @@ final class Local implements Client
 					],
 				);
 
-				if (!$ex instanceof Exceptions\CoapError) {
+				if (!$ex instanceof ShellyExceptions\CoapError) {
 					$this->dispatcher?->dispatch(
 						new DevicesEvents\TerminateConnector(
 							Sources\Connector::SHELLY,
@@ -301,15 +301,15 @@ final class Local implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -333,15 +333,15 @@ final class Local implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -481,7 +481,7 @@ final class Local implements Client
 				->catch(function (Throwable $ex) use ($device): void {
 					$renderException = true;
 
-					if ($ex instanceof Exceptions\HttpApiCall) {
+					if ($ex instanceof ShellyExceptions\HttpApiCall) {
 						$renderException = false;
 					}
 
@@ -543,7 +543,7 @@ final class Local implements Client
 				->catch(function (Throwable $ex) use ($device): void {
 					$renderException = true;
 
-					if ($ex instanceof Exceptions\HttpApiError) {
+					if ($ex instanceof ShellyExceptions\HttpApiError) {
 						$this->queue->append(
 							$this->messageBuilder->create(
 								Queue\Messages\StoreDeviceConnectionState::class,
@@ -554,7 +554,7 @@ final class Local implements Client
 								],
 							),
 						);
-					} elseif ($ex instanceof Exceptions\HttpApiCall) {
+					} elseif ($ex instanceof ShellyExceptions\HttpApiCall) {
 						if (
 							$ex->getResponse() !== null
 							&& $ex->getResponse()->getStatusCode() >= StatusCodeInterface::STATUS_BAD_REQUEST
@@ -624,12 +624,12 @@ final class Local implements Client
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidState
 	 */
 	private function createGen2DeviceWsClient(Documents\Devices\Device $device): API\Gen2WsApi
 	{
 		if (array_key_exists($device->getId()->toString(), $this->gen2DevicesWsClients)) {
-			throw new Exceptions\InvalidState('Gen 2 device WS client is already created');
+			throw new ShellyExceptions\InvalidState('Gen 2 device WS client is already created');
 		}
 
 		unset($this->processedDevicesCommands[$device->getId()->toString()]);
@@ -637,7 +637,7 @@ final class Local implements Client
 		try {
 			$client = $this->connectionManager->getGen2WsApiConnection($device);
 		} catch (Throwable $ex) {
-			throw new Exceptions\InvalidState('Gen 2 device WS client is already created', $ex->getCode(), $ex);
+			throw new ShellyExceptions\InvalidState('Gen 2 device WS client is already created', $ex->getCode(), $ex);
 		}
 
 		$client->onMessage[] = function (API\Messages\Message $message) use ($device): void {
@@ -726,7 +726,7 @@ final class Local implements Client
 				->catch(function (Throwable $ex) use ($device): void {
 					$renderException = true;
 
-					if ($ex instanceof Exceptions\HttpApiCall) {
+					if ($ex instanceof ShellyExceptions\HttpApiCall) {
 						$renderException = false;
 					}
 
@@ -802,10 +802,10 @@ final class Local implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1040,7 +1040,7 @@ final class Local implements Client
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws ShellyExceptions\Runtime
 	 */
 	public function processGen1DeviceReportedStatus(
 		API\Messages\Response\Gen1\ReportDeviceState $state,
@@ -1083,10 +1083,10 @@ final class Local implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1129,7 +1129,7 @@ final class Local implements Client
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws ShellyExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -1179,15 +1179,15 @@ final class Local implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
-	 * @throws ApplicationExceptions\Logic
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws ShellyExceptions\InvalidArgument
+	 * @throws ShellyExceptions\InvalidState
 	 * @throws RuntimeException
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 * @throws ValueError
 	 */

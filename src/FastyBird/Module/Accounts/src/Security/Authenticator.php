@@ -15,10 +15,10 @@
 
 namespace FastyBird\Module\Accounts\Security;
 
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Types;
 use function is_string;
@@ -57,31 +57,31 @@ final class Authenticator implements Identity\Authenticator
 	 *
 	 * @return Entities\Identities\Identity
 	 *
-	 * @throws Exceptions\AccountNotFound
-	 * @throws Exceptions\AuthenticationFailed
-	 * @throws Exceptions\InvalidState
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws AccountsExceptions\AccountNotFound
+	 * @throws AccountsExceptions\AuthenticationFailed
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 */
 	public function authenticate(array $credentials): Identity\UserIdentity
 	{
 		[$username, $password] = $credentials + [null, null];
 
 		if (!is_string($username)) {
-			throw new Exceptions\AccountNotFound('The identity identifier is incorrect', self::IDENTITY_UID_NOT_FOUND);
+			throw new AccountsExceptions\AccountNotFound('The identity identifier is incorrect', self::IDENTITY_UID_NOT_FOUND);
 		}
 
 		$identity = $this->identitiesRepository->findOneByUid($username);
 
 		if ($identity === null) {
-			throw new Exceptions\AccountNotFound('The identity identifier is incorrect', self::IDENTITY_UID_NOT_FOUND);
+			throw new AccountsExceptions\AccountNotFound('The identity identifier is incorrect', self::IDENTITY_UID_NOT_FOUND);
 		}
 
 		if (!is_string($password)) {
-			throw new Exceptions\AuthenticationFailed('The password is incorrect', self::INVALID_CREDENTIAL_FOR_UID);
+			throw new AccountsExceptions\AuthenticationFailed('The password is incorrect', self::INVALID_CREDENTIAL_FOR_UID);
 		}
 
 		if (!$identity->verifyPassword($password)) {
-			throw new Exceptions\AuthenticationFailed('The password is incorrect', self::INVALID_CREDENTIAL_FOR_UID);
+			throw new AccountsExceptions\AuthenticationFailed('The password is incorrect', self::INVALID_CREDENTIAL_FOR_UID);
 		}
 
 		$account = $identity->getAccount();
@@ -91,18 +91,18 @@ final class Authenticator implements Identity\Authenticator
 		}
 
 		if ($account->getState() === Types\AccountState::BLOCKED) {
-			throw new Exceptions\AuthenticationFailed(
+			throw new AccountsExceptions\AuthenticationFailed(
 				'Account profile is blocked',
 				self::ACCOUNT_PROFILE_BLOCKED,
 			);
 		} elseif ($account->getState() === Types\AccountState::DELETED) {
-			throw new Exceptions\AuthenticationFailed(
+			throw new AccountsExceptions\AuthenticationFailed(
 				'Account profile is deleted',
 				self::ACCOUNT_PROFILE_DELETED,
 			);
 		}
 
-		throw new Exceptions\AuthenticationFailed(
+		throw new AccountsExceptions\AuthenticationFailed(
 			'Account profile is not available',
 			self::ACCOUNT_PROFILE_OTHER_ERROR,
 		);

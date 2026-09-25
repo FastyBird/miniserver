@@ -4,10 +4,10 @@ namespace FastyBird\Automator\DevicesModule\Tests\Cases\Unit\Queries;
 
 use Error;
 use FastyBird\Automator\DevicesModule\Entities;
-use FastyBird\Automator\DevicesModule\Exceptions;
+use FastyBird\Automator\DevicesModule\Exceptions as DevicesModuleExceptions;
 use FastyBird\Automator\DevicesModule\Queries;
 use FastyBird\Automator\DevicesModule\Tests;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Triggers\Models as TriggersModels;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -21,9 +21,9 @@ final class FindActionsTest extends Tests\Cases\Unit\DbTestCase
 {
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -43,9 +43,9 @@ final class FindActionsTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -65,9 +65,9 @@ final class FindActionsTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -87,9 +87,9 @@ final class FindActionsTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
@@ -109,9 +109,9 @@ final class FindActionsTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidArgument
+	 * @throws DevicesModuleExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error

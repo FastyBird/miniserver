@@ -19,10 +19,10 @@ use BinSoul\Net\Mqtt;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\API;
 use FastyBird\Connector\FbMqtt\Documents;
-use FastyBird\Connector\FbMqtt\Exceptions;
+use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Connector\FbMqtt\Queue;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -72,10 +72,10 @@ final class FbMqttV1 implements Client
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws InvalidArgumentException
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -95,9 +95,9 @@ final class FbMqttV1 implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -110,9 +110,9 @@ final class FbMqttV1 implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidArgument
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
@@ -191,7 +191,7 @@ final class FbMqttV1 implements Client
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws FbMqttExceptions\Runtime
 	 */
 	public function onMessage(Mqtt\Message $message): void
 	{
@@ -334,7 +334,7 @@ final class FbMqttV1 implements Client
 						),
 					),
 				);
-			} catch (Exceptions\ParseMessage $ex) {
+			} catch (FbMqttExceptions\ParseMessage $ex) {
 				$this->logger->debug(
 					'Received message could not be successfully parsed to entity',
 					[

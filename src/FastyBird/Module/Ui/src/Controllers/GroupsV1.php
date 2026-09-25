@@ -18,7 +18,7 @@ namespace FastyBird\Module\Ui\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -294,7 +294,7 @@ final class GroupsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws PersistenceExceptions\Query
 	 * @throws UiExceptions\InvalidState
@@ -302,7 +302,7 @@ final class GroupsV1 extends BaseV1
 	 * @throws InvalidArgumentException
 	 * @throws ApiExceptions\JsonApi
 	 * @throws ApiExceptions\JsonApiError
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 *
 	 * @Secured\Role(manager,administrator)
 	 */

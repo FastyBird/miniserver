@@ -5,11 +5,11 @@ namespace FastyBird\Connector\Sonoff\Tests\Cases\Unit\API;
 use Error;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
-use FastyBird\Connector\Sonoff\Exceptions;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Tests;
 use FastyBird\Connector\Sonoff\Types;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use Nette\DI;
@@ -30,10 +30,10 @@ final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 	private const PASSWORD = 'dBCQZohQNR2U4rW9';
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\CloudApiCall
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\CloudApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -154,10 +154,10 @@ final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\CloudApiCall
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\CloudApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -240,10 +240,10 @@ final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\CloudApiCall
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\CloudApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
@@ -326,10 +326,10 @@ final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\CloudApiCall
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws SonoffExceptions\CloudApiCall
 	 * @throws RuntimeException
 	 * @throws Error
 	 */

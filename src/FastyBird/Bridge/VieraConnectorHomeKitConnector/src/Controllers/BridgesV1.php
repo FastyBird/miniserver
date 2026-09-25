@@ -25,7 +25,7 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Queries;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
-use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -403,7 +403,7 @@ class BridgesV1 extends BaseV1
 	}
 
 	/**
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws PersistenceExceptions\Query
 	 * @throws VieraConnectorHomeKitConnectorExceptions\InvalidState
@@ -411,7 +411,7 @@ class BridgesV1 extends BaseV1
 	 * @throws InvalidArgumentException
 	 * @throws ApiExceptions\JsonApi
 	 * @throws ApiExceptions\JsonApiError
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 *
 	 * @Secured
 	 * @Secured\Role(manager,administrator)
@@ -472,7 +472,7 @@ class BridgesV1 extends BaseV1
 
 	/**
 	 * @throws ApiExceptions\JsonApi
-	 * @throws ApplicationExceptions\InvalidState
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findDevice(string $id): Entities\Devices\Viera
