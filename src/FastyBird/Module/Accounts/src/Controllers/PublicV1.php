@@ -17,8 +17,8 @@ namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
 use Exception;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Controllers;
@@ -72,10 +72,10 @@ final class PublicV1 extends BaseV1
 
 	/**
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws Doctrine\DBAL\ConnectionException
 	 * @throws Doctrine\DBAL\Exception
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Exception
 	 *
 	 * @Secured\User(guest)
@@ -90,7 +90,7 @@ final class PublicV1 extends BaseV1
 		$attributes = $document->getResource()->getAttributes();
 
 		if ($document->getResource()->getType() !== Schemas\Identities\Identity::SCHEMA_TYPE) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidType.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.invalidType.message')),
@@ -101,7 +101,7 @@ final class PublicV1 extends BaseV1
 		}
 
 		if (!$attributes->has('uid') || !is_scalar($attributes->get('uid'))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -117,7 +117,7 @@ final class PublicV1 extends BaseV1
 		$identity = $this->identitiesRepository->findOneBy($findQuery);
 
 		if ($identity === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
@@ -127,7 +127,7 @@ final class PublicV1 extends BaseV1
 		$account = $identity->getAccount();
 
 		if ($account->isDeleted()) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
@@ -144,7 +144,7 @@ final class PublicV1 extends BaseV1
 
 			// TODO: Send new user email
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.public.messages.notActivated.heading')),
 				strval($this->translator->translate('//accounts-module.public.messages.notActivated.message')),
@@ -153,7 +153,7 @@ final class PublicV1 extends BaseV1
 				],
 			);
 		} elseif ($account->isBlocked()) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.public.messages.blocked.heading')),
 				strval($this->translator->translate('//accounts-module.public.messages.blocked.message')),
@@ -177,7 +177,7 @@ final class PublicV1 extends BaseV1
 			// Commit all changes into database
 			$this->getOrmConnection()->commit();
 
-		} catch (JsonApiExceptions\JsonApi $ex) {
+		} catch (ApiExceptions\JsonApi $ex) {
 			throw $ex;
 		} catch (Throwable $ex) {
 			// Log caught exception
@@ -190,7 +190,7 @@ final class PublicV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.public.messages.requestNotSent.heading')),
 				strval($this->translator->translate('//accounts-module.public.messages.requestNotSent.message')),

@@ -18,10 +18,10 @@ namespace FastyBird\Connector\HomeKit\Hydrators\Channels;
 use Doctrine\Persistence;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Schemas;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Helpers;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
@@ -47,25 +47,25 @@ abstract class Channel extends DevicesHydrators\Channels\Channel
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		JsonApiHelpers\CrudReader|null $crudReader = null,
+		Helpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($managerRegistry, $translator, $crudReader);
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 		Entities\Channels\Channel|null $entity,
 	): Entities\Devices\Device
 	{
 		if (
-			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {
@@ -79,7 +79,7 @@ abstract class Channel extends DevicesHydrators\Channels\Channel
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate('//homekit-connector.base.messages.invalidRelation.heading')),
 			strval($this->translator->translate('//homekit-connector.base.messages.invalidRelation.message')),

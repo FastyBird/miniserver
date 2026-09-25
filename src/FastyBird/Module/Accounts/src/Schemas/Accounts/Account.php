@@ -16,11 +16,11 @@
 namespace FastyBird\Module\Accounts\Schemas\Accounts;
 
 use DateTimeInterface;
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApis;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
@@ -36,13 +36,13 @@ use function strval;
  * Account entity schema
  *
  * @template T of Entities\Accounts\Account
- * @extends JsonApis\JsonApi<T>
+ * @extends Schemas\JsonApiSchema<T>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Account extends JsonApis\JsonApi
+final class Account extends Schemas\JsonApiSchema
 {
 
 	/**

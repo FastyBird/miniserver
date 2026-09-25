@@ -22,7 +22,7 @@ contributteTranslation:
 
 	localeResolvers: []
 	dirs:
-		- %vendorDir%/fastybird/miniserver-core/src/Translations/JsonApi
+		- %vendorDir%/fastybird/miniserver-core/src/Api/Translations
 
 nettrineDbal:
 	connection:

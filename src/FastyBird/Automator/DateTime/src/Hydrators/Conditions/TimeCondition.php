@@ -17,8 +17,8 @@ namespace FastyBird\Automator\DateTime\Hydrators\Conditions;
 
 use DateTimeInterface;
 use FastyBird\Automator\DateTime\Entities;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
@@ -52,15 +52,15 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateTimeAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): DateTimeInterface
 	{
 		// Condition time have to be set
 		if (!is_scalar($attributes->get('time')) || !$attributes->has('time')) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.message')),
@@ -76,7 +76,7 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 			!$date instanceof DateTimeInterface
 			|| $date->format(DateTimeInterface::ATOM) !== $attributes->get('time')
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.conditions.messages.invalidTime.heading')),
 				strval($this->translator->translate('//triggers-module.conditions.messages.invalidTime.message')),
@@ -92,15 +92,15 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 	/**
 	 * @return array<int>
 	 *
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateDaysAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): array
 	{
 		// Condition days have to be set
 		if (!$attributes->has('days')) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.message')),
@@ -109,7 +109,7 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 				],
 			);
 		} elseif (!is_array($attributes->get('days'))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.conditions.messages.invalidDays.heading')),
 				strval($this->translator->translate('//triggers-module.conditions.messages.invalidDays.message')),

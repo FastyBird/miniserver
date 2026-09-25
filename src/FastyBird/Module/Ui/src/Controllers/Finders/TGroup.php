@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Controllers\Finders;
 
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Models;
 use Fig\Http\Message\StatusCodeInterface;
@@ -32,8 +32,8 @@ trait TGroup
 {
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApi
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findGroup(string $id): Entities\Groups\Group
@@ -42,14 +42,14 @@ trait TGroup
 			$group = $this->groupsRepository->find(Uuid\Uuid::fromString($id));
 
 			if ($group === null) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_NOT_FOUND,
 					strval($this->translator->translate('//ui-module.base.messages.notFound.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.notFound.message')),
 				);
 			}
 		} catch (Uuid\Exception\InvalidUuidStringException) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//ui-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.notFound.message')),

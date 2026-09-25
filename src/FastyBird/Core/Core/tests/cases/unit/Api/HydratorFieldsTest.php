@@ -3,21 +3,15 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Api;
 
 use DateTimeInterface;
-use FastyBird\Core\Encoding\JsonApi\Objects\StandardObject;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\ArrayField;
-use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\BackedEnumField;
-use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\BooleanField;
-use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\DateTimeField;
-use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\MixedField;
-use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\NumberField;
-use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\SingleEntityField;
-use FastyBird\Core\Persistence\JsonApi\Hydrators\Fields\TextField;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
+use FastyBird\Core\Api\Hydrators\Fields;
+use FastyBird\Core\Tests;
 use FastyBird\Core\Values\Types;
 use Fig\Http\Message\StatusCodeInterface;
+use Nette;
 use Nette\Localization;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 use ValueError;
 
@@ -29,17 +23,17 @@ use ValueError;
  * decided 2026-09-22) rather than silently coercing it -- the tests named accordingly
  * document that reversal rather than the original defect.
  */
-final class HydratorFieldsTest extends TestCase
+final class HydratorFieldsTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	public function testFieldIsRequiredAndIsWritableReturnConstructorArgumentsUnchanged(): void
 	{
-		$field = new TextField(false, 'mapped-name', 'field-name', true, false);
+		$field = new Fields\TextField(false, 'mapped-name', 'field-name', true, false);
 
 		self::assertTrue($field->isRequired());
 		self::assertFalse($field->isWritable());
 
-		$field = new TextField(false, 'mapped-name', 'field-name', false, true);
+		$field = new Fields\TextField(false, 'mapped-name', 'field-name', false, true);
 
 		self::assertFalse($field->isRequired());
 		self::assertTrue($field->isWritable());
@@ -47,7 +41,7 @@ final class HydratorFieldsTest extends TestCase
 
 	public function testFieldGetMappedNameDoesNotFallBackToFieldName(): void
 	{
-		$field = new TextField(false, 'mapped-name', 'field-name', true, true);
+		$field = new Fields\TextField(false, 'mapped-name', 'field-name', true, true);
 
 		self::assertSame('mapped-name', $field->getMappedName());
 		self::assertSame('field-name', $field->getFieldName());
@@ -55,19 +49,19 @@ final class HydratorFieldsTest extends TestCase
 
 	public function testTextFieldGetValueDoesNotTrimSurroundingWhitespace(): void
 	{
-		$field = new TextField(false, 'field', 'field', true, true);
+		$field = new Fields\TextField(false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', '  hello  ');
+		$attributes = (new Objects\StandardObject())->set('field', '  hello  ');
 
 		self::assertSame('  hello  ', $field->getValue($attributes));
 	}
 
 	public function testTextFieldGetValueTurnsEmptyStringToNullOnlyWhenNullable(): void
 	{
-		$nullableField = new TextField(true, 'field', 'field', true, true);
-		$notNullableField = new TextField(false, 'field', 'field', true, true);
+		$nullableField = new Fields\TextField(true, 'field', 'field', true, true);
+		$notNullableField = new Fields\TextField(false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', '');
+		$attributes = (new Objects\StandardObject())->set('field', '');
 
 		self::assertNull($nullableField->getValue($attributes));
 		self::assertSame('', $notNullableField->getValue($attributes));
@@ -78,9 +72,9 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testNumberFieldGetValueCastsToIntWhenNotDecimal(): void
 	{
-		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
+		$field = new Fields\NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', '42');
+		$attributes = (new Objects\StandardObject())->set('field', '42');
 
 		self::assertSame(42, $field->getValue($attributes));
 	}
@@ -90,9 +84,9 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testNumberFieldGetValueCastsToFloatWhenDecimal(): void
 	{
-		$field = new NumberField($this->createTranslator(), true, false, 'field', 'field', true, true);
+		$field = new Fields\NumberField($this->createTranslator(), true, false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', '4.5');
+		$attributes = (new Objects\StandardObject())->set('field', '4.5');
 
 		self::assertSame(4.5, $field->getValue($attributes));
 	}
@@ -102,18 +96,18 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testNumberFieldGetValueTruncatesADecimalStringWhenNotDecimal(): void
 	{
-		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
+		$field = new Fields\NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', '4.5');
+		$attributes = (new Objects\StandardObject())->set('field', '4.5');
 
 		self::assertSame(4, $field->getValue($attributes));
 	}
 
 	public function testNumberFieldGetValueOnNonNumericStringThrowsJsonApiErrorWithAttributePointer(): void
 	{
-		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
+		$field = new Fields\NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', 'not a number');
+		$attributes = (new Objects\StandardObject())->set('field', 'not a number');
 
 		try {
 			$field->getValue($attributes);
@@ -125,11 +119,48 @@ final class HydratorFieldsTest extends TestCase
 		}
 	}
 
+	/**
+	 * The other tests in this file build their `NumberField`/`BooleanField`/`ArrayField`/
+	 * `BackedEnumField` through {@see self::createTranslator()}, a mock whose `translate()`
+	 * returns its argument unchanged -- so they never notice whether the real translation
+	 * catalogue actually resolves `//jsonApi.hydrator.*` to text. If the `jsonApi` domain's
+	 * translations failed to load (wrong `contributteTranslation.dirs` entry after the E3 Api
+	 * move, wrong domain, wrong locale), `Translator::translate()` falls back to returning the
+	 * key verbatim, and a `JsonApiError` would silently carry `//jsonApi.hydrator.
+	 * invalidAttribute.heading` as its "heading" instead of "Invalid attribute" -- a client-
+	 * facing regression no other test here would catch. This one resolves the translator from
+	 * a real container built off `tests/common.neon` (the config this test suite actually
+	 * loads translations through, not a hand-picked directory), and asserts against the exact
+	 * strings in `src/Api/Translations/jsonApi.en_US.neon`.
+	 *
+	 * @throws Exceptions\JsonApiError
+	 * @throws Nette\DI\MissingServiceException
+	 */
+	public function testNumberFieldGetValueOnNonNumericStringCarriesTranslatedTextNotTheRawKey(): void
+	{
+		$translator = $this->container->getByType(Localization\Translator::class);
+
+		$field = new Fields\NumberField($translator, false, false, 'field', 'field', true, true);
+
+		$attributes = (new Objects\StandardObject())->set('field', 'not a number');
+
+		try {
+			$field->getValue($attributes);
+
+			self::fail('NumberField::getValue() did not reject a non-numeric string.');
+		} catch (Exceptions\JsonApiError $ex) {
+			self::assertSame('Invalid attribute', $ex->getMessage());
+			self::assertSame('Provided attribute value is not valid', $ex->getDetail());
+			self::assertStringNotContainsString('//jsonApi.hydrator', $ex->getMessage());
+			self::assertStringNotContainsString('//jsonApi.hydrator', $ex->getDetail());
+		}
+	}
+
 	public function testNumberFieldGetValueRejectsABooleanRatherThanCastingItToZeroOrOne(): void
 	{
-		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
+		$field = new Fields\NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', true);
+		$attributes = (new Objects\StandardObject())->set('field', true);
 
 		try {
 			$field->getValue($attributes);
@@ -149,9 +180,9 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testNumberFieldGetValueOnNonScalarReturnsNullRatherThanThrowing(): void
 	{
-		$field = new NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
+		$field = new Fields\NumberField($this->createTranslator(), false, false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', ['nested' => 'value']);
+		$attributes = (new Objects\StandardObject())->set('field', ['nested' => 'value']);
 
 		self::assertNull($field->getValue($attributes));
 	}
@@ -161,18 +192,18 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBooleanFieldGetValueReturnsActualBooleanUnchanged(): void
 	{
-		$field = new BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
+		$field = new Fields\BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		self::assertTrue($field->getValue((new StandardObject())->set('field', true)));
-		self::assertFalse($field->getValue((new StandardObject())->set('field', false)));
+		self::assertTrue($field->getValue((new Objects\StandardObject())->set('field', true)));
+		self::assertFalse($field->getValue((new Objects\StandardObject())->set('field', false)));
 	}
 
 	#[DataProvider('nonBooleanScalars')]
 	public function testBooleanFieldGetValueRejectsAnyNonBooleanScalar(bool|string|int $value): void
 	{
-		$field = new BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
+		$field = new Fields\BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', $value);
+		$attributes = (new Objects\StandardObject())->set('field', $value);
 
 		try {
 			$field->getValue($attributes);
@@ -209,10 +240,10 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBooleanFieldGetValueOnMissingKeyReturnsNullOrFalseDependingOnNullable(): void
 	{
-		$nullableField = new BooleanField($this->createTranslator(), true, 'field', 'field', true, true);
-		$notNullableField = new BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
+		$nullableField = new Fields\BooleanField($this->createTranslator(), true, 'field', 'field', true, true);
+		$notNullableField = new Fields\BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		$attributes = new StandardObject();
+		$attributes = new Objects\StandardObject();
 
 		self::assertNull($nullableField->getValue($attributes));
 		self::assertFalse($notNullableField->getValue($attributes));
@@ -228,10 +259,10 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBooleanFieldGetValueOnExplicitNullIsTreatedTheSameAsMissingKey(): void
 	{
-		$nullableField = new BooleanField($this->createTranslator(), true, 'field', 'field', true, true);
-		$notNullableField = new BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
+		$nullableField = new Fields\BooleanField($this->createTranslator(), true, 'field', 'field', true, true);
+		$notNullableField = new Fields\BooleanField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', null);
+		$attributes = (new Objects\StandardObject())->set('field', null);
 
 		self::assertNull($nullableField->getValue($attributes));
 		self::assertFalse($notNullableField->getValue($attributes));
@@ -242,9 +273,9 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testDateTimeFieldGetValueParsesAtomFormatAndPreservesTheInstant(): void
 	{
-		$field = new DateTimeField(false, 'field', 'field', true, true);
+		$field = new Fields\DateTimeField(false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', '2026-09-21T12:00:00+00:00');
+		$attributes = (new Objects\StandardObject())->set('field', '2026-09-21T12:00:00+00:00');
 
 		$value = $field->getValue($attributes);
 
@@ -257,9 +288,9 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testDateTimeFieldGetValueReturnsNullForAnUnparseableStringRatherThanThrowing(): void
 	{
-		$field = new DateTimeField(false, 'field', 'field', true, true);
+		$field = new Fields\DateTimeField(false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', 'not a date');
+		$attributes = (new Objects\StandardObject())->set('field', 'not a date');
 
 		self::assertNull($field->getValue($attributes));
 	}
@@ -269,14 +300,14 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testDateTimeFieldGetValueRejectsADateThatParsesButDoesNotRoundTrip(): void
 	{
-		$field = new DateTimeField(false, 'field', 'field', true, true);
+		$field = new Fields\DateTimeField(false, 'field', 'field', true, true);
 
 		// September has 30 days. `createFromFormat()` accepts day 31 and silently
 		// overflows into October 1st -- it parses, but re-formatting the result with
 		// the same ATOM format no longer reproduces the input string. The round-trip
 		// equality check in the source is what rejects this, not the `instanceof` check
 		// alone.
-		$attributes = (new StandardObject())->set('field', '2026-09-31T12:00:00+00:00');
+		$attributes = (new Objects\StandardObject())->set('field', '2026-09-31T12:00:00+00:00');
 
 		self::assertNull($field->getValue($attributes));
 	}
@@ -286,7 +317,7 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBackedEnumFieldGetValueReturnsTheMatchingCaseForAValidBackingValue(): void
 	{
-		$field = new BackedEnumField(
+		$field = new Fields\BackedEnumField(
 			$this->createTranslator(),
 			Types\DataType::class,
 			false,
@@ -296,14 +327,14 @@ final class HydratorFieldsTest extends TestCase
 			true,
 		);
 
-		$attributes = (new StandardObject())->set('field', 'char');
+		$attributes = (new Objects\StandardObject())->set('field', 'char');
 
 		self::assertSame(Types\DataType::CHAR, $field->getValue($attributes));
 	}
 
 	public function testBackedEnumFieldGetValueThrowsJsonApiErrorForAnInvalidBackingValue(): void
 	{
-		$field = new BackedEnumField(
+		$field = new Fields\BackedEnumField(
 			$this->createTranslator(),
 			Types\DataType::class,
 			false,
@@ -313,7 +344,7 @@ final class HydratorFieldsTest extends TestCase
 			true,
 		);
 
-		$attributes = (new StandardObject())->set('field', 'not-a-data-type');
+		$attributes = (new Objects\StandardObject())->set('field', 'not-a-data-type');
 
 		try {
 			$field->getValue($attributes);
@@ -334,7 +365,7 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testBackedEnumFieldGetValueReturnsNullWhenAttributeIsAbsentRatherThanThrowing(): void
 	{
-		$field = new BackedEnumField(
+		$field = new Fields\BackedEnumField(
 			$this->createTranslator(),
 			Types\DataType::class,
 			false,
@@ -344,7 +375,7 @@ final class HydratorFieldsTest extends TestCase
 			true,
 		);
 
-		$attributes = new StandardObject();
+		$attributes = new Objects\StandardObject();
 
 		self::assertNull($field->getValue($attributes));
 	}
@@ -354,18 +385,18 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testArrayFieldGetValueRoundTripsAnArray(): void
 	{
-		$field = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
+		$field = new Fields\ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', [1, 2, 3]);
+		$attributes = (new Objects\StandardObject())->set('field', [1, 2, 3]);
 
 		self::assertSame([1, 2, 3], $field->getValue($attributes));
 	}
 
 	public function testArrayFieldGetValueRejectsANonArrayScalarRatherThanWrappingIt(): void
 	{
-		$field = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
+		$field = new Fields\ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', 'not an array');
+		$attributes = (new Objects\StandardObject())->set('field', 'not an array');
 
 		try {
 			$field->getValue($attributes);
@@ -382,10 +413,10 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testArrayFieldGetValueOnMissingKeyReturnsEmptyArrayOrNullDependingOnNullable(): void
 	{
-		$nullableField = new ArrayField($this->createTranslator(), true, 'field', 'field', true, true);
-		$notNullableField = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
+		$nullableField = new Fields\ArrayField($this->createTranslator(), true, 'field', 'field', true, true);
+		$notNullableField = new Fields\ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		$attributes = new StandardObject();
+		$attributes = new Objects\StandardObject();
 
 		self::assertSame([], $nullableField->getValue($attributes));
 		self::assertNull($notNullableField->getValue($attributes));
@@ -396,10 +427,10 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testArrayFieldGetValueOnExplicitNullIsTreatedTheSameAsMissingKey(): void
 	{
-		$nullableField = new ArrayField($this->createTranslator(), true, 'field', 'field', true, true);
-		$notNullableField = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
+		$nullableField = new Fields\ArrayField($this->createTranslator(), true, 'field', 'field', true, true);
+		$notNullableField = new Fields\ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', null);
+		$attributes = (new Objects\StandardObject())->set('field', null);
 
 		self::assertSame([], $nullableField->getValue($attributes));
 		self::assertNull($notNullableField->getValue($attributes));
@@ -410,29 +441,29 @@ final class HydratorFieldsTest extends TestCase
 	 */
 	public function testArrayFieldGetValueConvertsANestedStandardObjectViaToArray(): void
 	{
-		$field = new ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
+		$field = new Fields\ArrayField($this->createTranslator(), false, 'field', 'field', true, true);
 
-		$nested = (new StandardObject())->set('inner', 'value');
-		$attributes = (new StandardObject())->set('field', $nested);
+		$nested = (new Objects\StandardObject())->set('inner', 'value');
+		$attributes = (new Objects\StandardObject())->set('field', $nested);
 
 		self::assertSame(['inner' => 'value'], $field->getValue($attributes));
 	}
 
 	public function testMixedFieldGetValueReturnsTheAttributeUnchanged(): void
 	{
-		$field = new MixedField(false, 'field', 'field', true, true);
+		$field = new Fields\MixedField(false, 'field', 'field', true, true);
 
-		$attributes = (new StandardObject())->set('field', ['nested' => 'value']);
+		$attributes = (new Objects\StandardObject())->set('field', ['nested' => 'value']);
 
 		self::assertSame(['nested' => 'value'], $field->getValue($attributes));
 	}
 
 	public function testMixedFieldGetValueOnMissingKeyReturnsNullRegardlessOfNullable(): void
 	{
-		$nullableField = new MixedField(true, 'field', 'field', true, true);
-		$notNullableField = new MixedField(false, 'field', 'field', true, true);
+		$nullableField = new Fields\MixedField(true, 'field', 'field', true, true);
+		$notNullableField = new Fields\MixedField(false, 'field', 'field', true, true);
 
-		$attributes = new StandardObject();
+		$attributes = new Objects\StandardObject();
 
 		self::assertNull($nullableField->getValue($attributes));
 		self::assertNull($notNullableField->getValue($attributes));
@@ -440,7 +471,7 @@ final class HydratorFieldsTest extends TestCase
 
 	public function testEntityFieldGetClassNameIsNullableAndIsRelationshipReturnConstructorArgumentsUnchanged(): void
 	{
-		$field = new SingleEntityField(stdClass::class, true, 'field', false, 'field', true, true);
+		$field = new Fields\SingleEntityField(stdClass::class, true, 'field', false, 'field', true, true);
 
 		self::assertSame(stdClass::class, $field->getClassName());
 		self::assertTrue($field->isNullable());

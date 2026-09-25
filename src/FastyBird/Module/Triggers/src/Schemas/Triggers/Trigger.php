@@ -15,14 +15,13 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Router;
-use FastyBird\Module\Triggers\Schemas;
 use Neomerx\JsonApi;
 use function count;
 
@@ -30,12 +29,12 @@ use function count;
  * Base trigger entity schema
  *
  * @template T of Entities\Triggers\Trigger
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Schemas
  */
-abstract class Trigger extends JsonApiSchemas\JsonApi
+abstract class Trigger extends ApiSchemas\JsonApiSchema
 {
 
 	/**

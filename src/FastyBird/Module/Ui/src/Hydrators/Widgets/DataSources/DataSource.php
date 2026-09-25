@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\DataSources;
 
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 
@@ -23,13 +23,13 @@ use FastyBird\Module\Ui\Schemas;
  * Data source entity hydrator
  *
  * @template  T of Entities\Widgets\DataSources\DataSource
- * @extends   JsonApiHydrators\Hydrator<T>
+ * @extends   Hydrators\Hydrator<T>
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class DataSource extends JsonApiHydrators\Hydrator
+abstract class DataSource extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */

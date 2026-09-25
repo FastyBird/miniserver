@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
@@ -28,13 +28,13 @@ use function strval;
  * Widget display entity hydrator
  *
  * @template  T of Entities\Widgets\Displays\Display
- * @extends   JsonApiHydrators\Hydrator<T>
+ * @extends   Hydrators\Hydrator<T>
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Display extends JsonApiHydrators\Hydrator
+abstract class Display extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -48,15 +48,15 @@ abstract class Display extends JsonApiHydrators\Hydrator
 	];
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydratePrecisionAttribute(JsonApi\Objects\IStandardObject $attributes): int
+	protected function hydratePrecisionAttribute(Objects\IStandardObject $attributes): int
 	{
 		if (
 			!is_scalar($attributes->get('precision'))
 			|| (string) $attributes->get('precision') === ''
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.message')),
@@ -70,15 +70,15 @@ abstract class Display extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateMinimumValueAttribute(JsonApi\Objects\IStandardObject $attributes): float
+	protected function hydrateMinimumValueAttribute(Objects\IStandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('minimum_value'))
 			|| (string) $attributes->get('minimum_value') === ''
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.message')),
@@ -92,15 +92,15 @@ abstract class Display extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateMaximumValueAttribute(JsonApi\Objects\IStandardObject $attributes): float
+	protected function hydrateMaximumValueAttribute(Objects\IStandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('maximum_value'))
 			|| (string) $attributes->get('maximum_value') === ''
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.message')),
@@ -114,15 +114,15 @@ abstract class Display extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateStepValueAttribute(JsonApi\Objects\IStandardObject $attributes): float
+	protected function hydrateStepValueAttribute(Objects\IStandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('step_value'))
 			|| (string) $attributes->get('step_value') === ''
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.message')),

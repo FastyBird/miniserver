@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Triggers\Controllers\Finders;
 
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Queries;
@@ -33,8 +33,8 @@ trait TTrigger
 {
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApi
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findTrigger(string $id): Entities\Triggers\Trigger
@@ -46,14 +46,14 @@ trait TTrigger
 			$trigger = $this->triggersRepository->findOneBy($findQuery);
 
 			if ($trigger === null) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_NOT_FOUND,
 					strval($this->translator->translate('//triggers-module.base.messages.notFound.heading')),
 					strval($this->translator->translate('//triggers-module.base.messages.notFound.message')),
 				);
 			}
 		} catch (Uuid\Exception\InvalidUuidStringException) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//triggers-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.notFound.message')),

@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Schemas\Dashboards\Tabs;
 
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
@@ -27,13 +27,13 @@ use Neomerx\JsonApi;
  * Tab entity schema
  *
  * @template T of Entities\Dashboards\Tabs\Tab
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  Schemas\JsonApiSchema<T>
  *
  * @package          FastyBird:UIModule!
  * @subpackage       Schemas
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Tab extends JsonApiSchemas\JsonApi
+final class Tab extends Schemas\JsonApiSchema
 {
 
 	/**

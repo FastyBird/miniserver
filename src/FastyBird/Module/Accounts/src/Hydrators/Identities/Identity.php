@@ -15,11 +15,11 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Identities;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
@@ -29,13 +29,13 @@ use function strval;
 /**
  * Identity entity hydrator
  *
- * @extends JsonApiHydrators\Hydrator<Entities\Identities\Identity>
+ * @extends Hydrators\Hydrator<Entities\Identities\Identity>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Identity extends JsonApiHydrators\Hydrator
+class Identity extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -55,15 +55,15 @@ class Identity extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws AccountsExceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
 	 */
 	protected function hydratePasswordAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Helpers\Password
 	{
 		if (!is_scalar($attributes->get('password'))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.invalidAttribute.message')),

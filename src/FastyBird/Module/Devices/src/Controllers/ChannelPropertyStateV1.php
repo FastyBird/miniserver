@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Devices\Controllers;
 
 use Exception;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Module\Devices\Controllers;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -60,7 +60,7 @@ final class ChannelPropertyStateV1 extends BaseV1
 	 * @throws Exception
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws ApplicationExceptions\InvalidArgument
 	 * @throws TypeError
@@ -88,7 +88,7 @@ final class ChannelPropertyStateV1 extends BaseV1
 			!$property instanceof Documents\Channels\Properties\Dynamic
 			&& !$property instanceof Documents\Channels\Properties\Mapped
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//channels-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//channels-module.base.messages.notFound.message')),
@@ -98,7 +98,7 @@ final class ChannelPropertyStateV1 extends BaseV1
 		$state = $this->channelPropertiesStatesManager->readState($property);
 
 		if ($state === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//channels-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//channels-module.base.messages.notFound.message')),

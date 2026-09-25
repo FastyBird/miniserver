@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Devices\Middleware;
 
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Constants as Metadata;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Http as SlimRouterHttp;
 use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Devices;
@@ -45,7 +45,7 @@ final readonly class UrlFormat implements MiddlewareInterface
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */

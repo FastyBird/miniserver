@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Devices\Controllers\Finders;
 
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use Fig\Http\Message\StatusCodeInterface;
@@ -32,8 +32,8 @@ trait TConnector
 {
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApi
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function findConnector(string $id): Entities\Connectors\Connector
@@ -42,14 +42,14 @@ trait TConnector
 			$connector = $this->connectorsRepository->find(Uuid\Uuid::fromString($id));
 
 			if ($connector === null) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_NOT_FOUND,
 					strval($this->translator->translate('//devices-module.base.messages.notFound.heading')),
 					strval($this->translator->translate('//devices-module.base.messages.notFound.message')),
 				);
 			}
 		} catch (Uuid\Exception\InvalidUuidStringException) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//devices-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//devices-module.base.messages.notFound.message')),

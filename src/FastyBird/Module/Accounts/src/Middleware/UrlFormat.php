@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Middleware;
 
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Constants as Metadata;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Http as SlimRouterHttp;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
@@ -51,7 +51,7 @@ final readonly class UrlFormat implements MiddlewareInterface
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */
@@ -77,7 +77,7 @@ final readonly class UrlFormat implements MiddlewareInterface
 			)
 		) {
 			if ($this->user->getAccount() === null) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new Exceptions\JsonApiError(
 					StatusCodeInterface::STATUS_BAD_REQUEST,
 					strval($this->translator->translate('//accounts-module.base.messages.failed.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.failed.message')),

@@ -18,9 +18,9 @@ namespace FastyBird\Module\Accounts\Controllers;
 use DateTimeImmutable;
 use Doctrine;
 use Exception;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
@@ -71,7 +71,7 @@ final class SessionV1 extends BaseV1
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
 	 * @throws AccountsExceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws SimpleAuthExceptions\UnauthorizedAccess
 	 *
 	 * @Secured\User(loggedIn)
@@ -93,7 +93,7 @@ final class SessionV1 extends BaseV1
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 *
 	 * @Secured\User(guest)
 	 */
@@ -107,7 +107,7 @@ final class SessionV1 extends BaseV1
 		$attributes = $document->getResource()->getAttributes();
 
 		if (!$attributes->has('uid') || !is_scalar($attributes->get('uid'))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -118,7 +118,7 @@ final class SessionV1 extends BaseV1
 		}
 
 		if (!$attributes->has('password') || !is_scalar($attributes->get('password'))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -134,7 +134,7 @@ final class SessionV1 extends BaseV1
 
 		} catch (Throwable $ex) {
 			if ($ex instanceof AccountsExceptions\AccountNotFound) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.session.messages.unknownAccount.heading')),
 					strval($this->translator->translate('//accounts-module.session.messages.unknownAccount.message')),
@@ -142,12 +142,12 @@ final class SessionV1 extends BaseV1
 			} elseif ($ex instanceof AccountsExceptions\AuthenticationFailed) {
 				throw match ($ex->getCode()) {
 					// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-					Security\Authenticator::ACCOUNT_PROFILE_BLOCKED, Security\Authenticator::ACCOUNT_PROFILE_DELETED => new JsonApiExceptions\JsonApiError(
+					Security\Authenticator::ACCOUNT_PROFILE_BLOCKED, Security\Authenticator::ACCOUNT_PROFILE_DELETED => new ApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_FORBIDDEN,
 						strval($this->translator->translate('//accounts-module.base.messages.forbidden.heading')),
 						strval($this->translator->translate('//accounts-module.base.messages.forbidden.message')),
 					),
-					default => new JsonApiExceptions\JsonApiError(
+					default => new ApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 						strval(
 							$this->translator->translate('//accounts-module.session.messages.unknownAccount.heading'),
@@ -168,7 +168,7 @@ final class SessionV1 extends BaseV1
 					],
 				);
 
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.base.messages.notCreated.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.notCreated.message')),
@@ -226,7 +226,7 @@ final class SessionV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.notCreated.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notCreated.message')),
@@ -250,7 +250,7 @@ final class SessionV1 extends BaseV1
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 *
 	 * @Secured\User(guest)
 	 */
@@ -264,7 +264,7 @@ final class SessionV1 extends BaseV1
 		$attributes = $document->getResource()->getAttributes();
 
 		if (!$attributes->has('refresh') || !is_scalar($attributes->get('refresh'))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -280,7 +280,7 @@ final class SessionV1 extends BaseV1
 		);
 
 		if ($refreshToken === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.session.messages.invalidRefreshToken.heading')),
 				strval($this->translator->translate('//accounts-module.session.messages.invalidRefreshToken.message')),
@@ -297,7 +297,7 @@ final class SessionV1 extends BaseV1
 			// Remove expired tokens
 			$this->tokensManager->delete($refreshToken->getAccessToken());
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.session.messages.refreshTokenExpired.heading')),
 				strval($this->translator->translate('//accounts-module.session.messages.refreshTokenExpired.message')),
@@ -365,7 +365,7 @@ final class SessionV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval(
 					$this->translator->translate('//accounts-module.session.messages.refreshingTokenFailed.heading'),
@@ -394,7 +394,7 @@ final class SessionV1 extends BaseV1
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws SimpleAuthExceptions\UnauthorizedAccess
 	 *
 	 * @Secured\User(loggedIn)
@@ -432,7 +432,7 @@ final class SessionV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval(
 					$this->translator->translate('//accounts-module.session.messages.destroyingSessionFailed.heading'),
@@ -453,7 +453,7 @@ final class SessionV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 *
 	 * @Secured\User(loggedIn)
 	 */
@@ -484,14 +484,14 @@ final class SessionV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	private function getToken(Message\ServerRequestInterface $request): Entities\Tokens\AccessToken
 	{
 		$token = $this->tokenReader->read($request);
 
 		if ($token === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				strval($this->translator->translate('//accounts-module.base.messages.forbidden.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.forbidden.message')),
@@ -514,7 +514,7 @@ final class SessionV1 extends BaseV1
 			return $accessToken;
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_FORBIDDEN,
 			strval($this->translator->translate('//accounts-module.base.messages.forbidden.heading')),
 			strval($this->translator->translate('//accounts-module.base.messages.forbidden.message')),

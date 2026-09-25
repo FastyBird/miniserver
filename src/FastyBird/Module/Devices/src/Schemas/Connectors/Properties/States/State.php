@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Devices\Schemas\Connectors\Properties\States;
 
 use DateTimeInterface;
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
@@ -26,7 +26,6 @@ use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
@@ -37,13 +36,13 @@ use function is_bool;
  * Connector property state entity schema
  *
  * @template T of States\ConnectorProperty
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class State extends JsonApiSchemas\JsonApi
+final class State extends ApiSchemas\JsonApiSchema
 {
 
 	/**

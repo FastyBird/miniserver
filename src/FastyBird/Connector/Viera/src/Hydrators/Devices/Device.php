@@ -18,10 +18,10 @@ namespace FastyBird\Connector\Viera\Hydrators\Devices;
 use Doctrine\Persistence;
 use FastyBird\Connector\Viera\Entities;
 use FastyBird\Connector\Viera\Schemas;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Helpers;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
@@ -46,7 +46,7 @@ final class Device extends DevicesHydrators\Devices\Device
 		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		JsonApiHelpers\CrudReader|null $crudReader = null,
+		Helpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($managerRegistry, $translator, $crudReader);
@@ -58,18 +58,18 @@ final class Device extends DevicesHydrators\Devices\Device
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 		Entities\Devices\Device|null $entity,
 	): Entities\Connectors\Connector
 	{
 		if (
-			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {
@@ -83,7 +83,7 @@ final class Device extends DevicesHydrators\Devices\Device
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate('//viera-connector.base.messages.invalidRelation.heading')),
 			strval($this->translator->translate('//viera-connector.base.messages.invalidRelation.message')),

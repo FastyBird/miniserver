@@ -21,11 +21,11 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Encoding\JsonApi as JsonApiJsonApi;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
-use FastyBird\Core\Helpers\JsonApi as JsonApiHelpers;
+use FastyBird\Core\Api\Encoding;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Helpers;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
@@ -76,8 +76,8 @@ class Shelly extends HomeKitHydrators\Devices\Device
 			DevicesSchemas\Devices\Device::RELATIONSHIPS_PROPERTIES,
 		];
 
-	/** @var JsonApiJsonApi\SchemaContainer<PersistenceEntities\CrudEntity>|null */
-	private JsonApiJsonApi\SchemaContainer|null $jsonApiSchemaContainer = null;
+	/** @var Encoding\SchemaContainer<PersistenceEntities\CrudEntity>|null */
+	private Encoding\SchemaContainer|null $jsonApiSchemaContainer = null;
 
 	/** @var array<DevicesHydrators\Devices\Properties\Property<DevicesEntities\Devices\Properties\Property>>|null  */
 	private array|null $propertiesHydrators = null;
@@ -88,7 +88,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 		private readonly DI\Container $container,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
-		JsonApiHelpers\CrudReader|null $crudReader = null,
+		Helpers\CrudReader|null $crudReader = null,
 	)
 	{
 		parent::__construct($connectorsRepository, $managerRegistry, $translator, $crudReader);
@@ -102,18 +102,18 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	/**
 	 * @param ShellyConnectorHomeKitConnectorEntities\Devices\Shelly|null $entity
 	 *
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 		HomeKitEntities\Devices\Device|null $entity,
 	): HomeKitEntities\Connectors\Connector
 	{
 		if (
-			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {
@@ -127,7 +127,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate(
 				'//shelly-connector-homekit-connector-bridge.base.messages.invalidRelation.heading',
@@ -144,17 +144,17 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	/**
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
-		JsonApi\Objects\IRelationshipObject $relationships,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationships,
+		Objects\IResourceObjectCollection|null $included,
 		ShellyConnectorHomeKitConnectorEntities\Devices\Shelly|null $entity,
 	): array
 	{
-		if ($relationships->getData() instanceof JsonApi\Objects\ResourceIdentifierCollection) {
+		if ($relationships->getData() instanceof Objects\ResourceIdentifierCollection) {
 			$parents = [];
 			$foundValidParent = false;
 
@@ -182,7 +182,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate(
 				'//shelly-connector-homekit-connector-bridge.base.messages.missingRelation.heading',
@@ -200,17 +200,17 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @return array<mixed>
 	 *
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
 	 * @throws Throwable
 	 */
 	protected function hydratePropertiesRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 	): array
 	{
 		if ($included === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval(
 					$this->translator->translate(
@@ -242,7 +242,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 
 						if ($propertiesSchema->getType() === $item->getType()) {
 							try {
-								$document = JsonApi\Document::create(Utils\Json::encode([
+								$document = Encoding\Document::create(Utils\Json::encode([
 									'data' => [
 										'id' => $item->getId(),
 										'type' => $item->getType(),
@@ -252,8 +252,8 @@ class Shelly extends HomeKitHydrators\Devices\Device
 
 								$properties[] = $propertyHydrator->hydrate($document, null, false);
 
-							} catch (JsonApiExceptions\JsonApi | JsonException) {
-								throw new JsonApiExceptions\JsonApiError(
+							} catch (ApiExceptions\JsonApi | JsonException) {
+								throw new ApiExceptions\JsonApiError(
 									StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 									strval(
 										$this->translator->translate(
@@ -280,17 +280,17 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	}
 
 	/**
-	 * @return JsonApiJsonApi\SchemaContainer<PersistenceEntities\CrudEntity>
+	 * @return Encoding\SchemaContainer<PersistenceEntities\CrudEntity>
 	 *
 	 * @throws DI\MissingServiceException
 	 */
-	private function getSchemaContainer(): JsonApiJsonApi\SchemaContainer
+	private function getSchemaContainer(): Encoding\SchemaContainer
 	{
 		if ($this->jsonApiSchemaContainer !== null) {
 			return $this->jsonApiSchemaContainer;
 		}
 
-		$this->jsonApiSchemaContainer = $this->container->getByType(JsonApiJsonApi\SchemaContainer::class);
+		$this->jsonApiSchemaContainer = $this->container->getByType(Encoding\SchemaContainer::class);
 
 		return $this->jsonApiSchemaContainer;
 	}

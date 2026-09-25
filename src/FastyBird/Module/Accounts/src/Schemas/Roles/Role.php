@@ -16,9 +16,9 @@
 namespace FastyBird\Module\Accounts\Schemas\Roles;
 
 use Exception;
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApis;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -31,13 +31,13 @@ use function count;
  * Role entity schema
  *
  * @template T of Entities\Roles\Role
- * @extends  JsonApis\JsonApi<T>
+ * @extends  Schemas\JsonApiSchema<T>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Role extends JsonApis\JsonApi
+final class Role extends Schemas\JsonApiSchema
 {
 
 	/**

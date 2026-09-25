@@ -17,14 +17,14 @@ namespace FastyBird\Module\Ui\Hydrators\Widgets;
 
 use Contributte\Translation;
 use Doctrine\Persistence;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Encoding\JsonApi as JsonApiJsonApi;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Hydrators as ApiHydrators;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Module\Ui\Entities as UiEntities;
-use FastyBird\Module\Ui\Hydrators;
+use FastyBird\Module\Ui\Hydrators as UiHydrators;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Schemas;
@@ -39,13 +39,13 @@ use function strval;
  * Widget entity hydrator
  *
  * @template  T of UiEntities\Widgets\Widget
- * @extends   JsonApiHydrators\Hydrator<T>
+ * @extends   ApiHydrators\Hydrator<T>
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Widget extends JsonApiHydrators\Hydrator
+abstract class Widget extends ApiHydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -69,10 +69,10 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 		Schemas\Widgets\Widget::RELATIONSHIPS_DATA_SOURCES => 'dataSources',
 	];
 
-	/** @var JsonApiJsonApi\SchemaContainer<PersistenceEntities\CrudEntity>|null */
-	private JsonApiJsonApi\SchemaContainer|null $jsonApiSchemaContainer = null;
+	/** @var Encoding\SchemaContainer<PersistenceEntities\CrudEntity>|null */
+	private Encoding\SchemaContainer|null $jsonApiSchemaContainer = null;
 
-	/** @var array<Hydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>>|null  */
+	/** @var array<UiHydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>>|null  */
 	private array|null $dataSourcesHydrators = null;
 
 	public function __construct(
@@ -86,7 +86,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 		parent::__construct($managerRegistry, $translator);
 	}
 
-	protected function hydrateNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -101,13 +101,13 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	/**
 	 * @return array<mixed>|null
 	 *
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDisplayRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasOne()) {
@@ -128,13 +128,13 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	/**
 	 * @return array<mixed>
 	 *
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildDisplay(
 		string $type,
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 		string|null $identifier = null,
 	): array
 	{
@@ -260,7 +260,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 				return $display;
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate('//ui-module.base.messages.missingRelation.heading')),
 			strval($this->translator->translate('//ui-module.base.messages.missingRelation.message')),
@@ -274,17 +274,17 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	 * @return array<mixed>
 	 *
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidState
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDataSourcesRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 	): array
 	{
 		if ($included === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.missingRelation.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.missingRelation.message')),
@@ -334,13 +334,13 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	/**
 	 * @return array<mixed>|null
 	 *
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateTabsRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasMany()) {
@@ -362,7 +362,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 					}
 				}
 			} catch (Uuid\Exception\InvalidUuidStringException) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.invalidIdentifier.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.invalidIdentifier.message')),
@@ -379,13 +379,13 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	/**
 	 * @return array<mixed>|null
 	 *
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateGroupsRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasMany()) {
@@ -407,7 +407,7 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 					}
 				}
 			} catch (Uuid\Exception\InvalidUuidStringException) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.invalidIdentifier.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.invalidIdentifier.message')),
@@ -422,23 +422,23 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @return JsonApiJsonApi\SchemaContainer<PersistenceEntities\CrudEntity>
+	 * @return Encoding\SchemaContainer<PersistenceEntities\CrudEntity>
 	 *
 	 * @throws DI\MissingServiceException
 	 */
-	private function getSchemaContainer(): JsonApiJsonApi\SchemaContainer
+	private function getSchemaContainer(): Encoding\SchemaContainer
 	{
 		if ($this->jsonApiSchemaContainer !== null) {
 			return $this->jsonApiSchemaContainer;
 		}
 
-		$this->jsonApiSchemaContainer = $this->container->getByType(JsonApiJsonApi\SchemaContainer::class);
+		$this->jsonApiSchemaContainer = $this->container->getByType(Encoding\SchemaContainer::class);
 
 		return $this->jsonApiSchemaContainer;
 	}
 
 	/**
-	 * @return array<Hydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>>
+	 * @return array<UiHydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>>
 	 *
 	 * @throws DI\MissingServiceException
 	 */
@@ -450,11 +450,11 @@ abstract class Widget extends JsonApiHydrators\Hydrator
 
 		$this->dataSourcesHydrators = [];
 
-		$serviceNames = $this->container->findByType(Hydrators\Widgets\DataSources\DataSource::class);
+		$serviceNames = $this->container->findByType(UiHydrators\Widgets\DataSources\DataSource::class);
 
 		foreach ($serviceNames as $serviceName) {
 			$service = $this->container->getByName($serviceName);
-			assert($service instanceof Hydrators\Widgets\DataSources\DataSource);
+			assert($service instanceof UiHydrators\Widgets\DataSources\DataSource);
 
 			$this->dataSourcesHydrators[] = $service;
 		}

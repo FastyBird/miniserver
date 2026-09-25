@@ -18,14 +18,13 @@ namespace FastyBird\Module\Triggers\Controllers;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
 use Exception;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Encoding\JsonApi as JsonApiBuilder;
+use FastyBird\Core\Api\Encoding;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Persistence\Entities;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\Core\Persistence\Query;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Router;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -60,12 +59,12 @@ abstract class BaseV1
 
 	protected Persistence\ManagerRegistry $managerRegistry;
 
-	protected JsonApiBuilder\Builder $builder;
+	protected Encoding\Builder $builder;
 
 	protected Router\Validator $routesValidator;
 
-	/** @var JsonApiHydrators\Container<Entities\CrudEntity> */
-	protected JsonApiHydrators\Container $hydratorsContainer;
+	/** @var Hydrators\Container<Entities\CrudEntity> */
+	protected Hydrators\Container $hydratorsContainer;
 
 	protected Log\LoggerInterface $logger;
 
@@ -84,7 +83,7 @@ abstract class BaseV1
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
-	public function injectJsonApiBuilder(JsonApiBuilder\Builder $builder): void
+	public function injectJsonApiBuilder(Encoding\Builder $builder): void
 	{
 		$this->builder = $builder;
 	}
@@ -95,15 +94,15 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param JsonApiHydrators\Container<Entities\CrudEntity> $hydratorsContainer
+	 * @param Hydrators\Container<Entities\CrudEntity> $hydratorsContainer
 	 */
-	public function injectHydratorsContainer(JsonApiHydrators\Container $hydratorsContainer): void
+	public function injectHydratorsContainer(Hydrators\Container $hydratorsContainer): void
 	{
 		$this->hydratorsContainer = $hydratorsContainer;
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
@@ -114,7 +113,7 @@ abstract class BaseV1
 		$relationEntity = Utils\Strings::lower(strval($request->getAttribute(Router\ApiRoutes::RELATION_ENTITY)));
 
 		if ($relationEntity !== '') {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//triggers-module.base.messages.relationNotFound.heading')),
 				strval($this->translator->translate(
@@ -124,7 +123,7 @@ abstract class BaseV1
 			);
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_NOT_FOUND,
 			strval($this->translator->translate('//triggers-module.base.messages.unknownRelation.heading')),
 			strval($this->translator->translate('//triggers-module.base.messages.unknownRelation.message')),
@@ -132,32 +131,32 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws RuntimeException
 	 */
-	protected function createDocument(Message\ServerRequestInterface $request): JsonApi\IDocument
+	protected function createDocument(Message\ServerRequestInterface $request): Encoding\IDocument
 	{
 		try {
 			$content = Utils\Json::decode($request->getBody()->getContents());
 
 			if (!$content instanceof stdClass) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_BAD_REQUEST,
 					strval($this->translator->translate('//triggers-module.base.messages.notValidJsonApi.heading')),
 					strval($this->translator->translate('//triggers-module.base.messages.notValidJsonApi.message')),
 				);
 			}
 
-			$document = new JsonApi\Document($content);
+			$document = new Encoding\Document($content);
 
 		} catch (Utils\JsonException) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//triggers-module.base.messages.notValidJson.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.notValidJson.message')),
 			);
 		} catch (ApplicationExceptions\Runtime) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//triggers-module.base.messages.notValidJsonApi.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.notValidJsonApi.message')),
@@ -168,11 +167,11 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws ApiExceptions\JsonApiError
 	 */
 	protected function validateIdentifier(
 		Message\ServerRequestInterface $request,
-		JsonApi\IDocument $document,
+		Encoding\IDocument $document,
 	): bool
 	{
 		if (
@@ -183,7 +182,7 @@ abstract class BaseV1
 			&& $request->getAttribute(Router\ApiRoutes::URL_ITEM_ID) !== null
 			&& $request->getAttribute(Router\ApiRoutes::URL_ITEM_ID) !== $document->getResource()->getId()
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//triggers-module.base.messages.invalidIdentifier.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.invalidIdentifier.message')),
@@ -194,7 +193,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws TriggersExceptions\Runtime
 	 */
 	protected function getOrmConnection(): Connection
 	{
@@ -204,7 +203,7 @@ abstract class BaseV1
 			return $connection;
 		}
 
-		throw new Exceptions\Runtime('Entity manager could not be loaded');
+		throw new TriggersExceptions\Runtime('Entity manager could not be loaded');
 	}
 
 	/**

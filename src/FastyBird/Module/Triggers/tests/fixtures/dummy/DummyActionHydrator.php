@@ -2,8 +2,8 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Triggers\Hydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use Ramsey\Uuid;
@@ -26,10 +26,10 @@ final class DummyActionHydrator extends Hydrators\Actions\Action
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateDoItemAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -38,7 +38,7 @@ final class DummyActionHydrator extends Hydrators\Actions\Action
 			|| $attributes->get('do_item') === ''
 			|| !Uuid\Uuid::isValid((string) $attributes->get('do_item'))
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.message')),

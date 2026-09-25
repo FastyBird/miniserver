@@ -16,26 +16,25 @@
 namespace FastyBird\Module\Devices\Schemas\Connectors\Controls;
 
 use DateTimeInterface;
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas;
 use Neomerx\JsonApi;
 
 /**
  * Connector control entity schema
  *
  * @template T of Entities\Connectors\Controls\Control
- * @extends JsonApiSchemas\JsonApi<T>
+ * @extends ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Control extends JsonApiSchemas\JsonApi
+final class Control extends ApiSchemas\JsonApiSchema
 {
 
 	/**

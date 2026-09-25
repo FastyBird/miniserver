@@ -15,27 +15,26 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Actions;
 
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Router;
-use FastyBird\Module\Triggers\Schemas;
 use Neomerx\JsonApi;
 
 /**
  * Action entity schema
  *
  * @template T of Entities\Actions\Action
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:TriggersModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Action extends JsonApiSchemas\JsonApi
+abstract class Action extends ApiSchemas\JsonApiSchema
 {
 
 	/**

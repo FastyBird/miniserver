@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Dashboards\Tabs;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
 use function is_scalar;
@@ -24,13 +24,13 @@ use function is_scalar;
 /**
  * Tab entity hydrator
  *
- * @extends JsonApiHydrators\Hydrator<Entities\Dashboards\Tabs\Tab>
+ * @extends Hydrators\Hydrator<Entities\Dashboards\Tabs\Tab>
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Tab extends JsonApiHydrators\Hydrator
+final class Tab extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -51,7 +51,7 @@ final class Tab extends JsonApiHydrators\Hydrator
 		return Entities\Dashboards\Tabs\Tab::class;
 	}
 
-	protected function hydrateNameAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -63,7 +63,7 @@ final class Tab extends JsonApiHydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateCommentAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))

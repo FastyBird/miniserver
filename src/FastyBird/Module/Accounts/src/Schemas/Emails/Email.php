@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Schemas\Emails;
 
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApis;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -27,13 +27,13 @@ use Neomerx\JsonApi;
  * Email entity schema
  *
  * @template T of Entities\Emails\Email
- * @extends JsonApis\JsonApi<T>
+ * @extends Schemas\JsonApiSchema<T>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Email extends JsonApis\JsonApi
+final class Email extends Schemas\JsonApiSchema
 {
 
 	/**

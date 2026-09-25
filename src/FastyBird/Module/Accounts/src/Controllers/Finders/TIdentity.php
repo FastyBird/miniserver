@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Controllers\Finders;
 
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
@@ -35,8 +35,8 @@ trait TIdentity
 {
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApi
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function findIdentity(
@@ -45,7 +45,7 @@ trait TIdentity
 	): Entities\Identities\Identity
 	{
 		if (!Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
@@ -62,7 +62,7 @@ trait TIdentity
 		$identity = $this->identitiesRepository->findOneBy($findQuery);
 
 		if ($identity === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),

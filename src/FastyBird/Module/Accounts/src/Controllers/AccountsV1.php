@@ -18,9 +18,10 @@ namespace FastyBird\Module\Accounts\Controllers;
 use Casbin\Exceptions as CasbinExceptions;
 use Doctrine;
 use Exception;
-use FastyBird\Core\Encoding\JsonApi;
+use FastyBird\Core\Api\Encoding;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
@@ -101,7 +102,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
@@ -123,7 +124,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function create(
 		Message\ServerRequestInterface $request,
@@ -144,7 +145,7 @@ final class AccountsV1 extends BaseV1
 
 				$this->assignAccountToRoles($document, $account);
 			} else {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.base.messages.invalidType.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.invalidType.message')),
@@ -157,10 +158,10 @@ final class AccountsV1 extends BaseV1
 			// Commit all changes into database
 			$this->getOrmConnection()->commit();
 
-		} catch (JsonApiExceptions\JsonApi $ex) {
+		} catch (ApiExceptions\JsonApi $ex) {
 			throw $ex;
 		} catch (AccountsExceptions\AccountRoleInvalid) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidRelation.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.invalidRelation.message')),
@@ -169,7 +170,7 @@ final class AccountsV1 extends BaseV1
 				],
 			);
 		} catch (PersistenceExceptions\EntityCreation $ex) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
@@ -181,7 +182,7 @@ final class AccountsV1 extends BaseV1
 			// ORM 3 detects a client-supplied duplicate id while adding to the identity
 			// map, which happens before the INSERT that used to surface this as a DBAL
 			// unique constraint violation on PRIMARY. Same condition, reported earlier.
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.uniqueIdentifier.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.uniqueIdentifier.message')),
@@ -191,7 +192,7 @@ final class AccountsV1 extends BaseV1
 			);
 		} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
 			if (preg_match("%PRIMARY'%", $ex->getMessage(), $match) === 1) {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.base.messages.uniqueIdentifier.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.uniqueIdentifier.message')),
@@ -204,7 +205,7 @@ final class AccountsV1 extends BaseV1
 				$columnKey = end($columnParts);
 
 				if (str_starts_with($columnKey, 'account_')) {
-					throw new JsonApiExceptions\JsonApiError(
+					throw new ApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 						strval($this->translator->translate('//accounts-module.base.messages.uniqueAttribute.heading')),
 						strval($this->translator->translate('//accounts-module.base.messages.uniqueAttribute.message')),
@@ -217,7 +218,7 @@ final class AccountsV1 extends BaseV1
 				}
 			}
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.uniqueAttribute.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.uniqueAttribute.message')),
@@ -233,7 +234,7 @@ final class AccountsV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.notCreated.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notCreated.message')),
@@ -259,7 +260,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function update(
 		Message\ServerRequestInterface $request,
@@ -283,7 +284,7 @@ final class AccountsV1 extends BaseV1
 
 				$this->assignAccountToRoles($document, $account);
 			} else {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.base.messages.invalidType.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.invalidType.message')),
@@ -296,10 +297,10 @@ final class AccountsV1 extends BaseV1
 			// Commit all changes into database
 			$this->getOrmConnection()->commit();
 
-		} catch (JsonApiExceptions\JsonApi $ex) {
+		} catch (ApiExceptions\JsonApi $ex) {
 			throw $ex;
 		} catch (AccountsExceptions\AccountRoleInvalid) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidRelation.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.invalidRelation.message')),
@@ -318,7 +319,7 @@ final class AccountsV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.notUpdated.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notUpdated.message')),
@@ -341,7 +342,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
 	 */
 	public function delete(
@@ -355,7 +356,7 @@ final class AccountsV1 extends BaseV1
 			$this->user->getAccount() !== null
 			&& $account->getId()->equals($this->user->getAccount()->getId())
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.accounts.messages.selfNotDeletable.heading')),
 				strval($this->translator->translate('//accounts-module.accounts.messages.selfNotDeletable.message')),
@@ -397,7 +398,7 @@ final class AccountsV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.notDeleted.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notDeleted.message')),
@@ -416,7 +417,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
@@ -461,7 +462,7 @@ final class AccountsV1 extends BaseV1
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
@@ -470,7 +471,7 @@ final class AccountsV1 extends BaseV1
 	): Entities\Accounts\Account
 	{
 		if (!Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
@@ -483,7 +484,7 @@ final class AccountsV1 extends BaseV1
 		$account = $this->accountsRepository->findOneBy($findQuery);
 
 		if ($account === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
@@ -500,7 +501,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws AccountsExceptions\AccountRoleInvalid
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
-	private function assignAccountToRoles(JsonApi\IDocument $document, Entities\Accounts\Account $account): void
+	private function assignAccountToRoles(Encoding\IDocument $document, Entities\Accounts\Account $account): void
 	{
 		$relationships = $document->getResource()->getRelationships();
 
@@ -509,7 +510,7 @@ final class AccountsV1 extends BaseV1
 		$hasRoleRelation = false;
 
 		foreach ($relationships->getAll() as $relationship) {
-			if ($relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierCollection) {
+			if ($relationship->getData() instanceof Objects\IResourceIdentifierCollection) {
 				foreach ($relationship->getData()->getAll() as $resource) {
 					if ($resource->getType() === Schemas\Roles\Role::SCHEMA_TYPE && is_string($resource->getId())) {
 						$hasRoleRelation = true;

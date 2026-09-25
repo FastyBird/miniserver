@@ -17,7 +17,7 @@ namespace FastyBird\Module\Ui\Controllers;
 
 use Doctrine;
 use Exception;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Controllers;
@@ -54,7 +54,7 @@ final class DisplayV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
@@ -70,8 +70,8 @@ final class DisplayV1 extends BaseV1
 	/**
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApi
+	 * @throws Exceptions\JsonApiError
 	 *
 	 * @Secured\Role(manager,administrator)
 	 */
@@ -101,7 +101,7 @@ final class DisplayV1 extends BaseV1
 				// Commit all changes into database
 				$this->getOrmConnection()->commit();
 
-			} catch (JsonApiExceptions\JsonApi $ex) {
+			} catch (Exceptions\JsonApi $ex) {
 				throw $ex;
 			} catch (Throwable $ex) {
 				// Log caught exception
@@ -114,7 +114,7 @@ final class DisplayV1 extends BaseV1
 					],
 				);
 
-				throw new JsonApiExceptions\JsonApiError(
+				throw new Exceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//ui-module.base.messages.notUpdated.heading')),
 					strval($this->translator->translate('//ui-module.base.messages.notUpdated.message')),
@@ -129,7 +129,7 @@ final class DisplayV1 extends BaseV1
 			return $this->buildResponse($request, $response, $display);
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new Exceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate('//ui-module.base.messages.invalidType.heading')),
 			strval($this->translator->translate('//ui-module.base.messages.invalidType.message')),
@@ -141,7 +141,7 @@ final class DisplayV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,

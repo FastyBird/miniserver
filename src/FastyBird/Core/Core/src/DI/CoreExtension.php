@@ -6,6 +6,11 @@ use Casbin;
 use DateInvalidTimeZoneException;
 use DateTimeZone;
 use Doctrine;
+use FastyBird\Core\Api\Encoding as ApiEncoding;
+use FastyBird\Core\Api\Helpers as ApiHelpers;
+use FastyBird\Core\Api\Hydrators;
+use FastyBird\Core\Api\Middleware as ApiMiddleware;
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Clients as WsServerClients;
 use FastyBird\Core\Clock;
@@ -14,7 +19,6 @@ use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Controllers as WebSocketsControllers;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Encoding as JsonApiEncoding;
 use FastyBird\Core\Encoding as WebSocketsEncoding;
 use FastyBird\Core\EventLoop;
 use FastyBird\Core\Events as SimpleAuthEvents;
@@ -38,7 +42,6 @@ use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
-use FastyBird\Core\Helpers as JsonApiHelpers;
 use FastyBird\Core\Helpers as WsServerHelpers;
 use FastyBird\Core\Http as WebServerHttp;
 use FastyBird\Core\Logging;
@@ -47,9 +50,7 @@ use FastyBird\Core\Mapping as SimpleAuthMapping;
 use FastyBird\Core\Messaging as WebSocketsMessaging;
 use FastyBird\Core\Middleware as SimpleAuthMiddleware;
 use FastyBird\Core\Middleware as WebServerMiddleware;
-use FastyBird\Core\Middleware\JsonApi\JsonApi;
 use FastyBird\Core\Persistence as DoctrineCrudPersistence;
-use FastyBird\Core\Persistence as JsonApiPersistence;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Crud\Create;
 use FastyBird\Core\Persistence\Crud\Delete;
@@ -64,7 +65,6 @@ use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Phone\Types;
 use FastyBird\Core\Routing;
-use FastyBird\Core\Schemas as JsonApiSchemas;
 use FastyBird\Core\Security as SimpleAuthSecurity;
 use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Server as WsServerServer;
@@ -838,22 +838,22 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('jsonApi.builder'), new DI\Definitions\ServiceDefinition())
-			->setType(JsonApiEncoding\JsonApi\Builder::class)
+			->setType(ApiEncoding\Builder::class)
 			->setArgument('metaAuthor', $configuration->jsonApi->meta->author)
 			->setArgument('metaCopyright', $configuration->jsonApi->meta->copyright);
 
 		$builder->addDefinition($this->prefix('jsonApi.middlewares.jsonapi'), new DI\Definitions\ServiceDefinition())
-			->setType(JsonApi::class);
+			->setType(ApiMiddleware\JsonApiMiddleware::class);
 
 		$builder->addDefinition($this->prefix('jsonApi.hydrators.container'), new DI\Definitions\ServiceDefinition())
-			->setType(JsonApiPersistence\JsonApi\Hydrators\Container::class);
+			->setType(Hydrators\Container::class);
 
 		$builder->addDefinition($this->prefix('jsonApi.schemas.container'), new DI\Definitions\ServiceDefinition())
-			->setType(JsonApiEncoding\JsonApi\SchemaContainer::class);
+			->setType(ApiEncoding\SchemaContainer::class);
 
 		if (class_exists('\IPub\DoctrineCrud\Mapping\Annotation\Crud')) {
 			$builder->addDefinition($this->prefix('jsonApi.helpers.crudReader'), new DI\Definitions\ServiceDefinition())
-				->setType(JsonApiHelpers\JsonApi\CrudReader::class);
+				->setType(ApiHelpers\CrudReader::class);
 		}
 
 		/**
@@ -1383,22 +1383,22 @@ final class CoreExtension extends DI\CompilerExtension
 		 * JSON:API -- schema/hydrator assembly
 		 */
 
-		$schemaContainerServiceName = $builder->getByType(JsonApiEncoding\JsonApi\SchemaContainer::class, true);
+		$schemaContainerServiceName = $builder->getByType(ApiEncoding\SchemaContainer::class, true);
 		$schemaContainerService = $builder->getDefinition($schemaContainerServiceName);
 		assert($schemaContainerService instanceof DI\Definitions\ServiceDefinition);
 
-		foreach ($builder->findByType(JsonApiSchemas\JsonApi\JsonApi::class) as $schemasService) {
+		foreach ($builder->findByType(ApiSchemas\JsonApiSchema::class) as $schemasService) {
 			$schemaContainerService->addSetup('add', [$schemasService]);
 		}
 
 		$hydratorContainerServiceName = $builder->getByType(
-			JsonApiPersistence\JsonApi\Hydrators\Container::class,
+			Hydrators\Container::class,
 			true,
 		);
 		$hydratorContainerService = $builder->getDefinition($hydratorContainerServiceName);
 		assert($hydratorContainerService instanceof DI\Definitions\ServiceDefinition);
 
-		foreach ($builder->findByType(JsonApiPersistence\JsonApi\Hydrators\Hydrator::class) as $hydratorService) {
+		foreach ($builder->findByType(Hydrators\Hydrator::class) as $hydratorService) {
 			$hydratorContainerService->addSetup('add', [$hydratorService]);
 		}
 

@@ -16,8 +16,8 @@
 namespace FastyBird\Automator\DevicesModule\Hydrators\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Ramsey\Uuid;
 use function is_scalar;
@@ -51,11 +51,11 @@ final class ChannelPropertyCondition extends PropertyCondition
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws Exceptions\JsonApi
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateChannelAttribute(
-		JsonApi\Objects\IStandardObject $attributes,
+		Objects\IStandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -64,7 +64,7 @@ final class ChannelPropertyCondition extends PropertyCondition
 			|| $attributes->get('channel') === ''
 			|| !Uuid\Uuid::isValid((string) $attributes->get('channel'))
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//triggers-module.base.messages.missingAttribute.message')),

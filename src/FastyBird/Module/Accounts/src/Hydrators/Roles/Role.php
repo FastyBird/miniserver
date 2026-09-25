@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Accounts\Hydrators\Roles;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Persistence\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Schemas;
 use function is_scalar;
@@ -24,13 +24,13 @@ use function is_scalar;
 /**
  * Role entity hydrator
  *
- * @extends JsonApiHydrators\Hydrator<Entities\Roles\Role>
+ * @extends Hydrators\Hydrator<Entities\Roles\Role>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Hydrators
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Role extends JsonApiHydrators\Hydrator
+final class Role extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */
@@ -48,7 +48,7 @@ final class Role extends JsonApiHydrators\Hydrator
 		return Entities\Roles\Role::class;
 	}
 
-	protected function hydrateCommentAttribute(JsonApi\Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(Objects\IStandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))

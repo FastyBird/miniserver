@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Ui\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use function is_scalar;
@@ -49,15 +49,15 @@ final class ChartGraph extends Display
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateEnableMinMaxAttribute(JsonApi\Objects\IStandardObject $attributes): bool
+	protected function hydrateEnableMinMaxAttribute(Objects\IStandardObject $attributes): bool
 	{
 		if (
 			!is_scalar($attributes->get('enable_min_max'))
 			|| (string) $attributes->get('enable_min_max') === ''
 		) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.heading')),
 				strval($this->translator->translate('//ui-module.base.messages.missingAttribute.message')),

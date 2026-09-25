@@ -16,12 +16,11 @@
 namespace FastyBird\Module\Devices\Schemas\Connectors;
 
 use DateTimeInterface;
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas;
 use Neomerx\JsonApi;
 use function count;
 
@@ -29,13 +28,13 @@ use function count;
  * Connector entity schema
  *
  * @template T of Entities\Connectors\Connector
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Connector extends JsonApiSchemas\JsonApi
+abstract class Connector extends ApiSchemas\JsonApiSchema
 {
 
 	/**

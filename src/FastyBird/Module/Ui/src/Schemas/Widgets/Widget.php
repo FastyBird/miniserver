@@ -15,8 +15,8 @@
 
 namespace FastyBird\Module\Ui\Schemas\Widgets;
 
+use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
@@ -27,13 +27,13 @@ use function count;
  * Widget entity schema
  *
  * @template  T of Entities\Widgets\Widget
- * @extends   JsonApiSchemas\JsonApi<T>
+ * @extends   Schemas\JsonApiSchema<T>
  *
  * @package          FastyBird:UIModule!
  * @subpackage       Schemas
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Widget extends JsonApiSchemas\JsonApi
+abstract class Widget extends Schemas\JsonApiSchema
 {
 
 	/**

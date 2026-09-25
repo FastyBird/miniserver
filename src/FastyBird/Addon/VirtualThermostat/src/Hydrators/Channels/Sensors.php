@@ -20,9 +20,9 @@ use FastyBird\Addon\VirtualThermostat\Hydrators;
 use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
-use FastyBird\Core\Encoding\JsonApi;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
+use FastyBird\Core\Api\Encoding\Objects;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Ramsey\Uuid;
 use function is_string;
@@ -46,18 +46,18 @@ final class Sensors extends VirtualHydrators\Channels\Channel
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
-	 * @throws Exceptions\InvalidState
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(
-		JsonApi\Objects\IRelationshipObject $relationship,
-		JsonApi\Objects\IResourceObjectCollection|null $included,
+		Objects\IRelationshipObject $relationship,
+		Objects\IResourceObjectCollection|null $included,
 		VirtualEntities\Channels\Channel|null $entity,
 	): Entities\Devices\Device
 	{
 		if (
-			$relationship->getData() instanceof JsonApi\Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\IResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {
@@ -71,7 +71,7 @@ final class Sensors extends VirtualHydrators\Channels\Channel
 			}
 		}
 
-		throw new JsonApiExceptions\JsonApiError(
+		throw new ApiExceptions\JsonApiError(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 			strval($this->translator->translate('//virtual-thermostat-addon.base.messages.invalidRelation.heading')),
 			strval($this->translator->translate('//virtual-thermostat-addon.base.messages.invalidRelation.message')),

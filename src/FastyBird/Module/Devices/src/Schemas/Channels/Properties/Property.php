@@ -17,10 +17,10 @@ namespace FastyBird\Module\Devices\Schemas\Channels\Properties;
 
 use DateTimeInterface;
 use Exception;
+use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Routing as SlimRouterRouting;
-use FastyBird\Core\Schemas\JsonApi as JsonApiSchemas;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
@@ -28,7 +28,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas;
 use Neomerx\JsonApi;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
@@ -39,13 +38,13 @@ use function strval;
  * Channel property entity schema
  *
  * @template T of Entities\Channels\Properties\Property
- * @extends  JsonApiSchemas\JsonApi<T>
+ * @extends  ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:DevicesModule!
  * @subpackage     Schemas
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class Property extends JsonApiSchemas\JsonApi
+abstract class Property extends ApiSchemas\JsonApiSchema
 {
 
 	/**

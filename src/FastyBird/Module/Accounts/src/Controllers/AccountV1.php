@@ -17,8 +17,8 @@ namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
 use Exception;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as JsonApiExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
@@ -62,7 +62,7 @@ final class AccountV1 extends BaseV1
 
 	/**
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
@@ -79,7 +79,7 @@ final class AccountV1 extends BaseV1
 	 * @throws Doctrine\DBAL\Exception
 	 * @throws Exception
 	 * @throws AccountsExceptions\Runtime
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function update(
 		Message\ServerRequestInterface $request,
@@ -91,7 +91,7 @@ final class AccountV1 extends BaseV1
 		$document = $this->createDocument($request);
 
 		if ($account->getId()->toString() !== $document->getResource()->getId()) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				strval($this->translator->translate('//accounts-module.base.messages.invalidIdentifier.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.invalidIdentifier.message')),
@@ -109,7 +109,7 @@ final class AccountV1 extends BaseV1
 				);
 
 			} else {
-				throw new JsonApiExceptions\JsonApiError(
+				throw new ApiExceptions\JsonApiError(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 					strval($this->translator->translate('//accounts-module.base.messages.invalidType.heading')),
 					strval($this->translator->translate('//accounts-module.base.messages.invalidType.message')),
@@ -122,7 +122,7 @@ final class AccountV1 extends BaseV1
 			// Commit all changes into database
 			$this->getOrmConnection()->commit();
 
-		} catch (JsonApiExceptions\JsonApi $ex) {
+		} catch (ApiExceptions\JsonApi $ex) {
 			throw $ex;
 		} catch (Throwable $ex) {
 			// Log caught exception
@@ -135,7 +135,7 @@ final class AccountV1 extends BaseV1
 				],
 			);
 
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				strval($this->translator->translate('//accounts-module.base.messages.notUpdated.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.notUpdated.message')),
@@ -152,7 +152,7 @@ final class AccountV1 extends BaseV1
 
 	/**
 	 * @throws InvalidArgumentException
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function delete(
 		Message\ServerRequestInterface $request,
@@ -170,7 +170,7 @@ final class AccountV1 extends BaseV1
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
-	 * @throws JsonApiExceptions\JsonApi
+	 * @throws ApiExceptions\JsonApi
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
@@ -211,12 +211,12 @@ final class AccountV1 extends BaseV1
 	}
 
 	/**
-	 * @throws JsonApiExceptions\JsonApiError
+	 * @throws ApiExceptions\JsonApiError
 	 */
 	private function findAccount(): Entities\Accounts\Account
 	{
 		if ($this->user->getAccount() === null) {
-			throw new JsonApiExceptions\JsonApiError(
+			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				strval($this->translator->translate('//accounts-module.base.messages.forbidden.heading')),
 				strval($this->translator->translate('//accounts-module.base.messages.forbidden.message')),
