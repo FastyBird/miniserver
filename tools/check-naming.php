@@ -32,6 +32,29 @@
  * case for the root -- `array_slice(..., -2)` degrades correctly because a Core import always
  * has at least two segments (`FastyBird`, `Core`).
  *
+ * EXTENDED RULE: when the plain two-segment form would collide
+ *
+ * Two capabilities can each own a sub-namespace whose last two segments read the same --
+ * `FastyBird\Core\Persistence\Mapping\Driver` and `FastyBird\Core\Security\Mapping\Driver`
+ * both reduce to `MappingDriver`. When that happens inside one file, the two-segment alias
+ * is no longer legal for EITHER import: the alias climbs to the last THREE segments,
+ * `PersistenceMappingDriver` and `SecurityMappingDriver`. This is symmetric -- when two
+ * imports' k-segment forms would be equal, BOTH escalate to k+1, never just one of them --
+ * and it repeats one segment at a time for as long as the collision persists (`tools/
+ * move-core-symbols.php`'s alias assignment applies the write side of the same rule when it
+ * picks a fresh alias for a moved reference; this is its read side, checked structurally
+ * rather than moved).
+ *
+ *   use FastyBird\Core\Persistence\Mapping\Driver as PersistenceMappingDriver; legal (collides
+ *   use FastyBird\Core\Security\Mapping\Driver as SecurityMappingDriver;       with the above at 2 segments, so both climb to 3)
+ *
+ * A longer alias is legal ONLY when a same-kind sibling import in the same file justifies it
+ * this way -- a bare `k > 2` alias with no colliding sibling is still illegal (gratuitous),
+ * and so is a `k == 2` alias left in place while a sibling that does collide with it escalated
+ * (asymmetric: the collision applies to both or neither). `use`, `use function` and
+ * `use const` each keep their own alias namespace in PHP, so only same-kind imports can
+ * collide with each other for this purpose.
+ *
  * The alias detector recognises every legal `use` form PHP has, not just the plain
  * `use X as Y;` case: leading whitespace (a class-body `use Trait;` or a re-indent), grouped
  * imports (`use FastyBird\Core\{Documents as D, Http as H};`), comma lists
@@ -261,36 +284,93 @@ function fbSplitUseBody(string $body): array
 }
 
 /**
- * Every aliased import of a FastyBird\Core symbol in the file, in whichever of the seven
- * legal `use` forms it was written: leading whitespace, grouped, comma list, leading `\`,
- * uppercase `AS`, `use function`/`use const`, and the bare root (`FastyBird\Core as X`).
+ * Every FastyBird\Core import in the file, aliased or not, in whichever of the seven legal
+ * `use` forms it was written: leading whitespace, grouped, comma list, leading `\`, uppercase
+ * `AS`, `use function`/`use const`, and the bare root (`FastyBird\Core as X`). A bare (never
+ * aliased) import is included too: it still names an FQCN that can be the OTHER half of a
+ * collision an aliased sibling escalates to avoid, even though a bare import is never itself
+ * checked for alias legality (there is no alias to check).
  *
- * @return array<array{imported: string, alias: string}>
+ * `kind` is `class`, `function` or `const` -- PHP keeps a separate alias namespace per kind
+ * (`use Foo;` and `use function Foo;` never collide with each other), so only same-kind
+ * imports are ever compared against one another for the collision rule below.
+ *
+ * @return array<array{imported: string, alias: string|null, kind: string}>
  */
-function fbFindCoreAliases(string $code): array
+function fbFindCoreImports(string $code): array
 {
-	$aliases = [];
+	$imports = [];
 
 	// The body is captured non-greedily up to the first following `;`. `s` (DOTALL) lets it
 	// span the multiple lines a grouped import can be written across; that is safe even so,
 	// because the match still stops at the nearest `;`, and no legal `use` body contains one.
-	preg_match_all('/^[ \t]*use\s+(?:(?:function|const)\s+)?(.+?);/ms', $code, $statementMatches);
+	preg_match_all('/^[ \t]*use\s+((?:function|const)\s+)?(.+?);/ms', $code, $statementMatches, PREG_SET_ORDER);
 
-	foreach ($statementMatches[1] as $body) {
-		foreach (fbSplitUseBody($body) as [$name, $alias]) {
-			if ($alias === null) {
-				continue;
-			}
+	foreach ($statementMatches as $statement) {
+		$kind = trim($statement[1]) !== '' ? strtolower(trim($statement[1])) : 'class';
 
+		foreach (fbSplitUseBody($statement[2]) as [$name, $alias]) {
 			$imported = ltrim($name, '\\');
 
 			if ($imported === 'FastyBird\\Core' || str_starts_with($imported, 'FastyBird\\Core\\')) {
-				$aliases[] = ['imported' => $imported, 'alias' => $alias];
+				$imports[] = ['imported' => $imported, 'alias' => $alias, 'kind' => $kind];
 			}
 		}
 	}
 
-	return $aliases;
+	return $imports;
+}
+
+/**
+ * The last $count segments of a qualified name, joined without a separator -- the shape a
+ * legal alias takes beyond a bare import.
+ */
+function fbLastSegments(string $name, int $count): string
+{
+	return implode('', array_slice(explode('\\', $name), -$count));
+}
+
+/**
+ * Whether some OTHER name among $siblings reduces to the same string as $name does at
+ * $level segments -- i.e. whether a plain $level-segment alias of $name would collide.
+ *
+ * @param array<string> $siblings
+ */
+function fbHasSiblingCollision(string $name, array $siblings, int $level): bool
+{
+	$target = fbLastSegments($name, $level);
+
+	foreach ($siblings as $sibling) {
+		if ($sibling !== $name && fbLastSegments($sibling, $level) === $target) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * The alias tools/check-naming.php requires for $name: the last two segments joined, UNLESS
+ * that would collide with another same-kind Core import in the same file also reducing to it
+ * there ($siblings, every OTHER Core import's FQCN of that kind) -- then the last three, and
+ * so on, one segment at a time, for as long as the collision persists or the name runs out of
+ * segments. This is the read side of the symmetric rule tools/move-core-symbols.php's alias
+ * assignment applies on the write side: two imports whose k-segment forms would be equal both
+ * escalate to k+1, never just one of them, so this climbs past any level still shared with a
+ * sibling and stops the moment it reaches one that is not.
+ *
+ * @param array<string> $siblings
+ */
+function fbExpectedAlias(string $name, array $siblings): string
+{
+	$max = count(explode('\\', $name));
+	$level = 2;
+
+	while ($level < $max && fbHasSiblingCollision($name, $siblings, $level)) {
+		$level++;
+	}
+
+	return fbLastSegments($name, $level);
 }
 
 /**
@@ -343,19 +423,31 @@ function fbCheckFile(string $path, string $code, string $relative): array
 
 	// 3. Import aliases of a FastyBird\Core symbol, everywhere in the repository.
 	//
-	// The "expected" value is the last-two-segments rule, and it is only a meaningful
-	// SUGGESTION for a class-shaped import (class/interface/trait/enum), where every segment
-	// is a namespace part. For `use function`/`use const` the final segment is a symbol name,
-	// not a namespace part -- e.g. `use function FastyBird\Core\Helpers\format as X;` computes
-	// "expected Helpersformat", which is not a name anyone should actually use. The violation
-	// itself still fails closed and is real signal (the alias genuinely does not match the
-	// convention), so this is not a hole -- just do not treat the printed "expected" text as
-	// an authoritative replacement for a function or const alias; pick one by hand instead.
-	foreach (fbFindCoreAliases($code) as $match) {
-		$imported = $match['imported'];
-		$alias = $match['alias'];
-		$segments = explode('\\', $imported);
-		$expected = implode('', array_slice($segments, -2));
+	// The "expected" value is the last-two-segments rule (extended, see the file docblock, to
+	// climb past a segment level a same-kind sibling import in this file also reduces to), and
+	// it is only a meaningful SUGGESTION for a class-shaped import (class/interface/trait/
+	// enum), where every segment is a namespace part. For `use function`/`use const` the final
+	// segment is a symbol name, not a namespace part -- e.g. `use function FastyBird\Core\
+	// Helpers\format as X;` computes "expected Helpersformat", which is not a name anyone
+	// should actually use. The violation itself still fails closed and is real signal (the
+	// alias genuinely does not match the convention), so this is not a hole -- just do not
+	// treat the printed "expected" text as an authoritative replacement for a function or
+	// const alias; pick one by hand instead.
+	$fileCoreImports = fbFindCoreImports($code);
+	$importsByKind = [];
+
+	foreach ($fileCoreImports as $import) {
+		$importsByKind[$import['kind']][] = $import['imported'];
+	}
+
+	foreach ($fileCoreImports as $import) {
+		if ($import['alias'] === null) {
+			continue;
+		}
+
+		$imported = $import['imported'];
+		$alias = $import['alias'];
+		$expected = fbExpectedAlias($imported, $importsByKind[$import['kind']]);
 
 		if ($alias !== $expected) {
 			$violations[] = sprintf(
