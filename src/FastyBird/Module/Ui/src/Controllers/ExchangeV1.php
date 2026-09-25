@@ -15,6 +15,7 @@
 
 namespace FastyBird\Module\Ui\Controllers;
 
+use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -23,6 +24,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Entities\Topics;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Events;
@@ -46,6 +48,15 @@ use function is_array;
  */
 final class ExchangeV1 extends Controllers\Controller
 {
+
+	/**
+	 * The roles the HTTP API requires to change a widget data source: DataSourcesV1 limits its
+	 * create, update and delete to them.
+	 */
+	private const array WRITE_ROLES = [
+		Constants::ROLE_MANAGER,
+		Constants::ROLE_ADMINISTRATOR,
+	];
 
 	public function __construct(
 		private readonly Models\Configuration\Widgets\DataSources\Repository $dataSourcesConfigurationRepository,
@@ -114,6 +125,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @throws CoreExceptions\Logic
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws Utils\JsonException
+	 * @throws WebSocketsExceptions\ForbiddenRequest
 	 */
 	public function actionCall(
 		array $args,
@@ -132,6 +144,9 @@ final class ExchangeV1 extends Controllers\Controller
 			],
 		);
 
+		// Every call needs an authenticated client, as every HTTP controller of this module does
+		$this->authorize($client);
+
 		if (!array_key_exists('routing_key', $args) || !array_key_exists('source', $args)) {
 			throw new UiExceptions\InvalidArgument('Provided message has invalid format');
 		}
@@ -141,12 +156,21 @@ final class ExchangeV1 extends Controllers\Controller
 				/** @var array<string, mixed>|null $data */
 				$data = isset($args['data']) && is_array($args['data']) ? $args['data'] : null;
 
-				if ($data !== null) {
-					$document = $this->documentFactory->create(
+				$document = $data !== null
+					? $this->documentFactory->create(
 						UiDocuments\Widgets\DataSources\Actions\Action::class,
 						$data,
-					);
+					)
+					: null;
 
+				// A GET reads the data source, which DataSourcesV1 serves to any authenticated
+				// user -- and the caller already is one. A SET, or an action that cannot be read,
+				// changes state and takes the rule for a change.
+				if ($document?->getAction() !== Types\DataSourceAction::GET) {
+					$this->authorize($client, ...self::WRITE_ROLES);
+				}
+
+				if ($document !== null) {
 					$this->handleDataSourceAction($client, $topic, $document);
 				}
 
