@@ -22,7 +22,7 @@ use FastyBird\Addon\VirtualThermostat\Drivers;
 use FastyBird\Addon\VirtualThermostat\Helpers;
 use FastyBird\Addon\VirtualThermostat\Hydrators;
 use FastyBird\Addon\VirtualThermostat\Schemas;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use Nette\Bootstrap;
@@ -46,7 +46,7 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 	public const NAME = 'fbVirtualThermostatAddon';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

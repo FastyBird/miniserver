@@ -15,8 +15,7 @@
 
 namespace FastyBird\Module\Accounts;
 
-use FastyBird\Core\Constants as Metadata;
-use FastyBird\Core\Constants as SimpleAuth;
+use FastyBird\Core\Constants as CoreConstants;
 
 /**
  * Module constants
@@ -84,17 +83,17 @@ final class Constants
 	 */
 
 	public const DEFAULT_ROLES = [
-		SimpleAuth\Constants::ROLE_USER,
+		CoreConstants::ROLE_USER,
 	];
 
 	public const SINGLE_ROLES = [
-		SimpleAuth\Constants::ROLE_ADMINISTRATOR,
-		SimpleAuth\Constants::ROLE_USER,
+		CoreConstants::ROLE_ADMINISTRATOR,
+		CoreConstants::ROLE_USER,
 	];
 
 	public const NOT_ASSIGNABLE_ROLES = [
-		SimpleAuth\Constants::ROLE_VISITOR,
-		SimpleAuth\Constants::ROLE_ANONYMOUS,
+		CoreConstants::ROLE_VISITOR,
+		CoreConstants::ROLE_ANONYMOUS,
 	];
 
 	/**
@@ -109,7 +108,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
+	public const ROUTING_PREFIX = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
 
 	// Accounts
 	public const MESSAGE_BUS_ACCOUNT_DOCUMENT_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.account';

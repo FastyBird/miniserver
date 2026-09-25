@@ -24,7 +24,7 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Hydrators;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Protocol;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Router;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Http\Routing;
@@ -52,7 +52,7 @@ class VirtualThermostatAddonHomeKitConnectorExtension extends DI\CompilerExtensi
 	public const NAME = 'fbVirtualThermostatAddonHomeKitConnectorBridge';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

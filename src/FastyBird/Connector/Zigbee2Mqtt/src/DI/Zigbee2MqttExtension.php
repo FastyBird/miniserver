@@ -29,7 +29,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Schemas;
 use FastyBird\Connector\Zigbee2Mqtt\Subscribers;
 use FastyBird\Connector\Zigbee2Mqtt\Writers;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
@@ -54,7 +54,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 	public const NAME = 'fbZigbee2MqttConnector';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

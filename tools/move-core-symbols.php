@@ -96,6 +96,15 @@
 
 const FB_MOVE_CORE_PACKAGE = 'src/FastyBird/Core/Core/';
 
+/**
+ * Core's own root namespace -- the one a target FQCN's namespace equals when the map moves a
+ * class to live directly under it (E3.14: `Configuration\Configuration` -> `Configuration`,
+ * `Constants\Constants` -> `Constants`). See fbMoveVacatedNamespaces() and the fallback branch
+ * of fbMoveRewritePhp()'s $express closure for the two places that need to treat this
+ * specially.
+ */
+const FB_MOVE_CORE_NAMESPACE = 'FastyBird\\Core';
+
 const FB_MOVE_PHP_ROOTS = ['src/FastyBird/', 'public/', 'bin/', 'tests/', 'migrations/', 'tools/'];
 
 const FB_MOVE_CONFIG_EXTENSIONS = ['neon', 'xml', 'json'];
@@ -1222,6 +1231,17 @@ function fbMoveRewritePhp(
 			return ['rel', fbMoveShortOf($targetNamespace) . '\\' . $short, ''];
 		}
 
+		if (strcasecmp($targetNamespace, FB_MOVE_CORE_NAMESPACE) === 0) {
+			// $target lives directly under Core's own root namespace (E3.14: a namespace
+			// collapsing into a same-named class, e.g. Constants\Constants -> Constants) --
+			// there is no capability sub-namespace left to import and reference relatively, so
+			// the class itself is imported instead, exactly like the "existing import of the
+			// class itself" branch above, only new.
+			$newImports[strtolower($target)] ??= $target;
+
+			return ['new', strtolower($target), ''];
+		}
+
 		$newImports[strtolower($targetNamespace)] ??= $targetNamespace;
 
 		return ['new', strtolower($targetNamespace), $short];
@@ -2022,6 +2042,11 @@ function fbMoveInReportScope(string $file): bool
 /**
  * Namespaces the map empties: every type declared in them, or below them, moves.
  *
+ * A namespace a moving class's OWN new FQCN reoccupies exactly (E3.14: `Constants\Constants`
+ * moves TO `FastyBird\Core\Constants`, which is also `Constants\Constants`'s OLD namespace) is
+ * not vacated: the name lives on, now as a class rather than a namespace, so an import or a
+ * mention of it after the rewrite is a live reference to that class, not a stale one.
+ *
  * @param array<string, string> $classes
  * @param array<string, array{0: string, 1: string}> $index
  *
@@ -2030,10 +2055,16 @@ function fbMoveInReportScope(string $file): bool
 function fbMoveVacatedNamespaces(array $classes, array $index): array
 {
 	$moving = array_change_key_case(array_flip(array_keys($classes)));
+	$reoccupied = array_change_key_case(array_flip(array_values($classes)));
 	$vacated = [];
 
 	foreach (array_keys($classes) as $old) {
 		$namespace = fbMoveNamespaceOf($old);
+
+		if (isset($reoccupied[strtolower($namespace)])) {
+			continue;
+		}
+
 		$prefix = strtolower($namespace) . '\\';
 		$empty = true;
 

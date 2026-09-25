@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Presenters;
 
-use FastyBird\Core\Presenters\Application as ApplicationPresenters;
+use FastyBird\Core\Presenters;
 use Nette\Application;
 
 /**
@@ -26,7 +26,7 @@ use Nette\Application;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-abstract class BasePresenter extends ApplicationPresenters\BasePresenter
+abstract class BasePresenter extends Presenters\BasePresenter
 {
 
 	public function formatTemplateFiles(): array

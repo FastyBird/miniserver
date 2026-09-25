@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\DI;
 
 use Contributte\Translation;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Http\Routing;
@@ -58,7 +58,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 	public const NAME = 'fbAccountsModule';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

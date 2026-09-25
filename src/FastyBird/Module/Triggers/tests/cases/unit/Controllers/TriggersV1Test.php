@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Triggers\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -72,57 +72,57 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'readAll' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.index.json',
 			],
 			'readAllPaging' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers?page[offset]=1&page[limit]=1',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.index.paging.json',
 			],
 			'readOne' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.read.json',
 			],
 			'readOneInclude' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4?include=actions,notifications',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4?include=actions,notifications',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.read.include.json',
 			],
 			'readRelationshipsActions' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/actions',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/actions',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.readRelationships.actions.json',
 			],
 			'readRelationshipsNotifications' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/notifications',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/notifications',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.readRelationships.notifications.json',
 			],
 			'readRelationshipsConditions' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/0b48dfbc-fac2-4292-88dc-7981a121602d/relationships/conditions',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/0b48dfbc-fac2-4292-88dc-7981a121602d/relationships/conditions',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.readRelationships.conditions.json',
 			],
 			'readAllUser' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.index.json',
 			],
 			'readOneUser' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.read.json',
@@ -131,73 +131,73 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'readOneUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsConditionsInvalid' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/conditions',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/conditions',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.readRelationships.conditionsInvalid.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/0b48dfbc-fac2-4292-88dc-7981a121602d/relationships/unknown',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/0b48dfbc-fac2-4292-88dc-7981a121602d/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readRelationshipsUnknownTrigger' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888/relationships/actions',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888/relationships/actions',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readAllMissingToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneMissingToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllEmptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneEmptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllInvalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneInvalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readAllExpiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneExpiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
@@ -279,7 +279,7 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'createManual' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.createManual.json'),
 				StatusCodeInterface::STATUS_CREATED,
@@ -289,14 +289,14 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'notAllowed' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.createManual.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'missingRequired' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/triggers.create.missing.required.json',
@@ -305,35 +305,35 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.create.missing.required.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.create.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'missingToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.createManual.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.createManual.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.createManual.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.createManual.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -387,7 +387,7 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'update' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -397,56 +397,56 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'notAllowed' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'unknownTrigger' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.json'),
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'idMismatch' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.idMismatch.json'),
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.identifier.json',
 			],
 			'missingToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/triggers.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -499,7 +499,7 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'delete' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.delete.json',
@@ -508,37 +508,37 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'notAllowed' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'deleteUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'missingToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',

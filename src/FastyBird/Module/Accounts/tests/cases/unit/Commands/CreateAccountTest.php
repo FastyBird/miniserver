@@ -5,7 +5,7 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Commands;
 use Contributte\Translation;
 use Doctrine\Persistence;
 use Error;
-use FastyBird\Core\Constants as SimpleAuth;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Identity;
@@ -83,7 +83,7 @@ final class CreateAccountTest extends Tests\Cases\Unit\DbTestCase
 			'firstName' => 'Rocky',
 			'email' => 'rocky@balboa.com',
 			'password' => 'someRandomPassword',
-			'role' => SimpleAuth\Constants::ROLE_USER,
+			'role' => Constants::ROLE_USER,
 		]);
 
 		self::assertSame(0, $result);

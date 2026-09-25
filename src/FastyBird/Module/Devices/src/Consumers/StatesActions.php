@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Consumers;
 
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exchange\Consumers;
@@ -119,11 +119,11 @@ final class StatesActions implements Consumers\Consumer
 				$data = [];
 
 				if ($document->getSet() !== null) {
-					if ($document->getSet()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getSet()->getActualValue();
 					}
 
-					if ($document->getSet()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getSet()->getExpectedValue();
 					}
 
@@ -136,11 +136,11 @@ final class StatesActions implements Consumers\Consumer
 						);
 					}
 				} elseif ($document->getWrite() !== null) {
-					if ($document->getWrite()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getWrite()->getActualValue();
 					}
 
-					if ($document->getWrite()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getWrite()->getExpectedValue();
 					}
 
@@ -251,11 +251,11 @@ final class StatesActions implements Consumers\Consumer
 				$data = [];
 
 				if ($document->getSet() !== null) {
-					if ($document->getSet()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getSet()->getActualValue();
 					}
 
-					if ($document->getSet()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getSet()->getExpectedValue();
 					}
 
@@ -268,11 +268,11 @@ final class StatesActions implements Consumers\Consumer
 						);
 					}
 				} elseif ($document->getWrite() !== null) {
-					if ($document->getWrite()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getWrite()->getActualValue();
 					}
 
-					if ($document->getWrite()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getWrite()->getExpectedValue();
 					}
 
@@ -383,11 +383,11 @@ final class StatesActions implements Consumers\Consumer
 				$data = [];
 
 				if ($document->getSet() !== null) {
-					if ($document->getSet()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getSet()->getActualValue();
 					}
 
-					if ($document->getSet()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getSet()->getExpectedValue();
 					}
 
@@ -400,11 +400,11 @@ final class StatesActions implements Consumers\Consumer
 						);
 					}
 				} elseif ($document->getWrite() !== null) {
-					if ($document->getWrite()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getWrite()->getActualValue();
 					}
 
-					if ($document->getWrite()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+					if ($document->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getWrite()->getExpectedValue();
 					}
 

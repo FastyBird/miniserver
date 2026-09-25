@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\RabbitMq\DI;
 
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Connections;
 use FastyBird\Plugin\RabbitMq\Handlers;
@@ -44,7 +44,7 @@ class RabbitMqExtension extends DI\CompilerExtension
 	public const NAME = 'fbRabbitMqPlugin';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

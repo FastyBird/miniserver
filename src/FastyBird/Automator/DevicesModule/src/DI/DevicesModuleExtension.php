@@ -18,7 +18,7 @@ namespace FastyBird\Automator\DevicesModule\DI;
 use FastyBird\Automator\DevicesModule\Hydrators;
 use FastyBird\Automator\DevicesModule\Schemas;
 use FastyBird\Automator\DevicesModule\Subscribers;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use Nette\Bootstrap;
@@ -42,7 +42,7 @@ class DevicesModuleExtension extends DI\CompilerExtension
 	public const NAME = 'fbDevicesModuleAutomator';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

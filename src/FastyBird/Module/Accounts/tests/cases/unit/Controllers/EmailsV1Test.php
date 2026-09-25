@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -86,28 +86,28 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'readAll' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.index.json',
 			],
 			'readAllPaging' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails?page[offset]=1&page[limit]=1',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.index.paging.json',
 			],
 			'readOne' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.read.json',
 			],
 			'readRelationshipsAccount' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.relationships.account.json',
@@ -117,79 +117,79 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::UNKNOWN_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::UNKNOWN_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/unknown',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/unknown',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readAllNoToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneNoToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllEmptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneEmptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllUserToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::USER_TOKEN,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneUserToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::USER_TOKEN,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllInvalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneInvalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readAllExpiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneExpiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
@@ -243,7 +243,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'create' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
@@ -253,7 +253,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'missingRequired' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.missing.required.json',
@@ -262,7 +262,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.create.missing.required.json',
 			],
 			'missingRelation' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.missing.relation.json',
@@ -271,14 +271,14 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.create.missing.relation.json',
 			],
 			'invalidRelation' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.create.invalid.relation.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.invalid.type.json',
@@ -287,7 +287,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'identifierNotUnique' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.identifier.notUnique.json',
@@ -296,7 +296,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/identifier.notUnique.json',
 			],
 			'invalidEmail' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.invalid.email.json',
@@ -305,7 +305,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.create.invalid.email.json',
 			],
 			'usedEmail' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.usedEmail.json',
@@ -314,35 +314,35 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.create.usedEmail.json',
 			],
 			'noToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'userToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.create.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -398,7 +398,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'update' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -406,7 +406,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'verify' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID_2 . '/emails/' . self::USER_NOT_VERIFIED_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID_2 . '/emails/' . self::USER_NOT_VERIFIED_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.verify.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -417,7 +417,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'unknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::UNKNOWN_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::UNKNOWN_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.invalid.id.json',
@@ -427,7 +427,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'invalidRelation' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.invalid.relation.json',
@@ -437,7 +437,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'invalidType' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.invalid.type.json',
@@ -447,7 +447,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'idMismatch' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.invalid.id.json',
@@ -457,7 +457,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'noToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -465,7 +465,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'emptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -473,7 +473,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'userToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -481,7 +481,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'invalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -489,7 +489,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'expiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/emails/emails.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -544,7 +544,7 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'delete' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.delete.json',
@@ -553,49 +553,49 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'default' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID . '/emails/' . self::USER_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID . '/emails/' . self::USER_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.delete.default.json',
 			],
 			'unknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::UNKNOWN_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::UNKNOWN_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'noToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'userToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::USER_TOKEN,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::ADMINISTRATOR_ACCOUNT_ID . '/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',

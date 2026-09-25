@@ -107,7 +107,7 @@
                 <element key="src/FastyBird/Core/Core/tests/cases/unit" value="FastyBird\Core\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Core/Core/tests/fixtures" value="FastyBird\Core\Tests\Fixtures"/>
                 <element key="src/FastyBird/Core/Core/tests/fixtures/dummy" value="FastyBird\Core\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Core/Core/tests/tools" value="FastyBird\Core\Tests\Tools"/>
+                <element key="src/FastyBird/Core/Core/tests/support" value="FastyBird\Core\Tests\Support"/>
 
                 <element key="src/FastyBird/Module/Accounts/src" value="FastyBird\Module\Accounts"/>
                 <element key="src/FastyBird/Module/Accounts/tests/cases/unit" value="FastyBird\Module\Accounts\Tests\Cases\Unit"/>

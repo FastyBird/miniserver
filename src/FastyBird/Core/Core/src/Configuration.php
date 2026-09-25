@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Configuration;
+namespace FastyBird\Core;
 
 use Nette\Application;
 

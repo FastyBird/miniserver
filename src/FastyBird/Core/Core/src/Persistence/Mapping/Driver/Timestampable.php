@@ -55,7 +55,7 @@ final class Timestampable
 	];
 
 	public function __construct(
-		private readonly Configuration\Configuration $configuration,
+		private readonly Configuration $configuration,
 		private readonly CacheItemPoolInterface|null $cache = null,
 	)
 	{

@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents;
 
 use DateTimeInterface;
-use FastyBird\Core\Constants\Constants as MetadataConstants;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Rules;
@@ -289,7 +289,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 			return $this->valueTransformer;
 		}
 
-		if (preg_match(MetadataConstants::VALUE_EQUATION_TRANSFORMER, $this->valueTransformer) === 1) {
+		if (preg_match(Constants::VALUE_EQUATION_TRANSFORMER, $this->valueTransformer) === 1) {
 			if (
 				in_array(
 					$this->dataType,
@@ -398,7 +398,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 				}, $format));
 			}
 
-			if (preg_match(MetadataConstants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
+			if (preg_match(Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
 				return new Formats\NumberRange($format);
 			}
 		} elseif (
@@ -429,9 +429,9 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 				}, $format));
 			}
 
-			if (preg_match(MetadataConstants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
+			if (preg_match(Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
 				return new Formats\CombinedEnum($format);
-			} elseif (preg_match(MetadataConstants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
+			} elseif (preg_match(Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
 				return new Formats\StringEnum($format);
 			}
 		}

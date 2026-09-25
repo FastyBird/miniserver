@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\DI;
 
 use FastyBird\Bridge\RedisDbPluginDevicesModule\Models;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
@@ -37,7 +37,7 @@ class RedisDbPluginDevicesModuleExtension extends DI\CompilerExtension
 	public const NAME = 'fbRedisDbPluginDevicesModuleBridge';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

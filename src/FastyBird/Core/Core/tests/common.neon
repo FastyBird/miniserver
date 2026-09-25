@@ -32,13 +32,12 @@ contributteTranslation:
         fallback: [en_US, en]
     localeResolvers: []
     dirs:
-        - %appDir%/../src/Translations
         - %appDir%/../src/Api/Translations
 
 nettrineDbal:
     connections:
         default:
-            wrapperClass: \FastyBird\Core\Tests\Tools\ConnectionWrapper
+            wrapperClass: \FastyBird\Core\Tests\Support\ConnectionWrapper
 
 nettrineOrm:
     managers:

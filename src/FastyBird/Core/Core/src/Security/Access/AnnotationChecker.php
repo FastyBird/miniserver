@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Security\Access;
 
-use FastyBird\Core\Constants as SimpleAuth;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\Identity;
 use Nette\Utils;
@@ -211,7 +211,7 @@ final readonly class AnnotationChecker implements Checker, CheckRequirements
 			}
 
 			// Parse resource & privilege from permission
-			[$resource, $privilege] = explode(SimpleAuth\Constants::PERMISSIONS_DELIMITER, $permission) + [null, null];
+			[$resource, $privilege] = explode(Constants::PERMISSIONS_DELIMITER, $permission) + [null, null];
 
 			// Remove white spaces
 			$resource = $resource !== null ? Utils\Strings::trim($resource) : null;

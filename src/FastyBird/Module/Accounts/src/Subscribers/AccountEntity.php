@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Constants as SimpleAuth;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts;
@@ -76,11 +76,11 @@ final class AccountEntity implements Common\EventSubscriber
 			if (
 				$object instanceof Entities\Accounts\Account
 				&& $this->enforcerFactory->getEnforcer()->getUsersForRole(
-					SimpleAuth\Constants::ROLE_ADMINISTRATOR,
+					Constants::ROLE_ADMINISTRATOR,
 				) === []
 				&& !$this->enforcerFactory->getEnforcer()->hasRoleForUser(
 					$object->getId()->toString(),
-					SimpleAuth\Constants::ROLE_ADMINISTRATOR,
+					Constants::ROLE_ADMINISTRATOR,
 				)
 			) {
 				throw new Exceptions\InvalidState('First account have to be an administrator account');

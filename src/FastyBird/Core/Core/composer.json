@@ -100,7 +100,7 @@
       "FastyBird\\Core\\Tests\\Cases\\Unit\\": "tests/cases/unit",
       "FastyBird\\Core\\Tests\\Fixtures\\": "tests/fixtures",
       "FastyBird\\Core\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-      "FastyBird\\Core\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Core\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

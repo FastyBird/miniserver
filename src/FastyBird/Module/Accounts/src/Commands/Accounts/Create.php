@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Commands\Accounts;
 use Doctrine;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
-use FastyBird\Core\Constants as SimpleAuth;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Identity;
@@ -180,9 +180,9 @@ class Create extends Console\Command\Command
 		$repeat = true;
 
 		if ($input->hasArgument('role') && in_array($input->getArgument('role'), [
-			SimpleAuth\Constants::ROLE_USER,
-			SimpleAuth\Constants::ROLE_MANAGER,
-			SimpleAuth\Constants::ROLE_ADMINISTRATOR,
+			Constants::ROLE_USER,
+			Constants::ROLE_MANAGER,
+			Constants::ROLE_ADMINISTRATOR,
 		], true)
 		) {
 			$findRoleQuery = new Queries\Entities\FindRoles();
@@ -215,15 +215,15 @@ class Create extends Console\Command\Command
 
 				switch ($roleName) {
 					case 'U':
-						$roleName = SimpleAuth\Constants::ROLE_USER;
+						$roleName = Constants::ROLE_USER;
 
 						break;
 					case 'M':
-						$roleName = SimpleAuth\Constants::ROLE_MANAGER;
+						$roleName = Constants::ROLE_MANAGER;
 
 						break;
 					case 'A':
-						$roleName = SimpleAuth\Constants::ROLE_ADMINISTRATOR;
+						$roleName = Constants::ROLE_ADMINISTRATOR;
 
 						break;
 				}

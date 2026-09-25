@@ -15,8 +15,8 @@
 
 namespace FastyBird\Plugin\RedisDb\DI;
 
-use FastyBird\Core\Boot as ApplicationBoot;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Boot;
+use FastyBird\Core\Constants;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Exchange;
@@ -44,7 +44,7 @@ class RedisDbExtension extends DI\CompilerExtension
 	public const NAME = 'fbRedisDbPlugin';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{
@@ -66,7 +66,7 @@ class RedisDbExtension extends DI\CompilerExtension
 				'password' => Schema\Expect::string()->nullable(),
 			]),
 			'exchange' => Schema\Expect::structure([
-				'channel' => Schema\Expect::string()->default(Metadata\Constants::EXCHANGE_CHANNEL_NAME),
+				'channel' => Schema\Expect::string()->default(Constants::EXCHANGE_CHANNEL_NAME),
 			]),
 		]);
 	}

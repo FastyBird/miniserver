@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -72,37 +72,37 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'read' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.read.json',
 			],
 			'readUser' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.read.user.json',
 			],
 			'readWithIncluded' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me?include=emails',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me?include=emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.read.included.json',
 			],
 			'readRelationshipsEmails' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.emails.json',
 			],
 			'readRelationshipsIdentities' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_IDENTITIES,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_IDENTITIES,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.identities.json',
 			],
 			'readRelationshipsRoles' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_ROLES,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_ROLES,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.roles.json',
@@ -111,55 +111,55 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'readRelationshipsUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/unknown',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/unknown',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readNoToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readEmptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readExpiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readInvalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readRelationshipsNoToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readRelationshipsEmptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readRelationshipsInvalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readRelationshipsExpiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
@@ -213,7 +213,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'update' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -223,7 +223,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'missingRequired' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.missing.required.json',
@@ -232,7 +232,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.update.missing.required.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.invalid.type.json',
@@ -241,7 +241,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'idMismatch' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.invalid.id.json',
@@ -250,28 +250,28 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.identifier.json',
 			],
 			'noToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,

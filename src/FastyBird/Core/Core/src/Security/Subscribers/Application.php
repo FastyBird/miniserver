@@ -2,8 +2,8 @@
 
 namespace FastyBird\Core\Security\Subscribers;
 
-use FastyBird\Core\Constants as SimpleAuth;
-use FastyBird\Core\Events;
+use FastyBird\Core\Constants;
+use FastyBird\Core\Presenters\Events;
 use FastyBird\Core\Security\Exceptions;
 use FastyBird\Core\Security\Identity;
 use Lcobucci\JWT;
@@ -64,7 +64,7 @@ final readonly class Application implements EventDispatcher\EventSubscriberInter
 	{
 		$request = $this->requestFactory->fromGlobals();
 
-		$token = $request->getCookie(SimpleAuth\Constants::ACCESS_TOKEN_COOKIE);
+		$token = $request->getCookie(Constants::ACCESS_TOKEN_COOKIE);
 
 		if (is_string($token)) {
 			$token = $this->tokenValidator->validate($token);

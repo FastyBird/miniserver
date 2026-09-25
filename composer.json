@@ -221,7 +221,7 @@
             "FastyBird\\Core\\Tests\\Cases\\Unit\\": "src/FastyBird/Core/Core/tests/cases/unit",
             "FastyBird\\Core\\Tests\\Fixtures\\": "src/FastyBird/Core/Core/tests/fixtures",
             "FastyBird\\Core\\Tests\\Fixtures\\Dummy\\": "src/FastyBird/Core/Core/tests/fixtures/dummy",
-            "FastyBird\\Core\\Tests\\Tools\\": "src/FastyBird/Core/Core/tests/tools",
+            "FastyBird\\Core\\Tests\\Support\\": "src/FastyBird/Core/Core/tests/support",
             "FastyBird\\Module\\Accounts\\Tests\\Cases\\Unit\\": "src/FastyBird/Module/Accounts/tests/cases/unit",
             "FastyBird\\Module\\Accounts\\Tests\\Fixtures\\": "src/FastyBird/Module/Accounts/tests/fixtures",
             "FastyBird\\Module\\Accounts\\Tests\\Tools\\": "src/FastyBird/Module/Accounts/tests/tools",

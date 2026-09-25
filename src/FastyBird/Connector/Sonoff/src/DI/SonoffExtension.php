@@ -29,7 +29,7 @@ use FastyBird\Connector\Sonoff\Schemas;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Subscribers;
 use FastyBird\Connector\Sonoff\Writers;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
@@ -54,7 +54,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	public const NAME = 'fbSonoffConnector';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

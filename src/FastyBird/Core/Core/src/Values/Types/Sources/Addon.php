@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Values\Types\Sources;
 
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 
 /**
  * Bridges sources types
@@ -10,8 +10,8 @@ use FastyBird\Core\Constants as Metadata;
 enum Addon: string implements Source
 {
 
-	case NOT_SPECIFIED = Metadata\Constants::NOT_SPECIFIED_SOURCE;
+	case NOT_SPECIFIED = Constants::NOT_SPECIFIED_SOURCE;
 
-	case VIRTUAL_THERMOSTAT = Metadata\Constants::ADDON_VIRTUAL_THERMOSTAT_SOURCE;
+	case VIRTUAL_THERMOSTAT = Constants::ADDON_VIRTUAL_THERMOSTAT_SOURCE;
 
 }

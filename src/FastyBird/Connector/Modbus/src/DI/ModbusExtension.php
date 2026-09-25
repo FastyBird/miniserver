@@ -28,7 +28,7 @@ use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Schemas;
 use FastyBird\Connector\Modbus\Subscribers;
 use FastyBird\Connector\Modbus\Writers;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
@@ -54,7 +54,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	public const NAME = 'fbModbusConnector';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

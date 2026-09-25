@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Presenters\Application;
+namespace FastyBird\Core\Presenters;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\Presenters;
-use FastyBird\Core\UI\Application as UI;
+use FastyBird\Core\UI;
 use Nette\Application;
 use Override;
 use function preg_match;

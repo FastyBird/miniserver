@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -63,42 +63,42 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'readAll' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/groups.index.json',
 			],
 			'readAllPaging' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups?page[offset]=1&page[limit]=1',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/groups.index.paging.json',
 			],
 			'readOne' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/groups.read.json',
 			],
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsWidgets' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c/relationships/widgets',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c/relationships/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/groups.readRelationships.widgets.json',
 			],
 			'readRelationshipsUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c/relationships/unknown',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
@@ -149,14 +149,14 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'create' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/groups.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/groups.create.json',
 			],
 			'missingRequired' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/groups.create.missing.required.json',
@@ -165,7 +165,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/groups.missing.required.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/groups.create.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -218,7 +218,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 		return [
 			'update' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/groups.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -226,7 +226,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'invalidType' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/groups.update.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -234,7 +234,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'idMismatch' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/groups.update.idMismatch.json'),
 				StatusCodeInterface::STATUS_BAD_REQUEST,
@@ -242,7 +242,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'notFound' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/88f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/88f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/groups.update.notFound.json'),
 				StatusCodeInterface::STATUS_NOT_FOUND,
@@ -294,14 +294,14 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 		return [
 			'delete' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/groups.delete.json',
 			],
 			'deleteUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/groups/88f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/groups/88f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',

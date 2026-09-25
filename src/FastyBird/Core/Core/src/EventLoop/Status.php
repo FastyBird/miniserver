@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\EventLoop\Application;
+namespace FastyBird\Core\EventLoop;
 
 /**
  * Event loop status helper

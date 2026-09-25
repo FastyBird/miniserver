@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Router;
 
 use Error;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Accounts\Exceptions;
@@ -70,7 +70,7 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_OK,
 			],
 			'readAllInvalid' => [
-				'/api/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 			],

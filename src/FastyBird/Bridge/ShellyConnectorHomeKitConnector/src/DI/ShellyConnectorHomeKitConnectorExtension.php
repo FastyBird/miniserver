@@ -25,7 +25,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Http\Routing;
@@ -53,7 +53,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 	public const NAME = 'fbShellyConnectorHomeKitConnectorBridge';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

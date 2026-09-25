@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Triggers\DI;
 
 use Contributte\Translation;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Http\Routing;
@@ -54,7 +54,7 @@ class TriggersExtension extends DI\CompilerExtension implements Translation\DI\T
 	public const TRIGGER_TYPE_TAG = 'trigger_type';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

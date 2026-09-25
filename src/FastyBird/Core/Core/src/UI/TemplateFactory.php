@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\UI\Application;
+namespace FastyBird\Core\UI;
 
 use FastyBird\Core\Exceptions;
 use function file_exists;

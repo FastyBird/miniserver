@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Events;
+namespace FastyBird\Core\Presenters\Events;
 
 use Nette\Application;
 use Symfony\Contracts\EventDispatcher;

@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Subscribers\Application;
+namespace FastyBird\Core\EventLoop\Subscribers;
 
-use FastyBird\Core\EventLoop\Application as EventLoop;
-use FastyBird\Core\Events;
+use FastyBird\Core\EventLoop;
+use FastyBird\Core\EventLoop\Events;
 use Override;
 use Symfony\Component\EventDispatcher;
 

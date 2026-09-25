@@ -13,7 +13,7 @@ use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Servers as HomeKitServers;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
+use FastyBird\Core\EventLoop;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -60,9 +60,9 @@ final class AccessoriesTest extends Tests\Cases\Unit\DbTestCase
 	{
 		parent::setUp();
 
-		$eventLoop = $this->createMock(ApplicationEventLoop\Wrapper::class);
+		$eventLoop = $this->createMock(EventLoop\Wrapper::class);
 
-		$this->mockContainerService(ApplicationEventLoop\Wrapper::class, $eventLoop);
+		$this->mockContainerService(EventLoop\Wrapper::class, $eventLoop);
 
 		$repository = $this->getContainer()->getByType(DevicesModels\Configuration\Connectors\Repository::class);
 

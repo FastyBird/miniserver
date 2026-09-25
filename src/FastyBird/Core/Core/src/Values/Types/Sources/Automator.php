@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Values\Types\Sources;
 
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 
 /**
  * Triggers automators sources types
@@ -10,10 +10,10 @@ use FastyBird\Core\Constants as Metadata;
 enum Automator: string implements Source
 {
 
-	case NOT_SPECIFIED = Metadata\Constants::NOT_SPECIFIED_SOURCE;
+	case NOT_SPECIFIED = Constants::NOT_SPECIFIED_SOURCE;
 
-	case DEVICE_MODULE = Metadata\Constants::AUTOMATOR_DEVICE_MODULE_SOURCE;
+	case DEVICE_MODULE = Constants::AUTOMATOR_DEVICE_MODULE_SOURCE;
 
-	case DATE_TIME = Metadata\Constants::AUTOMATOR_DATE_TIME_SOURCE;
+	case DATE_TIME = Constants::AUTOMATOR_DATE_TIME_SOURCE;
 
 }

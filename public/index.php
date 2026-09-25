@@ -37,7 +37,7 @@ if (file_exists($autoload)) {
 
 	$configurator = Boot\Bootstrap::boot();
 
-	$isApi = substr($_SERVER['REQUEST_URI'], 0, 4) === '/' . Constants\Constants::ROUTER_API_PREFIX;
+	$isApi = substr($_SERVER['REQUEST_URI'], 0, 4) === '/' . Constants::ROUTER_API_PREFIX;
 
 	$container = $configurator->createContainer();
 

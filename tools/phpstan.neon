@@ -69,4 +69,4 @@ parameters:
 
     excludePaths:
         analyseAndScan:
-            - ../src/FastyBird/Core/Core/src/EventLoop/Application/Wrapper.php
+            - ../src/FastyBird/Core/Core/src/EventLoop/Wrapper.php

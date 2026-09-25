@@ -12,7 +12,7 @@ use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Tests;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\EventLoop\Application\Wrapper;
+use FastyBird\Core\EventLoop;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -58,9 +58,9 @@ final class CharacteristicsTest extends Tests\Cases\Unit\DbTestCase
 	{
 		parent::setUp();
 
-		$eventLoop = $this->createMock(Wrapper::class);
+		$eventLoop = $this->createMock(EventLoop\Wrapper::class);
 
-		$this->mockContainerService(Wrapper::class, $eventLoop);
+		$this->mockContainerService(EventLoop\Wrapper::class, $eventLoop);
 
 		$repository = $this->getContainer()->getByType(DevicesModels\Configuration\Connectors\Repository::class);
 

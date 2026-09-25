@@ -28,7 +28,7 @@ use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Connector\Virtual\Schemas;
 use FastyBird\Connector\Virtual\Subscribers;
 use FastyBird\Connector\Virtual\Writers;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
@@ -54,7 +54,7 @@ class VirtualExtension extends DI\CompilerExtension implements Translation\DI\Tr
 	public const NAME = 'fbVirtualConnector';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{
