@@ -5,8 +5,8 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Middleware;
 use Error;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Http as SlimRouterHttp;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -44,7 +44,7 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 		string $fixture,
 	): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
 
 		$request = new ServerRequest(
 			$method,
@@ -62,7 +62,7 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 			(string) $response->getBody(),
 		);
 		self::assertSame($statusCode, $response->getStatusCode());
-		self::assertTrue($response instanceof SlimRouterHttp\Response);
+		self::assertTrue($response instanceof Http\Response);
 	}
 
 	/**

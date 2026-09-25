@@ -17,7 +17,7 @@ namespace FastyBird\Module\Accounts\Schemas\Sessions;
 
 use DateTimeInterface;
 use FastyBird\Core\Api\Schemas;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -48,7 +48,7 @@ final class Session extends Schemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_ACCOUNT = 'account';
 
-	public function __construct(private readonly SlimRouterRouting\IRouter $router)
+	public function __construct(private readonly Routing\IRouter $router)
 	{
 	}
 

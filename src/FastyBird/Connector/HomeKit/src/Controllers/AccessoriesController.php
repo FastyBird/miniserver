@@ -21,7 +21,7 @@ use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Http as SlimRouterHttp;
+use FastyBird\Core\Http;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -95,7 +95,7 @@ final class AccessoriesController extends BaseController
 
 		$response = $response->withStatus(StatusCodeInterface::STATUS_OK);
 		$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode($result)));
+		$response = $response->withBody(Http\Stream::fromBodyString(Utils\Json::encode($result)));
 
 		return $response;
 	}

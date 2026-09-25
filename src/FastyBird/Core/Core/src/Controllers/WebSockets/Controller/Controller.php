@@ -6,6 +6,7 @@ use FastyBird\Core\Controllers\WebSockets as Application;
 use FastyBird\Core\Controllers\WebSockets\Responses;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
+use FastyBird\Core\Http\Routing as HttpRouting;
 use FastyBird\Core\Routing as Router;
 use Fig\Http;
 use Nette;
@@ -75,7 +76,7 @@ abstract class Controller implements IController
 
 	private Router\IWampRouter|null $router = null;
 
-	private Router\LinkGenerator|null $linkGenerator = null;
+	private HttpRouting\LinkGenerator|null $linkGenerator = null;
 
 	private NS\User|null $user = null;
 
@@ -91,7 +92,7 @@ abstract class Controller implements IController
 		Nette\DI\Container|null $context = null,
 		IControllerFactory|null $controllerFactory = null,
 		Router\IWampRouter|null $router = null,
-		Router\LinkGenerator|null $linkGenerator = null,
+		HttpRouting\LinkGenerator|null $linkGenerator = null,
 		NS\User|null $user = null,
 	): void
 	{

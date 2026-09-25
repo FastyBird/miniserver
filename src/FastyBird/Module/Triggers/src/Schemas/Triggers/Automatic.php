@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
@@ -50,7 +50,7 @@ final class Automatic extends Trigger
 	public const RELATIONSHIPS_CONDITIONS = 'conditions';
 
 	public function __construct(
-		SlimRouterRouting\IRouter $router,
+		Routing\IRouter $router,
 		Models\States\ActionsRepository $actionStateRepository,
 		private readonly Models\States\ConditionsRepository $conditionStateRepository,
 	)

@@ -20,7 +20,7 @@ Dependency layering, measured by `tools/check-layering.php` rather than composer
 
 ## Request routing
 
-`public/index.php` is the single entry point for both the API and the UI. It inspects `$_SERVER['REQUEST_URI']` against `FastyBird\Core\Constants\Constants::ROUTER_API_PREFIX`: a match is routed to the ReactPHP-based `FastyBird\Core\Server\HttpServer\Application`; everything else goes to the Nette application.
+`public/index.php` is the single entry point for both the API and the UI. It inspects `$_SERVER['REQUEST_URI']` against `FastyBird\Core\Constants\Constants::ROUTER_API_PREFIX`: a match is routed to the ReactPHP-based `FastyBird\Core\Http\Server\Application`; everything else goes to the Nette application.
 
 The Nette application's layout template (`Core/Core/templates/@layout.latte`) does wire up the Vue SPA shell -- it emits `<script src="{='index.html'|vite}">` into a `#app` mount point, matching what `Core/Core/assets/application/main.ts` expects. But reaching that template requires a route, and none is registered: `Core/Core/src/Routing/Application/AppRouter.php` defines a route for `/`, yet nothing calls it (no `services: router:` entry and no `application: mapping:` in any shipped `.neon`). The Nette application therefore has **no active routes today, and `GET /` 404s by design** -- this is pre-existing, frozen-repository behaviour, not something the merge introduced, and wiring the router is a behavioural change out of scope here. Only `/api/v1` (and the rest of the JSON:API surface) responds. Do not document or assume `GET /` returns 200; see `docker/prod/Dockerfile`'s `HEALTHCHECK` comment and `.github/workflows/ci-tests.yaml`'s `GET /` step for the same conclusion reached independently.
 

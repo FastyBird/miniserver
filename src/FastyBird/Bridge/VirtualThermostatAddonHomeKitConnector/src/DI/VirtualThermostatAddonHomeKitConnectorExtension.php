@@ -27,7 +27,7 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
@@ -209,7 +209,7 @@ class VirtualThermostatAddonHomeKitConnectorExtension extends DI\CompilerExtensi
 		 * API ROUTER
 		 */
 
-		$routerService = $builder->getDefinitionByType(SlimRouterRouting\Router::class);
+		$routerService = $builder->getDefinitionByType(Routing\Router::class);
 
 		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [

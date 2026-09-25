@@ -19,8 +19,8 @@ use DateTimeInterface;
 use Exception;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
@@ -59,7 +59,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	public const RELATIONSHIPS_STATE = 'state';
 
 	public function __construct(
-		protected readonly SlimRouterRouting\IRouter $router,
+		protected readonly Routing\IRouter $router,
 		protected readonly Models\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
 	)
 	{

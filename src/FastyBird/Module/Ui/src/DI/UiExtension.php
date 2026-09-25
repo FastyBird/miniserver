@@ -21,7 +21,7 @@ use FastyBird\Core\Controllers\WebSockets\Controller;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
 use FastyBird\Core\Topics\WsServer as TopicsWsServer;
 use FastyBird\Core\Values\Types\Sources;
@@ -447,7 +447,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 */
 
 		if (
-			$builder->findByType(SlimRouterRouting\LinkGenerator::class) !== []
+			$builder->findByType(Routing\LinkGenerator::class) !== []
 			&& $builder->findByType(TopicsWsServer\IStorage::class) !== []
 		) {
 			$builder->addDefinition(
@@ -519,7 +519,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * ROUTES
 		 */
 
-		$routerService = $builder->getDefinitionByType(SlimRouterRouting\Router::class);
+		$routerService = $builder->getDefinitionByType(Routing\Router::class);
 
 		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [

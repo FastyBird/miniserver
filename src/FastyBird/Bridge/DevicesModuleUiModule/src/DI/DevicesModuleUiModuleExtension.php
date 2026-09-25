@@ -24,7 +24,7 @@ use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Routing as CoreRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
 use FastyBird\Core\Topics\WsServer as TopicsWsServer;
 use Nette\Bootstrap;
@@ -148,7 +148,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 */
 
 		if (
-			$builder->findByType(CoreRouting\LinkGenerator::class) !== []
+			$builder->findByType(Routing\LinkGenerator::class) !== []
 			&& $builder->findByType(TopicsWsServer\IStorage::class) !== []
 		) {
 			$builder->addDefinition(

@@ -16,11 +16,11 @@
 namespace FastyBird\Connector\NsPanel\Exceptions;
 
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Exceptions as SlimRouterExceptions;
+use FastyBird\Core\Http\Exceptions;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
-class ServerRequestError extends SlimRouterExceptions\Http implements Exception
+class ServerRequestError extends Exceptions\Http implements Exception
 {
 
 	public function __construct(

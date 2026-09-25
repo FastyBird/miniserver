@@ -18,8 +18,8 @@ namespace FastyBird\Module\Devices\Schemas\Devices\Properties;
 use Exception;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents;
@@ -56,7 +56,7 @@ final class Dynamic extends Property
 	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/device/' . Types\PropertyType::DYNAMIC->value;
 
 	public function __construct(
-		SlimRouterRouting\IRouter $router,
+		Routing\IRouter $router,
 		Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		private readonly Models\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
 		private readonly Models\States\DevicePropertiesManager $devicePropertiesStatesManager,

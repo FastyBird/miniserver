@@ -20,8 +20,8 @@ use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDoc
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exchange\Consumers;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Routing as WebSocketsRouting;
 use FastyBird\Core\Topics\WsServer as WsServerTopics;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
@@ -66,7 +66,7 @@ final class SocketsBridge implements Consumers\Consumer
 	public function __construct(
 		private readonly UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
 		private readonly DevicesModuleUiModule\Logger $logger,
-		private readonly WebSocketsRouting\LinkGenerator $linkGenerator,
+		private readonly Routing\LinkGenerator $linkGenerator,
 		private readonly WsServerTopics\IStorage $topicsStorage,
 	)
 	{

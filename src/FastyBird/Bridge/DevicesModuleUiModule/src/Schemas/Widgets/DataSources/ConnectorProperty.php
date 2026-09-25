@@ -18,7 +18,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Schemas\Widgets\DataSources;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
@@ -59,7 +59,7 @@ final class ConnectorProperty extends Property
 	public function __construct(
 		private readonly DevicesModels\Configuration\Connectors\Properties\Repository $connectorsPropertiesRepository,
 		private readonly DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesManager,
-		SlimRouterRouting\IRouter $router,
+		Routing\IRouter $router,
 	)
 	{
 		parent::__construct($router);

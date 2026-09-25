@@ -5,8 +5,8 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Controllers;
 use Error;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Http as SlimRouterHttp;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -38,7 +38,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('resetIdentity')]
 	public function testResetIdentity(string $url, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_POST,
@@ -49,7 +49,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$response = $router->handle($request);
 
-		self::assertTrue($response instanceof SlimRouterHttp\Response);
+		self::assertTrue($response instanceof Http\Response);
 		self::assertSame($statusCode, $response->getStatusCode());
 		Tests\Tools\JsonAssert::assertFixtureMatch(
 			$fixture,

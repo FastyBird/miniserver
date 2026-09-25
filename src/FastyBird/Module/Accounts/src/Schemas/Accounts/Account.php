@@ -18,9 +18,9 @@ namespace FastyBird\Module\Accounts\Schemas\Accounts;
 use DateTimeInterface;
 use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
@@ -60,7 +60,7 @@ final class Account extends Schemas\JsonApiSchema
 	public const RELATIONSHIPS_EMAILS = 'emails';
 
 	public function __construct(
-		protected readonly SlimRouterRouting\IRouter $router,
+		protected readonly Routing\IRouter $router,
 		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
 		private readonly SimpleAuthSecurity\EnforcerFactory $enforcerFactory,
 	)

@@ -14,7 +14,7 @@ services:
 	cache.storage: Nette\Caching\Storages\DevNullStorage
 
 decorator:
-	FastyBird\Core\Routing\ServerRouter:
+	FastyBird\Core\Http\Routing\ServerRouter:
 		setup:
 			- addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
 

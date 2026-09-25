@@ -5,8 +5,8 @@ namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets\Controller;
 use FastyBird\Core\Controllers\WebSockets\Controller\Controller;
 use FastyBird\Core\Controllers\WebSockets\Controller\IControllerFactory;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Routing\IWampRouter;
-use FastyBird\Core\Routing\LinkGenerator;
 use Nette\DI\Container;
 use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
@@ -56,7 +56,7 @@ final class ControllerTest extends TestCase
 
 		$controllerFactory = $this->createMock(IControllerFactory::class);
 		$router = $this->createMock(IWampRouter::class);
-		$linkGenerator = new LinkGenerator($router);
+		$linkGenerator = new Routing\LinkGenerator($router);
 
 		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
 
@@ -78,7 +78,7 @@ final class ControllerTest extends TestCase
 
 		$controllerFactory = $this->createMock(IControllerFactory::class);
 		$router = $this->createMock(IWampRouter::class);
-		$linkGenerator = new LinkGenerator($router);
+		$linkGenerator = new Routing\LinkGenerator($router);
 
 		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
 

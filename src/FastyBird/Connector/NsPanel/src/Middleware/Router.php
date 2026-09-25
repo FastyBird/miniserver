@@ -17,13 +17,13 @@ namespace FastyBird\Connector\NsPanel\Middleware;
 
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Events;
-use FastyBird\Connector\NsPanel\Exceptions;
+use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Servers;
 use FastyBird\Connector\NsPanel\Types;
-use FastyBird\Core\Exceptions as SlimRouterExceptions;
-use FastyBird\Core\Http as SlimRouterHttp;
+use FastyBird\Core\Http;
+use FastyBird\Core\Http\Exceptions as HttpExceptions;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Logging;
-use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -49,15 +49,15 @@ use function strval;
 final class Router
 {
 
-	private SlimRouterHttp\ResponseFactory $responseFactory;
+	private Http\ResponseFactory $responseFactory;
 
 	public function __construct(
 		private readonly NsPanel\Logger $logger,
-		private readonly SlimRouterRouting\IRouter $router,
+		private readonly Routing\IRouter $router,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
-		$this->responseFactory = new SlimRouterHttp\ResponseFactory();
+		$this->responseFactory = new Http\ResponseFactory();
 	}
 
 	private function getMessageId(ServerRequestInterface $request): string
@@ -98,7 +98,7 @@ final class Router
 		try {
 			$response = $this->router->handle($request);
 			$response = $response->withHeader('Server', 'FastyBird NS Panel Connector');
-		} catch (Exceptions\ServerRequestError $ex) {
+		} catch (NsPanelExceptions\ServerRequestError $ex) {
 			$this->logger->warning(
 				'Request ended with error',
 				[
@@ -115,7 +115,7 @@ final class Router
 			$response = $this->responseFactory->createResponse($ex->getCode());
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(Http\Stream::fromBodyString(Utils\Json::encode([
 				'event' => [
 					'header' => [
 						'name' => Types\Header::ERROR_RESPONSE->value,
@@ -127,7 +127,7 @@ final class Router
 					],
 				],
 			])));
-		} catch (SlimRouterExceptions\Http $ex) {
+		} catch (HttpExceptions\Http $ex) {
 			$this->logger->warning(
 				'Received invalid HTTP request',
 				[
@@ -144,7 +144,7 @@ final class Router
 			$response = $this->responseFactory->createResponse($ex->getCode());
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(Http\Stream::fromBodyString(Utils\Json::encode([
 				'event' => [
 					'header' => [
 						'name' => Types\Header::ERROR_RESPONSE->value,
@@ -169,7 +169,7 @@ final class Router
 			$response = $this->responseFactory->createResponse(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
 
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode([
+			$response = $response->withBody(Http\Stream::fromBodyString(Utils\Json::encode([
 				'event' => [
 					'header' => [
 						'name' => Types\Header::ERROR_RESPONSE->value,

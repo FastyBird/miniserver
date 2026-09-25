@@ -18,8 +18,8 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
 use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
-use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
 /**
@@ -47,16 +47,16 @@ class ApiRoutes
 	{
 	}
 
-	public function registerRoutes(SlimRouterRouting\IRouter $router): void
+	public function registerRoutes(Routing\IRouter $router): void
 	{
 		$routes = $router->group('/' . Metadata\Constants::ROUTER_API_PREFIX, function (
-			SlimRouterRouting\RouteCollector $group,
+			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group(
 					'/' . Metadata\Constants::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
 					function (
-						SlimRouterRouting\RouteCollector $group,
+						Routing\RouteCollector $group,
 					): void {
 						$this->buildRoutes($group);
 					},
@@ -73,14 +73,14 @@ class ApiRoutes
 	}
 
 	private function buildRoutes(
-		SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group,
-	): SlimRouterRouting\IRouteGroup
+		Routing\IRouter|Routing\IRouteCollector $group,
+	): Routing\IRouteGroup
 	{
-		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
+		return $group->group('/v1', function (Routing\RouteCollector $group): void {
 			/**
 			 * BRIDGES
 			 */
-			$group->group('/bridges', function (SlimRouterRouting\RouteCollector $group): void {
+			$group->group('/bridges', function (Routing\RouteCollector $group): void {
 				$route = $group->get('', [$this->bridgesV1Controller, 'index']);
 				$route->setName(ShellyConnectorHomeKitConnector\Constants::ROUTE_NAME_BRIDGES);
 

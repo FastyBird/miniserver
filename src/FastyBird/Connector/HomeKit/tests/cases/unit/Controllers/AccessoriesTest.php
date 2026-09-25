@@ -14,7 +14,7 @@ use FastyBird\Connector\HomeKit\Tests;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Http as SlimRouterHttp;
+use FastyBird\Core\Http;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\RequestMethodInterface;
@@ -122,7 +122,7 @@ final class AccessoriesTest extends Tests\Cases\Unit\DbTestCase
 
 		$response = call_user_func($middleware, $request);
 
-		self::assertTrue($response instanceof SlimRouterHttp\Response);
+		self::assertTrue($response instanceof Http\Response);
 		self::assertSame($statusCode, $response->getStatusCode());
 		Tests\Tools\JsonAssert::assertFixtureMatch(
 			$fixture,

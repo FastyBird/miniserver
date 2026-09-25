@@ -18,8 +18,8 @@ namespace FastyBird\Module\Devices\Schemas\Devices;
 use DateTimeInterface;
 use Exception;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Persistence\Exceptions;
-use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
@@ -60,7 +60,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 		protected readonly Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		protected readonly Models\Entities\Devices\Controls\ControlsRepository $devicesControlsRepository,
 		protected readonly Models\Entities\Channels\ChannelsRepository $channelsRepository,
-		protected readonly SlimRouterRouting\IRouter $router,
+		protected readonly Routing\IRouter $router,
 	)
 	{
 	}

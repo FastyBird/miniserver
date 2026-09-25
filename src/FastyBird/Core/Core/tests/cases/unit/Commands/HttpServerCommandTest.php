@@ -2,9 +2,9 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Commands;
 
-use FastyBird\Core\Commands;
-use FastyBird\Core\Middleware\WebServer as Middleware;
-use FastyBird\Core\Server\HttpServer as Server;
+use FastyBird\Core\Http\Commands;
+use FastyBird\Core\Http\Middleware;
+use FastyBird\Core\Http\Server;
 use FastyBird\Core\Values\Types\Sources;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher;

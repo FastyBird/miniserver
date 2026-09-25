@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Schemas\Widgets;
 
 use FastyBird\Core\Api\Schemas;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
@@ -47,7 +47,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 
 	public const RELATIONSHIPS_DATA_SOURCES = 'data-sources';
 
-	public function __construct(protected readonly SlimRouterRouting\IRouter $router)
+	public function __construct(protected readonly Routing\IRouter $router)
 	{
 	}
 
