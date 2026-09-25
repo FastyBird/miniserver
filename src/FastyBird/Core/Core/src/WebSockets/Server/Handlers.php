@@ -106,7 +106,11 @@ final class Handlers
 		}
 	}
 
-	private function handleData(string $data, React\Socket\ConnectionInterface $connection, ServerWrapper $application): void
+	private function handleData(
+		string $data,
+		React\Socket\ConnectionInterface $connection,
+		ServerWrapper $application,
+	): void
 	{
 		try {
 			$client = $this->clientStorage->getClient((int) $connection->stream);

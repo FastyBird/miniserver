@@ -4,9 +4,9 @@ namespace FastyBird\Core\WebSockets\Controllers;
 
 use Closure;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Wamp;
@@ -89,7 +89,11 @@ abstract class Application implements Dispatcher
 	}
 
 	#[Override]
-	public function handleMessage(Entities\ConnectedClient $from, Handshake\IRequest $httpRequest, string $message): void
+	public function handleMessage(
+		Entities\ConnectedClient $from,
+		Handshake\IRequest $httpRequest,
+		string $message,
+	): void
 	{
 		Utils\Arrays::invoke($this->onMessage, $this, $from, $httpRequest, $message);
 	}
@@ -98,7 +102,10 @@ abstract class Application implements Dispatcher
 	 * @throws WebSocketsExceptions\BadRequest
 	 * @throws Exceptions\InvalidController
 	 */
-	protected function processMessage(Handshake\IRequest $httpRequest, array $parameters): Responses\ControllerResponse|null
+	protected function processMessage(
+		Handshake\IRequest $httpRequest,
+		array $parameters,
+	): Responses\ControllerResponse|null
 	{
 		$appRequest = $this->router->match($httpRequest);
 

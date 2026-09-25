@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
 use Error;
-use FastyBird\Core\WebSockets\Entities\WebSocket;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities;
 use PHPUnit\Framework\TestCase;

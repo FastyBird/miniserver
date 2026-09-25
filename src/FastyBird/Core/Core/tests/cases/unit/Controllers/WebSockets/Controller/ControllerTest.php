@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets\Controller;
 
-use FastyBird\Core\WebSockets\Controllers\Controller;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\WebSockets\Controllers;

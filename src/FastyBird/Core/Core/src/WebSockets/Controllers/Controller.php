@@ -3,8 +3,8 @@
 namespace FastyBird\Core\WebSockets\Controllers;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\Http\Routing as HttpRouting;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Wamp;
 use Fig\Http;
 use Nette;

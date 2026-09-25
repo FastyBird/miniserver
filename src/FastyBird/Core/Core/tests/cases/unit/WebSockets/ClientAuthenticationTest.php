@@ -129,7 +129,13 @@ final class ClientAuthenticationTest extends TestCase
 		$database = new Helpers\Database($managerRegistry);
 
 		return $configured
-			? new Subscribers\Client($database, new SimpleAuth\TokenReader($validator), $validator, $identityFactory, $logger)
+			? new Subscribers\Client(
+				$database,
+				new SimpleAuth\TokenReader($validator),
+				$validator,
+				$identityFactory,
+				$logger,
+			)
 			: new Subscribers\Client($database, null, null, null, $logger);
 	}
 

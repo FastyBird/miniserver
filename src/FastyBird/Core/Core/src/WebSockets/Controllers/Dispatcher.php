@@ -32,7 +32,11 @@ interface Dispatcher
 	/**
 	 * Triggered when a client sends data through the socket
 	 */
-	public function handleMessage(Entities\ConnectedClient $from, Handshake\IRequest $httpRequest, string $message): void;
+	public function handleMessage(
+		Entities\ConnectedClient $from,
+		Handshake\IRequest $httpRequest,
+		string $message,
+	): void;
 
 	/**
 	 * @todo This method may be removed in future version (note that will not break code, just make some code obsolete)

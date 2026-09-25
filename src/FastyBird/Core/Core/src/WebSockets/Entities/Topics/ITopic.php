@@ -22,7 +22,11 @@ interface ITopic extends IteratorAggregate, Countable
 	 * @param array $exclude A list of session IDs the message should be excluded from (blacklist)
 	 * @param array $eligible A list of session Ids the message should be send to (whitelist)
 	 */
-	public function broadcast(string|Responses\ControllerResponse $message, array $exclude = [], array $eligible = []): void;
+	public function broadcast(
+		string|Responses\ControllerResponse $message,
+		array $exclude = [],
+		array $eligible = [],
+	): void;
 
 	public function has(Entities\ConnectedClient $client): bool;
 

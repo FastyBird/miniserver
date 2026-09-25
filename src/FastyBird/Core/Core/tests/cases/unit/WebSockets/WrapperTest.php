@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\WebSockets\Server\Wrapper;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Encoding;

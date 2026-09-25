@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets;
 
-use FastyBird\Core\WebSockets\Controllers\WampApplication;
 use FastyBird\Core\Tests\Fixtures\Dummy\DummyWebSocketsController;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Controllers;

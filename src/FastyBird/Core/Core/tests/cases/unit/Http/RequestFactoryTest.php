@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Http;
 
-use FastyBird\Core\WebSockets\Handshake\RequestFactory;
 use FastyBird\Core\WebSockets\Handshake;
 use PHPUnit\Framework\TestCase;
 use Throwable;

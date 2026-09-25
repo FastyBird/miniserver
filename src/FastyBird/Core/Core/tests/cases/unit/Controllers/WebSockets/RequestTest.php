@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets;
 
-use FastyBird\Core\WebSockets\Controllers\Request;
 use FastyBird\Core\WebSockets\Controllers;
 use PHPUnit\Framework\TestCase;
 

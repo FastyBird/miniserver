@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
-use FastyBird\Core\WebSockets\Server\Handlers;
 use FastyBird\Core\Tests\Fixtures\Dummy\DummyWsConnection;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Clients\Drivers;
