@@ -18,9 +18,9 @@ namespace FastyBird\Module\Devices\Entities\Devices;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Core\Security\Entities as SecurityEntities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Types;
@@ -55,13 +55,13 @@ use function array_map;
 #[ORM\MappedSuperclass]
 abstract class Device implements DevicesEntities\Entity,
 	DevicesEntities\EntityParams,
-	SimpleAuthEntities\Owner,
+	SecurityEntities\Owner,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
 	use DevicesEntities\TEntity;
 	use DevicesEntities\TEntityParams;
-	use SimpleAuthEntities\TOwner;
+	use SecurityEntities\HasOwner;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

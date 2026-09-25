@@ -7,8 +7,8 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Security\SimpleAuth;
+use FastyBird\Core\Security\Exceptions;
+use FastyBird\Core\Security\Identity;
 use Lcobucci\JWT;
 use PHPUnit\Framework\TestCase;
 use React\Http\Message\ServerRequest;
@@ -73,7 +73,7 @@ final class TokenTest extends TestCase
 	 */
 	public function testBuiltTokenCarriesTheUserAndRoleClaims(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', ['administrator', 'user']);
 
@@ -93,7 +93,7 @@ final class TokenTest extends TestCase
 	 */
 	public function testIssuedAtComesFromTheClockNotTheWallClock(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', []);
 
@@ -110,7 +110,7 @@ final class TokenTest extends TestCase
 	 */
 	public function testEveryTokenGetsADistinctIdentifier(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$first = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', []);
 		$second = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', []);
@@ -126,8 +126,8 @@ final class TokenTest extends TestCase
 	 */
 	public function testValidatorAcceptsATokenThisBuilderProduced(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', ['user']);
 
@@ -145,8 +145,8 @@ final class TokenTest extends TestCase
 	 */
 	public function testValidatorRejectsADifferentSignature(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
-		$validator = new SimpleAuth\TokenValidator(
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(
 			'Nq7ZBvAaP2sXtYuEwR5cV8bN1mK4jH6gF9dS3aQ0zL',
 			self::ISSUER,
 			$this->clock(),
@@ -162,8 +162,8 @@ final class TokenTest extends TestCase
 	 */
 	public function testValidatorRejectsADifferentIssuer(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, 'com.example.other', $this->clock());
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, 'com.example.other', $this->clock());
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', []);
 
@@ -175,8 +175,8 @@ final class TokenTest extends TestCase
 	 */
 	public function testValidatorRejectsAnExpiredToken(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
-		$validator = new SimpleAuth\TokenValidator(
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(
 			self::SIGNATURE,
 			self::ISSUER,
 			$this->clock('2026-09-21T14:00:00+00:00'),
@@ -196,7 +196,7 @@ final class TokenTest extends TestCase
 	 */
 	public function testValidatorRejectsGarbage(): void
 	{
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		self::expectException(Exceptions\UnauthorizedAccess::class);
 
@@ -208,7 +208,7 @@ final class TokenTest extends TestCase
 	 */
 	public function testValidatorRejectsATokenWithoutAUserClaim(): void
 	{
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $this->tokenWithClaims([
 			Constants\Constants::TOKEN_CLAIM_ROLES => ['user'],
@@ -222,7 +222,7 @@ final class TokenTest extends TestCase
 	 */
 	public function testValidatorRejectsATokenWithoutARolesClaim(): void
 	{
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $this->tokenWithClaims([
 			Constants\Constants::TOKEN_CLAIM_USER => '9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a',
@@ -236,7 +236,7 @@ final class TokenTest extends TestCase
 	 */
 	public function testValidatorRejectsATokenWithANonUuidUserClaim(): void
 	{
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $this->tokenWithClaims([
 			Constants\Constants::TOKEN_CLAIM_USER => 'not-a-uuid',
@@ -251,9 +251,9 @@ final class TokenTest extends TestCase
 	 */
 	public function testReaderExtractsABearerToken(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
-		$reader = new SimpleAuth\TokenReader($validator);
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$reader = new Identity\TokenReader($validator);
 
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', ['user']);
 
@@ -271,8 +271,8 @@ final class TokenTest extends TestCase
 	 */
 	public function testReaderReturnsNullWithoutAnAuthorizationHeader(): void
 	{
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
-		$reader = new SimpleAuth\TokenReader($validator);
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$reader = new Identity\TokenReader($validator);
 
 		self::assertNull($reader->read(new ServerRequest('GET', '/api/v1/devices')));
 	}
@@ -282,8 +282,8 @@ final class TokenTest extends TestCase
 	 */
 	public function testReaderIgnoresAHeaderWithoutTheBearerPrefix(): void
 	{
-		$validator = new SimpleAuth\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
-		$reader = new SimpleAuth\TokenReader($validator);
+		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
+		$reader = new Identity\TokenReader($validator);
 
 		$request = (new ServerRequest('GET', '/api/v1/devices'))
 			->withHeader(Constants\Constants::TOKEN_HEADER_NAME, 'Basic dXNlcjpwYXNz');
@@ -296,13 +296,13 @@ final class TokenTest extends TestCase
 	 */
 	public function testReaderThrowsWhenTheBearerTokenFailsValidation(): void
 	{
-		$builder = new SimpleAuth\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
-		$validator = new SimpleAuth\TokenValidator(
+		$builder = new Identity\TokenBuilder(self::SIGNATURE, self::ISSUER, $this->clock());
+		$validator = new Identity\TokenValidator(
 			'Nq7ZBvAaP2sXtYuEwR5cV8bN1mK4jH6gF9dS3aQ0zL',
 			self::ISSUER,
 			$this->clock(),
 		);
-		$reader = new SimpleAuth\TokenReader($validator);
+		$reader = new Identity\TokenReader($validator);
 
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', ['user']);
 

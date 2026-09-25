@@ -17,10 +17,10 @@ namespace FastyBird\Module\Ui\Router;
 
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
+use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Controllers;
-use FastyBird\Module\Ui\Middleware;
+use FastyBird\Module\Ui\Middleware as UiMiddleware;
 
 /**
  * Module API routes configuration
@@ -49,9 +49,9 @@ class ApiRoutes
 		private readonly Controllers\WidgetsV1 $widgetsV1Controller,
 		private readonly Controllers\DisplayV1 $displayV1Controller,
 		private readonly Controllers\DataSourcesV1 $dataSourceV1Controller,
-		private readonly Middleware\Access $uiAccessControlMiddleware,
-		private readonly SimpleAuthMiddleware\Authorization $authorizationMiddleware,
-		private readonly SimpleAuthMiddleware\User $userMiddleware,
+		private readonly UiMiddleware\Access $uiAccessControlMiddleware,
+		private readonly SecurityMiddleware\Authorization $authorizationMiddleware,
+		private readonly SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

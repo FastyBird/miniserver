@@ -21,13 +21,13 @@ use Exception;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Exceptions as SimpleAuthExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
-use FastyBird\Core\Types\SimpleAuth as SimpleAuthTypes;
+use FastyBird\Core\Security\Exceptions as SecurityExceptions;
+use FastyBird\Core\Security\Identity;
+use FastyBird\Core\Security\Models\Tokens;
+use FastyBird\Core\Security\Queries;
+use FastyBird\Core\Security\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
@@ -57,11 +57,11 @@ final class SessionV1 extends BaseV1
 {
 
 	public function __construct(
-		private readonly SimpleAuthModels\Tokens\Repository $tokensRepository,
-		private readonly SimpleAuthModels\Tokens\Manager $tokensManager,
-		private readonly SimpleAuthSecurity\TokenReader $tokenReader,
-		private readonly SimpleAuthSecurity\TokenBuilder $tokenBuilder,
-		private readonly SimpleAuthSecurity\EnforcerFactory $enforcerFactory,
+		private readonly Tokens\Repository $tokensRepository,
+		private readonly Tokens\Manager $tokensManager,
+		private readonly Identity\TokenReader $tokenReader,
+		private readonly Identity\TokenBuilder $tokenBuilder,
+		private readonly Identity\EnforcerFactory $enforcerFactory,
 	)
 	{
 	}
@@ -72,7 +72,7 @@ final class SessionV1 extends BaseV1
 	 * @throws Exception
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi
-	 * @throws SimpleAuthExceptions\UnauthorizedAccess
+	 * @throws SecurityExceptions\UnauthorizedAccess
 	 *
 	 * @Secured\User(loggedIn)
 	 */
@@ -193,7 +193,7 @@ final class SessionV1 extends BaseV1
 					$validTill,
 				),
 				'validTill' => $validTill,
-				'state' => SimpleAuthTypes\TokenState::ACTIVE,
+				'state' => Types\TokenState::ACTIVE,
 				'identity' => $this->user->getIdentity(),
 			]);
 
@@ -207,7 +207,7 @@ final class SessionV1 extends BaseV1
 				'accessToken' => $accessToken,
 				'token' => $this->createToken($this->user->getId() ?? Uuid\Uuid::uuid4(), [], $validTill),
 				'validTill' => $validTill,
-				'state' => SimpleAuthTypes\TokenState::ACTIVE,
+				'state' => Types\TokenState::ACTIVE,
 			]);
 
 			$this->tokensManager->create($values);
@@ -329,7 +329,7 @@ final class SessionV1 extends BaseV1
 					$validTill,
 				),
 				'validTill' => $validTill,
-				'state' => SimpleAuthTypes\TokenState::ACTIVE,
+				'state' => Types\TokenState::ACTIVE,
 				'identity' => $this->user->getIdentity(),
 			]);
 
@@ -343,7 +343,7 @@ final class SessionV1 extends BaseV1
 				'accessToken' => $newAccessToken,
 				'token' => $this->createToken($this->user->getId() ?? Uuid\Uuid::uuid4(), [], $validTill),
 				'validTill' => $validTill,
-				'state' => SimpleAuthTypes\TokenState::ACTIVE,
+				'state' => Types\TokenState::ACTIVE,
 			]);
 
 			$this->tokensManager->create($values);
@@ -395,7 +395,7 @@ final class SessionV1 extends BaseV1
 	 * @throws AccountsExceptions\Runtime
 	 * @throws InvalidArgumentException
 	 * @throws ApiExceptions\JsonApi
-	 * @throws SimpleAuthExceptions\UnauthorizedAccess
+	 * @throws SecurityExceptions\UnauthorizedAccess
 	 *
 	 * @Secured\User(loggedIn)
 	 */
@@ -480,7 +480,7 @@ final class SessionV1 extends BaseV1
 	}
 
 	/**
-	 * @throws SimpleAuthExceptions\UnauthorizedAccess
+	 * @throws SecurityExceptions\UnauthorizedAccess
 	 * @throws ApplicationExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\InvalidState
@@ -498,7 +498,7 @@ final class SessionV1 extends BaseV1
 			);
 		}
 
-		$findToken = new SimpleAuthQueries\FindTokens();
+		$findToken = new Queries\FindTokens();
 		$findToken->byToken($token->toString());
 
 		$accessToken = $this->tokensRepository->findOneBy($findToken, Entities\Tokens\AccessToken::class);

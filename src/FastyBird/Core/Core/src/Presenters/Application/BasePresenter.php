@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Presenters\Application;
 
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Presenters\SimpleAuth as SimpleAuthApplication;
+use FastyBird\Core\Security\Presenters;
 use FastyBird\Core\UI\Application as UI;
 use Nette\Application;
 use Override;
@@ -15,7 +15,7 @@ use function preg_match;
 abstract class BasePresenter extends Application\UI\Presenter
 {
 
-	use SimpleAuthApplication\TSimpleAuth;
+	use Presenters\HasAuthorization;
 
 	private UI\TemplateFactory|null $templateFactory = null;
 

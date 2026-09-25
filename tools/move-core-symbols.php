@@ -205,11 +205,24 @@ function fbMoveShortOf(string $name): string
 }
 
 /**
- * The alias tools/check-naming.php accepts: the last two segments of the imported name.
+ * The last $count segments of a qualified name, joined without a separator.
+ */
+function fbMoveLastSegments(string $name, int $count): string
+{
+	return implode('', array_slice(explode('\\', $name), -$count));
+}
+
+/**
+ * The alias tools/check-naming.php accepts by default: the last two segments of the imported
+ * name. Two DIFFERENT imports can independently reduce to the same two-segment form (e.g.
+ * `Persistence\Mapping\Driver` and `Security\Mapping\Driver` both give `MappingDriver`); when
+ * that happens between two touched entries, fbMoveAssignAliases() escalates both past this
+ * default -- see its docblock -- and tools/check-naming.php accepts the longer form precisely
+ * because a same-kind sibling in the file justifies it the same way.
  */
 function fbMoveTwoSegmentAlias(string $name): string
 {
-	return implode('', array_slice(explode('\\', $name), -2));
+	return fbMoveLastSegments($name, 2);
 }
 
 /**
@@ -1615,6 +1628,17 @@ function fbMoveRewritePhp(
  * but the same short name is touched. An untouched import is re-aliased only when a name the
  * rewrite made relative would otherwise resolve through it.
  *
+ * Two touched entries of DIFFERENT names can still independently compute the IDENTICAL
+ * two-segment alias (`FastyBird\Core\Persistence\Mapping\Driver` and `FastyBird\Core\
+ * Security\Mapping\Driver` both reduce to `MappingDriver`) -- this happens precisely when they
+ * already share a short name, so the block above always touches both of them first. Once that
+ * happens, both climb to the last THREE segments, symmetrically -- never just one of them --
+ * repeated one segment at a time for as long as the collision persists or a name runs out of
+ * segments; this is the write side of the same rule tools/check-naming.php checks on the read
+ * side (see that file's docblock). A collision the climb cannot resolve (a genuinely identical
+ * tail, or a clash against a RESERVED name rather than a sibling import) still fails below,
+ * exactly as before.
+ *
  * @param array<string, array{name: string, alias: string, touched: bool}> $final
  * @param array<string, true> $reserved
  */
@@ -1664,6 +1688,46 @@ function fbMoveAssignAliases(string $path, array &$final, array $reserved): void
 			}
 		}
 	}
+
+	// Symmetric escalation: two touched entries of different names whose two-segment alias
+	// still collides both climb to the last THREE segments together -- never just one of them
+	// -- and keep climbing one segment at a time for as long as the group they land in still
+	// has more than one member. $levels tracks, for every entry that started this step at the
+	// default two-segment form, how many segments its alias currently holds; escalating strictly
+	// increases it and it is bounded by the name's own segment count, so this always terminates.
+	$levels = [];
+
+	foreach ($final as $id => $entry) {
+		if ($entry['touched'] && $entry['alias'] === fbMoveTwoSegmentAlias($entry['name'])) {
+			$levels[$id] = 2;
+		}
+	}
+
+	do {
+		$groups = [];
+
+		foreach ($levels as $id => $level) {
+			$groups[strtolower($final[$id]['alias'])][] = $id;
+		}
+
+		$escalated = false;
+
+		foreach ($groups as $ids) {
+			if (count($ids) < 2) {
+				continue;
+			}
+
+			foreach ($ids as $id) {
+				$maxLevel = count(explode('\\', $final[$id]['name']));
+
+				if ($levels[$id] < $maxLevel) {
+					$levels[$id]++;
+					$final[$id]['alias'] = fbMoveLastSegments($final[$id]['name'], $levels[$id]);
+					$escalated = true;
+				}
+			}
+		}
+	} while ($escalated);
 
 	$seen = [];
 

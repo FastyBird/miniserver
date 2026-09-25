@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\Presenters;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Models;
@@ -95,7 +95,7 @@ class AccountPresenter extends BasePresenter
 	 */
 	protected function loadAccount(): void
 	{
-		assert($this->simpleUser instanceof SimpleAuthSecurity\User);
+		assert($this->simpleUser instanceof Identity\User);
 		assert($this->simpleUser->getId() instanceof Uuid\UuidInterface);
 
 		$findQuery = new Queries\Entities\FindAccounts();
@@ -118,7 +118,7 @@ class AccountPresenter extends BasePresenter
 	 */
 	protected function loadEmails(): void
 	{
-		assert($this->simpleUser instanceof SimpleAuthSecurity\User);
+		assert($this->simpleUser instanceof Identity\User);
 		assert($this->simpleUser->getId() instanceof Uuid\UuidInterface);
 
 		$findQuery = new Queries\Entities\FindAccounts();

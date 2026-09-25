@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Entities\Identities;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity as SecurityIdentity;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Helpers;
@@ -40,7 +40,7 @@ use function strval;
 #[ORM\Index(columns: ['identity_state'], name: 'identity_state_idx')]
 #[ORM\UniqueConstraint(name: 'identity_uid_unique', columns: ['identity_uid'])]
 class Identity implements AccountsEntities\Entity,
-	SimpleAuthSecurity\IIdentity,
+	SecurityIdentity\UserIdentity,
 	AccountsEntities\EntityParams,
 	PersistenceEntities\EntityCreated,
 	PersistenceEntities\EntityUpdated

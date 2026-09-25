@@ -20,8 +20,8 @@ use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
+use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -61,8 +61,8 @@ final class Account extends Schemas\JsonApiSchema
 
 	public function __construct(
 		protected readonly Routing\IRouter $router,
-		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
-		private readonly SimpleAuthSecurity\EnforcerFactory $enforcerFactory,
+		private readonly Policies\Repository $policiesRepository,
+		private readonly Identity\EnforcerFactory $enforcerFactory,
 	)
 	{
 	}

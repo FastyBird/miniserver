@@ -17,10 +17,10 @@ namespace FastyBird\Module\Triggers\Router;
 
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
+use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Controllers;
-use FastyBird\Module\Triggers\Middleware;
+use FastyBird\Module\Triggers\Middleware as TriggersMiddleware;
 
 /**
  * Module router configuration
@@ -46,9 +46,9 @@ class ApiRoutes
 		private readonly Controllers\NotificationsV1 $notificationsV1Controller,
 		private readonly Controllers\ConditionsV1 $conditionsV1Controller,
 		private readonly Controllers\TriggerControlsV1 $controlsV1Controller,
-		private readonly Middleware\Access $triggersAccessControlMiddleware,
-		private readonly SimpleAuthMiddleware\Authorization $authorizationMiddleware,
-		private readonly SimpleAuthMiddleware\User $userMiddleware,
+		private readonly TriggersMiddleware\Access $triggersAccessControlMiddleware,
+		private readonly SecurityMiddleware\Authorization $authorizationMiddleware,
+		private readonly SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

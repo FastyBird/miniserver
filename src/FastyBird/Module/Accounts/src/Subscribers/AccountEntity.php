@@ -20,7 +20,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
@@ -44,7 +44,7 @@ final class AccountEntity implements Common\EventSubscriber
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly SimpleAuthSecurity\EnforcerFactory $enforcerFactory,
+		private readonly Identity\EnforcerFactory $enforcerFactory,
 	)
 	{
 	}

@@ -17,11 +17,11 @@ namespace FastyBird\Module\Accounts\Entities\Roles;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
-use FastyBird\Core\Types\SimpleAuth as SimpleAuthTypes;
+use FastyBird\Core\Security\Entities\Policies;
+use FastyBird\Core\Security\Types;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use Ramsey\Uuid;
 use function array_map;
@@ -32,7 +32,7 @@ use function is_string;
 #[ORM\Entity]
 #[ORM\UniqueConstraint(name: 'policy_name_unique', columns: ['parent_id', 'policy_v0'])]
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
-class Role extends SimpleAuthEntities\Policies\Policy implements AccountsEntities\Entity,
+class Role extends Policies\Policy implements AccountsEntities\Entity,
 	PersistenceEntities\EntityCreated,
 	PersistenceEntities\EntityUpdated
 {
@@ -68,7 +68,7 @@ class Role extends SimpleAuthEntities\Policies\Policy implements AccountsEntitie
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
-		parent::__construct(SimpleAuthTypes\PolicyType::POLICY, $id);
+		parent::__construct(Types\PolicyType::POLICY, $id);
 
 		$this->setV0($v0);
 		$this->setComment($comment);

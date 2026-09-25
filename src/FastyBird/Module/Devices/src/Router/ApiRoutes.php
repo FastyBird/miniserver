@@ -17,10 +17,10 @@ namespace FastyBird\Module\Devices\Router;
 
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
+use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Controllers;
-use FastyBird\Module\Devices\Middleware;
+use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
 /**
  * Module API routes configuration
@@ -63,10 +63,10 @@ class ApiRoutes
 		private readonly Controllers\ConnectorPropertiesV1 $connectorPropertiesV1Controller,
 		private readonly Controllers\ConnectorPropertyStateV1 $connectorPropertyStateV1Controller,
 		private readonly Controllers\ConnectorControlsV1 $connectorControlsV1Controller,
-		private readonly Middleware\Access $devicesAccessControlMiddleware,
-		private readonly Middleware\UrlFormat $urlFormatlMiddleware,
-		private readonly SimpleAuthMiddleware\Authorization $accessControlMiddleware,
-		private readonly SimpleAuthMiddleware\User $userMiddleware,
+		private readonly DevicesMiddleware\Access $devicesAccessControlMiddleware,
+		private readonly DevicesMiddleware\UrlFormat $urlFormatlMiddleware,
+		private readonly SecurityMiddleware\Authorization $accessControlMiddleware,
+		private readonly SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Schemas\Roles;
 use Exception;
 use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -53,7 +53,7 @@ final class Role extends Schemas\JsonApiSchema
 	public const RELATIONSHIPS_CHILDREN = 'children';
 
 	public function __construct(
-		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
+		private readonly Policies\Repository $policiesRepository,
 		private readonly Routing\IRouter $router,
 	)
 	{

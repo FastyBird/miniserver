@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Persistence\Helpers;
-use FastyBird\Core\Security\SimpleAuth;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Controllers\Responses;
@@ -59,7 +59,7 @@ final class ClientAuthenticationTest extends TestCase
 	 */
 	private function issue(DateTimeImmutable|null $expiration = null, string $signature = self::SIGNATURE): string
 	{
-		$builder = new SimpleAuth\TokenBuilder(
+		$builder = new Identity\TokenBuilder(
 			$signature,
 			self::ISSUER,
 			new Clock\FrozenClock(new DateTimeImmutable(self::NOW)),
@@ -76,13 +76,13 @@ final class ClientAuthenticationTest extends TestCase
 	 */
 	private function subscriber(array $persistedTokens, bool $configured = true): Subscribers\Client
 	{
-		$validator = new SimpleAuth\TokenValidator(
+		$validator = new Identity\TokenValidator(
 			self::SIGNATURE,
 			self::ISSUER,
 			new Clock\FrozenClock(new DateTimeImmutable('2026-09-21T13:00:00+00:00')),
 		);
 
-		$identityFactory = new class ($persistedTokens, self::USER) implements SimpleAuth\IIdentityFactory {
+		$identityFactory = new class ($persistedTokens, self::USER) implements Identity\IdentityProvider {
 
 			/**
 			 * @param list<string> $persistedTokens
@@ -95,10 +95,10 @@ final class ClientAuthenticationTest extends TestCase
 			 * @throws Throwable
 			 */
 			#[Override]
-			public function create(JWT\UnencryptedToken $token): SimpleAuth\IIdentity|null
+			public function create(JWT\UnencryptedToken $token): Identity\UserIdentity|null
 			{
 				return in_array($token->toString(), $this->persistedTokens, true)
-					? new SimpleAuth\PlainIdentity($this->userId, ['user'])
+					? new Identity\PlainIdentity($this->userId, ['user'])
 					: null;
 			}
 
@@ -131,7 +131,7 @@ final class ClientAuthenticationTest extends TestCase
 		return $configured
 			? new Subscribers\Client(
 				$database,
-				new SimpleAuth\TokenReader($validator),
+				new Identity\TokenReader($validator),
 				$validator,
 				$identityFactory,
 				$logger,

@@ -19,7 +19,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
+use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
 /**
@@ -41,8 +41,8 @@ class ApiRoutes
 		private readonly bool $usePrefix,
 		private readonly Controllers\BridgesV1 $bridgesV1Controller,
 		private readonly DevicesMiddleware\Access $devicesAccessControlMiddleware,
-		private readonly SimpleAuthMiddleware\Authorization $authorizationMiddleware,
-		private readonly SimpleAuthMiddleware\User $userMiddleware,
+		private readonly SecurityMiddleware\Authorization $authorizationMiddleware,
+		private readonly SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

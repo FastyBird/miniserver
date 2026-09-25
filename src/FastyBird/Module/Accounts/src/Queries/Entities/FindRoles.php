@@ -17,20 +17,20 @@ namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Doctrine\DBAL;
 use Doctrine\ORM;
-use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
+use FastyBird\Core\Security\Queries;
 use FastyBird\Module\Accounts\Entities;
 use Ramsey\Uuid;
 
 /**
  * Find roles entities query
  *
- * @extends  SimpleAuthQueries\FindPolicies<Entities\Roles\Role>
+ * @extends  Queries\FindPolicies<Entities\Roles\Role>
  *
  * @package        FastyBird:AccountsModule!
  * @subpackage     Queries
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindRoles extends SimpleAuthQueries\FindPolicies
+class FindRoles extends Queries\FindPolicies
 {
 
 	public function forParent(Entities\Roles\Role $role): void

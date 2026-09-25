@@ -8,8 +8,8 @@ use Error;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
+use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Module\Accounts\Commands;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Helpers;
@@ -51,9 +51,9 @@ final class CreateAccountTest extends Tests\Cases\Unit\DbTestCase
 
 		$identitiesManager = $this->getContainer()->getByType(Models\Entities\Identities\IdentitiesManager::class);
 
-		$enforcerFactory = $this->getContainer()->getByType(SimpleAuthSecurity\EnforcerFactory::class);
+		$enforcerFactory = $this->getContainer()->getByType(Identity\EnforcerFactory::class);
 
-		$policiesRepository = $this->getContainer()->getByType(SimpleAuthModels\Policies\Repository::class);
+		$policiesRepository = $this->getContainer()->getByType(Policies\Repository::class);
 
 		$identitiesRepository = $this->getContainer()->getByType(
 			Models\Entities\Identities\IdentitiesRepository::class,

@@ -17,9 +17,9 @@ namespace FastyBird\Module\Accounts\Security;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\Persistence\SimpleAuth\Queries as SimpleAuthQueries;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
+use FastyBird\Core\Security\Models\Tokens;
+use FastyBird\Core\Security\Queries;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use Lcobucci\JWT;
@@ -32,12 +32,10 @@ use Lcobucci\JWT;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-readonly class IdentityFactory implements SimpleAuthSecurity\IIdentityFactory
+readonly class IdentityFactory implements Identity\IdentityProvider
 {
 
-	public function __construct(
-		private SimpleAuthModels\Tokens\Repository $tokensRepository,
-	)
+	public function __construct(private Tokens\Repository $tokensRepository)
 	{
 	}
 
@@ -46,10 +44,10 @@ readonly class IdentityFactory implements SimpleAuthSecurity\IIdentityFactory
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\InvalidState
 	 */
-	public function create(JWT\Token $token): SimpleAuthSecurity\IIdentity|null
+	public function create(JWT\Token $token): Identity\UserIdentity|null
 	{
-		/** @var SimpleAuthQueries\FindTokens<Entities\Tokens\AccessToken> $findToken */
-		$findToken = new SimpleAuthQueries\FindTokens();
+		/** @var Queries\FindTokens<Entities\Tokens\AccessToken> $findToken */
+		$findToken = new Queries\FindTokens();
 		$findToken->byToken($token->toString());
 
 		$accessToken = $this->tokensRepository->findOneBy($findToken, Entities\Tokens\AccessToken::class);

@@ -18,7 +18,7 @@ namespace FastyBird\Module\Accounts\Controllers\Finders;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;
@@ -30,7 +30,7 @@ use function strval;
 
 /**
  * @property-read Localization\ITranslator $translator
- * @property-read SimpleAuthModels\Policies\Repository $policiesRepository
+ * @property-read Policies\Repository $policiesRepository
  */
 trait TRole
 {

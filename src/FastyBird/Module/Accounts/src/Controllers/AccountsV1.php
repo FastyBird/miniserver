@@ -24,8 +24,8 @@ use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
+use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
@@ -75,8 +75,8 @@ final class AccountsV1 extends BaseV1
 		private readonly Models\Entities\Accounts\AccountsRepository $accountsRepository,
 		private readonly Models\Entities\Accounts\AccountsManager $accountsManager,
 		private readonly Models\Entities\Identities\IdentitiesManager $identitiesManager,
-		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
-		private readonly SimpleAuthSecurity\EnforcerFactory $enforcerFactory,
+		private readonly Policies\Repository $policiesRepository,
+		private readonly Identity\EnforcerFactory $enforcerFactory,
 	)
 	{
 	}
