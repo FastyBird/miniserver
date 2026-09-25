@@ -1125,7 +1125,26 @@ foreach ($packages as $identifier => &$package) {
 				 * target this tool cannot name, and skipping them silently is how a forbidden
 				 * edge disappears by being written one segment shorter. There are zero of these
 				 * in the tree, so a hard failure costs nothing and closes the hole.
+				 *
+				 * The one exception is a type with exactly one package (Core/Core) referenced,
+				 * or self-declared, by its bare TYPE coordinate with no third segment at all --
+				 * `namespace FastyBird\Core;`, the shape a class now takes when E3.14 (#507)
+				 * moves it to live directly under Core's own root rather than a capability
+				 * sub-namespace (`Configuration\Configuration` -> `Configuration`). This is not
+				 * a syntactically broken coordinate the way a group-`use` brace or a cut alias
+				 * is: it is the complete, two-segment coordinate, and for a type with exactly
+				 * one package it is already unambiguous -- the same tolerance the sole-package
+				 * fallback below already gives a THREE-segment reference that names no real
+				 * package (`FastyBird\Core\Boot` resolves to Core/Core without "Boot" naming a
+				 * package). A type with two or more packages still fails here exactly as
+				 * before: a bare `FastyBird\Module` genuinely cannot be read.
 				 */
+				if ($segmentThree === null && count($packagesByType[$typeName] ?? []) === 1) {
+					$record($packagesByType[$typeName][0], fbNormalise($match[0][0]), $match[0][1]);
+
+					continue;
+				}
+
 				if ($segmentThree === null) {
 					$unresolvedAt(
 						'unreadable',
