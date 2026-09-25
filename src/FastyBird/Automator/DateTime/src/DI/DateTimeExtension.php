@@ -17,7 +17,7 @@ namespace FastyBird\Automator\DateTime\DI;
 
 use FastyBird\Automator\DateTime\Hydrators;
 use FastyBird\Automator\DateTime\Schemas;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use Nette\Bootstrap;
@@ -41,7 +41,7 @@ class DateTimeExtension extends DI\CompilerExtension
 	public const NAME = 'fbDateTimeAutomator';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

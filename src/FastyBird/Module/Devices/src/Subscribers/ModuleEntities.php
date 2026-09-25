@@ -20,7 +20,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\EventLoop\Application\Status;
+use FastyBird\Core\EventLoop;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exceptions as ExchangeExceptions;
 use FastyBird\Core\Exchange\Publisher;
@@ -63,7 +63,7 @@ final class ModuleEntities implements Common\EventSubscriber
 		private readonly Models\States\Async\DevicePropertiesManager $asyncDevicePropertiesStatesManager,
 		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
 		private readonly Models\States\Async\ChannelPropertiesManager $asyncChannelPropertiesStatesManager,
-		private readonly Status $eventLoopStatus,
+		private readonly EventLoop\Status $eventLoopStatus,
 		private readonly Documents\RoutingDocumentFactory $documentFactory,
 		private readonly Publisher\MessagePublisher $publisher,
 		private readonly Async\MessagePublisher $asyncPublisher,

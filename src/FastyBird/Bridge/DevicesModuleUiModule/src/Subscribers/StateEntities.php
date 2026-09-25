@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Documents;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
-use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
+use FastyBird\Core\EventLoop;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
@@ -49,7 +49,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	public function __construct(
 		private readonly UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,
 		private readonly UiCaching\Container $uiModuleCaching,
-		private readonly ApplicationEventLoop\Status $eventLoopStatus,
+		private readonly EventLoop\Status $eventLoopStatus,
 		private readonly Publisher\MessagePublisher $publisher,
 		private readonly Async\MessagePublisher $asyncPublisher,
 	)

@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Middleware;
 
 use FastyBird\Core\Api\Exceptions;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Devices;
@@ -74,8 +74,8 @@ final readonly class UrlFormat implements MiddlewareInterface
 				case Devices\Constants::ROUTE_NAME_DEVICE_CHANNEL_CONTROL:
 				case Devices\Constants::ROUTE_NAME_DEVICE_CHANNEL_CONTROL_RELATIONSHIP:
 					$content = str_replace(
-						'\/api' . ($this->usePrefix ? '\/' . Metadata\Constants::MODULE_DEVICES_PREFIX : '') . '\/v1\/channels',
-						'\/api' . ($this->usePrefix ? '\/' . Metadata\Constants::MODULE_DEVICES_PREFIX : '')
+						'\/api' . ($this->usePrefix ? '\/' . Constants::MODULE_DEVICES_PREFIX : '') . '\/v1\/channels',
+						'\/api' . ($this->usePrefix ? '\/' . Constants::MODULE_DEVICES_PREFIX : '')
 							. '\/v1\/devices\/' . $route->getArgument(Router\ApiRoutes::URL_DEVICE_ID) . '\/channels',
 						$content,
 					);
@@ -95,8 +95,8 @@ final readonly class UrlFormat implements MiddlewareInterface
 				case Devices\Constants::ROUTE_NAME_CONNECTOR_DEVICE_CONTROL:
 				case Devices\Constants::ROUTE_NAME_CONNECTOR_DEVICE_CONTROL_RELATIONSHIP:
 					$content = str_replace(
-						'\/api' . ($this->usePrefix ? '\/' . Metadata\Constants::MODULE_DEVICES_PREFIX : '') . '\/v1\/devices',
-						'\/api' . ($this->usePrefix ? '\/' . Metadata\Constants::MODULE_DEVICES_PREFIX : '')
+						'\/api' . ($this->usePrefix ? '\/' . Constants::MODULE_DEVICES_PREFIX : '') . '\/v1\/devices',
+						'\/api' . ($this->usePrefix ? '\/' . Constants::MODULE_DEVICES_PREFIX : '')
 							. '\/v1\/connectors\/' . $route->getArgument(
 								Router\ApiRoutes::URL_CONNECTOR_ID,
 							) . '\/devices',

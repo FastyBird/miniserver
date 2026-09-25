@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Values\Types\Sources;
 
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 
 /**
  * Plugins sources types
@@ -10,20 +10,20 @@ use FastyBird\Core\Constants as Metadata;
 enum Plugin: string implements Source
 {
 
-	case NOT_SPECIFIED = Metadata\Constants::NOT_SPECIFIED_SOURCE;
+	case NOT_SPECIFIED = Constants::NOT_SPECIFIED_SOURCE;
 
-	case COUCHDB = Metadata\Constants::PLUGIN_COUCHDB_SOURCE;
+	case COUCHDB = Constants::PLUGIN_COUCHDB_SOURCE;
 
-	case RABBITMQ = Metadata\Constants::PLUGIN_RABBITMQ_SOURCE;
+	case RABBITMQ = Constants::PLUGIN_RABBITMQ_SOURCE;
 
-	case REDISDB = Metadata\Constants::PLUGIN_REDISDB_SOURCE;
+	case REDISDB = Constants::PLUGIN_REDISDB_SOURCE;
 
-	case REDISDB_CACHE = Metadata\Constants::PLUGIN_REDISDB_CACHE_SOURCE;
+	case REDISDB_CACHE = Constants::PLUGIN_REDISDB_CACHE_SOURCE;
 
-	case WS_SERVER = Metadata\Constants::PLUGIN_WS_SERVER_SOURCE;
+	case WS_SERVER = Constants::PLUGIN_WS_SERVER_SOURCE;
 
-	case WEB_SERVER = Metadata\Constants::PLUGIN_WEB_SERVER_SOURCE;
+	case WEB_SERVER = Constants::PLUGIN_WEB_SERVER_SOURCE;
 
-	case API_KEY = Metadata\Constants::PLUGIN_API_KEY;
+	case API_KEY = Constants::PLUGIN_API_KEY;
 
 }

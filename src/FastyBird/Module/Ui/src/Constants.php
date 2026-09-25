@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui;
 
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants as CoreConstants;
 
 /**
  * Service constants
@@ -70,7 +70,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
+	public const ROUTING_PREFIX = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
 
 	// WIDGETS
 	public const MESSAGE_BUS_WIDGET_DOCUMENT_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.widget';
@@ -127,7 +127,7 @@ final class Constants
 	public const MESSAGE_BUS_DASHBOARD_TAB_DOCUMENT_DELETED_ROUTING_KEY = self::ROUTING_PREFIX . '.deleted.dashboard.tab';
 
 	// ACTIONS
-	public const MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.action.widget.dataSource';
+	public const MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.widget.dataSource';
 
 	public const MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING
 		= [

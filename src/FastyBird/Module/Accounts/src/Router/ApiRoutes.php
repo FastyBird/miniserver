@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Router;
 
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Accounts;
@@ -60,11 +60,11 @@ class ApiRoutes
 
 	public function registerRoutes(Routing\IRouter $router): void
 	{
-		$routes = $router->group('/' . Metadata\Constants::ROUTER_API_PREFIX, function (
+		$routes = $router->group('/' . Constants::ROUTER_API_PREFIX, function (
 			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
-				$group->group('/' . Metadata\Constants::MODULE_ACCOUNTS_PREFIX, function (
+				$group->group('/' . Constants::MODULE_ACCOUNTS_PREFIX, function (
 					Routing\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);

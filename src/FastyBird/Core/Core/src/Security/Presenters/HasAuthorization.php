@@ -19,7 +19,7 @@ use ReflectionMethod;
 trait HasAuthorization
 {
 
-	protected Configuration\Configuration $simpleAuthConfiguration;
+	protected Configuration $simpleAuthConfiguration;
 
 	protected Access\AnnotationChecker $annotationChecker;
 
@@ -27,7 +27,7 @@ trait HasAuthorization
 
 	public function injectSimpleAuth(
 		Access\AnnotationChecker $annotationChecker,
-		Configuration\Configuration $configuration,
+		Configuration $configuration,
 		Identity\User|null $simpleUser = null,
 	): void
 	{

@@ -16,7 +16,7 @@
 namespace FastyBird\Plugin\RabbitMq\Channels;
 
 use Bunny;
-use FastyBird\Core\Constants\Constants as MetadataConstants;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exchange;
 use FastyBird\Plugin\RabbitMq\Connections;
 use FastyBird\Plugin\RabbitMq\Events;
@@ -97,7 +97,7 @@ final class Factory implements Exchange\Factory
 		$channel->queueBind(
 			$queueName,
 			$this->exchangeName,
-			MetadataConstants::MESSAGE_BUS_PREFIX_KEY . '.#',
+			Constants::MESSAGE_BUS_PREFIX_KEY . '.#',
 		);
 
 		$channel->consume(

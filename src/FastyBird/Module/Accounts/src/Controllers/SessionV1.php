@@ -19,7 +19,7 @@ use DateTimeImmutable;
 use Doctrine;
 use Exception;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
-use FastyBird\Core\Constants as SimpleAuth;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
@@ -188,7 +188,7 @@ final class SessionV1 extends BaseV1
 				'token' => $this->createToken(
 					$this->user->getId() ?? Uuid\Uuid::uuid4(),
 					$this->enforcerFactory->getEnforcer()->getRolesForUser(
-						$this->user->getId()?->toString() ?? SimpleAuth\Constants::USER_ANONYMOUS,
+						$this->user->getId()?->toString() ?? Constants::USER_ANONYMOUS,
 					),
 					$validTill,
 				),
@@ -324,7 +324,7 @@ final class SessionV1 extends BaseV1
 				'token' => $this->createToken(
 					$this->user->getId() ?? Uuid\Uuid::uuid4(),
 					$this->enforcerFactory->getEnforcer()->getRolesForUser(
-						$this->user->getId()?->toString() ?? SimpleAuth\Constants::USER_ANONYMOUS,
+						$this->user->getId()?->toString() ?? Constants::USER_ANONYMOUS,
 					),
 					$validTill,
 				),

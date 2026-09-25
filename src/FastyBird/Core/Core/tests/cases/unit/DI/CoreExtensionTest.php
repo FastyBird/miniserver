@@ -135,8 +135,8 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 */
 
 		$mergedConfiguration = $container->getService('fbCore.configuration');
-		self::assertInstanceOf(Configuration\Configuration::class, $mergedConfiguration);
-		self::assertSame($mergedConfiguration, $container->getByType(Configuration\Configuration::class, false));
+		self::assertInstanceOf(Configuration::class, $mergedConfiguration);
+		self::assertSame($mergedConfiguration, $container->getByType(Configuration::class, false));
 
 		self::assertInstanceOf(
 			PhoneSubscribers\PhoneObjectSubscriber::class,

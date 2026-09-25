@@ -29,7 +29,7 @@ use FastyBird\Connector\Tuya\Schemas;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Subscribers;
 use FastyBird\Connector\Tuya\Writers;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
@@ -54,7 +54,7 @@ class TuyaExtension extends DI\CompilerExtension implements Translation\DI\Trans
 	public const NAME = 'fbTuyaConnector';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

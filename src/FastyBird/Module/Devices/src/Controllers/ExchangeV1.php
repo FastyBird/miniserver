@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Controllers;
 
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
@@ -282,11 +282,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -300,11 +300,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 
@@ -375,11 +375,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -393,11 +393,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 
@@ -468,11 +468,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -486,11 +486,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Metadata\Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 

@@ -1,8 +1,7 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\EventLoop\Application;
+namespace FastyBird\Core\EventLoop;
 
-use FastyBird\Core\Events;
 use Override;
 use Psr\EventDispatcher;
 use React\EventLoop as ReactEventLoop;

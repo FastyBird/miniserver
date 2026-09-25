@@ -4,7 +4,7 @@ namespace FastyBird\Connector\HomeKit\Tests\Cases\Unit;
 
 use Error;
 use FastyBird\Connector\HomeKit\DI;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use Nette;
 use PHPUnit\Framework\TestCase;
@@ -40,7 +40,7 @@ abstract class BaseTestCase extends TestCase
 		$rootDir = __DIR__ . '/../..';
 		$vendorDir = defined('FB_VENDOR_DIR') ? constant('FB_VENDOR_DIR') : $rootDir . '/../vendor';
 
-		$config = ApplicationBoot\Bootstrap::boot();
+		$config = Boot\Bootstrap::boot();
 		// Per package, because several caches under the temp directory use a fixed filename
 		// and would otherwise collide now that the directory is shared. The translation
 		// catalogue is the clearest case: Symfony names it from a hash of the fallback

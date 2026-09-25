@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Constants\Constants as MetadataConstants;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
@@ -48,7 +48,7 @@ final readonly class ActionValues implements Documents\Document
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('actual_value')]
-		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue = MetadataConstants::VALUE_NOT_SET,
+		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue = Constants::VALUE_NOT_SET,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
@@ -61,7 +61,7 @@ final readonly class ActionValues implements Documents\Document
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('expected_value')]
-		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = MetadataConstants::VALUE_NOT_SET,
+		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = Constants::VALUE_NOT_SET,
 	)
 	{
 	}
@@ -80,13 +80,13 @@ final readonly class ActionValues implements Documents\Document
 	{
 		$data = [];
 
-		if ($this->getActualValue() !== MetadataConstants::VALUE_NOT_SET) {
+		if ($this->getActualValue() !== Constants::VALUE_NOT_SET) {
 			$data = array_merge($data, [
 				'actual_value' => Utilities\Value::flattenValue($this->getActualValue()),
 			]);
 		}
 
-		if ($this->getExpectedValue() !== MetadataConstants::VALUE_NOT_SET) {
+		if ($this->getExpectedValue() !== Constants::VALUE_NOT_SET) {
 			$data = array_merge($data, [
 				'expected_value' => Utilities\Value::flattenValue($this->getExpectedValue()),
 			]);

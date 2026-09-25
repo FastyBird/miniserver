@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -63,55 +63,55 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'readAll' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.index.json',
 			],
 			'readAllPaging' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets?page[offset]=1&page[limit]=1',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.index.paging.json',
 			],
 			'readOne' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.read.json',
 			],
 			'readOneWithInclude' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.read.include.json',
 			],
 			'readOneUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsDisplay' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/display',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/display',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.readRelationships.display.json',
 			],
 			'readRelationshipsDataSources' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/data-sources',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.readRelationships.dataSources.json',
 			],
 			'readRelationshipsGroups' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/groups',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/groups',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.readRelationships.groups.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/unknown',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
@@ -162,14 +162,14 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'create' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.create.json',
 			],
 			'missingRequired' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.missing.required.json',
@@ -178,14 +178,14 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.missing.required.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'invalidDisplay' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.invalidDisplay.json',
@@ -239,28 +239,28 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'update' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.json'),
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.update.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'idMismatch' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.idMismatch.json'),
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.identifier.json',
 			],
 			'notFound' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/55553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/55553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.notFound.json'),
 				StatusCodeInterface::STATUS_NOT_FOUND,
@@ -311,13 +311,13 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'delete' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.delete.json',
 			],
 			'deleteUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/widgets/11553443-4564-454d-af04-0dfeef08aa96',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/11553443-4564-454d-af04-0dfeef08aa96',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',

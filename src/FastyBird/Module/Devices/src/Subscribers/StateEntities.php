@@ -19,7 +19,7 @@ use DateTimeInterface;
 use Exception;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
-use FastyBird\Core\EventLoop\Application\Status;
+use FastyBird\Core\EventLoop;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
@@ -57,7 +57,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	public function __construct(
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly Caching\Container $moduleCaching,
-		private readonly Status $eventLoopStatus,
+		private readonly EventLoop\Status $eventLoopStatus,
 		private readonly Publisher\MessagePublisher $publisher,
 		private readonly Async\MessagePublisher $asyncPublisher,
 	)

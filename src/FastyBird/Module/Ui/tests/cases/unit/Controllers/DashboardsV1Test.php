@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Ui\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -66,37 +66,37 @@ final class DashboardsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'readAll' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/dashboards.index.json',
 			],
 			'readAllPaging' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards?page[offset]=1&page[limit]=1',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/dashboards.index.paging.json',
 			],
 			'readOne' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/dashboards.read.json',
 			],
 			'readOneUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsTabs' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/relationships/tabs',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/relationships/tabs',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/dashboards.readRelationships.tabs.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/relationships/unknown',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
@@ -175,14 +175,14 @@ final class DashboardsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'create' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/dashboards.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/dashboards.create.json',
 			],
 			'missingRequired' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/dashboards.create.missing.required.json',
@@ -191,7 +191,7 @@ final class DashboardsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/dashboards.missing.required.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/dashboards.create.invalidType.json',
@@ -245,14 +245,14 @@ final class DashboardsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'update' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/dashboards.update.json'),
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/dashboards.update.json',
 			],
 			'invalidType' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/dashboards.update.invalidType.json',
@@ -261,7 +261,7 @@ final class DashboardsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'idMismatch' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/dashboards.update.idMismatch.json',
@@ -314,13 +314,13 @@ final class DashboardsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'delete' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/dashboards.delete.json',
 			],
 			'deleteUnknown' => [
-				'/api/' . Metadata\Constants::MODULE_UI_PREFIX . '/v1/dashboards/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',

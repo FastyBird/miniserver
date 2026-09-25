@@ -16,7 +16,7 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Documents;
 use FastyBird\Core\EventLoop;
-use FastyBird\Core\Events as SimpleAuthEvents;
+use FastyBird\Core\EventLoop\Subscribers as EventLoopSubscribers;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers;
@@ -43,7 +43,8 @@ use FastyBird\Core\Persistence\Utilities;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Phone\Types;
-use FastyBird\Core\Routing as CoreRouting;
+use FastyBird\Core\Presenters;
+use FastyBird\Core\Presenters\Events as PresentersEvents;
 use FastyBird\Core\Security\Access;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Mapping\Driver as SecurityMappingDriver;
@@ -53,7 +54,6 @@ use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Core\Security\Models\Tokens;
 use FastyBird\Core\Security\Services as SecurityServices;
 use FastyBird\Core\Security\Subscribers as SecuritySubscribers;
-use FastyBird\Core\Subscribers as ApplicationSubscribers;
 use FastyBird\Core\UI;
 use FastyBird\Core\Values\Schemas as ValuesSchemas;
 use FastyBird\Core\WebSockets\Clients;
@@ -372,10 +372,10 @@ final class CoreExtension extends DI\CompilerExtension
 			->setType(ArrayAdapter::class);
 
 		$builder->addDefinition($this->prefix('application.eventLoop.wrapper'), new DI\Definitions\ServiceDefinition())
-			->setType(EventLoop\Application\Wrapper::class);
+			->setType(EventLoop\Wrapper::class);
 
 		$builder->addDefinition($this->prefix('application.eventLoop.status'), new DI\Definitions\ServiceDefinition())
-			->setType(EventLoop\Application\Status::class);
+			->setType(EventLoop\Status::class);
 
 		if ($configuration->application->logging->console->enabled) {
 			$builder->addDefinition(
@@ -401,10 +401,10 @@ final class CoreExtension extends DI\CompilerExtension
 			$this->prefix('application.subscribers.eventLoop'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(ApplicationSubscribers\Application\EventLoopLifeCycle::class);
+			->setType(EventLoopSubscribers\EventLoopLifeCycle::class);
 
 		$builder->addDefinition($this->prefix('application.ui.templateFactory'), new DI\Definitions\ServiceDefinition())
-			->setType(UI\Application\TemplateFactory::class);
+			->setType(UI\TemplateFactory::class);
 
 		$builder->addDefinition($this->prefix('application.ui.routes'), new DI\Definitions\ServiceDefinition())
 			->setType(Nette\Application\Routers\RouteList::class);
@@ -780,7 +780,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('configuration'))
-			->setType(Configuration\Configuration::class)
+			->setType(Configuration::class)
 			->setArguments([
 				'tokenIssuer' => $configuration->simpleAuth->token->issuer,
 				'tokenSignature' => $configuration->simpleAuth->token->signature,
@@ -1171,7 +1171,7 @@ final class CoreExtension extends DI\CompilerExtension
 		assert(is_string($appRouterServiceName));
 		$appRouterService = $builder->getDefinition($appRouterServiceName);
 		assert($appRouterService instanceof DI\Definitions\ServiceDefinition);
-		$appRouterService->addSetup([CoreRouting\AppRouter::class, 'createRouter'], [$appRouterService]);
+		$appRouterService->addSetup([Presenters\AppRouter::class, 'createRouter'], [$appRouterService]);
 
 		$presenterFactoryService = $builder->getDefinitionByType(Application\IPresenterFactory::class);
 
@@ -1181,7 +1181,7 @@ final class CoreExtension extends DI\CompilerExtension
 			]]);
 		}
 
-		$templateFactoryService = $builder->getDefinitionByType(UI\Application\TemplateFactory::class);
+		$templateFactoryService = $builder->getDefinitionByType(UI\TemplateFactory::class);
 		assert($templateFactoryService instanceof DI\Definitions\ServiceDefinition);
 		$templateFactoryService->addSetup('registerLayout', [
 			__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR
@@ -1299,12 +1299,12 @@ final class CoreExtension extends DI\CompilerExtension
 				$application->addSetup('?->onRequest[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 					'@self',
 					$dispatcher,
-					new PhpGenerator\Literal(SimpleAuthEvents\PresenterRequest::class),
+					new PhpGenerator\Literal(PresentersEvents\PresenterRequest::class),
 				]);
 				$application->addSetup('?->onResponse[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 					'@self',
 					$dispatcher,
-					new PhpGenerator\Literal(SimpleAuthEvents\PresenterResponse::class),
+					new PhpGenerator\Literal(PresentersEvents\PresenterResponse::class),
 				]);
 			}
 		}

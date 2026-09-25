@@ -4,7 +4,7 @@ namespace FastyBird\Core\Security\Identity;
 
 use Casbin\Exceptions as CasbinExceptions;
 use Closure;
-use FastyBird\Core\Constants as SimpleAuth;
+use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
 use Nette\Utils;
@@ -86,7 +86,7 @@ class User
 	public function isInRole(string $role): bool
 	{
 		return $this->enforcerFactory->getEnforcer()->hasRoleForUser(
-			$this->getId()?->toString() ?? SimpleAuth\Constants::USER_ANONYMOUS,
+			$this->getId()?->toString() ?? Constants::USER_ANONYMOUS,
 			$role,
 		);
 	}
@@ -99,11 +99,11 @@ class User
 	public function getRoles(): array
 	{
 		if (!$this->isLoggedIn()) {
-			return [SimpleAuth\Constants::ROLE_ANONYMOUS];
+			return [Constants::ROLE_ANONYMOUS];
 		}
 
 		return $this->enforcerFactory->getEnforcer()->getRolesForUser(
-			$this->getId()?->toString() ?? SimpleAuth\Constants::USER_ANONYMOUS,
+			$this->getId()?->toString() ?? Constants::USER_ANONYMOUS,
 		);
 	}
 
@@ -118,7 +118,7 @@ class User
 	{
 		try {
 			return $this->enforcerFactory->getEnforcer()->enforce(
-				$this->getId()?->toString() ?? SimpleAuth\Constants::USER_ANONYMOUS,
+				$this->getId()?->toString() ?? Constants::USER_ANONYMOUS,
 				...$rules,
 			);
 		} catch (CasbinExceptions\CasbinException) {

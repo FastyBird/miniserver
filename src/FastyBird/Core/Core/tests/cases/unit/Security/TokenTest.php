@@ -79,11 +79,11 @@ final class TokenTest extends TestCase
 
 		self::assertSame(
 			'9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a',
-			$token->claims()->get(Constants\Constants::TOKEN_CLAIM_USER),
+			$token->claims()->get(Constants::TOKEN_CLAIM_USER),
 		);
 		self::assertSame(
 			['administrator', 'user'],
-			$token->claims()->get(Constants\Constants::TOKEN_CLAIM_ROLES),
+			$token->claims()->get(Constants::TOKEN_CLAIM_ROLES),
 		);
 		self::assertSame(self::ISSUER, $token->claims()->get(JWT\Token\RegisteredClaims::ISSUER));
 	}
@@ -136,7 +136,7 @@ final class TokenTest extends TestCase
 		self::assertInstanceOf(JWT\UnencryptedToken::class, $validated);
 		self::assertSame(
 			'9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a',
-			$validated->claims()->get(Constants\Constants::TOKEN_CLAIM_USER),
+			$validated->claims()->get(Constants::TOKEN_CLAIM_USER),
 		);
 	}
 
@@ -211,7 +211,7 @@ final class TokenTest extends TestCase
 		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $this->tokenWithClaims([
-			Constants\Constants::TOKEN_CLAIM_ROLES => ['user'],
+			Constants::TOKEN_CLAIM_ROLES => ['user'],
 		]);
 
 		self::assertNull($validator->validate($token));
@@ -225,7 +225,7 @@ final class TokenTest extends TestCase
 		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $this->tokenWithClaims([
-			Constants\Constants::TOKEN_CLAIM_USER => '9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a',
+			Constants::TOKEN_CLAIM_USER => '9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a',
 		]);
 
 		self::assertNull($validator->validate($token));
@@ -239,8 +239,8 @@ final class TokenTest extends TestCase
 		$validator = new Identity\TokenValidator(self::SIGNATURE, self::ISSUER, $this->clock());
 
 		$token = $this->tokenWithClaims([
-			Constants\Constants::TOKEN_CLAIM_USER => 'not-a-uuid',
-			Constants\Constants::TOKEN_CLAIM_ROLES => ['user'],
+			Constants::TOKEN_CLAIM_USER => 'not-a-uuid',
+			Constants::TOKEN_CLAIM_ROLES => ['user'],
 		]);
 
 		self::assertNull($validator->validate($token));
@@ -258,7 +258,7 @@ final class TokenTest extends TestCase
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', ['user']);
 
 		$request = (new ServerRequest('GET', '/api/v1/devices'))
-			->withHeader(Constants\Constants::TOKEN_HEADER_NAME, 'Bearer ' . $token->toString());
+			->withHeader(Constants::TOKEN_HEADER_NAME, 'Bearer ' . $token->toString());
 
 		$read = $reader->read($request);
 
@@ -286,7 +286,7 @@ final class TokenTest extends TestCase
 		$reader = new Identity\TokenReader($validator);
 
 		$request = (new ServerRequest('GET', '/api/v1/devices'))
-			->withHeader(Constants\Constants::TOKEN_HEADER_NAME, 'Basic dXNlcjpwYXNz');
+			->withHeader(Constants::TOKEN_HEADER_NAME, 'Basic dXNlcjpwYXNz');
 
 		self::assertNull($reader->read($request));
 	}
@@ -307,7 +307,7 @@ final class TokenTest extends TestCase
 		$token = $builder->build('9b1d2b4e-0a1e-4a6a-9d3f-1f2e3d4c5b6a', ['user']);
 
 		$request = (new ServerRequest('GET', '/api/v1/devices'))
-			->withHeader(Constants\Constants::TOKEN_HEADER_NAME, 'Bearer ' . $token->toString());
+			->withHeader(Constants::TOKEN_HEADER_NAME, 'Bearer ' . $token->toString());
 
 		self::expectException(Exceptions\UnauthorizedAccess::class);
 

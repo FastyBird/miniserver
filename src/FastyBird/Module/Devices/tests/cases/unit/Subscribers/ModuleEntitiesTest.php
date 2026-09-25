@@ -6,7 +6,7 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use Exception;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\EventLoop\Application as ApplicationEventLoop;
+use FastyBird\Core\EventLoop;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
@@ -54,7 +54,7 @@ final class ModuleEntitiesTest extends TestCase
 
 		$documentFactory = $this->createMock(CoreDocuments\RoutingDocumentFactory::class);
 
-		$eventLoopStatus = $this->createMock(ApplicationEventLoop\Status::class);
+		$eventLoopStatus = $this->createMock(EventLoop\Status::class);
 
 		$subscriber = new Subscribers\ModuleEntities(
 			$entityManager,
@@ -166,7 +166,7 @@ final class ModuleEntitiesTest extends TestCase
 			->method('create')
 			->willReturn($document);
 
-		$eventLoopStatus = $this->createMock(ApplicationEventLoop\Status::class);
+		$eventLoopStatus = $this->createMock(EventLoop\Status::class);
 
 		$subscriber = new Subscribers\ModuleEntities(
 			$entityManager,
@@ -287,7 +287,7 @@ final class ModuleEntitiesTest extends TestCase
 			->method('create')
 			->willReturn($document);
 
-		$eventLoopStatus = $this->createMock(ApplicationEventLoop\Status::class);
+		$eventLoopStatus = $this->createMock(EventLoop\Status::class);
 
 		$subscriber = new Subscribers\ModuleEntities(
 			$entityManager,
@@ -416,7 +416,7 @@ final class ModuleEntitiesTest extends TestCase
 			->method('create')
 			->willReturn($document);
 
-		$eventLoopStatus = $this->createMock(ApplicationEventLoop\Status::class);
+		$eventLoopStatus = $this->createMock(EventLoop\Status::class);
 
 		$subscriber = new Subscribers\ModuleEntities(
 			$entityManager,

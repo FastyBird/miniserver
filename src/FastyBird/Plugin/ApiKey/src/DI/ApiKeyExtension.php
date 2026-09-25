@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\ApiKey\DI;
 
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Plugin\ApiKey\Commands;
 use FastyBird\Plugin\ApiKey\Middleware;
 use FastyBird\Plugin\ApiKey\Models;
@@ -39,7 +39,7 @@ class ApiKeyExtension extends DI\CompilerExtension
 	public const NAME = 'fbApiKeyPlugin';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

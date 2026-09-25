@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\CouchDb\DI;
 
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Models;
 use Nette\Bootstrap;
@@ -38,7 +38,7 @@ class CouchDbExtension extends DI\CompilerExtension
 	public const NAME = 'fbCouchDbPlugin';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

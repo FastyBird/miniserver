@@ -28,7 +28,7 @@ use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Schemas;
 use FastyBird\Connector\FbMqtt\Subscribers;
 use FastyBird\Connector\FbMqtt\Writers;
-use FastyBird\Core\Boot as ApplicationBoot;
+use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
@@ -53,7 +53,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	public const NAME = 'fbFbMqttConnector';
 
 	public static function register(
-		ApplicationBoot\Configurator $config,
+		Boot\Configurator $config,
 		string $extensionName = self::NAME,
 	): void
 	{

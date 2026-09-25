@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Caching\Application;
+namespace FastyBird\Core\Caching;
 
 use Nette\Caching;
 use Override;

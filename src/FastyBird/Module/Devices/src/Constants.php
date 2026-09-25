@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices;
 
-use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Constants as CoreConstants;
 
 /**
  * Service constants
@@ -152,7 +152,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
+	public const ROUTING_PREFIX = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
 
 	public const MESSAGE_BUS_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.';
 
@@ -271,17 +271,17 @@ final class Constants
 	public const MESSAGE_BUS_CONNECTOR_CONTROL_DOCUMENT_DELETED_ROUTING_KEY = self::ROUTING_PREFIX . '.deleted.connector.control';
 
 	// ACTIONS
-	public const MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.action.connector.control';
+	public const MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.connector.control';
 
-	public const MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.action.connector.property';
+	public const MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.connector.property';
 
-	public const MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.action.device.control';
+	public const MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.device.control';
 
-	public const MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.action.device.property';
+	public const MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.device.property';
 
-	public const MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.action.channel.control';
+	public const MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.channel.control';
 
-	public const MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY = Metadata\Constants::MESSAGE_BUS_PREFIX_KEY . '.action.channel.property';
+	public const MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.channel.property';
 
 	public const MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING
 		= [
