@@ -1451,10 +1451,16 @@ function fbMoveRewritePhp(
 			));
 		}
 
+		// A repurposed import's own `use` line changes (a different namespace, even though its
+		// alias does not), so it is touched for the same reason a brand-new import is: its
+		// sibling of the old namespace, and any other import short-name-colliding with it, must
+		// go through the ordinary force-alias handling below rather than staying bare next to
+		// it -- the maintainer's rule (never one bare, one aliased, for a shared short name)
+		// applies exactly as it would had this been a dropped-and-recreated import instead.
 		$final['e' . $key] = [
 			'name' => $name,
 			'alias' => $wantLegal[$key] ? fbMoveShortOf($name) : $import['alias'],
-			'touched' => $wantLegal[$key],
+			'touched' => $wantLegal[$key] || isset($repurpose[$key]),
 		];
 	}
 
