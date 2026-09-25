@@ -129,7 +129,7 @@ final class ServerRuntime
 	{
 		Utils\Arrays::invoke($this->onStart, $this->loop, $this);
 
-		$this->logger->debug('Starting FastyBird\Core\Server\WsServer');
+		$this->logger->debug('Starting FastyBird\Core\WebSockets\Server');
 		$this->logger->debug(
 			sprintf(
 				'Launching WebSockets WS Server on: %s:%s',
