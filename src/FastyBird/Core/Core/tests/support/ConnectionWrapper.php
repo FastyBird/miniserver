@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Tests\Tools;
+namespace FastyBird\Core\Tests\Support;
 
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL;
