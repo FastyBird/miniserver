@@ -73,16 +73,16 @@ The baseline may only shrink. A stale entry in it fails the gate.
 
 ## Namespace layout
 
-**Target state, not current — E3 of the Core identity refactor gets Core here.** Today
-`src/FastyBird/Core/Core/src` is still the type-first layout PRs #454/#455 produced:
-`Middleware`, `Subscribers`, `Entities`, `Controllers`, `Providers`, `Presenters`, `Helpers`,
-`Services`, `Types`, `Utilities` and more all sit at the top level, and epic test files import
-paths like `FastyBird\Core\Subscribers\Application\EventLoopLifeCycle` that this section's
-target contradicts.
+**E3 of the Core identity refactor got Core here.** Before it, `src/FastyBird/Core/Core/src`
+was the type-first layout PRs #454/#455 produced: `Middleware`, `Subscribers`, `Entities`,
+`Controllers`, `Providers`, `Presenters`, `Helpers`, `Services`, `Types`, `Utilities` and more
+all sat at the top level, with paths like the pre-#507 `Subscribers\Application\
+EventLoopLifeCycle` (under the `FastyBird\Core\` root) that this section's target contradicted.
 
-Once E3 lands, Core will be **capability-first**, following Symfony's component convention:
-`Security\`, `WebSockets\`, `Api\`, `Http\`, `Persistence\`, `Values\`, `Documents\`,
-`Exchange\`, `Phone\`, `Clock\`, `Logging\`, and `Exceptions\`.
+Core is now **capability-first**, following Symfony's component convention: `Security\`,
+`WebSockets\`, `Api\`, `Http\`, `Persistence\`, `Values\`, `Documents\`, `Exchange\`, `Phone\`,
+`Clock\`, `Logging\`, and `Exceptions\` -- plus `Boot\`, `DI\`, `Caching\`, `EventLoop\`,
+`Presenters\` and `UI\`, the other allowed root namespaces.
 
 `Exceptions\` is the odd one out — it is a shared root holding only the handful of
 genuinely cross-cutting exceptions, not a capability. Layer names — `Middleware`,
