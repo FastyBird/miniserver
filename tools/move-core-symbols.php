@@ -1218,6 +1218,86 @@ function fbMoveRewritePhp(
 	$origin = []; // ref key => the import it resolved through
 	$originalRest = []; // ref key => the text after the import's alias, as it was written
 
+	// Duplicate imports of the identical namespace -- a file that imports one Core namespace
+	// both bare and under an explicit, subsystem-flavoured alias (`Exceptions` and `Exceptions
+	// as WebSocketsExceptions` for the very same `FastyBird\Core\Exceptions`, both legal PHP).
+	// A capability move can split such a namespace's members: some move (per the map's
+	// `classes` entries), others -- typically a shared-root type several capabilities still
+	// reference (Epic decision 6) -- do not. When exactly one duplicate member's alias already
+	// equals the two-segment alias every moving reference through it needs, and a sibling
+	// member keeps importing the untouched namespace and hosts none of those moving references,
+	// that member is repurposed for the new namespace in place -- instead of adding a second
+	// `use` line that would collide with its own alias -- and the sibling absorbs whatever
+	// untouched references the repurposed member used to carry.
+	$duplicateNames = [];
+
+	foreach ($imports as $key => $import) {
+		if ($import['kind'] === 'class') {
+			$duplicateNames[strtolower($import['name'])][] = $key;
+		}
+	}
+
+	$repurpose = []; // import key => new namespace
+	$redirect = []; // import key => sibling import key to rebind untouched references onto
+
+	foreach ($duplicateNames as $keys) {
+		if (count($keys) < 2) {
+			continue;
+		}
+
+		$targetNamespaces = []; // import key => [namespace => true]
+		$hostsUnchanged = []; // import key => true
+
+		foreach ($analysis['refs'] as $ref) {
+			$resolved = fbMoveResolve($ref['text'], $oldNamespace, $imports, $aliasIndex);
+
+			if ($resolved['import'] < 0 || !in_array($resolved['import'], $keys, true)) {
+				continue;
+			}
+
+			$target = $classes[strtolower($resolved['fqcn'])] ?? null;
+
+			if ($target !== null) {
+				$targetNamespaces[$resolved['import']][fbMoveNamespaceOf($target)] = true;
+			} else {
+				$hostsUnchanged[$resolved['import']] = true;
+			}
+		}
+
+		foreach ($keys as $key) {
+			$namespaces = array_keys($targetNamespaces[$key] ?? []);
+
+			// Only a duplicate member that itself still carries an unchanged reference needs to
+			// be kept alive in place: one whose every reference moves away is left to the
+			// ordinary "unused import" path instead, which drops it and lets a fresh, correctly
+			// alphabetised `use` line take its place -- exactly what happens when there is no
+			// duplicate at all. Repurposing it too would keep it pinned at its old position.
+			if (
+				count($namespaces) !== 1
+				|| !$imports[$key]['explicit']
+				|| !isset($hostsUnchanged[$key])
+				|| strcasecmp(fbMoveTwoSegmentAlias($namespaces[0]), $imports[$key]['alias']) !== 0
+			) {
+				continue;
+			}
+
+			$sibling = null;
+
+			foreach ($keys as $other) {
+				if ($other !== $key && !isset($targetNamespaces[$other])) {
+					$sibling = $other;
+
+					break;
+				}
+			}
+
+			if ($sibling !== null) {
+				$repurpose[$key] = $namespaces[0];
+				$redirect[$key] = $sibling;
+			}
+		}
+	}
+
 	foreach ($analysis['refs'] as $refKey => $ref) {
 		$resolved = fbMoveResolve($ref['text'], $oldNamespace, $imports, $aliasIndex);
 		$lowerFqcn = strtolower($resolved['fqcn']);
@@ -1233,7 +1313,8 @@ function fbMoveRewritePhp(
 		}
 
 		if ($resolved['import'] >= 0) {
-			$key = $resolved['import'];
+			$originalKey = $resolved['import'];
+			$key = $originalKey;
 
 			if ($imports[$key]['kind'] === 'group') {
 				if ($changed) {
@@ -1243,12 +1324,25 @@ function fbMoveRewritePhp(
 				continue;
 			}
 
+			if (!$changed && isset($redirect[$key])) {
+				$key = $redirect[$key];
+			}
+
 			$before[$key]++;
-			$origin[$refKey] = $key;
+			// The true as-written import, not the redirect target: the "keep unchanged" fast
+			// path below compares this against the final binding, and a redirected reference's
+			// text must change (it now reads through a different alias), so this must not be
+			// masked by attributing it to the import it was rebound onto.
+			$origin[$refKey] = $originalKey;
 			$originalRest[$refKey] = $resolved['rest'];
-			$bindings[$refKey] = $changed || $sameNamespace[$key]
-				? $express($target)
-				: ['imp', (string) ($mergedInto[$key] >= 0 ? $mergedInto[$key] : $key), $resolved['rest']];
+
+			if ($changed && isset($repurpose[$originalKey])) {
+				$bindings[$refKey] = ['imp', (string) $key, fbMoveShortOf($target)];
+			} else {
+				$bindings[$refKey] = $changed || $sameNamespace[$key]
+					? $express($target)
+					: ['imp', (string) ($mergedInto[$key] >= 0 ? $mergedInto[$key] : $key), $resolved['rest']];
+			}
 
 			continue;
 		}
@@ -1328,7 +1422,7 @@ function fbMoveRewritePhp(
 			fbMoveFailMentions($path, $code, $import['name'], 'must be dropped', $mentions);
 		}
 
-		$name = $import['name'];
+		$name = $repurpose[$key] ?? $import['name'];
 
 		// Only an import the mentions alone would keep is retargeted or stops the run. One that
 		// code still uses and that is not itself stale is right as it stands; stale prose through
