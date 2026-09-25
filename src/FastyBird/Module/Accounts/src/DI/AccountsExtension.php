@@ -19,7 +19,7 @@ use Contributte\Translation;
 use FastyBird\Core\Boot as ApplicationBoot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Accounts\Commands;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Helpers;
@@ -276,7 +276,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 		 * ROUTES
 		 */
 
-		$routerService = $builder->getDefinitionByType(SlimRouterRouting\Router::class);
+		$routerService = $builder->getDefinitionByType(Routing\Router::class);
 
 		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [

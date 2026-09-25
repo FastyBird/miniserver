@@ -17,8 +17,8 @@ namespace FastyBird\Module\Devices\Middleware;
 
 use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Constants as Metadata;
-use FastyBird\Core\Http as SlimRouterHttp;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Router;
 use InvalidArgumentException;
@@ -53,9 +53,9 @@ final readonly class UrlFormat implements MiddlewareInterface
 	{
 		$response = $handler->handle($request);
 
-		$route = $request->getAttribute(SlimRouterRouting\Router::ROUTE);
+		$route = $request->getAttribute(Routing\Router::ROUTE);
 
-		if ($route instanceof SlimRouterRouting\Route) {
+		if ($route instanceof Routing\Route) {
 			$body = $response->getBody();
 			$body->rewind();
 
@@ -106,7 +106,7 @@ final readonly class UrlFormat implements MiddlewareInterface
 					break;
 			}
 
-			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString($content));
+			$response = $response->withBody(Http\Stream::fromBodyString($content));
 		}
 
 		return $response;

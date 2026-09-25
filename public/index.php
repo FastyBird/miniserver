@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Dotenv\Dotenv;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Constants;
-use FastyBird\Core\Server\HttpServer as WebServerApplication;
+use FastyBird\Core\Http\Server;
 use Nette\Application as NetteApplication;
 
 if (isset($_ENV['FB_APP_DIR'])) {
@@ -44,7 +44,7 @@ if (file_exists($autoload)) {
 	if ($isApi) {
 		// WebServer application
 		$container
-			->getByType(WebServerApplication\Application::class)
+			->getByType(Server\Application::class)
 			->run();
 	} else {
 		// Nette application

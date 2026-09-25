@@ -16,8 +16,8 @@
 namespace FastyBird\Module\Ui\Router;
 
 use FastyBird\Core\Constants as Metadata;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Middleware\SimpleAuth as SimpleAuthMiddleware;
-use FastyBird\Core\Routing as SlimRouterRouting;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Controllers;
 use FastyBird\Module\Ui\Middleware;
@@ -56,14 +56,14 @@ class ApiRoutes
 	{
 	}
 
-	public function registerRoutes(SlimRouterRouting\IRouter $router): void
+	public function registerRoutes(Routing\IRouter $router): void
 	{
 		$routes = $router->group('/' . Metadata\Constants::ROUTER_API_PREFIX, function (
-			SlimRouterRouting\RouteCollector $group,
+			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group('/' . Metadata\Constants::MODULE_UI_PREFIX, function (
-					SlimRouterRouting\RouteCollector $group,
+					Routing\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);
 				});
@@ -79,11 +79,11 @@ class ApiRoutes
 	}
 
 	private function buildRoutes(
-		SlimRouterRouting\IRouter|SlimRouterRouting\IRouteCollector $group,
-	): SlimRouterRouting\IRouteGroup
+		Routing\IRouter|Routing\IRouteCollector $group,
+	): Routing\IRouteGroup
 	{
-		return $group->group('/v1', function (SlimRouterRouting\RouteCollector $group): void {
-			$group->group('/dashboards', function (SlimRouterRouting\RouteCollector $group): void {
+		return $group->group('/v1', function (Routing\RouteCollector $group): void {
+			$group->group('/dashboards', function (Routing\RouteCollector $group): void {
 				/**
 				 * DASHBOARDS
 				 */
@@ -108,8 +108,8 @@ class ApiRoutes
 
 			$group->group(
 				'/dashboards/{' . self::URL_DASHBOARD_ID . '}',
-				function (SlimRouterRouting\RouteCollector $group): void {
-					$group->group('/tabs', function (SlimRouterRouting\RouteCollector $group): void {
+				function (Routing\RouteCollector $group): void {
+					$group->group('/tabs', function (Routing\RouteCollector $group): void {
 						/**
 						 * DASHBOARD TABS
 						 */
@@ -137,7 +137,7 @@ class ApiRoutes
 				},
 			);
 
-			$group->group('/groups', function (SlimRouterRouting\RouteCollector $group): void {
+			$group->group('/groups', function (Routing\RouteCollector $group): void {
 				/**
 				 * GROUPS
 				 */
@@ -160,7 +160,7 @@ class ApiRoutes
 				$route->setName(Ui\Constants::ROUTE_NAME_GROUP_RELATIONSHIP);
 			});
 
-			$group->group('/widgets', function (SlimRouterRouting\RouteCollector $group): void {
+			$group->group('/widgets', function (Routing\RouteCollector $group): void {
 				/**
 				 * WIDGETS
 				 */
@@ -185,8 +185,8 @@ class ApiRoutes
 
 			$group->group(
 				'/widgets/{' . self::URL_WIDGET_ID . '}',
-				function (SlimRouterRouting\RouteCollector $group): void {
-					$group->group('/display', function (SlimRouterRouting\RouteCollector $group): void {
+				function (Routing\RouteCollector $group): void {
+					$group->group('/display', function (Routing\RouteCollector $group): void {
 						/**
 						 * WIDGET DISPLAY
 						 */
@@ -202,7 +202,7 @@ class ApiRoutes
 						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP);
 					});
 
-					$group->group('/data-sources', function (SlimRouterRouting\RouteCollector $group): void {
+					$group->group('/data-sources', function (Routing\RouteCollector $group): void {
 						/**
 						 * WIDGET DATA SOURCES
 						 */

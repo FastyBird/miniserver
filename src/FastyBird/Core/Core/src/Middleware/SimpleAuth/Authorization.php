@@ -4,7 +4,7 @@ namespace FastyBird\Core\Middleware\SimpleAuth;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as SimpleAuthExceptions;
-use FastyBird\Core\Routing;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\SimpleAuth\Access;
 use Override;
 use Psr\Http\Message\ResponseInterface;

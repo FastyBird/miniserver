@@ -25,7 +25,7 @@ use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Http as SlimRouterHttp;
+use FastyBird\Core\Http;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -185,7 +185,7 @@ final class CharacteristicsController extends BaseController
 			$anyError ? StatusCodeInterface::STATUS_MULTI_STATUS : StatusCodeInterface::STATUS_OK,
 		);
 		$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode($result)));
+		$response = $response->withBody(Http\Stream::fromBodyString(Utils\Json::encode($result)));
 
 		return $response;
 	}
@@ -351,7 +351,7 @@ final class CharacteristicsController extends BaseController
 
 		if ($anyError) {
 			$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-			$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode($result)));
+			$response = $response->withBody(Http\Stream::fromBodyString(Utils\Json::encode($result)));
 		}
 
 		return $response;
@@ -414,7 +414,7 @@ final class CharacteristicsController extends BaseController
 
 		$response = $response->withStatus(StatusCodeInterface::STATUS_OK);
 		$response = $response->withHeader('Content-Type', Servers\Http::JSON_CONTENT_TYPE);
-		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString(Utils\Json::encode($result)));
+		$response = $response->withBody(Http\Stream::fromBodyString(Utils\Json::encode($result)));
 
 		return $response;
 	}

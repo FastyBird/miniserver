@@ -14,7 +14,6 @@ use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Clients as WsServerClients;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Commands as HttpServerCommands;
 use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Controllers as WebSocketsControllers;
@@ -43,13 +42,17 @@ use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Helpers as WsServerHelpers;
-use FastyBird\Core\Http as WebServerHttp;
+use FastyBird\Core\Http;
+use FastyBird\Core\Http\Commands as HttpCommands;
+use FastyBird\Core\Http\Middleware as HttpMiddleware;
+use FastyBird\Core\Http\Routing as HttpRouting;
+use FastyBird\Core\Http\Server as HttpServer;
+use FastyBird\Core\Http\Subscribers as HttpSubscribers;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Logging\Subscribers as LoggingSubscribers;
 use FastyBird\Core\Mapping as SimpleAuthMapping;
 use FastyBird\Core\Messaging as WebSocketsMessaging;
 use FastyBird\Core\Middleware as SimpleAuthMiddleware;
-use FastyBird\Core\Middleware as WebServerMiddleware;
 use FastyBird\Core\Persistence as DoctrineCrudPersistence;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Crud\Create;
@@ -64,13 +67,11 @@ use FastyBird\Core\Persistence\Utilities;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Phone\Types;
-use FastyBird\Core\Routing;
+use FastyBird\Core\Routing as CoreRouting;
 use FastyBird\Core\Security as SimpleAuthSecurity;
-use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Server as WsServerServer;
 use FastyBird\Core\Services as SimpleAuthServices;
 use FastyBird\Core\Subscribers as ApplicationSubscribers;
-use FastyBird\Core\Subscribers as HttpServerSubscribers;
 use FastyBird\Core\Subscribers as SimpleAuthSubscribers;
 use FastyBird\Core\Subscribers as WsServerSubscribers;
 use FastyBird\Core\Topics\WsServer\Drivers\InMemory;
@@ -919,18 +920,18 @@ final class CoreExtension extends DI\CompilerExtension
 			);
 
 		$router = $builder->addDefinition($this->prefix('webSockets.routing.router'))
-			->setType(Routing\IWampRouter::class)
-			->setFactory(Routing\RouteList::class);
+			->setType(CoreRouting\IWampRouter::class)
+			->setFactory(CoreRouting\RouteList::class);
 
 		foreach ($configuration->webSockets->routes as $mask => $action) {
 			$router->addSetup(
-				sprintf('$service[] = new %s(?, ?);', Routing\WampRoute::class),
+				sprintf('$service[] = new %s(?, ?);', CoreRouting\WampRoute::class),
 				[$mask, $action],
 			);
 		}
 
 		$builder->addDefinition($this->prefix('webSockets.routing.generator'))
-			->setType(Routing\LinkGenerator::class);
+			->setType(HttpRouting\LinkGenerator::class);
 
 		$builder->addDefinition($this->prefix('wsServer.server.wrapper'))
 			->setType(WsServerServer\WsServer\Wrapper::class);
@@ -1021,13 +1022,13 @@ final class CoreExtension extends DI\CompilerExtension
 			$this->prefix('httpServer.routing.responseFactory'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(WebServerHttp\ServerResponseFactory::class);
+			->setType(Http\ServerResponseFactory::class);
 
 		$builder->addDefinition($this->prefix('httpServer.routing.router'), new DI\Definitions\ServiceDefinition())
-			->setType(Routing\ServerRouter::class);
+			->setType(HttpRouting\ServerRouter::class);
 
 		$builder->addDefinition($this->prefix('httpServer.commands.server'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpServerCommands\HttpServer::class)
+			->setType(HttpCommands\HttpServer::class)
 			->setArguments([
 				'serverAddress' => $configuration->httpServer->server->address,
 				'serverPort' => $configuration->httpServer->server->port,
@@ -1035,7 +1036,7 @@ final class CoreExtension extends DI\CompilerExtension
 			]);
 
 		$builder->addDefinition($this->prefix('httpServer.middlewares.cors'), new DI\Definitions\ServiceDefinition())
-			->setType(WebServerMiddleware\WebServer\Cors::class)
+			->setType(HttpMiddleware\Cors::class)
 			->setArguments([
 				'enabled' => $configuration->httpServer->cors->enabled,
 				'allowOrigin' => $configuration->httpServer->cors->allow->origin,
@@ -1048,21 +1049,21 @@ final class CoreExtension extends DI\CompilerExtension
 			$this->prefix('httpServer.middlewares.staticFiles'),
 			new DI\Definitions\ServiceDefinition(),
 		)
-			->setType(WebServerMiddleware\WebServer\StaticFiles::class)
+			->setType(HttpMiddleware\StaticFiles::class)
 			->setArgument('publicRoot', $configuration->httpServer->static->publicRoot)
 			->setArgument('enabled', $configuration->httpServer->static->enabled);
 
 		$builder->addDefinition($this->prefix('httpServer.middlewares.router'), new DI\Definitions\ServiceDefinition())
-			->setType(WebServerMiddleware\WebServer\Router::class);
+			->setType(HttpMiddleware\Router::class);
 
 		$builder->addDefinition($this->prefix('httpServer.application.classic'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpServerServer\HttpServer\Application::class);
+			->setType(HttpServer\Application::class);
 
 		$builder->addDefinition($this->prefix('httpServer.server.factory'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpServerServer\HttpServer\Factory::class);
+			->setType(HttpServer\Factory::class);
 
 		$builder->addDefinition($this->prefix('httpServer.subscribers.server'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpServerSubscribers\HttpServer\Server::class);
+			->setType(HttpSubscribers\Server::class);
 
 		/**
 		 * WS SERVER (Plugin/WsServer's own registrations)
@@ -1179,7 +1180,7 @@ final class CoreExtension extends DI\CompilerExtension
 		assert(is_string($appRouterServiceName));
 		$appRouterService = $builder->getDefinition($appRouterServiceName);
 		assert($appRouterService instanceof DI\Definitions\ServiceDefinition);
-		$appRouterService->addSetup([Routing\AppRouter::class, 'createRouter'], [$appRouterService]);
+		$appRouterService->addSetup([CoreRouting\AppRouter::class, 'createRouter'], [$appRouterService]);
 
 		$presenterFactoryService = $builder->getDefinitionByType(Application\IPresenterFactory::class);
 

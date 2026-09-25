@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Schemas\Groups;
 
 use FastyBird\Core\Api\Schemas;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
@@ -46,7 +46,7 @@ final class Group extends Schemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_WIDGETS = 'widgets';
 
-	public function __construct(protected readonly SlimRouterRouting\IRouter $router)
+	public function __construct(protected readonly Routing\IRouter $router)
 	{
 	}
 

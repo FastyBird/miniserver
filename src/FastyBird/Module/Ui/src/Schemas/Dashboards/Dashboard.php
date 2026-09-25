@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Schemas\Dashboards;
 
 use FastyBird\Core\Api\Schemas;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
@@ -46,7 +46,7 @@ final class Dashboard extends Schemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_TABS = 'tabs';
 
-	public function __construct(protected readonly SlimRouterRouting\IRouter $router)
+	public function __construct(protected readonly Routing\IRouter $router)
 	{
 	}
 

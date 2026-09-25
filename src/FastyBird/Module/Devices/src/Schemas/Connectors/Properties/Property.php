@@ -18,7 +18,7 @@ namespace FastyBird\Module\Devices\Schemas\Connectors\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
@@ -50,7 +50,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 
 	public const RELATIONSHIPS_STATE = 'state';
 
-	public function __construct(protected readonly SlimRouterRouting\IRouter $router)
+	public function __construct(protected readonly Routing\IRouter $router)
 	{
 	}
 

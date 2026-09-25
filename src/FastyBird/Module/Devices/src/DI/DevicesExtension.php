@@ -22,7 +22,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Server\WsServer as ServerWsServer;
 use FastyBird\Core\Topics\WsServer as TopicsWsServer;
 use FastyBird\Core\Values\Types\Sources;
@@ -908,7 +908,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 			->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
 
 		if (
-			$builder->findByType(SlimRouterRouting\LinkGenerator::class) !== []
+			$builder->findByType(Routing\LinkGenerator::class) !== []
 			&& $builder->findByType(TopicsWsServer\IStorage::class) !== []
 		) {
 			$builder->addDefinition(
@@ -1008,7 +1008,7 @@ class DevicesExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * ROUTES
 		 */
 
-		$routerService = $builder->getDefinitionByType(SlimRouterRouting\Router::class);
+		$routerService = $builder->getDefinitionByType(Routing\Router::class);
 
 		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [

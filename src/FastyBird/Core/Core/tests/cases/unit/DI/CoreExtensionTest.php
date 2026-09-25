@@ -4,7 +4,6 @@ namespace FastyBird\Core\Tests\Cases\Unit\DI;
 
 use Error;
 use FastyBird\Core\Api\Encoding;
-use FastyBird\Core\Commands as HttpServerCommands;
 use FastyBird\Core\Commands as WsServerCommands;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Controllers as WebSocketsControllers;
@@ -13,15 +12,16 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
-use FastyBird\Core\Http as WebServerHttp;
-use FastyBird\Core\Middleware as WebServerMiddleware;
+use FastyBird\Core\Http;
+use FastyBird\Core\Http\Commands as HttpCommands;
+use FastyBird\Core\Http\Middleware;
+use FastyBird\Core\Http\Server;
+use FastyBird\Core\Http\Subscribers as HttpSubscribers;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
-use FastyBird\Core\Server as HttpServerServer;
 use FastyBird\Core\Services as SimpleAuthServices;
-use FastyBird\Core\Subscribers as HttpServerSubscribers;
 use FastyBird\Core\Subscribers as WsServerSubscribers;
 use FastyBird\Core\Tests;
 use FastyBird\Core\Values\Schemas;
@@ -87,15 +87,15 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * HTTP SERVER (formerly Plugin/WebServer) -- from WebServerExtensionTest
 		 */
 
-		self::assertNotNull($container->getByType(HttpServerServer\HttpServer\Application::class, false));
-		self::assertNotNull($container->getByType(HttpServerCommands\HttpServer::class, false));
-		self::assertNotNull($container->getByType(WebServerHttp\ServerResponseFactory::class, false));
+		self::assertNotNull($container->getByType(Server\Application::class, false));
+		self::assertNotNull($container->getByType(HttpCommands\HttpServer::class, false));
+		self::assertNotNull($container->getByType(Http\ServerResponseFactory::class, false));
 		self::assertNotNull($container->getByType(EventLoop\LoopInterface::class, false));
-		self::assertNotNull($container->getByType(WebServerMiddleware\WebServer\Cors::class, false));
-		self::assertNotNull($container->getByType(WebServerMiddleware\WebServer\StaticFiles::class, false));
-		self::assertNotNull($container->getByType(WebServerMiddleware\WebServer\Router::class, false));
-		self::assertNotNull($container->getByType(HttpServerServer\HttpServer\Factory::class, false));
-		self::assertNotNull($container->getByType(HttpServerSubscribers\HttpServer\Server::class, false));
+		self::assertNotNull($container->getByType(Middleware\Cors::class, false));
+		self::assertNotNull($container->getByType(Middleware\StaticFiles::class, false));
+		self::assertNotNull($container->getByType(Middleware\Router::class, false));
+		self::assertNotNull($container->getByType(Server\Factory::class, false));
+		self::assertNotNull($container->getByType(HttpSubscribers\Server::class, false));
 
 		/**
 		 * WS SERVER (Plugin/WsServer's own registrations) -- from WsServerExtensionTest

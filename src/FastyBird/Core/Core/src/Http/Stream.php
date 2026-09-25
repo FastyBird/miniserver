@@ -2,8 +2,7 @@
 
 namespace FastyBird\Core\Http;
 
-use FastyBird\Core\Exceptions;
-use FastyBird\Core\Exceptions as SlimRouterExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use Override;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
@@ -42,18 +41,18 @@ final class Stream implements StreamInterface
 	 *
 	 * @see https://www.php.net/manual/en/resource.php
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 */
 	public function __construct(private $resource = null)
 	{
 		if (get_resource_type($resource) !== 'stream') {
-			throw new Exceptions\InvalidArgument('Invalid stream resource');
+			throw new CoreExceptions\InvalidArgument('Invalid stream resource');
 		}
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\Runtime
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public static function fromResourceUri(string $streamUri, string $mode = 'r'): self
 	{
@@ -61,15 +60,15 @@ final class Stream implements StreamInterface
 
 		if ($resource === false) {
 			throw preg_match('/^[acrwx](?:\+?[tb]?|[tb]?\+?)$/', $mode) === false
-				? new Exceptions\InvalidArgument('Invalid stream resource mode')
-				: new Exceptions\Runtime('Invalid stream reference');
+				? new CoreExceptions\InvalidArgument('Invalid stream resource mode')
+				: new CoreExceptions\Runtime('Invalid stream reference');
 		}
 
 		return new self($resource);
 	}
 
 	/**
-	 * @throws Exceptions\Runtime
+	 * @throws CoreExceptions\Runtime
 	 * @throws RuntimeException
 	 */
 	public static function fromBodyString(string $body): self
@@ -77,7 +76,7 @@ final class Stream implements StreamInterface
 		$resource = fopen('php://temp', 'w+b');
 
 		if ($resource === false) {
-			throw new Exceptions\Runtime('Resource could not be created');
+			throw new CoreExceptions\Runtime('Resource could not be created');
 		}
 
 		$stream = new self($resource);
@@ -134,13 +133,13 @@ final class Stream implements StreamInterface
 	public function tell(): int
 	{
 		if ($this->resource === null) {
-			throw new Exceptions\Runtime('Pointer position not available in detached resource');
+			throw new CoreExceptions\Runtime('Pointer position not available in detached resource');
 		}
 
 		$position = ftell($this->resource);
 
 		if ($position === false) {
-			throw new SlimRouterExceptions\StreamResourceCall('Failed to tell pointer position');
+			throw new Exceptions\StreamResourceCall('Failed to tell pointer position');
 		}
 
 		return $position;
@@ -169,17 +168,17 @@ final class Stream implements StreamInterface
 	public function seek($offset, $whence = SEEK_SET): void
 	{
 		if ($this->resource === null) {
-			throw new Exceptions\Runtime('No resource available; cannot read');
+			throw new CoreExceptions\Runtime('No resource available; cannot read');
 		}
 
 		if (!$this->isSeekable()) {
-			throw new Exceptions\Runtime('Stream is not seekable or detached');
+			throw new CoreExceptions\Runtime('Stream is not seekable or detached');
 		}
 
 		$exitCode = fseek($this->resource, $offset, $whence);
 
 		if ($exitCode === -1) {
-			throw new SlimRouterExceptions\StreamResourceCall('Failed to seek the stream');
+			throw new Exceptions\StreamResourceCall('Failed to seek the stream');
 		}
 	}
 
@@ -212,17 +211,17 @@ final class Stream implements StreamInterface
 	public function write($string)
 	{
 		if ($this->resource === null) {
-			throw new Exceptions\Runtime('No resource available; cannot write');
+			throw new CoreExceptions\Runtime('No resource available; cannot write');
 		}
 
 		if (!$this->isWritable()) {
-			throw new Exceptions\Runtime('Stream is not writable');
+			throw new CoreExceptions\Runtime('Stream is not writable');
 		}
 
 		$bytesWritten = fwrite($this->resource, $string);
 
 		if ($bytesWritten === false) {
-			throw new SlimRouterExceptions\StreamResourceCall('Failed writing to stream');
+			throw new Exceptions\StreamResourceCall('Failed writing to stream');
 		}
 
 		return $bytesWritten;
@@ -250,17 +249,17 @@ final class Stream implements StreamInterface
 	public function read($length)
 	{
 		if ($this->resource === null) {
-			throw new Exceptions\Runtime('No resource available; cannot read');
+			throw new CoreExceptions\Runtime('No resource available; cannot read');
 		}
 
 		if (!$this->isReadable()) {
-			throw new Exceptions\Runtime('Stream is not readable');
+			throw new CoreExceptions\Runtime('Stream is not readable');
 		}
 
 		$streamData = fread($this->resource, $length);
 
 		if ($streamData === false) {
-			throw new SlimRouterExceptions\StreamResourceCall('Failed reading from stream');
+			throw new Exceptions\StreamResourceCall('Failed reading from stream');
 		}
 
 		return $streamData;
@@ -273,17 +272,17 @@ final class Stream implements StreamInterface
 	public function getContents()
 	{
 		if ($this->resource === null) {
-			throw new Exceptions\Runtime('No resource available; cannot read');
+			throw new CoreExceptions\Runtime('No resource available; cannot read');
 		}
 
 		if (!$this->isReadable()) {
-			throw new Exceptions\Runtime('Stream is not readable or detached');
+			throw new CoreExceptions\Runtime('Stream is not readable or detached');
 		}
 
 		$streamContents = stream_get_contents($this->resource);
 
 		if ($streamContents === false) {
-			throw new SlimRouterExceptions\StreamResourceCall('Failed to retrieve stream contents');
+			throw new Exceptions\StreamResourceCall('Failed to retrieve stream contents');
 		}
 
 		return $streamContents;
@@ -314,7 +313,7 @@ final class Stream implements StreamInterface
 			$this->rewind();
 
 			return $this->getContents();
-		} catch (Exceptions\Runtime) {
+		} catch (CoreExceptions\Runtime) {
 			return '';
 		}
 	}

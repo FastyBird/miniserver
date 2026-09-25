@@ -12,7 +12,7 @@ extensions:
 
 services:
 decorator:
-	FastyBird\Core\Routing\ServerRouter:
+	FastyBird\Core\Http\Routing\ServerRouter:
 		setup:
 			- addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
 

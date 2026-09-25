@@ -5,8 +5,8 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Controllers;
 use Error;
 use FastyBird\Core\Constants as Metadata;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Http as SlimRouterHttp;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http;
+use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Devices\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -36,7 +36,7 @@ final class ConnectorsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('connectorsRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
 
 		$headers = [];
 
@@ -52,7 +52,7 @@ final class ConnectorsV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$response = $router->handle($request);
 
-		self::assertTrue($response instanceof SlimRouterHttp\Response);
+		self::assertTrue($response instanceof Http\Response);
 		self::assertSame($statusCode, $response->getStatusCode());
 		Tests\Tools\JsonAssert::assertFixtureMatch(
 			$fixture,
@@ -169,7 +169,7 @@ final class ConnectorsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('connectorsUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(SlimRouterRouting\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
 
 		$headers = [];
 
@@ -186,7 +186,7 @@ final class ConnectorsV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$response = $router->handle($request);
 
-		self::assertTrue($response instanceof SlimRouterHttp\Response);
+		self::assertTrue($response instanceof Http\Response);
 		self::assertSame($statusCode, $response->getStatusCode());
 		Tests\Tools\JsonAssert::assertFixtureMatch(
 			$fixture,

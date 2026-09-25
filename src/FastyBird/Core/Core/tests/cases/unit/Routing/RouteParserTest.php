@@ -2,13 +2,10 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Routing;
 
-use FastyBird\Core\Controllers\SlimRouter\ControllerResolver;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Http\Controllers;
 use FastyBird\Core\Http\ResponseFactory;
-use FastyBird\Core\Routing\IRouteCollector;
-use FastyBird\Core\Routing\RouteCollector;
-use FastyBird\Core\Routing\RouteParser;
-use FastyBird\Core\Routing\Router;
+use FastyBird\Core\Http\Routing;
 use PHPUnit\Framework\TestCase;
 
 final class RouteParserTest extends TestCase
@@ -19,7 +16,7 @@ final class RouteParserTest extends TestCase
 	 */
 	public function testGetNamedRouteRetrievesARouteMappedAndNamed(): void
 	{
-		$router = new Router();
+		$router = new Routing\Router();
 
 		$route = $router->get('/api/v1/devices', static function (): void {
 		});
@@ -34,7 +31,7 @@ final class RouteParserTest extends TestCase
 	 */
 	public function testUrlForReturnsThePlainPatternForANamedRoute(): void
 	{
-		$router = new Router();
+		$router = new Routing\Router();
 
 		$router->get('/api/v1/devices', static function (): void {
 		})->setName('devices.index');
@@ -48,7 +45,7 @@ final class RouteParserTest extends TestCase
 	 */
 	public function testUrlForSubstitutesAPlaceholderArgument(): void
 	{
-		$router = new Router();
+		$router = new Routing\Router();
 
 		$router->get('/api/v1/devices/{id}', static function (): void {
 		})->setName('devices.read');
@@ -65,7 +62,7 @@ final class RouteParserTest extends TestCase
 	 */
 	public function testUrlForAppendsQueryStringArguments(): void
 	{
-		$router = new Router();
+		$router = new Routing\Router();
 
 		$router->get('/api/v1/devices', static function (): void {
 		})->setName('devices.index');
@@ -81,7 +78,7 @@ final class RouteParserTest extends TestCase
 	 */
 	public function testGetNamedRouteOnUnknownNameThrowsRuntime(): void
 	{
-		$router = new Router();
+		$router = new Routing\Router();
 
 		self::expectException(Exceptions\Runtime::class);
 
@@ -94,9 +91,9 @@ final class RouteParserTest extends TestCase
 	public function testRemoveNamedRouteMakesTheNameUnresolvable(): void
 	{
 		$responseFactory = new ResponseFactory();
-		$router = new Router($responseFactory);
-		$routeParser = new RouteParser($router);
-		$collector = new RouteCollector($responseFactory, new ControllerResolver(), $routeParser);
+		$router = new Routing\Router($responseFactory);
+		$routeParser = new Routing\RouteParser($router);
+		$collector = new Routing\RouteCollector($responseFactory, new Controllers\ControllerResolver(), $routeParser);
 
 		$route = $collector->get('/api/v1/devices', static function (): void {
 		});
@@ -116,9 +113,9 @@ final class RouteParserTest extends TestCase
 	 */
 	public function testGroupPrefixesThePatternsOfRoutesDeclaredInsideIt(): void
 	{
-		$router = new Router();
+		$router = new Routing\Router();
 
-		$router->group('/api/v1', static function (IRouteCollector $group): void {
+		$router->group('/api/v1', static function (Routing\IRouteCollector $group): void {
 			$group->get('/devices', static function (): void {
 			})->setName('devices.index');
 		});
@@ -134,10 +131,10 @@ final class RouteParserTest extends TestCase
 	 */
 	public function testNestedGroupsAccumulatePatternPrefixesAcrossLevels(): void
 	{
-		$router = new Router();
+		$router = new Routing\Router();
 
-		$router->group('/api/v1', static function (IRouteCollector $group): void {
-			$group->group('/devices', static function (IRouteCollector $nested): void {
+		$router->group('/api/v1', static function (Routing\IRouteCollector $group): void {
+			$group->group('/devices', static function (Routing\IRouteCollector $nested): void {
 				$nested->get('/{id}', static function (): void {
 				})->setName('devices.read');
 			});
@@ -155,7 +152,7 @@ final class RouteParserTest extends TestCase
 	 */
 	public function testSetBasePathIsReflectedInUrlForOutput(): void
 	{
-		$router = new Router();
+		$router = new Routing\Router();
 
 		$router->get('/api/v1/devices', static function (): void {
 		})->setName('devices.index');

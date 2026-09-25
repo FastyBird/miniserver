@@ -6,7 +6,7 @@ namespace FastyBird\Core\Api\Middleware;
 
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
-use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Http\Exceptions as HttpExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Neomerx;
@@ -72,8 +72,8 @@ final class JsonApiMiddleware implements Server\MiddlewareInterface
 				}
 
 			} elseif (
-				class_exists(CoreExceptions\Http::class)
-				&& $ex instanceof CoreExceptions\Http
+				class_exists(HttpExceptions\Http::class)
+				&& $ex instanceof HttpExceptions\Http
 			) {
 				$response = $response->withStatus($ex->getCode());
 

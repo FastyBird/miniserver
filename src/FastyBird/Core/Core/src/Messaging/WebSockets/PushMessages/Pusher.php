@@ -5,7 +5,7 @@ namespace FastyBird\Core\Messaging\WebSockets\PushMessages;
 use FastyBird\Core\Encoding\WebSockets as Serializers;
 use FastyBird\Core\Entities\WebSockets\PushMessages as Entities;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
-use FastyBird\Core\Routing as WebSocketsRouter;
+use FastyBird\Core\Http\Routing;
 use Override;
 use ReflectionException;
 
@@ -20,7 +20,7 @@ abstract class Pusher implements IPusher
 	public function __construct(
 		private string $name,
 		private Serializers\PushMessageSerializer $serializer,
-		private WebSocketsRouter\LinkGenerator $linkGenerator,
+		private Routing\LinkGenerator $linkGenerator,
 	)
 	{
 	}

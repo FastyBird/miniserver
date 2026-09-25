@@ -9,11 +9,11 @@ use FastyBird\Core\Entities\WsServer as WebSocketsEntities;
 use FastyBird\Core\Entities\WsServer\Topics as TopicEntities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions as WebSocketsExceptions;
-use FastyBird\Core\Http as WebSocketsHttp;
+use FastyBird\Core\Http as CoreHttp;
 use FastyBird\Core\Routing as WebSocketsRouter;
 use FastyBird\Core\Server\WsServer as WebSocketsServer;
 use FastyBird\Core\Topics\WsServer as Topics;
-use Nette\Http;
+use Nette\Http as NetteHttp;
 use Nette\Utils;
 use Override;
 use Psr\Log;
@@ -78,7 +78,7 @@ final class WampApplication extends Application implements IWampApplication
 	 * @throws Utils\JsonException
 	 */
 	#[Override]
-	public function handleOpen(WebSocketsEntities\IClient $client, WebSocketsHttp\IRequest $httpRequest): void
+	public function handleOpen(WebSocketsEntities\IClient $client, CoreHttp\IRequest $httpRequest): void
 	{
 		$client->addParameter('wampSession', str_replace('.', '', uniqid((string) mt_rand(), true)));
 
@@ -96,7 +96,7 @@ final class WampApplication extends Application implements IWampApplication
 	}
 
 	#[Override]
-	public function handleClose(WebSocketsEntities\IClient $client, WebSocketsHttp\IRequest $httpRequest): void
+	public function handleClose(WebSocketsEntities\IClient $client, CoreHttp\IRequest $httpRequest): void
 	{
 		parent::handleClose($client, $httpRequest);
 
@@ -113,7 +113,7 @@ final class WampApplication extends Application implements IWampApplication
 	#[Override]
 	public function handleMessage(
 		WebSocketsEntities\IClient $client,
-		WebSocketsHttp\IRequest $httpRequest,
+		CoreHttp\IRequest $httpRequest,
 		string $message,
 	): void
 	{
@@ -294,20 +294,20 @@ final class WampApplication extends Application implements IWampApplication
 		try {
 			$topic = $this->getTopic($message->getTopic());
 
-			$url = new Http\Url($message->getTopic());
+			$url = new NetteHttp\Url($message->getTopic());
 			$action = $url->getQueryParameter(Controller\Controller::ACTION_KEY);
 
 			if ($action === null || $action === Controller\Controller::DEFAULT_ACTION) {
 				$url->setQueryParameter(Controller\Controller::ACTION_KEY, 'push');
 			}
 
-			$httpRequest = new WebSocketsHttp\Request(
-				new Http\UrlScript($url),
+			$httpRequest = new CoreHttp\Request(
+				new NetteHttp\UrlScript($url),
 				[],
 				[],
 				[],
 				[],
-				WebSocketsHttp\IRequest::GET,
+				CoreHttp\IRequest::GET,
 			);
 
 			$this->processMessage($httpRequest, [
@@ -373,12 +373,12 @@ final class WampApplication extends Application implements IWampApplication
 	}
 
 	private function modifyRequest(
-		WebSocketsHttp\IRequest $httpRequest,
+		CoreHttp\IRequest $httpRequest,
 		TopicEntities\ITopic $topic,
 		string $action,
-	): WebSocketsHttp\IRequest
+	): CoreHttp\IRequest
 	{
-		$url = new Http\Url((string) $httpRequest->getUrl());
+		$url = new NetteHttp\Url((string) $httpRequest->getUrl());
 		$url->setPath(rtrim($url->getPath(), '/') . '/' . ltrim($topic->getId(), '/'));
 
 		$parsedAction = $url->getQueryParameter(Controller\Controller::ACTION_KEY);
@@ -387,7 +387,7 @@ final class WampApplication extends Application implements IWampApplication
 			$url->setQueryParameter(Controller\Controller::ACTION_KEY, $action);
 		}
 
-		$httpRequest->setUrl(new Http\UrlScript($url));
+		$httpRequest->setUrl(new NetteHttp\UrlScript($url));
 
 		return $httpRequest;
 	}

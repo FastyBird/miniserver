@@ -19,7 +19,7 @@ use Exception;
 use FastRoute;
 use FastRoute\RouteCollector as FastRouteCollector;
 use FastRoute\RouteParser\Std;
-use FastyBird\Core\Routing as SlimRouterRouting;
+use FastyBird\Core\Http\Routing;
 use Fig\Http\Message\RequestMethodInterface;
 use Nette\DI;
 use function assert;
@@ -35,7 +35,7 @@ use function assert;
 class Validator
 {
 
-	private SlimRouterRouting\FastRouteDispatcher|null $routerDispatcher = null;
+	private Routing\FastRouteDispatcher|null $routerDispatcher = null;
 
 	public function __construct(private readonly DI\Container $container)
 	{
@@ -48,19 +48,19 @@ class Validator
 	{
 		$results = $this->getRouterDispatcher()->dispatch($method, $link);
 
-		return $results[0] === SlimRouterRouting\RoutingResults::FOUND;
+		return $results[0] === Routing\RoutingResults::FOUND;
 	}
 
 	/**
 	 * @throws Exception
 	 */
-	private function getRouterDispatcher(): SlimRouterRouting\FastRouteDispatcher
+	private function getRouterDispatcher(): Routing\FastRouteDispatcher
 	{
 		if ($this->routerDispatcher !== null) {
 			return $this->routerDispatcher;
 		}
 
-		$router = $this->container->getByType(SlimRouterRouting\IRouter::class);
+		$router = $this->container->getByType(Routing\IRouter::class);
 
 		$routeDefinitionCallback = static function (FastRouteCollector $r) use ($router): void {
 			$basePath = $router->getBasePath();
@@ -71,10 +71,10 @@ class Validator
 		};
 
 		$dispatcher = FastRoute\simpleDispatcher($routeDefinitionCallback, [
-			'dispatcher' => SlimRouterRouting\FastRouteDispatcher::class,
+			'dispatcher' => Routing\FastRouteDispatcher::class,
 			'routeParser' => new Std(),
 		]);
-		assert($dispatcher instanceof SlimRouterRouting\FastRouteDispatcher);
+		assert($dispatcher instanceof Routing\FastRouteDispatcher);
 
 		$this->routerDispatcher = $dispatcher;
 

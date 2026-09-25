@@ -28,7 +28,7 @@ use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Http as SlimRouterHttp;
+use FastyBird\Core\Http;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -305,7 +305,7 @@ final class PairingController extends BaseController
 
 		$response = $response->withStatus(StatusCodeInterface::STATUS_OK);
 		$response = $response->withHeader('Content-Type', Servers\Http::PAIRING_CONTENT_TYPE);
-		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString($this->tlv->encode($result)));
+		$response = $response->withBody(Http\Stream::fromBodyString($this->tlv->encode($result)));
 
 		return $response;
 	}
@@ -403,7 +403,7 @@ final class PairingController extends BaseController
 
 		$response = $response->withStatus(StatusCodeInterface::STATUS_OK);
 		$response = $response->withHeader('Content-Type', Servers\Http::PAIRING_CONTENT_TYPE);
-		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString($this->tlv->encode($result)));
+		$response = $response->withBody(Http\Stream::fromBodyString($this->tlv->encode($result)));
 
 		return $response;
 	}
@@ -517,7 +517,7 @@ final class PairingController extends BaseController
 
 		$response = $response->withStatus(StatusCodeInterface::STATUS_OK);
 		$response = $response->withHeader('Content-Type', Servers\Http::PAIRING_CONTENT_TYPE);
-		$response = $response->withBody(SlimRouterHttp\Stream::fromBodyString($this->tlv->encode($result)));
+		$response = $response->withBody(Http\Stream::fromBodyString($this->tlv->encode($result)));
 
 		return $response;
 	}
