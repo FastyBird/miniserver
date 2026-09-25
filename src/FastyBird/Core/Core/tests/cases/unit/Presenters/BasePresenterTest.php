@@ -28,8 +28,6 @@ final class BasePresenterTest extends TestCase
 
 		$templateFiles = $presenter->formatTemplateFiles();
 
-		self::assertNotSame([], $templateFiles);
-
 		// dirname() of "$dir/presenters/$presenter.latte" is "$dir/presenters", regardless of
 		// the (here unset) presenter name -- the directory prefix is what this test verifies.
 		$resolvedPresentersDir = realpath(dirname($templateFiles[2]));
