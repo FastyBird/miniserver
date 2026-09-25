@@ -18,9 +18,9 @@ namespace FastyBird\Module\Ui\Entities\Groups;
 use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Core\Security\Entities as SecurityEntities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities as UiEntities;
 use Nette\Utils;
@@ -39,13 +39,13 @@ use function array_map;
 #[ORM\Index(columns: ['group_name'], name: 'group_name_idx')]
 class Group implements UiEntities\Entity,
 	UiEntities\EntityParams,
-	SimpleAuthEntities\Owner,
+	SecurityEntities\Owner,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
 	use UiEntities\TEntity;
 	use UiEntities\TEntityParams;
-	use SimpleAuthEntities\TOwner;
+	use SecurityEntities\HasOwner;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

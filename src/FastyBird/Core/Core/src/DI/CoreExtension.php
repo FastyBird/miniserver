@@ -30,9 +30,6 @@ use FastyBird\Core\Http\Server as HttpServer;
 use FastyBird\Core\Http\Subscribers as HttpSubscribers;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Logging\Subscribers as LoggingSubscribers;
-use FastyBird\Core\Mapping as SimpleAuthMapping;
-use FastyBird\Core\Middleware as SimpleAuthMiddleware;
-use FastyBird\Core\Persistence as DoctrineCrudPersistence;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Crud\Create;
 use FastyBird\Core\Persistence\Crud\Delete;
@@ -40,17 +37,23 @@ use FastyBird\Core\Persistence\Crud\Update;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
 use FastyBird\Core\Persistence\Helpers\StringFunctions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
-use FastyBird\Core\Persistence\Mapping\Driver;
+use FastyBird\Core\Persistence\Mapping\Driver as PersistenceMappingDriver;
 use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
 use FastyBird\Core\Persistence\Utilities;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Phone\Types;
 use FastyBird\Core\Routing as CoreRouting;
-use FastyBird\Core\Security as SimpleAuthSecurity;
-use FastyBird\Core\Services as SimpleAuthServices;
+use FastyBird\Core\Security\Access;
+use FastyBird\Core\Security\Identity;
+use FastyBird\Core\Security\Mapping\Driver as SecurityMappingDriver;
+use FastyBird\Core\Security\Middleware as SecurityMiddleware;
+use FastyBird\Core\Security\Models\Casbin as ModelsCasbin;
+use FastyBird\Core\Security\Models\Policies;
+use FastyBird\Core\Security\Models\Tokens;
+use FastyBird\Core\Security\Services as SecurityServices;
+use FastyBird\Core\Security\Subscribers as SecuritySubscribers;
 use FastyBird\Core\Subscribers as ApplicationSubscribers;
-use FastyBird\Core\Subscribers as SimpleAuthSubscribers;
 use FastyBird\Core\UI;
 use FastyBird\Core\Values\Schemas as ValuesSchemas;
 use FastyBird\Core\WebSockets\Clients;
@@ -467,18 +470,18 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if ($configuration->simpleAuth->token->signature !== '') {
 			$builder->addDefinition($this->prefix('simpleAuth.auth'), new DI\Definitions\ServiceDefinition())
-				->setType(SimpleAuthServices\SimpleAuth\Auth::class);
+				->setType(SecurityServices\Auth::class);
 
 			$builder->addDefinition($this->prefix('simpleAuth.token.builder'), new DI\Definitions\ServiceDefinition())
-				->setType(SimpleAuthSecurity\SimpleAuth\TokenBuilder::class)
+				->setType(Identity\TokenBuilder::class)
 				->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
 				->setArgument('tokenIssuer', $configuration->simpleAuth->token->issuer);
 
 			$builder->addDefinition($this->prefix('simpleAuth.token.reader'), new DI\Definitions\ServiceDefinition())
-				->setType(SimpleAuthSecurity\SimpleAuth\TokenReader::class);
+				->setType(Identity\TokenReader::class);
 
 			$builder->addDefinition($this->prefix('simpleAuth.token.validator'), new DI\Definitions\ServiceDefinition())
-				->setType(SimpleAuthSecurity\SimpleAuth\TokenValidator::class)
+				->setType(Identity\TokenValidator::class)
 				->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
 				->setArgument('tokenIssuer', $configuration->simpleAuth->token->issuer);
 
@@ -487,39 +490,39 @@ final class CoreExtension extends DI\CompilerExtension
 					$this->prefix('simpleAuth.security.identityFactory'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(SimpleAuthSecurity\SimpleAuth\IdentityFactory::class);
+					->setType(Identity\IdentityFactory::class);
 			}
 
 			$builder->addDefinition(
 				$this->prefix('simpleAuth.security.userStorage'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(SimpleAuthSecurity\SimpleAuth\UserStorage::class);
+				->setType(Identity\UserStorage::class);
 
 			$builder->addDefinition(
 				$this->prefix('simpleAuth.access.annotationChecker'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(SimpleAuthSecurity\SimpleAuth\Access\AnnotationChecker::class);
+				->setType(Access\AnnotationChecker::class);
 
 			$builder->addDefinition(
 				$this->prefix('simpleAuth.access.latteChecker'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(SimpleAuthSecurity\SimpleAuth\Access\LatteChecker::class);
+				->setType(Access\LatteChecker::class);
 
 			$builder->addDefinition(
 				$this->prefix('simpleAuth.access.linkChecker'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(SimpleAuthSecurity\SimpleAuth\Access\LinkChecker::class);
+				->setType(Access\LinkChecker::class);
 
 			if ($configuration->simpleAuth->enable->casbin->database) {
 				$adapter = $builder->addDefinition(
 					$this->prefix('simpleAuth.casbin.adapter'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Casbin\Adapter::class);
+					->setType(ModelsCasbin\Adapter::class);
 
 				// Adapter::__construct only stores the DBAL connection; every method that
 				// actually queries it (loadPolicy, savePolicy, ...) runs later, on demand.
@@ -541,7 +544,7 @@ final class CoreExtension extends DI\CompilerExtension
 					$this->prefix('simpleAuth.casbin.subscriber'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(SimpleAuthSubscribers\SimpleAuth\Policy::class);
+					->setType(SecuritySubscribers\Policy::class);
 			} else {
 				$policyFile = $configuration->simpleAuth->casbin->policy;
 
@@ -567,7 +570,7 @@ final class CoreExtension extends DI\CompilerExtension
 				$this->prefix('simpleAuth.casbin.enforcerFactory'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(SimpleAuthSecurity\SimpleAuth\EnforcerFactory::class)
+				->setType(Identity\EnforcerFactory::class)
 				->setArguments(['modelFile' => $modelFile, 'adapter' => $adapter]);
 
 			if ($configuration->simpleAuth->enable->middleware) {
@@ -575,13 +578,13 @@ final class CoreExtension extends DI\CompilerExtension
 					$this->prefix('simpleAuth.middleware.access'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(SimpleAuthMiddleware\SimpleAuth\Authorization::class);
+					->setType(SecurityMiddleware\Authorization::class);
 
 				$builder->addDefinition(
 					$this->prefix('simpleAuth.middleware.user'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(SimpleAuthMiddleware\SimpleAuth\User::class);
+					->setType(SecurityMiddleware\User::class);
 			}
 
 			if ($configuration->simpleAuth->enable->doctrine->mapping) {
@@ -589,13 +592,13 @@ final class CoreExtension extends DI\CompilerExtension
 					$this->prefix('simpleAuth.doctrine.driver'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(SimpleAuthMapping\SimpleAuth\Driver\Owner::class);
+					->setType(SecurityMappingDriver\Owner::class);
 
 				$builder->addDefinition(
 					$this->prefix('simpleAuth.doctrine.subscriber'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(SimpleAuthSubscribers\SimpleAuth\User::class);
+					->setType(SecuritySubscribers\User::class);
 			}
 
 			if ($configuration->simpleAuth->enable->doctrine->models) {
@@ -603,13 +606,13 @@ final class CoreExtension extends DI\CompilerExtension
 					$this->prefix('simpleAuth.doctrine.tokensRepository'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Tokens\Repository::class);
+					->setType(Tokens\Repository::class);
 
 				$builder->addDefinition(
 					$this->prefix('simpleAuth.doctrine.tokensManager'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Tokens\Manager::class);
+					->setType(Tokens\Manager::class);
 			}
 
 			if ($configuration->simpleAuth->enable->casbin->database) {
@@ -617,13 +620,13 @@ final class CoreExtension extends DI\CompilerExtension
 					$this->prefix('simpleAuth.doctrine.policiesRepository'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Policies\Repository::class);
+					->setType(Policies\Repository::class);
 
 				$builder->addDefinition(
 					$this->prefix('simpleAuth.doctrine.policiesManager'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(DoctrineCrudPersistence\SimpleAuth\Models\Policies\Manager::class);
+					->setType(Policies\Manager::class);
 			}
 
 			if ($configuration->simpleAuth->enable->nette->application) {
@@ -631,7 +634,7 @@ final class CoreExtension extends DI\CompilerExtension
 					$this->prefix('simpleAuth.nette.application'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(SimpleAuthSubscribers\SimpleAuth\Application::class);
+					->setType(SecuritySubscribers\Application::class);
 			}
 		}
 
@@ -797,7 +800,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('doctrineTimestampable.driver'))
-			->setType(Driver\Timestampable::class);
+			->setType(PersistenceMappingDriver\Timestampable::class);
 
 		$builder->addDefinition($this->prefix('doctrineTimestampable.subscriber'))
 			->setType(PersistenceSubscribers\TimestampableSubscriber::class);
@@ -1258,7 +1261,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * SIMPLE AUTH -- user context fallback, Doctrine mapping, Nette Application event bridge
 		 */
 
-		$userContextServiceName = $builder->getByType(SimpleAuthSecurity\SimpleAuth\User::class);
+		$userContextServiceName = $builder->getByType(Identity\User::class);
 
 		// Mirrors the signature !== '' gate around the "SIMPLE AUTH" block in
 		// loadConfiguration() above: this fallback's constructor needs IUserStorage, which only
@@ -1268,7 +1271,7 @@ final class CoreExtension extends DI\CompilerExtension
 		// "signature is missing" with a confusing "IUserStorage not found" deep in DI resolution.
 		if ($userContextServiceName === null && $configuration->simpleAuth->token->signature !== '') {
 			$builder->addDefinition($this->prefix('simpleAuth.security.user'), new DI\Definitions\ServiceDefinition())
-				->setType(SimpleAuthSecurity\SimpleAuth\User::class);
+				->setType(Identity\User::class);
 		}
 
 		if (

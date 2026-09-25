@@ -17,17 +17,17 @@ namespace FastyBird\Module\Accounts\Entities\Tokens;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Core\Security\Entities\Tokens;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
 #[PersistenceMapping\DiscriminatorEntry(name: 'access_token')]
-class AccessToken extends SimpleAuthEntities\Tokens\Token implements
+class AccessToken extends Tokens\Token implements
 	AccountsEntities\Entity,
 	AccountsEntities\EntityParams,
 	PersistenceEntities\EntityCreated,

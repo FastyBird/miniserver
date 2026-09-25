@@ -4,8 +4,8 @@ namespace FastyBird\Core\Tests\Cases\Unit\Security;
 
 use Casbin\Persist\Adapters\FileAdapter;
 use FastyBird\Core\Exceptions;
-use FastyBird\Core\Security\SimpleAuth;
-use FastyBird\Core\Security\SimpleAuth\Access;
+use FastyBird\Core\Security\Access;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Tests\Fixtures\Security as FixturesSecurity;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -32,9 +32,9 @@ final class AnnotationCheckerTest extends TestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function enforcerFactory(): SimpleAuth\EnforcerFactory
+	private function enforcerFactory(): Identity\EnforcerFactory
 	{
-		return new SimpleAuth\EnforcerFactory(
+		return new Identity\EnforcerFactory(
 			__DIR__ . '/../../../../resources/model.conf',
 			new FileAdapter(__DIR__ . '/../../../policy.csv'),
 		);
@@ -43,13 +43,13 @@ final class AnnotationCheckerTest extends TestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function user(bool $loggedIn, string|null $identity = null): SimpleAuth\User
+	private function user(bool $loggedIn, string|null $identity = null): Identity\User
 	{
-		$storage = $this->createMock(SimpleAuth\IUserStorage::class);
+		$storage = $this->createMock(Identity\IUserStorage::class);
 		$storage->method('isAuthenticated')->willReturn($loggedIn);
 
 		if ($identity !== null) {
-			$identityDouble = $this->createMock(SimpleAuth\IIdentity::class);
+			$identityDouble = $this->createMock(Identity\UserIdentity::class);
 			$identityDouble->method('getId')->willReturn(Uuid::fromString($identity));
 
 			$storage->method('getIdentity')->willReturn($identityDouble);
@@ -57,7 +57,7 @@ final class AnnotationCheckerTest extends TestCase
 			$storage->method('getIdentity')->willReturn(null);
 		}
 
-		return new SimpleAuth\User($storage, $this->enforcerFactory());
+		return new Identity\User($storage, $this->enforcerFactory());
 	}
 
 	/**

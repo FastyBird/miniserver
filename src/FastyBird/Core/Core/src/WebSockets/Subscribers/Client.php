@@ -6,7 +6,8 @@ use Doctrine\DBAL;
 use FastyBird\Core\Constants as WsServer;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
-use FastyBird\Core\Security\SimpleAuth;
+use FastyBird\Core\Security\Exceptions as SecurityExceptions;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers\Responses;
 use FastyBird\Core\WebSockets\Entities;
@@ -40,9 +41,9 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 */
 	public function __construct(
 		private readonly Helpers\Database $database,
-		private readonly SimpleAuth\TokenReader|null $tokenReader = null,
-		private readonly SimpleAuth\TokenValidator|null $tokenValidator = null,
-		private readonly SimpleAuth\IIdentityFactory|null $identityFactory = null,
+		private readonly Identity\TokenReader|null $tokenReader = null,
+		private readonly Identity\TokenValidator|null $tokenValidator = null,
+		private readonly Identity\IdentityProvider|null $identityFactory = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 		string|null $wsKeys = null,
 		string|null $allowedOrigins = null,
@@ -174,7 +175,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			$token = $headerToken !== null
 				? $this->tokenReader->readHeader($headerToken)
 				: (is_string($cookieToken) ? $this->tokenValidator->validate($cookieToken) : null);
-		} catch (CoreExceptions\UnauthorizedAccess) {
+		} catch (SecurityExceptions\UnauthorizedAccess) {
 			$token = null;
 		}
 

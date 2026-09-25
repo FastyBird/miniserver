@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Accounts\Security;
 
 use FastyBird\Core\Exceptions as ApplicationExceptions;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Models;
@@ -31,7 +31,7 @@ use function is_string;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Authenticator implements SimpleAuthSecurity\IAuthenticator
+final class Authenticator implements Identity\Authenticator
 {
 
 	public const IDENTITY_UID_NOT_FOUND = 110;
@@ -62,7 +62,7 @@ final class Authenticator implements SimpleAuthSecurity\IAuthenticator
 	 * @throws Exceptions\InvalidState
 	 * @throws ApplicationExceptions\InvalidState
 	 */
-	public function authenticate(array $credentials): SimpleAuthSecurity\IIdentity
+	public function authenticate(array $credentials): Identity\UserIdentity
 	{
 		[$username, $password] = $credentials + [null, null];
 

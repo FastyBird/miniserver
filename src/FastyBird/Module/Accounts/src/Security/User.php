@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Accounts\Security;
 
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts\Entities;
 use Ramsey\Uuid;
 
@@ -27,7 +27,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class User extends SimpleAuthSecurity\User
+class User extends Identity\User
 {
 
 	public function getId(): Uuid\UuidInterface|null

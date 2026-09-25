@@ -19,7 +19,7 @@ use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
-use FastyBird\Core\Services as SimpleAuthServices;
+use FastyBird\Core\Security\Services as SecurityServices;
 use FastyBird\Core\Tests;
 use FastyBird\Core\Values\Schemas;
 use FastyBird\Core\WebSockets\Commands as WebSocketsCommands;
@@ -110,7 +110,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 */
 
 		self::assertInstanceOf(
-			SimpleAuthServices\SimpleAuth\Auth::class,
+			SecurityServices\Auth::class,
 			$container->getService('fbCore.simpleAuth.auth'),
 		);
 		self::assertInstanceOf(

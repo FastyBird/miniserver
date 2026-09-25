@@ -17,10 +17,10 @@ namespace FastyBird\Module\Accounts\Entities\Tokens;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Core\Security\Entities\Tokens;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use Ramsey\Uuid;
@@ -28,7 +28,7 @@ use function sprintf;
 
 #[ORM\Entity]
 #[PersistenceMapping\DiscriminatorEntry(name: 'refresh_token')]
-class RefreshToken extends SimpleAuthEntities\Tokens\Token implements
+class RefreshToken extends Tokens\Token implements
 	AccountsEntities\Entity,
 	AccountsEntities\EntityParams,
 	PersistenceEntities\EntityCreated,

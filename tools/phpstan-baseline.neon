@@ -5302,97 +5302,97 @@ parameters:
 			message: '#^Access to deprecated property \$check of class Latte\\Compiler\\Nodes\\Php\\ModifierNode\.$#'
 			identifier: property.deprecated
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/AllowedHrefNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/AllowedHrefNode.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/AllowedHrefNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/AllowedHrefNode.php
 
 		-
 			message: '#^Cannot access property \$name on mixed\.$#'
 			identifier: property.nonObject
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
 			message: '#^Cannot access property \$parser on mixed\.$#'
 			identifier: property.nonObject
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
 			message: '#^Cannot access property \$position on mixed\.$#'
 			identifier: property.nonObject
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
 			message: '#^Cannot access property \$stream on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
 			message: '#^Cannot call method is\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
 			message: '#^Cannot call method parseArguments\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
 			message: '#^Cannot use array destructuring on mixed\.$#'
 			identifier: offsetAccess.nonArray
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
 			message: '#^Parameter \#2 \$position of class Latte\\CompileException constructor expects Latte\\Compiler\\Position\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Latte\\SimpleAuth\\Nodes\\IfAllowedNode\:\:\$args \(Latte\\Compiler\\Nodes\\Php\\Expression\\ArrayNode\) does not accept mixed\.$#'
+			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\IfAllowedNode\:\:\$args \(Latte\\Compiler\\Nodes\\Php\\Expression\\ArrayNode\) does not accept mixed\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Latte\\SimpleAuth\\Nodes\\IfAllowedNode\:\:\$else \(Latte\\Compiler\\Nodes\\AreaNode\|null\) does not accept mixed\.$#'
+			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\IfAllowedNode\:\:\$else \(Latte\\Compiler\\Nodes\\AreaNode\|null\) does not accept mixed\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Latte\\SimpleAuth\\Nodes\\IfAllowedNode\:\:\$elseLine \(Latte\\Compiler\\Position\|null\) does not accept mixed\.$#'
+			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\IfAllowedNode\:\:\$elseLine \(Latte\\Compiler\\Position\|null\) does not accept mixed\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Latte\\SimpleAuth\\Nodes\\IfAllowedNode\:\:\$then \(Latte\\Compiler\\Nodes\\AreaNode\) does not accept mixed\.$#'
+			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\IfAllowedNode\:\:\$then \(Latte\\Compiler\\Nodes\\AreaNode\) does not accept mixed\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/IfAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
 
 		-
 			message: '#^Cannot use array destructuring on mixed\.$#'
 			identifier: offsetAccess.nonArray
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/NElseAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/NElseAllowedNode.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Latte\\SimpleAuth\\Nodes\\NElseAllowedNode\:\:\$content \(Latte\\Compiler\\Nodes\\AreaNode\) does not accept mixed\.$#'
+			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\NElseAllowedNode\:\:\$content \(Latte\\Compiler\\Nodes\\AreaNode\) does not accept mixed\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Latte/SimpleAuth/Nodes/NElseAllowedNode.php
+			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/NElseAllowedNode.php
 
 		-
 			message: '#^PHPDoc tag @var with type Doctrine\\ORM\\Mapping\\ClassMetadata\<object\> is not subtype of type Doctrine\\Persistence\\Mapping\\ClassMetadata\<FastyBird\\Core\\Persistence\\Entities\\CrudEntity\>\.$#'
@@ -5458,7 +5458,7 @@ parameters:
 			message: '#^Cannot access an offset on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Mapping/SimpleAuth/Driver/Owner.php
+			path: ../src/FastyBird/Core/Core/src/Security/Mapping/Driver/Owner.php
 
 		-
 			message: '#^Method FastyBird\\Core\\Exchange\\Publisher\\Async\\Container\:\:publish\(\) should return React\\Promise\\PromiseInterface\<bool\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
@@ -5650,97 +5650,97 @@ parameters:
 			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
 			identifier: notEqual.notAllowed
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
 			message: '#^Parameter \#1 \$key of method Doctrine\\DBAL\\Query\\QueryBuilder\:\:setParameter\(\) expects int\<0, max\>\|string, int given\.$#'
 			identifier: argument.type
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
 			message: '#^Parameter \#1 \$key of method Doctrine\\DBAL\\Query\\QueryBuilder\:\:setParameter\(\) expects int\<0, max\>\|string, int\|string given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#2 \$rule of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:savePolicyLine\(\) expects array\<int, string\|null\>, array\<string\> given\.$#'
+			message: '#^Parameter \#2 \$rule of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:savePolicyLine\(\) expects array\<int, string\|null\>, array\<string\> given\.$#'
 			identifier: argument.type
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#3 \$newRules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:updateFilteredPolicies\(\) should be contravariant with parameter \$newPolicies \(array\) of method Casbin\\Persist\\UpdatableAdapter\:\:updateFilteredPolicies\(\)$#'
+			message: '#^Parameter \#3 \$newRules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:updateFilteredPolicies\(\) should be contravariant with parameter \$newPolicies \(array\) of method Casbin\\Persist\\UpdatableAdapter\:\:updateFilteredPolicies\(\)$#'
 			identifier: method.childParameterType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#3 \$oldRule \(array\<int, string\|null\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:updatePolicy\(\) should be contravariant with parameter \$oldRule \(array\<string\>\) of method Casbin\\Persist\\UpdatableAdapter\:\:updatePolicy\(\)$#'
+			message: '#^Parameter \#3 \$oldRule \(array\<int, string\|null\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:updatePolicy\(\) should be contravariant with parameter \$oldRule \(array\<string\>\) of method Casbin\\Persist\\UpdatableAdapter\:\:updatePolicy\(\)$#'
 			identifier: method.childParameterType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#3 \$oldRules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:updatePolicies\(\) should be contravariant with parameter \$oldRules \(array\<array\<string\>\>\) of method Casbin\\Persist\\UpdatableAdapter\:\:updatePolicies\(\)$#'
+			message: '#^Parameter \#3 \$oldRules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:updatePolicies\(\) should be contravariant with parameter \$oldRules \(array\<array\<string\>\>\) of method Casbin\\Persist\\UpdatableAdapter\:\:updatePolicies\(\)$#'
 			identifier: method.childParameterType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#3 \$rule \(array\<int, string\|null\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:addPolicy\(\) should be contravariant with parameter \$rule \(array\) of method Casbin\\Persist\\Adapter\:\:addPolicy\(\)$#'
+			message: '#^Parameter \#3 \$rule \(array\<int, string\|null\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:addPolicy\(\) should be contravariant with parameter \$rule \(array\) of method Casbin\\Persist\\Adapter\:\:addPolicy\(\)$#'
 			identifier: method.childParameterType
 			count: 4
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#3 \$rule \(array\<int, string\|null\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:removePolicy\(\) should be contravariant with parameter \$rule \(array\) of method Casbin\\Persist\\Adapter\:\:removePolicy\(\)$#'
+			message: '#^Parameter \#3 \$rule \(array\<int, string\|null\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:removePolicy\(\) should be contravariant with parameter \$rule \(array\) of method Casbin\\Persist\\Adapter\:\:removePolicy\(\)$#'
 			identifier: method.childParameterType
 			count: 4
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#3 \$rules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:addPolicies\(\) should be contravariant with parameter \$rules \(array\<array\<string\>\>\) of method Casbin\\Persist\\BatchAdapter\:\:addPolicies\(\)$#'
+			message: '#^Parameter \#3 \$rules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:addPolicies\(\) should be contravariant with parameter \$rules \(array\<array\<string\>\>\) of method Casbin\\Persist\\BatchAdapter\:\:addPolicies\(\)$#'
 			identifier: method.childParameterType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#3 \$rules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:removePolicies\(\) should be contravariant with parameter \$rules \(array\<array\<string\>\>\) of method Casbin\\Persist\\BatchAdapter\:\:removePolicies\(\)$#'
+			message: '#^Parameter \#3 \$rules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:removePolicies\(\) should be contravariant with parameter \$rules \(array\<array\<string\>\>\) of method Casbin\\Persist\\BatchAdapter\:\:removePolicies\(\)$#'
 			identifier: method.childParameterType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#4 \$newPolicy \(array\<int, string\|null\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:updatePolicy\(\) should be contravariant with parameter \$newPolicy \(array\<string\>\) of method Casbin\\Persist\\UpdatableAdapter\:\:updatePolicy\(\)$#'
+			message: '#^Parameter \#4 \$newPolicy \(array\<int, string\|null\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:updatePolicy\(\) should be contravariant with parameter \$newPolicy \(array\<string\>\) of method Casbin\\Persist\\UpdatableAdapter\:\:updatePolicy\(\)$#'
 			identifier: method.childParameterType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Parameter \#4 \$newRules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Casbin\\Adapter\:\:updatePolicies\(\) should be contravariant with parameter \$newRules \(array\<array\<string\>\>\) of method Casbin\\Persist\\UpdatableAdapter\:\:updatePolicies\(\)$#'
+			message: '#^Parameter \#4 \$newRules \(array\<int, array\<int, string\|null\>\>\) of method FastyBird\\Core\\Security\\Models\\Casbin\\Adapter\:\:updatePolicies\(\) should be contravariant with parameter \$newRules \(array\<array\<string\>\>\) of method Casbin\\Persist\\UpdatableAdapter\:\:updatePolicies\(\)$#'
 			identifier: method.childParameterType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between non\-empty\-string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Casbin/Adapter.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Casbin/Adapter.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Policies\\Repository\:\:\$repository \(array\<Doctrine\\ORM\\EntityRepository\<FastyBird\\Core\\Entities\\SimpleAuth\\Policies\\Policy\>\>\) does not accept non\-empty\-array\<Doctrine\\ORM\\EntityRepository\<FastyBird\\Core\\Entities\\SimpleAuth\\Policies\\Policy\>\|Doctrine\\ORM\\EntityRepository\<T of FastyBird\\Core\\Entities\\SimpleAuth\\Policies\\Policy\>\>\.$#'
+			message: '#^Property FastyBird\\Core\\Security\\Models\\Policies\\Repository\:\:\$repository \(array\<Doctrine\\ORM\\EntityRepository\<FastyBird\\Core\\Security\\Entities\\Policies\\Policy\>\>\) does not accept non\-empty\-array\<Doctrine\\ORM\\EntityRepository\<FastyBird\\Core\\Security\\Entities\\Policies\\Policy\>\|Doctrine\\ORM\\EntityRepository\<T of FastyBird\\Core\\Security\\Entities\\Policies\\Policy\>\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Policies/Repository.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Policies/Repository.php
 
 		-
-			message: '#^Property FastyBird\\Core\\Persistence\\SimpleAuth\\Models\\Tokens\\Repository\:\:\$repository \(array\<Doctrine\\ORM\\EntityRepository\<FastyBird\\Core\\Entities\\SimpleAuth\\Tokens\\Token\>\>\) does not accept non\-empty\-array\<Doctrine\\ORM\\EntityRepository\<FastyBird\\Core\\Entities\\SimpleAuth\\Tokens\\Token\>\|Doctrine\\ORM\\EntityRepository\<T of FastyBird\\Core\\Entities\\SimpleAuth\\Tokens\\Token\>\>\.$#'
+			message: '#^Property FastyBird\\Core\\Security\\Models\\Tokens\\Repository\:\:\$repository \(array\<Doctrine\\ORM\\EntityRepository\<FastyBird\\Core\\Security\\Entities\\Tokens\\Token\>\>\) does not accept non\-empty\-array\<Doctrine\\ORM\\EntityRepository\<FastyBird\\Core\\Security\\Entities\\Tokens\\Token\>\|Doctrine\\ORM\\EntityRepository\<T of FastyBird\\Core\\Security\\Entities\\Tokens\\Token\>\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/SimpleAuth/Models/Tokens/Repository.php
+			path: ../src/FastyBird/Core/Core/src/Security/Models/Tokens/Repository.php
 
 		-
 			message: '#^Call to an undefined method Nette\\Application\\IPresenter\:\:redirectUrl\(\)\.$#'
@@ -5749,7 +5749,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Presenters/Application/BasePresenter.php
 
 		-
-			message: '#^Cannot call method isLoggedIn\(\) on FastyBird\\Core\\Security\\SimpleAuth\\User\|null\.$#'
+			message: '#^Cannot call method isLoggedIn\(\) on FastyBird\\Core\\Security\\Identity\\User\|null\.$#'
 			identifier: method.nonObject
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Presenters/Application/BasePresenter.php
@@ -6658,43 +6658,43 @@ parameters:
 			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
 			identifier: notEqual.notAllowed
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/AnnotationChecker.php
+			path: ../src/FastyBird/Core/Core/src/Security/Access/AnnotationChecker.php
 
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/AnnotationChecker.php
+			path: ../src/FastyBird/Core/Core/src/Security/Access/AnnotationChecker.php
 
 		-
 			message: '#^Parameter \#2 \$array of function array_key_exists expects array, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/AnnotationChecker.php
+			path: ../src/FastyBird/Core/Core/src/Security/Access/AnnotationChecker.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between non\-empty\-string and '''' will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/AnnotationChecker.php
+			path: ../src/FastyBird/Core/Core/src/Security/Access/AnnotationChecker.php
 
 		-
 			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
 			identifier: notEqual.notAllowed
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/LinkChecker.php
+			path: ../src/FastyBird/Core/Core/src/Security/Access/LinkChecker.php
 
 		-
 			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
 			identifier: equal.notAllowed
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/SimpleAuth/Access/LinkChecker.php
+			path: ../src/FastyBird/Core/Core/src/Security/Access/LinkChecker.php
 
 		-
-			message: '#^Parameter \#2 \$roles of class FastyBird\\Core\\Security\\SimpleAuth\\PlainIdentity constructor expects array\<string\>, array\<mixed, mixed\> given\.$#'
+			message: '#^Parameter \#2 \$roles of class FastyBird\\Core\\Security\\Identity\\PlainIdentity constructor expects array\<string\>, array\<mixed, mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/SimpleAuth/IdentityFactory.php
+			path: ../src/FastyBird/Core/Core/src/Security/Identity/IdentityFactory.php
 
 		-
 			message: '#^Method FastyBird\\Core\\WebSockets\\Server\\Configuration\:\:__construct\(\) has parameter \$sslSettings with no value type specified in iterable type array\.$#'
@@ -7057,13 +7057,13 @@ parameters:
 			'''
 			identifier: method.deprecated
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/User.php
+			path: ../src/FastyBird/Core/Core/src/Security/Subscribers/User.php
 
 		-
-			message: '#^Parameter \#1 \$fields of method FastyBird\\Core\\Subscribers\\SimpleAuth\\User\<T of object\>\:\:updateFields\(\) expects array\<string\>, array\<mixed, mixed\> given\.$#'
+			message: '#^Parameter \#1 \$fields of method FastyBird\\Core\\Security\\Subscribers\\User\<T of object\>\:\:updateFields\(\) expects array\<string\>, array\<mixed, mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Subscribers/SimpleAuth/User.php
+			path: ../src/FastyBird/Core/Core/src/Security/Subscribers/User.php
 
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'

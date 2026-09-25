@@ -17,9 +17,9 @@ namespace FastyBird\Module\Triggers\Entities\Triggers;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Entities\SimpleAuth as SimpleAuthEntities;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
+use FastyBird\Core\Security\Entities as SecurityEntities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
 use Ramsey\Uuid;
@@ -44,13 +44,13 @@ use Ramsey\Uuid;
 #[ORM\MappedSuperclass]
 abstract class Trigger implements TriggersEntities\Entity,
 	TriggersEntities\EntityParams,
-	SimpleAuthEntities\Owner,
+	SecurityEntities\Owner,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
 	use TriggersEntities\TEntity;
 	use TriggersEntities\TEntityParams;
-	use SimpleAuthEntities\TOwner;
+	use SecurityEntities\HasOwner;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

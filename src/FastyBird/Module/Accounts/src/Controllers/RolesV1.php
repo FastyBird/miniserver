@@ -21,7 +21,7 @@ use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
+use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Controllers;
 use FastyBird\Module\Accounts\Entities;
@@ -54,8 +54,8 @@ final class RolesV1 extends BaseV1
 
 	public function __construct(
 		private readonly Hydrators\Roles\Role $roleHydrator,
-		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
-		private readonly SimpleAuthModels\Policies\Manager $policiesManager,
+		private readonly Policies\Repository $policiesRepository,
+		private readonly Policies\Manager $policiesManager,
 	)
 	{
 	}

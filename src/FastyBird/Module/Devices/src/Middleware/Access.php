@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Middleware;
 
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
-use FastyBird\Core\Exceptions as SimpleAuthExceptions;
+use FastyBird\Core\Security\Exceptions as SecurityExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
 use Psr\Http\Message\ResponseInterface;
@@ -47,13 +47,13 @@ final readonly class Access implements MiddlewareInterface
 	{
 		try {
 			return $handler->handle($request);
-		} catch (SimpleAuthExceptions\UnauthorizedAccess) {
+		} catch (SecurityExceptions\UnauthorizedAccess) {
 			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				strval($this->translator->translate('//devices-module.base.messages.unauthorized.heading')),
 				strval($this->translator->translate('//devices-module.base.messages.unauthorized.message')),
 			);
-		} catch (SimpleAuthExceptions\ForbiddenAccess) {
+		} catch (SecurityExceptions\ForbiddenAccess) {
 			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				strval($this->translator->translate('//devices-module.base.messages.forbidden.heading')),

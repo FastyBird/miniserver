@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Accounts\Exceptions;
 
-use FastyBird\Core\Exceptions as SimpleAuthExceptions;
+use FastyBird\Core\Security\Exceptions;
 
-class AuthenticationFailed extends SimpleAuthExceptions\Authentication implements Exception
+class AuthenticationFailed extends Exceptions\Authentication implements Exception
 {
 
 }

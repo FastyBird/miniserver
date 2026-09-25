@@ -21,8 +21,8 @@ use Doctrine\Persistence;
 use FastyBird\Core\Constants as SimpleAuth;
 use FastyBird\Core\Exceptions as ApplicationExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Core\Persistence\SimpleAuth\Models as SimpleAuthModels;
-use FastyBird\Core\Security\SimpleAuth as SimpleAuthSecurity;
+use FastyBird\Core\Security\Identity;
+use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
@@ -59,8 +59,8 @@ class Create extends Console\Command\Command
 		private readonly Models\Entities\Emails\EmailsManager $emailsManager,
 		private readonly Models\Entities\Identities\IdentitiesManager $identitiesManager,
 		private readonly Localization\Translator $translator,
-		private readonly SimpleAuthSecurity\EnforcerFactory $enforcerFactory,
-		private readonly SimpleAuthModels\Policies\Repository $policiesRepository,
+		private readonly Identity\EnforcerFactory $enforcerFactory,
+		private readonly Policies\Repository $policiesRepository,
 		private readonly Persistence\ManagerRegistry $managerRegistry,
 		string|null $name = null,
 	)
