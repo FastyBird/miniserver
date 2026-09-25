@@ -13,9 +13,9 @@ use React\Socket;
 use RuntimeException;
 
 /**
- * Server::$onCreate/$onStart/$onStop used to fire only through SmartObject::__call. These guard
- * that Utils\Arrays::invoke() reaches every registered handler with the same arguments the old
- * magic call did.
+ * ServerRuntime::$onCreate/$onStart/$onStop used to fire only through SmartObject::__call.
+ * These guard that Utils\Arrays::invoke() reaches every registered handler with the same
+ * arguments the old magic call did.
  */
 final class ServerTest extends TestCase
 {
