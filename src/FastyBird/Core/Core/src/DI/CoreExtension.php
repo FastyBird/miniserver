@@ -1177,7 +1177,7 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if ($presenterFactoryService instanceof DI\Definitions\ServiceDefinition) {
 			$presenterFactoryService->addSetup('setMapping', [[
-				'App' => 'FastyBird\Core\Presenters\Application\*Presenter',
+				'App' => 'FastyBird\Core\Presenters\*Presenter',
 			]]);
 		}
 
