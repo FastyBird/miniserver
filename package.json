@@ -44,7 +44,7 @@
     "@iconify/iconify": "^3.1",
     "@iconify/vue": "^5",
     "@unhead/vue": "^3.4",
-    "element-plus": "^2.8",
+    "element-plus": "^2.14",
     "lodash.get": "^4.4",
     "md5": "^2.3",
     "nprogress": "^0.2",
