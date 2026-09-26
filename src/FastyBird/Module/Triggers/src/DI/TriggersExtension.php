@@ -101,16 +101,25 @@ class TriggersExtension extends NetteDI\CompilerExtension implements Translation
 		$builder->addDefinition($this->prefix('models.actionsRepository'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Actions\ActionsRepository::class);
 
-		$builder->addDefinition($this->prefix('models.conditionsRepository'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('models.conditionsRepository'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\Entities\Conditions\ConditionsRepository::class);
 
-		$builder->addDefinition($this->prefix('models.notificationsRepository'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('models.notificationsRepository'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\Entities\Notifications\NotificationsRepository::class);
 
 		$builder->addDefinition($this->prefix('models.triggersManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Triggers\TriggersManager::class);
 
-		$builder->addDefinition($this->prefix('models.triggersControlsManager'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('models.triggersControlsManager'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\Entities\Triggers\Controls\ControlsManager::class);
 
 		$builder->addDefinition($this->prefix('models.actionsManager'), new NetteDI\Definitions\ServiceDefinition())
@@ -119,10 +128,16 @@ class TriggersExtension extends NetteDI\CompilerExtension implements Translation
 		$builder->addDefinition($this->prefix('models.conditionsManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Conditions\ConditionsManager::class);
 
-		$builder->addDefinition($this->prefix('models.notificationsManager'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('models.notificationsManager'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\Entities\Notifications\NotificationsManager::class);
 
-		$builder->addDefinition($this->prefix('subscribers.notificationEntity'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('subscribers.notificationEntity'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Subscribers\NotificationEntity::class);
 
 		$builder->addDefinition($this->prefix('subscribers.entities'), new NetteDI\Definitions\ServiceDefinition())
@@ -144,11 +159,17 @@ class TriggersExtension extends NetteDI\CompilerExtension implements Translation
 			->setType(Controllers\NotificationsV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.triggersControls'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('controllers.triggersControls'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Controllers\TriggerControlsV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('schemas.triggers.automatic'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.triggers.automatic'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Triggers\Automatic::class);
 
 		$builder->addDefinition($this->prefix('schemas.triggers.manual'), new NetteDI\Definitions\ServiceDefinition())
@@ -157,34 +178,55 @@ class TriggersExtension extends NetteDI\CompilerExtension implements Translation
 		$builder->addDefinition($this->prefix('schemas.trigger.control'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Triggers\Controls\Control::class);
 
-		$builder->addDefinition($this->prefix('schemas.notifications.email'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.notifications.email'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Notifications\Email::class);
 
 		$builder->addDefinition($this->prefix('schemas.notifications.sms'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Notifications\Sms::class);
 
-		$builder->addDefinition($this->prefix('hydrators.triggers.automatic'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.triggers.automatic'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Triggers\AutomaticTrigger::class);
 
 		$builder->addDefinition($this->prefix('hydrators.triggers.manual'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Triggers\ManualTrigger::class);
 
-		$builder->addDefinition($this->prefix('hydrators.notifications.email'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.notifications.email'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Notifications\Email::class);
 
-		$builder->addDefinition($this->prefix('hydrators.notifications.sms'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.notifications.sms'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Notifications\Sms::class);
 
-		$builder->addDefinition($this->prefix('states.repositories.actions'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('states.repositories.actions'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\States\ActionsRepository::class);
 
-		$builder->addDefinition($this->prefix('states.repositories.conditions'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('states.repositories.conditions'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\States\ConditionsRepository::class);
 
 		$builder->addDefinition($this->prefix('states.managers.actions'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\States\ActionsManager::class);
 
-		$builder->addDefinition($this->prefix('states.managers.conditions'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('states.managers.conditions'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\States\ConditionsManager::class);
 
 		$builder->addDefinition($this->prefix('commands.initialize'), new NetteDI\Definitions\ServiceDefinition())

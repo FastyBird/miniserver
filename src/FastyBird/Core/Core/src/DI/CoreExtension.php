@@ -1448,7 +1448,9 @@ final class CoreExtension extends DI\CompilerExtension
 			interface_exists('Symfony\Component\EventDispatcher\EventDispatcherInterface')
 			&& $builder->getByType(ComponentEventDispatcher\EventDispatcherInterface::class) !== null
 		) {
-			$dispatcher = $builder->getDefinition($builder->getByType(ComponentEventDispatcher\EventDispatcherInterface::class));
+			$dispatcher = $builder->getDefinition(
+				$builder->getByType(ComponentEventDispatcher\EventDispatcherInterface::class),
+			);
 
 			// Preserved guard (PR #450): the base Application service is genuinely optional --
 			// nothing in this extension registers it directly, only whichever extension embeds

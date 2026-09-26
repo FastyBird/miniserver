@@ -118,17 +118,26 @@ class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerEx
 		$builder->addDefinition($this->prefix('schemas.device.thermostat'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Devices\Thermostat::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.thermostat'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.thermostat'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\Thermostat::class);
 
 		/**
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.device.thermostat'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.device.thermostat'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Devices\Thermostat::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.thermostat'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.channel.thermostat'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Channels\Thermostat::class);
 
 		/**

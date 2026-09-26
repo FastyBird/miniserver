@@ -270,7 +270,10 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		$builder->addDefinition($this->prefix('subscribers.entities'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\ModuleEntities::class);
 
-		$builder->addDefinition($this->prefix('subscribers.dashboardEntity'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('subscribers.dashboardEntity'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Subscribers\DashboardEntity::class);
 
 		/**
@@ -331,10 +334,16 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		$builder->addDefinition($this->prefix('schemas.group'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Groups\Group::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.analogActuator'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.widgets.analogActuator'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Widgets\AnalogActuator::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.analogSensor'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.widgets.analogSensor'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Widgets\AnalogSensor::class);
 
 		$builder->addDefinition(
@@ -343,31 +352,49 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		)
 			->setType(Schemas\Widgets\DigitalActuator::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.digitalSensor'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.widgets.digitalSensor'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Widgets\DigitalSensor::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.analogValue'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.display.analogValue'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Widgets\Display\AnalogValue::class);
 
 		$builder->addDefinition($this->prefix('schemas.display.button'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\Button::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.chartGraph'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.display.chartGraph'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Widgets\Display\ChartGraph::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.digitalValue'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.display.digitalValue'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Widgets\Display\DigitalValue::class);
 
 		$builder->addDefinition($this->prefix('schemas.display.gauge'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\Gauge::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.groupedButton'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.display.groupedButton'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Widgets\Display\GroupedButton::class);
 
 		$builder->addDefinition($this->prefix('schemas.display.slider'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\Slider::class);
 
-		$builder->addDefinition($this->prefix('schemas.dataSource.generic'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.dataSource.generic'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Widgets\DataSources\Generic::class);
 
 		/**
@@ -389,7 +416,10 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		)
 			->setType(Hydrators\Widgets\AnalogActuator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.analogSensor'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.widgets.analogSensor'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Widgets\AnalogSensor::class);
 
 		$builder->addDefinition(
@@ -404,16 +434,25 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		)
 			->setType(Hydrators\Widgets\DigitalSensor::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.analogValue'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.display.analogValue'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Widgets\Displays\AnalogValue::class);
 
 		$builder->addDefinition($this->prefix('hydrators.display.button'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\Button::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.chartGraph'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.display.chartGraph'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Widgets\Displays\ChartGraph::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.digitalValue'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.display.digitalValue'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Widgets\Displays\DigitalValue::class);
 
 		$builder->addDefinition($this->prefix('hydrators.display.gauge'), new NetteDI\Definitions\ServiceDefinition())
@@ -428,7 +467,10 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		$builder->addDefinition($this->prefix('hydrators.display.slider'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\Slider::class);
 
-		$builder->addDefinition($this->prefix('hydrators.dataSources.generic'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.dataSources.generic'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Widgets\DataSources\Generic::class);
 
 		/**

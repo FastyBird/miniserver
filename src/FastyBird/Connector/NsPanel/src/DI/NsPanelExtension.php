@@ -607,7 +607,10 @@ class NsPanelExtension extends NetteDI\CompilerExtension implements Translation\
 				'logger' => $logger,
 			]);
 
-		$builder->addDefinition($this->prefix('http.controllers.directive'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('http.controllers.directive'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Controllers\DirectiveController::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');

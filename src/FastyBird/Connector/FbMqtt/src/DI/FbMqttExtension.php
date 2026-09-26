@@ -240,7 +240,10 @@ class FbMqttExtension extends NetteDI\CompilerExtension implements Translation\D
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.connector.fbMqtt'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.connector.fbMqtt'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Connectors\Connector::class);
 
 		$builder->addDefinition($this->prefix('hydrators.device.fbMqtt'), new NetteDI\Definitions\ServiceDefinition())

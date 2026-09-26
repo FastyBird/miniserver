@@ -87,16 +87,25 @@ class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.moduleEntities'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('subscribers.moduleEntities'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Subscribers\ModuleEntities::class);
 
 		$builder->addDefinition($this->prefix('subscribers.stateEntities'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\StateEntities::class);
 
-		$builder->addDefinition($this->prefix('subscribers.documentsMapper'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('subscribers.documentsMapper'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Subscribers\DocumentsMapper::class);
 
-		$builder->addDefinition($this->prefix('subscribers.dataSourceAction'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('subscribers.dataSourceAction'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Subscribers\ActionCommand::class);
 
 		/**

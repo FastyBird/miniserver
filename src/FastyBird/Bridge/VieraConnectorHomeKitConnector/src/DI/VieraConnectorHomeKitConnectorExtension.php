@@ -126,7 +126,10 @@ class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension 
 		$builder->addDefinition($this->prefix('schemas.device.viera'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Devices\Viera::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.television'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.television'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\Television::class);
 
 		$builder->addDefinition(
@@ -135,7 +138,10 @@ class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension 
 		)
 			->setType(Schemas\Channels\TelevisionSpeaker::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.inputSource'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.inputSource'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\InputSource::class);
 
 		/**
@@ -145,7 +151,10 @@ class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension 
 		$builder->addDefinition($this->prefix('hydrators.device.viera'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Devices\Viera::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.television'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.channel.television'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Channels\Television::class);
 
 		$builder->addDefinition(
@@ -154,7 +163,10 @@ class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension 
 		)
 			->setType(Hydrators\Channels\TelevisionSpeaker::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.inputSource'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.channel.inputSource'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Channels\InputSource::class);
 
 		/**

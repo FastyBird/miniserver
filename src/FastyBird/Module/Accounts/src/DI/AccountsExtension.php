@@ -110,7 +110,10 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 		$builder->addDefinition($this->prefix('models.emailsRepository'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Emails\EmailsRepository::class);
 
-		$builder->addDefinition($this->prefix('models.identitiesRepository'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('models.identitiesRepository'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\Entities\Identities\IdentitiesRepository::class);
 
 		// Database managers
@@ -144,7 +147,10 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 			->setType(Controllers\AccountEmailsV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.accountIdentities'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('controllers.accountIdentities'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Controllers\AccountIdentitiesV1::class)
 			->addTag('nette.inject');
 
@@ -187,7 +193,10 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 		$builder->addDefinition($this->prefix('schemas.session'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Sessions\Session::class);
 
-		$builder->addDefinition($this->prefix('hydrators.accounts.profile'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.accounts.profile'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Accounts\ProfileAccount::class);
 
 		$builder->addDefinition($this->prefix('hydrators.accounts'), new NetteDI\Definitions\ServiceDefinition())
@@ -199,7 +208,10 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 		$builder->addDefinition($this->prefix('hydrators.emails.email'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Emails\Email::class);
 
-		$builder->addDefinition($this->prefix('hydrators.identities.profile'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.identities.profile'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Identities\Identity::class);
 
 		$builder->addDefinition($this->prefix('hydrators.role'), new NetteDI\Definitions\ServiceDefinition())

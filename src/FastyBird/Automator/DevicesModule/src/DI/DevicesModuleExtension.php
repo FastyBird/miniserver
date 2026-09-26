@@ -58,7 +58,10 @@ class DevicesModuleExtension extends NetteDI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('schemas.actions.deviceProperty'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.actions.deviceProperty'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Actions\DevicePropertyAction::class);
 
 		$builder->addDefinition(

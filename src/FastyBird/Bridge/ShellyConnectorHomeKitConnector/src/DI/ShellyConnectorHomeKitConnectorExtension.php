@@ -138,13 +138,22 @@ class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension
 		$builder->addDefinition($this->prefix('schemas.channel.valve'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Valve::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.windowCovering'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.windowCovering'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\WindowCovering::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.inputButton'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.inputButton'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\InputButton::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.inputSwitch'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.inputSwitch'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\InputSwitch::class);
 
 		/**
@@ -154,7 +163,10 @@ class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension
 		$builder->addDefinition($this->prefix('hydrators.device.shelly'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Devices\Shelly::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.lightbulb'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.channel.lightbulb'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Channels\Lightbulb::class);
 
 		$builder->addDefinition($this->prefix('hydrators.channel.outlet'), new NetteDI\Definitions\ServiceDefinition())

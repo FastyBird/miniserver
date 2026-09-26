@@ -249,7 +249,10 @@ class HomeKitExtension extends NetteDI\CompilerExtension implements Translation\
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.connector.homekit'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.connector.homekit'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Connectors\Connector::class);
 
 		$builder->addDefinition($this->prefix('hydrators.device.homekit'), new NetteDI\Definitions\ServiceDefinition())
@@ -258,7 +261,10 @@ class HomeKitExtension extends NetteDI\CompilerExtension implements Translation\
 		$builder->addDefinition($this->prefix('hydrators.channel.homekit'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Generic::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.lightBulb'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.channel.lightBulb'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Channels\LightBulb::class);
 
 		$builder->addDefinition($this->prefix('hydrators.channel.battery'), new NetteDI\Definitions\ServiceDefinition())
@@ -299,7 +305,10 @@ class HomeKitExtension extends NetteDI\CompilerExtension implements Translation\
 		 * CONTROLLERS
 		 */
 
-		$builder->addDefinition($this->prefix('http.controllers.accessories'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('http.controllers.accessories'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Controllers\AccessoriesController::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
@@ -317,7 +326,10 @@ class HomeKitExtension extends NetteDI\CompilerExtension implements Translation\
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('http.controllers.diagnostics'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('http.controllers.diagnostics'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Controllers\DiagnosticsController::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');

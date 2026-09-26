@@ -299,7 +299,10 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 		 * MODELS - CONFIGURATION
 		 */
 
-		$builder->addDefinition($this->prefix('models.configuration.builder'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('models.configuration.builder'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\Configuration\Builder::class);
 
 		// CONNECTORS
@@ -460,7 +463,10 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 			]);
 
 		// MANAGERS - DEVICES
-		$builder->addDefinition($this->prefix('models.states.devices.states'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('models.states.devices.states'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\States\DevicePropertiesManager::class)
 			->setArguments([
 				'useExchange' => $configuration->exchange,
@@ -478,7 +484,10 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 			]);
 
 		// MANAGERS - CHANNELS
-		$builder->addDefinition($this->prefix('models.states.channels.states'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('models.states.channels.states'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Models\States\ChannelPropertiesManager::class)
 			->setArguments([
 				'useExchange' => $configuration->exchange,
@@ -846,13 +855,19 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 		 * HELPERS
 		 */
 
-		$builder->addDefinition($this->prefix('utilities.devices.connection'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('utilities.devices.connection'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Utilities\DeviceConnection::class)
 			->setArguments([
 				'logger' => $logger,
 			]);
 
-		$builder->addDefinition($this->prefix('utilities.connector.connection'), new NetteDI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('utilities.connector.connection'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Utilities\ConnectorConnection::class)
 			->setArguments([
 				'logger' => $logger,
