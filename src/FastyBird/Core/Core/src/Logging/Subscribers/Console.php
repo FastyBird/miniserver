@@ -5,7 +5,7 @@ namespace FastyBird\Core\Logging\Subscribers;
 use Monolog;
 use Override;
 use Psr\Log\LogLevel;
-use Symfony\Bridge\Monolog as SymfonyMonolog;
+use Symfony\Bridge\Monolog as BridgeMonolog;
 use Symfony\Component\Console as SymfonyConsole;
 use Symfony\Component\EventDispatcher;
 
@@ -22,7 +22,7 @@ final readonly class Console implements EventDispatcher\EventSubscriberInterface
 	 */
 	public function __construct(
 		private Monolog\Logger $logger,
-		private SymfonyMonolog\Handler\ConsoleHandler $handler,
+		private BridgeMonolog\Handler\ConsoleHandler $handler,
 		private int|string|Monolog\Level $level,
 	)
 	{

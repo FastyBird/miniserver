@@ -26,7 +26,7 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
 use function array_pop;
@@ -40,7 +40,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class VirtualThermostatExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class VirtualThermostatExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbVirtualThermostatAddon';
@@ -52,7 +52,7 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
@@ -62,7 +62,7 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 	{
 		$builder = $this->getContainerBuilder();
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(VirtualThermostat\Logger::class)
 			->setAutowired(false);
 
@@ -84,34 +84,34 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 
 		$builder->addDefinition(
 			$this->prefix('schemas.device'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.actors'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.actors'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Actors::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.configuration'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Configuration::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.preset'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Preset::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.sensors'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Sensors::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.state'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\State::class);
 
@@ -121,37 +121,37 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.device'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Devices\Device::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.actors'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Actors::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.configuration'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Configuration::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.preset'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Preset::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.sensors'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Sensors::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.state'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\State::class);
 
@@ -159,14 +159,14 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 		 * HELPERS
 		 */
 
-		$builder->addDefinition($this->prefix('helpers.device'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.device'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Device::class);
 
 		/**
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.install'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.install'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class)
 			->setArguments([
 				'logger' => $logger,
@@ -174,7 +174,7 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -207,7 +207,7 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -217,7 +217,7 @@ class VirtualThermostatExtension extends DI\CompilerExtension implements Transla
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Addon\VirtualThermostat\Documents',

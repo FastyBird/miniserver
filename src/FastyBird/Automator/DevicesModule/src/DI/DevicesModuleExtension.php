@@ -22,7 +22,7 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
 use function array_pop;
@@ -36,7 +36,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DevicesModuleExtension extends DI\CompilerExtension
+class DevicesModuleExtension extends NetteDI\CompilerExtension
 {
 
 	public const NAME = 'fbDevicesModuleAutomator';
@@ -48,7 +48,7 @@ class DevicesModuleExtension extends DI\CompilerExtension
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
@@ -58,66 +58,69 @@ class DevicesModuleExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('schemas.actions.deviceProperty'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.actions.deviceProperty'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Actions\DevicePropertyAction::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.actions.channelProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Actions\ChannelPropertyAction::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.conditions.channelProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Conditions\ChannelPropertyCondition::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.conditions.deviceProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Conditions\DevicePropertyCondition::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.actions.deviceProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Actions\DevicePropertyAction::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.actions.channelProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Actions\ChannelPropertyAction::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.conditions.channelProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Conditions\ChannelPropertyCondition::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.conditions.deviceProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Conditions\DevicePropertyCondition::class);
 
 		$builder->addDefinition(
 			$this->prefix('subscribers.actions'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Subscribers\ActionEntity::class);
 
 		$builder->addDefinition(
 			$this->prefix('subscribers.conditions'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Subscribers\ConditionEntity::class);
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -150,7 +153,7 @@ class DevicesModuleExtension extends DI\CompilerExtension
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -160,7 +163,7 @@ class DevicesModuleExtension extends DI\CompilerExtension
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Automator\DevicesModule\Documents',

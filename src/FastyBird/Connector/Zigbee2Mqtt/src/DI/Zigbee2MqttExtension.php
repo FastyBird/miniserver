@@ -34,7 +34,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
 use function array_pop;
@@ -48,7 +48,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbZigbee2MqttConnector';
@@ -60,20 +60,20 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
 	}
 
 	/**
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Zigbee2Mqtt\Logger::class)
 			->setAutowired(false);
 
@@ -138,7 +138,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 		 * API
 		 */
 
-		$builder->addDefinition($this->prefix('api.connectionsManager'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('api.connectionsManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(API\ConnectionManager::class);
 
 		$builder->addFactoryDefinition($this->prefix('api.client'))
@@ -155,7 +155,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.bridgeConnectionState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreBridgeConnectionState::class)
 			->setArguments([
@@ -164,7 +164,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.bridgeDevices'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreBridgeDevices::class)
 			->setArguments([
@@ -173,7 +173,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.bridgeEvent'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreBridgeEvent::class)
 			->setArguments([
@@ -182,7 +182,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.bridgeGroups'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreBridgeGroups::class)
 			->setArguments([
@@ -191,7 +191,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.bridgeInfo'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreBridgeInfo::class)
 			->setArguments([
@@ -200,7 +200,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.bridgeLog'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreBridgeLog::class)
 			->setArguments([
@@ -209,7 +209,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.deviceConnectionState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDeviceConnectionState::class)
 			->setArguments([
@@ -218,7 +218,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.deviceState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDeviceState::class)
 			->setArguments([
@@ -227,7 +227,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.write.subDeviceChannelPropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteSubDeviceChannelPropertyState::class)
 			->setArguments([
@@ -236,7 +236,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers::class)
 			->setArguments([
@@ -246,7 +246,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('queue.queue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Queue::class)
 			->setArguments([
@@ -257,10 +257,10 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.properties'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.properties'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Properties::class);
 
-		$builder->addDefinition($this->prefix('subscribers.controls'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.controls'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Controls::class);
 
 		/**
@@ -269,25 +269,25 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('schemas.connector'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Connectors\Connector::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.device.bridge'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Devices\Bridge::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.device.subDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Devices\SubDevice::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Channel::class);
 
@@ -297,25 +297,25 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.connector'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Connectors\Connector::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.device.bridge'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Devices\Bridge::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.device.subDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Devices\SubDevice::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Channel::class);
 
@@ -323,36 +323,36 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 		 * MODELS
 		 */
 
-		$builder->addDefinition($this->prefix('models.stateRepository'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.stateRepository'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\StateRepository::class);
 
 		/**
 		 * HELPERS
 		 */
 
-		$builder->addDefinition($this->prefix('helpers.messageBuilder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.messageBuilder'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\MessageBuilder::class);
 
-		$builder->addDefinition($this->prefix('helpers.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('helpers.devices.bridge'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.devices.bridge'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Devices\Bridge::class);
 
-		$builder->addDefinition($this->prefix('helpers.devices.subDevice'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.devices.subDevice'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Devices\SubDevice::class);
 
 		/**
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.execute'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.execute'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Execute::class);
 
-		$builder->addDefinition($this->prefix('commands.discover'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.discover'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Discover::class);
 
-		$builder->addDefinition($this->prefix('commands.install'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.install'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class)
 			->setArguments([
 				'logger' => $logger,
@@ -378,7 +378,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -411,7 +411,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -421,7 +421,7 @@ class Zigbee2MqttExtension extends DI\CompilerExtension implements Translation\D
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Connector\Zigbee2Mqtt\Documents',

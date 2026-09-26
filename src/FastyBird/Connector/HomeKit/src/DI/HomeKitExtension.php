@@ -38,7 +38,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
 use function array_pop;
@@ -53,7 +53,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class HomeKitExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbHomeKitConnector';
@@ -65,20 +65,20 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
 	}
 
 	/**
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(HomeKit\Logger::class)
 			->setAutowired(false);
 
@@ -142,7 +142,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.deviceConnectionState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDeviceConnectionState::class)
 			->setArguments([
@@ -151,7 +151,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.devicePropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDevicePropertyState::class)
 			->setArguments([
@@ -160,7 +160,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.channelPropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreChannelPropertyState::class)
 			->setArguments([
@@ -169,7 +169,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.write.devicePropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteDevicePropertyState::class)
 			->setArguments([
@@ -178,7 +178,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.write.channelPropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteChannelPropertyState::class)
 			->setArguments([
@@ -187,7 +187,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers::class)
 			->setArguments([
@@ -197,7 +197,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.queue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Queue::class)
 			->setArguments([
@@ -206,7 +206,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.messageBuilder'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Helpers\MessageBuilder::class);
 
@@ -214,81 +214,87 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.properties'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.properties'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Properties::class);
 
-		$builder->addDefinition($this->prefix('subscribers.controls'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.controls'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Controls::class);
 
-		$builder->addDefinition($this->prefix('subscribers.system'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.system'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\System::class);
 
-		$builder->addDefinition($this->prefix('subscribers.entities'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.entities'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Entities::class);
 
 		/**
 		 * JSON-API SCHEMAS
 		 */
 
-		$builder->addDefinition($this->prefix('schemas.connector.homekit'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.connector.homekit'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('schemas.device.homekit'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.device.homekit'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.homekit'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.homekit'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Generic::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.lightBulb'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.lightBulb'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\LightBulb::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.battery'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.battery'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Battery::class);
 
 		/**
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.connector.homekit'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.connector.homekit'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('hydrators.device.homekit'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.device.homekit'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.homekit'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel.homekit'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Generic::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.lightBulb'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.channel.lightBulb'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Channels\LightBulb::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.battery'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel.battery'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Battery::class);
 
 		/**
 		 * HELPERS
 		 */
 
-		$builder->addDefinition($this->prefix('helpers.loader'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.loader'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Loader::class);
 
-		$builder->addDefinition($this->prefix('helpers.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Connector::class);
 
-		$builder->addDefinition($this->prefix('helpers.device'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.device'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Device::class);
 
-		$builder->addDefinition($this->prefix('helpers.channel'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.channel'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Channel::class);
 
 		/**
 		 * ROUTING
 		 */
 
-		$router = $builder->addDefinition($this->prefix('http.router'), new DI\Definitions\ServiceDefinition())
+		$router = $builder->addDefinition($this->prefix('http.router'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\Router::class)
 			->setAutowired(false);
 
-		$builder->addDefinition($this->prefix('http.middlewares.router'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('http.middlewares.router'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Middleware\Router::class)
 			->setArguments([
 				'router' => $router,
@@ -299,25 +305,31 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * CONTROLLERS
 		 */
 
-		$builder->addDefinition($this->prefix('http.controllers.accessories'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('http.controllers.accessories'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Controllers\AccessoriesController::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
 		$builder->addDefinition(
 			$this->prefix('http.controllers.characteristics'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Controllers\CharacteristicsController::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('http.controllers.pairing'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('http.controllers.pairing'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\PairingController::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('http.controllers.diagnostics'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('http.controllers.diagnostics'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Controllers\DiagnosticsController::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
@@ -356,7 +368,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		$builder->addDefinition($this->prefix('protocol.characteristic.factory.variableProperty'))
 			->setType(Protocol\Characteristics\VariablePropertyFactory::class);
 
-		$builder->addDefinition($this->prefix('protocol.tlv'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('protocol.tlv'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Protocol\Tlv::class);
 
 		$builder->addDefinition($this->prefix('protocol.accessoryLoader'))
@@ -378,23 +390,23 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * MODELS
 		 */
 
-		$builder->addDefinition($this->prefix('models.clientsRepository'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.clientsRepository'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Clients\ClientsRepository::class);
 
-		$builder->addDefinition($this->prefix('models.clientsManager'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.clientsManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Clients\ClientsManager::class);
 
 		/**
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.execute'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.execute'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Execute::class)
 			->setArguments([
 				'logger' => $logger,
 			]);
 
-		$builder->addDefinition($this->prefix('commands.install'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.install'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class)
 			->setArguments([
 				'logger' => $logger,
@@ -420,8 +432,8 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\MissingServiceException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{
@@ -454,7 +466,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -464,7 +476,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Connector\HomeKit\Documents',
@@ -481,7 +493,7 @@ class HomeKitExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		if ($protocolLoaderServiceName !== null) {
 			$protocolLoaderService = $builder->getDefinition($protocolLoaderServiceName);
-			assert($protocolLoaderService instanceof DI\Definitions\ServiceDefinition);
+			assert($protocolLoaderService instanceof NetteDI\Definitions\ServiceDefinition);
 
 			$accessoriesFactories = $builder->findByType(
 				Protocol\Accessories\AccessoryFactory::class,

@@ -30,7 +30,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Http\Routing;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
 use stdClass;
@@ -47,7 +47,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbShellyConnectorHomeKitConnectorBridge';
@@ -59,7 +59,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
@@ -78,7 +78,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(ShellyConnectorHomeKitConnector\Logger::class)
 			->setAutowired(false);
 
@@ -86,7 +86,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 		 * BUILDERS
 		 */
 
-		$builder->addDefinition($this->prefix('builder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('builder'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Builders\Builder::class)
 			->setArguments([
 				'logger' => $logger,
@@ -96,14 +96,14 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 		 * MAPPING CONFIGURATION
 		 */
 
-		$builder->addDefinition($this->prefix('mapping.builder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('mapping.builder'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Mapping\Builder::class);
 
 		/**
 		 * ROUTE MIDDLEWARES & ROUTING
 		 */
 
-		$builder->addDefinition($this->prefix('router.api.routes'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('router.api.routes'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
@@ -113,7 +113,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 
 		$builder->addDefinition(
 			$this->prefix('controllers.bridges'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Controllers\BridgesV1::class)
 			->addSetup('setLogger', [$logger])
@@ -123,64 +123,76 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 		 * JSON-API SCHEMAS
 		 */
 
-		$builder->addDefinition($this->prefix('schemas.device.shelly'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.device.shelly'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Devices\Shelly::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.lightbulb'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.lightbulb'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Lightbulb::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.outlet'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.outlet'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Outlet::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.relay'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.relay'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Relay::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.valve'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.valve'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Valve::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.windowCovering'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.windowCovering'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\WindowCovering::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.inputButton'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.inputButton'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\InputButton::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.inputSwitch'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('schemas.channel.inputSwitch'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Schemas\Channels\InputSwitch::class);
 
 		/**
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.device.shelly'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.device.shelly'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Devices\Shelly::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.lightbulb'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.channel.lightbulb'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Channels\Lightbulb::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.outlet'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel.outlet'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Outlet::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.relay'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel.relay'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Relay::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.valve'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel.valve'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Valve::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.windowCovering'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\WindowCovering::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.inputButton'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\InputButton::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.inputSwitch'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\InputSwitch::class);
 
@@ -216,7 +228,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.build'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.build'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Build::class)
 			->setArguments([
 				'logger' => $logger,
@@ -224,7 +236,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -257,7 +269,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -267,7 +279,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents',
@@ -282,7 +294,7 @@ class ShellyConnectorHomeKitConnectorExtension extends DI\CompilerExtension impl
 
 		$routerService = $builder->getDefinitionByType(Routing\Router::class);
 
-		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
+		if ($routerService instanceof NetteDI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [
 				$builder->getDefinitionByType(Router\ApiRoutes::class),
 				$routerService,

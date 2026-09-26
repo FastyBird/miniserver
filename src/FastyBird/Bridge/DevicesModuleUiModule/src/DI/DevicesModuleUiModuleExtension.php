@@ -28,7 +28,7 @@ use FastyBird\Core\Http\Routing;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
 use stdClass;
@@ -45,7 +45,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DevicesModuleUiModuleExtension extends DI\CompilerExtension
+class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 {
 
 	public const NAME = 'fbDevicesModuleUiModuleBridge';
@@ -57,7 +57,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
@@ -71,7 +71,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 	}
 
 	/**
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function loadConfiguration(): void
 	{
@@ -79,7 +79,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(DevicesModuleUiModule\Logger::class)
 			->setAutowired(false);
 
@@ -87,16 +87,25 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.moduleEntities'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('subscribers.moduleEntities'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Subscribers\ModuleEntities::class);
 
-		$builder->addDefinition($this->prefix('subscribers.stateEntities'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.stateEntities'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\StateEntities::class);
 
-		$builder->addDefinition($this->prefix('subscribers.documentsMapper'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('subscribers.documentsMapper'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Subscribers\DocumentsMapper::class);
 
-		$builder->addDefinition($this->prefix('subscribers.dataSourceAction'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('subscribers.dataSourceAction'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Subscribers\ActionCommand::class);
 
 		/**
@@ -105,19 +114,19 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 
 		$builder->addDefinition(
 			$this->prefix('schemas.dataSources.connectorProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Widgets\DataSources\ConnectorProperty::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.dataSources.deviceProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Widgets\DataSources\DeviceProperty::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.dataSources.channelProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Widgets\DataSources\ChannelProperty::class);
 
@@ -127,19 +136,19 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.dataSources.connectorProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Widgets\DataSources\ConnectorProperty::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.dataSources.deviceProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Widgets\DataSources\DeviceProperty::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.dataSources.channelProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Widgets\DataSources\ChannelProperty::class);
 
@@ -153,7 +162,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.stateEntities'),
-				new DI\Definitions\ServiceDefinition(),
+				new NetteDI\Definitions\ServiceDefinition(),
 			)
 				->setType(DevicesModuleUiModuleConsumers\SocketsBridge::class)
 				->setArguments([
@@ -164,7 +173,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -197,7 +206,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -207,7 +216,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Bridge\DevicesModuleUiModule\Documents',
@@ -222,10 +231,10 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 
 		try {
 			$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
-			assert($consumerService instanceof DI\Definitions\ServiceDefinition);
+			assert($consumerService instanceof NetteDI\Definitions\ServiceDefinition);
 
 			$wsServerService = $builder->getDefinitionByType(Server\ServerRuntime::class);
-			assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
+			assert($wsServerService instanceof NetteDI\Definitions\ServiceDefinition);
 
 			$wsServerService->addSetup(
 				'?->onCreate[] = function() {?->enable(?);}',
@@ -236,7 +245,7 @@ class DevicesModuleUiModuleExtension extends DI\CompilerExtension
 				],
 			);
 
-		} catch (DI\MissingServiceException) {
+		} catch (NetteDI\MissingServiceException) {
 			// Extension is not registered
 		}
 	}

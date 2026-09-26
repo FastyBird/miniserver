@@ -30,7 +30,7 @@ use FastyBird\Module\Ui\Caching as UiCaching;
 use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models as UiModels;
 use Nette;
-use Nette\Caching;
+use Nette\Caching as NetteCaching;
 use function array_map;
 use function assert;
 use function count;
@@ -120,14 +120,14 @@ final class ModuleEntities implements Common\EventSubscriber
 		}
 
 		$this->uiModuleCaching->getConfigurationBuilderCache()->clean([
-			Caching\Cache::Tags => array_map(
+			NetteCaching\Cache::Tags => array_map(
 				static fn (Documents\Widgets\DataSources\Property $dataSource): string => $dataSource->getId()->toString(),
 				$dataSources,
 			),
 		]);
 
 		$this->uiModuleCaching->getConfigurationRepositoryCache()->clean([
-			Caching\Cache::Tags => array_map(
+			NetteCaching\Cache::Tags => array_map(
 				static fn (Documents\Widgets\DataSources\Property $dataSource): string => $dataSource->getId()->toString(),
 				$dataSources,
 			),

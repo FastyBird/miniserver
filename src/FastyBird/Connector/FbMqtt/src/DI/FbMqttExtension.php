@@ -33,7 +33,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
 use function array_pop;
@@ -47,7 +47,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class FbMqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbFbMqttConnector';
@@ -59,20 +59,20 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
 	}
 
 	/**
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(FbMqtt\Logger::class)
 			->setAutowired(false);
 
@@ -113,7 +113,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 		 * API
 		 */
 
-		$builder->addDefinition($this->prefix('api.connectionsManager'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('api.connectionsManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(API\ConnectionManager::class);
 
 		$builder->addFactoryDefinition($this->prefix('api.client'))
@@ -130,7 +130,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.device'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\DeviceAttribute::class)
 			->setArguments([
@@ -139,7 +139,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.deviceProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\DeviceProperty::class)
 			->setArguments([
@@ -148,7 +148,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.extension'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\ExtensionAttribute::class)
 			->setArguments([
@@ -157,7 +157,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.channel'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\ChannelAttribute::class)
 			->setArguments([
@@ -166,7 +166,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.channelProperty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\ChannelProperty::class)
 			->setArguments([
@@ -175,7 +175,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.writeV1DevicePropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteV1DevicePropertyState::class)
 			->setArguments([
@@ -184,7 +184,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.writeV1ChannelPropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteV1ChannelPropertyState::class)
 			->setArguments([
@@ -193,7 +193,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers::class)
 			->setArguments([
@@ -203,7 +203,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.queue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Queue::class)
 			->setArguments([
@@ -212,7 +212,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.messageBuilder'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Helpers\MessageBuilder::class);
 
@@ -220,50 +220,53 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.controls'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.controls'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Controls::class);
 
 		/**
 		 * JSON-API SCHEMAS
 		 */
 
-		$builder->addDefinition($this->prefix('schemas.connector.fbMqtt'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.connector.fbMqtt'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('schemas.device.fbMqtt'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.device.fbMqtt'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.fbMqtt'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.fbMqtt'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Channel::class);
 
 		/**
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.connector.fbMqtt'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition(
+			$this->prefix('hydrators.connector.fbMqtt'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Hydrators\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('hydrators.device.fbMqtt'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.device.fbMqtt'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.fbMqtt'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel.fbMqtt'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Channel::class);
 
 		/**
 		 * HELPERS
 		 */
 
-		$builder->addDefinition($this->prefix('helpers.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Connector::class);
 
 		/**
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.execute'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.execute'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Execute::class);
 
-		$builder->addDefinition($this->prefix('commands.install'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.install'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class)
 			->setArguments([
 				'logger' => $logger,
@@ -289,7 +292,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -322,7 +325,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -332,7 +335,7 @@ class FbMqttExtension extends DI\CompilerExtension implements Translation\DI\Tra
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Connector\FbMqtt\Documents',

@@ -82,15 +82,15 @@ use Nette\Schema;
 use Nettrine\Migrations as NettrineMigrations;
 use Nettrine\ORM as NettrineORM;
 use Override;
-use Psr\EventDispatcher as WsServerEventDispatcher;
+use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Log;
 use React;
 use Sentry;
 use stdClass;
-use Symfony\Bridge\Monolog as SymfonyMonolog;
+use Symfony\Bridge\Monolog as BridgeMonolog;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\EventDispatcher;
-use Symfony\Contracts\EventDispatcher as SymfonyEventDispatcherContracts;
+use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
+use Symfony\Contracts\EventDispatcher as ContractsEventDispatcher;
 use function array_values;
 use function assert;
 use function class_alias;
@@ -365,7 +365,7 @@ final class CoreExtension extends DI\CompilerExtension
 				$this->prefix('application.logger.handler.console'),
 				new DI\Definitions\ServiceDefinition(),
 			)
-				->setType(SymfonyMonolog\Handler\ConsoleHandler::class);
+				->setType(BridgeMonolog\Handler\ConsoleHandler::class);
 		}
 
 		$builder->addDefinition($this->prefix('application.cache.psr6'), new DI\Definitions\ServiceDefinition())
@@ -1103,9 +1103,9 @@ final class CoreExtension extends DI\CompilerExtension
 		 * satisfies every lookup below, whichever of the two interfaces is asked for.
 		 */
 
-		if ($builder->getByType(WsServerEventDispatcher\EventDispatcherInterface::class) === null) {
+		if ($builder->getByType(PsrEventDispatcher\EventDispatcherInterface::class) === null) {
 			$builder->addDefinition($this->prefix('application.eventDispatcher'))
-				->setType(EventDispatcher\EventDispatcher::class);
+				->setType(ComponentEventDispatcher\EventDispatcher::class);
 		}
 
 		/**
@@ -1287,11 +1287,11 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if ($configuration->simpleAuth->enable->nette->application) {
 			if (
-				$builder->getByType(SymfonyEventDispatcherContracts\EventDispatcherInterface::class) !== null
+				$builder->getByType(ContractsEventDispatcher\EventDispatcherInterface::class) !== null
 				&& $builder->getByType(NetteApplication\Application::class) !== null
 			) {
 				$dispatcher = $builder->getDefinition(
-					$builder->getByType(SymfonyEventDispatcherContracts\EventDispatcherInterface::class),
+					$builder->getByType(ContractsEventDispatcher\EventDispatcherInterface::class),
 				);
 				$application = $builder->getDefinition($builder->getByType(NetteApplication\Application::class));
 				assert($application instanceof DI\Definitions\ServiceDefinition);
@@ -1446,9 +1446,11 @@ final class CoreExtension extends DI\CompilerExtension
 
 		if (
 			interface_exists('Symfony\Component\EventDispatcher\EventDispatcherInterface')
-			&& $builder->getByType(EventDispatcher\EventDispatcherInterface::class) !== null
+			&& $builder->getByType(ComponentEventDispatcher\EventDispatcherInterface::class) !== null
 		) {
-			$dispatcher = $builder->getDefinition($builder->getByType(EventDispatcher\EventDispatcherInterface::class));
+			$dispatcher = $builder->getDefinition(
+				$builder->getByType(ComponentEventDispatcher\EventDispatcherInterface::class),
+			);
 
 			// Preserved guard (PR #450): the base Application service is genuinely optional --
 			// nothing in this extension registers it directly, only whichever extension embeds
@@ -1546,15 +1548,15 @@ final class CoreExtension extends DI\CompilerExtension
 		 * preserved from WsServerExtension::beforeCompile())
 		 */
 
-		if ($builder->getByType(WsServerEventDispatcher\EventDispatcherInterface::class) === null) {
+		if ($builder->getByType(PsrEventDispatcher\EventDispatcherInterface::class) === null) {
 			throw new Exceptions\Logic(sprintf(
 				'Service of type "%s" is needed. Please register it.',
-				WsServerEventDispatcher\EventDispatcherInterface::class,
+				PsrEventDispatcher\EventDispatcherInterface::class,
 			));
 		}
 
 		$wsServerDispatcher = $builder->getDefinition(
-			$builder->getByType(WsServerEventDispatcher\EventDispatcherInterface::class),
+			$builder->getByType(PsrEventDispatcher\EventDispatcherInterface::class),
 		);
 		$socketWrapperServiceName = $builder->getByType(WebSocketsServer\Wrapper::class);
 		assert(is_string($socketWrapperServiceName));
