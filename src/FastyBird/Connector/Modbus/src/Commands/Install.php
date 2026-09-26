@@ -320,7 +320,10 @@ class Install extends Console\Command\Command
 		$createDevices = (bool) $io->askQuestion($question);
 
 		if ($createDevices) {
-			$connector = $this->connectorsRepository->find($connector->getId(), ModbusEntities\Connectors\Connector::class);
+			$connector = $this->connectorsRepository->find(
+				$connector->getId(),
+				ModbusEntities\Connectors\Connector::class,
+			);
 			assert($connector instanceof ModbusEntities\Connectors\Connector);
 
 			$this->createDevice($io, $connector);
@@ -1322,7 +1325,10 @@ class Install extends Console\Command\Command
 			$findChannelsQuery = new Queries\Entities\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
-			$channels = $this->channelsRepository->findAllBy($findChannelsQuery, ModbusEntities\Channels\Channel::class);
+			$channels = $this->channelsRepository->findAllBy(
+				$findChannelsQuery,
+				ModbusEntities\Channels\Channel::class,
+			);
 
 			foreach ($channels as $channel) {
 				if ($channel->getRegisterType() !== null) {
@@ -1767,7 +1773,10 @@ class Install extends Console\Command\Command
 		$findChannelsQuery = new Queries\Entities\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$deviceChannels = $this->channelsRepository->findAllBy($findChannelsQuery, ModbusEntities\Channels\Channel::class);
+		$deviceChannels = $this->channelsRepository->findAllBy(
+			$findChannelsQuery,
+			ModbusEntities\Channels\Channel::class,
+		);
 		usort(
 			$deviceChannels,
 			static fn (ModbusEntities\Channels\Channel $a, ModbusEntities\Channels\Channel $b): int => (
@@ -2480,7 +2489,10 @@ class Install extends Console\Command\Command
 		return $answer;
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, ModbusEntities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(
+		Style\SymfonyStyle $io,
+		ModbusEntities\Devices\Device|null $device = null,
+	): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//modbus-connector.cmd.install.questions.provide.device.name'),
@@ -2922,7 +2934,10 @@ class Install extends Console\Command\Command
 				$findChannelsQuery = new Queries\Entities\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
-				$channels = $this->channelsRepository->findAllBy($findChannelsQuery, ModbusEntities\Channels\Channel::class);
+				$channels = $this->channelsRepository->findAllBy(
+					$findChannelsQuery,
+					ModbusEntities\Channels\Channel::class,
+				);
 
 				foreach ($channels as $deviceChannel) {
 					$address = $deviceChannel->getAddress();
@@ -3863,43 +3878,47 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): ModbusEntities\Connectors\Connector {
-			if ($answer === null) {
+		$question->setValidator(
+			function (string|int|null $answer) use ($connectors): ModbusEntities\Connectors\Connector {
+				if ($answer === null) {
+					throw new ModbusExceptions\Runtime(
+						sprintf(
+							(string) $this->translator->translate(
+								'//modbus-connector.cmd.base.messages.answerNotValid',
+							),
+							$answer,
+						),
+					);
+				}
+
+				if (array_key_exists($answer, array_values($connectors))) {
+					$answer = array_values($connectors)[$answer];
+				}
+
+				$identifier = array_search($answer, $connectors, true);
+
+				if ($identifier !== false) {
+					$findConnectorQuery = new Queries\Entities\FindConnectors();
+					$findConnectorQuery->byIdentifier($identifier);
+
+					$connector = $this->connectorsRepository->findOneBy(
+						$findConnectorQuery,
+						ModbusEntities\Connectors\Connector::class,
+					);
+
+					if ($connector !== null) {
+						return $connector;
+					}
+				}
+
 				throw new ModbusExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 						$answer,
 					),
 				);
-			}
-
-			if (array_key_exists($answer, array_values($connectors))) {
-				$answer = array_values($connectors)[$answer];
-			}
-
-			$identifier = array_search($answer, $connectors, true);
-
-			if ($identifier !== false) {
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
-				$findConnectorQuery->byIdentifier($identifier);
-
-				$connector = $this->connectorsRepository->findOneBy(
-					$findConnectorQuery,
-					ModbusEntities\Connectors\Connector::class,
-				);
-
-				if ($connector !== null) {
-					return $connector;
-				}
-			}
-
-			throw new ModbusExceptions\Runtime(
-				sprintf(
-					(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
-					$answer,
-				),
-			);
-		});
+			},
+		);
 
 		$connector = $io->askQuestion($question);
 		assert($connector instanceof ModbusEntities\Connectors\Connector);

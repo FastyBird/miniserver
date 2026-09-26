@@ -224,7 +224,10 @@ final class StoreSubDevice implements Queue\Consumer
 				$findChannelQuery->byIdentifier($identifier);
 				$findChannelQuery->forDevice($device);
 
-				$channel = $this->channelsRepository->findOneBy($findChannelQuery, NsPanelEntities\Channels\Channel::class);
+				$channel = $this->channelsRepository->findOneBy(
+					$findChannelQuery,
+					NsPanelEntities\Channels\Channel::class,
+				);
 
 				if ($channel === null) {
 					$capabilityMetadata = $this->mappingBuilder->getCapabilitiesMapping()->findByCapabilityName(

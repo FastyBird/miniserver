@@ -275,7 +275,10 @@ final class StoreLocalDevice implements Queue\Consumer
 				$findChannelQuery->byIdentifier(TuyaTypes\DataPoint::LOCAL);
 				$findChannelQuery->forDevice($device);
 
-				$channel = $this->channelsRepository->findOneBy($findChannelQuery, TuyaEntities\Channels\Channel::class);
+				$channel = $this->channelsRepository->findOneBy(
+					$findChannelQuery,
+					TuyaEntities\Channels\Channel::class,
+				);
 
 				if ($channel === null) {
 					$channel = $this->channelsManager->create(Utils\ArrayHash::from([

@@ -1291,7 +1291,10 @@ class Install extends Console\Command\Command
 		return $answer;
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, SonoffEntities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(
+		Style\SymfonyStyle $io,
+		SonoffEntities\Devices\Device|null $device = null,
+	): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//sonoff-connector.cmd.install.questions.provide.device.name'),
@@ -1340,43 +1343,47 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): SonoffEntities\Connectors\Connector {
-			if ($answer === null) {
+		$question->setValidator(
+			function (string|int|null $answer) use ($connectors): SonoffEntities\Connectors\Connector {
+				if ($answer === null) {
+					throw new SonoffExceptions\Runtime(
+						sprintf(
+							(string) $this->translator->translate(
+								'//sonoff-connector.cmd.base.messages.answerNotValid',
+							),
+							$answer,
+						),
+					);
+				}
+
+				if (array_key_exists($answer, array_values($connectors))) {
+					$answer = array_values($connectors)[$answer];
+				}
+
+				$identifier = array_search($answer, $connectors, true);
+
+				if ($identifier !== false) {
+					$findConnectorQuery = new Queries\Entities\FindConnectors();
+					$findConnectorQuery->byIdentifier($identifier);
+
+					$connector = $this->connectorsRepository->findOneBy(
+						$findConnectorQuery,
+						SonoffEntities\Connectors\Connector::class,
+					);
+
+					if ($connector !== null) {
+						return $connector;
+					}
+				}
+
 				throw new SonoffExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 						$answer,
 					),
 				);
-			}
-
-			if (array_key_exists($answer, array_values($connectors))) {
-				$answer = array_values($connectors)[$answer];
-			}
-
-			$identifier = array_search($answer, $connectors, true);
-
-			if ($identifier !== false) {
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
-				$findConnectorQuery->byIdentifier($identifier);
-
-				$connector = $this->connectorsRepository->findOneBy(
-					$findConnectorQuery,
-					SonoffEntities\Connectors\Connector::class,
-				);
-
-				if ($connector !== null) {
-					return $connector;
-				}
-			}
-
-			throw new SonoffExceptions\Runtime(
-				sprintf(
-					(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
-					$answer,
-				),
-			);
-		});
+			},
+		);
 
 		$connector = $io->askQuestion($question);
 		assert($connector instanceof SonoffEntities\Connectors\Connector);

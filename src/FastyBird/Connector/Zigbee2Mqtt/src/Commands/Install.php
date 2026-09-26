@@ -699,7 +699,10 @@ class Install extends Console\Command\Command
 			$findDevicesQuery = new Queries\Entities\FindDevices();
 			$findDevicesQuery->forConnector($connector);
 
-			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Zigbee2MqttEntities\Devices\Bridge::class);
+			$devices = $this->devicesRepository->findAllBy(
+				$findDevicesQuery,
+				Zigbee2MqttEntities\Devices\Bridge::class,
+			);
 
 			$table->addRow([
 				$index + 1,
@@ -1057,7 +1060,10 @@ class Install extends Console\Command\Command
 			$findDevicesQuery = new Queries\Entities\FindDevices();
 			$findDevicesQuery->forParent($device);
 
-			$childDevices = $this->devicesRepository->findAllBy($findDevicesQuery, Zigbee2MqttEntities\Devices\Device::class);
+			$childDevices = $this->devicesRepository->findAllBy(
+				$findDevicesQuery,
+				Zigbee2MqttEntities\Devices\Device::class,
+			);
 
 			$table->addRow([
 				$index + 1,
@@ -1088,7 +1094,10 @@ class Install extends Console\Command\Command
 		$findDevicesQuery = new Queries\Entities\FindBridgeDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		if ($this->devicesRepository->getResultSet($findDevicesQuery, Zigbee2MqttEntities\Devices\Bridge::class)->count() === 0) {
+		if ($this->devicesRepository->getResultSet(
+			$findDevicesQuery,
+			Zigbee2MqttEntities\Devices\Bridge::class,
+		)->count() === 0) {
 			$io->info((string) $this->translator->translate('//zigbee2mqtt-connector.cmd.install.messages.noBridges'));
 
 			return;
@@ -1157,7 +1166,10 @@ class Install extends Console\Command\Command
 			$findDevicesQuery->forConnector($bridge->getConnector());
 			$findDevicesQuery->forParent($bridge);
 
-			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Zigbee2MqttEntities\Devices\SubDevice::class);
+			$devices = $this->devicesRepository->findAllBy(
+				$findDevicesQuery,
+				Zigbee2MqttEntities\Devices\SubDevice::class,
+			);
 
 			foreach ($devices as $device) {
 				$createdAt = $device->getCreatedAt();
@@ -1799,7 +1811,10 @@ class Install extends Console\Command\Command
 		return strval($password) === '' ? null : strval($password);
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, Zigbee2MqttEntities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(
+		Style\SymfonyStyle $io,
+		Zigbee2MqttEntities\Devices\Device|null $device = null,
+	): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//zigbee2mqtt-connector.cmd.install.questions.provide.device.name'),
@@ -1873,8 +1888,39 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//zigbee2mqtt-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): Zigbee2MqttEntities\Connectors\Connector {
-			if ($answer === null) {
+		$question->setValidator(
+			function (string|int|null $answer) use ($connectors): Zigbee2MqttEntities\Connectors\Connector {
+				if ($answer === null) {
+					throw new Zigbee2MqttExceptions\Runtime(
+						sprintf(
+							(string) $this->translator->translate(
+								'//zigbee2mqtt-connector.cmd.base.messages.answerNotValid',
+							),
+							$answer,
+						),
+					);
+				}
+
+				if (array_key_exists($answer, array_values($connectors))) {
+					$answer = array_values($connectors)[$answer];
+				}
+
+				$identifier = array_search($answer, $connectors, true);
+
+				if ($identifier !== false) {
+					$findConnectorQuery = new Queries\Entities\FindConnectors();
+					$findConnectorQuery->byIdentifier($identifier);
+
+					$connector = $this->connectorsRepository->findOneBy(
+						$findConnectorQuery,
+						Zigbee2MqttEntities\Connectors\Connector::class,
+					);
+
+					if ($connector !== null) {
+						return $connector;
+					}
+				}
+
 				throw new Zigbee2MqttExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate(
@@ -1883,35 +1929,8 @@ class Install extends Console\Command\Command
 						$answer,
 					),
 				);
-			}
-
-			if (array_key_exists($answer, array_values($connectors))) {
-				$answer = array_values($connectors)[$answer];
-			}
-
-			$identifier = array_search($answer, $connectors, true);
-
-			if ($identifier !== false) {
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
-				$findConnectorQuery->byIdentifier($identifier);
-
-				$connector = $this->connectorsRepository->findOneBy(
-					$findConnectorQuery,
-					Zigbee2MqttEntities\Connectors\Connector::class,
-				);
-
-				if ($connector !== null) {
-					return $connector;
-				}
-			}
-
-			throw new Zigbee2MqttExceptions\Runtime(
-				sprintf(
-					(string) $this->translator->translate('//zigbee2mqtt-connector.cmd.base.messages.answerNotValid'),
-					$answer,
-				),
-			);
-		});
+			},
+		);
 
 		$connector = $io->askQuestion($question);
 		assert($connector instanceof Zigbee2MqttEntities\Connectors\Connector);
@@ -1932,7 +1951,10 @@ class Install extends Console\Command\Command
 		$findDevicesQuery = new Queries\Entities\FindBridgeDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$connectorDevices = $this->devicesRepository->findAllBy($findDevicesQuery, Zigbee2MqttEntities\Devices\Bridge::class);
+		$connectorDevices = $this->devicesRepository->findAllBy(
+			$findDevicesQuery,
+			Zigbee2MqttEntities\Devices\Bridge::class,
+		);
 		usort(
 			$connectorDevices,
 			static fn (Zigbee2MqttEntities\Devices\Bridge $a, Zigbee2MqttEntities\Devices\Bridge $b): int => (
@@ -1981,7 +2003,10 @@ class Install extends Console\Command\Command
 					$findDeviceQuery->byIdentifier($identifier);
 					$findDeviceQuery->forConnector($connector);
 
-					$device = $this->devicesRepository->findOneBy($findDeviceQuery, Zigbee2MqttEntities\Devices\Bridge::class);
+					$device = $this->devicesRepository->findOneBy(
+						$findDeviceQuery,
+						Zigbee2MqttEntities\Devices\Bridge::class,
+					);
 
 					if ($device !== null) {
 						return $device;
@@ -2104,7 +2129,10 @@ class Install extends Console\Command\Command
 	 * @throws Zigbee2MqttExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function findNextDeviceIdentifier(Zigbee2MqttEntities\Connectors\Connector $connector, string $pattern): string
+	private function findNextDeviceIdentifier(
+		Zigbee2MqttEntities\Connectors\Connector $connector,
+		string $pattern,
+	): string
 	{
 		for ($i = 1; $i <= 100; $i++) {
 			$identifier = sprintf($pattern, $i);

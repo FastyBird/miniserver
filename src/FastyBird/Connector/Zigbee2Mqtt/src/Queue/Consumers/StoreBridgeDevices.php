@@ -122,7 +122,10 @@ final class StoreBridgeDevices implements Queue\Consumer
 				$findDeviceQuery->forParent($bridge);
 				$findDeviceQuery->byIdentifier($deviceDescription->getIeeeAddress());
 
-				$device = $this->devicesRepository->findOneBy($findDeviceQuery, Zigbee2MqttEntities\Devices\SubDevice::class);
+				$device = $this->devicesRepository->findOneBy(
+					$findDeviceQuery,
+					Zigbee2MqttEntities\Devices\SubDevice::class,
+				);
 			}
 
 			if ($device === null) {
@@ -448,7 +451,10 @@ final class StoreBridgeDevices implements Queue\Consumer
 				$findChannelQuery->byIdentifier($identifier);
 				$findChannelQuery->forDevice($device);
 
-				$channel = $this->channelsRepository->findOneBy($findChannelQuery, Zigbee2MqttEntities\Channels\Channel::class);
+				$channel = $this->channelsRepository->findOneBy(
+					$findChannelQuery,
+					Zigbee2MqttEntities\Channels\Channel::class,
+				);
 
 				if ($channel === null) {
 					$channel = $this->channelsManager->create(Utils\ArrayHash::from([

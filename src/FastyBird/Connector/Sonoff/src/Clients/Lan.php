@@ -614,7 +614,8 @@ final class Lan extends ClientProcess implements Client
 				$states[] = [
 					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::STARTUP->value,
 					SonoffTypes\PropertyParameter::VALUE->value => $switchConfiguration->getStartup(),
-					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value . '_' . $switchConfiguration->getOutlet(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value
+						. '_' . $switchConfiguration->getOutlet(),
 				];
 			}
 		}

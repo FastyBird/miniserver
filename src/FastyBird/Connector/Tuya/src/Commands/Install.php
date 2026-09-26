@@ -1480,43 +1480,45 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//tuya-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): TuyaEntities\Connectors\Connector {
-			if ($answer === null) {
+		$question->setValidator(
+			function (string|int|null $answer) use ($connectors): TuyaEntities\Connectors\Connector {
+				if ($answer === null) {
+					throw new TuyaExceptions\Runtime(
+						sprintf(
+							(string) $this->translator->translate('//tuya-connector.cmd.base.messages.answerNotValid'),
+							$answer,
+						),
+					);
+				}
+
+				if (array_key_exists($answer, array_values($connectors))) {
+					$answer = array_values($connectors)[$answer];
+				}
+
+				$identifier = array_search($answer, $connectors, true);
+
+				if ($identifier !== false) {
+					$findConnectorQuery = new Queries\Entities\FindConnectors();
+					$findConnectorQuery->byIdentifier($identifier);
+
+					$connector = $this->connectorsRepository->findOneBy(
+						$findConnectorQuery,
+						TuyaEntities\Connectors\Connector::class,
+					);
+
+					if ($connector !== null) {
+						return $connector;
+					}
+				}
+
 				throw new TuyaExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//tuya-connector.cmd.base.messages.answerNotValid'),
 						$answer,
 					),
 				);
-			}
-
-			if (array_key_exists($answer, array_values($connectors))) {
-				$answer = array_values($connectors)[$answer];
-			}
-
-			$identifier = array_search($answer, $connectors, true);
-
-			if ($identifier !== false) {
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
-				$findConnectorQuery->byIdentifier($identifier);
-
-				$connector = $this->connectorsRepository->findOneBy(
-					$findConnectorQuery,
-					TuyaEntities\Connectors\Connector::class,
-				);
-
-				if ($connector !== null) {
-					return $connector;
-				}
-			}
-
-			throw new TuyaExceptions\Runtime(
-				sprintf(
-					(string) $this->translator->translate('//tuya-connector.cmd.base.messages.answerNotValid'),
-					$answer,
-				),
-			);
-		});
+			},
+		);
 
 		$connector = $io->askQuestion($question);
 		assert($connector instanceof TuyaEntities\Connectors\Connector);

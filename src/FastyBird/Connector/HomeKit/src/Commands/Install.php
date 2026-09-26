@@ -287,7 +287,10 @@ class Install extends Console\Command\Command
 		$createDevices = (bool) $io->askQuestion($question);
 
 		if ($createDevices) {
-			$connector = $this->connectorsRepository->find($connector->getId(), HomeKitEntities\Connectors\Connector::class);
+			$connector = $this->connectorsRepository->find(
+				$connector->getId(),
+				HomeKitEntities\Connectors\Connector::class,
+			);
 			assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 			$this->createDevice($io, $connector);
@@ -426,7 +429,10 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$connector = $this->connectorsRepository->find($connector->getId(), HomeKitEntities\Connectors\Connector::class);
+		$connector = $this->connectorsRepository->find(
+			$connector->getId(),
+			HomeKitEntities\Connectors\Connector::class,
+		);
 		assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 		$this->askManageConnectorAction($io, $connector);
@@ -597,7 +603,10 @@ class Install extends Console\Command\Command
 				$findDeviceQuery->byIdentifier($answer);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, HomeKitEntities\Devices\Device::class) !== null
+					$this->devicesRepository->findOneBy(
+						$findDeviceQuery,
+						HomeKitEntities\Devices\Device::class,
+					) !== null
 				) {
 					throw new HomeKitExceptions\Runtime(
 						(string) $this->translator->translate(
@@ -622,7 +631,10 @@ class Install extends Console\Command\Command
 				$findDeviceQuery->byIdentifier($identifier);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, HomeKitEntities\Devices\Device::class) === null
+					$this->devicesRepository->findOneBy(
+						$findDeviceQuery,
+						HomeKitEntities\Devices\Device::class,
+					) === null
 				) {
 					break;
 				}
@@ -1381,7 +1393,10 @@ class Install extends Console\Command\Command
 		$findChannelsQuery = new HomeKitQueries\Entities\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$deviceChannels = $this->channelsRepository->findAllBy($findChannelsQuery, HomeKitEntities\Channels\Channel::class);
+		$deviceChannels = $this->channelsRepository->findAllBy(
+			$findChannelsQuery,
+			HomeKitEntities\Channels\Channel::class,
+		);
 		usort(
 			$deviceChannels,
 			static fn (DevicesEntities\Channels\Channel $a, DevicesEntities\Channels\Channel $b): int => (
@@ -2095,7 +2110,10 @@ class Install extends Console\Command\Command
 		HomeKitEntities\Connectors\Connector $connector,
 	): void
 	{
-		$connector = $this->connectorsRepository->find($connector->getId(), HomeKitEntities\Connectors\Connector::class);
+		$connector = $this->connectorsRepository->find(
+			$connector->getId(),
+			HomeKitEntities\Connectors\Connector::class,
+		);
 		assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 		$question = new Console\Question\ChoiceQuestion(
@@ -2360,7 +2378,10 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function askConnectorPort(Style\SymfonyStyle $io, HomeKitEntities\Connectors\Connector|null $connector = null): int
+	private function askConnectorPort(
+		Style\SymfonyStyle $io,
+		HomeKitEntities\Connectors\Connector|null $connector = null,
+	): int
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//homekit-connector.cmd.install.questions.provide.connector.port'),
@@ -2407,7 +2428,10 @@ class Install extends Console\Command\Command
 		return intval($io->askQuestion($question));
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, HomeKitEntities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(
+		Style\SymfonyStyle $io,
+		HomeKitEntities\Devices\Device|null $device = null,
+	): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//homekit-connector.cmd.install.questions.provide.device.name'),
@@ -3533,43 +3557,47 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): HomeKitEntities\Connectors\Connector {
-			if ($answer === null) {
+		$question->setValidator(
+			function (string|int|null $answer) use ($connectors): HomeKitEntities\Connectors\Connector {
+				if ($answer === null) {
+					throw new HomeKitExceptions\Runtime(
+						sprintf(
+							(string) $this->translator->translate(
+								'//homekit-connector.cmd.base.messages.answerNotValid',
+							),
+							$answer,
+						),
+					);
+				}
+
+				if (array_key_exists($answer, array_values($connectors))) {
+					$answer = array_values($connectors)[$answer];
+				}
+
+				$identifier = array_search($answer, $connectors, true);
+
+				if ($identifier !== false) {
+					$findConnectorQuery = new HomeKitQueries\Entities\FindConnectors();
+					$findConnectorQuery->byIdentifier($identifier);
+
+					$connector = $this->connectorsRepository->findOneBy(
+						$findConnectorQuery,
+						HomeKitEntities\Connectors\Connector::class,
+					);
+
+					if ($connector !== null) {
+						return $connector;
+					}
+				}
+
 				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
 					),
 				);
-			}
-
-			if (array_key_exists($answer, array_values($connectors))) {
-				$answer = array_values($connectors)[$answer];
-			}
-
-			$identifier = array_search($answer, $connectors, true);
-
-			if ($identifier !== false) {
-				$findConnectorQuery = new HomeKitQueries\Entities\FindConnectors();
-				$findConnectorQuery->byIdentifier($identifier);
-
-				$connector = $this->connectorsRepository->findOneBy(
-					$findConnectorQuery,
-					HomeKitEntities\Connectors\Connector::class,
-				);
-
-				if ($connector !== null) {
-					return $connector;
-				}
-			}
-
-			throw new HomeKitExceptions\Runtime(
-				sprintf(
-					(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
-					$answer,
-				),
-			);
-		});
+			},
+		);
 
 		$connector = $io->askQuestion($question);
 		assert($connector instanceof HomeKitEntities\Connectors\Connector);
@@ -3814,7 +3842,10 @@ class Install extends Console\Command\Command
 		$findChannelsQuery = new HomeKitQueries\Entities\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$deviceChannels = $this->channelsRepository->findAllBy($findChannelsQuery, HomeKitEntities\Channels\Channel::class);
+		$deviceChannels = $this->channelsRepository->findAllBy(
+			$findChannelsQuery,
+			HomeKitEntities\Channels\Channel::class,
+		);
 		usort(
 			$deviceChannels,
 			static fn (DevicesEntities\Channels\Channel $a, DevicesEntities\Channels\Channel $b): int => (

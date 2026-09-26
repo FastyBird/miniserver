@@ -2012,7 +2012,10 @@ class Install extends Console\Command\Command
 		return strval($name) === '' ? null : strval($name);
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, VieraEntities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(
+		Style\SymfonyStyle $io,
+		VieraEntities\Devices\Device|null $device = null,
+	): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//viera-connector.cmd.install.questions.provide.device.name'),
@@ -2030,7 +2033,10 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function askDeviceIpAddress(Style\SymfonyStyle $io, VieraEntities\Devices\Device|null $device = null): string
+	private function askDeviceIpAddress(
+		Style\SymfonyStyle $io,
+		VieraEntities\Devices\Device|null $device = null,
+	): string
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//viera-connector.cmd.install.questions.provide.device.ipAddress'),
@@ -2090,7 +2096,10 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function askDeviceMacAddress(Style\SymfonyStyle $io, VieraEntities\Devices\Device|null $device = null): string
+	private function askDeviceMacAddress(
+		Style\SymfonyStyle $io,
+		VieraEntities\Devices\Device|null $device = null,
+	): string
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//viera-connector.cmd.install.questions.provide.device.macAddress'),
@@ -2250,43 +2259,45 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): VieraEntities\Connectors\Connector {
-			if ($answer === null) {
+		$question->setValidator(
+			function (string|int|null $answer) use ($connectors): VieraEntities\Connectors\Connector {
+				if ($answer === null) {
+					throw new VieraExceptions\Runtime(
+						sprintf(
+							(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
+							$answer,
+						),
+					);
+				}
+
+				if (array_key_exists($answer, array_values($connectors))) {
+					$answer = array_values($connectors)[$answer];
+				}
+
+				$identifier = array_search($answer, $connectors, true);
+
+				if ($identifier !== false) {
+					$findConnectorQuery = new Queries\Entities\FindConnectors();
+					$findConnectorQuery->byIdentifier($identifier);
+
+					$connector = $this->connectorsRepository->findOneBy(
+						$findConnectorQuery,
+						VieraEntities\Connectors\Connector::class,
+					);
+
+					if ($connector !== null) {
+						return $connector;
+					}
+				}
+
 				throw new VieraExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 						$answer,
 					),
 				);
-			}
-
-			if (array_key_exists($answer, array_values($connectors))) {
-				$answer = array_values($connectors)[$answer];
-			}
-
-			$identifier = array_search($answer, $connectors, true);
-
-			if ($identifier !== false) {
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
-				$findConnectorQuery->byIdentifier($identifier);
-
-				$connector = $this->connectorsRepository->findOneBy(
-					$findConnectorQuery,
-					VieraEntities\Connectors\Connector::class,
-				);
-
-				if ($connector !== null) {
-					return $connector;
-				}
-			}
-
-			throw new VieraExceptions\Runtime(
-				sprintf(
-					(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
-					$answer,
-				),
-			);
-		});
+			},
+		);
 
 		$connector = $io->askQuestion($question);
 		assert($connector instanceof VieraEntities\Connectors\Connector);
