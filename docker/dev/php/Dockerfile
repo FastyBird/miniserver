@@ -1,6 +1,6 @@
-FROM composer:2.8 AS composer
+FROM composer:2.10 AS composer
 
-FROM php:8.4-fpm
+FROM php:8.5-fpm
 
 RUN apt-get update
 
