@@ -70,9 +70,59 @@ alone was aliased 11 different ways, one per library the importing file happened
 ```
 
 The baseline may only shrink. A stale entry in it fails the gate. **As of E3.15 (#508), the
-last capability PR of the Core identity refactor's Epic E3, the baseline holds 0 entries** --
-every alias of a Core namespace anywhere in the repository is legal. The table above is kept
-as history, not current state.
+last capability PR of the Core identity refactor's Epic E3, the Core-alias entries in the
+baseline were 0** -- every alias of a Core namespace anywhere in the repository was legal. The
+table above is kept as history, not current state.
+
+**Single-segment exception, generalized.** A name with only one segment (`use Casbin;`,
+`use Monolog;`, `use Exception;`) has no two-segment form, so it always stays bare, even when it
+collides with something. This was approved for `Casbin` specifically -- there is no
+`Something\Casbin` to alias it from -- and #541 states it as the general rule: it applies to
+every single-segment import, not just that one name.
+
+```php
+use Casbin;                                 // legal even inside a collision group
+use FastyBird\Core\Security\Models\Casbin as ModelsCasbin; // the colliding sibling still aliases
+```
+
+**One named exception: `Doctrine\ORM\Mapping as ORM`.** Unlike the single-segment rule above,
+this is not a general mechanism -- it is exactly one FQCN, allowed exactly one alias, listed as
+a single constant map in `tools/check-naming.php` (`FB_ALIAS_EXCEPTIONS`). `ORM` is Doctrine's
+own documented attribute convention (`#[ORM\Entity]`, `#[ORM\Column]`, ...), used by the 54
+entity files that import it with no collision at all; the last-two-segments rule would want
+`ORMMapping` instead, which exists nowhere in the codebase and would split entity files across
+two styles for no reader benefit. Only this exact pair is exempt: `Doctrine\ORM\Mapping` left
+bare, or aliased anything other than `ORM` (`Orm`, `ORMMapping`), while inside a collision group
+is still a violation, and the alias `make naming` expects is `ORM`, not a climbed one. Every
+other member of the same group is unaffected and still gets the ordinary `fbExpectedAlias` rule.
+
+```php
+use Doctrine\ORM\Mapping as ORM;                              // legal, even colliding
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping; // ordinary rule, unaffected
+```
+
+**#541: every collision group, not just Core's.** Before #541, `make naming` only checked
+aliases of `FastyBird\Core\...` imports (check 3 above). The identical problem -- a bare import
+left in place while a same-named sibling gets aliased -- happens just as often between two
+ordinary, non-Core namespaces: a package's own `Documents` left bare next to
+`Devices\Documents as DevicesDocuments`, or a module's own `Caching` left bare next to
+`Nette\Caching as NetteCaching`. `make naming`'s check 4 now applies the same rule -- bare
+unless it collides, aliased to the smallest colliding `k >= 2` when it does, single-segment
+names always exempt -- to every top-level `use` import in every file the gate scans, per KIND
+(`use`, `use function` and `use const` never collide with each other). A `use` inside a class
+body (trait composition) is not an import and is never in scope; neither is a standalone alias
+with no colliding sibling in the file (`use Doctrine\ORM\Mapping as ORM;` on its own).
+
+Both checks now compute a colliding import's expected alias from the same function over the
+same, whole-file, same-kind sibling list -- check 3's Core-only siblings widened to match check
+4's, so the two can never disagree about what one particular import is expected to be aliased
+as.
+
+Seeding this check found 534 additional violations, 124 of them the `Doctrine\ORM\Mapping`
+collisions the named exception above then removed, leaving **410 violations across the
+baseline**, entirely pre-existing -- this PR adds no code rewrite, only the check and the
+baseline entries it newly makes visible. They will be worked down package by package in the PRs
+#541 plans next.
 
 ## Namespace layout
 

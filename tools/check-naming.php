@@ -69,6 +69,63 @@
  * used as grouping layers) but permitted inside a declared TYPE name, where they are ordinary
  * English words -- Ratchet's WampApplication is not a reference to FastyBird:Application!.
  *
+ * CHECK 4: every import collision group, repository-wide (#541)
+ *
+ * The alias check above (3.) only ever looked at `FastyBird\Core\...` imports. But the same
+ * problem -- a bare import left in place while a same-named sibling from elsewhere gets
+ * aliased -- happens just as often between two ordinary, non-Core namespaces: a package's own
+ * `Documents` left bare next to `Devices\Documents as DevicesDocuments`, or `Nette\Caching`
+ * bare next to a module's own `Caching` also bare. Check 4 generalises the rule to every
+ * `use` import in the files this gate already scans, for every KIND (class, `use function`,
+ * `use const` each keep their own alias namespace and are never compared across kinds):
+ *
+ *   - imports are grouped, per file and per kind, by the lower-cased LAST segment of the
+ *     imported name (`fbLastSegments($fqcn, 1)`) -- a GROUP is any such bucket holding two or
+ *     more DISTINCT fully-qualified names (the same FQCN imported twice under two different
+ *     local bindings, bare and aliased, is not a collision with itself);
+ *   - a single-segment import (`use Casbin;`, `use Monolog;`, `use Exception;`) has no
+ *     two-segment form and MUST stay bare even inside a group -- this is the Casbin exception
+ *     already approved for Core, generalised to every import in the repository;
+ *   - FB_ALIAS_EXCEPTIONS is a second, much narrower exception, a single FQCN => alias pair,
+ *     not a generic mechanism: `Doctrine\ORM\Mapping` MUST be aliased exactly `ORM` when it is
+ *     in a group (bare, or any other alias, is still a violation there) -- Doctrine's own
+ *     documented attribute convention (`#[ORM\Entity]`), which the last-two-segments rule
+ *     cannot produce (it would want `ORMMapping`) and which the 54 entity files that import it
+ *     with no collision at all already use everywhere;
+ *   - every other member of a group -- and `Doctrine\ORM\Mapping`'s own group-mates -- must
+ *     carry EXACTLY `fbExpectedAlias($fqcn, $siblings)` -- the same symmetric,
+ *     climb-on-collision function check 3 already uses, given every same-kind import of the
+ *     file as `$siblings` (not just the Core ones -- see below);
+ *   - a bare member of a group, or one whose alias does not match, is a violation; a member
+ *     that is already correct produces nothing; an import that is not in any group is entirely
+ *     out of scope (a standalone `use Doctrine\ORM\Mapping as ORM;` with no colliding sibling
+ *     is never touched by this check either way -- it needs no exception to pass).
+ *
+ * Only a top-level import counts. A class-body `use TraitName;` is not an import -- it names a
+ * trait to compose into the class, and its own `as` clause renames a method's visibility or
+ * name, an entirely different thing PHP happens to spell the same way. Every legal top-level
+ * `use` import in a namespaced file appears before the file's first `class`/`interface`/
+ * `trait`/`enum` declaration (that is a language rule, not a style choice), so "before the
+ * first declaration" is used as the structural test rather than trying to track brace depth: a
+ * `use` match at or after that offset is a class body and is ignored. The same boundary, and
+ * the same regex, is now shared with check 3's Core-only collector, so the two checks can never
+ * disagree about which `use` statements exist in a file. A closure's `use (...)` is never
+ * mistaken for an import either, because a real import never has `(` where a namespace name
+ * would be, and the shared regex requires it not to.
+ *
+ * SIBLINGS: check 3 now shares check 4's rule. Before #541, check 3 computed each Core
+ * import's expected alias using only the file's OTHER Core imports as siblings, because
+ * nothing else was being checked. That is no longer sufficient: `FastyBird\Core\DI` and
+ * `Nette\DI` reduce to the same short name, so a file can contain a Core import that check 3
+ * alone would consider correctly aliased (no OTHER Core import collides with it) while check 4
+ * requires the SAME import to escalate, because a non-Core sibling does collide with it -- two
+ * checks silently disagreeing about the one import. Check 3 and check 4 now compute every
+ * expected alias from the identical function call over the identical, whole-file, same-kind
+ * sibling list, so the two can never reach a different answer for the same import. The only
+ * remaining coordination needed is not reporting the same bad import twice: if check 3 already
+ * flagged an import's alias as wrong, check 4 skips it rather than repeating the finding under
+ * the `import` category.
+ *
  * Exit codes follow tools/check-layering.php:
  *   0  clean
  *   1  at least one violation, or the baseline has gone stale
@@ -116,6 +173,22 @@ const FB_TYPE_DENYLIST = [
 	'DoctrinePhone',
 	'IPub',
 	'IPublikuj',
+];
+
+/**
+ * A named exception to check 4's collision rule, next to (not instead of) the single-segment
+ * exception -- NOT a generic "vendor idiom" mechanism, just this one FQCN => alias pair. `ORM`
+ * is Doctrine's own documented attribute convention (`#[ORM\Entity]`); 54 entity files use it
+ * with no collision at all, and the handful that also import a same-named `...\Mapping`
+ * (`FastyBird\Core\Persistence\Mapping`, for a discriminator map) would otherwise be forced
+ * onto `ORMMapping` alone, splitting entity files across two styles for no reader benefit.
+ * Only this exact pair is exempt: `Doctrine\ORM\Mapping` aliased anything else (`Orm`,
+ * `ORMMapping`) or left bare, while inside a collision group, is still a violation, and its
+ * expected text is `ORM`, not whatever fbExpectedAlias() would otherwise climb to. Every OTHER
+ * member of the same group is unaffected and still gets its normal fbExpectedAlias().
+ */
+const FB_ALIAS_EXCEPTIONS = [
+	'Doctrine\\ORM\\Mapping' => 'ORM',
 ];
 
 $repoRoot = dirname(__DIR__);
@@ -284,41 +357,130 @@ function fbSplitUseBody(string $body): array
 }
 
 /**
- * Every FastyBird\Core import in the file, aliased or not, in whichever of the seven legal
- * `use` forms it was written: leading whitespace, grouped, comma list, leading `\`, uppercase
- * `AS`, `use function`/`use const`, and the bare root (`FastyBird\Core as X`). A bare (never
- * aliased) import is included too: it still names an FQCN that can be the OTHER half of a
- * collision an aliased sibling escalates to avoid, even though a bare import is never itself
- * checked for alias legality (there is no alias to check).
+ * The offset of the file's first `class`/`interface`/`trait`/`enum` declaration, or PHP_INT_MAX
+ * when it has none. Every legal top-level `use` import statement in a PHP file must appear
+ * before the first such declaration -- PHP does not allow one afterward -- so this offset is a
+ * reliable, purely structural boundary between "these `use` statements are imports" and "these
+ * are class-body trait composition", without having to track brace depth through the rest of
+ * the file.
+ */
+function fbFindImportBoundary(string $code): int
+{
+	if (
+		preg_match(
+			'/^[ \t]*(?:final\s+|abstract\s+|readonly\s+)*(?:class|interface|trait|enum)\s+\w+/m',
+			$code,
+			$matches,
+			PREG_OFFSET_CAPTURE,
+		) === 1
+	) {
+		return $matches[0][1];
+	}
+
+	return PHP_INT_MAX;
+}
+
+/**
+ * Every top-level `use` IMPORT in the file (i.e. before $boundary, see fbFindImportBoundary),
+ * aliased or not, in whichever of the seven legal forms it was written: leading whitespace,
+ * grouped, comma list, leading `\`, uppercase `AS`, `use function`/`use const`, and the bare
+ * root (`FastyBird\Core as X`). A bare (never aliased) import is included too: it still names
+ * an FQCN that can be the OTHER half of a collision an aliased sibling escalates to avoid, and
+ * -- since #541 -- can itself be the half that is missing a required alias.
  *
  * `kind` is `class`, `function` or `const` -- PHP keeps a separate alias namespace per kind
  * (`use Foo;` and `use function Foo;` never collide with each other), so only same-kind
  * imports are ever compared against one another for the collision rule below.
  *
+ * `(?!\()` immediately after `use\s+` rejects a closure's `use ($foo)`: a real import never has
+ * `(` where a namespace name would be, and without the exclusion a closure written as
+ *
+ *   function ()
+ *       use ($foo) {
+ *
+ * would put `use` at the very start of a line, the only thing that otherwise distinguishes an
+ * import from the rest of a statement.
+ *
  * @return array<array{imported: string, alias: string|null, kind: string}>
  */
-function fbFindCoreImports(string $code): array
+function fbFindAllImports(string $code, int $boundary): array
 {
 	$imports = [];
 
 	// The body is captured non-greedily up to the first following `;`. `s` (DOTALL) lets it
 	// span the multiple lines a grouped import can be written across; that is safe even so,
 	// because the match still stops at the nearest `;`, and no legal `use` body contains one.
-	preg_match_all('/^[ \t]*use\s+((?:function|const)\s+)?(.+?);/ms', $code, $statementMatches, PREG_SET_ORDER);
+	preg_match_all(
+		'/^[ \t]*use\s+(?!\()((?:function|const)\s+)?(.+?);/ms',
+		$code,
+		$statementMatches,
+		PREG_SET_ORDER | PREG_OFFSET_CAPTURE,
+	);
 
 	foreach ($statementMatches as $statement) {
-		$kind = trim($statement[1]) !== '' ? strtolower(trim($statement[1])) : 'class';
+		if ($statement[0][1] >= $boundary) {
+			// At or after the file's first class-like declaration -- a class-body trait `use`,
+			// not an import.
+			continue;
+		}
 
-		foreach (fbSplitUseBody($statement[2]) as [$name, $alias]) {
+		$kind = trim($statement[1][0]) !== '' ? strtolower(trim($statement[1][0])) : 'class';
+
+		foreach (fbSplitUseBody($statement[2][0]) as [$name, $alias]) {
 			$imported = ltrim($name, '\\');
 
-			if ($imported === 'FastyBird\\Core' || str_starts_with($imported, 'FastyBird\\Core\\')) {
-				$imports[] = ['imported' => $imported, 'alias' => $alias, 'kind' => $kind];
-			}
+			$imports[] = ['imported' => $imported, 'alias' => $alias, 'kind' => $kind];
 		}
 	}
 
 	return $imports;
+}
+
+/**
+ * Narrows fbFindAllImports()'s result to FastyBird\Core imports only -- check 3's original
+ * scope, now expressed as a filter over the shared collector rather than its own regex, so
+ * check 3 and check 4 can never disagree about which `use` statements a file contains.
+ *
+ * @param array<array{imported: string, alias: string|null, kind: string}> $allImports
+ *
+ * @return array<array{imported: string, alias: string|null, kind: string}>
+ */
+function fbFilterCoreImports(array $allImports): array
+{
+	return array_values(array_filter(
+		$allImports,
+		static fn (array $import): bool => $import['imported'] === 'FastyBird\\Core'
+			|| str_starts_with($import['imported'], 'FastyBird\\Core\\'),
+	));
+}
+
+/**
+ * Groups $fqcns (one kind's worth of a file's imports, duplicates allowed) by the lower-cased
+ * last segment, and keeps only the groups holding two or more DISTINCT names -- a name imported
+ * twice under two different local bindings is not a collision with itself.
+ *
+ * @param array<string> $fqcns
+ *
+ * @return array<string, array<string>> lower-cased short name => distinct FQCNs
+ */
+function fbGroupCollisions(array $fqcns): array
+{
+	$byShortName = [];
+
+	foreach ($fqcns as $fqcn) {
+		$short = strtolower(fbLastSegments($fqcn, 1));
+		$byShortName[$short][$fqcn] = true;
+	}
+
+	$groups = [];
+
+	foreach ($byShortName as $short => $members) {
+		if (count($members) >= 2) {
+			$groups[$short] = array_keys($members);
+		}
+	}
+
+	return $groups;
 }
 
 /**
@@ -421,6 +583,18 @@ function fbCheckFile(string $path, string $code, string $relative): array
 		}
 	}
 
+	// Every top-level `use` import in the file, all kinds, Core and non-Core alike -- shared by
+	// checks 3 and 4 so the two can never disagree about which imports exist or what any one of
+	// them is expected to be aliased as (see "SIBLINGS" in the file docblock).
+	$boundary = fbFindImportBoundary($code);
+	$allImports = fbFindAllImports($code, $boundary);
+
+	$importsByKind = [];
+
+	foreach ($allImports as $import) {
+		$importsByKind[$import['kind']][] = $import['imported'];
+	}
+
 	// 3. Import aliases of a FastyBird\Core symbol, everywhere in the repository.
 	//
 	// The "expected" value is the last-two-segments rule (extended, see the file docblock, to
@@ -433,12 +607,17 @@ function fbCheckFile(string $path, string $code, string $relative): array
 	// alias genuinely does not match the convention), so this is not a hole -- just do not
 	// treat the printed "expected" text as an authoritative replacement for a function or
 	// const alias; pick one by hand instead.
-	$fileCoreImports = fbFindCoreImports($code);
-	$importsByKind = [];
+	//
+	// Siblings are every same-kind import of the file (see above), not just the other Core
+	// ones: since #541, a Core import can be forced to escalate past two segments by a
+	// non-Core sibling that reduces to the same text (`FastyBird\Core\DI` alongside
+	// `Nette\DI`), and check 4 below computes the very same expected value for that import, so
+	// the two must start from the same sibling list or they could reach different answers.
+	$fileCoreImports = fbFilterCoreImports($allImports);
 
-	foreach ($fileCoreImports as $import) {
-		$importsByKind[$import['kind']][] = $import['imported'];
-	}
+	// Tracks which (kind, imported) pairs this loop already reported, so check 4 does not
+	// repeat the same finding under the `import` category.
+	$check3Flagged = [];
 
 	foreach ($fileCoreImports as $import) {
 		if ($import['alias'] === null) {
@@ -457,6 +636,75 @@ function fbCheckFile(string $path, string $code, string $relative): array
 				$alias,
 				$expected,
 			);
+
+			$check3Flagged[$import['kind'] . ':' . $imported] = true;
+		}
+	}
+
+	// 4. Every import collision group, repository-wide (#541). See the file docblock for the
+	// rule; this is its implementation.
+	foreach ($importsByKind as $kind => $fqcns) {
+		$groups = fbGroupCollisions($fqcns);
+
+		if ($groups === []) {
+			continue;
+		}
+
+		foreach ($allImports as $import) {
+			if ($import['kind'] !== $kind) {
+				continue;
+			}
+
+			$imported = $import['imported'];
+			$short = strtolower(fbLastSegments($imported, 1));
+
+			if (!isset($groups[$short])) {
+				// Not part of any collision group in this file -- out of scope, e.g. a
+				// standalone `use Doctrine\ORM\Mapping as ORM;` with no colliding sibling.
+				continue;
+			}
+
+			if (isset($check3Flagged[$kind . ':' . $imported])) {
+				// Already reported by check 3 above -- same import, same underlying problem.
+				continue;
+			}
+
+			$alias = $import['alias'];
+			$isSingleSegment = !str_contains($imported, '\\');
+
+			if ($isSingleSegment) {
+				// No two-segment form exists (`Casbin`, `Monolog`, `Exception`) -- it must
+				// stay bare even though it collides; its siblings still take their aliases.
+				if ($alias !== null) {
+					$violations[] = sprintf(
+						"import\t%s\t%s as %s (expected bare)",
+						$relative,
+						$imported,
+						$alias,
+					);
+				}
+
+				continue;
+			}
+
+			$expected = FB_ALIAS_EXCEPTIONS[$imported] ?? fbExpectedAlias($imported, $fqcns);
+
+			if ($alias === null) {
+				$violations[] = sprintf(
+					"import\t%s\t%s bare (expected %s)",
+					$relative,
+					$imported,
+					$expected,
+				);
+			} elseif ($alias !== $expected) {
+				$violations[] = sprintf(
+					"import\t%s\t%s as %s (expected %s)",
+					$relative,
+					$imported,
+					$alias,
+					$expected,
+				);
+			}
 		}
 	}
 
@@ -466,6 +714,7 @@ function fbCheckFile(string $path, string $code, string $relative): array
 $files = fbCollectFiles($repoRoot);
 $violations = [];
 $coreImports = 0;
+$allImportLines = 0;
 
 foreach ($files as $path) {
 	$code = file_get_contents($path);
@@ -476,6 +725,10 @@ foreach ($files as $path) {
 
 	$relative = substr($path, strlen($repoRoot) + 1);
 	$coreImports += preg_match_all('/^[ \t]*use\s+(?:(?:function|const)\s+)?\\\\?FastyBird\\\\Core\b/m', $code);
+	// Independent of fbFindAllImports() on purpose (see the comment below) -- a plain count of
+	// every line that opens a `use` import, closures excluded, with no boundary/trait
+	// filtering. #541's check 4 self-check floor.
+	$allImportLines += preg_match_all('/^[ \t]*use\s+(?!\()(?:(?:function|const)\s+)?\S/m', $code);
 
 	foreach (fbCheckFile($path, $code, $relative) as $violation) {
 		$violations[] = $violation;
@@ -493,6 +746,11 @@ if (count($files) < 2_000) {
 
 if ($coreImports < 1_500) {
 	fbFail(sprintf('found only %d FastyBird\\Core imports; expected at least 1500', $coreImports));
+}
+
+// #541: same reasoning, for every import checks 3 and 4 now share, not just the Core ones.
+if ($allImportLines < 20_000) {
+	fbFail(sprintf('found only %d total import lines; expected at least 20000', $allImportLines));
 }
 
 sort($violations);
