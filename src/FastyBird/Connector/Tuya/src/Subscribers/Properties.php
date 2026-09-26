@@ -19,7 +19,7 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\Tuya\Entities;
+use FastyBird\Connector\Tuya\Entities as TuyaEntities;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Types as TuyaTypes;
@@ -75,7 +75,7 @@ final class Properties implements Common\EventSubscriber
 		$entity = $eventArgs->getObject();
 
 		// Check for valid entity
-		if (!$entity instanceof Entities\Devices\Device) {
+		if (!$entity instanceof TuyaEntities\Devices\Device) {
 			return;
 		}
 

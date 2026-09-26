@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Sonoff\Commands;
 use DateTimeImmutable;
 use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Entities;
+use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Types as SonoffTypes;
@@ -148,7 +148,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					SonoffEntities\Connectors\Connector::class,
 				);
 
 				if ($connector !== null) {
@@ -176,7 +176,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					SonoffEntities\Connectors\Connector::class,
 				);
 
 				if ($connector === null) {
@@ -208,11 +208,11 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Connectors\Connector::class,
+				'entity' => SonoffEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof SonoffEntities\Connectors\Connector);
 
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
@@ -414,7 +414,7 @@ class Install extends Console\Command\Command
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof SonoffEntities\Connectors\Connector);
 
 			if ($modeProperty === null) {
 				if ($mode === null) {
@@ -608,11 +608,11 @@ class Install extends Console\Command\Command
 
 		$connectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			SonoffEntities\Connectors\Connector::class,
 		);
 		usort(
 			$connectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (SonoffEntities\Connectors\Connector $a, SonoffEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -629,7 +629,7 @@ class Install extends Console\Command\Command
 			$findDevicesQuery = new Queries\Entities\FindDevices();
 			$findDevicesQuery->forConnector($connector);
 
-			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, SonoffEntities\Devices\Device::class);
 
 			$table->addRow([
 				$index + 1,
@@ -650,7 +650,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function editDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function editDevice(Style\SymfonyStyle $io, SonoffEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -669,7 +669,7 @@ class Install extends Console\Command\Command
 			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof SonoffEntities\Devices\Device);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -705,7 +705,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function deleteDevice(Style\SymfonyStyle $io, SonoffEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -774,15 +774,15 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function listDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function listDevices(Style\SymfonyStyle $io, SonoffEntities\Connectors\Connector $connector): void
 	{
 		$findDevicesQuery = new Queries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, SonoffEntities\Devices\Device::class);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (SonoffEntities\Devices\Device $a, SonoffEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -820,7 +820,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function discoverDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function discoverDevices(Style\SymfonyStyle $io, SonoffEntities\Connectors\Connector $connector): void
 	{
 		if ($this->output === null) {
 			throw new SonoffExceptions\InvalidState('Something went wrong, console output is not configured');
@@ -873,7 +873,7 @@ class Install extends Console\Command\Command
 		$findDevicesQuery = new Queries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, SonoffEntities\Devices\Device::class);
 
 		foreach ($devices as $device) {
 			$createdAt = $device->getCreatedAt();
@@ -1014,7 +1014,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageConnectorAction(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
+		SonoffEntities\Connectors\Connector $connector,
 	): void
 	{
 		$question = new Console\Question\ChoiceQuestion(
@@ -1145,7 +1145,7 @@ class Install extends Console\Command\Command
 
 	private function askConnectorName(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		SonoffEntities\Connectors\Connector|null $connector = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -1166,7 +1166,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorUsername(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		SonoffEntities\Connectors\Connector|null $connector = null,
 	): string
 	{
 		$question = new Console\Question\Question(
@@ -1291,7 +1291,7 @@ class Install extends Console\Command\Command
 		return $answer;
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(Style\SymfonyStyle $io, SonoffEntities\Devices\Device|null $device = null): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//sonoff-connector.cmd.install.questions.provide.device.name'),
@@ -1306,7 +1306,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function askWhichConnector(Style\SymfonyStyle $io): Entities\Connectors\Connector|null
+	private function askWhichConnector(Style\SymfonyStyle $io): SonoffEntities\Connectors\Connector|null
 	{
 		$connectors = [];
 
@@ -1314,11 +1314,11 @@ class Install extends Console\Command\Command
 
 		$systemConnectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			SonoffEntities\Connectors\Connector::class,
 		);
 		usort(
 			$systemConnectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (SonoffEntities\Connectors\Connector $a, SonoffEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1340,7 +1340,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
+		$question->setValidator(function (string|int|null $answer) use ($connectors): SonoffEntities\Connectors\Connector {
 			if ($answer === null) {
 				throw new SonoffExceptions\Runtime(
 					sprintf(
@@ -1362,7 +1362,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					SonoffEntities\Connectors\Connector::class,
 				);
 
 				if ($connector !== null) {
@@ -1379,7 +1379,7 @@ class Install extends Console\Command\Command
 		});
 
 		$connector = $io->askQuestion($question);
-		assert($connector instanceof Entities\Connectors\Connector);
+		assert($connector instanceof SonoffEntities\Connectors\Connector);
 
 		return $connector;
 	}
@@ -1389,8 +1389,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichDevice(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
-	): Entities\Devices\Device|null
+		SonoffEntities\Connectors\Connector $connector,
+	): SonoffEntities\Devices\Device|null
 	{
 		$devices = [];
 
@@ -1399,11 +1399,11 @@ class Install extends Console\Command\Command
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Device::class,
+			SonoffEntities\Devices\Device::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (SonoffEntities\Devices\Device $a, SonoffEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1426,7 +1426,7 @@ class Install extends Console\Command\Command
 			(string) $this->translator->translate('//sonoff-connector.cmd.base.messages.answerNotValid'),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
+			function (string|int|null $answer) use ($connector, $devices): SonoffEntities\Devices\Device {
 				if ($answer === null) {
 					throw new SonoffExceptions\Runtime(
 						sprintf(
@@ -1451,7 +1451,7 @@ class Install extends Console\Command\Command
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Device::class,
+						SonoffEntities\Devices\Device::class,
 					);
 
 					if ($device !== null) {
@@ -1469,7 +1469,7 @@ class Install extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Device);
+		assert($device instanceof SonoffEntities\Devices\Device);
 
 		return $device;
 	}

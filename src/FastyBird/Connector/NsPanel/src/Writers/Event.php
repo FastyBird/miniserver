@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Writers;
 
 use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Queries;
+use FastyBird\Connector\NsPanel\Queries as NsPanelQueries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -62,7 +62,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 	): void
 	{
 		try {
-			$findChannelQuery = new Queries\Configuration\FindChannels();
+			$findChannelQuery = new NsPanelQueries\Configuration\FindChannels();
 			$findChannelQuery->byId($event->getProperty()->getChannel());
 
 			$channel = $this->channelsConfigurationRepository->findOneBy(

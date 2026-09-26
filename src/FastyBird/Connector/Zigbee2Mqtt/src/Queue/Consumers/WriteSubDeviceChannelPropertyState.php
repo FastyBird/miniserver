@@ -18,11 +18,11 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 use DateTimeInterface;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\API;
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
-use FastyBird\Connector\Zigbee2Mqtt\Models;
-use FastyBird\Connector\Zigbee2Mqtt\Queries;
+use FastyBird\Connector\Zigbee2Mqtt\Models as Zigbee2MqttModels;
+use FastyBird\Connector\Zigbee2Mqtt\Queries as Zigbee2MqttQueries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Clock;
@@ -71,7 +71,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 		private readonly Helpers\Connectors\Connector $connectorHelper,
 		private readonly Helpers\Devices\Bridge $bridgeHelper,
 		private readonly Helpers\Devices\SubDevice $subDeviceHelper,
-		private readonly Models\StateRepository $stateRepository,
+		private readonly Zigbee2MqttModels\StateRepository $stateRepository,
 		private readonly Zigbee2Mqtt\Logger $logger,
 		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
@@ -101,12 +101,12 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new Zigbee2MqttQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			Zigbee2MqttDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -134,13 +134,13 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindSubDevices();
+		$findDeviceQuery = new Zigbee2MqttQueries\Configuration\FindSubDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\SubDevice::class,
+			Zigbee2MqttDocuments\Devices\SubDevice::class,
 		);
 
 		if ($device === null) {
@@ -170,13 +170,13 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 
 		$bridge = $this->subDeviceHelper->getBridge($device);
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new Zigbee2MqttQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			Zigbee2MqttDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {
@@ -616,7 +616,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function getClient(Documents\Connectors\Connector $connector): API\Client
+	private function getClient(Zigbee2MqttDocuments\Connectors\Connector $connector): API\Client
 	{
 		return $this->connectionManager->getClient(
 			$connector->getId()->toString(),

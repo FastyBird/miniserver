@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Commands;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Entities;
+use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
@@ -163,7 +163,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					ModbusEntities\Connectors\Connector::class,
 				);
 
 				if ($connector !== null) {
@@ -191,7 +191,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					ModbusEntities\Connectors\Connector::class,
 				);
 
 				if ($connector === null) {
@@ -227,11 +227,11 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Connectors\Connector::class,
+				'entity' => ModbusEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof ModbusEntities\Connectors\Connector);
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
@@ -320,8 +320,8 @@ class Install extends Console\Command\Command
 		$createDevices = (bool) $io->askQuestion($question);
 
 		if ($createDevices) {
-			$connector = $this->connectorsRepository->find($connector->getId(), Entities\Connectors\Connector::class);
-			assert($connector instanceof Entities\Connectors\Connector);
+			$connector = $this->connectorsRepository->find($connector->getId(), ModbusEntities\Connectors\Connector::class);
+			assert($connector instanceof ModbusEntities\Connectors\Connector);
 
 			$this->createDevice($io, $connector);
 		}
@@ -461,7 +461,7 @@ class Install extends Console\Command\Command
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof ModbusEntities\Connectors\Connector);
 
 			if ($modeProperty === null) {
 				if ($mode === null) {
@@ -620,8 +620,8 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$connector = $this->connectorsRepository->find($connector->getId(), Entities\Connectors\Connector::class);
-		assert($connector instanceof Entities\Connectors\Connector);
+		$connector = $this->connectorsRepository->find($connector->getId(), ModbusEntities\Connectors\Connector::class);
+		assert($connector instanceof ModbusEntities\Connectors\Connector);
 
 		$this->askManageConnectorAction($io, $connector);
 	}
@@ -730,11 +730,11 @@ class Install extends Console\Command\Command
 
 		$connectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			ModbusEntities\Connectors\Connector::class,
 		);
 		usort(
 			$connectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (ModbusEntities\Connectors\Connector $a, ModbusEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -751,7 +751,7 @@ class Install extends Console\Command\Command
 			$findDevicesQuery = new Queries\Entities\FindDevices();
 			$findDevicesQuery->forConnector($connector);
 
-			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, ModbusEntities\Devices\Device::class);
 
 			$table->addRow([
 				$index + 1,
@@ -780,7 +780,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function createDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function createDevice(Style\SymfonyStyle $io, ModbusEntities\Connectors\Connector $connector): void
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//modbus-connector.cmd.install.questions.provide.device.identifier'),
@@ -791,7 +791,7 @@ class Install extends Console\Command\Command
 				$findDeviceQuery = new Queries\Entities\FindDevices();
 				$findDeviceQuery->byIdentifier($answer);
 
-				$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
+				$device = $this->devicesRepository->findOneBy($findDeviceQuery, ModbusEntities\Devices\Device::class);
 
 				if ($device !== null) {
 					throw new ModbusExceptions\Runtime(
@@ -816,7 +816,7 @@ class Install extends Console\Command\Command
 				$findDeviceQuery = new Queries\Entities\FindDevices();
 				$findDeviceQuery->byIdentifier($identifier);
 
-				$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
+				$device = $this->devicesRepository->findOneBy($findDeviceQuery, ModbusEntities\Devices\Device::class);
 
 				if ($device === null) {
 					break;
@@ -865,12 +865,12 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$device = $this->devicesManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Devices\Device::class,
+				'entity' => ModbusEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof ModbusEntities\Devices\Device);
 
 			if ($connector->getClientMode() === ModbusTypes\ClientMode::RTU) {
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
@@ -953,8 +953,8 @@ class Install extends Console\Command\Command
 		$createRegisters = (bool) $io->askQuestion($question);
 
 		if ($createRegisters) {
-			$device = $this->devicesRepository->find($device->getId(), Entities\Devices\Device::class);
-			assert($device instanceof Entities\Devices\Device);
+			$device = $this->devicesRepository->find($device->getId(), ModbusEntities\Devices\Device::class);
+			assert($device instanceof ModbusEntities\Devices\Device);
 
 			$this->createRegister($io, $device);
 		}
@@ -972,7 +972,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function editDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function editDevice(Style\SymfonyStyle $io, ModbusEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -1056,7 +1056,7 @@ class Install extends Console\Command\Command
 			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof ModbusEntities\Devices\Device);
 
 			if ($connector->getClientMode() === ModbusTypes\ClientMode::RTU) {
 				if ($addressProperty === null) {
@@ -1186,8 +1186,8 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$device = $this->devicesRepository->find($device->getId(), Entities\Devices\Device::class);
-		assert($device instanceof Entities\Devices\Device);
+		$device = $this->devicesRepository->find($device->getId(), ModbusEntities\Devices\Device::class);
+		assert($device instanceof ModbusEntities\Devices\Device);
 
 		$this->askManageDeviceAction($io, $device);
 	}
@@ -1196,7 +1196,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function deleteDevice(Style\SymfonyStyle $io, ModbusEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -1271,7 +1271,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function manageDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function manageDevice(Style\SymfonyStyle $io, ModbusEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -1292,15 +1292,15 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function listDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function listDevices(Style\SymfonyStyle $io, ModbusEntities\Connectors\Connector $connector): void
 	{
 		$findDevicesQuery = new Queries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, ModbusEntities\Devices\Device::class);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (ModbusEntities\Devices\Device $a, ModbusEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1322,7 +1322,7 @@ class Install extends Console\Command\Command
 			$findChannelsQuery = new Queries\Entities\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
-			$channels = $this->channelsRepository->findAllBy($findChannelsQuery, Entities\Channels\Channel::class);
+			$channels = $this->channelsRepository->findAllBy($findChannelsQuery, ModbusEntities\Channels\Channel::class);
 
 			foreach ($channels as $channel) {
 				if ($channel->getRegisterType() !== null) {
@@ -1371,7 +1371,7 @@ class Install extends Console\Command\Command
 	 */
 	private function createRegister(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		ModbusEntities\Devices\Device $device,
 		bool $editMode = false,
 	): void
 	{
@@ -1404,7 +1404,7 @@ class Install extends Console\Command\Command
 
 			foreach (range($addresses[0], $addresses[1]) as $address) {
 				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\Channel::class,
+					'entity' => ModbusEntities\Channels\Channel::class,
 					'identifier' => $type->value . '_' . $address,
 					'name' => $name,
 					'device' => $device,
@@ -1515,7 +1515,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function editRegister(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function editRegister(Style\SymfonyStyle $io, ModbusEntities\Devices\Device $device): void
 	{
 		$channel = $this->askWhichRegister($io, $device);
 
@@ -1692,7 +1692,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function deleteRegister(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function deleteRegister(Style\SymfonyStyle $io, ModbusEntities\Devices\Device $device): void
 	{
 		$channel = $this->askWhichRegister($io, $device);
 
@@ -1762,15 +1762,15 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function listRegisters(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function listRegisters(Style\SymfonyStyle $io, ModbusEntities\Devices\Device $device): void
 	{
 		$findChannelsQuery = new Queries\Entities\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$deviceChannels = $this->channelsRepository->findAllBy($findChannelsQuery, Entities\Channels\Channel::class);
+		$deviceChannels = $this->channelsRepository->findAllBy($findChannelsQuery, ModbusEntities\Channels\Channel::class);
 		usort(
 			$deviceChannels,
-			static fn (Entities\Channels\Channel $a, Entities\Channels\Channel $b): int => (
+			static fn (ModbusEntities\Channels\Channel $a, ModbusEntities\Channels\Channel $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1913,7 +1913,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageConnectorAction(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
+		ModbusEntities\Connectors\Connector $connector,
 	): void
 	{
 		$question = new Console\Question\ChoiceQuestion(
@@ -2002,7 +2002,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageDeviceAction(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		ModbusEntities\Devices\Device $device,
 	): void
 	{
 		$question = new Console\Question\ChoiceQuestion(
@@ -2074,7 +2074,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorMode(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ModbusEntities\Connectors\Connector|null $connector = null,
 	): ModbusTypes\ClientMode
 	{
 		$default = null;
@@ -2143,7 +2143,7 @@ class Install extends Console\Command\Command
 
 	private function askConnectorName(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ModbusEntities\Connectors\Connector|null $connector = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -2164,7 +2164,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorInterface(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ModbusEntities\Connectors\Connector|null $connector = null,
 	): string
 	{
 		$question = new Console\Question\Question(
@@ -2197,7 +2197,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorBaudRate(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ModbusEntities\Connectors\Connector|null $connector = null,
 	): ModbusTypes\BaudRate
 	{
 		$default = $connector?->getBaudRate()->value ?? ModbusTypes\BaudRate::RATE_9600->value;
@@ -2264,7 +2264,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorByteSize(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ModbusEntities\Connectors\Connector|null $connector = null,
 	): ModbusTypes\ByteSize
 	{
 		$default = $connector?->getByteSize()->value ?? ModbusTypes\ByteSize::SIZE_8->value;
@@ -2331,7 +2331,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorDataParity(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ModbusEntities\Connectors\Connector|null $connector = null,
 	): ModbusTypes\Parity
 	{
 		$default = 0;
@@ -2421,7 +2421,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorStopBits(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ModbusEntities\Connectors\Connector|null $connector = null,
 	): ModbusTypes\StopBits
 	{
 		$default = $connector?->getStopBits()->value ?? ModbusTypes\StopBits::ONE->value;
@@ -2480,7 +2480,7 @@ class Install extends Console\Command\Command
 		return $answer;
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(Style\SymfonyStyle $io, ModbusEntities\Devices\Device|null $device = null): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//modbus-connector.cmd.install.questions.provide.device.name'),
@@ -2500,8 +2500,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askDeviceAddress(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
-		Entities\Devices\Device|null $device = null,
+		ModbusEntities\Connectors\Connector $connector,
+		ModbusEntities\Devices\Device|null $device = null,
 	): int
 	{
 		$question = new Console\Question\Question(
@@ -2525,7 +2525,7 @@ class Install extends Console\Command\Command
 
 			$devices = $this->devicesRepository->findAllBy(
 				$findDevicesQuery,
-				Entities\Devices\Device::class,
+				ModbusEntities\Devices\Device::class,
 			);
 
 			foreach ($devices as $connectorDevice) {
@@ -2555,7 +2555,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askDeviceIpAddress(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device|null $device = null,
+		ModbusEntities\Devices\Device|null $device = null,
 	): string
 	{
 		$question = new Console\Question\Question(
@@ -2590,7 +2590,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askDeviceIpAddressPort(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device|null $device = null,
+		ModbusEntities\Devices\Device|null $device = null,
 	): int
 	{
 		$question = new Console\Question\Question(
@@ -2621,8 +2621,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askDeviceUnitId(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
-		Entities\Devices\Device|null $device = null,
+		ModbusEntities\Connectors\Connector $connector,
+		ModbusEntities\Devices\Device|null $device = null,
 	): int
 	{
 		$question = new Console\Question\Question(
@@ -2646,7 +2646,7 @@ class Install extends Console\Command\Command
 
 			$devices = $this->devicesRepository->findAllBy(
 				$findDevicesQuery,
-				Entities\Devices\Device::class,
+				ModbusEntities\Devices\Device::class,
 			);
 
 			foreach ($devices as $connectorDevice) {
@@ -2676,7 +2676,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askDeviceByteOrder(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device|null $device = null,
+		ModbusEntities\Devices\Device|null $device = null,
 	): ModbusTypes\ByteOrder
 	{
 		$default = 0;
@@ -2771,7 +2771,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askRegisterType(
 		Style\SymfonyStyle $io,
-		Entities\Channels\Channel|null $channel = null,
+		ModbusEntities\Channels\Channel|null $channel = null,
 	): ModbusTypes\ChannelType
 	{
 		if ($channel !== null) {
@@ -2899,8 +2899,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askRegisterAddress(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
-		Entities\Channels\Channel|null $channel = null,
+		ModbusEntities\Devices\Device $device,
+		ModbusEntities\Channels\Channel|null $channel = null,
 	): int|array
 	{
 		$address = $channel?->getAddress();
@@ -2922,7 +2922,7 @@ class Install extends Console\Command\Command
 				$findChannelsQuery = new Queries\Entities\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
-				$channels = $this->channelsRepository->findAllBy($findChannelsQuery, Entities\Channels\Channel::class);
+				$channels = $this->channelsRepository->findAllBy($findChannelsQuery, ModbusEntities\Channels\Channel::class);
 
 				foreach ($channels as $deviceChannel) {
 					$address = $deviceChannel->getAddress();
@@ -2957,7 +2957,7 @@ class Install extends Console\Command\Command
 
 						$channels = $this->channelsRepository->findAllBy(
 							$findChannelsQuery,
-							Entities\Channels\Channel::class,
+							ModbusEntities\Channels\Channel::class,
 						);
 
 						foreach ($channels as $deviceChannel) {
@@ -2994,7 +2994,7 @@ class Install extends Console\Command\Command
 
 	private function askRegisterName(
 		Style\SymfonyStyle $io,
-		Entities\Channels\Channel|null $channel = null,
+		ModbusEntities\Channels\Channel|null $channel = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -3015,7 +3015,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askRegisterReadingDelay(
 		Style\SymfonyStyle $io,
-		Entities\Channels\Channel|null $channel = null,
+		ModbusEntities\Channels\Channel|null $channel = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -3037,7 +3037,7 @@ class Install extends Console\Command\Command
 	private function askRegisterDataType(
 		Style\SymfonyStyle $io,
 		ModbusTypes\ChannelType $type,
-		Entities\Channels\Channel|null $channel = null,
+		ModbusEntities\Channels\Channel|null $channel = null,
 	): ValuesTypes\DataType
 	{
 		$default = null;
@@ -3187,7 +3187,7 @@ class Install extends Console\Command\Command
 	private function askRegisterFormat(
 		Style\SymfonyStyle $io,
 		ValuesTypes\DataType $dataType,
-		Entities\Channels\Channel|null $channel = null,
+		ModbusEntities\Channels\Channel|null $channel = null,
 	): array|null
 	{
 		$format = [];
@@ -3241,7 +3241,7 @@ class Install extends Console\Command\Command
 	private function askFormatSwitchAction(
 		Style\SymfonyStyle $io,
 		Payloads\Switcher $payload,
-		Entities\Channels\Channel|null $channel = null,
+		ModbusEntities\Channels\Channel|null $channel = null,
 	): array|null
 	{
 		$defaultReading = $defaultWriting = null;
@@ -3505,7 +3505,7 @@ class Install extends Console\Command\Command
 	private function askFormatButtonAction(
 		Style\SymfonyStyle $io,
 		Payloads\Button $payload,
-		Entities\Channels\Channel|null $channel = null,
+		ModbusEntities\Channels\Channel|null $channel = null,
 	): array|null
 	{
 		$defaultReading = $defaultWriting = null;
@@ -3829,7 +3829,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function askWhichConnector(Style\SymfonyStyle $io): Entities\Connectors\Connector|null
+	private function askWhichConnector(Style\SymfonyStyle $io): ModbusEntities\Connectors\Connector|null
 	{
 		$connectors = [];
 
@@ -3837,11 +3837,11 @@ class Install extends Console\Command\Command
 
 		$systemConnectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			ModbusEntities\Connectors\Connector::class,
 		);
 		usort(
 			$systemConnectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (ModbusEntities\Connectors\Connector $a, ModbusEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -3863,7 +3863,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
+		$question->setValidator(function (string|int|null $answer) use ($connectors): ModbusEntities\Connectors\Connector {
 			if ($answer === null) {
 				throw new ModbusExceptions\Runtime(
 					sprintf(
@@ -3885,7 +3885,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					ModbusEntities\Connectors\Connector::class,
 				);
 
 				if ($connector !== null) {
@@ -3902,7 +3902,7 @@ class Install extends Console\Command\Command
 		});
 
 		$connector = $io->askQuestion($question);
-		assert($connector instanceof Entities\Connectors\Connector);
+		assert($connector instanceof ModbusEntities\Connectors\Connector);
 
 		return $connector;
 	}
@@ -3912,8 +3912,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichDevice(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
-	): Entities\Devices\Device|null
+		ModbusEntities\Connectors\Connector $connector,
+	): ModbusEntities\Devices\Device|null
 	{
 		$devices = [];
 
@@ -3922,11 +3922,11 @@ class Install extends Console\Command\Command
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Device::class,
+			ModbusEntities\Devices\Device::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (ModbusEntities\Devices\Device $a, ModbusEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -3949,7 +3949,7 @@ class Install extends Console\Command\Command
 			(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
+			function (string|int|null $answer) use ($connector, $devices): ModbusEntities\Devices\Device {
 				if ($answer === null) {
 					throw new ModbusExceptions\Runtime(
 						sprintf(
@@ -3974,7 +3974,7 @@ class Install extends Console\Command\Command
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Device::class,
+						ModbusEntities\Devices\Device::class,
 					);
 
 					if ($device !== null) {
@@ -3992,7 +3992,7 @@ class Install extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Device);
+		assert($device instanceof ModbusEntities\Devices\Device);
 
 		return $device;
 	}
@@ -4006,8 +4006,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichRegister(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
-	): Entities\Channels\Channel|null
+		ModbusEntities\Devices\Device $device,
+	): ModbusEntities\Channels\Channel|null
 	{
 		$channels = [];
 
@@ -4016,11 +4016,11 @@ class Install extends Console\Command\Command
 
 		$deviceChannels = $this->channelsRepository->findAllBy(
 			$findChannelsQuery,
-			Entities\Channels\Channel::class,
+			ModbusEntities\Channels\Channel::class,
 		);
 		usort(
 			$deviceChannels,
-			static fn (Entities\Channels\Channel $a, Entities\Channels\Channel $b): int => (
+			static fn (ModbusEntities\Channels\Channel $a, ModbusEntities\Channels\Channel $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -4048,7 +4048,7 @@ class Install extends Console\Command\Command
 			(string) $this->translator->translate('//modbus-connector.cmd.base.messages.answerNotValid'),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($device, $channels): Entities\Channels\Channel {
+			function (string|int|null $answer) use ($device, $channels): ModbusEntities\Channels\Channel {
 				if ($answer === null) {
 					throw new ModbusExceptions\Runtime(
 						sprintf(
@@ -4073,7 +4073,7 @@ class Install extends Console\Command\Command
 
 					$channel = $this->channelsRepository->findOneBy(
 						$findChannelQuery,
-						Entities\Channels\Channel::class,
+						ModbusEntities\Channels\Channel::class,
 					);
 
 					if ($channel !== null) {
@@ -4091,7 +4091,7 @@ class Install extends Console\Command\Command
 		);
 
 		$channel = $io->askQuestion($question);
-		assert($channel instanceof Entities\Channels\Channel);
+		assert($channel instanceof ModbusEntities\Channels\Channel);
 
 		return $channel;
 	}

@@ -17,7 +17,7 @@ namespace FastyBird\Connector\FbMqtt\Connector;
 
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Clients;
-use FastyBird\Connector\FbMqtt\Documents;
+use FastyBird\Connector\FbMqtt\Documents as FbMqttDocuments;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Connector\FbMqtt\Queue;
@@ -75,7 +75,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof FbMqttDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -95,7 +95,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof FbMqttDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting FB MQTT connector service',
@@ -170,7 +170,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof FbMqttDocuments\Connectors\Connector);
 
 		return Promise\reject(
 			new FbMqttExceptions\InvalidState('Devices discovery is not allowed for FB MQTT connector type'),
@@ -179,7 +179,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof FbMqttDocuments\Connectors\Connector);
 
 		$this->client?->disconnect();
 

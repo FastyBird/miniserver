@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Sonoff\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Entities;
+use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -47,14 +47,14 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<SonoffEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
 		$devices = [];
 
 		foreach (parent::getDevices() as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof SonoffEntities\Devices\Device) {
 				$devices[] = $device;
 			}
 		}
@@ -67,7 +67,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
-		if (!$device instanceof Entities\Devices\Device) {
+		if (!$device instanceof SonoffEntities\Devices\Device) {
 			throw new SonoffExceptions\InvalidArgument('Provided device type is not valid');
 		}
 

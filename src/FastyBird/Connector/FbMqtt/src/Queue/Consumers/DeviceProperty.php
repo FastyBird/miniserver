@@ -17,7 +17,7 @@ namespace FastyBird\Connector\FbMqtt\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Documents;
+use FastyBird\Connector\FbMqtt\Documents as FbMqttDocuments;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Queue;
@@ -87,7 +87,7 @@ final class DeviceProperty implements Queue\Consumer
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			FbMqttDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {

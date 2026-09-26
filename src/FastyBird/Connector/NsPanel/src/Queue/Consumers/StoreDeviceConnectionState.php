@@ -17,8 +17,8 @@ namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Documents;
-use FastyBird\Connector\NsPanel\Queries;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
+use FastyBird\Connector\NsPanel\Queries as NsPanelQueries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -81,13 +81,13 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new NsPanelQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			NsPanelDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -140,12 +140,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					));
 				}
 
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new NsPanelQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					NsPanelDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {
@@ -167,18 +167,18 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 				}
 			}
 
-			if ($device instanceof Documents\Devices\Gateway) {
+			if ($device instanceof NsPanelDocuments\Devices\Gateway) {
 				if (
 					$message->getState() === DevicesTypes\ConnectionState::DISCONNECTED
 					|| $message->getState() === DevicesTypes\ConnectionState::ALERT
 					|| $message->getState() === DevicesTypes\ConnectionState::UNKNOWN
 				) {
-					$findChildrenDevicesQuery = new Queries\Configuration\FindSubDevices();
+					$findChildrenDevicesQuery = new NsPanelQueries\Configuration\FindSubDevices();
 					$findChildrenDevicesQuery->forParent($device);
 
 					$children = $this->devicesConfigurationRepository->findAllBy(
 						$findChildrenDevicesQuery,
-						Documents\Devices\SubDevice::class,
+						NsPanelDocuments\Devices\SubDevice::class,
 					);
 
 					foreach ($children as $child) {
@@ -203,12 +203,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 							));
 						}
 
-						$findChannelsQuery = new Queries\Configuration\FindChannels();
+						$findChannelsQuery = new NsPanelQueries\Configuration\FindChannels();
 						$findChannelsQuery->forDevice($child);
 
 						$channels = $this->channelsConfigurationRepository->findAllBy(
 							$findChannelsQuery,
-							Documents\Channels\Channel::class,
+							NsPanelDocuments\Channels\Channel::class,
 						);
 
 						foreach ($channels as $channel) {
@@ -232,12 +232,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 				}
 
 				if ($message->getState() === DevicesTypes\ConnectionState::ALERT) {
-					$findChildrenDevicesQuery = new Queries\Configuration\FindThirdPartyDevices();
+					$findChildrenDevicesQuery = new NsPanelQueries\Configuration\FindThirdPartyDevices();
 					$findChildrenDevicesQuery->forParent($device);
 
 					$children = $this->devicesConfigurationRepository->findAllBy(
 						$findChildrenDevicesQuery,
-						Documents\Devices\ThirdPartyDevice::class,
+						NsPanelDocuments\Devices\ThirdPartyDevice::class,
 					);
 
 					foreach ($children as $child) {

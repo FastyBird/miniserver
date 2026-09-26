@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Writers;
 
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Documents;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
@@ -48,7 +48,7 @@ class Event extends Periodic implements Writer, ComponentEventDispatcher\EventSu
 	public const NAME = 'event';
 
 	public function __construct(
-		Documents\Connectors\Connector $connector,
+		HomeKitDocuments\Connectors\Connector $connector,
 		Helpers\MessageBuilder $messageBuilder,
 		Queue\Queue $queue,
 		Protocol\Driver $accessoryDriver,

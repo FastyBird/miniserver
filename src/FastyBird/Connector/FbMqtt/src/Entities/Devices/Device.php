@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\FbMqtt\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\FbMqtt\Entities;
+use FastyBird\Connector\FbMqtt\Entities as FbMqttEntities;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
@@ -33,7 +33,7 @@ class Device extends DevicesEntities\Devices\Device
 
 	public function __construct(
 		string $identifier,
-		Entities\Connectors\Connector $connector,
+		FbMqttEntities\Connectors\Connector $connector,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -51,22 +51,22 @@ class Device extends DevicesEntities\Devices\Device
 		return Sources\Connector::FB_MQTT;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): FbMqttEntities\Connectors\Connector
 	{
-		assert($this->connector instanceof Entities\Connectors\Connector);
+		assert($this->connector instanceof FbMqttEntities\Connectors\Connector);
 
 		return $this->connector;
 	}
 
 	/**
-	 * @return array<Entities\Channels\Channel>
+	 * @return array<FbMqttEntities\Channels\Channel>
 	 */
 	public function getChannels(): array
 	{
 		$channels = [];
 
 		foreach (parent::getChannels() as $channel) {
-			if ($channel instanceof Entities\Channels\Channel) {
+			if ($channel instanceof FbMqttEntities\Channels\Channel) {
 				$channels[] = $channel;
 			}
 		}
@@ -79,7 +79,7 @@ class Device extends DevicesEntities\Devices\Device
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
-		if (!$channel instanceof Entities\Channels\Channel) {
+		if (!$channel instanceof FbMqttEntities\Channels\Channel) {
 			throw new Exceptions\InvalidArgument('Provided channel type is not valid');
 		}
 

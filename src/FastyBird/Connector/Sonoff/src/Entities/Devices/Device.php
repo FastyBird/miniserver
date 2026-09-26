@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Sonoff\Entities\Devices;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
-use FastyBird\Connector\Sonoff\Entities;
+use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -44,7 +44,7 @@ class Device extends DevicesEntities\Devices\Device
 
 	public function __construct(
 		string $identifier,
-		Entities\Connectors\Connector $connector,
+		SonoffEntities\Connectors\Connector $connector,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -62,22 +62,22 @@ class Device extends DevicesEntities\Devices\Device
 		return Sources\Connector::SONOFF;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): SonoffEntities\Connectors\Connector
 	{
-		assert($this->connector instanceof Entities\Connectors\Connector);
+		assert($this->connector instanceof SonoffEntities\Connectors\Connector);
 
 		return $this->connector;
 	}
 
 	/**
-	 * @return array<Entities\Channels\Channel>
+	 * @return array<SonoffEntities\Channels\Channel>
 	 */
 	public function getChannels(): array
 	{
 		$channels = [];
 
 		foreach (parent::getChannels() as $channel) {
-			if ($channel instanceof Entities\Channels\Channel) {
+			if ($channel instanceof SonoffEntities\Channels\Channel) {
 				$channels[] = $channel;
 			}
 		}
@@ -90,7 +90,7 @@ class Device extends DevicesEntities\Devices\Device
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
-		if (!$channel instanceof Entities\Channels\Channel) {
+		if (!$channel instanceof SonoffEntities\Channels\Channel) {
 			throw new SonoffExceptions\InvalidArgument('Provided channel type is not valid');
 		}
 

@@ -17,11 +17,11 @@ namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Entities;
+use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers as NsPanelHelpers;
 use FastyBird\Connector\NsPanel\Mapping;
-use FastyBird\Connector\NsPanel\Queries;
+use FastyBird\Connector\NsPanel\Queries as NsPanelQueries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -83,7 +83,7 @@ final class StoreSubDevice implements Queue\Consumer
 			return false;
 		}
 
-		$parent = $this->devicesRepository->find($message->getGateway(), Entities\Devices\Gateway::class);
+		$parent = $this->devicesRepository->find($message->getGateway(), NsPanelEntities\Devices\Gateway::class);
 
 		if ($parent === null) {
 			$this->logger->error(
@@ -107,17 +107,17 @@ final class StoreSubDevice implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Entities\FindSubDevices();
+		$findDeviceQuery = new NsPanelQueries\Entities\FindSubDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->forParent($parent);
 		$findDeviceQuery->byIdentifier($message->getIdentifier());
 
-		$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\SubDevice::class);
+		$device = $this->devicesRepository->findOneBy($findDeviceQuery, NsPanelEntities\Devices\SubDevice::class);
 
 		if ($device === null) {
 			$connector = $this->connectorsRepository->find(
 				$message->getConnector(),
-				Entities\Connectors\Connector::class,
+				NsPanelEntities\Connectors\Connector::class,
 			);
 
 			if ($connector === null) {
@@ -143,15 +143,15 @@ final class StoreSubDevice implements Queue\Consumer
 			}
 
 			$device = $this->databaseHelper->transaction(
-				function () use ($message, $connector, $parent): Entities\Devices\SubDevice {
+				function () use ($message, $connector, $parent): NsPanelEntities\Devices\SubDevice {
 					$device = $this->devicesManager->create(Utils\ArrayHash::from([
-						'entity' => Entities\Devices\SubDevice::class,
+						'entity' => NsPanelEntities\Devices\SubDevice::class,
 						'connector' => $connector,
 						'parent' => $parent,
 						'identifier' => $message->getIdentifier(),
 						'name' => $message->getName(),
 					]));
-					assert($device instanceof Entities\Devices\SubDevice);
+					assert($device instanceof NsPanelEntities\Devices\SubDevice);
 
 					return $device;
 				},
@@ -220,11 +220,11 @@ final class StoreSubDevice implements Queue\Consumer
 					$capability->getName(),
 				);
 
-				$findChannelQuery = new Queries\Entities\FindChannels();
+				$findChannelQuery = new NsPanelQueries\Entities\FindChannels();
 				$findChannelQuery->byIdentifier($identifier);
 				$findChannelQuery->forDevice($device);
 
-				$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+				$channel = $this->channelsRepository->findOneBy($findChannelQuery, NsPanelEntities\Channels\Channel::class);
 
 				if ($channel === null) {
 					$capabilityMetadata = $this->mappingBuilder->getCapabilitiesMapping()->findByCapabilityName(
@@ -273,11 +273,11 @@ final class StoreSubDevice implements Queue\Consumer
 				$state->getIdentifier(),
 			);
 
-			$findChannelQuery = new Queries\Entities\FindChannels();
+			$findChannelQuery = new NsPanelQueries\Entities\FindChannels();
 			$findChannelQuery->byIdentifier($identifier);
 			$findChannelQuery->forDevice($device);
 
-			$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+			$channel = $this->channelsRepository->findOneBy($findChannelQuery, NsPanelEntities\Channels\Channel::class);
 
 			if ($channel === null) {
 				continue;

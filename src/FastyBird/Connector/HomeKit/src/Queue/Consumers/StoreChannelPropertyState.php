@@ -17,8 +17,8 @@ namespace FastyBird\Connector\HomeKit\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Documents;
-use FastyBird\Connector\HomeKit\Queries;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
+use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
@@ -82,13 +82,13 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new HomeKitQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			HomeKitDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -116,13 +116,13 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new HomeKitQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			HomeKitDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {

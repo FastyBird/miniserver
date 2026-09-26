@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Entities;
+use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Types;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
@@ -40,7 +40,7 @@ class Channel extends DevicesEntities\Channels\Channel
 	public const TYPE = 'modbus-connector';
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		ModbusEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -59,9 +59,9 @@ class Channel extends DevicesEntities\Channels\Channel
 		return Sources\Connector::MODBUS;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): ModbusEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof ModbusEntities\Devices\Device);
 
 		return $this->device;
 	}

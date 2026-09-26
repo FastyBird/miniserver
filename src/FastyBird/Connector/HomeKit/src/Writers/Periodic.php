@@ -17,11 +17,11 @@ namespace FastyBird\Connector\HomeKit\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Documents;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
-use FastyBird\Connector\HomeKit\Queries;
+use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -61,7 +61,7 @@ abstract class Periodic
 
 	private const HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, HomeKitDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Devices\Properties\Property|DevicesDocuments\Channels\Properties\Property>>  */
@@ -76,7 +76,7 @@ abstract class Periodic
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly HomeKitDocuments\Connectors\Connector $connector,
 		protected readonly Helpers\MessageBuilder $messageBuilder,
 		protected readonly Queue\Queue $queue,
 		protected readonly HomeKit\Logger $logger,
@@ -110,12 +110,12 @@ abstract class Periodic
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new HomeKitQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			HomeKitDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -125,7 +125,7 @@ abstract class Periodic
 				$this->properties[$device->getId()->toString()] = [];
 			}
 
-			$findDevicePropertiesQuery = new Queries\Configuration\FindDeviceProperties();
+			$findDevicePropertiesQuery = new HomeKitQueries\Configuration\FindDeviceProperties();
 			$findDevicePropertiesQuery->forDevice($device);
 
 			$properties = $this->devicesPropertiesConfigurationRepository->findAllBy($findDevicePropertiesQuery);
@@ -134,12 +134,12 @@ abstract class Periodic
 				$this->properties[$device->getId()->toString()][$property->getId()->toString()] = $property;
 			}
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new HomeKitQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				HomeKitDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -214,7 +214,7 @@ abstract class Periodic
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(HomeKitDocuments\Devices\Device $device): bool
 	{
 		$now = $this->clock->getNow();
 
@@ -327,7 +327,7 @@ abstract class Periodic
 					$characteristicValue = $state->getGet()->getExpectedValue() ?? $state->getGet()->getActualValue();
 				}
 			} elseif ($property instanceof DevicesDocuments\Devices\Properties\Variable) {
-				$findDevicePropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
+				$findDevicePropertyQuery = new HomeKitQueries\Configuration\FindDeviceVariableProperties();
 				$findDevicePropertyQuery->byId($property->getId());
 
 				$property = $this->devicesPropertiesConfigurationRepository->findOneBy(

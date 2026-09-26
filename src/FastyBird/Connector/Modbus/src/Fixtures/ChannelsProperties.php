@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Fixtures;
 
 use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
-use FastyBird\Connector\Modbus\Entities;
+use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types\ChannelPropertyIdentifier;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -50,7 +50,7 @@ final class ChannelsProperties extends DataFixtures\AbstractFixture implements D
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		for ($i = 1; $i <= 4; $i++) {
-			$channel = $this->getReference('modbus-rtu-channel-' . $i, Entities\Channels\Channel::class);
+			$channel = $this->getReference('modbus-rtu-channel-' . $i, ModbusEntities\Channels\Channel::class);
 
 			$addressProperty = new DevicesEntities\Channels\Properties\Variable(
 				$channel,

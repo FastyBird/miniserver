@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\Helpers\Devices;
 
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
@@ -54,7 +54,7 @@ final readonly class Bridge
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getBaseTopic(Documents\Devices\Bridge $device): string
+	public function getBaseTopic(Zigbee2MqttDocuments\Devices\Bridge $device): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -83,7 +83,7 @@ final readonly class Bridge
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getFriendlyName(Documents\Devices\Bridge $device): string|null
+	public function getFriendlyName(Zigbee2MqttDocuments\Devices\Bridge $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -113,7 +113,7 @@ final readonly class Bridge
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getIeeeAddress(Documents\Devices\Bridge $device): string
+	public function getIeeeAddress(Zigbee2MqttDocuments\Devices\Bridge $device): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

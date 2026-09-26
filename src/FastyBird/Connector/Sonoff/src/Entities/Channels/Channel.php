@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Sonoff\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Sonoff\Entities;
+use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -31,7 +31,7 @@ class Channel extends DevicesEntities\Channels\Channel
 	public const TYPE = 'sonoff-connector';
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		SonoffEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -50,9 +50,9 @@ class Channel extends DevicesEntities\Channels\Channel
 		return Sources\Connector::SONOFF;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): SonoffEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof SonoffEntities\Devices\Device);
 
 		return $this->device;
 	}

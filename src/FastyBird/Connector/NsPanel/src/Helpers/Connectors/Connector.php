@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Helpers\Connectors;
 
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Documents;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Types;
@@ -56,7 +56,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getClientMode(Documents\Connectors\Connector $connector): Types\ClientMode
+	public function getClientMode(NsPanelDocuments\Connectors\Connector $connector): Types\ClientMode
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -84,7 +84,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPort(Documents\Connectors\Connector $connector): int
+	public function getPort(NsPanelDocuments\Connectors\Connector $connector): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);

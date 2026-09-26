@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Sonoff\Helpers;
 
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
-use FastyBird\Connector\Sonoff\Documents;
+use FastyBird\Connector\Sonoff\Documents as SonoffDocuments;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Types;
@@ -58,7 +58,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getIpAddress(Documents\Devices\Device $device): string|null
+	public function getIpAddress(SonoffDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -87,7 +87,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getAddress(Documents\Devices\Device $device): string|null
+	public function getAddress(SonoffDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -116,7 +116,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPort(Documents\Devices\Device $device): int
+	public function getPort(SonoffDocuments\Devices\Device $device): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -144,7 +144,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getApiKey(Documents\Devices\Device $device): string|null
+	public function getApiKey(SonoffDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -173,7 +173,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDeviceKey(Documents\Devices\Device $device): string|null
+	public function getDeviceKey(SonoffDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -202,7 +202,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getModel(Documents\Devices\Device $device): string|null
+	public function getModel(SonoffDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -232,7 +232,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getUiid(Documents\Devices\Device $device): int
+	public function getUiid(SonoffDocuments\Devices\Device $device): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -263,7 +263,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getStateReadingDelay(Documents\Devices\Device $device): float
+	public function getStateReadingDelay(SonoffDocuments\Devices\Device $device): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -292,7 +292,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getHeartbeatDelay(Documents\Devices\Device $device): float
+	public function getHeartbeatDelay(SonoffDocuments\Devices\Device $device): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

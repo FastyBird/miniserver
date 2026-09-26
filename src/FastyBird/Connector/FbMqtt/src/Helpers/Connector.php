@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\FbMqtt\Helpers;
 
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Documents;
+use FastyBird\Connector\FbMqtt\Documents as FbMqttDocuments;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Types;
@@ -57,7 +57,7 @@ final readonly class Connector
 	 * @throws ValueError
 	 */
 	public function getProtocolVersion(
-		Documents\Connectors\Connector $connector,
+		FbMqttDocuments\Connectors\Connector $connector,
 	): Types\ProtocolVersion
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
@@ -86,7 +86,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getServerAddress(Documents\Connectors\Connector $connector): string
+	public function getServerAddress(FbMqttDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -115,7 +115,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getServerPort(Documents\Connectors\Connector $connector): int
+	public function getServerPort(FbMqttDocuments\Connectors\Connector $connector): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -144,7 +144,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getServerSecuredPort(Documents\Connectors\Connector $connector): int
+	public function getServerSecuredPort(FbMqttDocuments\Connectors\Connector $connector): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -173,7 +173,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getUsername(Documents\Connectors\Connector $connector): string|null
+	public function getUsername(FbMqttDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -202,7 +202,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPassword(Documents\Connectors\Connector $connector): string|null
+	public function getPassword(FbMqttDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);

@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Tuya\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\Tuya;
-use FastyBird\Connector\Tuya\Documents;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
-use FastyBird\Connector\Tuya\Queries;
+use FastyBird\Connector\Tuya\Queries as TuyaQueries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -62,7 +62,7 @@ abstract class Periodic implements Writer
 
 	private const HANDLER_PENDING_DELAY = 2_000.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, TuyaDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Channels\Properties\Dynamic>>  */
@@ -77,7 +77,7 @@ abstract class Periodic implements Writer
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly TuyaDocuments\Connectors\Connector $connector,
 		protected readonly Helpers\MessageBuilder $messageBuilder,
 		protected readonly Queue\Queue $queue,
 		protected readonly Tuya\Logger $logger,
@@ -105,12 +105,12 @@ abstract class Periodic implements Writer
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new TuyaQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			TuyaDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -120,12 +120,12 @@ abstract class Periodic implements Writer
 				$this->properties[$device->getId()->toString()] = [];
 			}
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new TuyaQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				TuyaDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -198,7 +198,7 @@ abstract class Periodic implements Writer
 	 * @throws TuyaExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(TuyaDocuments\Devices\Device $device): bool
 	{
 		$now = $this->clock->getNow();
 

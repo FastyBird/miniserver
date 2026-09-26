@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Protocol;
-use FastyBird\Connector\HomeKit\Types;
+use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Values\Transformers;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use function is_float;
@@ -39,17 +39,17 @@ final class LightBulb extends Generic
 	{
 		if ($characteristic !== null) {
 			if (
-				$characteristic->getName() === Types\CharacteristicType::COLOR_RED->value
-				|| $characteristic->getName() === Types\CharacteristicType::COLOR_GREEN->value
-				|| $characteristic->getName() === Types\CharacteristicType::COLOR_BLUE->value
-				|| $characteristic->getName() === Types\CharacteristicType::COLOR_WHITE->value
+				$characteristic->getName() === HomeKitTypes\CharacteristicType::COLOR_RED->value
+				|| $characteristic->getName() === HomeKitTypes\CharacteristicType::COLOR_GREEN->value
+				|| $characteristic->getName() === HomeKitTypes\CharacteristicType::COLOR_BLUE->value
+				|| $characteristic->getName() === HomeKitTypes\CharacteristicType::COLOR_WHITE->value
 			) {
 				$this->calculateRgbToHsb();
 
 			} elseif (
-				$characteristic->getName() === Types\CharacteristicType::HUE->value
-				|| $characteristic->getName() === Types\CharacteristicType::SATURATION->value
-				|| $characteristic->getName() === Types\CharacteristicType::BRIGHTNESS->value
+				$characteristic->getName() === HomeKitTypes\CharacteristicType::HUE->value
+				|| $characteristic->getName() === HomeKitTypes\CharacteristicType::SATURATION->value
+				|| $characteristic->getName() === HomeKitTypes\CharacteristicType::BRIGHTNESS->value
 			) {
 				$this->calculateHsbToRgb();
 			}
@@ -58,17 +58,17 @@ final class LightBulb extends Generic
 		}
 
 		if (
-			$this->hasCharacteristic(Types\CharacteristicType::COLOR_RED)
-			&& $this->hasCharacteristic(Types\CharacteristicType::COLOR_GREEN)
-			&& $this->hasCharacteristic(Types\CharacteristicType::COLOR_BLUE)
+			$this->hasCharacteristic(HomeKitTypes\CharacteristicType::COLOR_RED)
+			&& $this->hasCharacteristic(HomeKitTypes\CharacteristicType::COLOR_GREEN)
+			&& $this->hasCharacteristic(HomeKitTypes\CharacteristicType::COLOR_BLUE)
 		) {
 			$this->calculateRgbToHsb();
 		}
 
 		if (
-			$this->hasCharacteristic(Types\CharacteristicType::HUE)
-			&& $this->hasCharacteristic(Types\CharacteristicType::SATURATION)
-			&& $this->hasCharacteristic(Types\CharacteristicType::BRIGHTNESS)
+			$this->hasCharacteristic(HomeKitTypes\CharacteristicType::HUE)
+			&& $this->hasCharacteristic(HomeKitTypes\CharacteristicType::SATURATION)
+			&& $this->hasCharacteristic(HomeKitTypes\CharacteristicType::BRIGHTNESS)
 		) {
 			$this->calculateHsbToRgb();
 		}
@@ -76,11 +76,11 @@ final class LightBulb extends Generic
 
 	private function calculateRgbToHsb(): void
 	{
-		$redCharacteristic = $this->findCharacteristic(Types\CharacteristicType::COLOR_RED);
-		$greenCharacteristic = $this->findCharacteristic(Types\CharacteristicType::COLOR_GREEN);
-		$blueCharacteristic = $this->findCharacteristic(Types\CharacteristicType::COLOR_BLUE);
+		$redCharacteristic = $this->findCharacteristic(HomeKitTypes\CharacteristicType::COLOR_RED);
+		$greenCharacteristic = $this->findCharacteristic(HomeKitTypes\CharacteristicType::COLOR_GREEN);
+		$blueCharacteristic = $this->findCharacteristic(HomeKitTypes\CharacteristicType::COLOR_BLUE);
 		// Optional white channel
-		$whiteCharacteristic = $this->findCharacteristic(Types\CharacteristicType::COLOR_WHITE);
+		$whiteCharacteristic = $this->findCharacteristic(HomeKitTypes\CharacteristicType::COLOR_WHITE);
 
 		if (
 			is_int($redCharacteristic?->getValue())
@@ -100,7 +100,7 @@ final class LightBulb extends Generic
 			$hsb = new Transformers\HsbTransformer(0, 0, 0);
 		}
 
-		$hue = $this->findCharacteristic(Types\CharacteristicType::HUE);
+		$hue = $this->findCharacteristic(HomeKitTypes\CharacteristicType::HUE);
 
 		if (
 			$hue?->getProperty() !== null
@@ -118,7 +118,7 @@ final class LightBulb extends Generic
 			$hue->setExpectedValue($hsb->getHue());
 		}
 
-		$saturation = $this->findCharacteristic(Types\CharacteristicType::SATURATION);
+		$saturation = $this->findCharacteristic(HomeKitTypes\CharacteristicType::SATURATION);
 
 		if (
 			$saturation?->getProperty() !== null
@@ -136,7 +136,7 @@ final class LightBulb extends Generic
 			$saturation->setExpectedValue($hsb->getSaturation());
 		}
 
-		$brightness = $this->findCharacteristic(Types\CharacteristicType::BRIGHTNESS);
+		$brightness = $this->findCharacteristic(HomeKitTypes\CharacteristicType::BRIGHTNESS);
 
 		if (
 			$brightness?->getProperty() !== null
@@ -152,9 +152,9 @@ final class LightBulb extends Generic
 
 	private function calculateHsbToRgb(): void
 	{
-		$hueCharacteristic = $this->findCharacteristic(Types\CharacteristicType::HUE);
-		$saturationCharacteristic = $this->findCharacteristic(Types\CharacteristicType::SATURATION);
-		$brightnessCharacteristic = $this->findCharacteristic(Types\CharacteristicType::BRIGHTNESS);
+		$hueCharacteristic = $this->findCharacteristic(HomeKitTypes\CharacteristicType::HUE);
+		$saturationCharacteristic = $this->findCharacteristic(HomeKitTypes\CharacteristicType::SATURATION);
+		$brightnessCharacteristic = $this->findCharacteristic(HomeKitTypes\CharacteristicType::BRIGHTNESS);
 
 		if (
 			(
@@ -183,7 +183,7 @@ final class LightBulb extends Generic
 				$brightness,
 			);
 
-			$rgb = $this->hasCharacteristic(Types\CharacteristicType::COLOR_WHITE)
+			$rgb = $this->hasCharacteristic(HomeKitTypes\CharacteristicType::COLOR_WHITE)
 				? $hsb->toRgbw($brightnessCharacteristic->getValue())
 				: $hsb->toRgb();
 
@@ -191,7 +191,7 @@ final class LightBulb extends Generic
 			$rgb = new Transformers\RgbTransformer(0, 0, 0);
 		}
 
-		$red = $this->findCharacteristic(Types\CharacteristicType::COLOR_RED);
+		$red = $this->findCharacteristic(HomeKitTypes\CharacteristicType::COLOR_RED);
 
 		if (
 			$red?->getProperty() !== null
@@ -209,7 +209,7 @@ final class LightBulb extends Generic
 			$red->setExpectedValue($rgb->getRed());
 		}
 
-		$green = $this->findCharacteristic(Types\CharacteristicType::COLOR_GREEN);
+		$green = $this->findCharacteristic(HomeKitTypes\CharacteristicType::COLOR_GREEN);
 
 		if (
 			$green?->getProperty() !== null
@@ -227,7 +227,7 @@ final class LightBulb extends Generic
 			$green->setExpectedValue($rgb->getGreen());
 		}
 
-		$blue = $this->findCharacteristic(Types\CharacteristicType::COLOR_BLUE);
+		$blue = $this->findCharacteristic(HomeKitTypes\CharacteristicType::COLOR_BLUE);
 
 		if (
 			$blue?->getProperty() !== null
@@ -245,7 +245,7 @@ final class LightBulb extends Generic
 			$blue->setExpectedValue($rgb->getBlue());
 		}
 
-		$white = $this->findCharacteristic(Types\CharacteristicType::COLOR_WHITE);
+		$white = $this->findCharacteristic(HomeKitTypes\CharacteristicType::COLOR_WHITE);
 
 		if (
 			$white?->getProperty() !== null

@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Helpers;
 
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Documents;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Types;
@@ -56,7 +56,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPort(Documents\Connectors\Connector $connector): int
+	public function getPort(HomeKitDocuments\Connectors\Connector $connector): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -85,7 +85,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getMacAddress(Documents\Connectors\Connector $connector): string
+	public function getMacAddress(HomeKitDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -113,7 +113,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getVersion(Documents\Connectors\Connector $connector): int
+	public function getVersion(HomeKitDocuments\Connectors\Connector $connector): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -142,7 +142,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getSetupId(Documents\Connectors\Connector $connector): string
+	public function getSetupId(HomeKitDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -171,7 +171,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPinCode(Documents\Connectors\Connector $connector): string
+	public function getPinCode(HomeKitDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -200,7 +200,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getXhmUri(Documents\Connectors\Connector $connector): string
+	public function getXhmUri(HomeKitDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -228,7 +228,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getServerSecret(Documents\Connectors\Connector $connector): string|null
+	public function getServerSecret(HomeKitDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -257,7 +257,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getHashingKey(Documents\Connectors\Connector $connector): string|null
+	public function getHashingKey(HomeKitDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -286,7 +286,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getClientPublicKey(Documents\Connectors\Connector $connector): string|null
+	public function getClientPublicKey(HomeKitDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -315,7 +315,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getSharedKey(Documents\Connectors\Connector $connector): string|null
+	public function getSharedKey(HomeKitDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -344,7 +344,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function isPaired(Documents\Connectors\Connector $connector): bool
+	public function isPaired(HomeKitDocuments\Connectors\Connector $connector): bool
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);

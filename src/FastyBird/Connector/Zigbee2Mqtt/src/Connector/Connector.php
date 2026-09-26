@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Connector;
 
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Clients;
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
@@ -78,7 +78,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof Zigbee2MqttDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -99,7 +99,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof Zigbee2MqttDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Zigbee2MQTT connector service',
@@ -204,7 +204,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof Zigbee2MqttDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Zigbee2MQTT connector discovery',
@@ -254,7 +254,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof Zigbee2MqttDocuments\Connectors\Connector);
 
 		foreach ($this->clients as $client) {
 			$client->disconnect()

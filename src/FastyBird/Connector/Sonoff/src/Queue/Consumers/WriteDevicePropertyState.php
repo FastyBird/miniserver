@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 use DateTimeInterface;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
-use FastyBird\Connector\Sonoff\Documents;
+use FastyBird\Connector\Sonoff\Documents as SonoffDocuments;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
-use FastyBird\Connector\Sonoff\Queries;
+use FastyBird\Connector\Sonoff\Queries as SonoffQueries;
 use FastyBird\Connector\Sonoff\Queue;
-use FastyBird\Connector\Sonoff\Types;
+use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -94,12 +94,12 @@ final class WriteDevicePropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new SonoffQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			SonoffDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -124,13 +124,13 @@ final class WriteDevicePropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new SonoffQueries\Configuration\FindDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			SonoffDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -249,7 +249,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 		$parameter = Helpers\Transformer::devicePropertyToParameter($property->getIdentifier());
 
 		try {
-			if ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::AUTO) {
+			if ($this->connectorHelper->getClientMode($connector) === SonoffTypes\ClientMode::AUTO) {
 				$deferred = new Promise\Deferred();
 
 				if ($this->deviceHelper->getIpAddress($device) !== null) {
@@ -305,7 +305,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 				}
 
 				$result = $deferred->promise();
-			} elseif ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::CLOUD) {
+			} elseif ($this->connectorHelper->getClientMode($connector) === SonoffTypes\ClientMode::CLOUD) {
 				$client = $this->connectionManager->getCloudApiConnection($connector);
 
 				if (!$client->isConnected()) {
@@ -319,7 +319,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 					$group,
 					$outlet,
 				);
-			} elseif ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::LAN) {
+			} elseif ($this->connectorHelper->getClientMode($connector) === SonoffTypes\ClientMode::LAN) {
 				if ($this->deviceHelper->getIpAddress($device) === null) {
 					throw new SonoffExceptions\InvalidState('Device IP address is not configured');
 				}

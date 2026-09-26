@@ -18,7 +18,7 @@ namespace FastyBird\Connector\HomeKit\Subscribers;
 use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
-use FastyBird\Connector\HomeKit\Entities;
+use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Types;
@@ -83,15 +83,15 @@ final class System implements Common\EventSubscriber
 			$uow->getScheduledEntityUpdates(),
 			$uow->getScheduledEntityDeletions(),
 		) as $object) {
-			if ($object instanceof Entities\Connectors\Connector) {
+			if ($object instanceof HomeKitEntities\Connectors\Connector) {
 				$this->doUpdate[] = $object->getId()->toString();
-			} elseif ($object instanceof Entities\Devices\Device) {
+			} elseif ($object instanceof HomeKitEntities\Devices\Device) {
 				$this->doUpdate[] = $object->getConnector()->getId()->toString();
 			} elseif ($object instanceof DevicesEntities\Devices\Properties\Property) {
 				$this->doUpdate[] = $object->getDevice()->getConnector()->getId()->toString();
 			} elseif ($object instanceof DevicesEntities\Devices\Controls\Control) {
 				$this->doUpdate[] = $object->getDevice()->getConnector()->getId()->toString();
-			} elseif ($object instanceof Entities\Channels\Channel) {
+			} elseif ($object instanceof HomeKitEntities\Channels\Channel) {
 				$this->doUpdate[] = $object->getDevice()->getConnector()->getId()->toString();
 			} elseif ($object instanceof DevicesEntities\Channels\Properties\Property) {
 				$this->doUpdate[] = $object->getChannel()->getDevice()->getConnector()->getId()->toString();

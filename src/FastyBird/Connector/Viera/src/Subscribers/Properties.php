@@ -20,7 +20,7 @@ use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Connector\Viera;
-use FastyBird\Connector\Viera\Entities;
+use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
@@ -89,14 +89,14 @@ final class Properties implements Common\EventSubscriber
 		$entity = $eventArgs->getObject();
 
 		// Check for valid entity
-		if ($entity instanceof Entities\Devices\Device) {
+		if ($entity instanceof VieraEntities\Devices\Device) {
 			$this->configureDeviceState($entity);
 		}
 
 		// Check for valid entity
 		if (
 			$entity instanceof DevicesEntities\Channels\Channel
-			&& $entity->getDevice() instanceof Entities\Devices\Device
+			&& $entity->getDevice() instanceof VieraEntities\Devices\Device
 		) {
 			$this->configureDeviceKeys($entity);
 		}
@@ -122,14 +122,14 @@ final class Properties implements Common\EventSubscriber
 
 		if (
 			$entity instanceof DevicesEntities\Channels\Channel
-			&& $entity->getDevice() instanceof Entities\Devices\Device
+			&& $entity->getDevice() instanceof VieraEntities\Devices\Device
 		) {
 			$this->configureDeviceKeys($entity);
 		}
 
 		if (
 			$entity instanceof DevicesEntities\Channels\Properties\Dynamic
-			&& $entity->getChannel()->getDevice() instanceof Entities\Devices\Device
+			&& $entity->getChannel()->getDevice() instanceof VieraEntities\Devices\Device
 			&& (
 				$entity->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::HDMI->value
 				|| $entity->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::APPLICATION->value
@@ -146,7 +146,7 @@ final class Properties implements Common\EventSubscriber
 	 * @throws VieraExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function configureDeviceState(Entities\Devices\Device $device): void
+	private function configureDeviceState(VieraEntities\Devices\Device $device): void
 	{
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);

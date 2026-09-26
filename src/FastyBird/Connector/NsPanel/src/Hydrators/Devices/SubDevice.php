@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Hydrators\Devices;
 
 use Doctrine\Persistence;
-use FastyBird\Connector\NsPanel\Entities;
+use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Schemas;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
@@ -33,7 +33,7 @@ use function strval;
 /**
  * NS Panel sub-device entity hydrator
  *
- * @extends Device<Entities\Devices\SubDevice>
+ * @extends Device<NsPanelEntities\Devices\SubDevice>
  *
  * @package        FastyBird:NsPanelConnector!
  * @subpackage     Hydrators
@@ -55,7 +55,7 @@ final class SubDevice extends Device
 
 	public function getEntityName(): string
 	{
-		return Entities\Devices\SubDevice::class;
+		return NsPanelEntities\Devices\SubDevice::class;
 	}
 
 	/**
@@ -68,7 +68,7 @@ final class SubDevice extends Device
 	protected function hydrateParentsRelationship(
 		Objects\IRelationshipObject $relationships,
 		Objects\IResourceObjectCollection|null $included,
-		Entities\Devices\Gateway|null $entity,
+		NsPanelEntities\Devices\Gateway|null $entity,
 	): array
 	{
 		if ($relationships->getData() instanceof Objects\ResourceIdentifierCollection) {
@@ -84,7 +84,7 @@ final class SubDevice extends Device
 						Uuid\Uuid::fromString($relationship->getId()),
 					);
 
-					if ($parent instanceof Entities\Devices\Gateway) {
+					if ($parent instanceof NsPanelEntities\Devices\Gateway) {
 						$foundValidParent = true;
 					}
 

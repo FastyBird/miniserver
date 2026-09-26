@@ -16,12 +16,12 @@
 namespace FastyBird\Connector\NsPanel\Protocol;
 
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Documents;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Protocol;
-use FastyBird\Connector\NsPanel\Queries;
+use FastyBird\Connector\NsPanel\Queries as NsPanelQueries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -93,45 +93,45 @@ readonly class Loader
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function load(Documents\Connectors\Connector $connector): void
+	public function load(NsPanelDocuments\Connectors\Connector $connector): void
 	{
 		$this->devicesDriver->reset();
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new NsPanelQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
 		$gateways = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Gateway::class,
+			NsPanelDocuments\Devices\Gateway::class,
 		);
 
 		foreach ($gateways as $gateway) {
-			assert($gateway instanceof Documents\Devices\Gateway);
+			assert($gateway instanceof NsPanelDocuments\Devices\Gateway);
 
-			$findDevicesQuery = new Queries\Configuration\FindDevices();
+			$findDevicesQuery = new NsPanelQueries\Configuration\FindDevices();
 			$findDevicesQuery->forParent($gateway);
 
 			$devices = $this->devicesConfigurationRepository->findAllBy(
 				$findDevicesQuery,
-				Documents\Devices\Device::class,
+				NsPanelDocuments\Devices\Device::class,
 			);
 
 			foreach ($devices as $device) {
 				if (
-					!$device instanceof Documents\Devices\SubDevice
-					&& !$device instanceof Documents\Devices\ThirdPartyDevice
+					!$device instanceof NsPanelDocuments\Devices\SubDevice
+					&& !$device instanceof NsPanelDocuments\Devices\ThirdPartyDevice
 				) {
 					continue;
 				}
 
 				$protocolDevice = $this->buildDevice($connector, $gateway, $device);
 
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new NsPanelQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					NsPanelDocuments\Channels\Channel::class,
 				);
 
 				$createdCapabilities = [];
@@ -425,9 +425,9 @@ readonly class Loader
 	 * @throws ValueError
 	 */
 	private function buildDevice(
-		Documents\Connectors\Connector $connector,
-		Documents\Devices\Gateway $gateway,
-		Documents\Devices\Device $device,
+		NsPanelDocuments\Connectors\Connector $connector,
+		NsPanelDocuments\Devices\Gateway $gateway,
+		NsPanelDocuments\Devices\Device $device,
 	): Protocol\Devices\Device
 	{
 		$protocolDevice = null;
@@ -436,7 +436,7 @@ readonly class Loader
 
 		foreach ($this->devicesFactories as $deviceFactory) {
 			if ($device::getType() === $deviceFactory->getEntityClass()::getType()) {
-				$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
+				$findPropertyQuery = new NsPanelQueries\Configuration\FindDeviceVariableProperties();
 				$findPropertyQuery->forDevice($device);
 				$findPropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::CATEGORY);
 
@@ -481,7 +481,7 @@ readonly class Loader
 	 * @throws ValueError
 	 */
 	private function buildCapability(
-		Documents\Channels\Channel $channel,
+		NsPanelDocuments\Channels\Channel $channel,
 		Protocol\Devices\Device $protocolDevice,
 	): Protocol\Capabilities\Capability
 	{

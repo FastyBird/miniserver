@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\FbMqtt\API;
 
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Documents;
+use FastyBird\Connector\FbMqtt\Documents as FbMqttDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Nette;
 use function str_replace;
@@ -105,7 +105,7 @@ final class V1Builder
 		. 'set';
 
 	public static function buildDevicePropertyTopic(
-		Documents\Devices\Device $device,
+		FbMqttDocuments\Devices\Device $device,
 		DevicesDocuments\Devices\Properties\Dynamic $property,
 	): string
 	{
@@ -116,7 +116,7 @@ final class V1Builder
 	}
 
 	public static function buildDeviceCommandTopic(
-		Documents\Devices\Device $device,
+		FbMqttDocuments\Devices\Device $device,
 		DevicesDocuments\Devices\Controls\Control $command,
 	): string
 	{
@@ -127,8 +127,8 @@ final class V1Builder
 	}
 
 	public static function buildChannelPropertyTopic(
-		Documents\Devices\Device $device,
-		Documents\Channels\Channel $channel,
+		FbMqttDocuments\Devices\Device $device,
+		FbMqttDocuments\Channels\Channel $channel,
 		DevicesDocuments\Channels\Properties\Dynamic $property,
 	): string
 	{
@@ -140,8 +140,8 @@ final class V1Builder
 	}
 
 	public static function buildChannelCommandTopic(
-		Documents\Devices\Device $device,
-		Documents\Channels\Channel $channel,
+		FbMqttDocuments\Devices\Device $device,
+		FbMqttDocuments\Channels\Channel $channel,
 		DevicesDocuments\Channels\Controls\Control $command,
 	): string
 	{

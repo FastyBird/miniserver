@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Sonoff\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Documents;
+use FastyBird\Connector\Sonoff\Documents as SonoffDocuments;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
-use FastyBird\Connector\Sonoff\Queries;
+use FastyBird\Connector\Sonoff\Queries as SonoffQueries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -62,7 +62,7 @@ abstract class Periodic implements Writer
 
 	private const HANDLER_PENDING_DELAY = 2_000.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, SonoffDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Channels\Properties\Dynamic>>  */
@@ -77,7 +77,7 @@ abstract class Periodic implements Writer
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly SonoffDocuments\Connectors\Connector $connector,
 		protected readonly Helpers\MessageBuilder $entityHelper,
 		protected readonly Queue\Queue $queue,
 		protected readonly Sonoff\Logger $logger,
@@ -107,12 +107,12 @@ abstract class Periodic implements Writer
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new SonoffQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			SonoffDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -134,12 +134,12 @@ abstract class Periodic implements Writer
 				}
 			}
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new SonoffQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				SonoffDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -211,7 +211,7 @@ abstract class Periodic implements Writer
 	 * @throws SonoffExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(SonoffDocuments\Devices\Device $device): bool
 	{
 		$now = $this->clock->getNow();
 

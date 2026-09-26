@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Shelly\Helpers;
 
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Documents;
+use FastyBird\Connector\Shelly\Documents as ShellyDocuments;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Types;
@@ -59,7 +59,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getGeneration(Documents\Devices\Device $device): Types\DeviceGeneration
+	public function getGeneration(ShellyDocuments\Devices\Device $device): Types\DeviceGeneration
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -87,7 +87,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getLocalAddress(Documents\Devices\Device $device): string|null
+	public function getLocalAddress(ShellyDocuments\Devices\Device $device): string|null
 	{
 		$domain = $this->getDomain($device);
 
@@ -106,7 +106,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getIpAddress(Documents\Devices\Device $device): string|null
+	public function getIpAddress(ShellyDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -135,7 +135,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDomain(Documents\Devices\Device $device): string|null
+	public function getDomain(ShellyDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -164,7 +164,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getUsername(Documents\Devices\Device $device): string|null
+	public function getUsername(ShellyDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -193,7 +193,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPassword(Documents\Devices\Device $device): string|null
+	public function getPassword(ShellyDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -222,7 +222,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function hasAuthentication(Documents\Devices\Device $device): bool
+	public function hasAuthentication(ShellyDocuments\Devices\Device $device): bool
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -251,7 +251,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getModel(Documents\Devices\Device $device): string|null
+	public function getModel(ShellyDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -280,7 +280,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getMacAddress(Documents\Devices\Device $device): string|null
+	public function getMacAddress(ShellyDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -309,7 +309,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getStateReadingDelay(Documents\Devices\Device $device): float
+	public function getStateReadingDelay(ShellyDocuments\Devices\Device $device): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

@@ -17,8 +17,8 @@ namespace FastyBird\Connector\FbMqtt\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Entities;
-use FastyBird\Connector\FbMqtt\Queries;
+use FastyBird\Connector\FbMqtt\Entities as FbMqttEntities;
+use FastyBird\Connector\FbMqtt\Queries as FbMqttQueries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
@@ -73,11 +73,11 @@ final class ChannelAttribute implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Entities\FindDevices();
+		$findDeviceQuery = new FbMqttQueries\Entities\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byIdentifier($message->getDevice());
 
-		$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
+		$device = $this->devicesRepository->findOneBy($findDeviceQuery, FbMqttEntities\Devices\Device::class);
 
 		if ($device === null) {
 			$this->logger->warning(
@@ -100,11 +100,11 @@ final class ChannelAttribute implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Entities\FindChannels();
+		$findChannelQuery = new FbMqttQueries\Entities\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier($message->getChannel());
 
-		$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+		$channel = $this->channelsRepository->findOneBy($findChannelQuery, FbMqttEntities\Channels\Channel::class);
 
 		if ($channel === null) {
 			$this->logger->warning(

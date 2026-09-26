@@ -20,7 +20,7 @@ use DateTimeInterface;
 use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
-use FastyBird\Connector\Viera\Entities;
+use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers as VieraHelpers;
 use FastyBird\Connector\Viera\Queries;
@@ -171,7 +171,7 @@ class Install extends Console\Command\Command
 
 				if ($this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					VieraEntities\Connectors\Connector::class,
 				) !== null) {
 					throw new VieraExceptions\Runtime(
 						(string) $this->translator->translate(
@@ -197,7 +197,7 @@ class Install extends Console\Command\Command
 
 				if ($this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					VieraEntities\Connectors\Connector::class,
 				) === null) {
 					break;
 				}
@@ -221,11 +221,11 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Connectors\Connector::class,
+				'entity' => VieraEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof VieraEntities\Connectors\Connector);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -266,9 +266,9 @@ class Install extends Console\Command\Command
 		if ($createDevices) {
 			$connector = $this->connectorsRepository->find(
 				$connector->getId(),
-				Entities\Connectors\Connector::class,
+				VieraEntities\Connectors\Connector::class,
 			);
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof VieraEntities\Connectors\Connector);
 
 			$this->createDevice($io, $connector);
 		}
@@ -340,7 +340,7 @@ class Install extends Console\Command\Command
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof VieraEntities\Connectors\Connector);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -384,9 +384,9 @@ class Install extends Console\Command\Command
 
 		$connector = $this->connectorsRepository->find(
 			$connector->getId(),
-			Entities\Connectors\Connector::class,
+			VieraEntities\Connectors\Connector::class,
 		);
-		assert($connector instanceof Entities\Connectors\Connector);
+		assert($connector instanceof VieraEntities\Connectors\Connector);
 
 		$this->askManageConnectorAction($io, $connector);
 	}
@@ -493,11 +493,11 @@ class Install extends Console\Command\Command
 
 		$connectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			VieraEntities\Connectors\Connector::class,
 		);
 		usort(
 			$connectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (VieraEntities\Connectors\Connector $a, VieraEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -513,7 +513,7 @@ class Install extends Console\Command\Command
 			$findDevicesQuery = new Queries\Entities\FindDevices();
 			$findDevicesQuery->forConnector($connector);
 
-			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, VieraEntities\Devices\Device::class);
 
 			$table->addRow([
 				$index + 1,
@@ -536,7 +536,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function createDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function createDevice(Style\SymfonyStyle $io, VieraEntities\Connectors\Connector $connector): void
 	{
 		$tempIdentifier = 'new-device-' . $this->clock->getNow()->format(DateTimeInterface::ATOM);
 
@@ -546,7 +546,7 @@ class Install extends Console\Command\Command
 			$televisionApi = $this->televisionApiFactory->create(
 				$tempIdentifier,
 				$ipAddress,
-				Entities\Devices\Device::DEFAULT_PORT,
+				VieraEntities\Devices\Device::DEFAULT_PORT,
 			);
 			$televisionApi->connect();
 		} catch (VieraExceptions\TelevisionApiCall | VieraExceptions\TelevisionApiError | VieraExceptions\InvalidState $ex) {
@@ -697,7 +697,7 @@ class Install extends Console\Command\Command
 				$televisionApi = $this->televisionApiFactory->create(
 					$tempIdentifier,
 					$ipAddress,
-					Entities\Devices\Device::DEFAULT_PORT,
+					VieraEntities\Devices\Device::DEFAULT_PORT,
 					$authorization->getAppId(),
 					$authorization->getEncryptionKey(),
 				);
@@ -803,12 +803,12 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$device = $this->devicesManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Devices\Device::class,
+				'entity' => VieraEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $specs->getSerialNumber(),
 				'name' => $specs->getFriendlyName() ?? $specs->getModelName(),
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof VieraEntities\Devices\Device);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
@@ -822,7 +822,7 @@ class Install extends Console\Command\Command
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
 				$device->getId(),
-				Entities\Devices\Device::DEFAULT_PORT,
+				VieraEntities\Devices\Device::DEFAULT_PORT,
 				ValuesTypes\DataType::UINT,
 				VieraTypes\DevicePropertyIdentifier::PORT,
 				DevicesUtilities\Name::createName(VieraTypes\DevicePropertyIdentifier::PORT->value),
@@ -894,7 +894,7 @@ class Install extends Console\Command\Command
 			}
 
 			$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Channels\Channel::class,
+				'entity' => VieraEntities\Channels\Channel::class,
 				'device' => $device,
 				'identifier' => VieraTypes\ChannelType::TELEVISION->value,
 			]));
@@ -1046,7 +1046,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function editDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function editDevice(Style\SymfonyStyle $io, VieraEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -1071,7 +1071,7 @@ class Install extends Console\Command\Command
 		$findChannel->forDevice($device);
 		$findChannel->byIdentifier(VieraTypes\ChannelType::TELEVISION);
 
-		$channel = $this->channelsRepository->findOneBy($findChannel, Entities\Channels\Channel::class);
+		$channel = $this->channelsRepository->findOneBy($findChannel, VieraEntities\Channels\Channel::class);
 
 		$authorization = null;
 
@@ -1431,7 +1431,7 @@ class Install extends Console\Command\Command
 			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof VieraEntities\Devices\Device);
 
 			$this->deviceProperty->create(
 				DevicesEntities\Devices\Properties\Variable::class,
@@ -1508,7 +1508,7 @@ class Install extends Console\Command\Command
 
 			if ($channel === null) {
 				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\Channel::class,
+					'entity' => VieraEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => VieraTypes\ChannelType::TELEVISION,
 				]));
@@ -1585,7 +1585,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function deleteDevice(Style\SymfonyStyle $io, VieraEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -1654,15 +1654,15 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function listDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function listDevices(Style\SymfonyStyle $io, VieraEntities\Connectors\Connector $connector): void
 	{
 		$findDevicesQuery = new Queries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, VieraEntities\Devices\Device::class);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (VieraEntities\Devices\Device $a, VieraEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1708,7 +1708,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function discoverDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function discoverDevices(Style\SymfonyStyle $io, VieraEntities\Connectors\Connector $connector): void
 	{
 		if ($this->output === null) {
 			throw new VieraExceptions\InvalidState('Something went wrong, console output is not configured');
@@ -1763,7 +1763,7 @@ class Install extends Console\Command\Command
 		$findDevicesQuery = new Queries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, VieraEntities\Devices\Device::class);
 
 		foreach ($devices as $device) {
 			$createdAt = $device->getCreatedAt();
@@ -1923,7 +1923,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageConnectorAction(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
+		VieraEntities\Connectors\Connector $connector,
 	): void
 	{
 		$question = new Console\Question\ChoiceQuestion(
@@ -1999,7 +1999,7 @@ class Install extends Console\Command\Command
 
 	private function askConnectorName(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		VieraEntities\Connectors\Connector|null $connector = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -2012,7 +2012,7 @@ class Install extends Console\Command\Command
 		return strval($name) === '' ? null : strval($name);
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(Style\SymfonyStyle $io, VieraEntities\Devices\Device|null $device = null): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//viera-connector.cmd.install.questions.provide.device.name'),
@@ -2030,7 +2030,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function askDeviceIpAddress(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string
+	private function askDeviceIpAddress(Style\SymfonyStyle $io, VieraEntities\Devices\Device|null $device = null): string
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//viera-connector.cmd.install.questions.provide.device.ipAddress'),
@@ -2060,7 +2060,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function askDevicePort(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): int
+	private function askDevicePort(Style\SymfonyStyle $io, VieraEntities\Devices\Device|null $device = null): int
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//viera-connector.cmd.install.questions.provide.device.port'),
@@ -2090,7 +2090,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function askDeviceMacAddress(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string
+	private function askDeviceMacAddress(Style\SymfonyStyle $io, VieraEntities\Devices\Device|null $device = null): string
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//viera-connector.cmd.install.questions.provide.device.macAddress'),
@@ -2116,7 +2116,7 @@ class Install extends Console\Command\Command
 
 	private function askDevicePinCode(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
+		VieraEntities\Connectors\Connector $connector,
 		API\TelevisionApi $televisionApi,
 	): API\Messages\Response\AuthorizePinCode
 	{
@@ -2216,7 +2216,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function askWhichConnector(Style\SymfonyStyle $io): Entities\Connectors\Connector|null
+	private function askWhichConnector(Style\SymfonyStyle $io): VieraEntities\Connectors\Connector|null
 	{
 		$connectors = [];
 
@@ -2224,11 +2224,11 @@ class Install extends Console\Command\Command
 
 		$systemConnectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			VieraEntities\Connectors\Connector::class,
 		);
 		usort(
 			$systemConnectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (VieraEntities\Connectors\Connector $a, VieraEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -2250,7 +2250,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
+		$question->setValidator(function (string|int|null $answer) use ($connectors): VieraEntities\Connectors\Connector {
 			if ($answer === null) {
 				throw new VieraExceptions\Runtime(
 					sprintf(
@@ -2272,7 +2272,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					VieraEntities\Connectors\Connector::class,
 				);
 
 				if ($connector !== null) {
@@ -2289,7 +2289,7 @@ class Install extends Console\Command\Command
 		});
 
 		$connector = $io->askQuestion($question);
-		assert($connector instanceof Entities\Connectors\Connector);
+		assert($connector instanceof VieraEntities\Connectors\Connector);
 
 		return $connector;
 	}
@@ -2299,8 +2299,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichDevice(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
-	): Entities\Devices\Device|null
+		VieraEntities\Connectors\Connector $connector,
+	): VieraEntities\Devices\Device|null
 	{
 		$devices = [];
 
@@ -2309,11 +2309,11 @@ class Install extends Console\Command\Command
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Device::class,
+			VieraEntities\Devices\Device::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (VieraEntities\Devices\Device $a, VieraEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -2336,7 +2336,7 @@ class Install extends Console\Command\Command
 			(string) $this->translator->translate('//viera-connector.cmd.base.messages.answerNotValid'),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
+			function (string|int|null $answer) use ($connector, $devices): VieraEntities\Devices\Device {
 				if ($answer === null) {
 					throw new VieraExceptions\Runtime(
 						sprintf(
@@ -2359,7 +2359,7 @@ class Install extends Console\Command\Command
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Device::class,
+						VieraEntities\Devices\Device::class,
 					);
 
 					if ($device !== null) {
@@ -2377,13 +2377,13 @@ class Install extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Device);
+		assert($device instanceof VieraEntities\Devices\Device);
 
 		return $device;
 	}
 
 	/**
-	 * @param array<Entities\Devices\Device> $encryptedDevices
+	 * @param array<VieraEntities\Devices\Device> $encryptedDevices
 	 *
 	 * @throws DBAL\Exception
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
@@ -2396,7 +2396,7 @@ class Install extends Console\Command\Command
 	 */
 	private function processEncryptedDevices(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
+		VieraEntities\Connectors\Connector $connector,
 		array $encryptedDevices,
 	): void
 	{

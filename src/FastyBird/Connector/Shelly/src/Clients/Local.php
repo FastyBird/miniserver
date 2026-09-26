@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Shelly\Clients;
 use DateTimeInterface;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
-use FastyBird\Connector\Shelly\Documents;
+use FastyBird\Connector\Shelly\Documents as ShellyDocuments;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
-use FastyBird\Connector\Shelly\Types;
+use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -74,7 +74,7 @@ final class Local implements Client
 
 	private const CMD_STATE = 'state';
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, ShellyDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, API\Gen2WsApi> */
@@ -89,7 +89,7 @@ final class Local implements Client
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
+		private readonly ShellyDocuments\Connectors\Connector $connector,
 		private readonly API\ConnectionManager $connectionManager,
 		private readonly Queue\Queue $queue,
 		private readonly Helpers\MessageBuilder $messageBuilder,
@@ -184,7 +184,7 @@ final class Local implements Client
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			ShellyDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -192,7 +192,7 @@ final class Local implements Client
 
 			$findDevicePropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 			$findDevicePropertyQuery->forDevice($device);
-			$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::GENERATION);
+			$findDevicePropertyQuery->byIdentifier(ShellyTypes\DevicePropertyIdentifier::GENERATION);
 
 			$generationProperty = $this->devicesPropertiesConfigurationRepository->findOneBy(
 				$findDevicePropertyQuery,
@@ -201,7 +201,7 @@ final class Local implements Client
 
 			if (
 				$generationProperty !== null
-				&& $generationProperty->getValue() === Types\DeviceGeneration::GENERATION_2->value
+				&& $generationProperty->getValue() === ShellyTypes\DeviceGeneration::GENERATION_2->value
 			) {
 				try {
 					$client = $this->createGen2DeviceWsClient($device);
@@ -345,7 +345,7 @@ final class Local implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function readDeviceState(Documents\Devices\Device $device): bool
+	private function readDeviceState(ShellyDocuments\Devices\Device $device): bool
 	{
 		if (!array_key_exists($device->getId()->toString(), $this->processedDevicesCommands)) {
 			$this->processedDevicesCommands[$device->getId()->toString()] = [];
@@ -387,7 +387,7 @@ final class Local implements Client
 			}
 		}
 
-		if ($this->deviceHelper->getGeneration($device) === Types\DeviceGeneration::GENERATION_2) {
+		if ($this->deviceHelper->getGeneration($device) === ShellyTypes\DeviceGeneration::GENERATION_2) {
 			$client = $this->getGen2DeviceWsClient($device);
 
 			if ($client === null) {
@@ -501,7 +501,7 @@ final class Local implements Client
 					);
 				});
 
-		} elseif ($this->deviceHelper->getGeneration($device) === Types\DeviceGeneration::GENERATION_1) {
+		} elseif ($this->deviceHelper->getGeneration($device) === ShellyTypes\DeviceGeneration::GENERATION_1) {
 			$address = $this->deviceHelper->getLocalAddress($device);
 
 			if ($address === null) {
@@ -626,7 +626,7 @@ final class Local implements Client
 	/**
 	 * @throws ShellyExceptions\InvalidState
 	 */
-	private function createGen2DeviceWsClient(Documents\Devices\Device $device): API\Gen2WsApi
+	private function createGen2DeviceWsClient(ShellyDocuments\Devices\Device $device): API\Gen2WsApi
 	{
 		if (array_key_exists($device->getId()->toString(), $this->gen2DevicesWsClients)) {
 			throw new ShellyExceptions\InvalidState('Gen 2 device WS client is already created');
@@ -790,7 +790,7 @@ final class Local implements Client
 		return $this->gen2DevicesWsClients[$device->getId()->toString()];
 	}
 
-	private function getGen2DeviceWsClient(Documents\Devices\Device $device): API\Gen2WsApi|null
+	private function getGen2DeviceWsClient(ShellyDocuments\Devices\Device $device): API\Gen2WsApi|null
 	{
 		return array_key_exists(
 			$device->getId()->toString(),
@@ -810,7 +810,7 @@ final class Local implements Client
 	 * @throws ValueError
 	 */
 	private function processGen1DeviceGetState(
-		Documents\Devices\Device $device,
+		ShellyDocuments\Devices\Device $device,
 		API\Messages\Response\Gen1\GetDeviceState $state,
 	): void
 	{
@@ -819,24 +819,24 @@ final class Local implements Client
 		if ($state->getRelays() !== []) {
 			foreach ($state->getRelays() as $index => $relay) {
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::RELAY->value . '_' . $index,
+					'identifier' => '_' . ShellyTypes\BlockDescription::RELAY->value . '_' . $index,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::OUTPUT->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::OUTPUT->value,
 							'value' => $relay->getState(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::OVERPOWER->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::OVERPOWER->value,
 							'value' => $relay->hasOverpower(),
 						],
 					],
 				];
 
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::DEVICE->value,
+					'identifier' => '_' . ShellyTypes\BlockDescription::DEVICE->value,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::OVERTEMPERATURE->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::OVERTEMPERATURE->value,
 							'value' => $relay->hasOvertemperature(),
 						],
 					],
@@ -847,28 +847,28 @@ final class Local implements Client
 		if ($state->getRollers() !== []) {
 			foreach ($state->getRollers() as $index => $roller) {
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::ROLLER->value . '_' . $index,
+					'identifier' => '_' . ShellyTypes\BlockDescription::ROLLER->value . '_' . $index,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::ROLLER->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ROLLER->value,
 							'value' => $roller->getState(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::ROLLER_POSITION->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ROLLER_POSITION->value,
 							'value' => $roller->getCurrentPosition(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::ROLLER_STOP_REASON->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ROLLER_STOP_REASON->value,
 							'value' => $roller->getStopReason(),
 						],
 					],
 				];
 
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::DEVICE->value,
+					'identifier' => '_' . ShellyTypes\BlockDescription::DEVICE->value,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::OVERTEMPERATURE->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::OVERTEMPERATURE->value,
 							'value' => $roller->hasOvertemperature(),
 						],
 					],
@@ -879,42 +879,42 @@ final class Local implements Client
 		if ($state->getLights() !== []) {
 			foreach ($state->getLights() as $index => $light) {
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::LIGHT->value . '_' . $index,
+					'identifier' => '_' . ShellyTypes\BlockDescription::LIGHT->value . '_' . $index,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::RED->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::RED->value,
 							'value' => $light->getGreen(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::GREEN->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::GREEN->value,
 							'value' => $light->getGreen(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::BLUE->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::BLUE->value,
 							'value' => $light->getBlue(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::GAIN->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::GAIN->value,
 							'value' => $light->getGain(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::WHITE->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::WHITE->value,
 							'value' => $light->getWhite(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::WHITE_LEVEL->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::WHITE_LEVEL->value,
 							'value' => $light->getWhite(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::EFFECT->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::EFFECT->value,
 							'value' => $light->getEffect(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::BRIGHTNESS->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::BRIGHTNESS->value,
 							'value' => $light->getBrightness(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::OUTPUT->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::OUTPUT->value,
 							'value' => $light->getState(),
 						],
 					],
@@ -925,34 +925,34 @@ final class Local implements Client
 		if ($state->getEmeters() !== []) {
 			foreach ($state->getEmeters() as $index => $emeter) {
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::EMETER->value . '_' . $index,
+					'identifier' => '_' . ShellyTypes\BlockDescription::EMETER->value . '_' . $index,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::ACTIVE_POWER->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ACTIVE_POWER->value,
 							'value' => $emeter->getActivePower(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::REACTIVE_POWER->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::REACTIVE_POWER->value,
 							'value' => $emeter->getReactivePower(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::POWER_FACTOR->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::POWER_FACTOR->value,
 							'value' => $emeter->getPowerFactor(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::CURRENT->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::CURRENT->value,
 							'value' => $emeter->getCurrent(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::VOLTAGE->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::VOLTAGE->value,
 							'value' => $emeter->getVoltage(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::ENERGY->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ENERGY->value,
 							'value' => $emeter->getTotal(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::ENERGY_RETURNED->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ENERGY_RETURNED->value,
 							'value' => $emeter->getTotalReturned(),
 						],
 					],
@@ -966,18 +966,18 @@ final class Local implements Client
 		if ($state->getInputs() !== []) {
 			foreach ($state->getInputs() as $index => $input) {
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::RELAY->value . '_' . $index,
+					'identifier' => '_' . ShellyTypes\BlockDescription::RELAY->value . '_' . $index,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::INPUT->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::INPUT->value,
 							'value' => $input->getInput(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::INPUT_EVENT->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::INPUT_EVENT->value,
 							'value' => $input->getEvent(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::INPUT_EVENT_COUNT->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::INPUT_EVENT_COUNT->value,
 							'value' => $input->getEventCnt(),
 						],
 					],
@@ -991,32 +991,32 @@ final class Local implements Client
 		if ($state->getMeters() !== []) {
 			foreach ($state->getMeters() as $index => $meter) {
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::RELAY->value . '_' . $index,
+					'identifier' => '_' . ShellyTypes\BlockDescription::RELAY->value . '_' . $index,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::ACTIVE_POWER->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ACTIVE_POWER->value,
 							'value' => $meter->getPower(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::ENERGY->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ENERGY->value,
 							'value' => $meter->getTotal(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::OVERPOWER->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::OVERPOWER->value,
 							'value' => $meter->getOverpower(),
 						],
 					],
 				];
 
 				$states[] = [
-					'identifier' => '_' . Types\BlockDescription::ROLLER->value . '_' . $index,
+					'identifier' => '_' . ShellyTypes\BlockDescription::ROLLER->value . '_' . $index,
 					'sensors' => [
 						[
-							'identifier' => '_' . Types\SensorDescription::ROLLER_POWER->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ROLLER_POWER->value,
 							'value' => $meter->getPower(),
 						],
 						[
-							'identifier' => '_' . Types\SensorDescription::ROLLER_ENERGY->value,
+							'identifier' => '_' . ShellyTypes\SensorDescription::ROLLER_ENERGY->value,
 							'value' => $meter->getTotal(),
 						],
 					],
@@ -1091,7 +1091,7 @@ final class Local implements Client
 	 * @throws ValueError
 	 */
 	private function processGen2DeviceGetState(
-		Documents\Devices\Device $device,
+		ShellyDocuments\Devices\Device $device,
 		API\Messages\Response\Gen2\GetDeviceState $state,
 	): void
 	{
@@ -1134,21 +1134,21 @@ final class Local implements Client
 	 * @throws ValueError
 	 */
 	private function processGen2DeviceEvent(
-		Documents\Devices\Device $device,
+		ShellyDocuments\Devices\Device $device,
 		API\Messages\Response\Gen2\DeviceEvent $notification,
 	): void
 	{
 		foreach ($notification->getEvents() as $event) {
 			if (
 				preg_match(self::COMPONENT_KEY, $event->getComponent(), $componentMatches) === 1
-				&& Types\ComponentType::tryFrom($componentMatches['component']) !== null
+				&& ShellyTypes\ComponentType::tryFrom($componentMatches['component']) !== null
 				&& array_key_exists('channel', $componentMatches)
 			) {
-				$component = Types\ComponentType::from($componentMatches['component']);
+				$component = ShellyTypes\ComponentType::from($componentMatches['component']);
 
 				if (
-					$component === Types\ComponentType::SCRIPT
-					&& $event->getEvent() === Types\ComponentEvent::RESULT->value
+					$component === ShellyTypes\ComponentType::SCRIPT
+					&& $event->getEvent() === ShellyTypes\ComponentEvent::RESULT->value
 					&& $event->getData() !== null
 				) {
 					$this->queue->append(
@@ -1165,7 +1165,7 @@ final class Local implements Client
 											. '_'
 											. $event->getId()
 											. '_'
-											. Types\ComponentAttributeType::RESULT->value
+											. ShellyTypes\ComponentAttributeType::RESULT->value
 										),
 										'value' => $event->getData(),
 									],

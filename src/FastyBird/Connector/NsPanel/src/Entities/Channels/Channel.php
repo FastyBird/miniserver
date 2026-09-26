@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\NsPanel\Entities;
+use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -28,7 +28,7 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 {
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		NsPanelEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -42,9 +42,9 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 		return Sources\Connector::NS_PANEL;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): NsPanelEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof NsPanelEntities\Devices\Device);
 
 		return $this->device;
 	}

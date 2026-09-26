@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Entities;
+use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -47,14 +47,14 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<NsPanelEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
 		$devices = [];
 
 		foreach (parent::getDevices() as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof NsPanelEntities\Devices\Device) {
 				$devices[] = $device;
 			}
 		}
@@ -67,7 +67,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
-		if (!$device instanceof Entities\Devices\Device) {
+		if (!$device instanceof NsPanelEntities\Devices\Device) {
 			throw new NsPanelExceptions\InvalidArgument('Provided device type is not valid');
 		}
 

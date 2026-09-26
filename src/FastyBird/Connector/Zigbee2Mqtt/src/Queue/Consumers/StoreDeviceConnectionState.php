@@ -17,11 +17,11 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Zigbee2Mqtt;
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
-use FastyBird\Connector\Zigbee2Mqtt\Queries;
+use FastyBird\Connector\Zigbee2Mqtt\Queries as Zigbee2MqttQueries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
-use FastyBird\Connector\Zigbee2Mqtt\Types;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -88,18 +88,18 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 		}
 
 		if (preg_match('/^0x[a-fA-F0-9]{16}$/', $message->getDevice()) === 1) {
-			$findDeviceQuery = new Queries\Configuration\FindSubDevices();
+			$findDeviceQuery = new Zigbee2MqttQueries\Configuration\FindSubDevices();
 			$findDeviceQuery->byConnectorId($message->getConnector());
 			$findDeviceQuery->byIdentifier($message->getDevice());
 
 			$device = $this->devicesConfigurationRepository->findOneBy(
 				$findDeviceQuery,
-				Documents\Devices\SubDevice::class,
+				Zigbee2MqttDocuments\Devices\SubDevice::class,
 			);
 
 		} else {
 			$findDevicePropertyQuery = new DevicesQueries\Configuration\FindDeviceVariableProperties();
-			$findDevicePropertyQuery->byIdentifier(Types\DevicePropertyIdentifier::FRIENDLY_NAME->value);
+			$findDevicePropertyQuery->byIdentifier(Zigbee2MqttTypes\DevicePropertyIdentifier::FRIENDLY_NAME->value);
 			$findDevicePropertyQuery->byValue($message->getDevice());
 
 			$property = $this->devicesPropertiesConfigurationRepository->findOneBy(
@@ -111,13 +111,13 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 				return true;
 			}
 
-			$findDeviceQuery = new Queries\Configuration\FindSubDevices();
+			$findDeviceQuery = new Zigbee2MqttQueries\Configuration\FindSubDevices();
 			$findDeviceQuery->byConnectorId($message->getConnector());
 			$findDeviceQuery->byId($property->getDevice());
 
 			$device = $this->devicesConfigurationRepository->findOneBy(
 				$findDeviceQuery,
-				Documents\Devices\SubDevice::class,
+				Zigbee2MqttDocuments\Devices\SubDevice::class,
 			);
 		}
 
@@ -133,11 +133,11 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 
 		$state = DevicesTypes\ConnectionState::UNKNOWN;
 
-		if ($message->getState() === Types\ConnectionState::ONLINE) {
+		if ($message->getState() === Zigbee2MqttTypes\ConnectionState::ONLINE) {
 			$state = DevicesTypes\ConnectionState::CONNECTED;
-		} elseif ($message->getState() === Types\ConnectionState::OFFLINE) {
+		} elseif ($message->getState() === Zigbee2MqttTypes\ConnectionState::OFFLINE) {
 			$state = DevicesTypes\ConnectionState::DISCONNECTED;
-		} elseif ($message->getState() === Types\ConnectionState::ALERT) {
+		} elseif ($message->getState() === Zigbee2MqttTypes\ConnectionState::ALERT) {
 			$state = DevicesTypes\ConnectionState::ALERT;
 		}
 
@@ -151,12 +151,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 				|| $state === DevicesTypes\ConnectionState::ALERT
 				|| $state === DevicesTypes\ConnectionState::UNKNOWN
 			) {
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new Zigbee2MqttQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					Zigbee2MqttDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {

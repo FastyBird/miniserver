@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\NsPanel\Helpers\Devices;
 
-use FastyBird\Connector\NsPanel\Documents;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Types;
@@ -51,7 +51,7 @@ final readonly class SubDevice
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws NsPanelExceptions\InvalidState
 	 */
-	public function getGateway(Documents\Devices\SubDevice $device): Documents\Devices\Gateway
+	public function getGateway(NsPanelDocuments\Devices\SubDevice $device): NsPanelDocuments\Devices\Gateway
 	{
 		foreach ($device->getParents() as $parent) {
 			$findDeviceQuery = new Queries\Configuration\FindGatewayDevices();
@@ -59,7 +59,7 @@ final readonly class SubDevice
 
 			$parent = $this->devicesConfigurationRepository->findOneBy(
 				$findDeviceQuery,
-				Documents\Devices\Gateway::class,
+				NsPanelDocuments\Devices\Gateway::class,
 			);
 
 			if ($parent !== null) {
@@ -78,7 +78,7 @@ final readonly class SubDevice
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDisplayCategory(Documents\Devices\SubDevice $device): Types\Category
+	public function getDisplayCategory(NsPanelDocuments\Devices\SubDevice $device): Types\Category
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -111,7 +111,7 @@ final readonly class SubDevice
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getManufacturer(Documents\Devices\SubDevice $device): string
+	public function getManufacturer(NsPanelDocuments\Devices\SubDevice $device): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -140,7 +140,7 @@ final readonly class SubDevice
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getModel(Documents\Devices\SubDevice $device): string
+	public function getModel(NsPanelDocuments\Devices\SubDevice $device): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -169,7 +169,7 @@ final readonly class SubDevice
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getFirmwareVersion(Documents\Devices\SubDevice $device): string
+	public function getFirmwareVersion(NsPanelDocuments\Devices\SubDevice $device): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

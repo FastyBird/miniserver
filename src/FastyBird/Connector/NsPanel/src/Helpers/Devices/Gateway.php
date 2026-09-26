@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\NsPanel\Helpers\Devices;
 
-use FastyBird\Connector\NsPanel\Documents;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Queries;
@@ -56,7 +56,7 @@ final readonly class Gateway
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getIpAddress(Documents\Devices\Gateway $device): string|null
+	public function getIpAddress(NsPanelDocuments\Devices\Gateway $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -85,7 +85,7 @@ final readonly class Gateway
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getDomain(Documents\Devices\Gateway $device): string|null
+	public function getDomain(NsPanelDocuments\Devices\Gateway $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -114,7 +114,7 @@ final readonly class Gateway
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getAccessToken(Documents\Devices\Gateway $device): string|null
+	public function getAccessToken(NsPanelDocuments\Devices\Gateway $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -143,7 +143,7 @@ final readonly class Gateway
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getMacAddress(Documents\Devices\Gateway $device): string|null
+	public function getMacAddress(NsPanelDocuments\Devices\Gateway $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -172,7 +172,7 @@ final readonly class Gateway
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getFirmwareVersion(Documents\Devices\Gateway $device): string|null
+	public function getFirmwareVersion(NsPanelDocuments\Devices\Gateway $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -201,7 +201,7 @@ final readonly class Gateway
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getStateReadingDelay(Documents\Devices\Gateway $device): float
+	public function getStateReadingDelay(NsPanelDocuments\Devices\Gateway $device): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -230,7 +230,7 @@ final readonly class Gateway
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getHeartbeatDelay(Documents\Devices\Gateway $device): float
+	public function getHeartbeatDelay(NsPanelDocuments\Devices\Gateway $device): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

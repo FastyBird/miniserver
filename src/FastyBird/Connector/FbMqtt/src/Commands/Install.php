@@ -17,7 +17,7 @@ namespace FastyBird\Connector\FbMqtt\Commands;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Entities;
+use FastyBird\Connector\FbMqtt\Entities as FbMqttEntities;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Queries;
 use FastyBird\Connector\FbMqtt\Types as FbMqttTypes;
@@ -136,7 +136,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					FbMqttEntities\Connectors\Connector::class,
 				);
 
 				if ($connector !== null) {
@@ -164,7 +164,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					FbMqttEntities\Connectors\Connector::class,
 				);
 
 				if ($connector === null) {
@@ -196,11 +196,11 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Connectors\Connector::class,
+				'entity' => FbMqttEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof FbMqttEntities\Connectors\Connector);
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
@@ -293,8 +293,8 @@ class Install extends Console\Command\Command
 		$createDevices = (bool) $io->askQuestion($question);
 
 		if ($createDevices) {
-			$connector = $this->connectorsRepository->find($connector->getId(), Entities\Connectors\Connector::class);
-			assert($connector instanceof Entities\Connectors\Connector);
+			$connector = $this->connectorsRepository->find($connector->getId(), FbMqttEntities\Connectors\Connector::class);
+			assert($connector instanceof FbMqttEntities\Connectors\Connector);
 
 			$this->createDevice($io, $connector);
 		}
@@ -425,7 +425,7 @@ class Install extends Console\Command\Command
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof FbMqttEntities\Connectors\Connector);
 
 			if ($protocolProperty === null) {
 				if ($protocol === null) {
@@ -565,8 +565,8 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$connector = $this->connectorsRepository->find($connector->getId(), Entities\Connectors\Connector::class);
-		assert($connector instanceof Entities\Connectors\Connector);
+		$connector = $this->connectorsRepository->find($connector->getId(), FbMqttEntities\Connectors\Connector::class);
+		assert($connector instanceof FbMqttEntities\Connectors\Connector);
 
 		$this->askManageConnectorAction($io, $connector);
 	}
@@ -675,11 +675,11 @@ class Install extends Console\Command\Command
 
 		$connectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			FbMqttEntities\Connectors\Connector::class,
 		);
 		usort(
 			$connectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (FbMqttEntities\Connectors\Connector $a, FbMqttEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -696,7 +696,7 @@ class Install extends Console\Command\Command
 			$findDevicesQuery = new Queries\Entities\FindDevices();
 			$findDevicesQuery->forConnector($connector);
 
-			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, FbMqttEntities\Devices\Device::class);
 
 			$table->addRow([
 				$index + 1,
@@ -716,7 +716,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function createDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function createDevice(Style\SymfonyStyle $io, FbMqttEntities\Connectors\Connector $connector): void
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate(
@@ -730,7 +730,7 @@ class Install extends Console\Command\Command
 				$findDeviceQuery->byIdentifier($answer);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) !== null
+					$this->devicesRepository->findOneBy($findDeviceQuery, FbMqttEntities\Devices\Device::class) !== null
 				) {
 					throw new FbMqttExceptions\Runtime(
 						(string) $this->translator->translate(
@@ -755,7 +755,7 @@ class Install extends Console\Command\Command
 				$findDeviceQuery->byIdentifier($identifier);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) === null
+					$this->devicesRepository->findOneBy($findDeviceQuery, FbMqttEntities\Devices\Device::class) === null
 				) {
 					break;
 				}
@@ -779,12 +779,12 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$device = $this->devicesManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Devices\Device::class,
+				'entity' => FbMqttEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof FbMqttEntities\Devices\Device);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -818,7 +818,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function editDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function editDevice(Style\SymfonyStyle $io, FbMqttEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -881,7 +881,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function deleteDevice(Style\SymfonyStyle $io, FbMqttEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -946,15 +946,15 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function listDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function listDevices(Style\SymfonyStyle $io, FbMqttEntities\Connectors\Connector $connector): void
 	{
 		$findDevicesQuery = new Queries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, FbMqttEntities\Devices\Device::class);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (FbMqttEntities\Devices\Device $a, FbMqttEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1074,7 +1074,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageConnectorAction(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
+		FbMqttEntities\Connectors\Connector $connector,
 	): void
 	{
 		$question = new Console\Question\ChoiceQuestion(
@@ -1186,7 +1186,7 @@ class Install extends Console\Command\Command
 
 	private function askConnectorName(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		FbMqttEntities\Connectors\Connector|null $connector = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -1207,7 +1207,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorServerAddress(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		FbMqttEntities\Connectors\Connector|null $connector = null,
 	): string
 	{
 		$question = new Console\Question\Question(
@@ -1240,7 +1240,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorServerPort(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		FbMqttEntities\Connectors\Connector|null $connector = null,
 	): int
 	{
 		$question = new Console\Question\Question(
@@ -1271,7 +1271,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorServerSecuredPort(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		FbMqttEntities\Connectors\Connector|null $connector = null,
 	): int
 	{
 		$question = new Console\Question\Question(
@@ -1304,7 +1304,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorUsername(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		FbMqttEntities\Connectors\Connector|null $connector = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -1327,7 +1327,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorPassword(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		FbMqttEntities\Connectors\Connector|null $connector = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -1342,7 +1342,7 @@ class Install extends Console\Command\Command
 		return strval($password) === '' ? null : strval($password);
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(Style\SymfonyStyle $io, FbMqttEntities\Devices\Device|null $device = null): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//fb-mqtt-connector.cmd.install.questions.provide.device.name'),
@@ -1357,7 +1357,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function askWhichConnector(Style\SymfonyStyle $io): Entities\Connectors\Connector|null
+	private function askWhichConnector(Style\SymfonyStyle $io): FbMqttEntities\Connectors\Connector|null
 	{
 		$connectors = [];
 
@@ -1365,11 +1365,11 @@ class Install extends Console\Command\Command
 
 		$systemConnectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			FbMqttEntities\Connectors\Connector::class,
 		);
 		usort(
 			$systemConnectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (FbMqttEntities\Connectors\Connector $a, FbMqttEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1391,7 +1391,7 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
+		$question->setValidator(function (string|int|null $answer) use ($connectors): FbMqttEntities\Connectors\Connector {
 			if ($answer === null) {
 				throw new FbMqttExceptions\Runtime(
 					sprintf(
@@ -1413,7 +1413,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					FbMqttEntities\Connectors\Connector::class,
 				);
 
 				if ($connector !== null) {
@@ -1430,7 +1430,7 @@ class Install extends Console\Command\Command
 		});
 
 		$connector = $io->askQuestion($question);
-		assert($connector instanceof Entities\Connectors\Connector);
+		assert($connector instanceof FbMqttEntities\Connectors\Connector);
 
 		return $connector;
 	}
@@ -1440,8 +1440,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichDevice(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
-	): Entities\Devices\Device|null
+		FbMqttEntities\Connectors\Connector $connector,
+	): FbMqttEntities\Devices\Device|null
 	{
 		$devices = [];
 
@@ -1450,11 +1450,11 @@ class Install extends Console\Command\Command
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Device::class,
+			FbMqttEntities\Devices\Device::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (FbMqttEntities\Devices\Device $a, FbMqttEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1477,7 +1477,7 @@ class Install extends Console\Command\Command
 			(string) $this->translator->translate('//fb-mqtt-connector.cmd.base.messages.answerNotValid'),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
+			function (string|int|null $answer) use ($connector, $devices): FbMqttEntities\Devices\Device {
 				if ($answer === null) {
 					throw new FbMqttExceptions\Runtime(
 						sprintf(
@@ -1502,7 +1502,7 @@ class Install extends Console\Command\Command
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Device::class,
+						FbMqttEntities\Devices\Device::class,
 					);
 
 					if ($device !== null) {
@@ -1520,7 +1520,7 @@ class Install extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Device);
+		assert($device instanceof FbMqttEntities\Devices\Device);
 
 		return $device;
 	}

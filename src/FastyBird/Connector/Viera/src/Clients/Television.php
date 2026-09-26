@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Viera\Clients;
 use DateTimeInterface;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
-use FastyBird\Connector\Viera\Documents;
+use FastyBird\Connector\Viera\Documents as VieraDocuments;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
-use FastyBird\Connector\Viera\Queries;
+use FastyBird\Connector\Viera\Queries as VieraQueries;
 use FastyBird\Connector\Viera\Queue;
-use FastyBird\Connector\Viera\Types;
+use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -65,7 +65,7 @@ final class Television implements Client
 
 	private const RECONNECT_COOL_DOWN_TIME = 300.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, VieraDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Channels\Properties\Dynamic>>  */
@@ -83,7 +83,7 @@ final class Television implements Client
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
+		private readonly VieraDocuments\Connectors\Connector $connector,
 		private readonly API\ConnectionManager $connectionManager,
 		private readonly Queue\Queue $queue,
 		private readonly Helpers\MessageBuilder $messageBuilder,
@@ -118,12 +118,12 @@ final class Television implements Client
 		$this->processedDevices = [];
 		$this->processedChannelsProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new VieraQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			VieraDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -131,13 +131,13 @@ final class Television implements Client
 				$this->properties[$device->getId()->toString()] = [];
 			}
 
-			$findChannelQuery = new Queries\Configuration\FindChannels();
+			$findChannelQuery = new VieraQueries\Configuration\FindChannels();
 			$findChannelQuery->forDevice($device);
-			$findChannelQuery->byIdentifier(Types\ChannelType::TELEVISION);
+			$findChannelQuery->byIdentifier(VieraTypes\ChannelType::TELEVISION);
 
 			$channel = $this->channelsConfigurationRepository->findOneBy(
 				$findChannelQuery,
-				Documents\Channels\Channel::class,
+				VieraDocuments\Channels\Channel::class,
 			);
 
 			if ($channel === null) {
@@ -245,7 +245,7 @@ final class Television implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function processDevice(Documents\Devices\Device $device): bool
+	private function processDevice(VieraDocuments\Devices\Device $device): bool
 	{
 		$client = $this->getDeviceClient($device);
 
@@ -417,15 +417,15 @@ final class Television implements Client
 
 			try {
 				switch ($property->getIdentifier()) {
-					case Types\ChannelPropertyIdentifier::STATE->value:
+					case VieraTypes\ChannelPropertyIdentifier::STATE->value:
 						$result = $client->isTurnedOn();
 
 						break;
-					case Types\ChannelPropertyIdentifier::VOLUME->value:
+					case VieraTypes\ChannelPropertyIdentifier::VOLUME->value:
 						$result = $client->getVolume();
 
 						break;
-					case Types\ChannelPropertyIdentifier::MUTE->value:
+					case VieraTypes\ChannelPropertyIdentifier::MUTE->value:
 						$result = $client->getMute();
 
 						break;
@@ -588,7 +588,7 @@ final class Television implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function createDeviceClient(Documents\Devices\Device $device): void
+	private function createDeviceClient(VieraDocuments\Devices\Device $device): void
 	{
 		unset($this->processedChannelsProperties[$device->getId()->toString()]);
 
@@ -607,8 +607,8 @@ final class Television implements Client
 						[
 							'connector' => $device->getConnector(),
 							'device' => $device->getId(),
-							'channel' => Types\ChannelType::TELEVISION,
-							'property' => Types\ChannelPropertyIdentifier::STATE,
+							'channel' => VieraTypes\ChannelType::TELEVISION,
+							'property' => VieraTypes\ChannelPropertyIdentifier::STATE,
 							'value' => $message->getScreenState(),
 						],
 					),
@@ -647,7 +647,7 @@ final class Television implements Client
 		$this->devicesClients[$device->getId()->toString()] = $client;
 	}
 
-	private function getDeviceClient(Documents\Devices\Device $device): API\TelevisionApi|null
+	private function getDeviceClient(VieraDocuments\Devices\Device $device): API\TelevisionApi|null
 	{
 		return array_key_exists(
 			$device->getId()->toString(),

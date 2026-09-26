@@ -19,7 +19,7 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\HomeKit\Entities;
+use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Queries;
@@ -84,7 +84,7 @@ final class Properties implements Common\EventSubscriber
 		$entity = $eventArgs->getObject();
 
 		// Check for valid entity
-		if ($entity instanceof Entities\Connectors\Connector) {
+		if ($entity instanceof HomeKitEntities\Connectors\Connector) {
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
 			$findConnectorPropertyQuery->forConnector($entity);
 			$findConnectorPropertyQuery->byIdentifier(HomeKitTypes\ConnectorPropertyIdentifier::MAC_ADDRESS);
@@ -216,7 +216,7 @@ final class Properties implements Common\EventSubscriber
 					'value' => $xhmUri,
 				]));
 			}
-		} elseif ($entity instanceof Entities\Devices\Device) {
+		} elseif ($entity instanceof HomeKitEntities\Devices\Device) {
 			$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 			$findDevicePropertyQuery->forDevice($entity);
 			$findDevicePropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::STATE);
@@ -286,7 +286,7 @@ final class Properties implements Common\EventSubscriber
 				|| $entity->getIdentifier() === HomeKitTypes\ConnectorPropertyIdentifier::SETUP_ID->value
 			) {
 				$connector = $entity->getConnector();
-				assert($connector instanceof Entities\Connectors\Connector);
+				assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 				$xhmUri = Helpers\Protocol::getXhmUri(
 					$connector->getPinCode(),

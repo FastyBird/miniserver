@@ -18,10 +18,10 @@ namespace FastyBird\Connector\FbMqtt\Queue\Consumers;
 use DateTimeInterface;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\API;
-use FastyBird\Connector\FbMqtt\Documents;
+use FastyBird\Connector\FbMqtt\Documents as FbMqttDocuments;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
-use FastyBird\Connector\FbMqtt\Queries;
+use FastyBird\Connector\FbMqtt\Queries as FbMqttQueries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Clock;
@@ -88,12 +88,12 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new FbMqttQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			FbMqttDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -122,13 +122,13 @@ final class WriteV1DevicePropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new FbMqttQueries\Configuration\FindDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			FbMqttDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {

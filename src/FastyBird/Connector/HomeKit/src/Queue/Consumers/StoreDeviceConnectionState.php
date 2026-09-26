@@ -17,8 +17,8 @@ namespace FastyBird\Connector\HomeKit\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Documents;
-use FastyBird\Connector\HomeKit\Queries;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
+use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -79,13 +79,13 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new HomeKitQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			HomeKitDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -122,12 +122,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 				|| $message->getState() === DevicesTypes\ConnectionState::ALERT
 				|| $message->getState() === DevicesTypes\ConnectionState::UNKNOWN
 			) {
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new HomeKitQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					HomeKitDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {

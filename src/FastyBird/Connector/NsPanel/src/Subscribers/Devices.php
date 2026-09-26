@@ -18,7 +18,7 @@ namespace FastyBird\Connector\NsPanel\Subscribers;
 use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\NsPanel\Entities;
+use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
@@ -54,7 +54,7 @@ final class Devices implements Common\EventSubscriber
 	{
 		$entity = $eventArgs->getObject();
 
-		if ($entity instanceof Entities\Devices\ThirdPartyDevice) {
+		if ($entity instanceof NsPanelEntities\Devices\ThirdPartyDevice) {
 			$this->checkAndAssignThirdPartyDeviceParents($entity, $eventArgs);
 		}
 	}
@@ -69,7 +69,7 @@ final class Devices implements Common\EventSubscriber
 	{
 		$entity = $eventArgs->getObject();
 
-		if ($entity instanceof Entities\Devices\ThirdPartyDevice) {
+		if ($entity instanceof NsPanelEntities\Devices\ThirdPartyDevice) {
 			$this->checkAndAssignThirdPartyDeviceParents($entity, $eventArgs);
 		}
 	}
@@ -81,7 +81,7 @@ final class Devices implements Common\EventSubscriber
 	 * @throws ORM\ORMInvalidArgumentException
 	 */
 	private function checkAndAssignThirdPartyDeviceParents(
-		Entities\Devices\ThirdPartyDevice $device,
+		NsPanelEntities\Devices\ThirdPartyDevice $device,
 		Persistence\Event\LifecycleEventArgs $eventArgs,
 	): void
 	{

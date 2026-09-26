@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Tuya\Connector;
 
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Clients;
-use FastyBird\Connector\Tuya\Documents;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queue;
@@ -75,7 +75,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof TuyaDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -100,7 +100,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof TuyaDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Tuya connector service',
@@ -182,7 +182,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof TuyaDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Tuya connector discovery',
@@ -230,7 +230,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof TuyaDocuments\Connectors\Connector);
 
 		$this->client?->disconnect();
 

@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Shelly\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Entities;
+use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -44,7 +44,7 @@ class Device extends DevicesEntities\Devices\Device
 
 	public function __construct(
 		string $identifier,
-		Entities\Connectors\Connector $connector,
+		ShellyEntities\Connectors\Connector $connector,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -62,22 +62,22 @@ class Device extends DevicesEntities\Devices\Device
 		return Sources\Connector::SHELLY;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): ShellyEntities\Connectors\Connector
 	{
-		assert($this->connector instanceof Entities\Connectors\Connector);
+		assert($this->connector instanceof ShellyEntities\Connectors\Connector);
 
 		return $this->connector;
 	}
 
 	/**
-	 * @return array<Entities\Channels\Channel>
+	 * @return array<ShellyEntities\Channels\Channel>
 	 */
 	public function getChannels(): array
 	{
 		$channels = [];
 
 		foreach (parent::getChannels() as $channel) {
-			if ($channel instanceof Entities\Channels\Channel) {
+			if ($channel instanceof ShellyEntities\Channels\Channel) {
 				$channels[] = $channel;
 			}
 		}
@@ -90,7 +90,7 @@ class Device extends DevicesEntities\Devices\Device
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
-		if (!$channel instanceof Entities\Channels\Channel) {
+		if (!$channel instanceof ShellyEntities\Channels\Channel) {
 			throw new ShellyExceptions\InvalidArgument('Provided channel type is not valid');
 		}
 

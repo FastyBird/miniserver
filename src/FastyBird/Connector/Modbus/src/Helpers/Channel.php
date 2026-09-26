@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Helpers;
 
 use DateTimeInterface;
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Documents;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types;
@@ -62,7 +62,7 @@ final class Channel
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getAddress(Documents\Channels\Channel $channel): int|null
+	public function getAddress(ModbusDocuments\Channels\Channel $channel): int|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindChannelVariableProperties();
 		$findPropertyQuery->forChannel($channel);
@@ -92,7 +92,7 @@ final class Channel
 	 * @throws ValueError
 	 */
 	public function getRegisterType(
-		Documents\Channels\Channel $channel,
+		ModbusDocuments\Channels\Channel $channel,
 	): Types\ChannelType|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindChannelVariableProperties();
@@ -123,7 +123,7 @@ final class Channel
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getReadingDelay(Documents\Channels\Channel $channel): float
+	public function getReadingDelay(ModbusDocuments\Channels\Channel $channel): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindChannelVariableProperties();
 		$findPropertyQuery->forChannel($channel);
@@ -153,7 +153,7 @@ final class Channel
 	 * @throws ValueError
 	 */
 	public function getConfiguration(
-		Documents\Channels\Channel $channel,
+		ModbusDocuments\Channels\Channel $channel,
 		Types\ChannelPropertyIdentifier $type,
 	): float|bool|int|string|Payloads\Payload|DateTimeInterface|null
 	{

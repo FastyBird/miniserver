@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Zigbee2Mqtt\Entities;
+use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -31,7 +31,7 @@ class Channel extends DevicesEntities\Channels\Channel
 	public const TYPE = 'zigbee2mqtt-connector';
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		Zigbee2MqttEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -50,9 +50,9 @@ class Channel extends DevicesEntities\Channels\Channel
 		return Sources\Connector::ZIGBEE2MQTT;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): Zigbee2MqttEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof Zigbee2MqttEntities\Devices\Device);
 
 		return $this->device;
 	}

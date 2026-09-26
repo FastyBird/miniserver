@@ -17,11 +17,11 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Zigbee2Mqtt;
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
-use FastyBird\Connector\Zigbee2Mqtt\Queries;
+use FastyBird\Connector\Zigbee2Mqtt\Queries as Zigbee2MqttQueries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
-use FastyBird\Connector\Zigbee2Mqtt\Types;
+use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -84,7 +84,7 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 			return false;
 		}
 
-		$findDevicePropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
+		$findDevicePropertyQuery = new Zigbee2MqttQueries\Configuration\FindDeviceVariableProperties();
 		$findDevicePropertyQuery->byIdentifier(Zigbee2Mqtt\Types\DevicePropertyIdentifier::BASE_TOPIC);
 		$findDevicePropertyQuery->byValue($message->getBaseTopic());
 
@@ -97,13 +97,13 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindBridgeDevices();
+		$findDeviceQuery = new Zigbee2MqttQueries\Configuration\FindBridgeDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byId($baseTopicProperty->getDevice());
 
 		$bridge = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Bridge::class,
+			Zigbee2MqttDocuments\Devices\Bridge::class,
 		);
 
 		if ($bridge === null) {
@@ -112,11 +112,11 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 
 		$state = DevicesTypes\ConnectionState::UNKNOWN;
 
-		if ($message->getState() === Types\ConnectionState::ONLINE) {
+		if ($message->getState() === Zigbee2MqttTypes\ConnectionState::ONLINE) {
 			$state = DevicesTypes\ConnectionState::CONNECTED;
-		} elseif ($message->getState() === Types\ConnectionState::OFFLINE) {
+		} elseif ($message->getState() === Zigbee2MqttTypes\ConnectionState::OFFLINE) {
 			$state = DevicesTypes\ConnectionState::DISCONNECTED;
-		} elseif ($message->getState() === Types\ConnectionState::ALERT) {
+		} elseif ($message->getState() === Zigbee2MqttTypes\ConnectionState::ALERT) {
 			$state = DevicesTypes\ConnectionState::ALERT;
 		}
 
@@ -146,12 +146,12 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 					));
 				}
 
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new Zigbee2MqttQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($bridge);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					Zigbee2MqttDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {
@@ -172,12 +172,12 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 					}
 				}
 
-				$findChildrenDevicesQuery = new Queries\Configuration\FindSubDevices();
+				$findChildrenDevicesQuery = new Zigbee2MqttQueries\Configuration\FindSubDevices();
 				$findChildrenDevicesQuery->forParent($bridge);
 
 				$children = $this->devicesConfigurationRepository->findAllBy(
 					$findChildrenDevicesQuery,
-					Documents\Devices\SubDevice::class,
+					Zigbee2MqttDocuments\Devices\SubDevice::class,
 				);
 
 				foreach ($children as $child) {
@@ -199,12 +199,12 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 						));
 					}
 
-					$findChannelsQuery = new Queries\Configuration\FindChannels();
+					$findChannelsQuery = new Zigbee2MqttQueries\Configuration\FindChannels();
 					$findChannelsQuery->forDevice($child);
 
 					$channels = $this->channelsConfigurationRepository->findAllBy(
 						$findChannelsQuery,
-						Documents\Channels\Channel::class,
+						Zigbee2MqttDocuments\Channels\Channel::class,
 					);
 
 					foreach ($channels as $channel) {

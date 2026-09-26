@@ -6,7 +6,7 @@ use Error;
 use Exception;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
-use FastyBird\Connector\HomeKit\Models;
+use FastyBird\Connector\HomeKit\Models as HomeKitModels;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -45,7 +45,7 @@ final class ClientsManagerTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertIsObject($connector);
 
-		$manager = $this->getContainer()->getByType(Models\Entities\Clients\ClientsManager::class);
+		$manager = $this->getContainer()->getByType(HomeKitModels\Entities\Clients\ClientsManager::class);
 
 		$clientPublicKey = random_bytes(32);
 
@@ -72,9 +72,9 @@ final class ClientsManagerTest extends Tests\Cases\Unit\DbTestCase
 	 */
 	public function testUpdate(): void
 	{
-		$manager = $this->getContainer()->getByType(Models\Entities\Clients\ClientsManager::class);
+		$manager = $this->getContainer()->getByType(HomeKitModels\Entities\Clients\ClientsManager::class);
 
-		$repository = $this->getContainer()->getByType(Models\Entities\Clients\ClientsRepository::class);
+		$repository = $this->getContainer()->getByType(HomeKitModels\Entities\Clients\ClientsRepository::class);
 
 		$findQuery = new Queries\Entities\FindClients();
 		$findQuery->byUid('e348f5fc-42de-459e-926e-2f4cd039c665');

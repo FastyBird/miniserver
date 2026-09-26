@@ -19,7 +19,7 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\Modbus\Entities;
+use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
@@ -83,7 +83,7 @@ final class Properties implements Common\EventSubscriber
 		$entity = $eventArgs->getObject();
 
 		// Check for valid entity
-		if ($entity instanceof Entities\Devices\Device) {
+		if ($entity instanceof ModbusEntities\Devices\Device) {
 			$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 			$findDevicePropertyQuery->forDevice($entity);
 			$findDevicePropertyQuery->byIdentifier(ModbusTypes\DevicePropertyIdentifier::STATE);
@@ -130,7 +130,7 @@ final class Properties implements Common\EventSubscriber
 			}
 		} elseif (
 			$entity instanceof DevicesEntities\Connectors\Properties\Variable
-			&& $entity->getConnector() instanceof Entities\Connectors\Connector
+			&& $entity->getConnector() instanceof ModbusEntities\Connectors\Connector
 		) {
 			if (
 				(
@@ -165,7 +165,7 @@ final class Properties implements Common\EventSubscriber
 			}
 		} elseif (
 			$entity instanceof DevicesEntities\Devices\Properties\Variable
-			&& $entity->getDevice() instanceof Entities\Devices\Device
+			&& $entity->getDevice() instanceof ModbusEntities\Devices\Device
 		) {
 			if (
 				(

@@ -18,10 +18,10 @@ namespace FastyBird\Connector\Modbus\Clients;
 use DateTimeInterface;
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\API;
-use FastyBird\Connector\Modbus\Documents;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Helpers;
-use FastyBird\Connector\Modbus\Queries;
+use FastyBird\Connector\Modbus\Queries as ModbusQueries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Clock;
@@ -92,7 +92,7 @@ class Rtu implements Client
 		protected readonly Queue\Queue $queue,
 		protected readonly Helpers\Device $deviceHelper,
 		protected readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		private readonly Documents\Connectors\Connector $connector,
+		private readonly ModbusDocuments\Connectors\Connector $connector,
 		private readonly API\ConnectionManager $connectionManager,
 		private readonly Helpers\Channel $channelHelper,
 		private readonly Modbus\Logger $logger,
@@ -125,12 +125,12 @@ class Rtu implements Client
 	 */
 	public function connect(): void
 	{
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new ModbusQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			ModbusDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -201,12 +201,12 @@ class Rtu implements Client
 	 */
 	private function handleCommunication(): void
 	{
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new ModbusQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			ModbusDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -270,19 +270,19 @@ class Rtu implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function processDevice(Documents\Devices\Device $device): bool
+	private function processDevice(ModbusDocuments\Devices\Device $device): bool
 	{
 		$station = $this->deviceHelper->getAddress($device);
 		assert(is_numeric($station));
 
 		$coilsAddresses = $discreteInputsAddresses = $holdingAddresses = $inputsAddresses = [];
 
-		$findChannelsQuery = new Queries\Configuration\FindChannels();
+		$findChannelsQuery = new ModbusQueries\Configuration\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
 		$channels = $this->channelsConfigurationRepository->findAllBy(
 			$findChannelsQuery,
-			Documents\Channels\Channel::class,
+			ModbusDocuments\Channels\Channel::class,
 		);
 
 		foreach ($channels as $channel) {
@@ -490,7 +490,7 @@ class Rtu implements Client
 					}
 
 					if ($channel !== null) {
-						$findChannelPropertyQuery = new Queries\Configuration\FindChannelDynamicProperties();
+						$findChannelPropertyQuery = new ModbusQueries\Configuration\FindChannelDynamicProperties();
 						$findChannelPropertyQuery->forChannel($channel);
 						$findChannelPropertyQuery->byIdentifier(ModbusTypes\ChannelPropertyIdentifier::VALUE);
 
@@ -574,13 +574,13 @@ class Rtu implements Client
 	 * @throws ValueError
 	 */
 	private function createReadAddress(
-		Documents\Devices\Device $device,
-		Documents\Channels\Channel $channel,
+		ModbusDocuments\Devices\Device $device,
+		ModbusDocuments\Channels\Channel $channel,
 	): Messages\Pointer\ReadAddress|null
 	{
 		$now = $this->clock->getNow();
 
-		$findChannelPropertyQuery = new Queries\Configuration\FindChannelDynamicProperties();
+		$findChannelPropertyQuery = new ModbusQueries\Configuration\FindChannelDynamicProperties();
 		$findChannelPropertyQuery->forChannel($channel);
 		$findChannelPropertyQuery->byIdentifier(ModbusTypes\ChannelPropertyIdentifier::VALUE);
 

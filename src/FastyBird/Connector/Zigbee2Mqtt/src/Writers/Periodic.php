@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\Zigbee2Mqtt;
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
-use FastyBird\Connector\Zigbee2Mqtt\Queries;
+use FastyBird\Connector\Zigbee2Mqtt\Queries as Zigbee2MqttQueries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -62,7 +62,7 @@ abstract class Periodic
 
 	private const HANDLER_PENDING_DELAY = 2_000.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, Zigbee2MqttDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Channels\Properties\Dynamic>>  */
@@ -77,7 +77,7 @@ abstract class Periodic
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly Zigbee2MqttDocuments\Connectors\Connector $connector,
 		protected readonly Helpers\MessageBuilder $messageBuilder,
 		protected readonly Queue\Queue $queue,
 		protected readonly Zigbee2Mqtt\Logger $logger,
@@ -105,12 +105,12 @@ abstract class Periodic
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindSubDevices();
+		$findDevicesQuery = new Zigbee2MqttQueries\Configuration\FindSubDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\SubDevice::class,
+			Zigbee2MqttDocuments\Devices\SubDevice::class,
 		);
 
 		foreach ($devices as $device) {
@@ -120,12 +120,12 @@ abstract class Periodic
 				$this->properties[$device->getId()->toString()] = [];
 			}
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new Zigbee2MqttQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				Zigbee2MqttDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -198,7 +198,7 @@ abstract class Periodic
 	 * @throws Zigbee2MqttExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(Zigbee2MqttDocuments\Devices\Device $device): bool
 	{
 		$now = $this->clock->getNow();
 

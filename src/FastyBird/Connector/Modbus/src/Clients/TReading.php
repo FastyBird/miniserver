@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Modbus\Clients;
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Clients\Messages\Pointer\ReadAddress;
 use FastyBird\Connector\Modbus\Clients\Messages\Request\Read;
-use FastyBird\Connector\Modbus\Documents;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Helpers;
 use FastyBird\Connector\Modbus\Helpers\MessageBuilder;
@@ -155,7 +155,7 @@ trait TReading
 	private function processDigitalRegistersResponse(
 		Messages\Request\Read $request,
 		API\Messages\Response\ReadDigitalInputs $response,
-		Documents\Devices\Device $device,
+		ModbusDocuments\Devices\Device $device,
 	): void
 	{
 		foreach ($response->getRegisters() as $address => $value) {
@@ -226,7 +226,7 @@ trait TReading
 	private function processAnalogRegistersResponse(
 		Messages\Request\Read $request,
 		API\Messages\Response\ReadAnalogInputs $response,
-		Documents\Devices\Device $device,
+		ModbusDocuments\Devices\Device $device,
 	): void
 	{
 		$registersBytes = $response->getRegisters();

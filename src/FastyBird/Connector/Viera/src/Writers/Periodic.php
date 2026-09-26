@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Viera\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\Viera;
-use FastyBird\Connector\Viera\Documents;
+use FastyBird\Connector\Viera\Documents as VieraDocuments;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
-use FastyBird\Connector\Viera\Queries;
+use FastyBird\Connector\Viera\Queries as VieraQueries;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -62,7 +62,7 @@ abstract class Periodic implements Writer
 
 	private const HANDLER_PENDING_DELAY = 2_000.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, VieraDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Channels\Properties\Dynamic>>  */
@@ -77,7 +77,7 @@ abstract class Periodic implements Writer
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly VieraDocuments\Connectors\Connector $connector,
 		protected readonly Helpers\MessageBuilder $messageBuilder,
 		protected readonly Queue\Queue $queue,
 		protected readonly Viera\Logger $logger,
@@ -105,12 +105,12 @@ abstract class Periodic implements Writer
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new VieraQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			VieraDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -120,12 +120,12 @@ abstract class Periodic implements Writer
 				$this->properties[$device->getId()->toString()] = [];
 			}
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new VieraQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				VieraDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -198,7 +198,7 @@ abstract class Periodic implements Writer
 	 * @throws VieraExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(VieraDocuments\Devices\Device $device): bool
 	{
 		$now = $this->clock->getNow();
 

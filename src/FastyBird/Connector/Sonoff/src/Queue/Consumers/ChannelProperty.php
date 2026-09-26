@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Entities;
+use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types;
@@ -113,7 +113,7 @@ trait ChannelProperty
 		}
 
 		if ($property === null) {
-			$channel = $this->channelsRepository->find($channelId, Entities\Channels\Channel::class);
+			$channel = $this->channelsRepository->find($channelId, SonoffEntities\Channels\Channel::class);
 
 			if ($channel === null) {
 				$this->logger->error(

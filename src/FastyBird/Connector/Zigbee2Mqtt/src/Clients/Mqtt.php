@@ -19,11 +19,11 @@ use BinSoul\Net\Mqtt as NetMqtt;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\API;
 use FastyBird\Connector\Zigbee2Mqtt\Clients;
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
-use FastyBird\Connector\Zigbee2Mqtt\Models;
-use FastyBird\Connector\Zigbee2Mqtt\Queries;
+use FastyBird\Connector\Zigbee2Mqtt\Models as Zigbee2MqttModels;
+use FastyBird\Connector\Zigbee2Mqtt\Queries as Zigbee2MqttQueries;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -59,11 +59,11 @@ final class Mqtt implements Client
 	private Clients\Subscribers\Device $deviceSubscriber;
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
+		private readonly Zigbee2MqttDocuments\Connectors\Connector $connector,
 		private readonly Clients\Subscribers\BridgeFactory $bridgeSubscriberFactory,
 		private readonly Clients\Subscribers\DeviceFactory $deviceSubscriberFactory,
 		private readonly API\ConnectionManager $connectionManager,
-		private readonly Models\StateRepository $stateRepository,
+		private readonly Zigbee2MqttModels\StateRepository $stateRepository,
 		private readonly Zigbee2Mqtt\Logger $logger,
 		private readonly Helpers\Connectors\Connector $connectorHelper,
 		private readonly Helpers\Devices\Bridge $bridgeHelper,
@@ -103,21 +103,21 @@ final class Mqtt implements Client
 		$this->bridgeSubscriber->subscribe($client);
 		$this->deviceSubscriber->subscribe($client);
 
-		$findDevicesQuery = new Queries\Configuration\FindBridgeDevices();
+		$findDevicesQuery = new Zigbee2MqttQueries\Configuration\FindBridgeDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$bridges = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Bridge::class,
+			Zigbee2MqttDocuments\Devices\Bridge::class,
 		);
 
 		foreach ($bridges as $bridge) {
-			$findDevicesQuery = new Queries\Configuration\FindSubDevices();
+			$findDevicesQuery = new Zigbee2MqttQueries\Configuration\FindSubDevices();
 			$findDevicesQuery->forParent($bridge);
 
 			$subDevices = $this->devicesConfigurationRepository->findAllBy(
 				$findDevicesQuery,
-				Documents\Devices\SubDevice::class,
+				Zigbee2MqttDocuments\Devices\SubDevice::class,
 			);
 
 			foreach ($subDevices as $subDevice) {
@@ -140,12 +140,12 @@ final class Mqtt implements Client
 					}
 				}
 
-				$findChannels = new Queries\Configuration\FindChannels();
+				$findChannels = new Zigbee2MqttQueries\Configuration\FindChannels();
 				$findChannels->forDevice($subDevice);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannels,
-					Documents\Channels\Channel::class,
+					Zigbee2MqttDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {
@@ -201,12 +201,12 @@ final class Mqtt implements Client
 	 */
 	public function onConnect(): void
 	{
-		$findDevicesQuery = new Queries\Configuration\FindBridgeDevices();
+		$findDevicesQuery = new Zigbee2MqttQueries\Configuration\FindBridgeDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$bridges = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Bridge::class,
+			Zigbee2MqttDocuments\Devices\Bridge::class,
 		);
 
 		foreach ($bridges as $bridge) {

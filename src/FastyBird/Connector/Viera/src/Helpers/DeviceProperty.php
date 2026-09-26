@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Viera\Helpers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
-use FastyBird\Connector\Viera\Entities;
+use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
@@ -111,7 +111,7 @@ final readonly class DeviceProperty
 		if ($property === null) {
 			$device = $this->devicesRepository->find(
 				$deviceId,
-				Entities\Devices\Device::class,
+				VieraEntities\Devices\Device::class,
 			);
 
 			if ($device === null) {

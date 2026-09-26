@@ -17,10 +17,10 @@ namespace FastyBird\Connector\FbMqtt\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Documents;
+use FastyBird\Connector\FbMqtt\Documents as FbMqttDocuments;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
-use FastyBird\Connector\FbMqtt\Queries;
+use FastyBird\Connector\FbMqtt\Queries as FbMqttQueries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -62,7 +62,7 @@ abstract class Periodic
 
 	private const HANDLER_PENDING_DELAY = 2_000.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, FbMqttDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Channels\Properties\Dynamic>>  */
@@ -77,7 +77,7 @@ abstract class Periodic
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly FbMqttDocuments\Connectors\Connector $connector,
 		protected readonly Helpers\MessageBuilder $messageBuilder,
 		protected readonly Queue\Queue $queue,
 		protected readonly FbMqtt\Logger $logger,
@@ -107,12 +107,12 @@ abstract class Periodic
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new FbMqttQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			FbMqttDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -135,12 +135,12 @@ abstract class Periodic
 				$this->properties[$device->getId()->toString()][$property->getId()->toString()] = $property;
 			}
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new FbMqttQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				FbMqttDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -213,7 +213,7 @@ abstract class Periodic
 	 * @throws FbMqttExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(FbMqttDocuments\Devices\Device $device): bool
 	{
 		$now = $this->clock->getNow();
 
@@ -259,7 +259,7 @@ abstract class Periodic
 	 * @throws CoreExceptions\InvalidArgument
 	 */
 	private function writeDeviceProperty(
-		Documents\Devices\Device $device,
+		FbMqttDocuments\Devices\Device $device,
 		DevicesDocuments\Devices\Properties\Dynamic $property,
 	): bool
 	{
@@ -341,7 +341,7 @@ abstract class Periodic
 	 * @throws CoreExceptions\InvalidArgument
 	 */
 	private function writeChannelProperty(
-		Documents\Devices\Device $device,
+		FbMqttDocuments\Devices\Device $device,
 		DevicesDocuments\Channels\Properties\Dynamic $property,
 	): bool
 	{

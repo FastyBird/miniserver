@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\Modbus\Queue\Consumers;
 
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Documents;
-use FastyBird\Connector\Modbus\Queries;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
+use FastyBird\Connector\Modbus\Queries as ModbusQueries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -71,13 +71,13 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new ModbusQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			ModbusDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -105,13 +105,13 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new ModbusQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			ModbusDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {

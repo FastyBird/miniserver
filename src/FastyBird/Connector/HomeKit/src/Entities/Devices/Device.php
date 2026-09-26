@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\HomeKit\Entities;
+use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -38,7 +38,7 @@ class Device extends DevicesEntities\Devices\Device
 
 	public function __construct(
 		string $identifier,
-		Entities\Connectors\Connector $connector,
+		HomeKitEntities\Connectors\Connector $connector,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -56,22 +56,22 @@ class Device extends DevicesEntities\Devices\Device
 		return Sources\Connector::HOMEKIT;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): HomeKitEntities\Connectors\Connector
 	{
-		assert($this->connector instanceof Entities\Connectors\Connector);
+		assert($this->connector instanceof HomeKitEntities\Connectors\Connector);
 
 		return $this->connector;
 	}
 
 	/**
-	 * @return array<Entities\Channels\Channel>
+	 * @return array<HomeKitEntities\Channels\Channel>
 	 */
 	public function getChannels(): array
 	{
 		$channels = [];
 
 		foreach (parent::getChannels() as $channel) {
-			if ($channel instanceof Entities\Channels\Channel) {
+			if ($channel instanceof HomeKitEntities\Channels\Channel) {
 				$channels[] = $channel;
 			}
 		}
@@ -84,7 +84,7 @@ class Device extends DevicesEntities\Devices\Device
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
-		if (!$channel instanceof Entities\Channels\Channel) {
+		if (!$channel instanceof HomeKitEntities\Channels\Channel) {
 			throw new HomeKitExceptions\InvalidArgument('Provided channel type is not valid');
 		}
 
@@ -144,7 +144,7 @@ class Device extends DevicesEntities\Devices\Device
 	}
 
 	/**
-	 * @return array<Entities\Channels\Channel>
+	 * @return array<HomeKitEntities\Channels\Channel>
 	 *
 	 * @throws HomeKitExceptions\InvalidState
 	 * @throws TypeError
@@ -155,7 +155,7 @@ class Device extends DevicesEntities\Devices\Device
 		$channels = [];
 
 		foreach (parent::getChannels() as $channel) {
-			if (!$channel instanceof Entities\Channels\Channel) {
+			if (!$channel instanceof HomeKitEntities\Channels\Channel) {
 				continue;
 			}
 
