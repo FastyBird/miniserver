@@ -20,7 +20,7 @@ use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Connector\Virtual;
-use FastyBird\Connector\Virtual\Entities;
+use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers;
 use FastyBird\Connector\Virtual\Queries;
@@ -76,7 +76,7 @@ final class Properties implements Common\EventSubscriber
 		$entity = $eventArgs->getObject();
 
 		// Check for valid entity
-		if (!$entity instanceof Entities\Devices\Device) {
+		if (!$entity instanceof VirtualEntities\Devices\Device) {
 			return;
 		}
 

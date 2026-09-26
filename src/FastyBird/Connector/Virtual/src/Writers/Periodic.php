@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Virtual\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\Virtual;
-use FastyBird\Connector\Virtual\Documents;
+use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers;
-use FastyBird\Connector\Virtual\Queries;
+use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -62,7 +62,7 @@ abstract class Periodic implements Writer
 
 	private const HANDLER_PENDING_DELAY = 2_000.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, VirtualDocuments\Devices\Device>  */
 	private array $devices = [];
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	/** @var array<string, array<string, DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped|DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped>>  */
@@ -77,7 +77,7 @@ abstract class Periodic implements Writer
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly VirtualDocuments\Connectors\Connector $connector,
 		protected readonly Helpers\MessageBuilder $messageBuilder,
 		protected readonly Queue\Queue $queue,
 		protected readonly Virtual\Logger $logger,
@@ -107,12 +107,12 @@ abstract class Periodic implements Writer
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new VirtualQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			VirtualDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -147,12 +147,12 @@ abstract class Periodic implements Writer
 				$this->properties[$device->getId()->toString()][$property->getId()->toString()] = $property;
 			}
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new VirtualQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				VirtualDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -237,7 +237,7 @@ abstract class Periodic implements Writer
 	 * @throws VirtualExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(VirtualDocuments\Devices\Device $device): bool
 	{
 		$now = $this->clock->getNow();
 

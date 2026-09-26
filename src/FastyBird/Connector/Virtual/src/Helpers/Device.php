@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Virtual\Helpers;
 
-use FastyBird\Connector\Virtual\Documents;
+use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
 use FastyBird\Connector\Virtual\Entities;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Queries;
@@ -55,7 +55,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getStateProcessingDelay(Documents\Devices\Device $device): float
+	public function getStateProcessingDelay(VirtualDocuments\Devices\Device $device): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

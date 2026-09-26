@@ -19,7 +19,7 @@ use FastyBird\Connector\Virtual;
 use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers;
-use FastyBird\Connector\Virtual\Queries;
+use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as CoreDocuments;
@@ -128,7 +128,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 					return;
 				}
 
-				$findDeviceQuery = new Queries\Configuration\FindDevices();
+				$findDeviceQuery = new VirtualQueries\Configuration\FindDevices();
 				$findDeviceQuery->forConnector($this->connector);
 				$findDeviceQuery->byId($document->getDevice());
 
@@ -195,7 +195,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 					return;
 				}
 
-				$findChannelQuery = new Queries\Configuration\FindChannels();
+				$findChannelQuery = new VirtualQueries\Configuration\FindChannels();
 				$findChannelQuery->byId($document->getChannel());
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
@@ -207,7 +207,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 					return;
 				}
 
-				$findDeviceQuery = new Queries\Configuration\FindDevices();
+				$findDeviceQuery = new VirtualQueries\Configuration\FindDevices();
 				$findDeviceQuery->forConnector($this->connector);
 				$findDeviceQuery->byId($channel->getDevice());
 

@@ -17,8 +17,8 @@ namespace FastyBird\Connector\Virtual\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Virtual;
-use FastyBird\Connector\Virtual\Documents;
-use FastyBird\Connector\Virtual\Queries;
+use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
+use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -79,13 +79,13 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new VirtualQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			VirtualDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -138,12 +138,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					));
 				}
 
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new VirtualQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					VirtualDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {

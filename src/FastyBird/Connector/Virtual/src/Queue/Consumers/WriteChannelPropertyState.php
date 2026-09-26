@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Virtual\Queue\Consumers;
 
 use DateTimeInterface;
 use FastyBird\Connector\Virtual;
-use FastyBird\Connector\Virtual\Documents;
+use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
 use FastyBird\Connector\Virtual\Drivers;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
-use FastyBird\Connector\Virtual\Queries;
+use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -88,12 +88,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new VirtualQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			VirtualDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -121,13 +121,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new VirtualQueries\Configuration\FindDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			VirtualDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -155,13 +155,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new VirtualQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			VirtualDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {
