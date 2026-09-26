@@ -28,8 +28,14 @@
  *                                         and, when the short name changes, its declared name
  *                                         are rewritten, and so is every reference to it.
  *   'normalize'  => [namespace, ...]     A namespace that does not move but belongs to the
- *                                         capability: every import of it with an illegal alias
- *                                         is re-aliased to the legal one, duplicates merge.
+ *                                         capability (need not be a Core namespace -- #541
+ *                                         piloted this on FastyBird\Connector\Virtual): every
+ *                                         import of it with an illegal alias is re-aliased to
+ *                                         the legal one; a BARE import of it whose short name
+ *                                         collides with another same-kind import in the file is
+ *                                         aliased too, through the same collision handling a
+ *                                         moved class's new import gets (see HOW A REFERENCE IS
+ *                                         WRITTEN); duplicates merge.
  *   'namespaces' => [oldNs => newNs]     A namespace named in a string or a config file
  *                                         rather than through a class (e.g. an ORM mapping
  *                                         namespace). Applied to string literals and to
@@ -66,6 +72,17 @@
  *   segments of the namespace joined (tools/check-naming.php's rule). When two imports share
  *   a short name, BOTH take the two-segment alias: a file never ends up with one of them bare
  *   and the other aliased. Imports whose every use was rewritten away are dropped.
+ *
+ *   #541: a `normalize`d namespace's import is never "new" (the namespace does not move), but a
+ *   BARE one that collides with a same-kind sibling's short name is fed into this same
+ *   collision handling as if it were: its "bare unless it collides" default no longer holds, so
+ *   it climbs to the two-segment alias exactly like a fresh import would, and every reference
+ *   through it is rewritten to match. The colliding sibling, when it is already correctly
+ *   aliased, is untouched -- the climb only ever reassigns an entry that is still bare, never
+ *   one that already carries a legal alias, so a correct sibling stays byte-identical. A
+ *   single-segment sibling (`use Casbin;`) has no two-segment form and the climb degrades to a
+ *   no-op for it, matching tools/check-naming.php's exemption; `Doctrine\ORM\Mapping as ORM` is
+ *   never bare, so it is never a candidate for reassignment either.
  *
  *   An import that only a docblock still names outside a rewritable type (prose, an unlisted
  *   tag) after the rewrite, where that mention names a moved type, is never left behind as it
@@ -241,6 +258,53 @@ function fbMoveTwoSegmentAlias(string $name): string
 function fbMoveAliasIsLegal(string $name, string $alias, bool $explicit): bool
 {
 	return !$explicit || $alias === fbMoveTwoSegmentAlias($name);
+}
+
+/**
+ * Groups a file's `class`-kind imports (ordinary imports and grouped-import members alike --
+ * both are checked identically by tools/check-naming.php's check 4) by the lower-cased short
+ * name, keeping only groups with two or more DISTINCT imported names -- tools/check-naming.php's
+ * fbGroupCollisions(), the read side of the same rule.
+ *
+ * @param list<array{kind: string, name: string, alias: string, start: int, end: int, lineStart: int, lineEnd: int, clean: bool, explicit: bool}> $imports
+ *
+ * @return array<string, array<string, true>> lower-cased short name => lower-cased FQCNs
+ */
+function fbMoveClassShortNameGroups(array $imports): array
+{
+	$byShort = [];
+
+	foreach ($imports as $import) {
+		if ($import['kind'] === 'class' || $import['kind'] === 'group') {
+			$byShort[strtolower(fbMoveShortOf($import['name']))][strtolower($import['name'])] = true;
+		}
+	}
+
+	return array_filter($byShort, static fn (array $names): bool => count($names) > 1);
+}
+
+/**
+ * Whether a normalized namespace's import needs the tool's attention: an illegal explicit
+ * alias (the original `normalize` behaviour), or -- #541 -- a bare import whose short name
+ * collides with another same-kind import in the file, which tools/check-naming.php's check 4
+ * requires to be aliased. A single-segment import has no two-segment form and is never touched
+ * here (fbMoveAssignAliases()'s escalation degrades to a no-op for one exactly the same way
+ * check 4 keeps it bare); `Doctrine\ORM\Mapping as ORM` is never bare in the first place, so it
+ * never reaches this check either.
+ *
+ * @param array<string, array<string, true>> $shortNameGroups
+ */
+function fbMoveNormalizedImportNeedsWork(
+	string $name,
+	string $alias,
+	bool $explicit,
+	array $shortNameGroups,
+): bool {
+	if (!fbMoveAliasIsLegal($name, $alias, $explicit)) {
+		return true;
+	}
+
+	return !$explicit && count($shortNameGroups[strtolower(fbMoveShortOf($name))] ?? []) > 1;
 }
 
 /**
@@ -1157,8 +1221,12 @@ function fbMoveRewritePhp(
 		$wantLegal[$key] = false;
 	}
 
-	// Normalization: an illegal alias of a listed namespace becomes legal; duplicates merge
-	// into the first import of that namespace.
+	// Normalization: an illegal alias of a listed namespace becomes legal, and -- #541 -- a bare
+	// import of one that collides with a same-kind sibling's short name is aliased too;
+	// duplicates merge into the first import of that namespace. The collision groups are
+	// computed once, over every class-kind import in the file (normalized or not), matching
+	// tools/check-naming.php's check 4.
+	$shortNameGroups = fbMoveClassShortNameGroups($imports);
 	$canonical = [];
 
 	foreach ($imports as $key => $import) {
@@ -1170,10 +1238,10 @@ function fbMoveRewritePhp(
 
 		if (
 			$import['kind'] === 'group'
-			&& !fbMoveAliasIsLegal($import['name'], $import['alias'], $import['explicit'])
+			&& fbMoveNormalizedImportNeedsWork($import['name'], $import['alias'], $import['explicit'], $shortNameGroups)
 		) {
 			fbMoveFail(sprintf(
-				'%s:%d: a grouped `use` holds an illegal alias of a normalized namespace',
+				'%s:%d: a grouped `use` of a normalized namespace needs an alias this tool cannot give it',
 				$path,
 				fbMoveLineOf($code, $import['start']),
 			));
@@ -1192,7 +1260,7 @@ function fbMoveRewritePhp(
 
 		$canonical[$lowerName] = $key;
 
-		if (!fbMoveAliasIsLegal($import['name'], $import['alias'], $import['explicit'])) {
+		if (fbMoveNormalizedImportNeedsWork($import['name'], $import['alias'], $import['explicit'], $shortNameGroups)) {
 			$wantLegal[$key] = true;
 		}
 	}
@@ -2169,6 +2237,7 @@ function fbMoveReport(string $root, array $map, array $index, array $oldPaths, a
 		$code = fbMoveRead($root . '/' . $file);
 		$analysis = fbMoveAnalyse($code);
 		$aliasIndex = fbMoveAliasIndex($analysis['imports']);
+		$shortNameGroups = fbMoveClassShortNameGroups($analysis['imports']);
 
 		foreach ($analysis['imports'] as $import) {
 			if ($import['kind'] === 'function' || $import['kind'] === 'const') {
@@ -2181,16 +2250,24 @@ function fbMoveReport(string $root, array $map, array $index, array $oldPaths, a
 
 			if (
 				isset($normalize[strtolower($import['name'])])
-				&& !fbMoveAliasIsLegal($import['name'], $import['alias'], $import['explicit'])
+				&& fbMoveNormalizedImportNeedsWork($import['name'], $import['alias'], $import['explicit'], $shortNameGroups)
 			) {
-				$illegal[] = sprintf(
-					'  %s:%d: use %s as %s (legal: no alias, or %s)',
-					$file,
-					fbMoveLineOf($code, $import['start']),
-					$import['name'],
-					$import['alias'],
-					fbMoveTwoSegmentAlias($import['name']),
-				);
+				$illegal[] = $import['explicit']
+					? sprintf(
+						'  %s:%d: use %s as %s (legal: no alias, or %s)',
+						$file,
+						fbMoveLineOf($code, $import['start']),
+						$import['name'],
+						$import['alias'],
+						fbMoveTwoSegmentAlias($import['name']),
+					)
+					: sprintf(
+						'  %s:%d: use %s bare, but collides with a same-kind sibling (needs %s)',
+						$file,
+						fbMoveLineOf($code, $import['start']),
+						$import['name'],
+						fbMoveTwoSegmentAlias($import['name']),
+					);
 			}
 
 			// prose and unlisted tags naming a moved type through this import
