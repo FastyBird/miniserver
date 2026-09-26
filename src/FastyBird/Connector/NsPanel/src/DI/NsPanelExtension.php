@@ -40,7 +40,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
 use function array_pop;
@@ -55,7 +55,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class NsPanelExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbNsPanelConnector';
@@ -67,20 +67,20 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
 	}
 
 	/**
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(NsPanel\Logger::class)
 			->setAutowired(false);
 
@@ -137,7 +137,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * SERVICES & FACTORIES
 		 */
 
-		$builder->addDefinition($this->prefix('services.httpClient'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('services.httpClient'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Services\HttpClientFactory::class);
 
 		/**
@@ -158,7 +158,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.deviceState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDeviceState::class)
 			->setArguments([
@@ -167,7 +167,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.deviceConnectionState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDeviceConnectionState::class)
 			->setArguments([
@@ -176,7 +176,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.thirdPartyDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreThirdPartyDevice::class)
 			->setArguments([
@@ -185,7 +185,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.subDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreSubDevice::class)
 			->setArguments([
@@ -194,7 +194,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.write.subDeviceState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteSubDeviceState::class)
 			->setArguments([
@@ -203,7 +203,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.write.thirdPartyDeviceState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteThirdPartyDeviceState::class)
 			->setArguments([
@@ -212,7 +212,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers::class)
 			->setArguments([
@@ -222,7 +222,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('queue.queue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Queue::class)
 			->setArguments([
@@ -233,13 +233,13 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.devices'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.devices'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Devices::class);
 
-		$builder->addDefinition($this->prefix('subscribers.properties'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.properties'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Properties::class);
 
-		$builder->addDefinition($this->prefix('subscribers.controls'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.controls'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Controls::class);
 
 		/**
@@ -248,157 +248,157 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('schemas.connector'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Connectors\Connector::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.device.gateway'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Devices\Gateway::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.device.subDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Devices\SubDevice::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.device.thirdPartyDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Devices\ThirdPartyDevice::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.battery'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Battery::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.brightness'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Brightness::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.cameraStream'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\CameraStream::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.colorRgb'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\ColorRgb::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.colorTemperature'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\ColorTemperature::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.detect'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Detect::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.fault'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Fault::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.humidity'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Humidity::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.illuminationLevel'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\IlluminationLevel::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.motorCalibration'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\MotorCalibration::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.motorControl'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\MotorControl::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.motorReverse'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\MotorReverse::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.percentage'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Percentage::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.power'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Power::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.press'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Press::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.rssi'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Rssi::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.startup'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Startup::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.temperature'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Temperature::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.thermostat'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Thermostat::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.thermostatModeDetect'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\ThermostatModeDetect::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.thermostatTargetSetPoint'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\ThermostatTargetSetPoint::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.toggle'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\Toggle::class);
 
@@ -408,157 +408,157 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.connector'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Connectors\Connector::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.device.gateway'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Devices\Gateway::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.device.subDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Devices\SubDevice::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.device.thirdPartyDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Devices\ThirdPartyDevice::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.battery'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Battery::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.brightness'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Brightness::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.cameraStream'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\CameraStream::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.colorRgb'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\ColorRgb::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.colorTemperature'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\ColorTemperature::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.detect'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Detect::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.fault'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Fault::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.humidity'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Humidity::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.illuminationLevel'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\IlluminationLevel::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.motorCalibration'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\MotorCalibration::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.motorControl'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\MotorControl::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.motorReverse'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\MotorReverse::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.percentage'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Percentage::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.power'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Power::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.press'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Press::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.rssi'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Rssi::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.startup'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Startup::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.temperature'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Temperature::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.thermostat'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Thermostat::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.thermostatModeDetect'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\ThermostatModeDetect::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.thermostatTargetSetPoint'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\ThermostatTargetSetPoint::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.toggle'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\Toggle::class);
 
@@ -566,22 +566,22 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * HELPERS
 		 */
 
-		$builder->addDefinition($this->prefix('helpers.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('helpers.gatewayDevice'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.gatewayDevice'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Devices\Gateway::class);
 
-		$builder->addDefinition($this->prefix('helpers.thirdPartyDevice'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.thirdPartyDevice'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Devices\ThirdPartyDevice::class);
 
-		$builder->addDefinition($this->prefix('helpers.subDevice'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.subDevice'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Devices\SubDevice::class);
 
-		$builder->addDefinition($this->prefix('helpers.channel'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.channel'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Channels\Channel::class);
 
-		$builder->addDefinition($this->prefix('helpers.messageBuilder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.messageBuilder'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\MessageBuilder::class);
 
 		/**
@@ -596,18 +596,18 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 				'logger' => $logger,
 			]);
 
-		$router = $builder->addDefinition($this->prefix('http.router'), new DI\Definitions\ServiceDefinition())
+		$router = $builder->addDefinition($this->prefix('http.router'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\Router::class)
 			->setAutowired(false);
 
-		$builder->addDefinition($this->prefix('http.middlewares.router'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('http.middlewares.router'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Middleware\Router::class)
 			->setArguments([
 				'router' => $router,
 				'logger' => $logger,
 			]);
 
-		$builder->addDefinition($this->prefix('http.controllers.directive'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('http.controllers.directive'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\DirectiveController::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
@@ -616,17 +616,17 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * METADATA MAPPING
 		 */
 
-		$builder->addDefinition($this->prefix('mapping.builder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('mapping.builder'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Mapping\Builder::class);
 
 		/**
 		 * COMMUNICATION PROTOCOL
 		 */
 
-		$builder->addDefinition($this->prefix('protocol.driver'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('protocol.driver'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Protocol\Driver::class);
 
-		$builder->addDefinition($this->prefix('protocol.loader'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('protocol.loader'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Protocol\Loader::class)
 			->setArguments([
 				'logger' => $logger,
@@ -636,13 +636,13 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.device.subDevice'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Devices\SubDeviceFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.device.thirdParty'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Devices\ThirdPartyDeviceFactory::class);
 
@@ -650,133 +650,133 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.battery'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\BatteryFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.brightness'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\BrightnessFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.cameraStream'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\CameraStreamFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.colorRgb'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\ColorRgbFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.colorTemperature'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\ColorTemperatureFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.detect'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\DetectFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.fault'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\FaultFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.humidity'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\HumidityFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.illuminationLevel'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\IlluminationLevelFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.motorCalibration'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\MotorCalibrationFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.motorControl'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\MotorControlFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.motorReverse'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\MotorReverseFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.percentage'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\PercentageFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.power'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\PowerFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.press'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\PressFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.rssi'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\RssiFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.startup'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\StartupFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.temperature'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\TemperatureFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.thermostat'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\ThermostatFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.thermostatModeDetect'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\ThermostatModeDetectFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.thermostatTargetSetPoint'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\ThermostatTargetSetPointFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.capability.toggle'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Capabilities\ToggleFactory::class);
 
@@ -784,145 +784,145 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.battery'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\BatteryFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.brightness'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\BrightnessFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.colorBlue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ColorBlueFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.colorGreen'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ColorGreenFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.colorRed'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ColorRedFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.colorTemperature'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ColorTemperatureFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.detected'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\DetectedFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.fault'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\FaultFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.humidity'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\HumidityFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.illuminationLevel'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\IlluminationLevelFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.motorCalibration'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\MotorCalibrationFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.motorControl'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\MotorControlFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.motorReverse'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\MotorReverseFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.percentage'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\PercentageFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.powerState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\PowerStateFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.press'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\PressFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.rssi'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\RssiFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.startup'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\StartupFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.temperature'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\TemperatureFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.thermostatAdaptiveRecoveryStatus'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ThermostatAdaptiveRecoveryStatusFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.thermostatMode'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ThermostatModeFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.thermostatModeDetection'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ThermostatModeDetectionFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.thermostatTargetSetPoint'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ThermostatTargetSetPointFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.attribute.toggleState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Attributes\ToggleStateFactory::class);
 
@@ -930,85 +930,85 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.mappingMode'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\MappingModeFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.rangeMax'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\RangeMaxFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.rangeMin'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\RangeMinFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.streamUrl'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\StreamUrlFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.supportedDetectionLowerSetPointScale'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\SupportedDetectionLowerSetPointScaleFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.supportedDetectionLowerSetPointValue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\SupportedDetectionLowerSetPointValueFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.supportedDetectionUpperSetPointScale'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\SupportedDetectionUpperSetPointScaleFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.supportedDetectionUpperSetPointValue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\SupportedDetectionUpperSetPointValueFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.supportedDetectionModes'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\SupportedDetectionModesFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.temperatureIncrement'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\TemperatureIncrementFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.temperatureMax'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\TemperatureMaxFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.temperatureMin'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\TemperatureMinFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.temperatureScale'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\TemperatureScaleFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('protocol.factory.configuration.thermostatSupportedModes'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Protocol\Configurations\ThermostatSupportedModesFactory::class);
 
@@ -1016,13 +1016,13 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.execute'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.execute'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Execute::class);
 
-		$builder->addDefinition($this->prefix('commands.discover'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.discover'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Discover::class);
 
-		$builder->addDefinition($this->prefix('commands.install'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.install'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class)
 			->setArguments([
 				'logger' => $logger,
@@ -1048,8 +1048,8 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\MissingServiceException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{
@@ -1082,7 +1082,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -1092,7 +1092,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Connector\NsPanel\Documents',
@@ -1109,7 +1109,7 @@ class NsPanelExtension extends DI\CompilerExtension implements Translation\DI\Tr
 
 		if ($protocolLoaderServiceName !== null) {
 			$protocolLoaderService = $builder->getDefinition($protocolLoaderServiceName);
-			assert($protocolLoaderService instanceof DI\Definitions\ServiceDefinition);
+			assert($protocolLoaderService instanceof NetteDI\Definitions\ServiceDefinition);
 
 			$devicesFactories = $builder->findByType(
 				Protocol\Devices\DeviceFactory::class,

@@ -31,7 +31,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
-use Symfony\Component\EventDispatcher;
+use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use Throwable;
 
 /**
@@ -42,7 +42,7 @@ use Throwable;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberInterface
+class Event extends Periodic implements Writer, ComponentEventDispatcher\EventSubscriberInterface
 {
 
 	public const NAME = 'event';

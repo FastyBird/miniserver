@@ -21,7 +21,7 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
 use function array_pop;
@@ -35,7 +35,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DateTimeExtension extends DI\CompilerExtension
+class DateTimeExtension extends NetteDI\CompilerExtension
 {
 
 	public const NAME = 'fbDateTimeAutomator';
@@ -47,7 +47,7 @@ class DateTimeExtension extends DI\CompilerExtension
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
@@ -57,21 +57,21 @@ class DateTimeExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('schemas.conditions.date'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.conditions.date'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Conditions\DateCondition::class);
 
-		$builder->addDefinition($this->prefix('schemas.conditions.time'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.conditions.time'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Conditions\TimeCondition::class);
 
-		$builder->addDefinition($this->prefix('hydrators.conditions.date'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.conditions.date'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Conditions\DataCondition::class);
 
-		$builder->addDefinition($this->prefix('hydrators.conditions.time'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.conditions.time'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Conditions\TimeCondition::class);
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -104,7 +104,7 @@ class DateTimeExtension extends DI\CompilerExtension
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -114,7 +114,7 @@ class DateTimeExtension extends DI\CompilerExtension
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Automator\DateTime\Documents',

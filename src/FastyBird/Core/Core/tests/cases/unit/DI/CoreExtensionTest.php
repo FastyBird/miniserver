@@ -29,7 +29,7 @@ use Monolog;
 use Nette;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use React\EventLoop;
-use Symfony\Bridge\Monolog as SymfonyMonolog;
+use Symfony\Bridge\Monolog as BridgeMonolog;
 
 /**
  * Replaces ApplicationExtensionTest, ExchangeExtensionTest, ToolsExtensionTest,
@@ -60,7 +60,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 */
 
 		self::assertNotNull($container->getByType(Monolog\Handler\RotatingFileHandler::class, false));
-		self::assertNull($container->getByType(SymfonyMonolog\Handler\ConsoleHandler::class, false));
+		self::assertNull($container->getByType(BridgeMonolog\Handler\ConsoleHandler::class, false));
 		self::assertNotNull($container->getByType(Documents\DocumentFactory::class, false));
 		self::assertInstanceOf(
 			Documents\DocumentFactory::class,

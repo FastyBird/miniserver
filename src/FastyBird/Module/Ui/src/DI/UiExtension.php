@@ -38,7 +38,7 @@ use FastyBird\Module\Ui\Schemas;
 use FastyBird\Module\Ui\Subscribers;
 use Nette\Bootstrap;
 use Nette\Caching as NetteCaching;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
 use stdClass;
@@ -55,7 +55,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class UiExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbUiModule';
@@ -67,7 +67,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
@@ -81,7 +81,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 	}
 
 	/**
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function loadConfiguration(): void
 	{
@@ -89,7 +89,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Ui\Logger::class)
 			->setAutowired(false);
 
@@ -99,7 +99,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 		$configurationRepositoryCache = $builder->addDefinition(
 			$this->prefix('caching.configuration.repository'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(NetteCaching\Cache::class)
 			->setArguments([
@@ -109,7 +109,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 		$configurationBuilderCache = $builder->addDefinition(
 			$this->prefix('caching.configuration.builder'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(NetteCaching\Cache::class)
 			->setArguments([
@@ -119,7 +119,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 		$builder->addDefinition(
 			$this->prefix('caching.container'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Caching\Container::class)
 			->setArguments([
@@ -131,14 +131,14 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * ROUTE MIDDLEWARES & ROUTING
 		 */
 
-		$builder->addDefinition($this->prefix('middleware.access'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('middleware.access'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Middleware\Access::class);
 
-		$builder->addDefinition($this->prefix('router.api.routes'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('router.api.routes'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
-		$builder->addDefinition($this->prefix('router.validator'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('router.validator'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\Validator::class);
 
 		/**
@@ -147,73 +147,73 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.repositories.dashboards'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Dashboards\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.managers.dashboards'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Dashboards\Manager::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.repositories.tabs'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Dashboards\Tabs\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.managers.tabs'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Dashboards\Tabs\Manager::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.repositories.groups'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Groups\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.managers.groups'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Groups\Manager::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.repositories.widgets'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Widgets\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.managers.widgets'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Widgets\Manager::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.repositories.dataSources'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Widgets\DataSources\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.managers.dataSources'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Widgets\DataSources\Manager::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.repositories.displays'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Widgets\Displays\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.entities.managers.displays'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Entities\Widgets\Displays\Manager::class);
 
@@ -223,43 +223,43 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 		$builder->addDefinition(
 			$this->prefix('models.configuration.builder'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Configuration\Builder::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.configuration.repositories.dashboards'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Configuration\Dashboards\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.configuration.repositories.tabs'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Configuration\Dashboards\Tabs\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.configuration.repositories.groups'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Configuration\Groups\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.configuration.repositories.widgets'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Configuration\Widgets\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.configuration.repositories.dataSources'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Configuration\Widgets\DataSources\Repository::class);
 
 		$builder->addDefinition(
 			$this->prefix('models.configuration.repositories.displays'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Models\Configuration\Widgets\Displays\Repository::class);
 
@@ -267,42 +267,42 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.entities'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.entities'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\ModuleEntities::class);
 
-		$builder->addDefinition($this->prefix('subscribers.dashboardEntity'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.dashboardEntity'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\DashboardEntity::class);
 
 		/**
 		 * API CONTROLLERS
 		 */
 
-		$builder->addDefinition($this->prefix('controllers.dashboards'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.dashboards'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(UiControllers\DashboardsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.tabs'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.tabs'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(UiControllers\TabsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.groups'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.groups'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(UiControllers\GroupsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.widgets'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.widgets'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(UiControllers\WidgetsV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.dataSources'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.dataSources'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(UiControllers\DataSourcesV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.display'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.display'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(UiControllers\DisplayV1::class)
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
@@ -311,7 +311,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * WEBSOCKETS CONTROLLERS
 		 */
 
-		$builder->addDefinition($this->prefix('controllers.exchange'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.exchange'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(UiControllers\ExchangeV1::class)
 			->setArguments([
 				'logger' => $logger,
@@ -322,113 +322,113 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 * JSON-API SCHEMAS
 		 */
 
-		$builder->addDefinition($this->prefix('schemas.dashboard'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.dashboard'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Dashboards\Dashboard::class);
 
-		$builder->addDefinition($this->prefix('schemas.tabs'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.tabs'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Dashboards\Tabs\Tab::class);
 
-		$builder->addDefinition($this->prefix('schemas.group'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.group'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Groups\Group::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.analogActuator'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.widgets.analogActuator'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\AnalogActuator::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.analogSensor'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.widgets.analogSensor'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\AnalogSensor::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.widgets.digitalActuator'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Widgets\DigitalActuator::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.digitalSensor'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.widgets.digitalSensor'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\DigitalSensor::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.analogValue'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.display.analogValue'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\AnalogValue::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.button'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.display.button'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\Button::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.chartGraph'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.display.chartGraph'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\ChartGraph::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.digitalValue'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.display.digitalValue'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\DigitalValue::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.gauge'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.display.gauge'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\Gauge::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.groupedButton'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.display.groupedButton'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\GroupedButton::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.slider'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.display.slider'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\Slider::class);
 
-		$builder->addDefinition($this->prefix('schemas.dataSource.generic'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.dataSource.generic'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\DataSources\Generic::class);
 
 		/**
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.dashboard'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.dashboard'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Dashboards\Dashboard::class);
 
-		$builder->addDefinition($this->prefix('hydrators.tabs'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.tabs'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Dashboards\Tabs\Tab::class);
 
-		$builder->addDefinition($this->prefix('hydrators.group'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.group'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Groups\Group::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.widgets.analogActuator'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Widgets\AnalogActuator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.analogSensor'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.widgets.analogSensor'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\AnalogSensor::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.widgets.digitalActuator'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Widgets\DigitalActuator::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.widgets.digitalSensor'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Widgets\DigitalSensor::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.analogValue'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.display.analogValue'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\AnalogValue::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.button'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.display.button'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\Button::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.chartGraph'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.display.chartGraph'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\ChartGraph::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.digitalValue'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.display.digitalValue'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\DigitalValue::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.gauge'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.display.gauge'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\Gauge::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.display.groupedButton'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Widgets\Displays\GroupedButton::class);
 
-		$builder->addDefinition($this->prefix('hydrators.display.slider'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.display.slider'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\Slider::class);
 
-		$builder->addDefinition($this->prefix('hydrators.dataSources.generic'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.dataSources.generic'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\DataSources\Generic::class);
 
 		/**
@@ -436,7 +436,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		 */
 
 		// Console commands
-		$builder->addDefinition($this->prefix('commands.initialize'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.initialize'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class)
 			->setArguments([
 				'logger' => $logger,
@@ -452,7 +452,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.socketsBridge'),
-				new DI\Definitions\ServiceDefinition(),
+				new NetteDI\Definitions\ServiceDefinition(),
 			)
 				->setType(UiConsumers\SocketsBridge::class)
 				->setArguments([
@@ -463,7 +463,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -496,7 +496,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -506,7 +506,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Module\Ui\Documents',
@@ -521,7 +521,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 
 		$routerService = $builder->getDefinitionByType(Routing\Router::class);
 
-		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
+		if ($routerService instanceof NetteDI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [
 				$builder->getDefinitionByType(Router\ApiRoutes::class),
 				$routerService,
@@ -536,7 +536,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 			$wsControllerFactoryService = $builder->getDefinitionByType(
 				WebSocketsControllers\IControllerFactory::class,
 			);
-			assert($wsControllerFactoryService instanceof DI\Definitions\ServiceDefinition);
+			assert($wsControllerFactoryService instanceof NetteDI\Definitions\ServiceDefinition);
 
 			$wsControllerFactoryService->addSetup(
 				'setMapping',
@@ -548,10 +548,10 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 			);
 
 			$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
-			assert($consumerService instanceof DI\Definitions\ServiceDefinition);
+			assert($consumerService instanceof NetteDI\Definitions\ServiceDefinition);
 
 			$wsServerService = $builder->getDefinitionByType(Server\ServerRuntime::class);
-			assert($wsServerService instanceof DI\Definitions\ServiceDefinition);
+			assert($wsServerService instanceof NetteDI\Definitions\ServiceDefinition);
 
 			$wsServerService->addSetup(
 				'?->onCreate[] = function() {?->enable(?);}',
@@ -562,7 +562,7 @@ class UiExtension extends DI\CompilerExtension implements Translation\DI\Transla
 				],
 			);
 
-		} catch (DI\MissingServiceException) {
+		} catch (NetteDI\MissingServiceException) {
 			// Extension is not registered
 		}
 	}

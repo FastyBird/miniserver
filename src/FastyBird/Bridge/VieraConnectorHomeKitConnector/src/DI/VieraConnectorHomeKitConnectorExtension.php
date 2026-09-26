@@ -30,7 +30,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Http\Routing;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
 use stdClass;
@@ -47,7 +47,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbVieraConnectorHomeKitConnectorBridge';
@@ -59,7 +59,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
@@ -78,7 +78,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(VieraConnectorHomeKitConnector\Logger::class)
 			->setAutowired(false);
 
@@ -86,7 +86,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 		 * BUILDERS
 		 */
 
-		$builder->addDefinition($this->prefix('builder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('builder'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Builders\Builder::class)
 			->setArguments([
 				'logger' => $logger,
@@ -96,14 +96,14 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 		 * MAPPING CONFIGURATION
 		 */
 
-		$builder->addDefinition($this->prefix('mapping.builder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('mapping.builder'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Mapping\Builder::class);
 
 		/**
 		 * ROUTE MIDDLEWARES & ROUTING
 		 */
 
-		$builder->addDefinition($this->prefix('router.api.routes'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('router.api.routes'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
@@ -113,7 +113,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 
 		$builder->addDefinition(
 			$this->prefix('controllers.bridges'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Controllers\BridgesV1::class)
 			->addSetup('setLogger', [$logger])
@@ -123,38 +123,38 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 		 * JSON-API SCHEMAS
 		 */
 
-		$builder->addDefinition($this->prefix('schemas.device.viera'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.device.viera'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Devices\Viera::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.television'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.television'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Television::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.channel.televisionSpeaker'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Schemas\Channels\TelevisionSpeaker::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel.inputSource'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel.inputSource'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\InputSource::class);
 
 		/**
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.device.viera'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.device.viera'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Devices\Viera::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.television'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel.television'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Television::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.televisionSpeaker'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Hydrators\Channels\TelevisionSpeaker::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel.inputSource'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel.inputSource'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\InputSource::class);
 
 		/**
@@ -177,7 +177,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.build'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.build'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Build::class)
 			->setArguments([
 				'logger' => $logger,
@@ -185,7 +185,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -218,7 +218,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -228,7 +228,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Bridge\VieraConnectorHomeKitConnector\Documents',
@@ -243,7 +243,7 @@ class VieraConnectorHomeKitConnectorExtension extends DI\CompilerExtension imple
 
 		$routerService = $builder->getDefinitionByType(Routing\Router::class);
 
-		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
+		if ($routerService instanceof NetteDI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [
 				$builder->getDefinitionByType(Router\ApiRoutes::class),
 				$routerService,

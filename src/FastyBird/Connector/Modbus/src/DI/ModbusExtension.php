@@ -33,7 +33,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\Fixtures as NettrineFixtures;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
@@ -48,7 +48,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ModbusExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class ModbusExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbModbusConnector';
@@ -60,20 +60,20 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
 	}
 
 	/**
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Modbus\Logger::class)
 			->setAutowired(false);
 
@@ -122,7 +122,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 		 * API
 		 */
 
-		$builder->addDefinition($this->prefix('api.connectionsManager'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('api.connectionsManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(API\ConnectionManager::class);
 
 		$builder->addFactoryDefinition($this->prefix('api.rtu'))
@@ -135,7 +135,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 			->getResultDefinition()
 			->setType(API\Tcp::class);
 
-		$builder->addDefinition($this->prefix('api.transformer'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('api.transformer'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(API\Transformer::class);
 
 		/**
@@ -144,7 +144,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.deviceConnectionState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDeviceConnectionState::class)
 			->setArguments([
@@ -153,7 +153,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.channelPropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreChannelPropertyState::class)
 			->setArguments([
@@ -162,7 +162,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.write.channelPropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteChannelPropertyState::class)
 			->setArguments([
@@ -171,7 +171,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers::class)
 			->setArguments([
@@ -181,7 +181,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.queue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Queue::class)
 			->setArguments([
@@ -192,62 +192,62 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.properties'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.properties'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Properties::class);
 
-		$builder->addDefinition($this->prefix('subscribers.controls'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.controls'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Controls::class);
 
 		/**
 		 * JSON-API SCHEMAS
 		 */
 
-		$builder->addDefinition($this->prefix('schemas.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('schemas.device'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.device'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Channel::class);
 
 		/**
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('hydrators.device'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.device'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Channel::class);
 
 		/**
 		 * HELPERS
 		 */
 
-		$builder->addDefinition($this->prefix('helpers.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Connector::class);
 
-		$builder->addDefinition($this->prefix('helpers.device'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.device'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Device::class);
 
-		$builder->addDefinition($this->prefix('helpers.channel'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.channel'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Channel::class);
 
-		$builder->addDefinition($this->prefix('helpers.messageBuilder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.messageBuilder'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\MessageBuilder::class);
 
 		/**
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.execute'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.execute'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Execute::class);
 
-		$builder->addDefinition($this->prefix('commands.install'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.install'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class)
 			->setArguments([
 				'logger' => $logger,
@@ -273,7 +273,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -306,7 +306,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -316,7 +316,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Connector\Modbus\Documents',
@@ -331,7 +331,7 @@ class ModbusExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$fixturesLoaderService = $builder->getDefinitionByType(NettrineFixtures\Loader\FixturesLoader::class);
 
-		if ($fixturesLoaderService instanceof DI\Definitions\ServiceDefinition) {
+		if ($fixturesLoaderService instanceof NetteDI\Definitions\ServiceDefinition) {
 			//$fixturesLoaderService->addSetup('addFixture', [new Fixtures\Connector()]);
 			//$fixturesLoaderService->addSetup('addFixture', [new Fixtures\ConnectorProperties()]);
 			//$fixturesLoaderService->addSetup('addFixture', [new Fixtures\Devices()]);

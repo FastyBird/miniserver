@@ -34,7 +34,7 @@ use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
 use function array_keys;
 use function array_pop;
@@ -48,7 +48,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class SonoffExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class SonoffExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbSonoffConnector';
@@ -60,20 +60,20 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
 	}
 
 	/**
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
-		$logger = $builder->addDefinition($this->prefix('logger'), new DI\Definitions\ServiceDefinition())
+		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Sonoff\Logger::class)
 			->setAutowired(false);
 
@@ -104,19 +104,19 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('services.httpClientFactory'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Services\HttpClientFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('services.webSocketClientFactory'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Services\WebSocketClientFactory::class);
 
 		$builder->addDefinition(
 			$this->prefix('services.multicastFactory'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Services\MulticastFactory::class);
 
@@ -162,7 +162,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('api.connectionsManager'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(API\ConnectionManager::class);
 
@@ -196,7 +196,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.device'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDevice::class)
 			->setArguments([
@@ -205,7 +205,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.deviceConnectionState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreDeviceConnectionState::class)
 			->setArguments([
@@ -214,7 +214,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.store.parametersStates'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\StoreParametersStates::class)
 			->setArguments([
@@ -223,7 +223,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.write.writeDevicePropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteDevicePropertyState::class)
 			->setArguments([
@@ -232,7 +232,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers.write.writeChannelPropertyState'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers\WriteChannelPropertyState::class)
 			->setArguments([
@@ -241,7 +241,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.consumers'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Consumers::class)
 			->setArguments([
@@ -251,7 +251,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 		$builder->addDefinition(
 			$this->prefix('queue.queue'),
-			new DI\Definitions\ServiceDefinition(),
+			new NetteDI\Definitions\ServiceDefinition(),
 		)
 			->setType(Queue\Queue::class)
 			->setArguments([
@@ -262,62 +262,62 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 		 * SUBSCRIBERS
 		 */
 
-		$builder->addDefinition($this->prefix('subscribers.properties'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.properties'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Properties::class);
 
-		$builder->addDefinition($this->prefix('subscribers.controls'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.controls'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Controls::class);
 
 		/**
 		 * JSON-API SCHEMAS
 		 */
 
-		$builder->addDefinition($this->prefix('schemas.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('schemas.device'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.device'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('schemas.channel'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.channel'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Channels\Channel::class);
 
 		/**
 		 * JSON-API HYDRATORS
 		 */
 
-		$builder->addDefinition($this->prefix('hydrators.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Connectors\Connector::class);
 
-		$builder->addDefinition($this->prefix('hydrators.device'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.device'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Devices\Device::class);
 
-		$builder->addDefinition($this->prefix('hydrators.channel'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.channel'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Channels\Channel::class);
 
 		/**
 		 * HELPERS
 		 */
 
-		$builder->addDefinition($this->prefix('helpers.entity'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.entity'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\MessageBuilder::class);
 
-		$builder->addDefinition($this->prefix('helpers.connector'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Connector::class);
 
-		$builder->addDefinition($this->prefix('helpers.device'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('helpers.device'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\Device::class);
 
 		/**
 		 * COMMANDS
 		 */
 
-		$builder->addDefinition($this->prefix('commands.execute'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.execute'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Execute::class);
 
-		$builder->addDefinition($this->prefix('commands.discover'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.discover'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Discover::class);
 
-		$builder->addDefinition($this->prefix('commands.install'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.install'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class)
 			->setArguments([
 				'logger' => $logger,
@@ -343,7 +343,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
+	 * @throws NetteDI\MissingServiceException
 	 */
 	public function beforeCompile(): void
 	{
@@ -376,7 +376,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -386,7 +386,7 @@ class SonoffExtension extends DI\CompilerExtension implements Translation\DI\Tra
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Connector\Sonoff\Documents',

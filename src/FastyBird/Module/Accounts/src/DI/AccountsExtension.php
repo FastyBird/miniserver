@@ -33,7 +33,7 @@ use FastyBird\Module\Accounts\Subscribers;
 use FastyBird\Module\Accounts\Utilities;
 use Nette\Application;
 use Nette\Bootstrap;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
 use stdClass;
@@ -52,7 +52,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class AccountsExtension extends DI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+class AccountsExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const NAME = 'fbAccountsModule';
@@ -64,7 +64,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 	{
 		$config->onCompile[] = static function (
 			Bootstrap\Configurator $config,
-			DI\Compiler $compiler,
+			NetteDI\Compiler $compiler,
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
@@ -83,144 +83,144 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
 
-		$builder->addDefinition($this->prefix('middlewares.access'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('middlewares.access'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Middleware\Access::class);
 
-		$builder->addDefinition($this->prefix('middlewares.urlFormat'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('middlewares.urlFormat'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Middleware\UrlFormat::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix])
 			->addTag('middleware');
 
-		$builder->addDefinition($this->prefix('router.routes'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('router.routes'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
-		$builder->addDefinition($this->prefix('router.validator'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('router.validator'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\Validator::class);
 
-		$builder->addDefinition($this->prefix('commands.create'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.create'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Accounts\Create::class);
 
-		$builder->addDefinition($this->prefix('commands.initialize'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.initialize'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Install::class);
 
-		$builder->addDefinition($this->prefix('models.accountsRepository'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.accountsRepository'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Accounts\AccountsRepository::class);
 
-		$builder->addDefinition($this->prefix('models.emailsRepository'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.emailsRepository'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Emails\EmailsRepository::class);
 
-		$builder->addDefinition($this->prefix('models.identitiesRepository'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.identitiesRepository'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Identities\IdentitiesRepository::class);
 
 		// Database managers
-		$builder->addDefinition($this->prefix('models.accountsManager'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.accountsManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Accounts\AccountsManager::class);
 
-		$builder->addDefinition($this->prefix('models.emailsManager'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.emailsManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Emails\EmailsManager::class);
 
-		$builder->addDefinition($this->prefix('models.identitiesManager'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('models.identitiesManager'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Identities\IdentitiesManager::class);
 
-		$builder->addDefinition($this->prefix('subscribers.entities'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.entities'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\ModuleEntities::class);
 
-		$builder->addDefinition($this->prefix('subscribers.accountEntity'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.accountEntity'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\AccountEntity::class);
 
-		$builder->addDefinition($this->prefix('subscribers.emailEntity'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.emailEntity'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\EmailEntity::class);
 
-		$builder->addDefinition($this->prefix('controllers.session'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.session'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\SessionV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.account'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.account'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\AccountV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.accountEmails'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.accountEmails'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\AccountEmailsV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.accountIdentities'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.accountIdentities'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\AccountIdentitiesV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.accounts'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.accounts'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\AccountsV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.emails'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.emails'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\EmailsV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.identities'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.identities'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\IdentitiesV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.roles'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.roles'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\RolesV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.roleChildren'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.roleChildren'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\RoleChildrenV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.public'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('controllers.public'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Controllers\PublicV1::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('schemas.account'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.account'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Accounts\Account::class);
 
-		$builder->addDefinition($this->prefix('schemas.email'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.email'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Emails\Email::class);
 
-		$builder->addDefinition($this->prefix('schemas.identity'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.identity'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Identities\Identity::class);
 
-		$builder->addDefinition($this->prefix('schemas.role'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.role'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Roles\Role::class);
 
-		$builder->addDefinition($this->prefix('schemas.session'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.session'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Sessions\Session::class);
 
-		$builder->addDefinition($this->prefix('hydrators.accounts.profile'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.accounts.profile'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Accounts\ProfileAccount::class);
 
-		$builder->addDefinition($this->prefix('hydrators.accounts'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.accounts'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Accounts\Account::class);
 
-		$builder->addDefinition($this->prefix('hydrators.emails.profile'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.emails.profile'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Emails\ProfileEmail::class);
 
-		$builder->addDefinition($this->prefix('hydrators.emails.email'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.emails.email'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Emails\Email::class);
 
-		$builder->addDefinition($this->prefix('hydrators.identities.profile'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.identities.profile'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Identities\Identity::class);
 
-		$builder->addDefinition($this->prefix('hydrators.role'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.role'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Roles\Role::class);
 
-		$builder->addDefinition($this->prefix('security.hash'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('security.hash'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Helpers\SecurityHash::class);
 
-		$builder->addDefinition($this->prefix('security.identityFactory'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('security.identityFactory'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Security\IdentityFactory::class);
 
-		$builder->addDefinition($this->prefix('security.authenticator'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('security.authenticator'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Security\Authenticator::class);
 
-		$builder->addDefinition('security.user', new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition('security.user', new NetteDI\Definitions\ServiceDefinition())
 			->setType(Security\User::class);
 	}
 
 	/**
-	 * @throws DI\MissingServiceException
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * @throws NetteDI\MissingServiceException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{
@@ -253,7 +253,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 
 			$documentAttributeDriverService = $builder->getDefinition($documentAttributeDriverServiceName);
 
-			if ($documentAttributeDriverService instanceof DI\Definitions\ServiceDefinition) {
+			if ($documentAttributeDriverService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$documentAttributeDriverService->addSetup(
 					'addPaths',
 					[[__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Documents']],
@@ -263,7 +263,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 					Documents\Mapping\Driver\MappingDriverChain::class,
 				);
 
-				if ($documentAttributeDriverChainService instanceof DI\Definitions\ServiceDefinition) {
+				if ($documentAttributeDriverChainService instanceof NetteDI\Definitions\ServiceDefinition) {
 					$documentAttributeDriverChainService->addSetup('addDriver', [
 						$documentAttributeDriverService,
 						'FastyBird\Module\Accounts\Documents',
@@ -278,7 +278,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 
 		$routerService = $builder->getDefinitionByType(Routing\Router::class);
 
-		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
+		if ($routerService instanceof NetteDI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [
 				$builder->getDefinitionByType(Router\ApiRoutes::class),
 				$routerService,
@@ -288,7 +288,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 		$appRouterServiceName = $builder->getByType(Application\Routers\RouteList::class);
 		assert(is_string($appRouterServiceName));
 		$appRouterService = $builder->getDefinition($appRouterServiceName);
-		assert($appRouterService instanceof DI\Definitions\ServiceDefinition);
+		assert($appRouterService instanceof NetteDI\Definitions\ServiceDefinition);
 
 		$appRouterService->addSetup([Router\AppRouter::class, 'createRouter'], [$appRouterService]);
 
@@ -298,7 +298,7 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 
 		$presenterFactoryService = $builder->getDefinitionByType(Application\IPresenterFactory::class);
 
-		if ($presenterFactoryService instanceof DI\Definitions\ServiceDefinition) {
+		if ($presenterFactoryService instanceof NetteDI\Definitions\ServiceDefinition) {
 			$presenterFactoryService->addSetup('setMapping', [[
 				'Accounts' => 'FastyBird\Module\Accounts\Presenters\*Presenter',
 			]]);
@@ -311,10 +311,10 @@ class AccountsExtension extends DI\CompilerExtension implements Translation\DI\T
 		if ($builder->getByType(Tracy\Bar::class) !== null) {
 			$tracyService = $builder->getDefinitionByType(Tracy\Bar::class);
 
-			if ($tracyService instanceof DI\Definitions\ServiceDefinition) {
+			if ($tracyService instanceof NetteDI\Definitions\ServiceDefinition) {
 				$tracyPanel = $builder->addDefinition(
 					$this->prefix('security.userPanel'),
-					new DI\Definitions\ServiceDefinition(),
+					new NetteDI\Definitions\ServiceDefinition(),
 				)
 					->setType(Utilities\UserPanel::class);
 
