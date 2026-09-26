@@ -85,6 +85,22 @@ use Casbin;                                 // legal even inside a collision gro
 use FastyBird\Core\Security\Models\Casbin as ModelsCasbin; // the colliding sibling still aliases
 ```
 
+**One named exception: `Doctrine\ORM\Mapping as ORM`.** Unlike the single-segment rule above,
+this is not a general mechanism -- it is exactly one FQCN, allowed exactly one alias, listed as
+a single constant map in `tools/check-naming.php` (`FB_ALIAS_EXCEPTIONS`). `ORM` is Doctrine's
+own documented attribute convention (`#[ORM\Entity]`, `#[ORM\Column]`, ...), used by the 54
+entity files that import it with no collision at all; the last-two-segments rule would want
+`ORMMapping` instead, which exists nowhere in the codebase and would split entity files across
+two styles for no reader benefit. Only this exact pair is exempt: `Doctrine\ORM\Mapping` left
+bare, or aliased anything other than `ORM` (`Orm`, `ORMMapping`), while inside a collision group
+is still a violation, and the alias `make naming` expects is `ORM`, not a climbed one. Every
+other member of the same group is unaffected and still gets the ordinary `fbExpectedAlias` rule.
+
+```php
+use Doctrine\ORM\Mapping as ORM;                              // legal, even colliding
+use FastyBird\Core\Persistence\Mapping as PersistenceMapping; // ordinary rule, unaffected
+```
+
 **#541: every collision group, not just Core's.** Before #541, `make naming` only checked
 aliases of `FastyBird\Core\...` imports (check 3 above). The identical problem -- a bare import
 left in place while a same-named sibling gets aliased -- happens just as often between two
@@ -102,9 +118,11 @@ same, whole-file, same-kind sibling list -- check 3's Core-only siblings widened
 4's, so the two can never disagree about what one particular import is expected to be aliased
 as.
 
-Seeding this check found 534 additional violations across 408 files, entirely pre-existing --
-this PR adds no code rewrite, only the check and the baseline entries it newly makes visible.
-They will be worked down package by package in the PRs #541 plans next.
+Seeding this check found 534 additional violations, 124 of them the `Doctrine\ORM\Mapping`
+collisions the named exception above then removed, leaving **410 violations across the
+baseline**, entirely pre-existing -- this PR adds no code rewrite, only the check and the
+baseline entries it newly makes visible. They will be worked down package by package in the PRs
+#541 plans next.
 
 ## Namespace layout
 

@@ -86,13 +86,20 @@
  *   - a single-segment import (`use Casbin;`, `use Monolog;`, `use Exception;`) has no
  *     two-segment form and MUST stay bare even inside a group -- this is the Casbin exception
  *     already approved for Core, generalised to every import in the repository;
- *   - every other member of a group must carry EXACTLY `fbExpectedAlias($fqcn, $siblings)` --
- *     the same symmetric, climb-on-collision function check 3 already uses, given every
- *     same-kind import of the file as `$siblings` (not just the Core ones -- see below);
+ *   - FB_ALIAS_EXCEPTIONS is a second, much narrower exception, a single FQCN => alias pair,
+ *     not a generic mechanism: `Doctrine\ORM\Mapping` MUST be aliased exactly `ORM` when it is
+ *     in a group (bare, or any other alias, is still a violation there) -- Doctrine's own
+ *     documented attribute convention (`#[ORM\Entity]`), which the last-two-segments rule
+ *     cannot produce (it would want `ORMMapping`) and which the 54 entity files that import it
+ *     with no collision at all already use everywhere;
+ *   - every other member of a group -- and `Doctrine\ORM\Mapping`'s own group-mates -- must
+ *     carry EXACTLY `fbExpectedAlias($fqcn, $siblings)` -- the same symmetric,
+ *     climb-on-collision function check 3 already uses, given every same-kind import of the
+ *     file as `$siblings` (not just the Core ones -- see below);
  *   - a bare member of a group, or one whose alias does not match, is a violation; a member
  *     that is already correct produces nothing; an import that is not in any group is entirely
- *     out of scope (`Doctrine\ORM\Mapping as ORM`, a standalone alias with no colliding
- *     sibling, is never touched by this check).
+ *     out of scope (a standalone `use Doctrine\ORM\Mapping as ORM;` with no colliding sibling
+ *     is never touched by this check either way -- it needs no exception to pass).
  *
  * Only a top-level import counts. A class-body `use TraitName;` is not an import -- it names a
  * trait to compose into the class, and its own `as` clause renames a method's visibility or
@@ -166,6 +173,22 @@ const FB_TYPE_DENYLIST = [
 	'DoctrinePhone',
 	'IPub',
 	'IPublikuj',
+];
+
+/**
+ * A named exception to check 4's collision rule, next to (not instead of) the single-segment
+ * exception -- NOT a generic "vendor idiom" mechanism, just this one FQCN => alias pair. `ORM`
+ * is Doctrine's own documented attribute convention (`#[ORM\Entity]`); 54 entity files use it
+ * with no collision at all, and the handful that also import a same-named `...\Mapping`
+ * (`FastyBird\Core\Persistence\Mapping`, for a discriminator map) would otherwise be forced
+ * onto `ORMMapping` alone, splitting entity files across two styles for no reader benefit.
+ * Only this exact pair is exempt: `Doctrine\ORM\Mapping` aliased anything else (`Orm`,
+ * `ORMMapping`) or left bare, while inside a collision group, is still a violation, and its
+ * expected text is `ORM`, not whatever fbExpectedAlias() would otherwise climb to. Every OTHER
+ * member of the same group is unaffected and still gets its normal fbExpectedAlias().
+ */
+const FB_ALIAS_EXCEPTIONS = [
+	'Doctrine\\ORM\\Mapping' => 'ORM',
 ];
 
 $repoRoot = dirname(__DIR__);
@@ -664,7 +687,7 @@ function fbCheckFile(string $path, string $code, string $relative): array
 				continue;
 			}
 
-			$expected = fbExpectedAlias($imported, $fqcns);
+			$expected = FB_ALIAS_EXCEPTIONS[$imported] ?? fbExpectedAlias($imported, $fqcns);
 
 			if ($alias === null) {
 				$violations[] = sprintf(
