@@ -1,0 +1,7 @@
+#
+# The exchange controller tests run with the exchange on, as the module ships: a property
+# SET is then carried on through the exchange publisher, which the tests record.
+#
+
+fbDevicesModule:
+    exchange: true

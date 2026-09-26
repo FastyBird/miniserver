@@ -24,6 +24,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Entities\Topics;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -48,6 +49,16 @@ use function is_array;
  */
 final class ExchangeV1 extends Controllers\Controller
 {
+
+	/**
+	 * The roles the HTTP API requires to change anything in this module: every create, update
+	 * and delete of the property controllers (ConnectorPropertiesV1, DevicePropertiesV1,
+	 * ChannelPropertiesV1) is limited to them.
+	 */
+	private const array WRITE_ROLES = [
+		Constants::ROLE_MANAGER,
+		Constants::ROLE_ADMINISTRATOR,
+	];
 
 	public function __construct(
 		private readonly Models\Configuration\Connectors\Properties\Repository $connectorPropertiesConfigurationRepository,
@@ -186,6 +197,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @throws Utils\JsonException
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws WebSocketsExceptions\ForbiddenRequest
 	 */
 	public function actionCall(
 		array $args,
@@ -204,43 +216,66 @@ final class ExchangeV1 extends Controllers\Controller
 			],
 		);
 
+		// Every call needs an authenticated client, as every HTTP controller of this module does
+		$this->authorize($client);
+
 		if (!array_key_exists('routing_key', $args) || !array_key_exists('source', $args)) {
 			throw new DevicesExceptions\InvalidArgument('Provided message has invalid format');
 		}
 
+		/** @var array<string, mixed>|null $data */
+		$data = isset($args['data']) && is_array($args['data']) ? $args['data'] : null;
+
 		switch ($args['routing_key']) {
 			case Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY:
-			case Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY:
 			case Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY:
-			case Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY:
 			case Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY:
+				// No HTTP endpoint runs a control; it changes state, so it takes the rule for a change
+				$this->authorize($client, ...self::WRITE_ROLES);
+
+				break;
+			case Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY:
+				$document = $data !== null
+					? $this->documentFactory->create(
+						DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
+						$data,
+					)
+					: null;
+
+				$this->authorizePropertyAction($client, $document?->getAction());
+
+				if ($document !== null) {
+					$this->handleConnectorAction($client, $topic, $document);
+				}
+
+				break;
+			case Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY:
+				$document = $data !== null
+					? $this->documentFactory->create(
+						DevicesDocuments\States\Devices\Properties\Actions\Action::class,
+						$data,
+					)
+					: null;
+
+				$this->authorizePropertyAction($client, $document?->getAction());
+
+				if ($document !== null) {
+					$this->handleDeviceAction($client, $topic, $document);
+				}
+
+				break;
 			case Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY:
-				/** @var array<string, mixed>|null $data */
-				$data = isset($args['data']) && is_array($args['data']) ? $args['data'] : null;
+				$document = $data !== null
+					? $this->documentFactory->create(
+						DevicesDocuments\States\Channels\Properties\Actions\Action::class,
+						$data,
+					)
+					: null;
 
-				if ($data !== null) {
-					if ($args['routing_key'] === Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY) {
-						$document = $this->documentFactory->create(
-							DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
-							$data,
-						);
+				$this->authorizePropertyAction($client, $document?->getAction());
 
-						$this->handleConnectorAction($client, $topic, $document);
-					} elseif ($args['routing_key'] === Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY) {
-						$document = $this->documentFactory->create(
-							DevicesDocuments\States\Devices\Properties\Actions\Action::class,
-							$data,
-						);
-
-						$this->handleDeviceAction($client, $topic, $document);
-					} elseif ($args['routing_key'] === Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY) {
-						$document = $this->documentFactory->create(
-							DevicesDocuments\States\Channels\Properties\Actions\Action::class,
-							$data,
-						);
-
-						$this->handleChannelAction($client, $topic, $document);
-					}
+				if ($document !== null) {
+					$this->handleChannelAction($client, $topic, $document);
 				}
 
 				break;
@@ -251,6 +286,24 @@ final class ExchangeV1 extends Controllers\Controller
 		$this->getPayload()->data = [
 			'response' => 'accepted',
 		];
+	}
+
+	/**
+	 * A GET reads a property state, which the property state controllers
+	 * (ConnectorPropertyStateV1, DevicePropertyStateV1, ChannelPropertyStateV1) serve to any
+	 * authenticated user -- and the caller already is one. A SET, or an action that cannot be
+	 * read, changes state and takes the rule for a change.
+	 *
+	 * @throws WebSocketsExceptions\ForbiddenRequest
+	 */
+	private function authorizePropertyAction(
+		Entities\ConnectedClient $client,
+		Types\PropertyAction|null $action,
+	): void
+	{
+		if ($action !== Types\PropertyAction::GET) {
+			$this->authorize($client, ...self::WRITE_ROLES);
+		}
 	}
 
 	/**
