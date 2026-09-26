@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Virtual\Connector;
 
 use FastyBird\Connector\Virtual;
 use FastyBird\Connector\Virtual\Devices;
-use FastyBird\Connector\Virtual\Documents;
+use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Connector\Virtual\Writers;
@@ -69,7 +69,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof VirtualDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -92,7 +92,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof VirtualDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Virtual connector service',
@@ -150,7 +150,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof VirtualDocuments\Connectors\Connector);
 
 		return Promise\reject(
 			new VirtualExceptions\InvalidState('Devices discovery is not allowed for Virtual connector type'),
@@ -159,7 +159,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof VirtualDocuments\Connectors\Connector);
 
 		$this->devices?->stop();
 

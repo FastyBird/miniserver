@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Virtual\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Virtual\Entities;
+use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -37,7 +37,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 
 	public function __construct(
 		string $identifier,
-		Entities\Connectors\Connector $connector,
+		VirtualEntities\Connectors\Connector $connector,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -50,22 +50,22 @@ abstract class Device extends DevicesEntities\Devices\Device
 		return Sources\Connector::VIRTUAL;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): VirtualEntities\Connectors\Connector
 	{
-		assert($this->connector instanceof Entities\Connectors\Connector);
+		assert($this->connector instanceof VirtualEntities\Connectors\Connector);
 
 		return $this->connector;
 	}
 
 	/**
-	 * @return array<Entities\Channels\Channel>
+	 * @return array<VirtualEntities\Channels\Channel>
 	 */
 	public function getChannels(): array
 	{
 		$channels = [];
 
 		foreach (parent::getChannels() as $channel) {
-			if ($channel instanceof Entities\Channels\Channel) {
+			if ($channel instanceof VirtualEntities\Channels\Channel) {
 				$channels[] = $channel;
 			}
 		}
@@ -78,7 +78,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
-		if (!$channel instanceof Entities\Channels\Channel) {
+		if (!$channel instanceof VirtualEntities\Channels\Channel) {
 			throw new VirtualExceptions\InvalidArgument('Provided channel type is not valid');
 		}
 

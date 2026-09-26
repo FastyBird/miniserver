@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Virtual\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Virtual\Entities;
+use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Ramsey\Uuid;
@@ -27,7 +27,7 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 {
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		VirtualEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -41,9 +41,9 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 		return Sources\Connector::VIRTUAL;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): VirtualEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof VirtualEntities\Devices\Device);
 
 		return $this->device;
 	}

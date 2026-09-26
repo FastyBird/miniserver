@@ -17,8 +17,8 @@ namespace FastyBird\Connector\Virtual\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Virtual;
-use FastyBird\Connector\Virtual\Documents;
-use FastyBird\Connector\Virtual\Queries;
+use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
+use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
@@ -82,13 +82,13 @@ final class StoreDevicePropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new VirtualQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			VirtualDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
