@@ -94,6 +94,28 @@ outright on a machine already running another Redis. The namespace approach abov
 publishing any port. The deployment phase rewrites these compose files and should fold
 this in.
 
+### PHP: the DI snapshot
+
+The suite fetches a handful of services; `tools/di-snapshot.php` records every definition of
+every container the repository builds (production, each package's test container, and each
+per-test NEON overlay): type, factory, arguments, setups in order, tags, autowiring, and the
+global definition order. A change to the DI wiring is proven by comparing a recording of the
+base against one of the head. It needs no database. Recordings go under
+`var/tools/di-snapshot/`, which is git-ignored; they are never committed.
+
+```bash
+docker run --rm -v "$PWD":/app -w /app -e XDEBUG_MODE=off -e TZ=UTC -e PHP_DATE_TIMEZONE=UTC \
+  <application-image> php tools/di-snapshot.php var/tools/di-snapshot/head
+docker run --rm -v "$PWD":/app -w /app -e XDEBUG_MODE=off \
+  <application-image> php tools/di-snapshot.php --diff var/tools/di-snapshot/base var/tools/di-snapshot/head
+```
+
+`--diff` exits 1 on any difference and prints it grouped by container and service; `--map
+<file>` applies a service/tag rename map to the base first; `--list` prints the containers
+without compiling. Refresh the `vendor/fastybird/*` mirror first: the recording loads the
+production classes from there, not from `src/`. The file's header documents the rest,
+including the map format.
+
 ### JavaScript: install and build
 
 ```bash
