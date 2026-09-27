@@ -16,10 +16,10 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities as ShellyConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Queries;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Queries as ShellyConnectorHomeKitConnectorQueries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
@@ -101,19 +101,19 @@ class Builder
 		ShellyEntities\Devices\Device $shelly,
 		HomeKitEntities\Connectors\Connector $homeKitConnector,
 		HomeKitTypes\AccessoryCategory $category,
-		Entities\Devices\Shelly|null $accessory = null,
-	): Entities\Devices\Shelly
+		ShellyConnectorHomeKitConnectorEntities\Devices\Shelly|null $accessory = null,
+	): ShellyConnectorHomeKitConnectorEntities\Devices\Shelly
 	{
 		$updated = null;
 
 		try {
 			if ($accessory === null) {
-				$findAccessoryQuery = new Queries\Entities\FindShellyDevices();
+				$findAccessoryQuery = new ShellyConnectorHomeKitConnectorQueries\Entities\FindShellyDevices();
 				$findAccessoryQuery->forParent($shelly);
 
 				$accessory = $this->devicesRepository->findOneBy(
 					$findAccessoryQuery,
-					Entities\Devices\Shelly::class,
+					ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 				);
 			}
 
@@ -165,8 +165,8 @@ class Builder
 		ShellyEntities\Devices\Device $shelly,
 		HomeKitEntities\Connectors\Connector $homeKitConnector,
 		HomeKitTypes\AccessoryCategory $category,
-		Entities\Devices\Shelly|null $accessory = null,
-	): Entities\Devices\Shelly
+		ShellyConnectorHomeKitConnectorEntities\Devices\Shelly|null $accessory = null,
+	): ShellyConnectorHomeKitConnectorEntities\Devices\Shelly
 	{
 		try {
 			if ($accessory === null) {
@@ -319,13 +319,13 @@ class Builder
 
 			if ($accessory === null) {
 				$accessory = $this->devicesManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Devices\Shelly::class,
+					'entity' => ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 					'connector' => $homeKitConnector,
 					'identifier' => $identifier,
 					'parents' => [$shelly],
 					'name' => $shelly->getName(),
 				]));
-				assert($accessory instanceof Entities\Devices\Shelly);
+				assert($accessory instanceof ShellyConnectorHomeKitConnectorEntities\Devices\Shelly);
 			}
 
 			if ($categoryProperty === null) {
@@ -408,7 +408,7 @@ class Builder
 			$this->databaseHelper->commitTransaction();
 
 			$accessory = $this->devicesRepository->find($accessory->getId());
-			assert($accessory instanceof Entities\Devices\Shelly);
+			assert($accessory instanceof ShellyConnectorHomeKitConnectorEntities\Devices\Shelly);
 
 			$this->logger->debug(
 				'Shelly device accessory was created',
@@ -446,7 +446,7 @@ class Builder
 	 */
 	private function createService(
 		ShellyEntities\Devices\Device $shelly,
-		Entities\Devices\Shelly $accessory,
+		ShellyConnectorHomeKitConnectorEntities\Devices\Shelly $accessory,
 		Mapping\Services\Service $serviceMapping,
 	): bool
 	{
@@ -526,18 +526,23 @@ class Builder
 					),
 				) . '_' . $serviceIndex;
 
-				$findServiceQuery = new Queries\Entities\FindShellyChannels();
+				$findServiceQuery = new ShellyConnectorHomeKitConnectorQueries\Entities\FindShellyChannels();
 				$findServiceQuery->forDevice($accessory);
 				$findServiceQuery->byIdentifier($identifier);
 
 				$service = $this->channelsRepository->findOneBy(
 					$findServiceQuery,
-					Entities\Channels\Shelly::class,
+					ShellyConnectorHomeKitConnectorEntities\Channels\Shelly::class,
 				);
 
 				if ($service === null) {
 					$service = $this->databaseHelper->transaction(
-						function () use ($identifier, $accessory, $serviceMapping, $serviceIndex): Entities\Channels\Shelly {
+						function () use (
+							$identifier,
+							$accessory,
+							$serviceMapping,
+							$serviceIndex,
+						): ShellyConnectorHomeKitConnectorEntities\Channels\Shelly {
 							$channel = $this->channelsManager->create(Utils\ArrayHash::from([
 								'entity' => $serviceMapping->getClass(),
 								'identifier' => $identifier,
@@ -548,7 +553,7 @@ class Builder
 									),
 								) . ($serviceMapping->isMultiple() ? ' ' . $serviceIndex : ''),
 							]));
-							assert($channel instanceof Entities\Channels\Shelly);
+							assert($channel instanceof ShellyConnectorHomeKitConnectorEntities\Channels\Shelly);
 
 							return $channel;
 						},
@@ -701,7 +706,7 @@ class Builder
 		ShellyEntities\Devices\Device $shelly,
 		ShellyEntities\Channels\Channel|null $channel,
 		int|null $index,
-		Entities\Channels\Shelly $service,
+		ShellyConnectorHomeKitConnectorEntities\Channels\Shelly $service,
 		Mapping\Characteristics\Characteristic $characteristicMapping,
 		bool $optional = false,
 		bool $virtual = false,

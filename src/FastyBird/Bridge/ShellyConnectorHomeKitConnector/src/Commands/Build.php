@@ -17,10 +17,10 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Commands;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities as ShellyConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Queries;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Queries as ShellyConnectorHomeKitConnectorQueries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
@@ -164,13 +164,13 @@ class Build extends Console\Command\Command
 			return;
 		}
 
-		$findDeviceQuery = new Queries\Entities\FindShellyDevices();
+		$findDeviceQuery = new ShellyConnectorHomeKitConnectorQueries\Entities\FindShellyDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->forParent($device);
 
 		$bridge = $this->devicesRepository->findOneBy(
 			$findDeviceQuery,
-			Entities\Devices\Shelly::class,
+			ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 		);
 
 		$category = $this->askWhichCategory($io, $device, $bridge);
@@ -368,12 +368,15 @@ class Build extends Console\Command\Command
 	 */
 	private function listBridges(Style\SymfonyStyle $io): void
 	{
-		$findDevicesQuery = new Queries\Entities\FindShellyDevices();
+		$findDevicesQuery = new ShellyConnectorHomeKitConnectorQueries\Entities\FindShellyDevices();
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Shelly::class);
+		$devices = $this->devicesRepository->findAllBy(
+			$findDevicesQuery,
+			ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
+		);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Shelly $a, Entities\Devices\Shelly $b): int => (
+			static fn (ShellyConnectorHomeKitConnectorEntities\Devices\Shelly $a, ShellyConnectorHomeKitConnectorEntities\Devices\Shelly $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -682,19 +685,19 @@ class Build extends Console\Command\Command
 	 */
 	private function askWhichBridge(
 		Style\SymfonyStyle $io,
-	): Entities\Devices\Shelly|null
+	): ShellyConnectorHomeKitConnectorEntities\Devices\Shelly|null
 	{
 		$devices = [];
 
-		$findDevicesQuery = new Queries\Entities\FindShellyDevices();
+		$findDevicesQuery = new ShellyConnectorHomeKitConnectorQueries\Entities\FindShellyDevices();
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Shelly::class,
+			ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Shelly $a, Entities\Devices\Shelly $b): int => (
+			static fn (ShellyConnectorHomeKitConnectorEntities\Devices\Shelly $a, ShellyConnectorHomeKitConnectorEntities\Devices\Shelly $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -721,7 +724,7 @@ class Build extends Console\Command\Command
 			),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($devices): Entities\Devices\Shelly {
+			function (string|int|null $answer) use ($devices): ShellyConnectorHomeKitConnectorEntities\Devices\Shelly {
 				if ($answer === null) {
 					throw new ShellyConnectorHomeKitConnectorExceptions\Runtime(
 						sprintf(
@@ -740,12 +743,12 @@ class Build extends Console\Command\Command
 				$identifier = array_search($answer, $devices, true);
 
 				if ($identifier !== false) {
-					$findDeviceQuery = new Queries\Entities\FindShellyDevices();
+					$findDeviceQuery = new ShellyConnectorHomeKitConnectorQueries\Entities\FindShellyDevices();
 					$findDeviceQuery->byIdentifier($identifier);
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Shelly::class,
+						ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 					);
 
 					if ($device !== null) {
@@ -765,7 +768,7 @@ class Build extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Shelly);
+		assert($device instanceof ShellyConnectorHomeKitConnectorEntities\Devices\Shelly);
 
 		return $device;
 	}

@@ -19,9 +19,9 @@ use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
 use FastyBird\Addon\VirtualThermostat\Queries as VirtualThermostatQueries;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Builders;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities as VirtualThermostatAddonHomeKitConnectorEntities;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions as VirtualThermostatAddonHomeKitConnectorExceptions;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries as VirtualThermostatAddonHomeKitConnectorQueries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -301,12 +301,18 @@ class Build extends Console\Command\Command
 	 */
 	private function listBridges(Style\SymfonyStyle $io): void
 	{
-		$findDevicesQuery = new Queries\Entities\FindThermostatDevices();
+		$findDevicesQuery = new VirtualThermostatAddonHomeKitConnectorQueries\Entities\FindThermostatDevices();
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Thermostat::class);
+		$devices = $this->devicesRepository->findAllBy(
+			$findDevicesQuery,
+			VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class,
+		);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Thermostat $a, Entities\Devices\Thermostat $b): int => (
+			static fn (
+				VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $a,
+				VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $b,
+			): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -610,19 +616,22 @@ class Build extends Console\Command\Command
 	 */
 	private function askWhichBridge(
 		Style\SymfonyStyle $io,
-	): Entities\Devices\Thermostat|null
+	): VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat|null
 	{
 		$devices = [];
 
-		$findDevicesQuery = new Queries\Entities\FindThermostatDevices();
+		$findDevicesQuery = new VirtualThermostatAddonHomeKitConnectorQueries\Entities\FindThermostatDevices();
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Thermostat::class,
+			VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Thermostat $a, Entities\Devices\Thermostat $b): int => (
+			static fn (
+				VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $a,
+				VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $b,
+			): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -649,7 +658,7 @@ class Build extends Console\Command\Command
 			),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($devices): Entities\Devices\Thermostat {
+			function (string|int|null $answer) use ($devices): VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat {
 				if ($answer === null) {
 					throw new VirtualThermostatAddonHomeKitConnectorExceptions\Runtime(
 						sprintf(
@@ -668,12 +677,12 @@ class Build extends Console\Command\Command
 				$identifier = array_search($answer, $devices, true);
 
 				if ($identifier !== false) {
-					$findDeviceQuery = new Queries\Entities\FindThermostatDevices();
+					$findDeviceQuery = new VirtualThermostatAddonHomeKitConnectorQueries\Entities\FindThermostatDevices();
 					$findDeviceQuery->byIdentifier($identifier);
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Thermostat::class,
+						VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class,
 					);
 
 					if ($device !== null) {
@@ -693,7 +702,7 @@ class Build extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Thermostat);
+		assert($device instanceof VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat);
 
 		return $device;
 	}

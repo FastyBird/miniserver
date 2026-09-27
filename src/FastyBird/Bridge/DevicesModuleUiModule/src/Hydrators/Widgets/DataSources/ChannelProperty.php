@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Hydrators\Widgets\DataSources;
 
 use Doctrine\Persistence;
-use FastyBird\Bridge\DevicesModuleUiModule\Entities;
+use FastyBird\Bridge\DevicesModuleUiModule\Entities as DevicesModuleUiModuleEntities;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
@@ -34,7 +34,7 @@ use function strval;
 /**
  * Channel property data source entity hydrator
  *
- * @extends UiHydrators\Widgets\DataSources\DataSource<Entities\Widgets\DataSources\ChannelProperty>
+ * @extends UiHydrators\Widgets\DataSources\DataSource<DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty>
  *
  * @package        FastyBird:DevicesModuleUiModuleBridge!
  * @subpackage     Hydrators
@@ -61,7 +61,7 @@ final class ChannelProperty extends UiHydrators\Widgets\DataSources\DataSource
 
 	public function getEntityName(): string
 	{
-		return Entities\Widgets\DataSources\ChannelProperty::class;
+		return DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class;
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class ChannelProperty extends UiHydrators\Widgets\DataSources\DataSource
 	protected function hydratePropertyRelationship(
 		Objects\IRelationshipObject $relationship,
 		Objects\IResourceObjectCollection|null $included,
-		Entities\Widgets\DataSources\ChannelProperty|null $entity,
+		DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty|null $entity,
 	): DevicesEntities\Channels\Properties\Property
 	{
 		if (

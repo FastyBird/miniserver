@@ -21,7 +21,7 @@ use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Types;
 use Nette\Caching as NetteCaching;
@@ -39,7 +39,7 @@ final readonly class ModuleEntities implements Consumers\Consumer
 
 	public function __construct(
 		private Devices\Logger $logger,
-		private Caching\Container $moduleCaching,
+		private DevicesCaching\Container $moduleCaching,
 		private Helpers\Database $databaseHelper,
 	)
 	{

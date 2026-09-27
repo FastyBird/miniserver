@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities as VirtualThermostatAddonHomeKitConnectorEntities;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
@@ -31,7 +31,7 @@ class Thermostat extends HomeKitEntities\Channels\Channel
 	public const TYPE = 'virtual-thermostat-addon-homekit-connector-bridge';
 
 	public function __construct(
-		Entities\Devices\Thermostat $device,
+		VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -50,9 +50,9 @@ class Thermostat extends HomeKitEntities\Channels\Channel
 		return Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR;
 	}
 
-	public function getDevice(): Entities\Devices\Thermostat
+	public function getDevice(): VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat
 	{
-		assert($this->device instanceof Entities\Devices\Thermostat);
+		assert($this->device instanceof VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat);
 
 		return $this->device;
 	}

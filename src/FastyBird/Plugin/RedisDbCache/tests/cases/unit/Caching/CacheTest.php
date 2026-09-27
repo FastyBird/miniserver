@@ -2,7 +2,7 @@
 
 namespace FastyBird\Plugin\RedisDbCache\Tests\Cases\Unit\Caching;
 
-use FastyBird\Plugin\RedisDbCache\Caching;
+use FastyBird\Plugin\RedisDbCache\Caching as RedisDbCacheCaching;
 use FastyBird\Plugin\RedisDbCache\Clients;
 use FastyBird\Plugin\RedisDbCache\Connections;
 use FastyBird\Plugin\RedisDbCache\Exceptions;
@@ -19,7 +19,7 @@ final class CacheTest extends Tests\Cases\Unit\BaseTestCase
 
 	private NetteCaching\Cache $cache;
 
-	private Caching\Storage $storage;
+	private RedisDbCacheCaching\Storage $storage;
 
 	protected function setUp(): void
 	{
@@ -27,9 +27,9 @@ final class CacheTest extends Tests\Cases\Unit\BaseTestCase
 
 		$this->client = new Clients\Client(new Connections\Configuration());
 
-		$journal = new Caching\Journal($this->client);
+		$journal = new RedisDbCacheCaching\Journal($this->client);
 
-		$this->storage = new Caching\Storage($this->client, $journal);
+		$this->storage = new RedisDbCacheCaching\Storage($this->client, $journal);
 
 		$this->cache = new NetteCaching\Cache($this->storage);
 	}
@@ -146,31 +146,57 @@ final class CacheTest extends Tests\Cases\Unit\BaseTestCase
 	public function testTagsCleaning(): void
 	{
 		$this->storage->clean([NetteCaching\Cache::All => true]);
-		self::assertFalse($this->client->exists($this->generateJournalKey('tag', Caching\Journal::SUFFIX_KEYS, false)));
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->write('foo', 'bar', [NetteCaching\Cache::Tags => ['tag']]);
-		self::assertTrue($this->client->exists($this->generateJournalKey('foo', Caching\Journal::SUFFIX_TAGS, true)));
-		self::assertTrue($this->client->exists($this->generateJournalKey('tag', Caching\Journal::SUFFIX_KEYS, false)));
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->clean([NetteCaching\Cache::Tags => ['tag']]);
-		self::assertFalse($this->client->exists($this->generateJournalKey('foo', Caching\Journal::SUFFIX_TAGS, true)));
-		self::assertFalse($this->client->exists($this->generateJournalKey('tag', Caching\Journal::SUFFIX_KEYS, false)));
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->write('foo', 'bar', [NetteCaching\Cache::Tags => ['tag']]);
-		self::assertTrue($this->client->exists($this->generateJournalKey('foo', Caching\Journal::SUFFIX_TAGS, true)));
-		self::assertTrue($this->client->exists($this->generateJournalKey('tag', Caching\Journal::SUFFIX_KEYS, false)));
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->remove('foo');
-		self::assertFalse($this->client->exists($this->generateJournalKey('foo', Caching\Journal::SUFFIX_TAGS, true)));
-		self::assertFalse($this->client->exists($this->generateJournalKey('tag', Caching\Journal::SUFFIX_KEYS, false)));
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->write('foo', 'bar', [NetteCaching\Cache::Tags => ['tag'], NetteCaching\Cache::Priority => 1]);
-		self::assertTrue($this->client->exists($this->generateJournalKey('foo', Caching\Journal::SUFFIX_TAGS, true)));
-		self::assertTrue($this->client->exists($this->generateJournalKey('tag', Caching\Journal::SUFFIX_KEYS, false)));
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->clean([NetteCaching\Cache::Priority => 1]);
-		self::assertFalse($this->client->exists($this->generateJournalKey('foo', Caching\Journal::SUFFIX_TAGS, true)));
-		self::assertFalse($this->client->exists($this->generateJournalKey('tag', Caching\Journal::SUFFIX_KEYS, false)));
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 	}
 
 	private function generateJournalKey(string $key, string $suffix, bool $addStoragePrefix): string
@@ -178,10 +204,10 @@ final class CacheTest extends Tests\Cases\Unit\BaseTestCase
 		$prefix = $addStoragePrefix
 			? sprintf(
 				'%s:%s',
-				Caching\Journal::NS_PREFIX,
-				Caching\Storage::NS_PREFIX,
+				RedisDbCacheCaching\Journal::NS_PREFIX,
+				RedisDbCacheCaching\Storage::NS_PREFIX,
 			)
-			: Caching\Journal::NS_PREFIX;
+			: RedisDbCacheCaching\Journal::NS_PREFIX;
 
 		return sprintf('%s:%s:%s', $prefix, $key, $suffix);
 	}

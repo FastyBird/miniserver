@@ -18,7 +18,7 @@ namespace FastyBird\Addon\VirtualThermostat\Drivers;
 use DateTimeInterface;
 use FastyBird\Addon\VirtualThermostat;
 use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
-use FastyBird\Addon\VirtualThermostat\Helpers;
+use FastyBird\Addon\VirtualThermostat\Helpers as VirtualThermostatHelpers;
 use FastyBird\Addon\VirtualThermostat\Types as VirtualThermostatTypes;
 use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
 use FastyBird\Connector\Virtual\Drivers as VirtualDrivers;
@@ -110,7 +110,7 @@ class Thermostat implements VirtualDrivers\Driver
 
 	public function __construct(
 		private readonly DevicesDocuments\Devices\Device $device,
-		private readonly Helpers\Device $deviceHelper,
+		private readonly VirtualThermostatHelpers\Device $deviceHelper,
 		private readonly VirtualQueue\Queue $queue,
 		private readonly VirtualHelpers\MessageBuilder $messageBuilder,
 		private readonly VirtualThermostat\Logger $logger,

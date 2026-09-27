@@ -19,9 +19,9 @@ use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
 use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Types as VirtualThermostatTypes;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities as VirtualThermostatAddonHomeKitConnectorEntities;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions as VirtualThermostatAddonHomeKitConnectorExceptions;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries as VirtualThermostatAddonHomeKitConnectorQueries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
@@ -93,19 +93,19 @@ class Builder
 	public function build(
 		VirtualThermostatEntities\Devices\Device $thermostat,
 		HomeKitEntities\Connectors\Connector $homeKitConnector,
-		Entities\Devices\Thermostat|null $accessory = null,
-	): Entities\Devices\Thermostat
+		VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat|null $accessory = null,
+	): VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat
 	{
 		$updated = null;
 
 		try {
 			if ($accessory === null) {
-				$findAccessoryQuery = new Queries\Entities\FindThermostatDevices();
+				$findAccessoryQuery = new VirtualThermostatAddonHomeKitConnectorQueries\Entities\FindThermostatDevices();
 				$findAccessoryQuery->forParent($thermostat);
 
 				$accessory = $this->devicesRepository->findOneBy(
 					$findAccessoryQuery,
-					Entities\Devices\Thermostat::class,
+					VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class,
 				);
 			}
 
@@ -137,8 +137,8 @@ class Builder
 	private function createAccessory(
 		VirtualThermostatEntities\Devices\Device $thermostat,
 		HomeKitEntities\Connectors\Connector $homeKitConnector,
-		Entities\Devices\Thermostat|null $accessory = null,
-	): Entities\Devices\Thermostat
+		VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat|null $accessory = null,
+	): VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat
 	{
 		try {
 			if ($accessory === null) {
@@ -229,13 +229,13 @@ class Builder
 
 			if ($accessory === null) {
 				$accessory = $this->devicesManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Devices\Thermostat::class,
+					'entity' => VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class,
 					'connector' => $homeKitConnector,
 					'identifier' => $identifier,
 					'parents' => [$thermostat],
 					'name' => $thermostat->getName(),
 				]));
-				assert($accessory instanceof Entities\Devices\Thermostat);
+				assert($accessory instanceof VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat);
 			}
 
 			if ($categoryProperty === null) {
@@ -322,7 +322,7 @@ class Builder
 	 */
 	private function createService(
 		VirtualThermostatEntities\Devices\Device $thermostat,
-		Entities\Devices\Thermostat $accessory,
+		VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $accessory,
 		HomeKitTypes\ServiceType $type,
 	): void
 	{
@@ -360,27 +360,27 @@ class Builder
 				),
 			) . '_1';
 
-			$findChannelsQuery = new Queries\Entities\FindThermostatChannels();
+			$findChannelsQuery = new VirtualThermostatAddonHomeKitConnectorQueries\Entities\FindThermostatChannels();
 			$findChannelsQuery->forDevice($accessory);
 			$findChannelsQuery->byIdentifier($identifier);
 
 			$service = $this->channelsRepository->findOneBy(
 				$findChannelsQuery,
-				Entities\Channels\Thermostat::class,
+				VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat::class,
 			);
 
 			if ($service === null) {
 				$service = $this->databaseHelper->transaction(
-					function () use ($identifier, $accessory): Entities\Channels\Thermostat {
+					function () use ($identifier, $accessory): VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat {
 						$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-							'entity' => Entities\Channels\Thermostat::class,
+							'entity' => VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat::class,
 							'identifier' => $identifier,
 							'device' => $accessory,
 							'name' => $this->translator->translate(
 								'//virtual-thermostat-addon-homekit-connector-bridge.base.misc.services.thermostat',
 							),
 						]));
-						assert($channel instanceof Entities\Channels\Thermostat);
+						assert($channel instanceof VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat);
 
 						return $channel;
 					},
@@ -478,7 +478,7 @@ class Builder
 	 */
 	private function createCharacteristic(
 		VirtualThermostatEntities\Devices\Device $thermostat,
-		Entities\Channels\Thermostat $service,
+		VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat $service,
 		HomeKitTypes\CharacteristicType $characteristicType,
 		VirtualThermostatTypes\ChannelPropertyIdentifier|null $propertyType,
 		bool $optional = false,

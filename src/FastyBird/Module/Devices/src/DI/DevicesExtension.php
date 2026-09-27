@@ -27,7 +27,7 @@ use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Commands;
 use FastyBird\Module\Devices\Connectors;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
@@ -149,7 +149,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 			$this->prefix('caching.container'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Caching\Container::class)
+			->setType(DevicesCaching\Container::class)
 			->setArguments([
 				'configurationBuilderCache' => $configurationBuilderCache,
 				'configurationRepositoryCache' => $configurationRepositoryCache,

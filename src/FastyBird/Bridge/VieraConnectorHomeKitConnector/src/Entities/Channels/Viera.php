@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities as VieraConnectorHomeKitConnectorEntities;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Core\Values\Types\Sources;
 use Ramsey\Uuid;
@@ -27,7 +27,7 @@ abstract class Viera extends HomeKitEntities\Channels\Channel
 {
 
 	public function __construct(
-		Entities\Devices\Viera $device,
+		VieraConnectorHomeKitConnectorEntities\Devices\Viera $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -41,9 +41,9 @@ abstract class Viera extends HomeKitEntities\Channels\Channel
 		return Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR;
 	}
 
-	public function getDevice(): Entities\Devices\Viera
+	public function getDevice(): VieraConnectorHomeKitConnectorEntities\Devices\Viera
 	{
-		assert($this->device instanceof Entities\Devices\Viera);
+		assert($this->device instanceof VieraConnectorHomeKitConnectorEntities\Devices\Viera);
 
 		return $this->device;
 	}

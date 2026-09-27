@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Services;
 
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents as ShellyConnectorHomeKitConnectorDocuments;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
@@ -51,7 +51,7 @@ class InputSwitchFactory implements HomeKitProtocol\Services\ServiceFactory
 		bool $hidden = false,
 	): InputSwitch
 	{
-		assert($channel instanceof Documents\Channels\Shelly);
+		assert($channel instanceof ShellyConnectorHomeKitConnectorDocuments\Channels\Shelly);
 
 		return new InputSwitch(
 			$typeId,

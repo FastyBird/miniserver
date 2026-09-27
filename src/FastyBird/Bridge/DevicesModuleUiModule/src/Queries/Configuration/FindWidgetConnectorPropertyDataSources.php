@@ -15,14 +15,14 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Queries\Configuration;
 
-use FastyBird\Bridge\DevicesModuleUiModule\Documents;
+use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Ramsey\Uuid;
 
 /**
  * Find widgets connector properties data sources configuration query
  *
- * @extends  FindWidgetDataSources<Documents\Widgets\DataSources\ConnectorProperty>
+ * @extends  FindWidgetDataSources<DevicesModuleUiModuleDocuments\Widgets\DataSources\ConnectorProperty>
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Queries
@@ -35,7 +35,7 @@ class FindWidgetConnectorPropertyDataSources extends FindWidgetDataSources
 	{
 		parent::__construct();
 
-		$this->filter[] = '.[?(@.type == "' . Documents\Widgets\DataSources\ConnectorProperty::getType() . '")]';
+		$this->filter[] = '.[?(@.type == "' . DevicesModuleUiModuleDocuments\Widgets\DataSources\ConnectorProperty::getType() . '")]';
 	}
 
 	public function forConnector(DevicesDocuments\Property $connector): void

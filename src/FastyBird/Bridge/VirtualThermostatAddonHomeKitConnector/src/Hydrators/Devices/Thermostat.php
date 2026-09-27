@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Hydrators\Devi
 
 use Doctrine\Persistence;
 use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities as VirtualThermostatAddonHomeKitConnectorEntities;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
@@ -36,7 +36,7 @@ use function strval;
 /**
  * Thermostat device entity hydrator
  *
- * @extends HomeKitHydrators\Devices\Device<Entities\Devices\Thermostat>
+ * @extends HomeKitHydrators\Devices\Device<VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat>
  *
  * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
  * @subpackage     Hydrators
@@ -58,11 +58,11 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 
 	public function getEntityName(): string
 	{
-		return Entities\Devices\Thermostat::class;
+		return VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class;
 	}
 
 	/**
-	 * @param Entities\Devices\Thermostat|null $entity
+	 * @param VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat|null $entity
 	 *
 	 * @throws ApiExceptions\JsonApiError
 	 * @throws CoreExceptions\InvalidState
@@ -113,7 +113,7 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 	protected function hydrateParentsRelationship(
 		Objects\IRelationshipObject $relationships,
 		Objects\IResourceObjectCollection|null $included,
-		Entities\Devices\Thermostat|null $entity,
+		VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat|null $entity,
 	): array
 	{
 		if ($relationships->getData() instanceof Objects\ResourceIdentifierCollection) {

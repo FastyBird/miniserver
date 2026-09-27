@@ -16,7 +16,6 @@
 namespace FastyBird\Addon\VirtualThermostat\Schemas\Devices;
 
 use FastyBird\Addon\VirtualThermostat\Entities;
-use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Connector\Virtual\Schemas as VirtualSchemas;
 use FastyBird\Core\Values\Types\Sources;
 

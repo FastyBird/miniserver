@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Models\Configuration\Dashboards\Tabs;
 
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Module\Ui\Caching;
+use FastyBird\Module\Ui\Caching as UiCaching;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Exceptions;
 use FastyBird\Module\Ui\Models;
@@ -40,7 +40,7 @@ final class Repository extends Models\Configuration\Repository
 {
 
 	public function __construct(
-		private readonly Caching\Container $moduleCaching,
+		private readonly UiCaching\Container $moduleCaching,
 		private readonly Models\Configuration\Builder $builder,
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)

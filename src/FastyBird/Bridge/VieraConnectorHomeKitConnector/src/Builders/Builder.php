@@ -16,10 +16,10 @@
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Builders;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities as VieraConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions as VieraConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Queries;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Queries as VieraConnectorHomeKitConnectorQueries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
@@ -106,19 +106,19 @@ class Builder
 	public function build(
 		VieraEntities\Devices\Device $viera,
 		HomeKitEntities\Connectors\Connector $homeKitConnector,
-		Entities\Devices\Viera|null $accessory = null,
-	): Entities\Devices\Viera
+		VieraConnectorHomeKitConnectorEntities\Devices\Viera|null $accessory = null,
+	): VieraConnectorHomeKitConnectorEntities\Devices\Viera
 	{
 		$updated = null;
 
 		try {
 			if ($accessory === null) {
-				$findAccessoryQuery = new Queries\Entities\FindVieraDevices();
+				$findAccessoryQuery = new VieraConnectorHomeKitConnectorQueries\Entities\FindVieraDevices();
 				$findAccessoryQuery->forParent($viera);
 
 				$accessory = $this->devicesRepository->findOneBy(
 					$findAccessoryQuery,
-					Entities\Devices\Viera::class,
+					VieraConnectorHomeKitConnectorEntities\Devices\Viera::class,
 				);
 			}
 
@@ -150,8 +150,8 @@ class Builder
 	private function createAccessory(
 		VieraEntities\Devices\Device $viera,
 		HomeKitEntities\Connectors\Connector $homeKitConnector,
-		Entities\Devices\Viera|null $accessory = null,
-	): Entities\Devices\Viera
+		VieraConnectorHomeKitConnectorEntities\Devices\Viera|null $accessory = null,
+	): VieraConnectorHomeKitConnectorEntities\Devices\Viera
 	{
 		try {
 			if ($accessory === null) {
@@ -275,13 +275,13 @@ class Builder
 
 			if ($accessory === null) {
 				$accessory = $this->devicesManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Devices\Viera::class,
+					'entity' => VieraConnectorHomeKitConnectorEntities\Devices\Viera::class,
 					'connector' => $homeKitConnector,
 					'identifier' => $identifier,
 					'parents' => [$viera],
 					'name' => $viera->getName(),
 				]));
-				assert($accessory instanceof Entities\Devices\Viera);
+				assert($accessory instanceof VieraConnectorHomeKitConnectorEntities\Devices\Viera);
 			}
 
 			if ($categoryProperty === null) {
@@ -383,7 +383,7 @@ class Builder
 	 */
 	private function createService(
 		VieraEntities\Devices\Device $viera,
-		Entities\Devices\Viera $accessory,
+		VieraConnectorHomeKitConnectorEntities\Devices\Viera $accessory,
 		Mapping\Services\Service $serviceMapping,
 	): bool
 	{
@@ -530,13 +530,13 @@ class Builder
 					),
 				) . '_' . $serviceIndex;
 
-				$findServiceQuery = new Queries\Entities\FindVieraChannels();
+				$findServiceQuery = new VieraConnectorHomeKitConnectorQueries\Entities\FindVieraChannels();
 				$findServiceQuery->forDevice($accessory);
 				$findServiceQuery->byIdentifier($identifier);
 
 				$service = $this->channelsRepository->findOneBy(
 					$findServiceQuery,
-					Entities\Channels\Viera::class,
+					VieraConnectorHomeKitConnectorEntities\Channels\Viera::class,
 				);
 
 				$name = $this->translator->translate(
@@ -561,14 +561,14 @@ class Builder
 
 				if ($service === null) {
 					$service = $this->databaseHelper->transaction(
-						function () use ($identifier, $accessory, $serviceMapping, $name): Entities\Channels\Viera {
+						function () use ($identifier, $accessory, $serviceMapping, $name): VieraConnectorHomeKitConnectorEntities\Channels\Viera {
 							$channel = $this->channelsManager->create(Utils\ArrayHash::from([
 								'entity' => $serviceMapping->getClass(),
 								'identifier' => $identifier,
 								'device' => $accessory,
 								'name' => $name,
 							]));
-							assert($channel instanceof Entities\Channels\Viera);
+							assert($channel instanceof VieraConnectorHomeKitConnectorEntities\Channels\Viera);
 
 							return $channel;
 						},
@@ -987,7 +987,7 @@ class Builder
 	private function createCharacteristic(
 		VieraEntities\Devices\Device $viera,
 		VieraEntities\Channels\Channel|null $channel,
-		Entities\Channels\Viera $service,
+		VieraConnectorHomeKitConnectorEntities\Channels\Viera $service,
 		Mapping\Characteristics\Characteristic $characteristicMapping,
 		string|null $name = null,
 		int|null $value = null,

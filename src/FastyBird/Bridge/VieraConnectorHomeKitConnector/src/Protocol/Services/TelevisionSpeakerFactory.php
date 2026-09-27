@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Protocol\Services;
 
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Documents;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Documents as VieraConnectorHomeKitConnectorDocuments;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
@@ -51,7 +51,7 @@ class TelevisionSpeakerFactory implements HomeKitProtocol\Services\ServiceFactor
 		bool $hidden = false,
 	): TelevisionSpeaker
 	{
-		assert($channel instanceof Documents\Channels\Viera);
+		assert($channel instanceof VieraConnectorHomeKitConnectorDocuments\Channels\Viera);
 
 		return new TelevisionSpeaker(
 			$typeId,

@@ -21,7 +21,7 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Builders;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions as VieraConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Hydrators;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Queries;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Queries as VieraConnectorHomeKitConnectorQueries;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
@@ -77,7 +77,7 @@ class BridgesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		$findQuery = new Queries\Entities\FindVieraDevices();
+		$findQuery = new VieraConnectorHomeKitConnectorQueries\Entities\FindVieraDevices();
 
 		$devices = $this->devicesRepository->getResultSet(
 			$findQuery,

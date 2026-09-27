@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Models\Configuration\Connectors\Properties;
 
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
@@ -44,7 +44,7 @@ final class Repository extends Models\Configuration\Repository
 
 	public function __construct(
 		private readonly Models\Configuration\Builder $builder,
-		private readonly Caching\Container $moduleCaching,
+		private readonly DevicesCaching\Container $moduleCaching,
 		private readonly CoreDocuments\Mapping\ClassMetadataFactory $classMetadataFactory,
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
 	)

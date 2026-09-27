@@ -17,9 +17,9 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Commands;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Builders;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities as VieraConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions as VieraConnectorHomeKitConnectorExceptions;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Queries;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Queries as VieraConnectorHomeKitConnectorQueries;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
@@ -144,13 +144,13 @@ class Build extends Console\Command\Command
 			return;
 		}
 
-		$findDeviceQuery = new Queries\Entities\FindVieraDevices();
+		$findDeviceQuery = new VieraConnectorHomeKitConnectorQueries\Entities\FindVieraDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->forParent($device);
 
 		$bridge = $this->devicesRepository->findOneBy(
 			$findDeviceQuery,
-			Entities\Devices\Viera::class,
+			VieraConnectorHomeKitConnectorEntities\Devices\Viera::class,
 		);
 
 		try {
@@ -315,12 +315,15 @@ class Build extends Console\Command\Command
 	 */
 	private function listBridges(Style\SymfonyStyle $io): void
 	{
-		$findDevicesQuery = new Queries\Entities\FindVieraDevices();
+		$findDevicesQuery = new VieraConnectorHomeKitConnectorQueries\Entities\FindVieraDevices();
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Viera::class);
+		$devices = $this->devicesRepository->findAllBy(
+			$findDevicesQuery,
+			VieraConnectorHomeKitConnectorEntities\Devices\Viera::class,
+		);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Viera $a, Entities\Devices\Viera $b): int => (
+			static fn (VieraConnectorHomeKitConnectorEntities\Devices\Viera $a, VieraConnectorHomeKitConnectorEntities\Devices\Viera $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -628,19 +631,19 @@ class Build extends Console\Command\Command
 	 */
 	private function askWhichBridge(
 		Style\SymfonyStyle $io,
-	): Entities\Devices\Viera|null
+	): VieraConnectorHomeKitConnectorEntities\Devices\Viera|null
 	{
 		$devices = [];
 
-		$findDevicesQuery = new Queries\Entities\FindVieraDevices();
+		$findDevicesQuery = new VieraConnectorHomeKitConnectorQueries\Entities\FindVieraDevices();
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Viera::class,
+			VieraConnectorHomeKitConnectorEntities\Devices\Viera::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Viera $a, Entities\Devices\Viera $b): int => (
+			static fn (VieraConnectorHomeKitConnectorEntities\Devices\Viera $a, VieraConnectorHomeKitConnectorEntities\Devices\Viera $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -667,7 +670,7 @@ class Build extends Console\Command\Command
 			),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($devices): Entities\Devices\Viera {
+			function (string|int|null $answer) use ($devices): VieraConnectorHomeKitConnectorEntities\Devices\Viera {
 				if ($answer === null) {
 					throw new VieraConnectorHomeKitConnectorExceptions\Runtime(
 						sprintf(
@@ -686,12 +689,12 @@ class Build extends Console\Command\Command
 				$identifier = array_search($answer, $devices, true);
 
 				if ($identifier !== false) {
-					$findDeviceQuery = new Queries\Entities\FindVieraDevices();
+					$findDeviceQuery = new VieraConnectorHomeKitConnectorQueries\Entities\FindVieraDevices();
 					$findDeviceQuery->byIdentifier($identifier);
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Viera::class,
+						VieraConnectorHomeKitConnectorEntities\Devices\Viera::class,
 					);
 
 					if ($device !== null) {
@@ -711,7 +714,7 @@ class Build extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Viera);
+		assert($device instanceof VieraConnectorHomeKitConnectorEntities\Devices\Viera);
 
 		return $device;
 	}

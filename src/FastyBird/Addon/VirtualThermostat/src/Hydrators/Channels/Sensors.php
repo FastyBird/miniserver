@@ -15,8 +15,7 @@
 
 namespace FastyBird\Addon\VirtualThermostat\Hydrators\Channels;
 
-use FastyBird\Addon\VirtualThermostat\Entities;
-use FastyBird\Addon\VirtualThermostat\Hydrators;
+use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
 use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
@@ -31,7 +30,7 @@ use function strval;
 /**
  * Sensors channel entity hydrator
  *
- * @extends VirtualHydrators\Channels\Channel<Entities\Channels\Sensors>
+ * @extends VirtualHydrators\Channels\Channel<VirtualThermostatEntities\Channels\Sensors>
  *
  * @package        FastyBird:VirtualThermostatAddon!
  * @subpackage     Hydrators
@@ -42,7 +41,7 @@ final class Sensors extends VirtualHydrators\Channels\Channel
 
 	public function getEntityName(): string
 	{
-		return Entities\Channels\Sensors::class;
+		return VirtualThermostatEntities\Channels\Sensors::class;
 	}
 
 	/**
@@ -54,7 +53,7 @@ final class Sensors extends VirtualHydrators\Channels\Channel
 		Objects\IRelationshipObject $relationship,
 		Objects\IResourceObjectCollection|null $included,
 		VirtualEntities\Channels\Channel|null $entity,
-	): Entities\Devices\Device
+	): VirtualThermostatEntities\Devices\Device
 	{
 		if (
 			$relationship->getData() instanceof Objects\IResourceIdentifierObject
@@ -63,7 +62,7 @@ final class Sensors extends VirtualHydrators\Channels\Channel
 		) {
 			$device = $this->devicesRepository->find(
 				Uuid\Uuid::fromString($relationship->getData()->getId()),
-				Entities\Devices\Device::class,
+				VirtualThermostatEntities\Devices\Device::class,
 			);
 
 			if ($device !== null) {

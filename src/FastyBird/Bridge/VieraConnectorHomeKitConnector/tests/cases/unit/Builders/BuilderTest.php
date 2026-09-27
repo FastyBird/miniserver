@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Cases\Unit\Build
 
 use Error;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Builders;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities as VieraConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions as VieraConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
@@ -74,7 +74,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame($viera, $bridge->getParent());
 
 		self::assertCount($expectedChannelsCnt, $bridge->getChannels());
-		self::assertInstanceOf(Entities\Channels\Viera::class, $bridge->getChannels()[0]);
+		self::assertInstanceOf(VieraConnectorHomeKitConnectorEntities\Channels\Viera::class, $bridge->getChannels()[0]);
 
 		$actual = [];
 

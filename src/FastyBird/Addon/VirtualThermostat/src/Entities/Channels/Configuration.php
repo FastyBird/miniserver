@@ -16,7 +16,7 @@
 namespace FastyBird\Addon\VirtualThermostat\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Addon\VirtualThermostat\Entities;
+use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Core\Exceptions;
@@ -38,7 +38,7 @@ class Configuration extends VirtualEntities\Channels\Channel
 	public const TYPE = 'virtual-thermostat-addon-configuration';
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		VirtualThermostatEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -57,9 +57,9 @@ class Configuration extends VirtualEntities\Channels\Channel
 		return Sources\Addon::VIRTUAL_THERMOSTAT;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): VirtualThermostatEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof VirtualThermostatEntities\Devices\Device);
 
 		return $this->device;
 	}
@@ -88,7 +88,7 @@ class Configuration extends VirtualEntities\Channels\Channel
 			return floatval($property->getValue());
 		}
 
-		return Entities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE;
+		return VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE;
 	}
 
 	/**
@@ -143,7 +143,7 @@ class Configuration extends VirtualEntities\Channels\Channel
 			return floatval($property->getValue());
 		}
 
-		return Entities\Devices\Device::COLD_TOLERANCE;
+		return VirtualThermostatEntities\Devices\Device::COLD_TOLERANCE;
 	}
 
 	/**
@@ -171,7 +171,7 @@ class Configuration extends VirtualEntities\Channels\Channel
 			return floatval($property->getValue());
 		}
 
-		return Entities\Devices\Device::HOT_TOLERANCE;
+		return VirtualThermostatEntities\Devices\Device::HOT_TOLERANCE;
 	}
 
 }

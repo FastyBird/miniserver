@@ -16,7 +16,7 @@
 namespace FastyBird\Addon\VirtualThermostat\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Addon\VirtualThermostat\Entities;
+use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
 use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
@@ -84,7 +84,7 @@ class Device extends VirtualEntities\Devices\Device
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
-	public function getConfiguration(): Entities\Channels\Configuration
+	public function getConfiguration(): VirtualThermostatEntities\Channels\Configuration
 	{
 		$channels = $this->channels
 			->filter(
@@ -97,7 +97,7 @@ class Device extends VirtualEntities\Devices\Device
 		}
 
 		$channel = $channels->first();
-		assert($channel instanceof Entities\Channels\Configuration);
+		assert($channel instanceof VirtualThermostatEntities\Channels\Configuration);
 
 		return $channel;
 	}
@@ -105,7 +105,7 @@ class Device extends VirtualEntities\Devices\Device
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
-	public function getState(): Entities\Channels\State
+	public function getState(): VirtualThermostatEntities\Channels\State
 	{
 		$channels = $this->channels
 			->filter(
@@ -117,7 +117,7 @@ class Device extends VirtualEntities\Devices\Device
 		}
 
 		$channel = $channels->first();
-		assert($channel instanceof Entities\Channels\State);
+		assert($channel instanceof VirtualThermostatEntities\Channels\State);
 
 		return $channel;
 	}
@@ -125,7 +125,7 @@ class Device extends VirtualEntities\Devices\Device
 	/**
 	 * @throws VirtualThermostatExceptions\InvalidState
 	 */
-	public function getPreset(Types\ChannelIdentifier $preset): Entities\Channels\Preset
+	public function getPreset(Types\ChannelIdentifier $preset): VirtualThermostatEntities\Channels\Preset
 	{
 		$channels = $this->channels
 			->filter(
@@ -139,7 +139,7 @@ class Device extends VirtualEntities\Devices\Device
 		}
 
 		$channel = $channels->first();
-		assert($channel instanceof Entities\Channels\Preset);
+		assert($channel instanceof VirtualThermostatEntities\Channels\Preset);
 
 		return $channel;
 	}
@@ -339,7 +339,7 @@ class Device extends VirtualEntities\Devices\Device
 		}
 
 		$channel = $channels->first();
-		assert($channel instanceof Entities\Channels\Actors);
+		assert($channel instanceof VirtualThermostatEntities\Channels\Actors);
 
 		return array_filter(
 			$channel->getActors(),
@@ -392,7 +392,7 @@ class Device extends VirtualEntities\Devices\Device
 		}
 
 		$channel = $channels->first();
-		assert($channel instanceof Entities\Channels\Sensors);
+		assert($channel instanceof VirtualThermostatEntities\Channels\Sensors);
 
 		return array_filter(
 			$channel->getSensors(),

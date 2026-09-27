@@ -3,7 +3,7 @@
 namespace FastyBird\Addon\VirtualThermostat\Tests\Cases\Unit\Drivers;
 
 use Error;
-use FastyBird\Addon\VirtualThermostat\Documents;
+use FastyBird\Addon\VirtualThermostat\Documents as VirtualThermostatDocuments;
 use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
 use FastyBird\Addon\VirtualThermostat\Queries;
 use FastyBird\Addon\VirtualThermostat\Tests;
@@ -43,9 +43,9 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 
 		$device = $devicesRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			VirtualThermostatDocuments\Devices\Device::class,
 		);
-		self::assertInstanceOf(Documents\Devices\Device::class, $device);
+		self::assertInstanceOf(VirtualThermostatDocuments\Devices\Device::class, $device);
 
 		$driversManager = $this->getContainer()->getByType(VirtualDrivers\DriversManager::class);
 
@@ -130,9 +130,9 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 
 		$device = $devicesRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			VirtualThermostatDocuments\Devices\Device::class,
 		);
-		self::assertInstanceOf(Documents\Devices\Device::class, $device);
+		self::assertInstanceOf(VirtualThermostatDocuments\Devices\Device::class, $device);
 
 		$driversManager = $this->getContainer()->getByType(VirtualDrivers\DriversManager::class);
 

@@ -20,7 +20,7 @@ use Doctrine\Persistence;
 use Exception;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router as ShellyConnectorHomeKitConnectorRouter;
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Api\Hydrators;
@@ -112,7 +112,9 @@ abstract class BaseV1
 	): ResponseInterface
 	{
 		// & relation entity name
-		$relationEntity = Utils\Strings::lower(strval($request->getAttribute(Router\ApiRoutes::RELATION_ENTITY)));
+		$relationEntity = Utils\Strings::lower(
+			strval($request->getAttribute(ShellyConnectorHomeKitConnectorRouter\ApiRoutes::RELATION_ENTITY)),
+		);
 
 		if ($relationEntity !== '') {
 			throw new ApiExceptions\JsonApiError(
@@ -199,8 +201,10 @@ abstract class BaseV1
 				RequestMethodInterface::METHOD_POST,
 				RequestMethodInterface::METHOD_PATCH,
 			], true)
-			&& $request->getAttribute(Router\ApiRoutes::URL_ITEM_ID) !== null
-			&& $request->getAttribute(Router\ApiRoutes::URL_ITEM_ID) !== $document->getResource()->getId()
+			&& $request->getAttribute(ShellyConnectorHomeKitConnectorRouter\ApiRoutes::URL_ITEM_ID) !== null
+			&& $request->getAttribute(
+				ShellyConnectorHomeKitConnectorRouter\ApiRoutes::URL_ITEM_ID,
+			) !== $document->getResource()->getId()
 		) {
 			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,

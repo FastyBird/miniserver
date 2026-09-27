@@ -15,14 +15,14 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Queries\Configuration;
 
-use FastyBird\Bridge\DevicesModuleUiModule\Documents;
+use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Ramsey\Uuid;
 
 /**
  * Find widgets device properties data sources configuration query
  *
- * @extends  FindWidgetDataSources<Documents\Widgets\DataSources\DeviceProperty>
+ * @extends  FindWidgetDataSources<DevicesModuleUiModuleDocuments\Widgets\DataSources\DeviceProperty>
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Queries
@@ -35,7 +35,7 @@ class FindWidgetDevicePropertyDataSources extends FindWidgetDataSources
 	{
 		parent::__construct();
 
-		$this->filter[] = '.[?(@.type == "' . Documents\Widgets\DataSources\DeviceProperty::getType() . '")]';
+		$this->filter[] = '.[?(@.type == "' . DevicesModuleUiModuleDocuments\Widgets\DataSources\DeviceProperty::getType() . '")]';
 	}
 
 	public function forDevice(DevicesDocuments\Property $device): void

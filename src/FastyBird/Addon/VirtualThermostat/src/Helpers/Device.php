@@ -15,10 +15,10 @@
 
 namespace FastyBird\Addon\VirtualThermostat\Helpers;
 
-use FastyBird\Addon\VirtualThermostat\Documents;
+use FastyBird\Addon\VirtualThermostat\Documents as VirtualThermostatDocuments;
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
-use FastyBird\Addon\VirtualThermostat\Queries;
+use FastyBird\Addon\VirtualThermostat\Queries as VirtualThermostatQueries;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Formats;
@@ -63,13 +63,13 @@ final readonly class Device
 		DevicesDocuments\Devices\Device $device,
 	): DevicesDocuments\Channels\Channel
 	{
-		$findChannelQuery = new Queries\Configuration\FindConfigurationChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Configuration\FindConfigurationChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(Types\ChannelIdentifier::CONFIGURATION);
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Configuration::class,
+			VirtualThermostatDocuments\Channels\Configuration::class,
 		);
 
 		if ($channel === null) {
@@ -86,13 +86,13 @@ final readonly class Device
 	 */
 	public function getState(DevicesDocuments\Devices\Device $device): DevicesDocuments\Channels\Channel
 	{
-		$findChannelQuery = new Queries\Configuration\FindStateChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Configuration\FindStateChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(Types\ChannelIdentifier::STATE);
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\State::class,
+			VirtualThermostatDocuments\Channels\State::class,
 		);
 
 		if ($channel === null) {
@@ -112,13 +112,13 @@ final readonly class Device
 		Types\ChannelIdentifier $preset,
 	): DevicesDocuments\Channels\Channel
 	{
-		$findChannelQuery = new Queries\Configuration\FindPresetChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Configuration\FindPresetChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier($preset);
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Preset::class,
+			VirtualThermostatDocuments\Channels\Preset::class,
 		);
 
 		if ($channel === null) {
@@ -466,13 +466,13 @@ final readonly class Device
 	 */
 	public function getActors(DevicesDocuments\Devices\Device $device): array
 	{
-		$findChannelQuery = new Queries\Configuration\FindActorChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Configuration\FindActorChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(Types\ChannelIdentifier::ACTORS);
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Actors::class,
+			VirtualThermostatDocuments\Channels\Actors::class,
 		);
 
 		if ($channel === null) {
@@ -541,13 +541,13 @@ final readonly class Device
 	 */
 	public function getSensors(DevicesDocuments\Devices\Device $device): array
 	{
-		$findChannelQuery = new Queries\Configuration\FindSensorChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Configuration\FindSensorChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(Types\ChannelIdentifier::SENSORS);
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Sensors::class,
+			VirtualThermostatDocuments\Channels\Sensors::class,
 		);
 
 		if ($channel === null) {

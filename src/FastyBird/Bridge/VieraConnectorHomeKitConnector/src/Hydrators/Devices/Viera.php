@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Hydrators\Devices;
 
 use Doctrine\Persistence;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities as VieraConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
@@ -36,7 +36,7 @@ use function strval;
 /**
  * Viera device entity hydrator
  *
- * @extends HomeKitHydrators\Devices\Device<Entities\Devices\Viera>
+ * @extends HomeKitHydrators\Devices\Device<VieraConnectorHomeKitConnectorEntities\Devices\Viera>
  *
  * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
  * @subpackage     Hydrators
@@ -68,11 +68,11 @@ class Viera extends HomeKitHydrators\Devices\Device
 
 	public function getEntityName(): string
 	{
-		return Entities\Devices\Viera::class;
+		return VieraConnectorHomeKitConnectorEntities\Devices\Viera::class;
 	}
 
 	/**
-	 * @param Entities\Devices\Viera|null $entity
+	 * @param VieraConnectorHomeKitConnectorEntities\Devices\Viera|null $entity
 	 *
 	 * @throws ApiExceptions\JsonApiError
 	 * @throws CoreExceptions\InvalidState
@@ -123,7 +123,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 	protected function hydrateParentsRelationship(
 		Objects\IRelationshipObject $relationships,
 		Objects\IResourceObjectCollection|null $included,
-		Entities\Devices\Viera|null $entity,
+		VieraConnectorHomeKitConnectorEntities\Devices\Viera|null $entity,
 	): array
 	{
 		if ($relationships->getData() instanceof Objects\ResourceIdentifierCollection) {
