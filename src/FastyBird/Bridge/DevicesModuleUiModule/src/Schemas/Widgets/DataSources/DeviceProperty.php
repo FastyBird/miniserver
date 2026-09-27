@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Schemas\Widgets\DataSources;
 
-use FastyBird\Bridge\DevicesModuleUiModule\Entities;
+use FastyBird\Bridge\DevicesModuleUiModule\Entities as DevicesModuleUiModuleEntities;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
@@ -35,7 +35,7 @@ use function array_merge;
 /**
  * Device property data source entity schema
  *
- * @template T of Entities\Widgets\DataSources\DeviceProperty
+ * @template T of DevicesModuleUiModuleEntities\Widgets\DataSources\DeviceProperty
  * @extends  Property<T>
  *
  * @package          FastyBird:DevicesModuleUiModuleBridge!
@@ -49,7 +49,7 @@ final class DeviceProperty extends Property
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = Sources\Bridge::DEVICES_MODULE_UI_MODULE->value . '/data-source/' . Entities\Widgets\DataSources\DeviceProperty::TYPE;
+	public const SCHEMA_TYPE = Sources\Bridge::DEVICES_MODULE_UI_MODULE->value . '/data-source/' . DevicesModuleUiModuleEntities\Widgets\DataSources\DeviceProperty::TYPE;
 
 	/**
 	 * Define relationships names
@@ -67,7 +67,7 @@ final class DeviceProperty extends Property
 
 	public function getEntityClass(): string
 	{
-		return Entities\Widgets\DataSources\DeviceProperty::class;
+		return DevicesModuleUiModuleEntities\Widgets\DataSources\DeviceProperty::class;
 	}
 
 	public function getType(): string

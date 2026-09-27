@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui\Subscribers;
 
-use FastyBird\Module\Ui\Caching;
+use FastyBird\Module\Ui\Caching as UiCaching;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Events;
 use FastyBird\Module\Ui\Types;
@@ -37,7 +37,7 @@ final class ConfigurationCache implements EventDispatcher\EventSubscriberInterfa
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Caching\Container $moduleCaching,
+		private readonly UiCaching\Container $moduleCaching,
 	)
 	{
 	}

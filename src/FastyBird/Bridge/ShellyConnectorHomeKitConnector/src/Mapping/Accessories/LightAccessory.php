@@ -16,7 +16,7 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Accessories;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Types;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Types as ShellyConnectorHomeKitConnectorTypes;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use Orisai\ObjectMapper;
 use TypeError;
@@ -39,7 +39,7 @@ readonly class LightAccessory extends Accessory
 	 * @param array<Mapping\Services\Service> $services
 	 */
 	public function __construct(
-		#[ObjectMapper\Rules\ArrayEnumValue(cases: [Types\DeviceType::LIGHT->value])]
+		#[ObjectMapper\Rules\ArrayEnumValue(cases: [ShellyConnectorHomeKitConnectorTypes\DeviceType::LIGHT->value])]
 		private string $type,
 		#[ObjectMapper\Rules\ArrayOf(
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
@@ -64,9 +64,9 @@ readonly class LightAccessory extends Accessory
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getType(): Types\DeviceType
+	public function getType(): ShellyConnectorHomeKitConnectorTypes\DeviceType
 	{
-		return Types\DeviceType::from($this->type);
+		return ShellyConnectorHomeKitConnectorTypes\DeviceType::from($this->type);
 	}
 
 	/**

@@ -5,7 +5,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Cases\Un
 use Error;
 use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Builders;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities as VirtualThermostatAddonHomeKitConnectorEntities;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions as VirtualThermostatAddonHomeKitConnectorExceptions;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
@@ -62,7 +62,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame($thermostat, $bridge->getParent());
 
 		self::assertCount(1, $bridge->getChannels());
-		self::assertInstanceOf(Entities\Channels\Thermostat::class, $bridge->getChannels()[0]);
+		self::assertInstanceOf(VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat::class, $bridge->getChannels()[0]);
 
 		$actual = [];
 

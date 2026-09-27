@@ -21,7 +21,7 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Builders;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Exceptions as VirtualThermostatAddonHomeKitConnectorExceptions;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Hydrators;
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Queries as VirtualThermostatAddonHomeKitConnectorQueries;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Router;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
@@ -77,7 +77,7 @@ class BridgesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		$findQuery = new Queries\Entities\FindThermostatDevices();
+		$findQuery = new VirtualThermostatAddonHomeKitConnectorQueries\Entities\FindThermostatDevices();
 
 		$devices = $this->devicesRepository->getResultSet(
 			$findQuery,

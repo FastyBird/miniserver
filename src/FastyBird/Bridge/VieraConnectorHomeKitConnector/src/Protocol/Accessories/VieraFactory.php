@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Protocol\Accessories;
 
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Documents;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Documents as VieraConnectorHomeKitConnectorDocuments;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
@@ -40,7 +40,7 @@ class VieraFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 		HomeKitDocuments\Devices\Device $device,
 	): Viera
 	{
-		assert($device instanceof Documents\Devices\Viera);
+		assert($device instanceof VieraConnectorHomeKitConnectorDocuments\Devices\Viera);
 
 		return new Viera($name, $aid, $category, $device);
 	}

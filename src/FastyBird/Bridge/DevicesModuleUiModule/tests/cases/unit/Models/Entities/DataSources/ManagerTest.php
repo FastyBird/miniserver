@@ -4,9 +4,9 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Cases\Unit\Models\Entitie
 
 use Doctrine\DBAL;
 use Error;
-use FastyBird\Bridge\DevicesModuleUiModule\Entities;
+use FastyBird\Bridge\DevicesModuleUiModule\Entities as DevicesModuleUiModuleEntities;
 use FastyBird\Bridge\DevicesModuleUiModule\Exceptions as DevicesModuleUiModuleExceptions;
-use FastyBird\Bridge\DevicesModuleUiModule\Queries;
+use FastyBird\Bridge\DevicesModuleUiModule\Queries as DevicesModuleUiModuleQueries;
 use FastyBird\Bridge\DevicesModuleUiModule\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -68,12 +68,12 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 		$dataSourcesManager = $this->getContainer()->getByType(UiModels\Entities\Widgets\DataSources\Manager::class);
 
 		$dataSource = $dataSourcesManager->create(Utils\ArrayHash::from([
-			'entity' => Entities\Widgets\DataSources\ChannelProperty::class,
+			'entity' => DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class,
 			'property' => $property,
 			'widget' => $widget,
 		]));
 
-		self::assertInstanceOf(Entities\Widgets\DataSources\ChannelProperty::class, $dataSource);
+		self::assertInstanceOf(DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class, $dataSource);
 		self::assertSame($property, $dataSource->getProperty());
 		self::assertSame($widget, $dataSource->getWidget());
 	}
@@ -94,12 +94,12 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 			UiModels\Entities\Widgets\DataSources\Repository::class,
 		);
 
-		$findDataSourceQuery = new Queries\Entities\FindWidgetChannelPropertyDataSources();
+		$findDataSourceQuery = new DevicesModuleUiModuleQueries\Entities\FindWidgetChannelPropertyDataSources();
 		$findDataSourceQuery->byId(Uuid\Uuid::fromString('764937a7-8565-472e-8e12-fe97cd55a377'));
 
 		$dataSource = $dataSourcesRepository->findOneBy(
 			$findDataSourceQuery,
-			Entities\Widgets\DataSources\ChannelProperty::class,
+			DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class,
 		);
 
 		self::assertNotNull($dataSource);
@@ -122,12 +122,12 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 
 		$dataSourcesManager->delete($dataSource);
 
-		$findDataSourceQuery = new Queries\Entities\FindWidgetChannelPropertyDataSources();
+		$findDataSourceQuery = new DevicesModuleUiModuleQueries\Entities\FindWidgetChannelPropertyDataSources();
 		$findDataSourceQuery->byId(Uuid\Uuid::fromString('764937a7-8565-472e-8e12-fe97cd55a377'));
 
 		$dataSource = $dataSourcesRepository->findOneBy(
 			$findDataSourceQuery,
-			Entities\Widgets\DataSources\ChannelProperty::class,
+			DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class,
 		);
 
 		self::assertNull($dataSource);
@@ -156,12 +156,12 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 
 		$dataSource = $dataSourcesManager->create(Utils\ArrayHash::from([
 			'id' => Uuid\Uuid::fromString('764937a7-8565-472e-8e12-fe97cd55a377'),
-			'entity' => Entities\Widgets\DataSources\ChannelProperty::class,
+			'entity' => DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class,
 			'property' => $property,
 			'widget' => $widget,
 		]));
 
-		self::assertInstanceOf(Entities\Widgets\DataSources\ChannelProperty::class, $dataSource);
+		self::assertInstanceOf(DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class, $dataSource);
 		self::assertSame($property, $dataSource->getProperty());
 		self::assertSame('764937a7-8565-472e-8e12-fe97cd55a377', $dataSource->getId()->toString());
 
@@ -181,12 +181,12 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNull($property);
 
-		$findDataSourceQuery = new Queries\Entities\FindWidgetChannelPropertyDataSources();
+		$findDataSourceQuery = new DevicesModuleUiModuleQueries\Entities\FindWidgetChannelPropertyDataSources();
 		$findDataSourceQuery->byId(Uuid\Uuid::fromString('764937a7-8565-472e-8e12-fe97cd55a377'));
 
 		$dataSource = $dataSourcesRepository->findOneBy(
 			$findDataSourceQuery,
-			Entities\Widgets\DataSources\ChannelProperty::class,
+			DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class,
 		);
 
 		self::assertNull($dataSource);

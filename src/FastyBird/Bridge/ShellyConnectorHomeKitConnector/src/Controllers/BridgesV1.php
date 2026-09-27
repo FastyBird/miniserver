@@ -18,10 +18,10 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
 use Doctrine;
 use Exception;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities as ShellyConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Queries;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Queries as ShellyConnectorHomeKitConnectorQueries;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
@@ -82,11 +82,11 @@ class BridgesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		$findQuery = new Queries\Entities\FindShellyDevices();
+		$findQuery = new ShellyConnectorHomeKitConnectorQueries\Entities\FindShellyDevices();
 
 		$devices = $this->devicesRepository->getResultSet(
 			$findQuery,
-			Entities\Devices\Shelly::class,
+			ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 		);
 
 		// @phpstan-ignore-next-line
@@ -131,7 +131,7 @@ class BridgesV1 extends BaseV1
 				$this->getOrmConnection()->beginTransaction();
 
 				$device = $this->devicesManager->create($hydrator->hydrate($document));
-				assert($device instanceof Entities\Devices\Shelly);
+				assert($device instanceof ShellyConnectorHomeKitConnectorEntities\Devices\Shelly);
 
 				$findDeviceProperty = new DevicesQueries\Entities\FindDeviceVariableProperties();
 				$findDeviceProperty->forDevice($device);
@@ -347,7 +347,7 @@ class BridgesV1 extends BaseV1
 				$this->getOrmConnection()->beginTransaction();
 
 				$device = $this->devicesManager->update($device, $hydrator->hydrate($document, $device));
-				assert($device instanceof Entities\Devices\Shelly);
+				assert($device instanceof ShellyConnectorHomeKitConnectorEntities\Devices\Shelly);
 
 				$findDeviceProperty = new DevicesQueries\Entities\FindDeviceVariableProperties();
 				$findDeviceProperty->forDevice($device);
@@ -536,12 +536,12 @@ class BridgesV1 extends BaseV1
 	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
-	protected function findDevice(string $id): Entities\Devices\Shelly
+	protected function findDevice(string $id): ShellyConnectorHomeKitConnectorEntities\Devices\Shelly
 	{
 		try {
 			$device = $this->devicesRepository->find(
 				Uuid\Uuid::fromString($id),
-				Entities\Devices\Shelly::class,
+				ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 			);
 
 			if ($device === null) {

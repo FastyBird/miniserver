@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Subscribers;
 
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Types;
@@ -37,7 +37,7 @@ final class ConfigurationCache implements EventDispatcher\EventSubscriberInterfa
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Caching\Container $moduleCaching,
+		private readonly DevicesCaching\Container $moduleCaching,
 	)
 	{
 	}

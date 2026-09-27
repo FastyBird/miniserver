@@ -15,14 +15,14 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Queries\Configuration;
 
-use FastyBird\Bridge\DevicesModuleUiModule\Documents;
+use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Ramsey\Uuid;
 
 /**
  * Find widgets channel properties data sources configuration query
  *
- * @extends  FindWidgetDataSources<Documents\Widgets\DataSources\ChannelProperty>
+ * @extends  FindWidgetDataSources<DevicesModuleUiModuleDocuments\Widgets\DataSources\ChannelProperty>
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Queries
@@ -35,7 +35,7 @@ class FindWidgetChannelPropertyDataSources extends FindWidgetDataSources
 	{
 		parent::__construct();
 
-		$this->filter[] = '.[?(@.type == "' . Documents\Widgets\DataSources\ChannelProperty::getType() . '")]';
+		$this->filter[] = '.[?(@.type == "' . DevicesModuleUiModuleDocuments\Widgets\DataSources\ChannelProperty::getType() . '")]';
 	}
 
 	public function forChannel(DevicesDocuments\Property $channel): void

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
-use FastyBird\Bridge\DevicesModuleUiModule\Documents;
+use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Core\EventLoop;
 use FastyBird\Core\Exchange\Publisher;
@@ -100,7 +100,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 
 		$dataSources = $this->dataSourcesRepository->findAllBy(
 			$findDataSources,
-			Documents\Widgets\DataSources\Property::class,
+			DevicesModuleUiModuleDocuments\Widgets\DataSources\Property::class,
 		);
 
 		if ($dataSources === []) {
@@ -109,14 +109,14 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 
 		$this->uiModuleCaching->getConfigurationBuilderCache()->clean([
 			NetteCaching\Cache::Tags => array_map(
-				static fn (Documents\Widgets\DataSources\Property $dataSource): string => $dataSource->getId()->toString(),
+				static fn (DevicesModuleUiModuleDocuments\Widgets\DataSources\Property $dataSource): string => $dataSource->getId()->toString(),
 				$dataSources,
 			),
 		]);
 
 		$this->uiModuleCaching->getConfigurationRepositoryCache()->clean([
 			NetteCaching\Cache::Tags => array_map(
-				static fn (Documents\Widgets\DataSources\Property $dataSource): string => $dataSource->getId()->toString(),
+				static fn (DevicesModuleUiModuleDocuments\Widgets\DataSources\Property $dataSource): string => $dataSource->getId()->toString(),
 				$dataSources,
 			),
 		]);
@@ -127,7 +127,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 
 			$dataSource = $this->dataSourcesRepository->findOneBy(
 				$findDataSources,
-				Documents\Widgets\DataSources\Property::class,
+				DevicesModuleUiModuleDocuments\Widgets\DataSources\Property::class,
 			);
 			assert($dataSource !== null);
 
@@ -136,7 +136,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	}
 
 	private function publishDocument(
-		Documents\Widgets\DataSources\Property $dataSource,
+		DevicesModuleUiModuleDocuments\Widgets\DataSources\Property $dataSource,
 	): void
 	{
 		$this->getPublisher($this->eventLoopStatus->isRunning())->publish(

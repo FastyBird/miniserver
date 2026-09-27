@@ -26,7 +26,7 @@ use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -71,7 +71,7 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 		private readonly bool $useExchange,
 		private readonly Models\States\Connectors\Async\Repository $connectorPropertyStateRepository,
 		private readonly Models\States\Connectors\Async\Manager $connectorPropertiesStatesManager,
-		private readonly Caching\Container $moduleCaching,
+		private readonly DevicesCaching\Container $moduleCaching,
 		private readonly Clock\Clock $clock,
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly Async\MessagePublisher $publisher,

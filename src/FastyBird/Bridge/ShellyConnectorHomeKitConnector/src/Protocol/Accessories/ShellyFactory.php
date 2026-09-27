@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Accessories;
 
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents as ShellyConnectorHomeKitConnectorDocuments;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
@@ -40,7 +40,7 @@ class ShellyFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 		HomeKitDocuments\Devices\Device $device,
 	): Shelly
 	{
-		assert($device instanceof Documents\Devices\Shelly);
+		assert($device instanceof ShellyConnectorHomeKitConnectorDocuments\Devices\Shelly);
 
 		return new Shelly($name, $aid, $category, $device);
 	}

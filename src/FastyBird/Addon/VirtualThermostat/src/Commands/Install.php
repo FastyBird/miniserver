@@ -18,9 +18,9 @@ namespace FastyBird\Addon\VirtualThermostat\Commands;
 use Doctrine\DBAL;
 use Exception;
 use FastyBird\Addon\VirtualThermostat;
-use FastyBird\Addon\VirtualThermostat\Entities;
+use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
 use FastyBird\Addon\VirtualThermostat\Exceptions as VirtualThermostatExceptions;
-use FastyBird\Addon\VirtualThermostat\Queries;
+use FastyBird\Addon\VirtualThermostat\Queries as VirtualThermostatQueries;
 use FastyBird\Addon\VirtualThermostat\Types as VirtualThermostatTypes;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
@@ -177,11 +177,11 @@ class Install extends Console\Command\Command
 
 		$question->setValidator(function (string|null $answer) {
 			if ($answer !== '' && $answer !== null) {
-				$findDeviceQuery = new Queries\Entities\FindDevices();
+				$findDeviceQuery = new VirtualThermostatQueries\Entities\FindDevices();
 				$findDeviceQuery->byIdentifier($answer);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) !== null
+					$this->devicesRepository->findOneBy($findDeviceQuery, VirtualThermostatEntities\Devices\Device::class) !== null
 				) {
 					throw new VirtualThermostatExceptions\Runtime(
 						(string) $this->translator->translate(
@@ -202,11 +202,11 @@ class Install extends Console\Command\Command
 			for ($i = 1; $i <= 100; $i++) {
 				$identifier = sprintf($identifierPattern, $i);
 
-				$findDeviceQuery = new Queries\Entities\FindDevices();
+				$findDeviceQuery = new VirtualThermostatQueries\Entities\FindDevices();
 				$findDeviceQuery->byIdentifier($identifier);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) === null
+					$this->devicesRepository->findOneBy($findDeviceQuery, VirtualThermostatEntities\Devices\Device::class) === null
 				) {
 					break;
 				}
@@ -234,34 +234,34 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$device = $this->devicesManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Devices\Device::class,
+				'entity' => VirtualThermostatEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof VirtualThermostatEntities\Devices\Device);
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => VirtualTypes\DevicePropertyIdentifier::MODEL->value,
 				'device' => $device,
 				'dataType' => ValuesTypes\DataType::STRING,
-				'value' => Entities\Devices\Device::TYPE,
+				'value' => VirtualThermostatEntities\Devices\Device::TYPE,
 			]));
 
 			$configurationChannel = $this->channelsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Channels\Configuration::class,
+				'entity' => VirtualThermostatEntities\Channels\Configuration::class,
 				'device' => $device,
 				'identifier' => VirtualThermostatTypes\ChannelIdentifier::CONFIGURATION->value,
 			]));
-			assert($configurationChannel instanceof Entities\Channels\Configuration);
+			assert($configurationChannel instanceof VirtualThermostatEntities\Channels\Configuration);
 
 			$stateChannel = $this->channelsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Channels\State::class,
+				'entity' => VirtualThermostatEntities\Channels\State::class,
 				'device' => $device,
 				'identifier' => VirtualThermostatTypes\ChannelIdentifier::STATE->value,
 			]));
-			assert($stateChannel instanceof Entities\Channels\State);
+			assert($stateChannel instanceof VirtualThermostatEntities\Channels\State);
 
 			$modes = $this->askThermostatModes($io);
 
@@ -331,18 +331,18 @@ class Install extends Console\Command\Command
 			$heaterActors = $coolerActors = $openingSensors = $roomTempSensors = $floorTempSensors = $roomHumSensors = [];
 
 			$actorsChannel = $this->channelsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Channels\Actors::class,
+				'entity' => VirtualThermostatEntities\Channels\Actors::class,
 				'device' => $device,
 				'identifier' => VirtualThermostatTypes\ChannelIdentifier::ACTORS->value,
 			]));
-			assert($actorsChannel instanceof Entities\Channels\Actors);
+			assert($actorsChannel instanceof VirtualThermostatEntities\Channels\Actors);
 
 			$sensorsChannel = $this->channelsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Channels\Sensors::class,
+				'entity' => VirtualThermostatEntities\Channels\Sensors::class,
 				'device' => $device,
 				'identifier' => VirtualThermostatTypes\ChannelIdentifier::SENSORS->value,
 			]));
-			assert($sensorsChannel instanceof Entities\Channels\Sensors);
+			assert($sensorsChannel instanceof VirtualThermostatEntities\Channels\Sensors);
 
 			if (in_array(VirtualThermostatTypes\HvacMode::HEAT, $modes, true)) {
 				$io->info(
@@ -717,11 +717,11 @@ class Install extends Console\Command\Command
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_TEMPERATURE->value,
 					'channel' => $stateChannel,
 					'dataType' => ValuesTypes\DataType::FLOAT,
-					'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_ROOM_TEMPERATURE],
+					'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_ROOM_TEMPERATURE],
 					'unit' => null,
 					'invalid' => null,
 					'scale' => null,
-					'step' => Entities\Devices\Device::PRECISION,
+					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 					'settable' => false,
 					'queryable' => true,
 				]),
@@ -738,9 +738,9 @@ class Install extends Console\Command\Command
 					'unit' => null,
 					'invalid' => null,
 					'scale' => null,
-					'step' => Entities\Devices\Device::PRECISION,
-					'value' => Entities\Devices\Device::COLD_TOLERANCE,
-					'default' => Entities\Devices\Device::COLD_TOLERANCE,
+					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
+					'value' => VirtualThermostatEntities\Devices\Device::COLD_TOLERANCE,
+					'default' => VirtualThermostatEntities\Devices\Device::COLD_TOLERANCE,
 				]),
 			);
 
@@ -755,9 +755,9 @@ class Install extends Console\Command\Command
 					'unit' => null,
 					'invalid' => null,
 					'scale' => null,
-					'step' => Entities\Devices\Device::PRECISION,
-					'value' => Entities\Devices\Device::HOT_TOLERANCE,
-					'default' => Entities\Devices\Device::HOT_TOLERANCE,
+					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
+					'value' => VirtualThermostatEntities\Devices\Device::HOT_TOLERANCE,
+					'default' => VirtualThermostatEntities\Devices\Device::HOT_TOLERANCE,
 				]),
 			);
 
@@ -793,13 +793,13 @@ class Install extends Console\Command\Command
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::MAXIMUM_FLOOR_TEMPERATURE->value,
 						'channel' => $configurationChannel,
 						'dataType' => ValuesTypes\DataType::FLOAT,
-						'format' => [0, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+						'format' => [0, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 						'unit' => null,
 						'invalid' => null,
 						'scale' => null,
-						'step' => Entities\Devices\Device::PRECISION,
+						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'value' => $maxFloorTemp,
-						'default' => Entities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE,
+						'default' => VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE,
 					]),
 				);
 
@@ -810,11 +810,11 @@ class Install extends Console\Command\Command
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_FLOOR_TEMPERATURE->value,
 						'channel' => $stateChannel,
 						'dataType' => ValuesTypes\DataType::FLOAT,
-						'format' => [0, Entities\Devices\Device::MAXIMUM_FLOOR_TEMPERATURE],
+						'format' => [0, VirtualThermostatEntities\Devices\Device::MAXIMUM_FLOOR_TEMPERATURE],
 						'unit' => null,
 						'invalid' => null,
 						'scale' => null,
-						'step' => Entities\Devices\Device::PRECISION,
+						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'settable' => false,
 						'queryable' => true,
 					]),
@@ -888,11 +888,11 @@ class Install extends Console\Command\Command
 				);
 
 				$presetChannel = $this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\Preset::class,
+					'entity' => VirtualThermostatEntities\Channels\Preset::class,
 					'device' => $device,
 					'identifier' => 'preset_' . $preset->value,
 				]));
-				assert($presetChannel instanceof Entities\Channels\Preset);
+				assert($presetChannel instanceof VirtualThermostatEntities\Channels\Preset);
 
 				$setPresets[$preset->value] = [
 					'value' => $this->askTargetTemperature($io, $preset, $unit),
@@ -903,14 +903,14 @@ class Install extends Console\Command\Command
 							'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::TARGET_ROOM_TEMPERATURE->value,
 							'channel' => $presetChannel,
 							'dataType' => ValuesTypes\DataType::FLOAT,
-							'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+							'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 							'unit' => null,
 							'invalid' => null,
 							'scale' => null,
-							'step' => Entities\Devices\Device::PRECISION,
+							'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 							'settable' => true,
 							'queryable' => true,
-							'default' => Entities\Devices\Device::TARGET_TEMPERATURE,
+							'default' => VirtualThermostatEntities\Devices\Device::TARGET_TEMPERATURE,
 						]),
 					),
 				];
@@ -929,11 +929,11 @@ class Install extends Console\Command\Command
 							'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HEATING_THRESHOLD_TEMPERATURE->value,
 							'channel' => $presetChannel,
 							'dataType' => ValuesTypes\DataType::FLOAT,
-							'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+							'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 							'unit' => null,
 							'invalid' => null,
 							'scale' => null,
-							'step' => Entities\Devices\Device::PRECISION,
+							'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 							'default' => null,
 							'value' => $heatingThresholdTemp,
 						]),
@@ -952,11 +952,11 @@ class Install extends Console\Command\Command
 							'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::COOLING_THRESHOLD_TEMPERATURE->value,
 							'channel' => $presetChannel,
 							'dataType' => ValuesTypes\DataType::FLOAT,
-							'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+							'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 							'unit' => null,
 							'invalid' => null,
 							'scale' => null,
-							'step' => Entities\Devices\Device::PRECISION,
+							'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 							'default' => null,
 							'value' => $coolingThresholdTemp,
 						]),
@@ -1084,22 +1084,22 @@ class Install extends Console\Command\Command
 
 		$deviceModelProperty = $this->devicesPropertiesRepository->findOneBy($findDevicePropertyQuery);
 
-		$findChannelQuery = new Queries\Entities\FindConfigurationChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Entities\FindConfigurationChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(VirtualThermostatTypes\ChannelIdentifier::CONFIGURATION);
 
 		$configurationChannel = $this->channelsRepository->findOneBy(
 			$findChannelQuery,
-			Entities\Channels\Configuration::class,
+			VirtualThermostatEntities\Channels\Configuration::class,
 		);
 
-		$findChannelQuery = new Queries\Entities\FindStateChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Entities\FindStateChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(VirtualThermostatTypes\ChannelIdentifier::STATE);
 
 		$stateChannel = $this->channelsRepository->findOneBy(
 			$findChannelQuery,
-			Entities\Channels\State::class,
+			VirtualThermostatEntities\Channels\State::class,
 		);
 
 		$unitProperty = $maxFloorTempProperty = null;
@@ -1221,7 +1221,7 @@ class Install extends Console\Command\Command
 			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof VirtualThermostatEntities\Devices\Device);
 
 			if (
 				$deviceModelProperty !== null
@@ -1238,7 +1238,7 @@ class Install extends Console\Command\Command
 					'identifier' => VirtualTypes\DevicePropertyIdentifier::MODEL->value,
 					'device' => $device,
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => Entities\Devices\Device::TYPE,
+					'value' => VirtualThermostatEntities\Devices\Device::TYPE,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($deviceModelProperty, Utils\ArrayHash::from([
@@ -1249,26 +1249,26 @@ class Install extends Console\Command\Command
 					'scale' => null,
 					'step' => null,
 					'default' => null,
-					'value' => Entities\Devices\Device::TYPE,
+					'value' => VirtualThermostatEntities\Devices\Device::TYPE,
 				]));
 			}
 
 			if ($configurationChannel === null) {
 				$configurationChannel = $this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\Configuration::class,
+					'entity' => VirtualThermostatEntities\Channels\Configuration::class,
 					'device' => $device,
 					'identifier' => VirtualThermostatTypes\ChannelIdentifier::CONFIGURATION->value,
 				]));
-				assert($configurationChannel instanceof Entities\Channels\Configuration);
+				assert($configurationChannel instanceof VirtualThermostatEntities\Channels\Configuration);
 			}
 
 			if ($stateChannel === null) {
 				$stateChannel = $this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\State::class,
+					'entity' => VirtualThermostatEntities\Channels\State::class,
 					'device' => $device,
 					'identifier' => VirtualThermostatTypes\ChannelIdentifier::STATE->value,
 				]));
-				assert($stateChannel instanceof Entities\Channels\Configuration);
+				assert($stateChannel instanceof VirtualThermostatEntities\Channels\Configuration);
 			}
 
 			$hvacModeProperty = $this->createOrUpdateProperty(
@@ -1329,11 +1329,11 @@ class Install extends Console\Command\Command
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_TEMPERATURE->value,
 					'channel' => $stateChannel,
 					'dataType' => ValuesTypes\DataType::FLOAT,
-					'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_ROOM_TEMPERATURE],
+					'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_ROOM_TEMPERATURE],
 					'unit' => null,
 					'invalid' => null,
 					'scale' => null,
-					'step' => Entities\Devices\Device::PRECISION,
+					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 					'settable' => false,
 					'queryable' => true,
 				]),
@@ -1375,13 +1375,13 @@ class Install extends Console\Command\Command
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::MAXIMUM_FLOOR_TEMPERATURE->value,
 						'channel' => $configurationChannel,
 						'dataType' => ValuesTypes\DataType::FLOAT,
-						'format' => [0, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+						'format' => [0, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 						'unit' => null,
 						'invalid' => null,
 						'scale' => null,
-						'step' => Entities\Devices\Device::PRECISION,
+						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'value' => $maxFloorTemp,
-						'default' => Entities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE,
+						'default' => VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE,
 					]),
 					$maxFloorTempProperty,
 				);
@@ -1393,11 +1393,11 @@ class Install extends Console\Command\Command
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_FLOOR_TEMPERATURE->value,
 						'channel' => $stateChannel,
 						'dataType' => ValuesTypes\DataType::FLOAT,
-						'format' => [0, Entities\Devices\Device::MAXIMUM_FLOOR_TEMPERATURE],
+						'format' => [0, VirtualThermostatEntities\Devices\Device::MAXIMUM_FLOOR_TEMPERATURE],
 						'unit' => null,
 						'invalid' => null,
 						'scale' => null,
-						'step' => Entities\Devices\Device::PRECISION,
+						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'settable' => false,
 						'queryable' => true,
 					]),
@@ -1482,7 +1482,7 @@ class Install extends Console\Command\Command
 			);
 
 			foreach (VirtualThermostatTypes\Preset::cases() as $preset) {
-				$findPresetChannelQuery = new Queries\Entities\FindPresetChannels();
+				$findPresetChannelQuery = new VirtualThermostatQueries\Entities\FindPresetChannels();
 				$findPresetChannelQuery->forDevice($device);
 				$findPresetChannelQuery->byIdentifier(
 					VirtualThermostatTypes\ChannelIdentifier::from('preset_' . $preset->value),
@@ -1490,17 +1490,17 @@ class Install extends Console\Command\Command
 
 				$presetChannel = $this->channelsRepository->findOneBy(
 					$findPresetChannelQuery,
-					Entities\Channels\Preset::class,
+					VirtualThermostatEntities\Channels\Preset::class,
 				);
 
 				if (in_array($preset, $presets, true)) {
 					if ($presetChannel === null) {
 						$presetChannel = $this->channelsManager->create(Utils\ArrayHash::from([
-							'entity' => Entities\Channels\Preset::class,
+							'entity' => VirtualThermostatEntities\Channels\Preset::class,
 							'device' => $device,
 							'identifier' => 'preset_' . $preset->value,
 						]));
-						assert($presetChannel instanceof Entities\Channels\Preset);
+						assert($presetChannel instanceof VirtualThermostatEntities\Channels\Preset);
 
 						$setPresets[$preset->value] = [
 							'value' => $this->askTargetTemperature(
@@ -1515,14 +1515,14 @@ class Install extends Console\Command\Command
 									'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::TARGET_ROOM_TEMPERATURE->value,
 									'channel' => $presetChannel,
 									'dataType' => ValuesTypes\DataType::FLOAT,
-									'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+									'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 									'unit' => null,
 									'invalid' => null,
 									'scale' => null,
-									'step' => Entities\Devices\Device::PRECISION,
+									'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 									'settable' => true,
 									'queryable' => true,
-									'default' => Entities\Devices\Device::TARGET_TEMPERATURE,
+									'default' => VirtualThermostatEntities\Devices\Device::TARGET_TEMPERATURE,
 								]),
 							),
 						];
@@ -1541,11 +1541,11 @@ class Install extends Console\Command\Command
 									'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HEATING_THRESHOLD_TEMPERATURE->value,
 									'channel' => $presetChannel,
 									'dataType' => ValuesTypes\DataType::FLOAT,
-									'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+									'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 									'unit' => null,
 									'invalid' => null,
 									'scale' => null,
-									'step' => Entities\Devices\Device::PRECISION,
+									'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 									'default' => null,
 									'value' => $heatingThresholdTemp,
 								]),
@@ -1564,11 +1564,11 @@ class Install extends Console\Command\Command
 									'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::COOLING_THRESHOLD_TEMPERATURE->value,
 									'channel' => $presetChannel,
 									'dataType' => ValuesTypes\DataType::FLOAT,
-									'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+									'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 									'unit' => null,
 									'invalid' => null,
 									'scale' => null,
-									'step' => Entities\Devices\Device::PRECISION,
+									'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 									'default' => null,
 									'value' => $coolingThresholdTemp,
 								]),
@@ -1772,12 +1772,12 @@ class Install extends Console\Command\Command
 	 */
 	private function listDevices(Style\SymfonyStyle $io): void
 	{
-		$findDevicesQuery = new Queries\Entities\FindDevices();
+		$findDevicesQuery = new VirtualThermostatQueries\Entities\FindDevices();
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, VirtualThermostatEntities\Devices\Device::class);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (VirtualThermostatEntities\Devices\Device $a, VirtualThermostatEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1832,14 +1832,14 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function createActor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function createActor(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
-		$findChannelQuery = new Queries\Entities\FindActorChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Entities\FindActorChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(VirtualThermostatTypes\ChannelIdentifier::ACTORS);
 
-		$actorsChannel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Actors::class);
-		assert($actorsChannel instanceof Entities\Channels\Actors);
+		$actorsChannel = $this->channelsRepository->findOneBy($findChannelQuery, VirtualThermostatEntities\Channels\Actors::class);
+		assert($actorsChannel instanceof VirtualThermostatEntities\Channels\Actors);
 
 		$actorType = $this->askActorType($io, $device);
 
@@ -1930,7 +1930,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function editActor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function editActor(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
 		$property = $this->askWhichActor($io, $device);
 
@@ -2013,7 +2013,7 @@ class Install extends Console\Command\Command
 		}
 	}
 
-	private function listActors(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function listActors(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
 		$table = new Console\Helper\Table($io);
 		$table->setHeaders([
@@ -2077,7 +2077,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteActor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function deleteActor(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
 		$property = $this->askWhichActor($io, $device);
 
@@ -2148,14 +2148,14 @@ class Install extends Console\Command\Command
 	 * @throws Exception
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
-	private function createSensor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function createSensor(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
-		$findChannelQuery = new Queries\Entities\FindSensorChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Entities\FindSensorChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(VirtualThermostatTypes\ChannelIdentifier::SENSORS);
 
-		$sensorsChannel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Sensors::class);
-		assert($sensorsChannel instanceof Entities\Channels\Sensors);
+		$sensorsChannel = $this->channelsRepository->findOneBy($findChannelQuery, VirtualThermostatEntities\Channels\Sensors::class);
+		assert($sensorsChannel instanceof VirtualThermostatEntities\Channels\Sensors);
 
 		$sensorType = $this->askSensorType($io);
 
@@ -2297,7 +2297,7 @@ class Install extends Console\Command\Command
 	 * @throws Exception
 	 * @throws VirtualThermostatExceptions\InvalidArgument
 	 */
-	private function editSensor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function editSensor(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
 		$property = $this->askWhichSensor($io, $device);
 
@@ -2451,7 +2451,7 @@ class Install extends Console\Command\Command
 		}
 	}
 
-	private function listSensors(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function listSensors(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
 		$table = new Console\Helper\Table($io);
 		$table->setHeaders([
@@ -2538,7 +2538,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteSensor(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function deleteSensor(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
 		$property = $this->askWhichSensor($io, $device);
 
@@ -2617,7 +2617,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function editPreset(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function editPreset(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device $device): void
 	{
 		$preset = $this->askWhichPreset($io, $device);
 
@@ -2629,15 +2629,15 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$findChannelQuery = new Queries\Entities\FindConfigurationChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Entities\FindConfigurationChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(VirtualThermostatTypes\ChannelIdentifier::CONFIGURATION);
 
 		$configuration = $this->channelsRepository->findOneBy(
 			$findChannelQuery,
-			Entities\Channels\Configuration::class,
+			VirtualThermostatEntities\Channels\Configuration::class,
 		);
-		assert($configuration instanceof Entities\Channels\Configuration);
+		assert($configuration instanceof VirtualThermostatEntities\Channels\Configuration);
 
 		$findChannelPropertyQuery = new DevicesQueries\Entities\FindChannelVariableProperties();
 		$findChannelPropertyQuery->forChannel($configuration);
@@ -2649,11 +2649,11 @@ class Install extends Console\Command\Command
 		);
 		assert($unitProperty instanceof DevicesEntities\Channels\Properties\Variable);
 
-		$findChannelQuery = new Queries\Entities\FindPresetChannels();
+		$findChannelQuery = new VirtualThermostatQueries\Entities\FindPresetChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->endWithIdentifier($preset->value);
 
-		$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Preset::class);
+		$channel = $this->channelsRepository->findOneBy($findChannelQuery, VirtualThermostatEntities\Channels\Preset::class);
 
 		$targetTempProperty = $heatingThresholdTempProperty = $coolingThresholdTempProperty = null;
 
@@ -2714,11 +2714,11 @@ class Install extends Console\Command\Command
 
 			if ($channel === null) {
 				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\Preset::class,
+					'entity' => VirtualThermostatEntities\Channels\Preset::class,
 					'device' => $device,
 					'identifier' => 'preset_' . $preset->value,
 				]));
-				assert($channel instanceof Entities\Channels\Preset);
+				assert($channel instanceof VirtualThermostatEntities\Channels\Preset);
 			}
 
 			$targetTempProperty = $this->createOrUpdateProperty(
@@ -2728,14 +2728,14 @@ class Install extends Console\Command\Command
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::TARGET_ROOM_TEMPERATURE->value,
 					'channel' => $channel,
 					'dataType' => ValuesTypes\DataType::FLOAT,
-					'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+					'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 					'unit' => null,
 					'invalid' => null,
 					'scale' => null,
-					'step' => Entities\Devices\Device::PRECISION,
+					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 					'settable' => true,
 					'queryable' => true,
-					'default' => Entities\Devices\Device::TARGET_TEMPERATURE,
+					'default' => VirtualThermostatEntities\Devices\Device::TARGET_TEMPERATURE,
 				]),
 				$targetTempProperty,
 			);
@@ -2748,11 +2748,11 @@ class Install extends Console\Command\Command
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HEATING_THRESHOLD_TEMPERATURE->value,
 						'channel' => $channel,
 						'dataType' => ValuesTypes\DataType::FLOAT,
-						'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+						'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 						'unit' => null,
 						'invalid' => null,
 						'scale' => null,
-						'step' => Entities\Devices\Device::PRECISION,
+						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'default' => null,
 						'value' => $heatingThresholdTemp,
 					]),
@@ -2766,11 +2766,11 @@ class Install extends Console\Command\Command
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::COOLING_THRESHOLD_TEMPERATURE->value,
 						'channel' => $channel,
 						'dataType' => ValuesTypes\DataType::FLOAT,
-						'format' => [Entities\Devices\Device::MINIMUM_TEMPERATURE, Entities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
+						'format' => [VirtualThermostatEntities\Devices\Device::MINIMUM_TEMPERATURE, VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_ROOM_TEMPERATURE],
 						'unit' => null,
 						'invalid' => null,
 						'scale' => null,
-						'step' => Entities\Devices\Device::PRECISION,
+						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'default' => null,
 						'value' => $coolingThresholdTemp,
 					]),
@@ -2824,7 +2824,7 @@ class Install extends Console\Command\Command
 		);
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device|null $device = null): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate(
@@ -3239,7 +3239,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askActorType(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		VirtualThermostatEntities\Devices\Device $device,
 	): VirtualThermostatTypes\ChannelPropertyIdentifier
 	{
 		$types = [];
@@ -3500,7 +3500,7 @@ class Install extends Console\Command\Command
 		Style\SymfonyStyle $io,
 		VirtualThermostatTypes\Preset $thermostatMode,
 		VirtualThermostatTypes\Unit $unit,
-		Entities\Devices\Device|null $device = null,
+		VirtualThermostatEntities\Devices\Device|null $device = null,
 	): float
 	{
 		try {
@@ -3509,7 +3509,7 @@ class Install extends Console\Command\Command
 			$property = null;
 		}
 
-		$targetTemp = Entities\Devices\Device::TARGET_TEMPERATURE;
+		$targetTemp = VirtualThermostatEntities\Devices\Device::TARGET_TEMPERATURE;
 
 		if ($property !== null) {
 			$propertyConfiguration = $this->channelsPropertiesConfigurationRepository->find(
@@ -3579,7 +3579,7 @@ class Install extends Console\Command\Command
 	private function askMaxFloorTemperature(
 		Style\SymfonyStyle $io,
 		VirtualThermostatTypes\Unit $unit,
-		Entities\Devices\Device|null $device = null,
+		VirtualThermostatEntities\Devices\Device|null $device = null,
 	): float
 	{
 		$question = new Console\Question\Question(
@@ -3587,7 +3587,7 @@ class Install extends Console\Command\Command
 				'//virtual-thermostat-addon.cmd.install.questions.provide.maximumFloorTemperature',
 				['unit' => $unit->value],
 			),
-			$device?->getMaximumFloorTemp() ?? Entities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE,
+			$device?->getMaximumFloorTemp() ?? VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE,
 		);
 		$question->setValidator(function (string|int|null $answer): float {
 			if ($answer === null) {
@@ -3632,7 +3632,7 @@ class Install extends Console\Command\Command
 		Style\SymfonyStyle $io,
 		VirtualThermostatTypes\Preset $thermostatMode,
 		VirtualThermostatTypes\Unit $unit,
-		Entities\Devices\Device|null $device = null,
+		VirtualThermostatEntities\Devices\Device|null $device = null,
 	): float
 	{
 		$question = new Console\Question\Question(
@@ -3685,7 +3685,7 @@ class Install extends Console\Command\Command
 		Style\SymfonyStyle $io,
 		VirtualThermostatTypes\Preset $thermostatMode,
 		VirtualThermostatTypes\Unit $unit,
-		Entities\Devices\Device|null $device = null,
+		VirtualThermostatEntities\Devices\Device|null $device = null,
 	): float
 	{
 		$question = new Console\Question\Question(
@@ -3765,7 +3765,7 @@ class Install extends Console\Command\Command
 		);
 
 		foreach ($systemDevices as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof VirtualThermostatEntities\Devices\Device) {
 				continue;
 			}
 
@@ -4330,11 +4330,11 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageDeviceAction(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		VirtualThermostatEntities\Devices\Device $device,
 	): void
 	{
-		$device = $this->devicesRepository->find($device->getId(), Entities\Devices\Device::class);
-		assert($device instanceof Entities\Devices\Device);
+		$device = $this->devicesRepository->find($device->getId(), VirtualThermostatEntities\Devices\Device::class);
+		assert($device instanceof VirtualThermostatEntities\Devices\Device);
 
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//virtual-thermostat-addon.cmd.base.questions.whatToDo'),
@@ -4565,19 +4565,19 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichDevice(
 		Style\SymfonyStyle $io,
-	): Entities\Devices\Device|null
+	): VirtualThermostatEntities\Devices\Device|null
 	{
 		$devices = [];
 
-		$findDevicesQuery = new Queries\Entities\FindDevices();
+		$findDevicesQuery = new VirtualThermostatQueries\Entities\FindDevices();
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Device::class,
+			VirtualThermostatEntities\Devices\Device::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (VirtualThermostatEntities\Devices\Device $a, VirtualThermostatEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -4602,7 +4602,7 @@ class Install extends Console\Command\Command
 			(string) $this->translator->translate('//virtual-thermostat-addon.cmd.base.messages.answerNotValid'),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($devices): Entities\Devices\Device {
+			function (string|int|null $answer) use ($devices): VirtualThermostatEntities\Devices\Device {
 				if ($answer === null) {
 					throw new VirtualThermostatExceptions\Runtime(
 						sprintf(
@@ -4621,12 +4621,12 @@ class Install extends Console\Command\Command
 				$identifier = array_search($answer, $devices, true);
 
 				if ($identifier !== false) {
-					$findDeviceQuery = new Queries\Entities\FindDevices();
+					$findDeviceQuery = new VirtualThermostatQueries\Entities\FindDevices();
 					$findDeviceQuery->byIdentifier($identifier);
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Device::class,
+						VirtualThermostatEntities\Devices\Device::class,
 					);
 
 					if ($device !== null) {
@@ -4646,7 +4646,7 @@ class Install extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Device);
+		assert($device instanceof VirtualThermostatEntities\Devices\Device);
 
 		return $device;
 	}
@@ -4659,7 +4659,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichPreset(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		VirtualThermostatEntities\Devices\Device $device,
 	): VirtualThermostatTypes\Preset|null
 	{
 		$allowedValues = $device->getPresetModes();
@@ -4743,15 +4743,15 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichActor(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		VirtualThermostatEntities\Devices\Device $device,
 	): DevicesEntities\Channels\Properties\Mapped|null
 	{
 		$actors = [];
 
-		$findChannelsQuery = new Queries\Entities\FindActorChannels();
+		$findChannelsQuery = new VirtualThermostatQueries\Entities\FindActorChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$channel = $this->channelsRepository->findOneBy($findChannelsQuery, Entities\Channels\Actors::class);
+		$channel = $this->channelsRepository->findOneBy($findChannelsQuery, VirtualThermostatEntities\Channels\Actors::class);
 
 		if ($channel === null) {
 			return null;
@@ -4856,15 +4856,15 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichSensor(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		VirtualThermostatEntities\Devices\Device $device,
 	): DevicesEntities\Channels\Properties\Mapped|null
 	{
 		$sensors = [];
 
-		$findChannelsQuery = new Queries\Entities\FindSensorChannels();
+		$findChannelsQuery = new VirtualThermostatQueries\Entities\FindSensorChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$channel = $this->channelsRepository->findOneBy($findChannelsQuery, Entities\Channels\Sensors::class);
+		$channel = $this->channelsRepository->findOneBy($findChannelsQuery, VirtualThermostatEntities\Channels\Sensors::class);
 
 		if ($channel === null) {
 			return null;

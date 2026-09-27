@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
-use FastyBird\Bridge\DevicesModuleUiModule\Documents;
+use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
@@ -75,7 +75,7 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 	{
 		if (
 			$event->getAction()->getAction() !== UiTypes\DataSourceAction::SET
-			|| !$event->getDataSource() instanceof Documents\Widgets\DataSources\Property
+			|| !$event->getDataSource() instanceof DevicesModuleUiModuleDocuments\Widgets\DataSources\Property
 		) {
 			return;
 		}
@@ -93,13 +93,13 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 			return;
 		}
 
-		if ($event->getDataSource() instanceof Documents\Widgets\DataSources\ConnectorProperty) {
+		if ($event->getDataSource() instanceof DevicesModuleUiModuleDocuments\Widgets\DataSources\ConnectorProperty) {
 			$this->handleConnectorAction($property, $data);
 
-		} elseif ($event->getDataSource() instanceof Documents\Widgets\DataSources\DeviceProperty) {
+		} elseif ($event->getDataSource() instanceof DevicesModuleUiModuleDocuments\Widgets\DataSources\DeviceProperty) {
 			$this->handleDeviceAction($property, $data);
 
-		} elseif ($event->getDataSource() instanceof Documents\Widgets\DataSources\ChannelProperty) {
+		} elseif ($event->getDataSource() instanceof DevicesModuleUiModuleDocuments\Widgets\DataSources\ChannelProperty) {
 			$this->handleChannelAction($property, $data);
 		}
 	}

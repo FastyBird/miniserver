@@ -26,7 +26,7 @@ use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -56,7 +56,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 
 	public function __construct(
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
-		private readonly Caching\Container $moduleCaching,
+		private readonly DevicesCaching\Container $moduleCaching,
 		private readonly EventLoop\Status $eventLoopStatus,
 		private readonly Publisher\MessagePublisher $publisher,
 		private readonly Async\MessagePublisher $asyncPublisher,

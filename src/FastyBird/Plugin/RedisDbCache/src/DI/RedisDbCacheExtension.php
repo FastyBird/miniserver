@@ -15,7 +15,7 @@
 
 namespace FastyBird\Plugin\RedisDbCache\DI;
 
-use FastyBird\Plugin\RedisDbCache\Caching;
+use FastyBird\Plugin\RedisDbCache\Caching as RedisDbCacheCaching;
 use FastyBird\Plugin\RedisDbCache\Clients;
 use FastyBird\Plugin\RedisDbCache\Connections;
 use Nette\Bootstrap;
@@ -100,11 +100,11 @@ class RedisDbCacheExtension extends DI\CompilerExtension
 			->setAutowired(false);
 
 		$journal = $builder->addDefinition($this->prefix('cache.journal'), new DI\Definitions\ServiceDefinition())
-			->setType(Caching\Journal::class)
+			->setType(RedisDbCacheCaching\Journal::class)
 			->setAutowired(false);
 
 		$builder->addDefinition($this->prefix('cache.storage'), new DI\Definitions\ServiceDefinition())
-			->setType(Caching\Storage::class)
+			->setType(RedisDbCacheCaching\Storage::class)
 			->setArguments([
 				'journal' => $journal,
 			])

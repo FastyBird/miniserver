@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Ui\Models\Configuration;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Module\Ui\Caching;
+use FastyBird\Module\Ui\Caching as UiCaching;
 use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Types;
@@ -37,7 +37,7 @@ final readonly class Builder
 {
 
 	public function __construct(
-		private Caching\Container $moduleCaching,
+		private UiCaching\Container $moduleCaching,
 		private Models\Entities\Dashboards\Repository $dashboardsRepository,
 		private Models\Entities\Dashboards\Tabs\Repository $dashboardsTabsRepository,
 		private Models\Entities\Groups\Repository $groupsRepository,

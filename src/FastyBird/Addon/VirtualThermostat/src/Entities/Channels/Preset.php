@@ -16,7 +16,7 @@
 namespace FastyBird\Addon\VirtualThermostat\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Addon\VirtualThermostat\Entities;
+use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Core\Exceptions;
@@ -38,7 +38,7 @@ class Preset extends VirtualEntities\Channels\Channel
 	public const TYPE = 'virtual-thermostat-addon-preset';
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		VirtualThermostatEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -57,9 +57,9 @@ class Preset extends VirtualEntities\Channels\Channel
 		return Sources\Addon::VIRTUAL_THERMOSTAT;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): VirtualThermostatEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof VirtualThermostatEntities\Devices\Device);
 
 		return $this->device;
 	}

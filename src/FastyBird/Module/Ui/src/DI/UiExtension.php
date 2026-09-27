@@ -26,7 +26,7 @@ use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Ui;
-use FastyBird\Module\Ui\Caching;
+use FastyBird\Module\Ui\Caching as UiCaching;
 use FastyBird\Module\Ui\Commands;
 use FastyBird\Module\Ui\Consumers as UiConsumers;
 use FastyBird\Module\Ui\Controllers as UiControllers;
@@ -121,7 +121,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 			$this->prefix('caching.container'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Caching\Container::class)
+			->setType(UiCaching\Container::class)
 			->setArguments([
 				'configurationBuilderCache' => $configurationBuilderCache,
 				'configurationRepositoryCache' => $configurationRepositoryCache,

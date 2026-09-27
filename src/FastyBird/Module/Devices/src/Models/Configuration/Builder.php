@@ -16,7 +16,7 @@
 namespace FastyBird\Module\Devices\Models\Configuration;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Types;
@@ -49,7 +49,7 @@ final class Builder
 		private readonly Models\Entities\Channels\ChannelsRepository $channelsRepository,
 		private readonly Models\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly Models\Entities\Channels\Controls\ControlsRepository $channelsControlsRepository,
-		private readonly Caching\Container $moduleCaching,
+		private readonly DevicesCaching\Container $moduleCaching,
 	)
 	{
 	}

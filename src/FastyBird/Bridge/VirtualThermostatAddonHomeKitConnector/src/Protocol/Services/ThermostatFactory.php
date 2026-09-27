@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Protocol\Services;
 
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Documents;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Documents as VirtualThermostatAddonHomeKitConnectorDocuments;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
@@ -51,7 +51,7 @@ class ThermostatFactory implements HomeKitProtocol\Services\ServiceFactory
 		bool $hidden = false,
 	): Thermostat
 	{
-		assert($channel instanceof Documents\Channels\Thermostat);
+		assert($channel instanceof VirtualThermostatAddonHomeKitConnectorDocuments\Channels\Thermostat);
 
 		return new Thermostat(
 			$typeId,

@@ -17,7 +17,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators\Devices;
 
 use Doctrine\Persistence;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities as ShellyConnectorHomeKitConnectorEntities;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas as ShellyConnectorHomeKitConnectorSchemas;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
@@ -136,7 +136,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 				'//shelly-connector-homekit-connector-bridge.base.messages.invalidRelation.message',
 			)),
 			[
-				'pointer' => '/data/relationships/' . Schemas\Devices\Shelly::RELATIONSHIPS_CONNECTOR . '/data/id',
+				'pointer' => '/data/relationships/' . ShellyConnectorHomeKitConnectorSchemas\Devices\Shelly::RELATIONSHIPS_CONNECTOR . '/data/id',
 			],
 		);
 	}
@@ -191,7 +191,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 				'//shelly-connector-homekit-connector-bridge.base.messages.missingRelation.message',
 			)),
 			[
-				'pointer' => '/data/relationships/' . Schemas\Devices\Shelly::RELATIONSHIPS_PARENTS . '/data/id',
+				'pointer' => '/data/relationships/' . ShellyConnectorHomeKitConnectorSchemas\Devices\Shelly::RELATIONSHIPS_PARENTS . '/data/id',
 			],
 		);
 	}

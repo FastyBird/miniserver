@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Models\States\Channels;
 
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\States;
 use Nette;
@@ -36,7 +36,7 @@ final class Repository
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Caching\Container $moduleCaching,
+		private readonly DevicesCaching\Container $moduleCaching,
 		private readonly IRepository|null $repository = null,
 	)
 	{

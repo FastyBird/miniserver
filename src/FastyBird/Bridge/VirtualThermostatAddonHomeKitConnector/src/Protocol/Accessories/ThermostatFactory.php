@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Protocol\Accessories;
 
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Documents;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Documents as VirtualThermostatAddonHomeKitConnectorDocuments;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
@@ -40,7 +40,7 @@ class ThermostatFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 		HomeKitDocuments\Devices\Device $device,
 	): Thermostat
 	{
-		assert($device instanceof Documents\Devices\Thermostat);
+		assert($device instanceof VirtualThermostatAddonHomeKitConnectorDocuments\Devices\Thermostat);
 
 		return new Thermostat($name, $aid, $category, $device);
 	}

@@ -16,7 +16,7 @@
 namespace FastyBird\Automator\DevicesModule\Queries\Entities;
 
 use Doctrine\ORM;
-use FastyBird\Automator\DevicesModule\Entities;
+use FastyBird\Automator\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use FastyBird\Module\Triggers\Queries as TriggersQueries;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
@@ -134,13 +134,13 @@ class FindConditions extends TriggersQueries\Entities\FindConditions
 	 */
 	protected function createBasicDql(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
-		if ($repository->getClassName() === Entities\Conditions\PropertyCondition::class) {
+		if ($repository->getClassName() === DevicesModuleEntities\Conditions\PropertyCondition::class) {
 			$qb = $repository->createQueryBuilder('pc');
 			$qb->join(TriggersEntities\Conditions\Condition::class, 'c', ORM\Query\Expr\Join::WITH, 'pc = c');
 
 		} elseif (
-			$repository->getClassName() === Entities\Conditions\ChannelPropertyCondition::class
-			|| $repository->getClassName() === Entities\Conditions\DevicePropertyCondition::class
+			$repository->getClassName() === DevicesModuleEntities\Conditions\ChannelPropertyCondition::class
+			|| $repository->getClassName() === DevicesModuleEntities\Conditions\DevicePropertyCondition::class
 		) {
 			$qb = $repository->createQueryBuilder('cdc');
 			$qb->join(TriggersEntities\Conditions\Condition::class, 'c', ORM\Query\Expr\Join::WITH, 'cdc = c');

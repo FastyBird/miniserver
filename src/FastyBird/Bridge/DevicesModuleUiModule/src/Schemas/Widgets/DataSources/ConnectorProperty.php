@@ -15,7 +15,7 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Schemas\Widgets\DataSources;
 
-use FastyBird\Bridge\DevicesModuleUiModule\Entities;
+use FastyBird\Bridge\DevicesModuleUiModule\Entities as DevicesModuleUiModuleEntities;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
@@ -35,7 +35,7 @@ use function array_merge;
 /**
  * Connector property data source entity schema
  *
- * @template T of Entities\Widgets\DataSources\ConnectorProperty
+ * @template T of DevicesModuleUiModuleEntities\Widgets\DataSources\ConnectorProperty
  * @extends  Property<T>
  *
  * @package          FastyBird:DevicesModuleUiModuleBridge!
@@ -49,7 +49,7 @@ final class ConnectorProperty extends Property
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = Sources\Bridge::DEVICES_MODULE_UI_MODULE->value . '/data-source/' . Entities\Widgets\DataSources\ConnectorProperty::TYPE;
+	public const SCHEMA_TYPE = Sources\Bridge::DEVICES_MODULE_UI_MODULE->value . '/data-source/' . DevicesModuleUiModuleEntities\Widgets\DataSources\ConnectorProperty::TYPE;
 
 	/**
 	 * Define relationships names
@@ -67,7 +67,7 @@ final class ConnectorProperty extends Property
 
 	public function getEntityClass(): string
 	{
-		return Entities\Widgets\DataSources\ConnectorProperty::class;
+		return DevicesModuleUiModuleEntities\Widgets\DataSources\ConnectorProperty::class;
 	}
 
 	public function getType(): string

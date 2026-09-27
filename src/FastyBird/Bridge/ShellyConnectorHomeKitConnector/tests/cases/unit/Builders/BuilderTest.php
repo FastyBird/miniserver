@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Cases\Unit\Buil
 
 use Error;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities as ShellyConnectorHomeKitConnectorEntities;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions as ShellyConnectorHomeKitConnectorExceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
@@ -77,7 +77,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame($shelly, $bridge->getParent());
 
 		self::assertCount($expectedChannelsCnt, $bridge->getChannels());
-		self::assertInstanceOf(Entities\Channels\Shelly::class, $bridge->getChannels()[0]);
+		self::assertInstanceOf(ShellyConnectorHomeKitConnectorEntities\Channels\Shelly::class, $bridge->getChannels()[0]);
 
 		$actual = [];
 

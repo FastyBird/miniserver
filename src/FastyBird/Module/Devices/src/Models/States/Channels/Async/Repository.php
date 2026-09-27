@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices\Models\States\Channels\Async;
 
-use FastyBird\Module\Devices\Caching;
+use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\States;
@@ -40,7 +40,7 @@ final class Repository
 
 	public function __construct(
 		private readonly Models\States\Channels\Repository $fallback,
-		private readonly Caching\Container $moduleCaching,
+		private readonly DevicesCaching\Container $moduleCaching,
 		private readonly IRepository|null $repository = null,
 	)
 	{
