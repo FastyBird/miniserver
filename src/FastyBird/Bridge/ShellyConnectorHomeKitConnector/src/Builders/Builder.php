@@ -537,7 +537,12 @@ class Builder
 
 				if ($service === null) {
 					$service = $this->databaseHelper->transaction(
-						function () use ($identifier, $accessory, $serviceMapping, $serviceIndex): ShellyConnectorHomeKitConnectorEntities\Channels\Shelly {
+						function () use (
+							$identifier,
+							$accessory,
+							$serviceMapping,
+							$serviceIndex,
+						): ShellyConnectorHomeKitConnectorEntities\Channels\Shelly {
 							$channel = $this->channelsManager->create(Utils\ArrayHash::from([
 								'entity' => $serviceMapping->getClass(),
 								'identifier' => $identifier,

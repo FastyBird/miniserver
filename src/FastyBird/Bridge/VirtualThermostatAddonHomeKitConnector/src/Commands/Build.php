@@ -309,7 +309,10 @@ class Build extends Console\Command\Command
 		);
 		usort(
 			$devices,
-			static fn (VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $a, VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $b): int => (
+			static fn (
+				VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $a,
+				VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $b,
+			): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -625,7 +628,10 @@ class Build extends Console\Command\Command
 		);
 		usort(
 			$connectorDevices,
-			static fn (VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $a, VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $b): int => (
+			static fn (
+				VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $a,
+				VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $b,
+			): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
