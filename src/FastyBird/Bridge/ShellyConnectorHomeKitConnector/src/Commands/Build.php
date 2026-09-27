@@ -370,7 +370,10 @@ class Build extends Console\Command\Command
 	{
 		$findDevicesQuery = new ShellyConnectorHomeKitConnectorQueries\Entities\FindShellyDevices();
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class);
+		$devices = $this->devicesRepository->findAllBy(
+			$findDevicesQuery,
+			ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
+		);
 		usort(
 			$devices,
 			static fn (ShellyConnectorHomeKitConnectorEntities\Devices\Shelly $a, ShellyConnectorHomeKitConnectorEntities\Devices\Shelly $b): int => (

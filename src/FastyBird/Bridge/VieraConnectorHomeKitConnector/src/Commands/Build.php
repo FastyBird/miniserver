@@ -317,7 +317,10 @@ class Build extends Console\Command\Command
 	{
 		$findDevicesQuery = new VieraConnectorHomeKitConnectorQueries\Entities\FindVieraDevices();
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, VieraConnectorHomeKitConnectorEntities\Devices\Viera::class);
+		$devices = $this->devicesRepository->findAllBy(
+			$findDevicesQuery,
+			VieraConnectorHomeKitConnectorEntities\Devices\Viera::class,
+		);
 		usort(
 			$devices,
 			static fn (VieraConnectorHomeKitConnectorEntities\Devices\Viera $a, VieraConnectorHomeKitConnectorEntities\Devices\Viera $b): int => (

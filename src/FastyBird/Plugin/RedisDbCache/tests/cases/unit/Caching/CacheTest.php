@@ -146,31 +146,57 @@ final class CacheTest extends Tests\Cases\Unit\BaseTestCase
 	public function testTagsCleaning(): void
 	{
 		$this->storage->clean([NetteCaching\Cache::All => true]);
-		self::assertFalse($this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)));
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->write('foo', 'bar', [NetteCaching\Cache::Tags => ['tag']]);
-		self::assertTrue($this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)));
-		self::assertTrue($this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)));
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->clean([NetteCaching\Cache::Tags => ['tag']]);
-		self::assertFalse($this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)));
-		self::assertFalse($this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)));
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->write('foo', 'bar', [NetteCaching\Cache::Tags => ['tag']]);
-		self::assertTrue($this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)));
-		self::assertTrue($this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)));
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->remove('foo');
-		self::assertFalse($this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)));
-		self::assertFalse($this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)));
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->write('foo', 'bar', [NetteCaching\Cache::Tags => ['tag'], NetteCaching\Cache::Priority => 1]);
-		self::assertTrue($this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)));
-		self::assertTrue($this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)));
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertTrue(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 
 		$this->storage->clean([NetteCaching\Cache::Priority => 1]);
-		self::assertFalse($this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)));
-		self::assertFalse($this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)));
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('foo', RedisDbCacheCaching\Journal::SUFFIX_TAGS, true)),
+		);
+		self::assertFalse(
+			$this->client->exists($this->generateJournalKey('tag', RedisDbCacheCaching\Journal::SUFFIX_KEYS, false)),
+		);
 	}
 
 	private function generateJournalKey(string $key, string $suffix, bool $addStoragePrefix): string

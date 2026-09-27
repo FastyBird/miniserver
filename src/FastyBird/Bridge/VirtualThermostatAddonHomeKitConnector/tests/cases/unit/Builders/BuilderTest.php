@@ -62,7 +62,10 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame($thermostat, $bridge->getParent());
 
 		self::assertCount(1, $bridge->getChannels());
-		self::assertInstanceOf(VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat::class, $bridge->getChannels()[0]);
+		self::assertInstanceOf(
+			VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat::class,
+			$bridge->getChannels()[0],
+		);
 
 		$actual = [];
 

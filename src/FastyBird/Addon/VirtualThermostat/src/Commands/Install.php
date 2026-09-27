@@ -181,7 +181,10 @@ class Install extends Console\Command\Command
 				$findDeviceQuery->byIdentifier($answer);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, VirtualThermostatEntities\Devices\Device::class) !== null
+					$this->devicesRepository->findOneBy(
+						$findDeviceQuery,
+						VirtualThermostatEntities\Devices\Device::class,
+					) !== null
 				) {
 					throw new VirtualThermostatExceptions\Runtime(
 						(string) $this->translator->translate(
@@ -206,7 +209,10 @@ class Install extends Console\Command\Command
 				$findDeviceQuery->byIdentifier($identifier);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, VirtualThermostatEntities\Devices\Device::class) === null
+					$this->devicesRepository->findOneBy(
+						$findDeviceQuery,
+						VirtualThermostatEntities\Devices\Device::class,
+					) === null
 				) {
 					break;
 				}
@@ -1774,7 +1780,10 @@ class Install extends Console\Command\Command
 	{
 		$findDevicesQuery = new VirtualThermostatQueries\Entities\FindDevices();
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, VirtualThermostatEntities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy(
+			$findDevicesQuery,
+			VirtualThermostatEntities\Devices\Device::class,
+		);
 		usort(
 			$devices,
 			static fn (VirtualThermostatEntities\Devices\Device $a, VirtualThermostatEntities\Devices\Device $b): int => (
@@ -1838,7 +1847,10 @@ class Install extends Console\Command\Command
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(VirtualThermostatTypes\ChannelIdentifier::ACTORS);
 
-		$actorsChannel = $this->channelsRepository->findOneBy($findChannelQuery, VirtualThermostatEntities\Channels\Actors::class);
+		$actorsChannel = $this->channelsRepository->findOneBy(
+			$findChannelQuery,
+			VirtualThermostatEntities\Channels\Actors::class,
+		);
 		assert($actorsChannel instanceof VirtualThermostatEntities\Channels\Actors);
 
 		$actorType = $this->askActorType($io, $device);
@@ -2154,7 +2166,10 @@ class Install extends Console\Command\Command
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier(VirtualThermostatTypes\ChannelIdentifier::SENSORS);
 
-		$sensorsChannel = $this->channelsRepository->findOneBy($findChannelQuery, VirtualThermostatEntities\Channels\Sensors::class);
+		$sensorsChannel = $this->channelsRepository->findOneBy(
+			$findChannelQuery,
+			VirtualThermostatEntities\Channels\Sensors::class,
+		);
 		assert($sensorsChannel instanceof VirtualThermostatEntities\Channels\Sensors);
 
 		$sensorType = $this->askSensorType($io);
@@ -2653,7 +2668,10 @@ class Install extends Console\Command\Command
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->endWithIdentifier($preset->value);
 
-		$channel = $this->channelsRepository->findOneBy($findChannelQuery, VirtualThermostatEntities\Channels\Preset::class);
+		$channel = $this->channelsRepository->findOneBy(
+			$findChannelQuery,
+			VirtualThermostatEntities\Channels\Preset::class,
+		);
 
 		$targetTempProperty = $heatingThresholdTempProperty = $coolingThresholdTempProperty = null;
 
@@ -2824,7 +2842,10 @@ class Install extends Console\Command\Command
 		);
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, VirtualThermostatEntities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(
+		Style\SymfonyStyle $io,
+		VirtualThermostatEntities\Devices\Device|null $device = null,
+	): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate(
@@ -4751,7 +4772,10 @@ class Install extends Console\Command\Command
 		$findChannelsQuery = new VirtualThermostatQueries\Entities\FindActorChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$channel = $this->channelsRepository->findOneBy($findChannelsQuery, VirtualThermostatEntities\Channels\Actors::class);
+		$channel = $this->channelsRepository->findOneBy(
+			$findChannelsQuery,
+			VirtualThermostatEntities\Channels\Actors::class,
+		);
 
 		if ($channel === null) {
 			return null;
@@ -4864,7 +4888,10 @@ class Install extends Console\Command\Command
 		$findChannelsQuery = new VirtualThermostatQueries\Entities\FindSensorChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$channel = $this->channelsRepository->findOneBy($findChannelsQuery, VirtualThermostatEntities\Channels\Sensors::class);
+		$channel = $this->channelsRepository->findOneBy(
+			$findChannelsQuery,
+			VirtualThermostatEntities\Channels\Sensors::class,
+		);
 
 		if ($channel === null) {
 			return null;

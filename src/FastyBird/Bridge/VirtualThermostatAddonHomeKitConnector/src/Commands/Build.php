@@ -303,7 +303,10 @@ class Build extends Console\Command\Command
 	{
 		$findDevicesQuery = new VirtualThermostatAddonHomeKitConnectorQueries\Entities\FindThermostatDevices();
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class);
+		$devices = $this->devicesRepository->findAllBy(
+			$findDevicesQuery,
+			VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class,
+		);
 		usort(
 			$devices,
 			static fn (VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $a, VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $b): int => (

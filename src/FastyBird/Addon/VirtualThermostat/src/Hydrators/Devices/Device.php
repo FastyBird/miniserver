@@ -16,7 +16,6 @@
 namespace FastyBird\Addon\VirtualThermostat\Hydrators\Devices;
 
 use FastyBird\Addon\VirtualThermostat\Entities;
-use FastyBird\Addon\VirtualThermostat\Hydrators as VirtualThermostatHydrators;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
 
 /**

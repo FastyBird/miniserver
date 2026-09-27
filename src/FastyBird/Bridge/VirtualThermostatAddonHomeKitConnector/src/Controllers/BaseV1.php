@@ -112,7 +112,9 @@ abstract class BaseV1
 	): ResponseInterface
 	{
 		// & relation entity name
-		$relationEntity = Utils\Strings::lower(strval($request->getAttribute(VirtualThermostatAddonHomeKitConnectorRouter\ApiRoutes::RELATION_ENTITY)));
+		$relationEntity = Utils\Strings::lower(
+			strval($request->getAttribute(VirtualThermostatAddonHomeKitConnectorRouter\ApiRoutes::RELATION_ENTITY)),
+		);
 
 		if ($relationEntity !== '') {
 			throw new ApiExceptions\JsonApiError(
@@ -200,7 +202,9 @@ abstract class BaseV1
 				RequestMethodInterface::METHOD_PATCH,
 			], true)
 			&& $request->getAttribute(VirtualThermostatAddonHomeKitConnectorRouter\ApiRoutes::URL_ITEM_ID) !== null
-			&& $request->getAttribute(VirtualThermostatAddonHomeKitConnectorRouter\ApiRoutes::URL_ITEM_ID) !== $document->getResource()->getId()
+			&& $request->getAttribute(
+				VirtualThermostatAddonHomeKitConnectorRouter\ApiRoutes::URL_ITEM_ID,
+			) !== $document->getResource()->getId()
 		) {
 			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_BAD_REQUEST,

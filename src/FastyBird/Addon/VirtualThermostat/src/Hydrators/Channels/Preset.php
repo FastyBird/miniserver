@@ -16,7 +16,6 @@
 namespace FastyBird\Addon\VirtualThermostat\Hydrators\Channels;
 
 use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
-use FastyBird\Addon\VirtualThermostat\Hydrators as VirtualThermostatHydrators;
 use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;

@@ -77,7 +77,10 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame($shelly, $bridge->getParent());
 
 		self::assertCount($expectedChannelsCnt, $bridge->getChannels());
-		self::assertInstanceOf(ShellyConnectorHomeKitConnectorEntities\Channels\Shelly::class, $bridge->getChannels()[0]);
+		self::assertInstanceOf(
+			ShellyConnectorHomeKitConnectorEntities\Channels\Shelly::class,
+			$bridge->getChannels()[0],
+		);
 
 		$actual = [];
 
