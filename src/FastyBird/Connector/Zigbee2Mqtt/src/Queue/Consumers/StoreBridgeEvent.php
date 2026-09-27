@@ -16,8 +16,8 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 
 use FastyBird\Connector\Zigbee2Mqtt;
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
-use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
+use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Values\Types\Sources;
@@ -50,7 +50,7 @@ final class StoreBridgeEvent implements Queue\Consumer
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
-	 * @throws Exceptions\InvalidArgument
+	 * @throws Zigbee2MqttExceptions\InvalidArgument
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{
@@ -77,7 +77,7 @@ final class StoreBridgeEvent implements Queue\Consumer
 
 		$bridge = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Bridge::class,
+			Zigbee2MqttDocuments\Devices\Bridge::class,
 		);
 
 		if ($bridge === null) {

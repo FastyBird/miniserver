@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Viera\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Viera\Entities;
+use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -31,7 +31,7 @@ class Channel extends DevicesEntities\Channels\Channel
 	public const TYPE = 'viera-connector';
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		VieraEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -50,9 +50,9 @@ class Channel extends DevicesEntities\Channels\Channel
 		return Sources\Connector::VIERA;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): VieraEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof VieraEntities\Devices\Device);
 
 		return $this->device;
 	}

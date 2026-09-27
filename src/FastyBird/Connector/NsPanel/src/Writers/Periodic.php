@@ -17,10 +17,10 @@ namespace FastyBird\Connector\NsPanel\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Documents;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
-use FastyBird\Connector\NsPanel\Queries;
+use FastyBird\Connector\NsPanel\Queries as NsPanelQueries;
 use FastyBird\Connector\NsPanel\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -65,7 +65,7 @@ abstract class Periodic implements Writer
 
 	private const HANDLER_PENDING_DELAY = 2_000.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, NsPanelDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Channels\Properties\Property>>  */
@@ -80,7 +80,7 @@ abstract class Periodic implements Writer
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly NsPanelDocuments\Connectors\Connector $connector,
 		protected readonly Helpers\MessageBuilder $messageBuilder,
 		protected readonly Helpers\Devices\ThirdPartyDevice $thirdPartyDeviceHelper,
 		protected readonly Queue\Queue $queue,
@@ -113,18 +113,18 @@ abstract class Periodic implements Writer
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new NsPanelQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			NsPanelDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
 			if (
-				!$device instanceof Documents\Devices\SubDevice
-				&& !$device instanceof Documents\Devices\ThirdPartyDevice
+				!$device instanceof NsPanelDocuments\Devices\SubDevice
+				&& !$device instanceof NsPanelDocuments\Devices\ThirdPartyDevice
 			) {
 				continue;
 			}
@@ -150,10 +150,10 @@ abstract class Periodic implements Writer
 				foreach ($properties as $property) {
 					if (
 						(
-							$device instanceof Documents\Devices\SubDevice
+							$device instanceof NsPanelDocuments\Devices\SubDevice
 							&& $property instanceof DevicesDocuments\Channels\Properties\Dynamic
 						) || (
-							$device instanceof Documents\Devices\ThirdPartyDevice
+							$device instanceof NsPanelDocuments\Devices\ThirdPartyDevice
 							&& (
 								$property instanceof DevicesDocuments\Channels\Properties\Mapped
 								|| $property instanceof DevicesDocuments\Channels\Properties\Dynamic
@@ -229,7 +229,7 @@ abstract class Periodic implements Writer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(NsPanelDocuments\Devices\Device $device): bool
 	{
 		if (!array_key_exists($device->getId()->toString(), $this->properties)) {
 			return false;
@@ -237,13 +237,13 @@ abstract class Periodic implements Writer
 
 		foreach ($this->properties[$device->getId()->toString()] as $property) {
 			if (
-				$device instanceof Documents\Devices\SubDevice
+				$device instanceof NsPanelDocuments\Devices\SubDevice
 				&& $property instanceof DevicesDocuments\Channels\Properties\Dynamic
 			) {
 				if ($this->writeSubDeviceChannelProperty($device, $property)) {
 					return true;
 				}
-			} elseif ($device instanceof Documents\Devices\ThirdPartyDevice) {
+			} elseif ($device instanceof NsPanelDocuments\Devices\ThirdPartyDevice) {
 				if ($this->writeThirdPartyDeviceChannelProperty($device, $property)) {
 					return true;
 				}
@@ -263,7 +263,7 @@ abstract class Periodic implements Writer
 	 * @throws CoreExceptions\InvalidArgument
 	 */
 	private function writeSubDeviceChannelProperty(
-		Documents\Devices\SubDevice $device,
+		NsPanelDocuments\Devices\SubDevice $device,
 		DevicesDocuments\Channels\Properties\Dynamic $property,
 	): bool
 	{
@@ -365,7 +365,7 @@ abstract class Periodic implements Writer
 	 * @throws ValueError
 	 */
 	private function writeThirdPartyDeviceChannelProperty(
-		Documents\Devices\ThirdPartyDevice $device,
+		NsPanelDocuments\Devices\ThirdPartyDevice $device,
 		DevicesDocuments\Channels\Properties\Property $property,
 	): bool
 	{

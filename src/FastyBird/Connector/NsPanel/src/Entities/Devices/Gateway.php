@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\NsPanel\Entities;
+use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
@@ -29,7 +29,7 @@ use function is_string;
 
 #[ORM\Entity]
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
-class Gateway extends Entities\Devices\Device
+class Gateway extends NsPanelEntities\Devices\Device
 {
 
 	public const TYPE = 'ns-panel-connector-gateway';

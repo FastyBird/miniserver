@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Fixtures;
 
 use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
-use FastyBird\Connector\Modbus\Entities;
+use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -48,7 +48,7 @@ final class ConnectorProperties extends DataFixtures\AbstractFixture implements 
 	 */
 	public function load(Persistence\ObjectManager $manager): void
 	{
-		$connector = $this->getReference('modbus-rtu-connector', Entities\Connectors\Connector::class);
+		$connector = $this->getReference('modbus-rtu-connector', ModbusEntities\Connectors\Connector::class);
 
 		$clientModeProperty = new DevicesEntities\Connectors\Properties\Variable(
 			$connector,

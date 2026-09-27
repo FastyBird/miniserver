@@ -21,7 +21,7 @@ use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
 use FastyBird\Connector\Viera\Documents;
-use FastyBird\Connector\Viera\Entities;
+use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
@@ -460,7 +460,7 @@ class Discover extends Console\Command\Command
 		if ($continue) {
 			foreach ($encryptedDevices as $configuredDevice) {
 				$device = $this->devicesRepository->find($configuredDevice->getId());
-				assert($device instanceof Entities\Devices\Device);
+				assert($device instanceof VieraEntities\Devices\Device);
 
 				if ($device->getIpAddress() === null) {
 					$io->error(

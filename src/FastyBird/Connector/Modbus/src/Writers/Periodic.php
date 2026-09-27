@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Modbus\Writers;
 
 use DateTimeInterface;
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Documents;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Helpers\MessageBuilder;
-use FastyBird\Connector\Modbus\Queries;
+use FastyBird\Connector\Modbus\Queries as ModbusQueries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -64,7 +64,7 @@ abstract class Periodic
 
 	private const HANDLER_PENDING_DELAY = 2_000.0;
 
-	/** @var array<string, Documents\Devices\Device>  */
+	/** @var array<string, ModbusDocuments\Devices\Device>  */
 	private array $devices = [];
 
 	/** @var array<string, array<string, DevicesDocuments\Channels\Properties\Dynamic>>  */
@@ -79,7 +79,7 @@ abstract class Periodic
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 
 	public function __construct(
-		protected readonly Documents\Connectors\Connector $connector,
+		protected readonly ModbusDocuments\Connectors\Connector $connector,
 		protected readonly MessageBuilder $messageBuilder,
 		protected readonly Queue\Queue $queue,
 		protected readonly Modbus\Logger $logger,
@@ -107,12 +107,12 @@ abstract class Periodic
 		$this->processedDevices = [];
 		$this->processedProperties = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new ModbusQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			ModbusDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
@@ -122,12 +122,12 @@ abstract class Periodic
 				$this->properties[$device->getId()->toString()] = [];
 			}
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new ModbusQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				ModbusDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -200,7 +200,7 @@ abstract class Periodic
 	 * @throws ModbusExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	private function writeProperty(Documents\Devices\Device $device): bool
+	private function writeProperty(ModbusDocuments\Devices\Device $device): bool
 	{
 		$now = $this->clock->getNow();
 

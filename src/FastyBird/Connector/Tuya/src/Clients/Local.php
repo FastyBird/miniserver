@@ -23,7 +23,7 @@ use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
-use FastyBird\Connector\Tuya\Types;
+use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -321,7 +321,7 @@ final class Local implements Client
 
 		$client->readStates($this->deviceHelper->getGateway($device) !== null ? $device->getIdentifier() : null)
 			->then(
-				function (array|API\Messages\Response\LocalDeviceWifiScan|Types\LocalDeviceError|string|null $statuses) use ($device): void {
+				function (array|API\Messages\Response\LocalDeviceWifiScan|TuyaTypes\LocalDeviceError|string|null $statuses) use ($device): void {
 					$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->getNow();
 
 					if (is_array($statuses)) {
@@ -426,7 +426,7 @@ final class Local implements Client
 		$client->onMessage[] = function (API\Messages\Message $message): void {
 			if (
 				$message instanceof API\Messages\Response\LocalDeviceMessage
-				&& $message->getCommand() === Types\LocalDeviceCommand::STATUS
+				&& $message->getCommand() === TuyaTypes\LocalDeviceCommand::STATUS
 				&& is_array($message->getData())
 			) {
 				$dataPointsStatuses = [];

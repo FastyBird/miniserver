@@ -17,7 +17,7 @@ namespace FastyBird\Connector\HomeKit\Connector;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Documents;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
@@ -78,7 +78,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof HomeKitDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -106,7 +106,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof HomeKitDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting HomeKit connector service',
@@ -154,7 +154,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->consumersTimer = $this->eventLoop->addPeriodicTimer(
 			self::DRIVER_RELOAD_INTERVAL,
 			function (): void {
-				assert($this->connector instanceof Documents\Connectors\Connector);
+				assert($this->connector instanceof HomeKitDocuments\Connectors\Connector);
 				$this->accessoriesLoader->load($this->connector);
 			},
 		);
@@ -178,7 +178,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof HomeKitDocuments\Connectors\Connector);
 
 		return Promise\reject(
 			new HomeKitExceptions\InvalidState('Devices discovery is not allowed for HomeKit connector type'),
@@ -187,7 +187,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof HomeKitDocuments\Connectors\Connector);
 
 		$this->writer?->disconnect();
 

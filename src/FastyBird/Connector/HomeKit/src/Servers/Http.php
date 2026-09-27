@@ -24,7 +24,7 @@ use FastyBird\Connector\HomeKit\Middleware;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Subscribers;
-use FastyBird\Connector\HomeKit\Types;
+use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -309,7 +309,7 @@ final class Http implements Server
 	{
 		if (
 			$property->getConnector()->getId()->equals($this->connector->getId())
-			&& $property->getIdentifier() === Types\ConnectorPropertyIdentifier::SHARED_KEY->value
+			&& $property->getIdentifier() === HomeKitTypes\ConnectorPropertyIdentifier::SHARED_KEY->value
 		) {
 			$this->logger->debug(
 				'Shared key has been updated',

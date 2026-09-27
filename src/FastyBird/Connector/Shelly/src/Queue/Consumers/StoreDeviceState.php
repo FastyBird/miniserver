@@ -17,9 +17,9 @@ namespace FastyBird\Connector\Shelly\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Documents;
+use FastyBird\Connector\Shelly\Documents as ShellyDocuments;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
-use FastyBird\Connector\Shelly\Queries;
+use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -94,13 +94,13 @@ final class StoreDeviceState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new ShellyQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->startWithIdentifier($message->getIdentifier());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			ShellyDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -159,12 +159,12 @@ final class StoreDeviceState implements Queue\Consumer
 						);
 					}
 				} else {
-					$findChannelsQuery = new Queries\Configuration\FindChannels();
+					$findChannelsQuery = new ShellyQueries\Configuration\FindChannels();
 					$findChannelsQuery->forDevice($device);
 
 					$channels = $this->channelsConfigurationRepository->findAllBy(
 						$findChannelsQuery,
-						Documents\Channels\Channel::class,
+						ShellyDocuments\Channels\Channel::class,
 					);
 
 					foreach ($channels as $channel) {
@@ -216,7 +216,7 @@ final class StoreDeviceState implements Queue\Consumer
 					}
 				}
 			} else {
-				$findChannelQuery = new Queries\Configuration\FindChannels();
+				$findChannelQuery = new ShellyQueries\Configuration\FindChannels();
 				$findChannelQuery->forDevice($device);
 
 				if (str_starts_with($state->getIdentifier(), '_')) {
@@ -229,7 +229,7 @@ final class StoreDeviceState implements Queue\Consumer
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
 					$findChannelQuery,
-					Documents\Channels\Channel::class,
+					ShellyDocuments\Channels\Channel::class,
 				);
 
 				if ($channel !== null) {

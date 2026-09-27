@@ -18,10 +18,10 @@ namespace FastyBird\Connector\Viera\Queue\Consumers;
 use DateTimeInterface;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
-use FastyBird\Connector\Viera\Documents;
+use FastyBird\Connector\Viera\Documents as VieraDocuments;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
-use FastyBird\Connector\Viera\Queries;
+use FastyBird\Connector\Viera\Queries as VieraQueries;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Types as VieraTypes;
 use FastyBird\Core\Clock;
@@ -98,12 +98,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new VieraQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			VieraDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -131,13 +131,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new VieraQueries\Configuration\FindDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			VieraDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -201,13 +201,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new VieraQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			VieraDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {
@@ -644,7 +644,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				}
 
 				if ($property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value) {
-					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
+					$findChannelPropertyQuery = new VieraQueries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
 					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::APPLICATION);
 
@@ -668,7 +668,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						Sources\Connector::VIERA,
 					));
 
-					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
+					$findChannelPropertyQuery = new VieraQueries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
 					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::HDMI);
 
@@ -696,7 +696,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					$property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::APPLICATION->value
 					|| $property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::HDMI->value
 				) {
-					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
+					$findChannelPropertyQuery = new VieraQueries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
 					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE);
 
@@ -715,7 +715,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						Sources\Connector::VIERA,
 					));
 
-					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
+					$findChannelPropertyQuery = new VieraQueries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
 					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::HDMI);
 
@@ -725,7 +725,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					);
 					assert($hdmiProperty instanceof DevicesDocuments\Channels\Properties\Dynamic);
 
-					$findChannelPropertyQuery = new Queries\Configuration\FindChannelProperties();
+					$findChannelPropertyQuery = new VieraQueries\Configuration\FindChannelProperties();
 					$findChannelPropertyQuery->forChannel($channel);
 					$findChannelPropertyQuery->byIdentifier(VieraTypes\ChannelPropertyIdentifier::APPLICATION);
 

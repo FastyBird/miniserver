@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Modbus\Helpers;
 
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Documents;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types;
@@ -58,17 +58,17 @@ final readonly class Device
 	 * @throws ValueError
 	 */
 	public function findChannelByType(
-		Documents\Devices\Device $device,
+		ModbusDocuments\Devices\Device $device,
 		int $address,
 		Types\ChannelType $type,
-	): Documents\Channels\Channel|null
+	): ModbusDocuments\Channels\Channel|null
 	{
 		$findChannelsQuery = new Queries\Configuration\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
 		$channels = $this->channelsConfigurationRepository->findAllBy(
 			$findChannelsQuery,
-			Documents\Channels\Channel::class,
+			ModbusDocuments\Channels\Channel::class,
 		);
 
 		foreach ($channels as $channel) {
@@ -92,7 +92,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getAddress(Documents\Devices\Device $device): int|null
+	public function getAddress(ModbusDocuments\Devices\Device $device): int|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -121,7 +121,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getIpAddress(Documents\Devices\Device $device): string|null
+	public function getIpAddress(ModbusDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -150,7 +150,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPort(Documents\Devices\Device $device): int
+	public function getPort(ModbusDocuments\Devices\Device $device): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -179,7 +179,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getByteOrder(Documents\Devices\Device $device): Types\ByteOrder
+	public function getByteOrder(ModbusDocuments\Devices\Device $device): Types\ByteOrder
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -209,7 +209,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getUnitId(Documents\Devices\Device $device): int
+	public function getUnitId(ModbusDocuments\Devices\Device $device): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

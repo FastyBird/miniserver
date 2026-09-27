@@ -17,10 +17,10 @@ namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Entities;
+use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers as SonoffHelpers;
-use FastyBird\Connector\Sonoff\Queries;
+use FastyBird\Connector\Sonoff\Queries as SonoffQueries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -78,16 +78,16 @@ final class StoreDevice implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Entities\FindDevices();
+		$findDeviceQuery = new SonoffQueries\Entities\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byIdentifier($message->getId());
 
-		$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
+		$device = $this->devicesRepository->findOneBy($findDeviceQuery, SonoffEntities\Devices\Device::class);
 
 		if ($device === null) {
 			$connector = $this->connectorsRepository->find(
 				$message->getConnector(),
-				Entities\Connectors\Connector::class,
+				SonoffEntities\Connectors\Connector::class,
 			);
 
 			if ($connector === null) {
@@ -95,15 +95,15 @@ final class StoreDevice implements Queue\Consumer
 			}
 
 			$device = $this->databaseHelper->transaction(
-				function () use ($message, $connector): Entities\Devices\Device {
+				function () use ($message, $connector): SonoffEntities\Devices\Device {
 					$device = $this->devicesManager->create(Utils\ArrayHash::from([
-						'entity' => Entities\Devices\Device::class,
+						'entity' => SonoffEntities\Devices\Device::class,
 						'connector' => $connector,
 						'identifier' => $message->getId(),
 						'name' => $message->getName(),
 						'description' => $message->getDescription(),
 					]));
-					assert($device instanceof Entities\Devices\Device);
+					assert($device instanceof SonoffEntities\Devices\Device);
 
 					return $device;
 				},
@@ -300,18 +300,18 @@ final class StoreDevice implements Queue\Consumer
 		$this->databaseHelper->transaction(function () use ($message, $device): bool {
 			foreach ($message->getParameters() as $parameter) {
 				if ($parameter->getType() === SonoffTypes\ParameterType::CHANNEL) {
-					$findChannelQuery = new Queries\Entities\FindChannels();
+					$findChannelQuery = new SonoffQueries\Entities\FindChannels();
 					$findChannelQuery->byIdentifier($parameter->getGroup());
 					$findChannelQuery->forDevice($device);
 
 					$channel = $this->channelsRepository->findOneBy(
 						$findChannelQuery,
-						Entities\Channels\Channel::class,
+						SonoffEntities\Channels\Channel::class,
 					);
 
 					if ($channel === null) {
 						$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-							'entity' => Entities\Channels\Channel::class,
+							'entity' => SonoffEntities\Channels\Channel::class,
 							'device' => $device,
 							'identifier' => $parameter->getGroup(),
 						]));

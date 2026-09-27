@@ -17,7 +17,7 @@ namespace FastyBird\Connector\HomeKit\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Entities;
+use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Values\Types\Sources;
@@ -39,7 +39,7 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 	public const SERVICE_IDENTIFIER = '/^(?P<type>[a-z_]+)(?:_(?P<cnt>[0-9]+){1})$/';
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		HomeKitEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -53,9 +53,9 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 		return Sources\Connector::HOMEKIT;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): HomeKitEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof HomeKitEntities\Devices\Device);
 
 		return $this->device;
 	}

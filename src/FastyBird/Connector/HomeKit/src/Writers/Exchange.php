@@ -21,7 +21,7 @@ use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
-use FastyBird\Connector\HomeKit\Queries;
+use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Clock;
@@ -141,7 +141,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 				}
 
 				if ($document instanceof DevicesDocuments\States\Devices\Properties\Property) {
-					$findDeviceQuery = new Queries\Configuration\FindDevices();
+					$findDeviceQuery = new HomeKitQueries\Configuration\FindDevices();
 					$findDeviceQuery->forConnector($this->connector);
 					$findDeviceQuery->byId($document->getDevice());
 
@@ -154,7 +154,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 						return;
 					}
 
-					$findPropertyQuery = new Queries\Configuration\FindDeviceProperties();
+					$findPropertyQuery = new HomeKitQueries\Configuration\FindDeviceProperties();
 					$findPropertyQuery->byId($document->getId());
 					$findPropertyQuery->forDevice($device);
 
@@ -208,7 +208,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 						);
 					}
 				} else {
-					$findChannelQuery = new Queries\Configuration\FindChannels();
+					$findChannelQuery = new HomeKitQueries\Configuration\FindChannels();
 					$findChannelQuery->byId($document->getChannel());
 
 					$channel = $this->channelsConfigurationRepository->findOneBy(
@@ -220,7 +220,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 						return;
 					}
 
-					$findDeviceQuery = new Queries\Configuration\FindDevices();
+					$findDeviceQuery = new HomeKitQueries\Configuration\FindDevices();
 					$findDeviceQuery->forConnector($this->connector);
 					$findDeviceQuery->byId($channel->getDevice());
 
@@ -298,7 +298,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 				}
 
 				if ($document instanceof DevicesDocuments\Devices\Properties\Variable) {
-					$findDeviceQuery = new Queries\Configuration\FindDevices();
+					$findDeviceQuery = new HomeKitQueries\Configuration\FindDevices();
 					$findDeviceQuery->forConnector($this->connector);
 					$findDeviceQuery->byId($document->getDevice());
 
@@ -323,7 +323,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 					);
 
 				} else {
-					$findChannelQuery = new Queries\Configuration\FindChannels();
+					$findChannelQuery = new HomeKitQueries\Configuration\FindChannels();
 					$findChannelQuery->byId($document->getChannel());
 
 					$channel = $this->channelsConfigurationRepository->findOneBy(
@@ -335,7 +335,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 						return;
 					}
 
-					$findDeviceQuery = new Queries\Configuration\FindDevices();
+					$findDeviceQuery = new HomeKitQueries\Configuration\FindDevices();
 					$findDeviceQuery->forConnector($this->connector);
 					$findDeviceQuery->byId($channel->getDevice());
 

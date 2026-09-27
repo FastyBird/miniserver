@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Zigbee2Mqtt\Entities;
+use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -53,14 +53,14 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<Zigbee2MqttEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
 		$devices = [];
 
 		foreach (parent::getDevices() as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof Zigbee2MqttEntities\Devices\Device) {
 				$devices[] = $device;
 			}
 		}
@@ -73,7 +73,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
-		if (!$device instanceof Entities\Devices\Device) {
+		if (!$device instanceof Zigbee2MqttEntities\Devices\Device) {
 			throw new Zigbee2MqttExceptions\InvalidArgument('Provided device type is not valid');
 		}
 

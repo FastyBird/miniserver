@@ -17,8 +17,8 @@ namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Queries;
+use FastyBird\Connector\Sonoff\Documents as SonoffDocuments;
+use FastyBird\Connector\Sonoff\Queries as SonoffQueries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
@@ -85,13 +85,13 @@ final class StoreParametersStates implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new SonoffQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->startWithIdentifier($message->getIdentifier());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			SonoffDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -133,13 +133,13 @@ final class StoreParametersStates implements Queue\Consumer
 					);
 				}
 			} elseif ($parameter instanceof Queue\Messages\States\ChannelParameterState) {
-				$findChannelQuery = new Queries\Configuration\FindChannels();
+				$findChannelQuery = new SonoffQueries\Configuration\FindChannels();
 				$findChannelQuery->forDevice($device);
 				$findChannelQuery->byIdentifier($parameter->getGroup());
 
 				$channel = $this->channelsConfigurationRepository->findOneBy(
 					$findChannelQuery,
-					Documents\Channels\Channel::class,
+					SonoffDocuments\Channels\Channel::class,
 				);
 
 				if ($channel !== null) {

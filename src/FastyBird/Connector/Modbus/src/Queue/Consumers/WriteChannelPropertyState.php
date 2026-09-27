@@ -18,10 +18,10 @@ namespace FastyBird\Connector\Modbus\Queue\Consumers;
 use DateTimeInterface;
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\API;
-use FastyBird\Connector\Modbus\Documents;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Helpers;
-use FastyBird\Connector\Modbus\Queries;
+use FastyBird\Connector\Modbus\Queries as ModbusQueries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Clock;
@@ -100,12 +100,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new ModbusQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			ModbusDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -133,13 +133,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new ModbusQueries\Configuration\FindDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			ModbusDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -167,13 +167,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new ModbusQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			ModbusDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {

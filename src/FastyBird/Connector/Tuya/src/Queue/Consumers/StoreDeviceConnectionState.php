@@ -17,8 +17,8 @@ namespace FastyBird\Connector\Tuya\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Tuya;
-use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Queries;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
+use FastyBird\Connector\Tuya\Queries as TuyaQueries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -81,13 +81,13 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new TuyaQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byIdentifier($message->getIdentifier());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			TuyaDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -141,12 +141,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					));
 				}
 
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new TuyaQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					TuyaDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {
@@ -167,12 +167,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					}
 				}
 
-				$findChildrenDevicesQuery = new Queries\Configuration\FindDevices();
+				$findChildrenDevicesQuery = new TuyaQueries\Configuration\FindDevices();
 				$findChildrenDevicesQuery->forParent($device);
 
 				$children = $this->devicesConfigurationRepository->findAllBy(
 					$findChildrenDevicesQuery,
-					Documents\Devices\Device::class,
+					TuyaDocuments\Devices\Device::class,
 				);
 
 				foreach ($children as $child) {
@@ -197,12 +197,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 						));
 					}
 
-					$findChannelsQuery = new Queries\Configuration\FindChannels();
+					$findChannelsQuery = new TuyaQueries\Configuration\FindChannels();
 					$findChannelsQuery->forDevice($child);
 
 					$channels = $this->channelsConfigurationRepository->findAllBy(
 						$findChannelsQuery,
-						Documents\Channels\Channel::class,
+						TuyaDocuments\Channels\Channel::class,
 					);
 
 					foreach ($channels as $channel) {

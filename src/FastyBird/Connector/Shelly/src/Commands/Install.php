@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Shelly\Commands;
 use DateTimeImmutable;
 use Doctrine\DBAL;
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Entities;
+use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
@@ -148,7 +148,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					ShellyEntities\Connectors\Connector::class,
 				);
 
 				if ($connector !== null) {
@@ -176,7 +176,7 @@ class Install extends Console\Command\Command
 
 				$connector = $this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					ShellyEntities\Connectors\Connector::class,
 				);
 
 				if ($connector === null) {
@@ -210,11 +210,11 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Connectors\Connector::class,
+				'entity' => ShellyEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof ShellyEntities\Connectors\Connector);
 
 			$this->propertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
@@ -419,7 +419,7 @@ class Install extends Console\Command\Command
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof ShellyEntities\Connectors\Connector);
 
 			if ($modeProperty === null) {
 				if ($mode === null) {
@@ -615,11 +615,11 @@ class Install extends Console\Command\Command
 
 		$connectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			ShellyEntities\Connectors\Connector::class,
 		);
 		usort(
 			$connectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (ShellyEntities\Connectors\Connector $a, ShellyEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -636,7 +636,7 @@ class Install extends Console\Command\Command
 			$findDevicesQuery = new Queries\Entities\FindDevices();
 			$findDevicesQuery->forConnector($connector);
 
-			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, ShellyEntities\Devices\Device::class);
 
 			$table->addRow([
 				$index + 1,
@@ -657,7 +657,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function editDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function editDevice(Style\SymfonyStyle $io, ShellyEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -676,7 +676,7 @@ class Install extends Console\Command\Command
 			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof ShellyEntities\Devices\Device);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -712,7 +712,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function deleteDevice(Style\SymfonyStyle $io, ShellyEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -782,15 +782,15 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function listDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function listDevices(Style\SymfonyStyle $io, ShellyEntities\Connectors\Connector $connector): void
 	{
 		$findDevicesQuery = new Queries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, ShellyEntities\Devices\Device::class);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (ShellyEntities\Devices\Device $a, ShellyEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -832,7 +832,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function discoverDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function discoverDevices(Style\SymfonyStyle $io, ShellyEntities\Connectors\Connector $connector): void
 	{
 		if ($this->output === null) {
 			throw new ShellyExceptions\InvalidState('Something went wrong, console output is not configured');
@@ -886,7 +886,7 @@ class Install extends Console\Command\Command
 		$findDevicesQuery = new Queries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, ShellyEntities\Devices\Device::class);
 
 		foreach ($devices as $device) {
 			$createdAt = $device->getCreatedAt();
@@ -1030,7 +1030,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageConnectorAction(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
+		ShellyEntities\Connectors\Connector $connector,
 	): void
 	{
 		$question = new Console\Question\ChoiceQuestion(
@@ -1150,7 +1150,7 @@ class Install extends Console\Command\Command
 
 	private function askConnectorName(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ShellyEntities\Connectors\Connector|null $connector = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -1171,7 +1171,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorCloudAuthenticationKey(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ShellyEntities\Connectors\Connector|null $connector = null,
 	): string
 	{
 		$question = new Console\Question\Question(
@@ -1204,7 +1204,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askConnectorCloudServerAddress(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		ShellyEntities\Connectors\Connector|null $connector = null,
 	): string
 	{
 		$question = new Console\Question\Question(
@@ -1229,7 +1229,10 @@ class Install extends Console\Command\Command
 		return strval($io->askQuestion($question));
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(
+		Style\SymfonyStyle $io,
+		ShellyEntities\Devices\Device|null $device = null,
+	): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//shelly-connector.cmd.install.questions.provide.device.name'),
@@ -1244,7 +1247,7 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function askWhichConnector(Style\SymfonyStyle $io): Entities\Connectors\Connector|null
+	private function askWhichConnector(Style\SymfonyStyle $io): ShellyEntities\Connectors\Connector|null
 	{
 		$connectors = [];
 
@@ -1252,11 +1255,11 @@ class Install extends Console\Command\Command
 
 		$systemConnectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			ShellyEntities\Connectors\Connector::class,
 		);
 		usort(
 			$systemConnectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (ShellyEntities\Connectors\Connector $a, ShellyEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1278,46 +1281,50 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//shelly-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
-			if ($answer === null) {
+		$question->setValidator(
+			function (string|int|null $answer) use ($connectors): ShellyEntities\Connectors\Connector {
+				if ($answer === null) {
+					throw new ShellyExceptions\Runtime(
+						sprintf(
+							(string) $this->translator->translate(
+								'//shelly-connector.cmd.base.messages.answerNotValid',
+							),
+							$answer,
+						),
+					);
+				}
+
+				if (array_key_exists($answer, array_values($connectors))) {
+					$answer = array_values($connectors)[$answer];
+				}
+
+				$identifier = array_search($answer, $connectors, true);
+
+				if ($identifier !== false) {
+					$findConnectorQuery = new Queries\Entities\FindConnectors();
+					$findConnectorQuery->byIdentifier($identifier);
+
+					$connector = $this->connectorsRepository->findOneBy(
+						$findConnectorQuery,
+						ShellyEntities\Connectors\Connector::class,
+					);
+
+					if ($connector !== null) {
+						return $connector;
+					}
+				}
+
 				throw new ShellyExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//shelly-connector.cmd.base.messages.answerNotValid'),
 						$answer,
 					),
 				);
-			}
-
-			if (array_key_exists($answer, array_values($connectors))) {
-				$answer = array_values($connectors)[$answer];
-			}
-
-			$identifier = array_search($answer, $connectors, true);
-
-			if ($identifier !== false) {
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
-				$findConnectorQuery->byIdentifier($identifier);
-
-				$connector = $this->connectorsRepository->findOneBy(
-					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
-				);
-
-				if ($connector !== null) {
-					return $connector;
-				}
-			}
-
-			throw new ShellyExceptions\Runtime(
-				sprintf(
-					(string) $this->translator->translate('//shelly-connector.cmd.base.messages.answerNotValid'),
-					$answer,
-				),
-			);
-		});
+			},
+		);
 
 		$connector = $io->askQuestion($question);
-		assert($connector instanceof Entities\Connectors\Connector);
+		assert($connector instanceof ShellyEntities\Connectors\Connector);
 
 		return $connector;
 	}
@@ -1327,8 +1334,8 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichDevice(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
-	): Entities\Devices\Device|null
+		ShellyEntities\Connectors\Connector $connector,
+	): ShellyEntities\Devices\Device|null
 	{
 		$devices = [];
 
@@ -1337,11 +1344,11 @@ class Install extends Console\Command\Command
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Device::class,
+			ShellyEntities\Devices\Device::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (ShellyEntities\Devices\Device $a, ShellyEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -1364,7 +1371,7 @@ class Install extends Console\Command\Command
 			(string) $this->translator->translate('//shelly-connector.cmd.base.messages.answerNotValid'),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
+			function (string|int|null $answer) use ($connector, $devices): ShellyEntities\Devices\Device {
 				if ($answer === null) {
 					throw new ShellyExceptions\Runtime(
 						sprintf(
@@ -1389,7 +1396,7 @@ class Install extends Console\Command\Command
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Device::class,
+						ShellyEntities\Devices\Device::class,
 					);
 
 					if ($device !== null) {
@@ -1407,7 +1414,7 @@ class Install extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Device);
+		assert($device instanceof ShellyEntities\Devices\Device);
 
 		return $device;
 	}

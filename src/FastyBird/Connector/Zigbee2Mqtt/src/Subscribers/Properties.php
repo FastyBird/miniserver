@@ -19,7 +19,7 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\Zigbee2Mqtt\Entities;
+use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
@@ -76,8 +76,8 @@ final class Properties implements Common\EventSubscriber
 
 		// Check for valid entity
 		if (
-			$entity instanceof Entities\Devices\Bridge
-			|| $entity instanceof Entities\Devices\SubDevice
+			$entity instanceof Zigbee2MqttEntities\Devices\Bridge
+			|| $entity instanceof Zigbee2MqttEntities\Devices\SubDevice
 		) {
 			$this->processDeviceProperties($entity);
 		}
@@ -90,7 +90,7 @@ final class Properties implements Common\EventSubscriber
 	 * @throws Zigbee2MqttExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function processDeviceProperties(Entities\Devices\Device $device): void
+	private function processDeviceProperties(Zigbee2MqttEntities\Devices\Device $device): void
 	{
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);

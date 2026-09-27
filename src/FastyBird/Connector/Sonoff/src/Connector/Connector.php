@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Sonoff\Connector;
 use BadMethodCallException;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Clients;
-use FastyBird\Connector\Sonoff\Documents;
+use FastyBird\Connector\Sonoff\Documents as SonoffDocuments;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queue;
@@ -78,7 +78,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof SonoffDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -100,7 +100,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof SonoffDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Sonoff connector service',
@@ -184,7 +184,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof SonoffDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Sonoff connector discovery',
@@ -232,7 +232,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof SonoffDocuments\Connectors\Connector);
 
 		$this->client?->disconnect();
 

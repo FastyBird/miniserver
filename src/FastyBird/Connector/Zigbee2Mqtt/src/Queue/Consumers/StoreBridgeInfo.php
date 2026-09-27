@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Zigbee2Mqtt;
-use FastyBird\Connector\Zigbee2Mqtt\Entities;
+use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
@@ -84,7 +84,7 @@ final class StoreBridgeInfo implements Queue\Consumer
 
 		$bridge = $this->devicesRepository->find(
 			$baseTopicProperty->getDevice()->getId(),
-			Entities\Devices\Bridge::class,
+			Zigbee2MqttEntities\Devices\Bridge::class,
 		);
 
 		if ($bridge === null) {

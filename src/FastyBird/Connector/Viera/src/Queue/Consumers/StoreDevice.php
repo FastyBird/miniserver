@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Viera\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
-use FastyBird\Connector\Viera\Entities;
+use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers as VieraHelpers;
 use FastyBird\Connector\Viera\Queries;
@@ -79,12 +79,12 @@ final class StoreDevice implements Queue\Consumer
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byIdentifier($message->getIdentifier());
 
-		$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
+		$device = $this->devicesRepository->findOneBy($findDeviceQuery, VieraEntities\Devices\Device::class);
 
 		if ($device === null) {
 			$connector = $this->connectorsRepository->find(
 				$message->getConnector(),
-				Entities\Connectors\Connector::class,
+				VieraEntities\Connectors\Connector::class,
 			);
 
 			if ($connector === null) {
@@ -92,14 +92,14 @@ final class StoreDevice implements Queue\Consumer
 			}
 
 			$device = $this->databaseHelper->transaction(
-				function () use ($message, $connector): Entities\Devices\Device {
+				function () use ($message, $connector): VieraEntities\Devices\Device {
 					$device = $this->devicesManager->create(Utils\ArrayHash::from([
-						'entity' => Entities\Devices\Device::class,
+						'entity' => VieraEntities\Devices\Device::class,
 						'connector' => $connector,
 						'identifier' => $message->getIdentifier(),
 						'name' => $message->getName(),
 					]));
-					assert($device instanceof Entities\Devices\Device);
+					assert($device instanceof VieraEntities\Devices\Device);
 
 					return $device;
 				},
@@ -201,11 +201,11 @@ final class StoreDevice implements Queue\Consumer
 			$findChannelQuery->byIdentifier(VieraTypes\ChannelType::TELEVISION);
 			$findChannelQuery->forDevice($device);
 
-			$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+			$channel = $this->channelsRepository->findOneBy($findChannelQuery, VieraEntities\Channels\Channel::class);
 
 			if ($channel === null) {
 				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\Channel::class,
+					'entity' => VieraEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => VieraTypes\ChannelType::TELEVISION->value,
 				]));

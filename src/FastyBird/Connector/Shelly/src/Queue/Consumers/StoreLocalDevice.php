@@ -17,9 +17,9 @@ namespace FastyBird\Connector\Shelly\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Shelly;
-use FastyBird\Connector\Shelly\Entities;
+use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
-use FastyBird\Connector\Shelly\Queries;
+use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -81,16 +81,16 @@ final class StoreLocalDevice implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Entities\FindDevices();
+		$findDeviceQuery = new ShellyQueries\Entities\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byIdentifier($message->getIdentifier());
 
-		$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
+		$device = $this->devicesRepository->findOneBy($findDeviceQuery, ShellyEntities\Devices\Device::class);
 
 		if ($device === null) {
 			$connector = $this->connectorsRepository->find(
 				$message->getConnector(),
-				Entities\Connectors\Connector::class,
+				ShellyEntities\Connectors\Connector::class,
 			);
 
 			if ($connector === null) {
@@ -98,13 +98,13 @@ final class StoreLocalDevice implements Queue\Consumer
 			}
 
 			$device = $this->databaseHelper->transaction(
-				function () use ($message, $connector): Entities\Devices\Device {
+				function () use ($message, $connector): ShellyEntities\Devices\Device {
 					$device = $this->devicesManager->create(Utils\ArrayHash::from([
-						'entity' => Entities\Devices\Device::class,
+						'entity' => ShellyEntities\Devices\Device::class,
 						'connector' => $connector,
 						'identifier' => $message->getIdentifier(),
 					]));
-					assert($device instanceof Entities\Devices\Device);
+					assert($device instanceof ShellyEntities\Devices\Device);
 
 					return $device;
 				},
@@ -187,15 +187,15 @@ final class StoreLocalDevice implements Queue\Consumer
 		);
 
 		foreach ($message->getChannels() as $channelDescription) {
-			$findChannelQuery = new Queries\Entities\FindChannels();
+			$findChannelQuery = new ShellyQueries\Entities\FindChannels();
 			$findChannelQuery->forDevice($device);
 			$findChannelQuery->byIdentifier($channelDescription->getIdentifier());
 
-			$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+			$channel = $this->channelsRepository->findOneBy($findChannelQuery, ShellyEntities\Channels\Channel::class);
 
 			$channel = $channel === null ? $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Channels\Channel => $this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\Channel::class,
+					'entity' => ShellyEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => $channelDescription->getIdentifier(),
 					'name' => $channelDescription->getName(),

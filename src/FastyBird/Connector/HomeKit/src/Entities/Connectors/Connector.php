@@ -18,7 +18,7 @@ namespace FastyBird\Connector\HomeKit\Entities\Connectors;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Entities;
+use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -39,11 +39,11 @@ class Connector extends DevicesEntities\Connectors\Connector
 
 	public const TYPE = 'homekit-connector';
 
-	/** @var Common\Collections\Collection<int, Entities\Clients\Client> */
+	/** @var Common\Collections\Collection<int, HomeKitEntities\Clients\Client> */
 	#[Attribute\Crud(writable: true)]
 	#[ORM\OneToMany(
 		mappedBy: 'connector',
-		targetEntity: Entities\Clients\Client::class,
+		targetEntity: HomeKitEntities\Clients\Client::class,
 		cascade: ['persist', 'remove'],
 		orphanRemoval: true,
 	)]
@@ -60,14 +60,14 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<HomeKitEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
 		$devices = [];
 
 		foreach (parent::getDevices() as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof HomeKitEntities\Devices\Device) {
 				$devices[] = $device;
 			}
 		}
@@ -80,7 +80,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
-		if (!$device instanceof Entities\Devices\Device) {
+		if (!$device instanceof HomeKitEntities\Devices\Device) {
 			throw new HomeKitExceptions\InvalidArgument('Provided device type is not valid');
 		}
 
@@ -88,7 +88,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Clients\Client>
+	 * @return array<HomeKitEntities\Clients\Client>
 	 */
 	public function getClients(): array
 	{

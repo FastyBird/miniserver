@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Sonoff\Helpers;
 
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Documents;
+use FastyBird\Connector\Sonoff\Documents as SonoffDocuments;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Types;
@@ -55,7 +55,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getClientMode(Documents\Connectors\Connector $connector): Types\ClientMode
+	public function getClientMode(SonoffDocuments\Connectors\Connector $connector): Types\ClientMode
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -83,7 +83,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getUsername(Documents\Connectors\Connector $connector): string
+	public function getUsername(SonoffDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -112,7 +112,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPassword(Documents\Connectors\Connector $connector): string
+	public function getPassword(SonoffDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -141,7 +141,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getAppId(Documents\Connectors\Connector $connector): string
+	public function getAppId(SonoffDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -170,7 +170,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getAppSecret(Documents\Connectors\Connector $connector): string
+	public function getAppSecret(SonoffDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -199,7 +199,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getRegion(Documents\Connectors\Connector $connector): Types\Region
+	public function getRegion(SonoffDocuments\Connectors\Connector $connector): Types\Region
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -227,7 +227,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getGatewayId(Documents\Connectors\Connector $connector): string|null
+	public function getGatewayId(SonoffDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -256,7 +256,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getGatewayApiKey(Documents\Connectors\Connector $connector): string|null
+	public function getGatewayApiKey(SonoffDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);

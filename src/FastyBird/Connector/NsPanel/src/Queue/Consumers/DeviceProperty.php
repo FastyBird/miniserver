@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\NsPanel;
-use FastyBird\Connector\NsPanel\Entities;
+use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -116,7 +116,7 @@ trait DeviceProperty
 		if ($property === null) {
 			$device = $this->devicesRepository->find(
 				$deviceId,
-				Entities\Devices\Device::class,
+				NsPanelEntities\Devices\Device::class,
 			);
 
 			if ($device === null) {

@@ -17,8 +17,8 @@ namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Sonoff;
-use FastyBird\Connector\Sonoff\Documents;
-use FastyBird\Connector\Sonoff\Queries;
+use FastyBird\Connector\Sonoff\Documents as SonoffDocuments;
+use FastyBird\Connector\Sonoff\Queries as SonoffQueries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -81,13 +81,13 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new SonoffQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->startWithIdentifier($message->getIdentifier());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			SonoffDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -140,12 +140,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					));
 				}
 
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new SonoffQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					SonoffDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {
@@ -166,12 +166,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					}
 				}
 
-				$findChildrenDevicesQuery = new Queries\Configuration\FindDevices();
+				$findChildrenDevicesQuery = new SonoffQueries\Configuration\FindDevices();
 				$findChildrenDevicesQuery->forParent($device);
 
 				$children = $this->devicesConfigurationRepository->findAllBy(
 					$findChildrenDevicesQuery,
-					Documents\Devices\Device::class,
+					SonoffDocuments\Devices\Device::class,
 				);
 
 				foreach ($children as $child) {
@@ -196,12 +196,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 						));
 					}
 
-					$findChannelsQuery = new Queries\Configuration\FindChannels();
+					$findChannelsQuery = new SonoffQueries\Configuration\FindChannels();
 					$findChannelsQuery->forDevice($child);
 
 					$channels = $this->channelsConfigurationRepository->findAllBy(
 						$findChannelsQuery,
-						Documents\Channels\Channel::class,
+						SonoffDocuments\Channels\Channel::class,
 					);
 
 					foreach ($channels as $channel) {

@@ -20,10 +20,10 @@ use DateTimeInterface;
 use Doctrine\DBAL;
 use Exception;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Entities;
+use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
-use FastyBird\Connector\HomeKit\Queries;
+use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -178,12 +178,12 @@ class Install extends Console\Command\Command
 
 		$question->setValidator(function ($answer) {
 			if ($answer !== null) {
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
+				$findConnectorQuery = new HomeKitQueries\Entities\FindConnectors();
 				$findConnectorQuery->byIdentifier($answer);
 
 				if ($this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					HomeKitEntities\Connectors\Connector::class,
 				) !== null) {
 					throw new HomeKitExceptions\Runtime(
 						(string) $this->translator->translate(
@@ -204,12 +204,12 @@ class Install extends Console\Command\Command
 			for ($i = 1; $i <= 100; $i++) {
 				$identifier = sprintf($identifierPattern, $i);
 
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
+				$findConnectorQuery = new HomeKitQueries\Entities\FindConnectors();
 				$findConnectorQuery->byIdentifier($identifier);
 
 				if ($this->connectorsRepository->findOneBy(
 					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
+					HomeKitEntities\Connectors\Connector::class,
 				) === null) {
 					break;
 				}
@@ -235,11 +235,11 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Connectors\Connector::class,
+				'entity' => HomeKitEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
@@ -287,8 +287,11 @@ class Install extends Console\Command\Command
 		$createDevices = (bool) $io->askQuestion($question);
 
 		if ($createDevices) {
-			$connector = $this->connectorsRepository->find($connector->getId(), Entities\Connectors\Connector::class);
-			assert($connector instanceof Entities\Connectors\Connector);
+			$connector = $this->connectorsRepository->find(
+				$connector->getId(),
+				HomeKitEntities\Connectors\Connector::class,
+			);
+			assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 			$this->createDevice($io, $connector);
 		}
@@ -355,7 +358,7 @@ class Install extends Console\Command\Command
 
 		$port = $this->askConnectorPort($io, $connector);
 
-		$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
+		$findConnectorPropertyQuery = new HomeKitQueries\Entities\FindConnectorProperties();
 		$findConnectorPropertyQuery->forConnector($connector);
 		$findConnectorPropertyQuery->byIdentifier(HomeKitTypes\ConnectorPropertyIdentifier::PORT);
 
@@ -369,7 +372,7 @@ class Install extends Console\Command\Command
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
 			]));
-			assert($connector instanceof Entities\Connectors\Connector);
+			assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 			if ($portProperty === null) {
 				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
@@ -426,8 +429,11 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$connector = $this->connectorsRepository->find($connector->getId(), Entities\Connectors\Connector::class);
-		assert($connector instanceof Entities\Connectors\Connector);
+		$connector = $this->connectorsRepository->find(
+			$connector->getId(),
+			HomeKitEntities\Connectors\Connector::class,
+		);
+		assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 		$this->askManageConnectorAction($io, $connector);
 	}
@@ -531,15 +537,15 @@ class Install extends Console\Command\Command
 	 */
 	private function listConnectors(Style\SymfonyStyle $io): void
 	{
-		$findConnectorsQuery = new Queries\Entities\FindConnectors();
+		$findConnectorsQuery = new HomeKitQueries\Entities\FindConnectors();
 
 		$connectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			HomeKitEntities\Connectors\Connector::class,
 		);
 		usort(
 			$connectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (HomeKitEntities\Connectors\Connector $a, HomeKitEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -552,10 +558,10 @@ class Install extends Console\Command\Command
 		]);
 
 		foreach ($connectors as $index => $connector) {
-			$findDevicesQuery = new Queries\Entities\FindDevices();
+			$findDevicesQuery = new HomeKitQueries\Entities\FindDevices();
 			$findDevicesQuery->forConnector($connector);
 
-			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+			$devices = $this->devicesRepository->findAllBy($findDevicesQuery, HomeKitEntities\Devices\Device::class);
 
 			$table->addRow([
 				$index + 1,
@@ -583,7 +589,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function createDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function createDevice(Style\SymfonyStyle $io, HomeKitEntities\Connectors\Connector $connector): void
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate(
@@ -593,11 +599,14 @@ class Install extends Console\Command\Command
 
 		$question->setValidator(function (string|null $answer) {
 			if ($answer !== '' && $answer !== null) {
-				$findDeviceQuery = new Queries\Entities\FindDevices();
+				$findDeviceQuery = new HomeKitQueries\Entities\FindDevices();
 				$findDeviceQuery->byIdentifier($answer);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) !== null
+					$this->devicesRepository->findOneBy(
+						$findDeviceQuery,
+						HomeKitEntities\Devices\Device::class,
+					) !== null
 				) {
 					throw new HomeKitExceptions\Runtime(
 						(string) $this->translator->translate(
@@ -618,11 +627,14 @@ class Install extends Console\Command\Command
 			for ($i = 1; $i <= 100; $i++) {
 				$identifier = sprintf($identifierPattern, $i);
 
-				$findDeviceQuery = new Queries\Entities\FindDevices();
+				$findDeviceQuery = new HomeKitQueries\Entities\FindDevices();
 				$findDeviceQuery->byIdentifier($identifier);
 
 				if (
-					$this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class) === null
+					$this->devicesRepository->findOneBy(
+						$findDeviceQuery,
+						HomeKitEntities\Devices\Device::class,
+					) === null
 				) {
 					break;
 				}
@@ -648,12 +660,12 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$device = $this->devicesManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Devices\Device::class,
+				'entity' => HomeKitEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof HomeKitEntities\Devices\Device);
 
 			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
@@ -691,8 +703,8 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->clear();
 		}
 
-		$device = $this->devicesRepository->find($device->getId(), Entities\Devices\Device::class);
-		assert($device instanceof Entities\Devices\Device);
+		$device = $this->devicesRepository->find($device->getId(), HomeKitEntities\Devices\Device::class);
+		assert($device instanceof HomeKitEntities\Devices\Device);
 
 		$this->createService($io, $device);
 	}
@@ -711,7 +723,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function editDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function editDevice(Style\SymfonyStyle $io, HomeKitEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -734,7 +746,7 @@ class Install extends Console\Command\Command
 
 		$name = $this->askDeviceName($io, $device);
 
-		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
+		$findDevicePropertyQuery = new HomeKitQueries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);
 		$findDevicePropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::CATEGORY);
 
@@ -749,7 +761,7 @@ class Install extends Console\Command\Command
 			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
 				'name' => $name,
 			]));
-			assert($device instanceof Entities\Devices\Device);
+			assert($device instanceof HomeKitEntities\Devices\Device);
 
 			if ($categoryProperty === null) {
 				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
@@ -804,8 +816,8 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$device = $this->devicesRepository->find($device->getId(), Entities\Devices\Device::class);
-		assert($device instanceof Entities\Devices\Device);
+		$device = $this->devicesRepository->find($device->getId(), HomeKitEntities\Devices\Device::class);
+		assert($device instanceof HomeKitEntities\Devices\Device);
 
 		$this->askManageDeviceAction($io, $device);
 	}
@@ -814,7 +826,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function deleteDevice(Style\SymfonyStyle $io, HomeKitEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -889,7 +901,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function manageDevice(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function manageDevice(Style\SymfonyStyle $io, HomeKitEntities\Connectors\Connector $connector): void
 	{
 		$device = $this->askWhichDevice($io, $connector);
 
@@ -909,15 +921,15 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function listDevices(Style\SymfonyStyle $io, Entities\Connectors\Connector $connector): void
+	private function listDevices(Style\SymfonyStyle $io, HomeKitEntities\Connectors\Connector $connector): void
 	{
-		$findDevicesQuery = new Queries\Entities\FindDevices();
+		$findDevicesQuery = new HomeKitQueries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
-		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, Entities\Devices\Device::class);
+		$devices = $this->devicesRepository->findAllBy($findDevicesQuery, HomeKitEntities\Devices\Device::class);
 		usort(
 			$devices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (HomeKitEntities\Devices\Device $a, HomeKitEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -958,7 +970,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function createService(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function createService(Style\SymfonyStyle $io, HomeKitEntities\Devices\Device $device): void
 	{
 		$type = $this->askServiceType($io, $device);
 
@@ -969,11 +981,11 @@ class Install extends Console\Command\Command
 		for ($i = 1; $i <= 100; $i++) {
 			$identifier = sprintf($identifierPattern, $i);
 
-			$findChannelQuery = new Queries\Entities\FindChannels();
+			$findChannelQuery = new HomeKitQueries\Entities\FindChannels();
 			$findChannelQuery->forDevice($device);
 			$findChannelQuery->byIdentifier($identifier);
 
-			$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+			$channel = $this->channelsRepository->findOneBy($findChannelQuery, HomeKitEntities\Channels\Channel::class);
 
 			if ($channel === null) {
 				break;
@@ -1023,11 +1035,11 @@ class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-				'entity' => Entities\Channels\Generic::class,
+				'entity' => HomeKitEntities\Channels\Generic::class,
 				'identifier' => $identifier,
 				'device' => $device,
 			]));
-			assert($channel instanceof Entities\Channels\Generic);
+			assert($channel instanceof HomeKitEntities\Channels\Generic);
 
 			$this->createCharacteristics($io, $channel, $requiredCharacteristics, true);
 
@@ -1077,8 +1089,8 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$channel = $this->channelsRepository->find($channel->getId(), Entities\Channels\Channel::class);
-		assert($channel instanceof Entities\Channels\Channel);
+		$channel = $this->channelsRepository->find($channel->getId(), HomeKitEntities\Channels\Channel::class);
+		assert($channel instanceof HomeKitEntities\Channels\Channel);
 
 		$this->askManageServiceAction($io, $channel);
 	}
@@ -1097,7 +1109,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function editService(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function editService(Style\SymfonyStyle $io, HomeKitEntities\Devices\Device $device): void
 	{
 		$channels = $this->getServicesList($device);
 
@@ -1258,8 +1270,8 @@ class Install extends Console\Command\Command
 			return;
 		}
 
-		$channel = $this->channelsRepository->find($channel->getId(), Entities\Channels\Channel::class);
-		assert($channel instanceof Entities\Channels\Channel);
+		$channel = $this->channelsRepository->find($channel->getId(), HomeKitEntities\Channels\Channel::class);
+		assert($channel instanceof HomeKitEntities\Channels\Channel);
 
 		$this->askManageServiceAction($io, $channel);
 	}
@@ -1268,7 +1280,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteService(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function deleteService(Style\SymfonyStyle $io, HomeKitEntities\Devices\Device $device): void
 	{
 		$channels = $this->getServicesList($device);
 
@@ -1349,7 +1361,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function manageService(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function manageService(Style\SymfonyStyle $io, HomeKitEntities\Devices\Device $device): void
 	{
 		$channels = $this->getServicesList($device);
 
@@ -1376,12 +1388,15 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function listServices(Style\SymfonyStyle $io, Entities\Devices\Device $device): void
+	private function listServices(Style\SymfonyStyle $io, HomeKitEntities\Devices\Device $device): void
 	{
-		$findChannelsQuery = new Queries\Entities\FindChannels();
+		$findChannelsQuery = new HomeKitQueries\Entities\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$deviceChannels = $this->channelsRepository->findAllBy($findChannelsQuery, Entities\Channels\Channel::class);
+		$deviceChannels = $this->channelsRepository->findAllBy(
+			$findChannelsQuery,
+			HomeKitEntities\Channels\Channel::class,
+		);
 		usort(
 			$deviceChannels,
 			static fn (DevicesEntities\Channels\Channel $a, DevicesEntities\Channels\Channel $b): int => (
@@ -1439,7 +1454,7 @@ class Install extends Console\Command\Command
 	 */
 	private function createCharacteristics(
 		Style\SymfonyStyle $io,
-		Entities\Channels\Channel $channel,
+		HomeKitEntities\Channels\Channel $channel,
 		array $characteristics,
 		bool $required,
 	): void
@@ -1620,7 +1635,7 @@ class Install extends Console\Command\Command
 	 * @throws Nette\IOException
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function editCharacteristic(Style\SymfonyStyle $io, Entities\Channels\Channel $channel): void
+	private function editCharacteristic(Style\SymfonyStyle $io, HomeKitEntities\Channels\Channel $channel): void
 	{
 		$properties = $this->getCharacteristicsList($channel);
 
@@ -1850,7 +1865,7 @@ class Install extends Console\Command\Command
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function deleteCharacteristic(Style\SymfonyStyle $io, Entities\Channels\Channel $channel): void
+	private function deleteCharacteristic(Style\SymfonyStyle $io, HomeKitEntities\Channels\Channel $channel): void
 	{
 		$properties = $this->getCharacteristicsList($channel);
 
@@ -1930,7 +1945,7 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function listCharacteristics(Style\SymfonyStyle $io, Entities\Channels\Channel $channel): void
+	private function listCharacteristics(Style\SymfonyStyle $io, HomeKitEntities\Channels\Channel $channel): void
 	{
 		$findPropertiesQuery = new DevicesQueries\Entities\FindChannelProperties();
 		$findPropertiesQuery->forChannel($channel);
@@ -2092,11 +2107,14 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageConnectorAction(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
+		HomeKitEntities\Connectors\Connector $connector,
 	): void
 	{
-		$connector = $this->connectorsRepository->find($connector->getId(), Entities\Connectors\Connector::class);
-		assert($connector instanceof Entities\Connectors\Connector);
+		$connector = $this->connectorsRepository->find(
+			$connector->getId(),
+			HomeKitEntities\Connectors\Connector::class,
+		);
+		assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//homekit-connector.cmd.base.questions.whatToDo'),
@@ -2185,11 +2203,11 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageDeviceAction(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		HomeKitEntities\Devices\Device $device,
 	): void
 	{
-		$device = $this->devicesRepository->find($device->getId(), Entities\Devices\Device::class);
-		assert($device instanceof Entities\Devices\Device);
+		$device = $this->devicesRepository->find($device->getId(), HomeKitEntities\Devices\Device::class);
+		assert($device instanceof HomeKitEntities\Devices\Device);
 
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//homekit-connector.cmd.base.questions.whatToDo'),
@@ -2278,11 +2296,11 @@ class Install extends Console\Command\Command
 	 */
 	private function askManageServiceAction(
 		Style\SymfonyStyle $io,
-		Entities\Channels\Channel $channel,
+		HomeKitEntities\Channels\Channel $channel,
 	): void
 	{
-		$channel = $this->channelsRepository->find($channel->getId(), Entities\Channels\Channel::class);
-		assert($channel instanceof Entities\Channels\Channel);
+		$channel = $this->channelsRepository->find($channel->getId(), HomeKitEntities\Channels\Channel::class);
+		assert($channel instanceof HomeKitEntities\Channels\Channel);
 
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//homekit-connector.cmd.base.questions.whatToDo'),
@@ -2341,7 +2359,7 @@ class Install extends Console\Command\Command
 
 	private function askConnectorName(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector|null $connector = null,
+		HomeKitEntities\Connectors\Connector|null $connector = null,
 	): string|null
 	{
 		$question = new Console\Question\Question(
@@ -2360,7 +2378,10 @@ class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function askConnectorPort(Style\SymfonyStyle $io, Entities\Connectors\Connector|null $connector = null): int
+	private function askConnectorPort(
+		Style\SymfonyStyle $io,
+		HomeKitEntities\Connectors\Connector|null $connector = null,
+	): int
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//homekit-connector.cmd.install.questions.provide.connector.port'),
@@ -2376,7 +2397,7 @@ class Install extends Console\Command\Command
 				);
 			}
 
-			$findConnectorPropertiesQuery = new Queries\Entities\FindConnectorProperties();
+			$findConnectorPropertiesQuery = new HomeKitQueries\Entities\FindConnectorProperties();
 			$findConnectorPropertiesQuery->byIdentifier(HomeKitTypes\ConnectorPropertyIdentifier::PORT);
 
 			$properties = $this->connectorsPropertiesRepository->findAllBy(
@@ -2386,7 +2407,7 @@ class Install extends Console\Command\Command
 
 			foreach ($properties as $property) {
 				if (
-					$property->getConnector() instanceof Entities\Connectors\Connector
+					$property->getConnector() instanceof HomeKitEntities\Connectors\Connector
 					&& $property->getValue() === intval($answer)
 					&& (
 						$connector === null || !$property->getConnector()->getId()->equals($connector->getId())
@@ -2407,7 +2428,10 @@ class Install extends Console\Command\Command
 		return intval($io->askQuestion($question));
 	}
 
-	private function askDeviceName(Style\SymfonyStyle $io, Entities\Devices\Device|null $device = null): string|null
+	private function askDeviceName(
+		Style\SymfonyStyle $io,
+		HomeKitEntities\Devices\Device|null $device = null,
+	): string|null
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//homekit-connector.cmd.install.questions.provide.device.name'),
@@ -2427,7 +2451,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askDeviceCategory(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device|null $device = null,
+		HomeKitEntities\Devices\Device|null $device = null,
 	): HomeKitTypes\AccessoryCategory
 	{
 		$categories = array_combine(
@@ -2517,10 +2541,10 @@ class Install extends Console\Command\Command
 	 */
 	private function askServiceType(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		HomeKitEntities\Devices\Device $device,
 	): string
 	{
-		$findPropertyQuery = new Queries\Entities\FindDeviceProperties();
+		$findPropertyQuery = new HomeKitQueries\Entities\FindDeviceProperties();
 		$findPropertyQuery->forDevice($device);
 		$findPropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::CATEGORY);
 
@@ -2711,7 +2735,7 @@ class Install extends Console\Command\Command
 		);
 
 		foreach ($systemDevices as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof HomeKitEntities\Devices\Device) {
 				continue;
 			}
 
@@ -3499,19 +3523,19 @@ class Install extends Console\Command\Command
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function askWhichConnector(Style\SymfonyStyle $io): Entities\Connectors\Connector|null
+	private function askWhichConnector(Style\SymfonyStyle $io): HomeKitEntities\Connectors\Connector|null
 	{
 		$connectors = [];
 
-		$findConnectorsQuery = new Queries\Entities\FindConnectors();
+		$findConnectorsQuery = new HomeKitQueries\Entities\FindConnectors();
 
 		$systemConnectors = $this->connectorsRepository->findAllBy(
 			$findConnectorsQuery,
-			Entities\Connectors\Connector::class,
+			HomeKitEntities\Connectors\Connector::class,
 		);
 		usort(
 			$systemConnectors,
-			static fn (Entities\Connectors\Connector $a, Entities\Connectors\Connector $b): int => (
+			static fn (HomeKitEntities\Connectors\Connector $a, HomeKitEntities\Connectors\Connector $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -3533,46 +3557,50 @@ class Install extends Console\Command\Command
 		$question->setErrorMessage(
 			(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 		);
-		$question->setValidator(function (string|int|null $answer) use ($connectors): Entities\Connectors\Connector {
-			if ($answer === null) {
+		$question->setValidator(
+			function (string|int|null $answer) use ($connectors): HomeKitEntities\Connectors\Connector {
+				if ($answer === null) {
+					throw new HomeKitExceptions\Runtime(
+						sprintf(
+							(string) $this->translator->translate(
+								'//homekit-connector.cmd.base.messages.answerNotValid',
+							),
+							$answer,
+						),
+					);
+				}
+
+				if (array_key_exists($answer, array_values($connectors))) {
+					$answer = array_values($connectors)[$answer];
+				}
+
+				$identifier = array_search($answer, $connectors, true);
+
+				if ($identifier !== false) {
+					$findConnectorQuery = new HomeKitQueries\Entities\FindConnectors();
+					$findConnectorQuery->byIdentifier($identifier);
+
+					$connector = $this->connectorsRepository->findOneBy(
+						$findConnectorQuery,
+						HomeKitEntities\Connectors\Connector::class,
+					);
+
+					if ($connector !== null) {
+						return $connector;
+					}
+				}
+
 				throw new HomeKitExceptions\Runtime(
 					sprintf(
 						(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 						$answer,
 					),
 				);
-			}
-
-			if (array_key_exists($answer, array_values($connectors))) {
-				$answer = array_values($connectors)[$answer];
-			}
-
-			$identifier = array_search($answer, $connectors, true);
-
-			if ($identifier !== false) {
-				$findConnectorQuery = new Queries\Entities\FindConnectors();
-				$findConnectorQuery->byIdentifier($identifier);
-
-				$connector = $this->connectorsRepository->findOneBy(
-					$findConnectorQuery,
-					Entities\Connectors\Connector::class,
-				);
-
-				if ($connector !== null) {
-					return $connector;
-				}
-			}
-
-			throw new HomeKitExceptions\Runtime(
-				sprintf(
-					(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
-					$answer,
-				),
-			);
-		});
+			},
+		);
 
 		$connector = $io->askQuestion($question);
-		assert($connector instanceof Entities\Connectors\Connector);
+		assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 		return $connector;
 	}
@@ -3582,21 +3610,21 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichDevice(
 		Style\SymfonyStyle $io,
-		Entities\Connectors\Connector $connector,
-	): Entities\Devices\Device|null
+		HomeKitEntities\Connectors\Connector $connector,
+	): HomeKitEntities\Devices\Device|null
 	{
 		$devices = [];
 
-		$findDevicesQuery = new Queries\Entities\FindDevices();
+		$findDevicesQuery = new HomeKitQueries\Entities\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
 		$connectorDevices = $this->devicesRepository->findAllBy(
 			$findDevicesQuery,
-			Entities\Devices\Device::class,
+			HomeKitEntities\Devices\Device::class,
 		);
 		usort(
 			$connectorDevices,
-			static fn (Entities\Devices\Device $a, Entities\Devices\Device $b): int => (
+			static fn (HomeKitEntities\Devices\Device $a, HomeKitEntities\Devices\Device $b): int => (
 				($a->getName() ?? $a->getIdentifier()) <=> ($b->getName() ?? $b->getIdentifier())
 			),
 		);
@@ -3619,7 +3647,7 @@ class Install extends Console\Command\Command
 			(string) $this->translator->translate('//homekit-connector.cmd.base.messages.answerNotValid'),
 		);
 		$question->setValidator(
-			function (string|int|null $answer) use ($connector, $devices): Entities\Devices\Device {
+			function (string|int|null $answer) use ($connector, $devices): HomeKitEntities\Devices\Device {
 				if ($answer === null) {
 					throw new HomeKitExceptions\Runtime(
 						sprintf(
@@ -3638,13 +3666,13 @@ class Install extends Console\Command\Command
 				$identifier = array_search($answer, $devices, true);
 
 				if ($identifier !== false) {
-					$findDeviceQuery = new Queries\Entities\FindDevices();
+					$findDeviceQuery = new HomeKitQueries\Entities\FindDevices();
 					$findDeviceQuery->byIdentifier($identifier);
 					$findDeviceQuery->forConnector($connector);
 
 					$device = $this->devicesRepository->findOneBy(
 						$findDeviceQuery,
-						Entities\Devices\Device::class,
+						HomeKitEntities\Devices\Device::class,
 					);
 
 					if ($device !== null) {
@@ -3662,7 +3690,7 @@ class Install extends Console\Command\Command
 		);
 
 		$device = $io->askQuestion($question);
-		assert($device instanceof Entities\Devices\Device);
+		assert($device instanceof HomeKitEntities\Devices\Device);
 
 		return $device;
 	}
@@ -3674,9 +3702,9 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichService(
 		Style\SymfonyStyle $io,
-		Entities\Devices\Device $device,
+		HomeKitEntities\Devices\Device $device,
 		array $channels,
-	): Entities\Channels\Channel|null
+	): HomeKitEntities\Channels\Channel|null
 	{
 		$question = new Console\Question\ChoiceQuestion(
 			(string) $this->translator->translate('//homekit-connector.cmd.install.questions.select.item.service'),
@@ -3705,11 +3733,11 @@ class Install extends Console\Command\Command
 			return null;
 		}
 
-		$findChannelQuery = new Queries\Entities\FindChannels();
+		$findChannelQuery = new HomeKitQueries\Entities\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byIdentifier($serviceIdentifier);
 
-		$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+		$channel = $this->channelsRepository->findOneBy($findChannelQuery, HomeKitEntities\Channels\Channel::class);
 
 		if ($channel === null) {
 			$io->error(
@@ -3737,7 +3765,7 @@ class Install extends Console\Command\Command
 	 */
 	private function askWhichCharacteristic(
 		Style\SymfonyStyle $io,
-		Entities\Channels\Channel $channel,
+		HomeKitEntities\Channels\Channel $channel,
 		array $properties,
 	): DevicesEntities\Channels\Properties\Variable|DevicesEntities\Channels\Properties\Mapped|null
 	{
@@ -3807,14 +3835,17 @@ class Install extends Console\Command\Command
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function getServicesList(Entities\Devices\Device $device): array
+	private function getServicesList(HomeKitEntities\Devices\Device $device): array
 	{
 		$channels = [];
 
-		$findChannelsQuery = new Queries\Entities\FindChannels();
+		$findChannelsQuery = new HomeKitQueries\Entities\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
-		$deviceChannels = $this->channelsRepository->findAllBy($findChannelsQuery, Entities\Channels\Channel::class);
+		$deviceChannels = $this->channelsRepository->findAllBy(
+			$findChannelsQuery,
+			HomeKitEntities\Channels\Channel::class,
+		);
 		usort(
 			$deviceChannels,
 			static fn (DevicesEntities\Channels\Channel $a, DevicesEntities\Channels\Channel $b): int => (
@@ -3834,7 +3865,7 @@ class Install extends Console\Command\Command
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 */
-	private function getCharacteristicsList(Entities\Channels\Channel $channel): array
+	private function getCharacteristicsList(HomeKitEntities\Channels\Channel $channel): array
 	{
 		$properties = [];
 

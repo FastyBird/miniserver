@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Shelly\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Shelly\Entities;
+use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -31,7 +31,7 @@ class Channel extends DevicesEntities\Channels\Channel
 	public const TYPE = 'shelly-connector';
 
 	public function __construct(
-		Entities\Devices\Device $device,
+		ShellyEntities\Devices\Device $device,
 		string $identifier,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
@@ -50,9 +50,9 @@ class Channel extends DevicesEntities\Channels\Channel
 		return Sources\Connector::SHELLY;
 	}
 
-	public function getDevice(): Entities\Devices\Device
+	public function getDevice(): ShellyEntities\Devices\Device
 	{
-		assert($this->device instanceof Entities\Devices\Device);
+		assert($this->device instanceof ShellyEntities\Devices\Device);
 
 		return $this->device;
 	}

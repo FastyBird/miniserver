@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 use DateTimeInterface;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
-use FastyBird\Connector\Sonoff\Documents;
+use FastyBird\Connector\Sonoff\Documents as SonoffDocuments;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
-use FastyBird\Connector\Sonoff\Queries;
+use FastyBird\Connector\Sonoff\Queries as SonoffQueries;
 use FastyBird\Connector\Sonoff\Queue;
-use FastyBird\Connector\Sonoff\Types;
+use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -98,12 +98,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new SonoffQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			SonoffDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -131,13 +131,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new SonoffQueries\Configuration\FindDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			SonoffDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -165,13 +165,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new SonoffQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			SonoffDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {
@@ -304,21 +304,21 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			}
 
 			if ($outlet !== null) {
-				if ($parameter === Types\Parameter::SWITCH->value) {
-					$group = Types\ChannelGroup::SWITCHES;
-				} elseif ($parameter === Types\Parameter::STARTUP->value) {
-					$group = Types\ChannelGroup::CONFIGURE;
+				if ($parameter === SonoffTypes\Parameter::SWITCH->value) {
+					$group = SonoffTypes\ChannelGroup::SWITCHES;
+				} elseif ($parameter === SonoffTypes\Parameter::STARTUP->value) {
+					$group = SonoffTypes\ChannelGroup::CONFIGURE;
 				} elseif (
-					$parameter === Types\Parameter::PULSE->value
-					|| $parameter === Types\Parameter::PULSE_WIDTH->value
+					$parameter === SonoffTypes\Parameter::PULSE->value
+					|| $parameter === SonoffTypes\Parameter::PULSE_WIDTH->value
 				) {
-					$group = Types\ChannelGroup::PULSES;
+					$group = SonoffTypes\ChannelGroup::PULSES;
 				}
 			}
 		}
 
 		try {
-			if ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::AUTO) {
+			if ($this->connectorHelper->getClientMode($connector) === SonoffTypes\ClientMode::AUTO) {
 				$deferred = new Promise\Deferred();
 
 				if ($this->deviceHelper->getIpAddress($device) !== null) {
@@ -374,7 +374,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				}
 
 				$result = $deferred->promise();
-			} elseif ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::CLOUD) {
+			} elseif ($this->connectorHelper->getClientMode($connector) === SonoffTypes\ClientMode::CLOUD) {
 				$client = $this->connectionManager->getCloudApiConnection($connector);
 
 				if (!$client->isConnected()) {
@@ -388,7 +388,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 					$group,
 					$outlet,
 				);
-			} elseif ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::LAN) {
+			} elseif ($this->connectorHelper->getClientMode($connector) === SonoffTypes\ClientMode::LAN) {
 				if ($this->deviceHelper->getIpAddress($device) === null) {
 					throw new SonoffExceptions\InvalidState('Device IP address is not configured');
 				}

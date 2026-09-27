@@ -19,7 +19,7 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\NsPanel\Entities;
+use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
@@ -74,9 +74,9 @@ final class Properties implements Common\EventSubscriber
 		$entity = $eventArgs->getObject();
 
 		if (
-			$entity instanceof Entities\Devices\Gateway
-			|| $entity instanceof Entities\Devices\SubDevice
-			|| $entity instanceof Entities\Devices\ThirdPartyDevice
+			$entity instanceof NsPanelEntities\Devices\Gateway
+			|| $entity instanceof NsPanelEntities\Devices\SubDevice
+			|| $entity instanceof NsPanelEntities\Devices\ThirdPartyDevice
 		) {
 			$this->processDeviceProperties($entity);
 		}
@@ -89,7 +89,7 @@ final class Properties implements Common\EventSubscriber
 	 * @throws NsPanelExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 */
-	private function processDeviceProperties(Entities\Devices\Device $device): void
+	private function processDeviceProperties(NsPanelEntities\Devices\Device $device): void
 	{
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
 		$findDevicePropertyQuery->forDevice($device);

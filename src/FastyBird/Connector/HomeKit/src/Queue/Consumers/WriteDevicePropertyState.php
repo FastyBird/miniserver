@@ -17,7 +17,7 @@ namespace FastyBird\Connector\HomeKit\Queue\Consumers;
 
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Clients;
-use FastyBird\Connector\HomeKit\Documents;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries;
@@ -79,7 +79,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			HomeKitDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -110,7 +110,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			HomeKitDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {

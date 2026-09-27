@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Tuya\Helpers;
 
-use FastyBird\Connector\Tuya\Documents;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
 use FastyBird\Connector\Tuya\Entities;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Queries;
@@ -61,7 +61,7 @@ final readonly class Device
 	 * @throws ValueError
 	 */
 	public function getProtocolVersion(
-		Documents\Devices\Device $device,
+		TuyaDocuments\Devices\Device $device,
 	): Types\DeviceProtocolVersion
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
@@ -86,8 +86,8 @@ final readonly class Device
 	 * @throws DevicesExceptions\InvalidState
 	 */
 	public function getGateway(
-		Documents\Devices\Device $device,
-	): Documents\Devices\Device|null
+		TuyaDocuments\Devices\Device $device,
+	): TuyaDocuments\Devices\Device|null
 	{
 		foreach ($device->getParents() as $parent) {
 			$findDeviceQuery = new Queries\Configuration\FindDevices();
@@ -95,7 +95,7 @@ final readonly class Device
 
 			return $this->devicesConfigurationRepository->findOneBy(
 				$findDeviceQuery,
-				Documents\Devices\Device::class,
+				TuyaDocuments\Devices\Device::class,
 			);
 		}
 
@@ -110,7 +110,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getNodeId(Documents\Devices\Device $device): string|null
+	public function getNodeId(TuyaDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -139,7 +139,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getGatewayId(Documents\Devices\Device $device): string|null
+	public function getGatewayId(TuyaDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -168,7 +168,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getIpAddress(Documents\Devices\Device $device): string|null
+	public function getIpAddress(TuyaDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -197,7 +197,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getLocalKey(Documents\Devices\Device $device): string|null
+	public function getLocalKey(TuyaDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -226,7 +226,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function isEncrypted(Documents\Devices\Device $device): bool
+	public function isEncrypted(TuyaDocuments\Devices\Device $device): bool
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -257,7 +257,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getExcludedDps(Documents\Devices\Device $device): array
+	public function getExcludedDps(TuyaDocuments\Devices\Device $device): array
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -286,7 +286,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getModel(Documents\Devices\Device $device): string|null
+	public function getModel(TuyaDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -315,7 +315,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getMacAddress(Documents\Devices\Device $device): string|null
+	public function getMacAddress(TuyaDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -344,7 +344,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getStateReadingDelay(Documents\Devices\Device $device): float
+	public function getStateReadingDelay(TuyaDocuments\Devices\Device $device): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -373,7 +373,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getHeartbeatDelay(Documents\Devices\Device $device): float
+	public function getHeartbeatDelay(TuyaDocuments\Devices\Device $device): float
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

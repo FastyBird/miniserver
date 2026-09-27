@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Shelly\Queue\Consumers;
 use DateTimeInterface;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
-use FastyBird\Connector\Shelly\Documents;
+use FastyBird\Connector\Shelly\Documents as ShellyDocuments;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
-use FastyBird\Connector\Shelly\Queries;
+use FastyBird\Connector\Shelly\Queries as ShellyQueries;
 use FastyBird\Connector\Shelly\Queue;
-use FastyBird\Connector\Shelly\Types;
+use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -94,12 +94,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new ShellyQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			ShellyDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -127,13 +127,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new ShellyQueries\Configuration\FindDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			ShellyDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -161,13 +161,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new ShellyQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			ShellyDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {
@@ -292,7 +292,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 		));
 
 		try {
-			if ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::LOCAL) {
+			if ($this->connectorHelper->getClientMode($connector) === ShellyTypes\ClientMode::LOCAL) {
 				$address = $this->deviceHelper->getLocalAddress($device);
 
 				if ($address === null) {
@@ -338,7 +338,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 				}
 
 				if (
-					$this->deviceHelper->getGeneration($device) === Types\DeviceGeneration::GENERATION_2
+					$this->deviceHelper->getGeneration($device) === ShellyTypes\DeviceGeneration::GENERATION_2
 				) {
 					$result = $this->connectionManager->getGen2HttpApiConnection()->setDeviceState(
 						$address,
@@ -348,7 +348,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 						$expectedValue,
 					);
 				} elseif (
-					$this->deviceHelper->getGeneration($device) === Types\DeviceGeneration::GENERATION_1
+					$this->deviceHelper->getGeneration($device) === ShellyTypes\DeviceGeneration::GENERATION_1
 				) {
 					$result = $this->connectionManager->getGen1HttpApiConnection()->setDeviceState(
 						$address,

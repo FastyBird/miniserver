@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Tuya\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Tuya;
-use FastyBird\Connector\Tuya\Entities;
+use FastyBird\Connector\Tuya\Entities as TuyaEntities;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
@@ -84,12 +84,12 @@ final class StoreLocalDevice implements Queue\Consumer
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byIdentifier($message->getId());
 
-		$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
+		$device = $this->devicesRepository->findOneBy($findDeviceQuery, TuyaEntities\Devices\Device::class);
 
 		if ($device === null) {
 			$connector = $this->connectorsRepository->find(
 				$message->getConnector(),
-				Entities\Connectors\Connector::class,
+				TuyaEntities\Connectors\Connector::class,
 			);
 
 			if ($connector === null) {
@@ -97,7 +97,7 @@ final class StoreLocalDevice implements Queue\Consumer
 			}
 
 			$device = $this->databaseHelper->transaction(
-				function () use ($message, $connector): Entities\Devices\Device {
+				function () use ($message, $connector): TuyaEntities\Devices\Device {
 					$parents = [];
 
 					if ($message->getGateway() !== null) {
@@ -107,7 +107,7 @@ final class StoreLocalDevice implements Queue\Consumer
 
 						$parent = $this->devicesRepository->findOneBy(
 							$findParentDeviceQuery,
-							Entities\Devices\Device::class,
+							TuyaEntities\Devices\Device::class,
 						);
 
 						if ($parent === null) {
@@ -122,7 +122,7 @@ final class StoreLocalDevice implements Queue\Consumer
 					$device = $this->devicesManager->create(
 						Utils\ArrayHash::from(array_merge(
 							[
-								'entity' => Entities\Devices\Device::class,
+								'entity' => TuyaEntities\Devices\Device::class,
 								'connector' => $connector,
 								'identifier' => $message->getId(),
 								'name' => $message->getName(),
@@ -132,7 +132,7 @@ final class StoreLocalDevice implements Queue\Consumer
 								: [],
 						)),
 					);
-					assert($device instanceof Entities\Devices\Device);
+					assert($device instanceof TuyaEntities\Devices\Device);
 
 					return $device;
 				},
@@ -275,11 +275,14 @@ final class StoreLocalDevice implements Queue\Consumer
 				$findChannelQuery->byIdentifier(TuyaTypes\DataPoint::LOCAL);
 				$findChannelQuery->forDevice($device);
 
-				$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+				$channel = $this->channelsRepository->findOneBy(
+					$findChannelQuery,
+					TuyaEntities\Channels\Channel::class,
+				);
 
 				if ($channel === null) {
 					$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-						'entity' => Entities\Channels\Channel::class,
+						'entity' => TuyaEntities\Channels\Channel::class,
 						'device' => $device,
 						'identifier' => TuyaTypes\DataPoint::LOCAL->value,
 					]));

@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Entities;
+use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -49,14 +49,14 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<ModbusEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
 		$devices = [];
 
 		foreach (parent::getDevices() as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof ModbusEntities\Devices\Device) {
 				$devices[] = $device;
 			}
 		}
@@ -69,7 +69,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
-		if (!$device instanceof Entities\Devices\Device) {
+		if (!$device instanceof ModbusEntities\Devices\Device) {
 			throw new ModbusExceptions\InvalidArgument('Provided device type is not valid');
 		}
 

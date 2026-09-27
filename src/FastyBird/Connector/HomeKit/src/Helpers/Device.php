@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\HomeKit\Helpers;
 
-use FastyBird\Connector\HomeKit\Documents;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Connector\HomeKit\Types;
@@ -55,7 +55,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getAccessoryCategory(Documents\Devices\Device $device): Types\AccessoryCategory
+	public function getAccessoryCategory(HomeKitDocuments\Devices\Device $device): Types\AccessoryCategory
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -83,7 +83,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getAccessoryType(Documents\Devices\Device $device): Types\AccessoryType
+	public function getAccessoryType(HomeKitDocuments\Devices\Device $device): Types\AccessoryType
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -111,7 +111,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getFirmwareVersion(Documents\Devices\Device $device): SemVer\Version|null
+	public function getFirmwareVersion(HomeKitDocuments\Devices\Device $device): SemVer\Version|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -144,7 +144,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getSerialNumber(Documents\Devices\Device $device): string|null
+	public function getSerialNumber(HomeKitDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -173,7 +173,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getManufacturer(Documents\Devices\Device $device): string|null
+	public function getManufacturer(HomeKitDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -202,7 +202,7 @@ final readonly class Device
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getModel(Documents\Devices\Device $device): string|null
+	public function getModel(HomeKitDocuments\Devices\Device $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

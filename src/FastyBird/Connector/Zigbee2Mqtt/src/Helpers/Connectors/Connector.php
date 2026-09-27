@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\Helpers\Connectors;
 
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
@@ -56,7 +56,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getClientMode(Documents\Connectors\Connector $connector): Types\ClientMode
+	public function getClientMode(Zigbee2MqttDocuments\Connectors\Connector $connector): Types\ClientMode
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -84,7 +84,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getServerAddress(Documents\Connectors\Connector $connector): string
+	public function getServerAddress(Zigbee2MqttDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -113,7 +113,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getServerPort(Documents\Connectors\Connector $connector): int
+	public function getServerPort(Zigbee2MqttDocuments\Connectors\Connector $connector): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -142,7 +142,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getServerSecuredPort(Documents\Connectors\Connector $connector): int
+	public function getServerSecuredPort(Zigbee2MqttDocuments\Connectors\Connector $connector): int
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -171,7 +171,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getUsername(Documents\Connectors\Connector $connector): string|null
+	public function getUsername(Zigbee2MqttDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -200,7 +200,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getPassword(Documents\Connectors\Connector $connector): string|null
+	public function getPassword(Zigbee2MqttDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);

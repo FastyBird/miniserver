@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Tuya\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Tuya\Entities;
+use FastyBird\Connector\Tuya\Entities as TuyaEntities;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -46,14 +46,14 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<TuyaEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
 		$devices = [];
 
 		foreach (parent::getDevices() as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof TuyaEntities\Devices\Device) {
 				$devices[] = $device;
 			}
 		}
@@ -66,7 +66,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
-		if (!$device instanceof Entities\Devices\Device) {
+		if (!$device instanceof TuyaEntities\Devices\Device) {
 			throw new TuyaExceptions\InvalidArgument('Provided device type is not valid');
 		}
 

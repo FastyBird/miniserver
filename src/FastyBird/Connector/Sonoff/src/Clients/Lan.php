@@ -23,7 +23,7 @@ use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
-use FastyBird\Connector\Sonoff\Types;
+use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -394,109 +394,109 @@ final class Lan extends ClientProcess implements Client
 		if ($event->getData()->isSwitch() || $event->getData()->isLight()) {
 			if ($event->getData()->getSwitch() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::SWITCH->value,
-					Types\PropertyParameter::VALUE->value => $event->getData()->getSwitch(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::SWITCH->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getSwitch(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value,
 				];
 			}
 
 			if ($event->getData()->getStartup() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::STARTUP->value,
-					Types\PropertyParameter::VALUE->value => $event->getData()->getStartup(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::STARTUP->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getStartup(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value,
 				];
 			}
 
 			if ($event->getData()->getPulse() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::PULSE->value,
-					Types\PropertyParameter::VALUE->value => $event->getData()->getPulse(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::PULSE->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getPulse(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value,
 				];
 			}
 
 			if ($event->getData()->getPulseWidth() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::PULSE_WIDTH->value,
-					Types\PropertyParameter::VALUE->value => $event->getData()->getPulseWidth(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::PULSE_WIDTH->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getPulseWidth(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value,
 				];
 			}
 
 			if ($event->getData()->getBrightness() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::BRIGHTNESS_2->value,
-					Types\PropertyParameter::VALUE->value => $event->getData()->getBrightness(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::LIGHT->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::BRIGHTNESS_2->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getBrightness(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::LIGHT->value,
 				];
 			}
 
 			if ($event->getData()->getMinimumBrightness() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::MINIMUM_BRIGHTNESS->value,
-					Types\PropertyParameter::VALUE->value => $event->getData()->getMinimumBrightness(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::LIGHT->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::MINIMUM_BRIGHTNESS->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getMinimumBrightness(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::LIGHT->value,
 				];
 			}
 
 			if ($event->getData()->getMaximumBrightness() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::MAXIMUM_BRIGHTNESS->value,
-					Types\PropertyParameter::VALUE->value => $event->getData()->getMaximumBrightness(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::LIGHT->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::MAXIMUM_BRIGHTNESS->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getMaximumBrightness(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::LIGHT->value,
 				];
 			}
 
 			if ($event->getData()->getMode() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::MODE->value,
-					Types\PropertyParameter::VALUE->value => $event->getData()->getMode(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::LIGHT->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::MODE->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getMode(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::LIGHT->value,
 				];
 			}
 		} elseif ($event->getData()->isSwitches()) {
 			foreach ($event->getData()->getSwitchesStates() as $switchState) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::SWITCH->value,
-					Types\PropertyParameter::VALUE->value => $switchState->getSwitch(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value . '_' . $switchState->getOutlet(),
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::SWITCH->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $switchState->getSwitch(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value . '_' . $switchState->getOutlet(),
 				];
 			}
 		}
 
 		if ($event->getData()->getRssi() !== null) {
 			$states[] = [
-				Types\PropertyParameter::NAME->value => Types\Parameter::RSSI->value,
-				Types\PropertyParameter::VALUE->value => $event->getData()->getRssi(),
+				SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::RSSI->value,
+				SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getRssi(),
 			];
 		}
 
 		if ($event->getData()->getSsid() !== null) {
 			$states[] = [
-				Types\PropertyParameter::NAME->value => Types\Parameter::SSID->value,
-				Types\PropertyParameter::VALUE->value => $event->getData()->getSsid(),
+				SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::SSID->value,
+				SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getSsid(),
 			];
 		}
 
 		if ($event->getData()->getBssid() !== null) {
 			$states[] = [
-				Types\PropertyParameter::NAME->value => Types\Parameter::BSSID->value,
-				Types\PropertyParameter::VALUE->value => $event->getData()->getBssid(),
+				SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::BSSID->value,
+				SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getBssid(),
 			];
 		}
 
 		if ($event->getData()->getFirmwareVersion() !== null) {
 			$states[] = [
-				Types\PropertyParameter::NAME->value => Types\Parameter::FIRMWARE_VERSION->value,
-				Types\PropertyParameter::VALUE->value => $event->getData()->getFirmwareVersion(),
+				SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::FIRMWARE_VERSION->value,
+				SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getFirmwareVersion(),
 			];
 		}
 
 		if ($event->getData()->getStatusLed() !== null) {
 			$states[] = [
-				Types\PropertyParameter::NAME->value => Types\Parameter::STATUS_LED->value,
-				Types\PropertyParameter::VALUE->value => $event->getData()->getStatusLed(),
+				SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::STATUS_LED->value,
+				SonoffTypes\PropertyParameter::VALUE->value => $event->getData()->getStatusLed(),
 			];
 		}
 
@@ -526,123 +526,124 @@ final class Lan extends ClientProcess implements Client
 		if ($info->isSwitch() || $info->isLight()) {
 			if ($info->getSwitch() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::SWITCH->value,
-					Types\PropertyParameter::VALUE->value => $info->getSwitch(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::SWITCH->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $info->getSwitch(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value,
 				];
 			}
 
 			if ($info->getStartup() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::STARTUP->value,
-					Types\PropertyParameter::VALUE->value => $info->getStartup(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::STARTUP->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $info->getStartup(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value,
 				];
 			}
 
 			if ($info->getPulse() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::PULSE->value,
-					Types\PropertyParameter::VALUE->value => $info->getPulse(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::PULSE->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $info->getPulse(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value,
 				];
 			}
 
 			if ($info->getPulseWidth() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::PULSE_WIDTH->value,
-					Types\PropertyParameter::VALUE->value => $info->getPulseWidth(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::PULSE_WIDTH->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $info->getPulseWidth(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value,
 				];
 			}
 
 			if ($info->getBrightness() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::BRIGHTNESS_2->value,
-					Types\PropertyParameter::VALUE->value => $info->getBrightness(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::LIGHT->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::BRIGHTNESS_2->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $info->getBrightness(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::LIGHT->value,
 				];
 			}
 
 			if ($info->getMinimumBrightness() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::MINIMUM_BRIGHTNESS->value,
-					Types\PropertyParameter::VALUE->value => $info->getMinimumBrightness(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::LIGHT->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::MINIMUM_BRIGHTNESS->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $info->getMinimumBrightness(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::LIGHT->value,
 				];
 			}
 
 			if ($info->getMaximumBrightness() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::MAXIMUM_BRIGHTNESS->value,
-					Types\PropertyParameter::VALUE->value => $info->getMaximumBrightness(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::LIGHT->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::MAXIMUM_BRIGHTNESS->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $info->getMaximumBrightness(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::LIGHT->value,
 				];
 			}
 
 			if ($info->getMode() !== null) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::MODE->value,
-					Types\PropertyParameter::VALUE->value => $info->getMode(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::LIGHT->value,
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::MODE->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $info->getMode(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::LIGHT->value,
 				];
 			}
 		} elseif ($info->isSwitches()) {
 			foreach ($info->getSwitchesStates() as $switchState) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::SWITCH->value,
-					Types\PropertyParameter::VALUE->value => $switchState->getSwitch(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value . '_' . $switchState->getOutlet(),
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::SWITCH->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $switchState->getSwitch(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value . '_' . $switchState->getOutlet(),
 				];
 			}
 
 			foreach ($info->getSwitchesPulses() as $switchPulse) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::PULSE->value,
-					Types\PropertyParameter::VALUE->value => $switchPulse->getPulse(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value . '_' . $switchPulse->getOutlet(),
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::PULSE->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $switchPulse->getPulse(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value . '_' . $switchPulse->getOutlet(),
 				];
 
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::PULSE_WIDTH->value,
-					Types\PropertyParameter::VALUE->value => $switchPulse->getWidth(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value . '_' . $switchPulse->getOutlet(),
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::PULSE_WIDTH->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $switchPulse->getWidth(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value . '_' . $switchPulse->getOutlet(),
 				];
 			}
 
 			foreach ($info->getSwitchesConfiguration() as $switchConfiguration) {
 				$states[] = [
-					Types\PropertyParameter::NAME->value => Types\Parameter::STARTUP->value,
-					Types\PropertyParameter::VALUE->value => $switchConfiguration->getStartup(),
-					Types\PropertyParameter::GROUP->value => Types\ParameterGroup::SWITCH->value . '_' . $switchConfiguration->getOutlet(),
+					SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::STARTUP->value,
+					SonoffTypes\PropertyParameter::VALUE->value => $switchConfiguration->getStartup(),
+					SonoffTypes\PropertyParameter::GROUP->value => SonoffTypes\ParameterGroup::SWITCH->value
+						. '_' . $switchConfiguration->getOutlet(),
 				];
 			}
 		}
 
 		$states[] = [
-			Types\PropertyParameter::NAME->value => Types\Parameter::RSSI->value,
-			Types\PropertyParameter::VALUE->value => $info->getRssi(),
+			SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::RSSI->value,
+			SonoffTypes\PropertyParameter::VALUE->value => $info->getRssi(),
 		];
 
 		$states[] = [
-			Types\PropertyParameter::NAME->value => Types\Parameter::SSID->value,
-			Types\PropertyParameter::VALUE->value => $info->getSsid(),
+			SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::SSID->value,
+			SonoffTypes\PropertyParameter::VALUE->value => $info->getSsid(),
 		];
 
 		$states[] = [
-			Types\PropertyParameter::NAME->value => Types\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS->value,
-			Types\PropertyParameter::VALUE->value => $info->getBssid(),
+			SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS->value,
+			SonoffTypes\PropertyParameter::VALUE->value => $info->getBssid(),
 		];
 
 		$states[] = [
-			Types\PropertyParameter::NAME->value => Types\Parameter::FIRMWARE_VERSION->value,
-			Types\PropertyParameter::VALUE->value => $info->getFirmwareVersion(),
+			SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::FIRMWARE_VERSION->value,
+			SonoffTypes\PropertyParameter::VALUE->value => $info->getFirmwareVersion(),
 		];
 
 		if ($info->getStatusLed() !== null) {
 			$states[] = [
-				Types\PropertyParameter::NAME->value => Types\Parameter::STATUS_LED->value,
-				Types\PropertyParameter::VALUE->value => $info->getStatusLed(),
+				SonoffTypes\PropertyParameter::NAME->value => SonoffTypes\Parameter::STATUS_LED->value,
+				SonoffTypes\PropertyParameter::VALUE->value => $info->getStatusLed(),
 			];
 		}
 

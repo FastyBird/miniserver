@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Viera\Connector;
 
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Clients;
-use FastyBird\Connector\Viera\Documents;
+use FastyBird\Connector\Viera\Documents as VieraDocuments;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Writers;
@@ -69,7 +69,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -86,7 +86,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Viera connector service',
@@ -145,7 +145,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Viera connector discovery',
@@ -185,7 +185,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
 
 		$this->client?->disconnect();
 

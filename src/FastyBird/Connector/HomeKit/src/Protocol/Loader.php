@@ -18,12 +18,12 @@ namespace FastyBird\Connector\HomeKit\Protocol;
 use Composer;
 use Doctrine\DBAL;
 use FastyBird\Connector\HomeKit;
-use FastyBird\Connector\HomeKit\Documents;
-use FastyBird\Connector\HomeKit\Entities;
+use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
+use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
 use FastyBird\Connector\HomeKit\Protocol;
-use FastyBird\Connector\HomeKit\Queries;
+use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -130,7 +130,7 @@ class Loader
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
-	public function load(Documents\Connectors\Connector $connector): void
+	public function load(HomeKitDocuments\Connectors\Connector $connector): void
 	{
 		$bridge = $this->buildAccessory(
 			$connector,
@@ -144,16 +144,16 @@ class Loader
 
 		$bridgedAccessories = [];
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery = new HomeKitQueries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($connector);
 
 		$devices = $this->devicesConfigurationRepository->findAllBy(
 			$findDevicesQuery,
-			Documents\Devices\Device::class,
+			HomeKitDocuments\Devices\Device::class,
 		);
 
 		foreach ($devices as $device) {
-			$findDevicePropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
+			$findDevicePropertyQuery = new HomeKitQueries\Configuration\FindDeviceVariableProperties();
 			$findDevicePropertyQuery->forDevice($device);
 			$findDevicePropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::AID);
 
@@ -175,12 +175,12 @@ class Loader
 			);
 			assert($accessory instanceof Protocol\Accessories\Generic);
 
-			$findChannelsQuery = new Queries\Configuration\FindChannels();
+			$findChannelsQuery = new HomeKitQueries\Configuration\FindChannels();
 			$findChannelsQuery->forDevice($device);
 
 			$channels = $this->channelsConfigurationRepository->findAllBy(
 				$findChannelsQuery,
-				Documents\Channels\Channel::class,
+				HomeKitDocuments\Channels\Channel::class,
 			);
 
 			foreach ($channels as $channel) {
@@ -247,7 +247,7 @@ class Loader
 		foreach ($bridgedAccessories as $accessory) {
 			$this->accessoriesDriver->addBridgedAccessory($accessory);
 
-			$findDevicePropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
+			$findDevicePropertyQuery = new HomeKitQueries\Configuration\FindDeviceVariableProperties();
 			$findDevicePropertyQuery->forDevice($accessory->getDevice());
 			$findDevicePropertyQuery->byIdentifier(HomeKitTypes\DevicePropertyIdentifier::AID);
 
@@ -261,9 +261,9 @@ class Loader
 					function () use ($accessory): void {
 						$device = $this->devicesRepository->find(
 							$accessory->getDevice()->getId(),
-							Entities\Devices\Device::class,
+							HomeKitEntities\Devices\Device::class,
 						);
-						assert($device instanceof Entities\Devices\Device);
+						assert($device instanceof HomeKitEntities\Devices\Device);
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
@@ -448,7 +448,7 @@ class Loader
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function buildAccessory(
-		Documents\Connectors\Connector|Documents\Devices\Device $owner,
+		HomeKitDocuments\Connectors\Connector|HomeKitDocuments\Devices\Device $owner,
 		int|null $aid = null,
 		HomeKitTypes\AccessoryCategory|null $category = null,
 	): Protocol\Accessories\Accessory
@@ -456,7 +456,7 @@ class Loader
 		$category ??= HomeKitTypes\AccessoryCategory::OTHER;
 
 		if ($category === HomeKitTypes\AccessoryCategory::BRIDGE) {
-			if (!$owner instanceof Documents\Connectors\Connector) {
+			if (!$owner instanceof HomeKitDocuments\Connectors\Connector) {
 				throw new HomeKitExceptions\InvalidArgument(
 					'Bridge accessory owner have to be connector item instance',
 				);
@@ -464,7 +464,7 @@ class Loader
 
 			$accessory = $this->bridgeAccessoryFactory->create($owner->getName() ?? $owner->getIdentifier(), $owner);
 		} else {
-			if (!$owner instanceof Documents\Devices\Device) {
+			if (!$owner instanceof HomeKitDocuments\Devices\Device) {
 				throw new HomeKitExceptions\InvalidArgument('Device accessory owner have to be device item instance');
 			}
 
@@ -512,7 +512,7 @@ class Loader
 			$accessoryInformation,
 		);
 
-		if ($owner instanceof Documents\Devices\Device) {
+		if ($owner instanceof HomeKitDocuments\Devices\Device) {
 			$serialNumber = $this->deviceHelper->getSerialNumber($owner);
 
 			if ($serialNumber === null) {
@@ -527,9 +527,9 @@ class Loader
 					function () use ($owner, $serialNumber): void {
 						$device = $this->devicesRepository->find(
 							$owner->getId(),
-							Entities\Devices\Device::class,
+							HomeKitEntities\Devices\Device::class,
 						);
-						assert($device instanceof Entities\Devices\Device);
+						assert($device instanceof HomeKitEntities\Devices\Device);
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
@@ -565,7 +565,7 @@ class Loader
 			$accessoryInformation,
 		);
 
-		if ($owner instanceof Documents\Devices\Device) {
+		if ($owner instanceof HomeKitDocuments\Devices\Device) {
 			$firmwareVersion = $this->deviceHelper->getFirmwareVersion($owner);
 
 			if ($firmwareVersion === null) {
@@ -575,9 +575,9 @@ class Loader
 					function () use ($owner, $firmwareVersion): void {
 						$device = $this->devicesRepository->find(
 							$owner->getId(),
-							Entities\Devices\Device::class,
+							HomeKitEntities\Devices\Device::class,
 						);
-						assert($device instanceof Entities\Devices\Device);
+						assert($device instanceof HomeKitEntities\Devices\Device);
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
@@ -613,7 +613,7 @@ class Loader
 			$accessoryInformation,
 		);
 
-		if ($owner instanceof Documents\Devices\Device) {
+		if ($owner instanceof HomeKitDocuments\Devices\Device) {
 			$manufacturer = $this->deviceHelper->getManufacturer($owner);
 
 			if ($manufacturer === null) {
@@ -623,9 +623,9 @@ class Loader
 					function () use ($owner, $manufacturer): void {
 						$device = $this->devicesRepository->find(
 							$owner->getId(),
-							Entities\Devices\Device::class,
+							HomeKitEntities\Devices\Device::class,
 						);
-						assert($device instanceof Entities\Devices\Device);
+						assert($device instanceof HomeKitEntities\Devices\Device);
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
@@ -654,7 +654,7 @@ class Loader
 			$accessoryInformation,
 		);
 
-		if ($owner instanceof Documents\Devices\Device) {
+		if ($owner instanceof HomeKitDocuments\Devices\Device) {
 			$model = $this->deviceHelper->getModel($owner);
 
 			if ($model === null) {
@@ -664,9 +664,9 @@ class Loader
 					function () use ($owner, $model): void {
 						$device = $this->devicesRepository->find(
 							$owner->getId(),
-							Entities\Devices\Device::class,
+							HomeKitEntities\Devices\Device::class,
 						);
-						assert($device instanceof Entities\Devices\Device);
+						assert($device instanceof HomeKitEntities\Devices\Device);
 
 						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
@@ -732,7 +732,7 @@ class Loader
 	private function buildService(
 		HomeKitTypes\ServiceType $type,
 		Protocol\Accessories\Accessory $accessory,
-		Documents\Channels\Channel|null $channel = null,
+		HomeKitDocuments\Channels\Channel|null $channel = null,
 	): Protocol\Services\Service
 	{
 		$metadata = $this->loader->loadServices();

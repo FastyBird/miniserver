@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Zigbee2Mqtt\Entities;
+use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
@@ -29,7 +29,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 
 	public function __construct(
 		string $identifier,
-		Entities\Connectors\Connector $connector,
+		Zigbee2MqttEntities\Connectors\Connector $connector,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -42,22 +42,22 @@ abstract class Device extends DevicesEntities\Devices\Device
 		return Sources\Connector::ZIGBEE2MQTT;
 	}
 
-	public function getConnector(): Entities\Connectors\Connector
+	public function getConnector(): Zigbee2MqttEntities\Connectors\Connector
 	{
-		assert($this->connector instanceof Entities\Connectors\Connector);
+		assert($this->connector instanceof Zigbee2MqttEntities\Connectors\Connector);
 
 		return $this->connector;
 	}
 
 	/**
-	 * @return array<Entities\Channels\Channel>
+	 * @return array<Zigbee2MqttEntities\Channels\Channel>
 	 */
 	public function getChannels(): array
 	{
 		$channels = [];
 
 		foreach (parent::getChannels() as $channel) {
-			if ($channel instanceof Entities\Channels\Channel) {
+			if ($channel instanceof Zigbee2MqttEntities\Channels\Channel) {
 				$channels[] = $channel;
 			}
 		}
@@ -70,7 +70,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 	 */
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
-		if (!$channel instanceof Entities\Channels\Channel) {
+		if (!$channel instanceof Zigbee2MqttEntities\Channels\Channel) {
 			throw new Exceptions\InvalidArgument('Provided channel type is not valid');
 		}
 

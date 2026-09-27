@@ -17,7 +17,7 @@ namespace FastyBird\Connector\FbMqtt\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Entities;
+use FastyBird\Connector\FbMqtt\Entities as FbMqttEntities;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -47,14 +47,14 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<FbMqttEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
 		$devices = [];
 
 		foreach (parent::getDevices() as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof FbMqttEntities\Devices\Device) {
 				$devices[] = $device;
 			}
 		}
@@ -67,7 +67,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
-		if (!$device instanceof Entities\Devices\Device) {
+		if (!$device instanceof FbMqttEntities\Devices\Device) {
 			throw new FbMqttExceptions\InvalidArgument('Provided device type is not valid');
 		}
 

@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Shelly\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Shelly\Entities;
+use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -46,14 +46,14 @@ class Connector extends DevicesEntities\Connectors\Connector
 	}
 
 	/**
-	 * @return array<Entities\Devices\Device>
+	 * @return array<ShellyEntities\Devices\Device>
 	 */
 	public function getDevices(): array
 	{
 		$devices = [];
 
 		foreach (parent::getDevices() as $device) {
-			if ($device instanceof Entities\Devices\Device) {
+			if ($device instanceof ShellyEntities\Devices\Device) {
 				$devices[] = $device;
 			}
 		}
@@ -66,7 +66,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	 */
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
-		if (!$device instanceof Entities\Devices\Device) {
+		if (!$device instanceof ShellyEntities\Devices\Device) {
 			throw new ShellyExceptions\InvalidArgument('Provided device type is not valid');
 		}
 

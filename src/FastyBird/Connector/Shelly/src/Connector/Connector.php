@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Shelly\Connector;
 
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Clients;
-use FastyBird\Connector\Shelly\Documents;
+use FastyBird\Connector\Shelly\Documents as ShellyDocuments;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queue;
@@ -76,7 +76,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof ShellyDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -99,7 +99,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof ShellyDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Shelly connector service',
@@ -186,7 +186,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof ShellyDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Shelly connector discovery',
@@ -226,7 +226,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof ShellyDocuments\Connectors\Connector);
 
 		$this->client?->disconnect();
 

@@ -18,7 +18,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 use Doctrine\DBAL;
 use Exception;
 use FastyBird\Connector\Zigbee2Mqtt;
-use FastyBird\Connector\Zigbee2Mqtt\Entities;
+use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
@@ -105,7 +105,7 @@ final class StoreBridgeDevices implements Queue\Consumer
 
 		$bridge = $this->devicesRepository->find(
 			$baseTopicProperty->getDevice()->getId(),
-			Entities\Devices\Bridge::class,
+			Zigbee2MqttEntities\Devices\Bridge::class,
 		);
 
 		if ($bridge === null) {
@@ -122,7 +122,10 @@ final class StoreBridgeDevices implements Queue\Consumer
 				$findDeviceQuery->forParent($bridge);
 				$findDeviceQuery->byIdentifier($deviceDescription->getIeeeAddress());
 
-				$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\SubDevice::class);
+				$device = $this->devicesRepository->findOneBy(
+					$findDeviceQuery,
+					Zigbee2MqttEntities\Devices\SubDevice::class,
+				);
 			}
 
 			if ($device === null) {
@@ -133,7 +136,7 @@ final class StoreBridgeDevices implements Queue\Consumer
 				if (
 					$this->devicesRepository->getResultSet(
 						$findDeviceQuery,
-						Entities\Devices\Device::class,
+						Zigbee2MqttEntities\Devices\Device::class,
 					)->count() !== 0
 				) {
 					$this->logger->error(
@@ -159,7 +162,7 @@ final class StoreBridgeDevices implements Queue\Consumer
 
 				$connector = $this->connectorsRepository->find(
 					$message->getConnector(),
-					Entities\Connectors\Connector::class,
+					Zigbee2MqttEntities\Connectors\Connector::class,
 				);
 
 				if ($connector === null) {
@@ -185,16 +188,16 @@ final class StoreBridgeDevices implements Queue\Consumer
 				}
 
 				$device = $this->databaseHelper->transaction(
-					function () use ($connector, $bridge, $deviceDescription): Entities\Devices\SubDevice {
+					function () use ($connector, $bridge, $deviceDescription): Zigbee2MqttEntities\Devices\SubDevice {
 						$device = $this->devicesManager->create(Utils\ArrayHash::from([
-							'entity' => Entities\Devices\SubDevice::class,
+							'entity' => Zigbee2MqttEntities\Devices\SubDevice::class,
 							'connector' => $connector,
 							'parent' => $bridge,
 							'identifier' => $deviceDescription->getIeeeAddress(),
 							'name' => $deviceDescription->getDefinition()?->getDescription(),
 							'comment' => $deviceDescription->getDescription(),
 						]));
-						assert($device instanceof Entities\Devices\SubDevice);
+						assert($device instanceof Zigbee2MqttEntities\Devices\SubDevice);
 
 						return $device;
 					},
@@ -269,7 +272,7 @@ final class StoreBridgeDevices implements Queue\Consumer
 				DevicesUtilities\Name::createName(Zigbee2MqttTypes\DevicePropertyIdentifier::MANUFACTURER->value),
 			);
 
-			if ($device instanceof Entities\Devices\SubDevice) {
+			if ($device instanceof Zigbee2MqttEntities\Devices\SubDevice) {
 				$this->processExposes($device, $deviceDescription->getDefinition()?->getExposes() ?? []);
 			}
 		}
@@ -307,7 +310,7 @@ final class StoreBridgeDevices implements Queue\Consumer
 	 * @throws ValueError
 	 */
 	private function processExposes(
-		Entities\Devices\SubDevice $device,
+		Zigbee2MqttEntities\Devices\SubDevice $device,
 		array $exposes,
 		array $identifiers = [],
 	): void
@@ -439,7 +442,7 @@ final class StoreBridgeDevices implements Queue\Consumer
 	private function createChannel(
 		string $identifier,
 		string|null $name,
-		Entities\Devices\SubDevice $device,
+		Zigbee2MqttEntities\Devices\SubDevice $device,
 	): DevicesEntities\Channels\Channel
 	{
 		return $this->databaseHelper->transaction(
@@ -448,11 +451,14 @@ final class StoreBridgeDevices implements Queue\Consumer
 				$findChannelQuery->byIdentifier($identifier);
 				$findChannelQuery->forDevice($device);
 
-				$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+				$channel = $this->channelsRepository->findOneBy(
+					$findChannelQuery,
+					Zigbee2MqttEntities\Channels\Channel::class,
+				);
 
 				if ($channel === null) {
 					$channel = $this->channelsManager->create(Utils\ArrayHash::from([
-						'entity' => Entities\Channels\Channel::class,
+						'entity' => Zigbee2MqttEntities\Channels\Channel::class,
 						'device' => $device,
 						'identifier' => $identifier,
 						'name' => $name,

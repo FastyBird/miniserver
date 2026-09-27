@@ -18,12 +18,12 @@ namespace FastyBird\Connector\Tuya\Queue\Consumers;
 use DateTimeInterface;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\API;
-use FastyBird\Connector\Tuya\Documents;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
-use FastyBird\Connector\Tuya\Queries;
+use FastyBird\Connector\Tuya\Queries as TuyaQueries;
 use FastyBird\Connector\Tuya\Queue;
-use FastyBird\Connector\Tuya\Types;
+use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -97,12 +97,12 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findConnectorQuery = new Queries\Configuration\FindConnectors();
+		$findConnectorQuery = new TuyaQueries\Configuration\FindConnectors();
 		$findConnectorQuery->byId($message->getConnector());
 
 		$connector = $this->connectorsConfigurationRepository->findOneBy(
 			$findConnectorQuery,
-			Documents\Connectors\Connector::class,
+			TuyaDocuments\Connectors\Connector::class,
 		);
 
 		if ($connector === null) {
@@ -130,13 +130,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new TuyaQueries\Configuration\FindDevices();
 		$findDeviceQuery->forConnector($connector);
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			TuyaDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -164,13 +164,13 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$findChannelQuery = new Queries\Configuration\FindChannels();
+		$findChannelQuery = new TuyaQueries\Configuration\FindChannels();
 		$findChannelQuery->forDevice($device);
 		$findChannelQuery->byId($message->getChannel());
 
 		$channel = $this->channelsConfigurationRepository->findOneBy(
 			$findChannelQuery,
-			Documents\Channels\Channel::class,
+			TuyaDocuments\Channels\Channel::class,
 		);
 
 		if ($channel === null) {
@@ -295,7 +295,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 		));
 
 		try {
-			if ($this->connectorHelper->getClientMode($connector) === Types\ClientMode::CLOUD) {
+			if ($this->connectorHelper->getClientMode($connector) === TuyaTypes\ClientMode::CLOUD) {
 				$client = $this->connectionManager->getCloudApiConnection($connector);
 
 				if (!$client->isConnected()) {

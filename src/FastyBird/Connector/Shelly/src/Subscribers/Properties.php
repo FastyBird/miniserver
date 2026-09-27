@@ -19,7 +19,7 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\Shelly\Entities;
+use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
@@ -75,7 +75,7 @@ final class Properties implements Common\EventSubscriber
 		$entity = $eventArgs->getObject();
 
 		// Check for valid entity
-		if (!$entity instanceof Entities\Devices\Device) {
+		if (!$entity instanceof ShellyEntities\Devices\Device) {
 			return;
 		}
 

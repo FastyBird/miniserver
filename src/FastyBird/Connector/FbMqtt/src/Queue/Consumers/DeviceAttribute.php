@@ -17,9 +17,9 @@ namespace FastyBird\Connector\FbMqtt\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\FbMqtt;
-use FastyBird\Connector\FbMqtt\Entities;
+use FastyBird\Connector\FbMqtt\Entities as FbMqttEntities;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
-use FastyBird\Connector\FbMqtt\Queries;
+use FastyBird\Connector\FbMqtt\Queries as FbMqttQueries;
 use FastyBird\Connector\FbMqtt\Queue;
 use FastyBird\Connector\FbMqtt\Types as FbMqttTypes;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -92,11 +92,11 @@ final class DeviceAttribute implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Entities\FindDevices();
+		$findDeviceQuery = new FbMqttQueries\Entities\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byIdentifier($message->getDevice());
 
-		$device = $this->devicesRepository->findOneBy($findDeviceQuery, Entities\Devices\Device::class);
+		$device = $this->devicesRepository->findOneBy($findDeviceQuery, FbMqttEntities\Devices\Device::class);
 
 		if ($message->getAttribute() === Queue\Messages\Attribute::STATE) {
 			assert(!is_array($message->getValue()));
@@ -104,7 +104,7 @@ final class DeviceAttribute implements Queue\Consumer
 			if (DevicesTypes\ConnectionState::tryFrom($message->getValue()) !== null) {
 				if ($device === null) {
 					$device = $this->devicesManager->create(Utils\ArrayHash::from([
-						'entity' => Entities\Devices\Device::class,
+						'entity' => FbMqttEntities\Devices\Device::class,
 						'identifier' => $message->getDevice(),
 					]));
 				}
@@ -117,7 +117,7 @@ final class DeviceAttribute implements Queue\Consumer
 		} else {
 			$this->databaseHelper->transaction(function () use ($message, $device): void {
 				$toUpdate = [
-					'entity' => Entities\Devices\Device::class,
+					'entity' => FbMqttEntities\Devices\Device::class,
 				];
 
 				if ($message->getAttribute() === Queue\Messages\Attribute::NAME) {
@@ -211,7 +211,7 @@ final class DeviceAttribute implements Queue\Consumer
 					DevicesTypes\ConnectionState::UNKNOWN,
 				);
 			} else {
-				$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
+				$findDevicePropertyQuery = new FbMqttQueries\Entities\FindDeviceProperties();
 				$findDevicePropertyQuery->forDevice($device);
 				$findDevicePropertyQuery->byIdentifier(FbMqttTypes\DevicePropertyIdentifier::from($propertyName));
 
@@ -261,7 +261,7 @@ final class DeviceAttribute implements Queue\Consumer
 			}
 		}
 
-		$findDevicePropertiesQuery = new Queries\Entities\FindDeviceProperties();
+		$findDevicePropertiesQuery = new FbMqttQueries\Entities\FindDeviceProperties();
 		$findDevicePropertiesQuery->forDevice($device);
 
 		// Cleanup for unused properties
@@ -294,7 +294,7 @@ final class DeviceAttribute implements Queue\Consumer
 					FbMqttTypes\DevicePropertyIdentifier::HARDWARE_MODEL,
 					FbMqttTypes\DevicePropertyIdentifier::HARDWARE_VERSION,
 				] as $propertyName) {
-					$findPropertyQuery = new Queries\Entities\FindDeviceProperties();
+					$findPropertyQuery = new FbMqttQueries\Entities\FindDeviceProperties();
 					$findPropertyQuery->forDevice($device);
 					$findPropertyQuery->byIdentifier($propertyName);
 
@@ -313,7 +313,7 @@ final class DeviceAttribute implements Queue\Consumer
 					FbMqttTypes\DevicePropertyIdentifier::FIRMWARE_NAME,
 					FbMqttTypes\DevicePropertyIdentifier::FIRMWARE_VERSION,
 				] as $propertyName) {
-					$findPropertyQuery = new Queries\Entities\FindDeviceProperties();
+					$findPropertyQuery = new FbMqttQueries\Entities\FindDeviceProperties();
 					$findPropertyQuery->forDevice($device);
 					$findPropertyQuery->byIdentifier($propertyName);
 
@@ -385,28 +385,28 @@ final class DeviceAttribute implements Queue\Consumer
 	): void
 	{
 		foreach ($channels as $channelName) {
-			$findChannelQuery = new Queries\Entities\FindChannels();
+			$findChannelQuery = new FbMqttQueries\Entities\FindChannels();
 			$findChannelQuery->forDevice($device);
 			$findChannelQuery->byIdentifier($channelName);
 
-			$channel = $this->channelsRepository->findOneBy($findChannelQuery, Entities\Channels\Channel::class);
+			$channel = $this->channelsRepository->findOneBy($findChannelQuery, FbMqttEntities\Channels\Channel::class);
 
 			if ($channel === null) {
 				$this->channelsManager->create(Utils\ArrayHash::from([
-					'entity' => Entities\Channels\Channel::class,
+					'entity' => FbMqttEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => $channelName,
 				]));
 			}
 		}
 
-		$findChannelsQuery = new Queries\Entities\FindChannels();
+		$findChannelsQuery = new FbMqttQueries\Entities\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
 		// Cleanup for unused channels
 		foreach ($this->channelsRepository->findAllBy(
 			$findChannelsQuery,
-			Entities\Channels\Channel::class,
+			FbMqttEntities\Channels\Channel::class,
 		) as $channel) {
 			if (!in_array($channel->getIdentifier(), (array) $channels, true)) {
 				$this->channelsManager->delete($channel);

@@ -17,8 +17,8 @@ namespace FastyBird\Connector\Modbus\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Documents;
-use FastyBird\Connector\Modbus\Queries;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
+use FastyBird\Connector\Modbus\Queries as ModbusQueries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -81,13 +81,13 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new ModbusQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byId($message->getDevice());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			ModbusDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -145,12 +145,12 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					));
 				}
 
-				$findChannelsQuery = new Queries\Configuration\FindChannels();
+				$findChannelsQuery = new ModbusQueries\Configuration\FindChannels();
 				$findChannelsQuery->forDevice($device);
 
 				$channels = $this->channelsConfigurationRepository->findAllBy(
 					$findChannelsQuery,
-					Documents\Channels\Channel::class,
+					ModbusDocuments\Channels\Channel::class,
 				);
 
 				foreach ($channels as $channel) {

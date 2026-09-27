@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Modbus\Helpers;
 
 use FastyBird\Connector\Modbus;
-use FastyBird\Connector\Modbus\Documents;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Queries;
 use FastyBird\Connector\Modbus\Types;
@@ -56,7 +56,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getClientMode(Documents\Connectors\Connector $connector): Types\ClientMode
+	public function getClientMode(ModbusDocuments\Connectors\Connector $connector): Types\ClientMode
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -84,7 +84,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getByteSize(Documents\Connectors\Connector $connector): Types\ByteSize
+	public function getByteSize(ModbusDocuments\Connectors\Connector $connector): Types\ByteSize
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -114,7 +114,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getBaudRate(Documents\Connectors\Connector $connector): Types\BaudRate
+	public function getBaudRate(ModbusDocuments\Connectors\Connector $connector): Types\BaudRate
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -144,7 +144,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getParity(Documents\Connectors\Connector $connector): Types\Parity
+	public function getParity(ModbusDocuments\Connectors\Connector $connector): Types\Parity
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -174,7 +174,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getStopBits(Documents\Connectors\Connector $connector): Types\StopBits
+	public function getStopBits(ModbusDocuments\Connectors\Connector $connector): Types\StopBits
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -204,7 +204,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getRtuInterface(Documents\Connectors\Connector $connector): string
+	public function getRtuInterface(ModbusDocuments\Connectors\Connector $connector): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);

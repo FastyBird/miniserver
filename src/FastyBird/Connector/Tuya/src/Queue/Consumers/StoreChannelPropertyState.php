@@ -17,8 +17,8 @@ namespace FastyBird\Connector\Tuya\Queue\Consumers;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\Tuya;
-use FastyBird\Connector\Tuya\Documents;
-use FastyBird\Connector\Tuya\Queries;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
+use FastyBird\Connector\Tuya\Queries as TuyaQueries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
@@ -86,13 +86,13 @@ final class StoreChannelPropertyState implements Queue\Consumer
 			return false;
 		}
 
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new TuyaQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
 		$findDeviceQuery->byIdentifier($message->getIdentifier());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			TuyaDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
@@ -237,25 +237,25 @@ final class StoreChannelPropertyState implements Queue\Consumer
 		string $dataPointIdentifier,
 	): DevicesDocuments\Channels\Properties\Dynamic|null
 	{
-		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery = new TuyaQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($connectorId);
 		$findDeviceQuery->byIdentifier($deviceIdentifier);
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Device::class,
+			TuyaDocuments\Devices\Device::class,
 		);
 
 		if ($device === null) {
 			return null;
 		}
 
-		$findChannelsQuery = new Queries\Configuration\FindChannels();
+		$findChannelsQuery = new TuyaQueries\Configuration\FindChannels();
 		$findChannelsQuery->forDevice($device);
 
 		$channels = $this->channelsConfigurationRepository->findAllBy(
 			$findChannelsQuery,
-			Documents\Channels\Channel::class,
+			TuyaDocuments\Channels\Channel::class,
 		);
 
 		foreach ($channels as $channel) {

@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\Helpers\Devices;
 
-use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
@@ -50,7 +50,7 @@ final readonly class SubDevice
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Zigbee2MqttExceptions\InvalidState
 	 */
-	public function getBridge(Documents\Devices\SubDevice $device): Documents\Devices\Bridge
+	public function getBridge(Zigbee2MqttDocuments\Devices\SubDevice $device): Zigbee2MqttDocuments\Devices\Bridge
 	{
 		foreach ($device->getParents() as $parent) {
 			$findDeviceQuery = new Queries\Configuration\FindBridgeDevices();
@@ -58,7 +58,7 @@ final readonly class SubDevice
 
 			$parent = $this->devicesConfigurationRepository->findOneBy(
 				$findDeviceQuery,
-				Documents\Devices\Bridge::class,
+				Zigbee2MqttDocuments\Devices\Bridge::class,
 			);
 
 			if ($parent !== null) {
@@ -77,7 +77,7 @@ final readonly class SubDevice
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getFriendlyName(Documents\Devices\SubDevice $device): string|null
+	public function getFriendlyName(Zigbee2MqttDocuments\Devices\SubDevice $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -107,7 +107,7 @@ final readonly class SubDevice
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getIeeeAddress(Documents\Devices\SubDevice $device): string
+	public function getIeeeAddress(Zigbee2MqttDocuments\Devices\SubDevice $device): string
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -136,7 +136,7 @@ final readonly class SubDevice
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getHardwareModel(Documents\Devices\SubDevice $device): string|null
+	public function getHardwareModel(Zigbee2MqttDocuments\Devices\SubDevice $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);
@@ -165,7 +165,7 @@ final readonly class SubDevice
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getHardwareManufacturer(Documents\Devices\SubDevice $device): string|null
+	public function getHardwareManufacturer(Zigbee2MqttDocuments\Devices\SubDevice $device): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findPropertyQuery->forDevice($device);

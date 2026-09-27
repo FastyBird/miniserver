@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\Connector;
 
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Clients;
-use FastyBird\Connector\NsPanel\Documents;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Protocol;
@@ -84,7 +84,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof NsPanelDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -107,7 +107,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof NsPanelDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting NS Panel connector service',
@@ -175,7 +175,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->consumersTimer = $this->eventLoop->addPeriodicTimer(
 			self::DRIVER_RELOAD_INTERVAL,
 			function (): void {
-				assert($this->connector instanceof Documents\Connectors\Connector);
+				assert($this->connector instanceof NsPanelDocuments\Connectors\Connector);
 				$this->devicesLoader->load($this->connector);
 			},
 		);
@@ -206,7 +206,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof NsPanelDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting NS Panel connector discovery',
@@ -248,7 +248,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof NsPanelDocuments\Connectors\Connector);
 
 		foreach ($this->clients as $client) {
 			$client->disconnect();

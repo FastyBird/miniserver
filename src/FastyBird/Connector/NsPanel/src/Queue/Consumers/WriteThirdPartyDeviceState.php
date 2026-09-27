@@ -17,7 +17,7 @@ namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\API;
-use FastyBird\Connector\NsPanel\Documents;
+use FastyBird\Connector\NsPanel\Documents as NsPanelDocuments;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Protocol;
@@ -152,7 +152,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 
 		$gateway = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
-			Documents\Devices\Gateway::class,
+			NsPanelDocuments\Devices\Gateway::class,
 		);
 
 		if ($gateway === null) {

@@ -16,7 +16,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Zigbee2Mqtt\Entities;
+use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -45,7 +45,7 @@ class SubDevice extends Device
 	public function __construct(
 		string $identifier,
 		Bridge $parent,
-		Entities\Connectors\Connector $connector,
+		Zigbee2MqttEntities\Connectors\Connector $connector,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)

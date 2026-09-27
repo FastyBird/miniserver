@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Connector;
 
 use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Clients;
-use FastyBird\Connector\Modbus\Documents;
+use FastyBird\Connector\Modbus\Documents as ModbusDocuments;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Helpers;
 use FastyBird\Connector\Modbus\Queue;
@@ -74,7 +74,7 @@ final class Connector implements DevicesConnectors\Connector
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof ModbusDocuments\Connectors\Connector);
 	}
 
 	/**
@@ -96,7 +96,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof ModbusDocuments\Connectors\Connector);
 
 		$this->logger->info(
 			'Starting Modbus connector service',
@@ -171,7 +171,7 @@ final class Connector implements DevicesConnectors\Connector
 	 */
 	public function discover(): Promise\PromiseInterface
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof ModbusDocuments\Connectors\Connector);
 
 		return Promise\reject(
 			new ModbusExceptions\InvalidState('Devices discovery is not allowed for Modbus connector type'),
@@ -180,7 +180,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	public function terminate(): void
 	{
-		assert($this->connector instanceof Documents\Connectors\Connector);
+		assert($this->connector instanceof ModbusDocuments\Connectors\Connector);
 
 		$this->client?->disconnect();
 

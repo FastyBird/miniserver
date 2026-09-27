@@ -17,7 +17,7 @@ namespace FastyBird\Connector\Modbus\Fixtures;
 
 use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
-use FastyBird\Connector\Modbus\Entities;
+use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -48,7 +48,7 @@ final class DevicesProperties extends DataFixtures\AbstractFixture implements Da
 	 */
 	public function load(Persistence\ObjectManager $manager): void
 	{
-		$device = $this->getReference('modbus-rtu-device', Entities\Devices\Device::class);
+		$device = $this->getReference('modbus-rtu-device', ModbusEntities\Devices\Device::class);
 
 		$addressProperty = new DevicesEntities\Devices\Properties\Variable(
 			$device,

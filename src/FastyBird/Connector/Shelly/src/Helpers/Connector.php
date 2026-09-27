@@ -15,7 +15,7 @@
 
 namespace FastyBird\Connector\Shelly\Helpers;
 
-use FastyBird\Connector\Shelly\Documents;
+use FastyBird\Connector\Shelly\Documents as ShellyDocuments;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Types;
@@ -54,7 +54,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getClientMode(Documents\Connectors\Connector $connector): Types\ClientMode
+	public function getClientMode(ShellyDocuments\Connectors\Connector $connector): Types\ClientMode
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
@@ -83,7 +83,7 @@ final readonly class Connector
 	 * @throws ValueError
 	 */
 	public function getCloudServerAddress(
-		Documents\Connectors\Connector $connector,
+		ShellyDocuments\Connectors\Connector $connector,
 	): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
@@ -113,7 +113,7 @@ final readonly class Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getCloudAuthKey(Documents\Connectors\Connector $connector): string|null
+	public function getCloudAuthKey(ShellyDocuments\Connectors\Connector $connector): string|null
 	{
 		$findPropertyQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findPropertyQuery->forConnector($connector);
