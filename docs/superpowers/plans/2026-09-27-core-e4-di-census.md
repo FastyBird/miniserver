@@ -27,6 +27,12 @@ These are recorded here, not reopened (#459 comment of 2026-09-27, plan §3.2, �
    names, the DI tags and the translation domain. This census writes every row. Approving it
    approves the individual names, not the scope.
 
+**Decided while the census was reviewed (orchestrator, 2026-09-27, through the plan's §3.5
+route).** A relative-order change is allowed when it comes with a proof that it is inert, and
+§5.4 is that proof. The snapshot criteria and the 13 allowed global-order moves are recorded in
+§5.5. **Merging this census approves those 13 moves and the two named hooks
+(`loadTimestampable()`, `loadServerProcess()`).**
+
 ## Headline numbers, and where the plan's differ
 
 | Item | Plan (#459) | Measured | Which is right, and why |
@@ -36,7 +42,7 @@ These are recorded here, not reopened (#459 comment of 2026-09-27, plan §3.2, �
 | Services per owner | Security 22, WebSockets 22, Persistence 11, Http 9, Logging 9, root 8, Phone 7, Documents 5, Api 5, Exchange 4, Clock 2, Values 1 | identical | same |
 | `beforeCompile()` blocks | 14 | **11 comment-headed blocks**. The plan's 14 counts `APPLICATION` as its 4 concerns (loggers, `AppRouter`, presenter mapping, template layout). One of the 14 (entity-manager subscriber wiring) has **two owners**, so there are **15 allocation units** | 14 is right at concern granularity; the allocation needs 15 |
 | Symfony event subscribers in Core | 5 | **6**: `Symfony\Bridge\Monolog\Handler\ConsoleHandler` (`application.logger.handler.console`, debug mode only) is an `EventSubscriberInterface` too | measured |
-| Doctrine subscribers in Core | 6; `loadClassMetadata` 4, `onFlush` 2 | 6; `loadClassMetadata` 4, `onFlush` 2 (as subscribers); **listener entries 6 and 3** in production, because of D2 | same, plus D2 |
+| Doctrine subscribers in Core | 6; `loadClassMetadata` 4, `onFlush` 2 | 6; `loadClassMetadata` 4, `onFlush` 2 (as subscribers); **listener entries 6 and 3** in production, because of D2 (#564) | same, plus D2 |
 | Module `loadConfiguration()` lookups of Core services | `DevicesExtension.php:926`, `DevicesModuleUiModuleExtension.php:160` | **3 extensions, 6 lookups**: Devices `:926-927`, **Ui `:492-493`**, DevicesModuleUiModule bridge `:160-161` (`LinkGenerator` + `Topics\IStorage` each) | measured |
 | "`fbCore` is registered first, so every Core registration precedes every module `loadConfiguration()`" (§1.6) | holds | **Holds in production only.** In all 28 package test containers the package's own extension is registered by `<Ext>::register()` through `Configurator::onCompile`, which puts it **before** every NEON `extensions:` entry, so it runs `loadConfiguration()` **before** `fbCore` | measured; see finding F1. The composite does not change it |
 | Base test containers | 29 | 29 `tests/common.neon`; **28 compile. `Plugin/CouchDb`'s does not compile on `main`**, and no test extends its `BaseTestCase` | measured; see F2 |
@@ -44,13 +50,13 @@ These are recorded here, not reopened (#459 comment of 2026-09-27, plan §3.2, �
 | Production | 1 | 1 configuration. It compiles only with a signature **and** a Vite manifest. 4 compilable variants were measured (§7) | — |
 | DI-identifier denylist | 12 words + scoped `application` | `FB_NAMESPACE_DENYLIST` has 16 entries. The plan's list omits `slimRouter`, `doctrineOrmQuery` and `jsonApiDocument`, and `FB_TYPE_DENYLIST` adds `iPublikuj` | Use the full list (§10). The counts on `main` are identical either way |
 | Guard violations on `main` | — | **134** = 61 service names + 71 schema key paths + 2 tag strings | §10 |
-| Translation domain | 22 lookups in 5 Api files; `HydratorFieldsTest` | 22 lookups in 5 files, 11 distinct keys; `HydratorFieldsTest` has 2 `'//jsonApi.hydrator'` strings; catalogue has 10 keys. **4 of the 22 lookups name keys the catalogue does not have** | measured; see F3 |
+| Translation domain | 22 lookups in 5 Api files; `HydratorFieldsTest` | 22 lookups in 5 files, 11 distinct keys; `HydratorFieldsTest` has 2 `'//jsonApi.hydrator'` strings; catalogue has 10 keys. **4 of the 22 lookups name keys the catalogue does not have** | measured; see F3 (#567) |
 | `@fbCore.jsonApi.middlewares.jsonapi` in NEON | 25 files | 25 | same |
 | Service names looked up by string in tests | 7 (`CoreExtensionTest`) | 7 | same |
-| Tag sites | 21 `findByTag(DRIVER_TAG)`, 15 `addTag(CONSUMER_STATE)` | 21 (21 files, all in `beforeCompile()`), 15 (13 files, all in `loadConfiguration()`) | same |
+| Tag sites | 21 `findByTag(DRIVER_TAG)`, 15 `addTag(CONSUMER_STATE)` | 21 (21 files, all in `beforeCompile()`), 15 (13 files, all in `loadConfiguration()`). **10 of the 15 have no effect** (F4) | same count; F4 is new |
 | Example rename `fbCore.wsServer.server.server` | → `fbCore.webSockets.server` | → **`fbCore.webSockets.server.runtime`** | see §2: the plan's form would also be the prefix of six sibling names |
 | Order preservation | "at most a couple of named hooks" | **2 named hooks** (Persistence, WebSockets), **0 relative-order changes** in any collection, in all 38 compiled containers | §5 |
-| Global definition order | recorded by the snapshot | **cannot be reproduced** under the one-hook rule: 13 of 103 `loadConfiguration()` definitions move. Exact reproduction needs 6 extra hooks | §5.5, a finding for the orchestrator |
+| Global definition order | recorded by the snapshot | **cannot be reproduced** under the one-hook rule: 13 of 103 `loadConfiguration()` definitions move. Exact reproduction needs 6 extra hooks | §5.5. **Resolved:** the 13 moves are proven inert (§5.4) and approved by merging this census; the snapshot allows exactly these (`--allow-moves`) |
 
 ## 1. Allocation
 
@@ -195,8 +201,8 @@ loop) → WebSockets. No service belongs to two capabilities without a rule to b
 | 8 | 1260–1310 | SIMPLE AUTH — user fallback, Doctrine mapping, Nette Application bridge | registers `simpleAuth.security.user`; `MappingHelper::of($this)->addAttribute(…Security\Entities…)`; `onRequest`/`onResponse` on Nette `Application` | Security | `SecurityExtension::beforeCompile()` |
 | 9 | 1312–1326 | TOOLS — Sentry handler wiring | `pushHandler` Sentry on the Monolog logger | Logging | `LoggingExtension::beforeCompile()` (after block 3's two) |
 | 10 | 1328–1350 | DOCTRINE CRUD — custom DATE_FORMAT | `addCustomStringFunction('DATE_FORMAT')` on the entity manager | Persistence | `PersistenceExtension::beforeCompile()` |
-| 11a | 1364–1367 | DOCTRINE TIMESTAMPABLE + DOCTRINE PHONE (first half) | `addEventSubscriber(timestampable)` on the entity manager | Persistence | `PersistenceExtension::beforeCompile()` (verbatim, D2) |
-| 11b | 1368–1371 | DOCTRINE TIMESTAMPABLE + DOCTRINE PHONE (second half) | `addEventSubscriber(phone)` on the entity manager | Phone | `PhoneExtension::beforeCompile()` (verbatim, D2) |
+| 11a | 1364–1367 | DOCTRINE TIMESTAMPABLE + DOCTRINE PHONE (first half) | `addEventSubscriber(timestampable)` on the entity manager | Persistence | `PersistenceExtension::beforeCompile()` (verbatim, D2 #564) |
+| 11b | 1368–1371 | DOCTRINE TIMESTAMPABLE + DOCTRINE PHONE (second half) | `addEventSubscriber(phone)` on the entity manager | Phone | `PhoneExtension::beforeCompile()` (verbatim, D2 #564) |
 | 12 | 1374–1395 | JSON:API — schema/hydrator assembly | `add()` every `JsonApiSchema` / `Hydrator` into the two containers | Api | `ApiExtension::beforeCompile()` |
 | 13 | 1397–1544 | WEBSOCKETS — router, controllers, event bridges | `findByTag(TAG_WEBSOCKETS_ROUTES)` → `offsetSet`; tags every `RequestController` with `nette.inject` + `ipub.websockets.controller`; event bridges on `Controllers\Application`, `ServerRuntime`, `Wrapper`, `WampApplication`; push registry; `onStart[]` | WebSockets | `WebSocketsExtension::beforeCompile()` |
 | 14 | 1546–1577 | WS SERVER PLUGIN — events bridge | throws without a PSR-14 dispatcher; `ClientConnected`/`IncomingMessage` bridges on `Wrapper` | WebSockets | `WebSocketsExtension::beforeCompile()` (after block 13) |
@@ -466,7 +472,7 @@ return [
 ];
 ```
 
-**Not service names, but renamed with them (E4.6, together, D3):** the two schema defaults and
+**Not service names, but renamed with them (E4.6, together, D3 #565):** the two schema defaults and
 the two literal comparisons `'@wsServer.clients.driver.memory'` (`CoreExtension.php:255`, `:901`)
 and `'@wsServer.wamp.topics.driver.memory'` (`:259`, `:976`) become
 `'@fbCore.webSockets.clients.driver.memory'` and `'@fbCore.webSockets.wamp.topics.driver.memory'`,
@@ -777,7 +783,7 @@ subscribers), `contributteConsole.application` setups and `wiring[Command]`, and
 `contributteEvents.dispatcher` setups and `wiring[EventSubscriberInterface]`. So the check can see
 a flip.
 
-### 5.5 The global definition order (a finding for the orchestrator)
+### 5.5 The global definition order (resolved: 13 approved inert moves)
 
 The snapshot is specified to record the global definition order (§3.3), and E4.3/E4.4 must show
 an **empty** diff. **The composite, as §3.5 specifies it (one call at the first block, at most one
@@ -808,20 +814,32 @@ Under the proposed composite (2 hooks), **13 of the 103 definitions change globa
 The best placement allowed by the rule adds a third hook (Logging, for the 5 Sentry definitions)
 and still leaves **4** moves. `variants.py` enumerates every placement, and none reaches 0.
 
-**Recommendation for #554's `--diff`:** compare what is observable, and do not fail on the raw
-global order.
+**Decision (orchestrator, 2026-09-27, through the plan's §3.5 route).** §3.5 allows a
+relative-order change when it comes with a proof that it is inert, and §5.4 is that proof for
+these 13 moves. The snapshot (#554) therefore works as follows:
 
-1. Per definition: name, type, creator, arguments (after `complete()`), setups **in order**, tags,
-   autowiring, `lazy`, `implement`. This covers every compile-time collection, because each ends as
-   a setup sequence or an array argument.
-2. The generated `$wiring` (per-type service lists, in order) and `$tags` (per-tag lists, in
-   order). This covers every runtime `findByType()`/`findByTag()`.
-3. The generated `initialize()` body and the extension order.
+1. **Hard criteria, compared strictly:**
+   - per-definition content: name, type, creator, arguments (after `complete()`), setups **in
+     order**, tags, autowiring, `lazy`, `implement`. This covers every compile-time collection,
+     because each ends as a setup sequence or an array argument;
+   - the generated per-type `$wiring` lists and per-tag `$tags` lists, **in order**. This covers
+     every runtime `findByType()`/`findByTag()`;
+   - the generated `initialize()` body;
+   - the extension order.
 
-Record the raw global order too, but report it as informational, or check it against the listed
-permutation. Under 1–3 the proposed composite gives an empty diff, measured in all 38 containers.
-If the maintainer prefers a byte-identical global order instead, the §3.5 rule has to allow 6
-hooks.
+   #554's tool records and compares all of these.
+2. **The raw global definition order stays strict, with one exception.** `--allow-moves <file>`
+   names the definitions that may change position. **For E4.3 and E4.4 that list is exactly the 13
+   definitions in the table above**, under the composite of §5.3 with its two named hooks
+   (`loadTimestampable()`, `loadServerProcess()`). A move of any other definition fails.
+3. **E4.5, E4.6 and E4.7 keep the global order identical** under their maps. Those PRs change no
+   position.
+
+Measured: under the §5.3 composite, all hard criteria in item 1 give an empty diff in all 38
+containers (§5.4). The only raw-order differences are the 13 listed moves.
+
+**Merging this census approves the 13 moves and the two named hooks.** A different hook placement,
+or any other moved definition, is an escalation (#459 §14).
 
 <details><summary>Full composite order of the 103 <code>loadConfiguration()</code> names (static, every branch)</summary>
 
@@ -1043,22 +1061,22 @@ service map covers them statically.
 | Silent path | Tested today? | Evidence |
 |---|---|---|
 | `DRIVER_TAG`: a module's document path | **Indirectly only, not mutation-proven** | No test references the tag or its string. Devices `Documents/ChannelPropertyDocumentTest` and `ChannelPropertyActionDocumentTest`, and Ui `Documents/WidgetDocumentTest`, create their module's documents through the container's `DocumentFactory`; those namespaces reach the mapping chain only through the `DRIVER_TAG` blocks (`DevicesExtension.php:995-1017`, `UiExtension.php:533`). No other test calls the container's `DocumentFactory` directly. Whether one of the other 19 consumers is exercised through a service that builds documents is not established without a mutation run. |
-| `CONSUMER_STATE = false` leaves a consumer disabled | **Untested** | `Messaging/ExchangeContainerTest` builds `Consumers\Container` by hand (`register($consumer, null)`); no test compiles a tagged consumer and reads its state |
+| `CONSUMER_STATE = false` leaves a consumer disabled | **Untested** | `Messaging/ExchangeContainerTest` builds `Consumers\Container` by hand (`register($consumer, null)`); no test compiles a tagged consumer and reads its state. The test must use one of the 5 tags on a service definition (e.g. Devices `exchange.consumer.statesActions`); the 10 connector tags never reach the proxy (F4) |
 | `CONSUMER_ROUTING_KEY` | **Untested**; no producer exists | only the `?? null` default is ever exercised |
 | `ipub.websockets.routes`: Devices WAMP routes reach the router | **Untested** | Devices and Ui `Controllers/ExchangeV1Test` call `Router\SocketRoutes::createRouter()` directly |
 | `ipub.websockets.controller`: `ControllerFactory` resolves a tagged controller | **Untested** | Core `ApplicationTest`, `WampApplicationTest`, `ControllerTest` and both `ExchangeV1Test` mock or hand-build `IControllerFactory` |
-| D2 listener count | **Untested** | no test reads `getListeners()` |
+| D2 (#564) listener count | **Untested** | no test reads `getListeners()` |
 
 ## 9. D1–D4
 
 | # | Verdict | Evidence (reproduce with the scripts in the last section) |
 |---|---|---|
 | D1 `CrudReader` never registered | **Confirmed**; the decision is #552 | `class_exists('\IPub\DoctrineCrud\Mapping\Annotation\Crud')` is `false` in the image; `git log -S 'namespace IPub\DoctrineCrud\Mapping\Annotation'` finds no commit; `fbCore.jsonApi.helpers.crudReader` is absent from all 38 compiled containers. E4 keeps the guard verbatim in the Api extension |
-| D2 Timestampable and Phone subscribed twice | **Confirmed** | table below |
-| D3 non-default WebSockets storage driver cannot work | **Confirmed**; fails loudly at compile time; not live (no tracked NEON sets these keys) | table below |
-| D4 `WsServer` command's `exchangeFactories` resolved too early | **Confirmed; live in the documented RedisDb and RabbitMQ configurations** (`docs/configuration.md`); not live in the shipped default, which has no `Exchange\Factory`. **Escalated** | table below |
+| D2 Timestampable and Phone subscribed twice | **Confirmed; filed as #564** | table below |
+| D3 non-default WebSockets storage driver cannot work | **Confirmed; filed as #565**. Fails loudly at compile time; not live (no tracked NEON sets these keys) | table below |
+| D4 `WsServer` command's `exchangeFactories` resolved too early | **Confirmed; filed as #566.** Live in the documented RedisDb and RabbitMQ configurations (`docs/configuration.md`); not live in the shipped default, which has no `Exchange\Factory`. Not an E4 blocker: E4 keeps the timing verbatim (§12) | table below |
 
-**D2.** Each container was instantiated (no database connection is made) and nettrine's
+**D2 (#564).** Each container was instantiated (no database connection is made) and nettrine's
 `ContainerEventManager::$listeners` was read, then resolved through `getListeners()`:
 
 | Container | Event | Listener entries | Distinct objects | Invoked twice | Dispatch order (`(obj)` = the `addEventSubscriber()` entry) |
@@ -1079,7 +1097,7 @@ Accounts and Triggers `onFlush` subscribers.** Removing the duplicate is therefo
 change, not dead-code removal. E4 keeps the wiring verbatim. E4.2's characterization test should
 pin these counts.
 
-**D3.** The Core test container compiled with one overlay each:
+**D3 (#565).** The Core test container compiled with one overlay each:
 
 | Overlay (`fbCore.webSockets.storage…`) | Result |
 |---|---|
@@ -1089,7 +1107,7 @@ pin these counts.
 | `clients.driver: "fbCore.wsServer.clients.driver.memory"` (bare, registered by Core) | compiles; the only working non-default form |
 | `topics.driver: "@myTopicsDriver"` | `MissingServiceException` for `fbCore.wsServer.wamp.topics.driver.memory`: the non-default branch (`:979`) fetches the memory driver it declined to register |
 
-**D4.** Production (`prod:entity-mapping-test`) compiled with the `config/local.neon` from
+**D4 (#566).** Production (`prod:entity-mapping-test`) compiled with the `config/local.neon` from
 `docs/configuration.md`, verbatim:
 
 | Container | `Exchange\Factory` services | `fbCore.wsServer.commands.wsServer` `exchangeFactories` | Devices `commands.exchange` / `commands.connector` (collected in `beforeCompile()`) |
@@ -1144,6 +1162,9 @@ The two kinds of rule catch different defects. The denylist catches `fbCore.phon
 which the pattern accepts; the pattern catches `document.*`, which the denylist accepts. Every
 target in §2 and §4 passes both.
 
+**Adopted by #554 (orchestrator, 2026-09-27):** the guard uses the full word list above, checks
+every schema node's key path (not only leaves), and adds both positive rules.
+
 ## 11. Other findings (not D-items)
 
 - **F1: package test containers load the package before `fbCore`.** Measured in all 28:
@@ -1155,21 +1176,42 @@ target in §2 and §4 passes both.
 - **F2: `Plugin/CouchDb`'s test container does not compile on `main`**
   (`fbCouchDbPlugin.model.statesManager` needs a `CouchDb\States\StateFactory` nobody registers).
   Reproduced without the census harness (`couchdb_plain.php`). No test extends its `BaseTestCase`.
-- **F3: four JSON:API error texts are untranslated.** Through the real translator,
+- **F3: four JSON:API error texts are untranslated; filed as #567.** Through the real translator,
   `//jsonApi.hydrator.resourceInvalid.{heading,message}` and `…identifierInvalid.{heading,message}`
   return the raw key, while the control key `…invalidAttribute.heading` returns "Invalid attribute".
   So a 422 for a missing resource or an invalid identifier carries the key as its title and detail.
-  E4.8 renames the domain only; fixing the keys is a translation-key change (§14), so it is escalated.
+  E4.8 renames only the domain prefix on those lines. Fixing the keys is a translation-key change
+  (#459 §14) and belongs to #567.
+- **F4: 10 of the 15 `CONSUMER_STATE` tags have no effect; not a bug.** The 10 connector extensions
+  (FbMqtt, HomeKit, Modbus, NsPanel, Shelly, Sonoff, Tuya, Viera, Virtual, Zigbee2Mqtt; e.g.
+  `ShellyExtension.php:99`) put the tag on `addFactoryDefinition(...)->getResultDefinition()`.
+  Core's proxy assembly iterates `findByType(Consumers\Consumer)`, which sees service definitions
+  only, never a factory's result definition.
+
+  Evidence, from the production compile (`prod:entity-mapping-test`, `f4.py`): the tag sits on 5
+  service definitions, and all 5 appear as `register()` setups on `fbCore.exchange.consumer`
+  (Devices `statesActions`, `moduleEntities`, `socketsBridge`; Ui `socketsBridge`; bridge
+  `stateEntities`). The tag also sits on the result definition of 10
+  `<connector>.writers.exchange` `FactoryDefinition`s, and none of those is registered. The
+  generated `$wiring[Consumers\Consumer]` lists the proxy plus those same 5.
+
+  The writers register themselves disabled at runtime: all 10 `Connector/*/src/Writers/Exchange.php`
+  call `register($this, null, false)`, e.g. Shelly `:80`. So the tag changes nothing. E4.7 still
+  renames these 10 tag uses like any other.
 
 ## 12. Escalation items
 
-1. **D4 is live and user-visible in a documented configuration.** With RedisDb or RabbitMQ
-   registered as `docs/configuration.md` shows, the WebSockets server process never starts that
-   exchange. E4 keeps the timing; the fix needs a decision.
-2. **F3, untranslated JSON:API errors.** E4.8 touches exactly these lines but must not change the
-   keys.
-3. **The global definition order (§5.5)** is a question for the orchestrator, not a blocker: what
-   #554's `--diff` compares, or whether §3.5 allows 6 hooks.
+**None open.** The items this census raised are filed or decided:
+
+| Item | Status |
+|---|---|
+| D1 `CrudReader` guard | #552, the maintainer's decision. E4 keeps the guard verbatim |
+| D2 double Doctrine subscription | filed as #564. E4 keeps the wiring verbatim |
+| D3 non-default WebSockets storage drivers | filed as #565. E4.6 renames the sentinels together, and nothing more |
+| D4 `exchangeFactories` timing (live with RedisDb/RabbitMQ as documented) | filed as #566. **Not an E4 blocker:** E4 keeps the timing verbatim (plan §1.8, §3.8). Whether to fix it separately is the maintainer's call |
+| F3 untranslated JSON:API errors | filed as #567. E4.8 renames only the domain prefix on those lines |
+| F4 inert connector `CONSUMER_STATE` tags | no bug. E4.7 renames them with the rest |
+| Global definition order (§5.5) | **resolved (orchestrator, 2026-09-27):** the hard snapshot criteria of §5.5, and `--allow-moves` with exactly the 13 listed definitions for E4.3/E4.4. Merging this census approves the 13 moves and the two named hooks |
 
 No service belongs to two capabilities without a rule to break the tie. No rename touches a route,
 topic, payload, table, discriminator or `@Secured` line: none of the 124 `@Secured` lines mentions
@@ -1202,6 +1244,7 @@ docker run --rm -v "$PWD":/app:ro -v ~/.cache/e4/census:/census -w /app \
 | `scan.php` | parses every tracked `.php` and `.neon`: tag constants and literals with the enclosing call, `//jsonApi.` lookups, catalogues, service-name strings, DI and runtime container lookups | §4, §2 notes, §5.2 lookups |
 | `translation.php`, `translate_check.php` | lookup keys against the catalogue; the real translator on the four missing keys | §4, F3 |
 | `couchdb_plain.php` | CouchDb container without the probes | F2 |
+| `f4.py` | `CONSUMER_STATE` tags on service definitions versus factory result definitions, against the proxy's `register()` setups | F4 |
 | `analyze.py` (`model.py` holds the allocation rule, the three maps, the composite and the denylists) | allocation counts; map totality and uniqueness; the pair-flip check across every collection of every container; `CONTROL=nohooks` for the positive control | §1, §2, §5.4 |
 | `globalorder.py`, `variants.py` | owner runs, the 13 moved definitions, every hook placement | §5.5 |
 | `contiguous.py` | contiguity of `fbCore`'s block in each container | §5.1 |
