@@ -20,10 +20,12 @@
  *       must not exist yet or must be empty. Put it under var/tools/di-snapshot/<label>/, which
  *       var/tools/.gitignore already ignores; snapshots are never committed.
  *
- *   php tools/di-snapshot.php --diff <baseDir> <headDir> [--map <file>]...
+ *   php tools/di-snapshot.php --diff <baseDir> <headDir> [--map <file>]... [--allow-moves <file>]...
  *       Compare two snapshot directories. Exit 0 if they are identical, 1 on any difference,
  *       2 on a usage or input error. Differences are printed grouped by container and then by
  *       service. Every --map is applied to the BASE side, in the order given, before comparing.
+ *       --allow-moves names definitions that may change position in the raw global order (see
+ *       below); every other difference, every observable order included, still fails.
  *
  *   docker run --rm -v "$PWD":/app -w /app -e XDEBUG_MODE=off -e TZ=UTC -e PHP_DATE_TIMEZONE=UTC \
  *       <application-image> php tools/di-snapshot.php var/tools/di-snapshot/head
@@ -36,7 +38,12 @@
  *     developer's git-ignored config/local.neon never leaks into the recording. Like the
  *     application-scope test tier, it points contributte/vite at
  *     tests/cases/application/fixtures/vite-manifest.json, because the real manifest is a
- *     frontend build artefact that a checkout does not have.
+ *     frontend build artefact that a checkout does not have. This is the census's
+ *     prod:entity-mapping-test.
+ *   - "production:dev": the same with APP_ENV=dev (debug mode compiles the stdout and console
+ *     log handlers and the ConsoleHandler subscriber).
+ *   - "production:sentry": the same with a fixed dummy FB_APP_PARAMETER__SENTRY_DSN (the only
+ *     way the Sentry definitions and the Sentry pushHandler compile).
  *   - "test/<Type>/<Name>": one per package, replicated from the package's own
  *     tests/cases/unit/BaseTestCase.php and DbTestCase.php (the tests' Bootstrap::boot(), the
  *     package's tests/common.neon, its time zone and its <Extension>::register() call). If the
@@ -55,8 +62,8 @@
  * run with an error naming the file, rather than silently leaving a container out.
  *
  * Every subprocess gets a controlled environment: TZ=UTC, PHP_DATE_TIMEZONE=UTC,
- * XDEBUG_MODE=off, no APP_ENV, no FB_APP_PARAMETER_* except a fixed
- * FB_APP_PARAMETER__SECURITY_SIGNATURE (without one the production container registers none of
+ * XDEBUG_MODE=off, no APP_ENV (except production:dev), no FB_APP_PARAMETER_* except a fixed
+ * FB_APP_PARAMETER__SECURITY_SIGNATURE and production:sentry's fixed Sentry DSN (without one the production container registers none of
  * the Security services, and a random one would differ between runs). Nothing connects to a
  * database: the container is compiled (Configurator::loadContainer()), never instantiated.
  *
@@ -66,11 +73,23 @@
  *     kept apart from the definitions so that a diff can report "order changed" separately
  *     from "definition changed". Order is behaviour here: nettrine's EventPass and the event
  *     dispatcher register subscribers in definition order.
- *   - "aliases".
+ *   - "aliases", and "extensions": every registered compiler extension, in the compiler's order.
  *   - "services", keyed by name and sorted by it, each with: kind (service, factory, accessor,
  *     locator, imported), resolved type, factory entity, arguments, setup statements IN ORDER,
  *     tags with their values, autowiring, exported, lazy, and implement for generated
  *     factories/accessors/locators (with the factory's result definition).
+ *   - From the generated container class: "wiring" (per type, the service lists behind
+ *     findByType()/getByType(), in compiled order), "tags" (per tag, the [service, value] list
+ *     behind findByTag(), in compiled order) and "initialize" (the initialize() body, paths
+ *     normalised). These are the runtime-observable orders.
+ *
+ * Every field is a hard diff criterion, with one exception: the raw global "order". It is strict
+ * by default, but a refactoring may legitimately move a definition that sits in no observable
+ * collection (census #553, section 5.5). --allow-moves <file> lists such names, one per line,
+ * blank lines and # comments ignored, named as the head names them. The order is then compared
+ * with those names taken out; their moves are printed as information, and a move of any other
+ * name still fails. Because the setups, $wiring and $tags are compared regardless, an allowed
+ * move that changes an observable order is still reported.
  *
  * A reference is recorded as {"@": "<service name>"}, never as the object it points at, so a
  * rename is visible and mappable. Absolute paths are normalised to %root%, %tempDir%,
@@ -88,9 +107,10 @@
  *   ];
  *
  * Both keys are optional. A service rename rewrites the definition's key, its place in
- * "order", aliases (both sides), every {"@": ...} reference, and every string argument that is
+ * "order", aliases (both sides), every {"@": ...} reference, every string argument that is
  * exactly the old name (nettrine's EventPass registers subscribers by service name as a plain
- * string). A tag rename rewrites tag keys, a locator's "tagged", and every string argument
+ * string), the names in "wiring" and "tags", and the quoted name in "initialize". A tag rename
+ * rewrites tag keys (definitions and "tags"), a locator's "tagged", and every string argument
  * that is exactly the old tag. Renaming two old names to one new name is an error.
  */
 
@@ -98,9 +118,11 @@
 
 const FB_DI_SNAPSHOT_SIGNATURE = 'di-snapshot-fixed-signature';
 
+const FB_DI_SNAPSHOT_SENTRY_DSN = 'https://di-snapshot@sentry.invalid/1';
+
 const FB_DI_SNAPSHOT_EXTENSION = 'fbDiSnapshot';
 
-const FB_DI_SNAPSHOT_FORMAT = 1;
+const FB_DI_SNAPSHOT_FORMAT = 2;
 
 /**
  * The only methods a package TestCase may call on its Configurator. Anything else changes the
@@ -197,11 +219,21 @@ function fbDiSnapshotRoot(): string
  */
 function fbDiSnapshotEnumerate(string $root): array
 {
-	$containers = [[
-		'id' => 'production',
-		'kind' => 'production',
-		'root' => $root,
-	]];
+	// Production, as bin/fb-console.php and EntityMappingTest compile it, plus the two
+	// environment variants that compile Core definitions the plain one does not: debug mode
+	// (APP_ENV=dev: the stdout and console log handlers and the ConsoleHandler subscriber) and a
+	// Sentry DSN (the 4 Sentry definitions and the Sentry pushHandler). Fixed values, so the
+	// recordings are deterministic.
+	$containers = [
+		['id' => 'production', 'kind' => 'production', 'root' => $root, 'env' => []],
+		['id' => 'production:dev', 'kind' => 'production', 'root' => $root, 'env' => ['APP_ENV' => 'dev']],
+		[
+			'id' => 'production:sentry',
+			'kind' => 'production',
+			'root' => $root,
+			'env' => ['FB_APP_PARAMETER__SENTRY_DSN' => FB_DI_SNAPSHOT_SENTRY_DSN],
+		],
+	];
 
 	$packageDirs = glob($root . '/src/FastyBird/*/*', GLOB_ONLYDIR);
 	assert(is_array($packageDirs));
@@ -559,7 +591,7 @@ function fbDiSnapshotSnapshotCommand(array $args): int
 				[0 => ['file', '/dev/null', 'r'], 1 => ['file', $dir . '/worker.log', 'a'], 2 => ['file', $dir . '/worker.log', 'a']],
 				$pipes,
 				$root,
-				$env,
+				array_merge($env, $container['env'] ?? []),
 			);
 
 			if ($process === false) {
@@ -789,18 +821,17 @@ function fbDiSnapshotWorker(string $specFile): int
 	// Added last, so every other onCompile callback (the package's register()) has run first.
 	// Its afterCompile() runs after ContainerBuilder::complete(), so every definition it sees
 	// is resolved.
+	$recorder = fbDiSnapshotDumpExtension($id, $replacements);
+
 	$configurator->onCompile[] = static function (
 		Nette\Bootstrap\Configurator $configurator,
 		Nette\DI\Compiler $compiler,
-	) use ($output, $id, $replacements): void {
-		$compiler->addExtension(
-			FB_DI_SNAPSHOT_EXTENSION,
-			fbDiSnapshotDumpExtension($output, $id, $replacements),
-		);
+	) use ($recorder): void {
+		$compiler->addExtension(FB_DI_SNAPSHOT_EXTENSION, $recorder);
 	};
 
 	try {
-		$configurator->loadContainer();
+		$containerClass = $configurator->loadContainer();
 	} catch (FbDiSnapshotDumpError $ex) {
 		throw $ex;
 	} catch (Throwable $ex) {
@@ -822,11 +853,60 @@ function fbDiSnapshotWorker(string $specFile): int
 		return 0;
 	}
 
-	if (!is_file($output)) {
+	$snapshot = $recorder->snapshot;
+
+	if ($snapshot === null) {
 		fwrite(STDERR, "The container was not compiled (loaded from a cache?), nothing was recorded\n");
 
 		return 1;
 	}
+
+	// What the generated class holds, as the runtime reads it: $wiring backs findByType() and
+	// getByType(), $tags backs findByTag(), each list in its compiled order. initialize() runs
+	// every extension's initialization code. Read from the generated class, not the builder,
+	// because they are only final once every extension has contributed to the class.
+	$reflection = new ReflectionClass($containerClass);
+	$defaults = $reflection->getDefaultProperties();
+
+	$wiring = $defaults['wiring'] ?? [];
+	assert(is_array($wiring));
+	ksort($wiring, SORT_STRING);
+	$snapshot['wiring'] = $wiring;
+
+	$tags = [];
+
+	foreach (is_array($defaults['tags'] ?? null) ? $defaults['tags'] : [] as $tag => $services) {
+		$pairs = [];
+
+		foreach ($services as $service => $value) {
+			$pairs[] = [(string) $service, $recorder->recordValue([$value])[0]];
+		}
+
+		$tags[(string) $tag] = $pairs;
+	}
+
+	ksort($tags, SORT_STRING);
+	$snapshot['tags'] = $tags;
+
+	$initialize = [];
+
+	if ($reflection->hasMethod('initialize') && $reflection->getMethod('initialize')->getDeclaringClass()->getName() === $reflection->getName()) {
+		$method = $reflection->getMethod('initialize');
+		$lines = file((string) $method->getFileName(), FILE_IGNORE_NEW_LINES);
+		assert(is_array($lines));
+
+		foreach (array_slice($lines, $method->getStartLine() - 1, $method->getEndLine() - $method->getStartLine() + 1) as $line) {
+			$initialize[] = $recorder->normalise(rtrim($line));
+		}
+	}
+
+	$snapshot['initialize'] = $initialize;
+
+	file_put_contents($output, json_encode(
+		$snapshot,
+		JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+		| JSON_PRESERVE_ZERO_FRACTION | JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR,
+	) . "\n");
 
 	return 0;
 }
@@ -834,20 +914,22 @@ function fbDiSnapshotWorker(string $specFile): int
 /**
  * @param array<string, string> $replacements
  */
-function fbDiSnapshotDumpExtension(string $output, string $id, array $replacements): Nette\DI\CompilerExtension
+function fbDiSnapshotDumpExtension(string $id, array $replacements): Nette\DI\CompilerExtension
 {
-	return new class ($output, $id, $replacements) extends Nette\DI\CompilerExtension {
+	return new class ($id, $replacements) extends Nette\DI\CompilerExtension {
 
 		/**
 		 * @param array<string, string> $replacements
 		 */
 		public function __construct(
-			private readonly string $output,
 			private readonly string $id,
 			private readonly array $replacements,
 		)
 		{
 		}
+
+		/** @var array<string, mixed>|null */
+		public array|null $snapshot = null;
 
 		public function afterCompile(Nette\PhpGenerator\ClassType $class): void
 		{
@@ -856,6 +938,11 @@ function fbDiSnapshotDumpExtension(string $output, string $id, array $replacemen
 			} catch (Throwable $ex) {
 				throw new FbDiSnapshotDumpError('Recording the container failed: ' . $ex->getMessage(), 0, $ex);
 			}
+		}
+
+		public function normalise(string $value): string
+		{
+			return strtr($value, $this->replacements);
 		}
 
 		private function record(): void
@@ -875,20 +962,25 @@ function fbDiSnapshotDumpExtension(string $output, string $id, array $replacemen
 			$aliases = $builder->getAliases();
 			ksort($aliases, SORT_STRING);
 
-			$snapshot = [
+			// The generated container's $wiring, $tags and initialize() are added by the worker
+			// once the class exists; see fbDiSnapshotWorker().
+			$this->snapshot = [
 				'format' => FB_DI_SNAPSHOT_FORMAT,
 				'container' => $this->id,
 				'compiled' => true,
+				'extensions' => array_map('strval', array_keys($this->compiler->getExtensions())),
 				'order' => $order,
 				'aliases' => $aliases,
 				'services' => $services,
 			];
+		}
 
-			file_put_contents($this->output, json_encode(
-				$snapshot,
-				JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-				| JSON_PRESERVE_ZERO_FRACTION | JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR,
-			) . "\n");
+		/**
+		 * @param array<mixed> $value
+		 */
+		public function recordValue(array $value): mixed
+		{
+			return $this->value($value);
 		}
 
 		/**
@@ -1024,11 +1116,20 @@ function fbDiSnapshotDiffCommand(array $args): int
 {
 	$dirs = [];
 	$maps = [];
+	$allowedMoves = [];
 
 	while ($args !== []) {
 		$arg = array_shift($args);
 
-		if ($arg === '--map') {
+		if ($arg === '--allow-moves') {
+			$file = array_shift($args);
+
+			if ($file === null) {
+				throw new FbDiSnapshotUsageError('--allow-moves needs a file');
+			}
+
+			$allowedMoves = array_merge($allowedMoves, fbDiSnapshotLoadAllowedMoves($file));
+		} elseif ($arg === '--map') {
 			$file = array_shift($args);
 
 			if ($file === null) {
@@ -1057,6 +1158,7 @@ function fbDiSnapshotDiffCommand(array $args): int
 	$differing = 0;
 	$identical = 0;
 	$common = 0;
+	$informational = 0;
 
 	foreach ($ids as $id) {
 		if (!isset($headIndex[$id])) {
@@ -1082,29 +1184,60 @@ function fbDiSnapshotDiffCommand(array $args): int
 			$base = fbDiSnapshotApplyMap($base, $map);
 		}
 
-		$lines = fbDiSnapshotCompare($base, $head);
+		[$lines, $info] = fbDiSnapshotCompare($base, $head, $allowedMoves);
 
 		if ($lines === []) {
 			$identical++;
+
+			if ($info !== []) {
+				$informational++;
+				fwrite(STDOUT, '== ' . $id . " (identical; informational only)\n" . implode("\n", $info) . "\n\n");
+			}
 
 			continue;
 		}
 
 		$differing++;
-		fwrite(STDOUT, '== ' . $id . "\n" . implode("\n", $lines) . "\n\n");
+		fwrite(STDOUT, '== ' . $id . "\n" . implode("\n", array_merge($lines, $info)) . "\n\n");
 	}
 
 	fwrite(STDOUT, sprintf(
-		"%d containers in base, %d in head, %d in both: %d identical%s, %d differ.\n",
+		"%d containers in base, %d in head, %d in both: %d identical%s%s, %d differ.\n",
 		count($baseIndex),
 		count($headIndex),
 		$common,
 		$identical,
 		$maps !== [] ? sprintf(' under %d map(s)', count($maps)) : '',
+		$informational > 0 ? sprintf(' (%d with allowed moves only)', $informational) : '',
 		$differing,
 	));
 
 	return $differing === 0 ? 0 : 1;
+}
+
+/**
+ * One definition name per line; blank lines and lines starting with # are ignored. Names are
+ * matched after any --map, i.e. as the head names them.
+ *
+ * @return list<string>
+ */
+function fbDiSnapshotLoadAllowedMoves(string $file): array
+{
+	if (!is_file($file)) {
+		throw new FbDiSnapshotUsageError(sprintf('Allowed-moves file "%s" does not exist', $file));
+	}
+
+	$names = [];
+
+	foreach (file($file, FILE_IGNORE_NEW_LINES) ?: [] as $line) {
+		$line = trim($line);
+
+		if ($line !== '' && !str_starts_with($line, '#')) {
+			$names[] = $line;
+		}
+	}
+
+	return $names;
 }
 
 /**
@@ -1273,58 +1406,162 @@ function fbDiSnapshotApplyMap(array $snapshot, array $map): array
 	ksort($renamed, SORT_STRING);
 	$snapshot['services'] = $renamed;
 
+	// The generated container: every service name in $wiring and $tags, tag names as $tags
+	// keys, and quoted names in the initialize() body.
+	$wiring = [];
+
+	foreach ($snapshot['wiring'] ?? [] as $type => $lists) {
+		foreach ($lists as $key => $names) {
+			$lists[$key] = array_map($rename, $names);
+		}
+
+		$wiring[$type] = $lists;
+	}
+
+	$snapshot['wiring'] = $wiring;
+
+	$generatedTags = [];
+
+	foreach ($snapshot['tags'] ?? [] as $tag => $pairs) {
+		$generatedTags[$tags[$tag] ?? $tag] = array_map(
+			static fn (array $pair): array => [$rename($pair[0]), $pair[1]],
+			$pairs,
+		);
+	}
+
+	ksort($generatedTags, SORT_STRING);
+	$snapshot['tags'] = $generatedTags;
+
+	$quoted = [];
+
+	foreach ($strings as $old => $new) {
+		$quoted["'" . $old . "'"] = "'" . $new . "'";
+	}
+
+	$snapshot['initialize'] = array_map(
+		static fn (string $line): string => strtr($line, $quoted),
+		$snapshot['initialize'] ?? [],
+	);
+
 	return $snapshot;
 }
 
 /**
  * @param array<string, mixed> $base
  * @param array<string, mixed> $head
+ * @param list<string> $allowedMoves
  *
- * @return list<string>
+ * @return array{list<string>, list<string>} [differences, informational lines]
  */
-function fbDiSnapshotCompare(array $base, array $head): array
+function fbDiSnapshotCompare(array $base, array $head, array $allowedMoves = []): array
 {
 	$lines = [];
+	$info = [];
 	$json = static fn (mixed $value): string => json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION) ?: '?';
 
 	if (($base['compiled'] ?? false) !== true || ($head['compiled'] ?? false) !== true) {
 		if (($base['compiled'] ?? false) === ($head['compiled'] ?? false) && ($base['error'] ?? null) === ($head['error'] ?? null)) {
-			return [];
+			return [[], []];
 		}
 
-		return [
+		return [[
 			'  compile result changed',
 			'    base: ' . (($base['compiled'] ?? false) === true ? 'compiles' : $json($base['error'] ?? null)),
 			'    head: ' . (($head['compiled'] ?? false) === true ? 'compiles' : $json($head['error'] ?? null)),
-		];
+		], []];
 	}
 
 	// Definition order, over the names both sides have: additions and removals are reported
-	// with the services below, not as an order change.
-	$commonNames = array_intersect($base['order'], $head['order']);
-	$baseOrder = array_values(array_filter($base['order'], static fn (string $n): bool => in_array($n, $commonNames, true)));
-	$headOrder = array_values(array_filter($head['order'], static fn (string $n): bool => in_array($n, $commonNames, true)));
+	// with the services below, not as an order change. A name listed in --allow-moves may
+	// change position: the order is compared with those names taken out, and their moves are
+	// only reported. Every observable order (setups, $wiring, $tags) is still compared below.
+	$commonNames = array_flip(array_intersect($base['order'], $head['order']));
+	$baseOrder = array_values(array_filter($base['order'], static fn (string $n): bool => isset($commonNames[$n])));
+	$headOrder = array_values(array_filter($head['order'], static fn (string $n): bool => isset($commonNames[$n])));
 
 	if ($baseOrder !== $headOrder) {
-		$moved = 0;
-		$first = null;
+		$allowed = array_flip($allowedMoves);
+		$strictBase = array_values(array_filter($baseOrder, static fn (string $n): bool => !isset($allowed[$n])));
+		$strictHead = array_values(array_filter($headOrder, static fn (string $n): bool => !isset($allowed[$n])));
 
-		foreach ($baseOrder as $position => $name) {
-			if ($headOrder[$position] !== $name) {
-				$first ??= $position;
-				$moved++;
+		if ($strictBase === $strictHead) {
+			$headPositions = array_flip($headOrder);
+			$moved = [];
+
+			foreach ($baseOrder as $position => $name) {
+				if (isset($allowed[$name]) && $headPositions[$name] !== $position) {
+					$moved[] = sprintf('%s #%d -> #%d', $name, $position, $headPositions[$name]);
+				}
 			}
-		}
 
-		$lines[] = sprintf('  order changed: %d of %d common definitions are at a different position; first at #%d', $moved, count($baseOrder), (int) $first);
-		$lines[] = '    base: ' . implode(', ', array_slice($baseOrder, max(0, (int) $first - 2), 8));
-		$lines[] = '    head: ' . implode(', ', array_slice($headOrder, max(0, (int) $first - 2), 8));
+			$info[] = sprintf('  info: %d allowed definition(s) moved in the global order; nothing else did', count($moved));
+
+			foreach ($moved as $move) {
+				$info[] = '    ' . $move;
+			}
+		} else {
+			$moved = 0;
+			$first = null;
+
+			foreach ($strictBase as $position => $name) {
+				if (($strictHead[$position] ?? null) !== $name) {
+					$first ??= $position;
+					$moved++;
+				}
+			}
+
+			$lines[] = sprintf(
+				'  order changed: %d of %d common definitions%s are at a different position; first at #%d',
+				$moved,
+				count($strictBase),
+				$allowedMoves !== [] ? ' outside --allow-moves' : '',
+				(int) $first,
+			);
+			$lines[] = '    base: ' . implode(', ', array_slice($strictBase, max(0, (int) $first - 2), 8));
+			$lines[] = '    head: ' . implode(', ', array_slice($strictHead, max(0, (int) $first - 2), 8));
+		}
 	}
 
-	if ($base['aliases'] !== $head['aliases']) {
-		$lines[] = '  aliases changed';
-		$lines[] = '    base: ' . $json($base['aliases']);
-		$lines[] = '    head: ' . $json($head['aliases']);
+	foreach (['extensions' => 'extension order', 'aliases' => 'aliases'] as $field => $label) {
+		if (($base[$field] ?? null) !== ($head[$field] ?? null)) {
+			$lines[] = '  ' . $label . ' changed';
+			$lines[] = '    base: ' . $json($base[$field] ?? null);
+			$lines[] = '    head: ' . $json($head[$field] ?? null);
+		}
+	}
+
+	// The generated container's runtime collections, in their compiled order
+	foreach (['wiring' => 'wiring[%s]', 'tags' => 'tags[%s]'] as $field => $label) {
+		$baseItems = $base[$field] ?? [];
+		$headItems = $head[$field] ?? [];
+		$keys = array_unique(array_merge(array_keys($baseItems), array_keys($headItems)));
+		sort($keys, SORT_STRING);
+
+		foreach ($keys as $key) {
+			if (($baseItems[$key] ?? null) !== ($headItems[$key] ?? null)) {
+				$lines[] = '  ' . sprintf($label, $key) . ' changed';
+				$lines[] = '    base: ' . (isset($baseItems[$key]) ? $json($baseItems[$key]) : '(none)');
+				$lines[] = '    head: ' . (isset($headItems[$key]) ? $json($headItems[$key]) : '(none)');
+			}
+		}
+	}
+
+	if (($base['initialize'] ?? []) !== ($head['initialize'] ?? [])) {
+		$baseInit = $base['initialize'] ?? [];
+		$headInit = $head['initialize'] ?? [];
+		$lines[] = sprintf('  initialize() changed (%d lines in base, %d in head)', count($baseInit), count($headInit));
+
+		foreach (array_values(array_diff($baseInit, $headInit)) as $line) {
+			$lines[] = '    - ' . trim($line);
+		}
+
+		foreach (array_values(array_diff($headInit, $baseInit)) as $line) {
+			$lines[] = '    + ' . trim($line);
+		}
+
+		if (array_diff($baseInit, $headInit) === [] && array_diff($headInit, $baseInit) === []) {
+			$lines[] = '    (same lines, different order)';
+		}
 	}
 
 	$names = array_unique(array_merge(array_keys($base['services']), array_keys($head['services'])));
@@ -1380,5 +1617,5 @@ function fbDiSnapshotCompare(array $base, array $head): array
 		}
 	}
 
-	return $lines;
+	return [$lines, $info];
 }

@@ -97,9 +97,10 @@ this in.
 ### PHP: the DI snapshot
 
 The suite fetches a handful of services; `tools/di-snapshot.php` records every definition of
-every container the repository builds (production, each package's test container, and each
-per-test NEON overlay): type, factory, arguments, setups in order, tags, autowiring, and the
-global definition order. A change to the DI wiring is proven by comparing a recording of the
+every container the repository builds (production in three environment variants, each
+package's test container, and each per-test NEON overlay): type, factory, arguments, setups
+in order, tags, autowiring, the generated container's `$wiring`/`$tags` lists and
+`initialize()`, and the global definition order. A change to the DI wiring is proven by comparing a recording of the
 base against one of the head. It needs no database. Recordings go under
 `var/tools/di-snapshot/`, which is git-ignored; they are never committed.
 
@@ -111,8 +112,10 @@ docker run --rm -v "$PWD":/app -w /app -e XDEBUG_MODE=off \
 ```
 
 `--diff` exits 1 on any difference and prints it grouped by container and service; `--map
-<file>` applies a service/tag rename map to the base first; `--list` prints the containers
-without compiling. Refresh the `vendor/fastybird/*` mirror first: the recording loads the
+<file>` applies a service/tag rename map to the base first; `--allow-moves <file>` lets the
+listed definitions change place in the raw global order (the observable orders, the
+generated `$wiring`/`$tags` lists and every setup sequence, are still compared); `--list`
+prints the containers without compiling. Refresh the `vendor/fastybird/*` mirror first: the recording loads the
 production classes from there, not from `src/`. The file's header documents the rest,
 including the map format.
 
