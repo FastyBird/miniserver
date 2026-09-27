@@ -133,11 +133,15 @@ final class CoreExtension extends DI\CompilerExtension
 
 	public const string CONSUMER_ROUTING_KEY = 'consumer_routing_key';
 
-	// Wire-level tag string, not a namespace -- Module/Devices (not migrated by this plan)
-	// still produces this exact string at src/FastyBird/Module/Devices/src/DI/DevicesExtension.php,
-	// so the value must stay byte-for-byte what WebSocketsExtension used, not the
-	// fastybird.core.* convention the rest of this file's own tags use.
+	// Tags a service whose createRouter() contributes WAMP routes; beforeCompile() below collects
+	// them into the WAMP router. Module/Devices produces it. A tag renamed on one side only makes
+	// the routes vanish without an error, so both sides use this constant.
 	public const string TAG_WEBSOCKETS_ROUTES = 'ipub.websockets.routes';
+
+	// Set by beforeCompile() below on every WebSockets controller service, and looked up at
+	// runtime by WebSockets\Controllers\ControllerFactory. Both sides use this constant for the
+	// same reason as TAG_WEBSOCKETS_ROUTES.
+	public const string TAG_WEBSOCKETS_CONTROLLER = 'ipub.websockets.controller';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -1438,10 +1442,8 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		foreach ($allControllers as $def) {
-			// Wire-level tag string, not a namespace -- Controllers/WebSockets/Controller/
-			// ControllerFactory::create() (this same package, Task 15) still consumes this exact
-			// string via findByTag(), so it must stay byte-for-byte what WebSocketsExtension used.
-			$def->addTag('nette.inject')->addTag('ipub.websockets.controller', $def->getType());
+			// WebSockets\Controllers\ControllerFactory looks controllers up by this tag at runtime
+			$def->addTag('nette.inject')->addTag(self::TAG_WEBSOCKETS_CONTROLLER, $def->getType());
 		}
 
 		if (

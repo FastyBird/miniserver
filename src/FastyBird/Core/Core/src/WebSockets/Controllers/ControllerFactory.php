@@ -2,9 +2,10 @@
 
 namespace FastyBird\Core\WebSockets\Controllers;
 
+use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Exceptions;
 use Nette;
-use Nette\DI;
+use Nette\DI as NetteDI;
 use Nette\Utils;
 use Override;
 use ReflectionClass;
@@ -43,14 +44,18 @@ final class ControllerFactory implements IControllerFactory
 	/** @var callable */
 	private $factory;
 
-	private DI\Container $container;
+	private NetteDI\Container $container;
 
 	public function __construct(Nette\DI\Container $container, callable|null $factory = null)
 	{
 		$this->container = $container;
 
 		$this->factory = $factory ?? function (string $class) {
-			$services = array_keys($this->container->findByTag('ipub.websockets.controller'), $class, true);
+			$services = array_keys(
+				$this->container->findByTag(CoreDI\CoreExtension::TAG_WEBSOCKETS_CONTROLLER),
+				$class,
+				true,
+			);
 
 			if (count($services) > 1) {
 				throw new Exceptions\InvalidController(

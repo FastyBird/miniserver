@@ -175,7 +175,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 
 		$builder->addDefinition($this->prefix('router.sockets.routes'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\SocketRoutes::class)
-			->addTag('ipub.websockets.routes');
+			->addTag(CoreDI\CoreExtension::TAG_WEBSOCKETS_ROUTES);
 
 		$builder->addDefinition($this->prefix('router.validator'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\Validator::class);
