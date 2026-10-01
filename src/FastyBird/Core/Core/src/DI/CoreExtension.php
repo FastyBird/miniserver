@@ -39,9 +39,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Driver as PersistenceMappingDriver;
 use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
 use FastyBird\Core\Persistence\Utilities;
-use FastyBird\Core\Phone\Services as PhoneServices;
-use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
-use FastyBird\Core\Phone\Types;
+use FastyBird\Core\Phone\DI\PhoneExtension;
 use FastyBird\Core\Presenters;
 use FastyBird\Core\Presenters\Events as PresentersEvents;
 use FastyBird\Core\Security\Access;
@@ -68,7 +66,6 @@ use FastyBird\Core\WebSockets\Subscribers as WebSocketsSubscribers;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Core\WebSockets\Topics\Drivers as TopicsDrivers;
 use FastyBird\Core\WebSockets\Wamp;
-use libphonenumber;
 use Monolog;
 use Nette;
 use Nette\Application;
@@ -149,10 +146,13 @@ final class CoreExtension extends DI\CompilerExtension
 
 	private readonly ValuesExtension $values;
 
+	private readonly PhoneExtension $phone;
+
 	public function __construct()
 	{
 		$this->clock = new ClockExtension();
 		$this->values = new ValuesExtension();
+		$this->phone = new PhoneExtension();
 	}
 
 	public static function register(
@@ -882,31 +882,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * PHONE
 		 */
 
-		$builder->addDefinition($this->prefix('phone.libphone.utils'))
-			->setType(libphonenumber\PhoneNumberUtil::class)
-			->setFactory('libphonenumber\PhoneNumberUtil::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.libphone.geoCoder'))
-			->setType(libphonenumber\geocoding\PhoneNumberOfflineGeocoder::class)
-			->setFactory('libphonenumber\geocoding\PhoneNumberOfflineGeocoder::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.libphone.shortNumber'))
-			->setType(libphonenumber\ShortNumberInfo::class)
-			->setFactory('libphonenumber\ShortNumberInfo::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.libphone.mapper.carrier'))
-			->setType(libphonenumber\PhoneNumberToCarrierMapper::class)
-			->setFactory('libphonenumber\PhoneNumberToCarrierMapper::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.libphone.mapper.timezone'))
-			->setType(libphonenumber\PhoneNumberToTimeZonesMapper::class)
-			->setFactory('libphonenumber\PhoneNumberToTimeZonesMapper::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.phone'))
-			->setType(PhoneServices\PhoneNumberHelper::class);
-
-		$builder->addDefinition($this->prefix('phone.doctrinePhone.subscriber'))
-			->setType(PhoneSubscribers\PhoneObjectSubscriber::class);
+		$this->phone->loadConfiguration();
 
 		/**
 		 * WEBSOCKETS (base + WAMP)
@@ -1395,11 +1371,11 @@ final class CoreExtension extends DI\CompilerExtension
 				'@self',
 				$builder->getDefinition($this->prefix('doctrineTimestampable.subscriber')),
 			]);
-			$emService->addSetup('?->getEventManager()->addEventSubscriber(?)', [
-				'@self',
-				$builder->getDefinition($this->prefix('phone.doctrinePhone.subscriber')),
-			]);
 		}
+
+		// The Phone child adds its subscriber to the same entity manager, right after the
+		// Timestampable one, as this block did (D2, #564)
+		$this->phone->beforeCompile();
 
 		/**
 		 * JSON:API -- schema/hydrator assembly
@@ -1609,16 +1585,7 @@ final class CoreExtension extends DI\CompilerExtension
 	{
 		parent::afterCompile($class);
 
-		// Preserved from DoctrinePhoneExtension::afterCompile() -- registers the 'phone' DBAL
-		// type. Entities map columns to it by name (Module/Triggers Entities\Notifications\Sms),
-		// so without this every test that loads the Triggers metadata fails.
-		$initialize = $class->getMethod('initialize');
-		$initialize->addBody(
-			'if (!Doctrine\DBAL\Types\Type::hasType(\'' . Types\PhoneType::PHONE . '\')) {'
-			. ' Doctrine\DBAL\Types\Type::addType('
-			. '\'' . Types\PhoneType::PHONE . '\', \'' . Types\PhoneType::class . '\''
-			. '); }',
-		);
+		$this->phone->afterCompile($class);
 	}
 
 	/**
@@ -1626,7 +1593,7 @@ final class CoreExtension extends DI\CompilerExtension
 	 */
 	private function children(): array
 	{
-		return [$this->values, $this->clock];
+		return [$this->values, $this->clock, $this->phone];
 	}
 
 }
