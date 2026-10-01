@@ -2,8 +2,8 @@
 
 namespace FastyBird\Core\WebSockets\Controllers;
 
-use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\WebSockets\DI as WebSocketsDI;
 use Nette;
 use Nette\DI as NetteDI;
 use Nette\Utils;
@@ -52,7 +52,7 @@ final class ControllerFactory implements IControllerFactory
 
 		$this->factory = $factory ?? function (string $class) {
 			$services = array_keys(
-				$this->container->findByTag(CoreDI\CoreExtension::TAG_WEBSOCKETS_CONTROLLER),
+				$this->container->findByTag(WebSocketsDI\WebSocketsExtension::CONTROLLER_TAG),
 				$class,
 				true,
 			);

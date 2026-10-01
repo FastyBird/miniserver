@@ -29,7 +29,7 @@ final class TaggedServicesTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
-	 * CoreExtension::TAG_WEBSOCKETS_ROUTES: the module's socket routes service is collected
+	 * WebSocketsExtension::ROUTES_TAG: the module's socket routes service is collected
 	 * into the WAMP router
 	 *
 	 * @throws Exceptions\InvalidArgument
@@ -50,7 +50,7 @@ final class TaggedServicesTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * CoreExtension::TAG_WEBSOCKETS_CONTROLLER: the controller factory creates a controller
+	 * WebSocketsExtension::CONTROLLER_TAG: the controller factory creates a controller
 	 * through its container service, found by the tag, and not as a new instance of its own
 	 *
 	 * @throws Exceptions\InvalidArgument
@@ -80,7 +80,7 @@ final class TaggedServicesTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * CoreExtension::DRIVER_TAG: the module adds its Documents directory to the tagged
+	 * DocumentsExtension::DRIVER_TAG: the module adds its Documents directory to the tagged
 	 * attribute driver, and that driver to the mapping chain, so its documents are mapped
 	 *
 	 * @throws Exceptions\InvalidArgument
@@ -96,7 +96,7 @@ final class TaggedServicesTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * CoreExtension::CONSUMER_STATE: a consumer the module tags with false is registered with
+	 * ExchangeExtension::CONSUMER_STATE: a consumer the module tags with false is registered with
 	 * the exchange consumer proxy, and registered disabled. The proxy offers no way to read a
 	 * registration back, so its storage is read directly.
 	 *

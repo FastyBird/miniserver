@@ -26,8 +26,8 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Protocol;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Router;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas;
 use FastyBird\Core\Boot;
-use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Http\Routing;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
@@ -222,7 +222,7 @@ class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension 
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
+		$services = $builder->findByTag(DocumentsDI\DocumentsExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

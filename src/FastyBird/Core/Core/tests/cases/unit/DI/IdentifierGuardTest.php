@@ -15,8 +15,13 @@ use function array_map;
 use function array_merge;
 use function array_unique;
 use function array_values;
+use function basename;
+use function class_exists;
+use function count;
+use function dirname;
 use function explode;
 use function file;
+use function glob;
 use function implode;
 use function in_array;
 use function is_string;
@@ -25,7 +30,9 @@ use function preg_quote;
 use function sort;
 use function sprintf;
 use function str_starts_with;
+use function strlen;
 use function strtolower;
+use function substr;
 use function trim;
 use const FILE_IGNORE_NEW_LINES;
 
@@ -48,7 +55,7 @@ use const FILE_IGNORE_NEW_LINES;
  *
  * The checked identifiers are every Core service name in the compiled Core test container
  * (fbCore.* and the unprefixed document.*), every key path of CoreExtension's schema, and
- * every tag constant of CoreExtension.
+ * every tag constant of CoreExtension and of the capability extensions, which own them.
  *
  * VIOLATIONS_FILE lists today's violations, one per line as "<kind> <identifier> <rules>". It
  * may only shrink: the test fails on a violation that is not listed, and on a listed entry
@@ -505,31 +512,77 @@ final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
+	 * Every public string constant but NAME, of CoreExtension and of each capability extension
+	 *
 	 * @return list<string>
 	 */
 	private static function tagViolations(): array
 	{
 		$violations = [];
 
-		$constants = (new ReflectionClass(CoreExtension::class))->getReflectionConstants(
-			ReflectionClassConstant::IS_PUBLIC,
-		);
+		foreach (self::extensions() as $extension) {
+			$constants = (new ReflectionClass($extension))->getReflectionConstants(
+				ReflectionClassConstant::IS_PUBLIC,
+			);
 
-		foreach ($constants as $constant) {
-			$value = $constant->getValue();
+			foreach ($constants as $constant) {
+				$value = $constant->getValue();
 
-			if ($constant->getName() === 'NAME' || !is_string($value)) {
-				continue;
-			}
+				if ($constant->getName() === 'NAME' || !is_string($value)) {
+					continue;
+				}
 
-			$rules = self::tagRules($value);
+				$rules = self::tagRules($value);
 
-			if ($rules !== []) {
-				$violations[] = sprintf('tag %s %s', $value, implode(',', $rules));
+				if ($rules !== []) {
+					$violations[] = sprintf('tag %s %s', $value, implode(',', $rules));
+				}
 			}
 		}
 
 		return $violations;
+	}
+
+	/**
+	 * CoreExtension and every <Capability>\DI\<Capability>Extension beside it, found on disk so that
+	 * a tag constant on any of them is checked
+	 *
+	 * @return list<class-string>
+	 */
+	private static function extensions(): array
+	{
+		$core = new ReflectionClass(CoreExtension::class);
+		$coreFile = $core->getFileName();
+
+		if ($coreFile === false) {
+			self::fail('CoreExtension has no file');
+		}
+
+		$files = glob(dirname($coreFile, 2) . '/*/DI/*Extension.php');
+
+		if ($files === false) {
+			self::fail('The capability extensions could not be listed');
+		}
+
+		// CoreExtension sits in <root>\DI; the capability extensions in <root>\<Capability>\DI
+		$rootNamespace = substr($core->getNamespaceName(), 0, -strlen('\DI'));
+		$extensions = [CoreExtension::class];
+
+		foreach ($files as $file) {
+			$class = $rootNamespace . '\\' . basename(dirname($file, 2)) . '\\DI\\' . basename($file, '.php');
+
+			if (!class_exists($class)) {
+				self::fail(sprintf('%s does not declare %s', $file, $class));
+			}
+
+			$extensions[] = $class;
+		}
+
+		if (count($extensions) !== count(self::CAPABILITIES) + 1) {
+			self::fail(sprintf('Expected CoreExtension and %d capability extensions', count(self::CAPABILITIES)));
+		}
+
+		return $extensions;
 	}
 
 	/**

@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Documents\DI;
 
-use FastyBird\Core\DI\CoreExtension;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
 use Nette\Caching;
@@ -22,10 +21,15 @@ use function sprintf;
  * registered with the compiler itself. It runs as fbCore.documents and reads its
  * fbCore > documents section, so its services are fbCore.documents.cache,
  * fbCore.documents.factory and fbCore.documents.mapping.*. Module extensions add their own
- * drivers to the chain through CoreExtension::DRIVER_TAG.
+ * drivers to the chain through DRIVER_TAG.
  */
 final class DocumentsExtension extends DI\CompilerExtension
 {
+
+	// Set on the attribute mapping driver. Module, connector, bridge and addon extensions look it up by
+	// this tag and add their own document paths to it. A tag renamed on one side only leaves their
+	// documents unmapped without an error, so both sides use this constant.
+	public const string DRIVER_TAG = 'fastybird.core.documents.attributeDriver';
 
 	#[Override]
 	public function getConfigSchema(): Schema\Schema
@@ -69,7 +73,7 @@ final class DocumentsExtension extends DI\CompilerExtension
 			->setType(Documents\Mapping\Driver\AttributeDriver::class)
 			->setArguments(['paths' => array_values($configuration->mapping)])
 			->addSetup('addExcludePaths', [$configuration->excludePaths])
-			->addTag(CoreExtension::DRIVER_TAG)
+			->addTag(self::DRIVER_TAG)
 			->setAutowired(false);
 
 		$mappingDriver = $builder->addDefinition(

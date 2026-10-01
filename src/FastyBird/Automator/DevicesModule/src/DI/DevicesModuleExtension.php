@@ -19,8 +19,8 @@ use FastyBird\Automator\DevicesModule\Hydrators;
 use FastyBird\Automator\DevicesModule\Schemas;
 use FastyBird\Automator\DevicesModule\Subscribers;
 use FastyBird\Core\Boot;
-use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\DI as DocumentsDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
@@ -145,7 +145,7 @@ class DevicesModuleExtension extends NetteDI\CompilerExtension
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
+		$services = $builder->findByTag(DocumentsDI\DocumentsExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

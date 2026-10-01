@@ -150,6 +150,94 @@ Core is now **capability-first**, following Symfony's component convention.
   a root-level class rather than keeping a stuttering `Configuration\Configuration` /
   `Constants\Constants` shape).
 
+## DI
+
+Epic #459 split Core's DI extension by capability and renamed every identifier it registers.
+These rules keep it that way. `IdentifierGuardTest` (Core, `tests/cases/unit/DI`) enforces the
+naming rules below. It checks every Core service name in the compiled Core test container, every
+key path of the `fbCore` schema, and every tag constant. Its expected-violations list,
+`identifier-guard-violations.txt`, is empty and may only shrink. Any new violation fails it.
+
+### Extension layout
+
+- Core registers exactly one compiler extension, the composite `FastyBird\Core\DI\CoreExtension`,
+  under the name `fbCore` (`CoreExtension::NAME`).
+- Each of the 11 capabilities has a child extension,
+  `FastyBird\Core\<Capability>\DI\<Capability>Extension`, for example
+  `FastyBird\Core\Security\DI\SecurityExtension`.
+- The children are never registered with the compiler, because nette/di cannot add an extension
+  while it is compiling. Instead, the composite does the following:
+  - constructs each child;
+  - calls `setCompiler()` on each child as `fbCore.<capability>`;
+  - hands each child exactly its own configuration subtree;
+  - forwards the `loadConfiguration()`, `beforeCompile()` and `afterCompile()` calls to the
+    children that implement them, and appends each child's `getInitialization()` body to its own.
+- Definition order is observable. nettrine's `EventPass`, the Symfony event dispatcher, the
+  console command list and the generated container's `findByType()`/`findByTag()` lists all
+  follow it. So the composite calls each child at the position its definitions hold in that
+  order, not in a convenient order.
+- A child that must contribute at two positions exposes one extra, explicitly named hook, and the
+  composite calls it at the second position. Today there are two:
+  `PersistenceExtension::loadTimestampable()` and `WebSocketsExtension::loadServerProcess()`.
+- `CoreExtension` itself keeps only the composition and the root runtime: the event loop, the
+  Nette UI and route list, the presenter mapping, the PSR-6 cache, the event-dispatcher fallback
+  and `Configuration`.
+- A new capability needs:
+  - a child extension;
+  - an entry in the composite's constructor, `children()`, `getConfigSchema()` (if it has
+    configuration) and hook calls;
+  - an entry in `IdentifierGuardTest::CAPABILITIES`.
+
+### Service names
+
+- Name each service `fbCore.<capability>.<role>`. `<capability>` is one of `api`, `clock`,
+  `documents`, `exchange`, `http`, `logging`, `persistence`, `phone`, `security`, `values` and
+  `webSockets`. `<role>` is one or more dot-separated camelCase segments, for example
+  `fbCore.security.token.builder` or `fbCore.webSockets.server.wrapper`. A child gets this
+  prefix from `$this->prefix('<role>')`.
+- The root services use the root forms: `fbCore.eventLoop.<role>`, `fbCore.ui.<role>`,
+  `fbCore.cache.<role>`, `fbCore.eventDispatcher` and `fbCore.configuration`.
+- No segment may be the name of a library Core was assembled from, compared case-insensitively.
+  The guard's `DENYLIST` holds those names: `jsonApi`, `simpleAuth`, `wsServer`, `ipub` and the
+  rest. `application` may not be the segment directly under `fbCore`. Deeper down it may be,
+  because there it names Nette's or the HTTP server's `Application`.
+- Other extensions look Core services up by type (`getByType()`, `findByType()`), not by name.
+  A reference by name in NEON, such as `@fbCore.api.middleware`, is part of the public surface,
+  and renaming the service breaks it.
+
+### Configuration keys
+
+- `fbCore` has one section per configurable capability: `logging` (with `sentry`), `documents`,
+  `security`, `clock`, `persistence` (with `timestampable`), `api`, `webSockets` (with `access`)
+  and `http`. Exchange, Values and Phone have no configuration.
+- Each child declares the schema of its own section in `getConfigSchema()`. The composite builds
+  its schema from them and hands each child exactly its subtree. [configuration.md](./configuration.md#core-fbcore)
+  documents every key.
+- The denylist applies to every key path, sections and leaves alike. `application` may not be a
+  top-level key.
+
+### Tags
+
+- Name each tag `fastybird.core.<capability>.<role>`, with the capability list above.
+- Define the tag string once, as a `public const string` on the extension of the capability that
+  owns the tag, never on `CoreExtension`.
+- The producer and the consumer both use that constant, never a string literal. A tag that one
+  side misspells or stops reading is not an error: the tagged service is silently unused.
+- The guard reads every public string constant other than `NAME` on `CoreExtension` and on each
+  capability extension as a tag. So a public string constant on a Core extension is a tag.
+- An extension outside Core imports the owning extension's `DI` namespace. There it collides with
+  `Nette\DI`, so the import alias rule above applies: `use FastyBird\Core\Documents\DI as DocumentsDI;`,
+  then `DocumentsDI\DocumentsExtension::DRIVER_TAG`.
+- Tags that belong to a third party, such as `nette.inject`, keep their own names.
+
+| Tag | Constant | Before #559 |
+|---|---|---|
+| `fastybird.core.documents.attributeDriver` | `DocumentsExtension::DRIVER_TAG` | `fastybird.application.attribute.driver` |
+| `fastybird.core.exchange.consumerState` | `ExchangeExtension::CONSUMER_STATE` | `consumer_state` |
+| `fastybird.core.exchange.consumerRoutingKey` | `ExchangeExtension::CONSUMER_ROUTING_KEY` | `consumer_routing_key` |
+| `fastybird.core.webSockets.routes` | `WebSocketsExtension::ROUTES_TAG` | `ipub.websockets.routes` |
+| `fastybird.core.webSockets.controller` | `WebSocketsExtension::CONTROLLER_TAG` | `ipub.websockets.controller` |
+
 ## Docblocks
 
 **No file header.** The licence is in `LICENSE.md`, the author in `composer.json`, and the

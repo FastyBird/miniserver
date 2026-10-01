@@ -17,13 +17,15 @@ namespace FastyBird\Module\Devices\DI;
 
 use Contributte\Translation;
 use FastyBird\Core\Boot;
-use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Exchange\DI as ExchangeDI;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
+use FastyBird\Core\WebSockets\DI as WebSocketsDI;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
@@ -175,7 +177,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 
 		$builder->addDefinition($this->prefix('router.sockets.routes'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\SocketRoutes::class)
-			->addTag(CoreDI\CoreExtension::TAG_WEBSOCKETS_ROUTES);
+			->addTag(WebSocketsDI\WebSocketsExtension::ROUTES_TAG);
 
 		$builder->addDefinition($this->prefix('router.validator'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\Validator::class);
@@ -910,7 +912,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 			->setArguments([
 				'logger' => $logger,
 			])
-			->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
+			->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
 
 		$builder->addDefinition(
 			$this->prefix('exchange.consumer.moduleEntities'),
@@ -920,7 +922,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 			->setArguments([
 				'logger' => $logger,
 			])
-			->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
+			->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
 
 		if (
 			$builder->findByType(Routing\LinkGenerator::class) !== []
@@ -934,7 +936,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 				->setArguments([
 					'logger' => $logger,
 				])
-				->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
+				->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
 		}
 
 		/**
@@ -992,7 +994,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
+		$services = $builder->findByTag(DocumentsDI\DocumentsExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

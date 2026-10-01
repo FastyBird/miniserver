@@ -61,22 +61,6 @@ final class CoreExtension extends DI\CompilerExtension
 
 	public const string NAME = 'fbCore';
 
-	public const string DRIVER_TAG = 'fastybird.application.attribute.driver';
-
-	public const string CONSUMER_STATE = 'consumer_state';
-
-	public const string CONSUMER_ROUTING_KEY = 'consumer_routing_key';
-
-	// Tags a service whose createRouter() contributes WAMP routes; WebSocketsExtension::beforeCompile()
-	// collects them into the WAMP router. Module/Devices produces it. A tag renamed on one side only makes
-	// the routes vanish without an error, so both sides use this constant.
-	public const string TAG_WEBSOCKETS_ROUTES = 'ipub.websockets.routes';
-
-	// Set by WebSocketsExtension::beforeCompile() on every WebSockets controller service, and looked up at
-	// runtime by WebSockets\Controllers\ControllerFactory. Both sides use this constant for the
-	// same reason as TAG_WEBSOCKETS_ROUTES.
-	public const string TAG_WEBSOCKETS_CONTROLLER = 'ipub.websockets.controller';
-
 	private readonly LoggingExtension $logging;
 
 	private readonly DocumentsExtension $documents;

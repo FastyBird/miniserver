@@ -1,7 +1,2 @@
 # Core DI identifiers that break a naming rule of IdentifierGuardTest: "<kind> <identifier> <rules>".
-# This list may only shrink. Epic #459 empties it (E4.5 config keys, E4.6 service names, E4.7 tags).
-tag consumer_routing_key pattern
-tag consumer_state pattern
-tag fastybird.application.attribute.driver pattern
-tag ipub.websockets.controller denylist,pattern
-tag ipub.websockets.routes denylist,pattern
+# This list may only shrink. Epic #459 emptied it (E4.5 config keys, E4.6 service names, E4.7 tags).
