@@ -1,0 +1,10 @@
+#
+# The clients storage driver configured explicitly as the in-memory driver Core registers, in the
+# same form as the default.
+#
+
+fbCore:
+    webSockets:
+        storage:
+            clients:
+                driver: "@fbCore.webSockets.clients.driver.memory"

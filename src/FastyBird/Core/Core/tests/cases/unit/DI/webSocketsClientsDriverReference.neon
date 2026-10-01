@@ -1,0 +1,14 @@
+#
+# A clients storage driver configured as a service reference, the documented form and the form of
+# the default, to a service registered under services:. nette/di processes services: after every
+# extension's loadConfiguration(), so the driver does not exist yet when fbCore reads the option.
+#
+
+fbCore:
+    webSockets:
+        storage:
+            clients:
+                driver: @myClientsDriver
+
+services:
+    myClientsDriver: FastyBird\Core\Tests\Fixtures\Dummy\DummyClientsDriver
