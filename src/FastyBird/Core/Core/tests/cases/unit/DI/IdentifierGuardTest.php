@@ -21,6 +21,7 @@ use function implode;
 use function in_array;
 use function is_string;
 use function preg_match;
+use function preg_quote;
 use function sort;
 use function sprintf;
 use function str_starts_with;
@@ -111,6 +112,8 @@ final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 	 * Digits are allowed after the first character (fbCore.cache.psr6)
 	 */
 	public const string ROLE = '[a-z][A-Za-z0-9]*(?:\.[a-z][A-Za-z0-9]*)*';
+
+	public const string TAG_PREFIX = 'fastybird.core';
 
 	/**
 	 * Core registers these without the fbCore prefix
@@ -446,8 +449,11 @@ final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 		}
 
 		$capability = '(?:' . implode('|', self::CAPABILITIES) . ')';
+		// preg_quote() rather than a literal: `make layers` reads the vendor word followed by
+		// a backslash as a package coordinate (see NeonClassReferencesTest)
+		$prefix = preg_quote(self::TAG_PREFIX . '.', '/');
 
-		if (preg_match('/^fastybird\.core\.' . $capability . '\.' . self::ROLE . '$/', $tag) !== 1) {
+		if (preg_match('/^' . $prefix . $capability . '\.' . self::ROLE . '$/', $tag) !== 1) {
 			$rules[] = 'pattern';
 		}
 
