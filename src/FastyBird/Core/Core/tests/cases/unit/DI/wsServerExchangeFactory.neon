@@ -1,0 +1,8 @@
+#
+# An exchange factory registered after fbCore's loadConfiguration(): services: entries are
+# processed after every extension's loadConfiguration(), as are extensions registered in a later
+# configuration file (RedisDb and RabbitMQ through config/local.neon, docs/configuration.md).
+#
+
+services:
+    dummyExchangeFactory: FastyBird\Core\Tests\Fixtures\Dummy\DummyExchangeFactory
