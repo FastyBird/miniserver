@@ -4,7 +4,6 @@ namespace FastyBird\Core\DI;
 
 use Casbin;
 use DateInvalidTimeZoneException;
-use Doctrine;
 use FastyBird\Core\Api\Encoding as ApiEncoding;
 use FastyBird\Core\Api\Helpers as ApiHelpers;
 use FastyBird\Core\Api\Hydrators;
@@ -26,22 +25,13 @@ use FastyBird\Core\Http\Routing as HttpRouting;
 use FastyBird\Core\Http\Server as HttpServer;
 use FastyBird\Core\Http\Subscribers as HttpSubscribers;
 use FastyBird\Core\Logging\DI\LoggingExtension;
-use FastyBird\Core\Persistence\Crud;
-use FastyBird\Core\Persistence\Crud\Create;
-use FastyBird\Core\Persistence\Crud\Delete;
-use FastyBird\Core\Persistence\Crud\Update;
-use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
-use FastyBird\Core\Persistence\Helpers\StringFunctions;
-use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
-use FastyBird\Core\Persistence\Mapping\Driver as PersistenceMappingDriver;
-use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
-use FastyBird\Core\Persistence\Utilities;
+use FastyBird\Core\Persistence\DI\PersistenceExtension;
 use FastyBird\Core\Phone\DI\PhoneExtension;
 use FastyBird\Core\Presenters;
 use FastyBird\Core\Presenters\Events as PresentersEvents;
 use FastyBird\Core\Security\Access;
 use FastyBird\Core\Security\Identity;
-use FastyBird\Core\Security\Mapping\Driver as SecurityMappingDriver;
+use FastyBird\Core\Security\Mapping\Driver as MappingDriver;
 use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Core\Security\Models\Casbin as ModelsCasbin;
 use FastyBird\Core\Security\Models\Policies;
@@ -71,7 +61,6 @@ use Nette\Bootstrap;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
-use Nettrine\Migrations as NettrineMigrations;
 use Nettrine\ORM as NettrineORM;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -139,6 +128,8 @@ final class CoreExtension extends DI\CompilerExtension
 
 	private readonly ExchangeExtension $exchange;
 
+	private readonly PersistenceExtension $persistence;
+
 	private readonly ClockExtension $clock;
 
 	private readonly ValuesExtension $values;
@@ -150,6 +141,7 @@ final class CoreExtension extends DI\CompilerExtension
 		$this->logging = new LoggingExtension();
 		$this->documents = new DocumentsExtension();
 		$this->exchange = new ExchangeExtension();
+		$this->persistence = new PersistenceExtension();
 		$this->clock = new ClockExtension();
 		$this->values = new ValuesExtension();
 		$this->phone = new PhoneExtension();
@@ -258,11 +250,7 @@ final class CoreExtension extends DI\CompilerExtension
 				]),
 			]),
 			'dateTimeFactory' => $this->clock->getConfigSchema(),
-			'doctrineTimestampable' => Schema\Expect::structure([
-				'lazyAssociation' => Schema\Expect::bool(false),
-				'autoMapField' => Schema\Expect::bool(true),
-				'dbFieldType' => Schema\Expect::string('datetime_immutable'),
-			]),
+			'doctrineTimestampable' => $this->persistence->getConfigSchema(),
 			'jsonApi' => Schema\Expect::structure([
 				'meta' => Schema\Expect::structure([
 					'author' => Schema\Expect::anyOf(Schema\Expect::string(), Schema\Expect::array())
@@ -383,6 +371,9 @@ final class CoreExtension extends DI\CompilerExtension
 		assert($configuration->dateTimeFactory instanceof stdClass);
 		$this->clock->setConfig($configuration->dateTimeFactory);
 
+		assert($configuration->doctrineTimestampable instanceof stdClass);
+		$this->persistence->setConfig($configuration->doctrineTimestampable);
+
 		/**
 		 * LOGGING -- the handlers, the console subscriber and Sentry
 		 */
@@ -402,13 +393,15 @@ final class CoreExtension extends DI\CompilerExtension
 		$builder->addDefinition($this->prefix('application.eventLoop.status'), new DI\Definitions\ServiceDefinition())
 			->setType(EventLoop\Status::class);
 
-		if (class_exists('\Doctrine\DBAL\Connection') && class_exists('\Doctrine\ORM\EntityManager')) {
-			$builder->addDefinition(
-				$this->prefix('application.subscribers.entityDiscriminator'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(PersistenceSubscribers\EntityDiscriminator::class);
-		}
+		/**
+		 * PERSISTENCE -- the entity discriminator, the helpers and entity CRUD
+		 */
+
+		$this->persistence->loadConfiguration();
+
+		/**
+		 * APPLICATION, continued
+		 */
 
 		$builder->addDefinition(
 			$this->prefix('application.subscribers.eventLoop'),
@@ -562,7 +555,7 @@ final class CoreExtension extends DI\CompilerExtension
 					$this->prefix('simpleAuth.doctrine.driver'),
 					new DI\Definitions\ServiceDefinition(),
 				)
-					->setType(SecurityMappingDriver\Owner::class);
+					->setType(MappingDriver\Owner::class);
 
 				$builder->addDefinition(
 					$this->prefix('simpleAuth.doctrine.subscriber'),
@@ -609,21 +602,9 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		/**
-		 * TOOLS
+		 * VALUES
 		 */
 
-		if (class_exists('\Doctrine\DBAL\Connection') && class_exists('\Doctrine\ORM\EntityManager')) {
-			$builder->addDefinition($this->prefix('tools.helpers.database'), new DI\Definitions\ServiceDefinition())
-				->setType(PersistenceHelpers\Database::class);
-		}
-
-		$builder->addDefinition(
-			$this->prefix('tools.utilities.doctrineDateProvider'),
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(Utilities\DateTimeProvider::class);
-
-		// VALUES -- its one definition stood here, inside TOOLS, and keeps its place in the order
 		$this->values->loadConfiguration();
 
 		/**
@@ -631,44 +612,6 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$this->clock->loadConfiguration();
-
-		/**
-		 * DOCTRINE CRUD
-		 */
-
-		$builder->addDefinition($this->prefix('doctrineCrud.entity.mapper'))
-			->setType(PersistenceMapping\EntityMapper::class)
-			->setAutowired(false);
-
-		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.creator'))
-			->setImplement(Create\EntityCreatorFactory::class)
-			->setAutowired(false)
-			->getResultDefinition()
-			->setType(Create\EntityCreator::class);
-
-		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.updater'))
-			->setImplement(Update\EntityUpdaterFactory::class)
-			->setAutowired(false)
-			->getResultDefinition()
-			->setFactory(Update\EntityUpdater::class);
-
-		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.deleter'))
-			->setImplement(Delete\EntityDeleterFactory::class)
-			->setAutowired(false)
-			->getResultDefinition()
-			->setFactory(Delete\EntityDeleter::class);
-
-		$builder->addFactoryDefinition($this->prefix('doctrineCrud.crud'))
-			->setImplement(Crud\CrudFactory::class)
-			->getResultDefinition()
-			->setType(Crud\EntityCrud::class)
-			->setArguments([
-				new PhpGenerator\Literal('$entityName'),
-				'@' . $this->prefix('doctrineCrud.entity.mapper'),
-				'@' . $this->prefix('doctrineCrud.entity.creator'),
-				'@' . $this->prefix('doctrineCrud.entity.updater'),
-				'@' . $this->prefix('doctrineCrud.entity.deleter'),
-			]);
 
 		/**
 		 * CONFIGURATION (SimpleAuth + DoctrineTimestampable settings, combined -- see
@@ -694,34 +637,13 @@ final class CoreExtension extends DI\CompilerExtension
 			]);
 
 		/**
-		 * DOCTRINE TIMESTAMPABLE
+		 * PERSISTENCE, continued -- timestampable and the schema subscriber
+		 *
+		 * The second Persistence hook: these subscribers follow Security's in definition order,
+		 * which nettrine's EventPass turns into listener order (census section 5.3).
 		 */
 
-		$builder->addDefinition($this->prefix('doctrineTimestampable.driver'))
-			->setType(PersistenceMappingDriver\Timestampable::class);
-
-		$builder->addDefinition($this->prefix('doctrineTimestampable.subscriber'))
-			->setType(PersistenceSubscribers\TimestampableSubscriber::class);
-
-		/**
-		 * DOCTRINE MIGRATIONS
-		 *
-		 * Registered only where nettrineMigrations itself is -- isolated per-package unit tests
-		 * boot only Core's own internal config, not the application's config/common.neon that
-		 * declares that extension, so its Doctrine\Migrations\Metadata\Storage\
-		 * TableMetadataStorageConfiguration service the subscriber is autowired against would
-		 * otherwise never exist for them to compile against.
-		 *
-		 * This keys on the extension being registered, not on findByType() against that service:
-		 * MigrationsExtension declares it with setFactory() and no setType(), so at this point in
-		 * loadConfiguration() the definition carries no resolvable type yet and findByType() always
-		 * returns [], which left the subscriber never registered in production (#515).
-		 */
-
-		if ($this->compiler->getExtensions(NettrineMigrations\DI\MigrationsExtension::class) !== []) {
-			$builder->addDefinition($this->prefix('doctrineMigrations.subscriber'))
-				->setType(PersistenceSubscribers\SchemaSubscriber::class);
-		}
+		$this->persistence->loadTimestampable();
 
 		/**
 		 * JSON:API
@@ -983,31 +905,11 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		/**
-		 * DOCTRINE CRUD -- entity CRUD services, removed when Doctrine ORM is absent
-		 *
-		 * loadConfiguration() unconditionally registers doctrineCrud.entity.{mapper,creator,
-		 * updater,deleter} and doctrineCrud.crud: EntityMapper/EntityCreator/EntityUpdater all
-		 * take a non-nullable Doctrine\Persistence\ManagerRegistry constructor argument, which
-		 * only exists in containers that also register nettrineOrm/nettrineDbal. Several
-		 * fbCore-using containers (RabbitMq, RedisDb, RedisDbCache among them) don't, so those
-		 * five otherwise-unconditional definitions failed to compile at all. Whether
-		 * ManagerRegistry ends up registered can depend on another extension's own
-		 * loadConfiguration() -- order-dependent within that phase -- so this can only be
-		 * decided reliably here, in beforeCompile(), after every extension's loadConfiguration()
-		 * has already run.
+		 * PERSISTENCE -- entity CRUD removal without Doctrine ORM, DATE_FORMAT, and the
+		 * timestampable subscription on the entity manager
 		 */
 
-		if ($builder->getByType(Doctrine\Persistence\ManagerRegistry::class) === null) {
-			foreach ([
-				'doctrineCrud.entity.mapper',
-				'doctrineCrud.entity.creator',
-				'doctrineCrud.entity.updater',
-				'doctrineCrud.entity.deleter',
-				'doctrineCrud.crud',
-			] as $doctrineCrudServiceName) {
-				$builder->removeDefinition($this->prefix($doctrineCrudServiceName));
-			}
-		}
+		$this->persistence->beforeCompile();
 
 		/**
 		 * LOGGING -- the Monolog handlers, rotating file and stdout, then Sentry
@@ -1018,10 +920,6 @@ final class CoreExtension extends DI\CompilerExtension
 		/**
 		 * APPLICATION -- routes, UI
 		 */
-
-		// EntityDiscriminator used to be attached here by hand. nettrine/orm 0.10's EventPass
-		// finds every service typed Doctrine\Common\EventSubscriber and registers it on its
-		// ContainerEventManager itself, so doing it here too would subscribe it twice.
 
 		$appRouterServiceName = $builder->getByType(Application\Routers\RouteList::class);
 		assert(is_string($appRouterServiceName));
@@ -1103,49 +1001,10 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		/**
-		 * DOCTRINE CRUD -- custom DATE_FORMAT string function
+		 * PHONE -- its subscriber on the entity manager, after the Timestampable one that
+		 * PersistenceExtension::beforeCompile() added above (D2, #564)
 		 */
 
-		// throw:true here unconditionally required Doctrine ORM's EntityManagerInterface in
-		// *every* container using fbCore -- including the several packages (CouchDb, RabbitMq,
-		// RedisDb, RedisDbCache among them) whose test containers never wire nettrineOrm at all.
-		// The Sentry handler lookup just above uses the same "look, act only if found" pattern
-		// this now matches; Doctrine's DATE_FORMAT function only needs registering when an
-		// EntityManager actually exists to register it on.
-		$entityManagerServiceName = $builder->getByType(Doctrine\ORM\EntityManagerInterface::class);
-
-		if ($entityManagerServiceName !== null) {
-			$entityManagerService = $builder->getDefinition($entityManagerServiceName);
-
-			if ($entityManagerService instanceof DI\Definitions\ServiceDefinition) {
-				$entityManagerService->addSetup('?->getConfiguration()->addCustomStringFunction(?, ?)', [
-					'@self',
-					'DATE_FORMAT',
-					StringFunctions\DateFormat::class,
-				]);
-			}
-		}
-
-		/**
-		 * DOCTRINE TIMESTAMPABLE + DOCTRINE PHONE -- EventManager subscriber wiring
-		 */
-
-		// Same fix as the DATE_FORMAT block above and for the same reason: throw:true made this
-		// unconditional for every fbCore container, including the several packages that never
-		// wire Doctrine ORM at all.
-		$emServiceName = $builder->getByType(Doctrine\ORM\EntityManagerInterface::class);
-
-		if ($emServiceName !== null) {
-			$emService = $builder->getDefinition($emServiceName);
-			assert($emService instanceof DI\Definitions\ServiceDefinition);
-			$emService->addSetup('?->getEventManager()->addEventSubscriber(?)', [
-				'@self',
-				$builder->getDefinition($this->prefix('doctrineTimestampable.subscriber')),
-			]);
-		}
-
-		// The Phone child adds its subscriber to the same entity manager, right after the
-		// Timestampable one, as this block did (D2, #564)
 		$this->phone->beforeCompile();
 
 		/**
@@ -1364,7 +1223,15 @@ final class CoreExtension extends DI\CompilerExtension
 	 */
 	private function children(): array
 	{
-		return [$this->logging, $this->documents, $this->exchange, $this->values, $this->clock, $this->phone];
+		return [
+			$this->logging,
+			$this->persistence,
+			$this->documents,
+			$this->exchange,
+			$this->values,
+			$this->clock,
+			$this->phone,
+		];
 	}
 
 }
