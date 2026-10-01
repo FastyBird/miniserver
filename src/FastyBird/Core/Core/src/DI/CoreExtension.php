@@ -27,8 +27,7 @@ use FastyBird\Core\Http\Middleware as HttpMiddleware;
 use FastyBird\Core\Http\Routing as HttpRouting;
 use FastyBird\Core\Http\Server as HttpServer;
 use FastyBird\Core\Http\Subscribers as HttpSubscribers;
-use FastyBird\Core\Logging;
-use FastyBird\Core\Logging\Subscribers as LoggingSubscribers;
+use FastyBird\Core\Logging\DI\LoggingExtension;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Crud\Create;
 use FastyBird\Core\Persistence\Crud\Delete;
@@ -82,16 +81,13 @@ use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Log;
 use React;
 use ReflectionClass;
-use Sentry;
 use stdClass;
-use Symfony\Bridge\Monolog as BridgeMonolog;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use Symfony\Contracts\EventDispatcher as ContractsEventDispatcher;
 use function array_values;
 use function assert;
 use function class_exists;
-use function getenv;
 use function interface_exists;
 use function is_bool;
 use function is_dir;
@@ -142,6 +138,8 @@ final class CoreExtension extends DI\CompilerExtension
 	// same reason as TAG_WEBSOCKETS_ROUTES.
 	public const string TAG_WEBSOCKETS_CONTROLLER = 'ipub.websockets.controller';
 
+	private readonly LoggingExtension $logging;
+
 	private readonly ClockExtension $clock;
 
 	private readonly ValuesExtension $values;
@@ -150,6 +148,7 @@ final class CoreExtension extends DI\CompilerExtension
 
 	public function __construct()
 	{
+		$this->logging = new LoggingExtension();
 		$this->clock = new ClockExtension();
 		$this->values = new ValuesExtension();
 		$this->phone = new PhoneExtension();
@@ -380,47 +379,22 @@ final class CoreExtension extends DI\CompilerExtension
 
 		$this->compiler->addDependencies($childFiles);
 
+		// Logging reads two sections until the keys are renamed (#557), so it gets the whole
+		// configuration (census section 6)
+		$this->logging->setConfig($configuration);
+
 		assert($configuration->dateTimeFactory instanceof stdClass);
 		$this->clock->setConfig($configuration->dateTimeFactory);
 
 		/**
-		 * APPLICATION
+		 * LOGGING -- the handlers, the console subscriber and Sentry
 		 */
 
-		if ($configuration->application->logging->rotatingFile->enabled === true) {
-			$builder->addDefinition(
-				$this->prefix('application.logger.handler.rotatingFile'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Monolog\Handler\RotatingFileHandler::class)
-				->setArguments([
-					'filename' => FB_LOGS_DIR . DIRECTORY_SEPARATOR . $configuration->application->logging->rotatingFile->filename,
-					'maxFiles' => 10,
-					'level' => $configuration->application->logging->rotatingFile->level,
-				]);
-		}
+		$this->logging->loadConfiguration();
 
-		if ($configuration->application->logging->stdOut->enabled === true) {
-			$builder->addDefinition(
-				$this->prefix('application.logger.handler.stdOut'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Monolog\Handler\StreamHandler::class)
-				->setArguments([
-					'stream' => 'php://stdout',
-					'level' => $configuration->application->logging->stdOut->level,
-				]);
-		}
-
-		$consoleHandler = null;
-
-		if ($configuration->application->logging->console->enabled) {
-			$consoleHandler = $builder->addDefinition(
-				$this->prefix('application.logger.handler.console'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(BridgeMonolog\Handler\ConsoleHandler::class);
-		}
+		/**
+		 * APPLICATION
+		 */
 
 		$builder->addDefinition($this->prefix('application.cache.psr6'), new DI\Definitions\ServiceDefinition())
 			->setType(ArrayAdapter::class);
@@ -430,18 +404,6 @@ final class CoreExtension extends DI\CompilerExtension
 
 		$builder->addDefinition($this->prefix('application.eventLoop.status'), new DI\Definitions\ServiceDefinition())
 			->setType(EventLoop\Status::class);
-
-		if ($configuration->application->logging->console->enabled) {
-			$builder->addDefinition(
-				$this->prefix('application.subscribers.console'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(LoggingSubscribers\Console::class)
-				->setArguments([
-					'handler' => $consoleHandler,
-					'level' => $configuration->application->logging->console->level,
-				]);
-		}
 
 		if (class_exists('\Doctrine\DBAL\Connection') && class_exists('\Doctrine\ORM\EntityManager')) {
 			$builder->addDefinition(
@@ -709,54 +671,6 @@ final class CoreExtension extends DI\CompilerExtension
 
 		// VALUES -- its one definition stood here, inside TOOLS, and keeps its place in the order
 		$this->values->loadConfiguration();
-
-		if (interface_exists('\Sentry\ClientInterface')) {
-			$builder->addDefinition($this->prefix('tools.helpers.sentry'), new DI\Definitions\ServiceDefinition())
-				->setType(Logging\Sentry::class);
-		}
-
-		// Preserved from ToolsExtension::loadConfiguration() -- the DSN can come from the OS
-		// environment directly (both $_ENV and getenv(), containers set it either way), and only
-		// falls back to the NEON-configured value if neither is present. Dropping this fallback
-		// would silently disable Sentry for every deployment that wires the DSN via environment
-		// only, which is how the original packages -- and this repo's own docker/ setup -- do it.
-		if (
-			isset($_ENV['FB_APP_PARAMETER__SENTRY_DSN'])
-			&& is_string($_ENV['FB_APP_PARAMETER__SENTRY_DSN'])
-			&& $_ENV['FB_APP_PARAMETER__SENTRY_DSN'] !== ''
-		) {
-			$sentryDSN = $_ENV['FB_APP_PARAMETER__SENTRY_DSN'];
-		} elseif (
-			getenv('FB_APP_PARAMETER__SENTRY_DSN') !== false
-			&& getenv('FB_APP_PARAMETER__SENTRY_DSN') !== ''
-		) {
-			$sentryDSN = getenv('FB_APP_PARAMETER__SENTRY_DSN');
-		} elseif ($configuration->tools->sentry->dsn !== null) {
-			$sentryDSN = $configuration->tools->sentry->dsn;
-		} else {
-			$sentryDSN = null;
-		}
-
-		if (is_string($sentryDSN) && $sentryDSN !== '') {
-			$builder->addDefinition($this->prefix('tools.sentry.handler'), new DI\Definitions\ServiceDefinition())
-				->setType(Sentry\Monolog\Handler::class)
-				->setArgument('level', $configuration->tools->sentry->level);
-
-			$sentryClientBuilderService = $builder->addDefinition(
-				$this->prefix('tools.sentry.clientBuilder'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setFactory('Sentry\ClientBuilder::create')
-				->setArguments([['dsn' => $sentryDSN]]);
-
-			$builder->addDefinition($this->prefix('tools.sentry.client'), new DI\Definitions\ServiceDefinition())
-				->setType(Sentry\ClientInterface::class)
-				// @phpstan-ignore argument.type (Nette ServiceDefinition::setFactory() accepts a [service, method] callable array at runtime)
-				->setFactory([$sentryClientBuilderService, 'getClient']);
-
-			$builder->addDefinition($this->prefix('tools.sentry.hub'), new DI\Definitions\ServiceDefinition())
-				->setType(Sentry\State\Hub::class);
-		}
 
 		/**
 		 * DATE TIME FACTORY
@@ -1142,32 +1056,14 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		/**
-		 * APPLICATION -- loggers, routes, UI
+		 * LOGGING -- the Monolog handlers, rotating file and stdout, then Sentry
 		 */
 
-		if (
-			$configuration->application->logging->rotatingFile->enabled === true
-			|| $configuration->application->logging->stdOut->enabled === true
-		) {
-			$monologLoggerServiceName = $builder->getByType(Monolog\Logger::class);
-			assert(is_string($monologLoggerServiceName));
-			$monologLoggerService = $builder->getDefinition($monologLoggerServiceName);
-			assert($monologLoggerService instanceof DI\Definitions\ServiceDefinition);
+		$this->logging->beforeCompile();
 
-			if ($configuration->application->logging->rotatingFile->enabled === true) {
-				$monologLoggerService->addSetup('?->pushHandler(?)', [
-					'@self',
-					$builder->getDefinition($this->prefix('application.logger.handler.rotatingFile')),
-				]);
-			}
-
-			if ($configuration->application->logging->stdOut->enabled === true) {
-				$monologLoggerService->addSetup('?->pushHandler(?)', [
-					'@self',
-					$builder->getDefinition($this->prefix('application.logger.handler.stdOut')),
-				]);
-			}
-		}
+		/**
+		 * APPLICATION -- routes, UI
+		 */
 
 		// EntityDiscriminator used to be attached here by hand. nettrine/orm 0.10's EventPass
 		// finds every service typed Doctrine\Common\EventSubscriber and registers it on its
@@ -1313,22 +1209,6 @@ final class CoreExtension extends DI\CompilerExtension
 					new PhpGenerator\Literal(PresentersEvents\PresenterResponse::class),
 				]);
 			}
-		}
-
-		/**
-		 * TOOLS -- Sentry handler wiring
-		 */
-
-		$sentryHandlerServiceName = $builder->getByType(Sentry\Monolog\Handler::class);
-
-		if ($sentryHandlerServiceName !== null) {
-			$monologLoggerServiceName = $builder->getByType(Monolog\Logger::class);
-			assert(is_string($monologLoggerServiceName));
-			$monologLoggerService = $builder->getDefinition($monologLoggerServiceName);
-			assert($monologLoggerService instanceof DI\Definitions\ServiceDefinition);
-			$sentryHandlerService = $builder->getDefinition($this->prefix('tools.sentry.handler'));
-			assert($sentryHandlerService instanceof DI\Definitions\ServiceDefinition);
-			$monologLoggerService->addSetup('?->pushHandler(?)', ['@self', $sentryHandlerService]);
 		}
 
 		/**
@@ -1593,7 +1473,7 @@ final class CoreExtension extends DI\CompilerExtension
 	 */
 	private function children(): array
 	{
-		return [$this->values, $this->clock, $this->phone];
+		return [$this->logging, $this->values, $this->clock, $this->phone];
 	}
 
 }
