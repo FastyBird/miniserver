@@ -1,7 +1,5 @@
 <?php declare(strict_types = 1);
 
-// phpcs:ignoreFile
-
 namespace FastyBird\Core\Api\Middleware;
 
 use FastyBird\Core\Api\Encoding;
@@ -13,12 +11,12 @@ use Neomerx;
 use Neomerx\JsonApi\Contracts;
 use Neomerx\JsonApi\Schema;
 use Nette\DI;
+use Override;
 use Psr\Http\Message;
 use Psr\Http\Server;
 use Psr\Log;
 use RuntimeException;
 use Throwable;
-use function class_alias;
 use function class_exists;
 use const JSON_PRETTY_PRINT;
 
@@ -43,8 +41,8 @@ final class JsonApiMiddleware implements Server\MiddlewareInterface
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */
-	#[\Override]
-    public function process(
+	#[Override]
+	public function process(
 		Message\ServerRequestInterface $request,
 		Server\RequestHandlerInterface $handler,
 	): Message\ResponseInterface
@@ -70,7 +68,6 @@ final class JsonApiMiddleware implements Server\MiddlewareInterface
 					$response->getBody()
 						->write($content);
 				}
-
 			} elseif (
 				class_exists(HttpExceptions\Http::class)
 				&& $ex instanceof HttpExceptions\Http
