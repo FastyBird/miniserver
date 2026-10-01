@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\WebSockets\DI;
 
-use FastyBird\Core\DI\CoreExtension;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Http\Routing;
@@ -57,6 +56,16 @@ use const SORT_STRING;
  */
 final class WebSocketsExtension extends DI\CompilerExtension
 {
+
+	// Tags a service whose createRouter() contributes WAMP routes; beforeCompile() collects them into
+	// the WAMP router. Module/Devices produces it. A tag renamed on one side only makes the routes
+	// vanish without an error, so both sides use this constant.
+	public const string ROUTES_TAG = 'fastybird.core.webSockets.routes';
+
+	// Set by beforeCompile() on every WebSockets controller service, and looked up at runtime by
+	// WebSockets\Controllers\ControllerFactory. Both sides use this constant for the same reason as
+	// ROUTES_TAG.
+	public const string CONTROLLER_TAG = 'fastybird.core.webSockets.controller';
 
 	#[Override]
 	public function getConfigSchema(): Schema\Schema
@@ -275,7 +284,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$webSocketsRouter = $builder->getDefinition($this->prefix('routing.router'));
 		$routersFactories = [];
 
-		foreach ($builder->findByTag(CoreExtension::TAG_WEBSOCKETS_ROUTES) as $tagRouterService => $tagPriority) {
+		foreach ($builder->findByTag(self::ROUTES_TAG) as $tagRouterService => $tagPriority) {
 			if (is_bool($tagPriority)) {
 				$tagPriority = 100;
 			}
@@ -309,7 +318,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 
 		foreach ($allControllers as $def) {
 			// WebSockets\Controllers\ControllerFactory looks controllers up by this tag at runtime
-			$def->addTag('nette.inject')->addTag(CoreExtension::TAG_WEBSOCKETS_CONTROLLER, $def->getType());
+			$def->addTag('nette.inject')->addTag(self::CONTROLLER_TAG, $def->getType());
 		}
 
 		if (

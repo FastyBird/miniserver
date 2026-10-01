@@ -17,8 +17,8 @@ namespace FastyBird\Module\Accounts\DI;
 
 use Contributte\Translation;
 use FastyBird\Core\Boot;
-use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Accounts\Commands;
 use FastyBird\Module\Accounts\Controllers;
@@ -257,7 +257,7 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
+		$services = $builder->findByTag(DocumentsDI\DocumentsExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

@@ -17,9 +17,10 @@ namespace FastyBird\Module\Ui\DI;
 
 use Contributte\Translation;
 use FastyBird\Core\Boot;
-use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
+use FastyBird\Core\Exchange\DI as ExchangeDI;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
@@ -500,7 +501,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 				->setArguments([
 					'logger' => $logger,
 				])
-				->addTag(CoreDI\CoreExtension::CONSUMER_STATE, false);
+				->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
 		}
 	}
 
@@ -530,7 +531,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
+		$services = $builder->findByTag(DocumentsDI\DocumentsExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

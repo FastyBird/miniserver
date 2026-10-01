@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Exchange\DI;
 
-use FastyBird\Core\DI\CoreExtension;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
@@ -19,11 +18,20 @@ use function is_string;
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs as fbCore.exchange, so its services are
  * fbCore.exchange.*. It has no configuration. In beforeCompile() it registers every consumer
- * and publisher service with its proxy, reading the CoreExtension::CONSUMER_STATE and
- * CoreExtension::CONSUMER_ROUTING_KEY tags.
+ * and publisher service with its proxy, reading the CONSUMER_STATE and CONSUMER_ROUTING_KEY
+ * tags.
  */
 final class ExchangeExtension extends DI\CompilerExtension
 {
+
+	// Set by an extension on a consumer service, with a bool value: false registers the consumer
+	// disabled. Without the tag the consumer is registered enabled, so a tag renamed on one side only
+	// enables it without an error; both sides use this constant.
+	public const string CONSUMER_STATE = 'fastybird.core.exchange.consumerState';
+
+	// Set by an extension on a consumer service, with a routing key value the consumer is registered
+	// for. Nothing sets it today.
+	public const string CONSUMER_ROUTING_KEY = 'fastybird.core.exchange.consumerRoutingKey';
 
 	#[Override]
 	public function loadConfiguration(): void
@@ -66,9 +74,9 @@ final class ExchangeExtension extends DI\CompilerExtension
 					&& ($consumerService->getAutowired() === true || !is_bool($consumerService->getAutowired()))
 				) {
 					$consumerService->setAutowired(false);
-					$consumerStatus = $consumerService->getTag(CoreExtension::CONSUMER_STATE);
+					$consumerStatus = $consumerService->getTag(self::CONSUMER_STATE);
 					assert(is_bool($consumerStatus) || $consumerStatus === null);
-					$consumerRoutingKey = $consumerService->getTag(CoreExtension::CONSUMER_ROUTING_KEY);
+					$consumerRoutingKey = $consumerService->getTag(self::CONSUMER_ROUTING_KEY);
 					assert(is_string($consumerRoutingKey) || $consumerRoutingKey === null);
 
 					$consumerProxyService->addSetup('?->register(?, ?, ?)', [

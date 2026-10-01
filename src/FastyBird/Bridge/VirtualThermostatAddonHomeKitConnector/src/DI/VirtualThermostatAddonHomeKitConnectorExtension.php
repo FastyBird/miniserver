@@ -25,8 +25,8 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Protocol;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Router;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas;
 use FastyBird\Core\Boot;
-use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Http\Routing;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
@@ -187,7 +187,7 @@ class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerEx
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
+		$services = $builder->findByTag(DocumentsDI\DocumentsExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);

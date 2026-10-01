@@ -23,8 +23,8 @@ use FastyBird\Addon\VirtualThermostat\Helpers;
 use FastyBird\Addon\VirtualThermostat\Hydrators;
 use FastyBird\Addon\VirtualThermostat\Schemas;
 use FastyBird\Core\Boot;
-use FastyBird\Core\DI as CoreDI;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\DI as DocumentsDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
@@ -199,7 +199,7 @@ class VirtualThermostatExtension extends NetteDI\CompilerExtension implements Tr
 		 * APPLICATION DOCUMENTS
 		 */
 
-		$services = $builder->findByTag(CoreDI\CoreExtension::DRIVER_TAG);
+		$services = $builder->findByTag(DocumentsDI\DocumentsExtension::DRIVER_TAG);
 
 		if ($services !== []) {
 			$services = array_keys($services);
