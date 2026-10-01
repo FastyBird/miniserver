@@ -93,7 +93,6 @@ use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use Symfony\Contracts\EventDispatcher as ContractsEventDispatcher;
 use function array_values;
 use function assert;
-use function class_alias;
 use function class_exists;
 use function getenv;
 use function in_array;
@@ -109,10 +108,6 @@ use function strval;
 use const DIRECTORY_SEPARATOR;
 use const SORT_NUMERIC;
 use const SORT_STRING;
-
-if (!class_exists('Nette\PhpGenerator\Literal')) {
-	class_alias('Nette\PhpGenerator\PhpLiteral', 'Nette\PhpGenerator\Literal');
-}
 
 /**
  * FastyBird Core -- consolidated DI extension
