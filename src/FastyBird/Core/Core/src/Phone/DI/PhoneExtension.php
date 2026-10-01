@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Phone\DI;
 
-use Doctrine;
 use FastyBird\Core\Phone\Services;
 use FastyBird\Core\Phone\Subscribers;
 use FastyBird\Core\Phone\Types;
@@ -10,7 +9,6 @@ use libphonenumber;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Override;
-use function assert;
 
 /**
  * Phone number handling: libphonenumber, the phone helper, the Doctrine subscriber and the
@@ -51,36 +49,14 @@ final class PhoneExtension extends DI\CompilerExtension
 		$builder->addDefinition($this->prefix('helper'))
 			->setType(Services\PhoneNumberHelper::class);
 
+		// Defining the subscriber is all it takes. nettrine/orm's EventPass finds every service
+		// typed Doctrine\Common\EventSubscriber and subscribes it on its ContainerEventManager by
+		// service name. Until #564 a beforeCompile() here also called the entity manager's
+		// addEventSubscriber() for it, which subscribed the same object a second time, so
+		// PhoneObjectSubscriber ran twice on loadClassMetadata. DoctrineSubscriptionTest pins one
+		// entry per subscriber.
 		$builder->addDefinition($this->prefix('doctrine.subscriber'))
 			->setType(Subscribers\PhoneObjectSubscriber::class);
-	}
-
-	/**
-	 * @throws DI\MissingServiceException
-	 * @throws DI\NotAllowedDuringResolvingException
-	 */
-	#[Override]
-	public function beforeCompile(): void
-	{
-		parent::beforeCompile();
-
-		$builder = $this->getContainerBuilder();
-
-		// KNOWN DEFECT, kept verbatim on purpose (#564, D2 of the Epic #459 census): nettrine's
-		// EventPass already subscribes this service by name, so this second subscription makes
-		// PhoneObjectSubscriber run twice on loadClassMetadata. KnownDefectDoubleDoctrineSubscriptionTest
-		// pins it. The lookup does not throw: several fbCore containers wire no Doctrine ORM at
-		// all, and they get no subscription.
-		$emServiceName = $builder->getByType(Doctrine\ORM\EntityManagerInterface::class);
-
-		if ($emServiceName !== null) {
-			$emService = $builder->getDefinition($emServiceName);
-			assert($emService instanceof DI\Definitions\ServiceDefinition);
-			$emService->addSetup('?->getEventManager()->addEventSubscriber(?)', [
-				'@self',
-				$builder->getDefinition($this->prefix('doctrine.subscriber')),
-			]);
-		}
 	}
 
 	#[Override]
