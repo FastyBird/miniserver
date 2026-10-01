@@ -14,7 +14,9 @@ use React\Promise;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use function in_array;
+use function count;
+use function is_string;
+use function preg_match;
 
 final class HttpServerCommandTest extends TestCase
 {
@@ -36,24 +38,25 @@ final class HttpServerCommandTest extends TestCase
 			->method('info')
 			->with(
 				self::callback(static function (...$args): bool {
-					$valid = [
+					if ($args === [
+						'Starting HTTP Server',
 						[
-							'Starting HTTP Server',
-							[
-								'source' => Sources\Plugin::WEB_SERVER->value,
-								'type' => 'server-command',
-							],
+							'source' => Sources\Plugin::WEB_SERVER->value,
+							'type' => 'server-command',
 						],
-						[
-							'Listening on "http://127.0.0.1:8001"',
-							[
-								'source' => Sources\Plugin::WEB_SERVER->value,
-								'type' => 'factory',
-							],
-						],
-					];
+					]) {
+						return true;
+					}
 
-					return in_array($args, $valid, true);
+					// The command binds port 0, so the operating system picks a free port and
+					// the test never competes with anything else for a fixed one.
+					return count($args) === 2
+						&& is_string($args[0])
+						&& preg_match('#^Listening on "http://127\.0\.0\.1:[1-9][0-9]*"$#', $args[0]) === 1
+						&& $args[1] === [
+							'source' => Sources\Plugin::WEB_SERVER->value,
+							'type' => 'factory',
+						];
 				}),
 			);
 
@@ -85,7 +88,7 @@ final class HttpServerCommandTest extends TestCase
 		$application = new Application();
 		$application->add(new Commands\HttpServer(
 			'127.0.0.1',
-			8_001,
+			0,
 			$serverFactory,
 			$eventLoop,
 			$eventDispatcher,
