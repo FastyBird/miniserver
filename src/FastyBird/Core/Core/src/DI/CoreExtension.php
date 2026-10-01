@@ -4,7 +4,6 @@ namespace FastyBird\Core\DI;
 
 use Casbin;
 use DateInvalidTimeZoneException;
-use DateTimeZone;
 use Doctrine;
 use FastyBird\Core\Api\Encoding as ApiEncoding;
 use FastyBird\Core\Api\Helpers as ApiHelpers;
@@ -12,7 +11,7 @@ use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Api\Middleware as ApiMiddleware;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Clock;
+use FastyBird\Core\Clock\DI\ClockExtension;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Documents;
 use FastyBird\Core\EventLoop;
@@ -40,9 +39,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Driver as PersistenceMappingDriver;
 use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
 use FastyBird\Core\Persistence\Utilities;
-use FastyBird\Core\Phone\Services as PhoneServices;
-use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
-use FastyBird\Core\Phone\Types;
+use FastyBird\Core\Phone\DI\PhoneExtension;
 use FastyBird\Core\Presenters;
 use FastyBird\Core\Presenters\Events as PresentersEvents;
 use FastyBird\Core\Security\Access;
@@ -55,7 +52,7 @@ use FastyBird\Core\Security\Models\Tokens;
 use FastyBird\Core\Security\Services as SecurityServices;
 use FastyBird\Core\Security\Subscribers as SecuritySubscribers;
 use FastyBird\Core\UI;
-use FastyBird\Core\Values\Schemas as ValuesSchemas;
+use FastyBird\Core\Values\DI\ValuesExtension;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Clients\Drivers as ClientsDrivers;
 use FastyBird\Core\WebSockets\Commands as WebSocketsCommands;
@@ -69,7 +66,6 @@ use FastyBird\Core\WebSockets\Subscribers as WebSocketsSubscribers;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Core\WebSockets\Topics\Drivers as TopicsDrivers;
 use FastyBird\Core\WebSockets\Wamp;
-use libphonenumber;
 use Monolog;
 use Nette;
 use Nette\Application;
@@ -85,6 +81,7 @@ use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Log;
 use React;
+use ReflectionClass;
 use Sentry;
 use stdClass;
 use Symfony\Bridge\Monolog as BridgeMonolog;
@@ -93,10 +90,8 @@ use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use Symfony\Contracts\EventDispatcher as ContractsEventDispatcher;
 use function array_values;
 use function assert;
-use function class_alias;
 use function class_exists;
 use function getenv;
-use function in_array;
 use function interface_exists;
 use function is_bool;
 use function is_dir;
@@ -110,17 +105,21 @@ use const DIRECTORY_SEPARATOR;
 use const SORT_NUMERIC;
 use const SORT_STRING;
 
-if (!class_exists('Nette\PhpGenerator\Literal')) {
-	class_alias('Nette\PhpGenerator\PhpLiteral', 'Nette\PhpGenerator\Literal');
-}
-
 /**
- * FastyBird Core -- consolidated DI extension
+ * FastyBird Core -- the composite DI extension
  *
- * Registers every service Core provides in one pass: application bootstrapping, the
- * exchange, authentication and authorization, shared tooling, date/time handling, entity
- * CRUD and timestamping, JSON:API, phone number handling, and the WebSocket, WAMP and web
- * servers. See docs/superpowers/specs/2026-09-20-core-consolidation-design.md section 6.
+ * The only Core extension registered with the compiler (as fbCore). It registers every
+ * service Core provides: application bootstrapping, the exchange, authentication and
+ * authorization, shared tooling, date/time handling, entity CRUD and timestamping, JSON:API,
+ * phone number handling, and the WebSocket, WAMP and web servers. Some capabilities are
+ * delegated to child extensions, the rest is still registered inline.
+ *
+ * nette/di cannot register an extension while the container is compiling, so the children
+ * are not registered: this class owns them and forwards each lifecycle call to them at the
+ * position the capability's code held in the inline extension, which keeps the definition
+ * order. Each child runs under this extension's name, so its services keep their fbCore.*
+ * names and its configuration stays at today's fbCore path (Epic #459 section 3.1, census
+ * docs/superpowers/plans/2026-09-27-core-e4-di-census.md section 5).
  */
 final class CoreExtension extends DI\CompilerExtension
 {
@@ -143,6 +142,19 @@ final class CoreExtension extends DI\CompilerExtension
 	// same reason as TAG_WEBSOCKETS_ROUTES.
 	public const string TAG_WEBSOCKETS_CONTROLLER = 'ipub.websockets.controller';
 
+	private readonly ClockExtension $clock;
+
+	private readonly ValuesExtension $values;
+
+	private readonly PhoneExtension $phone;
+
+	public function __construct()
+	{
+		$this->clock = new ClockExtension();
+		$this->values = new ValuesExtension();
+		$this->phone = new PhoneExtension();
+	}
+
 	public static function register(
 		Boot\Configurator $config,
 		string $extensionName = self::NAME,
@@ -154,6 +166,23 @@ final class CoreExtension extends DI\CompilerExtension
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
+	}
+
+	/**
+	 * The compiler asks only the extensions registered with it for their initialization, and
+	 * the children are not registered, so their bodies are appended to this extension's own
+	 */
+	#[Override]
+	public function getInitialization(): PhpGenerator\Closure
+	{
+		$initialization = new PhpGenerator\Closure();
+		$initialization->setBody(parent::getInitialization()->getBody());
+
+		foreach ($this->children() as $child) {
+			$initialization->setBody($initialization->getBody() . $child->getInitialization()->getBody());
+		}
+
+		return $initialization;
 	}
 
 	#[Override]
@@ -236,11 +265,7 @@ final class CoreExtension extends DI\CompilerExtension
 					'level' => Schema\Expect::int(Monolog\Level::Warning),
 				]),
 			]),
-			'dateTimeFactory' => Schema\Expect::structure([
-				'timeZone' => Schema\Expect::string('UTC'),
-				'system' => Schema\Expect::bool(true),
-				'frozen' => Schema\Expect::anyOf(Schema\Expect::float(), Schema\Expect::mixed()),
-			]),
+			'dateTimeFactory' => $this->clock->getConfigSchema(),
 			'doctrineTimestampable' => Schema\Expect::structure([
 				'lazyAssociation' => Schema\Expect::bool(false),
 				'autoMapField' => Schema\Expect::bool(true),
@@ -332,6 +357,31 @@ final class CoreExtension extends DI\CompilerExtension
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
+
+		/**
+		 * CHILD EXTENSIONS -- the compiler, under this extension's name
+		 *
+		 * The compiler records the class file of every registered extension as a container
+		 * dependency, so that editing one rebuilds the container in debug mode. The children are
+		 * not registered, so their files are added here.
+		 */
+
+		$childFiles = [];
+
+		foreach ($this->children() as $child) {
+			$child->setCompiler($this->compiler, $this->name);
+
+			$childFile = (new ReflectionClass($child))->getFileName();
+
+			if ($childFile !== false) {
+				$childFiles[] = $childFile;
+			}
+		}
+
+		$this->compiler->addDependencies($childFiles);
+
+		assert($configuration->dateTimeFactory instanceof stdClass);
+		$this->clock->setConfig($configuration->dateTimeFactory);
 
 		/**
 		 * APPLICATION
@@ -657,8 +707,8 @@ final class CoreExtension extends DI\CompilerExtension
 		)
 			->setType(Utilities\DateTimeProvider::class);
 
-		$builder->addDefinition($this->prefix('tools.schemas.validator'), new DI\Definitions\ServiceDefinition())
-			->setType(ValuesSchemas\Validator::class);
+		// VALUES -- its one definition stood here, inside TOOLS, and keeps its place in the order
+		$this->values->loadConfiguration();
 
 		if (interface_exists('\Sentry\ClientInterface')) {
 			$builder->addDefinition($this->prefix('tools.helpers.sentry'), new DI\Definitions\ServiceDefinition())
@@ -712,31 +762,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * DATE TIME FACTORY
 		 */
 
-		if (!in_array($configuration->dateTimeFactory->timeZone, DateTimeZone::listIdentifiers(), true)) {
-			throw new Exceptions\InvalidArgument('Timezone have to be valid PHP timezone string');
-		}
-
-		if ($configuration->dateTimeFactory->system) {
-			$builder->addDefinition(
-				$this->prefix('dateTimeFactory.datetime.system'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Clock\SystemClock::class)
-				->setArgument('timeZone', new DateTimeZone($configuration->dateTimeFactory->timeZone))
-				->setAutowired($configuration->dateTimeFactory->frozen === null);
-		}
-
-		if ($configuration->dateTimeFactory->frozen !== null) {
-			$builder->addDefinition(
-				$this->prefix('dateTimeFactory.datetime.frozen'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Clock\FrozenClock::class)
-				->setArguments([
-					'timestamp' => $configuration->dateTimeFactory->frozen,
-					'timeZone' => new DateTimeZone($configuration->dateTimeFactory->timeZone),
-				]);
-		}
+		$this->clock->loadConfiguration();
 
 		/**
 		 * DOCTRINE CRUD
@@ -856,31 +882,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * PHONE
 		 */
 
-		$builder->addDefinition($this->prefix('phone.libphone.utils'))
-			->setType(libphonenumber\PhoneNumberUtil::class)
-			->setFactory('libphonenumber\PhoneNumberUtil::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.libphone.geoCoder'))
-			->setType(libphonenumber\geocoding\PhoneNumberOfflineGeocoder::class)
-			->setFactory('libphonenumber\geocoding\PhoneNumberOfflineGeocoder::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.libphone.shortNumber'))
-			->setType(libphonenumber\ShortNumberInfo::class)
-			->setFactory('libphonenumber\ShortNumberInfo::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.libphone.mapper.carrier'))
-			->setType(libphonenumber\PhoneNumberToCarrierMapper::class)
-			->setFactory('libphonenumber\PhoneNumberToCarrierMapper::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.libphone.mapper.timezone'))
-			->setType(libphonenumber\PhoneNumberToTimeZonesMapper::class)
-			->setFactory('libphonenumber\PhoneNumberToTimeZonesMapper::getInstance');
-
-		$builder->addDefinition($this->prefix('phone.phone'))
-			->setType(PhoneServices\PhoneNumberHelper::class);
-
-		$builder->addDefinition($this->prefix('phone.doctrinePhone.subscriber'))
-			->setType(PhoneSubscribers\PhoneObjectSubscriber::class);
+		$this->phone->loadConfiguration();
 
 		/**
 		 * WEBSOCKETS (base + WAMP)
@@ -1369,11 +1371,11 @@ final class CoreExtension extends DI\CompilerExtension
 				'@self',
 				$builder->getDefinition($this->prefix('doctrineTimestampable.subscriber')),
 			]);
-			$emService->addSetup('?->getEventManager()->addEventSubscriber(?)', [
-				'@self',
-				$builder->getDefinition($this->prefix('phone.doctrinePhone.subscriber')),
-			]);
 		}
+
+		// The Phone child adds its subscriber to the same entity manager, right after the
+		// Timestampable one, as this block did (D2, #564)
+		$this->phone->beforeCompile();
 
 		/**
 		 * JSON:API -- schema/hydrator assembly
@@ -1583,16 +1585,15 @@ final class CoreExtension extends DI\CompilerExtension
 	{
 		parent::afterCompile($class);
 
-		// Preserved from DoctrinePhoneExtension::afterCompile() -- registers the 'phone' DBAL
-		// type. Entities map columns to it by name (Module/Triggers Entities\Notifications\Sms),
-		// so without this every test that loads the Triggers metadata fails.
-		$initialize = $class->getMethod('initialize');
-		$initialize->addBody(
-			'if (!Doctrine\DBAL\Types\Type::hasType(\'' . Types\PhoneType::PHONE . '\')) {'
-			. ' Doctrine\DBAL\Types\Type::addType('
-			. '\'' . Types\PhoneType::PHONE . '\', \'' . Types\PhoneType::class . '\''
-			. '); }',
-		);
+		$this->phone->afterCompile($class);
+	}
+
+	/**
+	 * @return list<DI\CompilerExtension>
+	 */
+	private function children(): array
+	{
+		return [$this->values, $this->clock, $this->phone];
 	}
 
 }

@@ -176,15 +176,6 @@
         <exclude-pattern>src/FastyBird/Module/Devices/src/Subscribers/StateEntities\.php</exclude-pattern>
     </rule>
 
-    <!-- A pre-Nette-4.0 Nette\PhpGenerator\Literal rename guard: a conditional class_alias()
-         ahead of the extension class declaration. Behaviour-preserving, kept as absorbed.
-         Originally exempted on Library/WebSockets/src/DI/WebSocketsExtension.php; Task 18
-         (Core consolidation) transplanted the same guard into the merged CoreExtension.php,
-         so the exemption moves with it. -->
-    <rule ref="PSR1.Files.SideEffects">
-        <exclude-pattern>src/FastyBird/Core/Core/src/DI/CoreExtension\.php</exclude-pattern>
-    </rule>
-
     <!-- The only rule ruleset-8.4 adds over ruleset-8.2 (it arrived in the 8.3 ruleset; 8.4
          adds nothing further). The repository has 1,633 untyped class constants across 602
          files and zero typed ones (214 in 39 Core files, 1,419 in 563 files elsewhere), so

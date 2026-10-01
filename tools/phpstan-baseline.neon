@@ -3889,12 +3889,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
-			message: '#^Cannot access property \$frozen on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
 			message: '#^Cannot access property \$headers on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -4096,18 +4090,6 @@ parameters:
 			message: '#^Cannot access property \$storage on mixed\.$#'
 			identifier: property.nonObject
 			count: 5
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$system on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$timeZone on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
