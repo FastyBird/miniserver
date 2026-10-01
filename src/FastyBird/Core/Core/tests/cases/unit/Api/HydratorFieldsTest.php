@@ -123,15 +123,15 @@ final class HydratorFieldsTest extends Tests\Cases\Unit\BaseTestCase
 	 * The other tests in this file build their `NumberField`/`BooleanField`/`ArrayField`/
 	 * `BackedEnumField` through {@see self::createTranslator()}, a mock whose `translate()`
 	 * returns its argument unchanged -- so they never notice whether the real translation
-	 * catalogue actually resolves `//jsonApi.hydrator.*` to text. If the `jsonApi` domain's
+	 * catalogue actually resolves `//api.hydrator.*` to text. If the `api` domain's
 	 * translations failed to load (wrong `contributteTranslation.dirs` entry after the E3 Api
 	 * move, wrong domain, wrong locale), `Translator::translate()` falls back to returning the
-	 * key verbatim, and a `JsonApiError` would silently carry `//jsonApi.hydrator.
+	 * key verbatim, and a `JsonApiError` would silently carry `//api.hydrator.
 	 * invalidAttribute.heading` as its "heading" instead of "Invalid attribute" -- a client-
 	 * facing regression no other test here would catch. This one resolves the translator from
 	 * a real container built off `tests/common.neon` (the config this test suite actually
 	 * loads translations through, not a hand-picked directory), and asserts against the exact
-	 * strings in `src/Api/Translations/jsonApi.en_US.neon`.
+	 * strings in `src/Api/Translations/api.en_US.neon`.
 	 *
 	 * @throws Exceptions\JsonApiError
 	 * @throws Nette\DI\MissingServiceException
@@ -151,8 +151,8 @@ final class HydratorFieldsTest extends Tests\Cases\Unit\BaseTestCase
 		} catch (Exceptions\JsonApiError $ex) {
 			self::assertSame('Invalid attribute', $ex->getMessage());
 			self::assertSame('Provided attribute value is not valid', $ex->getDetail());
-			self::assertStringNotContainsString('//jsonApi.hydrator', $ex->getMessage());
-			self::assertStringNotContainsString('//jsonApi.hydrator', $ex->getDetail());
+			self::assertStringNotContainsString('//api.hydrator', $ex->getMessage());
+			self::assertStringNotContainsString('//api.hydrator', $ex->getDetail());
 		}
 	}
 
