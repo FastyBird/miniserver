@@ -14,6 +14,7 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\Clock\DI\ClockExtension;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Documents;
+use FastyBird\Core\Documents\DI\DocumentsExtension;
 use FastyBird\Core\EventLoop;
 use FastyBird\Core\EventLoop\Subscribers as EventLoopSubscribers;
 use FastyBird\Core\Exceptions;
@@ -70,7 +71,6 @@ use Nette;
 use Nette\Application;
 use Nette\Application as NetteApplication;
 use Nette\Bootstrap;
-use Nette\Caching;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
@@ -85,12 +85,10 @@ use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use Symfony\Contracts\EventDispatcher as ContractsEventDispatcher;
-use function array_values;
 use function assert;
 use function class_exists;
 use function interface_exists;
 use function is_bool;
-use function is_dir;
 use function is_file;
 use function is_string;
 use function krsort;
@@ -140,6 +138,8 @@ final class CoreExtension extends DI\CompilerExtension
 
 	private readonly LoggingExtension $logging;
 
+	private readonly DocumentsExtension $documents;
+
 	private readonly ClockExtension $clock;
 
 	private readonly ValuesExtension $values;
@@ -149,6 +149,7 @@ final class CoreExtension extends DI\CompilerExtension
 	public function __construct()
 	{
 		$this->logging = new LoggingExtension();
+		$this->documents = new DocumentsExtension();
 		$this->clock = new ClockExtension();
 		$this->values = new ValuesExtension();
 		$this->phone = new PhoneExtension();
@@ -204,15 +205,7 @@ final class CoreExtension extends DI\CompilerExtension
 						'level' => Schema\Expect::int(Monolog\Level::Info),
 					]),
 				]),
-				'documents' => Schema\Expect::structure([
-					// No default previously -- ->required() forced every container that loads
-					// fbCore (now literally every container in the repo, see below) to supply a
-					// mapping even when it owns zero JSON:API documents. An empty map is a
-					// perfectly valid "this package/container has none" answer.
-					'mapping' => Schema\Expect::arrayOf(Schema\Expect::string(), Schema\Expect::string())
-						->default([]),
-					'excludePaths' => Schema\Expect::arrayOf(Schema\Expect::string(), Schema\Expect::string()),
-				]),
+				'documents' => $this->documents->getConfigSchema(),
 			]),
 			'simpleAuth' => Schema\Expect::structure([
 				// SimpleAuth used to be its own separate, opt-in Nette extension
@@ -383,6 +376,10 @@ final class CoreExtension extends DI\CompilerExtension
 		// configuration (census section 6)
 		$this->logging->setConfig($configuration);
 
+		assert($configuration->application instanceof stdClass);
+		assert($configuration->application->documents instanceof stdClass);
+		$this->documents->setConfig($configuration->application->documents);
+
 		assert($configuration->dateTimeFactory instanceof stdClass);
 		$this->clock->setConfig($configuration->dateTimeFactory);
 
@@ -425,44 +422,11 @@ final class CoreExtension extends DI\CompilerExtension
 		$builder->addDefinition($this->prefix('application.ui.routes'), new DI\Definitions\ServiceDefinition())
 			->setType(Nette\Application\Routers\RouteList::class);
 
-		$metadataCache = $builder->addDefinition(
-			$this->prefix('application.document.cache'),
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(Caching\Cache::class)
-			->setArguments(['namespace' => 'metadata_class_metadata'])
-			->setAutowired(false);
+		/**
+		 * DOCUMENTS
+		 */
 
-		$builder->addDefinition('document.factory', new DI\Definitions\ServiceDefinition())
-			->setType(Documents\DocumentFactory::class);
-
-		$attributeDriver = $builder->addDefinition(
-			'document.mapping.attributeDriver',
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(Documents\Mapping\Driver\AttributeDriver::class)
-			->setArguments(['paths' => array_values($configuration->application->documents->mapping)])
-			->addSetup('addExcludePaths', [$configuration->application->documents->excludePaths])
-			->addTag(self::DRIVER_TAG)
-			->setAutowired(false);
-
-		$mappingDriver = $builder->addDefinition(
-			'document.mapping.mappingDriver',
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(Documents\Mapping\Driver\MappingDriverChain::class);
-
-		$builder->addDefinition('document.mapping.classMetadataFactory', new DI\Definitions\ServiceDefinition())
-			->setType(Documents\Mapping\ClassMetadataFactory::class)
-			->setArguments(['driver' => $mappingDriver, 'cache' => $metadataCache]);
-
-		foreach ($configuration->application->documents->mapping as $namespace => $path) {
-			if (!is_dir($path)) {
-				throw new Exceptions\InvalidState(sprintf('Given mapping path "%s" does not exist', $path));
-			}
-
-			$mappingDriver->addSetup('addDriver', [$attributeDriver, $namespace]);
-		}
+		$this->documents->loadConfiguration();
 
 		/**
 		 * EXCHANGE
@@ -1473,7 +1437,7 @@ final class CoreExtension extends DI\CompilerExtension
 	 */
 	private function children(): array
 	{
-		return [$this->logging, $this->values, $this->clock, $this->phone];
+		return [$this->logging, $this->documents, $this->values, $this->clock, $this->phone];
 	}
 
 }
