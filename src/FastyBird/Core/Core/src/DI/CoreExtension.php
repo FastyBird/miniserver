@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\DI;
 
-use Casbin;
 use DateInvalidTimeZoneException;
 use FastyBird\Core\Api\DI\ApiExtension;
 use FastyBird\Core\Boot;
@@ -18,48 +17,35 @@ use FastyBird\Core\Logging\DI\LoggingExtension;
 use FastyBird\Core\Persistence\DI\PersistenceExtension;
 use FastyBird\Core\Phone\DI\PhoneExtension;
 use FastyBird\Core\Presenters;
-use FastyBird\Core\Presenters\Events as PresentersEvents;
-use FastyBird\Core\Security\Access;
-use FastyBird\Core\Security\Identity;
-use FastyBird\Core\Security\Mapping\Driver as MappingDriver;
-use FastyBird\Core\Security\Middleware as SecurityMiddleware;
-use FastyBird\Core\Security\Models\Casbin as ModelsCasbin;
-use FastyBird\Core\Security\Models\Policies;
-use FastyBird\Core\Security\Models\Tokens;
-use FastyBird\Core\Security\Services as SecurityServices;
-use FastyBird\Core\Security\Subscribers as SecuritySubscribers;
+use FastyBird\Core\Security\DI\SecurityExtension;
 use FastyBird\Core\UI;
 use FastyBird\Core\Values\DI\ValuesExtension;
 use FastyBird\Core\WebSockets\DI\WebSocketsExtension;
 use Monolog;
 use Nette;
 use Nette\Application;
-use Nette\Application as NetteApplication;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
-use Nettrine\ORM as NettrineORM;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use ReflectionClass;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
-use Symfony\Contracts\EventDispatcher as ContractsEventDispatcher;
 use function assert;
-use function is_file;
 use function is_string;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * FastyBird Core -- the composite DI extension
  *
- * The only Core extension registered with the compiler (as fbCore). It registers every
- * service Core provides: application bootstrapping, the exchange, authentication and
- * authorization, shared tooling, date/time handling, entity CRUD and timestamping, JSON:API,
- * phone number handling, and the WebSocket, WAMP and web servers. Some capabilities are
- * delegated to child extensions, the rest is still registered inline.
+ * The only Core extension registered with the compiler (as fbCore). Every capability is a
+ * child extension -- Logging, Persistence, Documents, Exchange, Security, Values, Clock, Api,
+ * Phone, WebSockets and Http -- and this class keeps only the composition and the root runtime:
+ * the event loop, the Nette UI and route list, the presenter mapping, the PSR-6 array cache, the
+ * event-dispatcher fallback and the Configuration service.
  *
  * nette/di cannot register an extension while the container is compiling, so the children
  * are not registered: this class owns them and forwards each lifecycle call to them at the
@@ -79,12 +65,12 @@ final class CoreExtension extends DI\CompilerExtension
 
 	public const string CONSUMER_ROUTING_KEY = 'consumer_routing_key';
 
-	// Tags a service whose createRouter() contributes WAMP routes; beforeCompile() below collects
-	// them into the WAMP router. Module/Devices produces it. A tag renamed on one side only makes
+	// Tags a service whose createRouter() contributes WAMP routes; WebSocketsExtension::beforeCompile()
+	// collects them into the WAMP router. Module/Devices produces it. A tag renamed on one side only makes
 	// the routes vanish without an error, so both sides use this constant.
 	public const string TAG_WEBSOCKETS_ROUTES = 'ipub.websockets.routes';
 
-	// Set by beforeCompile() below on every WebSockets controller service, and looked up at
+	// Set by WebSocketsExtension::beforeCompile() on every WebSockets controller service, and looked up at
 	// runtime by WebSockets\Controllers\ControllerFactory. Both sides use this constant for the
 	// same reason as TAG_WEBSOCKETS_ROUTES.
 	public const string TAG_WEBSOCKETS_CONTROLLER = 'ipub.websockets.controller';
@@ -96,6 +82,8 @@ final class CoreExtension extends DI\CompilerExtension
 	private readonly ExchangeExtension $exchange;
 
 	private readonly PersistenceExtension $persistence;
+
+	private readonly SecurityExtension $security;
 
 	private readonly ApiExtension $api;
 
@@ -115,6 +103,7 @@ final class CoreExtension extends DI\CompilerExtension
 		$this->documents = new DocumentsExtension();
 		$this->exchange = new ExchangeExtension();
 		$this->persistence = new PersistenceExtension();
+		$this->security = new SecurityExtension();
 		$this->api = new ApiExtension();
 		$this->http = new HttpExtension();
 		$this->webSockets = new WebSocketsExtension();
@@ -175,50 +164,7 @@ final class CoreExtension extends DI\CompilerExtension
 				]),
 				'documents' => $this->documents->getConfigSchema(),
 			]),
-			'simpleAuth' => Schema\Expect::structure([
-				// SimpleAuth used to be its own separate, opt-in Nette extension
-				// (fbSimpleAuth/SimpleAuthExtension) that a container's own config chose to
-				// register -- or not. fbCore is now the single universal extension every
-				// container in the repo loads (production and every package's tests alike), so
-				// there is no longer a way to simply not register SimpleAuth. An empty-string
-				// default keeps container compilation possible for containers that never
-				// configure it; the "SIMPLE AUTH" block in loadConfiguration() below is gated on
-				// this same signature being non-empty, so an unconfigured signature never
-				// reaches TokenBuilder/TokenValidator or gets used for real token signing -- it
-				// simply means none of SimpleAuth's services are registered at all, matching
-				// pre-merge behaviour for containers that never opted into fbSimpleAuth.
-				'token' => Schema\Expect::structure([
-					'issuer' => Schema\Expect::string(),
-					'signature' => Schema\Expect::string(''),
-				]),
-				'enable' => Schema\Expect::structure([
-					'middleware' => Schema\Expect::bool(false),
-					'doctrine' => Schema\Expect::structure([
-						'mapping' => Schema\Expect::bool(false),
-						'models' => Schema\Expect::bool(false),
-					]),
-					'casbin' => Schema\Expect::structure([
-						'database' => Schema\Expect::bool(false),
-					]),
-					'nette' => Schema\Expect::structure([
-						'application' => Schema\Expect::bool(false),
-					]),
-				]),
-				'application' => Schema\Expect::structure([
-					'signInUrl' => Schema\Expect::string(),
-					'homeUrl' => Schema\Expect::string('/'),
-				]),
-				'services' => Schema\Expect::structure([
-					'identity' => Schema\Expect::bool(false),
-				]),
-				'casbin' => Schema\Expect::structure([
-					'model' => Schema\Expect::string(
-						// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-						__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'model.conf',
-					),
-					'policy' => Schema\Expect::string(),
-				]),
-			]),
+			'simpleAuth' => $this->security->getConfigSchema(),
 			'tools' => Schema\Expect::structure([
 				'sentry' => Schema\Expect::structure([
 					'dsn' => Schema\Expect::string()->nullable(),
@@ -309,6 +255,9 @@ final class CoreExtension extends DI\CompilerExtension
 		assert($configuration->application->documents instanceof stdClass);
 		$this->documents->setConfig($configuration->application->documents);
 
+		assert($configuration->simpleAuth instanceof stdClass);
+		$this->security->setConfig($configuration->simpleAuth);
+
 		assert($configuration->dateTimeFactory instanceof stdClass);
 		$this->clock->setConfig($configuration->dateTimeFactory);
 
@@ -379,178 +328,10 @@ final class CoreExtension extends DI\CompilerExtension
 		$this->exchange->loadConfiguration();
 
 		/**
-		 * SIMPLE AUTH
+		 * SECURITY
 		 */
 
-		if ($configuration->simpleAuth->token->signature !== '') {
-			$builder->addDefinition($this->prefix('simpleAuth.auth'), new DI\Definitions\ServiceDefinition())
-				->setType(SecurityServices\Auth::class);
-
-			$builder->addDefinition($this->prefix('simpleAuth.token.builder'), new DI\Definitions\ServiceDefinition())
-				->setType(Identity\TokenBuilder::class)
-				->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
-				->setArgument('tokenIssuer', $configuration->simpleAuth->token->issuer);
-
-			$builder->addDefinition($this->prefix('simpleAuth.token.reader'), new DI\Definitions\ServiceDefinition())
-				->setType(Identity\TokenReader::class);
-
-			$builder->addDefinition($this->prefix('simpleAuth.token.validator'), new DI\Definitions\ServiceDefinition())
-				->setType(Identity\TokenValidator::class)
-				->setArgument('tokenSignature', $configuration->simpleAuth->token->signature)
-				->setArgument('tokenIssuer', $configuration->simpleAuth->token->issuer);
-
-			if ($configuration->simpleAuth->services->identity) {
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.security.identityFactory'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(Identity\IdentityFactory::class);
-			}
-
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.security.userStorage'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Identity\UserStorage::class);
-
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.access.annotationChecker'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Access\AnnotationChecker::class);
-
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.access.latteChecker'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Access\LatteChecker::class);
-
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.access.linkChecker'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Access\LinkChecker::class);
-
-			if ($configuration->simpleAuth->enable->casbin->database) {
-				$adapter = $builder->addDefinition(
-					$this->prefix('simpleAuth.casbin.adapter'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(ModelsCasbin\Adapter::class);
-
-				// Adapter::__construct only stores the DBAL connection; every method that
-				// actually queries it (loadPolicy, savePolicy, ...) runs later, on demand.
-				// Autowiring still resolves the constructor argument eagerly, though, which
-				// forces nettrineDbal.connections.default.connection to exist merely because
-				// something -- transitively -- asked for an EnforcerFactory. In production
-				// (Tracy debug bar + AccountsModule's UserPanel + nettrine/dbal's own Tracy
-				// connection panel all present at once) that eager build closes a real cycle:
-				// tracy.bar -> fbAccountsModule.security.userPanel -> security.user ->
-				// this enforcerFactory -> this adapter -> nettrineDbal's connection, whose own
-				// ConnectionPanel::initialize() setup autowires an optional Tracy\Bar argument
-				// and calls back into tracy.bar while it is still being constructed. A PHP 8.4
-				// lazy ghost defers the constructor (and therefore the connection lookup) until
-				// something actually calls a method on the adapter, which happens outside that
-				// call stack, breaking the cycle without touching nettrine/dbal or Tracy.
-				$adapter->lazy = true;
-
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.casbin.subscriber'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(SecuritySubscribers\Policy::class);
-			} else {
-				$policyFile = $configuration->simpleAuth->casbin->policy;
-
-				if (!is_string($policyFile) || !is_file($policyFile)) {
-					throw new Exceptions\Logic('Casbin policy file is not configured');
-				}
-
-				$adapter = $builder->addDefinition(
-					$this->prefix('simpleAuth.casbin.adapter'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(Casbin\Persist\Adapters\FileAdapter::class)
-					->setArguments(['filePath' => $policyFile]);
-			}
-
-			$modelFile = $configuration->simpleAuth->casbin->model;
-
-			if (!is_string($modelFile) || !is_file($modelFile)) {
-				throw new Exceptions\Logic('Casbin model file is not configured');
-			}
-
-			$builder->addDefinition(
-				$this->prefix('simpleAuth.casbin.enforcerFactory'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Identity\EnforcerFactory::class)
-				->setArguments(['modelFile' => $modelFile, 'adapter' => $adapter]);
-
-			if ($configuration->simpleAuth->enable->middleware) {
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.middleware.access'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(SecurityMiddleware\Authorization::class);
-
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.middleware.user'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(SecurityMiddleware\User::class);
-			}
-
-			if ($configuration->simpleAuth->enable->doctrine->mapping) {
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.driver'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(MappingDriver\Owner::class);
-
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.subscriber'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(SecuritySubscribers\User::class);
-			}
-
-			if ($configuration->simpleAuth->enable->doctrine->models) {
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.tokensRepository'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(Tokens\Repository::class);
-
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.tokensManager'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(Tokens\Manager::class);
-			}
-
-			if ($configuration->simpleAuth->enable->casbin->database) {
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.policiesRepository'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(Policies\Repository::class);
-
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.policiesManager'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(Policies\Manager::class);
-			}
-
-			if ($configuration->simpleAuth->enable->nette->application) {
-				$builder->addDefinition(
-					$this->prefix('simpleAuth.nette.application'),
-					new DI\Definitions\ServiceDefinition(),
-				)
-					->setType(SecuritySubscribers\Application::class);
-			}
-		}
+		$this->security->loadConfiguration();
 
 		/**
 		 * VALUES
@@ -566,7 +347,7 @@ final class CoreExtension extends DI\CompilerExtension
 
 		/**
 		 * CONFIGURATION (SimpleAuth + DoctrineTimestampable settings, combined -- see
-		 * SIMPLE AUTH above for why this is registered unconditionally rather than only
+		 * SecurityExtension's schema for why this is registered unconditionally rather than only
 		 * inside the `$configuration->simpleAuth->token->signature !== ''` gate: the
 		 * DoctrineTimestampable half of this data must always be available)
 		 */
@@ -641,8 +422,6 @@ final class CoreExtension extends DI\CompilerExtension
 		parent::beforeCompile();
 
 		$builder = $this->getContainerBuilder();
-		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
 
 		/**
 		 * EVENT DISPATCHER -- default fallback
@@ -715,56 +494,10 @@ final class CoreExtension extends DI\CompilerExtension
 		$this->exchange->beforeCompile();
 
 		/**
-		 * SIMPLE AUTH -- user context fallback, Doctrine mapping, Nette Application event bridge
+		 * SECURITY -- user context fallback, Doctrine mapping, Nette Application event bridge
 		 */
 
-		$userContextServiceName = $builder->getByType(Identity\User::class);
-
-		// Mirrors the signature !== '' gate around the "SIMPLE AUTH" block in
-		// loadConfiguration() above: this fallback's constructor needs IUserStorage, which only
-		// exists if that block ran and registered simpleAuth.security.userStorage. Without this
-		// gate, containers that never configure SimpleAuth (signature === '') would still get an
-		// unconditional fallback User service whose dependency was never registered, replacing
-		// "signature is missing" with a confusing "IUserStorage not found" deep in DI resolution.
-		if ($userContextServiceName === null && $configuration->simpleAuth->token->signature !== '') {
-			$builder->addDefinition($this->prefix('simpleAuth.security.user'), new DI\Definitions\ServiceDefinition())
-				->setType(Identity\User::class);
-		}
-
-		if (
-			$configuration->simpleAuth->enable->doctrine->models
-			|| $configuration->simpleAuth->enable->casbin->database
-		) {
-			NettrineORM\DI\Helpers\MappingHelper::of($this)->addAttribute(
-				'default',
-				'FastyBird\Core\Security\Entities',
-				__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Security' . DIRECTORY_SEPARATOR . 'Entities',
-			);
-		}
-
-		if ($configuration->simpleAuth->enable->nette->application) {
-			if (
-				$builder->getByType(ContractsEventDispatcher\EventDispatcherInterface::class) !== null
-				&& $builder->getByType(NetteApplication\Application::class) !== null
-			) {
-				$dispatcher = $builder->getDefinition(
-					$builder->getByType(ContractsEventDispatcher\EventDispatcherInterface::class),
-				);
-				$application = $builder->getDefinition($builder->getByType(NetteApplication\Application::class));
-				assert($application instanceof DI\Definitions\ServiceDefinition);
-
-				$application->addSetup('?->onRequest[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self',
-					$dispatcher,
-					new PhpGenerator\Literal(PresentersEvents\PresenterRequest::class),
-				]);
-				$application->addSetup('?->onResponse[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self',
-					$dispatcher,
-					new PhpGenerator\Literal(PresentersEvents\PresenterResponse::class),
-				]);
-			}
-		}
+		$this->security->beforeCompile();
 
 		/**
 		 * PHONE -- its subscriber on the entity manager, after the Timestampable one that
@@ -803,6 +536,7 @@ final class CoreExtension extends DI\CompilerExtension
 			$this->persistence,
 			$this->documents,
 			$this->exchange,
+			$this->security,
 			$this->values,
 			$this->clock,
 			$this->api,
