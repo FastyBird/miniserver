@@ -10,8 +10,8 @@ use Override;
  * The JSON schema validator
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name, so its service is
- * fbCore.tools.schemas.validator. It has no configuration.
+ * registered with the compiler itself. It runs as fbCore.values, so its service is
+ * fbCore.values.schemas.validator. It has no configuration.
  */
 final class ValuesExtension extends DI\CompilerExtension
 {
@@ -21,7 +21,7 @@ final class ValuesExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('tools.schemas.validator'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.validator'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Validator::class);
 	}
 

@@ -44,12 +44,14 @@ use const SORT_STRING;
  * the WS server command and its event bridges
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > webSockets section, so its services are fbCore.webSockets.* and fbCore.wsServer.*.
+ * registered with the compiler itself. It runs as fbCore.webSockets and reads its
+ * fbCore > webSockets section, so its services are fbCore.webSockets.*.
  *
  * It also registers Http\Routing\LinkGenerator, the WAMP link generator, which still lives in
- * the Http namespace (#460 moves it). The storage-driver sentinels are kept as they are (D3,
- * #565). The WS server command and the client subscriber follow the HTTP server's in the
+ * the Http namespace (#460 moves it). The storage-driver defaults are sentinels: each is the
+ * '@'-form of its memory driver's name, and loadConfiguration() compares the configured value
+ * with that same literal. Only the default works (D3, #565). The WS server command and the
+ * client subscriber follow the HTTP server's in the
  * console and Symfony subscriber collections, so the composite registers them through a second
  * hook, loadServerProcess(), after the Http child (census section 5.3).
  */
@@ -62,11 +64,11 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		return Schema\Expect::structure([
 			'storage' => Schema\Expect::structure([
 				'clients' => Schema\Expect::structure([
-					'driver' => Schema\Expect::string('@wsServer.clients.driver.memory'),
+					'driver' => Schema\Expect::string('@fbCore.webSockets.clients.driver.memory'),
 					'ttl' => Schema\Expect::int(0),
 				]),
 				'topics' => Schema\Expect::structure([
-					'driver' => Schema\Expect::string('@wsServer.wamp.topics.driver.memory'),
+					'driver' => Schema\Expect::string('@fbCore.webSockets.wamp.topics.driver.memory'),
 					'ttl' => Schema\Expect::int(0),
 				]),
 			]),
@@ -103,7 +105,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
 
-		$controllerFactory = $builder->addDefinition($this->prefix('webSockets.controllers.factory'))
+		$controllerFactory = $builder->addDefinition($this->prefix('controllers.factory'))
 			->setType(Controllers\IControllerFactory::class)
 			->setFactory(Controllers\ControllerFactory::class);
 
@@ -112,26 +114,26 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		}
 
 		if ($builder->getByType(Clients\ClientProvider::class) === null) {
-			$builder->addDefinition($this->prefix('wsServer.clients.factory'))
+			$builder->addDefinition($this->prefix('clients.factory'))
 				->setType(Clients\ClientFactory::class);
 		}
 
-		$builder->addDefinition($this->prefix('wsServer.clients.driver.memory'))
+		$builder->addDefinition($this->prefix('clients.driver.memory'))
 			->setType(ClientsDrivers\InMemory::class);
 
-		$clientsStorageDriver = $configuration->storage->clients->driver === '@wsServer.clients.driver.memory'
-			? $builder->getDefinition($this->prefix('wsServer.clients.driver.memory'))
+		$clientsStorageDriver = $configuration->storage->clients->driver === '@fbCore.webSockets.clients.driver.memory'
+			? $builder->getDefinition($this->prefix('clients.driver.memory'))
 			: $builder->getDefinition($configuration->storage->clients->driver);
 
-		$builder->addDefinition($this->prefix('wsServer.clients.storage'))
+		$builder->addDefinition($this->prefix('clients.storage'))
 			->setType(Clients\Storage::class)
 			->setArguments(['ttl' => $configuration->storage->clients->ttl])
 			->addSetup(
 				'?->setStorageDriver(?)',
-				['@' . $this->prefix('wsServer.clients.storage'), $clientsStorageDriver],
+				['@' . $this->prefix('clients.storage'), $clientsStorageDriver],
 			);
 
-		$router = $builder->addDefinition($this->prefix('webSockets.routing.router'))
+		$router = $builder->addDefinition($this->prefix('routing.router'))
 			->setType(Wamp\WampRouter::class)
 			->setFactory(Wamp\RouteList::class);
 
@@ -142,13 +144,13 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			);
 		}
 
-		$builder->addDefinition($this->prefix('webSockets.routing.generator'))
+		$builder->addDefinition($this->prefix('routing.generator'))
 			->setType(Routing\LinkGenerator::class);
 
-		$builder->addDefinition($this->prefix('wsServer.server.wrapper'))
+		$builder->addDefinition($this->prefix('server.wrapper'))
 			->setType(Server\Wrapper::class);
 
-		$flashApplication = $builder->addDefinition($this->prefix('wsServer.server.flashWrapper'))
+		$flashApplication = $builder->addDefinition($this->prefix('server.flashWrapper'))
 			->setType(Server\FlashWrapper::class);
 
 		$flashApplication->addSetup('?->addAllowedAccess(?, \'80\')', [
@@ -161,12 +163,12 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			strval($configuration->server->port),
 		]);
 
-		$handlers = $builder->addDefinition($this->prefix('wsServer.server.handlers'))
+		$handlers = $builder->addDefinition($this->prefix('server.handlers'))
 			->setType(Server\Handlers::class);
 
 		if ($configuration->loop === null) {
 			$loop = $builder->getByType(React\EventLoop\LoopInterface::class) === null
-				? $builder->addDefinition($this->prefix('wsServer.server.loop'))
+				? $builder->addDefinition($this->prefix('server.loop'))
 				->setType(React\EventLoop\LoopInterface::class)
 				->setFactory('React\EventLoop\Factory::create')
 				: $builder->getDefinitionByType(React\EventLoop\LoopInterface::class);
@@ -176,7 +178,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 				: $configuration->loop;
 		}
 
-		$serverConfiguration = $builder->addDefinition($this->prefix('wsServer.server.configuration'))
+		$serverConfiguration = $builder->addDefinition($this->prefix('server.configuration'))
 			->setType(Server\Configuration::class)
 			->setArguments([
 				'port' => $configuration->server->port,
@@ -186,44 +188,44 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			]);
 
 		if ($builder->findByType(Log\LoggerInterface::class) === []) {
-			$builder->addDefinition($this->prefix('wsServer.server.logger'))
+			$builder->addDefinition($this->prefix('server.logger'))
 				->setType(Helpers\Console::class);
 		}
 
-		$builder->addDefinition($this->prefix('wsServer.server.server'))
+		$builder->addDefinition($this->prefix('server.runtime'))
 			->setType(Server\ServerRuntime::class)
 			->setArguments([$handlers, $loop, $serverConfiguration]);
 
-		$wampStorageDriver = $configuration->storage->topics->driver === '@wsServer.wamp.topics.driver.memory'
-			? $builder->addDefinition($this->prefix('wsServer.wamp.topics.driver.memory'))
+		$wampStorageDriver = $configuration->storage->topics->driver === '@fbCore.webSockets.wamp.topics.driver.memory'
+			? $builder->addDefinition($this->prefix('wamp.topics.driver.memory'))
 			->setType(TopicsDrivers\InMemory::class)
-			: $builder->getDefinition($this->prefix('wsServer.wamp.topics.driver.memory'));
+			: $builder->getDefinition($this->prefix('wamp.topics.driver.memory'));
 
-		$builder->addDefinition($this->prefix('wsServer.wamp.topics.storage'))
+		$builder->addDefinition($this->prefix('wamp.topics.storage'))
 			->setType(Topics\Storage::class)
 			->setArguments(['ttl' => $configuration->storage->topics->ttl])
 			->addSetup(
 				'?->setStorageDriver(?)',
-				['@' . $this->prefix('wsServer.wamp.topics.storage'), $wampStorageDriver],
+				['@' . $this->prefix('wamp.topics.storage'), $wampStorageDriver],
 			);
 
-		$builder->addDefinition($this->prefix('webSockets.wamp.application'))
+		$builder->addDefinition($this->prefix('wamp.application'))
 			->setType(Controllers\WampApplication::class);
 
-		$builder->addDefinition($this->prefix('webSockets.wamp.serializer'))
+		$builder->addDefinition($this->prefix('wamp.serializer'))
 			->setType(Encoding\PushMessageSerializer::class);
 
-		$builder->addDefinition($this->prefix('webSockets.wamp.pushRegistry'))
+		$builder->addDefinition($this->prefix('wamp.pushRegistry'))
 			->setType(PushMessages\ConsumersRegistry::class);
 
 		if ($builder->getByType(Clients\ClientProvider::class) !== null) {
 			$builder->removeDefinition($builder->getByType(Clients\ClientProvider::class));
 		}
 
-		$builder->addDefinition($this->prefix('wsServer.wamp.clientsFactory'))
+		$builder->addDefinition($this->prefix('wamp.clientsFactory'))
 			->setType(Clients\WampClientFactory::class);
 
-		$builder->addDefinition($this->prefix('wsServer.wamp.subscribers.onServerStart'))
+		$builder->addDefinition($this->prefix('wamp.subscribers.onServerStart'))
 			->setType(Subscribers\OnServerStartHandler::class);
 	}
 
@@ -240,11 +242,11 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
 
-		$builder->addDefinition($this->prefix('wsServer.commands.wsServer'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.server'), new DI\Definitions\ServiceDefinition())
 			->setType(Commands\WsServer::class)
 			->setArguments(['exchangeFactories' => $builder->findByType(Exchange\Factory::class)]);
 
-		$builder->addDefinition($this->prefix('wsServer.subscribers.client'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.client'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Client::class)
 			->setArgument('wsKeys', $configuration->access->keys)
 			->setArgument('allowedOrigins', $configuration->access->origins);
@@ -270,7 +272,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		 * calls this out by name as logic that must be preserved, not just relocated.
 		 */
 
-		$webSocketsRouter = $builder->getDefinition($this->prefix('webSockets.routing.router'));
+		$webSocketsRouter = $builder->getDefinition($this->prefix('routing.router'));
 		$routersFactories = [];
 
 		foreach ($builder->findByTag(CoreExtension::TAG_WEBSOCKETS_ROUTES) as $tagRouterService => $tagPriority) {
@@ -406,7 +408,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 
 		$wsServerServer = $builder->getDefinitionByType(Server\ServerRuntime::class);
 		$wsServerServer->addSetup('$service->onStart[] = ?', [
-			'@' . $this->prefix('wsServer.wamp.subscribers.onServerStart'),
+			'@' . $this->prefix('wamp.subscribers.onServerStart'),
 		]);
 
 		/**

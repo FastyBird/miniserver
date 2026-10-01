@@ -49,9 +49,11 @@ use const DIRECTORY_SEPARATOR;
  * nette/di cannot register an extension while the container is compiling, so the children
  * are not registered: this class owns them and forwards each lifecycle call to them at the
  * position the capability's code held in the inline extension, which keeps the definition
- * order. Each child runs under this extension's name, so its services keep their fbCore.*
- * names (Epic #459 section 3.1, census docs/superpowers/plans/2026-09-27-core-e4-di-census.md
- * section 5). Each configured child declares the schema of its own fbCore section, and this
+ * order (Epic #459 section 3.1, census docs/superpowers/plans/2026-09-27-core-e4-di-census.md
+ * section 5). Each child runs under its capability's name, fbCore.<capability>, so its
+ * services are fbCore.<capability>.<role>; the root services are fbCore.eventLoop.*,
+ * fbCore.ui.*, fbCore.cache.psr6, fbCore.eventDispatcher and fbCore.configuration (census
+ * section 2). Each configured child declares the schema of its own fbCore section, and this
  * class hands it exactly that subtree (census section 3).
  */
 final class CoreExtension extends DI\CompilerExtension
@@ -172,7 +174,7 @@ final class CoreExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		/**
-		 * CHILD EXTENSIONS -- the compiler, under this extension's name
+		 * CHILD EXTENSIONS -- the compiler, each child under its capability's name
 		 *
 		 * The compiler records the class file of every registered extension as a container
 		 * dependency, so that editing one rebuilds the container in debug mode. The children are
@@ -181,8 +183,8 @@ final class CoreExtension extends DI\CompilerExtension
 
 		$childFiles = [];
 
-		foreach ($this->children() as $child) {
-			$child->setCompiler($this->compiler, $this->name);
+		foreach ($this->children() as $capability => $child) {
+			$child->setCompiler($this->compiler, $this->prefix($capability));
 
 			$childFile = (new ReflectionClass($child))->getFileName();
 
@@ -230,13 +232,13 @@ final class CoreExtension extends DI\CompilerExtension
 		 * APPLICATION
 		 */
 
-		$builder->addDefinition($this->prefix('application.cache.psr6'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('cache.psr6'), new DI\Definitions\ServiceDefinition())
 			->setType(ArrayAdapter::class);
 
-		$builder->addDefinition($this->prefix('application.eventLoop.wrapper'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('eventLoop.wrapper'), new DI\Definitions\ServiceDefinition())
 			->setType(EventLoop\Wrapper::class);
 
-		$builder->addDefinition($this->prefix('application.eventLoop.status'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('eventLoop.status'), new DI\Definitions\ServiceDefinition())
 			->setType(EventLoop\Status::class);
 
 		/**
@@ -250,15 +252,15 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$builder->addDefinition(
-			$this->prefix('application.subscribers.eventLoop'),
+			$this->prefix('eventLoop.subscribers.lifeCycle'),
 			new DI\Definitions\ServiceDefinition(),
 		)
 			->setType(EventLoopSubscribers\EventLoopLifeCycle::class);
 
-		$builder->addDefinition($this->prefix('application.ui.templateFactory'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('ui.templateFactory'), new DI\Definitions\ServiceDefinition())
 			->setType(UI\TemplateFactory::class);
 
-		$builder->addDefinition($this->prefix('application.ui.routes'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('ui.routes'), new DI\Definitions\ServiceDefinition())
 			->setType(Nette\Application\Routers\RouteList::class);
 
 		/**
@@ -394,7 +396,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		if ($builder->getByType(PsrEventDispatcher\EventDispatcherInterface::class) === null) {
-			$builder->addDefinition($this->prefix('application.eventDispatcher'))
+			$builder->addDefinition($this->prefix('eventDispatcher'))
 				->setType(ComponentEventDispatcher\EventDispatcher::class);
 		}
 
@@ -476,22 +478,24 @@ final class CoreExtension extends DI\CompilerExtension
 	}
 
 	/**
-	 * @return list<DI\CompilerExtension>
+	 * Every child, keyed by the capability name it runs under (fbCore.<capability>)
+	 *
+	 * @return array<string, DI\CompilerExtension>
 	 */
 	private function children(): array
 	{
 		return [
-			$this->logging,
-			$this->persistence,
-			$this->documents,
-			$this->exchange,
-			$this->security,
-			$this->values,
-			$this->clock,
-			$this->api,
-			$this->phone,
-			$this->webSockets,
-			$this->http,
+			'logging' => $this->logging,
+			'persistence' => $this->persistence,
+			'documents' => $this->documents,
+			'exchange' => $this->exchange,
+			'security' => $this->security,
+			'values' => $this->values,
+			'clock' => $this->clock,
+			'api' => $this->api,
+			'phone' => $this->phone,
+			'webSockets' => $this->webSockets,
+			'http' => $this->http,
 		];
 	}
 

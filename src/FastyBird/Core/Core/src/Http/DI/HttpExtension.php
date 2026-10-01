@@ -18,8 +18,8 @@ use function assert;
  * The HTTP server: router, middlewares, the server application and its console command
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > http section, so its services are fbCore.httpServer.*.
+ * registered with the compiler itself. It runs as fbCore.http and reads its fbCore > http
+ * section, so its services are fbCore.http.*.
  */
 final class HttpExtension extends DI\CompilerExtension
 {
@@ -67,15 +67,15 @@ final class HttpExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		$builder->addDefinition(
-			$this->prefix('httpServer.routing.responseFactory'),
+			$this->prefix('routing.responseFactory'),
 			new DI\Definitions\ServiceDefinition(),
 		)
 			->setType(Http\ServerResponseFactory::class);
 
-		$builder->addDefinition($this->prefix('httpServer.routing.router'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('routing.router'), new DI\Definitions\ServiceDefinition())
 			->setType(Routing\ServerRouter::class);
 
-		$builder->addDefinition($this->prefix('httpServer.commands.server'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('commands.server'), new DI\Definitions\ServiceDefinition())
 			->setType(Commands\HttpServer::class)
 			->setArguments([
 				'serverAddress' => $configuration->server->address,
@@ -83,7 +83,7 @@ final class HttpExtension extends DI\CompilerExtension
 				'serverCertificate' => $configuration->server->certificate,
 			]);
 
-		$builder->addDefinition($this->prefix('httpServer.middlewares.cors'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('middlewares.cors'), new DI\Definitions\ServiceDefinition())
 			->setType(Middleware\Cors::class)
 			->setArguments([
 				'enabled' => $configuration->cors->enabled,
@@ -94,23 +94,23 @@ final class HttpExtension extends DI\CompilerExtension
 			]);
 
 		$builder->addDefinition(
-			$this->prefix('httpServer.middlewares.staticFiles'),
+			$this->prefix('middlewares.staticFiles'),
 			new DI\Definitions\ServiceDefinition(),
 		)
 			->setType(Middleware\StaticFiles::class)
 			->setArgument('publicRoot', $configuration->static->publicRoot)
 			->setArgument('enabled', $configuration->static->enabled);
 
-		$builder->addDefinition($this->prefix('httpServer.middlewares.router'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('middlewares.router'), new DI\Definitions\ServiceDefinition())
 			->setType(Middleware\Router::class);
 
-		$builder->addDefinition($this->prefix('httpServer.application.classic'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('application.classic'), new DI\Definitions\ServiceDefinition())
 			->setType(Server\Application::class);
 
-		$builder->addDefinition($this->prefix('httpServer.server.factory'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('server.factory'), new DI\Definitions\ServiceDefinition())
 			->setType(Server\Factory::class);
 
-		$builder->addDefinition($this->prefix('httpServer.subscribers.server'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('subscribers.server'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Server::class);
 	}
 

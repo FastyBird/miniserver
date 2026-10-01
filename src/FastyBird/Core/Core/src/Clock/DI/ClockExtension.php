@@ -17,8 +17,8 @@ use function in_array;
  * The system clock, or a frozen one
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > clock section, so its services are fbCore.dateTimeFactory.*.
+ * registered with the compiler itself. It runs as fbCore.clock and reads its fbCore > clock
+ * section, so its services are fbCore.clock.system and fbCore.clock.frozen.
  */
 final class ClockExtension extends DI\CompilerExtension
 {
@@ -50,7 +50,7 @@ final class ClockExtension extends DI\CompilerExtension
 
 		if ($configuration->system) {
 			$builder->addDefinition(
-				$this->prefix('dateTimeFactory.datetime.system'),
+				$this->prefix('system'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Clock\SystemClock::class)
@@ -60,7 +60,7 @@ final class ClockExtension extends DI\CompilerExtension
 
 		if ($configuration->frozen !== null) {
 			$builder->addDefinition(
-				$this->prefix('dateTimeFactory.datetime.frozen'),
+				$this->prefix('frozen'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Clock\FrozenClock::class)

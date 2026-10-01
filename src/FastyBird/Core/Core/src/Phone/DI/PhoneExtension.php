@@ -17,7 +17,7 @@ use function assert;
  * `phone` DBAL type
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name, so its services are
+ * registered with the compiler itself. It runs as fbCore.phone, so its services are
  * fbCore.phone.*. It has no configuration.
  */
 final class PhoneExtension extends DI\CompilerExtension
@@ -28,30 +28,30 @@ final class PhoneExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('phone.libphone.utils'))
+		$builder->addDefinition($this->prefix('libphone.utils'))
 			->setType(libphonenumber\PhoneNumberUtil::class)
 			->setFactory('libphonenumber\PhoneNumberUtil::getInstance');
 
-		$builder->addDefinition($this->prefix('phone.libphone.geoCoder'))
+		$builder->addDefinition($this->prefix('libphone.geoCoder'))
 			->setType(libphonenumber\geocoding\PhoneNumberOfflineGeocoder::class)
 			->setFactory('libphonenumber\geocoding\PhoneNumberOfflineGeocoder::getInstance');
 
-		$builder->addDefinition($this->prefix('phone.libphone.shortNumber'))
+		$builder->addDefinition($this->prefix('libphone.shortNumber'))
 			->setType(libphonenumber\ShortNumberInfo::class)
 			->setFactory('libphonenumber\ShortNumberInfo::getInstance');
 
-		$builder->addDefinition($this->prefix('phone.libphone.mapper.carrier'))
+		$builder->addDefinition($this->prefix('libphone.mapper.carrier'))
 			->setType(libphonenumber\PhoneNumberToCarrierMapper::class)
 			->setFactory('libphonenumber\PhoneNumberToCarrierMapper::getInstance');
 
-		$builder->addDefinition($this->prefix('phone.libphone.mapper.timezone'))
+		$builder->addDefinition($this->prefix('libphone.mapper.timezone'))
 			->setType(libphonenumber\PhoneNumberToTimeZonesMapper::class)
 			->setFactory('libphonenumber\PhoneNumberToTimeZonesMapper::getInstance');
 
-		$builder->addDefinition($this->prefix('phone.phone'))
+		$builder->addDefinition($this->prefix('helper'))
 			->setType(Services\PhoneNumberHelper::class);
 
-		$builder->addDefinition($this->prefix('phone.doctrinePhone.subscriber'))
+		$builder->addDefinition($this->prefix('doctrine.subscriber'))
 			->setType(Subscribers\PhoneObjectSubscriber::class);
 	}
 
@@ -78,7 +78,7 @@ final class PhoneExtension extends DI\CompilerExtension
 			assert($emService instanceof DI\Definitions\ServiceDefinition);
 			$emService->addSetup('?->getEventManager()->addEventSubscriber(?)', [
 				'@self',
-				$builder->getDefinition($this->prefix('phone.doctrinePhone.subscriber')),
+				$builder->getDefinition($this->prefix('doctrine.subscriber')),
 			]);
 		}
 	}

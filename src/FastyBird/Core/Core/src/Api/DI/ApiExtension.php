@@ -18,8 +18,8 @@ use function class_exists;
  * JSON:API: the document builder, the middleware, and the schema and hydrator containers
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > api section, so its services are fbCore.jsonApi.*. In beforeCompile() it adds
+ * registered with the compiler itself. It runs as fbCore.api and reads its fbCore > api
+ * section, so its services are fbCore.api.*. In beforeCompile() it adds
  * every JSON:API schema and hydrator service to its container.
  */
 final class ApiExtension extends DI\CompilerExtension
@@ -44,22 +44,22 @@ final class ApiExtension extends DI\CompilerExtension
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
 
-		$builder->addDefinition($this->prefix('jsonApi.builder'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('builder'), new DI\Definitions\ServiceDefinition())
 			->setType(Encoding\Builder::class)
 			->setArgument('metaAuthor', $configuration->meta->author)
 			->setArgument('metaCopyright', $configuration->meta->copyright);
 
-		$builder->addDefinition($this->prefix('jsonApi.middlewares.jsonapi'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('middleware'), new DI\Definitions\ServiceDefinition())
 			->setType(Middleware\JsonApiMiddleware::class);
 
-		$builder->addDefinition($this->prefix('jsonApi.hydrators.container'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('hydrators.container'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Container::class);
 
-		$builder->addDefinition($this->prefix('jsonApi.schemas.container'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('schemas.container'), new DI\Definitions\ServiceDefinition())
 			->setType(Encoding\SchemaContainer::class);
 
 		if (class_exists('\IPub\DoctrineCrud\Mapping\Annotation\Crud')) {
-			$builder->addDefinition($this->prefix('jsonApi.helpers.crudReader'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('helpers.crudReader'), new DI\Definitions\ServiceDefinition())
 				->setType(Helpers\CrudReader::class);
 		}
 	}
