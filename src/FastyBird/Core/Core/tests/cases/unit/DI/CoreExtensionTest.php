@@ -64,7 +64,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertNotNull($container->getByType(Documents\DocumentFactory::class, false));
 		self::assertInstanceOf(
 			Documents\DocumentFactory::class,
-			$container->getService('document.factory'),
+			$container->getService('fbCore.documents.factory'),
 		);
 
 		/**
@@ -111,11 +111,11 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertInstanceOf(
 			SecurityServices\Auth::class,
-			$container->getService('fbCore.simpleAuth.auth'),
+			$container->getService('fbCore.security.auth'),
 		);
 		self::assertInstanceOf(
 			Encoding\Builder::class,
-			$container->getService('fbCore.jsonApi.builder'),
+			$container->getService('fbCore.api.builder'),
 		);
 		self::assertInstanceOf(
 			Controllers\IControllerFactory::class,
@@ -140,11 +140,11 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertInstanceOf(
 			PhoneSubscribers\PhoneObjectSubscriber::class,
-			$container->getService('fbCore.phone.doctrinePhone.subscriber'),
+			$container->getService('fbCore.phone.doctrine.subscriber'),
 		);
 		self::assertInstanceOf(
 			PersistenceSubscribers\TimestampableSubscriber::class,
-			$container->getService('fbCore.doctrineTimestampable.subscriber'),
+			$container->getService('fbCore.persistence.timestampable.subscriber'),
 		);
 	}
 

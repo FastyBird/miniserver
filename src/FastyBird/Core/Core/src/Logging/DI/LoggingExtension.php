@@ -21,9 +21,9 @@ use const DIRECTORY_SEPARATOR;
  * Logging: the Monolog handlers, the console log subscriber and Sentry
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > logging section, so its services are fbCore.application.logger.*,
- * fbCore.application.subscribers.console, fbCore.tools.helpers.sentry and fbCore.tools.sentry.*.
+ * registered with the compiler itself. It runs as fbCore.logging and reads its fbCore > logging
+ * section, so its services are fbCore.logging.handler.*, fbCore.logging.subscribers.console,
+ * fbCore.logging.helpers.sentry and fbCore.logging.sentry.*.
  */
 final class LoggingExtension extends DI\CompilerExtension
 {
@@ -61,7 +61,7 @@ final class LoggingExtension extends DI\CompilerExtension
 
 		if ($configuration->rotatingFile->enabled === true) {
 			$builder->addDefinition(
-				$this->prefix('application.logger.handler.rotatingFile'),
+				$this->prefix('handler.rotatingFile'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Monolog\Handler\RotatingFileHandler::class)
@@ -74,7 +74,7 @@ final class LoggingExtension extends DI\CompilerExtension
 
 		if ($configuration->stdOut->enabled === true) {
 			$builder->addDefinition(
-				$this->prefix('application.logger.handler.stdOut'),
+				$this->prefix('handler.stdOut'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Monolog\Handler\StreamHandler::class)
@@ -88,7 +88,7 @@ final class LoggingExtension extends DI\CompilerExtension
 
 		if ($configuration->console->enabled) {
 			$consoleHandler = $builder->addDefinition(
-				$this->prefix('application.logger.handler.console'),
+				$this->prefix('handler.console'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(BridgeMonolog\Handler\ConsoleHandler::class);
@@ -96,7 +96,7 @@ final class LoggingExtension extends DI\CompilerExtension
 
 		if ($configuration->console->enabled) {
 			$builder->addDefinition(
-				$this->prefix('application.subscribers.console'),
+				$this->prefix('subscribers.console'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Subscribers\Console::class)
@@ -107,7 +107,7 @@ final class LoggingExtension extends DI\CompilerExtension
 		}
 
 		if (interface_exists('\Sentry\ClientInterface')) {
-			$builder->addDefinition($this->prefix('tools.helpers.sentry'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('helpers.sentry'), new DI\Definitions\ServiceDefinition())
 				->setType(Logging\Sentry::class);
 		}
 
@@ -134,23 +134,23 @@ final class LoggingExtension extends DI\CompilerExtension
 		}
 
 		if (is_string($sentryDSN) && $sentryDSN !== '') {
-			$builder->addDefinition($this->prefix('tools.sentry.handler'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('sentry.handler'), new DI\Definitions\ServiceDefinition())
 				->setType(Sentry\Monolog\Handler::class)
 				->setArgument('level', $configuration->sentry->level);
 
 			$sentryClientBuilderService = $builder->addDefinition(
-				$this->prefix('tools.sentry.clientBuilder'),
+				$this->prefix('sentry.clientBuilder'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setFactory('Sentry\ClientBuilder::create')
 				->setArguments([['dsn' => $sentryDSN]]);
 
-			$builder->addDefinition($this->prefix('tools.sentry.client'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('sentry.client'), new DI\Definitions\ServiceDefinition())
 				->setType(Sentry\ClientInterface::class)
 				// @phpstan-ignore argument.type (Nette ServiceDefinition::setFactory() accepts a [service, method] callable array at runtime)
 				->setFactory([$sentryClientBuilderService, 'getClient']);
 
-			$builder->addDefinition($this->prefix('tools.sentry.hub'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('sentry.hub'), new DI\Definitions\ServiceDefinition())
 				->setType(Sentry\State\Hub::class);
 		}
 	}
@@ -184,14 +184,14 @@ final class LoggingExtension extends DI\CompilerExtension
 			if ($configuration->rotatingFile->enabled === true) {
 				$monologLoggerService->addSetup('?->pushHandler(?)', [
 					'@self',
-					$builder->getDefinition($this->prefix('application.logger.handler.rotatingFile')),
+					$builder->getDefinition($this->prefix('handler.rotatingFile')),
 				]);
 			}
 
 			if ($configuration->stdOut->enabled === true) {
 				$monologLoggerService->addSetup('?->pushHandler(?)', [
 					'@self',
-					$builder->getDefinition($this->prefix('application.logger.handler.stdOut')),
+					$builder->getDefinition($this->prefix('handler.stdOut')),
 				]);
 			}
 		}
@@ -207,7 +207,7 @@ final class LoggingExtension extends DI\CompilerExtension
 			assert(is_string($monologLoggerServiceName));
 			$monologLoggerService = $builder->getDefinition($monologLoggerServiceName);
 			assert($monologLoggerService instanceof DI\Definitions\ServiceDefinition);
-			$sentryHandlerService = $builder->getDefinition($this->prefix('tools.sentry.handler'));
+			$sentryHandlerService = $builder->getDefinition($this->prefix('sentry.handler'));
 			assert($sentryHandlerService instanceof DI\Definitions\ServiceDefinition);
 			$monologLoggerService->addSetup('?->pushHandler(?)', ['@self', $sentryHandlerService]);
 		}

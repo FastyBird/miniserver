@@ -19,10 +19,10 @@ use function sprintf;
  * Documents: the document factory, its attribute mapping driver chain and metadata cache
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > documents section, so its services are fbCore.application.document.cache
- * and the unprefixed document.*. Module extensions add their own drivers to the chain through
- * CoreExtension::DRIVER_TAG.
+ * registered with the compiler itself. It runs as fbCore.documents and reads its
+ * fbCore > documents section, so its services are fbCore.documents.cache,
+ * fbCore.documents.factory and fbCore.documents.mapping.*. Module extensions add their own
+ * drivers to the chain through CoreExtension::DRIVER_TAG.
  */
 final class DocumentsExtension extends DI\CompilerExtension
 {
@@ -52,18 +52,18 @@ final class DocumentsExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		$metadataCache = $builder->addDefinition(
-			$this->prefix('application.document.cache'),
+			$this->prefix('cache'),
 			new DI\Definitions\ServiceDefinition(),
 		)
 			->setType(Caching\Cache::class)
 			->setArguments(['namespace' => 'metadata_class_metadata'])
 			->setAutowired(false);
 
-		$builder->addDefinition('document.factory', new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('factory'), new DI\Definitions\ServiceDefinition())
 			->setType(Documents\DocumentFactory::class);
 
 		$attributeDriver = $builder->addDefinition(
-			'document.mapping.attributeDriver',
+			$this->prefix('mapping.attributeDriver'),
 			new DI\Definitions\ServiceDefinition(),
 		)
 			->setType(Documents\Mapping\Driver\AttributeDriver::class)
@@ -73,12 +73,12 @@ final class DocumentsExtension extends DI\CompilerExtension
 			->setAutowired(false);
 
 		$mappingDriver = $builder->addDefinition(
-			'document.mapping.mappingDriver',
+			$this->prefix('mapping.driverChain'),
 			new DI\Definitions\ServiceDefinition(),
 		)
 			->setType(Documents\Mapping\Driver\MappingDriverChain::class);
 
-		$builder->addDefinition('document.mapping.classMetadataFactory', new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('mapping.classMetadataFactory'), new DI\Definitions\ServiceDefinition())
 			->setType(Documents\Mapping\ClassMetadataFactory::class)
 			->setArguments(['driver' => $mappingDriver, 'cache' => $metadataCache]);
 

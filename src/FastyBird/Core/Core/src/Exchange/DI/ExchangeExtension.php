@@ -17,7 +17,7 @@ use function is_string;
  * The exchange: the consumer and publisher proxies and the routing document factory
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name, so its services are
+ * registered with the compiler itself. It runs as fbCore.exchange, so its services are
  * fbCore.exchange.*. It has no configuration. In beforeCompile() it registers every consumer
  * and publisher service with its proxy, reading the CoreExtension::CONSUMER_STATE and
  * CoreExtension::CONSUMER_ROUTING_KEY tags.
@@ -30,16 +30,16 @@ final class ExchangeExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('exchange.consumer'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('consumer'), new DI\Definitions\ServiceDefinition())
 			->setType(Consumers\Container::class);
 
-		$builder->addDefinition($this->prefix('exchange.publisher'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('publisher'), new DI\Definitions\ServiceDefinition())
 			->setType(Publisher\Container::class);
 
-		$builder->addDefinition($this->prefix('exchange.publisher.async'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('publisher.async'), new DI\Definitions\ServiceDefinition())
 			->setType(Async\Container::class);
 
-		$builder->addDefinition($this->prefix('exchange.entityFactory'), new DI\Definitions\ServiceDefinition())
+		$builder->addDefinition($this->prefix('entityFactory'), new DI\Definitions\ServiceDefinition())
 			->setType(Documents\RoutingDocumentFactory::class);
 	}
 

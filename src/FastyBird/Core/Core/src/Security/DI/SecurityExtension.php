@@ -33,8 +33,8 @@ use const DIRECTORY_SEPARATOR;
  * checkers, Casbin, the middlewares, the Doctrine owner mapping and the security entities
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > security section, so its services are fbCore.simpleAuth.*. Nothing is registered
+ * registered with the compiler itself. It runs as fbCore.security and reads its
+ * fbCore > security section, so its services are fbCore.security.*. Nothing is registered
  * unless a token signature is configured. The composite also reads that section, for the root
  * Configuration.
  *
@@ -103,57 +103,57 @@ final class SecurityExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		if ($configuration->token->signature !== '') {
-			$builder->addDefinition($this->prefix('simpleAuth.auth'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('auth'), new DI\Definitions\ServiceDefinition())
 				->setType(Services\Auth::class);
 
-			$builder->addDefinition($this->prefix('simpleAuth.token.builder'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('token.builder'), new DI\Definitions\ServiceDefinition())
 				->setType(Identity\TokenBuilder::class)
 				->setArgument('tokenSignature', $configuration->token->signature)
 				->setArgument('tokenIssuer', $configuration->token->issuer);
 
-			$builder->addDefinition($this->prefix('simpleAuth.token.reader'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('token.reader'), new DI\Definitions\ServiceDefinition())
 				->setType(Identity\TokenReader::class);
 
-			$builder->addDefinition($this->prefix('simpleAuth.token.validator'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('token.validator'), new DI\Definitions\ServiceDefinition())
 				->setType(Identity\TokenValidator::class)
 				->setArgument('tokenSignature', $configuration->token->signature)
 				->setArgument('tokenIssuer', $configuration->token->issuer);
 
 			if ($configuration->services->identity) {
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.security.identityFactory'),
+					$this->prefix('identityFactory'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Identity\IdentityFactory::class);
 			}
 
 			$builder->addDefinition(
-				$this->prefix('simpleAuth.security.userStorage'),
+				$this->prefix('userStorage'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Identity\UserStorage::class);
 
 			$builder->addDefinition(
-				$this->prefix('simpleAuth.access.annotationChecker'),
+				$this->prefix('access.annotationChecker'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Access\AnnotationChecker::class);
 
 			$builder->addDefinition(
-				$this->prefix('simpleAuth.access.latteChecker'),
+				$this->prefix('access.latteChecker'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Access\LatteChecker::class);
 
 			$builder->addDefinition(
-				$this->prefix('simpleAuth.access.linkChecker'),
+				$this->prefix('access.linkChecker'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Access\LinkChecker::class);
 
 			if ($configuration->enable->casbin->database) {
 				$adapter = $builder->addDefinition(
-					$this->prefix('simpleAuth.casbin.adapter'),
+					$this->prefix('casbin.adapter'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(ModelsCasbin\Adapter::class);
@@ -175,7 +175,7 @@ final class SecurityExtension extends DI\CompilerExtension
 				$adapter->lazy = true;
 
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.casbin.subscriber'),
+					$this->prefix('casbin.subscriber'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Subscribers\Policy::class);
@@ -187,7 +187,7 @@ final class SecurityExtension extends DI\CompilerExtension
 				}
 
 				$adapter = $builder->addDefinition(
-					$this->prefix('simpleAuth.casbin.adapter'),
+					$this->prefix('casbin.adapter'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Casbin\Persist\Adapters\FileAdapter::class)
@@ -201,7 +201,7 @@ final class SecurityExtension extends DI\CompilerExtension
 			}
 
 			$builder->addDefinition(
-				$this->prefix('simpleAuth.casbin.enforcerFactory'),
+				$this->prefix('casbin.enforcerFactory'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Identity\EnforcerFactory::class)
@@ -209,13 +209,13 @@ final class SecurityExtension extends DI\CompilerExtension
 
 			if ($configuration->enable->middleware) {
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.middleware.access'),
+					$this->prefix('middleware.access'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Middleware\Authorization::class);
 
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.middleware.user'),
+					$this->prefix('middleware.user'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Middleware\User::class);
@@ -223,13 +223,13 @@ final class SecurityExtension extends DI\CompilerExtension
 
 			if ($configuration->enable->doctrine->mapping) {
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.driver'),
+					$this->prefix('doctrine.driver'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Mapping\Driver\Owner::class);
 
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.subscriber'),
+					$this->prefix('doctrine.subscriber'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Subscribers\User::class);
@@ -237,13 +237,13 @@ final class SecurityExtension extends DI\CompilerExtension
 
 			if ($configuration->enable->doctrine->models) {
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.tokensRepository'),
+					$this->prefix('doctrine.tokensRepository'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Tokens\Repository::class);
 
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.tokensManager'),
+					$this->prefix('doctrine.tokensManager'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Tokens\Manager::class);
@@ -251,13 +251,13 @@ final class SecurityExtension extends DI\CompilerExtension
 
 			if ($configuration->enable->casbin->database) {
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.policiesRepository'),
+					$this->prefix('doctrine.policiesRepository'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Policies\Repository::class);
 
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.doctrine.policiesManager'),
+					$this->prefix('doctrine.policiesManager'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Policies\Manager::class);
@@ -265,7 +265,7 @@ final class SecurityExtension extends DI\CompilerExtension
 
 			if ($configuration->enable->nette->application) {
 				$builder->addDefinition(
-					$this->prefix('simpleAuth.nette.application'),
+					$this->prefix('nette.application'),
 					new DI\Definitions\ServiceDefinition(),
 				)
 					->setType(Subscribers\Application::class);
@@ -290,12 +290,12 @@ final class SecurityExtension extends DI\CompilerExtension
 
 		// Mirrors the signature !== '' gate around everything in loadConfiguration() above: this
 		// fallback's constructor needs IUserStorage, which only exists if that gate passed and
-		// registered simpleAuth.security.userStorage. Without this
+		// registered security.userStorage. Without this
 		// gate, containers that never configure SimpleAuth (signature === '') would still get an
 		// unconditional fallback User service whose dependency was never registered, replacing
 		// "signature is missing" with a confusing "IUserStorage not found" deep in DI resolution.
 		if ($userContextServiceName === null && $configuration->token->signature !== '') {
-			$builder->addDefinition($this->prefix('simpleAuth.security.user'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('user'), new DI\Definitions\ServiceDefinition())
 				->setType(Identity\User::class);
 		}
 

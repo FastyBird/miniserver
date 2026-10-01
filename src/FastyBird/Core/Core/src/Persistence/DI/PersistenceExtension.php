@@ -25,11 +25,12 @@ use function class_exists;
  * the Doctrine helpers
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name and owns the schema
- * of fbCore > persistence, so its services are fbCore.application.subscribers.
- * entityDiscriminator, fbCore.tools.*, fbCore.doctrineCrud.*, fbCore.doctrineTimestampable.* and
- * fbCore.doctrineMigrations.subscriber. The composite reads fbCore > persistence > timestampable
- * itself, for the root Configuration.
+ * registered with the compiler itself. It runs as fbCore.persistence and owns the schema of
+ * fbCore > persistence, so its services are fbCore.persistence.subscribers.entityDiscriminator,
+ * fbCore.persistence.helpers.database, fbCore.persistence.utilities.doctrineDateProvider,
+ * fbCore.persistence.entity.*, fbCore.persistence.crud, fbCore.persistence.timestampable.* and
+ * fbCore.persistence.migrations.subscriber. The composite reads fbCore > persistence >
+ * timestampable itself, for the root Configuration.
  *
  * Its Doctrine subscribers sit on both sides of Security's in definition order, which nettrine's
  * EventPass turns into listener order: the entity discriminator before them, the timestampable
@@ -58,7 +59,7 @@ final class PersistenceExtension extends DI\CompilerExtension
 
 		if (class_exists('\Doctrine\DBAL\Connection') && class_exists('\Doctrine\ORM\EntityManager')) {
 			$builder->addDefinition(
-				$this->prefix('application.subscribers.entityDiscriminator'),
+				$this->prefix('subscribers.entityDiscriminator'),
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setType(Subscribers\EntityDiscriminator::class);
@@ -69,12 +70,12 @@ final class PersistenceExtension extends DI\CompilerExtension
 		 */
 
 		if (class_exists('\Doctrine\DBAL\Connection') && class_exists('\Doctrine\ORM\EntityManager')) {
-			$builder->addDefinition($this->prefix('tools.helpers.database'), new DI\Definitions\ServiceDefinition())
+			$builder->addDefinition($this->prefix('helpers.database'), new DI\Definitions\ServiceDefinition())
 				->setType(Helpers\Database::class);
 		}
 
 		$builder->addDefinition(
-			$this->prefix('tools.utilities.doctrineDateProvider'),
+			$this->prefix('utilities.doctrineDateProvider'),
 			new DI\Definitions\ServiceDefinition(),
 		)
 			->setType(Utilities\DateTimeProvider::class);
@@ -83,38 +84,38 @@ final class PersistenceExtension extends DI\CompilerExtension
 		 * Entity CRUD
 		 */
 
-		$builder->addDefinition($this->prefix('doctrineCrud.entity.mapper'))
+		$builder->addDefinition($this->prefix('entity.mapper'))
 			->setType(Mapping\EntityMapper::class)
 			->setAutowired(false);
 
-		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.creator'))
+		$builder->addFactoryDefinition($this->prefix('entity.creator'))
 			->setImplement(Create\EntityCreatorFactory::class)
 			->setAutowired(false)
 			->getResultDefinition()
 			->setType(Create\EntityCreator::class);
 
-		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.updater'))
+		$builder->addFactoryDefinition($this->prefix('entity.updater'))
 			->setImplement(Update\EntityUpdaterFactory::class)
 			->setAutowired(false)
 			->getResultDefinition()
 			->setFactory(Update\EntityUpdater::class);
 
-		$builder->addFactoryDefinition($this->prefix('doctrineCrud.entity.deleter'))
+		$builder->addFactoryDefinition($this->prefix('entity.deleter'))
 			->setImplement(Delete\EntityDeleterFactory::class)
 			->setAutowired(false)
 			->getResultDefinition()
 			->setFactory(Delete\EntityDeleter::class);
 
-		$builder->addFactoryDefinition($this->prefix('doctrineCrud.crud'))
+		$builder->addFactoryDefinition($this->prefix('crud'))
 			->setImplement(Crud\CrudFactory::class)
 			->getResultDefinition()
 			->setType(Crud\EntityCrud::class)
 			->setArguments([
 				new PhpGenerator\Literal('$entityName'),
-				'@' . $this->prefix('doctrineCrud.entity.mapper'),
-				'@' . $this->prefix('doctrineCrud.entity.creator'),
-				'@' . $this->prefix('doctrineCrud.entity.updater'),
-				'@' . $this->prefix('doctrineCrud.entity.deleter'),
+				'@' . $this->prefix('entity.mapper'),
+				'@' . $this->prefix('entity.creator'),
+				'@' . $this->prefix('entity.updater'),
+				'@' . $this->prefix('entity.deleter'),
 			]);
 	}
 
@@ -131,10 +132,10 @@ final class PersistenceExtension extends DI\CompilerExtension
 		 * Timestampable
 		 */
 
-		$builder->addDefinition($this->prefix('doctrineTimestampable.driver'))
+		$builder->addDefinition($this->prefix('timestampable.driver'))
 			->setType(Mapping\Driver\Timestampable::class);
 
-		$builder->addDefinition($this->prefix('doctrineTimestampable.subscriber'))
+		$builder->addDefinition($this->prefix('timestampable.subscriber'))
 			->setType(Subscribers\TimestampableSubscriber::class);
 
 		/**
@@ -153,7 +154,7 @@ final class PersistenceExtension extends DI\CompilerExtension
 		 */
 
 		if ($this->compiler->getExtensions(Migrations\DI\MigrationsExtension::class) !== []) {
-			$builder->addDefinition($this->prefix('doctrineMigrations.subscriber'))
+			$builder->addDefinition($this->prefix('migrations.subscriber'))
 				->setType(Subscribers\SchemaSubscriber::class);
 		}
 	}
@@ -172,8 +173,8 @@ final class PersistenceExtension extends DI\CompilerExtension
 		/**
 		 * Entity CRUD services, removed when Doctrine ORM is absent
 		 *
-		 * loadConfiguration() unconditionally registers doctrineCrud.entity.{mapper,creator,
-		 * updater,deleter} and doctrineCrud.crud: EntityMapper/EntityCreator/EntityUpdater all
+		 * loadConfiguration() unconditionally registers entity.{mapper,creator,updater,deleter}
+		 * and crud: EntityMapper/EntityCreator/EntityUpdater all
 		 * take a non-nullable Doctrine\Persistence\ManagerRegistry constructor argument, which
 		 * only exists in containers that also register nettrineOrm/nettrineDbal. Several
 		 * fbCore-using containers (RabbitMq, RedisDb, RedisDbCache among them) don't, so those
@@ -186,13 +187,13 @@ final class PersistenceExtension extends DI\CompilerExtension
 
 		if ($builder->getByType(Doctrine\Persistence\ManagerRegistry::class) === null) {
 			foreach ([
-				'doctrineCrud.entity.mapper',
-				'doctrineCrud.entity.creator',
-				'doctrineCrud.entity.updater',
-				'doctrineCrud.entity.deleter',
-				'doctrineCrud.crud',
-			] as $doctrineCrudServiceName) {
-				$builder->removeDefinition($this->prefix($doctrineCrudServiceName));
+				'entity.mapper',
+				'entity.creator',
+				'entity.updater',
+				'entity.deleter',
+				'crud',
+			] as $crudServiceName) {
+				$builder->removeDefinition($this->prefix($crudServiceName));
 			}
 		}
 
@@ -241,7 +242,7 @@ final class PersistenceExtension extends DI\CompilerExtension
 			assert($emService instanceof DI\Definitions\ServiceDefinition);
 			$emService->addSetup('?->getEventManager()->addEventSubscriber(?)', [
 				'@self',
-				$builder->getDefinition($this->prefix('doctrineTimestampable.subscriber')),
+				$builder->getDefinition($this->prefix('timestampable.subscriber')),
 			]);
 		}
 	}

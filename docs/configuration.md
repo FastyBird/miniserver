@@ -36,6 +36,21 @@ Before Epic #459 (#557), these sections carried the names of the libraries Core 
 
 The old sections `application`, `tools` and `wsServer` are gone. There is no live installation, so there is no compatibility layer and no migration path. A `config/local.neon` that still uses an old key fails at the first container compilation with `Unexpected item 'fbCore › <old key>'`. To fix it, move the section to its new path. For example, `fbCore: simpleAuth: token: signature: …` becomes `fbCore: security: token: signature: …`.
 
+### Renamed service names (breaking change)
+
+Since Epic #459 (#558), every Core service is named `fbCore.<capability>.<role>`, after the capability that registers it. The root services are `fbCore.eventLoop.*`, `fbCore.ui.*`, `fbCore.cache.psr6`, `fbCore.eventDispatcher` and `fbCore.configuration`. The four unprefixed `document.*` services are now `fbCore.documents.*`. The full old-to-new table is `tools/di-maps/06-services.php`. Some examples:
+
+| Old name | New name |
+|---|---|
+| `fbCore.jsonApi.middlewares.jsonapi` | `fbCore.api.middleware` |
+| `fbCore.simpleAuth.token.builder` | `fbCore.security.token.builder` |
+| `fbCore.wsServer.server.server` | `fbCore.webSockets.server.runtime` |
+| `fbCore.httpServer.routing.router` | `fbCore.http.routing.router` |
+| `fbCore.application.eventLoop.wrapper` | `fbCore.eventLoop.wrapper` |
+| `document.factory` | `fbCore.documents.factory` |
+
+The service types are unchanged, so autowiring is not affected. Only a reference by name breaks. A `config/local.neon` that still names an old service, for example `@fbCore.jsonApi.middlewares.jsonapi` in a `decorator:` setup, fails container compilation with a missing-service error. To fix it, use the new name.
+
 ### `fbCore.logging`
 
 | Key | Type | Default | Meaning |
@@ -108,9 +123,9 @@ Nothing in this section takes effect unless `token.signature` is set. With an em
 | `server.httpHost` | string | `localhost` | Host the Flash socket policy allows, on port 80 and on `server.port`. |
 | `server.secured.enable` | bool | `false` | Serve the WebSocket server over TLS. |
 | `server.secured.sslSettings` | array | `[]` | Stream context SSL options for TLS. |
-| `storage.clients.driver` | string | `@wsServer.clients.driver.memory` | Driver for the connected-clients storage. Only the default works today (#565). |
+| `storage.clients.driver` | string | `@fbCore.webSockets.clients.driver.memory` | Driver for the connected-clients storage. Only the default works today (#565). |
 | `storage.clients.ttl` | int | `0` | Time to live the clients storage passes to its driver. The in-memory driver ignores it. |
-| `storage.topics.driver` | string | `@wsServer.wamp.topics.driver.memory` | Driver for the WAMP topics storage. Only the default works today (#565). |
+| `storage.topics.driver` | string | `@fbCore.webSockets.wamp.topics.driver.memory` | Driver for the WAMP topics storage. Only the default works today (#565). |
 | `storage.topics.ttl` | int | `0` | Time to live the topics storage passes to its driver. The in-memory driver ignores it. |
 | `routes` | map of mask to action | `[]` | Extra WAMP routes. Modules contribute theirs through a DI tag. |
 | `mapping` | map | `[]` | Controller name mapping for the WebSocket controller factory, as in Nette's presenter mapping. |

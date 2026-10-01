@@ -42,7 +42,7 @@ fbDevicesModule:
 decorator:
 	FastyBird\Core\Http\Routing\ServerRouter:
 		setup:
-			- addMiddleware(@fbCore.jsonApi.middlewares.jsonapi)
+			- addMiddleware(@fbCore.api.middleware)
 
 contributteTranslation:
 	locales:
