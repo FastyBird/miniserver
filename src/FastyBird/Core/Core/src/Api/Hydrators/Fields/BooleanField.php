@@ -43,8 +43,8 @@ final class BooleanField extends Field
 		if (!is_bool($value)) {
 			throw new Exceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				strval($this->translator->translate('//jsonApi.hydrator.invalidAttribute.heading')),
-				strval($this->translator->translate('//jsonApi.hydrator.invalidAttribute.message')),
+				strval($this->translator->translate('//api.hydrator.invalidAttribute.heading')),
+				strval($this->translator->translate('//api.hydrator.invalidAttribute.message')),
 				[
 					'pointer' => '/data/attributes/' . $this->getMappedName(),
 				],
