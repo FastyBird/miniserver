@@ -3733,109 +3733,19 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/WampApplication.php
 
 		-
-			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Binary operation "\." between ''FB_LOGS_DIR/''\|''FB_LOGS_DIR\\\\'' and mixed results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Call to an undefined method Nette\\DI\\Definitions\\Definition\:\:addSetup\(\)\.$#'
-			identifier: method.notFound
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$access on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$address on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$allow on mixed\.$#'
-			identifier: property.nonObject
-			count: 4
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$application on mixed\.$#'
-			identifier: property.nonObject
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
 			message: '#^Cannot access property \$author on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$autoMapField on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$casbin on mixed\.$#'
-			identifier: property.nonObject
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$certificate on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$clients on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$console on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+			path: ../src/FastyBird/Core/Core/src/Api/DI/ApiExtension.php
 
 		-
 			message: '#^Cannot access property \$copyright on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+			path: ../src/FastyBird/Core/Core/src/Api/DI/ApiExtension.php
 
 		-
-			message: '#^Cannot access property \$cors on mixed\.$#'
-			identifier: property.nonObject
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$credentials on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$database on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$dbFieldType on mixed\.$#'
+			message: '#^Cannot access property \$application on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
@@ -3843,55 +3753,7 @@ parameters:
 		-
 			message: '#^Cannot access property \$doctrine on mixed\.$#'
 			identifier: property.nonObject
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$documents on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$driver on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$dsn on mixed\.$#'
-			identifier: property.nonObject
 			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$enable on mixed\.$#'
-			identifier: property.nonObject
-			count: 14
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$enabled on mixed\.$#'
-			identifier: property.nonObject
-			count: 10
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$excludePaths on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$filename on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$headers on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
@@ -3901,67 +3763,13 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
-			message: '#^Cannot access property \$httpHost on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$identity on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
 			message: '#^Cannot access property \$issuer on mixed\.$#'
 			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$keys on mixed\.$#'
-			identifier: property.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$lazyAssociation on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$level on mixed\.$#'
-			identifier: property.nonObject
-			count: 4
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$logging on mixed\.$#'
-			identifier: property.nonObject
-			count: 12
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$loop on mixed\.$#'
-			identifier: property.nonObject
-			count: 4
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
 			message: '#^Cannot access property \$mapping on mixed\.$#'
-			identifier: property.nonObject
-			count: 6
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$meta on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$methods on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
@@ -3969,89 +3777,17 @@ parameters:
 		-
 			message: '#^Cannot access property \$middleware on mixed\.$#'
 			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$model on mixed\.$#'
-			identifier: property.nonObject
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
 			message: '#^Cannot access property \$models on mixed\.$#'
 			identifier: property.nonObject
-			count: 3
+			count: 1
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
 			message: '#^Cannot access property \$nette on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$origin on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$origins on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$policy on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$port on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$publicRoot on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$rotatingFile on mixed\.$#'
-			identifier: property.nonObject
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$routes on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$secured on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$sentry on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$server on mixed\.$#'
-			identifier: property.nonObject
-			count: 10
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$services on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
@@ -4065,92 +3801,374 @@ parameters:
 		-
 			message: '#^Cannot access property \$signature on mixed\.$#'
 			identifier: property.nonObject
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$sslSettings on mixed\.$#'
-			identifier: property.nonObject
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
 
 		-
-			message: '#^Cannot access property \$static on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$stdOut on mixed\.$#'
-			identifier: property.nonObject
-			count: 4
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$storage on mixed\.$#'
-			identifier: property.nonObject
-			count: 5
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$token on mixed\.$#'
-			identifier: property.nonObject
-			count: 8
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$topics on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Cannot access property \$ttl on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Documents/DI/DocumentsExtension.php
 
 		-
 			message: '#^Parameter \#1 \$array of function array_values expects array\<T\>, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+			path: ../src/FastyBird/Core/Core/src/Documents/DI/DocumentsExtension.php
 
 		-
 			message: '#^Parameter \#1 \$filename of function is_dir expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Parameter \#1 \$name of method Nette\\DI\\ContainerBuilder\:\:getDefinition\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Parameter \#1 \$name of method Nette\\DI\\ContainerBuilder\:\:getDefinition\(\) expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 4
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
-
-		-
-			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+			path: ../src/FastyBird/Core/Core/src/Documents/DI/DocumentsExtension.php
 
 		-
 			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+			path: ../src/FastyBird/Core/Core/src/Documents/DI/DocumentsExtension.php
+
+		-
+			message: '#^Cannot access property \$address on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$allow on mixed\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$certificate on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$credentials on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$enabled on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$headers on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$methods on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$origin on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$port on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Cannot access property \$publicRoot on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Http/DI/HttpExtension.php
+
+		-
+			message: '#^Binary operation "\." between ''FB_LOGS_DIR/''\|''FB_LOGS_DIR\\\\'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$console on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$dsn on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$enabled on mixed\.$#'
+			identifier: property.nonObject
+			count: 8
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$filename on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$level on mixed\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$logging on mixed\.$#'
+			identifier: property.nonObject
+			count: 12
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$rotatingFile on mixed\.$#'
+			identifier: property.nonObject
+			count: 5
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$sentry on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$stdOut on mixed\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/Logging/DI/LoggingExtension.php
+
+		-
+			message: '#^Cannot access property \$application on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$casbin on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$database on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$doctrine on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$identity on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$issuer on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$mapping on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$middleware on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$model on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$models on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$nette on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$policy on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Cannot access property \$signature on mixed\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/Security/DI/SecurityExtension.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Call to an undefined method Nette\\DI\\Definitions\\Definition\:\:addSetup\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$access on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$address on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$clients on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$driver on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$enable on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$httpHost on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$keys on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$loop on mixed\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$mapping on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$origins on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$port on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$routes on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$secured on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$server on mixed\.$#'
+			identifier: property.nonObject
+			count: 7
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$sslSettings on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$storage on mixed\.$#'
+			identifier: property.nonObject
+			count: 5
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$topics on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Cannot access property \$ttl on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Parameter \#1 \$name of method Nette\\DI\\ContainerBuilder\:\:getDefinition\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Parameter \#1 \$name of method Nette\\DI\\ContainerBuilder\:\:getDefinition\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 4
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
 
 		-
 			message: '#^Possibly invalid array key type mixed\.$#'
 			identifier: offsetAccess.invalidOffset
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/DI/CoreExtension.php
+			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
 
 		-
 			message: '#^Method FastyBird\\Core\\Documents\\Mapping\\ClassMetadataFactory\:\:loadMetadata\(\) should return array\<class\-string\<FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<FastyBird\\Core\\Documents\\Document\>\> but returns array\<class\-string\<T of FastyBird\\Core\\Documents\\Document\>, FastyBird\\Core\\Documents\\Mapping\\ClassMetadata\<T of FastyBird\\Core\\Documents\\Document\>\>\.$#'
