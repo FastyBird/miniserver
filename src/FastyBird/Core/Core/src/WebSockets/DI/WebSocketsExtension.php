@@ -21,6 +21,7 @@ use FastyBird\Core\WebSockets\Topics\Drivers as TopicsDrivers;
 use FastyBird\Core\WebSockets\Wamp;
 use Nette\DI;
 use Nette\PhpGenerator;
+use Nette\Schema;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Log;
@@ -43,10 +44,8 @@ use const SORT_STRING;
  * the WS server command and its event bridges
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
- * registered with the compiler itself. It runs under the composite's name, so its services are
- * fbCore.webSockets.* and fbCore.wsServer.*. It reads two sections, fbCore > webSockets and
- * fbCore > wsServer, so until the keys are renamed (#557) it is given the composite's whole
- * configuration, whose schema declares both.
+ * registered with the compiler itself. It runs under the composite's name and reads its
+ * fbCore > webSockets section, so its services are fbCore.webSockets.* and fbCore.wsServer.*.
  *
  * It also registers Http\Routing\LinkGenerator, the WAMP link generator, which still lives in
  * the Http namespace (#460 moves it). The storage-driver sentinels are kept as they are (D3,
@@ -56,6 +55,42 @@ use const SORT_STRING;
  */
 final class WebSocketsExtension extends DI\CompilerExtension
 {
+
+	#[Override]
+	public function getConfigSchema(): Schema\Schema
+	{
+		return Schema\Expect::structure([
+			'storage' => Schema\Expect::structure([
+				'clients' => Schema\Expect::structure([
+					'driver' => Schema\Expect::string('@wsServer.clients.driver.memory'),
+					'ttl' => Schema\Expect::int(0),
+				]),
+				'topics' => Schema\Expect::structure([
+					'driver' => Schema\Expect::string('@wsServer.wamp.topics.driver.memory'),
+					'ttl' => Schema\Expect::int(0),
+				]),
+			]),
+			'server' => Schema\Expect::structure([
+				'httpHost' => Schema\Expect::string('localhost'),
+				'port' => Schema\Expect::int(8_080),
+				'address' => Schema\Expect::string('0.0.0.0'),
+				'secured' => Schema\Expect::structure([
+					'enable' => Schema\Expect::bool(false),
+					'sslSettings' => Schema\Expect::array([]),
+				]),
+			]),
+			'routes' => Schema\Expect::array([]),
+			'mapping' => Schema\Expect::array([]),
+			'loop' => Schema\Expect::anyOf(
+				Schema\Expect::string(),
+				Schema\Expect::type(DI\Definitions\Statement::class),
+			)->nullable(),
+			'access' => Schema\Expect::structure([
+				'keys' => Schema\Expect::string()->default(null),
+				'origins' => Schema\Expect::string()->default(null),
+			]),
+		]);
+	}
 
 	/**
 	 * @throws DI\MissingServiceException
@@ -72,8 +107,8 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			->setType(Controllers\IControllerFactory::class)
 			->setFactory(Controllers\ControllerFactory::class);
 
-		if ($configuration->webSockets->mapping) {
-			$controllerFactory->addSetup('setMapping', [$configuration->webSockets->mapping]);
+		if ($configuration->mapping) {
+			$controllerFactory->addSetup('setMapping', [$configuration->mapping]);
 		}
 
 		if ($builder->getByType(Clients\ClientProvider::class) === null) {
@@ -84,13 +119,13 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$builder->addDefinition($this->prefix('wsServer.clients.driver.memory'))
 			->setType(ClientsDrivers\InMemory::class);
 
-		$clientsStorageDriver = $configuration->webSockets->storage->clients->driver === '@wsServer.clients.driver.memory'
+		$clientsStorageDriver = $configuration->storage->clients->driver === '@wsServer.clients.driver.memory'
 			? $builder->getDefinition($this->prefix('wsServer.clients.driver.memory'))
-			: $builder->getDefinition($configuration->webSockets->storage->clients->driver);
+			: $builder->getDefinition($configuration->storage->clients->driver);
 
 		$builder->addDefinition($this->prefix('wsServer.clients.storage'))
 			->setType(Clients\Storage::class)
-			->setArguments(['ttl' => $configuration->webSockets->storage->clients->ttl])
+			->setArguments(['ttl' => $configuration->storage->clients->ttl])
 			->addSetup(
 				'?->setStorageDriver(?)',
 				['@' . $this->prefix('wsServer.clients.storage'), $clientsStorageDriver],
@@ -100,7 +135,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			->setType(Wamp\WampRouter::class)
 			->setFactory(Wamp\RouteList::class);
 
-		foreach ($configuration->webSockets->routes as $mask => $action) {
+		foreach ($configuration->routes as $mask => $action) {
 			$router->addSetup(
 				sprintf('$service[] = new %s(?, ?);', Wamp\WampRoute::class),
 				[$mask, $action],
@@ -118,36 +153,36 @@ final class WebSocketsExtension extends DI\CompilerExtension
 
 		$flashApplication->addSetup('?->addAllowedAccess(?, \'80\')', [
 			$flashApplication,
-			$configuration->webSockets->server->httpHost,
+			$configuration->server->httpHost,
 		]);
 		$flashApplication->addSetup('?->addAllowedAccess(?, ?)', [
 			$flashApplication,
-			$configuration->webSockets->server->httpHost,
-			strval($configuration->webSockets->server->port),
+			$configuration->server->httpHost,
+			strval($configuration->server->port),
 		]);
 
 		$handlers = $builder->addDefinition($this->prefix('wsServer.server.handlers'))
 			->setType(Server\Handlers::class);
 
-		if ($configuration->webSockets->loop === null) {
+		if ($configuration->loop === null) {
 			$loop = $builder->getByType(React\EventLoop\LoopInterface::class) === null
 				? $builder->addDefinition($this->prefix('wsServer.server.loop'))
 				->setType(React\EventLoop\LoopInterface::class)
 				->setFactory('React\EventLoop\Factory::create')
 				: $builder->getDefinitionByType(React\EventLoop\LoopInterface::class);
 		} else {
-			$loop = is_string($configuration->webSockets->loop)
-				? new DI\Definitions\Statement($configuration->webSockets->loop)
-				: $configuration->webSockets->loop;
+			$loop = is_string($configuration->loop)
+				? new DI\Definitions\Statement($configuration->loop)
+				: $configuration->loop;
 		}
 
 		$serverConfiguration = $builder->addDefinition($this->prefix('wsServer.server.configuration'))
 			->setType(Server\Configuration::class)
 			->setArguments([
-				'port' => $configuration->webSockets->server->port,
-				'address' => $configuration->webSockets->server->address,
-				'enableSSL' => $configuration->webSockets->server->secured->enable,
-				'sslSettings' => $configuration->webSockets->server->secured->sslSettings,
+				'port' => $configuration->server->port,
+				'address' => $configuration->server->address,
+				'enableSSL' => $configuration->server->secured->enable,
+				'sslSettings' => $configuration->server->secured->sslSettings,
 			]);
 
 		if ($builder->findByType(Log\LoggerInterface::class) === []) {
@@ -159,14 +194,14 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			->setType(Server\ServerRuntime::class)
 			->setArguments([$handlers, $loop, $serverConfiguration]);
 
-		$wampStorageDriver = $configuration->webSockets->storage->topics->driver === '@wsServer.wamp.topics.driver.memory'
+		$wampStorageDriver = $configuration->storage->topics->driver === '@wsServer.wamp.topics.driver.memory'
 			? $builder->addDefinition($this->prefix('wsServer.wamp.topics.driver.memory'))
 			->setType(TopicsDrivers\InMemory::class)
 			: $builder->getDefinition($this->prefix('wsServer.wamp.topics.driver.memory'));
 
 		$builder->addDefinition($this->prefix('wsServer.wamp.topics.storage'))
 			->setType(Topics\Storage::class)
-			->setArguments(['ttl' => $configuration->webSockets->storage->topics->ttl])
+			->setArguments(['ttl' => $configuration->storage->topics->ttl])
 			->addSetup(
 				'?->setStorageDriver(?)',
 				['@' . $this->prefix('wsServer.wamp.topics.storage'), $wampStorageDriver],
@@ -211,8 +246,8 @@ final class WebSocketsExtension extends DI\CompilerExtension
 
 		$builder->addDefinition($this->prefix('wsServer.subscribers.client'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Client::class)
-			->setArgument('wsKeys', $configuration->wsServer->access->keys)
-			->setArgument('allowedOrigins', $configuration->wsServer->access->origins);
+			->setArgument('wsKeys', $configuration->access->keys)
+			->setArgument('allowedOrigins', $configuration->access->origins);
 	}
 
 	/**

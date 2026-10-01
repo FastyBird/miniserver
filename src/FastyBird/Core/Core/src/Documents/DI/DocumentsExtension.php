@@ -20,7 +20,7 @@ use function sprintf;
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > application > documents section, so its services are fbCore.application.document.cache
+ * fbCore > documents section, so its services are fbCore.application.document.cache
  * and the unprefixed document.*. Module extensions add their own drivers to the chain through
  * CoreExtension::DRIVER_TAG.
  */

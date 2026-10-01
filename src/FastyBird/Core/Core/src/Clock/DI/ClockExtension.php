@@ -18,7 +18,7 @@ use function in_array;
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > dateTimeFactory section, so its services are fbCore.dateTimeFactory.*.
+ * fbCore > clock section, so its services are fbCore.dateTimeFactory.*.
  */
 final class ClockExtension extends DI\CompilerExtension
 {

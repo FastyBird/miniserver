@@ -26,10 +26,10 @@ use function class_exists;
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs under the composite's name and owns the schema
- * of fbCore > doctrineTimestampable, so its services are fbCore.application.subscribers.
+ * of fbCore > persistence, so its services are fbCore.application.subscribers.
  * entityDiscriminator, fbCore.tools.*, fbCore.doctrineCrud.*, fbCore.doctrineTimestampable.* and
- * fbCore.doctrineMigrations.subscriber. The composite reads that section itself, for the root
- * Configuration.
+ * fbCore.doctrineMigrations.subscriber. The composite reads fbCore > persistence > timestampable
+ * itself, for the root Configuration.
  *
  * Its Doctrine subscribers sit on both sides of Security's in definition order, which nettrine's
  * EventPass turns into listener order: the entity discriminator before them, the timestampable
@@ -43,9 +43,11 @@ final class PersistenceExtension extends DI\CompilerExtension
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
-			'lazyAssociation' => Schema\Expect::bool(false),
-			'autoMapField' => Schema\Expect::bool(true),
-			'dbFieldType' => Schema\Expect::string('datetime_immutable'),
+			'timestampable' => Schema\Expect::structure([
+				'lazyAssociation' => Schema\Expect::bool(false),
+				'autoMapField' => Schema\Expect::bool(true),
+				'dbFieldType' => Schema\Expect::string('datetime_immutable'),
+			]),
 		]);
 	}
 

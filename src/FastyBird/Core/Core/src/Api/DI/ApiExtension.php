@@ -19,7 +19,7 @@ use function class_exists;
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > jsonApi section, so its services are fbCore.jsonApi.*. In beforeCompile() it adds
+ * fbCore > api section, so its services are fbCore.jsonApi.*. In beforeCompile() it adds
  * every JSON:API schema and hydrator service to its container.
  */
 final class ApiExtension extends DI\CompilerExtension

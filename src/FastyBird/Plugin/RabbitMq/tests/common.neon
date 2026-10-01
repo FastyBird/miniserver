@@ -9,10 +9,9 @@ fbRabbitMqPlugin:
 		name: testingQueueName
 
 fbCore:
-	application:
-		documents:
-			mapping: []
+	documents:
+		mapping: []
 
-	dateTimeFactory:
+	clock:
 		frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
 

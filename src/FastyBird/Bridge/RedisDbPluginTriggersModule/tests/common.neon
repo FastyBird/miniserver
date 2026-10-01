@@ -45,11 +45,10 @@ nettrineOrm:
 			autoGenerateProxyClasses: 3
 
 fbCore:
-	application:
-		documents:
-			mapping: []
+	documents:
+		mapping: []
 
-	simpleAuth:
+	security:
 		token:
 			issuer: com.fastybird.auth-module
 			signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
@@ -65,10 +64,10 @@ fbCore:
 		services:
 			identity: true
 
-	jsonApi:
+	api:
 		meta:
 			copyright: FastyBird s.r.o
 
-	dateTimeFactory:
+	clock:
 		frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
 
