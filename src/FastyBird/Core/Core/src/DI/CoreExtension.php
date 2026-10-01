@@ -54,7 +54,7 @@ use FastyBird\Core\Security\Models\Tokens;
 use FastyBird\Core\Security\Services as SecurityServices;
 use FastyBird\Core\Security\Subscribers as SecuritySubscribers;
 use FastyBird\Core\UI;
-use FastyBird\Core\Values\Schemas as ValuesSchemas;
+use FastyBird\Core\Values\DI\ValuesExtension;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Clients\Drivers as ClientsDrivers;
 use FastyBird\Core\WebSockets\Commands as WebSocketsCommands;
@@ -147,9 +147,12 @@ final class CoreExtension extends DI\CompilerExtension
 
 	private readonly ClockExtension $clock;
 
+	private readonly ValuesExtension $values;
+
 	public function __construct()
 	{
 		$this->clock = new ClockExtension();
+		$this->values = new ValuesExtension();
 	}
 
 	public static function register(
@@ -704,8 +707,8 @@ final class CoreExtension extends DI\CompilerExtension
 		)
 			->setType(Utilities\DateTimeProvider::class);
 
-		$builder->addDefinition($this->prefix('tools.schemas.validator'), new DI\Definitions\ServiceDefinition())
-			->setType(ValuesSchemas\Validator::class);
+		// VALUES -- its one definition stood here, inside TOOLS, and keeps its place in the order
+		$this->values->loadConfiguration();
 
 		if (interface_exists('\Sentry\ClientInterface')) {
 			$builder->addDefinition($this->prefix('tools.helpers.sentry'), new DI\Definitions\ServiceDefinition())
@@ -1623,7 +1626,7 @@ final class CoreExtension extends DI\CompilerExtension
 	 */
 	private function children(): array
 	{
-		return [$this->clock];
+		return [$this->values, $this->clock];
 	}
 
 }
