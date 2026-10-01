@@ -34,7 +34,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > simpleAuth section, so its services are fbCore.simpleAuth.*. Nothing is registered
+ * fbCore > security section, so its services are fbCore.simpleAuth.*. Nothing is registered
  * unless a token signature is configured. The composite also reads that section, for the root
  * Configuration.
  *

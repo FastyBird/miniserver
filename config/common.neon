@@ -62,7 +62,7 @@ decorator:
 # FastyBird Core
 ################
 fbCore:
-    simpleAuth:
+    security:
         token:
             issuer: %security.issuer%
             signature: %security.signature%
@@ -78,14 +78,14 @@ fbCore:
         application:
             signInUrl: Accounts:Sign:in
             homeUrl: App:Default:default
-    jsonApi:
+    api:
         meta:
             copyright: FastyBird s.r.o
     webSockets:
         server:
             address: %sockets.address%
             port: %sockets.port%
-    httpServer:
+    http:
         static:
             publicRoot: %appDir%/public/dist/
             enabled: true
@@ -100,9 +100,8 @@ fbCore:
             address: %server.address%
             port: %server.port%
             certificate: %server.certificate%
-    application:
-        documents:
-            mapping: []
+    documents:
+        mapping: []
 
 # Modules
 #########

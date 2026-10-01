@@ -94,8 +94,8 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	 * Doctrine's TimestampableSubscriber reads the `#[Timestampable]` attribute through
 	 * `Timestampable::EXTENSION_ANNOTATION`, feeding `ReflectionProperty::getAttributes()`.
 	 * A wrong FQCN there returns an empty array silently -- the property is simply never
-	 * stamped -- so this asserts the actual, frozen (tests/common.neon `dateTimeFactory.
-	 * frozen`) value, not just that the field is non-null.
+	 * stamped -- so this asserts the actual, frozen (tests/common.neon `clock.frozen`) value,
+	 * not just that the field is non-null.
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DBAL\Exception\UniqueConstraintViolationException

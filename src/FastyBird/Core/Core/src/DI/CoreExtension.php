@@ -21,7 +21,6 @@ use FastyBird\Core\Security\DI\SecurityExtension;
 use FastyBird\Core\UI;
 use FastyBird\Core\Values\DI\ValuesExtension;
 use FastyBird\Core\WebSockets\DI\WebSocketsExtension;
-use Monolog;
 use Nette;
 use Nette\Application;
 use Nette\Bootstrap;
@@ -51,8 +50,9 @@ use const DIRECTORY_SEPARATOR;
  * are not registered: this class owns them and forwards each lifecycle call to them at the
  * position the capability's code held in the inline extension, which keeps the definition
  * order. Each child runs under this extension's name, so its services keep their fbCore.*
- * names and its configuration stays at today's fbCore path (Epic #459 section 3.1, census
- * docs/superpowers/plans/2026-09-27-core-e4-di-census.md section 5).
+ * names (Epic #459 section 3.1, census docs/superpowers/plans/2026-09-27-core-e4-di-census.md
+ * section 5). Each configured child declares the schema of its own fbCore section, and this
+ * class hands it exactly that subtree (census section 3).
  */
 final class CoreExtension extends DI\CompilerExtension
 {
@@ -146,68 +146,14 @@ final class CoreExtension extends DI\CompilerExtension
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
-			'application' => Schema\Expect::structure([
-				'logging' => Schema\Expect::structure([
-					'rotatingFile' => Schema\Expect::structure([
-						'enabled' => Schema\Expect::bool(true),
-						'level' => Schema\Expect::int(Monolog\Level::Info),
-						'filename' => Schema\Expect::string('app.log'),
-					]),
-					'stdOut' => Schema\Expect::structure([
-						'enabled' => Schema\Expect::bool(false),
-						'level' => Schema\Expect::int(Monolog\Level::Info),
-					]),
-					'console' => Schema\Expect::structure([
-						'enabled' => Schema\Expect::bool(false),
-						'level' => Schema\Expect::int(Monolog\Level::Info),
-					]),
-				]),
-				'documents' => $this->documents->getConfigSchema(),
-			]),
-			'simpleAuth' => $this->security->getConfigSchema(),
-			'tools' => Schema\Expect::structure([
-				'sentry' => Schema\Expect::structure([
-					'dsn' => Schema\Expect::string()->nullable(),
-					'level' => Schema\Expect::int(Monolog\Level::Warning),
-				]),
-			]),
-			'dateTimeFactory' => $this->clock->getConfigSchema(),
-			'doctrineTimestampable' => $this->persistence->getConfigSchema(),
-			'jsonApi' => $this->api->getConfigSchema(),
-			'webSockets' => Schema\Expect::structure([
-				'storage' => Schema\Expect::structure([
-					'clients' => Schema\Expect::structure([
-						'driver' => Schema\Expect::string('@wsServer.clients.driver.memory'),
-						'ttl' => Schema\Expect::int(0),
-					]),
-					'topics' => Schema\Expect::structure([
-						'driver' => Schema\Expect::string('@wsServer.wamp.topics.driver.memory'),
-						'ttl' => Schema\Expect::int(0),
-					]),
-				]),
-				'server' => Schema\Expect::structure([
-					'httpHost' => Schema\Expect::string('localhost'),
-					'port' => Schema\Expect::int(8_080),
-					'address' => Schema\Expect::string('0.0.0.0'),
-					'secured' => Schema\Expect::structure([
-						'enable' => Schema\Expect::bool(false),
-						'sslSettings' => Schema\Expect::array([]),
-					]),
-				]),
-				'routes' => Schema\Expect::array([]),
-				'mapping' => Schema\Expect::array([]),
-				'loop' => Schema\Expect::anyOf(
-					Schema\Expect::string(),
-					Schema\Expect::type(DI\Definitions\Statement::class),
-				)->nullable(),
-			]),
-			'httpServer' => $this->http->getConfigSchema(),
-			'wsServer' => Schema\Expect::structure([
-				'access' => Schema\Expect::structure([
-					'keys' => Schema\Expect::string()->default(null),
-					'origins' => Schema\Expect::string()->default(null),
-				]),
-			]),
+			'logging' => $this->logging->getConfigSchema(),
+			'documents' => $this->documents->getConfigSchema(),
+			'security' => $this->security->getConfigSchema(),
+			'clock' => $this->clock->getConfigSchema(),
+			'persistence' => $this->persistence->getConfigSchema(),
+			'api' => $this->api->getConfigSchema(),
+			'webSockets' => $this->webSockets->getConfigSchema(),
+			'http' => $this->http->getConfigSchema(),
 		]);
 	}
 
@@ -247,32 +193,32 @@ final class CoreExtension extends DI\CompilerExtension
 
 		$this->compiler->addDependencies($childFiles);
 
-		// Logging reads two sections until the keys are renamed (#557), so it gets the whole
-		// configuration (census section 6)
-		$this->logging->setConfig($configuration);
+		// Every configured child gets exactly its own subtree (census section 3). Exchange,
+		// Values and Phone read no configuration.
 
-		assert($configuration->application instanceof stdClass);
-		assert($configuration->application->documents instanceof stdClass);
-		$this->documents->setConfig($configuration->application->documents);
+		assert($configuration->logging instanceof stdClass);
+		$this->logging->setConfig($configuration->logging);
 
-		assert($configuration->simpleAuth instanceof stdClass);
-		$this->security->setConfig($configuration->simpleAuth);
+		assert($configuration->documents instanceof stdClass);
+		$this->documents->setConfig($configuration->documents);
 
-		assert($configuration->dateTimeFactory instanceof stdClass);
-		$this->clock->setConfig($configuration->dateTimeFactory);
+		assert($configuration->security instanceof stdClass);
+		$this->security->setConfig($configuration->security);
 
-		assert($configuration->doctrineTimestampable instanceof stdClass);
-		$this->persistence->setConfig($configuration->doctrineTimestampable);
+		assert($configuration->clock instanceof stdClass);
+		$this->clock->setConfig($configuration->clock);
 
-		assert($configuration->jsonApi instanceof stdClass);
-		$this->api->setConfig($configuration->jsonApi);
+		assert($configuration->persistence instanceof stdClass);
+		$this->persistence->setConfig($configuration->persistence);
 
-		assert($configuration->httpServer instanceof stdClass);
-		$this->http->setConfig($configuration->httpServer);
+		assert($configuration->api instanceof stdClass);
+		$this->api->setConfig($configuration->api);
 
-		// WebSockets reads two sections until the keys are renamed (#557), so it gets the whole
-		// configuration (census section 6)
-		$this->webSockets->setConfig($configuration);
+		assert($configuration->http instanceof stdClass);
+		$this->http->setConfig($configuration->http);
+
+		assert($configuration->webSockets instanceof stdClass);
+		$this->webSockets->setConfig($configuration->webSockets);
 
 		/**
 		 * LOGGING -- the handlers, the console subscriber and Sentry
@@ -346,26 +292,29 @@ final class CoreExtension extends DI\CompilerExtension
 		$this->clock->loadConfiguration();
 
 		/**
-		 * CONFIGURATION (SimpleAuth + DoctrineTimestampable settings, combined -- see
+		 * CONFIGURATION (the security and persistence.timestampable settings, combined -- see
 		 * SecurityExtension's schema for why this is registered unconditionally rather than only
-		 * inside the `$configuration->simpleAuth->token->signature !== ''` gate: the
-		 * DoctrineTimestampable half of this data must always be available)
+		 * inside the `$configuration->security->token->signature !== ''` gate: the
+		 * timestampable half of this data must always be available)
 		 */
+
+		$timestampable = $configuration->persistence->timestampable;
+		assert($timestampable instanceof stdClass);
 
 		$builder->addDefinition($this->prefix('configuration'))
 			->setType(Configuration::class)
 			->setArguments([
-				'tokenIssuer' => $configuration->simpleAuth->token->issuer,
-				'tokenSignature' => $configuration->simpleAuth->token->signature,
-				'enableMiddleware' => $configuration->simpleAuth->enable->middleware,
-				'enableDoctrineMapping' => $configuration->simpleAuth->enable->doctrine->mapping,
-				'enableDoctrineModels' => $configuration->simpleAuth->enable->doctrine->models,
-				'enableNetteApplication' => $configuration->simpleAuth->enable->nette->application,
-				'applicationSignInUrl' => $configuration->simpleAuth->application->signInUrl,
-				'applicationHomeUrl' => $configuration->simpleAuth->application->homeUrl,
-				'lazyAssociation' => $configuration->doctrineTimestampable->lazyAssociation,
-				'autoMapField' => $configuration->doctrineTimestampable->autoMapField,
-				'dbFieldType' => $configuration->doctrineTimestampable->dbFieldType,
+				'tokenIssuer' => $configuration->security->token->issuer,
+				'tokenSignature' => $configuration->security->token->signature,
+				'enableMiddleware' => $configuration->security->enable->middleware,
+				'enableDoctrineMapping' => $configuration->security->enable->doctrine->mapping,
+				'enableDoctrineModels' => $configuration->security->enable->doctrine->models,
+				'enableNetteApplication' => $configuration->security->enable->nette->application,
+				'applicationSignInUrl' => $configuration->security->application->signInUrl,
+				'applicationHomeUrl' => $configuration->security->application->homeUrl,
+				'lazyAssociation' => $timestampable->lazyAssociation,
+				'autoMapField' => $timestampable->autoMapField,
+				'dbFieldType' => $timestampable->dbFieldType,
 			]);
 
 		/**

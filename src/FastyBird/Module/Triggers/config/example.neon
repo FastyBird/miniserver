@@ -68,7 +68,7 @@ nettrineOrmAttributes:
 	mapping: []
 
 fbCore:
-	simpleAuth:
+	security:
 		token:
 			issuer: com.fastybird.auth-module
 			signature: %security.signature%
@@ -88,7 +88,7 @@ fbCore:
 		services:
 			identity: true
 
-	jsonApi:
+	api:
 		meta:
 			copyright: FastyBird s.r.o
 

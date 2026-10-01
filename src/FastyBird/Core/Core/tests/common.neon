@@ -67,7 +67,7 @@ nettrineOrm:
             autoGenerateProxyClasses: 3   # AbstractProxyFactory::AUTOGENERATE_EVAL
 
 fbCore:
-    simpleAuth:
+    security:
         token:
             issuer: com.fastybird.auth-module
             signature: 'g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k='
@@ -75,10 +75,9 @@ fbCore:
             identity: true
         casbin:
             policy: %appDir%/policy.csv
-    dateTimeFactory:
+    clock:
         frozen: DateTimeImmutable('2020-04-01T12:00:00+00:00')
-    application:
-        documents:
-            mapping: [
-                FastyBird\Core\Tests\Fixtures\Dummy: %appDir%/fixtures/dummy
-            ]
+    documents:
+        mapping: [
+            FastyBird\Core\Tests\Fixtures\Dummy: %appDir%/fixtures/dummy
+        ]

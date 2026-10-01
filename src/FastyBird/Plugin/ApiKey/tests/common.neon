@@ -42,11 +42,10 @@ nettrineOrm:
 			autoGenerateProxyClasses: 3
 
 fbCore:
-	application:
-		documents:
-			mapping: []
+	documents:
+		mapping: []
 
-	jsonApi:
+	api:
 		meta:
 			copyright: FastyBird s.r.o
 

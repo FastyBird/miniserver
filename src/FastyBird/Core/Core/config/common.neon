@@ -71,18 +71,17 @@ orisaiObjectMapper:
 # Core application extension
 ############################
 fbCore:
-    application:
-        logging:
-            rotatingFile:
-                enabled: %logger.rotatingFile.enabled%
-                level: %logger.rotatingFile.level%
-                filename: %logger.rotatingFile.filename%
-            stdOut:
-                enabled: %logger.stdOut.enabled%
-                level: %logger.stdOut.level%
-            console:
-                enabled: %logger.console.enabled%
-                level: %logger.console.level%
+    logging:
+        rotatingFile:
+            enabled: %logger.rotatingFile.enabled%
+            level: %logger.rotatingFile.level%
+            filename: %logger.rotatingFile.filename%
+        stdOut:
+            enabled: %logger.stdOut.enabled%
+            level: %logger.stdOut.level%
+        console:
+            enabled: %logger.console.enabled%
+            level: %logger.console.level%
 
 # Application extension
 #######################

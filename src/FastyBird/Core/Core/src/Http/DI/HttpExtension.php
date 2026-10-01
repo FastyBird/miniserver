@@ -19,7 +19,7 @@ use function assert;
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs under the composite's name and reads its
- * fbCore > httpServer section, so its services are fbCore.httpServer.*.
+ * fbCore > http section, so its services are fbCore.httpServer.*.
  */
 final class HttpExtension extends DI\CompilerExtension
 {
