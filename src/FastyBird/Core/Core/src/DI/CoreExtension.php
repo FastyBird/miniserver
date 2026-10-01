@@ -4,7 +4,6 @@ namespace FastyBird\Core\DI;
 
 use Casbin;
 use DateInvalidTimeZoneException;
-use DateTimeZone;
 use Doctrine;
 use FastyBird\Core\Api\Encoding as ApiEncoding;
 use FastyBird\Core\Api\Helpers as ApiHelpers;
@@ -12,7 +11,7 @@ use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Api\Middleware as ApiMiddleware;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Clock;
+use FastyBird\Core\Clock\DI\ClockExtension;
 use FastyBird\Core\Configuration;
 use FastyBird\Core\Documents;
 use FastyBird\Core\EventLoop;
@@ -96,7 +95,6 @@ use function array_values;
 use function assert;
 use function class_exists;
 use function getenv;
-use function in_array;
 use function interface_exists;
 use function is_bool;
 use function is_dir;
@@ -146,6 +144,13 @@ final class CoreExtension extends DI\CompilerExtension
 	// runtime by WebSockets\Controllers\ControllerFactory. Both sides use this constant for the
 	// same reason as TAG_WEBSOCKETS_ROUTES.
 	public const string TAG_WEBSOCKETS_CONTROLLER = 'ipub.websockets.controller';
+
+	private readonly ClockExtension $clock;
+
+	public function __construct()
+	{
+		$this->clock = new ClockExtension();
+	}
 
 	public static function register(
 		Boot\Configurator $config,
@@ -257,11 +262,7 @@ final class CoreExtension extends DI\CompilerExtension
 					'level' => Schema\Expect::int(Monolog\Level::Warning),
 				]),
 			]),
-			'dateTimeFactory' => Schema\Expect::structure([
-				'timeZone' => Schema\Expect::string('UTC'),
-				'system' => Schema\Expect::bool(true),
-				'frozen' => Schema\Expect::anyOf(Schema\Expect::float(), Schema\Expect::mixed()),
-			]),
+			'dateTimeFactory' => $this->clock->getConfigSchema(),
 			'doctrineTimestampable' => Schema\Expect::structure([
 				'lazyAssociation' => Schema\Expect::bool(false),
 				'autoMapField' => Schema\Expect::bool(true),
@@ -375,6 +376,9 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		$this->compiler->addDependencies($childFiles);
+
+		assert($configuration->dateTimeFactory instanceof stdClass);
+		$this->clock->setConfig($configuration->dateTimeFactory);
 
 		/**
 		 * APPLICATION
@@ -755,31 +759,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * DATE TIME FACTORY
 		 */
 
-		if (!in_array($configuration->dateTimeFactory->timeZone, DateTimeZone::listIdentifiers(), true)) {
-			throw new Exceptions\InvalidArgument('Timezone have to be valid PHP timezone string');
-		}
-
-		if ($configuration->dateTimeFactory->system) {
-			$builder->addDefinition(
-				$this->prefix('dateTimeFactory.datetime.system'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Clock\SystemClock::class)
-				->setArgument('timeZone', new DateTimeZone($configuration->dateTimeFactory->timeZone))
-				->setAutowired($configuration->dateTimeFactory->frozen === null);
-		}
-
-		if ($configuration->dateTimeFactory->frozen !== null) {
-			$builder->addDefinition(
-				$this->prefix('dateTimeFactory.datetime.frozen'),
-				new DI\Definitions\ServiceDefinition(),
-			)
-				->setType(Clock\FrozenClock::class)
-				->setArguments([
-					'timestamp' => $configuration->dateTimeFactory->frozen,
-					'timeZone' => new DateTimeZone($configuration->dateTimeFactory->timeZone),
-				]);
-		}
+		$this->clock->loadConfiguration();
 
 		/**
 		 * DOCTRINE CRUD
@@ -1643,7 +1623,7 @@ final class CoreExtension extends DI\CompilerExtension
 	 */
 	private function children(): array
 	{
-		return [];
+		return [$this->clock];
 	}
 
 }
