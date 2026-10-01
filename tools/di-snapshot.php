@@ -145,6 +145,8 @@ function fbDiSnapshotMain(array $argv): int
 {
 	$args = array_slice($argv, 1);
 
+	fbDiSnapshotSelfCheck();
+
 	try {
 		if (($args[0] ?? null) === '--worker') {
 			return fbDiSnapshotWorker($args[1] ?? '');
@@ -702,6 +704,63 @@ function fbDiSnapshotChildEnvironment(): array
 	return $env;
 }
 
+/**
+ * Replaces absolute paths by placeholders, longest path first, and only where the path starts
+ * and ends at a path-segment boundary: the repository is mounted at /app, and
+ * /app/tests/cases/application must become %root%/tests/cases/application, never
+ * %root%lication, and /application/app must stay as it is.
+ *
+ * @param array<string, string> $replacements path => placeholder
+ */
+function fbDiSnapshotNormalise(string $value, array $replacements): string
+{
+	uksort($replacements, static fn (string $a, string $b): int => strlen($b) <=> strlen($a));
+
+	foreach ($replacements as $path => $placeholder) {
+		if ($path === '' || !str_contains($value, $path)) {
+			continue;
+		}
+
+		$value = (string) preg_replace(
+			'~(?<![A-Za-z0-9_.\-/])' . preg_quote($path, '~') . '(?![A-Za-z0-9_.\-])~',
+			addcslashes($placeholder, '\\$'),
+			$value,
+		);
+	}
+
+	return $value;
+}
+
+/**
+ * Runs on every invocation: a normalisation that silently mangles a path would corrupt every
+ * recording in the same way, base and head alike, and no diff would show it.
+ */
+function fbDiSnapshotSelfCheck(): void
+{
+	$replacements = ['/app' => '%root%', '/app/var/w/temp' => '%FB_TEMP_DIR%'];
+
+	$cases = [
+		'/app' => '%root%',
+		'/app/tests/cases/application' => '%root%/tests/cases/application',
+		'/application/app' => '/application/app',
+		'/app/var/w/temp/cache' => '%FB_TEMP_DIR%/cache',
+		"'/app/x', '/apple'" => "'%root%/x', '/apple'",
+	];
+
+	foreach ($cases as $input => $expected) {
+		$actual = fbDiSnapshotNormalise($input, $replacements);
+
+		if ($actual !== $expected) {
+			throw new RuntimeException(sprintf(
+				'Path normalisation self-check failed: "%s" became "%s", expected "%s"',
+				$input,
+				$actual,
+				$expected,
+			));
+		}
+	}
+}
+
 function fbDiSnapshotSlug(string $id): string
 {
 	return (string) preg_replace('/[^A-Za-z0-9._-]+/', '_', $id);
@@ -839,7 +898,7 @@ function fbDiSnapshotWorker(string $specFile): int
 		// that "still fails the same way" is a comparable result and not a hole in the set.
 		// Only a failure inside the compiler lands here; a crash of the recording itself is
 		// rethrown above and fails the run.
-		$message = strtr(strtok($ex->getMessage(), "\n") ?: '', $replacements);
+		$message = fbDiSnapshotNormalise(strtok($ex->getMessage(), "\n") ?: '', $replacements);
 
 		file_put_contents($output, json_encode([
 			'format' => FB_DI_SNAPSHOT_FORMAT,
@@ -942,7 +1001,7 @@ function fbDiSnapshotDumpExtension(string $id, array $replacements): Nette\DI\Co
 
 		public function normalise(string $value): string
 		{
-			return strtr($value, $this->replacements);
+			return fbDiSnapshotNormalise($value, $this->replacements);
 		}
 
 		private function record(): void
@@ -1067,7 +1126,7 @@ function fbDiSnapshotDumpExtension(string $id, array $replacements): Nette\DI\Co
 			return match (true) {
 				$value === null, is_bool($value), is_int($value) => $value,
 				is_float($value) => is_finite($value) ? $value : ['float' => (string) $value],
-				is_string($value) => strtr($value, $this->replacements),
+				is_string($value) => fbDiSnapshotNormalise($value, $this->replacements),
 				is_array($value) => $this->arrayValue($value, $depth),
 				$value instanceof Nette\DI\Definitions\Reference => ['@' => $value->getValue()],
 				$value instanceof Nette\DI\Definitions\Definition => ['@' => $value->getName()],
@@ -1075,7 +1134,7 @@ function fbDiSnapshotDumpExtension(string $id, array $replacements): Nette\DI\Co
 					'entity' => $this->value($value->getEntity(), $depth + 1),
 					'arguments' => $this->value($value->arguments, $depth + 1),
 				],
-				$value instanceof Nette\PhpGenerator\Literal => ['literal' => strtr((string) $value, $this->replacements)],
+				$value instanceof Nette\PhpGenerator\Literal => ['literal' => fbDiSnapshotNormalise((string) $value, $this->replacements)],
 				$value instanceof UnitEnum => ['enum' => $value::class . '::' . $value->name],
 				$value instanceof Closure => ['closure' => true],
 				is_object($value) => [
@@ -1094,7 +1153,7 @@ function fbDiSnapshotDumpExtension(string $id, array $replacements): Nette\DI\Co
 			$result = [];
 
 			foreach ($value as $key => $item) {
-				$result[is_string($key) ? strtr($key, $this->replacements) : $key] = $this->value($item, $depth + 1);
+				$result[is_string($key) ? fbDiSnapshotNormalise($key, $this->replacements) : $key] = $this->value($item, $depth + 1);
 			}
 
 			// Keep the distinction between an empty list and an empty map out of the recording:
