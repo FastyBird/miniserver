@@ -14,12 +14,8 @@ use FastyBird\Core\EventLoop\Subscribers as EventLoopSubscribers;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\DI\ExchangeExtension;
-use FastyBird\Core\Http;
-use FastyBird\Core\Http\Commands as HttpCommands;
-use FastyBird\Core\Http\Middleware as HttpMiddleware;
+use FastyBird\Core\Http\DI\HttpExtension;
 use FastyBird\Core\Http\Routing as HttpRouting;
-use FastyBird\Core\Http\Server as HttpServer;
-use FastyBird\Core\Http\Subscribers as HttpSubscribers;
 use FastyBird\Core\Logging\DI\LoggingExtension;
 use FastyBird\Core\Persistence\DI\PersistenceExtension;
 use FastyBird\Core\Phone\DI\PhoneExtension;
@@ -127,6 +123,8 @@ final class CoreExtension extends DI\CompilerExtension
 
 	private readonly ApiExtension $api;
 
+	private readonly HttpExtension $http;
+
 	private readonly ClockExtension $clock;
 
 	private readonly ValuesExtension $values;
@@ -140,6 +138,7 @@ final class CoreExtension extends DI\CompilerExtension
 		$this->exchange = new ExchangeExtension();
 		$this->persistence = new PersistenceExtension();
 		$this->api = new ApiExtension();
+		$this->http = new HttpExtension();
 		$this->clock = new ClockExtension();
 		$this->values = new ValuesExtension();
 		$this->phone = new PhoneExtension();
@@ -277,36 +276,7 @@ final class CoreExtension extends DI\CompilerExtension
 					Schema\Expect::type(DI\Definitions\Statement::class),
 				)->nullable(),
 			]),
-			'httpServer' => Schema\Expect::structure([
-				'static' => Schema\Expect::structure([
-					'publicRoot' => Schema\Expect::string()->nullable(),
-					'enabled' => Schema\Expect::bool(false),
-				]),
-				'server' => Schema\Expect::structure([
-					'address' => Schema\Expect::string('127.0.0.1'),
-					'port' => Schema\Expect::int(8_000),
-					'certificate' => Schema\Expect::string()->nullable(),
-				]),
-				'cors' => Schema\Expect::structure([
-					'enabled' => Schema\Expect::bool(false),
-					'allow' => Schema\Expect::structure([
-						'origin' => Schema\Expect::string('*'),
-						'methods' => Schema\Expect::arrayOf('string')->default([
-							'GET',
-							'POST',
-							'PATCH',
-							'DELETE',
-							'OPTIONS',
-						]),
-						'credentials' => Schema\Expect::bool(true),
-						'headers' => Schema\Expect::arrayOf('string')->default([
-							'Content-Type',
-							'Authorization',
-							'X-Requested-With',
-						]),
-					]),
-				]),
-			]),
+			'httpServer' => $this->http->getConfigSchema(),
 			'wsServer' => Schema\Expect::structure([
 				'access' => Schema\Expect::structure([
 					'keys' => Schema\Expect::string()->default(null),
@@ -368,6 +338,9 @@ final class CoreExtension extends DI\CompilerExtension
 
 		assert($configuration->jsonApi instanceof stdClass);
 		$this->api->setConfig($configuration->jsonApi);
+
+		assert($configuration->httpServer instanceof stdClass);
+		$this->http->setConfig($configuration->httpServer);
 
 		/**
 		 * LOGGING -- the handlers, the console subscriber and Sentry
@@ -783,52 +756,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * HTTP SERVER
 		 */
 
-		$builder->addDefinition(
-			$this->prefix('httpServer.routing.responseFactory'),
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(Http\ServerResponseFactory::class);
-
-		$builder->addDefinition($this->prefix('httpServer.routing.router'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpRouting\ServerRouter::class);
-
-		$builder->addDefinition($this->prefix('httpServer.commands.server'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpCommands\HttpServer::class)
-			->setArguments([
-				'serverAddress' => $configuration->httpServer->server->address,
-				'serverPort' => $configuration->httpServer->server->port,
-				'serverCertificate' => $configuration->httpServer->server->certificate,
-			]);
-
-		$builder->addDefinition($this->prefix('httpServer.middlewares.cors'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpMiddleware\Cors::class)
-			->setArguments([
-				'enabled' => $configuration->httpServer->cors->enabled,
-				'allowOrigin' => $configuration->httpServer->cors->allow->origin,
-				'allowMethods' => $configuration->httpServer->cors->allow->methods,
-				'allowCredentials' => $configuration->httpServer->cors->allow->credentials,
-				'allowHeaders' => $configuration->httpServer->cors->allow->headers,
-			]);
-
-		$builder->addDefinition(
-			$this->prefix('httpServer.middlewares.staticFiles'),
-			new DI\Definitions\ServiceDefinition(),
-		)
-			->setType(HttpMiddleware\StaticFiles::class)
-			->setArgument('publicRoot', $configuration->httpServer->static->publicRoot)
-			->setArgument('enabled', $configuration->httpServer->static->enabled);
-
-		$builder->addDefinition($this->prefix('httpServer.middlewares.router'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpMiddleware\Router::class);
-
-		$builder->addDefinition($this->prefix('httpServer.application.classic'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpServer\Application::class);
-
-		$builder->addDefinition($this->prefix('httpServer.server.factory'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpServer\Factory::class);
-
-		$builder->addDefinition($this->prefix('httpServer.subscribers.server'), new DI\Definitions\ServiceDefinition())
-			->setType(HttpSubscribers\Server::class);
+		$this->http->loadConfiguration();
 
 		/**
 		 * WS SERVER (Plugin/WsServer's own registrations)
@@ -1193,6 +1121,7 @@ final class CoreExtension extends DI\CompilerExtension
 			$this->clock,
 			$this->api,
 			$this->phone,
+			$this->http,
 		];
 	}
 
