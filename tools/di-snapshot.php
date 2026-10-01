@@ -93,7 +93,11 @@
  *
  * A reference is recorded as {"@": "<service name>"}, never as the object it points at, so a
  * rename is visible and mappable. Absolute paths are normalised to %root%, %tempDir%,
- * %FB_TEMP_DIR%, %logsDir% and %configDir%, so two checkouts compare equal.
+ * %FB_TEMP_DIR%, %logsDir% and %configDir%, so two checkouts compare equal, and within such a
+ * path "." segments and "<segment>/.." pairs are collapsed lexically (no realpath(), no
+ * filesystem access), so "%root%/src/DI/../Security/Entities" and "%root%/src/Security/Entities"
+ * record the same: moving the code that spells a path is not a graph change. Format 3 added this;
+ * --diff refuses a recording of another format.
  *
  * The recording is taken in afterCompile() of an extension added last through
  * Configurator::$onCompile, after ContainerBuilder::complete(), so every definition is resolved.
@@ -122,7 +126,7 @@ const FB_DI_SNAPSHOT_SENTRY_DSN = 'https://di-snapshot@sentry.invalid/1';
 
 const FB_DI_SNAPSHOT_EXTENSION = 'fbDiSnapshot';
 
-const FB_DI_SNAPSHOT_FORMAT = 2;
+const FB_DI_SNAPSHOT_FORMAT = 3;
 
 /**
  * The only methods a package TestCase may call on its Configurator. Anything else changes the
@@ -728,6 +732,55 @@ function fbDiSnapshotNormalise(string $value, array $replacements): string
 		);
 	}
 
+	return fbDiSnapshotCollapseDotSegments($value, array_values(array_unique($replacements)));
+}
+
+/**
+ * Removes "." segments and "<segment>/.." pairs from every path fbDiSnapshotNormalise()
+ * recognised, i.e. that now starts with one of its placeholders, so that two spellings of the
+ * same location record the same string: "%root%/src/DI/../../resources/model.conf" and
+ * "%root%/resources/model.conf" are one file, and moving the code that spells a path to another
+ * directory is not a graph change. The path runs from the placeholder over the characters the
+ * segment-boundary check above treats as part of a path, plus "/".
+ *
+ * Purely lexical: no realpath(), no filesystem access, so a symlinked segment is not resolved.
+ * Nothing above the placeholder is ever removed ("%root%/../x" stays as it is), only whole
+ * segments count ("a..b" is a name), and a string that holds no recognised path is untouched.
+ *
+ * @param list<string> $placeholders
+ */
+function fbDiSnapshotCollapseDotSegments(string $value, array $placeholders): string
+{
+	foreach ($placeholders as $placeholder) {
+		if ($placeholder === '' || !str_contains($value, $placeholder)) {
+			continue;
+		}
+
+		$value = (string) preg_replace_callback(
+			'~' . preg_quote($placeholder, '~') . '\K(?:/[A-Za-z0-9_.\-]*)+~',
+			static function (array $match): string {
+				$segments = [];
+
+				foreach (explode('/', substr($match[0], 1)) as $segment) {
+					if ($segment === '.') {
+						continue;
+					}
+
+					if ($segment === '..' && $segments !== [] && !in_array(end($segments), ['..', ''], true)) {
+						array_pop($segments);
+
+						continue;
+					}
+
+					$segments[] = $segment;
+				}
+
+				return '/' . implode('/', $segments);
+			},
+			$value,
+		);
+	}
+
 	return $value;
 }
 
@@ -745,6 +798,18 @@ function fbDiSnapshotSelfCheck(): void
 		'/application/app' => '/application/app',
 		'/app/var/w/temp/cache' => '%FB_TEMP_DIR%/cache',
 		"'/app/x', '/apple'" => "'%root%/x', '/apple'",
+		// Dot segments: collapsed lexically, only inside a recognised path, never above its root
+		'/app/src/DI/../../resources/model.conf' => '%root%/resources/model.conf',
+		'/app/src/DI/../Security/Entities' => '%root%/src/Security/Entities',
+		'/app/./src/./x' => '%root%/src/x',
+		'/app/a/b/../../c' => '%root%/c',
+		'/app/../x' => '%root%/../x',
+		'/app/a/../../x' => '%root%/../x',
+		'/app/a..b/c' => '%root%/a..b/c',
+		'/app/var/w/temp/x/../cache' => '%FB_TEMP_DIR%/cache',
+		'/apple/../x' => '/apple/../x',
+		'see ../x and ./y' => 'see ../x and ./y',
+		"'/app/a/../b', '/app/c/./d'" => "'%root%/b', '%root%/c/d'",
 	];
 
 	foreach ($cases as $input => $expected) {
