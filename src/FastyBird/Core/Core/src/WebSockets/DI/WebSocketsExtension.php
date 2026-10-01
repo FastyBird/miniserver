@@ -33,6 +33,7 @@ use function is_bool;
 use function is_string;
 use function krsort;
 use function ksort;
+use function ltrim;
 use function sprintf;
 use function strval;
 use const SORT_NUMERIC;
@@ -47,9 +48,10 @@ use const SORT_STRING;
  * fbCore > webSockets section, so its services are fbCore.webSockets.*.
  *
  * It also registers Http\Routing\LinkGenerator, the WAMP link generator, which still lives in
- * the Http namespace (#460 moves it). The storage-driver defaults are sentinels: each is the
- * '@'-form of its memory driver's name, and loadConfiguration() compares the configured value
- * with that same literal. Only the default works (D3, #565). The WS server command and the
+ * the Http namespace (#460 moves it). Each storage-driver option names a service; its default
+ * is the '@'-form of its memory driver's name. Any other service is wired as a reference, which
+ * resolves when the container is completed, so a driver from the services: section, processed
+ * after every extension's loadConfiguration(), works too (#565). The WS server command and the
  * client subscriber follow the HTTP server's in the
  * console and Symfony subscriber collections, so the composite registers them through a second
  * hook, loadServerProcess(), after the Http child (census section 5.3).
@@ -130,9 +132,11 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$builder->addDefinition($this->prefix('clients.driver.memory'))
 			->setType(ClientsDrivers\InMemory::class);
 
-		$clientsStorageDriver = $configuration->storage->clients->driver === '@fbCore.webSockets.clients.driver.memory'
+		$clientsDriver = self::driverServiceName($configuration->storage->clients->driver);
+
+		$clientsStorageDriver = $clientsDriver === $this->prefix('clients.driver.memory')
 			? $builder->getDefinition($this->prefix('clients.driver.memory'))
-			: $builder->getDefinition($configuration->storage->clients->driver);
+			: new DI\Definitions\Reference($clientsDriver);
 
 		$builder->addDefinition($this->prefix('clients.storage'))
 			->setType(Clients\Storage::class)
@@ -205,10 +209,12 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			->setType(Server\ServerRuntime::class)
 			->setArguments([$handlers, $loop, $serverConfiguration]);
 
-		$wampStorageDriver = $configuration->storage->topics->driver === '@fbCore.webSockets.wamp.topics.driver.memory'
+		$topicsDriver = self::driverServiceName($configuration->storage->topics->driver);
+
+		$wampStorageDriver = $topicsDriver === $this->prefix('wamp.topics.driver.memory')
 			? $builder->addDefinition($this->prefix('wamp.topics.driver.memory'))
 			->setType(TopicsDrivers\InMemory::class)
-			: $builder->getDefinition($this->prefix('wamp.topics.driver.memory'));
+			: new DI\Definitions\Reference($topicsDriver);
 
 		$builder->addDefinition($this->prefix('wamp.topics.storage'))
 			->setType(Topics\Storage::class)
@@ -456,6 +462,19 @@ final class WebSocketsExtension extends DI\CompilerExtension
 				'@self', $wsServerDispatcher, new PhpGenerator\Literal(Events\IncomingMessage::class),
 			],
 		);
+	}
+
+	/**
+	 * The service a storage-driver option names: a reference, "@name" like the defaults, or a
+	 * bare "name". NEON reads a quoted "@name" as a literal string, which nette/di escapes to
+	 * "@@name"; the option can only name a service, so that form is read the same way.
+	 */
+	private static function driverServiceName(mixed $driver): string
+	{
+		// The schema declares both options as strings
+		assert(is_string($driver));
+
+		return ltrim($driver, '@');
 	}
 
 }
