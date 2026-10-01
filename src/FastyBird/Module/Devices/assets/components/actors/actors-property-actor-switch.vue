@@ -156,7 +156,9 @@ const onToggleState = async (): Promise<void> => {
 				device: props.device?.id,
 				channel: props.channel?.id,
 				property: props.property.id,
-				expected_value: props.property.expectedValue,
+				set: {
+					expected_value: props.property.expectedValue,
+				},
 			},
 		});
 
