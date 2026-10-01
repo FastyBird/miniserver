@@ -240,10 +240,8 @@ final class WebSocketsExtension extends DI\CompilerExtension
 
 	/**
 	 * The second half of loadConfiguration(), which the composite calls after the Http child:
-	 * the WS server command and the client subscriber. The command's exchangeFactories are
-	 * still resolved here, during loadConfiguration() (D4, #566).
-	 *
-	 * @throws DI\NotAllowedDuringResolvingException
+	 * the WS server command and the client subscriber. The command's exchangeFactories are set
+	 * in beforeCompile(), once every extension has registered its services (#566).
 	 */
 	public function loadServerProcess(): void
 	{
@@ -252,8 +250,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		$builder->addDefinition($this->prefix('commands.server'), new DI\Definitions\ServiceDefinition())
-			->setType(Commands\WsServer::class)
-			->setArguments(['exchangeFactories' => $builder->findByType(Exchange\Factory::class)]);
+			->setType(Commands\WsServer::class);
 
 		$builder->addDefinition($this->prefix('subscribers.client'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Client::class)
@@ -419,6 +416,13 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$wsServerServer->addSetup('$service->onStart[] = ?', [
 			'@' . $this->prefix('wamp.subscribers.onServerStart'),
 		]);
+
+		// Collected here, not in loadServerProcess(): an exchange registered after fbCore, such
+		// as RedisDb or RabbitMQ in config/local.neon, does not exist yet during
+		// loadConfiguration() (#566)
+		$serverCommand = $builder->getDefinition($this->prefix('commands.server'));
+		assert($serverCommand instanceof DI\Definitions\ServiceDefinition);
+		$serverCommand->setArgument('exchangeFactories', $builder->findByType(Exchange\Factory::class));
 
 		/**
 		 * WS SERVER PLUGIN -- events bridge (fails loudly if the event dispatcher is missing,
