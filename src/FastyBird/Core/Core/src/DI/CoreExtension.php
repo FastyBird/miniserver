@@ -4,11 +4,7 @@ namespace FastyBird\Core\DI;
 
 use Casbin;
 use DateInvalidTimeZoneException;
-use FastyBird\Core\Api\Encoding as ApiEncoding;
-use FastyBird\Core\Api\Helpers as ApiHelpers;
-use FastyBird\Core\Api\Hydrators;
-use FastyBird\Core\Api\Middleware as ApiMiddleware;
-use FastyBird\Core\Api\Schemas as ApiSchemas;
+use FastyBird\Core\Api\DI\ApiExtension;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Clock\DI\ClockExtension;
 use FastyBird\Core\Configuration;
@@ -72,7 +68,6 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use Symfony\Contracts\EventDispatcher as ContractsEventDispatcher;
 use function assert;
-use function class_exists;
 use function interface_exists;
 use function is_bool;
 use function is_file;
@@ -130,6 +125,8 @@ final class CoreExtension extends DI\CompilerExtension
 
 	private readonly PersistenceExtension $persistence;
 
+	private readonly ApiExtension $api;
+
 	private readonly ClockExtension $clock;
 
 	private readonly ValuesExtension $values;
@@ -142,6 +139,7 @@ final class CoreExtension extends DI\CompilerExtension
 		$this->documents = new DocumentsExtension();
 		$this->exchange = new ExchangeExtension();
 		$this->persistence = new PersistenceExtension();
+		$this->api = new ApiExtension();
 		$this->clock = new ClockExtension();
 		$this->values = new ValuesExtension();
 		$this->phone = new PhoneExtension();
@@ -251,13 +249,7 @@ final class CoreExtension extends DI\CompilerExtension
 			]),
 			'dateTimeFactory' => $this->clock->getConfigSchema(),
 			'doctrineTimestampable' => $this->persistence->getConfigSchema(),
-			'jsonApi' => Schema\Expect::structure([
-				'meta' => Schema\Expect::structure([
-					'author' => Schema\Expect::anyOf(Schema\Expect::string(), Schema\Expect::array())
-						->default('FastyBird team'),
-					'copyright' => Schema\Expect::string()->default(null)->nullable(),
-				]),
-			]),
+			'jsonApi' => $this->api->getConfigSchema(),
 			'webSockets' => Schema\Expect::structure([
 				'storage' => Schema\Expect::structure([
 					'clients' => Schema\Expect::structure([
@@ -373,6 +365,9 @@ final class CoreExtension extends DI\CompilerExtension
 
 		assert($configuration->doctrineTimestampable instanceof stdClass);
 		$this->persistence->setConfig($configuration->doctrineTimestampable);
+
+		assert($configuration->jsonApi instanceof stdClass);
+		$this->api->setConfig($configuration->jsonApi);
 
 		/**
 		 * LOGGING -- the handlers, the console subscriber and Sentry
@@ -649,24 +644,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * JSON:API
 		 */
 
-		$builder->addDefinition($this->prefix('jsonApi.builder'), new DI\Definitions\ServiceDefinition())
-			->setType(ApiEncoding\Builder::class)
-			->setArgument('metaAuthor', $configuration->jsonApi->meta->author)
-			->setArgument('metaCopyright', $configuration->jsonApi->meta->copyright);
-
-		$builder->addDefinition($this->prefix('jsonApi.middlewares.jsonapi'), new DI\Definitions\ServiceDefinition())
-			->setType(ApiMiddleware\JsonApiMiddleware::class);
-
-		$builder->addDefinition($this->prefix('jsonApi.hydrators.container'), new DI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Container::class);
-
-		$builder->addDefinition($this->prefix('jsonApi.schemas.container'), new DI\Definitions\ServiceDefinition())
-			->setType(ApiEncoding\SchemaContainer::class);
-
-		if (class_exists('\IPub\DoctrineCrud\Mapping\Annotation\Crud')) {
-			$builder->addDefinition($this->prefix('jsonApi.helpers.crudReader'), new DI\Definitions\ServiceDefinition())
-				->setType(ApiHelpers\CrudReader::class);
-		}
+		$this->api->loadConfiguration();
 
 		/**
 		 * PHONE
@@ -1011,24 +989,7 @@ final class CoreExtension extends DI\CompilerExtension
 		 * JSON:API -- schema/hydrator assembly
 		 */
 
-		$schemaContainerServiceName = $builder->getByType(ApiEncoding\SchemaContainer::class, true);
-		$schemaContainerService = $builder->getDefinition($schemaContainerServiceName);
-		assert($schemaContainerService instanceof DI\Definitions\ServiceDefinition);
-
-		foreach ($builder->findByType(ApiSchemas\JsonApiSchema::class) as $schemasService) {
-			$schemaContainerService->addSetup('add', [$schemasService]);
-		}
-
-		$hydratorContainerServiceName = $builder->getByType(
-			Hydrators\Container::class,
-			true,
-		);
-		$hydratorContainerService = $builder->getDefinition($hydratorContainerServiceName);
-		assert($hydratorContainerService instanceof DI\Definitions\ServiceDefinition);
-
-		foreach ($builder->findByType(Hydrators\Hydrator::class) as $hydratorService) {
-			$hydratorContainerService->addSetup('add', [$hydratorService]);
-		}
+		$this->api->beforeCompile();
 
 		/**
 		 * WEBSOCKETS -- router assembly, controller injection, event bridges
@@ -1230,6 +1191,7 @@ final class CoreExtension extends DI\CompilerExtension
 			$this->exchange,
 			$this->values,
 			$this->clock,
+			$this->api,
 			$this->phone,
 		];
 	}
