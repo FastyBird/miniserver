@@ -1,0 +1,13 @@
+#
+# A topics storage driver configured as a service reference to a service registered under
+# services:. With a non-default topics driver, Core does not register its in-memory topics driver.
+#
+
+fbCore:
+    webSockets:
+        storage:
+            topics:
+                driver: @myTopicsDriver
+
+services:
+    myTopicsDriver: FastyBird\Core\Tests\Fixtures\Dummy\DummyTopicsDriver

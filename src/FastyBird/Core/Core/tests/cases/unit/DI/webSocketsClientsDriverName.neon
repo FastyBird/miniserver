@@ -1,0 +1,13 @@
+#
+# A clients storage driver configured as a bare service name, without the leading @, to a service
+# registered under services:.
+#
+
+fbCore:
+    webSockets:
+        storage:
+            clients:
+                driver: myClientsDriver
+
+services:
+    myClientsDriver: FastyBird\Core\Tests\Fixtures\Dummy\DummyClientsDriver

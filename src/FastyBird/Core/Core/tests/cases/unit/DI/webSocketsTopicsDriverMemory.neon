@@ -1,0 +1,10 @@
+#
+# The topics storage driver configured explicitly as Core's in-memory topics driver, by its bare
+# name. Core registers that driver only when the option names it.
+#
+
+fbCore:
+    webSockets:
+        storage:
+            topics:
+                driver: fbCore.webSockets.wamp.topics.driver.memory

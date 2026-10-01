@@ -1,0 +1,14 @@
+#
+# A clients storage driver configured as a quoted service reference, to a service registered under
+# services:. NEON reads a quoted "@name" as a literal string, which nette/di escapes to "@@name";
+# the option can only name a service, so it is accepted as the reference.
+#
+
+fbCore:
+    webSockets:
+        storage:
+            clients:
+                driver: "@myClientsDriver"
+
+services:
+    myClientsDriver: FastyBird\Core\Tests\Fixtures\Dummy\DummyClientsDriver
