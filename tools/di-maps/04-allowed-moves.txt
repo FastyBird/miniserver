@@ -1,0 +1,23 @@
+# E4.4 (#556): the definitions the capability extraction may move in the raw global definition
+# order, read by `php tools/di-snapshot.php --diff <base> <head> --allow-moves <this file>`.
+#
+# Exactly the 13 definitions of census section 5.5
+# (docs/superpowers/plans/2026-09-27-core-e4-di-census.md), approved with the census (#553).
+# Under the composite of census section 5.3 they change position because their capability's
+# loadConfiguration() runs at its first block, and none of them is in an order-sensitive
+# collection (census section 5.4). Every other definition must keep its position, and every
+# observable order (setups, $wiring, $tags) is compared regardless of this list.
+
+fbCore.application.subscribers.console
+fbCore.tools.helpers.database
+fbCore.tools.utilities.doctrineDateProvider
+fbCore.tools.helpers.sentry
+fbCore.tools.sentry.handler
+fbCore.tools.sentry.clientBuilder
+fbCore.tools.sentry.client
+fbCore.tools.sentry.hub
+fbCore.doctrineCrud.entity.mapper
+fbCore.doctrineCrud.entity.creator
+fbCore.doctrineCrud.entity.updater
+fbCore.doctrineCrud.entity.deleter
+fbCore.doctrineCrud.crud
