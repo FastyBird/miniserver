@@ -150,8 +150,8 @@ abstract class Hydrator
 		if (!$document->hasResource()) {
 			throw new ApiExceptions\JsonApiError(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				strval($this->translator->translate('//api.hydrator.resourceInvalid.heading')),
-				strval($this->translator->translate('//api.hydrator.resourceInvalid.message')),
+				strval($this->translator->translate('//api.hydrator.invalidResource.heading')),
+				strval($this->translator->translate('//api.hydrator.invalidResource.message')),
 				[
 					'pointer' => '/data',
 				],
@@ -200,8 +200,8 @@ abstract class Hydrator
 				if ($identifier === null || !Uuid\Uuid::isValid($identifier)) {
 					throw new ApiExceptions\JsonApiError(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-						strval($this->translator->translate('//api.hydrator.identifierInvalid.heading')),
-						strval($this->translator->translate('//api.hydrator.identifierInvalid.message')),
+						strval($this->translator->translate('//api.hydrator.invalidIdentifier.heading')),
+						strval($this->translator->translate('//api.hydrator.invalidIdentifier.message')),
 						[
 							'pointer' => '/data/id',
 						],
