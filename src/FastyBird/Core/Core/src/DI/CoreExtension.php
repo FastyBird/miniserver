@@ -85,6 +85,7 @@ use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Log;
 use React;
+use ReflectionClass;
 use Sentry;
 use stdClass;
 use Symfony\Bridge\Monolog as BridgeMonolog;
@@ -110,12 +111,20 @@ use const SORT_NUMERIC;
 use const SORT_STRING;
 
 /**
- * FastyBird Core -- consolidated DI extension
+ * FastyBird Core -- the composite DI extension
  *
- * Registers every service Core provides in one pass: application bootstrapping, the
- * exchange, authentication and authorization, shared tooling, date/time handling, entity
- * CRUD and timestamping, JSON:API, phone number handling, and the WebSocket, WAMP and web
- * servers. See docs/superpowers/specs/2026-09-20-core-consolidation-design.md section 6.
+ * The only Core extension registered with the compiler (as fbCore). It registers every
+ * service Core provides: application bootstrapping, the exchange, authentication and
+ * authorization, shared tooling, date/time handling, entity CRUD and timestamping, JSON:API,
+ * phone number handling, and the WebSocket, WAMP and web servers. Some capabilities are
+ * delegated to child extensions, the rest is still registered inline.
+ *
+ * nette/di cannot register an extension while the container is compiling, so the children
+ * are not registered: this class owns them and forwards each lifecycle call to them at the
+ * position the capability's code held in the inline extension, which keeps the definition
+ * order. Each child runs under this extension's name, so its services keep their fbCore.*
+ * names and its configuration stays at today's fbCore path (Epic #459 section 3.1, census
+ * docs/superpowers/plans/2026-09-27-core-e4-di-census.md section 5).
  */
 final class CoreExtension extends DI\CompilerExtension
 {
@@ -149,6 +158,23 @@ final class CoreExtension extends DI\CompilerExtension
 		) use ($extensionName): void {
 			$compiler->addExtension($extensionName, new self());
 		};
+	}
+
+	/**
+	 * The compiler asks only the extensions registered with it for their initialization, and
+	 * the children are not registered, so their bodies are appended to this extension's own
+	 */
+	#[Override]
+	public function getInitialization(): PhpGenerator\Closure
+	{
+		$initialization = new PhpGenerator\Closure();
+		$initialization->setBody(parent::getInitialization()->getBody());
+
+		foreach ($this->children() as $child) {
+			$initialization->setBody($initialization->getBody() . $child->getInitialization()->getBody());
+		}
+
+		return $initialization;
 	}
 
 	#[Override]
@@ -327,6 +353,28 @@ final class CoreExtension extends DI\CompilerExtension
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
 		assert($configuration instanceof stdClass);
+
+		/**
+		 * CHILD EXTENSIONS -- the compiler, under this extension's name
+		 *
+		 * The compiler records the class file of every registered extension as a container
+		 * dependency, so that editing one rebuilds the container in debug mode. The children are
+		 * not registered, so their files are added here.
+		 */
+
+		$childFiles = [];
+
+		foreach ($this->children() as $child) {
+			$child->setCompiler($this->compiler, $this->name);
+
+			$childFile = (new ReflectionClass($child))->getFileName();
+
+			if ($childFile !== false) {
+				$childFiles[] = $childFile;
+			}
+		}
+
+		$this->compiler->addDependencies($childFiles);
 
 		/**
 		 * APPLICATION
@@ -1588,6 +1636,14 @@ final class CoreExtension extends DI\CompilerExtension
 			. '\'' . Types\PhoneType::PHONE . '\', \'' . Types\PhoneType::class . '\''
 			. '); }',
 		);
+	}
+
+	/**
+	 * @return list<DI\CompilerExtension>
+	 */
+	private function children(): array
+	{
+		return [];
 	}
 
 }
