@@ -158,6 +158,7 @@ final class PersistenceExtension extends DI\CompilerExtension
 
 	/**
 	 * @throws DI\MissingServiceException
+	 * @throws DI\NotAllowedDuringResolvingException
 	 */
 	#[Override]
 	public function beforeCompile(): void

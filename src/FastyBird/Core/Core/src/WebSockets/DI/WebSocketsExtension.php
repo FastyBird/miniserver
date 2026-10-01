@@ -196,6 +196,8 @@ final class WebSocketsExtension extends DI\CompilerExtension
 	 * The second half of loadConfiguration(), which the composite calls after the Http child:
 	 * the WS server command and the client subscriber. The command's exchangeFactories are
 	 * still resolved here, during loadConfiguration() (D4, #566).
+	 *
+	 * @throws DI\NotAllowedDuringResolvingException
 	 */
 	public function loadServerProcess(): void
 	{
