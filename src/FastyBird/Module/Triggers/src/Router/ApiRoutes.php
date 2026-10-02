@@ -197,12 +197,6 @@ class ApiRoutes
 						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'read']);
 						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROL);
 
-						$group->post('', [$this->controlsV1Controller, 'create']);
-
-						$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'update']);
-
-						$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'delete']);
-
 						$route = $group->get(
 							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
 							[
