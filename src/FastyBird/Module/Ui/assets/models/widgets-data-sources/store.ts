@@ -651,7 +651,7 @@ export const useWidgetDataSources = defineStore<string, IWidgetDataSourcesState,
 						data: {
 							action: ExchangeCommand.SET,
 							widget: widget.id,
-							dataSource: dataSource.id,
+							data_source: dataSource.id,
 							expected_value: payload.value,
 						},
 					});

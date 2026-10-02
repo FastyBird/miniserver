@@ -1,5 +1,5 @@
 export enum ActionRoutes {
-	WIDGET_DATA_SOURCE = 'fb.exchange.action.widget.data-source',
+	WIDGET_DATA_SOURCE = 'fb.exchange.action.widget.dataSource',
 }
 
 export enum RoutingKeys {
@@ -34,10 +34,10 @@ export enum RoutingKeys {
 	WIDGET_DISPLAY_DOCUMENT_DELETED = 'fb.exchange.module.document.deleted.widget.display',
 
 	// Widget's data sources
-	WIDGET_DATA_SOURCE_DOCUMENT_REPORTED = 'fb.exchange.module.document.reported.widget.data-source',
-	WIDGET_DATA_SOURCE_DOCUMENT_CREATED = 'fb.exchange.module.document.created.widget.data-source',
-	WIDGET_DATA_SOURCE_DOCUMENT_UPDATED = 'fb.exchange.module.document.updated.widget.data-source',
-	WIDGET_DATA_SOURCE_DOCUMENT_DELETED = 'fb.exchange.module.document.deleted.widget.data-source',
+	WIDGET_DATA_SOURCE_DOCUMENT_REPORTED = 'fb.exchange.module.document.reported.widget.dataSource',
+	WIDGET_DATA_SOURCE_DOCUMENT_CREATED = 'fb.exchange.module.document.created.widget.dataSource',
+	WIDGET_DATA_SOURCE_DOCUMENT_UPDATED = 'fb.exchange.module.document.updated.widget.dataSource',
+	WIDGET_DATA_SOURCE_DOCUMENT_DELETED = 'fb.exchange.module.document.deleted.widget.dataSource',
 }
 
 export enum ExchangeCommand {

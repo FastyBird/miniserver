@@ -11,6 +11,7 @@ use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Controllers as UiControllers;
+use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Events;
 use FastyBird\Module\Ui\Router;
 use FastyBird\Module\Ui\Tests;
@@ -57,6 +58,9 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 
 	/** @var list<Types\DataSourceAction> */
 	private array $carriedOn = [];
+
+	/** @var list<Documents\Widgets\DataSources\Actions\Action> */
+	private array $carriedOnDocuments = [];
 
 	/**
 	 * @return array<string, array{Types\DataSourceAction, list<string>|null, bool}>
@@ -161,6 +165,96 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
+	 * The call the UI's widget data-source store sends to set a value, written out as it goes
+	 * over the wire rather than through the module's constants, reaches the handler: the routing
+	 * key is `…widget.dataSource`, the data source is named by `data_source` and the value by
+	 * `expected_value`.
+	 *
+	 * @throws Throwable
+	 */
+	public function testTheUiDataSourceSetCallIsCarriedOn(): void
+	{
+		$this->call($this->client(['manager']), [
+			'routing_key' => 'fb.exchange.action.widget.dataSource',
+			'source' => Sources\Module::UI->value,
+			'data' => [
+				'action' => 'set',
+				'widget' => self::WIDGET,
+				'data_source' => self::DATA_SOURCE,
+				'expected_value' => 21.5,
+			],
+		]);
+
+		self::assertSame(
+			[[WebSocketsControllers\WampApplication::MSG_CALL_RESULT, self::RPC_ID, ['response' => 'accepted']]],
+			$this->sent,
+		);
+		self::assertSame([Types\DataSourceAction::SET], $this->carriedOn);
+		self::assertCount(1, $this->carriedOnDocuments);
+		self::assertSame(self::WIDGET, $this->carriedOnDocuments[0]->getWidget()->toString());
+		self::assertSame(self::DATA_SOURCE, $this->carriedOnDocuments[0]->getDataSource()->toString());
+		self::assertSame(21.5, $this->carriedOnDocuments[0]->getExpectedValue());
+	}
+
+	/**
+	 * @return array<string, array{array<string, mixed>, string}>
+	 */
+	public static function formerUiDataSourceCalls(): array
+	{
+		return [
+			'routing key spelled data-source' => [
+				[
+					'routing_key' => 'fb.exchange.action.widget.data-source',
+					'source' => Sources\Module::UI->value,
+					'data' => [
+						'action' => 'set',
+						'widget' => self::WIDGET,
+						'data_source' => self::DATA_SOURCE,
+						'expected_value' => 21.5,
+					],
+				],
+				'Provided message has unsupported routing key',
+			],
+			'data source field spelled dataSource' => [
+				[
+					'routing_key' => 'fb.exchange.action.widget.dataSource',
+					'source' => Sources\Module::UI->value,
+					'data' => [
+						'action' => 'set',
+						'widget' => self::WIDGET,
+						'dataSource' => self::DATA_SOURCE,
+						'expected_value' => 21.5,
+					],
+				],
+				'Could not map data to document: data_source: uuid',
+			],
+		];
+	}
+
+	/**
+	 * The spellings the UI used before #585 are not handled: the call is answered with a WAMP
+	 * call error and no action is carried on, even for a manager.
+	 *
+	 * @param array<string, mixed> $args
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('formerUiDataSourceCalls')]
+	public function testAFormerUiDataSourceSpellingIsNotCarriedOn(array $args, string $message): void
+	{
+		$this->call($this->client(['manager']), $args);
+
+		self::assertCount(1, $this->sent);
+		self::assertSame([], $this->carriedOn);
+
+		$frame = $this->sent[0];
+		self::assertIsArray($frame);
+		self::assertSame(WebSocketsControllers\WampApplication::MSG_CALL_ERROR, $frame[0] ?? null);
+		self::assertSame(self::RPC_ID, $frame[1] ?? null);
+		self::assertSame($message, $frame[3] ?? null);
+	}
+
+	/**
 	 * A connected client holding what the ws-server's client subscriber stores on it. The
 	 * identity itself claims no roles: the controller has to read the roles the client holds.
 	 *
@@ -200,6 +294,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 			Events\ActionCommandReceived::class,
 			function (Events\ActionCommandReceived $event): void {
 				$this->carriedOn[] = $event->getAction()->getAction();
+				$this->carriedOnDocuments[] = $event->getAction();
 			},
 		);
 
