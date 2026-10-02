@@ -1,0 +1,16 @@
+{
+  "errors": [
+    {
+      "status": "422",
+      "code": "422",
+      "title": "Missing required relation",
+      "detail": "Provided request is missing required relation",
+      "source": {
+        "pointer": "/data/relationships/display/data/id"
+      }
+    }
+  ],
+  "jsonapi": {
+    "version": "1.1"
+  }
+}

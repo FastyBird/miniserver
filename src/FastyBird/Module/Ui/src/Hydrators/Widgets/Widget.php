@@ -20,6 +20,7 @@ use Doctrine\Persistence;
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Helpers;
 use FastyBird\Core\Api\Hydrators as ApiHydrators;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
@@ -81,9 +82,10 @@ abstract class Widget extends ApiHydrators\Hydrator
 		private readonly DI\Container $container,
 		Persistence\ManagerRegistry $managerRegistry,
 		Translation\Translator $translator,
+		Helpers\CrudReader|null $crudReader = null,
 	)
 	{
-		parent::__construct($managerRegistry, $translator);
+		parent::__construct($managerRegistry, $translator, $crudReader);
 	}
 
 	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null

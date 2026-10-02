@@ -1,0 +1,39 @@
+{
+  "data" : {
+    "id" : "329a7ac2-a309-4c39-9d97-c7ba69efe74f",
+    "type" : "com.fastybird.ui-module/widget/analog-sensor",
+    "attributes" : {
+      "identifier" : "new-analog-widget",
+      "name" : "New analog widget"
+    },
+    "relationships" : {
+      "groups" : {
+        "data" : [
+          {
+            "id" : "c74a16b1-67f4-4ffd-812a-9e5ec4bd5263",
+            "type" : "com.fastybird.ui-module/group"
+          },
+          {
+            "id" : "d721529e-dec6-47c8-8035-a3484070142b",
+            "type" : "com.fastybird.ui-module/group"
+          }
+        ]
+      },
+      "data-sources" : {
+        "data" : [
+          {
+            "id" : "874c5f81-b60b-4fcc-adb2-3f83b43cf182",
+            "type" : "com.fastybird.ui-module/data-source/generic"
+          }
+        ]
+      }
+    }
+  },
+  "included" : [
+    {
+      "attributes" : {},
+      "id" : "874c5f81-b60b-4fcc-adb2-3f83b43cf182",
+      "type" : "com.fastybird.ui-module/data-source/generic"
+    }
+  ]
+}

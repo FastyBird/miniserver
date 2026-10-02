@@ -19,6 +19,7 @@ use Doctrine\Persistence;
 use Error;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Helpers;
 use FastyBird\Core\Phone\Entities as PhoneEntities;
 use FastyBird\Core\Phone\Exceptions as PhoneExceptions;
 use FastyBird\Core\Phone\Services;
@@ -50,9 +51,10 @@ final class Sms extends Notification
 		private readonly Services\PhoneNumberHelper $phone,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
+		Helpers\CrudReader|null $crudReader = null,
 	)
 	{
-		parent::__construct($managerRegistry, $translator);
+		parent::__construct($managerRegistry, $translator, $crudReader);
 	}
 
 	public function getEntityName(): string

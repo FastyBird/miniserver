@@ -177,6 +177,16 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.missing.required.json',
 			],
+			// #[Crud(required: true)] on Widget::$display, enforced by the hydrator's CrudReader
+			'missingDisplay' => [
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.missing.display.json',
+				),
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.create.missing.display.json',
+			],
 			'invalidType' => [
 				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
