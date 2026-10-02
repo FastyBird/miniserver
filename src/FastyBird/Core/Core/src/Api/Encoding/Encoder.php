@@ -2,12 +2,12 @@
 
 namespace FastyBird\Core\Api\Encoding;
 
-use Neomerx\JsonApi\Encoder as NeomerxEncoder;
+use Neomerx\JsonApi\Encoder as JsonApiEncoder;
 
 /**
  * Extended Json:API encoder
  */
-final class Encoder extends NeomerxEncoder\Encoder
+final class Encoder extends JsonApiEncoder\Encoder
 {
 
 	/**

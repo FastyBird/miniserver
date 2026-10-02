@@ -6,7 +6,7 @@ use Exception;
 use FastyBird\Bridge\RedisDbPluginDevicesModule\Models;
 use FastyBird\Bridge\RedisDbPluginDevicesModule\Tests;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
-use FastyBird\Plugin\RedisDb\Clients as RedisDbClient;
+use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use Nette;
 use Nette\Utils;
@@ -25,7 +25,7 @@ final class ChannelPropertiesRepositoryTest extends Tests\Cases\Unit\BaseTestCas
 	{
 		$id = Uuid\Uuid::uuid4();
 
-		$redisDbClient = $this->createMock(RedisDbClient\Client::class);
+		$redisDbClient = $this->createMock(Clients\Client::class);
 
 		$redisDbClient
 			->expects(self::once())
@@ -42,7 +42,7 @@ final class ChannelPropertiesRepositoryTest extends Tests\Cases\Unit\BaseTestCas
 				'expected_value' => 20,
 			]));
 
-		$this->mockContainerService(RedisDbClient\Client::class, $redisDbClient);
+		$this->mockContainerService(Clients\Client::class, $redisDbClient);
 
 		$repository = $this->container->getByType(Models\States\ChannelPropertiesRepository::class);
 
@@ -66,7 +66,7 @@ final class ChannelPropertiesRepositoryTest extends Tests\Cases\Unit\BaseTestCas
 	{
 		$id = Uuid\Uuid::uuid4();
 
-		$redisDbClient = $this->createMock(RedisDbClient\Client::class);
+		$redisDbClient = $this->createMock(Clients\Client::class);
 
 		$redisDbClient
 			->expects(self::once())
@@ -83,7 +83,7 @@ final class ChannelPropertiesRepositoryTest extends Tests\Cases\Unit\BaseTestCas
 				'expected_value' => 20,
 			]));
 
-		$this->mockContainerService(RedisDbClient\Client::class, $redisDbClient);
+		$this->mockContainerService(Clients\Client::class, $redisDbClient);
 
 		$repository = $this->container->getByType(Models\States\ChannelPropertiesRepository::class);
 

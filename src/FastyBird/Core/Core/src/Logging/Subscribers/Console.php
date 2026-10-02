@@ -6,7 +6,7 @@ use Monolog;
 use Override;
 use Psr\Log\LogLevel;
 use Symfony\Bridge\Monolog as BridgeMonolog;
-use Symfony\Component\Console as SymfonyConsole;
+use Symfony\Component\Console as ComponentConsole;
 use Symfony\Component\EventDispatcher;
 
 /**
@@ -32,7 +32,7 @@ final readonly class Console implements EventDispatcher\EventSubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			SymfonyConsole\ConsoleEvents::COMMAND => 'command',
+			ComponentConsole\ConsoleEvents::COMMAND => 'command',
 		];
 	}
 

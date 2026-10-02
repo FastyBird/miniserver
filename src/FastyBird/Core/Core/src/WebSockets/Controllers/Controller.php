@@ -9,7 +9,7 @@ use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Wamp;
 use Fig\Http;
 use Nette;
-use Nette\Security as NS;
+use Nette\Security;
 use Override;
 use ReflectionClass;
 use ReflectionException;
@@ -78,7 +78,7 @@ abstract class Controller implements RequestController
 
 	private HttpRouting\LinkGenerator|null $linkGenerator = null;
 
-	private NS\User|null $user = null;
+	private Security\User|null $user = null;
 
 	public function __construct()
 	{
@@ -93,7 +93,7 @@ abstract class Controller implements RequestController
 		IControllerFactory|null $controllerFactory = null,
 		Wamp\WampRouter|null $router = null,
 		HttpRouting\LinkGenerator|null $linkGenerator = null,
-		NS\User|null $user = null,
+		Security\User|null $user = null,
 	): void
 	{
 		// $controllerFactory is a typed property with no default; isset() is the only read that
