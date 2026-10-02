@@ -2,6 +2,7 @@
 
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Subscribers;
 
+use DateTimeInterface;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Error;
@@ -22,6 +23,7 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use RuntimeException;
+use function array_keys;
 use function array_map;
 use function array_slice;
 use function array_unique;
@@ -52,6 +54,9 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	private const FROZEN_NOW = '2020-04-01 12:00:00';
 
 	private const ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
+
+	// That account's default email in the fixtures
+	private const DEMOTED_EMAIL_ADDRESS = 'john.doe@fastybird.com';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
@@ -118,6 +123,165 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame(
 			['created_at' => '2017-09-07 18:24:35', 'updated_at' => self::FROZEN_NOW],
 			$this->fetchTimestamps('fb_accounts_module_emails', 'email_id', $email->getId()->toString()),
+		);
+	}
+
+	/**
+	 * The email that loses the default flag is written with it switched off and is stamped like any
+	 * other updated row (#593)
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws DBAL\Exception
+	 * @throws DBAL\Exception\UniqueConstraintViolationException
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws PersistenceExceptions\Query
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	public function testDemotedEmailIsStamped(): void
+	{
+		$this->runModuleOnFlushSubscribersAfterCore();
+
+		$repository = $this->getContainer()->getByType(Models\Entities\Emails\EmailsRepository::class);
+		$manager = $this->getContainer()->getByType(Models\Entities\Emails\EmailsManager::class);
+
+		$demoted = $repository->findOneByAddress(self::DEMOTED_EMAIL_ADDRESS);
+
+		self::assertNotNull($demoted);
+		self::assertTrue($demoted->isDefault());
+
+		$email = $repository->findOneByAddress('john.doe@fastybird.ovh');
+
+		self::assertNotNull($email);
+
+		$manager->update($email, Utils\ArrayHash::from([
+			'default' => true,
+		]));
+
+		self::assertFalse($demoted->isDefault());
+
+		self::assertSame(
+			['email_default' => 0, 'created_at' => '2019-09-22 20:29:16', 'updated_at' => self::FROZEN_NOW],
+			$this->getDb()->fetchAssociative(
+				'SELECT email_default, created_at, updated_at FROM fb_accounts_module_emails WHERE email_id = ?',
+				[$demoted->getId()->getBytes()],
+			),
+		);
+	}
+
+	/**
+	 * Every onFlush subscriber that runs after EmailEntity, and every update listener, sees the demotion
+	 * as a regular update, with the default flag going from on to off (#593)
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws DBAL\Exception\UniqueConstraintViolationException
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws PersistenceExceptions\Query
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testDemotedEmailChangeSet(): void
+	{
+		$this->runModuleOnFlushSubscribersAfterCore();
+
+		$repository = $this->getContainer()->getByType(Models\Entities\Emails\EmailsRepository::class);
+		$manager = $this->getContainer()->getByType(Models\Entities\Emails\EmailsManager::class);
+
+		$demoted = $repository->findOneByAddress(self::DEMOTED_EMAIL_ADDRESS);
+
+		self::assertNotNull($demoted);
+
+		$recorder = new class ($demoted) {
+
+			public bool $scheduledForUpdate = false;
+
+			/** @var array<string, mixed> */
+			public array $changeSet = [];
+
+			public function __construct(private readonly object $watched)
+			{
+			}
+
+			public function onFlush(ORM\Event\OnFlushEventArgs $eventArgs): void
+			{
+				$uow = $eventArgs->getObjectManager()->getUnitOfWork();
+
+				$this->scheduledForUpdate = $uow->isScheduledForUpdate($this->watched);
+				$this->changeSet = $uow->getEntityChangeSet($this->watched);
+			}
+
+		};
+
+		// Behind the module subscribers, so it sees what EmailEntity left in the unit of work
+		$this->getEntityManager()->getEventManager()->addEventListener(ORM\Events::onFlush, $recorder);
+
+		$email = $repository->findOneByAddress('john.doe@fastybird.ovh');
+
+		self::assertNotNull($email);
+
+		$manager->update($email, Utils\ArrayHash::from([
+			'default' => true,
+		]));
+
+		self::assertSame([true, false], $recorder->changeSet['default'] ?? null);
+		self::assertTrue($recorder->scheduledForUpdate);
+		self::assertSame(['default', 'updatedAt'], array_keys($recorder->changeSet));
+
+		$updatedAt = $recorder->changeSet['updatedAt'];
+
+		self::assertIsArray($updatedAt);
+		self::assertInstanceOf(DateTimeInterface::class, $updatedAt[1]);
+		self::assertSame(self::FROZEN_NOW, $updatedAt[1]->format('Y-m-d H:i:s'));
+	}
+
+	/**
+	 * A later flush on the same entity manager does not find the demotion again and reject it as an
+	 * attempt to switch the default email off (#593)
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws DBAL\Exception
+	 * @throws DBAL\Exception\UniqueConstraintViolationException
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws PersistenceExceptions\Query
+	 * @throws ORM\Exception\ORMException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFlushAfterDemotion(): void
+	{
+		$this->runModuleOnFlushSubscribersAfterCore();
+
+		$repository = $this->getContainer()->getByType(Models\Entities\Emails\EmailsRepository::class);
+		$manager = $this->getContainer()->getByType(Models\Entities\Emails\EmailsManager::class);
+
+		$demoted = $repository->findOneByAddress(self::DEMOTED_EMAIL_ADDRESS);
+
+		self::assertNotNull($demoted);
+
+		$email = $repository->findOneByAddress('john.doe@fastybird.ovh');
+
+		self::assertNotNull($email);
+
+		$manager->update($email, Utils\ArrayHash::from([
+			'default' => true,
+		]));
+
+		$this->getEntityManager()->flush();
+
+		self::assertSame([], $this->getEntityManager()->getUnitOfWork()->getEntityChangeSet($demoted));
+		self::assertSame(
+			0,
+			$this->getDb()->fetchOne(
+				'SELECT email_default FROM fb_accounts_module_emails WHERE email_id = ?',
+				[$demoted->getId()->getBytes()],
+			),
 		);
 	}
 

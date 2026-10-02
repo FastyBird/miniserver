@@ -19,13 +19,13 @@ use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Providers;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use Nette;
 use function array_key_exists;
 use function array_merge;
-use function assert;
 use function count;
 
 /**
@@ -41,7 +41,10 @@ final class EmailEntity implements Common\EventSubscriber
 
 	use Nette\SmartObject;
 
-	public function __construct(private readonly Models\Entities\Emails\EmailsRepository $emailsRepository)
+	public function __construct(
+		private readonly Models\Entities\Emails\EmailsRepository $emailsRepository,
+		private readonly Providers\DateProvider $dateProvider,
+	)
 	{
 	}
 
@@ -83,6 +86,7 @@ final class EmailEntity implements Common\EventSubscriber
 
 	/**
 	 * @throws AccountsExceptions\EmailHaveToBeDefault
+	 * @throws ORM\ORMInvalidArgumentException
 	 */
 	public function onFlush(ORM\Event\OnFlushEventArgs $eventArgs): void
 	{
@@ -115,7 +119,17 @@ final class EmailEntity implements Common\EventSubscriber
 	}
 
 	/**
+	 * Switches the account's other default emails off
+	 *
+	 * This runs in onFlush, after the change sets were computed and after TimestampableSubscriber
+	 * has stamped what it found in them. The demoted email is therefore stamped here, from the same
+	 * date provider, and its change set is recomputed, which makes it a regular scheduled update:
+	 * written with the other updates, seen by the update listeners, and with its original data
+	 * synchronised, so a later flush does not find the demotion again (#593).
+	 *
 	 * @param ORM\Mapping\ClassMetadata<Entities\Emails\Email> $classMetadata
+	 *
+	 * @throws ORM\ORMInvalidArgumentException
 	 */
 	private function setAsDefault(
 		ORM\UnitOfWork $uow,
@@ -123,11 +137,6 @@ final class EmailEntity implements Common\EventSubscriber
 		Entities\Emails\Email $email,
 	): void
 	{
-		// ORM 3 deprecates getReflectionProperty() and types it nullable; getPropertyAccessor() is
-		// the replacement and is what the ORM itself reads and writes mapped fields through.
-		$property = $classMetadata->getPropertyAccessor('default');
-		assert($property !== null);
-
 		foreach ($email->getAccount()->getEmails() as $accountEmail) {
 			// Deactivate all other user emails
 			if (
@@ -136,13 +145,9 @@ final class EmailEntity implements Common\EventSubscriber
 				&& $accountEmail->isDefault()
 			) {
 				$accountEmail->setDefault(false);
+				$accountEmail->setUpdatedAt($this->dateProvider->getDate());
 
-				$oldValue = $property->getValue($email);
-
-				$uow->propertyChanged($accountEmail, 'default', $oldValue, true);
-				$uow->scheduleExtraUpdate($accountEmail, [
-					'default' => [$oldValue, false],
-				]);
+				$uow->recomputeSingleEntityChangeSet($classMetadata, $accountEmail);
 			}
 		}
 	}
