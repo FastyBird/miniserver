@@ -545,7 +545,7 @@ export const useDeviceControls = defineStore<'devices_module_devices_controls', 
 			const { call } = useWampV1Client<{ data: string }>();
 
 			try {
-				const response = await call('', {
+				const response = await call(`/${ModulePrefix.DEVICES}/v1/exchange`, {
 					routing_key: ActionRoutes.DEVICE_CONTROL,
 					source: control.type.source,
 					data: {

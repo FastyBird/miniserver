@@ -545,7 +545,7 @@ export const useChannelControls = defineStore<'devices_module_channels_controls'
 			const { call } = useWampV1Client<{ data: string }>();
 
 			try {
-				const response = await call('', {
+				const response = await call(`/${ModulePrefix.DEVICES}/v1/exchange`, {
 					routing_key: ActionRoutes.CHANNEL_CONTROL,
 					source: control.type.source,
 					data: {

@@ -60,8 +60,8 @@ final class WebSocketsExtension extends DI\CompilerExtension
 {
 
 	// Tags a service whose createRouter() contributes WAMP routes; beforeCompile() collects them into
-	// the WAMP router. Module/Devices produces it. A tag renamed on one side only makes the routes
-	// vanish without an error, so both sides use this constant.
+	// the WAMP router. Module/Devices and Module/Ui produce it. A tag renamed on one side only makes
+	// the routes vanish without an error, so both sides use this constant.
 	public const string ROUTES_TAG = 'fastybird.core.webSockets.routes';
 
 	// Set by beforeCompile() on every WebSockets controller service, and looked up at runtime by

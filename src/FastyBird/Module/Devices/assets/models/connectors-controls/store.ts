@@ -547,7 +547,7 @@ export const useConnectorControls = defineStore<'devices_module_connectors_contr
 			const { call } = useWampV1Client<{ data: string }>();
 
 			try {
-				const response = await call('', {
+				const response = await call(`/${ModulePrefix.DEVICES}/v1/exchange`, {
 					routing_key: ActionRoutes.CONNECTOR_CONTROL,
 					source: control.type.source,
 					data: {

@@ -24,6 +24,7 @@ use FastyBird\Core\Exchange\DI as ExchangeDI;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
+use FastyBird\Core\WebSockets\DI as WebSocketsDI;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Ui;
@@ -138,6 +139,10 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		$builder->addDefinition($this->prefix('router.api.routes'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
+
+		$builder->addDefinition($this->prefix('router.sockets.routes'), new NetteDI\Definitions\ServiceDefinition())
+			->setType(Router\SocketRoutes::class)
+			->addTag(WebSocketsDI\WebSocketsExtension::ROUTES_TAG);
 
 		$builder->addDefinition($this->prefix('router.validator'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\Validator::class);
