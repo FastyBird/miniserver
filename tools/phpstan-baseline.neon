@@ -169,12 +169,6 @@ parameters:
 			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src/Controllers/BaseV1.php
 
 		-
-			message: '#^Offset ''key'' might not exist on array\{\}\|array\{0\: non\-falsy\-string, key\: non\-empty\-string, 1\: non\-empty\-string\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: ../src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src/Controllers/BridgesV1.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 3
@@ -235,12 +229,6 @@ parameters:
 			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Controllers/BaseV1.php
 
 		-
-			message: '#^Offset ''key'' might not exist on array\{\}\|array\{0\: non\-falsy\-string, key\: non\-empty\-string, 1\: non\-empty\-string\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: ../src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src/Controllers/BridgesV1.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 3
@@ -293,12 +281,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/src/Controllers/BaseV1.php
-
-		-
-			message: '#^Offset ''key'' might not exist on array\{\}\|array\{0\: non\-falsy\-string, key\: non\-empty\-string, 1\: non\-empty\-string\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: ../src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/src/Controllers/BridgesV1.php
 
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
@@ -7354,12 +7336,6 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Controllers/DevicePropertyStateV1.php
 
 		-
-			message: '#^Offset ''key'' might not exist on array\{\}\|array\{0\: non\-falsy\-string, key\: non\-empty\-string, 1\: non\-empty\-string\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: ../src/FastyBird/Module/Devices/src/Controllers/DevicesV1.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 15
@@ -7930,12 +7906,6 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Controllers/BaseV1.php
 
 		-
-			message: '#^Offset ''key'' might not exist on array\{\}\|array\{0\: non\-falsy\-string, key\: non\-empty\-string, 1\: non\-empty\-string\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: ../src/FastyBird/Module/Ui/src/Controllers/DashboardsV1.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 5
@@ -7964,12 +7934,6 @@ parameters:
 			identifier: argument.type
 			count: 11
 			path: ../src/FastyBird/Module/Ui/src/Controllers/TabsV1.php
-
-		-
-			message: '#^Offset ''key'' might not exist on array\{\}\|array\{0\: non\-falsy\-string, key\: non\-empty\-string, 1\: non\-empty\-string\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: ../src/FastyBird/Module/Ui/src/Controllers/WidgetsV1.php
 
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'

@@ -327,7 +327,7 @@ class BridgesV1 extends BaseV1
 			} catch (ApiExceptions\JsonApi $ex) {
 				throw $ex;
 			} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
-				if (preg_match("%key '(?P<key>.+)_unique'%", $ex->getMessage(), $match) !== false) {
+				if (preg_match("%key '(?P<key>.+)_unique'%", $ex->getMessage(), $match) === 1) {
 					$columnParts = explode('.', $match['key']);
 					$columnKey = end($columnParts);
 
