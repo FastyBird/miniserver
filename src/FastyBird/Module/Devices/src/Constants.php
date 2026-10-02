@@ -181,7 +181,7 @@ final class Constants
 	public const MESSAGE_BUS_DEVICE_PROPERTY_DOCUMENT_DELETED_ROUTING_KEY = self::ROUTING_PREFIX . '.deleted.device.property';
 
 	// DEVICES PROPERTIES STATES
-	public const MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . 'reported.device.property.state';
+	public const MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.device.property.state';
 
 	public const MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY = self::ROUTING_PREFIX . '.created.device.property.state';
 
