@@ -26,7 +26,6 @@ use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
 use function assert;
@@ -35,7 +34,7 @@ use function is_bool;
 /**
  * Device property state entity schema
  *
- * @template T of States\DeviceProperty
+ * @template T of Documents\States\Devices\Properties\Property
  * @extends  ApiSchemas\JsonApiSchema<T>
  *
  * @package        FastyBird:DevicesModule!
@@ -91,8 +90,8 @@ final class State extends ApiSchemas\JsonApiSchema
 
 		return [
 			'device' => $property->getDevice()->getId()->toString(),
-			'actual_value' => Utilities\Value::flattenValue($resource->getActualValue()),
-			'expected_value' => Utilities\Value::flattenValue($resource->getExpectedValue()),
+			'actual_value' => Utilities\Value::flattenValue($resource->getRead()->getActualValue()),
+			'expected_value' => Utilities\Value::flattenValue($resource->getRead()->getExpectedValue()),
 			'pending' => is_bool($resource->getPending())
 				? $resource->getPending()
 				: $resource->getPending()->format(DateTimeInterface::ATOM),
@@ -120,7 +119,7 @@ final class State extends ApiSchemas\JsonApiSchema
 				Devices\Constants::ROUTE_NAME_DEVICE_PROPERTY_STATE,
 				[
 					Router\ApiRoutes::URL_DEVICE_ID => $property->getDevice()->getId()->toString(),
-					Router\ApiRoutes::URL_ITEM_ID => $property->getId()->toString(),
+					Router\ApiRoutes::URL_PROPERTY_ID => $property->getId()->toString(),
 				],
 			),
 			false,

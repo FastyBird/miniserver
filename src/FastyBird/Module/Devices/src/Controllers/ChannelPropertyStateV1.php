@@ -49,6 +49,7 @@ final class ChannelPropertyStateV1 extends BaseV1
 	use Controllers\Finders\TChannel;
 
 	public function __construct(
+		protected readonly Models\Entities\Devices\DevicesRepository $devicesRepository,
 		protected readonly Models\Entities\Channels\ChannelsRepository $channelsRepository,
 		private readonly Models\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
@@ -71,8 +72,13 @@ final class ChannelPropertyStateV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load device, when the route names one
+		$device = $request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID) !== null
+			? $this->findDevice(
+				strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)),
+			)
+			: null;
+
 		// & channel
 		$channel = $this->findChannel(strval($request->getAttribute(Router\ApiRoutes::URL_CHANNEL_ID)), $device);
 		// & property

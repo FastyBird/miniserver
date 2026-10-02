@@ -4,7 +4,7 @@ namespace FastyBird\Module\Devices\Tests\Fixtures\Dummy;
 
 use FastyBird\Module\Devices\States;
 
-final class ChannelPropertyState extends PropertyState implements States\ChannelProperty
+final class DevicePropertyState extends PropertyState implements States\DeviceProperty
 {
 
 }
