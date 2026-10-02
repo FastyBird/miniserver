@@ -7,6 +7,7 @@ use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Schemas;
 use FastyBird\Module\Accounts\Tests;
@@ -26,6 +27,8 @@ use function file_get_contents;
 #[RunTestsInSeparateProcesses]
 final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 {
+
+	private const USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
@@ -278,6 +281,47 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 		];
+	}
+
+	/**
+	 * PATCH /v1/me is self-service, so a roles relationship in the request must not change the
+	 * caller's roles. Roles are assigned only by AccountsV1::assignAccountToRoles().
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\IOException
+	 */
+	public function testUpdateIgnoresRoles(): void
+	{
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+
+		$request = new ServerRequest(
+			RequestMethodInterface::METHOD_PATCH,
+			'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+			[
+				'authorization' => 'Bearer ' . self::USER_TOKEN,
+			],
+			Utils\FileSystem::read(
+				__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.roles.json',
+			),
+		);
+
+		$response = $router->handle($request);
+
+		self::assertTrue($response instanceof Http\Response);
+		self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
+
+		$enforcer = $this->getContainer()->getByType(Identity\EnforcerFactory::class)->getEnforcer();
+
+		// Read the stored policy, not the enforcer's in-memory copy
+		$enforcer->loadPolicy();
+
+		self::assertSame(['user'], $enforcer->getRolesForUser(self::USER_ACCOUNT_ID));
 	}
 
 }

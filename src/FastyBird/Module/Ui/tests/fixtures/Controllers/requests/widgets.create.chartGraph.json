@@ -1,0 +1,31 @@
+{
+  "data" : {
+    "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b01",
+    "type" : "com.fastybird.ui-module/widget/analog-sensor",
+    "attributes" : {
+      "identifier" : "chart-graph-widget",
+      "name" : "Chart graph widget"
+    },
+    "relationships" : {
+      "display" : {
+        "data" : {
+          "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b02",
+          "type" : "com.fastybird.ui-module/display/chart-graph"
+        }
+      }
+    }
+  },
+  "included" : [
+    {
+      "attributes" : {
+        "minimum_value" : 5,
+        "maximum_value" : 40,
+        "step_value" : 0.5,
+        "precision" : 1,
+        "enable_min_max" : true
+      },
+      "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b02",
+      "type" : "com.fastybird.ui-module/display/chart-graph"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "data" : {
+    "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b03",
+    "type" : "com.fastybird.ui-module/widget/analog-actuator",
+    "attributes" : {
+      "identifier" : "slider-widget",
+      "name" : "Slider widget"
+    },
+    "relationships" : {
+      "display" : {
+        "data" : {
+          "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b04",
+          "type" : "com.fastybird.ui-module/display/slider"
+        }
+      }
+    }
+  },
+  "included" : [
+    {
+      "attributes" : {
+        "minimum_value" : 10,
+        "maximum_value" : 30,
+        "step_value" : 2.5,
+        "precision" : 1
+      },
+      "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b04",
+      "type" : "com.fastybird.ui-module/display/slider"
+    }
+  ]
+}

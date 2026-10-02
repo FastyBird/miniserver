@@ -280,6 +280,133 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
+	 * The display values arrive on the included display resource. Widget::buildDisplay() hydrates
+	 * them with the widget hydrator's own attribute map, so this test guards those map entries.
+	 *
+	 * @param array<string, bool|float|int|string|null> $expected
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Utils\JsonException
+	 */
+	#[DataProvider('widgetsDisplayValues')]
+	public function testDisplayValues(
+		string $method,
+		string $url,
+		string $body,
+		int $statusCode,
+		string $widgetId,
+		array $expected,
+	): void
+	{
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+
+		$request = new ServerRequest(
+			$method,
+			$url,
+			[
+				'authorization' => 'Bearer ' . self::VALID_TOKEN,
+			],
+			$body,
+		);
+
+		$response = $router->handle($request);
+
+		self::assertTrue($response instanceof Http\Response);
+		self::assertSame($statusCode, $response->getStatusCode(), (string) $response->getBody());
+
+		// Read the display back from the database, not from the identity map
+		$this->getEntityManager()->clear();
+
+		$request = new ServerRequest(
+			RequestMethodInterface::METHOD_GET,
+			'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/' . $widgetId . '/display',
+			[
+				'authorization' => 'Bearer ' . self::VALID_TOKEN,
+			],
+		);
+
+		$response = $router->handle($request);
+
+		self::assertTrue($response instanceof Http\Response);
+		self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
+
+		$document = Utils\Json::decode((string) $response->getBody(), forceArrays: true);
+		self::assertIsArray($document);
+		self::assertIsArray($document['data']);
+		self::assertIsArray($document['data']['attributes']);
+
+		foreach ($expected as $attribute => $value) {
+			self::assertArrayHasKey($attribute, $document['data']['attributes']);
+			self::assertSame($value, $document['data']['attributes'][$attribute], $attribute);
+		}
+	}
+
+	/**
+	 * @return array<string, array<bool|string|int|array<string, bool|float|int|string|null>>>
+	 */
+	public static function widgetsDisplayValues(): array
+	{
+		return [
+			'createChartGraph' => [
+				RequestMethodInterface::METHOD_POST,
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.chartGraph.json'),
+				StatusCodeInterface::STATUS_CREATED,
+				'6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b01',
+				[
+					'minimum_value' => 5,
+					'maximum_value' => 40,
+					'step_value' => 0.5,
+					'precision' => 1,
+					'enable_min_max' => true,
+				],
+			],
+			// Slider takes minimum, maximum and step as required constructor arguments
+			'createSlider' => [
+				RequestMethodInterface::METHOD_POST,
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.slider.json'),
+				StatusCodeInterface::STATUS_CREATED,
+				'6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b03',
+				[
+					'minimum_value' => 10,
+					'maximum_value' => 30,
+					'step_value' => 2.5,
+					'precision' => 1,
+				],
+			],
+			'createButton' => [
+				RequestMethodInterface::METHOD_POST,
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.button.json'),
+				StatusCodeInterface::STATUS_CREATED,
+				'6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b05',
+				[
+					'icon' => 'thermometer',
+				],
+			],
+			'updateChartGraph' => [
+				RequestMethodInterface::METHOD_PATCH,
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.display.json'),
+				StatusCodeInterface::STATUS_OK,
+				'15553443-4564-454d-af04-0dfeef08aa96',
+				[
+					'minimum_value' => 10,
+					'maximum_value' => 30,
+					'step_value' => 0.5,
+					'precision' => 2,
+					'enable_min_max' => true,
+				],
+			],
+		];
+	}
+
+	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
