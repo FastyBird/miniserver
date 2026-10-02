@@ -385,8 +385,7 @@ final class CoreExtension extends DI\CompilerExtension
 		}
 
 		/**
-		 * PERSISTENCE -- entity CRUD removal without Doctrine ORM, DATE_FORMAT, and the
-		 * timestampable subscription on the entity manager
+		 * PERSISTENCE -- entity CRUD removal without Doctrine ORM, and DATE_FORMAT
 		 */
 
 		$this->persistence->beforeCompile();
@@ -433,13 +432,6 @@ final class CoreExtension extends DI\CompilerExtension
 		 */
 
 		$this->security->beforeCompile();
-
-		/**
-		 * PHONE -- its subscriber on the entity manager, after the Timestampable one that
-		 * PersistenceExtension::beforeCompile() added above (D2, #564)
-		 */
-
-		$this->phone->beforeCompile();
 
 		/**
 		 * JSON:API -- schema/hydrator assembly

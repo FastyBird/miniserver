@@ -17,7 +17,6 @@ use Nette\PhpGenerator;
 use Nette\Schema;
 use Nettrine\Migrations;
 use Override;
-use function assert;
 use function class_exists;
 
 /**
@@ -221,30 +220,13 @@ final class PersistenceExtension extends DI\CompilerExtension
 			}
 		}
 
-		/**
-		 * Timestampable -- EventManager subscriber wiring
-		 */
-
-		// EntityDiscriminator used to be attached here by hand. nettrine/orm 0.10's EventPass
-		// finds every service typed Doctrine\Common\EventSubscriber and registers it on its
-		// ContainerEventManager itself, so doing it here too would subscribe it twice.
-
-		// KNOWN DEFECT, kept verbatim on purpose (#564, D2 of the Epic #459 census): for the same
-		// reason, this second subscription makes TimestampableSubscriber run twice on
-		// loadClassMetadata and onFlush. KnownDefectDoubleDoctrineSubscriptionTest pins it.
-		// Same fix as the DATE_FORMAT block above and for the same reason: throw:true made this
-		// unconditional for every fbCore container, including the several packages that never
-		// wire Doctrine ORM at all.
-		$emServiceName = $builder->getByType(Doctrine\ORM\EntityManagerInterface::class);
-
-		if ($emServiceName !== null) {
-			$emService = $builder->getDefinition($emServiceName);
-			assert($emService instanceof DI\Definitions\ServiceDefinition);
-			$emService->addSetup('?->getEventManager()->addEventSubscriber(?)', [
-				'@self',
-				$builder->getDefinition($this->prefix('timestampable.subscriber')),
-			]);
-		}
+		// None of this extension's Doctrine subscribers -- EntityDiscriminator, Timestampable,
+		// the schema subscriber -- is attached to the entity manager here. nettrine/orm's
+		// EventPass finds every service typed Doctrine\Common\EventSubscriber and subscribes it
+		// on its ContainerEventManager by service name, so an addEventSubscriber() setup here
+		// would subscribe the same object a second time and every handler would run twice. Until
+		// #564 there was such a setup for TimestampableSubscriber, which therefore ran twice on
+		// loadClassMetadata and onFlush. DoctrineSubscriptionTest pins one entry per subscriber.
 	}
 
 }

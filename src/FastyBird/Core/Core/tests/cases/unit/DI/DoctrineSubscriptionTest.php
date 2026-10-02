@@ -16,28 +16,23 @@ use function spl_object_id;
 use function str_starts_with;
 
 /**
- * KNOWN DEFECT, pinned on purpose: #564 (D2 of the Epic #459 census, #553 section 9).
+ * Every Core Doctrine subscriber is on the event manager exactly once (#564)
  *
- * The Timestampable and Phone Doctrine subscribers are subscribed twice. nettrine's EventPass
- * adds every EventSubscriber service by name ("service@<name>"), and CoreExtension's
- * beforeCompile() adds the same two objects again through the entity manager's
- * addEventSubscriber(). Every entry is called, so TimestampableSubscriber runs twice on
- * loadClassMetadata and onFlush, and PhoneObjectSubscriber twice on loadClassMetadata.
- *
- * This test characterises the CURRENT behaviour so that the DI refactoring of Epic #459 cannot
- * change it unnoticed. It is not a statement that the behaviour is right. Fixing #564 changes
- * these counts, and this test is updated in the same change.
+ * nettrine's EventPass subscribes every Doctrine\Common\EventSubscriber service by name
+ * ("service@<name>"), and that is the only subscription. Until #564, the Persistence and Phone
+ * extensions also called the entity manager's addEventSubscriber() for the Timestampable and
+ * Phone subscribers, which added the same objects a second time, so TimestampableSubscriber ran
+ * twice on loadClassMetadata and onFlush, and PhoneObjectSubscriber twice on loadClassMetadata.
  */
-final class KnownDefectDoubleDoctrineSubscriptionTest extends Tests\Cases\Unit\BaseTestCase
+final class DoctrineSubscriptionTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
 	 * @throws Nette\DI\MissingServiceException
 	 */
-	public function testTimestampableAndPhoneSubscribersAreSubscribedTwice(): void
+	public function testCoreSubscribersAreSubscribedOnce(): void
 	{
-		// Creating the entity manager runs its setups, the second subscription among them. It
-		// connects to no database.
+		// Creating the entity manager runs every setup on it. It connects to no database.
 		$eventManager = $this->container->getByType(ORM\EntityManagerInterface::class)->getEventManager();
 
 		$loadClassMetadata = $eventManager->getListeners('loadClassMetadata');
@@ -47,28 +42,22 @@ final class KnownDefectDoubleDoctrineSubscriptionTest extends Tests\Cases\Unit\B
 				PersistenceSubscribers\EntityDiscriminator::class,
 				PersistenceSubscribers\TimestampableSubscriber::class,
 				PhoneSubscribers\PhoneObjectSubscriber::class,
-				PersistenceSubscribers\TimestampableSubscriber::class,
-				PhoneSubscribers\PhoneObjectSubscriber::class,
 			],
 			self::classes($loadClassMetadata),
 		);
 		self::assertSame(3, self::distinctObjects($loadClassMetadata));
-		self::assertSame(
-			[true, true, true, false, false],
-			self::subscribedByServiceName($loadClassMetadata),
-		);
+		self::assertSame([true, true, true], self::subscribedByServiceName($loadClassMetadata));
 
 		$onFlush = $eventManager->getListeners('onFlush');
 
 		self::assertSame(
 			[
 				PersistenceSubscribers\TimestampableSubscriber::class,
-				PersistenceSubscribers\TimestampableSubscriber::class,
 			],
 			self::classes($onFlush),
 		);
 		self::assertSame(1, self::distinctObjects($onFlush));
-		self::assertSame([true, false], self::subscribedByServiceName($onFlush));
+		self::assertSame([true], self::subscribedByServiceName($onFlush));
 	}
 
 	/**
