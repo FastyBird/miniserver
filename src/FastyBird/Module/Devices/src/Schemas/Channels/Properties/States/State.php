@@ -146,7 +146,7 @@ final class State extends ApiSchemas\JsonApiSchema
 
 		return [
 			self::RELATIONSHIPS_PROPERTY => [
-				self::RELATIONSHIP_DATA => $property->getChannel(),
+				self::RELATIONSHIP_DATA => $property,
 				self::RELATIONSHIP_LINKS_SELF => false,
 				self::RELATIONSHIP_LINKS_RELATED => true,
 			],

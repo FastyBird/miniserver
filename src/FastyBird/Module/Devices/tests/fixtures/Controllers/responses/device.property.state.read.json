@@ -27,8 +27,8 @@
           "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db"
         },
         "data": {
-          "type": "com.fastybird.devices-module/device/dummy",
-          "id": "69786d15-fd0c-4d9f-9378-33287c2009fa"
+          "type": "com.fastybird.devices-module/property/device/dynamic",
+          "id": "bbcccf8c-33ab-431b-a795-d7bb38b6b6db"
         }
       }
     },

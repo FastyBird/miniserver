@@ -40,7 +40,14 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws Utils\JsonException
 	 */
 	#[DataProvider('channelPropertyStateRead')]
-	public function testRead(string $url, string|null $token, int $lookups, int $statusCode, string $fixture): void
+	public function testRead(
+		string $url,
+		string|null $token,
+		int $lookups,
+		bool $stored,
+		int $statusCode,
+		string $fixture,
+	): void
 	{
 		// The storage driver behind the module's state repository; production registers it through a bridge
 		$stateRepository = $this->createMock(Models\States\Channels\IRepository::class);
@@ -51,13 +58,15 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 				static fn (Uuid\UuidInterface $id): bool => $id->toString() === self::PROPERTY_ID,
 			))
 			->willReturnCallback(
-				static fn (Uuid\UuidInterface $id): Tests\Fixtures\Dummy\ChannelPropertyState => new Tests\Fixtures\Dummy\ChannelPropertyState(
-					$id,
-					'215',
-					null,
-					false,
-					true,
-				),
+				static fn (Uuid\UuidInterface $id): Tests\Fixtures\Dummy\ChannelPropertyState|null => $stored
+					? new Tests\Fixtures\Dummy\ChannelPropertyState(
+						$id,
+						'215',
+						null,
+						false,
+						true,
+					)
+					: null,
 			);
 
 		$this->mockContainerService(
@@ -93,7 +102,7 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @return array<string, array<string|int|null>>
+	 * @return array<string, array<string|int|bool|null>>
 	 */
 	public static function channelPropertyStateRead(): array
 	{
@@ -105,6 +114,7 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
+				true,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/channel.property.state.read.json',
 			],
@@ -113,17 +123,37 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
+				true,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/channel.property.state.read.channel.json',
 			],
 
 			// Invalid responses
 			////////////////////
+			'readNoState' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
+				'Bearer ' . self::VALID_TOKEN,
+				1,
+				false,
+				StatusCodeInterface::STATUS_BAD_REQUEST,
+				__DIR__ . '/../../../fixtures/Controllers/responses/channel.property.state.missing.json',
+			],
+			'readPropertyOfOtherChannel' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db/state',
+				'Bearer ' . self::VALID_TOKEN,
+				0,
+				true,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readMissingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
 				null,
 				0,
+				true,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],

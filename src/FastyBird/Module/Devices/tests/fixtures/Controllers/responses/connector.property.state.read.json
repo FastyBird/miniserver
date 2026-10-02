@@ -27,8 +27,8 @@
           "related": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/1b17bcaa-a19e-45f0-98b5-6a3b2c5d0ab9"
         },
         "data": {
-          "type": "com.fastybird.devices-module/connector/dummy",
-          "id": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e"
+          "type": "com.fastybird.devices-module/property/connector/dynamic",
+          "id": "1b17bcaa-a19e-45f0-98b5-6a3b2c5d0ab9"
         }
       }
     },
