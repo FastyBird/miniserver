@@ -274,6 +274,16 @@ final class AccountsV1Test extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/accounts/accounts.create.missing.required.json',
 			],
+			// #[Crud(required: true)] on Account::$details, enforced by the hydrator's CrudReader
+			'detailsNull' => [
+				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts',
+				'Bearer ' . self::ADMINISTRATOR_TOKEN,
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/accounts/accounts.create.details.null.json',
+				),
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				__DIR__ . '/../../../fixtures/Controllers/responses/accounts/accounts.create.details.null.json',
+			],
 			'invalidType' => [
 				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,

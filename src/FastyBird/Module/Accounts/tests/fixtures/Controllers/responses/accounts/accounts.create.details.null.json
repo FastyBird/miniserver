@@ -1,0 +1,16 @@
+{
+  "errors" : [
+    {
+      "status" : "422",
+      "code" : "422",
+      "title" : "Missing required attribute",
+      "detail" : "Provided request is missing required attribute",
+      "source" : {
+        "pointer" : "/data/attributes/details"
+      }
+    }
+  ],
+  "jsonapi" : {
+    "version" : "1.1"
+  }
+}
