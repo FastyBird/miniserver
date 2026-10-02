@@ -28,6 +28,12 @@ class MotorCalibration extends Channel
 
 	public const TYPE = 'ns-panel-connector-motor-calibration';
 
+	/**
+	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so
+	 * neither the JSON:API hydrator nor the entity mapper requires it on create or writes one that is sent
+	 */
+	protected string $identifier;
+
 	public function __construct(
 		Entities\Devices\Device $device,
 		string|null $name = null,
