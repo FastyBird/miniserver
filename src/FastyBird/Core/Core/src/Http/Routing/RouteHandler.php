@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Http\Routing;
 
 use FastRoute;
-use FastRoute\RouteCollector as FastRouteCollector;
+use FastRoute\RouteCollector as FastRouteRouteCollector;
 use FastRoute\RouteParser\Std;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Exceptions as HttpExceptions;
@@ -110,7 +110,7 @@ final class RouteHandler implements RequestHandlerInterface
 			return $this->dispatcher;
 		}
 
-		$routeDefinitionCallback = function (FastRouteCollector $r): void {
+		$routeDefinitionCallback = function (FastRouteRouteCollector $r): void {
 			$basePath = $this->router->getBasePath();
 
 			foreach ($this->router->getIterator() as $route) {

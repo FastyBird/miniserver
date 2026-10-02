@@ -8,7 +8,7 @@ use FastyBird\Bridge\RedisDbPluginDevicesModule\Tests;
 use FastyBird\Bridge\RedisDbPluginDevicesModule\Tests\Tools\JsonAssert;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\States as DevicesStates;
-use FastyBird\Plugin\RedisDb\Clients as RedisDbClient;
+use FastyBird\Plugin\RedisDb\Clients;
 use Nette\Utils;
 use Ramsey\Uuid;
 
@@ -24,7 +24,7 @@ final class ChannelPropertiesManagerTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$id = Uuid\Uuid::uuid4();
 
-		$redisDbClient = $this->createMock(RedisDbClient\Client::class);
+		$redisDbClient = $this->createMock(Clients\Client::class);
 
 		$redisDbClient
 			->expects(self::once())
@@ -63,7 +63,7 @@ final class ChannelPropertiesManagerTest extends Tests\Cases\Unit\BaseTestCase
 				'created_at' => '2020-04-01T12:00:00+00:00',
 			]));
 
-		$this->mockContainerService(RedisDbClient\Client::class, $redisDbClient);
+		$this->mockContainerService(Clients\Client::class, $redisDbClient);
 
 		$manager = $this->container->getByType(Models\States\ChannelPropertiesManager::class);
 
@@ -91,7 +91,7 @@ final class ChannelPropertiesManagerTest extends Tests\Cases\Unit\BaseTestCase
 		$id = Uuid\Uuid::uuid4();
 		self::$getCalled = 0;
 
-		$redisDbClient = $this->createMock(RedisDbClient\Client::class);
+		$redisDbClient = $this->createMock(Clients\Client::class);
 
 		$redisDbClient
 			->expects(self::exactly(2))
@@ -136,7 +136,7 @@ final class ChannelPropertiesManagerTest extends Tests\Cases\Unit\BaseTestCase
 				},
 			);
 
-		$this->mockContainerService(RedisDbClient\Client::class, $redisDbClient);
+		$this->mockContainerService(Clients\Client::class, $redisDbClient);
 
 		$property = $this->createMock(DevicesEntities\Channels\Properties\Dynamic::class);
 		$property

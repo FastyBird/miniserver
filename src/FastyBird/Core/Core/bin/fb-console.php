@@ -2,19 +2,18 @@
 
 use FastyBird\Core\Boot;
 use Symfony\Component\Console;
-use const DIRECTORY_SEPARATOR as DS;
 
 $autoloadFile = false;
 
 $path = __DIR__;
 
 for ($i = 0;$i < 10;$i++) {
-	$path .= DS . '..';
+	$path .= DIRECTORY_SEPARATOR . '..';
 
-	$vendorPath = realpath($path . DS . 'vendor');
+	$vendorPath = realpath($path . DIRECTORY_SEPARATOR . 'vendor');
 
 	if ($vendorPath !== false) {
-		$autoloadFile = realpath($path) . DS . 'vendor' . DS . 'autoload.php';
+		$autoloadFile = realpath($path) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 		break;
 	}

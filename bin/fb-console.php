@@ -1,18 +1,16 @@
 <?php declare(strict_types = 1);
 
-use const DIRECTORY_SEPARATOR as DS;
-
 $boostrapFile = false;
 
 $path = __DIR__;
 
 for ($i = 0;$i < 10;$i++) {
-	$path .= DS . '..';
+	$path .= DIRECTORY_SEPARATOR . '..';
 
-	$srcPath = realpath($path . DS . 'src');
+	$srcPath = realpath($path . DIRECTORY_SEPARATOR . 'src');
 
 	if ($srcPath !== false) {
-		$boostrapFile = realpath($path) . DS . 'src' . DS . 'FastyBird' . DS . 'Core' . DS . 'Core' . DS . 'bin' . DS . 'fb-console.php';
+		$boostrapFile = realpath($path) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'FastyBird' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'fb-console.php';
 
 		break;
 	}

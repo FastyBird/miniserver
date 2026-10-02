@@ -17,7 +17,7 @@ use FastyBird\Module\Accounts\Tests;
 use FastyBird\Module\Accounts\Types;
 use Nette;
 use Nette\Utils;
-use Nettrine\ORM\Events as NettrineEvents;
+use Nettrine\ORM\Events;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
@@ -172,7 +172,7 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$eventManager = $this->getEntityManager()->getEventManager();
 		// nettrine's manager, which also takes a service name: that is how EventPass subscribed them
-		assert($eventManager instanceof NettrineEvents\ContainerEventManager);
+		assert($eventManager instanceof Events\ContainerEventManager);
 
 		$moduleSubscribers = [AccountsSubscribers\AccountEntity::class, AccountsSubscribers\EmailEntity::class];
 		$moduleListeners = [];

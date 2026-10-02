@@ -31,7 +31,7 @@ use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Schemas;
 use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\StatusCodeInterface;
-use GuzzleHttp\Psr7 as gPsr;
+use GuzzleHttp\Psr7;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
@@ -208,7 +208,7 @@ final class Gen2WsApi
 			);
 		}
 
-		$negotiator = new RFC6455\Handshake\ClientNegotiator(new gPsr\HttpFactory());
+		$negotiator = new RFC6455\Handshake\ClientNegotiator(new Psr7\HttpFactory());
 
 		$url = 'ws://' . $address . '/rpc';
 
@@ -217,7 +217,7 @@ final class Gen2WsApi
 		];
 
 		try {
-			$uri = gPsr\Utils::uriFor($url);
+			$uri = Psr7\Utils::uriFor($url);
 			$uri = $uri->withScheme('HTTP');
 
 			$headers += ['User-Agent' => 'Ratchet-Pawl/0.4.1'];
@@ -284,7 +284,7 @@ final class Gen2WsApi
 
 						$stream->removeListener('data', $headerParser);
 
-						$response = gPsr\Message::parseResponse($buffer);
+						$response = Psr7\Message::parseResponse($buffer);
 
 						if (!$negotiator->validateResponse($request, $response)) {
 							$connecting->then(static function (Socket\ConnectionInterface $connection): void {
@@ -308,7 +308,7 @@ final class Gen2WsApi
 							$this->connecting = false;
 							$this->connected = false;
 
-							$deferred->reject(new DomainException(gPsr\Message::toString($response)));
+							$deferred->reject(new DomainException(Psr7\Message::toString($response)));
 
 							$stream->close();
 
@@ -325,7 +325,7 @@ final class Gen2WsApi
 					};
 
 					$stream->on('data', $headerParser);
-					$stream->write(gPsr\Message::toString($request));
+					$stream->write(Psr7\Message::toString($request));
 				},
 			)
 			->catch(function (Throwable $ex) use ($connecting, $deferred): void {

@@ -17,7 +17,7 @@ namespace FastyBird\Module\Devices\Router;
 
 use Exception;
 use FastRoute;
-use FastRoute\RouteCollector as FastRouteCollector;
+use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std;
 use FastyBird\Core\Http\Routing;
 use Fig\Http\Message\RequestMethodInterface;
@@ -62,7 +62,7 @@ class Validator
 
 		$router = $this->container->getByType(Routing\IRouter::class);
 
-		$routeDefinitionCallback = static function (FastRouteCollector $r) use ($router): void {
+		$routeDefinitionCallback = static function (RouteCollector $r) use ($router): void {
 			$basePath = $router->getBasePath();
 
 			foreach ($router->getIterator() as $route) {

@@ -110,8 +110,37 @@ ordinary, non-Core namespaces: a package's own `Documents` left bare next to
 unless it collides, aliased to the smallest colliding `k >= 2` when it does, single-segment
 names always exempt -- to every top-level `use` import in every file the gate scans, per KIND
 (`use`, `use function` and `use const` never collide with each other). A `use` inside a class
-body (trait composition) is not an import and is never in scope; neither is a standalone alias
-with no colliding sibling in the file (`use Doctrine\ORM\Mapping as ORM;` on its own).
+body (trait composition) is not an import and is never in scope. Check 4 compares a file's
+imports only with each other, so a standalone import -- no colliding sibling `use` in the file --
+is outside what it can see; the next paragraph covers those.
+
+**#551: standalone imports.** They follow the same rule: bare unless they collide. For a
+standalone import a collision is wider than check 4's sibling list -- a class, interface, trait
+or enum declared in the file's own namespace counts, and so does the class the file itself
+declares. A bare import silently shadows a same-namespace type of the same short name, and one
+naming the file's own class does not compile. So `Http\Routing\RouteHandler`, which sits beside
+Core's own `Routing\RouteCollector`, imports `FastRoute\RouteCollector as FastRouteRouteCollector`,
+and `Logging\Subscribers\Console` imports `Symfony\Component\Console as ComponentConsole`. A file
+never imports a namespace it is already inside: `FastyBird\Module\Triggers\Constants` writes
+`Entities\Triggers\Trigger` relative to its own namespace. `ORM` stays the one named exception.
+This is kept by review, not by `make naming` -- #551 fixed the one-off aliases (`NS`, `gPsr`,
+`DS`, `RedisDbClient`, ...) by hand and deliberately added no check.
+
+```php
+use Nette\Security;                                        // was `as NS`
+use const DIRECTORY_SEPARATOR;                             // was `as DS`
+use Symfony\Component\Console as ComponentConsole;         // legal: the file declares `Console`
+```
+
+**SPL exceptions may be imported as `PHP<Name>Exception`.** The per-package `Exceptions\`
+directories extend the SPL exceptions under that alias (`class InvalidArgument extends
+PHPInvalidArgumentException implements Exception`, 68 imports across 26 packages), and it is an
+accepted convention, not a violation. For `Exception` itself, in an `Exceptions` namespace that
+declares its own `Exception` interface, the alias is required: a bare `use Exception;` would make
+the short name resolve to the global class instead of the package's interface, and
+`src/FastyBird/Core/Core/src/Exceptions/InvalidController.php`, which `extends PHPException
+implements Exception`, would stop compiling. Seven files are in that position. `PhpException`
+(`Connector/Modbus`) is an existing variant spelling of the same convention.
 
 Both checks now compute a colliding import's expected alias from the same function over the
 same, whole-file, same-kind sibling list -- check 3's Core-only siblings widened to match check

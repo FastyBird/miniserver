@@ -16,7 +16,6 @@
 namespace FastyBird\Module\Triggers;
 
 use FastyBird\Core\Constants as CoreConstants;
-use FastyBird\Module\Triggers\Entities as TriggersModuleEntities;
 
 /**
  * Service constants
@@ -117,24 +116,24 @@ final class Constants
 	public const MESSAGE_BUS_TRIGGER_CONTROL_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.trigger.control';
 
 	public const MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING = [
-		TriggersModuleEntities\Triggers\Trigger::class => self::MESSAGE_BUS_TRIGGER_DOCUMENT_CREATED_ROUTING_KEY,
-		TriggersModuleEntities\Actions\Action::class => self::MESSAGE_BUS_ACTION_DOCUMENT_CREATED_ROUTING_KEY,
-		TriggersModuleEntities\Notifications\Notification::class => self::MESSAGE_BUS_NOTIFICATION_DOCUMENT_CREATED_ROUTING_KEY,
-		TriggersModuleEntities\Conditions\Condition::class => self::MESSAGE_BUS_CONDITION_DOCUMENT_CREATED_ROUTING_KEY,
+		Entities\Triggers\Trigger::class => self::MESSAGE_BUS_TRIGGER_DOCUMENT_CREATED_ROUTING_KEY,
+		Entities\Actions\Action::class => self::MESSAGE_BUS_ACTION_DOCUMENT_CREATED_ROUTING_KEY,
+		Entities\Notifications\Notification::class => self::MESSAGE_BUS_NOTIFICATION_DOCUMENT_CREATED_ROUTING_KEY,
+		Entities\Conditions\Condition::class => self::MESSAGE_BUS_CONDITION_DOCUMENT_CREATED_ROUTING_KEY,
 	];
 
 	public const MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING = [
-		TriggersModuleEntities\Triggers\Trigger::class => self::MESSAGE_BUS_TRIGGER_DOCUMENT_UPDATED_ROUTING_KEY,
-		TriggersModuleEntities\Actions\Action::class => self::MESSAGE_BUS_ACTION_DOCUMENT_UPDATED_ROUTING_KEY,
-		TriggersModuleEntities\Notifications\Notification::class => self::MESSAGE_BUS_NOTIFICATION_DOCUMENT_UPDATED_ROUTING_KEY,
-		TriggersModuleEntities\Conditions\Condition::class => self::MESSAGE_BUS_CONDITION_DOCUMENT_UPDATED_ROUTING_KEY,
+		Entities\Triggers\Trigger::class => self::MESSAGE_BUS_TRIGGER_DOCUMENT_UPDATED_ROUTING_KEY,
+		Entities\Actions\Action::class => self::MESSAGE_BUS_ACTION_DOCUMENT_UPDATED_ROUTING_KEY,
+		Entities\Notifications\Notification::class => self::MESSAGE_BUS_NOTIFICATION_DOCUMENT_UPDATED_ROUTING_KEY,
+		Entities\Conditions\Condition::class => self::MESSAGE_BUS_CONDITION_DOCUMENT_UPDATED_ROUTING_KEY,
 	];
 
 	public const MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING = [
-		TriggersModuleEntities\Triggers\Trigger::class => self::MESSAGE_BUS_TRIGGER_DOCUMENT_DELETED_ROUTING_KEY,
-		TriggersModuleEntities\Actions\Action::class => self::MESSAGE_BUS_ACTION_DOCUMENT_DELETED_ROUTING_KEY,
-		TriggersModuleEntities\Notifications\Notification::class => self::MESSAGE_BUS_NOTIFICATION_DOCUMENT_DELETED_ROUTING_KEY,
-		TriggersModuleEntities\Conditions\Condition::class => self::MESSAGE_BUS_CONDITION_DOCUMENT_DELETED_ROUTING_KEY,
+		Entities\Triggers\Trigger::class => self::MESSAGE_BUS_TRIGGER_DOCUMENT_DELETED_ROUTING_KEY,
+		Entities\Actions\Action::class => self::MESSAGE_BUS_ACTION_DOCUMENT_DELETED_ROUTING_KEY,
+		Entities\Notifications\Notification::class => self::MESSAGE_BUS_NOTIFICATION_DOCUMENT_DELETED_ROUTING_KEY,
+		Entities\Conditions\Condition::class => self::MESSAGE_BUS_CONDITION_DOCUMENT_DELETED_ROUTING_KEY,
 	];
 
 }

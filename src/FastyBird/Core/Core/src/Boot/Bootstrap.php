@@ -29,7 +29,7 @@ use function strpos;
 use function strtolower;
 use function strval;
 use function substr;
-use const DIRECTORY_SEPARATOR as DS;
+use const DIRECTORY_SEPARATOR;
 use const E_ALL;
 use const E_DEPRECATED;
 use const E_USER_DEPRECATED;
@@ -116,8 +116,11 @@ final class Bootstrap
 
 		// Shipped extension defaults, then the application wiring, then the operator overrides
 		$configFiles = self::resolveConfigFiles([
-			[__DIR__ . DS . '..' . DS . '..' . DS . 'config', ['common.neon', 'defaults.neon']],
-			[strval(FB_APP_DIR) . DS . 'config', ['common.neon', 'defaults.neon']],
+			[
+				__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'config',
+				['common.neon', 'defaults.neon'],
+			],
+			[strval(FB_APP_DIR) . DIRECTORY_SEPARATOR . 'config', ['common.neon', 'defaults.neon']],
 			[strval(FB_CONFIG_DIR), ['common.neon', 'defaults.neon', 'local.neon']],
 		]);
 
@@ -144,7 +147,7 @@ final class Bootstrap
 
 		foreach ($sources as [$directory, $names]) {
 			foreach ($names as $name) {
-				$path = $directory . DS . $name;
+				$path = $directory . DIRECTORY_SEPARATOR . $name;
 
 				if (!file_exists($path)) {
 					continue;
@@ -179,9 +182,9 @@ final class Bootstrap
 			$path = __DIR__;
 
 			for ($i = 0;$i < 10;$i++) {
-				$path .= DS . '..';
+				$path .= DIRECTORY_SEPARATOR . '..';
 
-				$vendorPath = realpath($path . DS . 'vendor');
+				$vendorPath = realpath($path . DIRECTORY_SEPARATOR . 'vendor');
 
 				if ($vendorPath !== false) {
 					define('FB_APP_DIR', realpath($path));
@@ -199,7 +202,7 @@ final class Bootstrap
 			define('FB_PUBLIC_DIR', getenv('FB_PUBLIC_DIR'));
 
 		} elseif (!defined('FB_PUBLIC_DIR')) {
-			define('FB_PUBLIC_DIR', FB_APP_DIR . DS . 'public');
+			define('FB_PUBLIC_DIR', FB_APP_DIR . DIRECTORY_SEPARATOR . 'public');
 		}
 
 		// Configuring resources dir path
@@ -210,7 +213,7 @@ final class Bootstrap
 			define('FB_RESOURCES_DIR', getenv('FB_RESOURCES_DIR'));
 
 		} elseif (!defined('FB_RESOURCES_DIR')) {
-			define('FB_RESOURCES_DIR', FB_APP_DIR . DS . 'resources');
+			define('FB_RESOURCES_DIR', FB_APP_DIR . DIRECTORY_SEPARATOR . 'resources');
 		}
 
 		// Configuring temporary dir path
@@ -221,7 +224,7 @@ final class Bootstrap
 			define('FB_TEMP_DIR', getenv('FB_TEMP_DIR'));
 
 		} elseif (!defined('FB_TEMP_DIR')) {
-			define('FB_TEMP_DIR', FB_APP_DIR . DS . 'var' . DS . 'temp');
+			define('FB_TEMP_DIR', FB_APP_DIR . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'temp');
 		}
 
 		// Check for temporary dir.
@@ -247,7 +250,7 @@ final class Bootstrap
 			define('FB_LOGS_DIR', getenv('FB_LOGS_DIR'));
 
 		} elseif (!defined('FB_LOGS_DIR')) {
-			define('FB_LOGS_DIR', FB_APP_DIR . DS . 'var' . DS . 'logs');
+			define('FB_LOGS_DIR', FB_APP_DIR . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'logs');
 		}
 
 		// Check for logs dir. Same shared-directory race as the temp dir above.
@@ -267,7 +270,7 @@ final class Bootstrap
 			define('FB_CONFIG_DIR', realpath(getenv('FB_CONFIG_DIR')));
 
 		} elseif (!defined('FB_CONFIG_DIR')) {
-			define('FB_CONFIG_DIR', realpath(FB_APP_DIR . DS . 'config'));
+			define('FB_CONFIG_DIR', realpath(FB_APP_DIR . DIRECTORY_SEPARATOR . 'config'));
 		}
 	}
 
