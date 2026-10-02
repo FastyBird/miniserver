@@ -93,60 +93,31 @@ trait TAccount
 	}
 
 	/**
+	 * Only validates. The base hydrator fills `details` from the nested object, through the
+	 * `first_name`, `last_name` and `middle_name` mappings, so there is no value to return here.
+	 *
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateDetailsAttribute(
-		Objects\IStandardObject $attributes,
-	): Utils\ArrayHash|null
+	protected function validateDetailsAttribute(Objects\IStandardObject $attributes): void
 	{
-		if (
-			$attributes->has('details')
-			&& $attributes->get('details') instanceof Objects\IStandardObject
-		) {
-			$details = $attributes->get('details');
+		$details = $attributes->get('details');
 
-			$update = new Utils\ArrayHash();
-			$update['entity'] = Entities\Details\Details::class;
-
-			if ($details->has('first_name')) {
-				$update->offsetSet('firstName', $details->get('first_name'));
-
-			} else {
-				throw new Exceptions\JsonApiError(
-					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
-					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
-					[
-						'pointer' => '/data/attributes/details/first_name',
-					],
-				);
-			}
-
-			if ($details->has('last_name')) {
-				$update->offsetSet('lastName', $details->get('last_name'));
-
-			} else {
-				throw new Exceptions\JsonApiError(
-					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
-					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
-					[
-						'pointer' => '/data/attributes/details/last_name',
-					],
-				);
-			}
-
-			if ($details->has('middle_name') && $details->get('middle_name') !== '') {
-				$update->offsetSet('middleName', $details->get('middle_name'));
-
-			} else {
-				$update->offsetSet('middleName', null);
-			}
-
-			return $update;
+		if (!$details instanceof Objects\IStandardObject) {
+			return;
 		}
 
-		return null;
+		foreach (['first_name', 'last_name'] as $name) {
+			if (!$details->has($name)) {
+				throw new Exceptions\JsonApiError(
+					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.heading')),
+					strval($this->translator->translate('//accounts-module.base.messages.missingAttribute.message')),
+					[
+						'pointer' => '/data/attributes/details/' . $name,
+					],
+				);
+			}
+		}
 	}
 
 	protected function hydrateParamsAttribute(

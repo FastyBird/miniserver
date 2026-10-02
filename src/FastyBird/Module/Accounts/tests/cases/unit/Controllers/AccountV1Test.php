@@ -2,6 +2,7 @@
 
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Controllers;
 
+use Doctrine\DBAL;
 use Error;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -19,6 +20,7 @@ use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use function file_get_contents;
@@ -322,6 +324,142 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 		$enforcer->loadPolicy();
 
 		self::assertSame(['user'], $enforcer->getRolesForUser(self::USER_ACCOUNT_ID));
+	}
+
+	/**
+	 * TAccount::validateDetailsAttribute() only validates; the stored names come from the nested
+	 * `details` object. Read back from the table, not from the entity manager.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Utils\JsonException
+	 * @throws DBAL\Exception
+	 */
+	public function testUpdatePersistsDetails(): void
+	{
+		$response = $this->updateDetails([
+			'first_name' => 'Janet',
+			'last_name' => 'Smithers',
+			'middle_name' => 'Quinn',
+		]);
+
+		self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
+		self::assertSame(
+			[
+				'detail_first_name' => 'Janet',
+				'detail_last_name' => 'Smithers',
+				'detail_middle_name' => 'Quinn',
+			],
+			$this->storedDetails(),
+		);
+	}
+
+	/**
+	 * @return array<string, array{string, string}>
+	 */
+	public static function incompleteDetails(): array
+	{
+		return [
+			'missing first_name' => ['last_name', '/data/attributes/details/first_name'],
+			'missing last_name' => ['first_name', '/data/attributes/details/last_name'],
+		];
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Utils\JsonException
+	 * @throws DBAL\Exception
+	 */
+	#[DataProvider('incompleteDetails')]
+	public function testUpdateRejectsIncompleteDetails(string $sent, string $pointer): void
+	{
+		$response = $this->updateDetails([$sent => 'Janet']);
+
+		self::assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $response->getStatusCode());
+
+		$body = Utils\Json::decode((string) $response->getBody(), forceArrays: true);
+
+		self::assertIsArray($body);
+		self::assertSame(
+			[
+				[
+					'status' => '422',
+					'code' => '422',
+					'title' => 'Missing attribute',
+					'detail' => 'Provided request is missing required attribute',
+					'source' => ['pointer' => $pointer],
+				],
+			],
+			$body['errors'] ?? null,
+		);
+		self::assertSame(
+			[
+				'detail_first_name' => 'Jane',
+				'detail_last_name' => 'Doe',
+				'detail_middle_name' => null,
+			],
+			$this->storedDetails(),
+		);
+	}
+
+	/**
+	 * @param array<string, string> $details
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Utils\JsonException
+	 */
+	private function updateDetails(array $details): Http\Response
+	{
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+
+		$response = $router->handle(new ServerRequest(
+			RequestMethodInterface::METHOD_PATCH,
+			'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+			[
+				'authorization' => 'Bearer ' . self::USER_TOKEN,
+			],
+			Utils\Json::encode([
+				'data' => [
+					'type' => 'com.fastybird.accounts-module/account',
+					'id' => self::USER_ACCOUNT_ID,
+					'attributes' => [
+						'details' => $details,
+					],
+				],
+			]),
+		));
+
+		self::assertTrue($response instanceof Http\Response);
+
+		return $response;
+	}
+
+	/**
+	 * @return array<string, mixed>|false
+	 *
+	 * @throws DBAL\Exception
+	 */
+	private function storedDetails(): array|false
+	{
+		return $this->getDb()->fetchAssociative(
+			'SELECT detail_first_name, detail_last_name, detail_middle_name'
+			. ' FROM fb_accounts_module_accounts_details WHERE account_id = :account',
+			['account' => Uuid\Uuid::fromString(self::USER_ACCOUNT_ID)->getBytes()],
+		);
 	}
 
 }

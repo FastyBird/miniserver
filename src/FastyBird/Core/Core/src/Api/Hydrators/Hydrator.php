@@ -819,6 +819,8 @@ abstract class Hydrator
 				continue;
 			}
 
+			$this->callValidateAttribute($field->getFieldName(), $attributes, $entity);
+
 			// If there is a specific method for this attribute, we'll hydrate that
 			$value = $this->hasCustomHydrateAttribute($field->getFieldName(), $attributes)
 				? $this->callHydrateAttribute($field->getFieldName(), $attributes, $entity)
@@ -994,6 +996,34 @@ abstract class Hydrator
 		$converted = ucwords(str_replace(['-', '_'], ' ', $value));
 
 		return str_replace(' ', '', $converted);
+	}
+
+	/**
+	 * Validate an attribute by invoking validate<Field>Attribute($attributes, $entity) on this hydrator,
+	 * if it has one. It runs before the attribute is hydrated and returns nothing: it rejects a value
+	 * by throwing. Use it for a field whose value comes from somewhere else, such as a nested entity
+	 * that hydrateAttributes() fills from the nested object.
+	 *
+	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param T|null $entity
+	 */
+	private function callValidateAttribute(
+		string $attributeKey,
+		Objects\IStandardObject $attributes,
+		object|null $entity,
+	): void
+	{
+		$method = sprintf('validate%sAttribute', $this->classify($attributeKey));
+
+		if (!method_exists($this, $method)) {
+			return;
+		}
+
+		$callable = [$this, $method];
+
+		if (is_callable($callable)) {
+			call_user_func($callable, $attributes, $entity);
+		}
 	}
 
 	/**
