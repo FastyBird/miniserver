@@ -54,6 +54,8 @@ abstract class Widget extends ApiHydrators\Hydrator
 		0 => 'identifier',
 		1 => 'name',
 
+		// Not on the widget entity: buildDisplay() reuses this map for the included display
+		// resource, where these keys fill Entities\Widgets\Displays\*. They are not dead mappings.
 		'minimum_value' => 'minimumValue',
 		'maximum_value' => 'maximumValue',
 		'step_value' => 'stepValue',

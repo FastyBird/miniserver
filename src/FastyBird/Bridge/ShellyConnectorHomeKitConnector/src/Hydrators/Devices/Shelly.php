@@ -62,10 +62,6 @@ class Shelly extends HomeKitHydrators\Devices\Device
 			2 => 'name',
 			3 => 'comment',
 			4 => 'params',
-
-			// TODO: Fix this - this attr are for Device/Properties/Variable
-			5 => 'value',
-			'data_type' => 'dataType',
 		];
 
 	/** @var array<string> */

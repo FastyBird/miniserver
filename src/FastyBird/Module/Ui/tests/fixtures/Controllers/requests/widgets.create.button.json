@@ -1,0 +1,27 @@
+{
+  "data" : {
+    "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b05",
+    "type" : "com.fastybird.ui-module/widget/digital-actuator",
+    "attributes" : {
+      "identifier" : "button-widget",
+      "name" : "Button widget"
+    },
+    "relationships" : {
+      "display" : {
+        "data" : {
+          "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b06",
+          "type" : "com.fastybird.ui-module/display/button"
+        }
+      }
+    }
+  },
+  "included" : [
+    {
+      "attributes" : {
+        "icon" : "thermometer"
+      },
+      "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b06",
+      "type" : "com.fastybird.ui-module/display/button"
+    }
+  ]
+}

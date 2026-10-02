@@ -1,0 +1,23 @@
+{
+  "data" : {
+    "type" : "com.fastybird.accounts-module/account",
+    "id" : "efbfbdef-bfbd-68ef-bfbd-770b40efbfbd",
+    "attributes" : {
+      "details" : {
+        "first_name" : "Jane",
+        "last_name" : "Smith",
+        "middle_name" : null
+      }
+    },
+    "relationships" : {
+      "roles" : {
+        "data" : [
+          {
+            "type" : "com.fastybird.accounts-module/role",
+            "id" : "337a0518-664b-40ef-bfbd-efbfbd7914ef"
+          }
+        ]
+      }
+    }
+  }
+}
