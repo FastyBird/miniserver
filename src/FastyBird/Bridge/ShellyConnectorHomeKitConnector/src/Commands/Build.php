@@ -145,7 +145,7 @@ class Build extends Console\Command\Command
 		if ($device === null) {
 			$io->warning(
 				(string) $this->translator->translate(
-					'//shelly-connector-homekit-connector-bridge.cmd.build.messages.noShellys',
+					'//shelly-connector-homekit-connector-bridge.cmd.build.messages.noShellyDevices',
 				),
 			);
 

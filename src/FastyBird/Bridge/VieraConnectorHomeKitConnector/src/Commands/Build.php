@@ -125,7 +125,7 @@ class Build extends Console\Command\Command
 		if ($device === null) {
 			$io->warning(
 				(string) $this->translator->translate(
-					'//viera-connector-homekit-connector-bridge.cmd.build.messages.noVieras',
+					'//viera-connector-homekit-connector-bridge.cmd.build.messages.noVieraDevices',
 				),
 			);
 

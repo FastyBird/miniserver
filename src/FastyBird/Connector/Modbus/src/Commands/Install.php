@@ -3348,21 +3348,21 @@ class Install extends Console\Command\Command
 					'//modbus-connector.cmd.install.questions.provide.switch.readOnValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.switch.readOnValueError',
+					'//modbus-connector.cmd.install.messages.switch.readOnValueError',
 				);
 			} elseif ($payload === Payloads\Switcher::OFF) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.switch.readOffValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.switch.readOffValueError',
+					'//modbus-connector.cmd.install.messages.switch.readOffValueError',
 				);
 			} elseif ($payload === Payloads\Switcher::TOGGLE) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.switch.readToggleValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.switch.readToggleValueError',
+					'//modbus-connector.cmd.install.messages.switch.readToggleValueError',
 				);
 			} else {
 				throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
@@ -3373,21 +3373,21 @@ class Install extends Console\Command\Command
 					'//modbus-connector.cmd.install.questions.provide.switch.writeOnValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.switch.writeOnValueError',
+					'//modbus-connector.cmd.install.messages.switch.writeOnValueError',
 				);
 			} elseif ($payload === Payloads\Switcher::OFF) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.switch.writeOffValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.switch.writeOffValueError',
+					'//modbus-connector.cmd.install.messages.switch.writeOffValueError',
 				);
 			} elseif ($payload === Payloads\Switcher::TOGGLE) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.switch.writeToggleValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.switch.writeToggleValueError',
+					'//modbus-connector.cmd.install.messages.switch.writeToggleValueError',
 				);
 			} else {
 				throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
@@ -3628,49 +3628,49 @@ class Install extends Console\Command\Command
 					'//modbus-connector.cmd.install.questions.provide.button.readPressValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.readPressValueError',
+					'//modbus-connector.cmd.install.messages.button.readPressValueError',
 				);
 			} elseif ($payload === Payloads\Button::RELEASED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.readReleaseValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.readReleaseValueError',
+					'//modbus-connector.cmd.install.messages.button.readReleaseValueError',
 				);
 			} elseif ($payload === Payloads\Button::CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.readClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.readClickValueError',
+					'//modbus-connector.cmd.install.messages.button.readClickValueError',
 				);
 			} elseif ($payload === Payloads\Button::DOUBLE_CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.readDoubleClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.readDoubleClickValueError',
+					'//modbus-connector.cmd.install.messages.button.readDoubleClickValueError',
 				);
 			} elseif ($payload === Payloads\Button::TRIPLE_CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.readTripleClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.readTripleClickValueError',
+					'//modbus-connector.cmd.install.messages.button.readTripleClickValueError',
 				);
 			} elseif ($payload === Payloads\Button::LONG_CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.readLongClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.readLongClickValueError',
+					'//modbus-connector.cmd.install.messages.button.readLongClickValueError',
 				);
 			} elseif ($payload === Payloads\Button::EXTRA_LONG_CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.readExtraLongClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.readExtraLongClickValueError',
+					'//modbus-connector.cmd.install.messages.button.readExtraLongClickValueError',
 				);
 			} else {
 				throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');
@@ -3681,49 +3681,49 @@ class Install extends Console\Command\Command
 					'//modbus-connector.cmd.install.questions.provide.button.writePressValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.writePressValueError',
+					'//modbus-connector.cmd.install.messages.button.writePressValueError',
 				);
 			} elseif ($payload === Payloads\Button::RELEASED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.writeReleaseValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.writeReleaseValueError',
+					'//modbus-connector.cmd.install.messages.button.writeReleaseValueError',
 				);
 			} elseif ($payload === Payloads\Button::CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.writeClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.writeClickValueError',
+					'//modbus-connector.cmd.install.messages.button.writeClickValueError',
 				);
 			} elseif ($payload === Payloads\Button::DOUBLE_CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.writeDoubleClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.writeDoubleClickValueError',
+					'//modbus-connector.cmd.install.messages.button.writeDoubleClickValueError',
 				);
 			} elseif ($payload === Payloads\Button::TRIPLE_CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.writeTripleClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.writeTripleClickValueError',
+					'//modbus-connector.cmd.install.messages.button.writeTripleClickValueError',
 				);
 			} elseif ($payload === Payloads\Button::LONG_CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.writeLongClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.writeLongClickValueError',
+					'//modbus-connector.cmd.install.messages.button.writeLongClickValueError',
 				);
 			} elseif ($payload === Payloads\Button::EXTRA_LONG_CLICKED) {
 				$questionText = (string) $this->translator->translate(
 					'//modbus-connector.cmd.install.questions.provide.button.writeExtraLongClickValue',
 				);
 				$questionError = (string) $this->translator->translate(
-					'//modbus-connector.cmd.install.messages.provide.button.writeExtraLongClickValueError',
+					'//modbus-connector.cmd.install.messages.button.writeExtraLongClickValueError',
 				);
 			} else {
 				throw new ModbusExceptions\InvalidArgument('Provided payload type is not valid');

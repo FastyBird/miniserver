@@ -102,6 +102,9 @@ conditions:
         invalidTime:
             heading	: "Time is not valid"
             message	: "Provided time value is not valid ATOM value"
+        invalidDays:
+            heading	: "Days are not valid"
+            message	: "Provided days value is not valid list of week days"
         propertyNotUnique:
             heading	: "Property not unique"
             message	: "Condition property have to be unique per trigger"
