@@ -48,7 +48,14 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws Utils\JsonException
 	 */
 	#[DataProvider('connectorPropertyStateRead')]
-	public function testRead(string $url, string|null $token, int $lookups, int $statusCode, string $fixture): void
+	public function testRead(
+		string $url,
+		string|null $token,
+		int $lookups,
+		bool $stored,
+		int $statusCode,
+		string $fixture,
+	): void
 	{
 		// The storage driver behind the module's state repository; production registers it through a bridge
 		$stateRepository = $this->createMock(Models\States\Connectors\IRepository::class);
@@ -59,13 +66,15 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 				static fn (Uuid\UuidInterface $id): bool => $id->toString() === self::PROPERTY_ID,
 			))
 			->willReturnCallback(
-				static fn (Uuid\UuidInterface $id): Tests\Fixtures\Dummy\ConnectorPropertyState => new Tests\Fixtures\Dummy\ConnectorPropertyState(
-					$id,
-					'1',
-					null,
-					false,
-					true,
-				),
+				static fn (Uuid\UuidInterface $id): Tests\Fixtures\Dummy\ConnectorPropertyState|null => $stored
+					? new Tests\Fixtures\Dummy\ConnectorPropertyState(
+						$id,
+						'1',
+						null,
+						false,
+						true,
+					)
+					: null,
 			);
 
 		$this->mockContainerService(
@@ -101,7 +110,7 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @return array<string, array<string|int|null>>
+	 * @return array<string, array<string|int|bool|null>>
 	 */
 	public static function connectorPropertyStateRead(): array
 	{
@@ -113,17 +122,37 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
+				true,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/connector.property.state.read.json',
 			],
 
 			// Invalid responses
 			////////////////////
+			'readNoState' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
+				'Bearer ' . self::VALID_TOKEN,
+				1,
+				false,
+				StatusCodeInterface::STATUS_BAD_REQUEST,
+				__DIR__ . '/../../../fixtures/Controllers/responses/connector.property.state.missing.json',
+			],
+			'readVariableProperty' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366/state',
+				'Bearer ' . self::VALID_TOKEN,
+				0,
+				true,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readMissingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
 				null,
 				0,
+				true,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],

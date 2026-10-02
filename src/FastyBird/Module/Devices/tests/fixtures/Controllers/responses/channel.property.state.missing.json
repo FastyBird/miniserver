@@ -1,0 +1,13 @@
+{
+  "errors": [
+    {
+      "status": "400",
+      "code": "400",
+      "title": "Not found",
+      "detail": "Requested entity was not found"
+    }
+  ],
+  "jsonapi": {
+    "version": "1.1"
+  }
+}
