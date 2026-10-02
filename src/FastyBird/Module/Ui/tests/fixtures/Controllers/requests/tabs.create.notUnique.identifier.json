@@ -1,0 +1,18 @@
+{
+  "data" : {
+    "id" : "b6e2e213-8015-4fe5-a154-c0dbef3f42be",
+    "type" : "com.fastybird.ui-module/tab",
+    "attributes" : {
+      "identifier" : "default",
+      "name" : "New Tab"
+    },
+    "relationships" : {
+      "dashboard" : {
+        "data" : {
+          "id" : "272379d8-8351-44b6-ad8d-73a0abcb7f9c",
+          "type" : "com.fastybird.ui-module/dashboard"
+        }
+      }
+    }
+  }
+}
