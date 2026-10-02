@@ -9,7 +9,7 @@ import { ModulePrefix, wampClient } from '@fastybird/miniserver-core';
 import { useFlashMessage } from './composables';
 import { configurationKey, metaKey } from './configuration';
 import locales from './locales';
-import { useDashboards, useGroups, useWidgetDataSources, useWidgetDisplay, useWidgets } from './models';
+import { useDashboards, useGroups, useTabs, useWidgetDataSources, useWidgetDisplay, useWidgets } from './models';
 import { registerDashboardsStore } from './models/dashboards';
 import { registerGroupsStore } from './models/groups';
 import { registerTabsStore } from './models/tabs';
@@ -60,7 +60,7 @@ const onWsMessage = (data: string): void => {
 
 	const body = JSON.parse(data);
 
-	const stores = [useDashboards(), useGroups(), useWidgets(), useWidgetDataSources(), useWidgetDisplay()];
+	const stores = [useDashboards(), useTabs(), useGroups(), useWidgets(), useWidgetDataSources(), useWidgetDisplay()];
 
 	if (
 		Object.prototype.hasOwnProperty.call(body, 'routing_key') &&
