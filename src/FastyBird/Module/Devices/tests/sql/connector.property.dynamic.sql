@@ -1,0 +1,2 @@
+INSERT INTO `fb_devices_module_connectors_properties` (`property_id`, `connector_id`, `property_type`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_value`, `created_at`, `updated_at`) VALUES
+(_binary 0x1B17BCAAA19E45F098B56A3B2C5D0AB9, _binary 0x17C59DFA2EDD438E8C49FAA4E38E5A5E, 'dynamic', 'state', 'state', 0, 1, 'int', NULL, NULL, NULL, NULL, NULL, '2020-03-20 09:18:20', '2020-03-20 09:18:20');
