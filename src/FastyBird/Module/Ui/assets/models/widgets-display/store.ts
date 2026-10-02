@@ -15,7 +15,7 @@ import { ApiError } from '../../errors';
 import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { useWidgets } from '../../models';
 import { RoutingKeys, WidgetDisplayDocument } from '../../types';
-import { DB_TABLE_WIDGETS_DATA_SOURCES, addRecord, getAllRecords, getRecord, removeRecord } from '../../utilities/database';
+import { DB_TABLE_WIDGETS_DISPLAY, addRecord, getAllRecords, getRecord, removeRecord } from '../../utilities/database';
 import { IWidget } from '../widgets/types';
 
 import {
@@ -125,7 +125,7 @@ const databaseRecordFactory = (record: IWidgetDisplay): IWidgetDisplayDatabaseRe
 };
 
 export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidgetDisplayGetters, IWidgetDisplayActions>(
-	'ui_module_widgets_data_sources',
+	'ui_module_widgets_display',
 	{
 		state: (): IWidgetDisplayState => {
 			return {
@@ -190,7 +190,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 
 				const record = await storeRecordFactory(payload.data);
 
-				await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(record), DB_TABLE_WIDGETS_DATA_SOURCES);
+				await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(record), DB_TABLE_WIDGETS_DISPLAY);
 
 				this.meta[record.id] = record.type;
 
@@ -213,7 +213,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 
 					for (const item of items) {
 						if (item.id in (this.data ?? {})) {
-							await removeRecord(item.id, DB_TABLE_WIDGETS_DATA_SOURCES);
+							await removeRecord(item.id, DB_TABLE_WIDGETS_DISPLAY);
 
 							delete this.meta[item.id];
 
@@ -223,7 +223,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 
 					return;
 				} else if (payload.id !== undefined) {
-					await removeRecord(payload.id, DB_TABLE_WIDGETS_DATA_SOURCES);
+					await removeRecord(payload.id, DB_TABLE_WIDGETS_DISPLAY);
 
 					delete this.meta[payload.id];
 
@@ -266,7 +266,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 						...{ widgetId: displayResponseModel.widget.id },
 					});
 
-					await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(this.data[displayResponseModel.id]), DB_TABLE_WIDGETS_DATA_SOURCES);
+					await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(this.data[displayResponseModel.id]), DB_TABLE_WIDGETS_DISPLAY);
 
 					this.meta[displayResponseModel.id] = displayResponseModel.type;
 				} catch (e: any) {
@@ -342,7 +342,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 							...{ widgetId: updatedDisplayModel.widget.id },
 						});
 
-						await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(this.data[updatedDisplayModel.id]), DB_TABLE_WIDGETS_DATA_SOURCES);
+						await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(this.data[updatedDisplayModel.id]), DB_TABLE_WIDGETS_DISPLAY);
 
 						this.meta[updatedDisplayModel.id] = updatedDisplayModel.type;
 
@@ -407,7 +407,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 						...{ widgetId: savedDisplayModel.widget.id },
 					});
 
-					await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(this.data[savedDisplayModel.id]), DB_TABLE_WIDGETS_DATA_SOURCES);
+					await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(this.data[savedDisplayModel.id]), DB_TABLE_WIDGETS_DISPLAY);
 
 					this.meta[savedDisplayModel.id] = savedDisplayModel.type;
 
@@ -427,10 +427,10 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 			async socketData(payload: IWidgetDisplaySocketDataActionPayload): Promise<boolean> {
 				if (
 					![
-						RoutingKeys.WIDGET_DATA_SOURCE_DOCUMENT_REPORTED,
-						RoutingKeys.WIDGET_DATA_SOURCE_DOCUMENT_CREATED,
-						RoutingKeys.WIDGET_DATA_SOURCE_DOCUMENT_UPDATED,
-						RoutingKeys.WIDGET_DATA_SOURCE_DOCUMENT_DELETED,
+						RoutingKeys.WIDGET_DISPLAY_DOCUMENT_REPORTED,
+						RoutingKeys.WIDGET_DISPLAY_DOCUMENT_CREATED,
+						RoutingKeys.WIDGET_DISPLAY_DOCUMENT_UPDATED,
+						RoutingKeys.WIDGET_DISPLAY_DOCUMENT_DELETED,
 					].includes(payload.routingKey as RoutingKeys)
 				) {
 					return false;
@@ -448,8 +448,8 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 					return false;
 				}
 
-				if (payload.routingKey === RoutingKeys.WIDGET_DATA_SOURCE_DOCUMENT_DELETED) {
-					await removeRecord(body.id, DB_TABLE_WIDGETS_DATA_SOURCES);
+				if (payload.routingKey === RoutingKeys.WIDGET_DISPLAY_DOCUMENT_DELETED) {
+					await removeRecord(body.id, DB_TABLE_WIDGETS_DISPLAY);
 
 					delete this.meta[body.id];
 
@@ -469,7 +469,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 						if (!isEqual(JSON.parse(JSON.stringify(this.data[body.id])), JSON.parse(JSON.stringify(record)))) {
 							this.data[body.id] = record;
 
-							await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(record), DB_TABLE_WIDGETS_DATA_SOURCES);
+							await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(record), DB_TABLE_WIDGETS_DISPLAY);
 
 							this.meta[record.id] = record.type;
 						}
@@ -541,7 +541,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 						this.data[doc.id] = record;
 					}
 
-					await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(record), DB_TABLE_WIDGETS_DATA_SOURCES);
+					await addRecord<IWidgetDisplayDatabaseRecord>(databaseRecordFactory(record), DB_TABLE_WIDGETS_DISPLAY);
 
 					this.meta[record.id] = record.type;
 
@@ -557,7 +557,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 			 * @param {IWidgetDisplayLoadRecordActionPayload} payload
 			 */
 			async loadRecord(payload: IWidgetDisplayLoadRecordActionPayload): Promise<boolean> {
-				const record = await getRecord<IWidgetDisplayDatabaseRecord>(payload.id, DB_TABLE_WIDGETS_DATA_SOURCES);
+				const record = await getRecord<IWidgetDisplayDatabaseRecord>(payload.id, DB_TABLE_WIDGETS_DISPLAY);
 
 				if (record) {
 					this.data = this.data ?? {};
@@ -575,7 +575,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 			 * @param {IWidgetDisplayLoadAllRecordsActionPayload} payload
 			 */
 			async loadAllRecords(payload?: IWidgetDisplayLoadAllRecordsActionPayload): Promise<boolean> {
-				const records = await getAllRecords<IWidgetDisplayDatabaseRecord>(DB_TABLE_WIDGETS_DATA_SOURCES);
+				const records = await getAllRecords<IWidgetDisplayDatabaseRecord>(DB_TABLE_WIDGETS_DISPLAY);
 
 				this.data = this.data ?? {};
 
