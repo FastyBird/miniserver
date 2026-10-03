@@ -173,13 +173,16 @@ final class DisplayV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$url = '/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display';
 
+		$body = file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/display.update.json');
+		self::assertIsString($body);
+
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_PATCH,
 			$url,
 			[
 				'authorization' => 'Bearer ' . self::VALID_TOKEN,
 			],
-			file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/display.update.json'),
+			$body,
 		);
 
 		$response = $router->handle($request);

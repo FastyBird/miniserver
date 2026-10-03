@@ -323,7 +323,7 @@ final class DataSourcesV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @return array<string, array<int|string>>
+	 * @return array<string, array<bool|int|string>>
 	 */
 	public static function dataSourcesParams(): array
 	{

@@ -426,13 +426,18 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		$router = $this->getContainer()->getByType(Routing\IRouter::class);
 
+		$body = file_get_contents(
+			__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.dataSourceParams.json',
+		);
+		self::assertIsString($body);
+
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_POST,
 			'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
 			[
 				'authorization' => 'Bearer ' . self::VALID_TOKEN,
 			],
-			file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.dataSourceParams.json'),
+			$body,
 		);
 
 		$response = $router->handle($request);
