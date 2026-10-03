@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "author": "FastyBird team",
+    "copyright": "FastyBird s.r.o"
+  },
+  "jsonapi": {
+    "version": "1.1"
+  },
+  "links": {
+    "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties"
+  },
+  "data": {
+    "type": "com.fastybird.devices-module/property/device/variable",
+    "id": "50b0fd41-0a6e-44f0-b513-c536208afccf",
+    "attributes": {
+      "category": "generic",
+      "identifier": "battery",
+      "name": "battery",
+      "data_type": "enum",
+      "unit": null,
+      "format": [
+        "low",
+        "medium",
+        "full"
+      ],
+      "invalid": null,
+      "scale": null,
+      "step": null,
+      "value_transformer": null,
+      "value": null,
+      "default": null,
+      "owner": null,
+      "created_at": "2020-04-01T12:00:00+00:00",
+      "updated_at": "2020-04-01T12:00:00+00:00"
+    },
+    "relationships": {
+      "device": {
+        "links": {
+          "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa"
+        },
+        "data": {
+          "type": "com.fastybird.devices-module/device/dummy",
+          "id": "69786d15-fd0c-4d9f-9378-33287c2009fa"
+        }
+      },
+      "children": {
+        "links": {
+          "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf/relationships/children",
+          "related": {
+            "href": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf/children",
+            "meta": {
+              "count": 0
+            }
+          }
+        },
+        "data": []
+      }
+    },
+    "links": {
+      "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf"
+    }
+  }
+}

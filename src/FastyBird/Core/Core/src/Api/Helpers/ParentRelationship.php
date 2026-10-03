@@ -53,12 +53,12 @@ final class ParentRelationship
 			return;
 		}
 
-		if (
-			$identifier !== null
-			&& Uuid\Uuid::isValid($identifier)
-			&& Uuid\Uuid::fromString($identifier)->equals($parentId)
-		) {
-			return;
+		try {
+			if ($identifier !== null && Uuid\Uuid::fromString($identifier)->equals($parentId)) {
+				return;
+			}
+		} catch (Uuid\Exception\InvalidArgumentException) {
+			// Not a UUID, so it cannot name the URL parent either
 		}
 
 		throw new ApiExceptions\JsonApiError(

@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "author": "FastyBird team",
+    "copyright": "FastyBird s.r.o"
+  },
+  "jsonapi": {
+    "version": "1.1"
+  },
+  "links": {
+    "self": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties"
+  },
+  "data": {
+    "type": "com.fastybird.devices-module/property/channel/dynamic",
+    "id": "06644f70-7707-41c3-9a97-a5d66219659c",
+    "attributes": {
+      "category": "generic",
+      "identifier": "button",
+      "name": "button",
+      "settable": false,
+      "queryable": true,
+      "data_type": "unknown",
+      "unit": null,
+      "format": null,
+      "invalid": null,
+      "scale": null,
+      "step": null,
+      "default": null,
+      "value_transformer": null,
+      "owner": null,
+      "created_at": "2020-04-01T12:00:00+00:00",
+      "updated_at": "2020-04-01T12:00:00+00:00"
+    },
+    "relationships": {
+      "channel": {
+        "links": {
+          "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e"
+        },
+        "data": {
+          "type": "com.fastybird.devices-module/channel/dummy",
+          "id": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e"
+        }
+      },
+      "children": {
+        "links": {
+          "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/relationships/children",
+          "related": {
+            "href": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/children",
+            "meta": {
+              "count": 0
+            }
+          }
+        },
+        "data": []
+      },
+      "state": {
+        "links": {
+          "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/relationships/state",
+          "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/state"
+        },
+        "data": null
+      }
+    },
+    "links": {
+      "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c"
+    }
+  }
+}
