@@ -194,7 +194,7 @@ final class TabsV1 extends BaseV1
 							strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.message')),
 							[
 								'pointer' => '/data/attributes/' . Utilities\Api::fieldToJsonApi(
-									Utils\Strings::substring($columnKey, 7),
+									Utils\Strings::substring($columnKey, 4),
 								),
 							],
 						);

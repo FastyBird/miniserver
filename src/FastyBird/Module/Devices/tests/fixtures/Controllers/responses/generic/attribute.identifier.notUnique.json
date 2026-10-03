@@ -1,0 +1,16 @@
+{
+  "errors": [
+    {
+      "status": "422",
+      "code": "422",
+      "title": "Attribute not unique",
+      "detail": "Provided attribute is not unique",
+      "source": {
+        "pointer": "/data/attributes/identifier"
+      }
+    }
+  ],
+  "jsonapi": {
+    "version": "1.1"
+  }
+}

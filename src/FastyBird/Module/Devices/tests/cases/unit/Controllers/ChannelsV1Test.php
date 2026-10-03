@@ -250,6 +250,15 @@ final class ChannelsV1Test extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/channels.create.notUnique.json',
 			],
+			'notUniqueIdentifier' => [
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/channels.create.notUnique.identifier.json',
+				),
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/attribute.identifier.notUnique.json',
+			],
 			'invalidType' => [
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels',
 				'Bearer ' . self::VALID_TOKEN,

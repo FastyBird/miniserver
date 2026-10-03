@@ -173,7 +173,7 @@ final class DashboardsV1 extends BaseV1
 							strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.message')),
 							[
 								'pointer' => '/data/attributes/' . Utilities\Api::fieldToJsonApi(
-									Utils\Strings::substring($columnKey, 7),
+									Utils\Strings::substring($columnKey, 10),
 								),
 							],
 						);
@@ -257,7 +257,7 @@ final class DashboardsV1 extends BaseV1
 			} catch (ApiExceptions\JsonApi $ex) {
 				throw $ex;
 			} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
-				if (preg_match("%key '(?P<key>.+)_unique'%", $ex->getMessage(), $match) !== false) {
+				if (preg_match("%key '(?P<key>.+)_unique'%", $ex->getMessage(), $match) === 1) {
 					$columnParts = explode('.', $match['key']);
 					$columnKey = end($columnParts);
 
@@ -268,7 +268,7 @@ final class DashboardsV1 extends BaseV1
 							strval($this->translator->translate('//ui-module.base.messages.uniqueAttribute.message')),
 							[
 								'pointer' => '/data/attributes/' . Utilities\Api::fieldToJsonApi(
-									Utils\Strings::substring($columnKey, 7),
+									Utils\Strings::substring($columnKey, 10),
 								),
 							],
 						);

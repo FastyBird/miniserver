@@ -191,7 +191,7 @@ final class ConnectorPropertiesV1 extends BaseV1
 							),
 							[
 								'pointer' => '/data/attributes/' . Utilities\Api::fieldToJsonApi(
-									Utils\Strings::substring($columnKey, 7),
+									Utils\Strings::substring($columnKey, 9),
 								),
 							],
 						);
