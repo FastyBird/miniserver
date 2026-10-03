@@ -182,7 +182,9 @@ final class DataSourcesV1Test extends Tests\Cases\Unit\DbTestCase
 				// Body names the ambient-light widget, the URL names the room-temperature one
 				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources',
 				'Bearer ' . self::VALID_TOKEN,
-				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/dataSources.create.otherWidget.json'),
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/dataSources.create.otherWidget.json',
+				),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.widget.json',
 			],

@@ -286,7 +286,9 @@ final class DevicesV1Test extends Tests\Cases\Unit\DbTestCase
 				// Body names the dummy connector, the URL names the generic one
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices',
 				'Bearer ' . self::VALID_TOKEN,
-				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/devices.create.otherConnector.json'),
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/devices.create.otherConnector.json',
+				),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.connector.json',
 			],

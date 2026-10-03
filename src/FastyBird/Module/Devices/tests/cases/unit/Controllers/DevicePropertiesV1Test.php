@@ -272,7 +272,9 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 				// Body names the second device, the URL names the first one
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties',
 				'Bearer ' . self::VALID_TOKEN,
-				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/device.properties.create.otherDevice.json'),
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/device.properties.create.otherDevice.json',
+				),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.device.json',
 			],
@@ -281,7 +283,9 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties',
 				'Bearer ' . self::VALID_TOKEN,
-				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/device.properties.create.otherDevice.json'),
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/device.properties.create.otherDevice.json',
+				),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.device.json',
 			],

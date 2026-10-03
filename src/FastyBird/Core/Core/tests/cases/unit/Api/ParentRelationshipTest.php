@@ -3,7 +3,7 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Api;
 
 use FastyBird\Core\Api\Encoding;
-use FastyBird\Core\Api\Exceptions;
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Api\Helpers;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Fig\Http\Message\StatusCodeInterface;
@@ -26,7 +26,8 @@ final class ParentRelationshipTest extends TestCase
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
-	 * @throws Exceptions\JsonApiError
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ApiExceptions\JsonApiError
 	 */
 	#[DataProvider('passing')]
 	public function testPasses(string $body): void
@@ -57,6 +58,7 @@ final class ParentRelationshipTest extends TestCase
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	#[DataProvider('rejected')]
 	public function testRejects(string $body): void
@@ -65,7 +67,7 @@ final class ParentRelationshipTest extends TestCase
 			$this->validate($body);
 
 			self::fail('A body naming another parent must be rejected');
-		} catch (Exceptions\JsonApiError $ex) {
+		} catch (ApiExceptions\JsonApiError $ex) {
 			self::assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $ex->getCode());
 			self::assertSame('Invalid relation', $ex->getMessage());
 			self::assertSame('Provided relation is not valid', $ex->getDetail());
@@ -87,7 +89,8 @@ final class ParentRelationshipTest extends TestCase
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
-	 * @throws Exceptions\JsonApiError
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ApiExceptions\JsonApiError
 	 */
 	private function validate(string $body): void
 	{
