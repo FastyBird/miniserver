@@ -8,7 +8,7 @@ import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
 import { v4 as uuid } from 'uuid';
 
-import { ModulePrefix, useWampV1Client } from '@fastybird/miniserver-core';
+import { ModulePrefix, wampClient } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.widget.dataSource.json';
 import { ApiError } from '../../errors';
@@ -114,7 +114,7 @@ const databaseRecordFactory = (record: IWidgetDataSource): IWidgetDataSourceData
 			entity: record.type.entity,
 		},
 
-		params: record.params,
+		params: JSON.parse(JSON.stringify(record.params)),
 
 		relationshipNames: record.relationshipNames.map((name) => name),
 
@@ -642,10 +642,8 @@ export const useWidgetDataSources = defineStore<string, IWidgetDataSourcesState,
 					throw new Error('ui-module.widget-dataSources.transmit.failed');
 				}
 
-				const { call } = useWampV1Client<{ data: string }>();
-
 				try {
-					const response = await call(`/${ModulePrefix.UI}/v1/exchange`, {
+					const response = await wampClient.call<{ data: string }>(`/${ModulePrefix.UI}/v1/exchange`, {
 						routing_key: ActionRoutes.WIDGET_DATA_SOURCE,
 						source: dataSource.type.source,
 						data: {
