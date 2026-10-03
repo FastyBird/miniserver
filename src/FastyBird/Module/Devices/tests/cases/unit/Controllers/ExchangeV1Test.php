@@ -89,7 +89,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	/** @var list<string> */
 	private array $published = [];
 
-	/** @var list<array{source: string, routing_key: string, document: class-string|null, data: array<string, mixed>|null}> */
+	/** @var list<array{source: int|string, routing_key: string, document: class-string|null, data: array<string, mixed>|null}> */
 	private array $publishedDocuments = [];
 
 	public function setUp(): void
