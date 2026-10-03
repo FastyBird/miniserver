@@ -19,6 +19,7 @@ use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers;
@@ -64,11 +65,15 @@ final class ExchangeV1 extends Controllers\Controller
 		private readonly Models\Configuration\Connectors\Properties\Repository $connectorPropertiesConfigurationRepository,
 		private readonly Models\Configuration\Devices\Properties\Repository $devicePropertiesConfigurationRepository,
 		private readonly Models\Configuration\Channels\Properties\Repository $channelPropertiesConfigurationRepository,
+		private readonly Models\Configuration\Connectors\Controls\Repository $connectorControlsConfigurationRepository,
+		private readonly Models\Configuration\Devices\Controls\Repository $deviceControlsConfigurationRepository,
+		private readonly Models\Configuration\Channels\Controls\Repository $channelControlsConfigurationRepository,
 		private readonly Models\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
 		private readonly Models\States\DevicePropertiesManager $devicePropertiesStatesManager,
 		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
 		private readonly Devices\Logger $logger,
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
+		private readonly Publisher\MessagePublisher $publisher,
 	)
 	{
 		parent::__construct();
@@ -228,10 +233,66 @@ final class ExchangeV1 extends Controllers\Controller
 
 		switch ($args['routing_key']) {
 			case Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY:
+				// No HTTP endpoint runs a control; it changes state, so it takes the rule for a change
+				$this->authorize($client, ...self::WRITE_ROLES);
+
+				$document = $this->documentFactory->create(
+					DevicesDocuments\Connectors\Controls\Actions\Action::class,
+					$this->controlActionData($data),
+				);
+
+				$control = $this->connectorControlsConfigurationRepository->find($document->getControl());
+
+				if ($control === null || !$control->getConnector()->equals($document->getConnector())) {
+					throw new DevicesExceptions\InvalidArgument('Requested connector control was not found');
+				}
+
+				$this->publishControlAction(
+					Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY,
+					$document,
+				);
+
+				break;
 			case Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY:
+				// No HTTP endpoint runs a control; it changes state, so it takes the rule for a change
+				$this->authorize($client, ...self::WRITE_ROLES);
+
+				$document = $this->documentFactory->create(
+					DevicesDocuments\Devices\Controls\Actions\Action::class,
+					$this->controlActionData($data),
+				);
+
+				$control = $this->deviceControlsConfigurationRepository->find($document->getControl());
+
+				if ($control === null || !$control->getDevice()->equals($document->getDevice())) {
+					throw new DevicesExceptions\InvalidArgument('Requested device control was not found');
+				}
+
+				$this->publishControlAction(
+					Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY,
+					$document,
+				);
+
+				break;
 			case Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY:
 				// No HTTP endpoint runs a control; it changes state, so it takes the rule for a change
 				$this->authorize($client, ...self::WRITE_ROLES);
+
+				$document = $this->documentFactory->create(
+					DevicesDocuments\Channels\Controls\Actions\Action::class,
+					$this->controlActionData($data),
+				);
+
+				$control = $this->channelControlsConfigurationRepository->find($document->getControl());
+
+				if ($control === null || !$control->getChannel()->equals($document->getChannel())) {
+					throw new DevicesExceptions\InvalidArgument('Requested channel control was not found');
+				}
+
+				$this->publishControlAction(
+					Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY,
+					$document,
+				);
 
 				break;
 			case Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY:
@@ -286,6 +347,38 @@ final class ExchangeV1 extends Controllers\Controller
 		$this->getPayload()->data = [
 			'response' => 'accepted',
 		];
+	}
+
+	/**
+	 * @param array<string, mixed>|null $data
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @throws DevicesExceptions\InvalidArgument
+	 */
+	private function controlActionData(array|null $data): array
+	{
+		if ($data === null) {
+			throw new DevicesExceptions\InvalidArgument('Provided control action has no data');
+		}
+
+		return $data;
+	}
+
+	/**
+	 * A control action has no handler in this process: it is carried on through the exchange to
+	 * whichever consumer runs the control, as the property actions are when the exchange is on.
+	 *
+	 * @throws DevicesExceptions\InvalidState
+	 */
+	private function publishControlAction(
+		string $routingKey,
+		DevicesDocuments\Document $document,
+	): void
+	{
+		if (!$this->publisher->publish(Sources\Module::DEVICES, $routingKey, $document)) {
+			throw new DevicesExceptions\InvalidState('Requested control action could not be published');
+		}
 	}
 
 	/**
