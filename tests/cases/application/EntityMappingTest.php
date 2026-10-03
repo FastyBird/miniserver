@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * EntityMappingTest.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:MiniServer!
- * @subpackage     Tests
- * @since          1.0.0
- *
- * @date           12.09.26
- */
-
 namespace FastyBird\MiniServer\Tests\Cases\Application;
 
 use JsonException;
@@ -62,13 +49,13 @@ final class EntityMappingTest extends TestCase
 	 * null for rows that exist, because the persister emits WHERE <type> IN (...) from the
 	 * map. That is a production outage no per-package suite can see.
 	 */
-	private const EXPECTED_DISCRIMINATORS = [
+	private const array EXPECTED_DISCRIMINATORS = [
 		'FastyBird\Module\Devices\Entities\Connectors\Connector' => 12,
 		'FastyBird\Module\Devices\Entities\Devices\Device' => 18,
 		'FastyBird\Module\Devices\Entities\Channels\Channel' => 50,
 	];
 
-	private const EXPECTED_METADATA_CLASSES = 145;
+	private const int EXPECTED_METADATA_CLASSES = 145;
 
 	/**
 	 * @throws JsonException
@@ -82,7 +69,7 @@ final class EntityMappingTest extends TestCase
 			[],
 			$result['errors'],
 			sprintf(
-				"Doctrine reports %d class(es) with invalid mapping when every extension is "
+				'Doctrine reports %d class(es) with invalid mapping when every extension is '
 				. "registered. The single-extension suites cannot see this.\n\n%s",
 				$result['classesInError'],
 				implode("\n\n", array_slice($result['errorText'], 0, 5)),

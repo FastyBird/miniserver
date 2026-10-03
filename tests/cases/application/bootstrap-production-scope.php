@@ -10,15 +10,6 @@
  *
  * Run as a child process by EntityMappingTest; see the comment there for why it cannot
  * happen in-process.
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:MiniServer!
- * @subpackage     Tests
- * @since          1.0.0
- *
- * @date           12.09.26
  */
 
 // The deprecation notices vendor emits on PHP 8.4 would otherwise be interleaved with the

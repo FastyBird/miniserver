@@ -115,7 +115,13 @@ final class TranslationKeyGuardTest extends TestCase
 		'//modbus-connector.cmd.install.title',
 	];
 
-	/** @var array{literals: list<array{location: string, key: string}>, prefixes: list<array{location: string, key: string}>, dynamic: list<string>}|null */
+	/**
+	 * @var array{
+	 *     literals: list<array{location: string, key: string}>,
+	 *     prefixes: list<array{location: string, key: string}>,
+	 *     dynamic: list<string>,
+	 * }|null
+	 */
 	private static array|null $calls = null;
 
 	/** @var array<string, array<string, array<string, true>>>|null */
@@ -362,7 +368,9 @@ final class TranslationKeyGuardTest extends TestCase
 			$parts = explode('.', basename($path));
 
 			if (count($parts) !== 3) {
-				throw new RuntimeException(sprintf('Translation file %s is not named <domain>.<locale>.neon', $location));
+				throw new RuntimeException(
+					sprintf('Translation file %s is not named <domain>.<locale>.neon', $location),
+				);
 			}
 
 			$data = Neon\Neon::decodeFile($path);

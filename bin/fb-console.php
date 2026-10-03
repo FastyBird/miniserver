@@ -10,16 +10,19 @@ for ($i = 0;$i < 10;$i++) {
 	$srcPath = realpath($path . DIRECTORY_SEPARATOR . 'src');
 
 	if ($srcPath !== false) {
-		$boostrapFile = realpath($path) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'FastyBird' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'fb-console.php';
+		$boostrapFile = implode(
+			DIRECTORY_SEPARATOR,
+			[realpath($path), 'src', 'FastyBird', 'Core', 'Core', 'bin', 'fb-console.php'],
+		);
 
 		break;
 	}
 }
 
 if ($boostrapFile === false || !file_exists($boostrapFile)) {
-	echo "Application file not found." . PHP_EOL;
+	echo 'Application file not found.' . PHP_EOL;
 
 	exit(1);
 }
 
-include($boostrapFile);
+include $boostrapFile;

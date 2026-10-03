@@ -32,13 +32,22 @@ qa: ## Check code quality - coding style and static analysis
 	make phpstan
 	make cs
 
+# PHPCS_PATHS is every directory of first-party PHP outside vendor/ and tools/. Until #610 it
+# was `src` alone, so the application-scope tests under tests/cases/application and the two
+# bin/*.php launchers were never checked and had drifted from the standard unnoticed.
+# tests/stubs is excluded in tools/phpcs.xml (the .stub files are PHPStan stubs, not PHP the
+# standard applies to). phpcs only picks up *.php by default, so the extensionless shebang
+# wrappers bin/fb-console and bin/fb-supervisor are not scanned; each is a one-line include of
+# its .php sibling, which is.
+PHPCS_PATHS=src tests bin
+
 cs: ## Check PHP files coding style
 	mkdir -p var/tools/PHP_CodeSniffer
-	$(PRE_PHP) "vendor/bin/phpcs" src --standard=$(PHPCS_CONFIG) --parallel=$(LOGICAL_CORES) $(ARGS)
+	$(PRE_PHP) "vendor/bin/phpcs" $(PHPCS_PATHS) --standard=$(PHPCS_CONFIG) --parallel=$(LOGICAL_CORES) $(ARGS)
 
 csf: ## Fix PHP files coding style
 	mkdir -p var/tools/PHP_CodeSniffer
-	$(PRE_PHP) "vendor/bin/phpcbf" src --standard=$(PHPCS_CONFIG) --parallel=$(LOGICAL_CORES) $(ARGS)
+	$(PRE_PHP) "vendor/bin/phpcbf" $(PHPCS_PATHS) --standard=$(PHPCS_CONFIG) --parallel=$(LOGICAL_CORES) $(ARGS)
 
 lint:
 	$(PRE_PHP) "vendor/bin/parallel-lint" src --exclude .git --exclude vendor

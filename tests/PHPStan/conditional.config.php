@@ -1,5 +1,8 @@
 <?php declare(strict_types = 1);
 
+// Empty today, and kept as a variable rather than `return []` so a conditional entry can be
+// added exactly as in the example below.
+// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable.UselessVariable
 $config = [];
 
 /*

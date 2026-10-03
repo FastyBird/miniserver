@@ -15,6 +15,9 @@
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
         <properties>
             <property name="rootNamespaces" type="array">
+                <!-- The application-scope tier, outside every package; mirrors composer.json's autoload-dev. -->
+                <element key="tests/cases/application" value="FastyBird\MiniServer\Tests\Cases\Application"/>
+
                 <element key="src/FastyBird/Addon/VirtualThermostat/src" value="FastyBird\Addon\VirtualThermostat"/>
                 <element key="src/FastyBird/Addon/VirtualThermostat/tests/cases/unit" value="FastyBird\Addon\VirtualThermostat\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Addon/VirtualThermostat/tests/fixtures" value="FastyBird\Addon\VirtualThermostat\Tests\Fixtures"/>
