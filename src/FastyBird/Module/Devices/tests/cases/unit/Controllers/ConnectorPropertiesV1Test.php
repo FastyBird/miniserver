@@ -112,6 +112,73 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Utils\JsonException
 	 */
+	#[DataProvider('connectorPropertiesCreate')]
+	public function testCreate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
+	{
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+
+		$headers = [];
+
+		if ($token !== null) {
+			$headers['authorization'] = $token;
+		}
+
+		$request = new ServerRequest(
+			RequestMethodInterface::METHOD_POST,
+			$url,
+			$headers,
+			$body,
+		);
+
+		$response = $router->handle($request);
+
+		self::assertTrue($response instanceof Http\Response);
+		self::assertSame($statusCode, $response->getStatusCode());
+		Tests\Tools\JsonAssert::assertFixtureMatch(
+			$fixture,
+			(string) $response->getBody(),
+		);
+	}
+
+	/**
+	 * @return array<string, array<bool|string|int|null>>
+	 */
+	public static function connectorPropertiesCreate(): array
+	{
+		return [
+			// Valid responses
+			//////////////////
+			'create' => [
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/connector.properties.create.json'),
+				StatusCodeInterface::STATUS_CREATED,
+				__DIR__ . '/../../../fixtures/Controllers/responses/connector.properties.create.json',
+			],
+
+			// Invalid responses
+			////////////////////
+			'otherConnector' => [
+				// Body names the dummy connector, the URL names the generic one
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/connector.properties.create.otherConnector.json',
+				),
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.connector.json',
+			],
+		];
+	}
+
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Utils\JsonException
+	 */
 	#[DataProvider('connectorPropertiesUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{

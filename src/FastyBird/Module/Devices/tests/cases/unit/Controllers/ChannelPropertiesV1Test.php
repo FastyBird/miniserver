@@ -272,8 +272,33 @@ final class ChannelPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/channel.properties.create.composedEnum.json',
 			],
 
+			'createThroughChannel' => [
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/channel.properties.create.json'),
+				StatusCodeInterface::STATUS_CREATED,
+				__DIR__ . '/../../../fixtures/Controllers/responses/channel.properties.create.channel.json',
+			],
+
 			// Invalid responses
 			////////////////////
+			'otherChannel' => [
+				// Body names channel two of the same device, the URL names channel one
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/channel.properties.create.otherChannel.json'),
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.channel.json',
+			],
+			'otherChannelThroughChannel' => [
+				// Body names channel two of the same device, the URL names channel one
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/channel.properties.create.otherChannel.json'),
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.channel.json',
+			],
 			'missingRequired' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
