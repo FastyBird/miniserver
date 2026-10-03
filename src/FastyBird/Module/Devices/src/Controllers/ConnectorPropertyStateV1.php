@@ -45,7 +45,6 @@ use function strval;
 final class ConnectorPropertyStateV1 extends BaseV1
 {
 
-	use Controllers\Finders\TDevice;
 	use Controllers\Finders\TConnector;
 
 	public function __construct(
