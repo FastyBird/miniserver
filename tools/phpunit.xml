@@ -4,6 +4,7 @@
          bootstrap="./phpunit-bootstrap.php"
          beStrictAboutOutputDuringTests="true"
          colors="true"
+         failOnPhpunitDeprecation="true"
          failOnRisky="true"
          failOnWarning="true"
          stderr="true"
@@ -107,38 +108,43 @@
         directories, which would have zeroed the filter entirely.
     -->
     <!--
-        restrictDeprecations keeps the deprecation report to code this project
-        owns, which is the same default that the configuration template
-        PHPUnit itself generates carries. Collector::testTriggeredPhpDeprecation() drops any
-        deprecation whose file is outside the <include> set below.
+        ignoreIndirectDeprecations keeps the deprecation report to deprecations this
+        project can act on. PHPUnit classifies every deprecation by who triggered it
+        (Runner/ErrorHandler.php, Event/Value/Test/Issue/IssueTrigger.php): a PHP
+        deprecation raised while compiling or running a file in the <include> set
+        below, or in the test file itself, is "direct"; one raised in any other file
+        (vendor/, or a tests/tools or tests/fixtures helper) is "indirect", and this
+        attribute drops it. A userland E_USER_DEPRECATED is "direct" when
+        first-party code called the deprecated API and "indirect" when vendor code
+        called vendor code.
 
-        Without it the PHP 8.4 run reports 158 deprecations and writes roughly
-        28,000 lines of detail, none of it actionable: they all come from vendor
-        code tripping the implicitly-nullable-parameter deprecation
-        (thecodingmachine/safe through infection, illuminate/* through
-        mathsolver). Those are tracked in docs/deprecations.md, not here, and
-        burying our own deprecations under them is the opposite of what the
-        report is for.
+        Without a filter the PHP 8.4 run reports 231 deprecations from 1094 tests
+        (measured for #610), none of them actionable: every one is vendor code
+        tripping the implicitly-nullable-parameter deprecation as it is autoloaded
+        (neomerx/json-api, illuminate/*, casbin/casbin, z4kn4fein/php-semver,
+        predis/predis, binsoul/net-mqtt).
+        Those are tracked in docs/deprecations.md, not here, and burying our own
+        deprecations under them is the opposite of what the report is for. See
+        docs/baseline.md, "Test tooling hygiene (#610)", for the measured counts
+        with no filter and with this one.
+
+        This replaced restrictDeprecations="true" (#610). That attribute filtered by
+        whether the triggering file is inside <include>, but it left the 11.5 schema
+        in PHPUnit 11.1, so every run reported "Your XML configuration validates
+        against a deprecated schema" once per process: one per paratest worker plus
+        one for the paratest parent, which is why CI (4 cores) showed 5 and a 10-core
+        machine 11. The two filters differ only at the edges, and in the useful
+        direction: ignoreIndirectDeprecations additionally reports a deprecation in a
+        test file and a deprecated vendor API called from first-party code, both of
+        which restrictDeprecations silently dropped.
 
         This cannot change pass or fail: failOnDeprecation is not set.
-
-        Kept as restrictDeprecations rather than renamed to PHPUnit 11.1's
-        ignoreIndirectDeprecations, which the migrate-configuration CLI flag
-        suggests and which schema/11.4.xsd (and the current 11.5 schema, vendor/phpunit/
-        phpunit/phpunit.xsd) no longer declare. The two are not equivalent:
-        restrictDeprecations (still parsed by Xml/Loader.php, still enforced by
-        Runner/IssueFilter.php in 11.5.56) filters by whether the triggering
-        file is inside the <include> set below; ignoreIndirectDeprecations
-        filters by whether the trigger was direct or indirect in the call
-        stack, an unrelated axis that was not verified here to drop the same
-        158 vendor-noise deprecations. Renaming on faith would trade a known,
-        working, documented filter for an unverified one just to silence a
-        cosmetic notice. The resulting "Your XML configuration validates
-        against a deprecated schema" PHPUnit test runner deprecation (one per
-        paratest worker process, hence e.g. 11 with -p11) is accepted as a
-        known, non-blocking finding rather than chased further.
+        failOnPhpunitDeprecation is, on the root element, so a PHPUnit deprecation
+        (a configuration PHPUnit no longer accepts, doc-comment metadata, a
+        deprecated assertion) fails the run instead of adding to a count nobody
+        reads.
     -->
-    <source restrictDeprecations="true">
+    <source ignoreIndirectDeprecations="true">
         <include>
             <directory suffix=".php">../src/FastyBird/Addon/*/src</directory>
             <directory suffix=".php">../src/FastyBird/Automator/*/src</directory>
