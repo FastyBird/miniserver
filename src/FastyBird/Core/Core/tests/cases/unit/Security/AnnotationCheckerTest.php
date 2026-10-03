@@ -99,4 +99,43 @@ final class AnnotationCheckerTest extends TestCase
 		self::assertTrue($checker->isAllowed(new ReflectionClass(FixturesSecurity\Unannotated::class)));
 	}
 
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
+	 * @throws Throwable
+	 */
+	public function testCheckAccessEvaluatesTheAnnotationsOfAnExistingMethod(): void
+	{
+		$guest = new Access\AnnotationChecker($this->user(loggedIn: false));
+		$loggedIn = new Access\AnnotationChecker(
+			$this->user(loggedIn: true, identity: self::USER_ROLE_IDENTITY),
+		);
+
+		self::assertFalse($guest->checkAccess(FixturesSecurity\MethodIsSecured::class, 'read'));
+		self::assertTrue($loggedIn->checkAccess(FixturesSecurity\MethodIsSecured::class, 'read'));
+		self::assertTrue($guest->checkAccess(FixturesSecurity\MethodIsSecured::class, null));
+	}
+
+	/**
+	 * A route or link to a method that does not exist is a wiring error, not an access decision
+	 * (#607). Reporting it as "not allowed" answered 403 to every caller and hid the broken
+	 * target (#586, #596).
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Throwable
+	 */
+	public function testCheckAccessToAMissingMethodThrowsInvalidState(): void
+	{
+		$checker = new Access\AnnotationChecker(
+			$this->user(loggedIn: true, identity: self::USER_ROLE_IDENTITY),
+		);
+
+		$this->expectException(Exceptions\InvalidState::class);
+		$this->expectExceptionMessage(
+			'Access check targets ' . FixturesSecurity\MethodIsSecured::class . '::missing(), which does not exist',
+		);
+
+		$checker->checkAccess(FixturesSecurity\MethodIsSecured::class, 'missing');
+	}
+
 }

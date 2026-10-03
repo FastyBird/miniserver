@@ -26,11 +26,13 @@ use const PHP_BINARY;
  * Asserts, at production scope, that every registered API route can reach the controller code
  * it names (#596).
  *
- * A route whose target method does not exist does not fail loudly. The authorization
+ * A route whose target method does not exist used not to fail loudly. The authorization
  * middleware reflects on the target method before dispatch, and
- * Security\Access\AnnotationChecker::checkAccess() turns the ReflectionException into "access
- * denied", so the route answers 403 to every caller. That is how the Devices property state
+ * Security\Access\AnnotationChecker::checkAccess() turned the ReflectionException into "access
+ * denied", so the route answered 403 to every caller. That is how the Devices property state
  * routes (#586) and the Triggers control create/update/delete routes (#596) went unnoticed.
+ * Since #607 checkAccess() throws InvalidState instead, so such a route answers 500 and logs
+ * the error; this test still catches it before anything is served.
  *
  * The controller finder traits (Controllers\Finders\T*) read repositories from the controller
  * that composes them. Their @property-read docblocks satisfy PHPStan whether or not the
