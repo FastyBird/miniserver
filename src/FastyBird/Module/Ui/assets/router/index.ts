@@ -1,6 +1,14 @@
+import { h } from 'vue';
+import type { VNode } from 'vue';
 import { RouteRecordRaw, Router } from 'vue-router';
 
+import { Icon } from '@iconify/vue';
+
 import { useRoutesNames } from '../composables';
+
+const FasGauge = (): VNode => h(Icon, { icon: 'fa6-solid:gauge' });
+const FasLayerGroup = (): VNode => h(Icon, { icon: 'fa6-solid:layer-group' });
+const FasSliders = (): VNode => h(Icon, { icon: 'fa6-solid:sliders' });
 
 const { routeNames } = useRoutesNames();
 
@@ -9,6 +17,9 @@ const moduleRoutes: RouteRecordRaw[] = [
 		path: '/',
 		name: routeNames.root,
 		component: () => import('../layouts/layout-default.vue'),
+		meta: {
+			title: 'UI module',
+		},
 		children: [
 			{
 				path: 'dashboards',
@@ -16,6 +27,8 @@ const moduleRoutes: RouteRecordRaw[] = [
 				component: () => import('../views/view-dashboards.vue'),
 				meta: {
 					guards: ['authenticated'],
+					title: 'Dashboards',
+					icon: FasGauge,
 				},
 				children: [
 					{
@@ -64,6 +77,8 @@ const moduleRoutes: RouteRecordRaw[] = [
 				component: () => import('../views/view-groups.vue'),
 				meta: {
 					guards: ['authenticated'],
+					title: 'Groups',
+					icon: FasLayerGroup,
 				},
 				children: [
 					{
@@ -112,6 +127,8 @@ const moduleRoutes: RouteRecordRaw[] = [
 				component: () => import('../views/view-widgets.vue'),
 				meta: {
 					guards: ['authenticated'],
+					title: 'Widgets',
+					icon: FasSliders,
 				},
 				children: [
 					{

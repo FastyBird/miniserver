@@ -4,11 +4,11 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import get from 'lodash.get';
 import 'virtual:uno.css';
 
-import { ModulePrefix, wampClient } from '@fastybird/miniserver-core';
+import { IExtensionOptions, ModulePrefix, wampClient } from '@fastybird/miniserver-core';
 
 import { useFlashMessage } from './composables';
-import { configurationKey, metaKey } from './configuration';
-import locales from './locales';
+import { metaKey } from './configuration';
+import locales, { MessageSchema } from './locales';
 import { useDashboards, useGroups, useTabs, useWidgetDataSources, useWidgetDisplay, useWidgets } from './models';
 import { registerDashboardsStore } from './models/dashboards';
 import { registerGroupsStore } from './models/groups';
@@ -17,43 +17,30 @@ import { registerWidgetsStore } from './models/widgets';
 import { registerWidgetDataSourcesStore } from './models/widgets-data-sources';
 import { registerWidgetDisplayStore } from './models/widgets-display';
 import moduleRouter from './router';
-import { IUiModuleOptions, InstallFunction } from './types';
 
-export default function createDevicesModule(): InstallFunction {
-	return {
-		install(app: App, options: IUiModuleOptions): void {
-			if (this.installed) {
-				return;
-			}
-			this.installed = true;
+export default {
+	install: (app: App, options: IExtensionOptions<{ 'en-US': MessageSchema }>): void => {
+		moduleRouter(options.router);
 
-			if (typeof options.router === 'undefined') {
-				throw new Error('Router instance is missing in module configuration');
-			}
+		app.provide(metaKey, options.meta);
 
-			moduleRouter(options.router);
+		wampClient.subscribe(`/${ModulePrefix.UI}/v1/exchange`, onWsMessage);
 
-			app.provide(metaKey, options.meta);
-			app.provide(configurationKey, options.configuration);
+		for (const [locale, translations] of Object.entries(locales)) {
+			const currentMessages = options.i18n.global.getLocaleMessage(locale);
+			const mergedMessages = defaultsDeep(currentMessages, { uiModule: translations });
 
-			wampClient.subscribe(`/${ModulePrefix.UI}/v1/exchange`, onWsMessage);
+			options.i18n.global.setLocaleMessage(locale, mergedMessages);
+		}
 
-			for (const [locale, translations] of Object.entries(locales)) {
-				const currentMessages = options.i18n?.global.getLocaleMessage(locale);
-				const mergedMessages = defaultsDeep(currentMessages, translations);
-
-				options.i18n?.global.setLocaleMessage(locale, mergedMessages);
-			}
-
-			registerDashboardsStore(options.store);
-			registerTabsStore(options.store);
-			registerGroupsStore(options.store);
-			registerWidgetsStore(options.store);
-			registerWidgetDataSourcesStore(options.store);
-			registerWidgetDisplayStore(options.store);
-		},
-	};
-}
+		registerDashboardsStore(options.store);
+		registerTabsStore(options.store);
+		registerGroupsStore(options.store);
+		registerWidgetsStore(options.store);
+		registerWidgetDataSourcesStore(options.store);
+		registerWidgetDisplayStore(options.store);
+	},
+};
 
 const onWsMessage = (data: string): void => {
 	const flashMessage = useFlashMessage();

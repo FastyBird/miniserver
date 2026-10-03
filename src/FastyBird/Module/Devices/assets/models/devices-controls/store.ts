@@ -10,7 +10,7 @@ import lodashGet from 'lodash.get';
 import isEqual from 'lodash.isequal';
 import { v4 as uuid } from 'uuid';
 
-import { IStoresManager, ModulePrefix, injectStoresManager, useWampV1Client } from '@fastybird/miniserver-core';
+import { IStoresManager, ModulePrefix, injectStoresManager, wampClient } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.device.control.json';
 import { devicesStoreKey } from '../../configuration';
@@ -542,10 +542,8 @@ export const useDeviceControls = defineStore<'devices_module_devices_controls', 
 				throw new Error('devices-module.device-controls.transmit.failed');
 			}
 
-			const { call } = useWampV1Client<{ data: string }>();
-
 			try {
-				const response = await call(`/${ModulePrefix.DEVICES}/v1/exchange`, {
+				const response = await wampClient.call<{ data: string }>(`/${ModulePrefix.DEVICES}/v1/exchange`, {
 					routing_key: ActionRoutes.DEVICE_CONTROL,
 					source: control.type.source,
 					data: {
