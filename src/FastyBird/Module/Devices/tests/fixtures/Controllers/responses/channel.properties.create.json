@@ -33,7 +33,7 @@
     "relationships": {
       "channel": {
         "links": {
-          "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e"
+          "related": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e"
         },
         "data": {
           "type": "com.fastybird.devices-module/channel/dummy",
@@ -42,9 +42,9 @@
       },
       "children": {
         "links": {
-          "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/relationships/children",
+          "self": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/relationships/children",
           "related": {
-            "href": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/children",
+            "href": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/children",
             "meta": {
               "count": 0
             }
@@ -54,14 +54,14 @@
       },
       "state": {
         "links": {
-          "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/relationships/state",
-          "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/state"
+          "self": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/relationships/state",
+          "related": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c/state"
         },
         "data": null
       }
     },
     "links": {
-      "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c"
+      "self": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/06644f70-7707-41c3-9a97-a5d66219659c"
     }
   }
 }

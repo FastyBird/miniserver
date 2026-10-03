@@ -24,9 +24,9 @@
     "relationships": {
       "properties": {
         "links": {
-          "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/properties",
+          "self": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/properties",
           "related": {
-            "href": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/properties",
+            "href": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/properties",
             "meta": {
               "count": 0
             }
@@ -36,9 +36,9 @@
       },
       "controls": {
         "links": {
-          "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/controls",
+          "self": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/controls",
           "related": {
-            "href": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/controls",
+            "href": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/controls",
             "meta": {
               "count": 0
             }
@@ -48,9 +48,9 @@
       },
       "channels": {
         "links": {
-          "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/channels",
+          "self": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/channels",
           "related": {
-            "href": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/channels",
+            "href": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/channels",
             "meta": {
               "count": 0
             }
@@ -60,7 +60,7 @@
       },
       "connector": {
         "links": {
-          "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/connector",
+          "self": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/connector",
           "related": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e"
         },
         "data": {
@@ -70,9 +70,9 @@
       },
       "parents": {
         "links": {
-          "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/parents",
+          "self": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/parents",
           "related": {
-            "href": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/parents",
+            "href": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/parents",
             "meta": {
               "count": 0
             }
@@ -82,9 +82,9 @@
       },
       "children": {
         "links": {
-          "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/children",
+          "self": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/relationships/children",
           "related": {
-            "href": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea/children",
+            "href": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea/children",
             "meta": {
               "count": 0
             }
@@ -94,7 +94,7 @@
       }
     },
     "links": {
-      "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bbbf5caa-b30e-4558-b83a-699617958cea"
+      "self": "/api/devices-module/v1/devices/bbbf5caa-b30e-4558-b83a-699617958cea"
     }
   }
 }

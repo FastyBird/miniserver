@@ -128,10 +128,6 @@ final class Constants
 
 	public const ROUTE_NAME_CONNECTOR_DEVICE_RELATIONSHIP = 'connector.device.relationship';
 
-	public const ROUTE_NAME_CONNECTOR_DEVICE_PARENTS = 'connector.device.parents';
-
-	public const ROUTE_NAME_CONNECTOR_DEVICE_CHILDREN = 'connector.device.children';
-
 	public const ROUTE_NAME_CONNECTOR_DEVICE_PROPERTIES = 'connector.device.properties';
 
 	public const ROUTE_NAME_CONNECTOR_DEVICE_PROPERTY = 'connector.device.property';

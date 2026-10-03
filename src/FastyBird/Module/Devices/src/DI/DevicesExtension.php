@@ -166,11 +166,6 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 		$builder->addDefinition($this->prefix('middlewares.access'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Middleware\Access::class);
 
-		$builder->addDefinition($this->prefix('middlewares.urlFormat'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Middleware\UrlFormat::class)
-			->setArguments(['usePrefix' => $configuration->apiPrefix])
-			->addTag('middleware');
-
 		$builder->addDefinition($this->prefix('router.api.routes'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);

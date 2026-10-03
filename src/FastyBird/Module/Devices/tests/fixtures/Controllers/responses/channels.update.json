@@ -33,9 +33,9 @@
       },
       "properties": {
         "links": {
-          "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/relationships/properties",
+          "self": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/relationships/properties",
           "related": {
-            "href": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties",
+            "href": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties",
             "meta": {
               "count": 1
             }
@@ -50,9 +50,9 @@
       },
       "controls": {
         "links": {
-          "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/relationships/controls",
+          "self": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/relationships/controls",
           "related": {
-            "href": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/controls",
+            "href": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/controls",
             "meta": {
               "count": 1
             }
@@ -67,7 +67,7 @@
       }
     },
     "links": {
-      "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e"
+      "self": "/api/devices-module/v1/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e"
     }
   }
 }
