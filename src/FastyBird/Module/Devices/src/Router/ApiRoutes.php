@@ -64,7 +64,6 @@ class ApiRoutes
 		private readonly Controllers\ConnectorPropertyStateV1 $connectorPropertyStateV1Controller,
 		private readonly Controllers\ConnectorControlsV1 $connectorControlsV1Controller,
 		private readonly DevicesMiddleware\Access $devicesAccessControlMiddleware,
-		private readonly DevicesMiddleware\UrlFormat $urlFormatlMiddleware,
 		private readonly SecurityMiddleware\Authorization $accessControlMiddleware,
 		private readonly SecurityMiddleware\User $userMiddleware,
 	)
@@ -91,7 +90,6 @@ class ApiRoutes
 		$routes->addMiddleware($this->accessControlMiddleware);
 		$routes->addMiddleware($this->userMiddleware);
 		$routes->addMiddleware($this->devicesAccessControlMiddleware);
-		$routes->addMiddleware($this->urlFormatlMiddleware);
 	}
 
 	private function buildRoutes(

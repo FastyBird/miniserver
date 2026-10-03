@@ -36,7 +36,7 @@
     "relationships": {
       "device": {
         "links": {
-          "related": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa"
+          "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa"
         },
         "data": {
           "type": "com.fastybird.devices-module/device/dummy",
@@ -45,9 +45,9 @@
       },
       "children": {
         "links": {
-          "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf/relationships/children",
+          "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf/relationships/children",
           "related": {
-            "href": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf/children",
+            "href": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf/children",
             "meta": {
               "count": 0
             }
@@ -57,7 +57,7 @@
       }
     },
     "links": {
-      "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf"
+      "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/50b0fd41-0a6e-44f0-b513-c536208afccf"
     }
   }
 }

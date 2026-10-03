@@ -34,7 +34,7 @@
       "relationships": {
         "device": {
           "links": {
-            "related": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a"
+            "related": "/api/devices-module/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a"
           },
           "data": {
             "type": "com.fastybird.devices-module/device/dummy",
@@ -43,8 +43,8 @@
         },
         "parent": {
           "links": {
-            "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/5c2a0f61-8e3d-4b7a-9f14-2d6e8b3c7a90/relationships/parent",
-            "related": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db"
+            "self": "/api/devices-module/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/5c2a0f61-8e3d-4b7a-9f14-2d6e8b3c7a90/relationships/parent",
+            "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db"
           },
           "data": {
             "type": "com.fastybird.devices-module/property/device/dynamic",
@@ -53,14 +53,14 @@
         },
         "state": {
           "links": {
-            "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/5c2a0f61-8e3d-4b7a-9f14-2d6e8b3c7a90/relationships/state",
-            "related": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/5c2a0f61-8e3d-4b7a-9f14-2d6e8b3c7a90/state"
+            "self": "/api/devices-module/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/5c2a0f61-8e3d-4b7a-9f14-2d6e8b3c7a90/relationships/state",
+            "related": "/api/devices-module/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/5c2a0f61-8e3d-4b7a-9f14-2d6e8b3c7a90/state"
           },
           "data": null
         }
       },
       "links": {
-        "self": "/api/devices-module/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/5c2a0f61-8e3d-4b7a-9f14-2d6e8b3c7a90"
+        "self": "/api/devices-module/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/5c2a0f61-8e3d-4b7a-9f14-2d6e8b3c7a90"
       }
     }
   ]

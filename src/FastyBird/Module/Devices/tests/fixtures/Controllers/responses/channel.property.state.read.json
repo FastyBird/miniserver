@@ -24,7 +24,7 @@
     "relationships": {
       "property": {
         "links": {
-          "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c"
+          "related": "/api/devices-module/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c"
         },
         "data": {
           "type": "com.fastybird.devices-module/property/channel/dynamic",
@@ -33,7 +33,7 @@
       }
     },
     "links": {
-      "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/state"
+      "self": "/api/devices-module/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/state"
     }
   }
 }
