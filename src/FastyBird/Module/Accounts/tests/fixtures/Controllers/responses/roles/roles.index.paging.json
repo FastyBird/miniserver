@@ -43,7 +43,7 @@
         "parent": {
           "links": {
             "self": "/api/accounts-module/v1/roles/89f4a14f-7f78-4216-99b8-584ab9229f1c/relationships/parent",
-            "related": "/api/accounts-module/v1/roles/89f4a14f-7f78-4216-99b8-584ab9229f1c"
+            "related": "/api/accounts-module/v1/roles/efbfbdef-bfbd-efbf-bd0f-efbfbd5c4f61"
           },
           "data": {
             "type": "com.fastybird.accounts-module/role",

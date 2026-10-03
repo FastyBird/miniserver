@@ -100,7 +100,7 @@ final readonly class UrlFormat implements MiddlewareInterface
 			);
 			$content = str_replace(
 				'\/api\/v1\/accounts\/' . $this->user->getAccount()->getId()->toString(),
-				'\/v1\/me',
+				'\/api\/v1\/me',
 				$content,
 			);
 			$content = str_replace(

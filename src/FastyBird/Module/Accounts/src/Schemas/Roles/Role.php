@@ -155,7 +155,7 @@ final class Role extends Schemas\JsonApiSchema
 				$this->router->urlFor(
 					Accounts\Constants::ROUTE_NAME_ROLE,
 					[
-						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
+						Router\ApiRoutes::URL_ITEM_ID => $resource->getParent()->getId()->toString(),
 					],
 				),
 				false,
