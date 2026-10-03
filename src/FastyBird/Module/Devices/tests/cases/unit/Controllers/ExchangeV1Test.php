@@ -418,7 +418,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * A well-formed control call for a control of the fixtures, with the owner it belongs to
 	 *
-	 * @return array{string, array<string, string|int|bool>}
+	 * @return array{string, array<string, string|float|bool>}
 	 */
 	private static function controlCall(string $owner): array
 	{
@@ -438,7 +438,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 					'action' => Types\ControlAction::SET->value,
 					'device' => self::DEVICE,
 					'control' => self::DEVICE_CONTROL,
-					'expected_value' => 10,
+					'expected_value' => 10.5,
 				],
 			],
 			'channel' => [
