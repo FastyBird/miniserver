@@ -25,6 +25,7 @@ use function is_string;
 use function preg_match_all;
 use function preg_quote;
 use function preg_split;
+use function sprintf;
 use function strtolower;
 use function strval;
 use const PREG_SPLIT_NO_EMPTY;
@@ -40,6 +41,10 @@ final readonly class AnnotationChecker implements Checker, CheckRequirements
 	}
 
 	/**
+	 * A method name that does not exist on the class is a wiring error -- a route or a link
+	 * pointing at nothing -- not an access decision, so it fails loudly rather than being
+	 * reported as "not allowed", which would answer 403 to everyone and hide the broken target.
+	 *
 	 * @param class-string $className
 	 *
 	 * @throws Exceptions\InvalidArgument
@@ -66,8 +71,16 @@ final readonly class AnnotationChecker implements Checker, CheckRequirements
 					}
 				}
 			}
-		} catch (ReflectionException) {
-			return false;
+		} catch (ReflectionException $ex) {
+			throw new Exceptions\InvalidState(
+				sprintf(
+					'Access check targets %s::%s(), which does not exist',
+					$className,
+					strval($actionName),
+				),
+				0,
+				$ex,
+			);
 		}
 
 		return true;
