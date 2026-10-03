@@ -451,6 +451,10 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @return array<string, mixed>|false
 	 *
+	 * @throws AccountsExceptions\InvalidArgument
+	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
+	 * @throws Error
 	 * @throws DBAL\Exception
 	 */
 	private function storedDetails(): array|false
