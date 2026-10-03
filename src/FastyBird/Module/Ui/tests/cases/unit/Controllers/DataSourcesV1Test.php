@@ -7,6 +7,8 @@ use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -16,6 +18,7 @@ use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use function file_get_contents;
@@ -276,6 +279,79 @@ final class DataSourcesV1Test extends Tests\Cases\Unit\DbTestCase
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/dataSources.update.json'),
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+		];
+	}
+
+	/**
+	 * Data source schemas expose no attributes, so the entity is read back from the database.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Utils\JsonException
+	 */
+	#[DataProvider('dataSourcesParams')]
+	public function testParamsPersist(string $method, string $url, string $body, int $statusCode, string $id): void
+	{
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+
+		$request = new ServerRequest(
+			$method,
+			$url,
+			[
+				'authorization' => 'Bearer ' . self::VALID_TOKEN,
+			],
+			$body,
+		);
+
+		$response = $router->handle($request);
+
+		self::assertTrue($response instanceof Http\Response);
+		self::assertSame($statusCode, $response->getStatusCode(), (string) $response->getBody());
+
+		// Read the data source back from the database, not from the identity map
+		$this->getEntityManager()->clear();
+
+		$dataSourcesRepository = $this->getContainer()->getByType(
+			Models\Entities\Widgets\DataSources\Repository::class,
+		);
+
+		$dataSource = $dataSourcesRepository->find(Uuid\Uuid::fromString($id));
+
+		self::assertInstanceOf(Entities\Widgets\DataSources\Generic::class, $dataSource);
+		self::assertSame(
+			[
+				'label' => 'Room temperature',
+				'position' => 2,
+			],
+			(array) $dataSource->getParams(),
+		);
+	}
+
+	/**
+	 * @return array<string, array<bool|int|string>>
+	 */
+	public static function dataSourcesParams(): array
+	{
+		return [
+			'create' => [
+				RequestMethodInterface::METHOD_POST,
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources',
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/dataSources.create.params.json'),
+				StatusCodeInterface::STATUS_CREATED,
+				'0c96af0b-d5be-4e1b-81e6-0d02415b4d1b',
+			],
+			'update' => [
+				RequestMethodInterface::METHOD_PATCH,
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources/764937a7-8565-472e-8e12-fe97cd55a377',
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/dataSources.update.params.json'),
+				StatusCodeInterface::STATUS_OK,
+				'764937a7-8565-472e-8e12-fe97cd55a377',
 			],
 		];
 	}

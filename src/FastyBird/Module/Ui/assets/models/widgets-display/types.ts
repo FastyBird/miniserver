@@ -22,7 +22,6 @@ export interface IWidgetDisplayState {
 }
 
 export interface IWidgetDisplayGetters extends _GettersTree<IWidgetDisplayState> {
-	getting: (state: IWidgetDisplayState) => (id: IWidgetDisplay['id']) => boolean;
 	fetching: (state: IWidgetDisplayState) => (widgetId: IWidget['id'] | null) => boolean;
 	findById: (state: IWidgetDisplayState) => (id: IWidgetDisplay['id']) => IWidgetDisplay | null;
 	findForWidget: (state: IWidgetDisplayState) => (widgetId: IWidget['id']) => IWidgetDisplay[];
@@ -52,20 +51,29 @@ export interface IWidgetDisplayStateSemaphore {
 }
 
 interface IWidgetDisplayStateSemaphoreFetching {
+	// Identifiers of the widgets whose display is being fetched
 	items: string[];
-	item: string[];
 }
 
 // STORE MODELS
 // ============
 
-export interface IWidgetDisplay {
+// Display parameters, flattened the way the API and the exchange documents carry them.
+// Each display type uses a subset of them; the others stay null.
+export interface IWidgetDisplayParameters {
+	minimumValue: number | null;
+	maximumValue: number | null;
+	stepValue: number | null;
+	precision: number | null;
+	enableMinMax: boolean | null;
+	icon: string | null;
+}
+
+export interface IWidgetDisplay extends IWidgetDisplayParameters {
 	id: string;
 	type: IWidgetDisplayMeta;
 
 	draft: boolean;
-
-	params: object;
 
 	// Relations
 	relationshipNames: RelationshipName[];
@@ -76,13 +84,11 @@ export interface IWidgetDisplay {
 // STORE DATA FACTORIES
 // ====================
 
-export interface IWidgetDisplayRecordFactoryPayload {
+export interface IWidgetDisplayRecordFactoryPayload extends Partial<IWidgetDisplayParameters> {
 	id?: string;
 	type: IWidgetDisplayMeta;
 
 	draft?: boolean;
-
-	params?: object;
 
 	// Relations
 	relationshipNames?: RelationshipName[];
@@ -103,20 +109,16 @@ export interface IWidgetDisplayUnsetActionPayload {
 	id?: IWidgetDisplay['id'];
 }
 
+// The display is a to-one resource of the widget, so it is addressed by the widget alone
 export interface IWidgetDisplayGetActionPayload {
 	widget: IWidget;
-	id: IWidgetDisplay['id'];
 	refresh?: boolean;
 }
 
 export interface IWidgetDisplayEditActionPayload {
-	id: IWidget['id'];
+	id: IWidgetDisplay['id'];
 
-	data: {
-		params?: object;
-	};
-
-	widget: IWidget;
+	data: Partial<IWidgetDisplayParameters>;
 }
 
 export interface IWidgetDisplaySaveActionPayload {
@@ -146,7 +148,7 @@ export interface IWidgetDisplayLoadAllRecordsActionPayload {
 
 export interface IWidgetDisplayResponseJson extends TJsonApiBody {
 	data: IWidgetDisplayResponseData;
-	includes?: IWidgetResponseData[];
+	included?: IWidgetResponseData[];
 }
 
 export interface IWidgetDisplayResponseData extends TJsonApiData {
@@ -157,7 +159,15 @@ export interface IWidgetDisplayResponseData extends TJsonApiData {
 }
 
 interface IWidgetDisplayResponseDataAttributes {
-	params: object;
+	// Raw parameter storage the schema also sends. The store reads the flattened attributes.
+	params?: object;
+
+	minimum_value?: number | null;
+	maximum_value?: number | null;
+	step_value?: number | null;
+	precision?: number | null;
+	enable_min_max?: boolean | null;
+	icon?: string | null;
 }
 
 interface IWidgetDisplayResponseDataRelationships extends TJsonApiRelationships {
@@ -167,11 +177,9 @@ interface IWidgetDisplayResponseDataRelationships extends TJsonApiRelationships 
 // API RESPONSE MODELS
 // ===================
 
-export interface IWidgetDisplayResponseModel extends TJsonaModel {
+export interface IWidgetDisplayResponseModel extends TJsonaModel, Partial<IWidgetDisplayParameters> {
 	id: string;
 	type: IWidgetDisplayMeta;
-
-	params: object;
 
 	// Relations
 	relationshipNames: RelationshipName[];
@@ -182,11 +190,9 @@ export interface IWidgetDisplayResponseModel extends TJsonaModel {
 // DATABASE
 // ========
 
-export interface IWidgetDisplayDatabaseRecord {
+export interface IWidgetDisplayDatabaseRecord extends IWidgetDisplayParameters {
 	id: string;
 	type: IWidgetDisplayMeta;
-
-	params: object;
 
 	// Relations
 	relationshipNames: RelationshipName[];

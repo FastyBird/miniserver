@@ -28,6 +28,7 @@ import {
 	ITabsFetchActionPayload,
 	ITabsGetActionPayload,
 	ITabsGetters,
+	ITabsLoadAllRecordsActionPayload,
 	ITabsRemoveActionPayload,
 	ITabsResponseJson,
 	ITabsSaveActionPayload,
@@ -43,6 +44,11 @@ const jsonApiFormatter = new Jsona({
 	modelPropertiesMapper: new JsonApiModelPropertiesMapper(),
 	jsonPropertiesMapper: new JsonApiJsonPropertiesMapper(),
 });
+
+// Tabs are a nested resource of their dashboard
+const tabsApiUrl = (dashboardId: string): string => `/${ModulePrefix.UI}/v1/dashboards/${dashboardId}/tabs`;
+
+const tabApiUrl = (dashboardId: string, id: string): string => `${tabsApiUrl(dashboardId)}/${id}`;
 
 const storeRecordFactory = (data: ITabRecordFactoryPayload): ITab => {
 	const record: ITab = {
@@ -91,7 +97,7 @@ const storeRecordFactory = (data: ITabRecordFactoryPayload): ITab => {
 				id: get(relation, 'id', 'N/A'),
 				type: get(relation, 'type', {
 					source: ModuleSource.UI,
-					entity: 'display',
+					entity: 'dashboard',
 				}),
 			};
 		}
@@ -133,7 +139,7 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 		return {
 			semaphore: {
 				fetching: {
-					items: false,
+					items: [],
 					item: [],
 				},
 				creating: [],
@@ -141,7 +147,7 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 				deleting: [],
 			},
 
-			firstLoad: false,
+			firstLoad: [],
 
 			data: undefined,
 			meta: {},
@@ -149,16 +155,17 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 	},
 
 	getters: {
-		firstLoadFinished: (state: ITabsState): (() => boolean) => {
-			return (): boolean => state.firstLoad;
+		firstLoadFinished: (state: ITabsState): ((dashboardId: string) => boolean) => {
+			return (dashboardId: string): boolean => state.firstLoad.includes(dashboardId);
 		},
 
 		getting: (state: ITabsState): ((id: ITab['id']) => boolean) => {
 			return (id: ITab['id']): boolean => state.semaphore.fetching.item.includes(id);
 		},
 
-		fetching: (state: ITabsState): (() => boolean) => {
-			return (): boolean => state.semaphore.fetching.items;
+		fetching: (state: ITabsState): ((dashboardId: string | null) => boolean) => {
+			return (dashboardId: string | null): boolean =>
+				dashboardId !== null ? state.semaphore.fetching.items.includes(dashboardId) : state.semaphore.fetching.items.length > 0;
 		},
 
 		findById: (state: ITabsState): ((id: ITab['id']) => ITab | null) => {
@@ -170,6 +177,12 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 		findAll: (state: ITabsState): (() => ITab[]) => {
 			return (): ITab[] => {
 				return Object.values(state.data ?? {});
+			};
+		},
+
+		findForDashboard: (state: ITabsState): ((dashboardId: string) => ITab[]) => {
+			return (dashboardId: string): ITab[] => {
+				return Object.values(state.data ?? {}).filter((tab: ITab): boolean => tab.dashboard.id === dashboardId);
 			};
 		},
 
@@ -218,7 +231,7 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 			}
 
 			try {
-				const tabResponse = await axios.get<ITabResponseJson>(`/${ModulePrefix.UI}/v1/tabs/${payload.id}`);
+				const tabResponse = await axios.get<ITabResponseJson>(tabApiUrl(payload.dashboard.id, payload.id));
 
 				const tabResponseModel = jsonApiFormatter.deserialize(tabResponse.data) as ITabResponseModel;
 
@@ -244,25 +257,23 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 		 *
 		 * @param {ITabsFetchActionPayload} payload
 		 */
-		async fetch(payload?: ITabsFetchActionPayload): Promise<boolean> {
-			if (this.semaphore.fetching.items) {
+		async fetch(payload: ITabsFetchActionPayload): Promise<boolean> {
+			if (this.semaphore.fetching.items.includes(payload.dashboard.id)) {
 				return false;
 			}
 
-			const fromDatabase = await this.loadAllRecords();
+			const fromDatabase = await this.loadAllRecords({ dashboard: payload.dashboard });
 
-			if (fromDatabase && payload?.refresh === false) {
+			if (fromDatabase && payload.refresh === false) {
 				return true;
 			}
 
-			if (payload?.refresh === undefined || payload?.refresh === true || !fromDatabase) {
-				this.semaphore.fetching.items = true;
-			}
+			this.semaphore.fetching.items.push(payload.dashboard.id);
 
-			this.firstLoad = false;
+			this.firstLoad = this.firstLoad.filter((item) => item !== payload.dashboard.id);
 
 			try {
-				const tabsResponse = await axios.get<ITabsResponseJson>(`/${ModulePrefix.UI}/v1/tabs`);
+				const tabsResponse = await axios.get<ITabsResponseJson>(tabsApiUrl(payload.dashboard.id));
 
 				const tabsResponseModel = jsonApiFormatter.deserialize(tabsResponse.data) as ITabResponseModel[];
 
@@ -275,14 +286,14 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 					this.meta[tab.id] = tab.type;
 				}
 
-				this.firstLoad = true;
+				this.firstLoad.push(payload.dashboard.id);
 
-				// Get all current IDs from IndexedDB
+				// Get this dashboard's tab IDs from IndexedDB
 				const allRecords = await getAllRecords<ITabDatabaseRecord>(DB_TABLE_TABS);
-				const indexedDbIds: string[] = allRecords.map((record) => record.id);
+				const indexedDbIds: string[] = allRecords.filter((record) => record.dashboard.id === payload.dashboard.id).map((record) => record.id);
 
-				// Get the IDs from the latest changes
-				const serverIds: string[] = Object.keys(this.data ?? {});
+				// Get the IDs from the server response
+				const serverIds: string[] = tabsResponseModel.map((tab) => tab.id);
 
 				// Find IDs that are in IndexedDB but not in the server response
 				const idsToRemove: string[] = indexedDbIds.filter((id) => !serverIds.includes(id));
@@ -292,13 +303,15 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 					await removeRecord(id, DB_TABLE_TABS);
 
 					delete this.meta[id];
+
+					if (this.data && id in this.data) {
+						delete this.data[id];
+					}
 				}
 			} catch (e: any) {
 				throw new ApiError('ui-module.tabs.fetch.failed', e, 'Fetching tabs failed.');
 			} finally {
-				if (payload?.refresh === undefined || payload?.refresh === true || !fromDatabase) {
-					this.semaphore.fetching.items = false;
-				}
+				this.semaphore.fetching.items = this.semaphore.fetching.items.filter((item) => item !== payload.dashboard.id);
 			}
 
 			return true;
@@ -312,7 +325,12 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 		async add(payload: ITabsAddActionPayload): Promise<ITab> {
 			const newTab = storeRecordFactory({
 				...payload.data,
-				...{ id: payload?.id, type: payload?.type, draft: payload?.draft },
+				...{
+					id: payload?.id,
+					type: payload?.type,
+					draft: payload?.draft,
+					dashboard: { id: payload.dashboard.id, type: { source: ModuleSource.UI, entity: 'dashboard' } },
+				},
 			});
 
 			this.semaphore.creating.push(newTab.id);
@@ -327,7 +345,7 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 			} else {
 				try {
 					const createdTab = await axios.post<ITabResponseJson>(
-						`/${ModulePrefix.UI}/v1/tabs`,
+						tabsApiUrl(payload.dashboard.id),
 						jsonApiFormatter.serialize({
 							stuff: newTab,
 						})
@@ -383,7 +401,7 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 			} else {
 				try {
 					const updatedTab = await axios.patch<ITabResponseJson>(
-						`/${ModulePrefix.UI}/v1/tabs/${payload.id}`,
+						tabApiUrl(updatedRecord.dashboard.id, payload.id),
 						jsonApiFormatter.serialize({
 							stuff: updatedRecord,
 						})
@@ -398,7 +416,7 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 					this.meta[updatedTabModel.id] = updatedTabModel.type;
 				} catch (e: any) {
 					// Updating record on api failed, we need to refresh record
-					await this.get({ id: payload.id });
+					await this.get({ dashboard: updatedRecord.dashboard, id: payload.id });
 
 					throw new ApiError('ui-module.tabs.update.failed', e, 'Edit tab failed.');
 				} finally {
@@ -429,7 +447,7 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 
 			try {
 				const savedTab = await axios.post<ITabResponseJson>(
-					`/${ModulePrefix.UI}/v1/tabs`,
+					tabsApiUrl(recordToSave.dashboard.id),
 					jsonApiFormatter.serialize({
 						stuff: recordToSave,
 					})
@@ -479,10 +497,10 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 				this.semaphore.deleting = this.semaphore.deleting.filter((item) => item !== payload.id);
 			} else {
 				try {
-					await axios.delete(`/${ModulePrefix.UI}/v1/tabs/${payload.id}`);
+					await axios.delete(tabApiUrl(recordToDelete.dashboard.id, payload.id));
 				} catch (e: any) {
 					// Deleting record on api failed, we need to refresh record
-					await this.get({ id: payload.id });
+					await this.get({ dashboard: recordToDelete.dashboard, id: payload.id });
 
 					throw new ApiError('ui-module.tabs.delete.failed', e, 'Delete tab failed.');
 				} finally {
@@ -555,7 +573,7 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 					}
 				} else {
 					try {
-						await this.get({ id: body.id });
+						await this.get({ dashboard: { id: body.dashboard }, id: body.id });
 					} catch {
 						return false;
 					}
@@ -640,13 +658,19 @@ export const useTabs = defineStore<string, ITabsState, ITabsGetters, ITabsAction
 
 		/**
 		 * Load records from database
+		 *
+		 * @param {ITabsLoadAllRecordsActionPayload} payload
 		 */
-		async loadAllRecords(): Promise<boolean> {
+		async loadAllRecords(payload?: ITabsLoadAllRecordsActionPayload): Promise<boolean> {
 			const records = await getAllRecords<ITabDatabaseRecord>(DB_TABLE_TABS);
 
 			this.data = this.data ?? {};
 
 			for (const record of records) {
+				if (payload?.dashboard && payload.dashboard.id !== record.dashboard.id) {
+					continue;
+				}
+
 				this.data[record.id] = storeRecordFactory(record);
 			}
 

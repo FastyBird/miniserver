@@ -155,4 +155,75 @@ final class DisplayV1Test extends Tests\Cases\Unit\DbTestCase
 		];
 	}
 
+	/**
+	 * The display is a to-one resource of the widget: it is read and updated at
+	 * /widgets/{widget}/display, with no display id in the URL. The request carries the
+	 * flattened display attributes, which is the shape the Ui display store sends.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Utils\JsonException
+	 */
+	public function testUpdatePersists(): void
+	{
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+
+		$url = '/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display';
+
+		$body = file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/display.update.json');
+		self::assertIsString($body);
+
+		$request = new ServerRequest(
+			RequestMethodInterface::METHOD_PATCH,
+			$url,
+			[
+				'authorization' => 'Bearer ' . self::VALID_TOKEN,
+			],
+			$body,
+		);
+
+		$response = $router->handle($request);
+
+		self::assertTrue($response instanceof Http\Response);
+		self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode(), (string) $response->getBody());
+
+		// Read the display back from the database, not from the identity map
+		$this->getEntityManager()->clear();
+
+		$request = new ServerRequest(
+			RequestMethodInterface::METHOD_GET,
+			$url,
+			[
+				'authorization' => 'Bearer ' . self::VALID_TOKEN,
+			],
+		);
+
+		$response = $router->handle($request);
+
+		self::assertTrue($response instanceof Http\Response);
+		self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
+
+		$document = Utils\Json::decode((string) $response->getBody(), forceArrays: true);
+		self::assertIsArray($document);
+		self::assertIsArray($document['data']);
+		self::assertSame('467e6d4d-3545-481b-b613-53be7e9aa641', $document['data']['id']);
+		self::assertIsArray($document['data']['attributes']);
+
+		$expected = [
+			'minimum_value' => 5,
+			'maximum_value' => 60,
+			'step_value' => 0.1,
+			'enable_min_max' => true,
+			'precision' => 0,
+		];
+
+		foreach ($expected as $attribute => $value) {
+			self::assertArrayHasKey($attribute, $document['data']['attributes']);
+			self::assertSame($value, $document['data']['attributes'][$attribute], $attribute);
+		}
+	}
+
 }

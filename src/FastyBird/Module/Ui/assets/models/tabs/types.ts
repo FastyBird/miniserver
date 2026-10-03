@@ -3,6 +3,7 @@ import { _GettersTree } from 'pinia';
 import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships, TJsonaModel } from 'jsona/lib/JsonaTypes';
 
 import {
+	IDashboard,
 	IDashboardResponseData,
 	IDashboardResponseModel,
 	IEntityMeta,
@@ -23,24 +24,26 @@ type RelationshipName = 'widgets' | 'dashboard';
 
 export interface ITabsState {
 	semaphore: ITabsStateSemaphore;
-	firstLoad: boolean;
+	// Identifiers of the dashboards whose tabs were fetched at least once
+	firstLoad: string[];
 	data: { [key: ITab['id']]: ITab } | undefined;
 	meta: { [key: ITab['id']]: ITabMeta };
 }
 
 export interface ITabsGetters extends _GettersTree<ITabsState> {
-	firstLoadFinished: (state: ITabsState) => () => boolean;
+	firstLoadFinished: (state: ITabsState) => (dashboardId: IDashboard['id']) => boolean;
 	getting: (state: ITabsState) => (id: ITab['id']) => boolean;
-	fetching: (state: ITabsState) => () => boolean;
+	fetching: (state: ITabsState) => (dashboardId: IDashboard['id'] | null) => boolean;
 	findById: (state: ITabsState) => (id: ITab['id']) => ITab | null;
 	findAll: (state: ITabsState) => () => ITab[];
+	findForDashboard: (state: ITabsState) => (dashboardId: IDashboard['id']) => ITab[];
 	findMeta: (state: ITabsState) => (id: ITab['id']) => ITabMeta | null;
 }
 
 export interface ITabsActions {
 	set: (payload: ITabsSetActionPayload) => Promise<ITab>;
 	get: (payload: ITabsGetActionPayload) => Promise<boolean>;
-	fetch: (payload?: ITabsFetchActionPayload) => Promise<boolean>;
+	fetch: (payload: ITabsFetchActionPayload) => Promise<boolean>;
 	add: (payload: ITabsAddActionPayload) => Promise<ITab>;
 	edit: (payload: ITabsEditActionPayload) => Promise<ITab>;
 	save: (payload: ITabsSaveActionPayload) => Promise<ITab>;
@@ -48,7 +51,7 @@ export interface ITabsActions {
 	socketData: (payload: ITabsSocketDataActionPayload) => Promise<boolean>;
 	insertData: (payload: ITabsInsertDataActionPayload) => Promise<boolean>;
 	loadRecord: (payload: ITabsLoadRecordActionPayload) => Promise<boolean>;
-	loadAllRecords: () => Promise<boolean>;
+	loadAllRecords: (payload?: ITabsLoadAllRecordsActionPayload) => Promise<boolean>;
 }
 
 // STORE STATE
@@ -62,7 +65,8 @@ interface ITabsStateSemaphore {
 }
 
 interface ITabsStateSemaphoreFetching {
-	items: boolean;
+	// Identifiers of the dashboards whose tabs are being fetched
+	items: string[];
 	item: string[];
 }
 
@@ -113,16 +117,21 @@ export interface ITabRecordFactoryPayload {
 // STORE ACTIONS
 // =============
 
+// Tabs are a nested resource, /dashboards/{dashboard}/tabs, so every request needs the dashboard
+type TabDashboard = Pick<IDashboard, 'id'>;
+
 export interface ITabsSetActionPayload {
 	data: ITabRecordFactoryPayload;
 }
 
 export interface ITabsGetActionPayload {
+	dashboard: TabDashboard;
 	id: ITab['id'];
 	refresh?: boolean;
 }
 
 export interface ITabsFetchActionPayload {
+	dashboard: TabDashboard;
 	refresh?: boolean;
 }
 
@@ -131,6 +140,8 @@ export interface ITabsAddActionPayload {
 	type: ITabMeta;
 
 	draft?: ITab['draft'];
+
+	dashboard: TabDashboard;
 
 	data: {
 		identifier: ITab['identifier'];
@@ -170,6 +181,10 @@ export interface ITabsInsertDataActionPayload {
 
 export interface ITabsLoadRecordActionPayload {
 	id: ITab['id'];
+}
+
+export interface ITabsLoadAllRecordsActionPayload {
+	dashboard: TabDashboard;
 }
 
 // API RESPONSES JSONS

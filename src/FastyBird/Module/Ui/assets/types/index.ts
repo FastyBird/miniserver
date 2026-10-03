@@ -117,16 +117,22 @@ export interface WidgetDocument {
 	updatedAt: Date | null;
 }
 
+// Documents\Widgets\Displays\*::toArray(). The display parameters are flattened, and each
+// display type sends only its own subset of them.
 export interface WidgetDisplayDocument {
 	id: string;
 	type: string;
 	source: string;
-	identifier: string;
-	params: object;
 	widget: WidgetDocument['id'];
+	minimum_value?: number | null;
+	maximum_value?: number | null;
+	step_value?: number | null;
+	precision?: number | null;
+	enable_min_max?: boolean | null;
+	icon?: string | null;
 	owner: string | null;
-	createdAt: Date | null;
-	updatedAt: Date | null;
+	created_at: string | null;
+	updated_at: string | null;
 }
 
 export interface WidgetDataSourceDocument {
