@@ -22,6 +22,7 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Router;
 use Psr\Http\Message;
+use function is_string;
 use function strval;
 
 /**
@@ -37,10 +38,12 @@ use function strval;
 final class DevicePropertyChildrenV1 extends BaseV1
 {
 
+	use Controllers\Finders\TConnector;
 	use Controllers\Finders\TDevice;
 	use Controllers\Finders\TDeviceProperty;
 
 	public function __construct(
+		protected readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		protected readonly Models\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly Models\Entities\Devices\Properties\PropertiesRepository $devicePropertiesRepository,
 	)
@@ -56,8 +59,12 @@ final class DevicePropertyChildrenV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 		// & property
 		$property = $this->findProperty(strval($request->getAttribute(Router\ApiRoutes::URL_PROPERTY_ID)), $device);
 

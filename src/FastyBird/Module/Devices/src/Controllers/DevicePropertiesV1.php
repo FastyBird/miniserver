@@ -37,6 +37,7 @@ use Ramsey\Uuid;
 use Throwable;
 use function end;
 use function explode;
+use function is_string;
 use function preg_match;
 use function str_starts_with;
 use function strval;
@@ -54,10 +55,12 @@ use function strval;
 final class DevicePropertiesV1 extends BaseV1
 {
 
+	use Controllers\Finders\TConnector;
 	use Controllers\Finders\TDevice;
 	use Controllers\Finders\TDeviceProperty;
 
 	public function __construct(
+		protected readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		protected readonly Models\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly Models\Entities\Devices\Properties\PropertiesRepository $devicePropertiesRepository,
 		protected readonly Models\Entities\Devices\Properties\PropertiesManager $devicePropertiesManager,
@@ -74,8 +77,12 @@ final class DevicePropertiesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 
 		$findQuery = new Queries\Entities\FindDeviceProperties();
 		$findQuery->forDevice($device);
@@ -95,8 +102,12 @@ final class DevicePropertiesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 		// & property
 		$property = $this->findProperty(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)), $device);
 
@@ -116,8 +127,12 @@ final class DevicePropertiesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 
 		$document = $this->createDocument($request);
 
@@ -253,8 +268,12 @@ final class DevicePropertiesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 		// & property
 		$property = $this->findProperty(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)), $device);
 
@@ -330,8 +349,12 @@ final class DevicePropertiesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 		// & property
 		$property = $this->findProperty(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)), $device);
 
@@ -380,8 +403,12 @@ final class DevicePropertiesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 
 		// & relation entity name
 		$relationEntity = Utils\Strings::lower(strval($request->getAttribute(Router\ApiRoutes::RELATION_ENTITY)));

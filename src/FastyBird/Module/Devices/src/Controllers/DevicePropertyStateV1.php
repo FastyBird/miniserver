@@ -30,6 +30,7 @@ use Psr\Http\Message;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
+use function is_string;
 use function strval;
 
 /**
@@ -45,9 +46,11 @@ use function strval;
 final class DevicePropertyStateV1 extends BaseV1
 {
 
+	use Controllers\Finders\TConnector;
 	use Controllers\Finders\TDevice;
 
 	public function __construct(
+		protected readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		protected readonly Models\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly Models\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
 		private readonly Models\States\DevicePropertiesManager $devicePropertiesStatesManager,
@@ -71,8 +74,12 @@ final class DevicePropertyStateV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 		// & property
 		$findPropertyQuery = new Queries\Configuration\FindDeviceProperties();
 		$findPropertyQuery->byDeviceId($device->getId());

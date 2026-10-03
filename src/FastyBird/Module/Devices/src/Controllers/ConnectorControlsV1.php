@@ -81,12 +81,14 @@ final class ConnectorControlsV1 extends BaseV1
 	): Message\ResponseInterface
 	{
 		// At first, try to load connector
-		$this->findConnector(strval($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID)));
+		$connector = $this->findConnector(strval($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID)));
 
 		if (Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
-			$control = $this->connectorControlsRepository->find(
-				Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))),
-			);
+			$findQuery = new Queries\Entities\FindConnectorControls();
+			$findQuery->forConnector($connector);
+			$findQuery->byId(Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))));
+
+			$control = $this->connectorControlsRepository->findOneBy($findQuery);
 
 			if ($control !== null) {
 				return $this->buildResponse($request, $response, $control);
@@ -110,14 +112,16 @@ final class ConnectorControlsV1 extends BaseV1
 	): Message\ResponseInterface
 	{
 		// At first, try to load connector
-		$this->findConnector(strval($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID)));
+		$connector = $this->findConnector(strval($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID)));
 
 		$relationEntity = Utils\Strings::lower(strval($request->getAttribute(Router\ApiRoutes::RELATION_ENTITY)));
 
 		if (Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
-			$control = $this->connectorControlsRepository->find(
-				Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))),
-			);
+			$findQuery = new Queries\Entities\FindConnectorControls();
+			$findQuery->forConnector($connector);
+			$findQuery->byId(Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))));
+
+			$control = $this->connectorControlsRepository->findOneBy($findQuery);
 
 			if ($control !== null) {
 				if ($relationEntity === Schemas\Connectors\Controls\Control::RELATIONSHIPS_CONNECTOR) {

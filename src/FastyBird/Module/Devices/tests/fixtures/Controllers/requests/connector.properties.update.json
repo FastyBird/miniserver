@@ -1,0 +1,9 @@
+{
+  "data": {
+    "type": "com.fastybird.devices-module/property/connector/variable",
+    "id": "5a8b01f2-621c-4c41-bc83-c089d72b2366",
+    "attributes": {
+      "name": "Connector username"
+    }
+  }
+}

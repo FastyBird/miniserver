@@ -98,6 +98,30 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'readOneWrongDevice' => [
+				// Property of the first device, requested through the second device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'readRelationshipsDeviceWrongDevice' => [
+				// Property of the first device, requested through the second device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/relationships/device',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'readOneWrongConnector' => [
+				// Device of the generic connector, requested through the dummy connector
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4',
@@ -364,6 +388,24 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'wrongDevice' => [
+				// Property of the first device, updated through the second device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/device.properties.update.json'),
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'wrongConnector' => [
+				// Device of the generic connector, addressed through the dummy connector
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/device.properties.update.json'),
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'invalidType' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c',
@@ -480,6 +522,22 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'wrongDevice' => [
+				// Property of the first device, deleted through the second device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'wrongConnector' => [
+				// Device of the generic connector, addressed through the dummy connector
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'unknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/9f5e5560-72f2-487a-a382-d73d842ba538',

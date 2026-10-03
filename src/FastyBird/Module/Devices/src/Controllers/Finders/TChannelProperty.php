@@ -19,6 +19,7 @@ use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
+use FastyBird\Module\Devices\Queries;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
 use Ramsey\Uuid;
@@ -42,7 +43,11 @@ trait TChannelProperty
 	): Entities\Channels\Properties\Property
 	{
 		try {
-			$property = $this->channelPropertiesRepository->find(Uuid\Uuid::fromString($id));
+			$findQuery = new Queries\Entities\FindChannelProperties();
+			$findQuery->forChannel($channel);
+			$findQuery->byId(Uuid\Uuid::fromString($id));
+
+			$property = $this->channelPropertiesRepository->findOneBy($findQuery);
 
 			if ($property === null) {
 				throw new ApiExceptions\JsonApiError(

@@ -26,6 +26,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
 use Psr\Http\Message;
 use Ramsey\Uuid;
+use function is_string;
 use function strval;
 
 /**
@@ -41,9 +42,11 @@ use function strval;
 final class DeviceControlsV1 extends BaseV1
 {
 
+	use Controllers\Finders\TConnector;
 	use Controllers\Finders\TDevice;
 
 	public function __construct(
+		protected readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		protected readonly Models\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly Models\Entities\Devices\Controls\ControlsRepository $deviceControlsRepository,
 	)
@@ -59,8 +62,12 @@ final class DeviceControlsV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 
 		$findQuery = new Queries\Entities\FindDeviceControls();
 		$findQuery->forDevice($device);
@@ -80,13 +87,19 @@ final class DeviceControlsV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 
 		if (Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
-			$control = $this->deviceControlsRepository->find(
-				Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))),
-			);
+			$findQuery = new Queries\Entities\FindDeviceControls();
+			$findQuery->forDevice($device);
+			$findQuery->byId(Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))));
+
+			$control = $this->deviceControlsRepository->findOneBy($findQuery);
 
 			if ($control !== null) {
 				return $this->buildResponse($request, $response, $control);
@@ -109,15 +122,21 @@ final class DeviceControlsV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		// At first, try to load device
-		$this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
+		// At first, try to load connector, when the device is addressed through one
+		$connectorId = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID);
+		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
+
+		// & device
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 
 		$relationEntity = Utils\Strings::lower(strval($request->getAttribute(Router\ApiRoutes::RELATION_ENTITY)));
 
 		if (Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
-			$control = $this->deviceControlsRepository->find(
-				Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))),
-			);
+			$findQuery = new Queries\Entities\FindDeviceControls();
+			$findQuery->forDevice($device);
+			$findQuery->byId(Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))));
+
+			$control = $this->deviceControlsRepository->findOneBy($findQuery);
 
 			if ($control !== null) {
 				if ($relationEntity === Schemas\Devices\Controls\Control::RELATIONSHIPS_DEVICE) {

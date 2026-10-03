@@ -130,6 +130,16 @@ final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'readWrongConnector' => [
+				// Device of the generic connector, addressed through the dummy connector
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
+				'Bearer ' . self::VALID_TOKEN,
+				0,
+				true,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readNoState' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
