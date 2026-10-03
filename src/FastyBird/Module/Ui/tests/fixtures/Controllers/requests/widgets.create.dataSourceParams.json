@@ -1,0 +1,45 @@
+{
+  "data" : {
+    "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b07",
+    "type" : "com.fastybird.ui-module/widget/analog-sensor",
+    "attributes" : {
+      "identifier" : "data-source-params-widget",
+      "name" : "Data source params widget"
+    },
+    "relationships" : {
+      "data-sources" : {
+        "data" : [
+          {
+            "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b09",
+            "type" : "com.fastybird.ui-module/data-source/generic"
+          }
+        ]
+      },
+      "display" : {
+        "data" : {
+          "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b08",
+          "type" : "com.fastybird.ui-module/display/analog-value"
+        }
+      }
+    }
+  },
+  "included" : [
+    {
+      "attributes" : {
+        "params" : {
+          "label" : "Room temperature",
+          "position" : 2
+        }
+      },
+      "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b09",
+      "type" : "com.fastybird.ui-module/data-source/generic"
+    },
+    {
+      "attributes" : {
+        "precision" : 1
+      },
+      "id" : "6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b08",
+      "type" : "com.fastybird.ui-module/display/analog-value"
+    }
+  ]
+}

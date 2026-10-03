@@ -7,6 +7,8 @@ use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Ui\Entities;
+use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -16,6 +18,7 @@ use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use function file_get_contents;
@@ -404,6 +407,57 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 				],
 			],
 		];
+	}
+
+	/**
+	 * The included data sources are hydrated by Widget::hydrateDataSourcesRelationship(), not by
+	 * the data source hydrator's own hydrate(). This test guards that their `params` survive it.
+	 * Data source schemas expose no attributes, so the entity is read back from the database.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
+	 * @throws InvalidArgumentException
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Utils\JsonException
+	 */
+	public function testCreateKeepsIncludedDataSourceParams(): void
+	{
+		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+
+		$request = new ServerRequest(
+			RequestMethodInterface::METHOD_POST,
+			'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+			[
+				'authorization' => 'Bearer ' . self::VALID_TOKEN,
+			],
+			file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.dataSourceParams.json'),
+		);
+
+		$response = $router->handle($request);
+
+		self::assertTrue($response instanceof Http\Response);
+		self::assertSame(StatusCodeInterface::STATUS_CREATED, $response->getStatusCode(), (string) $response->getBody());
+
+		// Read the data source back from the database, not from the identity map
+		$this->getEntityManager()->clear();
+
+		$dataSourcesRepository = $this->getContainer()->getByType(
+			Models\Entities\Widgets\DataSources\Repository::class,
+		);
+
+		$dataSource = $dataSourcesRepository->find(Uuid\Uuid::fromString('6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b09'));
+
+		self::assertInstanceOf(Entities\Widgets\DataSources\Generic::class, $dataSource);
+		self::assertSame('6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b07', $dataSource->getWidget()->getId()->toString());
+		self::assertSame(
+			[
+				'label' => 'Room temperature',
+				'position' => 2,
+			],
+			(array) $dataSource->getParams(),
+		);
 	}
 
 	/**
