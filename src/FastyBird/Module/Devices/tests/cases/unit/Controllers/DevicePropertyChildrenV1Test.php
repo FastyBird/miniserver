@@ -24,6 +24,16 @@ use RuntimeException;
 final class DevicePropertyChildrenV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
+	public function setUp(): void
+	{
+		// The shared dummy data has no mapped device property, so no device property has children.
+		// The mapped property sits on the second device, so a parent link built from the child's
+		// own device or id would not match its parent's.
+		$this->registerDatabaseSchemaFile(__DIR__ . '/../../../sql/device.property.mapped.sql');
+
+		parent::setUp();
+	}
+
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws InvalidArgumentException
@@ -80,6 +90,20 @@ final class DevicePropertyChildrenV1Test extends Tests\Cases\Unit\DbTestCase
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/device.property.children.index.connector.json',
+			],
+			'readDeviceWithChildren' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db/children',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_OK,
+				__DIR__ . '/../../../fixtures/Controllers/responses/device.property.children.index.mapped.json',
+			],
+			'readConnectorDeviceWithChildren' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db/children',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_OK,
+				__DIR__ . '/../../../fixtures/Controllers/responses/device.property.children.index.mapped.connector.json',
 			],
 
 			// Invalid responses

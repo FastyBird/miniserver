@@ -147,6 +147,8 @@ final class Mapped extends Property
 	/**
 	 * @param T $resource
 	 *
+	 * @throws DevicesExceptions\InvalidState
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function getRelationshipRelatedLink(
@@ -155,14 +157,17 @@ final class Mapped extends Property
 	): JsonApi\Contracts\Schema\LinkInterface
 	{
 		if ($name === self::RELATIONSHIPS_PARENT) {
+			// The parent property, which may sit on another channel or device than this one
+			$parent = $resource->getParent();
+
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
 					Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTY,
 					[
-						Router\ApiRoutes::URL_DEVICE_ID => $resource->getChannel()->getDevice()->getId()->toString(),
-						Router\ApiRoutes::URL_CHANNEL_ID => $resource->getChannel()->getId()->toString(),
-						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
+						Router\ApiRoutes::URL_DEVICE_ID => $parent->getChannel()->getDevice()->getId()->toString(),
+						Router\ApiRoutes::URL_CHANNEL_ID => $parent->getChannel()->getId()->toString(),
+						Router\ApiRoutes::URL_ITEM_ID => $parent->getId()->toString(),
 					],
 				),
 				false,

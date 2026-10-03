@@ -44,7 +44,7 @@
         "parent": {
           "links": {
             "self": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/f5f3d6b3-b1de-4c1f-9e9b-0a6d7c4e2a10/relationships/parent",
-            "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/f5f3d6b3-b1de-4c1f-9e9b-0a6d7c4e2a10"
+            "related": "/api/devices-module/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c"
           },
           "data": {
             "type": "com.fastybird.devices-module/property/channel/dynamic",
