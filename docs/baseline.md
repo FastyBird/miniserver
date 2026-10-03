@@ -571,6 +571,11 @@ Fixed by replacing every glob `<directory>` with an explicit, enumerated list of
 33 `tests/cases/` directories, matching the convention `tools/phpstan.neon` already
 uses for the same reason.
 
+> **Superseded (#610, 2026-10-03):** the notice below is gone. `restrictDeprecations` was
+> replaced by `ignoreIndirectDeprecations` after measuring that it drops the same vendor
+> noise, and PHPUnit deprecations now fail the run. See "Test tooling hygiene (#610)" at
+> the end of this document.
+
 **"PHPUnit Deprecations: 11" from a clean `make tests` run was never 11 distinct
 findings.** It is one cosmetic, non-actionable notice --
 `tools/phpunit.xml` does not validate against its own declared PHPUnit 11.5 schema,
@@ -638,3 +643,80 @@ from `tools/patches/nette-utils-array-offsetcheck.diff` all along, identical fix
 confirmed by diffing the two. The repository is eligible for deletion now, not just in
 principle -- the "becomes removable only once ... absorbs those three libraries"
 condition the 2026-09-12 text set is met.
+
+## Test tooling hygiene (#610, 2026-10-03)
+
+**PHPUnit deprecations: 5 in CI and 11 locally were the same single notice, now 0.** Every
+one was "Your XML configuration validates against a deprecated schema", caused by
+`<source restrictDeprecations="true">` in `tools/phpunit.xml`, an attribute the PHPUnit 11.5
+schema no longer declares. PHPUnit reports it once per process that loads the
+configuration: one per paratest worker plus one for the paratest parent. CI's
+`ubuntu-latest` runners have 4 cores (`Processes: 4`), hence 5; a 10-core machine gets 11.
+A run with fewer test files than cores starts fewer workers and reports fewer. So the
+difference was the core count, not anything specific to the local harness.
+
+It is replaced by `ignoreIndirectDeprecations="true"`. Measured on PHP 8.4.26 / PHPUnit
+11.5.56 with `make tests`:
+
+| `<source>` filter | Deprecations | PHPUnit deprecations |
+|---|---|---|
+| `restrictDeprecations="true"` (main) | 0 | 11 (`-p10`) |
+| none | 231, from 1094 tests, all `vendor/` | 0 |
+| `ignoreIndirectDeprecations="true"` | 0 | 0 |
+
+The 231 are all vendor code that is autoloaded during a test and trips PHP 8.4's
+implicitly-nullable-parameter deprecation (neomerx/json-api 105, illuminate/* 84,
+casbin/casbin 20, z4kn4fein/php-semver 14, predis/predis 4, binsoul/net-mqtt 4). The two
+filters differ only at the edges, and the new one shows more, not less: a deprecation
+raised in a test file, or a deprecated vendor API called directly from first-party code,
+is "direct" and is now reported, where `restrictDeprecations` dropped both because the
+triggering file was outside `<include>`. `tools/phpunit.xml` has the full reasoning.
+
+`failOnPhpunitDeprecation="true"` is now set, so a new PHPUnit deprecation fails
+`make tests` and the CI job instead of changing a count nobody reads. Paratest honours it,
+because it computes its exit status with PHPUnit's own `ShellExitCodeCalculator`. Control:
+putting `restrictDeprecations` back with the flag set made a filtered run exit 1 with
+"OK, but there were issues!". `failOnDeprecation`, for PHP deprecations, stays off.
+
+**`make cs` now scans `tests/` and `bin/` as well as `src/`.** Before this change it only
+ran `phpcs src`. With the wider scope, main failed with 35 errors in 8 files: the
+application-scope tests had no `rootNamespaces` entry, still had file-header annotations,
+had untyped class constants and an unsorted `use`; the two `bin/*.php` launchers had a
+239-character line; and `tests/PHPStan/conditional.config.php` had a useless variable. All
+are fixed. PHPStan already analyses `tests/cases` (the tests config), but not root `bin/`
+or `tests/PHPStan/`. Extending PHPStan to them is not part of this change.
+
+**`make lint` stalling on a macOS bind mount: did not reproduce.** The recorded stall was
+a `make lint` on a bind-mounted worktree, under Docker Desktop on macOS, that stopped after
+`PHP 8.4.26 | 10 parallel jobs` and 18 progress dots. It printed nothing more and never
+exited. Five attempts on this machine all finished in 7-15 seconds, 3497 files each:
+three on an idle machine, and two while the full test suite ran against the same bind
+mount. Each attempt ran `make lint` in the background under a 300-second limit, ready to
+record process state as described in the last bullet below.
+
+Reading php-parallel-lint 1.4.0 gives a plausible mechanism, but it is not confirmed. The
+parent starts a helper process (`skip-linting.php`) that opens every file to read its first
+line, and on every pass through its main loop it reads that helper's stdout with a
+blocking `fread()`. If one `open()` on the bind mount stops responding, the helper stops
+writing. The parent then waits in `fread()` forever, and so does every lint worker it
+would have started. The lint workers' own pipes are drained only once they exit, so a
+worker that wrote more than the 64 KiB pipe buffer would deadlock as well. `php -l` never
+writes that much. parallel-lint has no option to turn the helper off. Passing `-j` with a
+lower value only reduces how many files are open at once; it does not remove the blocking
+read. With no reproduction to test against, `make lint` and CI are unchanged. CI lints a
+checkout on the runner's local disk, and no stall has been seen there.
+
+Workaround, if it happens again:
+
+- Always give the gate a deadline, so a stall fails instead of hanging the run:
+  `timeout 600 make lint`. Exit status 124 means it timed out.
+- Lint an in-container copy instead of the bind mount. This is what unblocked the
+  original runs:
+  `cp -a /app /tmp/lint-copy && cd /tmp/lint-copy && make lint`
+  (or `docker cp` the tree into the container).
+- To diagnose, run lint in the background and, once it stalls, record the state of every
+  process inside the container before killing it. Collect `ps -eo pid,ppid,stat,wchan:30,args`
+  plus `/proc/<pid>/wchan`, `/proc/<pid>/syscall` and `ls -l /proc/<pid>/fd` for each PHP
+  process. Two outcomes are possible. If the parent is blocked in `read` on the helper's
+  pipe and the helper is blocked in a filesystem wait, the cause is the bind mount, as
+  described above. If the helper is blocked in `write`, it is the pipe-buffer deadlock.
