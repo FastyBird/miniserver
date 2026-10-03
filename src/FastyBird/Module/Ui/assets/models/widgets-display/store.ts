@@ -4,6 +4,7 @@ import addFormats from 'ajv-formats';
 import Ajv from 'ajv/dist/2020';
 import axios from 'axios';
 import { Jsona } from 'jsona';
+import { TJsonApiBody } from 'jsona/lib/JsonaTypes';
 import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
 import { v4 as uuid } from 'uuid';
@@ -29,6 +30,7 @@ import {
 	IWidgetDisplayLoadAllRecordsActionPayload,
 	IWidgetDisplayLoadRecordActionPayload,
 	IWidgetDisplayMeta,
+	IWidgetDisplayParameters,
 	IWidgetDisplayRecordFactoryPayload,
 	IWidgetDisplayResponseJson,
 	IWidgetDisplayResponseModel,
@@ -46,6 +48,51 @@ const jsonApiFormatter = new Jsona({
 	modelPropertiesMapper: new JsonApiModelPropertiesMapper(),
 	jsonPropertiesMapper: new JsonApiJsonPropertiesMapper(),
 });
+
+const DISPLAY_PARAMETERS: (keyof IWidgetDisplayParameters)[] = ['minimumValue', 'maximumValue', 'stepValue', 'precision', 'enableMinMax', 'icon'];
+
+// The display is a to-one resource of its widget: there is no display identifier in the URL
+const displayApiUrl = (widgetId: IWidget['id']): string => `/${ModulePrefix.UI}/v1/widgets/${widgetId}/display`;
+
+/**
+ * Display parameters from an exchange document, which sends them flattened and snake cased
+ *
+ * @param {WidgetDisplayDocument} document
+ */
+const documentParameters = (document: WidgetDisplayDocument): IWidgetDisplayParameters => {
+	return {
+		minimumValue: get(document, 'minimum_value', null),
+		maximumValue: get(document, 'maximum_value', null),
+		stepValue: get(document, 'step_value', null),
+		precision: get(document, 'precision', null),
+		enableMinMax: get(document, 'enable_min_max', null),
+		icon: get(document, 'icon', null),
+	};
+};
+
+/**
+ * JSON:API update body for the display
+ *
+ * Only the parameters that are set are sent. Each display hydrator accepts only its own
+ * parameters, and rejects an empty value for a parameter it does accept.
+ *
+ * @param {IWidgetDisplay} record
+ */
+const apiUpdateBody = (record: IWidgetDisplay): TJsonApiBody => {
+	const parameters = Object.fromEntries(
+		DISPLAY_PARAMETERS.filter((name): boolean => record[name] !== null && record[name] !== undefined).map((name) => [name, record[name]])
+	);
+
+	return jsonApiFormatter.serialize({
+		stuff: {
+			id: record.id,
+			type: record.type,
+			...parameters,
+			// The widget is identified by the URL, the relationship is not sent
+			relationshipNames: [],
+		},
+	});
+};
 
 const storeRecordFactory = async (data: IWidgetDisplayRecordFactoryPayload): Promise<IWidgetDisplay> => {
 	const widgetsStore = useWidgets();
@@ -88,7 +135,12 @@ const storeRecordFactory = async (data: IWidgetDisplayRecordFactoryPayload): Pro
 
 		draft: get(data, 'draft', false),
 
-		params: get(data, 'params', {}),
+		minimumValue: get(data, 'minimumValue', null),
+		maximumValue: get(data, 'maximumValue', null),
+		stepValue: get(data, 'stepValue', null),
+		precision: get(data, 'precision', null),
+		enableMinMax: get(data, 'enableMinMax', null),
+		icon: get(data, 'icon', null),
 
 		// Relations
 		relationshipNames: ['widget'],
@@ -109,7 +161,12 @@ const databaseRecordFactory = (record: IWidgetDisplay): IWidgetDisplayDatabaseRe
 			entity: record.type.entity,
 		},
 
-		params: record.params,
+		minimumValue: record.minimumValue,
+		maximumValue: record.maximumValue,
+		stepValue: record.stepValue,
+		precision: record.precision,
+		enableMinMax: record.enableMinMax,
+		icon: record.icon,
 
 		relationshipNames: record.relationshipNames.map((name) => name),
 
@@ -130,7 +187,6 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 			semaphore: {
 				fetching: {
 					items: [],
-					item: [],
 				},
 				creating: [],
 				updating: [],
@@ -143,10 +199,6 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 	},
 
 	getters: {
-		getting: (state: IWidgetDisplayState): ((id: IWidgetDisplay['id']) => boolean) => {
-			return (id: IWidgetDisplay['id']): boolean => state.semaphore.fetching.item.includes(id);
-		},
-
 		fetching: (state: IWidgetDisplayState): ((widgetId: IWidget['id'] | null) => boolean) => {
 			return (widgetId: IWidget['id'] | null): boolean =>
 				widgetId !== null ? state.semaphore.fetching.items.includes(widgetId) : state.semaphore.fetching.items.length > 0;
@@ -234,27 +286,25 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 		},
 
 		/**
-		 * Get one record from server
+		 * Get widget display from server
 		 *
 		 * @param {IWidgetDisplayGetActionPayload} payload
 		 */
 		async get(payload: IWidgetDisplayGetActionPayload): Promise<boolean> {
-			if (this.semaphore.fetching.item.includes(payload.id)) {
+			if (this.semaphore.fetching.items.includes(payload.widget.id)) {
 				return false;
 			}
 
-			const fromDatabase = await this.loadRecord({ id: payload.id });
+			const fromDatabase = (await this.loadAllRecords({ widget: payload.widget })) && this.findForWidget(payload.widget.id).length > 0;
 
 			if (fromDatabase && payload.refresh === false) {
 				return true;
 			}
 
-			this.semaphore.fetching.item.push(payload.id);
+			this.semaphore.fetching.items.push(payload.widget.id);
 
 			try {
-				const displayResponse = await axios.get<IWidgetDisplayResponseJson>(
-					`/${ModulePrefix.UI}/v1/widgets/${payload.widget.id}/displays/${payload.id}`
-				);
+				const displayResponse = await axios.get<IWidgetDisplayResponseJson>(displayApiUrl(payload.widget.id));
 
 				const displayResponseModel = jsonApiFormatter.deserialize(displayResponse.data) as IWidgetDisplayResponseModel;
 
@@ -270,7 +320,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 			} catch (e: any) {
 				throw new ApiError('ui-module.widget-displays.get.failed', e, 'Fetching display failed.');
 			} finally {
-				this.semaphore.fetching.item = this.semaphore.fetching.item.filter((item) => item !== payload.id);
+				this.semaphore.fetching.items = this.semaphore.fetching.items.filter((item) => item !== payload.widget.id);
 			}
 
 			return true;
@@ -318,20 +368,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 				}
 
 				try {
-					const apiData: Partial<IWidgetDisplay> = {
-						id: updatedRecord.id,
-						type: updatedRecord.type,
-						params: updatedRecord.params,
-						widget: updatedRecord.widget,
-						relationshipNames: ['widget'],
-					};
-
-					const updatedDisplay = await axios.patch<IWidgetDisplayResponseJson>(
-						`/${ModulePrefix.UI}/v1/widgets/${updatedRecord.widget.id}/displays/${updatedRecord.id}`,
-						jsonApiFormatter.serialize({
-							stuff: apiData,
-						})
-					);
+					const updatedDisplay = await axios.patch<IWidgetDisplayResponseJson>(displayApiUrl(updatedRecord.widget.id), apiUpdateBody(updatedRecord));
 
 					const updatedDisplayModel = jsonApiFormatter.deserialize(updatedDisplay.data) as IWidgetDisplayResponseModel;
 
@@ -346,14 +383,8 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 
 					return this.data[updatedDisplayModel.id];
 				} catch (e: any) {
-					const widgetsStore = useWidgets();
-
-					const widget = widgetsStore.findById(updatedRecord.widget.id);
-
-					if (widget !== null) {
-						// Updating entity on api failed, we need to refresh entity
-						await this.get({ widget, id: payload.id });
-					}
+					// Updating entity on api failed, we need to refresh entity
+					await this.get({ widget });
 
 					throw new ApiError('ui-module.widget-displays.update.failed', e, 'Edit display failed.');
 				} finally {
@@ -364,6 +395,9 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 
 		/**
 		 * Save draft record on server
+		 *
+		 * A display is created together with its widget, so there is no display create endpoint.
+		 * A draft display is an edit of the widget's existing display, which is updated.
 		 *
 		 * @param {IWidgetDisplaySaveActionPayload} payload
 		 */
@@ -391,12 +425,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 			}
 
 			try {
-				const savedDisplay = await axios.post<IWidgetDisplayResponseJson>(
-					`/${ModulePrefix.UI}/v1/widgets/${recordToSave.widget.id}/displays`,
-					jsonApiFormatter.serialize({
-						stuff: recordToSave,
-					})
-				);
+				const savedDisplay = await axios.patch<IWidgetDisplayResponseJson>(displayApiUrl(recordToSave.widget.id), apiUpdateBody(recordToSave));
 
 				const savedDisplayModel = jsonApiFormatter.deserialize(savedDisplay.data) as IWidgetDisplayResponseModel;
 
@@ -458,8 +487,8 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 				if (this.data && body.id in this.data) {
 					const record = await storeRecordFactory({
 						...this.data[body.id],
+						...documentParameters(body),
 						...{
-							params: body.params,
 							widgetId: body.widget,
 						},
 					});
@@ -478,10 +507,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 
 					if (widget !== null) {
 						try {
-							await this.get({
-								widget,
-								id: body.id,
-							});
+							await this.get({ widget });
 						} catch {
 							return false;
 						}
@@ -530,7 +556,7 @@ export const useWidgetDisplay = defineStore<string, IWidgetDisplayState, IWidget
 							source: doc.source,
 							entity: 'display',
 						},
-						params: doc.params,
+						...documentParameters(doc),
 						widgetId: doc.widget,
 					},
 				});

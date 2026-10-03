@@ -149,10 +149,11 @@ const databaseRecordFactory = (record: IWidget): IWidgetDatabaseRecord => {
 	};
 };
 
+// A resource that came in the response's `included` carries its relationships, a bare relation does not
 const addDisplayRelation = async (widget: IWidget, display: IWidgetDisplayResponseModel | IPlainRelation): Promise<void> => {
 	const displayStore = useWidgetDisplay();
 
-	if ('params' in display) {
+	if ('relationshipNames' in display) {
 		await displayStore.set({
 			data: {
 				...display,
@@ -168,7 +169,7 @@ const addDataSourcesRelations = async (widget: IWidget, dataSources: (IWidgetDat
 	const dataSourcesStore = useWidgetDataSources();
 
 	for (const dataSource of dataSources) {
-		if ('params' in dataSource) {
+		if ('relationshipNames' in dataSource) {
 			await dataSourcesStore.set({
 				data: {
 					...dataSource,
@@ -242,7 +243,8 @@ export const useWidgets = defineStore<string, IWidgetsState, IWidgetsGetters, IW
 		async set(payload: IWidgetsSetActionPayload): Promise<IWidget> {
 			const record = storeRecordFactory(payload.data);
 
-			if ('display' in payload.data && Array.isArray(payload.data.display)) {
+			// The display is a to-one relation
+			if ('display' in payload.data && payload.data.display !== undefined && !Array.isArray(payload.data.display)) {
 				await addDisplayRelation(record, payload.data.display);
 			}
 
@@ -300,7 +302,7 @@ export const useWidgets = defineStore<string, IWidgetsState, IWidgetsGetters, IW
 			const promises: Promise<boolean>[] = [];
 
 			const displayStore = useWidgetDisplay();
-			promises.push(displayStore.fetch({ widget: this.data[payload.id] }));
+			promises.push(displayStore.get({ widget: this.data[payload.id] }));
 
 			const dataSourcesStore = useWidgetDataSources();
 			promises.push(dataSourcesStore.fetch({ widget: this.data[payload.id] }));
@@ -380,7 +382,7 @@ export const useWidgets = defineStore<string, IWidgetsState, IWidgetsGetters, IW
 			const dataSourcesStore = useWidgetDataSources();
 
 			for (const widget of Object.values(this.data ?? {})) {
-				promises.push(displayStore.fetch({ widget }));
+				promises.push(displayStore.get({ widget }));
 				promises.push(dataSourcesStore.fetch({ widget }));
 			}
 
@@ -439,7 +441,7 @@ export const useWidgets = defineStore<string, IWidgetsState, IWidgetsGetters, IW
 				const promises: Promise<boolean>[] = [];
 
 				const displayStore = useWidgetDisplay();
-				promises.push(displayStore.fetch({ widget: this.data[newWidget.id] }));
+				promises.push(displayStore.get({ widget: this.data[newWidget.id] }));
 
 				const dataSourcesStore = useWidgetDataSources();
 				promises.push(dataSourcesStore.fetch({ widget: this.data[newWidget.id] }));
@@ -507,7 +509,7 @@ export const useWidgets = defineStore<string, IWidgetsState, IWidgetsGetters, IW
 				const promises: Promise<boolean>[] = [];
 
 				const displayStore = useWidgetDisplay();
-				promises.push(displayStore.fetch({ widget: this.data[payload.id] }));
+				promises.push(displayStore.get({ widget: this.data[payload.id] }));
 
 				const dataSourcesStore = useWidgetDataSources();
 				promises.push(dataSourcesStore.fetch({ widget: this.data[payload.id] }));
@@ -562,7 +564,7 @@ export const useWidgets = defineStore<string, IWidgetsState, IWidgetsGetters, IW
 			const promises: Promise<boolean>[] = [];
 
 			const displayStore = useWidgetDisplay();
-			promises.push(displayStore.fetch({ widget: this.data[payload.id] }));
+			promises.push(displayStore.get({ widget: this.data[payload.id] }));
 
 			const dataSourcesStore = useWidgetDataSources();
 			promises.push(dataSourcesStore.fetch({ widget: this.data[payload.id] }));
