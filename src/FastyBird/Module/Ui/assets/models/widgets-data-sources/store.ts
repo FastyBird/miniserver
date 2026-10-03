@@ -645,7 +645,7 @@ export const useWidgetDataSources = defineStore<string, IWidgetDataSourcesState,
 				const { call } = useWampV1Client<{ data: string }>();
 
 				try {
-					const response = await call('', {
+					const response = await call(`/${ModulePrefix.UI}/v1/exchange`, {
 						routing_key: ActionRoutes.WIDGET_DATA_SOURCE,
 						source: dataSource.type.source,
 						data: {
