@@ -26,6 +26,7 @@ use TypeError;
 use ValueError;
 use function assert;
 use function in_array;
+use function is_array;
 use function is_scalar;
 use function strval;
 
@@ -98,11 +99,27 @@ trait TAccount
 	 *
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function validateDetailsAttribute(Objects\IStandardObject $attributes): void
+	protected function validateDetailsAttribute(
+		Objects\IStandardObject $attributes,
+		Entities\Accounts\Account|null $entity = null,
+	): void
 	{
 		$details = $attributes->get('details');
 
 		if (!$details instanceof Objects\IStandardObject) {
+			// The base hydrator takes a JSON array for nested details. On create, reject it the way
+			// it rejects any other non-object value. On update, it is ignored.
+			if ($entity === null && is_array($details)) {
+				throw new Exceptions\JsonApiError(
+					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+					strval($this->translator->translate('//api.hydrator.missingRequiredAttribute.heading')),
+					strval($this->translator->translate('//api.hydrator.missingRequiredAttribute.message')),
+					[
+						'pointer' => '/data/attributes/details',
+					],
+				);
+			}
+
 			return;
 		}
 
