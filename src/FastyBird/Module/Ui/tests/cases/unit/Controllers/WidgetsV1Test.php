@@ -438,7 +438,11 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 		$response = $router->handle($request);
 
 		self::assertTrue($response instanceof Http\Response);
-		self::assertSame(StatusCodeInterface::STATUS_CREATED, $response->getStatusCode(), (string) $response->getBody());
+		self::assertSame(
+			StatusCodeInterface::STATUS_CREATED,
+			$response->getStatusCode(),
+			(string) $response->getBody(),
+		);
 
 		// Read the data source back from the database, not from the identity map
 		$this->getEntityManager()->clear();

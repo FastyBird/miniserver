@@ -337,6 +337,7 @@ final class DataSourcesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'update' => [
 				RequestMethodInterface::METHOD_PATCH,
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources/764937a7-8565-472e-8e12-fe97cd55a377',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/dataSources.update.params.json'),
 				StatusCodeInterface::STATUS_OK,
