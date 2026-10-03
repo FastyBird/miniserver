@@ -129,16 +129,24 @@ class DevicesV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		if ($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID) !== null) {
-			// At first, try to load connector
-			$this->findConnector(strval($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID)));
-		}
+		// At first, try to load connector
+		$connector = $request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID) !== null
+			? $this->findConnector(strval($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID)))
+			: null;
 
 		$document = $this->createDocument($request);
 
 		$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 		if ($hydrator !== null) {
+			if ($connector !== null) {
+				$this->validateParentRelation(
+					$document,
+					Schemas\Devices\Device::RELATIONSHIPS_CONNECTOR,
+					$connector->getId(),
+				);
+			}
+
 			try {
 				// Start transaction connection to the database
 				$this->getOrmConnection()->beginTransaction();

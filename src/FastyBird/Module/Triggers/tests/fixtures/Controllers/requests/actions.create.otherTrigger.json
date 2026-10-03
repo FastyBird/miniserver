@@ -1,0 +1,18 @@
+{
+  "data" : {
+    "id" : "05f28df9-5f19-4923-b3f8-b9090116dadc",
+    "type" : "com.fastybird.triggers-module/action/dummy",
+    "attributes" : {
+      "do_item" : "215b4ea2-9657-47be-b2d5-0793de1f68c9",
+      "value" : "on"
+    },
+    "relationships" : {
+      "trigger" : {
+        "data" : {
+          "id" : "421ca8e9-26c6-4630-89ba-c53aea9bcb1e",
+          "type" : "com.fastybird.triggers-module/trigger/manual"
+        }
+      }
+    }
+  }
+}

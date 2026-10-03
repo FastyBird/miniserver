@@ -125,16 +125,24 @@ final class ChannelsV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		if ($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID) !== null) {
-			// At first, try to load device
-			$this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)));
-		}
+		// At first, try to load device
+		$device = $request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID) !== null
+			? $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)))
+			: null;
 
 		$document = $this->createDocument($request);
 
 		$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 		if ($hydrator !== null) {
+			if ($device !== null) {
+				$this->validateParentRelation(
+					$document,
+					Schemas\Channels\Channel::RELATIONSHIPS_DEVICE,
+					$device->getId(),
+				);
+			}
+
 			try {
 				// Start transaction connection to the database
 				$this->getOrmConnection()->beginTransaction();

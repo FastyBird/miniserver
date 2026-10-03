@@ -269,6 +269,16 @@ final class NotificationsV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'otherTrigger' => [
+				// Body names another manual trigger
+				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/notifications',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(
+					__DIR__ . '/../../../fixtures/Controllers/requests/notifications.createEmail.otherTrigger.json',
+				),
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.trigger.json',
+			],
 			'notAllowed' => [
 				'/api/' . Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/notifications',
 				'Bearer ' . self::VALID_TOKEN_USER,

@@ -1,0 +1,23 @@
+{
+  "data": {
+    "id": "bbbf5caa-b30e-4558-b83a-699617958cea",
+    "type": "com.fastybird.devices-module/device/dummy",
+    "attributes": {
+      "identifier": "new-device",
+      "comment": null,
+      "control": [
+        "configure"
+      ],
+      "enabled": true,
+      "name": "Newly created device"
+    },
+    "relationships": {
+      "connector": {
+        "data": {
+          "type": "com.fastybird.devices-module/connector/dummy",
+          "id": "7a3dd94c-7294-46fd-8c61-1b375c313d4d"
+        }
+      }
+    }
+  }
+}

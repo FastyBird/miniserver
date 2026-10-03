@@ -20,6 +20,7 @@ use Doctrine\Persistence;
 use Exception;
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Api\Helpers;
 use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -35,6 +36,7 @@ use Nette\Localization;
 use Nette\Utils;
 use Psr\Http\Message;
 use Psr\Http\Message\ResponseInterface;
+use Ramsey\Uuid;
 use RuntimeException;
 use stdClass;
 use function array_key_exists;
@@ -191,6 +193,26 @@ abstract class BaseV1
 		}
 
 		return true;
+	}
+
+	/**
+	 * Rejects a nested create whose body names a parent other than the URL parent
+	 *
+	 * @throws ApiExceptions\JsonApiError
+	 */
+	protected function validateParentRelation(
+		Encoding\IDocument $document,
+		string $relationship,
+		Uuid\UuidInterface $parentId,
+	): void
+	{
+		Helpers\ParentRelationship::validate(
+			$document,
+			$relationship,
+			$parentId,
+			strval($this->translator->translate('//devices-module.base.messages.invalidRelation.heading')),
+			strval($this->translator->translate('//devices-module.base.messages.invalidRelation.message')),
+		);
 	}
 
 	/**

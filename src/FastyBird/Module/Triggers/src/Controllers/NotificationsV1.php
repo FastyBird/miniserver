@@ -128,13 +128,19 @@ final class NotificationsV1 extends BaseV1
 	): Message\ResponseInterface
 	{
 		// At first, try to load trigger
-		$this->findTrigger(strval($request->getAttribute(Router\ApiRoutes::URL_TRIGGER_ID)));
+		$trigger = $this->findTrigger(strval($request->getAttribute(Router\ApiRoutes::URL_TRIGGER_ID)));
 
 		$document = $this->createDocument($request);
 
 		$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 		if ($hydrator !== null) {
+			$this->validateParentRelation(
+				$document,
+				Schemas\Notifications\Notification::RELATIONSHIPS_TRIGGER,
+				$trigger->getId(),
+			);
+
 			try {
 				// Start transaction connection to the database
 				$this->getOrmConnection()->beginTransaction();

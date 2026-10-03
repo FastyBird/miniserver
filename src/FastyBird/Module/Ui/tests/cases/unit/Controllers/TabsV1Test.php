@@ -180,6 +180,14 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
+			'otherDashboard' => [
+				// Body names the first-floor dashboard, the URL names the main one
+				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/tabs.create.otherDashboard.json'),
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.relation.dashboard.json',
+			],
 		];
 	}
 

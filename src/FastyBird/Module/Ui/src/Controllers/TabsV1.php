@@ -122,16 +122,24 @@ final class TabsV1 extends BaseV1
 		Message\ResponseInterface $response,
 	): Message\ResponseInterface
 	{
-		if ($request->getAttribute(Router\ApiRoutes::URL_DASHBOARD_ID) !== null) {
-			// At first, try to load dashboard
-			$this->findDashboard(strval($request->getAttribute(Router\ApiRoutes::URL_DASHBOARD_ID)));
-		}
+		// At first, try to load dashboard
+		$dashboard = $request->getAttribute(Router\ApiRoutes::URL_DASHBOARD_ID) !== null
+			? $this->findDashboard(strval($request->getAttribute(Router\ApiRoutes::URL_DASHBOARD_ID)))
+			: null;
 
 		$document = $this->createDocument($request);
 
 		$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 		if ($hydrator !== null) {
+			if ($dashboard !== null) {
+				$this->validateParentRelation(
+					$document,
+					Schemas\Dashboards\Tabs\Tab::RELATIONSHIPS_DASHBOARD,
+					$dashboard->getId(),
+				);
+			}
+
 			try {
 				// Start transaction connection to the database
 				$this->getOrmConnection()->beginTransaction();

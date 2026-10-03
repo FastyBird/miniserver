@@ -1,0 +1,19 @@
+{
+  "data" : {
+    "id" : "f333fc7a-6e23-4b2f-808d-ed35105b8430",
+    "type" : "com.fastybird.triggers-module/condition/dummy",
+    "attributes" : {
+      "watch_item" : "d1700ed7-0cc8-48d2-9fe9-8e4ae4d2bcaf",
+      "operator" : "eq",
+      "operand" : false
+    },
+    "relationships" : {
+      "trigger" : {
+        "data" : {
+          "id" : "0b48dfbc-fac2-4292-88dc-7981a121602d",
+          "type" : "com.fastybird.triggers-module/trigger/automatic"
+        }
+      }
+    }
+  }
+}

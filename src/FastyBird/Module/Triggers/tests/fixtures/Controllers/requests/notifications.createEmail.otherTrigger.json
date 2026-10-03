@@ -1,0 +1,17 @@
+{
+  "data" : {
+    "id" : "ef011ee6-82b9-4324-aeaf-33241d81b721",
+    "type" : "com.fastybird.triggers-module/notification/email",
+    "attributes" : {
+      "email" : "john@doe.com"
+    },
+    "relationships" : {
+      "trigger" : {
+        "data" : {
+          "id" : "421ca8e9-26c6-4630-89ba-c53aea9bcb1e",
+          "type" : "com.fastybird.triggers-module/trigger/manual"
+        }
+      }
+    }
+  }
+}

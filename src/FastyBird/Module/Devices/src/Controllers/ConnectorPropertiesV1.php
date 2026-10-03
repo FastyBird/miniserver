@@ -118,13 +118,19 @@ final class ConnectorPropertiesV1 extends BaseV1
 	): Message\ResponseInterface
 	{
 		// At first, try to load connector
-		$this->findConnector(strval($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID)));
+		$connector = $this->findConnector(strval($request->getAttribute(Router\ApiRoutes::URL_CONNECTOR_ID)));
 
 		$document = $this->createDocument($request);
 
 		$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 		if ($hydrator !== null) {
+			$this->validateParentRelation(
+				$document,
+				Schemas\Connectors\Properties\Property::RELATIONSHIPS_CONNECTOR,
+				$connector->getId(),
+			);
+
 			try {
 				// Start transaction connection to the database
 				$this->getOrmConnection()->beginTransaction();
