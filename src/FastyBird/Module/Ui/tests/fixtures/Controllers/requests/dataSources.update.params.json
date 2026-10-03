@@ -1,0 +1,12 @@
+{
+  "data" : {
+    "id" : "764937a7-8565-472e-8e12-fe97cd55a377",
+    "type" : "com.fastybird.ui-module/data-source/generic",
+    "attributes" : {
+      "params" : {
+        "label" : "Room temperature",
+        "position" : 2
+      }
+    }
+  }
+}

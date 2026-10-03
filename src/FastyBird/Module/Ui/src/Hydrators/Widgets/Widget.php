@@ -311,9 +311,12 @@ abstract class Widget extends ApiHydrators\Hydrator
 						);
 
 						if ($dataSourcesSchema->getType() === $item->getType()) {
-							$entityMapping = $this->mapEntity($dataSourceHydrator->getEntityName());
+							// The data source hydrator owns the attribute map of its entity (`params`
+							// and whatever a subtype adds). This hydrator's map only knows the widget
+							// and display keys, so mapping with it dropped every data source attribute.
+							$entityMapping = $dataSourceHydrator->mapEntity($dataSourceHydrator->getEntityName());
 
-							$dataSource = $this->hydrateAttributes(
+							$dataSource = $dataSourceHydrator->hydrateAttributes(
 								$dataSourceHydrator->getEntityName(),
 								$item->getAttributes(),
 								$entityMapping,

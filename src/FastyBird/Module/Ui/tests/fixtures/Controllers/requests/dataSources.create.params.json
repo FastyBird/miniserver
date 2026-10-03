@@ -1,0 +1,20 @@
+{
+  "data" : {
+    "id" : "0c96af0b-d5be-4e1b-81e6-0d02415b4d1b",
+    "type" : "com.fastybird.ui-module/data-source/generic",
+    "attributes" : {
+      "params" : {
+        "label" : "Room temperature",
+        "position" : 2
+      }
+    },
+    "relationships" : {
+      "widget" : {
+        "data" : {
+          "id" : "15553443-4564-454d-af04-0dfeef08aa96",
+          "type" : "com.fastybird.ui-module/widget/analog-sensor"
+        }
+      }
+    }
+  }
+}
