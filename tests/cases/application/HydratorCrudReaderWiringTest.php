@@ -2,8 +2,8 @@
 
 namespace FastyBird\MiniServer\Tests\Cases\Application;
 
-use FastyBird\Core\Api\Helpers\CrudReader;
 use Error;
+use FastyBird\Core\Api\Helpers\CrudReader;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
