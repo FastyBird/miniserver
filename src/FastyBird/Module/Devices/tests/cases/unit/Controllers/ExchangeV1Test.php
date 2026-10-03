@@ -22,8 +22,10 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Throwable;
+use function array_key_exists;
 use function is_array;
 use function is_string;
+use function str_starts_with;
 
 /**
  * A WAMP RPC call to the devices exchange applies the role rule the HTTP API applies to the
@@ -31,6 +33,11 @@ use function is_string;
  * serve to any signed-in user; setting one, or running a connector, device or channel
  * control, changes state, which over HTTP takes the manager or administrator role. A refused
  * call is answered with a WAMP call error, and nothing is published to the exchange.
+ *
+ * An allowed control call is carried on as the control action document of its owner, published
+ * to the exchange under the control action routing key, and is answered as accepted only then.
+ * A control that does not exist, or does not belong to the connector, device or channel the
+ * call names, and data that do not make a control action, are answered with a call error.
  *
  * Every call goes through the real WAMP application, the module's real socket router and the
  * module's real exchange controller, with the exchange on as the module ships. What is
@@ -60,11 +67,30 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 
 	private const string CHANNEL_PROPERTY = 'bbcccf8c-33ab-431b-a795-d7bb38b6b6db';
 
+	// The fixtures' controls, each with the owner it belongs to and another owner it does not
+	private const string CONNECTOR_CONTROL = '7c055b2b-60c3-4017-93db-e9478d8aa662';
+
+	private const string OTHER_CONNECTOR = '7a3dd94c-7294-46fd-8c61-1b375c313d4d';
+
+	private const string DEVICE_CONTROL = '7c055b2b-60c3-4017-93db-e9478d8aa662';
+
+	private const string OTHER_DEVICE = 'bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a';
+
+	private const string CHANNEL_CONTROL = '15db9bef-3b57-4a87-bf67-e3c19fc3ba34';
+
+	private const string OTHER_CHANNEL = '6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a';
+
+	// No connector, device or channel control has this identifier
+	private const string UNKNOWN_CONTROL = 'd6f0c3a2-5b8e-4f71-9a2c-3e4b5d6c7f80';
+
 	/** @var list<mixed> */
 	private array $sent = [];
 
 	/** @var list<string> */
 	private array $published = [];
+
+	/** @var list<array{source: string, routing_key: string, document: class-string|null, data: array<string, mixed>|null}> */
+	private array $publishedDocuments = [];
 
 	public function setUp(): void
 	{
@@ -106,22 +132,45 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	 */
 	public static function controlActions(): array
 	{
-		$routingKeys = [
-			'connector' => Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY,
-			'device' => Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY,
-			'channel' => Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY,
-		];
-
 		$cases = [];
 
-		foreach ($routingKeys as $owner => $routingKey) {
+		foreach (['connector', 'device', 'channel'] as $owner) {
 			foreach (self::principals() as $principal => $roles) {
 				$cases[$owner . ' control by ' . $principal] = [
-					$routingKey,
+					$owner,
 					$roles,
 					$principal === 'manager' || $principal === 'administrator',
 				];
 			}
+		}
+
+		return $cases;
+	}
+
+	/**
+	 * @return array<string, array{string}>
+	 */
+	public static function controlOwners(): array
+	{
+		return [
+			'connector' => ['connector'],
+			'device' => ['device'],
+			'channel' => ['channel'],
+		];
+	}
+
+	/**
+	 * @return array<string, array{string, string, string|null}>
+	 */
+	public static function malformedControlActions(): array
+	{
+		$cases = [];
+
+		foreach (['connector', 'device', 'channel'] as $owner) {
+			$cases[$owner . ' control without data'] = [$owner, 'no data', 'Provided control action has no data'];
+			$cases[$owner . ' control that is not an identifier'] = [$owner, 'control name', null];
+			$cases[$owner . ' control with an unknown action'] = [$owner, 'unknown action', null];
+			$cases[$owner . ' control without its owner'] = [$owner, 'no owner', null];
 		}
 
 		return $cases;
@@ -185,25 +234,167 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * No HTTP endpoint runs a control; it changes state, so it takes the rule HTTP applies to
-	 * every change. Nothing is carried on for a control at all, allowed or not.
+	 * every change. Only an allowed control is carried on, as the control action it is.
 	 *
 	 * @param list<string>|null $roles
 	 *
 	 * @throws Throwable
 	 */
 	#[DataProvider('controlActions')]
-	public function testControlAction(string $routingKey, array|null $roles, bool $allowed): void
+	public function testControlAction(string $owner, array|null $roles, bool $allowed): void
 	{
+		[$routingKey, $data] = self::controlCall($owner);
+
 		$frame = $this->call($this->client($roles), [
 			'routing_key' => $routingKey,
 			'source' => Sources\Module::DEVICES->value,
-			'data' => [
-				'control' => 'reset',
-				'device' => self::DEVICE,
-			],
+			'data' => $data,
 		]);
 
 		$this->assertAnswer($frame, $roles, $allowed);
+		self::assertSame($allowed ? [$routingKey] : [], $this->published);
+	}
+
+	/**
+	 * The control action reaches the exchange as its owner's control action document, under the
+	 * control action routing key, carrying the owner, the control, the action and the value
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('controlOwners')]
+	public function testControlActionPublishesTheControlActionDocument(string $owner): void
+	{
+		[$routingKey, $data] = self::controlCall($owner);
+
+		$frame = $this->call($this->client(['administrator']), [
+			'routing_key' => $routingKey,
+			'source' => Sources\Module::DEVICES->value,
+			'data' => $data,
+		]);
+
+		$this->assertAnswer($frame, ['administrator'], true);
+
+		$documents = [
+			'connector' => Devices\Documents\Connectors\Controls\Actions\Action::class,
+			'device' => Devices\Documents\Devices\Controls\Actions\Action::class,
+			'channel' => Devices\Documents\Channels\Controls\Actions\Action::class,
+		];
+
+		self::assertSame(
+			[
+				[
+					'source' => Sources\Module::DEVICES->value,
+					'routing_key' => $routingKey,
+					'document' => $documents[$owner],
+					'data' => [
+						'id' => $data['control'],
+						'source' => Sources\Module::DEVICES->value,
+						$owner => $data[$owner],
+						'control' => $data['control'],
+						'action' => Types\ControlAction::SET->value,
+						'expected_value' => $data['expected_value'],
+					],
+				],
+			],
+			$this->publishedDocuments,
+		);
+	}
+
+	/**
+	 * A control that does not exist is not run, and the caller is told so
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('controlOwners')]
+	public function testControlActionForAnUnknownControlIsAnError(string $owner): void
+	{
+		[$routingKey, $data] = self::controlCall($owner);
+
+		$data['control'] = self::UNKNOWN_CONTROL;
+
+		$frame = $this->call($this->client(['administrator']), [
+			'routing_key' => $routingKey,
+			'source' => Sources\Module::DEVICES->value,
+			'data' => $data,
+		]);
+
+		$this->assertError($frame, 'Requested ' . $owner . ' control was not found');
+		self::assertSame([], $this->published);
+	}
+
+	/**
+	 * A control is run only for the connector, device or channel it belongs to
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('controlOwners')]
+	public function testControlActionForAControlOfAnotherOwnerIsAnError(string $owner): void
+	{
+		[$routingKey, $data] = self::controlCall($owner);
+
+		$data[$owner] = [
+			'connector' => self::OTHER_CONNECTOR,
+			'device' => self::OTHER_DEVICE,
+			'channel' => self::OTHER_CHANNEL,
+		][$owner];
+
+		$frame = $this->call($this->client(['administrator']), [
+			'routing_key' => $routingKey,
+			'source' => Sources\Module::DEVICES->value,
+			'data' => $data,
+		]);
+
+		$this->assertError($frame, 'Requested ' . $owner . ' control was not found');
+		self::assertSame([], $this->published);
+	}
+
+	/**
+	 * Data that do not make a control action are refused, and nothing is carried on
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('malformedControlActions')]
+	public function testMalformedControlActionIsAnError(string $owner, string $malformation, string|null $message): void
+	{
+		[$routingKey, $data] = self::controlCall($owner);
+
+		$args = [
+			'routing_key' => $routingKey,
+			'source' => Sources\Module::DEVICES->value,
+		];
+
+		if ($malformation === 'control name') {
+			$data['control'] = 'reset';
+		} elseif ($malformation === 'unknown action') {
+			$data['action'] = 'toggle';
+		} elseif ($malformation === 'no owner') {
+			unset($data[$owner]);
+		}
+
+		if ($malformation !== 'no data') {
+			$args['data'] = $data;
+		}
+
+		$frame = $this->call($this->client(['administrator']), $args);
+
+		$this->assertError($frame, $message);
+		self::assertSame([], $this->published);
+	}
+
+	/**
+	 * The role rule is applied before the data of a control call are read: a caller without the
+	 * role is refused as such, whatever the call carries
+	 *
+	 * @throws Throwable
+	 */
+	public function testAControlCallWithoutDataIsRefusedToAUser(): void
+	{
+		$frame = $this->call($this->client(['user']), [
+			'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY,
+			'source' => Sources\Module::DEVICES->value,
+		]);
+
+		$this->assertAnswer($frame, ['user'], false);
 		self::assertSame([], $this->published);
 	}
 
@@ -222,6 +413,44 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$this->assertAnswer($frame, ['user'], false);
 		self::assertSame([], $this->published);
+	}
+
+	/**
+	 * A well-formed control call for a control of the fixtures, with the owner it belongs to
+	 *
+	 * @return array{string, array<string, string|int|bool>}
+	 */
+	private static function controlCall(string $owner): array
+	{
+		return [
+			'connector' => [
+				Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY,
+				[
+					'action' => Types\ControlAction::SET->value,
+					'connector' => self::CONNECTOR,
+					'control' => self::CONNECTOR_CONTROL,
+					'expected_value' => true,
+				],
+			],
+			'device' => [
+				Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY,
+				[
+					'action' => Types\ControlAction::SET->value,
+					'device' => self::DEVICE,
+					'control' => self::DEVICE_CONTROL,
+					'expected_value' => 10,
+				],
+			],
+			'channel' => [
+				Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY,
+				[
+					'action' => Types\ControlAction::SET->value,
+					'channel' => self::CHANNEL,
+					'control' => self::CHANNEL_CONTROL,
+					'expected_value' => 'on',
+				],
+			],
+		][$owner];
 	}
 
 	/**
@@ -304,6 +533,12 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 		$recorder->method('publish')->willReturnCallback(
 			function (Sources\Source $source, string $routingKey, Documents\Document|null $entity): bool {
 				$this->published[] = $routingKey;
+				$this->publishedDocuments[] = [
+					'source' => $source->value,
+					'routing_key' => $routingKey,
+					'document' => $entity !== null ? $entity::class : null,
+					'data' => $entity?->toArray(),
+				];
 
 				return true;
 			},
@@ -361,6 +596,29 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 		self::assertTrue(is_string($frame[3] ?? null));
 		self::assertTrue(is_array($frame[4] ?? null));
 		self::assertSame($roles === null ? 401 : 403, $frame[4]['code'] ?? null);
+	}
+
+	/**
+	 * A call error that is not a refusal: the caller holds the role, the call itself is wrong
+	 *
+	 * @param array<mixed> $frame
+	 * @param string|null $message the exact message, or null for any failure to map the data
+	 */
+	private function assertError(array $frame, string|null $message): void
+	{
+		self::assertSame(WebSocketsControllers\WampApplication::MSG_CALL_ERROR, $frame[0] ?? null);
+		self::assertSame(self::RPC_ID, $frame[1] ?? null);
+		self::assertSame(self::TOPIC, $frame[2] ?? null);
+		self::assertTrue(is_string($frame[3] ?? null));
+		self::assertTrue(is_array($frame[4] ?? null));
+		self::assertTrue(array_key_exists('code', $frame[4]));
+		self::assertSame(0, $frame[4]['code']);
+
+		if ($message !== null) {
+			self::assertSame($message, $frame[3]);
+		} else {
+			self::assertTrue(str_starts_with($frame[3], 'Could not map data to document: '));
+		}
 	}
 
 }
