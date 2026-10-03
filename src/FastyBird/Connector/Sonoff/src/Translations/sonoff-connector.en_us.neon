@@ -63,6 +63,7 @@ cmd:
             id: "ID"
             name: "Name"
             type: "Type"
+            model: "Model"
             ipAddress: "IP Address"
 
         messages:

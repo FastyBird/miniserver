@@ -216,6 +216,9 @@ cmd:
                 device:
                     success: "Device \"%name%\" was successfully created."
                     error: "Something went wrong, device could not be created. Error was logged."
+                register:
+                    success: "Register for device \"%name%\" was successfully created."
+                    error: "Something went wrong, device register could not be created. Error was logged."
                 registers:
                     success: "Registers for device \"%name%\" were successfully created."
                     error: "Something went wrong, device registers could not be created. Error was logged."

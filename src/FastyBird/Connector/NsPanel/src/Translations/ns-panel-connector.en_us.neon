@@ -214,6 +214,7 @@ cmd:
                     mappedChannelProperty: "Select channel property for mapping"
                     valueMapping: "Select device value which will be mapped to: %value%"
                     value: "Please select attribute value"
+                value: "Please select attribute value"
             disable:
                 connector: "Do you want to disable connector?"
             enable:

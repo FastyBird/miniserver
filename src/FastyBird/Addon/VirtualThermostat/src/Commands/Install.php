@@ -2452,7 +2452,7 @@ class Install extends Console\Command\Command
 
 			$io->error(
 				(string) $this->translator->translate(
-					'//virtual-thermostat-addon.cmd.install.messages.edit.sensor.error',
+					'//virtual-thermostat-addon.cmd.install.messages.update.sensor.error',
 				),
 			);
 
