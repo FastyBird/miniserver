@@ -1,0 +1,22 @@
+{
+  "data": {
+    "type": "com.fastybird.devices-module/property/connector/variable",
+    "id": "e7e4b5c1-5d3e-4b38-9f4a-0c6c1f7a2b11",
+    "attributes": {
+      "identifier": "api-key",
+      "name": "API key",
+      "data_type": "string",
+      "unit": null,
+      "format": null,
+      "invalid": null
+    },
+    "relationships": {
+      "connector": {
+        "data": {
+          "type": "com.fastybird.devices-module/connector/dummy",
+          "id": "7a3dd94c-7294-46fd-8c61-1b375c313d4d"
+        }
+      }
+    }
+  }
+}

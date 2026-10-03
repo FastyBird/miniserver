@@ -1,0 +1,18 @@
+{
+  "data": {
+    "id": "e0f879e3-0e8f-4b72-bde4-7e3fbb89decc",
+    "type": "com.fastybird.devices-module/channel/dummy",
+    "attributes": {
+      "identifier": "custom-channel",
+      "name": "Device custom added channel"
+    },
+    "relationships": {
+      "device": {
+        "data": {
+          "type": "com.fastybird.devices-module/device",
+          "id": "bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a"
+        }
+      }
+    }
+  }
+}

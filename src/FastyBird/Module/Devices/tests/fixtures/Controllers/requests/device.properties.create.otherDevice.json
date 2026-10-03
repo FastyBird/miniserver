@@ -1,0 +1,26 @@
+{
+  "data": {
+    "type": "com.fastybird.devices-module/property/device/variable",
+    "id": "50b0fd41-0a6e-44f0-b513-c536208afccf",
+    "attributes": {
+      "identifier": "battery",
+      "name": "battery",
+      "data_type": "enum",
+      "unit": null,
+      "format": [
+        "low",
+        "medium",
+        "full"
+      ],
+      "invalid": null
+    },
+    "relationships": {
+      "device": {
+        "data": {
+          "type": "com.fastybird.devices-module/device",
+          "id": "bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a"
+        }
+      }
+    }
+  }
+}
