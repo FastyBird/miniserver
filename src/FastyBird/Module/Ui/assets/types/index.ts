@@ -1,35 +1,9 @@
-import { Plugin } from 'vue';
-import { I18n } from 'vue-i18n';
-import { Router } from 'vue-router';
-
-import { Pinia } from 'pinia';
-
-import { Client } from '@fastybird/miniserver-core';
-
 export * from './exchange';
-
-export type InstallFunction = Plugin & { installed?: boolean };
-
-export interface IUiModuleOptions {
-	router?: Router;
-	meta: IUiModuleMeta;
-	configuration: IUiModuleConfiguration;
-	store: Pinia;
-	wsClient?: Client;
-	i18n?: I18n;
-}
 
 export interface IUiModuleMeta {
 	author: string;
 	website: string;
 	version: string;
-	[key: string]: any;
-}
-
-export interface IUiModuleConfiguration {
-	injectionKeys: {
-		eventBusInjectionKey?: symbol | string;
-	};
 	[key: string]: any;
 }
 

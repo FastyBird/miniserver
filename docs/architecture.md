@@ -46,4 +46,4 @@ Long-running workers under supervisord: `fb:ws-server:start` (WebSocket server, 
 
 ## Frontend
 
-`config/extensions.ts` registers which extensions' `assets/entry.ts` the Vite build includes; today that is `accounts-module`, `devices-module` and `homekit-connector` (`triggers-module` and `ui-module` have a UI but are not registered -- registering them is a functional change, out of scope for this merge). `src/FastyBird/Core/Core/assets/application/main.ts` reads that registry and the application version/description from the root `package.json` at build time.
+`config/extensions.ts` registers which extensions' `assets/entry.ts` the Vite build includes; today that is `accounts-module`, `devices-module`, `homekit-connector` and `ui-module` (`triggers-module` has a UI but is not registered). Every registered entry's default export must be a Vue plugin object whose `install(app, options)` takes the `IExtensionOptions` the shell passes; the shell skips, with a console error, any module that does not export one. `src/FastyBird/Core/Core/assets/application/main.ts` reads that registry and the application version/description from the root `package.json` at build time.

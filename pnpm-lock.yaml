@@ -20,6 +20,9 @@ importers:
       '@fastybird/miniserver-core':
         specifier: workspace:*
         version: link:src/FastyBird/Core/Core
+      '@fastybird/ui-module':
+        specifier: workspace:*
+        version: link:src/FastyBird/Module/Ui
       '@iconify/iconify':
         specifier: ^3.1
         version: 3.1.1
@@ -323,6 +326,9 @@ importers:
       '@fastybird/miniserver-core':
         specifier: workspace:*
         version: link:../../Core/Core
+      '@iconify/vue':
+        specifier: ^5
+        version: 5.0.1(vue@3.5.42(typescript@6.0.3))
       '@vueuse/core':
         specifier: ^11.2
         version: 11.3.0(vue@3.5.42(typescript@6.0.3))

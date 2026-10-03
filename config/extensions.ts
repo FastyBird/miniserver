@@ -1,6 +1,7 @@
 import accountsModule from '@fastybird/accounts-module';
 import devicesModule from '@fastybird/devices-module';
 import homekitConnector from '@fastybird/homekit-connector';
+import uiModule from '@fastybird/ui-module';
 
 export const extensions = [
 	{
@@ -14,5 +15,9 @@ export const extensions = [
 	{
 		name: '@fastybird/homekit-connector',
 		module: homekitConnector,
+	},
+	{
+		name: '@fastybird/ui-module',
+		module: uiModule,
 	},
 ];
