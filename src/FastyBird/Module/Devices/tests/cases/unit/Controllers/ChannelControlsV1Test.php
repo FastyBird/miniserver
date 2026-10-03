@@ -98,6 +98,22 @@ final class ChannelControlsV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'readOneWrongChannel' => [
+				// Control of channel one, requested through channel two of the same device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/controls/15db9bef-3b57-4a87-bf67-e3c19fc3ba34',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'readRelationshipsChannelWrongChannel' => [
+				// Control of channel one, requested through channel two of the same device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/controls/15db9bef-3b57-4a87-bf67-e3c19fc3ba34/relationships/channel',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/controls/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4',

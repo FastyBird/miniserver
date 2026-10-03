@@ -413,7 +413,11 @@ final class ConnectorPropertiesV1 extends BaseV1
 	): Entities\Connectors\Properties\Property
 	{
 		try {
-			$property = $this->connectorPropertiesRepository->find(Uuid\Uuid::fromString($id));
+			$findQuery = new Queries\Entities\FindConnectorProperties();
+			$findQuery->forConnector($connector);
+			$findQuery->byId(Uuid\Uuid::fromString($id));
+
+			$property = $this->connectorPropertiesRepository->findOneBy($findQuery);
 
 			if ($property === null) {
 				throw new ApiExceptions\JsonApiError(

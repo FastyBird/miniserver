@@ -99,6 +99,22 @@ final class ChannelPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'readOneWrongChannel' => [
+				// Property of channel two, requested through channel one of the same device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'readRelationshipsChannelWrongChannel' => [
+				// Property of channel two, requested through channel one of the same device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/relationships/channel',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4',
@@ -386,6 +402,15 @@ final class ChannelPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'wrongChannel' => [
+				// Property of channel one, updated through channel two of the same device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db',
+				'Bearer ' . self::VALID_TOKEN,
+				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/channel.properties.update.json'),
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'invalidType' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db',
@@ -502,6 +527,14 @@ final class ChannelPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'wrongChannel' => [
+				// Property of channel one, deleted through channel two of the same device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'unknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/9f5e5560-72f2-487a-a382-d73d842ba538',

@@ -97,6 +97,22 @@ final class ConnectorControlsV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'readOneWrongConnector' => [
+				// Control of the generic connector, requested through the dummy connector
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/controls/7c055b2b-60c3-4017-93db-e9478d8aa662',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'readRelationshipsConnectorWrongConnector' => [
+				// Control of the generic connector, requested through the dummy connector
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/controls/7c055b2b-60c3-4017-93db-e9478d8aa662/relationships/connector',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/controls/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4',

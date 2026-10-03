@@ -97,6 +97,30 @@ final class DeviceControlsV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'readOneWrongDevice' => [
+				// Control of the first device, requested through the second device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/controls/7c055b2b-60c3-4017-93db-e9478d8aa662',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'readRelationshipsDeviceWrongDevice' => [
+				// Control of the first device, requested through the second device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/controls/7c055b2b-60c3-4017-93db-e9478d8aa662/relationships/device',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
+			'readOneWrongConnector' => [
+				// Device of the generic connector, addressed through the dummy connector
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/controls/7c055b2b-60c3-4017-93db-e9478d8aa662',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/controls/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4',

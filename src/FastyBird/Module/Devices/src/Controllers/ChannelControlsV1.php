@@ -97,12 +97,14 @@ final class ChannelControlsV1 extends BaseV1
 			: null;
 
 		// & channel
-		$this->findChannel(strval($request->getAttribute(Router\ApiRoutes::URL_CHANNEL_ID)), $device);
+		$channel = $this->findChannel(strval($request->getAttribute(Router\ApiRoutes::URL_CHANNEL_ID)), $device);
 
 		if (Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
-			$control = $this->channelControlsRepository->find(
-				Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))),
-			);
+			$findQuery = new Queries\Entities\FindChannelControls();
+			$findQuery->forChannel($channel);
+			$findQuery->byId(Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))));
+
+			$control = $this->channelControlsRepository->findOneBy($findQuery);
 
 			if ($control !== null) {
 				return $this->buildResponse($request, $response, $control);
@@ -133,14 +135,16 @@ final class ChannelControlsV1 extends BaseV1
 			: null;
 
 		// & channel
-		$this->findChannel(strval($request->getAttribute(Router\ApiRoutes::URL_CHANNEL_ID)), $device);
+		$channel = $this->findChannel(strval($request->getAttribute(Router\ApiRoutes::URL_CHANNEL_ID)), $device);
 
 		$relationEntity = Utils\Strings::lower(strval($request->getAttribute(Router\ApiRoutes::RELATION_ENTITY)));
 
 		if (Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
-			$control = $this->channelControlsRepository->find(
-				Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))),
-			);
+			$findQuery = new Queries\Entities\FindChannelControls();
+			$findQuery->forChannel($channel);
+			$findQuery->byId(Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))));
+
+			$control = $this->channelControlsRepository->findOneBy($findQuery);
 
 			if ($control !== null) {
 				if ($relationEntity === Schemas\Channels\Controls\Control::RELATIONSHIPS_CHANNEL) {

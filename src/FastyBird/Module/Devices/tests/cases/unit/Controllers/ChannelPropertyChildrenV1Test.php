@@ -99,6 +99,14 @@ final class ChannelPropertyChildrenV1Test extends Tests\Cases\Unit\DbTestCase
 
 			// Invalid responses
 			////////////////////
+			'readWrongChannel' => [
+				// Property of channel two, requested through channel one of the same device
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
+				'Bearer ' . self::VALID_TOKEN,
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
+			],
 			'readUnknownDevice' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
