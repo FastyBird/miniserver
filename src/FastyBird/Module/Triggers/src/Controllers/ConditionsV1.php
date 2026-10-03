@@ -149,6 +149,12 @@ final class ConditionsV1 extends BaseV1
 			$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 			if ($hydrator !== null) {
+				$this->validateParentRelation(
+					$document,
+					Schemas\Conditions\Condition::RELATIONSHIPS_TRIGGER,
+					$trigger->getId(),
+				);
+
 				try {
 					// Start transaction connection to the database
 					$this->getOrmConnection()->beginTransaction();

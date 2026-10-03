@@ -132,13 +132,19 @@ final class DevicePropertiesV1 extends BaseV1
 		$connector = is_string($connectorId) ? $this->findConnector($connectorId) : null;
 
 		// & device
-		$this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
+		$device = $this->findDevice(strval($request->getAttribute(Router\ApiRoutes::URL_DEVICE_ID)), $connector);
 
 		$document = $this->createDocument($request);
 
 		$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 		if ($hydrator !== null) {
+			$this->validateParentRelation(
+				$document,
+				Schemas\Devices\Properties\Property::RELATIONSHIPS_DEVICE,
+				$device->getId(),
+			);
+
 			try {
 				// Start transaction connection to the database
 				$this->getOrmConnection()->beginTransaction();

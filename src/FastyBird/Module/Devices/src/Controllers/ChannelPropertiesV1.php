@@ -140,13 +140,19 @@ final class ChannelPropertiesV1 extends BaseV1
 			: null;
 
 		// & channel
-		$this->findChannel(strval($request->getAttribute(Router\ApiRoutes::URL_CHANNEL_ID)), $device);
+		$channel = $this->findChannel(strval($request->getAttribute(Router\ApiRoutes::URL_CHANNEL_ID)), $device);
 
 		$document = $this->createDocument($request);
 
 		$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 		if ($hydrator !== null) {
+			$this->validateParentRelation(
+				$document,
+				Schemas\Channels\Properties\Property::RELATIONSHIPS_CHANNEL,
+				$channel->getId(),
+			);
+
 			try {
 				// Start transaction connection to the database
 				$this->getOrmConnection()->beginTransaction();

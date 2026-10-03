@@ -28,6 +28,7 @@ use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Router;
+use FastyBird\Module\Ui\Schemas;
 use FastyBird\Module\Ui\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -117,13 +118,19 @@ final class DataSourcesV1 extends BaseV1
 	): Message\ResponseInterface
 	{
 		// At first, try to load widget
-		$this->findWidget(strval($request->getAttribute(Router\ApiRoutes::URL_WIDGET_ID)));
+		$widget = $this->findWidget(strval($request->getAttribute(Router\ApiRoutes::URL_WIDGET_ID)));
 
 		$document = $this->createDocument($request);
 
 		$hydrator = $this->hydratorsContainer->findHydrator($document);
 
 		if ($hydrator !== null) {
+			$this->validateParentRelation(
+				$document,
+				Schemas\Widgets\DataSources\DataSource::RELATIONSHIPS_WIDGET,
+				$widget->getId(),
+			);
+
 			try {
 				// Start transaction connection to the database
 				$this->getOrmConnection()->beginTransaction();
