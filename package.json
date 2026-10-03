@@ -81,7 +81,7 @@
     "eslint-plugin-vue": "^9.31",
     "husky": "^9.1",
     "prettier": "^3.3",
-    "sass": "^1.81",
+    "sass": "^1.104",
     "stylelint": "^16.10",
     "stylelint-config-recommended-scss": "^16.0.2",
     "stylelint-prettier": "^5.0",
