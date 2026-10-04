@@ -121,7 +121,7 @@ final class Document
 	/**
 	 * @throws InvalidArgument
 	 */
-	public static function create(string|stdClass $data): Document
+	public static function create(string|stdClass $data): self
 	{
 		if ($data instanceof stdClass) {
 			return new self($data);

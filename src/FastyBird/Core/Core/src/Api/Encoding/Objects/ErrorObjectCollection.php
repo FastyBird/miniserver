@@ -37,7 +37,7 @@ final class ErrorObjectCollection implements IteratorAggregate, Countable
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(array $errorArray): ErrorObjectCollection
+	public static function create(array $errorArray): self
 	{
 		$data = [];
 

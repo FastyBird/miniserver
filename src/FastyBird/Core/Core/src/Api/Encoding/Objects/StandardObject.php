@@ -48,7 +48,7 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 		return $values;
 	}
 
-	public function set(string $key, mixed $value): StandardObject
+	public function set(string $key, mixed $value): self
 	{
 		$this->proxy->{$key} = $value;
 
@@ -58,7 +58,7 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setMany(array $values): StandardObject
+	public function setMany(array $values): self
 	{
 		foreach ($values as $key => $value) {
 			$this->set($key, $value);
@@ -100,7 +100,7 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 		return array_keys(get_object_vars($this->proxy));
 	}
 
-	public function copy(): StandardObject
+	public function copy(): self
 	{
 		return clone $this;
 	}
@@ -108,7 +108,7 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 	/**
 	 * {@inheritDoc}
 	 */
-	public function remove(array ...$keys): StandardObject
+	public function remove(array ...$keys): self
 	{
 		foreach ($this->normalizeKeys($keys) as $key) {
 			unset($this->proxy->{$key});

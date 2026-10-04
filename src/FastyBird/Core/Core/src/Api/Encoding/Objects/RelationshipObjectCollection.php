@@ -42,7 +42,7 @@ final class RelationshipObjectCollection implements IteratorAggregate, Countable
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(StandardObject|null $relationshipObject): RelationshipObjectCollection
+	public static function create(StandardObject|null $relationshipObject): self
 	{
 		if ($relationshipObject === null) {
 			return new self([]);

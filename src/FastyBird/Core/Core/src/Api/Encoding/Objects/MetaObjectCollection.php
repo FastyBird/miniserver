@@ -44,7 +44,7 @@ final class MetaObjectCollection implements IteratorAggregate, Countable
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(StandardObject|null $metaObject): MetaObjectCollection
+	public static function create(StandardObject|null $metaObject): self
 	{
 		if ($metaObject === null) {
 			return new self([]);

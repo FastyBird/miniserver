@@ -39,7 +39,7 @@ final class StandardObjectCollection implements IteratorAggregate, Countable
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(array $objects): StandardObjectCollection
+	public static function create(array $objects): self
 	{
 		$objects = array_map(
 			static fn ($object): StandardObject => $object instanceof StandardObject ? $object : new StandardObject(

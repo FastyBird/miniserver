@@ -42,7 +42,7 @@ final class LinkObjectCollection implements IteratorAggregate, Countable
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(StandardObject|null $linkObject): LinkObjectCollection
+	public static function create(StandardObject|null $linkObject): self
 	{
 		if ($linkObject === null) {
 			return new self([]);

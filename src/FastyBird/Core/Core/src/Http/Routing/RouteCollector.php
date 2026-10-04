@@ -32,7 +32,7 @@ final class RouteCollector
 		private ResponseFactoryInterface $responseFactory,
 		private Controllers\ControllerResolver $controllerResolver,
 		private RouteParser $routeParser,
-		private RouteCollector|null $routeCollector = null,
+		private self|null $routeCollector = null,
 		Handlers\Handler|null $defaultInvocationHandler = null,
 		private string $pattern = '',
 	)

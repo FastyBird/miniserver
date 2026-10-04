@@ -41,7 +41,7 @@ final class ResourceIdentifierCollection implements IteratorAggregate, Countable
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(array $input): ResourceIdentifierCollection
+	public static function create(array $input): self
 	{
 		$collection = new self();
 

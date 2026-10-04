@@ -64,7 +64,7 @@ final class ResourceIdentifierObject
 		throw new Exceptions\Runtime(sprintf('Type "%s" is not in the supplied map.', $this->type));
 	}
 
-	public function isSame(ResourceIdentifierObject $identifier): bool
+	public function isSame(self $identifier): bool
 	{
 		return $this->type === $identifier->getType() &&
 			$this->id === $identifier->getId();

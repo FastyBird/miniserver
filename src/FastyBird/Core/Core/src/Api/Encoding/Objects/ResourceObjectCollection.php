@@ -41,7 +41,7 @@ final class ResourceObjectCollection implements IteratorAggregate, Countable
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(array $resourceArray): ResourceObjectCollection
+	public static function create(array $resourceArray): self
 	{
 		$data = [];
 
