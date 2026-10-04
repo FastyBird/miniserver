@@ -16,6 +16,8 @@ use function sprintf;
 
 /**
  * Link object collection
+ *
+ * @implements IteratorAggregate<string, LinkObject|string>
  */
 final class LinkObjectCollection implements IteratorAggregate, Countable
 {
@@ -65,7 +67,7 @@ final class LinkObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $link
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
@@ -116,7 +118,7 @@ final class LinkObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return Traversable
 	 *
 	 * @phpstan-return Traversable<string, LinkObject|string>
 	 *

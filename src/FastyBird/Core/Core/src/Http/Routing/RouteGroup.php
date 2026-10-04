@@ -14,11 +14,17 @@ final class RouteGroup
 	{
 	}
 
+	/**
+	 * Add middleware to the route group
+	 */
 	public function addMiddleware(MiddlewareInterface $middleware): void
 	{
 		$this->routeCollector->addMiddleware($middleware);
 	}
 
+	/**
+	 * Get the RouteGroup's pattern
+	 */
 	public function getPattern(): string
 	{
 		return $this->pattern;

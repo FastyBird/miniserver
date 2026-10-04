@@ -72,7 +72,7 @@ final class Route implements RequestHandlerInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<string>
 	 */
 	public function getMethods(): array
 	{
@@ -84,6 +84,9 @@ final class Route implements RequestHandlerInterface
 		return $this->routeCollector->getPattern() . $this->pattern;
 	}
 
+	/**
+	 * @return callable|string|array<mixed>
+	 */
 	public function getCallable(): callable|string|array
 	{
 		return $this->callable;
@@ -123,7 +126,7 @@ final class Route implements RequestHandlerInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<string> $arguments
 	 */
 	public function setArguments(array $arguments, bool $includeInSavedArguments = true): void
 	{
@@ -135,7 +138,7 @@ final class Route implements RequestHandlerInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<string>
 	 */
 	public function getArguments(): array
 	{
@@ -148,13 +151,20 @@ final class Route implements RequestHandlerInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $arguments
 	 */
 	public function prepare(array $arguments): void
 	{
 		$this->arguments = array_replace($this->savedArguments, $arguments) ?? [];
 	}
 
+	/**
+	 * Run route
+	 *
+	 * This method traverses the middleware stack, including the route's callable
+	 * and captures the resultant HTTP response object. It then sends the response
+	 * back to the Application.
+	 */
 	public function run(ServerRequestInterface $request): ResponseInterface
 	{
 		if (!$this->groupMiddlewareAppended) {

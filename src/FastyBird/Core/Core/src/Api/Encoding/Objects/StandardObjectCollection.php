@@ -13,6 +13,8 @@ use function iterator_to_array;
 
 /**
  * Standard objects collection
+ *
+ * @phpstan-implements IteratorAggregate<int, StandardObject<string, mixed>>
  */
 final class StandardObjectCollection implements IteratorAggregate, Countable
 {
@@ -52,7 +54,7 @@ final class StandardObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $objects
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
@@ -67,6 +69,9 @@ final class StandardObjectCollection implements IteratorAggregate, Countable
 		}
 	}
 
+	/**
+	 * @phpstan-param StandardObject<string, mixed> $object
+	 */
 	public function add(StandardObject $object): void
 	{
 		if (!$this->has($object)) {
@@ -74,6 +79,9 @@ final class StandardObjectCollection implements IteratorAggregate, Countable
 		}
 	}
 
+	/**
+	 * @phpstan-param StandardObject<string, mixed> $object
+	 */
 	public function has(StandardObject $object): bool
 	{
 		return $this->stack->offsetExists($object);
@@ -91,7 +99,9 @@ final class StandardObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<StandardObject>
+	 *
+	 * @phpstan-return Array<int, StandardObject<string, mixed>>
 	 */
 	public function getAll(): array
 	{

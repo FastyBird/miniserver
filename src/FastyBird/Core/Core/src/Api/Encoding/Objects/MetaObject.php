@@ -15,6 +15,9 @@ final class MetaObject
 	{
 	}
 
+	/**
+	 * @return string|int|float|bool|array<mixed>
+	 */
 	public function getValue(): string|int|float|bool|array
 	{
 		return $this->value;

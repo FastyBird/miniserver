@@ -30,16 +30,25 @@ final class EntityCrud
 		// CRUD factories
 	}
 
+	/**
+	 * @return Create\EntityCreator<T>
+	 */
 	public function getEntityCreator(): Create\EntityCreator
 	{
 		return $this->entityCreatorFactory->create($this->entityName, $this->entityMapper);
 	}
 
+	/**
+	 * @return Update\EntityUpdater<T>
+	 */
 	public function getEntityUpdater(): Update\EntityUpdater
 	{
 		return $this->entityUpdaterFactory->create($this->entityName, $this->entityMapper);
 	}
 
+	/**
+	 * @return Delete\EntityDeleter<T>
+	 */
 	public function getEntityDeleter(): Delete\EntityDeleter
 	{
 		return $this->entityDeleterFactory->create($this->entityName);

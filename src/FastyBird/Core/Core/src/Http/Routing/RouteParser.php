@@ -22,7 +22,11 @@ final class RouteParser
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Build the path for a named route excluding the base path
+	 *
+	 * @param string $routeName    Route name
+	 * @param array<mixed> $data        Named argument replacement data
+	 * @param array<mixed> $queryParams Optional query string parameters
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
@@ -96,7 +100,11 @@ final class RouteParser
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Build the path for a named route including the base path
+	 *
+	 * @param string $routeName    Route name
+	 * @param array<mixed> $data        Named argument replacement data
+	 * @param array<mixed> $queryParams Optional query string parameters
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
@@ -113,7 +121,11 @@ final class RouteParser
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Get fully qualified URL for named route
+	 *
+	 * @param string $routeName    Route name
+	 * @param array<mixed> $data        Named argument replacement data
+	 * @param array<mixed> $queryParams Optional query string parameters
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */

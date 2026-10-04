@@ -51,7 +51,7 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<Route>
 	 */
 	public function getRoutes(): array
 	{
@@ -93,6 +93,8 @@ final class RouteCollector
 	}
 
 	/**
+	 * @param string $name Route name
+	 *
 	 * @throws Exceptions\Runtime
 	 */
 	public function removeNamedRoute(string $name): bool
@@ -146,9 +148,14 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add GET route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function get(string $pattern, $callable): Route
 	{
@@ -156,9 +163,14 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add POST route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function post(string $pattern, $callable): Route
 	{
@@ -166,9 +178,14 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add PUT route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function put(string $pattern, $callable): Route
 	{
@@ -176,9 +193,14 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add PATCH route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function patch(string $pattern, $callable): Route
 	{
@@ -186,9 +208,14 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add DELETE route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function delete(string $pattern, $callable): Route
 	{
@@ -196,9 +223,14 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add OPTIONS route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function options(string $pattern, $callable): Route
 	{
@@ -206,9 +238,14 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add route for any HTTP method
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function any(string $pattern, $callable): Route
 	{
@@ -223,9 +260,15 @@ final class RouteCollector
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add route
+	 *
+	 * @param array<string> $methods                Array of HTTP methods
+	 * @param string $pattern                  The route pattern
+	 * @param callable|string|array<mixed> $handler The route callable
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function map(array $methods, string $pattern, $handler): Route
 	{
@@ -236,6 +279,9 @@ final class RouteCollector
 		return $route;
 	}
 
+	/**
+	 * Add route group
+	 */
 	public function group(string $pattern, callable $callable): RouteGroup
 	{
 		$routeCollector = new self(

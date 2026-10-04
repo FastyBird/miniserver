@@ -21,9 +21,13 @@ final class ControllerResolver
 	private const string CALLABLE_PATTERN = '!^([^\:]+)\:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)$!';
 
 	/**
-	 * {@inheritDoc}
+	 * Resolve $toResolve into a callable
+	 *
+	 * @param string|callable|array<mixed> $toResolve
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function resolve($toResolve): callable
 	{

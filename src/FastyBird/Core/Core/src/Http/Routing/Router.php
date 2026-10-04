@@ -17,6 +17,9 @@ use Psr\Http\Server\MiddlewareInterface;
 use RecursiveArrayIterator;
 use function strtoupper;
 
+/**
+ * @phpstan-implements IteratorAggregate<int, Route>
+ */
 class Router implements IteratorAggregate
 {
 
@@ -90,7 +93,12 @@ class Router implements IteratorAggregate
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add GET route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function get(string $pattern, $callable): Route
 	{
@@ -98,7 +106,12 @@ class Router implements IteratorAggregate
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add POST route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function post(string $pattern, $callable): Route
 	{
@@ -106,7 +119,12 @@ class Router implements IteratorAggregate
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add PUT route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function put(string $pattern, $callable): Route
 	{
@@ -114,7 +132,12 @@ class Router implements IteratorAggregate
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add PATCH route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function patch(string $pattern, $callable): Route
 	{
@@ -122,7 +145,12 @@ class Router implements IteratorAggregate
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add DELETE route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function delete(string $pattern, $callable): Route
 	{
@@ -130,7 +158,12 @@ class Router implements IteratorAggregate
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add OPTIONS route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function options(string $pattern, $callable): Route
 	{
@@ -138,7 +171,12 @@ class Router implements IteratorAggregate
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add route for any HTTP method
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function any(string $pattern, $callable): Route
 	{
@@ -153,20 +191,37 @@ class Router implements IteratorAggregate
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add route with multiple methods
+	 *
+	 * @param array<string> $methods                 Numeric array of HTTP method names
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function map(array $methods, string $pattern, $callable): Route
 	{
 		return $this->routeCollector->map($methods, $pattern, $callable);
 	}
 
+	/**
+	 * Route Groups
+	 *
+	 * This method accepts a route pattern and a callback. All route
+	 * declarations in the callback will be prepended by the group(s)
+	 * that it is in.
+	 */
 	public function group(string $pattern, callable $callable): RouteGroup
 	{
 		return $this->routeCollector->group($pattern, $callable);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Build the path for a named route including the base path
+	 *
+	 * @param string $routeName    Route name
+	 * @param array<mixed> $data        Named argument replacement data
+	 * @param array<mixed> $queryParams Optional query string parameters
 	 */
 	public function urlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{

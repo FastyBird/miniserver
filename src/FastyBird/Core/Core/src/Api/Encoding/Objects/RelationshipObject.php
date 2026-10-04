@@ -33,6 +33,10 @@ final class RelationshipObject
 	}
 
 	/**
+	 * @phpstan-return LinkObjectCollection
+	 *
+	 * @return LinkObjectCollection<string, LinkObject|string>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
@@ -53,6 +57,8 @@ final class RelationshipObject
 	}
 
 	/**
+	 * @phpstan-return ResourceIdentifierCollection<int, ResourceIdentifierObject>|ResourceIdentifierObject|null
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
@@ -73,6 +79,8 @@ final class RelationshipObject
 	}
 
 	/**
+	 * @phpstan-return MetaObjectCollection<string, MetaObject>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
@@ -104,6 +112,8 @@ final class RelationshipObject
 	}
 
 	/**
+	 * @phpstan-return ResourceIdentifierCollection<int, ResourceIdentifierObject>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */

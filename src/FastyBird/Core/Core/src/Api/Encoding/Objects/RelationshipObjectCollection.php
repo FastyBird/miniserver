@@ -16,6 +16,8 @@ use function sprintf;
 
 /**
  * Relationship object collection
+ *
+ * @phpstan-implements IteratorAggregate<string, RelationshipObject>
  */
 final class RelationshipObjectCollection implements IteratorAggregate, Countable
 {
@@ -62,7 +64,7 @@ final class RelationshipObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $relationship
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
@@ -113,6 +115,10 @@ final class RelationshipObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
+	 * @return Traversable
+	 *
+	 * @phpstan-return Traversable<string, RelationshipObject>
+	 *
 	 * @throws Exceptions\Runtime
 	 */
 	public function getAll(): Traversable

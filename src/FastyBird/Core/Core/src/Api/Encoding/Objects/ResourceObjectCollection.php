@@ -13,6 +13,8 @@ use function in_array;
 
 /**
  * Resource object collection
+ *
+ * @phpstan-implements IteratorAggregate<int, ResourceObject>
  */
 final class ResourceObjectCollection implements IteratorAggregate, Countable
 {
@@ -55,7 +57,7 @@ final class ResourceObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $resource
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
@@ -93,6 +95,11 @@ final class ResourceObjectCollection implements IteratorAggregate, Countable
 		return new ArrayIterator($this->stack);
 	}
 
+	/**
+	 * @return Traversable
+	 *
+	 * @phpstan-return Traversable<int, ResourceObject>
+	 */
 	public function getAll(): Traversable
 	{
 		return $this->getIterator();

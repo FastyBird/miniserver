@@ -13,6 +13,8 @@ use function in_array;
 
 /**
  * Error object collection
+ *
+ * @phpstan-implements IteratorAggregate<int, ErrorObject>
  */
 final class ErrorObjectCollection implements IteratorAggregate, Countable
 {
@@ -51,7 +53,7 @@ final class ErrorObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $error
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
@@ -89,6 +91,11 @@ final class ErrorObjectCollection implements IteratorAggregate, Countable
 		return new ArrayIterator($this->stack);
 	}
 
+	/**
+	 * @return Traversable
+	 *
+	 * @phpstan-return Traversable<int, ErrorObject>
+	 */
 	public function getAll(): Traversable
 	{
 		return $this->getIterator();

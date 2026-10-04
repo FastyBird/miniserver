@@ -172,6 +172,8 @@ final class Document
 	}
 
 	/**
+	 * @phpstan-return Objects\ResourceObjectCollection<int, Objects\ResourceObject>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
@@ -187,6 +189,8 @@ final class Document
 	}
 
 	/**
+	 * @phpstan-return Objects\StandardObject|Objects\StandardObjectCollection<int, Objects\StandardObject>|null
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
@@ -215,6 +219,8 @@ final class Document
 	}
 
 	/**
+	 * @phpstan-return Objects\LinkObjectCollection<string, Objects\LinkObject|string>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
@@ -235,6 +241,8 @@ final class Document
 	}
 
 	/**
+	 * @phpstan-return Objects\MetaObjectCollection<string, Objects\MetaObject>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
@@ -255,6 +263,8 @@ final class Document
 	}
 
 	/**
+	 * @phpstan-return Objects\ResourceObjectCollection<int, Objects\ResourceObject>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
@@ -275,6 +285,8 @@ final class Document
 	}
 
 	/**
+	 * @phpstan-return Objects\ErrorObjectCollection<int, Objects\ErrorObject>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */

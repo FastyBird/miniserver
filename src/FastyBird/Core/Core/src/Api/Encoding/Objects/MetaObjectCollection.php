@@ -18,6 +18,8 @@ use function sprintf;
 
 /**
  * Meta object collection
+ *
+ * @phpstan-implements IteratorAggregate<string, MetaObject>
  */
 final class MetaObjectCollection implements IteratorAggregate, Countable
 {
@@ -64,7 +66,7 @@ final class MetaObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $meta
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
@@ -115,6 +117,10 @@ final class MetaObjectCollection implements IteratorAggregate, Countable
 	}
 
 	/**
+	 * @return Traversable
+	 *
+	 * @phpstan-return Traversable<string, MetaObject>
+	 *
 	 * @throws Exceptions\Runtime
 	 */
 	public function getAll(): Traversable

@@ -29,13 +29,22 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 		$this->proxy = $proxy ?? new stdClass();
 	}
 
+	/**
+	 * @return string|int|float|bool|array<mixed>|StandardObject|null
+	 *
+	 * @phpstan-return string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>|null
+	 */
 	public function get(string $key, mixed $default = null): string|int|float|bool|array|self|null
 	{
 		return Obj::get($this->proxy, $key, $default);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param string|array<string> ...$keys
+	 *
+	 * @return array<mixed>
+	 *
+	 * @phpstan-return Array<string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>>
 	 */
 	public function getMany(string|array ...$keys): array
 	{
@@ -48,6 +57,11 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 		return $values;
 	}
 
+	/**
+	 * @phpstan-param string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>|null $value
+	 *
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
+	 */
 	public function set(string $key, mixed $value): self
 	{
 		$this->proxy->{$key} = $value;
@@ -56,7 +70,11 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $values
+	 *
+	 * @phpstan-param Array<string, string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>> $values
+	 *
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
 	 */
 	public function setMany(array $values): self
 	{
@@ -79,7 +97,7 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<string> ...$keys
 	 */
 	public function hasAny(array ...$keys): bool
 	{
@@ -93,20 +111,25 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<string>
 	 */
 	public function keys(): array
 	{
 		return array_keys(get_object_vars($this->proxy));
 	}
 
+	/**
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
+	 */
 	public function copy(): self
 	{
 		return clone $this;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<string> ...$keys
+	 *
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
 	 */
 	public function remove(array ...$keys): self
 	{
@@ -123,7 +146,7 @@ final class StandardObject implements IteratorAggregate, Countable, JsonSerializ
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<mixed>
 	 */
 	public function toArray(): array
 	{

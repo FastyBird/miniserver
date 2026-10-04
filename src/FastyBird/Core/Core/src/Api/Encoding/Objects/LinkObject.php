@@ -42,6 +42,8 @@ final class LinkObject
 	}
 
 	/**
+	 * @phpstan-return MetaObjectCollection<string, MetaObject>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
