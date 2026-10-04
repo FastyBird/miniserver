@@ -4420,12 +4420,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/Topic.php
 
 		-
-			message: '#^Property FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic\:\:\$subscribers with generic class SplObjectStorage does not specify its types\: TObject, TData$#'
-			identifier: missingType.generics
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/Topic.php
-
-		-
 			message: '#^Result of && is always false\.$#'
 			identifier: booleanAnd.alwaysFalse
 			count: 1

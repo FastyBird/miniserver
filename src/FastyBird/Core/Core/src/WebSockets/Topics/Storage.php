@@ -13,6 +13,8 @@ use function sprintf;
 
 /**
  * Storage for manage all topics
+ *
+ * @implements IteratorAggregate<int, Topics\Topic>
  */
 final class Storage implements IteratorAggregate
 {

@@ -13,6 +13,8 @@ use function sprintf;
 
 /**
  * Storage for manage all connections
+ *
+ * @implements IteratorAggregate<int, Entities\ConnectedClient>
  */
 final class Storage implements IteratorAggregate
 {

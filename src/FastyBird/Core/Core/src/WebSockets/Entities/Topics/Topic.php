@@ -12,7 +12,6 @@ use Nette\Utils;
 use Override;
 use SplObjectStorage;
 use Traversable;
-use function assert;
 use function count;
 use function in_array;
 use function is_string;
@@ -20,6 +19,8 @@ use function sprintf;
 
 /**
  * A topic/channel containing connections that have subscribed to it
+ *
+ * @implements IteratorAggregate<int, Entities\ConnectedClient>
  */
 final class Topic implements IteratorAggregate, Countable
 {
@@ -33,6 +34,7 @@ final class Topic implements IteratorAggregate, Countable
 
 	private string $id;
 
+	/** @var SplObjectStorage<Entities\ConnectedClient, mixed> */
 	private SplObjectStorage $subscribers;
 
 	/**
@@ -77,7 +79,6 @@ final class Topic implements IteratorAggregate, Countable
 		$useEligible = (bool) count($eligible);
 
 		foreach ($this->subscribers as $client) {
-			assert($client instanceof Entities\ConnectedClient);
 			if (in_array($client->getId(), $exclude, true)) {
 				continue;
 			}
