@@ -62,12 +62,14 @@ final class SubDevice extends Device
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
-		Objects\IRelationshipObject $relationships,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationships,
+		Objects\ResourceObjectCollection|null $included,
 		NsPanelEntities\Devices\Gateway|null $entity,
 	): array
 	{

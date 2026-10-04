@@ -2,12 +2,10 @@
 
 namespace FastyBird\Core\Api\Encoding\Objects;
 
-use Override;
-
 /**
  * Meta value
  */
-final class MetaObject implements IMetaObject
+final class MetaObject
 {
 
 	/**
@@ -17,7 +15,9 @@ final class MetaObject implements IMetaObject
 	{
 	}
 
-	#[Override]
+	/**
+	 * @return string|int|float|bool|array<mixed>
+	 */
 	public function getValue(): string|int|float|bool|array
 	{
 		return $this->value;

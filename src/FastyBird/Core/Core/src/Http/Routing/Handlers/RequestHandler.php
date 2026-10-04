@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * PSR-15 RequestHandler invocation strategy
  */
-final class RequestHandler implements IRequestHandler
+final class RequestHandler implements Handler
 {
 
 	public function __construct(private bool $appendRouteArgumentsToRequestAttributes = false)

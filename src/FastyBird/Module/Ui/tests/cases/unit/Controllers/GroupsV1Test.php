@@ -36,7 +36,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('groupsRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -117,7 +117,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('groupsCreate')]
 	public function testCreate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -185,7 +185,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('groupsUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -262,7 +262,7 @@ final class GroupsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('groupsDelete')]
 	public function testDelete(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 

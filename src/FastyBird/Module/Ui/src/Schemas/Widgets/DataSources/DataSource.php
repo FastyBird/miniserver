@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Ui\Schemas\Widgets\DataSources;
 
 use FastyBird\Core\Api\Schemas;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
@@ -40,7 +41,7 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_WIDGET = 'widget';
 
-	public function __construct(protected readonly Routing\IRouter $router)
+	public function __construct(protected readonly Routing\Router $router)
 	{
 	}
 
@@ -63,6 +64,9 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getSelfLink(
 		$resource,
@@ -106,6 +110,9 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getRelationshipRelatedLink(
 		$resource,
@@ -132,6 +139,9 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

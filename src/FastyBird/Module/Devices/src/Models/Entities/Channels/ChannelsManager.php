@@ -25,6 +25,7 @@ use FastyBird\Module\Devices\Models;
 use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher;
+use ReflectionException;
 use function assert;
 
 /**
@@ -40,8 +41,8 @@ final class ChannelsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Channels\Channel>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Channels\Channel>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Channels\Channel> $entityCrudFactory
@@ -58,6 +59,7 @@ final class ChannelsManager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Channels\Channel
 	{
@@ -73,6 +75,8 @@ final class ChannelsManager
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Entities\Channels\Channel $entity,
@@ -104,9 +108,9 @@ final class ChannelsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Channels\Channel>
+	 * @return Crud\EntityCrud<Entities\Channels\Channel>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Channels\Channel::class);

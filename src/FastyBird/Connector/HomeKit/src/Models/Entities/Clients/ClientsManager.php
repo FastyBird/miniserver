@@ -23,6 +23,7 @@ use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 use function assert;
 
 /**
@@ -38,8 +39,8 @@ class ClientsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Clients\Client>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Clients\Client>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Clients\Client> $entityCrudFactory
@@ -55,6 +56,7 @@ class ClientsManager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Clients\Client
 	{
@@ -68,6 +70,8 @@ class ClientsManager
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Entities\Clients\Client $entity,
@@ -91,9 +95,9 @@ class ClientsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Clients\Client>
+	 * @return Crud\EntityCrud<Entities\Clients\Client>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Clients\Client::class);

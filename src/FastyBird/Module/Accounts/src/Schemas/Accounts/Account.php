@@ -60,7 +60,7 @@ final class Account extends Schemas\JsonApiSchema
 	public const RELATIONSHIPS_EMAILS = 'emails';
 
 	public function __construct(
-		protected readonly Routing\IRouter $router,
+		protected readonly Routing\Router $router,
 		private readonly Policies\Repository $policiesRepository,
 		private readonly Identity\EnforcerFactory $enforcerFactory,
 	)
@@ -118,6 +118,9 @@ final class Account extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
@@ -171,6 +174,9 @@ final class Account extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipRelatedLink(
 		$resource,
@@ -214,6 +220,9 @@ final class Account extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

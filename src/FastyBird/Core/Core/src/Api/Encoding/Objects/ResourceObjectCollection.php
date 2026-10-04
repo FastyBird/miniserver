@@ -3,7 +3,9 @@
 namespace FastyBird\Core\Api\Encoding\Objects;
 
 use ArrayIterator;
+use Countable;
 use FastyBird\Core\Exceptions;
+use IteratorAggregate;
 use Override;
 use Traversable;
 use function count;
@@ -11,14 +13,16 @@ use function in_array;
 
 /**
  * Resource object collection
+ *
+ * @phpstan-implements IteratorAggregate<int, ResourceObject>
  */
-final class ResourceObjectCollection implements IResourceObjectCollection
+final class ResourceObjectCollection implements IteratorAggregate, Countable
 {
 
 	/**
 	 * @var array<mixed>
 	 *
-	 * @phpstan-var Array<int, IResourceObject>
+	 * @phpstan-var Array<int, ResourceObject>
 	 */
 	private array $stack = [];
 
@@ -35,16 +39,16 @@ final class ResourceObjectCollection implements IResourceObjectCollection
 	/**
 	 * @param array<mixed> $resourceArray
 	 *
-	 * @phpstan-return IResourceObjectCollection<int, IResourceObject>
+	 * @phpstan-return ResourceObjectCollection<int, ResourceObject>
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(array $resourceArray): IResourceObjectCollection
+	public static function create(array $resourceArray): self
 	{
 		$data = [];
 
 		foreach ($resourceArray as $resource) {
-			if ($resource instanceof IStandardObject) {
+			if ($resource instanceof StandardObject) {
 				$data[] = new ResourceObject($resource);
 			}
 		}
@@ -53,15 +57,14 @@ final class ResourceObjectCollection implements IResourceObjectCollection
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $resource
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	#[Override]
 	public function addMany(array $resource): void
 	{
 		foreach ($resource as $item) {
-			if (!$item instanceof IResourceObject) {
+			if (!$item instanceof ResourceObject) {
 				throw new Exceptions\InvalidArgument('Expecting only resource objects with keys.');
 			}
 
@@ -69,16 +72,14 @@ final class ResourceObjectCollection implements IResourceObjectCollection
 		}
 	}
 
-	#[Override]
-	public function add(IResourceObject $resource): void
+	public function add(ResourceObject $resource): void
 	{
 		if (!$this->has($resource)) {
 			$this->stack[] = $resource;
 		}
 	}
 
-	#[Override]
-	public function has(IResourceObject $resource): bool
+	public function has(ResourceObject $resource): bool
 	{
 		return in_array($resource, $this->stack, true);
 	}
@@ -86,7 +87,7 @@ final class ResourceObjectCollection implements IResourceObjectCollection
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @phpstan-return ArrayIterator<int, IResourceObject>
+	 * @phpstan-return ArrayIterator<int, ResourceObject>
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator
@@ -94,13 +95,16 @@ final class ResourceObjectCollection implements IResourceObjectCollection
 		return new ArrayIterator($this->stack);
 	}
 
-	#[Override]
+	/**
+	 * @return Traversable
+	 *
+	 * @phpstan-return Traversable<int, ResourceObject>
+	 */
 	public function getAll(): Traversable
 	{
 		return $this->getIterator();
 	}
 
-	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];

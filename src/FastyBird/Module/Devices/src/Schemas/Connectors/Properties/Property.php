@@ -50,7 +50,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 
 	public const RELATIONSHIPS_STATE = 'state';
 
-	public function __construct(protected readonly Routing\IRouter $router)
+	public function __construct(protected readonly Routing\Router $router)
 	{
 	}
 
@@ -97,6 +97,9 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getSelfLink(
 		$resource,
@@ -140,6 +143,9 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipRelatedLink(
 		$resource,

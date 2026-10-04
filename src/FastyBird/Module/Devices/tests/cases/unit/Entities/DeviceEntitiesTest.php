@@ -15,6 +15,7 @@ use Nette;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use ReflectionException;
 use RuntimeException;
 
 #[PreserveGlobalState(false)]
@@ -61,6 +62,7 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws ReflectionException
 	 */
 	public function testCreateChild(): void
 	{
@@ -105,6 +107,7 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws ReflectionException
 	 */
 	public function testCreateSetsTimestamps(): void
 	{

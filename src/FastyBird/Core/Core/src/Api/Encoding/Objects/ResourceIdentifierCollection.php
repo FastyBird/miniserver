@@ -3,8 +3,10 @@
 namespace FastyBird\Core\Api\Encoding\Objects;
 
 use ArrayIterator;
+use Countable;
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Exceptions;
+use IteratorAggregate;
 use Override;
 use function count;
 use function in_array;
@@ -13,11 +15,13 @@ use function is_string;
 
 /**
  * Resource identifier object
+ *
+ * @phpstan-implements IteratorAggregate<int, ResourceIdentifierObject>
  */
-final class ResourceIdentifierCollection implements IResourceIdentifierCollection
+final class ResourceIdentifierCollection implements IteratorAggregate, Countable
 {
 
-	/** @var array<IResourceIdentifierObject> */
+	/** @var array<ResourceIdentifierObject> */
 	private array $stack;
 
 	/**
@@ -35,21 +39,21 @@ final class ResourceIdentifierCollection implements IResourceIdentifierCollectio
 	/**
 	 * @param array<mixed> $input
 	 *
-	 * @phpstan-return IResourceIdentifierCollection<int, IResourceIdentifierObject>
+	 * @phpstan-return ResourceIdentifierCollection<int, ResourceIdentifierObject>
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(array $input): IResourceIdentifierCollection
+	public static function create(array $input): self
 	{
 		$collection = new self();
 
 		foreach ($input as $value) {
 			if (
-				$value instanceof IStandardObject
-				&& $value->has(Encoding\IDocument::KEYWORD_TYPE)
-				&& $value->has(Encoding\IDocument::KEYWORD_ID)
-				&& is_string($value->get(Encoding\IDocument::KEYWORD_TYPE))
-				&& is_string($value->get(Encoding\IDocument::KEYWORD_ID))
+				$value instanceof StandardObject
+				&& $value->has(Encoding\Document::KEYWORD_TYPE)
+				&& $value->has(Encoding\Document::KEYWORD_ID)
+				&& is_string($value->get(Encoding\Document::KEYWORD_TYPE))
+				&& is_string($value->get(Encoding\Document::KEYWORD_ID))
 			) {
 				$collection->add(new ResourceIdentifierObject($value));
 			}
@@ -59,15 +63,14 @@ final class ResourceIdentifierCollection implements IResourceIdentifierCollectio
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $identifiers
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	#[Override]
 	public function addMany(array $identifiers): void
 	{
 		foreach ($identifiers as $identifier) {
-			if (!$identifier instanceof IResourceIdentifierObject) {
+			if (!$identifier instanceof ResourceIdentifierObject) {
 				throw new Exceptions\InvalidArgument('Expecting only resource identifier objects.');
 			}
 
@@ -75,16 +78,17 @@ final class ResourceIdentifierCollection implements IResourceIdentifierCollectio
 		}
 	}
 
-	#[Override]
-	public function add(IResourceIdentifierObject $identifier): void
+	public function add(ResourceIdentifierObject $identifier): void
 	{
 		if (!$this->has($identifier)) {
 			$this->stack[] = $identifier;
 		}
 	}
 
-	#[Override]
-	public function has(IResourceIdentifierObject $identifier): bool
+	/**
+	 * Does the collection contain the supplied identifier?
+	 */
+	public function has(ResourceIdentifierObject $identifier): bool
 	{
 		return in_array($identifier, $this->stack, true);
 	}
@@ -92,7 +96,7 @@ final class ResourceIdentifierCollection implements IResourceIdentifierCollectio
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @phpstan-return ArrayIterator<int, IResourceIdentifierObject>
+	 * @phpstan-return ArrayIterator<int, ResourceIdentifierObject>
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator
@@ -101,9 +105,10 @@ final class ResourceIdentifierCollection implements IResourceIdentifierCollectio
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Get the collection as an array
+	 *
+	 * @return array<ResourceIdentifierObject>
 	 */
-	#[Override]
 	public function getAll(): array
 	{
 		return $this->stack;
@@ -115,13 +120,19 @@ final class ResourceIdentifierCollection implements IResourceIdentifierCollectio
 		return count($this->stack);
 	}
 
-	#[Override]
+	/**
+	 * Is the collection empty?
+	 */
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];
 	}
 
-	#[Override]
+	/**
+	 * Does every identifier in the collection match the supplied type/any of the supplied types?
+	 *
+	 * @param string|array<string> $typeOrTypes
+	 */
 	public function isOnly(string|array $typeOrTypes): bool
 	{
 		foreach ($this->stack as $identifier) {
@@ -134,9 +145,41 @@ final class ResourceIdentifierCollection implements IResourceIdentifierCollectio
 	}
 
 	/**
+	 * Map the collection to an array of type keys and id values
+	 *
+	 * For example, this JSON structure:
+	 *
+	 * ```
+	 * [
+	 *  {"type": "foo", "id": "1"},
+	 *  {"type": "foo", "id": "2"},
+	 *  {"type": "bar", "id": "99"}
+	 * ]
+	 * ```
+	 *
+	 * Will map to:
+	 *
+	 * ```
+	 * [
+	 *  "foo" => ["1", "2"],
+	 *  "bar" => ["99"]
+	 * ]
+	 * ```
+	 *
+	 * If the method call is provided with the an array `['foo' => 'FooModel', 'bar' => 'FoobarModel']`, then the
+	 * returned mapped array will be:
+	 *
+	 * ```
+	 * [
+	 *  "FooModel" => ["1", "2"],
+	 *  "FoobarModel" => ["99"]
+	 * ]
+	 * ```
+	 *
+	 * @param array<string>|null $typeMap if an array, map the identifier types to the supplied types.
+	 *
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function map(array|null $typeMap = null): mixed
 	{
 		$ret = [];
@@ -155,9 +198,10 @@ final class ResourceIdentifierCollection implements IResourceIdentifierCollectio
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Get an array of the ids of each identifier in the collection
+	 *
+	 * @return array<string>
 	 */
-	#[Override]
 	public function getIds(): array
 	{
 		$ids = [];

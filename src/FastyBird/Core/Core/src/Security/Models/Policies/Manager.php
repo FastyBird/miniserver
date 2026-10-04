@@ -8,6 +8,7 @@ use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Entities\Policies;
 use Nette\Utils;
+use ReflectionException;
 use function assert;
 
 /**
@@ -16,8 +17,8 @@ use function assert;
 final class Manager
 {
 
-	/** @var Crud\IEntityCrud<Policies\Policy>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Policies\Policy>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Policies\Policy> $entityCrudFactory
@@ -33,6 +34,7 @@ final class Manager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(Utils\ArrayHash $values): Policies\Policy
 	{
@@ -46,6 +48,8 @@ final class Manager
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Policies\Policy $entity,
@@ -69,9 +73,9 @@ final class Manager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Policies\Policy>
+	 * @return Crud\EntityCrud<Policies\Policy>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Policies\Policy::class);

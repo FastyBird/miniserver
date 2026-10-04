@@ -14,17 +14,17 @@ final class Obj
 {
 
 	/**
-	 * @return string|int|float|bool|array<mixed>|IStandardObject|null
+	 * @return string|int|float|bool|array<mixed>|StandardObject|null
 	 *
-	 * @phpstan-return string|int|float|bool|array<mixed>|IStandardObject<string, string|int|float|bool|array<mixed>|null>|null
+	 * @phpstan-return string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>|null
 	 */
 	public static function get(
-		IStandardObject|stdClass $data,
+		StandardObject|stdClass $data,
 		string $key,
 		mixed $default = null,
-	): string|int|float|bool|array|IStandardObject|null
+	): string|int|float|bool|array|StandardObject|null
 	{
-		if ($data instanceof IStandardObject) {
+		if ($data instanceof StandardObject) {
 			return $data->get($key, $default);
 		}
 
@@ -34,13 +34,13 @@ final class Obj
 
 		$value = $data->{$key};
 
-		if ($value instanceof IStandardObject || $value instanceof stdClass) {
+		if ($value instanceof StandardObject || $value instanceof stdClass) {
 			return self::cast($value);
 		} elseif (is_array($value)) {
 			$mapped = [];
 
 			foreach ($value as $fieldKey => $field) {
-				$mapped[$fieldKey] = $field instanceof IStandardObject || $field instanceof stdClass
+				$mapped[$fieldKey] = $field instanceof StandardObject || $field instanceof stdClass
 					? self::cast($field)
 					: $field;
 			}
@@ -52,11 +52,11 @@ final class Obj
 	}
 
 	/**
-	 * @phpstan-return IStandardObject<string, string|int|float|bool|array<mixed>|null>
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
 	 */
-	public static function cast(IStandardObject|stdClass $data): IStandardObject
+	public static function cast(StandardObject|stdClass $data): StandardObject
 	{
-		return $data instanceof IStandardObject ? $data : new StandardObject($data);
+		return $data instanceof StandardObject ? $data : new StandardObject($data);
 	}
 
 	public static function replicate(stdClass $data): stdClass
@@ -77,7 +77,7 @@ final class Obj
 	 *
 	 * @return Traversable
 	 *
-	 * @phpstan-return Traversable<string, string|int|float|bool|array<mixed>|IStandardObject|null>
+	 * @phpstan-return Traversable<string, string|int|float|bool|array<mixed>|StandardObject|null>
 	 */
 	public static function traverse(stdClass|array $data): Traversable
 	{

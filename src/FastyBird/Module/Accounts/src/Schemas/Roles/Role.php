@@ -17,6 +17,7 @@ namespace FastyBird\Module\Accounts\Schemas\Roles;
 
 use Exception;
 use FastyBird\Core\Api\Schemas;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Core\Values\Types\Sources;
@@ -54,7 +55,7 @@ final class Role extends Schemas\JsonApiSchema
 
 	public function __construct(
 		private readonly Policies\Repository $policiesRepository,
-		private readonly Routing\IRouter $router,
+		private readonly Routing\Router $router,
 	)
 	{
 	}
@@ -91,6 +92,9 @@ final class Role extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
@@ -143,6 +147,9 @@ final class Role extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getRelationshipRelatedLink(
 		$resource,
@@ -183,6 +190,9 @@ final class Role extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

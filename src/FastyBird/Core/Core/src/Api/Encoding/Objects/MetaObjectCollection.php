@@ -3,7 +3,9 @@
 namespace FastyBird\Core\Api\Encoding\Objects;
 
 use ArrayIterator;
+use Countable;
 use FastyBird\Core\Exceptions;
+use IteratorAggregate;
 use Override;
 use Traversable;
 use function array_key_exists;
@@ -16,14 +18,16 @@ use function sprintf;
 
 /**
  * Meta object collection
+ *
+ * @phpstan-implements IteratorAggregate<string, MetaObject>
  */
-final class MetaObjectCollection implements IMetaObjectCollection
+final class MetaObjectCollection implements IteratorAggregate, Countable
 {
 
 	/**
 	 * @var array<mixed>
 	 *
-	 * @phpstan-var Array<string, IMetaObject>
+	 * @phpstan-var Array<string, MetaObject>
 	 */
 	private array $stack = [];
 
@@ -38,11 +42,11 @@ final class MetaObjectCollection implements IMetaObjectCollection
 	}
 
 	/**
-	 * @phpstan-return IMetaObjectCollection<string, IMetaObject>
+	 * @phpstan-return MetaObjectCollection<string, MetaObject>
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(IStandardObject|null $metaObject): IMetaObjectCollection
+	public static function create(StandardObject|null $metaObject): self
 	{
 		if ($metaObject === null) {
 			return new self([]);
@@ -62,15 +66,14 @@ final class MetaObjectCollection implements IMetaObjectCollection
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $meta
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	#[Override]
 	public function addMany(array $meta): void
 	{
 		foreach ($meta as $key => $item) {
-			if (!$item instanceof IMetaObject || !is_string($key)) {
+			if (!$item instanceof MetaObject || !is_string($key)) {
 				throw new Exceptions\InvalidArgument('Expecting only meta objects with keys.');
 			}
 
@@ -78,8 +81,7 @@ final class MetaObjectCollection implements IMetaObjectCollection
 		}
 	}
 
-	#[Override]
-	public function add(IMetaObject $meta, string $key): void
+	public function add(MetaObject $meta, string $key): void
 	{
 		if (!$this->has($key)) {
 			$this->stack[$key] = $meta;
@@ -89,8 +91,7 @@ final class MetaObjectCollection implements IMetaObjectCollection
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function get(string $key): IMetaObject
+	public function get(string $key): MetaObject
 	{
 		if (!$this->has($key)) {
 			throw new Exceptions\Runtime(sprintf('Meta member "%s" is not present.', $key));
@@ -99,7 +100,6 @@ final class MetaObjectCollection implements IMetaObjectCollection
 		return $this->stack[$key];
 	}
 
-	#[Override]
 	public function has(string $key): bool
 	{
 		return array_key_exists($key, $this->stack);
@@ -108,7 +108,7 @@ final class MetaObjectCollection implements IMetaObjectCollection
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @phpstan-return ArrayIterator<string, IMetaObject>
+	 * @phpstan-return ArrayIterator<string, MetaObject>
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator
@@ -117,9 +117,12 @@ final class MetaObjectCollection implements IMetaObjectCollection
 	}
 
 	/**
+	 * @return Traversable
+	 *
+	 * @phpstan-return Traversable<string, MetaObject>
+	 *
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getAll(): Traversable
 	{
 		foreach (array_keys($this->stack) as $key) {
@@ -127,7 +130,6 @@ final class MetaObjectCollection implements IMetaObjectCollection
 		}
 	}
 
-	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];

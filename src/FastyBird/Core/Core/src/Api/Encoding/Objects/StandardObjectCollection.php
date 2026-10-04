@@ -3,7 +3,9 @@
 namespace FastyBird\Core\Api\Encoding\Objects;
 
 use ArrayIterator;
+use Countable;
 use FastyBird\Core\Exceptions;
+use IteratorAggregate;
 use Override;
 use SplObjectStorage;
 use function array_map;
@@ -11,11 +13,13 @@ use function iterator_to_array;
 
 /**
  * Standard objects collection
+ *
+ * @phpstan-implements IteratorAggregate<int, StandardObject<string, mixed>>
  */
-final class StandardObjectCollection implements IStandardObjectCollection
+final class StandardObjectCollection implements IteratorAggregate, Countable
 {
 
-	/** @phpstan-var SplObjectStorage<IStandardObject, null> */
+	/** @phpstan-var SplObjectStorage<StandardObject, null> */
 	private SplObjectStorage $stack;
 
 	/**
@@ -33,14 +37,14 @@ final class StandardObjectCollection implements IStandardObjectCollection
 	/**
 	 * @param array<mixed> $objects
 	 *
-	 * @phpstan-return IStandardObjectCollection<int, IStandardObject<string, mixed>>
+	 * @phpstan-return StandardObjectCollection<int, StandardObject<string, mixed>>
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(array $objects): IStandardObjectCollection
+	public static function create(array $objects): self
 	{
 		$objects = array_map(
-			static fn ($object): IStandardObject => $object instanceof IStandardObject ? $object : new StandardObject(
+			static fn ($object): StandardObject => $object instanceof StandardObject ? $object : new StandardObject(
 				$object,
 			),
 			$objects,
@@ -50,15 +54,14 @@ final class StandardObjectCollection implements IStandardObjectCollection
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $objects
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	#[Override]
 	public function addMany(array $objects): void
 	{
 		foreach ($objects as $object) {
-			if (!$object instanceof IStandardObject) {
+			if (!$object instanceof StandardObject) {
 				throw new Exceptions\InvalidArgument('Expecting only standard objects.');
 			}
 
@@ -66,16 +69,20 @@ final class StandardObjectCollection implements IStandardObjectCollection
 		}
 	}
 
-	#[Override]
-	public function add(IStandardObject $object): void
+	/**
+	 * @phpstan-param StandardObject<string, mixed> $object
+	 */
+	public function add(StandardObject $object): void
 	{
 		if (!$this->has($object)) {
 			$this->stack->offsetSet($object);
 		}
 	}
 
-	#[Override]
-	public function has(IStandardObject $object): bool
+	/**
+	 * @phpstan-param StandardObject<string, mixed> $object
+	 */
+	public function has(StandardObject $object): bool
 	{
 		return $this->stack->offsetExists($object);
 	}
@@ -83,7 +90,7 @@ final class StandardObjectCollection implements IStandardObjectCollection
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @phpstan-return ArrayIterator<int, IStandardObject<string, mixed>>
+	 * @phpstan-return ArrayIterator<int, StandardObject<string, mixed>>
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator
@@ -92,15 +99,15 @@ final class StandardObjectCollection implements IStandardObjectCollection
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<StandardObject>
+	 *
+	 * @phpstan-return Array<int, StandardObject<string, mixed>>
 	 */
-	#[Override]
 	public function getAll(): array
 	{
 		return iterator_to_array($this->stack);
 	}
 
-	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack->count() === 0;

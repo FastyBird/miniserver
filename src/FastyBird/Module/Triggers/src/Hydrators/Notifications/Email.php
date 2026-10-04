@@ -50,7 +50,7 @@ final class Email extends Notification
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateEmailAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): string
 	{
 		// Condition operator have to be set

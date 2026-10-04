@@ -47,7 +47,7 @@ class ApiRoutes
 	{
 	}
 
-	public function registerRoutes(Routing\IRouter $router): void
+	public function registerRoutes(Routing\Router $router): void
 	{
 		$routes = $router->group('/' . Constants::ROUTER_API_PREFIX, function (
 			Routing\RouteCollector $group,
@@ -73,8 +73,8 @@ class ApiRoutes
 	}
 
 	private function buildRoutes(
-		Routing\IRouter|Routing\IRouteCollector $group,
-	): Routing\IRouteGroup
+		Routing\Router|Routing\RouteCollector $group,
+	): Routing\RouteGroup
 	{
 		return $group->group('/v1', function (Routing\RouteCollector $group): void {
 			/**

@@ -153,7 +153,7 @@ final class HydratorCrudReaderTest extends Tests\Cases\Unit\BaseTestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function document(array $override = []): Encoding\IDocument
+	private function document(array $override = []): Encoding\Document
 	{
 		return Encoding\Document::create(Utils\Json::encode([
 			'data' => [

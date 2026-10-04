@@ -59,7 +59,7 @@ final class ChannelProperty extends Property
 	public function __construct(
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesRepository,
 		private readonly DevicesModels\States\ChannelPropertiesManager $channelPropertiesManager,
-		Routing\IRouter $router,
+		Routing\Router $router,
 	)
 	{
 		parent::__construct($router);
@@ -157,6 +157,9 @@ final class ChannelProperty extends Property
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

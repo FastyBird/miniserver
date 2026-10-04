@@ -16,10 +16,11 @@
 namespace FastyBird\Module\Triggers\Schemas\Conditions;
 
 use FastyBird\Core\Api\Schemas as ApiSchemas;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Router;
 use Neomerx\JsonApi;
@@ -43,7 +44,7 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	public const RELATIONSHIPS_TRIGGER = 'trigger';
 
 	public function __construct(
-		protected readonly Routing\IRouter $router,
+		protected readonly Routing\Router $router,
 		private readonly Models\States\ConditionsRepository $stateRepository,
 	)
 	{
@@ -64,7 +65,7 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 		try {
 			$state = $this->stateRepository->findOne($resource);
 
-		} catch (Exceptions\NotImplemented) {
+		} catch (TriggersExceptions\NotImplemented) {
 			$state = null;
 		}
 
@@ -78,6 +79,9 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
@@ -119,6 +123,9 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipRelatedLink(
 		$resource,
@@ -145,6 +152,9 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

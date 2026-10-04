@@ -130,7 +130,7 @@ final class AccountIdentitiesV1 extends BaseV1
 				$passwordAttribute = $attributes->get('password');
 
 				if (
-					!$passwordAttribute instanceof Objects\IStandardObject
+					!$passwordAttribute instanceof Objects\StandardObject
 					|| !$passwordAttribute->has('current')
 					|| !is_scalar($passwordAttribute->get('current'))
 				) {

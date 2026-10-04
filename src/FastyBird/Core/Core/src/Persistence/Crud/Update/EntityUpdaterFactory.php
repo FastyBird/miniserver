@@ -18,6 +18,6 @@ interface EntityUpdaterFactory
 	 *
 	 * @return EntityUpdater<T>
 	 */
-	public function create(string $entityName, Mapping\IEntityMapper $entityMapper): EntityUpdater;
+	public function create(string $entityName, Mapping\EntityMapper $entityMapper): EntityUpdater;
 
 }

@@ -59,7 +59,7 @@ final class ConnectorProperty extends Property
 	public function __construct(
 		private readonly DevicesModels\Configuration\Connectors\Properties\Repository $connectorsPropertiesRepository,
 		private readonly DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesManager,
-		Routing\IRouter $router,
+		Routing\Router $router,
 	)
 	{
 		parent::__construct($router);
@@ -132,6 +132,9 @@ final class ConnectorProperty extends Property
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

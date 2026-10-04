@@ -44,7 +44,7 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 		string $fixture,
 	): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$request = new ServerRequest(
 			$method,

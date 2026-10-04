@@ -52,7 +52,7 @@ final class DataCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateDateAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): DateTimeInterface
 	{
 		// Condition date have to be set

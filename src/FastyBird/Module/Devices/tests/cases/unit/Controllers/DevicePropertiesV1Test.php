@@ -36,7 +36,7 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('devicePropertiesRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -216,7 +216,7 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('devicePropertiesCreate')]
 	public function testCreate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -374,7 +374,7 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('devicePropertiesUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -510,7 +510,7 @@ final class DevicePropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('devicePropertiesDelete')]
 	public function testDelete(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 

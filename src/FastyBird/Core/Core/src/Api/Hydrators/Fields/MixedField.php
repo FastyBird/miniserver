@@ -22,9 +22,9 @@ final class MixedField extends Field
 	}
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 */
-	public function getValue(Objects\IStandardObject $attributes): mixed
+	public function getValue(Objects\StandardObject $attributes): mixed
 	{
 		return $attributes->get($this->getMappedName());
 	}

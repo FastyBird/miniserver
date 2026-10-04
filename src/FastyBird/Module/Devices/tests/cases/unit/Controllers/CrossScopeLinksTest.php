@@ -128,7 +128,7 @@ final class CrossScopeLinksTest extends Tests\Cases\Unit\DbTestCase
 	 */
 	private function read(string $url): array
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$response = $router->handle(new ServerRequest(
 			RequestMethodInterface::METHOD_GET,

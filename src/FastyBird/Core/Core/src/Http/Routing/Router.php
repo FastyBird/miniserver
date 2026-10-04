@@ -8,6 +8,7 @@ use FastyBird\Core\Http\Controllers;
 use FastyBird\Core\Http\Middleware;
 use Fig\Http\Message\RequestMethodInterface;
 use InvalidArgumentException;
+use IteratorAggregate;
 use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,7 +17,10 @@ use Psr\Http\Server\MiddlewareInterface;
 use RecursiveArrayIterator;
 use function strtoupper;
 
-class Router implements IRouter
+/**
+ * @phpstan-implements IteratorAggregate<int, Route>
+ */
+class Router implements IteratorAggregate
 {
 
 	public const string ROUTE = '__route__';
@@ -29,15 +33,15 @@ class Router implements IRouter
 
 	private ResponseFactoryInterface $responseFactory;
 
-	private IRouteCollector $routeCollector;
+	private RouteCollector $routeCollector;
 
-	private IRouteParser $routeParser;
+	private RouteParser $routeParser;
 
-	private Middleware\IMiddlewareDispatcher $middlewareDispatcher;
+	private Middleware\MiddlewareDispatcher $middlewareDispatcher;
 
 	public function __construct(
 		ResponseFactoryInterface|null $responseFactory = null,
-		Controllers\IControllerResolver|null $controllerResolver = null,
+		Controllers\ControllerResolver|null $controllerResolver = null,
 	)
 	{
 		$this->responseFactory = $responseFactory ?? new Http\ResponseFactory();
@@ -54,20 +58,20 @@ class Router implements IRouter
 		$this->middlewareDispatcher = new Middleware\MiddlewareDispatcher($routeHandler);
 	}
 
-	#[Override]
 	public function getBasePath(): string
 	{
 		return $this->basePath;
 	}
 
-	#[Override]
 	public function setBasePath(string $basePath): void
 	{
 		$this->basePath = $basePath;
 	}
 
-	#[Override]
-	public function getNamedRoute(string $name): IRoute|null
+	/**
+	 * @throws Exceptions\Runtime
+	 */
+	public function getNamedRoute(string $name): Route|null
 	{
 		return $this->routeCollector->getNamedRoute($name);
 	}
@@ -75,8 +79,7 @@ class Router implements IRouter
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function lookupRoute(string $identifier): IRoute
+	public function lookupRoute(string $identifier): Route
 	{
 		$route = $this->routeCollector->lookupRoute($identifier);
 
@@ -87,71 +90,112 @@ class Router implements IRouter
 		return $route;
 	}
 
-	#[Override]
 	public function addMiddleware(MiddlewareInterface $middleware): void
 	{
 		$this->middlewareDispatcher->add($middleware);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add GET route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
-	public function get(string $pattern, $callable): IRoute
+	public function get(string $pattern, $callable): Route
 	{
 		return $this->map([RequestMethodInterface::METHOD_GET], $pattern, $callable);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add POST route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
-	public function post(string $pattern, $callable): IRoute
+	public function post(string $pattern, $callable): Route
 	{
 		return $this->map([RequestMethodInterface::METHOD_POST], $pattern, $callable);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add PUT route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
-	public function put(string $pattern, $callable): IRoute
+	public function put(string $pattern, $callable): Route
 	{
 		return $this->map([RequestMethodInterface::METHOD_PUT], $pattern, $callable);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add PATCH route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
-	public function patch(string $pattern, $callable): IRoute
+	public function patch(string $pattern, $callable): Route
 	{
 		return $this->map([RequestMethodInterface::METHOD_PATCH], $pattern, $callable);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add DELETE route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
-	public function delete(string $pattern, $callable): IRoute
+	public function delete(string $pattern, $callable): Route
 	{
 		return $this->map([RequestMethodInterface::METHOD_DELETE], $pattern, $callable);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add OPTIONS route
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
-	public function options(string $pattern, $callable): IRoute
+	public function options(string $pattern, $callable): Route
 	{
 		return $this->map([RequestMethodInterface::METHOD_OPTIONS], $pattern, $callable);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add route for any HTTP method
+	 *
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
-	public function any(string $pattern, $callable): IRoute
+	public function any(string $pattern, $callable): Route
 	{
 		return $this->map([
 			RequestMethodInterface::METHOD_GET,
@@ -164,24 +208,43 @@ class Router implements IRouter
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Add route with multiple methods
+	 *
+	 * @param array<string> $methods                 Numeric array of HTTP method names
+	 * @param string $pattern                   The route URI pattern
+	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
-	public function map(array $methods, string $pattern, $callable): IRoute
+	public function map(array $methods, string $pattern, $callable): Route
 	{
 		return $this->routeCollector->map($methods, $pattern, $callable);
 	}
 
-	#[Override]
-	public function group(string $pattern, callable $callable): IRouteGroup
+	/**
+	 * Route Groups
+	 *
+	 * This method accepts a route pattern and a callback. All route
+	 * declarations in the callback will be prepended by the group(s)
+	 * that it is in.
+	 */
+	public function group(string $pattern, callable $callable): RouteGroup
 	{
 		return $this->routeCollector->group($pattern, $callable);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Build the path for a named route including the base path
+	 *
+	 * @param string $routeName    Route name
+	 * @param array<mixed> $data        Named argument replacement data
+	 * @param array<mixed> $queryParams Optional query string parameters
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function urlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{
 		return $this->routeParser->urlFor($routeName, $data, $queryParams);
@@ -190,7 +253,6 @@ class Router implements IRouter
 	/**
 	 * @throws InvalidArgumentException
 	 */
-	#[Override]
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 		$response = $this->middlewareDispatcher->handle($request);
@@ -214,7 +276,7 @@ class Router implements IRouter
 	}
 
 	/**
-	 * @return RecursiveArrayIterator<IRoute>
+	 * @return RecursiveArrayIterator<Route>
 	 */
 	#[Override]
 	public function getIterator(): RecursiveArrayIterator

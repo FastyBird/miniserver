@@ -44,7 +44,7 @@ abstract class Connector extends Hydrators\Hydrator
 			'enabled',
 		];
 
-	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -56,7 +56,7 @@ abstract class Connector extends Hydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateCommentAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))
@@ -68,7 +68,7 @@ abstract class Connector extends Hydrators\Hydrator
 		return (string) $attributes->get('comment');
 	}
 
-	protected function hydrateEnabledAttribute(Objects\IStandardObject $attributes): bool
+	protected function hydrateEnabledAttribute(Objects\StandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('enabled')) && boolval($attributes->get('enabled'));
 	}

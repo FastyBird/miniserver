@@ -16,14 +16,16 @@
 namespace FastyBird\Module\Ui\Models\Entities\Widgets\Displays;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Crud;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Events;
 use FastyBird\Module\Ui\Models;
 use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher;
+use ReflectionException;
 use function assert;
 
 /**
@@ -39,8 +41,8 @@ class Manager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Widgets\Displays\Display>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Widgets\Displays\Display>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Widgets\Displays\Display> $entityCrudFactory
@@ -54,8 +56,10 @@ class Manager
 
 	/**
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Entities\Widgets\Displays\Display $entity,
@@ -71,9 +75,9 @@ class Manager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Widgets\Displays\Display>
+	 * @return Crud\EntityCrud<Entities\Widgets\Displays\Display>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Widgets\Displays\Display::class);

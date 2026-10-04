@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Http\Controllers;
 
 use FastyBird\Core\Exceptions;
-use Override;
 use function class_exists;
 use function is_array;
 use function is_callable;
@@ -16,17 +15,20 @@ use function sprintf;
 /**
  * Endpoint controller callback resolver
  */
-final class ControllerResolver implements IControllerResolver
+final class ControllerResolver
 {
 
 	private const string CALLABLE_PATTERN = '!^([^\:]+)\:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)$!';
 
 	/**
-	 * {@inheritDoc}
+	 * Resolve $toResolve into a callable
+	 *
+	 * @param string|callable|array<mixed> $toResolve
 	 *
 	 * @throws Exceptions\Runtime
+	 *
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
-	#[Override]
 	public function resolve($toResolve): callable
 	{
 		if (is_callable($toResolve)) {

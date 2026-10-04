@@ -2,7 +2,9 @@
 
 namespace FastyBird\Core\Api\Encoding\Objects;
 
+use Countable;
 use IteratorAggregate;
+use JsonSerializable;
 use OutOfBoundsException;
 use Override;
 use stdClass;
@@ -15,9 +17,9 @@ use function property_exists;
 use function sprintf;
 
 /**
- * @phpstan-implements IteratorAggregate<mixed, mixed|IStandardObject>
+ * @phpstan-implements IteratorAggregate<mixed, mixed|StandardObject>
  */
-final class StandardObject implements IteratorAggregate, IStandardObject
+final class StandardObject implements IteratorAggregate, Countable, JsonSerializable
 {
 
 	protected stdClass $proxy;
@@ -27,16 +29,23 @@ final class StandardObject implements IteratorAggregate, IStandardObject
 		$this->proxy = $proxy ?? new stdClass();
 	}
 
-	#[Override]
+	/**
+	 * @return string|int|float|bool|array<mixed>|StandardObject|null
+	 *
+	 * @phpstan-return string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>|null
+	 */
 	public function get(string $key, mixed $default = null): string|int|float|bool|array|self|null
 	{
 		return Obj::get($this->proxy, $key, $default);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param string|array<string> ...$keys
+	 *
+	 * @return array<mixed>
+	 *
+	 * @phpstan-return Array<string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>>
 	 */
-	#[Override]
 	public function getMany(string|array ...$keys): array
 	{
 		$values = [];
@@ -48,8 +57,12 @@ final class StandardObject implements IteratorAggregate, IStandardObject
 		return $values;
 	}
 
-	#[Override]
-	public function set(string $key, mixed $value): IStandardObject
+	/**
+	 * @phpstan-param string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>|null $value
+	 *
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
+	 */
+	public function set(string $key, mixed $value): self
 	{
 		$this->proxy->{$key} = $value;
 
@@ -57,10 +70,13 @@ final class StandardObject implements IteratorAggregate, IStandardObject
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $values
+	 *
+	 * @phpstan-param Array<string, string|int|float|bool|array<mixed>|StandardObject<string, string|int|float|bool|array<mixed>|null>> $values
+	 *
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
 	 */
-	#[Override]
-	public function setMany(array $values): IStandardObject
+	public function setMany(array $values): self
 	{
 		foreach ($values as $key => $value) {
 			$this->set($key, $value);
@@ -69,7 +85,6 @@ final class StandardObject implements IteratorAggregate, IStandardObject
 		return $this;
 	}
 
-	#[Override]
 	public function has(string $key): bool
 	{
 		foreach ($this->normalizeKeys([$key]) as $normalizedKey) {
@@ -82,9 +97,8 @@ final class StandardObject implements IteratorAggregate, IStandardObject
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<string> ...$keys
 	 */
-	#[Override]
 	public function hasAny(array ...$keys): bool
 	{
 		foreach ($this->normalizeKeys($keys) as $key) {
@@ -97,25 +111,27 @@ final class StandardObject implements IteratorAggregate, IStandardObject
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<string>
 	 */
-	#[Override]
 	public function keys(): array
 	{
 		return array_keys(get_object_vars($this->proxy));
 	}
 
-	#[Override]
-	public function copy(): IStandardObject
+	/**
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
+	 */
+	public function copy(): self
 	{
 		return clone $this;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<string> ...$keys
+	 *
+	 * @phpstan-return StandardObject<string, string|int|float|bool|array<mixed>|null>
 	 */
-	#[Override]
-	public function remove(array ...$keys): IStandardObject
+	public function remove(array ...$keys): self
 	{
 		foreach ($this->normalizeKeys($keys) as $key) {
 			unset($this->proxy->{$key});
@@ -124,16 +140,14 @@ final class StandardObject implements IteratorAggregate, IStandardObject
 		return $this;
 	}
 
-	#[Override]
 	public function toStdClass(): stdClass
 	{
 		return Obj::replicate($this->proxy);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<mixed>
 	 */
-	#[Override]
 	public function toArray(): array
 	{
 		return Obj::toArray($this->proxy);

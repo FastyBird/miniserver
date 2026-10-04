@@ -15,11 +15,12 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
-use FastyBird\Module\Triggers\Exceptions;
+use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Router;
 use Neomerx\JsonApi;
@@ -50,7 +51,7 @@ final class Automatic extends Trigger
 	public const RELATIONSHIPS_CONDITIONS = 'conditions';
 
 	public function __construct(
-		Routing\IRouter $router,
+		Routing\Router $router,
 		Models\States\ActionsRepository $actionStateRepository,
 		private readonly Models\States\ConditionsRepository $conditionStateRepository,
 	)
@@ -92,7 +93,7 @@ final class Automatic extends Trigger
 					}
 				}
 			}
-		} catch (Exceptions\NotImplemented) {
+		} catch (TriggersExceptions\NotImplemented) {
 			$isFulfilled = null;
 		}
 
@@ -121,6 +122,9 @@ final class Automatic extends Trigger
 	}
 
 	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function getRelationshipRelatedLink(
@@ -148,6 +152,9 @@ final class Automatic extends Trigger
 	}
 
 	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function getRelationshipSelfLink(

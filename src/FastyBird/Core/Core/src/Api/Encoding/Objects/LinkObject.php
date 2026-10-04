@@ -4,21 +4,20 @@ namespace FastyBird\Core\Api\Encoding\Objects;
 
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Exceptions;
-use Override;
 use function is_string;
 
 /**
  * Link object
  */
-final class LinkObject implements ILinkObject
+final class LinkObject
 {
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function __construct(private IStandardObject $data)
+	public function __construct(private StandardObject $data)
 	{
-		if (!$data->has(Encoding\IDocument::KEYWORD_HREF)) {
+		if (!$data->has(Encoding\Document::KEYWORD_HREF)) {
 			throw new Exceptions\InvalidArgument('Provided link object has missing required attribute');
 		}
 	}
@@ -26,10 +25,9 @@ final class LinkObject implements ILinkObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getHref(): string
 	{
-		$href = $this->data->get(Encoding\IDocument::KEYWORD_HREF);
+		$href = $this->data->get(Encoding\Document::KEYWORD_HREF);
 
 		if (!is_string($href)) {
 			throw new Exceptions\Runtime('Value of href attribute of link object has invalid value.');
@@ -38,22 +36,22 @@ final class LinkObject implements ILinkObject
 		return $href;
 	}
 
-	#[Override]
 	public function hasMeta(): bool
 	{
-		return $this->data->has(Encoding\IDocument::KEYWORD_META);
+		return $this->data->has(Encoding\Document::KEYWORD_META);
 	}
 
 	/**
+	 * @phpstan-return MetaObjectCollection<string, MetaObject>
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getMeta(): IMetaObjectCollection
+	public function getMeta(): MetaObjectCollection
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_META);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_META);
 
-		if (!$raw instanceof IStandardObject && $raw !== null) {
+		if (!$raw instanceof StandardObject && $raw !== null) {
 			throw new Exceptions\Runtime('Meta member is not an object.');
 		}
 

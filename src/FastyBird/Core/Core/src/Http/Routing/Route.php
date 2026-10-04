@@ -15,11 +15,9 @@ use Ramsey\Uuid\Uuid;
 use Throwable;
 use function array_key_exists;
 use function array_replace;
-use function class_implements;
-use function in_array;
 use function is_array;
 
-final class Route implements IRoute, RequestHandlerInterface
+final class Route implements RequestHandlerInterface
 {
 
 	private string $identifier;
@@ -50,9 +48,9 @@ final class Route implements IRoute, RequestHandlerInterface
 		private array $methods,
 		private string $pattern,
 		callable|string|array $callable,
-		private IRouteCollector $routeCollector,
+		private RouteCollector $routeCollector,
 		private ResponseFactoryInterface $responseFactory,
-		private Controllers\IControllerResolver $controllerResolver,
+		private Controllers\ControllerResolver $controllerResolver,
 		private Handlers\Handler $invocationHandler,
 	)
 	{
@@ -68,52 +66,47 @@ final class Route implements IRoute, RequestHandlerInterface
 		$this->middlewareDispatcher = new Middleware\MiddlewareDispatcher($this);
 	}
 
-	#[Override]
 	public function setInvocationHandler(Handlers\Handler $invocationHandler): void
 	{
 		$this->invocationHandler = $invocationHandler;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<string>
 	 */
-	#[Override]
 	public function getMethods(): array
 	{
 		return $this->methods;
 	}
 
-	#[Override]
 	public function getPattern(): string
 	{
 		return $this->routeCollector->getPattern() . $this->pattern;
 	}
 
-	#[Override]
+	/**
+	 * @return callable|string|array<mixed>
+	 */
 	public function getCallable(): callable|string|array
 	{
 		return $this->callable;
 	}
 
-	#[Override]
 	public function setName(string $name): void
 	{
 		$this->name = $name;
 	}
 
-	#[Override]
 	public function getName(): string|null
 	{
 		return $this->name;
 	}
 
-	#[Override]
 	public function getIdentifier(): string
 	{
 		return $this->identifier;
 	}
 
-	#[Override]
 	public function setArgument(string $name, string $value, bool $includeInSavedArguments = true): void
 	{
 		if ($includeInSavedArguments) {
@@ -123,7 +116,6 @@ final class Route implements IRoute, RequestHandlerInterface
 		$this->arguments[$name] = $value;
 	}
 
-	#[Override]
 	public function getArgument(string $name, string|null $default = null): string|null
 	{
 		if (array_key_exists($name, $this->arguments)) {
@@ -134,9 +126,8 @@ final class Route implements IRoute, RequestHandlerInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<string> $arguments
 	 */
-	#[Override]
 	public function setArguments(array $arguments, bool $includeInSavedArguments = true): void
 	{
 		if ($includeInSavedArguments) {
@@ -147,30 +138,33 @@ final class Route implements IRoute, RequestHandlerInterface
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<string>
 	 */
-	#[Override]
 	public function getArguments(): array
 	{
 		return $this->arguments;
 	}
 
-	#[Override]
 	public function addMiddleware(MiddlewareInterface $middleware): void
 	{
 		$this->middlewareDispatcher->add($middleware);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $arguments
 	 */
-	#[Override]
 	public function prepare(array $arguments): void
 	{
 		$this->arguments = array_replace($this->savedArguments, $arguments) ?? [];
 	}
 
-	#[Override]
+	/**
+	 * Run route
+	 *
+	 * This method traverses the middleware stack, including the route's callable
+	 * and captures the resultant HTTP response object. It then sends the response
+	 * back to the Application.
+	 */
 	public function run(ServerRequestInterface $request): ResponseInterface
 	{
 		if (!$this->groupMiddlewareAppended) {
@@ -186,6 +180,9 @@ final class Route implements IRoute, RequestHandlerInterface
 		return $this->middlewareDispatcher->handle($request);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	#[Override]
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
@@ -195,8 +192,7 @@ final class Route implements IRoute, RequestHandlerInterface
 		if (
 			is_array($callable)
 			&& $callable[0] instanceof RequestHandlerInterface
-			&& class_implements($strategy) !== false
-			&& !in_array(Handlers\IRequestHandler::class, class_implements($strategy), true)
+			&& !$strategy instanceof Handlers\RequestHandler
 		) {
 			$strategy = new Handlers\RequestHandler();
 		}

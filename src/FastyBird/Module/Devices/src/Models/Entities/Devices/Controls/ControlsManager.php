@@ -25,6 +25,7 @@ use FastyBird\Module\Devices\Models;
 use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher;
+use ReflectionException;
 use function assert;
 
 /**
@@ -40,8 +41,8 @@ final class ControlsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Devices\Controls\Control>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Devices\Controls\Control>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Devices\Controls\Control> $entityCrudFactory
@@ -58,6 +59,7 @@ final class ControlsManager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(
 		Utils\ArrayHash $values,
@@ -75,6 +77,8 @@ final class ControlsManager
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Entities\Devices\Controls\Control $entity,
@@ -106,9 +110,9 @@ final class ControlsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Devices\Controls\Control>
+	 * @return Crud\EntityCrud<Entities\Devices\Controls\Control>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Devices\Controls\Control::class);

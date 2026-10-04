@@ -17,11 +17,12 @@ namespace FastyBird\Module\Accounts\Schemas\Sessions;
 
 use DateTimeInterface;
 use FastyBird\Core\Api\Schemas;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Exceptions;
+use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Router;
 use Neomerx\JsonApi;
 
@@ -48,7 +49,7 @@ final class Session extends Schemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_ACCOUNT = 'account';
 
-	public function __construct(private readonly Routing\IRouter $router)
+	public function __construct(private readonly Routing\Router $router)
 	{
 	}
 
@@ -86,6 +87,9 @@ final class Session extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
@@ -101,7 +105,7 @@ final class Session extends Schemas\JsonApiSchema
 	 *
 	 * @return iterable<string, array<int, (Entities\Accounts\Account|bool)>>
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws AccountsExceptions\InvalidState
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -122,7 +126,9 @@ final class Session extends Schemas\JsonApiSchema
 	/**
 	 * @param T $resource
 	 *
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
+	 * @throws AccountsExceptions\InvalidState
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -153,6 +159,9 @@ final class Session extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

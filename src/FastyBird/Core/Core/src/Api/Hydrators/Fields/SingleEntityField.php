@@ -14,13 +14,13 @@ final class SingleEntityField extends EntityField
 {
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 *
 	 * @return array<mixed>|null
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	public function getValue(Objects\IStandardObject $attributes): array|null
+	public function getValue(Objects\StandardObject $attributes): array|null
 	{
 		if ($this->isRelationship()) {
 			throw new Exceptions\InvalidState(
@@ -30,7 +30,7 @@ final class SingleEntityField extends EntityField
 
 		$value = $attributes->get($this->getMappedName());
 
-		if ($value instanceof Objects\IStandardObject) {
+		if ($value instanceof Objects\StandardObject) {
 			$value = $value->toArray();
 		}
 

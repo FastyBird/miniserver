@@ -53,7 +53,7 @@ final class Router
 
 	public function __construct(
 		private readonly NsPanel\Logger $logger,
-		private readonly Routing\IRouter $router,
+		private readonly Routing\Router $router,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
@@ -98,6 +98,7 @@ final class Router
 		try {
 			$response = $this->router->handle($request);
 			$response = $response->withHeader('Server', 'FastyBird NS Panel Connector');
+			// @phpstan-ignore catch.neverThrown (Routing\Router::handle() declares only InvalidArgumentException, but it runs the matched controller, which throws this)
 		} catch (NsPanelExceptions\ServerRequestError $ex) {
 			$this->logger->warning(
 				'Request ended with error',
@@ -127,6 +128,7 @@ final class Router
 					],
 				],
 			])));
+			// @phpstan-ignore catch.neverThrown (Routing\Router::handle() declares only InvalidArgumentException, but it runs the matched controller, which throws this)
 		} catch (HttpExceptions\Http $ex) {
 			$this->logger->warning(
 				'Received invalid HTTP request',

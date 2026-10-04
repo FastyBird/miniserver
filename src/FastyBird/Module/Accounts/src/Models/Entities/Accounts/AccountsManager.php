@@ -23,6 +23,7 @@ use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Models;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 use function assert;
 
 /**
@@ -38,8 +39,8 @@ final class AccountsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Accounts\Account>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Accounts\Account>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Accounts\Account> $entityCrudFactory
@@ -55,6 +56,7 @@ final class AccountsManager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Accounts\Account
 	{
@@ -68,6 +70,8 @@ final class AccountsManager
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Entities\Accounts\Account $entity,
@@ -91,9 +95,9 @@ final class AccountsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Accounts\Account>
+	 * @return Crud\EntityCrud<Entities\Accounts\Account>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Accounts\Account::class);

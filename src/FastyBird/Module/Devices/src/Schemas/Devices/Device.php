@@ -18,8 +18,9 @@ namespace FastyBird\Module\Devices\Schemas\Devices;
 use DateTimeInterface;
 use Exception;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Core\Persistence\Exceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
@@ -60,7 +61,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 		protected readonly Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		protected readonly Models\Entities\Devices\Controls\ControlsRepository $devicesControlsRepository,
 		protected readonly Models\Entities\Channels\ChannelsRepository $channelsRepository,
-		protected readonly Routing\IRouter $router,
+		protected readonly Routing\Router $router,
 	)
 	{
 	}
@@ -93,6 +94,9 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
@@ -114,7 +118,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @return iterable<string, mixed>
 	 *
 	 * @throws Exception
-	 * @throws Exceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -161,7 +165,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @throws Exception
-	 * @throws Exceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -275,6 +279,9 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,
@@ -310,7 +317,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @return array<Entities\Devices\Properties\Property>
 	 *
 	 * @throws Exception
-	 * @throws Exceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 */
 	private function getProperties(Entities\Devices\Device $device): array
 	{
@@ -324,7 +331,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @return array<Entities\Devices\Controls\Control>
 	 *
 	 * @throws Exception
-	 * @throws Exceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 */
 	private function getControls(Entities\Devices\Device $device): array
 	{
@@ -338,7 +345,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @return array<Entities\Channels\Channel>
 	 *
 	 * @throws Exception
-	 * @throws Exceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 */
 	private function getChannels(Entities\Devices\Device $device): array
 	{
@@ -352,7 +359,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @return array<Entities\Devices\Device>
 	 *
 	 * @throws Exception
-	 * @throws Exceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 */
 	private function getParents(Entities\Devices\Device $device): array
 	{
@@ -366,7 +373,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @return array<Entities\Devices\Device>
 	 *
 	 * @throws Exception
-	 * @throws Exceptions\Query
+	 * @throws PersistenceExceptions\Query
 	 */
 	private function getChildren(Entities\Devices\Device $device): array
 	{

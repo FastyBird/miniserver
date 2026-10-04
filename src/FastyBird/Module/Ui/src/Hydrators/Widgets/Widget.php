@@ -90,7 +90,7 @@ abstract class Widget extends ApiHydrators\Hydrator
 		parent::__construct($managerRegistry, $translator, $crudReader);
 	}
 
-	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -106,12 +106,14 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDisplayRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasOne()) {
@@ -138,7 +140,7 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 */
 	private function buildDisplay(
 		string $type,
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 		string|null $identifier = null,
 	): array
 	{
@@ -281,10 +283,12 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApiError
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	protected function hydrateDataSourcesRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 	): array
 	{
 		if ($included === null) {
@@ -342,12 +346,14 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateTabsRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasMany()) {
@@ -387,12 +393,14 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateGroupsRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 	): array|null
 	{
 		if (!$relationship->isHasMany()) {

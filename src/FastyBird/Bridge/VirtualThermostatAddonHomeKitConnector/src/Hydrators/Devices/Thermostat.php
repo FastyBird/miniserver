@@ -65,17 +65,19 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 	 * @param VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat|null $entity
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 		HomeKitEntities\Devices\Device|null $entity,
 	): HomeKitEntities\Connectors\Connector
 	{
 		if (
-			$relationship->getData() instanceof Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\ResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {
@@ -107,12 +109,14 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
-		Objects\IRelationshipObject $relationships,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationships,
+		Objects\ResourceObjectCollection|null $included,
 		VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat|null $entity,
 	): array
 	{

@@ -70,7 +70,7 @@ final class Sms extends Notification
 	 * @throws Error
 	 */
 	protected function hydratePhoneAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): PhoneEntities\Phone
 	{
 		// Condition operator have to be set

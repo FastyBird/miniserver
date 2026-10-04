@@ -28,17 +28,17 @@ final class ArrayField extends Field
 	}
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 *
 	 * @return array<mixed>|null
 	 *
 	 * @throws Exceptions\JsonApiError
 	 */
-	public function getValue(Objects\IStandardObject $attributes): array|null
+	public function getValue(Objects\StandardObject $attributes): array|null
 	{
 		$value = $attributes->get($this->getMappedName());
 
-		if ($value instanceof Objects\IStandardObject) {
+		if ($value instanceof Objects\StandardObject) {
 			return $value->toArray();
 		}
 

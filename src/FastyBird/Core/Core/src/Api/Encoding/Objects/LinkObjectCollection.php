@@ -3,7 +3,9 @@
 namespace FastyBird\Core\Api\Encoding\Objects;
 
 use ArrayIterator;
+use Countable;
 use FastyBird\Core\Exceptions;
+use IteratorAggregate;
 use Override;
 use Traversable;
 use function array_key_exists;
@@ -14,14 +16,16 @@ use function sprintf;
 
 /**
  * Link object collection
+ *
+ * @implements IteratorAggregate<string, LinkObject|string>
  */
-final class LinkObjectCollection implements ILinkObjectCollection
+final class LinkObjectCollection implements IteratorAggregate, Countable
 {
 
 	/**
 	 * @var array<mixed>
 	 *
-	 * @phpstan-var Array<string, ILinkObject|string>
+	 * @phpstan-var Array<string, LinkObject|string>
 	 */
 	private array $stack = [];
 
@@ -36,11 +40,11 @@ final class LinkObjectCollection implements ILinkObjectCollection
 	}
 
 	/**
-	 * @phpstan-return ILinkObjectCollection<string, ILinkObject|string>
+	 * @phpstan-return LinkObjectCollection<string, LinkObject|string>
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(IStandardObject|null $linkObject): ILinkObjectCollection
+	public static function create(StandardObject|null $linkObject): self
 	{
 		if ($linkObject === null) {
 			return new self([]);
@@ -54,7 +58,7 @@ final class LinkObjectCollection implements ILinkObjectCollection
 			if (is_string($link)) {
 				$data[$key] = $link;
 
-			} elseif ($link instanceof IStandardObject) {
+			} elseif ($link instanceof StandardObject) {
 				$data[$key] = new LinkObject($link);
 			}
 		}
@@ -63,15 +67,14 @@ final class LinkObjectCollection implements ILinkObjectCollection
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<mixed> $link
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	#[Override]
 	public function addMany(array $link): void
 	{
 		foreach ($link as $key => $item) {
-			if ((!$item instanceof ILinkObject && !is_string($item)) || !is_string($key)) {
+			if ((!$item instanceof LinkObject && !is_string($item)) || !is_string($key)) {
 				throw new Exceptions\InvalidArgument('Expecting only link objects with keys.');
 			}
 
@@ -79,15 +82,13 @@ final class LinkObjectCollection implements ILinkObjectCollection
 		}
 	}
 
-	#[Override]
-	public function add(ILinkObject|string $link, string $key): void
+	public function add(LinkObject|string $link, string $key): void
 	{
 		if (!$this->has($key)) {
 			$this->stack[$key] = $link;
 		}
 	}
 
-	#[Override]
 	public function has(string $key): bool
 	{
 		return array_key_exists($key, $this->stack);
@@ -96,8 +97,7 @@ final class LinkObjectCollection implements ILinkObjectCollection
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function get(string $key): string|ILinkObject
+	public function get(string $key): string|LinkObject
 	{
 		if (!$this->has($key)) {
 			throw new Exceptions\Runtime(sprintf('Link member "%s" is not present.', $key));
@@ -109,7 +109,7 @@ final class LinkObjectCollection implements ILinkObjectCollection
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @phpstan-return ArrayIterator<string, ILinkObject|string>
+	 * @phpstan-return ArrayIterator<string, LinkObject|string>
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator
@@ -118,13 +118,12 @@ final class LinkObjectCollection implements ILinkObjectCollection
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return Traversable
 	 *
-	 * @phpstan-return Traversable<string, ILinkObject|string>
+	 * @phpstan-return Traversable<string, LinkObject|string>
 	 *
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getAll(): Traversable
 	{
 		foreach (array_keys($this->stack) as $key) {
@@ -132,7 +131,6 @@ final class LinkObjectCollection implements ILinkObjectCollection
 		}
 	}
 
-	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];

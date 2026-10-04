@@ -115,7 +115,7 @@ final class RouteParserTest extends TestCase
 	{
 		$router = new Routing\Router();
 
-		$router->group('/api/v1', static function (Routing\IRouteCollector $group): void {
+		$router->group('/api/v1', static function (Routing\RouteCollector $group): void {
 			$group->get('/devices', static function (): void {
 			})->setName('devices.index');
 		});
@@ -133,8 +133,8 @@ final class RouteParserTest extends TestCase
 	{
 		$router = new Routing\Router();
 
-		$router->group('/api/v1', static function (Routing\IRouteCollector $group): void {
-			$group->group('/devices', static function (Routing\IRouteCollector $nested): void {
+		$router->group('/api/v1', static function (Routing\RouteCollector $group): void {
+			$group->group('/devices', static function (Routing\RouteCollector $nested): void {
 				$nested->get('/{id}', static function (): void {
 				})->setName('devices.read');
 			});

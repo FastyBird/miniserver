@@ -23,7 +23,7 @@ final class ParentRelationship
 	 * @throws ApiExceptions\JsonApiError
 	 */
 	public static function validate(
-		Encoding\IDocument $document,
+		Encoding\Document $document,
 		string $relationship,
 		Uuid\UuidInterface $parentId,
 		string $heading,

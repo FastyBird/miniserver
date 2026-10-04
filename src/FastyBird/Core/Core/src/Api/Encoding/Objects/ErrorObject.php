@@ -4,27 +4,25 @@ namespace FastyBird\Core\Api\Encoding\Objects;
 
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Exceptions;
-use Override;
 use function is_numeric;
 use function is_string;
 
 /**
  * Error object
  */
-final class ErrorObject implements IErrorObject
+final class ErrorObject
 {
 
-	public function __construct(private IStandardObject $data)
+	public function __construct(private StandardObject $data)
 	{
 	}
 
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getId(): string|null
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_ERRORS_ID);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_ERRORS_ID);
 
 		if (!is_string($raw) && $raw !== null) {
 			throw new Exceptions\Runtime('Value of id attribute of error object has invalid value.');
@@ -33,22 +31,20 @@ final class ErrorObject implements IErrorObject
 		return $raw;
 	}
 
-	#[Override]
 	public function hasLinks(): bool
 	{
-		return $this->data->has(Encoding\IDocument::KEYWORD_LINKS);
+		return $this->data->has(Encoding\Document::KEYWORD_LINKS);
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getLinks(): ILinkObjectCollection
+	public function getLinks(): LinkObjectCollection
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_LINKS);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_LINKS);
 
-		if (!$raw instanceof IStandardObject && $raw !== null) {
+		if (!$raw instanceof StandardObject && $raw !== null) {
 			throw new Exceptions\Runtime('Links member is not an object.');
 		}
 
@@ -58,10 +54,9 @@ final class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getStatus(): int|null
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_ERRORS_STATUS);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_ERRORS_STATUS);
 
 		if (!is_numeric($raw) && $raw !== null) {
 			throw new Exceptions\Runtime('Value of status attribute of error object has invalid value.');
@@ -73,10 +68,9 @@ final class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getCode(): string|null
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_ERRORS_CODE);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_ERRORS_CODE);
 
 		if (!is_string($raw) && $raw !== null) {
 			throw new Exceptions\Runtime('Value of code attribute of error object has invalid value.');
@@ -88,10 +82,9 @@ final class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getTitle(): string|null
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_ERRORS_TITLE);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_ERRORS_TITLE);
 
 		if (!is_string($raw) && $raw !== null) {
 			throw new Exceptions\Runtime('Value of title attribute of error object has invalid value.');
@@ -103,10 +96,9 @@ final class ErrorObject implements IErrorObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getDetail(): string|null
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_ERRORS_DETAIL);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_ERRORS_DETAIL);
 
 		if (!is_string($raw) && $raw !== null) {
 			throw new Exceptions\Runtime('Value of detail attribute of error object has invalid value.');
@@ -119,34 +111,31 @@ final class ErrorObject implements IErrorObject
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getSource(): ISourceObject|null
+	public function getSource(): SourceObject|null
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_ERRORS_SOURCE);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_ERRORS_SOURCE);
 
-		if (!$raw instanceof IStandardObject && $raw !== null) {
+		if (!$raw instanceof StandardObject && $raw !== null) {
 			throw new Exceptions\Runtime('Meta member is not an object.');
 		}
 
 		return $raw !== null ? new SourceObject($raw) : null;
 	}
 
-	#[Override]
 	public function hasMeta(): bool
 	{
-		return $this->data->has(Encoding\IDocument::KEYWORD_META);
+		return $this->data->has(Encoding\Document::KEYWORD_META);
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getMeta(): IMetaObjectCollection
+	public function getMeta(): MetaObjectCollection
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_META);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_META);
 
-		if (!$raw instanceof IStandardObject && $raw !== null) {
+		if (!$raw instanceof StandardObject && $raw !== null) {
 			throw new Exceptions\Runtime('Meta member is not an object.');
 		}
 

@@ -56,7 +56,7 @@ final class Mapped extends Property
 	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::MAPPED->value;
 
 	public function __construct(
-		Routing\IRouter $router,
+		Routing\Router $router,
 		Models\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly Models\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
@@ -147,6 +147,8 @@ final class Mapped extends Property
 	/**
 	 * @param T $resource
 	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 * @throws DevicesExceptions\InvalidState
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
@@ -194,6 +196,9 @@ final class Mapped extends Property
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

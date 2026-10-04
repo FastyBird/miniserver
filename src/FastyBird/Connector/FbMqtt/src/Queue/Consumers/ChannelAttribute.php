@@ -31,6 +31,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 use function in_array;
 use function is_array;
 use function sprintf;
@@ -176,6 +177,7 @@ final class ChannelAttribute implements Queue\Consumer
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	private function setChannelProperties(
 		DevicesEntities\Channels\Channel $channel,
@@ -218,6 +220,7 @@ final class ChannelAttribute implements Queue\Consumer
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	private function setChannelControls(
 		DevicesEntities\Channels\Channel $channel,

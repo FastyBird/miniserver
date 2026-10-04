@@ -25,6 +25,7 @@ use FastyBird\Module\Ui\Models;
 use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher;
+use ReflectionException;
 use function assert;
 
 /**
@@ -40,8 +41,8 @@ final class Manager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Dashboards\Dashboard>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Dashboards\Dashboard>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Dashboards\Dashboard> $entityCrudFactory
@@ -58,6 +59,7 @@ final class Manager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(
 		Utils\ArrayHash $values,
@@ -75,6 +77,8 @@ final class Manager
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Entities\Dashboards\Dashboard $entity,
@@ -106,9 +110,9 @@ final class Manager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Dashboards\Dashboard>
+	 * @return Crud\EntityCrud<Entities\Dashboards\Dashboard>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Dashboards\Dashboard::class);

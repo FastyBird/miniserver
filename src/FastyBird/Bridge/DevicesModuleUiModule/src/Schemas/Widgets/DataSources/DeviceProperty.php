@@ -59,7 +59,7 @@ final class DeviceProperty extends Property
 	public function __construct(
 		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesRepository,
 		private readonly DevicesModels\States\DevicePropertiesManager $devicePropertiesManager,
-		Routing\IRouter $router,
+		Routing\Router $router,
 	)
 	{
 		parent::__construct($router);
@@ -157,6 +157,9 @@ final class DeviceProperty extends Property
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

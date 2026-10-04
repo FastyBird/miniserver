@@ -17,6 +17,7 @@ namespace FastyBird\Module\Devices\Schemas\Channels;
 
 use DateTimeInterface;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
@@ -46,7 +47,7 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 
 	public const RELATIONSHIPS_CONTROLS = 'controls';
 
-	public function __construct(private readonly Routing\IRouter $router)
+	public function __construct(private readonly Routing\Router $router)
 	{
 	}
 
@@ -77,6 +78,9 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
@@ -128,6 +132,9 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getRelationshipRelatedLink(
 		$resource,
@@ -184,6 +191,9 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

@@ -44,7 +44,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('accountRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -184,7 +184,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('accountUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -300,7 +300,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 	 */
 	public function testUpdateIgnoresRoles(): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_PATCH,
@@ -424,7 +424,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 	 */
 	private function updateDetails(array $details): Http\Response
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$response = $router->handle(new ServerRequest(
 			RequestMethodInterface::METHOD_PATCH,

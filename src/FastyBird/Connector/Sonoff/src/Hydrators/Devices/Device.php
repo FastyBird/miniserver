@@ -59,17 +59,19 @@ final class Device extends DevicesHydrators\Devices\Device
 
 	/**
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 		Entities\Devices\Device|null $entity,
 	): Entities\Connectors\Connector
 	{
 		if (
-			$relationship->getData() instanceof Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\ResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {

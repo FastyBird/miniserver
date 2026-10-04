@@ -56,7 +56,7 @@ final class Dynamic extends Property
 	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/device/' . Types\PropertyType::DYNAMIC->value;
 
 	public function __construct(
-		Routing\IRouter $router,
+		Routing\Router $router,
 		Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		private readonly Models\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
 		private readonly Models\States\DevicePropertiesManager $devicePropertiesStatesManager,
@@ -143,6 +143,9 @@ final class Dynamic extends Property
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipRelatedLink(
 		$resource,
@@ -185,6 +188,9 @@ final class Dynamic extends Property
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

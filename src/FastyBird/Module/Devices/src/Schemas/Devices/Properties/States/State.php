@@ -55,7 +55,7 @@ final class State extends ApiSchemas\JsonApiSchema
 	public const RELATIONSHIPS_PROPERTY = 'property';
 
 	public function __construct(
-		private readonly Routing\IRouter $router,
+		private readonly Routing\Router $router,
 		private readonly Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 	)
 	{
@@ -104,7 +104,9 @@ final class State extends ApiSchemas\JsonApiSchema
 	/**
 	 * @param T $resource
 	 *
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
+	 * @throws Exceptions\Runtime
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -155,7 +157,9 @@ final class State extends ApiSchemas\JsonApiSchema
 	/**
 	 * @param T $resource
 	 *
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
+	 * @throws Exceptions\Runtime
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */

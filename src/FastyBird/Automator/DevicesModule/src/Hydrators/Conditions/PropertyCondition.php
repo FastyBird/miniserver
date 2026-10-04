@@ -56,7 +56,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -83,7 +83,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -111,7 +111,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws ValueError
 	 */
 	protected function hydrateOperatorAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): TriggersTypes\ConditionOperator
 	{
 		// Condition operator have to be set
@@ -148,7 +148,7 @@ abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateOperandAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): string
 	{
 		if (

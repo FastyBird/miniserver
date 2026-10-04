@@ -18,6 +18,6 @@ interface EntityCreatorFactory
 	 *
 	 * @return EntityCreator<T>
 	 */
-	public function create(string $entityName, Mapping\IEntityMapper $entityMapper): EntityCreator;
+	public function create(string $entityName, Mapping\EntityMapper $entityMapper): EntityCreator;
 
 }

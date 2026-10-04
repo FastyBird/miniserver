@@ -4,6 +4,7 @@ namespace FastyBird\Core\Http\Middleware;
 
 use FastyBird\Core\Http\Events;
 use FastyBird\Core\Http\Routing;
+use InvalidArgumentException;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,12 +16,15 @@ final readonly class Router
 {
 
 	public function __construct(
-		private Routing\IRouter $router,
+		private Routing\Router $router,
 		private EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
 	}
 
+	/**
+	 * @throws InvalidArgumentException
+	 */
 	public function __invoke(ServerRequestInterface $request): ResponseInterface
 	{
 		$this->dispatcher?->dispatch(new Events\HttpServerRequest($request));

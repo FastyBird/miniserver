@@ -16,7 +16,7 @@ class User
 {
 
 	public function __construct(
-		protected readonly IUserStorage $storage,
+		protected readonly UserStorage $storage,
 		protected readonly EnforcerFactory $enforcerFactory,
 		protected readonly Authenticator|null $authenticator = null,
 	)

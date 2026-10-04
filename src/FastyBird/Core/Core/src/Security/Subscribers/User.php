@@ -27,7 +27,7 @@ final readonly class User implements Common\EventSubscriber
 	 */
 	public function __construct(
 		private readonly Driver\Owner $driver,
-		private readonly Identity\IUserStorage $userStorage,
+		private readonly Identity\UserStorage $userStorage,
 	)
 	{
 	}

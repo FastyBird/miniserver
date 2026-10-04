@@ -22,6 +22,7 @@ use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Plugin\ApiKey\Entities;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 use function assert;
 
 /**
@@ -37,8 +38,8 @@ final class KeysManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Key>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Key>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Key> $entityCrudFactory
@@ -54,6 +55,7 @@ final class KeysManager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Key
 	{
@@ -67,6 +69,8 @@ final class KeysManager
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Entities\Key $entity,
@@ -90,9 +94,9 @@ final class KeysManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Key>
+	 * @return Crud\EntityCrud<Entities\Key>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Key::class);

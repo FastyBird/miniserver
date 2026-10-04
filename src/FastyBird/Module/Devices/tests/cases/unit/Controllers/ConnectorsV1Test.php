@@ -36,7 +36,7 @@ final class ConnectorsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('connectorsRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -169,7 +169,7 @@ final class ConnectorsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('connectorsUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 

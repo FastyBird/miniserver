@@ -16,6 +16,7 @@
 namespace FastyBird\Connector\NsPanel\Router;
 
 use FastyBird\Connector\NsPanel\Controllers;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 
 /**
@@ -33,6 +34,9 @@ class Router extends Routing\Router
 
 	public const URL_DEVICE_ID = 'device';
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function __construct(
 		Controllers\DirectiveController $directiveController,
 	)

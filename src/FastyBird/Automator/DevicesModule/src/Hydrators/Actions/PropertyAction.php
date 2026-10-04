@@ -52,7 +52,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -79,7 +79,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -105,7 +105,7 @@ abstract class PropertyAction extends TriggersHydrators\Actions\Action
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateValueAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): string
 	{
 		if (

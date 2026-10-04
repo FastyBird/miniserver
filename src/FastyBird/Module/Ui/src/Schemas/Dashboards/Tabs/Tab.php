@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Ui\Schemas\Dashboards\Tabs;
 
 use FastyBird\Core\Api\Schemas;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
@@ -48,7 +49,7 @@ final class Tab extends Schemas\JsonApiSchema
 
 	public const RELATIONSHIPS_WIDGETS = 'widgets';
 
-	public function __construct(protected readonly Routing\IRouter $router)
+	public function __construct(protected readonly Routing\Router $router)
 	{
 	}
 
@@ -86,6 +87,9 @@ final class Tab extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
@@ -132,6 +136,9 @@ final class Tab extends Schemas\JsonApiSchema
 	 * @param T $resource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function getRelationshipSelfLink(
 		$resource,

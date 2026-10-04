@@ -23,6 +23,7 @@ use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Models;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 use function assert;
 
 /**
@@ -38,8 +39,8 @@ final class NotificationsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Notifications\Notification>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Notifications\Notification>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Notifications\Notification> $entityCrudFactory
@@ -55,6 +56,7 @@ final class NotificationsManager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(Utils\ArrayHash $values): Entities\Notifications\Notification
 	{
@@ -68,6 +70,8 @@ final class NotificationsManager
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\EntityCreation
+	 * @throws ReflectionException
 	 */
 	public function update(
 		Entities\Notifications\Notification $entity,
@@ -91,9 +95,9 @@ final class NotificationsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Notifications\Notification>
+	 * @return Crud\EntityCrud<Entities\Notifications\Notification>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Notifications\Notification::class);

@@ -4,6 +4,7 @@ namespace FastyBird\Core\Http\Server;
 
 use FastyBird\Core\Http\Events;
 use FastyBird\Core\Http\Routing;
+use InvalidArgumentException;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
@@ -26,7 +27,7 @@ final readonly class Application
 	];
 
 	public function __construct(
-		private readonly Routing\IRouter $router,
+		private readonly Routing\Router $router,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
@@ -35,6 +36,7 @@ final readonly class Application
 	/**
 	 * Dispatch application in middleware cycle!
 	 *
+	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */
 	public function run(): ResponseInterface
