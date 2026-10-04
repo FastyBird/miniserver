@@ -11,7 +11,6 @@ use TypeError;
 use UnderflowException;
 use function array_key_exists;
 use function array_merge;
-use function assert;
 use function base64_encode;
 use function count;
 use function pack;
@@ -116,7 +115,6 @@ class RFC6455
 
 		if ($webSocket->getFrame()->isCoalesced()) {
 			$frame = $webSocket->getFrame();
-			assert($frame instanceof RFC6455\Frame);
 
 			if ($frame->getRsv1() !== false ||
 				$frame->getRsv2() !== false ||
@@ -203,7 +201,6 @@ class RFC6455
 			$overflow = $webSocket->getFrame()->extractOverflow();
 
 			$message = $webSocket->getMessage();
-			assert($message instanceof RFC6455\Message);
 
 			if ($frame->getOpCode() === RFC6455\Frame::OP_CONTINUE && count($message) === 0) {
 				$this->close($client, RFC6455\Frame::CLOSE_PROTOCOL);
