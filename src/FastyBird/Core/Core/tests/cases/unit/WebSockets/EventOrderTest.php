@@ -13,6 +13,7 @@ use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use Nette\DI;
+use Nette\Http;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use React\EventLoop;
@@ -327,9 +328,7 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	private function client(Entities\WebSocket $webSocket): Entities\ConnectedClient&MockObject
 	{
-		$request = $this->createMock(Handshake\Request::class);
-		$request->method('getHeader')
-			->willReturn(null);
+		$request = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('getId')

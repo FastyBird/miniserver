@@ -9,6 +9,8 @@ use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Wamp;
+use Nette\DI;
+use Nette\Http;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -23,8 +25,8 @@ final class ApplicationTest extends TestCase
 	private function createApplication(): Controllers\Application
 	{
 		$router = $this->createMock(Wamp\WampRouter::class);
-		$controllerFactory = $this->createMock(Controllers\ControllerFactory::class);
-		$clientsStorage = $this->createMock(Clients\Storage::class);
+		$controllerFactory = new Controllers\ControllerFactory(new DI\Container());
+		$clientsStorage = new Clients\Storage();
 
 		return new class(
 			$router,
@@ -50,7 +52,7 @@ final class ApplicationTest extends TestCase
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('getId')
 			->willReturn(1);
-		$httpRequest = $this->createMock(Handshake\Request::class);
+		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$received = [];
 		$application->onOpen[] = static function (
@@ -72,7 +74,7 @@ final class ApplicationTest extends TestCase
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('getId')
 			->willReturn(1);
-		$httpRequest = $this->createMock(Handshake\Request::class);
+		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$received = [];
 		$application->onClose[] = static function (
@@ -92,7 +94,7 @@ final class ApplicationTest extends TestCase
 	{
 		$application = $this->createApplication();
 		$client = $this->createMock(Entities\ConnectedClient::class);
-		$httpRequest = $this->createMock(Handshake\Request::class);
+		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$received = [];
 		$application->onMessage[] = static function (
@@ -118,7 +120,7 @@ final class ApplicationTest extends TestCase
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->expects(self::once())
 			->method('close');
-		$httpRequest = $this->createMock(Handshake\Request::class);
+		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 		$exception = new class('boom', 0) extends Exception
 		{
 

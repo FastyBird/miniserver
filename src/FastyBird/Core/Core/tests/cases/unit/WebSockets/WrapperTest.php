@@ -10,6 +10,7 @@ use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
+use Nette\Http;
 use PHPUnit\Framework\TestCase;
 use React\Socket;
 use RuntimeException;
@@ -31,7 +32,7 @@ final class WrapperTest extends TestCase
 	 */
 	public function testOnClientDisconnectedFiresRegisteredHandlerWithClientAndRequest(): void
 	{
-		$requestMock = $this->createMock(Handshake\Request::class);
+		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('isHttpHeadersReceived')
@@ -42,10 +43,9 @@ final class WrapperTest extends TestCase
 			->willReturn(1);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\Storage::class);
-		$clientsStorage->expects(self::once())
-			->method('removeClient')
-			->with(1);
+		$clientsStorage = new Clients\Storage();
+		$clientsStorage->setStorageDriver(new Clients\Drivers\InMemory());
+		$clientsStorage->addClient(1, $client);
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
@@ -57,9 +57,13 @@ final class WrapperTest extends TestCase
 			$received = [$c, $r];
 		};
 
+		// the storage held the client, and closing removes exactly that one
+		self::assertTrue($clientsStorage->hasClient(1));
+
 		$wrapper->handleClose($client);
 
 		self::assertSame([$client, $requestMock], $received);
+		self::assertFalse($clientsStorage->hasClient(1));
 	}
 
 	/**
@@ -68,7 +72,7 @@ final class WrapperTest extends TestCase
 	 */
 	public function testOnClientErrorFiresRegisteredHandlerWithClientAndRequest(): void
 	{
-		$requestMock = $this->createMock(Handshake\Request::class);
+		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
@@ -81,7 +85,7 @@ final class WrapperTest extends TestCase
 			->willReturn($requestMock);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\Storage::class);
+		$clientsStorage = new Clients\Storage();
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
@@ -100,7 +104,7 @@ final class WrapperTest extends TestCase
 
 	public function testOnIncomingMessageAndOnAfterIncomingMessageFireWithClientRequestAndMessage(): void
 	{
-		$requestMock = $this->createMock(Handshake\Request::class);
+		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
@@ -113,7 +117,7 @@ final class WrapperTest extends TestCase
 			->willReturn($requestMock);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\Storage::class);
+		$clientsStorage = new Clients\Storage();
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
@@ -146,9 +150,7 @@ final class WrapperTest extends TestCase
 	 */
 	public function testOnClientConnectedFiresRegisteredHandlerWithClientAndRequestOnSuccessfulUpgrade(): void
 	{
-		$requestMock = $this->createMock(Handshake\Request::class);
-		$requestMock->method('getHeader')
-			->willReturn(null);
+		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('doHandshake')
@@ -173,7 +175,7 @@ final class WrapperTest extends TestCase
 			->method('handleOpen')
 			->with($client, $requestMock);
 
-		$clientsStorage = $this->createMock(Clients\Storage::class);
+		$clientsStorage = new Clients\Storage();
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 

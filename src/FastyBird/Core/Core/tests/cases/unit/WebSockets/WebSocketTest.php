@@ -26,7 +26,7 @@ final class WebSocketTest extends TestCase
 
 		self::assertFalse($webSocket->hasMessage());
 
-		$webSocket->setMessage($this->createMock(RFC6455\Message::class));
+		$webSocket->setMessage(new RFC6455\Message());
 
 		self::assertTrue($webSocket->hasMessage());
 	}
@@ -34,7 +34,7 @@ final class WebSocketTest extends TestCase
 	public function testDestroyMessageClearsAnAlreadySetMessageWithoutThrowing(): void
 	{
 		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\RFC6455::class));
-		$webSocket->setMessage($this->createMock(RFC6455\Message::class));
+		$webSocket->setMessage(new RFC6455\Message());
 
 		$webSocket->destroyMessage();
 
@@ -47,7 +47,7 @@ final class WebSocketTest extends TestCase
 
 		self::assertFalse($webSocket->hasFrame());
 
-		$webSocket->setFrame($this->createMock(RFC6455\Frame::class));
+		$webSocket->setFrame(new RFC6455\Frame());
 
 		self::assertTrue($webSocket->hasFrame());
 	}
@@ -55,7 +55,7 @@ final class WebSocketTest extends TestCase
 	public function testDestroyFrameClearsAnAlreadySetFrameWithoutThrowing(): void
 	{
 		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\RFC6455::class));
-		$webSocket->setFrame($this->createMock(RFC6455\Frame::class));
+		$webSocket->setFrame(new RFC6455\Frame());
 
 		$webSocket->destroyFrame();
 

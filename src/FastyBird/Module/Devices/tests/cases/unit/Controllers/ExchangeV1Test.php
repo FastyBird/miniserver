@@ -16,6 +16,7 @@ use FastyBird\Module\Devices\Controllers as DevicesControllers;
 use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types;
+use Nette\DI;
 use Nette\Http;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -548,19 +549,22 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$controller = $this->getContainer()->getByType(DevicesControllers\ExchangeV1::class);
 
-		$controllerFactory = $this->createMock(WebSocketsControllers\ControllerFactory::class);
-		$controllerFactory->method('getControllerClass')->willReturn(DevicesControllers\ExchangeV1::class);
-		$controllerFactory->method('createController')->willReturn($controller);
+		// the module's own controller mapping, with the controller the container built
+		$controllerFactory = new WebSocketsControllers\ControllerFactory(
+			new DI\Container(),
+			static fn (): DevicesControllers\ExchangeV1 => $controller,
+		);
+		$controllerFactory->setMapping(['DevicesModule' => ['FastyBird\\Module\\Devices\\Controllers', '*', '*V1']]);
 
-		$topicsStorage = $this->createMock(Topics\Storage::class);
-		$topicsStorage->method('hasTopic')->willReturn(true);
-		$topicsStorage->method('getTopic')->willReturn(new Entities\Topics\Topic(self::TOPIC));
+		$topicsStorage = new Topics\Storage();
+		$topicsStorage->setStorageDriver(new Topics\Drivers\InMemory());
+		$topicsStorage->addTopic(self::TOPIC, new Entities\Topics\Topic(self::TOPIC));
 
 		$application = new WebSocketsControllers\WampApplication(
 			$topicsStorage,
 			Router\SocketRoutes::createRouter(),
 			$controllerFactory,
-			$this->createMock(Clients\Storage::class),
+			new Clients\Storage(),
 		);
 
 		$application->handleMessage(

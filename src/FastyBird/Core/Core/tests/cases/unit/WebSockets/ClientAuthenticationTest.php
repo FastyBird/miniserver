@@ -261,7 +261,7 @@ final class ClientAuthenticationTest extends TestCase
 
 		$wrapper = new Server\Wrapper(
 			$this->createMock(Controllers\Dispatcher::class),
-			$this->createMock(Clients\Storage::class),
+			new Clients\Storage(),
 		);
 		$wrapper->onIncomingMessage[] = static function (
 			Entities\ConnectedClient $client,

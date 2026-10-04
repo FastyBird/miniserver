@@ -62,7 +62,7 @@ final class ClosureRouteTest extends BaseTestCase
 	 */
 	public function testTheControllerFactoryHasNoControllerForAClosureRoute(): void
 	{
-		$factory = $this->container->getByType(Controllers\ControllerFactory::class);
+		$factory = $this->container->getService('fbCore.webSockets.controllers.factory');
 
 		self::assertInstanceOf(Controllers\ControllerFactory::class, $factory);
 		self::assertSame('IPubModule\WebSocketController', $factory->formatControllerClass('IPub:WebSocket'));
