@@ -4,12 +4,12 @@ namespace FastyBird\Core\Clock;
 
 use DateInvalidTimeZoneException;
 use DateTimeImmutable;
-use DateTimeInterface;
 use DateTimeZone;
 use Override;
+use Psr\Clock\ClockInterface;
 use function date_default_timezone_get;
 
-class SystemClock implements \Psr\Clock\ClockInterface
+final class SystemClock implements ClockInterface
 {
 
 	private DateTimeZone $timeZone;
@@ -23,7 +23,7 @@ class SystemClock implements \Psr\Clock\ClockInterface
 	}
 
 	#[Override]
-	public function now(): DateTimeInterface
+	public function now(): DateTimeImmutable
 	{
 		return (new DateTimeImmutable('now'))
 			->setTimezone($this->timeZone);

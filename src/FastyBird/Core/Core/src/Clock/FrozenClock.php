@@ -9,13 +9,14 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use Override;
+use Psr\Clock\ClockInterface;
 use ValueError;
 use function assert;
 use function date_default_timezone_get;
 use function floor;
 use function round;
 
-final class FrozenClock implements \Psr\Clock\ClockInterface
+final class FrozenClock implements ClockInterface
 {
 
 	private DateTimeImmutable $dt;
@@ -46,7 +47,7 @@ final class FrozenClock implements \Psr\Clock\ClockInterface
 	}
 
 	#[Override]
-	public function now(): DateTimeInterface
+	public function now(): DateTimeImmutable
 	{
 		return clone $this->dt;
 	}
