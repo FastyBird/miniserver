@@ -66,16 +66,49 @@
  *                                             resolving;
  *                                           - `#[Override]` goes from every method the interface
  *                                             declared that no remaining ancestor declares --
- *                                             left in place it would be a fatal error.
+ *                                             left in place it would be a fatal error;
+ *                                           - #637: the PHPDoc it inherited from the interface is
+ *                                             written out, because nothing is left to inherit it
+ *                                             from. Per method the interface declares and no
+ *                                             remaining ancestor does, PHPStan's own inheritance
+ *                                             rule decides what comes along: a tag the method
+ *                                             declares itself wins -- per `@param` (matched to the
+ *                                             method's parameter by position, and renamed to it),
+ *                                             for the `@return` family and for the `@throws`
+ *                                             family -- every other interface tag comes along, and
+ *                                             so does the interface's description where the method
+ *                                             has none. An `{@inheritDoc}` resolves in place to
+ *                                             that text, or simply goes when there is nothing to
+ *                                             inherit (a docblock left empty goes with it). The
+ *                                             interface's class-level `@extends Parent<...>`
+ *                                             becomes `@implements Parent<...>` for every parent
+ *                                             that moves onto the clause and is not parameterized
+ *                                             there already. Names in the carried text are written
+ *                                             through the implementation's own imports, by the
+ *                                             same rules as every other reference.
  *                                         The interface's file is deleted, and the PHPStan
  *                                         baseline entries whose `path:` is that file with it.
  *                                         Refused, before anything is touched: an interface that
  *                                         is not one, an implementation that does not name it in
- *                                         its own `implements` clause, and ANY OTHER type -- a
+ *                                         its own `implements` clause, ANY OTHER type -- a
  *                                         test double, an anonymous class, an interface extending
- *                                         it -- naming it in `extends`/`implements` (each needs a
- *                                         hand-fix prerequisite first, as in E3). Making the
+ *                                         it -- naming it in `extends`/`implements`, and (#637)
+ *                                         any statement that uses it reflectively: its `::class`
+ *                                         or its name in a string, beside a class_implements(),
+ *                                         is_subclass_of(), is_a(), interface_exists(),
+ *                                         implementsInterface(), isSubclassOf(),
+ *                                         getInterfaceNames() or getInterfaces() call. Named as
+ *                                         the class such a check changes meaning
+ *                                         (class_implements() never lists a class); an
+ *                                         `instanceof` keeps it. Each needs a hand-fix
+ *                                         prerequisite first, as in E3. Making the
  *                                         implementation `final` is not the tool's call.
+ *                                         Reported after the run, as warnings that do not change
+ *                                         the exit code (#637): every `@throws` an implementation
+ *                                         method declares that its interface method did not --
+ *                                         callers typed against the interface never had to
+ *                                         declare it, and now PHPStan asks them to -- and any
+ *                                         interface PHPDoc that is not carried.
  *
  * WHAT IS REWRITTEN
  *
@@ -1397,6 +1430,8 @@ function fbMoveRewritePhp(
 	$extraBindings = []; // id => binding of an interface added to the clause
 	$removals = []; // [start, end] deletions
 	$constantInsertion = null; // [offset, text]
+	$carryEdits = []; // #637: [start, end, text with \x01c<n>\x01 placeholders] -- the carried PHPDoc
+	$carryBindings = []; // #637: placeholder id => binding
 
 	if ($collapseHere !== null) {
 		$implementationType = null;
@@ -1516,6 +1551,96 @@ function fbMoveRewritePhp(
 			}
 
 			$constantInsertion = [$offset, $collapseHere['constants'] . "\n"];
+		}
+
+		// #637: the PHPDoc it inherited from the interface, written out
+		foreach ($implementationType['methods'] as $method) {
+			$carry = $collapseHere['carry'][strtolower($method['name'])] ?? null;
+
+			if ($carry !== null) {
+				array_push($carryEdits, ...fbMoveCarryMethodDoc($path, $code, $method['name'], $method, $carry));
+			}
+		}
+
+		if ($collapseHere['classTags'] !== []) {
+			$tagLines = static function (string $indent) use ($collapseHere): string {
+				$text = '';
+
+				foreach ($collapseHere['classTags'] as $tag) {
+					foreach ($tag['lines'] as $line) {
+						$text .= fbMoveDocLine($indent, $line);
+					}
+				}
+
+				return $text;
+			};
+			$classDoc = $implementationType['doc'];
+			$wholeDocRemoved = null;
+
+			foreach ($removals as [$start, $end]) {
+				if ($classDoc !== null && $start <= $classDoc[0] && $end >= $classDoc[1]) {
+					$wholeDocRemoved = $end;
+				}
+			}
+
+			if ($classDoc === null || $wholeDocRemoved !== null) {
+				if ($implementationType['declStart'] < 0) {
+					fbMoveFail(sprintf('%s: an attribute precedes the class; carry its interface\'s class-level PHPDoc by hand first', $path));
+				}
+
+				$at = $wholeDocRemoved ?? (int) strrpos(substr($code, 0, $implementationType['declStart']), "\n") + 1;
+				$indent = (string) substr($code, $at, strspn($code, " \t", $at));
+				$carryEdits[] = [$at, $at, $indent . "/**\n" . $tagLines($indent) . $indent . " */\n"];
+			} else {
+				$lines = fbMoveDocSourceLines($code, $classDoc);
+				$last = count($lines) - 1;
+
+				if ($last === 0) {
+					fbMoveFail(sprintf('%s: a one-line class docblock its collapsed interface\'s PHPDoc would merge into; expand it by hand first', $path));
+				}
+
+				$indent = (string) substr($lines[0][2], 0, strspn($lines[0][2], " \t"));
+				$previous = '';
+
+				for ($index = $last - 1; $index >= 0; $index--) {
+					$removed = false;
+
+					foreach ($removals as [$start, $end]) {
+						if ($lines[$index][0] >= $start && $lines[$index][1] <= $end) {
+							$removed = true;
+						}
+					}
+
+					if (!$removed) {
+						$previous = $index === 0 ? '' : fbMoveDocSourceContent($lines[$index][2]);
+
+						break;
+					}
+				}
+
+				$carryEdits[] = [
+					$lines[$last][0],
+					$lines[$last][0],
+					($previous !== '' ? fbMoveDocLine($indent, '') : '') . $tagLines($indent),
+				];
+			}
+		}
+
+		$used = [];
+
+		foreach ($carryEdits as [, , $text]) {
+			preg_match_all('/\x01(c\d+)\x01/', $text, $matches);
+
+			foreach ($matches[1] as $id) {
+				$used[$id] = true;
+			}
+		}
+
+		foreach (array_keys($used) as $id) {
+			$name = $collapseHere['names'][$id];
+			$fqcn = ltrim($name, '\\');
+			$target = $classes[strtolower($fqcn)] ?? $fqcn;
+			$carryBindings[$id] = str_starts_with($name, '\\') ? ['fq', $target, ''] : $express($target);
 		}
 	}
 
@@ -1684,7 +1809,7 @@ function fbMoveRewritePhp(
 		$reserved[strtolower(explode('\\', $ref['text'])[0])] = true;
 	}
 
-	foreach (array_merge(array_values($bindings), array_values($extraBindings)) as $binding) {
+	foreach (array_merge(array_values($bindings), array_values($extraBindings), array_values($carryBindings)) as $binding) {
 		if ($binding[0] === 'imp') {
 			$after[(int) $binding[1]]++;
 		}
@@ -1869,6 +1994,18 @@ function fbMoveRewritePhp(
 		$edits[] = [$start, $end, ''];
 	}
 
+	foreach ($carryEdits as [$start, $end, $text]) {
+		$edits[] = [
+			$start,
+			$end,
+			preg_replace_callback(
+				'/\x01(c\d+)\x01/',
+				static fn (array $match): string => $render($carryBindings[$match[1]]),
+				$text,
+			) ?? fbMoveFail(sprintf('%s: could not render a carried docblock', $path)),
+		];
+	}
+
 	if ($constantInsertion !== null) {
 		$edits[] = [$constantInsertion[0], $constantInsertion[0], $constantInsertion[1]];
 	}
@@ -1957,6 +2094,10 @@ function fbMoveRewritePhp(
 	}
 
 	$result = fbMoveApplyEdits($path, $code, $edits);
+
+	if (substr_count($result, "\x01") !== substr_count($code, "\x01")) {
+		fbMoveFail(sprintf('%s: a carried docblock kept an unrendered name', $path));
+	}
 
 	if ($result !== $code && fbMoveSecuredLines($result) !== fbMoveSecuredLines($code)) {
 		fbMoveFail(sprintf('%s: the rewrite would change a @Secured annotation line; refusing', $path));
@@ -2755,7 +2896,10 @@ function fbMoveMultisetDiff(array $a, array $b): array
  * Every type a PHP file declares, anonymous classes included, with what a collapse reads or
  * edits: the names in its `extends` and `implements` clauses, its body, its constants (each
  * with the byte range of its whole lines, leading docblock and comments included), the traits
- * it uses and its methods with the byte ranges that delete each `#[Override]` group.
+ * it uses and its methods with the byte ranges that delete each `#[Override]` group. Since #637
+ * also the byte range of the type's own docblock and where its declaration starts (-1 behind an
+ * attribute), and per method the byte range of its docblock, the start of the line its first
+ * token is on, and its parameter names in order -- what carrying an interface's PHPDoc needs.
  *
  * @return list<array{
  *     kind: string,
@@ -2769,7 +2913,16 @@ function fbMoveMultisetDiff(array $a, array $b): array
  *     bodyOffset: int,
  *     traits: list<string>,
  *     constants: list<array{names: list<string>, start: int, end: int, foreign: bool}>,
- *     methods: list<array{name: string, overrides: list<array{0: int, 1: int}>, multi: bool}>,
+ *     methods: list<array{
+ *         name: string,
+ *         overrides: list<array{0: int, 1: int}>,
+ *         multi: bool,
+ *         doc: array{0: int, 1: int}|null,
+ *         lineStart: int,
+ *         params: list<string>,
+ *     }>,
+ *     doc: array{0: int, 1: int}|null,
+ *     declStart: int,
  * }>
  */
 function fbMoveOutline(string $code): array
@@ -2838,6 +2991,30 @@ function fbMoveOutline(string $code): array
 			$cursor = $next;
 		}
 
+		// #637: where the declaration starts (its first modifier) and the docblock right before it
+		$declStart = $tokens[$i]->pos;
+		$doc = null;
+
+		for ($back = $i - 1; $back >= 0 && !$anonymous; $back--) {
+			if ($tokens[$back]->is([T_WHITESPACE, T_COMMENT])) {
+				continue;
+			}
+
+			if ($tokens[$back]->is([T_FINAL, T_ABSTRACT, T_READONLY])) {
+				$declStart = $tokens[$back]->pos;
+
+				continue;
+			}
+
+			if ($tokens[$back]->is(T_DOC_COMMENT)) {
+				$doc = [$tokens[$back]->pos, $tokens[$back]->pos + strlen($tokens[$back]->text)];
+			} elseif ($tokens[$back]->text === ']') {
+				$declStart = -1; // an attribute: where a docblock would go is not decided here
+			}
+
+			break;
+		}
+
 		$type = [
 			'kind' => match (true) {
 				$tokens[$i]->is(T_INTERFACE) => 'interface',
@@ -2856,6 +3033,8 @@ function fbMoveOutline(string $code): array
 			'traits' => [],
 			'constants' => [],
 			'methods' => [],
+			'doc' => $doc,
+			'declStart' => $declStart,
 		];
 
 		$mode = null;
@@ -2897,6 +3076,7 @@ function fbMoveOutline(string $code): array
 		$close = $match[$open];
 		$memberDepth = $depth[$open] + 1;
 		$memberStart = -1;
+		$memberStartIndex = -1;
 		$pending = [];
 
 		for ($k = $open + 1; $k < $close; $k++) {
@@ -2912,6 +3092,7 @@ function fbMoveOutline(string $code): array
 
 			if ($memberStart < 0) {
 				$memberStart = $token->pos;
+				$memberStartIndex = $k;
 			}
 
 			if ($token->is(T_ATTRIBUTE)) {
@@ -3011,10 +3192,42 @@ function fbMoveOutline(string $code): array
 					$next = fbMoveSignificant($tokens, $next, 1);
 				}
 
+				// #637: the method's own docblock (the last one among its leading tokens), the line its
+				// first token is on (where a new docblock goes), and its parameter names in order
+				$methodDoc = null;
+
+				for ($lead = $memberStartIndex; $lead < $k; $lead++) {
+					if ($tokens[$lead]->is(T_DOC_COMMENT) && $depth[$lead] === $memberDepth) {
+						$methodDoc = [$tokens[$lead]->pos, $tokens[$lead]->pos + strlen($tokens[$lead]->text)];
+					}
+				}
+
+				$params = [];
+				$parens = 0;
+
+				for ($p = $k + 1; $p < $close; $p++) {
+					if ($tokens[$p]->text === '(') {
+						$parens++;
+					} elseif ($tokens[$p]->text === ')') {
+						$parens--;
+
+						if ($parens === 0) {
+							break;
+						}
+					} elseif ($parens === 1 && $tokens[$p]->is(T_VARIABLE)) {
+						$params[] = $tokens[$p]->text;
+					} elseif ($parens === 0 && ($tokens[$p]->text === '{' || $tokens[$p]->text === ';')) {
+						break;
+					}
+				}
+
 				$type['methods'][] = [
 					'name' => $next >= 0 ? $tokens[$next]->text : '',
 					'overrides' => array_map(static fn (array $group): array => $group['range'], $pending),
 					'multi' => array_filter($pending, static fn (array $group): bool => $group['multi']) !== [],
+					'doc' => $methodDoc,
+					'lineStart' => $lineStart($memberStart),
+					'params' => $params,
 				];
 
 				// the method ends at its body's closing brace, or at `;` when it has none
@@ -3177,21 +3390,648 @@ function fbMoveTypeMethods(string $root, string $fqcn, array $index, array &$mem
 }
 
 /**
+ * A docblock's lines without their decoration -- the `/**`, the `*\/` and each line's leading
+ * `*` and one space -- with blank lines at either edge dropped.
+ *
+ * @return list<string>
+ */
+function fbMoveDocLines(string $doc): array
+{
+	if (!str_contains($doc, "\n")) {
+		$inner = trim(substr($doc, 3, -2));
+
+		return $inner === '' ? [] : [$inner];
+	}
+
+	$lines = [];
+
+	foreach (explode("\n", substr($doc, 3, -2)) as $line) {
+		$line = ltrim($line, " \t");
+
+		if (str_starts_with($line, '*')) {
+			$line = substr($line, 1);
+		}
+
+		if (str_starts_with($line, ' ')) {
+			$line = substr($line, 1);
+		}
+
+		$lines[] = rtrim($line);
+	}
+
+	while ($lines !== [] && $lines[0] === '') {
+		array_shift($lines);
+	}
+
+	while ($lines !== [] && $lines[count($lines) - 1] === '') {
+		array_pop($lines);
+	}
+
+	return $lines;
+}
+
+/**
+ * Whether one docblock line is an `{@inheritDoc}` (or a bare `@inheritDoc`) marker.
+ */
+function fbMoveIsInheritDocLine(string $line): bool
+{
+	return preg_match('/^\s*(?:\{@inheritDoc\}|@inheritDoc)\s*$/i', $line) === 1;
+}
+
+/**
+ * What a tag is to PHPStan's PHPDoc inheritance: one key per parameter for the `@param` family,
+ * `return` for the `@return` family, `throws` for the `@throws` family, and the tag's own name
+ * for any other. Two tags with the same key never both apply to one method.
+ */
+function fbMoveDocTagKey(string $line): string
+{
+	preg_match('/^@([A-Za-z][A-Za-z0-9_\-]*)/', $line, $match);
+	$name = strtolower($match[1] ?? '');
+	$base = preg_replace('/^(?:phpstan|psalm)-/', '', $name) ?? $name;
+
+	if ($base === 'param') {
+		return 'param ' . (fbMoveDocParamName($line) ?? '');
+	}
+
+	if ($base === 'return' || $base === 'throws') {
+		return $base;
+	}
+
+	return 'tag ' . $name;
+}
+
+/**
+ * The parameter a `@param` line documents, as `$name` -- after its type, or before it.
+ */
+function fbMoveDocParamName(string $line): string|null
+{
+	$position = (int) strcspn($line, " \t");
+	$after = fbMoveDocSkipSpace($line, $position);
+
+	if (($line[$after] ?? '') !== '$' && !str_starts_with(substr($line, $after), '...$') && !str_starts_with(substr($line, $after), '&$')) {
+		$after = fbMoveDocSkipSpace($line, fbMoveDocTypeEnd($line, $after));
+	}
+
+	return preg_match('/\G(?:\.\.\.)?&?(\$[A-Za-z_][A-Za-z0-9_]*)/', $line, $match, 0, $after) === 1 ? $match[1] : null;
+}
+
+/**
+ * Where a tag sorts among the groups of a method's docblock: description, `@param`, `@return`,
+ * `@throws`, anything else.
+ */
+function fbMoveDocTagRank(string $key): int
+{
+	return match (true) {
+		str_starts_with($key, 'param ') => 1,
+		$key === 'return' => 2,
+		$key === 'throws' => 3,
+		default => 4,
+	};
+}
+
+/**
+ * Splits docblock lines (fbMoveDocLines()) into the description and the tags. A tag runs from its
+ * `@name` line over its continuation lines; `group` numbers the blank-line-separated groups, so a
+ * carried set of tags keeps the grouping it was written with. `{@inheritDoc}` lines are counted,
+ * never kept.
+ *
+ * @param list<string> $lines
+ *
+ * @return array{description: list<string>, tags: list<array{key: string, lines: list<string>, group: int}>, inheritDoc: bool}
+ */
+function fbMoveDocEntries(array $lines): array
+{
+	$description = [];
+	$tags = [];
+	$inheritDoc = false;
+	$group = 0;
+	$blank = false;
+
+	foreach ($lines as $line) {
+		if (fbMoveIsInheritDocLine($line)) {
+			$inheritDoc = true;
+			$blank = true;
+
+			continue;
+		}
+
+		if ($line === '') {
+			$blank = true;
+
+			continue;
+		}
+
+		if (str_starts_with($line, '@')) {
+			if ($blank && $tags !== []) {
+				$group++;
+			}
+
+			$tags[] = ['key' => fbMoveDocTagKey($line), 'lines' => [$line], 'group' => $group];
+			$blank = false;
+
+			continue;
+		}
+
+		if ($tags === []) {
+			if ($blank && $description !== []) {
+				$description[] = '';
+			}
+
+			$description[] = $line;
+		} elseif ($blank) {
+			// prose after a tag group, separated from it: it belongs to no tag, so it is not carried
+			$tags[] = ['key' => 'prose', 'lines' => [$line], 'group' => ++$group];
+		} else {
+			$tags[count($tags) - 1]['lines'][] = $line;
+		}
+
+		$blank = false;
+	}
+
+	return ['description' => $description, 'tags' => $tags, 'inheritDoc' => $inheritDoc];
+}
+
+/**
+ * One rendered docblock line.
+ */
+function fbMoveDocLine(string $indent, string $content): string
+{
+	return $indent . ' *' . ($content === '' ? '' : ' ' . $content) . "\n";
+}
+
+/**
+ * Rendered tag lines, with a blank line between two groups.
+ *
+ * @param list<array{key: string, lines: list<string>, group: int}> $tags
+ */
+function fbMoveDocTagLines(string $indent, array $tags): string
+{
+	$text = '';
+	$previous = null;
+
+	foreach ($tags as $tag) {
+		if ($previous !== null && $tag['group'] !== $previous) {
+			$text .= fbMoveDocLine($indent, '');
+		}
+
+		foreach ($tag['lines'] as $line) {
+			$text .= fbMoveDocLine($indent, $line);
+		}
+
+		$previous = $tag['group'];
+	}
+
+	return $text;
+}
+
+/**
+ * The lines of a docblock in $code, each as [start, end, content] -- `end` past its newline.
+ *
+ * @param array{0: int, 1: int} $range
+ *
+ * @return list<array{0: int, 1: int, 2: string}>
+ */
+function fbMoveDocSourceLines(string $code, array $range): array
+{
+	$lines = [];
+	$start = strrpos(substr($code, 0, $range[0]), "\n");
+	$start = $start === false ? 0 : $start + 1;
+
+	while ($start < $range[1]) {
+		$end = strpos($code, "\n", $start);
+		$end = $end === false ? strlen($code) : $end + 1;
+		$lines[] = [$start, $end, substr($code, $start, $end - $start)];
+		$start = $end;
+	}
+
+	return $lines;
+}
+
+/**
+ * The text of one docblock source line without its decoration ('' for a blank line).
+ */
+function fbMoveDocSourceContent(string $line): string
+{
+	$content = trim($line);
+
+	if (str_starts_with($content, '/**') || str_starts_with($content, '*/')) {
+		return '';
+	}
+
+	return trim(ltrim($content, '*'));
+}
+
+/**
+ * The edits that give one implementation method the PHPDoc it inherited from the interface it
+ * collapses (#637): what PHPStan would have inherited, written out, because after the collapse
+ * there is nothing left to inherit from. PHPStan's own rule is followed -- a tag the method
+ * declares itself wins, per `@param` (matched to the method's parameter by position), for the
+ * `@return` family and for the `@throws` family -- and the interface's description comes along
+ * where the method has none. An `{@inheritDoc}` resolves in place to the carried text; with
+ * nothing to carry it simply goes, and so does a docblock left empty. Every edit only inserts or
+ * deletes whole lines of the method's own docblock, so the names in it are still rewritten by
+ * the ordinary rules. Names in the carried text are placeholders, rendered by the caller.
+ *
+ * @param array{doc: array{0: int, 1: int}|null, lineStart: int, params: list<string>} $method
+ * @param array{entries: array{description: list<string>, tags: list<array{key: string, lines: list<string>, group: int}>, inheritDoc: bool}, params: list<string>} $carry
+ *
+ * @return list<array{0: int, 1: int, 2: string}>
+ */
+function fbMoveCarryMethodDoc(string $path, string $code, string $name, array $method, array $carry): array
+{
+	// the interface's parameter names, renamed to the implementation's, by position
+	$renames = [];
+
+	foreach ($carry['params'] as $position => $parameter) {
+		if (isset($method['params'][$position]) && $method['params'][$position] !== $parameter) {
+			$renames[$parameter] = $method['params'][$position];
+		}
+	}
+
+	$own = $method['doc'] !== null
+		? fbMoveDocEntries(fbMoveDocLines(substr($code, $method['doc'][0], $method['doc'][1] - $method['doc'][0])))
+		: ['description' => [], 'tags' => [], 'inheritDoc' => false];
+	$ownKeys = array_fill_keys(array_column($own['tags'], 'key'), true);
+	$tags = [];
+
+	foreach ($carry['entries']['tags'] as $tag) {
+		if ($tag['key'] === 'prose') {
+			continue;
+		}
+
+		if (str_starts_with($tag['key'], 'param ')) {
+			$parameter = substr($tag['key'], strlen('param '));
+
+			if (isset($renames[$parameter])) {
+				$tag['key'] = 'param ' . $renames[$parameter];
+				$tag['lines'][0] = preg_replace(
+					'/(?<![A-Za-z0-9_])' . preg_quote($parameter, '/') . '(?![A-Za-z0-9_])/',
+					$renames[$parameter],
+					$tag['lines'][0],
+					1,
+				) ?? $tag['lines'][0];
+			}
+		}
+
+		if (!isset($ownKeys[$tag['key']])) {
+			$tags[] = $tag;
+		}
+	}
+
+	$description = $own['description'] === [] ? $carry['entries']['description'] : [];
+
+	if ($method['doc'] === null) {
+		if ($description === [] && $tags === []) {
+			return [];
+		}
+
+		$indent = (string) substr($code, $method['lineStart'], strspn($code, " \t", $method['lineStart']));
+		$text = $indent . "/**\n";
+
+		foreach ($description as $line) {
+			$text .= fbMoveDocLine($indent, $line);
+		}
+
+		if ($description !== [] && $tags !== []) {
+			$text .= fbMoveDocLine($indent, '');
+		}
+
+		$text .= fbMoveDocTagLines($indent, $tags) . $indent . " */\n";
+
+		return [[$method['lineStart'], $method['lineStart'], $text]];
+	}
+
+	if ($description === [] && $tags === [] && !$own['inheritDoc']) {
+		return [];
+	}
+
+	if (!str_contains(substr($code, $method['doc'][0], $method['doc'][1] - $method['doc'][0]), "\n")) {
+		fbMoveFail(sprintf(
+			'%s:%d: %s() has a one-line docblock its collapsed interface\'s PHPDoc would merge into; expand it by hand first',
+			$path,
+			fbMoveLineOf($code, $method['doc'][0]),
+			$name,
+		));
+	}
+
+	$lines = fbMoveDocSourceLines($code, $method['doc']);
+	$indent = (string) substr($lines[0][2], 0, strspn($lines[0][2], " \t"));
+	$last = count($lines) - 1;
+	$contents = array_map(static fn (array $line): string => fbMoveDocSourceContent($line[2]), $lines);
+	$edits = [];
+
+	$inheritAt = null;
+
+	foreach ($lines as $index => $line) {
+		if ($index > 0 && $index < $last && fbMoveIsInheritDocLine($contents[$index])) {
+			$inheritAt = $index;
+
+			break;
+		}
+	}
+
+	if ($inheritAt !== null) {
+		// {@inheritDoc} resolves in place: the carried text, or nothing
+		$block = '';
+
+		foreach ($description as $line) {
+			$block .= fbMoveDocLine($indent, $line);
+		}
+
+		if ($description !== [] && $tags !== []) {
+			$block .= fbMoveDocLine($indent, '');
+		}
+
+		$block .= fbMoveDocTagLines($indent, $tags);
+		$removeFrom = $lines[$inheritAt][0];
+		$removeTo = $lines[$inheritAt][1];
+		$before = $inheritAt - 1;
+		$after = $inheritAt + 1;
+
+		if ($block === '') {
+			if ($after < $last && $contents[$after] === '') {
+				$removeTo = $lines[$after][1];
+			} elseif ($before > 0 && $contents[$before] === '') {
+				$removeFrom = $lines[$before][0];
+			}
+
+			$left = 0;
+
+			foreach ($contents as $index => $content) {
+				if ($index > 0 && $index < $last && $content !== '' && $index !== $inheritAt) {
+					$left++;
+				}
+			}
+
+			if ($left === 0) {
+				// nothing else was in it: the whole docblock goes
+				return [[$lines[0][0], $lines[$last][1], '']];
+			}
+		} else {
+			if ($before > 0 && $contents[$before] !== '') {
+				$block = fbMoveDocLine($indent, '') . $block;
+			}
+
+			if ($after < $last && $contents[$after] !== '') {
+				$block .= fbMoveDocLine($indent, '');
+			}
+		}
+
+		return [[$removeFrom, $removeTo, $block]];
+	}
+
+	if ($description !== []) {
+		$text = '';
+
+		foreach ($description as $line) {
+			$text .= fbMoveDocLine($indent, $line);
+		}
+
+		$edits[] = [$lines[1][0], $lines[1][0], $text . ($last > 1 ? fbMoveDocLine($indent, '') : '')];
+	}
+
+	if ($tags !== []) {
+		// before the method's first tag of a later group, else at the end
+		$rank = max(array_map(static fn (array $tag): int => fbMoveDocTagRank($tag['key']), $tags));
+		$at = $last;
+
+		foreach ($lines as $index => $line) {
+			if (
+				$index > 0
+				&& $index < $last
+				&& str_starts_with($contents[$index], '@')
+				&& fbMoveDocTagRank(fbMoveDocTagKey($contents[$index])) > $rank
+			) {
+				$at = $index;
+
+				break;
+			}
+		}
+
+		$text = fbMoveDocTagLines($indent, $tags);
+		$previous = $contents[$at - 1] ?? '';
+
+		if ($at - 1 > 0 && $previous !== '') {
+			$text = fbMoveDocLine($indent, '') . $text;
+		}
+
+		if ($at < $last) {
+			$text .= fbMoveDocLine($indent, '');
+		}
+
+		$edits[] = [$lines[$at][0], $lines[$at][0], $text];
+	}
+
+	return $edits;
+}
+
+/**
+ * Names in a carried docblock become placeholders `\x01c<n>\x01` (a byte no trim() strips, as it
+ * would a NUL), rendered later through the
+ * implementation's own imports. A name that is not a known type -- a template parameter, a
+ * typo -- is left as written, and reported.
+ *
+ * @param array<string, array{0: string, 1: string}> $index
+ * @param array<string, string> $names placeholder id => FQCN (the caller's running list)
+ * @param list<string> $warnings
+ */
+function fbMoveDocPlaceholders(
+	string $root,
+	string $doc,
+	array $analysis,
+	array $index,
+	array $templates,
+	array &$names,
+	array &$warnings,
+	string $where,
+): string
+{
+	$aliasIndex = fbMoveAliasIndex($analysis['imports']);
+	$found = fbMoveDocNames($doc, fbMoveDocTypeRanges($doc));
+
+	foreach (array_reverse($found) as [$offset, $name]) {
+		if (
+			!str_contains($name, '\\')
+			&& (in_array($name, $templates, true) || in_array(strtolower($name), FB_MOVE_BUILTINS, true))
+		) {
+			continue;
+		}
+
+		$resolved = fbMoveResolve($name, $analysis['namespace'], $analysis['imports'], $aliasIndex);
+		$fqcn = $resolved['fqcn'];
+		$knownType = isset($index[strtolower($fqcn)])
+			|| class_exists($fqcn, false)
+			|| interface_exists($fqcn, false)
+			|| trait_exists($fqcn, false)
+			|| enum_exists($fqcn, false)
+			|| fbMoveVendorFile($root, $fqcn) !== null;
+
+		if (!$knownType) {
+			$warnings[] = sprintf('%s: "%s" is not a known type; carried as written', $where, $name);
+
+			continue;
+		}
+
+		$id = 'c' . count($names);
+		$names[$id] = ($resolved['fq'] ? '\\' : '') . $fqcn;
+		$doc = substr_replace($doc, "\x01" . $id . "\x01", $offset, strlen($name));
+	}
+
+	return $doc;
+}
+
+/**
+ * The `@throws` types of a docblock, resolved, lowercase FQCN => FQCN.
+ *
+ * @return array<string, string>
+ */
+function fbMoveDocThrows(string $doc, array $analysis): array
+{
+	$aliasIndex = fbMoveAliasIndex($analysis['imports']);
+	$throws = [];
+
+	foreach (fbMoveDocEntries(fbMoveDocLines($doc))['tags'] as $tag) {
+		if ($tag['key'] !== 'throws') {
+			continue;
+		}
+
+		$line = $tag['lines'][0];
+		$start = fbMoveDocSkipSpace($line, (int) strcspn($line, " \t"));
+		$type = substr($line, $start, fbMoveDocTypeEnd($line, $start) - $start);
+
+		foreach (preg_split('/[|&()]/', $type) ?: [] as $name) {
+			$name = trim($name);
+
+			if ($name === '') {
+				continue;
+			}
+
+			$fqcn = fbMoveResolve($name, $analysis['namespace'], $analysis['imports'], $aliasIndex)['fqcn'];
+			$throws[strtolower($fqcn)] = $fqcn;
+		}
+	}
+
+	return $throws;
+}
+
+/**
+ * Whether a PHP file uses one of $collapse's interfaces reflectively -- as the argument of a
+ * check that asks whether something IS that interface (class_implements(), is_subclass_of(),
+ * is_a(), interface_exists(), ReflectionClass::implementsInterface() ...). Rewritten to the
+ * implementation's name such a check changes meaning (class_implements() never lists a class,
+ * is_subclass_of() is false for the class itself), so the collapse is refused, naming each
+ * statement, before anything is touched. Statement granularity, on purpose: it errs towards a
+ * refusal, never towards a silent change.
+ *
+ * @param array<string, string> $lowerCollapse lowercase interface FQCN => implementation FQCN
+ *
+ * @return list<string>
+ */
+function fbMoveReflectiveUses(string $file, string $code, array $analysis, array $lowerCollapse): array
+{
+	$reflective = [
+		'class_implements', 'is_subclass_of', 'is_a', 'interface_exists', 'implementsinterface',
+		'issubclassof', 'getinterfacenames', 'getinterfaces',
+	];
+	$aliasIndex = fbMoveAliasIndex($analysis['imports']);
+	$tokens = fbMoveTokens($code);
+	$problems = [];
+	$statement = [];
+
+	$flush = static function () use (&$statement, &$problems, $file, $analysis, $aliasIndex, $lowerCollapse, $reflective): void {
+		$calls = [];
+		$interfaces = [];
+
+		foreach ($statement as $position => $token) {
+			if ($token->is(T_STRING) && in_array(strtolower($token->text), $reflective, true)) {
+				$next = $position + 1;
+
+				while (isset($statement[$next]) && $statement[$next]->is([T_WHITESPACE, T_COMMENT, T_DOC_COMMENT])) {
+					$next++;
+				}
+
+				if (isset($statement[$next]) && $statement[$next]->text === '(') {
+					$calls[] = $token->text;
+				}
+			}
+
+			if ($token->is([T_STRING, T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED])) {
+				$fqcn = fbMoveResolve($token->text, $analysis['namespace'], $analysis['imports'], $aliasIndex)['fqcn'];
+
+				if (isset($lowerCollapse[strtolower($fqcn)])) {
+					$interfaces[$fqcn] = $token->line;
+				}
+			}
+
+			if ($token->is(T_CONSTANT_ENCAPSED_STRING)) {
+				$literal = str_replace('\\\\', '\\', trim($token->text, '\'"'));
+
+				if (isset($lowerCollapse[strtolower(ltrim($literal, '\\'))])) {
+					$interfaces[ltrim($literal, '\\')] = $token->line;
+				}
+			}
+		}
+
+		if ($calls !== []) {
+			foreach ($interfaces as $fqcn => $line) {
+				$problems[] = sprintf(
+					'%s:%d: %s is used reflectively (%s()); named as %s the check would change meaning -- rewrite it by hand first (an instanceof keeps it)',
+					$file,
+					$line,
+					$fqcn,
+					implode('(), ', array_unique($calls)),
+					$lowerCollapse[strtolower($fqcn)],
+				);
+			}
+		}
+
+		$statement = [];
+	};
+
+	foreach ($tokens as $token) {
+		if (in_array($token->text, [';', '{', '}'], true)) {
+			$flush();
+
+			continue;
+		}
+
+		$statement[] = $token;
+	}
+
+	$flush();
+
+	return $problems;
+}
+
+/**
  * Everything a collapse does to its implementation's file, decided up front, and every
  * condition it refuses. Keyed by the implementation's file.
+ *
+ * Since #637 also the interface's PHPDoc the implementation inherits: per method that the
+ * interface declares and no remaining ancestor does (`carry`, fbMoveCarryMethodDoc()), and the
+ * interface's own `@extends Parent<...>` for every parent that moves onto the implementation's
+ * `implements` clause, as `@implements Parent<...>` (`classTags`). Names in that text are
+ * placeholders (`names`). $report collects, as warnings that do not stop the run, the `@throws`
+ * each implementation method declares that its interface method did not -- callers that called
+ * it through the interface did not have to declare them, and after the collapse they do -- and
+ * any interface PHPDoc that is not carried.
  *
  * @param array<string, string> $collapse interface FQCN => implementation FQCN
  * @param array<string, array{0: string, 1: string}> $index
  * @param list<string> $files
+ * @param list<string> $report
  *
  * @return array<string, array{
  *     implementation: string,
  *     interfaces: array<string, list<string>>,
  *     constants: string,
  *     dropOverride: list<string>,
+ *     carry: array<string, array{entries: array{description: list<string>, tags: list<array{key: string, lines: list<string>, group: int}>, inheritDoc: bool}, params: list<string>}>,
+ *     classTags: list<array{key: string, lines: list<string>, group: int}>,
+ *     names: array<string, string>,
  * }>
  */
-function fbMoveCollapsePlan(string $root, array $collapse, array $index, array $files): array
+function fbMoveCollapsePlan(string $root, array $collapse, array $index, array $files, array &$report = []): array
 {
 	$plan = [];
 	$problems = [];
@@ -3272,12 +4112,125 @@ function fbMoveCollapsePlan(string $root, array $collapse, array $index, array $
 			'interfaces' => [],
 			'constants' => '',
 			'dropOverride' => [],
+			'carry' => [],
+			'classTags' => [],
+			'names' => [],
 			'type' => $implementationType,
 			'analysis' => $implementationAnalysis,
+			'code' => $implementationCode,
 			'interfaceMethods' => [],
+			'classExtends' => [],
 		];
 
 		$entry['interfaces'][strtolower($interface)] = $resolveAll(array_column($interfaceType['extends'], 'text'), $interfaceAnalysis);
+
+		// #637: the interface's own PHPDoc -- its class-level `@extends Parent<...>`, and per method
+		// what the implementation inherits from it
+		$templates = [];
+		$generic = false;
+
+		if ($interfaceType['doc'] !== null) {
+			$classDoc = substr($interfaceCode, $interfaceType['doc'][0], $interfaceType['doc'][1] - $interfaceType['doc'][0]);
+
+			foreach (fbMoveDocEntries(fbMoveDocLines($classDoc))['tags'] as $tag) {
+				if (preg_match('/^@(?:phpstan-|psalm-)?template(?:-covariant|-contravariant)?\s+(\w+)/', $tag['lines'][0], $match) === 1) {
+					$templates[] = $match[1];
+					$generic = true;
+				}
+			}
+
+			$placeheld = fbMoveDocPlaceholders(
+				$root,
+				$classDoc,
+				$interfaceAnalysis,
+				$index,
+				$templates,
+				$entry['names'],
+				$report,
+				$interface,
+			);
+
+			foreach (fbMoveDocEntries(fbMoveDocLines($placeheld))['tags'] as $tag) {
+				$extends = preg_match('/^@((?:phpstan-|psalm-|template-)?)extends\s+(\S+)/', $tag['lines'][0], $match) === 1;
+
+				if (!$extends || $generic) {
+					if ($tag['key'] !== 'prose' && !str_contains($tag['key'], 'template')) {
+						$report[] = sprintf('%s: its class-level `%s` is not carried onto %s', $interface, strtok($tag['lines'][0], " \t"), $implementation);
+					}
+
+					continue;
+				}
+
+				$parent = preg_replace('/<.*$/s', '', $match[2]) ?? $match[2];
+				$parentFqcn = preg_match('/^\x01(c\d+)\x01$/', $parent, $id) === 1
+					? ltrim($entry['names'][$id[1]], '\\')
+					: fbMoveResolve($parent, $interfaceAnalysis['namespace'], $interfaceAnalysis['imports'], fbMoveAliasIndex($interfaceAnalysis['imports']))['fqcn'];
+				$tag['lines'][0] = '@' . $match[1] . 'implements' . substr($tag['lines'][0], strlen('@' . $match[1] . 'extends'));
+				$tag['key'] = 'implements ' . strtolower($parentFqcn);
+				$entry['classExtends'][] = $tag;
+			}
+
+			if ($generic) {
+				$report[] = sprintf('%s is generic (@template); its class-level PHPDoc is not carried onto %s', $interface, $implementation);
+			}
+		}
+
+		$implementationMethods = [];
+
+		foreach ($implementationType['methods'] as $method) {
+			$implementationMethods[strtolower($method['name'])] = $method;
+		}
+
+		foreach ($interfaceType['methods'] as $method) {
+			$lower = strtolower($method['name']);
+			$doc = $method['doc'] !== null ? substr($interfaceCode, $method['doc'][0], $method['doc'][1] - $method['doc'][0]) : null;
+			$methodTemplates = $templates;
+
+			if ($doc !== null) {
+				foreach (fbMoveDocEntries(fbMoveDocLines($doc))['tags'] as $tag) {
+					if (preg_match('/^@(?:phpstan-|psalm-)?template(?:-covariant|-contravariant)?\s+(\w+)/', $tag['lines'][0], $match) === 1) {
+						$methodTemplates[] = $match[1];
+					}
+				}
+			}
+
+			$entry['carry'][$lower] ??= [
+				'entries' => fbMoveDocEntries(fbMoveDocLines($doc === null ? '/** */' : fbMoveDocPlaceholders(
+					$root,
+					$doc,
+					$interfaceAnalysis,
+					$index,
+					$methodTemplates,
+					$entry['names'],
+					$report,
+					$interface . '::' . $method['name'] . '()',
+				))),
+				'params' => $method['params'],
+			];
+
+			// the @throws the interface hid from its callers
+			$own = $implementationMethods[$lower] ?? null;
+
+			if ($own === null || $own['doc'] === null) {
+				continue;
+			}
+
+			$hidden = array_diff_key(
+				fbMoveDocThrows(substr($implementationCode, $own['doc'][0], $own['doc'][1] - $own['doc'][0]), $implementationAnalysis),
+				$doc === null ? [] : fbMoveDocThrows($doc, $interfaceAnalysis),
+			);
+
+			if ($hidden !== []) {
+				$report[] = sprintf(
+					'%s::%s() declares @throws %s, which %s::%s() did not: a caller typed against the interface may now need it',
+					$implementation,
+					$own['name'],
+					implode(', ', $hidden),
+					$interface,
+					$method['name'],
+				);
+			}
+		}
 
 		// the interface's constants, copied verbatim
 		$implementationConstants = array_map(
@@ -3383,7 +4336,71 @@ function fbMoveCollapsePlan(string $root, array $collapse, array $index, array $
 			$plan[$file]['dropOverride'][] = $name;
 		}
 
-		unset($plan[$file]['type'], $plan[$file]['analysis'], $plan[$file]['interfaceMethods']);
+		// #637: only what no remaining ancestor declares is inherited from the interface alone
+		foreach (array_keys($plan[$file]['carry']) as $lower) {
+			if (in_array($lower, $inherited, true)) {
+				unset($plan[$file]['carry'][$lower]);
+			}
+		}
+
+		// #637: the interface's `@extends Parent<...>`, for each parent that ends up in the clause
+		// and that the implementation's own docblock does not already parameterize
+		$clause = [];
+
+		foreach ($resolveAll(array_column($type['implements'], 'text'), $analysis) as $fqcn) {
+			if (!isset($lowerSources[strtolower($fqcn)])) {
+				$clause[strtolower($fqcn)] = true;
+			}
+		}
+
+		foreach ($entry['interfaces'] as $parents) {
+			foreach ($parents as $parent) {
+				$clause[strtolower($parent)] = true;
+			}
+		}
+
+		if (isset($clause['iteratoraggregate']) || isset($clause['iterator'])) {
+			unset($clause['traversable']); // as the rewrite does: implied, never implemented directly
+		}
+
+		$parameterized = [];
+
+		if ($type['doc'] !== null) {
+			$classDoc = substr($entry['code'], $type['doc'][0], $type['doc'][1] - $type['doc'][0]);
+
+			foreach (fbMoveDocEntries(fbMoveDocLines($classDoc))['tags'] as $tag) {
+				if (preg_match('/^@(?:phpstan-|psalm-|template-)?implements\s+\\?([A-Za-z_][A-Za-z0-9_\\\\]*)/', $tag['lines'][0], $match) === 1) {
+					$parameterized[strtolower($resolveAll([$match[1]], $analysis)[0])] = true;
+				}
+			}
+		}
+
+		foreach ($entry['classExtends'] as $tag) {
+			$parent = substr($tag['key'], strlen('implements '));
+
+			if (isset($clause[$parent]) && !isset($parameterized[$parent])) {
+				$plan[$file]['classTags'][] = $tag;
+				$parameterized[$parent] = true;
+			} elseif (!isset($clause[$parent])) {
+				$report[] = sprintf(
+					'%s: `%s` is not carried; after the collapse it does not implement that type itself',
+					$entry['implementation'],
+					preg_replace_callback(
+						'/\x01(c\d+)\x01/',
+						static fn (array $match): string => $plan[$file]['names'][$match[1]],
+						$tag['lines'][0],
+					),
+				);
+			}
+		}
+
+		unset(
+			$plan[$file]['type'],
+			$plan[$file]['analysis'],
+			$plan[$file]['interfaceMethods'],
+			$plan[$file]['code'],
+			$plan[$file]['classExtends'],
+		);
 	}
 
 	// any other type naming a collapsed interface in `extends`/`implements` would break
@@ -3406,6 +4423,9 @@ function fbMoveCollapsePlan(string $root, array $collapse, array $index, array $
 		}
 
 		$analysis = fbMoveAnalyse($code);
+
+		// #637: a check that asks whether something IS the interface changes meaning
+		array_push($problems, ...fbMoveReflectiveUses($file, $code, $analysis, $lowerCollapse));
 
 		foreach (fbMoveOutline($code) as $type) {
 			$declared = ($analysis['namespace'] !== '' ? $analysis['namespace'] . '\\' : '') . $type['name'];
@@ -3599,7 +4619,8 @@ foreach ($map['classes'] + $map['collapse'] as $old => $new) {
 	$classes[strtolower($old)] = $new;
 }
 
-$collapsePlan = $collapsePending !== 0 ? fbMoveCollapsePlan($root, $map['collapse'], $index, $files) : [];
+$collapseReport = [];
+$collapsePlan = $collapsePending !== 0 ? fbMoveCollapsePlan($root, $map['collapse'], $index, $files, $collapseReport) : [];
 $deleting = $collapsePending !== 0 ? array_fill_keys($deleted, true) : [];
 
 foreach ($index as $lower => $unused) {
@@ -3699,6 +4720,20 @@ printf(
 	$deleting !== [] ? count($deleting) . ' interface file(s) deleted, ' : '',
 	count($writes),
 );
+
+// #637: what the collapse could not do for the reader, as warnings -- not findings, the exit code
+// stays 0. Each `@throws` line is a method whose callers through the interface never had to
+// declare that exception; PHPStan now asks them to (its own checked-exception configuration
+// decides which of them count).
+if ($collapseReport !== []) {
+	printf("Collapse warnings (%d):\n", count($collapseReport));
+
+	foreach ($collapseReport as $line) {
+		printf("  %s\n", $line);
+	}
+
+	echo "\n";
+}
 
 // 3. The report. Applying the map is not a finding, so its verdict does not set the exit code.
 fbMoveReport($root, $map, $index, $oldPaths, fbMoveTrackedFiles($root), $deleted);
