@@ -4168,12 +4168,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObjectCollection.php
 
 		-
-			message: '#^Call to an undefined method FastyBird\\Core\\WebSockets\\Encoding\\RFC6455\\Frame\:\:extractOverflow\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
-
-		-
 			message: '#^Instanceof between int and FastyBird\\Core\\WebSockets\\Encoding\\FrameData will always evaluate to false\.$#'
 			identifier: instanceof.alwaysFalse
 			count: 1
@@ -4204,12 +4198,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
 
 		-
-			message: '#^Parameter \#1 \$string of function strlen expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
-
-		-
 			message: '#^Parameter \#1 \$val of method FastyBird\\Core\\WebSockets\\Encoding\\RFC6455\:\:isValidCloseCode\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -4219,12 +4207,6 @@ parameters:
 			message: '#^Parameter \#1 \.\.\.\$arrays of function array_merge expects array, array\|false given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
-
-		-
-			message: '#^Parameter \#3 \$data of method FastyBird\\Core\\WebSockets\\Encoding\\RFC6455\:\:handleMessage\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 2
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
 
 		-
@@ -4390,12 +4372,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Client.php
 
 		-
-			message: '#^Parameter \#2 \$payload of method FastyBird\\Core\\WebSockets\\Encoding\\RFC6455\:\:send\(\) expects FastyBird\\Core\\WebSockets\\Encoding\\FrameData\|int\|string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Client.php
-
-		-
 			message: '#^Property FastyBird\\Core\\WebSockets\\Entities\\Client\:\:\$remoteAddress is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
@@ -4454,12 +4430,6 @@ parameters:
 			identifier: booleanAnd.alwaysFalse
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/Topic.php
-
-		-
-			message: '#^Cannot cast FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic to string\.$#'
-			identifier: cast.string
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/WampClient.php
 
 		-
 			message: '#^Property FastyBird\\Core\\Http\\Exceptions\\HttpMethodNotAllowed\:\:\$code has no type specified\.$#'
@@ -6234,12 +6204,6 @@ parameters:
 		-
 			message: '#^Call to preg_quote\(\) is missing delimiter / to be effective\.$#'
 			identifier: argument.invalidPregQuote
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Server/Wrapper.php
-
-		-
-			message: '#^Cannot cast FastyBird\\Core\\WebSockets\\Handshake\\WampResponse to string\.$#'
-			identifier: cast.string
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Server/Wrapper.php
 
