@@ -50,7 +50,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 
 	public const RELATIONSHIPS_STATE = 'state';
 
-	public function __construct(protected readonly Routing\IRouter $router)
+	public function __construct(protected readonly Routing\Router $router)
 	{
 	}
 

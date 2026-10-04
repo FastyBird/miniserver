@@ -16,8 +16,8 @@ use function assert;
 final class Manager
 {
 
-	/** @var Crud\IEntityCrud<Tokens\Token>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Tokens\Token>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Tokens\Token> $entityCrudFactory
@@ -69,9 +69,9 @@ final class Manager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Tokens\Token>
+	 * @return Crud\EntityCrud<Tokens\Token>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Tokens\Token::class);

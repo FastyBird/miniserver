@@ -50,7 +50,7 @@ final class Automatic extends Trigger
 	public const RELATIONSHIPS_CONDITIONS = 'conditions';
 
 	public function __construct(
-		Routing\IRouter $router,
+		Routing\Router $router,
 		Models\States\ActionsRepository $actionStateRepository,
 		private readonly Models\States\ConditionsRepository $conditionStateRepository,
 	)

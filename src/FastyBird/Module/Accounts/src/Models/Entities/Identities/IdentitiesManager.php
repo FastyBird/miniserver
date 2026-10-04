@@ -38,8 +38,8 @@ class IdentitiesManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Identities\Identity>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Identities\Identity>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Identities\Identity> $entityCrudFactory
@@ -93,9 +93,9 @@ class IdentitiesManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Identities\Identity>
+	 * @return Crud\EntityCrud<Entities\Identities\Identity>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Identities\Identity::class);

@@ -60,7 +60,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 		protected readonly Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		protected readonly Models\Entities\Devices\Controls\ControlsRepository $devicesControlsRepository,
 		protected readonly Models\Entities\Channels\ChannelsRepository $channelsRepository,
-		protected readonly Routing\IRouter $router,
+		protected readonly Routing\Router $router,
 	)
 	{
 	}

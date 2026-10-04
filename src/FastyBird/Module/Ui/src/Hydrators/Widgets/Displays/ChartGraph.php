@@ -51,7 +51,7 @@ final class ChartGraph extends Display
 	/**
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateEnableMinMaxAttribute(Objects\IStandardObject $attributes): bool
+	protected function hydrateEnableMinMaxAttribute(Objects\StandardObject $attributes): bool
 	{
 		if (
 			!is_scalar($attributes->get('enable_min_max'))

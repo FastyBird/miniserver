@@ -63,7 +63,7 @@ final class ResponseFixtureLinksTest extends Tests\Cases\Unit\DbTestCase
 	 */
 	public function testEveryFixtureLinkResolvesToRoute(): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$dispatcher = $this->createDispatcher($router);
 
@@ -124,7 +124,7 @@ final class ResponseFixtureLinksTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * Same route table the router dispatches with, see Routing\RouteHandler::getDispatcher()
 	 */
-	private function createDispatcher(Routing\IRouter $router): FastRoute\Dispatcher
+	private function createDispatcher(Routing\Router $router): FastRoute\Dispatcher
 	{
 		return FastRoute\simpleDispatcher(
 			static function (FastRouteRouteCollector $collector) use ($router): void {

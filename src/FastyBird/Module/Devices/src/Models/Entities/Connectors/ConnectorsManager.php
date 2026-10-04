@@ -40,8 +40,8 @@ final class ConnectorsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Connectors\Connector>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Connectors\Connector>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Connectors\Connector> $entityCrudFactory
@@ -106,9 +106,9 @@ final class ConnectorsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Connectors\Connector>
+	 * @return Crud\EntityCrud<Entities\Connectors\Connector>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Connectors\Connector::class);

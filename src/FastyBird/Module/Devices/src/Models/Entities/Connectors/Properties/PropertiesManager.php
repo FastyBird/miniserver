@@ -40,8 +40,8 @@ final class PropertiesManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Connectors\Properties\Property>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Connectors\Properties\Property>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Connectors\Properties\Property> $entityCrudFactory
@@ -106,9 +106,9 @@ final class PropertiesManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Connectors\Properties\Property>
+	 * @return Crud\EntityCrud<Entities\Connectors\Properties\Property>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Connectors\Properties\Property::class);

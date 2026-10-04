@@ -59,7 +59,7 @@ class Identity extends Hydrators\Hydrator
 	 * @throws ApiExceptions\JsonApiError
 	 */
 	protected function hydratePasswordAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Helpers\Password
 	{
 		if (!is_scalar($attributes->get('password'))) {

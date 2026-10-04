@@ -45,7 +45,7 @@ final class AnnotationCheckerTest extends TestCase
 	 */
 	private function user(bool $loggedIn, string|null $identity = null): Identity\User
 	{
-		$storage = $this->createMock(Identity\IUserStorage::class);
+		$storage = $this->createMock(Identity\UserStorage::class);
 		$storage->method('isAuthenticated')->willReturn($loggedIn);
 
 		if ($identity !== null) {

@@ -100,7 +100,7 @@ final class HydratorValidateAttributeTest extends Tests\Cases\Unit\BaseTestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function document(string|null $label): Encoding\IDocument
+	private function document(string|null $label): Encoding\Document
 	{
 		$attributes = ['identifier' => 'new-identifier'];
 

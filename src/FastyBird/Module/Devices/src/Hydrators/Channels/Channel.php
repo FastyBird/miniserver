@@ -50,7 +50,7 @@ abstract class Channel extends Hydrators\Hydrator
 			Schemas\Channels\Channel::RELATIONSHIPS_DEVICE,
 		];
 
-	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -62,7 +62,7 @@ abstract class Channel extends Hydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateCommentAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))

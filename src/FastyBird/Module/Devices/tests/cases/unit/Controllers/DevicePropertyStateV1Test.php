@@ -77,7 +77,7 @@ final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			),
 		);
 
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 

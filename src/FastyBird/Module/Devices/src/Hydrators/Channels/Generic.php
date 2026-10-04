@@ -62,13 +62,13 @@ final class Generic extends Channel
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDeviceRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 		Entities\Channels\Channel|null $entity,
 	): Entities\Devices\Device
 	{
 		if (
-			$relationship->getData() instanceof Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\ResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {

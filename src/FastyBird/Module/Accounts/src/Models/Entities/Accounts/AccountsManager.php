@@ -38,8 +38,8 @@ final class AccountsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Accounts\Account>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Accounts\Account>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Accounts\Account> $entityCrudFactory
@@ -91,9 +91,9 @@ final class AccountsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Accounts\Account>
+	 * @return Crud\EntityCrud<Entities\Accounts\Account>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Accounts\Account::class);

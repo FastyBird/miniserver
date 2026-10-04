@@ -9,7 +9,6 @@ use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use Nette\Utils;
-use Override;
 use phpDocumentor;
 use ReflectionAttribute;
 use ReflectionClass;
@@ -40,8 +39,15 @@ use function ucfirst;
 /**
  * Maps request values onto an entity's #[Crud]-marked properties, enforcing their required and writable rules
  */
-final readonly class EntityMapper implements IEntityMapper
+final readonly class EntityMapper
 {
+
+	/**
+	 * Annotation strings
+	 */
+	public const string ANNOTATION_REQUIRED = 'required';
+
+	public const string ANNOTATION_WRITABLE = 'writable';
 
 	public function __construct(
 		private readonly Persistence\ManagerRegistry $managerRegistry,
@@ -54,7 +60,6 @@ final readonly class EntityMapper implements IEntityMapper
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	#[Override]
 	public function fillEntity(
 		Utils\ArrayHash $values,
 		Entities\CrudEntity $entity,

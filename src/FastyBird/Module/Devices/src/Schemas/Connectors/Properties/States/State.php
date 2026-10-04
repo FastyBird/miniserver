@@ -55,7 +55,7 @@ final class State extends ApiSchemas\JsonApiSchema
 	public const RELATIONSHIPS_PROPERTY = 'property';
 
 	public function __construct(
-		private readonly Routing\IRouter $router,
+		private readonly Routing\Router $router,
 		private readonly Models\Entities\Connectors\Properties\PropertiesRepository $connectorsPropertiesRepository,
 	)
 	{

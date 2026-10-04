@@ -46,7 +46,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_TRIGGER = 'trigger';
 
-	public function __construct(private readonly Routing\IRouter $router)
+	public function __construct(private readonly Routing\Router $router)
 	{
 	}
 

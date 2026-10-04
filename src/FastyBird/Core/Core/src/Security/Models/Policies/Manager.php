@@ -16,8 +16,8 @@ use function assert;
 final class Manager
 {
 
-	/** @var Crud\IEntityCrud<Policies\Policy>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Policies\Policy>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Policies\Policy> $entityCrudFactory
@@ -69,9 +69,9 @@ final class Manager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Policies\Policy>
+	 * @return Crud\EntityCrud<Policies\Policy>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Policies\Policy::class);

@@ -278,7 +278,7 @@ final class CapabilityIdentifierTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function document(array $attributes = []): Encoding\IDocument
+	private function document(array $attributes = []): Encoding\Document
 	{
 		return Encoding\Document::create(Utils\Json::encode([
 			'data' => [

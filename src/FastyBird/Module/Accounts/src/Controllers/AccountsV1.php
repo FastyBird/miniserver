@@ -501,7 +501,7 @@ final class AccountsV1 extends BaseV1
 	 * @throws AccountsExceptions\AccountRoleInvalid
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
-	private function assignAccountToRoles(Encoding\IDocument $document, Entities\Accounts\Account $account): void
+	private function assignAccountToRoles(Encoding\Document $document, Entities\Accounts\Account $account): void
 	{
 		$relationships = $document->getResource()->getRelationships();
 
@@ -510,7 +510,7 @@ final class AccountsV1 extends BaseV1
 		$hasRoleRelation = false;
 
 		foreach ($relationships->getAll() as $relationship) {
-			if ($relationship->getData() instanceof Objects\IResourceIdentifierCollection) {
+			if ($relationship->getData() instanceof Objects\ResourceIdentifierCollection) {
 				foreach ($relationship->getData()->getAll() as $resource) {
 					if ($resource->getType() === Schemas\Roles\Role::SCHEMA_TYPE && is_string($resource->getId())) {
 						$hasRoleRelation = true;

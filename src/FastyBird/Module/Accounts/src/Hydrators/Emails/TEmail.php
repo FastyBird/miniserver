@@ -36,7 +36,7 @@ trait TEmail
 	}
 
 	protected function hydrateVisibilityAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Types\EmailVisibility
 	{
 		$isPrivate = (bool) $attributes->get('private');

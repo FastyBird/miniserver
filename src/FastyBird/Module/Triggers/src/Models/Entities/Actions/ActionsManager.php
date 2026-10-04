@@ -38,8 +38,8 @@ final class ActionsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Actions\Action>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Actions\Action>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Actions\Action> $entityCrudFactory
@@ -91,9 +91,9 @@ final class ActionsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Actions\Action>
+	 * @return Crud\EntityCrud<Entities\Actions\Action>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Actions\Action::class);

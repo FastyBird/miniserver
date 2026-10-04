@@ -56,7 +56,7 @@ abstract class DataSource extends Hydrators\Hydrator
 	 *
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateParamsAttribute(Objects\IStandardObject $attributes): array
+	protected function hydrateParamsAttribute(Objects\StandardObject $attributes): array
 	{
 		$params = $attributes->get('params');
 
@@ -64,7 +64,7 @@ abstract class DataSource extends Hydrators\Hydrator
 			return [];
 		}
 
-		if ($params instanceof Objects\IStandardObject) {
+		if ($params instanceof Objects\StandardObject) {
 			return $params->toArray();
 		}
 

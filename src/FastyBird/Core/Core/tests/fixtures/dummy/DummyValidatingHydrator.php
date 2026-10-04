@@ -32,11 +32,11 @@ final class DummyValidatingHydrator extends Hydrators\Hydrator
 	/**
 	 * Returns a value only to prove that the hydrator ignores it
 	 *
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 *
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function validateLabelAttribute(Objects\IStandardObject $attributes): string
+	protected function validateLabelAttribute(Objects\StandardObject $attributes): string
 	{
 		$this->validated[] = $attributes->get('label');
 

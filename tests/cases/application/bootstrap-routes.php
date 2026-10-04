@@ -134,7 +134,7 @@ try {
 
 	$container = $configurator->createContainer();
 
-	$router = $container->getByType(Routing\IRouter::class);
+	$router = $container->getByType(Routing\Router::class);
 
 	$routes = [];
 	$controllers = [];

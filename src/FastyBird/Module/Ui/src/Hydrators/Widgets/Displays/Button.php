@@ -52,7 +52,7 @@ final class Button extends Display
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	protected function hydrateIconAttribute(Objects\IStandardObject $attributes): Types\WidgetIcon
+	protected function hydrateIconAttribute(Objects\StandardObject $attributes): Types\WidgetIcon
 	{
 		if (
 			!is_scalar($attributes->get('icon'))

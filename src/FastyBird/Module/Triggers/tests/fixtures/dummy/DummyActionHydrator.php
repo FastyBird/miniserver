@@ -29,7 +29,7 @@ final class DummyActionHydrator extends Hydrators\Actions\Action
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateDoItemAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (

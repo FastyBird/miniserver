@@ -55,7 +55,7 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateTimeAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): DateTimeInterface
 	{
 		// Condition time have to be set
@@ -95,7 +95,7 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateDaysAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): array
 	{
 		// Condition days have to be set

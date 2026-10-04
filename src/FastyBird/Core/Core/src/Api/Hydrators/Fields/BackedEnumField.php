@@ -32,11 +32,11 @@ final class BackedEnumField extends Field
 	}
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 *
 	 * @throws Exceptions\JsonApiError
 	 */
-	public function getValue(Objects\IStandardObject $attributes): BackedEnum|null
+	public function getValue(Objects\StandardObject $attributes): BackedEnum|null
 	{
 		$value = $attributes->get($this->getMappedName());
 

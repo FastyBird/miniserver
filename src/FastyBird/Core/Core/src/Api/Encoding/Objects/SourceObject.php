@@ -4,23 +4,22 @@ namespace FastyBird\Core\Api\Encoding\Objects;
 
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Exceptions;
-use Override;
 use function is_string;
 
 /**
  * Source object
  */
-final class SourceObject implements ISourceObject
+final class SourceObject
 {
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function __construct(private IStandardObject $data)
+	public function __construct(private StandardObject $data)
 	{
 		if (
-			!$data->has(Encoding\IDocument::KEYWORD_POINTER)
-			&& !$data->has(Encoding\IDocument::KEYWORD_PARAMETER)
+			!$data->has(Encoding\Document::KEYWORD_POINTER)
+			&& !$data->has(Encoding\Document::KEYWORD_PARAMETER)
 		) {
 			throw new Exceptions\InvalidArgument('Provided source object has missing required attribute');
 		}
@@ -29,10 +28,9 @@ final class SourceObject implements ISourceObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getPointer(): string|null
 	{
-		$pointer = $this->data->get(Encoding\IDocument::KEYWORD_POINTER);
+		$pointer = $this->data->get(Encoding\Document::KEYWORD_POINTER);
 
 		if (!is_string($pointer)) {
 			throw new Exceptions\Runtime('Value of pointer attribute of source object has invalid value.');
@@ -44,10 +42,9 @@ final class SourceObject implements ISourceObject
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getParameter(): string|null
 	{
-		$parameter = $this->data->get(Encoding\IDocument::KEYWORD_PARAMETER);
+		$parameter = $this->data->get(Encoding\Document::KEYWORD_PARAMETER);
 
 		if (!is_string($parameter)) {
 			throw new Exceptions\Runtime('Value of parameter attribute of source object has invalid value.');

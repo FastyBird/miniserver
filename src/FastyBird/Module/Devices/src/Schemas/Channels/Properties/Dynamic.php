@@ -56,7 +56,7 @@ final class Dynamic extends Property
 	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::DYNAMIC->value;
 
 	public function __construct(
-		Routing\IRouter $router,
+		Routing\Router $router,
 		Models\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly Models\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,

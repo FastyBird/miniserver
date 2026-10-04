@@ -52,7 +52,7 @@ final class UrlFormatTest extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('unprefixedRead')]
 	public function testUnprefixedRead(string $url, string $token, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_GET,
@@ -88,7 +88,7 @@ final class UrlFormatTest extends Tests\Cases\Unit\DbTestCase
 	 */
 	public function testUnprefixedAccountSelfLink(): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_GET,

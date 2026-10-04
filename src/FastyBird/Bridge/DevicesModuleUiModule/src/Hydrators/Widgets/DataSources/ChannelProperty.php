@@ -70,13 +70,13 @@ final class ChannelProperty extends UiHydrators\Widgets\DataSources\DataSource
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 		DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty|null $entity,
 	): DevicesEntities\Channels\Properties\Property
 	{
 		if (
-			$relationship->getData() instanceof Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\ResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {

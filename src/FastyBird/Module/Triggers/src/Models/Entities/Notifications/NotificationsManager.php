@@ -38,8 +38,8 @@ final class NotificationsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Notifications\Notification>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Notifications\Notification>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Notifications\Notification> $entityCrudFactory
@@ -91,9 +91,9 @@ final class NotificationsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Notifications\Notification>
+	 * @return Crud\EntityCrud<Entities\Notifications\Notification>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Notifications\Notification::class);

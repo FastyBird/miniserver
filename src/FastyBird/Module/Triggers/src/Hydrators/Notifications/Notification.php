@@ -39,7 +39,7 @@ abstract class Notification extends Hydrators\Hydrator
 		Schemas\Notifications\Notification::RELATIONSHIPS_TRIGGER,
 	];
 
-	protected function hydrateEnabledAttribute(Objects\IStandardObject $attributes): bool
+	protected function hydrateEnabledAttribute(Objects\StandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('enabled')) && (bool) $attributes->get('enabled');
 	}

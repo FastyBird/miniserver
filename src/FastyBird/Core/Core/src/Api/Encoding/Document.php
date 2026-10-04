@@ -5,7 +5,6 @@ namespace FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
 use JsonException;
-use Override;
 use stdClass;
 use function is_array;
 use function json_decode;
@@ -13,10 +12,106 @@ use function json_decode;
 /**
  * JSON:API document
  */
-final class Document implements IDocument
+final class Document
 {
 
-	private Objects\IStandardObject $data;
+	// Reserved keyword
+	public const string KEYWORD_LINKS = 'links';
+
+	// Reserved keyword
+	public const string KEYWORD_HREF = 'href';
+
+	// Reserved keyword
+	public const string KEYWORD_RELATIONSHIPS = 'relationships';
+
+	// Reserved keyword
+	public const string KEYWORD_SELF = 'self';
+
+	// Reserved keyword
+	public const string KEYWORD_FIRST = 'first';
+
+	// Reserved keyword
+	public const string KEYWORD_LAST = 'last';
+
+	// Reserved keyword
+	public const string KEYWORD_NEXT = 'next';
+
+	// Reserved keyword
+	public const string KEYWORD_PREV = 'prev';
+
+	// Reserved keyword
+	public const string KEYWORD_RELATED = 'related';
+
+	// Reserved keyword
+	public const string KEYWORD_TYPE = 'type';
+
+	// Reserved keyword
+	public const string KEYWORD_ID = 'id';
+
+	// Reserved keyword
+	public const string KEYWORD_ATTRIBUTES = 'attributes';
+
+	// Reserved keyword
+	public const string KEYWORD_META = 'meta';
+
+	// Reserved keyword
+	public const string KEYWORD_ALIASES = 'aliases';
+
+	// Reserved keyword
+	public const string KEYWORD_PROFILE = 'profile';
+
+	// Reserved keyword
+	public const string KEYWORD_DATA = 'data';
+
+	// Reserved keyword
+	public const string KEYWORD_INCLUDED = 'included';
+
+	// Reserved keyword
+	public const string KEYWORD_JSON_API = 'jsonapi';
+
+	// Reserved keyword
+	public const string KEYWORD_VERSION = 'version';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS = 'errors';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_ID = 'id';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_TYPE = 'type';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_STATUS = 'status';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_CODE = 'code';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_TITLE = 'title';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_DETAIL = 'detail';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_META = 'meta';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_SOURCE = 'source';
+
+	// Reserved keyword
+	public const string KEYWORD_ERRORS_ABOUT = 'about';
+
+	// Reserved keyword
+	public const string KEYWORD_POINTER = 'pointer';
+
+	// Reserved keyword
+	public const string KEYWORD_PARAMETER = 'parameter';
+
+	// Include path separator
+	public const string PATH_SEPARATOR = '.';
+
+	private Objects\StandardObject $data;
 
 	public function __construct(stdClass $data)
 	{
@@ -26,7 +121,7 @@ final class Document implements IDocument
 	/**
 	 * @throws InvalidArgument
 	 */
-	public static function create(string|stdClass $data): IDocument
+	public static function create(string|stdClass $data): Document
 	{
 		if ($data instanceof stdClass) {
 			return new self($data);
@@ -43,24 +138,22 @@ final class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function hasResource(): bool
 	{
 		$data = $this->getData();
 
-		return $data instanceof Objects\IStandardObject;
+		return $data instanceof Objects\StandardObject;
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getResource(): Objects\IResourceObject
+	public function getResource(): Objects\ResourceObject
 	{
 		$data = $this->getData();
 
-		if (!$data instanceof Objects\IStandardObject) {
+		if (!$data instanceof Objects\StandardObject) {
 			throw new Exceptions\Runtime('Data member is not an object.');
 		}
 
@@ -71,24 +164,22 @@ final class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function hasResources(): bool
 	{
 		$data = $this->getData();
 
-		return $data instanceof Objects\IStandardObjectCollection;
+		return $data instanceof Objects\StandardObjectCollection;
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getResources(): Objects\IResourceObjectCollection
+	public function getResources(): Objects\ResourceObjectCollection
 	{
 		$data = $this->getData();
 
-		if (!$data instanceof Objects\IStandardObjectCollection) {
+		if (!$data instanceof Objects\StandardObjectCollection) {
 			throw new Exceptions\Runtime('Data member is not an array.');
 		}
 
@@ -99,8 +190,7 @@ final class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getData(): Objects\IStandardObject|Objects\IStandardObjectCollection|null
+	public function getData(): Objects\StandardObject|Objects\StandardObjectCollection|null
 	{
 		if (!$this->data->has(self::KEYWORD_DATA)) {
 			throw new Exceptions\Runtime('Data member is not present.');
@@ -112,14 +202,13 @@ final class Document implements IDocument
 			return Objects\StandardObjectCollection::create($data);
 		}
 
-		if (!$data instanceof Objects\IStandardObject && $data !== null) {
+		if (!$data instanceof Objects\StandardObject && $data !== null) {
 			throw new Exceptions\Runtime('Data member is not an object or null.');
 		}
 
 		return $data;
 	}
 
-	#[Override]
 	public function hasLinks(): bool
 	{
 		return $this->data->has(self::KEYWORD_LINKS);
@@ -129,19 +218,17 @@ final class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getLinks(): Objects\ILinkObjectCollection
+	public function getLinks(): Objects\LinkObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_LINKS);
 
-		if (!$raw instanceof Objects\IStandardObject && $raw !== null) {
+		if (!$raw instanceof Objects\StandardObject && $raw !== null) {
 			throw new Exceptions\Runtime('Links member is not an object.');
 		}
 
 		return Objects\LinkObjectCollection::create($raw);
 	}
 
-	#[Override]
 	public function hasMeta(): bool
 	{
 		return $this->data->has(self::KEYWORD_META);
@@ -151,19 +238,17 @@ final class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getMeta(): Objects\IMetaObjectCollection
+	public function getMeta(): Objects\MetaObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_META);
 
-		if (!$raw instanceof Objects\IStandardObject && $raw !== null) {
+		if (!$raw instanceof Objects\StandardObject && $raw !== null) {
 			throw new Exceptions\Runtime('Meta member is not an object.');
 		}
 
 		return Objects\MetaObjectCollection::create($raw);
 	}
 
-	#[Override]
 	public function hasIncluded(): bool
 	{
 		return $this->data->has(self::KEYWORD_INCLUDED);
@@ -173,8 +258,7 @@ final class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getIncluded(): Objects\IResourceObjectCollection
+	public function getIncluded(): Objects\ResourceObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_INCLUDED);
 
@@ -185,7 +269,6 @@ final class Document implements IDocument
 		return Objects\ResourceObjectCollection::create(Objects\StandardObjectCollection::create($raw)->getAll());
 	}
 
-	#[Override]
 	public function hasErrors(): bool
 	{
 		return $this->data->has(self::KEYWORD_ERRORS);
@@ -195,8 +278,7 @@ final class Document implements IDocument
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getErrors(): Objects\IErrorObjectCollection
+	public function getErrors(): Objects\ErrorObjectCollection
 	{
 		$raw = $this->data->get(self::KEYWORD_ERRORS);
 

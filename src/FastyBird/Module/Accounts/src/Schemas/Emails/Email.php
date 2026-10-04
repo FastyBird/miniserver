@@ -46,7 +46,7 @@ final class Email extends Schemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_ACCOUNT = 'account';
 
-	public function __construct(private readonly Routing\IRouter $router)
+	public function __construct(private readonly Routing\Router $router)
 	{
 	}
 

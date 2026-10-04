@@ -54,7 +54,7 @@ final class Role extends Schemas\JsonApiSchema
 
 	public function __construct(
 		private readonly Policies\Repository $policiesRepository,
-		private readonly Routing\IRouter $router,
+		private readonly Routing\Router $router,
 	)
 	{
 	}

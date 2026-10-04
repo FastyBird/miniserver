@@ -2,33 +2,29 @@
 
 namespace FastyBird\Core\Http\Routing;
 
-use Override;
 use Psr\Http\Server\MiddlewareInterface;
 
-final class RouteGroup implements IRouteGroup
+final class RouteGroup
 {
 
 	public function __construct(
 		private string $pattern,
-		private IRouteCollector $routeCollector,
+		private RouteCollector $routeCollector,
 	)
 	{
 	}
 
-	#[Override]
 	public function addMiddleware(MiddlewareInterface $middleware): void
 	{
 		$this->routeCollector->addMiddleware($middleware);
 	}
 
-	#[Override]
 	public function getPattern(): string
 	{
 		return $this->pattern;
 	}
 
-	#[Override]
-	public function getRouteCollector(): IRouteCollector
+	public function getRouteCollector(): RouteCollector
 	{
 		return $this->routeCollector;
 	}

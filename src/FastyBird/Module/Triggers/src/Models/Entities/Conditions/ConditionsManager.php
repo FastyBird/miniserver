@@ -38,8 +38,8 @@ final class ConditionsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Conditions\Condition>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Conditions\Condition>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Conditions\Condition> $entityCrudFactory
@@ -91,9 +91,9 @@ final class ConditionsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Conditions\Condition>
+	 * @return Crud\EntityCrud<Entities\Conditions\Condition>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Conditions\Condition::class);

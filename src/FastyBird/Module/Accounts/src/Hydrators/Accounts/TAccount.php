@@ -51,7 +51,7 @@ trait TAccount
 	/**
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateFirstNameAttribute(Objects\IStandardObject $attributes): string
+	protected function hydrateFirstNameAttribute(Objects\StandardObject $attributes): string
 	{
 		if (!$attributes->has('first_name') || !is_scalar($attributes->get('first_name'))) {
 			throw new Exceptions\JsonApiError(
@@ -70,7 +70,7 @@ trait TAccount
 	/**
 	 * @throws Exceptions\JsonApi
 	 */
-	protected function hydrateLastNameAttribute(Objects\IStandardObject $attributes): string
+	protected function hydrateLastNameAttribute(Objects\StandardObject $attributes): string
 	{
 		if (!$attributes->has('last_name') || !is_scalar($attributes->get('last_name'))) {
 			throw new Exceptions\JsonApiError(
@@ -86,7 +86,7 @@ trait TAccount
 		return (string) $attributes->get('last_name');
 	}
 
-	protected function hydrateMiddleNameAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateMiddleNameAttribute(Objects\StandardObject $attributes): string|null
 	{
 		return $attributes->has('middle_name') && is_scalar(
 			$attributes->get('middle_name'),
@@ -100,13 +100,13 @@ trait TAccount
 	 * @throws Exceptions\JsonApiError
 	 */
 	protected function validateDetailsAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 		Entities\Accounts\Account|null $entity = null,
 	): void
 	{
 		$details = $attributes->get('details');
 
-		if (!$details instanceof Objects\IStandardObject) {
+		if (!$details instanceof Objects\StandardObject) {
 			// The base hydrator takes a JSON array for nested details. On create, reject it the way
 			// it rejects any other non-object value. On update, it is ignored.
 			if ($entity === null && is_array($details)) {
@@ -138,7 +138,7 @@ trait TAccount
 	}
 
 	protected function hydrateParamsAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Utils\ArrayHash
 	{
 		$params = Utils\ArrayHash::from([
@@ -154,7 +154,7 @@ trait TAccount
 
 		if (
 			$attributes->has('datetime')
-			&& $attributes->get('datetime') instanceof Objects\IStandardObject
+			&& $attributes->get('datetime') instanceof Objects\StandardObject
 		) {
 			$datetime = $attributes->get('datetime');
 
@@ -182,7 +182,7 @@ trait TAccount
 	 * @throws ValueError
 	 */
 	protected function hydrateStateAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Types\AccountState
 	{
 		if (

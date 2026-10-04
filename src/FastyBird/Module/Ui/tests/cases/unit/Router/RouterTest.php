@@ -45,7 +45,7 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('prefixedRoutes')]
 	public function testPrefixedRoutes(string $url, string $token, int $statusCode): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [
 			'authorization' => $token,

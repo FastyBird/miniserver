@@ -40,7 +40,7 @@ abstract class Display extends Schemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_WIDGET = 'widget';
 
-	public function __construct(protected readonly Routing\IRouter $router)
+	public function __construct(protected readonly Routing\Router $router)
 	{
 	}
 

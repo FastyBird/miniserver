@@ -3,7 +3,9 @@
 namespace FastyBird\Core\Api\Encoding\Objects;
 
 use ArrayIterator;
+use Countable;
 use FastyBird\Core\Exceptions;
+use IteratorAggregate;
 use Override;
 use Traversable;
 use function count;
@@ -12,10 +14,10 @@ use function in_array;
 /**
  * Error object collection
  */
-final class ErrorObjectCollection implements IErrorObjectCollection
+final class ErrorObjectCollection implements IteratorAggregate, Countable
 {
 
-	/** @var Array<int, IErrorObject> */
+	/** @var Array<int, ErrorObject> */
 	private array $stack = [];
 
 	/**
@@ -31,16 +33,16 @@ final class ErrorObjectCollection implements IErrorObjectCollection
 	/**
 	 * @param array<mixed> $errorArray
 	 *
-	 * @phpstan-return IErrorObjectCollection<int, IErrorObject>
+	 * @phpstan-return ErrorObjectCollection<int, ErrorObject>
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(array $errorArray): IErrorObjectCollection
+	public static function create(array $errorArray): ErrorObjectCollection
 	{
 		$data = [];
 
 		foreach ($errorArray as $error) {
-			if ($error instanceof IStandardObject) {
+			if ($error instanceof StandardObject) {
 				$data[] = new ErrorObject($error);
 			}
 		}
@@ -53,11 +55,10 @@ final class ErrorObjectCollection implements IErrorObjectCollection
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	#[Override]
 	public function addMany(array $error): void
 	{
 		foreach ($error as $item) {
-			if (!$item instanceof IErrorObject) {
+			if (!$item instanceof ErrorObject) {
 				throw new Exceptions\InvalidArgument('Expecting only error objects with keys.');
 			}
 
@@ -65,16 +66,14 @@ final class ErrorObjectCollection implements IErrorObjectCollection
 		}
 	}
 
-	#[Override]
-	public function add(IErrorObject $error): void
+	public function add(ErrorObject $error): void
 	{
 		if (!$this->has($error)) {
 			$this->stack[] = $error;
 		}
 	}
 
-	#[Override]
-	public function has(IErrorObject $error): bool
+	public function has(ErrorObject $error): bool
 	{
 		return in_array($error, $this->stack, true);
 	}
@@ -82,7 +81,7 @@ final class ErrorObjectCollection implements IErrorObjectCollection
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @phpstan-return ArrayIterator<int, IErrorObject>
+	 * @phpstan-return ArrayIterator<int, ErrorObject>
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator
@@ -90,13 +89,11 @@ final class ErrorObjectCollection implements IErrorObjectCollection
 		return new ArrayIterator($this->stack);
 	}
 
-	#[Override]
 	public function getAll(): Traversable
 	{
 		return $this->getIterator();
 	}
 
-	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];

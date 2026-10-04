@@ -36,7 +36,7 @@ final class DisplayV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('displayRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -100,7 +100,7 @@ final class DisplayV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('displayUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -169,7 +169,7 @@ final class DisplayV1Test extends Tests\Cases\Unit\DbTestCase
 	 */
 	public function testUpdatePersists(): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$url = '/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display';
 

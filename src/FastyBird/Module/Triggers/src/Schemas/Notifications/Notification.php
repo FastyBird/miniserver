@@ -40,7 +40,7 @@ abstract class Notification extends ApiSchemas\JsonApiSchema
 	 */
 	public const RELATIONSHIPS_TRIGGER = 'trigger';
 
-	public function __construct(protected Routing\IRouter $router)
+	public function __construct(protected Routing\Router $router)
 	{
 	}
 

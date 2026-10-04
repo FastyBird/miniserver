@@ -55,7 +55,7 @@ final class ChannelPropertyCondition extends PropertyCondition
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateChannelAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (

@@ -13,11 +13,11 @@ final class CollectionField extends EntityField
 {
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	public function getValue(Objects\IStandardObject $attributes): mixed
+	public function getValue(Objects\StandardObject $attributes): mixed
 	{
 		throw new Exceptions\InvalidState(
 			sprintf('Collection field \'%s\' could not be mapped as attribute.', $this->getMappedName()),

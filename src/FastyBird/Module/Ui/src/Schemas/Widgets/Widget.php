@@ -47,7 +47,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 
 	public const RELATIONSHIPS_DATA_SOURCES = 'data-sources';
 
-	public function __construct(protected readonly Routing\IRouter $router)
+	public function __construct(protected readonly Routing\Router $router)
 	{
 	}
 

@@ -51,7 +51,7 @@ final class Tab extends Hydrators\Hydrator
 		return Entities\Dashboards\Tabs\Tab::class;
 	}
 
-	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -63,7 +63,7 @@ final class Tab extends Hydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateCommentAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))

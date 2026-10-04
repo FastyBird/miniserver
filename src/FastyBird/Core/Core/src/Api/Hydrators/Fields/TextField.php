@@ -23,9 +23,9 @@ final class TextField extends Field
 	}
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 */
-	public function getValue(Objects\IStandardObject $attributes): string|null
+	public function getValue(Objects\StandardObject $attributes): string|null
 	{
 		$value = $attributes->get($this->getMappedName());
 

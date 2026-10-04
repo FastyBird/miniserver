@@ -40,8 +40,8 @@ final class ChannelsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Channels\Channel>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Channels\Channel>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Channels\Channel> $entityCrudFactory
@@ -104,9 +104,9 @@ final class ChannelsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Channels\Channel>
+	 * @return Crud\EntityCrud<Entities\Channels\Channel>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Channels\Channel::class);

@@ -66,8 +66,8 @@ final class SubDevice extends Device
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(
-		Objects\IRelationshipObject $relationships,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationships,
+		Objects\ResourceObjectCollection|null $included,
 		NsPanelEntities\Devices\Gateway|null $entity,
 	): array
 	{

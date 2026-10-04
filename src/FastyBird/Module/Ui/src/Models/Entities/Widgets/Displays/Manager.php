@@ -39,8 +39,8 @@ class Manager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Widgets\Displays\Display>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Widgets\Displays\Display>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Widgets\Displays\Display> $entityCrudFactory
@@ -71,9 +71,9 @@ class Manager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Widgets\Displays\Display>
+	 * @return Crud\EntityCrud<Entities\Widgets\Displays\Display>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Widgets\Displays\Display::class);

@@ -59,7 +59,7 @@ final class ConnectorProperty extends Property
 	public function __construct(
 		private readonly DevicesModels\Configuration\Connectors\Properties\Repository $connectorsPropertiesRepository,
 		private readonly DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesManager,
-		Routing\IRouter $router,
+		Routing\Router $router,
 	)
 	{
 		parent::__construct($router);

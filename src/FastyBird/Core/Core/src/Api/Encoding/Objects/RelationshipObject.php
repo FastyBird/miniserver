@@ -4,64 +4,59 @@ namespace FastyBird\Core\Api\Encoding\Objects;
 
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Exceptions;
-use Override;
 use function is_array;
 use function is_string;
 
 /**
  * Relationship object
  */
-final class RelationshipObject implements IRelationshipObject
+final class RelationshipObject
 {
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function __construct(private IStandardObject $data)
+	public function __construct(private StandardObject $data)
 	{
 		if (
-			!$data->has(Encoding\IDocument::KEYWORD_LINKS)
-			&& !$data->has(Encoding\IDocument::KEYWORD_DATA)
-			&& !$data->has(Encoding\IDocument::KEYWORD_META)
+			!$data->has(Encoding\Document::KEYWORD_LINKS)
+			&& !$data->has(Encoding\Document::KEYWORD_DATA)
+			&& !$data->has(Encoding\Document::KEYWORD_META)
 		) {
 			throw new Exceptions\InvalidArgument('Provided data object is not valid relationship object');
 		}
 	}
 
-	#[Override]
 	public function hasLinks(): bool
 	{
-		return $this->data->has(Encoding\IDocument::KEYWORD_LINKS);
+		return $this->data->has(Encoding\Document::KEYWORD_LINKS);
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getLinks(): ILinkObjectCollection
+	public function getLinks(): LinkObjectCollection
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_LINKS);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_LINKS);
 
-		if (!$raw instanceof IStandardObject && $raw !== null) {
+		if (!$raw instanceof StandardObject && $raw !== null) {
 			throw new Exceptions\Runtime('Links member is not an object.');
 		}
 
 		return LinkObjectCollection::create($raw);
 	}
 
-	#[Override]
 	public function hasData(): bool
 	{
-		return $this->data->has(Encoding\IDocument::KEYWORD_DATA);
+		return $this->data->has(Encoding\Document::KEYWORD_DATA);
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getData(): IResourceIdentifierCollection|IResourceIdentifierObject|null
+	public function getData(): ResourceIdentifierCollection|ResourceIdentifierObject|null
 	{
 		if ($this->isHasMany()) {
 			return $this->getIdentifiers();
@@ -72,58 +67,53 @@ final class RelationshipObject implements IRelationshipObject
 		throw new Exceptions\Runtime('No data member or data member is not a valid relationship.');
 	}
 
-	#[Override]
 	public function hasMeta(): bool
 	{
-		return $this->data->has(Encoding\IDocument::KEYWORD_META);
+		return $this->data->has(Encoding\Document::KEYWORD_META);
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getMeta(): IMetaObjectCollection
+	public function getMeta(): MetaObjectCollection
 	{
-		$raw = $this->data->get(Encoding\IDocument::KEYWORD_META);
+		$raw = $this->data->get(Encoding\Document::KEYWORD_META);
 
-		if (!$raw instanceof IStandardObject && $raw !== null) {
+		if (!$raw instanceof StandardObject && $raw !== null) {
 			throw new Exceptions\Runtime('Meta member is not an object.');
 		}
 
 		return MetaObjectCollection::create($raw);
 	}
 
-	#[Override]
 	public function isHasMany(): bool
 	{
-		return is_array($this->data->get(Encoding\IDocument::KEYWORD_DATA));
+		return is_array($this->data->get(Encoding\Document::KEYWORD_DATA));
 	}
 
-	#[Override]
 	public function isHasOne(): bool
 	{
-		if (!$this->data->has(Encoding\IDocument::KEYWORD_DATA)) {
+		if (!$this->data->has(Encoding\Document::KEYWORD_DATA)) {
 			return false;
 		}
 
-		$data = $this->data->get(Encoding\IDocument::KEYWORD_DATA);
+		$data = $this->data->get(Encoding\Document::KEYWORD_DATA);
 
-		return $data === null || $data instanceof IStandardObject;
+		return $data === null || $data instanceof StandardObject;
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getIdentifiers(): IResourceIdentifierCollection
+	public function getIdentifiers(): ResourceIdentifierCollection
 	{
 		if (!$this->isHasMany()) {
 			throw new Exceptions\Runtime('No data member or data member is not a valid has-many relationship.');
 		}
 
-		$data = $this->data->get(Encoding\IDocument::KEYWORD_DATA);
+		$data = $this->data->get(Encoding\Document::KEYWORD_DATA);
 
 		if (!is_array($data)) {
 			throw new Exceptions\Runtime('Data member has invalid format');
@@ -132,22 +122,20 @@ final class RelationshipObject implements IRelationshipObject
 		return ResourceIdentifierCollection::create($data);
 	}
 
-	#[Override]
 	public function hasIdentifier(): bool
 	{
-		$data = $this->data->get(Encoding\IDocument::KEYWORD_DATA);
+		$data = $this->data->get(Encoding\Document::KEYWORD_DATA);
 
-		return $data instanceof IStandardObject
-			&& $data->has(Encoding\IDocument::KEYWORD_TYPE)
-			&& $data->has(Encoding\IDocument::KEYWORD_ID);
+		return $data instanceof StandardObject
+			&& $data->has(Encoding\Document::KEYWORD_TYPE)
+			&& $data->has(Encoding\Document::KEYWORD_ID);
 	}
 
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function getIdentifier(): IResourceIdentifierObject
+	public function getIdentifier(): ResourceIdentifierObject
 	{
 		if (!$this->isHasOne()) {
 			throw new Exceptions\Runtime('No data member or data member is not a valid has-one relationship.');
@@ -157,14 +145,14 @@ final class RelationshipObject implements IRelationshipObject
 			throw new Exceptions\Runtime('No resource identifier - relationship is empty.');
 		}
 
-		$data = $this->data->get(Encoding\IDocument::KEYWORD_DATA);
+		$data = $this->data->get(Encoding\Document::KEYWORD_DATA);
 
-		if (!$data instanceof IStandardObject) {
+		if (!$data instanceof StandardObject) {
 			throw new Exceptions\Runtime('Data member has invalid format');
 		}
 
-		$type = $data->get(Encoding\IDocument::KEYWORD_TYPE);
-		$id = $data->get(Encoding\IDocument::KEYWORD_ID);
+		$type = $data->get(Encoding\Document::KEYWORD_TYPE);
+		$id = $data->get(Encoding\Document::KEYWORD_ID);
 
 		if (!is_string($type) || !is_string($id)) {
 			throw new Exceptions\Runtime('Data member has invalid format');

@@ -136,7 +136,7 @@ abstract class BaseV1
 	 * @throws ApiExceptions\JsonApi
 	 * @throws RuntimeException
 	 */
-	protected function createDocument(Message\ServerRequestInterface $request): Encoding\IDocument
+	protected function createDocument(Message\ServerRequestInterface $request): Encoding\Document
 	{
 		try {
 			$content = Utils\Json::decode($request->getBody()->getContents());
@@ -173,7 +173,7 @@ abstract class BaseV1
 	 */
 	protected function validateIdentifier(
 		Message\ServerRequestInterface $request,
-		Encoding\IDocument $document,
+		Encoding\Document $document,
 	): bool
 	{
 		if (
@@ -200,7 +200,7 @@ abstract class BaseV1
 	 * @throws ApiExceptions\JsonApiError
 	 */
 	protected function validateParentRelation(
-		Encoding\IDocument $document,
+		Encoding\Document $document,
 		string $relationship,
 		Uuid\UuidInterface $parentId,
 	): void

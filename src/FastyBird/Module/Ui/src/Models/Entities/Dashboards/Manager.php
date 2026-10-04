@@ -40,8 +40,8 @@ final class Manager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Dashboards\Dashboard>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Dashboards\Dashboard>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Dashboards\Dashboard> $entityCrudFactory
@@ -106,9 +106,9 @@ final class Manager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Dashboards\Dashboard>
+	 * @return Crud\EntityCrud<Entities\Dashboards\Dashboard>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Dashboards\Dashboard::class);

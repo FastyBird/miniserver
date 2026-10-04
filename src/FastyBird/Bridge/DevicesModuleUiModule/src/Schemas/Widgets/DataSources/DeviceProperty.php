@@ -59,7 +59,7 @@ final class DeviceProperty extends Property
 	public function __construct(
 		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesRepository,
 		private readonly DevicesModels\States\DevicePropertiesManager $devicePropertiesManager,
-		Routing\IRouter $router,
+		Routing\Router $router,
 	)
 	{
 		parent::__construct($router);

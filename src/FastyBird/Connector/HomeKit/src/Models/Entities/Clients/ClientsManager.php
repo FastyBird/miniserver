@@ -38,8 +38,8 @@ class ClientsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Clients\Client>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Clients\Client>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Clients\Client> $entityCrudFactory
@@ -91,9 +91,9 @@ class ClientsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Clients\Client>
+	 * @return Crud\EntityCrud<Entities\Clients\Client>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Clients\Client::class);

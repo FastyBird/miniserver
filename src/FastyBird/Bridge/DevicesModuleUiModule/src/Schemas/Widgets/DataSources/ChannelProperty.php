@@ -59,7 +59,7 @@ final class ChannelProperty extends Property
 	public function __construct(
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesRepository,
 		private readonly DevicesModels\States\ChannelPropertiesManager $channelPropertiesManager,
-		Routing\IRouter $router,
+		Routing\Router $router,
 	)
 	{
 		parent::__construct($router);

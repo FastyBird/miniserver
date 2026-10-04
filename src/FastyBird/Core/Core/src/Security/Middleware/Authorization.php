@@ -43,7 +43,7 @@ final readonly class Authorization implements MiddlewareInterface
 	{
 		$route = $request->getAttribute(Routing\Router::ROUTE);
 
-		if ($route instanceof Routing\IRoute) {
+		if ($route instanceof Routing\Route) {
 			$routeCallable = $route->getCallable();
 
 			if (

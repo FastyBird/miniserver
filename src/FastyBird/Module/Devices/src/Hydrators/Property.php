@@ -64,7 +64,7 @@ abstract class Property extends Hydrators\Hydrator
 			'scale' => 'scale',
 		];
 
-	protected function hydrateNameAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateNameAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('name'))
@@ -76,12 +76,12 @@ abstract class Property extends Hydrators\Hydrator
 		return (string) $attributes->get('name');
 	}
 
-	protected function hydrateSettableAttribute(Objects\IStandardObject $attributes): bool
+	protected function hydrateSettableAttribute(Objects\StandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('settable')) && boolval($attributes->get('settable'));
 	}
 
-	protected function hydrateQueryableAttribute(Objects\IStandardObject $attributes): bool
+	protected function hydrateQueryableAttribute(Objects\StandardObject $attributes): bool
 	{
 		return is_scalar($attributes->get('queryable')) && boolval($attributes->get('queryable'));
 	}
@@ -91,7 +91,7 @@ abstract class Property extends Hydrators\Hydrator
 	 * @throws ValueError
 	 */
 	protected function hydrateDataTypeAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Types\DataType|null
 	{
 		if (
@@ -105,7 +105,7 @@ abstract class Property extends Hydrators\Hydrator
 		return Types\DataType::from((string) $attributes->get('data_type'));
 	}
 
-	protected function hydrateUnitAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateUnitAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('unit'))
@@ -122,7 +122,7 @@ abstract class Property extends Hydrators\Hydrator
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	protected function hydrateFormatAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateFormatAttribute(Objects\StandardObject $attributes): string|null
 	{
 		$rawFormat = $attributes->get('format');
 		$rawDataType = $attributes->get('data_type');
@@ -229,7 +229,7 @@ abstract class Property extends Hydrators\Hydrator
 		return (string) $rawFormat;
 	}
 
-	protected function hydrateInvalidAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateInvalidAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('invalid'))
@@ -241,7 +241,7 @@ abstract class Property extends Hydrators\Hydrator
 		return (string) $attributes->get('invalid');
 	}
 
-	protected function hydrateScaleAttribute(Objects\IStandardObject $attributes): int|null
+	protected function hydrateScaleAttribute(Objects\StandardObject $attributes): int|null
 	{
 		if (
 			!is_scalar($attributes->get('scale'))
@@ -253,7 +253,7 @@ abstract class Property extends Hydrators\Hydrator
 		return (int) $attributes->get('scale');
 	}
 
-	protected function hydrateValueAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateValueAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('value'))

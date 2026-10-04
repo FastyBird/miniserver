@@ -26,7 +26,7 @@ final readonly class Application
 	];
 
 	public function __construct(
-		private readonly Routing\IRouter $router,
+		private readonly Routing\Router $router,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{

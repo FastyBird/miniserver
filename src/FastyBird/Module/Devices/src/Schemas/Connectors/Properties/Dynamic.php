@@ -55,7 +55,7 @@ final class Dynamic extends Property
 	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/connector/' . Types\PropertyType::DYNAMIC->value;
 
 	public function __construct(
-		Routing\IRouter $router,
+		Routing\Router $router,
 		private readonly Models\Configuration\Connectors\Properties\Repository $connectorsPropertiesConfigurationRepository,
 		private readonly Models\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
 	)

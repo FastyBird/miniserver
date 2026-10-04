@@ -39,7 +39,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('widgetsRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -133,7 +133,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('widgetsCreate')]
 	public function testCreate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -220,7 +220,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('widgetsUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -305,7 +305,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 		array $expected,
 	): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$request = new ServerRequest(
 			$method,
@@ -424,7 +424,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	 */
 	public function testCreateKeepsIncludedDataSourceParams(): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$body = file_get_contents(
 			__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.dataSourceParams.json',
@@ -480,7 +480,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('widgetsDelete')]
 	public function testDelete(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 

@@ -25,7 +25,7 @@ final class EntityUpdater extends Crud\CrudManager
 	 */
 	public function __construct(
 		string $entityName,
-		private readonly Mapping\IEntityMapper $entityMapper,
+		private readonly Mapping\EntityMapper $entityMapper,
 		Persistence\ManagerRegistry $managerRegistry,
 	)
 	{

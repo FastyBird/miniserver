@@ -45,7 +45,7 @@ abstract class Trigger extends ApiSchemas\JsonApiSchema
 	public const RELATIONSHIPS_NOTIFICATIONS = 'notifications';
 
 	public function __construct(
-		protected readonly Routing\IRouter $router,
+		protected readonly Routing\Router $router,
 		private readonly Models\States\ActionsRepository $actionStateRepository,
 	)
 	{

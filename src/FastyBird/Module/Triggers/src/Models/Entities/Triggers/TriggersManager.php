@@ -38,8 +38,8 @@ final class TriggersManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Triggers\Trigger>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Triggers\Trigger>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Triggers\Trigger> $entityCrudFactory
@@ -91,9 +91,9 @@ final class TriggersManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Triggers\Trigger>
+	 * @return Crud\EntityCrud<Entities\Triggers\Trigger>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Triggers\Trigger::class);

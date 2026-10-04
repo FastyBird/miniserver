@@ -3,7 +3,9 @@
 namespace FastyBird\Core\Api\Encoding\Objects;
 
 use ArrayIterator;
+use Countable;
 use FastyBird\Core\Exceptions;
+use IteratorAggregate;
 use Override;
 use Traversable;
 use function array_key_exists;
@@ -15,13 +17,13 @@ use function sprintf;
 /**
  * Relationship object collection
  */
-final class RelationshipObjectCollection implements IRelationshipObjectCollection
+final class RelationshipObjectCollection implements IteratorAggregate, Countable
 {
 
 	/**
 	 * @var array<mixed>
 
-	 * @phpstan-var Array<string, IRelationshipObject>
+	 * @phpstan-var Array<string, RelationshipObject>
 	 */
 	private array $stack = [];
 
@@ -36,11 +38,11 @@ final class RelationshipObjectCollection implements IRelationshipObjectCollectio
 	}
 
 	/**
-	 * @phpstan-return IRelationshipObjectCollection<string, IRelationshipObject>
+	 * @phpstan-return RelationshipObjectCollection<string, RelationshipObject>
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public static function create(IStandardObject|null $relationshipObject): IRelationshipObjectCollection
+	public static function create(StandardObject|null $relationshipObject): RelationshipObjectCollection
 	{
 		if ($relationshipObject === null) {
 			return new self([]);
@@ -51,7 +53,7 @@ final class RelationshipObjectCollection implements IRelationshipObjectCollectio
 		foreach ($relationshipObject->keys() as $key) {
 			$relationship = $relationshipObject->get($key);
 
-			if ($relationship instanceof IStandardObject) {
+			if ($relationship instanceof StandardObject) {
 				$data[$key] = new RelationshipObject($relationship);
 			}
 		}
@@ -64,11 +66,10 @@ final class RelationshipObjectCollection implements IRelationshipObjectCollectio
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	#[Override]
 	public function addMany(array $relationship): void
 	{
 		foreach ($relationship as $key => $item) {
-			if (!$item instanceof IRelationshipObject || !is_string($key)) {
+			if (!$item instanceof RelationshipObject || !is_string($key)) {
 				throw new Exceptions\InvalidArgument('Expecting only relationship objects with keys.');
 			}
 
@@ -76,15 +77,13 @@ final class RelationshipObjectCollection implements IRelationshipObjectCollectio
 		}
 	}
 
-	#[Override]
-	public function add(IRelationshipObject $relationship, string $key): void
+	public function add(RelationshipObject $relationship, string $key): void
 	{
 		if (!$this->has($key)) {
 			$this->stack[$key] = $relationship;
 		}
 	}
 
-	#[Override]
 	public function has(string $key): bool
 	{
 		return array_key_exists($key, $this->stack);
@@ -93,8 +92,7 @@ final class RelationshipObjectCollection implements IRelationshipObjectCollectio
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
-	public function get(string $key): IRelationshipObject
+	public function get(string $key): RelationshipObject
 	{
 		if (!$this->has($key)) {
 			throw new Exceptions\Runtime(sprintf('Relationship member "%s" is not present.', $key));
@@ -106,7 +104,7 @@ final class RelationshipObjectCollection implements IRelationshipObjectCollectio
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @phpstan-return ArrayIterator<string, IRelationshipObject>
+	 * @phpstan-return ArrayIterator<string, RelationshipObject>
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator
@@ -117,7 +115,6 @@ final class RelationshipObjectCollection implements IRelationshipObjectCollectio
 	/**
 	 * @throws Exceptions\Runtime
 	 */
-	#[Override]
 	public function getAll(): Traversable
 	{
 		foreach (array_keys($this->stack) as $key) {
@@ -125,7 +122,6 @@ final class RelationshipObjectCollection implements IRelationshipObjectCollectio
 		}
 	}
 
-	#[Override]
 	public function isEmpty(): bool
 	{
 		return $this->stack === [];

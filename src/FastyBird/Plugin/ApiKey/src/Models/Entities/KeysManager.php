@@ -37,8 +37,8 @@ final class KeysManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Key>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Key>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Key> $entityCrudFactory
@@ -90,9 +90,9 @@ final class KeysManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Key>
+	 * @return Crud\EntityCrud<Entities\Key>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Key::class);

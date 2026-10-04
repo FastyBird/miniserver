@@ -50,7 +50,7 @@ abstract class Display extends Hydrators\Hydrator
 	/**
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydratePrecisionAttribute(Objects\IStandardObject $attributes): int
+	protected function hydratePrecisionAttribute(Objects\StandardObject $attributes): int
 	{
 		if (
 			!is_scalar($attributes->get('precision'))
@@ -72,7 +72,7 @@ abstract class Display extends Hydrators\Hydrator
 	/**
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateMinimumValueAttribute(Objects\IStandardObject $attributes): float
+	protected function hydrateMinimumValueAttribute(Objects\StandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('minimum_value'))
@@ -94,7 +94,7 @@ abstract class Display extends Hydrators\Hydrator
 	/**
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateMaximumValueAttribute(Objects\IStandardObject $attributes): float
+	protected function hydrateMaximumValueAttribute(Objects\StandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('maximum_value'))
@@ -116,7 +116,7 @@ abstract class Display extends Hydrators\Hydrator
 	/**
 	 * @throws Exceptions\JsonApiError
 	 */
-	protected function hydrateStepValueAttribute(Objects\IStandardObject $attributes): float
+	protected function hydrateStepValueAttribute(Objects\StandardObject $attributes): float
 	{
 		if (
 			!is_scalar($attributes->get('step_value'))

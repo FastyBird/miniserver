@@ -40,8 +40,8 @@ final class ControlsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Connectors\Controls\Control>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Connectors\Controls\Control>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Connectors\Controls\Control> $entityCrudFactory
@@ -106,9 +106,9 @@ final class ControlsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Connectors\Controls\Control>
+	 * @return Crud\EntityCrud<Entities\Connectors\Controls\Control>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Connectors\Controls\Control::class);

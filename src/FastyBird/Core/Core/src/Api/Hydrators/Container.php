@@ -40,7 +40,7 @@ final class Container
 	 * @throws DI\MissingServiceException
 	 * @throws Exceptions\InvalidState
 	 */
-	public function findHydrator(Encoding\IDocument $document): Hydrator|null
+	public function findHydrator(Encoding\Document $document): Hydrator|null
 	{
 		$this->hydrators->rewind();
 

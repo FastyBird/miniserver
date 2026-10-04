@@ -20,9 +20,9 @@ abstract class Field
 	}
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 */
-	abstract public function getValue(Objects\IStandardObject $attributes): mixed;
+	abstract public function getValue(Objects\StandardObject $attributes): mixed;
 
 	public function getMappedName(): string
 	{

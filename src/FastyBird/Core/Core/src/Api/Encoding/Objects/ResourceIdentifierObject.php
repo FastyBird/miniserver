@@ -14,7 +14,7 @@ use function sprintf;
 /**
  * Resource identifier object
  */
-final class ResourceIdentifierObject implements IResourceIdentifierObject
+final class ResourceIdentifierObject
 {
 
 	private string $type;
@@ -24,10 +24,10 @@ final class ResourceIdentifierObject implements IResourceIdentifierObject
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function __construct(IStandardObject $data)
+	public function __construct(StandardObject $data)
 	{
-		$type = $data->get(Encoding\IDocument::KEYWORD_TYPE);
-		$id = $data->get(Encoding\IDocument::KEYWORD_ID);
+		$type = $data->get(Encoding\Document::KEYWORD_TYPE);
+		$id = $data->get(Encoding\Document::KEYWORD_ID);
 
 		if (!is_string($type) || (!is_string($id) && $id !== null)) {
 			throw new Exceptions\InvalidArgument('Data member has invalid format');
@@ -37,19 +37,16 @@ final class ResourceIdentifierObject implements IResourceIdentifierObject
 		$this->id = $id;
 	}
 
-	#[Override]
 	public function getId(): string|null
 	{
 		return $this->id;
 	}
 
-	#[Override]
 	public function getType(): string
 	{
 		return $this->type;
 	}
 
-	#[Override]
 	public function isType(string|array $typeOrTypes): bool
 	{
 		return in_array($this->type, is_array($typeOrTypes) ? $typeOrTypes : [$typeOrTypes], true);
@@ -58,7 +55,6 @@ final class ResourceIdentifierObject implements IResourceIdentifierObject
 	/**
 	 * {@inheritDoc}
 	 */
-	#[Override]
 	public function mapType(array $types): string
 	{
 		if (array_key_exists($this->type, $types)) {
@@ -68,14 +64,12 @@ final class ResourceIdentifierObject implements IResourceIdentifierObject
 		throw new Exceptions\Runtime(sprintf('Type "%s" is not in the supplied map.', $this->type));
 	}
 
-	#[Override]
-	public function isSame(IResourceIdentifierObject $identifier): bool
+	public function isSame(ResourceIdentifierObject $identifier): bool
 	{
 		return $this->type === $identifier->getType() &&
 			$this->id === $identifier->getId();
 	}
 
-	#[Override]
 	public function toString(): string
 	{
 		return sprintf('%s:%s', $this->type, $this->id);

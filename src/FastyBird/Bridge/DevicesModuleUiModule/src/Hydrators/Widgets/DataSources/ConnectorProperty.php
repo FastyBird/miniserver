@@ -70,13 +70,13 @@ final class ConnectorProperty extends UiHydrators\Widgets\DataSources\DataSource
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyRelationship(
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included,
 		DevicesModuleUiModuleEntities\Widgets\DataSources\ConnectorProperty|null $entity,
 	): DevicesEntities\Connectors\Properties\Property
 	{
 		if (
-			$relationship->getData() instanceof Objects\IResourceIdentifierObject
+			$relationship->getData() instanceof Objects\ResourceIdentifierObject
 			&& is_string($relationship->getData()->getId())
 			&& Uuid\Uuid::isValid($relationship->getData()->getId())
 		) {

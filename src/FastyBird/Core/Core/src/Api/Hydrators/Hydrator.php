@@ -140,7 +140,7 @@ abstract class Hydrator
 	 * @throws Throwable
 	 */
 	public function hydrate(
-		Encoding\IDocument $document,
+		Encoding\Document $document,
 		object|null $entity = null,
 		bool $includeRelationShips = true,
 	): Utils\ArrayHash
@@ -785,7 +785,7 @@ abstract class Hydrator
 	}
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 * @param array<Fields\Field> $entityMapping
 	 * @param T|null $entity
 	 *
@@ -796,7 +796,7 @@ abstract class Hydrator
 	 */
 	protected function hydrateAttributes(
 		string $className,
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 		array $entityMapping,
 		object|null $entity,
 		string|null $rootField,
@@ -842,13 +842,13 @@ abstract class Hydrator
 					$fieldClassName = $field->getClassName();
 
 					/**
-					 * @var string|int|float|bool|array<mixed>|Objects\IStandardObject|null $fieldAttributes
+					 * @var string|int|float|bool|array<mixed>|Objects\StandardObject|null $fieldAttributes
 					 *
-					 * @phpstan-var string|int|float|bool|array<mixed>|Objects\IStandardObject<string, string|int|float|bool|array<mixed>|null>|null $fieldAttributes
+					 * @phpstan-var string|int|float|bool|array<mixed>|Objects\StandardObject<string, string|int|float|bool|array<mixed>|null>|null $fieldAttributes
 					 */
 					$fieldAttributes = $attributes->get($field->getMappedName());
 
-					if ($fieldAttributes instanceof Objects\IStandardObject) {
+					if ($fieldAttributes instanceof Objects\StandardObject) {
 						$data[$field->getFieldName()] = $this->hydrateAttributes(
 							$fieldClassName,
 							$fieldAttributes,
@@ -959,11 +959,11 @@ abstract class Hydrator
 	/**
 	 * Check if hydrator has custom attribute hydration method
 	 *
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 */
 	private function hasCustomHydrateAttribute(
 		string $attributeKey,
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): bool
 	{
 		$method = $this->methodForAttribute($attributeKey);
@@ -1004,12 +1004,12 @@ abstract class Hydrator
 	 * by throwing. Use it for a field whose value comes from somewhere else, such as a nested entity
 	 * that hydrateAttributes() fills from the nested object.
 	 *
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 * @param T|null $entity
 	 */
 	private function callValidateAttribute(
 		string $attributeKey,
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 		object|null $entity,
 	): void
 	{
@@ -1029,12 +1029,12 @@ abstract class Hydrator
 	/**
 	 * Hydrate a attribute by invoking a method on this hydrator.
 	 *
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 * @param T|null $entity
 	 */
 	private function callHydrateAttribute(
 		string $attributeKey,
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 		object|null $entity = null,
 	): mixed
 	{
@@ -1055,7 +1055,7 @@ abstract class Hydrator
 
 	/**
 	 * @param array<Fields\Field> $entityMapping
-	 * @param Objects\IResourceObjectCollection<Objects\IResourceObject>|null $included
+	 * @param Objects\ResourceObjectCollection<Objects\ResourceObject>|null $included
 	 * @param T|null $entity
 	 *
 	 * @return  array<mixed>
@@ -1063,9 +1063,9 @@ abstract class Hydrator
 	 * @throws CoreExceptions\InvalidState
 	 */
 	protected function hydrateRelationships(
-		Objects\IRelationshipObjectCollection $relationships,
+		Objects\RelationshipObjectCollection $relationships,
 		array $entityMapping,
-		Objects\IResourceObjectCollection|null $included = null,
+		Objects\ResourceObjectCollection|null $included = null,
 		object|null $entity = null,
 	): array
 	{
@@ -1130,7 +1130,7 @@ abstract class Hydrator
 	/**
 	 * Hydrate a relationship by invoking a method on this hydrator.
 	 *
-	 * @param Objects\IResourceObjectCollection<Objects\IResourceObject>|null $included
+	 * @param Objects\ResourceObjectCollection<Objects\ResourceObject>|null $included
 	 * @param T|null $entity
 	 *
 	 * @return  array<mixed>|object|null
@@ -1139,8 +1139,8 @@ abstract class Hydrator
 	 */
 	private function callHydrateRelationship(
 		string $relationshipKey,
-		Objects\IRelationshipObject $relationship,
-		Objects\IResourceObjectCollection|null $included = null,
+		Objects\RelationshipObject $relationship,
+		Objects\ResourceObjectCollection|null $included = null,
 		object|null $entity = null,
 	): array|object|null
 	{
@@ -1186,7 +1186,7 @@ abstract class Hydrator
 	 */
 	protected function hydrateHasOne(
 		Fields\Field $field,
-		Objects\IRelationshipObject $relationship,
+		Objects\RelationshipObject $relationship,
 		object|null $entity,
 		array $entityMapping,
 	): object|null
@@ -1230,7 +1230,7 @@ abstract class Hydrator
 	 */
 	private function findRelated(
 		string $entityClassName,
-		Objects\IResourceIdentifierObject $identifier,
+		Objects\ResourceIdentifierObject $identifier,
 	): object|null
 	{
 		if ($identifier->getId() === null || !Uuid\Uuid::isValid($identifier->getId())) {
@@ -1262,7 +1262,7 @@ abstract class Hydrator
 	 */
 	protected function hydrateHasMany(
 		Fields\Field $field,
-		Objects\IRelationshipObject $relationship,
+		Objects\RelationshipObject $relationship,
 		object|null $entity,
 		array $entityMapping,
 	): array

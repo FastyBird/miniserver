@@ -26,11 +26,11 @@ final class DateTimeField extends Field
 	}
 
 	/**
-	 * @param Objects\IStandardObject<string, mixed> $attributes
+	 * @param Objects\StandardObject<string, mixed> $attributes
 	 *
 	 * @throws ValueError
 	 */
-	public function getValue(Objects\IStandardObject $attributes): DateTimeInterface|null
+	public function getValue(Objects\StandardObject $attributes): DateTimeInterface|null
 	{
 		$value = $attributes->get($this->getMappedName());
 

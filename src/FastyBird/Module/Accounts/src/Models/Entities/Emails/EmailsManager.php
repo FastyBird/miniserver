@@ -38,8 +38,8 @@ final class EmailsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud<Entities\Emails\Email>|null */
-	private Crud\IEntityCrud|null $entityCrud = null;
+	/** @var Crud\EntityCrud<Entities\Emails\Email>|null */
+	private Crud\EntityCrud|null $entityCrud = null;
 
 	/**
 	 * @param Crud\CrudFactory<Entities\Emails\Email> $entityCrudFactory
@@ -91,9 +91,9 @@ final class EmailsManager
 	}
 
 	/**
-	 * @return Crud\IEntityCrud<Entities\Emails\Email>
+	 * @return Crud\EntityCrud<Entities\Emails\Email>
 	 */
-	public function getEntityCrud(): Crud\IEntityCrud
+	public function getEntityCrud(): Crud\EntityCrud
 	{
 		if ($this->entityCrud === null) {
 			$this->entityCrud = $this->entityCrudFactory->create(Entities\Emails\Email::class);

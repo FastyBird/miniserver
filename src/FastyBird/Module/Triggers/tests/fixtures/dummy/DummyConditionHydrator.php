@@ -33,7 +33,7 @@ final class DummyConditionHydrator extends Hydrators\Conditions\Condition
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateWatchItemAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Uuid\UuidInterface
 	{
 		if (
@@ -59,7 +59,7 @@ final class DummyConditionHydrator extends Hydrators\Conditions\Condition
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateOperatorAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): Types\ConditionOperator
 	{
 		// Condition operator have to be set
@@ -96,7 +96,7 @@ final class DummyConditionHydrator extends Hydrators\Conditions\Condition
 	 * @throws Exceptions\JsonApi
 	 */
 	protected function hydrateOperandAttribute(
-		Objects\IStandardObject $attributes,
+		Objects\StandardObject $attributes,
 	): string
 	{
 		if (

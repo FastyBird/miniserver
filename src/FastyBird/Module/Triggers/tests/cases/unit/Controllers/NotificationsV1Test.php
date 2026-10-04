@@ -36,7 +36,7 @@ final class NotificationsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('notificationsRead')]
 	public function testRead(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -219,7 +219,7 @@ final class NotificationsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('notificationsCreate')]
 	public function testCreate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -371,7 +371,7 @@ final class NotificationsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('notificationsUpdate')]
 	public function testUpdate(string $url, string|null $token, string $body, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 
@@ -505,7 +505,7 @@ final class NotificationsV1Test extends Tests\Cases\Unit\DbTestCase
 	#[DataProvider('notificationsDelete')]
 	public function testDelete(string $url, string|null $token, int $statusCode, string $fixture): void
 	{
-		$router = $this->getContainer()->getByType(Routing\IRouter::class);
+		$router = $this->getContainer()->getByType(Routing\Router::class);
 
 		$headers = [];
 

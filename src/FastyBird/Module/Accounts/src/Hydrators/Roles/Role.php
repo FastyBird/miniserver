@@ -48,7 +48,7 @@ final class Role extends Hydrators\Hydrator
 		return Entities\Roles\Role::class;
 	}
 
-	protected function hydrateCommentAttribute(Objects\IStandardObject $attributes): string|null
+	protected function hydrateCommentAttribute(Objects\StandardObject $attributes): string|null
 	{
 		if (
 			!is_scalar($attributes->get('comment'))

@@ -11,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * Router middleware dispatcher
  */
-final class MiddlewareDispatcher implements IMiddlewareDispatcher
+final class MiddlewareDispatcher implements RequestHandlerInterface
 {
 
 	/**
@@ -24,7 +24,6 @@ final class MiddlewareDispatcher implements IMiddlewareDispatcher
 		$this->seedMiddlewareStack($kernel);
 	}
 
-	#[Override]
 	public function seedMiddlewareStack(RequestHandlerInterface $kernel): void
 	{
 		$this->tip = $kernel;
@@ -36,7 +35,6 @@ final class MiddlewareDispatcher implements IMiddlewareDispatcher
 		return $this->tip->handle($request);
 	}
 
-	#[Override]
 	public function add(MiddlewareInterface $middleware): void
 	{
 		$next = $this->tip;

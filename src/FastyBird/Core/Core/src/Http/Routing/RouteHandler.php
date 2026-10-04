@@ -19,7 +19,7 @@ final class RouteHandler implements RequestHandlerInterface
 
 	private FastRouteDispatcher|null $dispatcher = null;
 
-	public function __construct(private IRouter $router)
+	public function __construct(private Router $router)
 	{
 	}
 
@@ -44,7 +44,7 @@ final class RouteHandler implements RequestHandlerInterface
 		);
 
 		$route = $request->getAttribute(Router::ROUTE);
-		assert($route instanceof IRoute);
+		assert($route instanceof Route);
 
 		return $route->run($request);
 	}
@@ -114,7 +114,7 @@ final class RouteHandler implements RequestHandlerInterface
 			$basePath = $this->router->getBasePath();
 
 			foreach ($this->router->getIterator() as $route) {
-				assert($route instanceof IRoute);
+				assert($route instanceof Route);
 				$r->addRoute($route->getMethods(), $basePath . $route->getPattern(), $route->getIdentifier());
 			}
 		};
