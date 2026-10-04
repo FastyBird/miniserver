@@ -6043,12 +6043,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Wamp/RouteList.php
 
 		-
-			message: '#^Strict comparison using \=\=\= between array and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Wamp/RouteList.php
-
-		-
 			message: '#^Binary operation "\." between ''Missing data for…'' and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1

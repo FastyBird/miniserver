@@ -21,7 +21,7 @@ use function substr;
 final class RouteList extends Utils\ArrayList implements WampRouter
 {
 
-	private array $cachedRoutes;
+	private array|null $cachedRoutes = null;
 
 	private string $module;
 
@@ -63,6 +63,8 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 		if ($this->cachedRoutes === null) {
 			$this->warmupCache();
 		}
+
+		assert($this->cachedRoutes !== null);
 
 		if ($this->module) {
 			if (strncmp($tmp = $appRequest->getControllerName(), $this->module, strlen($this->module)) === 0) {
@@ -106,6 +108,9 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 		}
 
 		parent::offsetSet($index, $route);
+
+		// A route added after the first constructUrl() would otherwise be missing from the cache
+		$this->cachedRoutes = null;
 	}
 
 	public function getModule(): string
