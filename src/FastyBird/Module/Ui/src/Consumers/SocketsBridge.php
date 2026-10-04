@@ -112,7 +112,7 @@ final readonly class SocketsBridge implements Consumers\Consumer
 	private function sendMessage(array $data): bool
 	{
 		try {
-			$link = $this->linkGenerator->link('DevicesModule:Exchange:');
+			$link = $this->linkGenerator->link('UiModule:Exchange:');
 
 			if ($this->topicsStorage->hasTopic($link)) {
 				$topic = $this->topicsStorage->getTopic($link);
