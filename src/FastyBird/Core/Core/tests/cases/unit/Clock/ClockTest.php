@@ -42,6 +42,7 @@ final class ClockTest extends BaseTestCase
 		$now = $clock->now();
 		$after = microtime(true);
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('Europe/Prague', $now->getTimezone()->getName());
 		self::assertGreaterThanOrEqual((int) $before, $now->getTimestamp());
@@ -56,6 +57,7 @@ final class ClockTest extends BaseTestCase
 	{
 		$now = (new Clock\SystemClock())->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame(date_default_timezone_get(), $now->getTimezone()->getName());
 		self::assertLessThan(5.0, abs((float) $now->format('U.u') - microtime(true)));
@@ -74,6 +76,7 @@ final class ClockTest extends BaseTestCase
 		$first = $clock->now();
 		$second = $clock->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $first);
 		self::assertSame('2026-10-03T12:34:56.123456+00:00', $first->format('Y-m-d\TH:i:s.uP'));
 		self::assertEquals($first, $second);
@@ -94,6 +97,7 @@ final class ClockTest extends BaseTestCase
 		$frozenAt->modify('+1 day');
 		$now = $clock->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('2026-10-03T12:34:56.123456+00:00', $now->format('Y-m-d\TH:i:s.uP'));
 	}
@@ -112,6 +116,7 @@ final class ClockTest extends BaseTestCase
 			$clock = new Clock\FrozenClock($frozenAt, new DateTimeZone('UTC'));
 
 			$returned = $clock->now();
+			// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 			self::assertInstanceOf(DateTimeImmutable::class, $returned);
 
 			$moved = $returned->modify('+1 day');
@@ -133,6 +138,7 @@ final class ClockTest extends BaseTestCase
 
 		$now = $clock->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame(1_759_494_896, $now->getTimestamp());
 		self::assertSame('250000', $now->format('u'));
@@ -179,6 +185,7 @@ final class ClockTest extends BaseTestCase
 
 		$now = $clock->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('2020-04-01T12:00:00.000000+00:00', $now->format('Y-m-d\TH:i:s.uP'));
 		self::assertSame('UTC', $now->getTimezone()->getName());

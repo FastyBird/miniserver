@@ -55,6 +55,7 @@ final class TokenCompatibilityTest extends BaseTestCase
 	public function testATokenTheContainerIssuesIsReadBackByTheContainer(): void
 	{
 		$now = $this->container->getByType(ClockInterface::class)->now();
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; the assertion predates it)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 
 		$token = $this->container->getByType(Identity\TokenBuilder::class)
@@ -88,6 +89,7 @@ final class TokenCompatibilityTest extends BaseTestCase
 	public function testAnExpiredTokenTheContainerIssuedIsRefused(): void
 	{
 		$now = $this->container->getByType(ClockInterface::class)->now();
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; the assertion predates it)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 
 		$token = $this->container->getByType(Identity\TokenBuilder::class)
