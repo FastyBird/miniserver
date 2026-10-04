@@ -15,8 +15,6 @@ use Ramsey\Uuid\Uuid;
 use Throwable;
 use function array_key_exists;
 use function array_replace;
-use function class_implements;
-use function in_array;
 use function is_array;
 
 final class Route implements RequestHandlerInterface
@@ -181,8 +179,7 @@ final class Route implements RequestHandlerInterface
 		if (
 			is_array($callable)
 			&& $callable[0] instanceof RequestHandlerInterface
-			&& class_implements($strategy) !== false
-			&& !in_array(Handlers\RequestHandler::class, class_implements($strategy), true)
+			&& !$strategy instanceof Handlers\RequestHandler
 		) {
 			$strategy = new Handlers\RequestHandler();
 		}

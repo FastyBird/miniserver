@@ -5488,12 +5488,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Http/Routing/Route.php
 
 		-
-			message: '#^Strict comparison using \!\=\= between array\<string, class\-string\> and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/Routing/Route.php
-
-		-
 			message: '#^Method FastyBird\\Core\\Http\\Routing\\RouteCollector\:\:any\(\) has parameter \$callable with no signature specified for callable\.$#'
 			identifier: missingType.callable
 			count: 1
