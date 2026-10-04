@@ -4,7 +4,7 @@ namespace FastyBird\Core\Security\Identity;
 
 use FastyBird\Core\Constants;
 use FastyBird\Core\Security\Exceptions;
-use Lcobucci\Clock as LcobucciClock;
+use Lcobucci\Clock;
 use Lcobucci\JWT;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
@@ -46,7 +46,7 @@ final readonly class TokenValidator
 
 		$configuration->setValidationConstraints(
 			new JWT\Validation\Constraint\IssuedBy($this->tokenIssuer),
-			new JWT\Validation\Constraint\LooseValidAt(new LcobucciClock\FrozenClock($now)),
+			new JWT\Validation\Constraint\LooseValidAt(new Clock\FrozenClock($now)),
 			new JWT\Validation\Constraint\SignedWith(
 				$configuration->signer(),
 				JWT\Signer\Key\InMemory::plainText($this->tokenSignature),
