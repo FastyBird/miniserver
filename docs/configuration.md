@@ -123,9 +123,9 @@ Nothing in this section takes effect unless `token.signature` is set. With an em
 | `server.httpHost` | string | `localhost` | Host the Flash socket policy allows, on port 80 and on `server.port`. |
 | `server.secured.enable` | bool | `false` | Serve the WebSocket server over TLS. |
 | `server.secured.sslSettings` | array | `[]` | Stream context SSL options for TLS. |
-| `storage.clients.driver` | service reference | `@fbCore.webSockets.clients.driver.memory` | Service the connected-clients storage keeps its clients in. It must implement `FastyBird\Core\WebSockets\Clients\Drivers\IDriver`. See [storage drivers](#websockets-storage-drivers). |
+| `storage.clients.driver` | service reference | `@fbCore.webSockets.clients.driver.memory` | Service the connected-clients storage keeps its clients in. It must implement `FastyBird\Core\WebSockets\Clients\Drivers\Driver`. See [storage drivers](#websockets-storage-drivers). |
 | `storage.clients.ttl` | int | `0` | Time to live the clients storage passes to its driver. The in-memory driver ignores it. |
-| `storage.topics.driver` | service reference | `@fbCore.webSockets.wamp.topics.driver.memory` | Service the WAMP topics storage keeps its topics in. It must implement `FastyBird\Core\WebSockets\Topics\Drivers\IDriver`. See [storage drivers](#websockets-storage-drivers). |
+| `storage.topics.driver` | service reference | `@fbCore.webSockets.wamp.topics.driver.memory` | Service the WAMP topics storage keeps its topics in. It must implement `FastyBird\Core\WebSockets\Topics\Drivers\Driver`. See [storage drivers](#websockets-storage-drivers). |
 | `storage.topics.ttl` | int | `0` | Time to live the topics storage passes to its driver. The in-memory driver ignores it. |
 | `routes` | map of mask to action | `[]` | Extra WAMP routes. Modules contribute theirs through a DI tag. |
 | `mapping` | map | `[]` | Controller name mapping for the WebSocket controller factory, as in Nette's presenter mapping. |
@@ -154,7 +154,7 @@ services:
     myClientsDriver: App\WebSockets\MyClientsDriver
 ```
 
-The clients driver must implement `FastyBird\Core\WebSockets\Clients\Drivers\IDriver`, and the topics driver `FastyBird\Core\WebSockets\Topics\Drivers\IDriver`. Core always registers the in-memory clients driver, `fbCore.webSockets.clients.driver.memory`. It registers the in-memory topics driver, `fbCore.webSockets.wamp.topics.driver.memory`, only when `storage.topics.driver` names it. A name that matches no service fails container compilation with `Reference to missing service`. The type is not checked at compile time: a service that does not implement the interface fails with a `TypeError` from `setStorageDriver()` when the storage is first created.
+The clients driver must implement `FastyBird\Core\WebSockets\Clients\Drivers\Driver`, and the topics driver `FastyBird\Core\WebSockets\Topics\Drivers\Driver`. Core always registers the in-memory clients driver, `fbCore.webSockets.clients.driver.memory`. It registers the in-memory topics driver, `fbCore.webSockets.wamp.topics.driver.memory`, only when `storage.topics.driver` names it. A name that matches no service fails container compilation with `Reference to missing service`. The type is not checked at compile time: a service that does not implement the interface fails with a `TypeError` from `setStorageDriver()` when the storage is first created.
 
 ### `fbCore.http`
 
