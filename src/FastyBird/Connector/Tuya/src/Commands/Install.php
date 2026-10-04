@@ -15,7 +15,6 @@
 
 namespace FastyBird\Connector\Tuya\Commands;
 
-use DateTimeImmutable;
 use Doctrine\DBAL;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Entities as TuyaEntities;
@@ -912,7 +911,6 @@ class Install extends Console\Command\Command
 		}
 
 		$executedTime = $this->clock->now();
-		assert($executedTime instanceof DateTimeImmutable);
 		$executedTime = $executedTime->modify('-5 second');
 
 		$symfonyApp = $this->getApplication();

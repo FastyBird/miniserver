@@ -15,7 +15,6 @@
 
 namespace FastyBird\Connector\Shelly\Commands;
 
-use DateTimeImmutable;
 use Doctrine\DBAL;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
@@ -839,7 +838,6 @@ class Install extends Console\Command\Command
 		}
 
 		$executedTime = $this->clock->now();
-		assert($executedTime instanceof DateTimeImmutable);
 		$executedTime = $executedTime->modify('-5 second');
 
 		$symfonyApp = $this->getApplication();

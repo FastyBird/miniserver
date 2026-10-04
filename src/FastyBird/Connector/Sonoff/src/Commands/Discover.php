@@ -15,7 +15,6 @@
 
 namespace FastyBird\Connector\Sonoff\Commands;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
@@ -116,7 +115,6 @@ class Discover extends Console\Command\Command
 		}
 
 		$executedTime = $this->clock->now();
-		assert($executedTime instanceof DateTimeImmutable);
 		$this->executedTime = $executedTime->modify('-5 second');
 
 		$io = new Style\SymfonyStyle($input, $output);

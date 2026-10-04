@@ -16,7 +16,6 @@
 namespace FastyBird\Connector\NsPanel\Commands;
 
 use Brick\Math;
-use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL;
 use Exception;
@@ -1313,7 +1312,6 @@ class Install extends Console\Command\Command
 		}
 
 		$executedTime = $this->clock->now();
-		assert($executedTime instanceof DateTimeImmutable);
 		$executedTime = $executedTime->modify('-5 second');
 
 		$symfonyApp = $this->getApplication();

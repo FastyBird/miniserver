@@ -16,12 +16,10 @@
 namespace FastyBird\Module\Accounts\Helpers;
 
 use DateMalformedStringException;
-use DateTimeImmutable;
 use Exception;
 use Nette;
 use Nette\Utils;
 use Psr\Clock\ClockInterface;
-use function assert;
 use function base64_decode;
 use function base64_encode;
 use function count;
@@ -52,7 +50,6 @@ final class SecurityHash
 	public function createKey(string $interval = '+ 1 hour'): string
 	{
 		$now = $this->clock->now();
-		assert($now instanceof DateTimeImmutable);
 
 		$datetime = $now->modify($interval);
 

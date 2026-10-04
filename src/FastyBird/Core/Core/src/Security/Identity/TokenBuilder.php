@@ -8,7 +8,6 @@ use Lcobucci\JWT;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Throwable;
-use function assert;
 
 /**
  * JW token builder
@@ -45,7 +44,6 @@ final readonly class TokenBuilder
 		);
 
 		$now = $this->clock->now();
-		assert($now instanceof DateTimeImmutable);
 
 		$jwtBuilder = $configuration->builder();
 

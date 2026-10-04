@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Security\Identity;
 
-use DateTimeImmutable;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Security\Exceptions;
 use Lcobucci\Clock as LcobucciClock;
@@ -44,7 +43,6 @@ final readonly class TokenValidator
 		);
 
 		$now = $this->clock->now();
-		assert($now instanceof DateTimeImmutable);
 
 		$configuration->setValidationConstraints(
 			new JWT\Validation\Constraint\IssuedBy($this->tokenIssuer),

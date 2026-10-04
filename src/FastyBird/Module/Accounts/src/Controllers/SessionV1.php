@@ -40,7 +40,6 @@ use Nette\Utils;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use Throwable;
-use function assert;
 use function is_scalar;
 use function strtolower;
 use function strval;
@@ -473,10 +472,7 @@ final class SessionV1 extends BaseV1
 
 	private function getNow(): DateTimeImmutable
 	{
-		$now = $this->clock->now();
-		assert($now instanceof DateTimeImmutable);
-
-		return $now;
+		return $this->clock->now();
 	}
 
 	/**

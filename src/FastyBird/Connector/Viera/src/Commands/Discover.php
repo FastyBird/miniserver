@@ -15,7 +15,6 @@
 
 namespace FastyBird\Connector\Viera\Commands;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
@@ -137,7 +136,6 @@ class Discover extends Console\Command\Command
 		}
 
 		$executedTime = $this->clock->now();
-		assert($executedTime instanceof DateTimeImmutable);
 		$this->executedTime = $executedTime->modify('-5 second');
 
 		$io = new Style\SymfonyStyle($input, $output);

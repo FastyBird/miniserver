@@ -15,7 +15,6 @@
 
 namespace FastyBird\Connector\Tuya\Commands;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Connector\Tuya\Documents;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
@@ -115,7 +114,6 @@ class Discover extends Console\Command\Command
 		}
 
 		$executedTime = $this->clock->now();
-		assert($executedTime instanceof DateTimeImmutable);
 		$this->executedTime = $executedTime->modify('-5 second');
 
 		$io = new Style\SymfonyStyle($input, $output);
