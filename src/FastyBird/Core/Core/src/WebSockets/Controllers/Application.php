@@ -13,6 +13,7 @@ use FastyBird\Core\WebSockets\Wamp;
 use Nette\Utils;
 use Override;
 use Psr\Log;
+use ReflectionException;
 use Throwable;
 use function array_merge;
 use function assert;
@@ -101,6 +102,7 @@ abstract class Application implements Dispatcher
 	/**
 	 * @throws WebSocketsExceptions\BadRequest
 	 * @throws CoreExceptions\InvalidController
+	 * @throws ReflectionException
 	 */
 	protected function processMessage(
 		Handshake\Request $httpRequest,

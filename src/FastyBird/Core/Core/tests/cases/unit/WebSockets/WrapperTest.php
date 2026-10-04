@@ -2,11 +2,12 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use PHPUnit\Framework\TestCase;
@@ -24,8 +25,9 @@ final class WrapperTest extends TestCase
 {
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
+	 * @throws WebSocketsExceptions\Storage
 	 */
 	public function testOnClientDisconnectedFiresRegisteredHandlerWithClientAndRequest(): void
 	{
@@ -61,7 +63,7 @@ final class WrapperTest extends TestCase
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
 	public function testOnClientErrorFiresRegisteredHandlerWithClientAndRequest(): void
@@ -139,7 +141,7 @@ final class WrapperTest extends TestCase
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
 	public function testOnClientConnectedFiresRegisteredHandlerWithClientAndRequestOnSuccessfulUpgrade(): void

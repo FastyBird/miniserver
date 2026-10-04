@@ -119,6 +119,7 @@ final class Wrapper implements ServerWrapper
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
+	 * @throws WebSocketsExceptions\Storage
 	 */
 	#[Override]
 	public function handleClose(Entities\ConnectedClient $client): void
@@ -174,6 +175,7 @@ final class Wrapper implements ServerWrapper
 	/**
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
+	 * @throws WebSocketsExceptions\Storage
 	 */
 	private function connectionClose(Entities\ConnectedClient $client): void
 	{
@@ -217,6 +219,11 @@ final class Wrapper implements ServerWrapper
 		}
 	}
 
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws TypeError
+	 * @throws UnderflowException
+	 */
 	private function connectionMessage(Entities\ConnectedClient $client, string $message): void
 	{
 		$webSocket = $client->getWebSocket();
@@ -247,6 +254,10 @@ final class Wrapper implements ServerWrapper
 		$this->attemptUpgrade($client);
 	}
 
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws TypeError
+	 */
 	private function attemptUpgrade(Entities\ConnectedClient $client): mixed
 	{
 		$httpRequest = $client->getRequest();

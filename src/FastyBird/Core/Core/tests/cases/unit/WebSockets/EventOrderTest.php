@@ -3,12 +3,13 @@
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
 use Error;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Tests\Cases\Unit\BaseTestCase;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Events;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use Nette\DI;
@@ -72,8 +73,8 @@ final class EventOrderTest extends BaseTestCase
 	/**
 	 * @throws DI\MissingServiceException
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	#[Override]
 	protected function setUp(): void
@@ -234,8 +235,9 @@ final class EventOrderTest extends BaseTestCase
 
 	/**
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
+	 * @throws WebSocketsExceptions\Storage
 	 */
 	public function testACloseDispatchesClientDisconnectedThenClose(): void
 	{
@@ -266,7 +268,7 @@ final class EventOrderTest extends BaseTestCase
 	 * onClientError carries no exception; the application's onError does.
 	 *
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
 	public function testAnErrorDispatchesClientErrorThenApplicationError(): void

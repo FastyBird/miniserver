@@ -90,6 +90,9 @@ final class WampApplication extends Application
 		parent::handleOpen($client, $httpRequest);
 	}
 
+	/**
+	 * @throws WebSocketsExceptions\Storage
+	 */
 	#[Override]
 	public function handleClose(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
 	{
@@ -287,6 +290,9 @@ final class WampApplication extends Application
 		return ['wamp'];
 	}
 
+	/**
+	 * @throws WebSocketsExceptions\Storage
+	 */
 	private function getTopic(string $topic): EntitiesTopics\Topic
 	{
 		if (!$this->topicsStorage->hasTopic($topic)) {
@@ -296,6 +302,9 @@ final class WampApplication extends Application
 		return $this->topicsStorage->getTopic($topic);
 	}
 
+	/**
+	 * @throws WebSocketsExceptions\Storage
+	 */
 	private function cleanTopic(EntitiesTopics\Topic $topic, Entities\ConnectedClient $client): void
 	{
 		$subscribedTopics = $client->getParameter('subscribedTopics', new SplObjectStorage());
