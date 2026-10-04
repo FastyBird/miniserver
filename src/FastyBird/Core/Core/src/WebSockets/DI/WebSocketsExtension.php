@@ -45,8 +45,8 @@ use const SORT_STRING;
  * registered with the compiler itself. It runs as fbCore.webSockets and reads its
  * fbCore > webSockets section, so its services are fbCore.webSockets.*.
  *
- * It also registers Http\Routing\LinkGenerator, the WAMP link generator, which still lives in
- * the Http namespace (#460 moves it). Each storage-driver option names a service; its default
+ * It also registers Routing\LinkGenerator, the WAMP link generator (moved here from the Http
+ * namespace by #637). Each storage-driver option names a service; its default
  * is the '@'-form of its memory driver's name. Any other service is wired as a reference, which
  * resolves when the container is completed, so a driver from the services: section, processed
  * after every extension's loadConfiguration(), works too (#565). The WS server command and the
