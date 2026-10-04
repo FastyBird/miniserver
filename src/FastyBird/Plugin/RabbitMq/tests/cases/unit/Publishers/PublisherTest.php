@@ -2,7 +2,7 @@
 
 namespace FastyBird\Plugin\RabbitMq\Tests\Cases\Unit\Publishers;
 
-use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Channels;
@@ -23,7 +23,7 @@ final class PublisherTest extends TestCase
 	 */
 	public function testPublishMessage(): void
 	{
-		$now = new DateTime();
+		$now = new DateTimeImmutable();
 
 		$channel = $this->createMock(Channels\Channel::class);
 		$channel
