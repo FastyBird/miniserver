@@ -8,8 +8,6 @@
  *
  *   server-lifecycle        ServerRuntime create(), run() and stop(): every WebSockets event
  *                           and which module SocketsBridge consumers are enabled at each step
- *   server-push-consumers   the same run() with a WAMP push consumer registered, to place
- *                           the onServerStart subscriber among the start hooks
  *   jsonapi-cold            the JSON:API middleware, response builder and hydrators container,
  *                           each fetched first from a fresh container, resolving the schema
  *                           container they need
@@ -42,7 +40,6 @@ use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\DI as WebSocketsDI;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Handshake;
-use FastyBird\Core\WebSockets\PushMessages;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Wamp;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
@@ -87,7 +84,7 @@ $short = static function (string $class): string {
  * consumers that are enabled at that moment, in the exchange consumer container's order (which
  * is the order they were enabled in: enable() re-inserts a consumer at the end).
  */
-$serverLifecycle = static function (bool $pushConsumer) use ($boot, $short): array {
+$serverLifecycle = static function () use ($boot, $short): array {
 	$container = $boot();
 
 	$bridges = [
@@ -134,7 +131,6 @@ $serverLifecycle = static function (bool $pushConsumer) use ($boot, $short): arr
 		Events\IncommingMessageEvent::class,
 		Events\MessageEvent::class,
 		Events\OpenEvent::class,
-		Events\PushEvent::class,
 		Events\StartEvent::class,
 		Events\StopEvent::class,
 		Events\WsServerError::class,
@@ -150,38 +146,6 @@ $serverLifecycle = static function (bool $pushConsumer) use ($boot, $short): arr
 	}
 
 	$server = $container->getByType(Server\ServerRuntime::class);
-
-	if ($pushConsumer) {
-		$container->getByType(PushMessages\ConsumersRegistry::class)->addConsumer(
-			new class (static function (string $step) use (&$timeline): void {
-				$timeline[] = $step;
-			}) implements PushMessages\IConsumer {
-
-				/**
-				 * @param Closure(string): void $record
-				 */
-				public function __construct(private readonly Closure $record)
-				{
-				}
-
-				public function connect(EventLoop\LoopInterface $loop, Controllers\IWampApplication $application): void
-				{
-					($this->record)('push consumer connected');
-				}
-
-				public function getName(): string
-				{
-					return 'e5-probe';
-				}
-
-				public function close(): void
-				{
-					// the probe never stops the server through its push consumers
-				}
-
-			},
-		);
-	}
 
 	// the loop the server runs, whatever the container calls it
 	$loop = (new ReflectionProperty(Server\ServerRuntime::class, 'loop'))->getValue($server);
@@ -394,8 +358,7 @@ try {
 	$probe = $argv[1] ?? '';
 
 	$report(['error' => null, 'result' => match ($probe) {
-		'server-lifecycle' => $serverLifecycle(false),
-		'server-push-consumers' => $serverLifecycle(true),
+		'server-lifecycle' => $serverLifecycle(),
 		'jsonapi-cold' => $jsonApiCold(),
 		'wamp-module-routes' => $wampModuleRoutes(),
 		'wamp-links' => $wampLinks(),
