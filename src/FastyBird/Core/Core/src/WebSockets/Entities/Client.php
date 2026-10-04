@@ -6,7 +6,6 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Controllers\Responses;
 use FastyBird\Core\WebSockets\Handshake;
-use Nette\Security;
 use Nette\Utils;
 use Override;
 use React\Socket;
@@ -16,8 +15,6 @@ use React\Socket;
  */
 class Client implements ConnectedClient
 {
-
-	private Security\User|null $user = null;
 
 	private Identity\UserIdentity|null $identity = null;
 
@@ -139,18 +136,6 @@ class Client implements ConnectedClient
 		}
 
 		$this->webSocket->getProtocol()->send($this, $response);
-	}
-
-	#[Override]
-	public function setUser(Security\User $user): void
-	{
-		$this->user = $user;
-	}
-
-	#[Override]
-	public function getUser(): Security\User|null
-	{
-		return $this->user;
 	}
 
 	/**

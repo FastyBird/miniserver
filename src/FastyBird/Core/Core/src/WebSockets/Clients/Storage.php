@@ -5,7 +5,6 @@ namespace FastyBird\Core\WebSockets\Clients;
 use ArrayIterator;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Exceptions;
-use Nette;
 use Override;
 use Psr\Log;
 use Throwable;
@@ -71,15 +70,7 @@ final class Storage implements IStorage
 	#[Override]
 	public function addClient(int $identifier, Entities\ConnectedClient $client): void
 	{
-		$context = [
-			'user' => $client->getUser(),
-		];
-
-		if ($client->getUser() instanceof Nette\Security\User) {
-			$context['userId'] = $client->getUser()->getId();
-		}
-
-		$this->logger->debug(sprintf('INSERT CLIENT ' . $identifier), $context);
+		$this->logger->debug(sprintf('INSERT CLIENT ' . $identifier));
 
 		try {
 			$result = $this->driver->save($identifier, $client, $this->ttl);
