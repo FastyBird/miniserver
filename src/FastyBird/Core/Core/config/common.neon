@@ -27,7 +27,6 @@ extensions:
 ##################################
 
 services:
-    # cache.storage: FastyBird\Core\Application\Caching\MemoryAdapterStorage(Nette\Caching\Storages\FileStorage(%tempDir%/cache, Nette\Caching\Storages\SQLiteJournal(%tempDir%/cache/journal.s3db)))
     # cache.storage: Nette\Caching\Storages\FileStorage(%tempDir%/cache, Nette\Caching\Storages\SQLiteJournal(%tempDir%/cache/journal.s3db))
     # cache.storage: Nette\Caching\Storages\FileStorage(%tempDir%/cache)
 
