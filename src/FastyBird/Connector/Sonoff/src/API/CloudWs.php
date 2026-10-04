@@ -23,7 +23,6 @@ use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Connector\Sonoff\ValueObjects;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -36,6 +35,7 @@ use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Ratchet;
 use Ratchet\RFC6455;
@@ -136,7 +136,7 @@ final class CloudWs
 		private readonly Helpers\MessageBuilder $entityHelper,
 		private readonly Sonoff\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)

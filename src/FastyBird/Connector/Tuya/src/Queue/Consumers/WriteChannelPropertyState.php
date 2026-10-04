@@ -24,7 +24,6 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries as TuyaQueries;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Types as TuyaTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -37,6 +36,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use RuntimeException;
 use Throwable;
 use TypeError;
@@ -73,7 +73,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 	}

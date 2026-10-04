@@ -26,7 +26,6 @@ use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers as VirtualHelpers;
 use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue as VirtualQueue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -36,6 +35,7 @@ use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
+use Psr\Clock\ClockInterface;
 use React\Promise;
 use Throwable;
 use TypeError;
@@ -116,7 +116,7 @@ class Thermostat implements VirtualDrivers\Driver
 		private readonly VirtualThermostat\Logger $logger,
 		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\States\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 		$this->presetMode = VirtualThermostatTypes\Preset::MANUAL;

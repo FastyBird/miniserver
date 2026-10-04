@@ -22,7 +22,6 @@ use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Queries as NsPanelQueries;
 use FastyBird\Connector\NsPanel\Queue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -33,6 +32,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
+use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
 use TypeError;
@@ -89,7 +89,7 @@ abstract class Periodic implements Writer
 		protected readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		protected readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		protected readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		protected readonly \Psr\Clock\ClockInterface $clock,
+		protected readonly ClockInterface $clock,
 		protected readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{

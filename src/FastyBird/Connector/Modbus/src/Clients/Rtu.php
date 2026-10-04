@@ -24,7 +24,6 @@ use FastyBird\Connector\Modbus\Helpers;
 use FastyBird\Connector\Modbus\Queries as ModbusQueries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -38,6 +37,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
 use Nette;
+use Psr\Clock\ClockInterface;
 use Random\RandomException;
 use React\EventLoop;
 use TypeError;
@@ -100,7 +100,7 @@ class Rtu implements Client
 		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
 		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{

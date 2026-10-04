@@ -21,7 +21,6 @@ use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -29,6 +28,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
 use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
@@ -59,7 +59,7 @@ class Event extends Periodic implements Writer, ComponentEventDispatcher\EventSu
 		DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		\Psr\Clock\ClockInterface $clock,
+		ClockInterface $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)

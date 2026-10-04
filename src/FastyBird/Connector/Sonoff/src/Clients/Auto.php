@@ -19,12 +19,12 @@ use BadMethodCallException;
 use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
 use Nette;
+use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use React\Promise;
 use RuntimeException;
@@ -54,7 +54,7 @@ final class Auto extends ClientProcess implements Client
 	public function __construct(
 		Helpers\Device $deviceHelper,
 		DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		\Psr\Clock\ClockInterface $clock,
+		ClockInterface $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly Documents\Connectors\Connector $connector,
 		private readonly LanFactory $lanClientFactory,

@@ -18,9 +18,9 @@ namespace FastyBird\Module\Accounts\Helpers;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use Exception;
-use FastyBird\Core\Clock;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use function assert;
 use function base64_decode;
 use function base64_encode;
@@ -42,7 +42,7 @@ final class SecurityHash
 
 	private const SEPARATOR = '##';
 
-	public function __construct(private readonly \Psr\Clock\ClockInterface $clock)
+	public function __construct(private readonly ClockInterface $clock)
 	{
 	}
 

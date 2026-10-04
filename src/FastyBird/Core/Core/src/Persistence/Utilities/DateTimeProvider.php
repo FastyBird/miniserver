@@ -3,9 +3,9 @@
 namespace FastyBird\Core\Persistence\Utilities;
 
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Persistence\Providers;
 use Override;
+use Psr\Clock\ClockInterface;
 
 /**
  * Date provider for doctrine timestampable
@@ -13,7 +13,7 @@ use Override;
 final readonly class DateTimeProvider implements Providers\DateProvider
 {
 
-	public function __construct(private \Psr\Clock\ClockInterface $clock)
+	public function __construct(private ClockInterface $clock)
 	{
 	}
 

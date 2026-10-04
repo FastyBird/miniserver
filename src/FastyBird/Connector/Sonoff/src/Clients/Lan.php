@@ -24,7 +24,6 @@ use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types as SonoffTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -33,6 +32,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher;
 use React\EventLoop;
 use React\Promise;
@@ -57,7 +57,7 @@ final class Lan extends ClientProcess implements Client
 	public function __construct(
 		Helpers\Device $deviceHelper,
 		DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		\Psr\Clock\ClockInterface $clock,
+		ClockInterface $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly Documents\Connectors\Connector $connector,
 		private readonly bool $autoMode,

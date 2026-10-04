@@ -17,7 +17,6 @@ namespace FastyBird\Plugin\RabbitMq\Publishers;
 
 use Bunny;
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Logging;
@@ -26,6 +25,7 @@ use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Utilities;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\Log;
 
 /**
@@ -47,7 +47,7 @@ final class Publisher implements ExchangePublisher\MessagePublisher
 		private readonly string $exchangeName,
 		private readonly Channels\Channel $channel,
 		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{

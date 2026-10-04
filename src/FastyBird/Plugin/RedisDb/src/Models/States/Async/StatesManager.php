@@ -17,7 +17,6 @@ namespace FastyBird\Plugin\RedisDb\Models\States\Async;
 
 use BackedEnum;
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
@@ -26,6 +25,7 @@ use FastyBird\Plugin\RedisDb\States;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\Log;
 use Ramsey\Uuid;
 use React\Promise;
@@ -65,7 +65,7 @@ class StatesManager
 	public function __construct(
 		private readonly Clients\Async\Client $client,
 		private readonly States\StateFactory $stateFactory,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly string $entity = States\State::class,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)

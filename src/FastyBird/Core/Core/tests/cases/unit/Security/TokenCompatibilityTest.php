@@ -5,7 +5,6 @@ namespace FastyBird\Core\Tests\Cases\Unit\Security;
 use DateInterval;
 use DateTimeImmutable;
 use Error;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
@@ -14,6 +13,7 @@ use FastyBird\Core\Tests\Cases\Unit\BaseTestCase;
 use JsonException;
 use Lcobucci\JWT;
 use Nette\DI;
+use Psr\Clock\ClockInterface;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use Throwable;
@@ -54,7 +54,7 @@ final class TokenCompatibilityTest extends BaseTestCase
 	 */
 	public function testATokenTheContainerIssuesIsReadBackByTheContainer(): void
 	{
-		$now = $this->container->getByType(\Psr\Clock\ClockInterface::class)->now();
+		$now = $this->container->getByType(ClockInterface::class)->now();
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 
 		$token = $this->container->getByType(Identity\TokenBuilder::class)
@@ -87,7 +87,7 @@ final class TokenCompatibilityTest extends BaseTestCase
 	 */
 	public function testAnExpiredTokenTheContainerIssuedIsRefused(): void
 	{
-		$now = $this->container->getByType(\Psr\Clock\ClockInterface::class)->now();
+		$now = $this->container->getByType(ClockInterface::class)->now();
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 
 		$token = $this->container->getByType(Identity\TokenBuilder::class)

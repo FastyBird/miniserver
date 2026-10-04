@@ -22,7 +22,6 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -34,6 +33,7 @@ use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use React\Promise;
@@ -158,7 +158,7 @@ final class OpenApi
 		private readonly Tuya\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 		$this->nonce = Uuid\Uuid::uuid1();

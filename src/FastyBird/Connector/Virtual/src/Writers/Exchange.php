@@ -21,7 +21,6 @@ use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers;
 use FastyBird\Connector\Virtual\Queries as VirtualQueries;
 use FastyBird\Connector\Virtual\Queue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -33,6 +32,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
 use function array_merge;
@@ -62,7 +62,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 		DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		\Psr\Clock\ClockInterface $clock,
+		ClockInterface $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly Consumers\Container $consumer,
 	)

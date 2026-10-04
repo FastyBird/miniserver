@@ -3,11 +3,11 @@
 namespace FastyBird\Core\Security\Identity;
 
 use DateTimeImmutable;
-use FastyBird\Core\Clock as CoreClock;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Security\Exceptions;
 use Lcobucci\Clock as LcobucciClock;
 use Lcobucci\JWT;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Throwable;
 use function assert;
@@ -26,7 +26,7 @@ final readonly class TokenValidator
 	public function __construct(
 		private readonly string $tokenSignature,
 		private readonly string $tokenIssuer,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 	}

@@ -12,6 +12,7 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Tests\Cases\Unit\BaseTestCase;
 use Nette\DI;
+use Psr\Clock\ClockInterface;
 use ValueError;
 use function abs;
 use function date_default_timezone_get;
@@ -167,12 +168,12 @@ final class ClockTest extends BaseTestCase
 	 */
 	public function testTheContainerAutowiresTheConfiguredClock(): void
 	{
-		$clock = $this->container->getByType(\Psr\Clock\ClockInterface::class);
+		$clock = $this->container->getByType(ClockInterface::class);
 
 		self::assertInstanceOf(Clock\FrozenClock::class, $clock);
 		self::assertSame(
 			['fbCore.clock.frozen', 'fbCore.clock.system'],
-			$this->container->findByType(\Psr\Clock\ClockInterface::class),
+			$this->container->findByType(ClockInterface::class),
 		);
 		self::assertInstanceOf(Clock\SystemClock::class, $this->container->getService('fbCore.clock.system'));
 

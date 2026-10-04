@@ -28,7 +28,6 @@ use FastyBird\Connector\NsPanel\Helpers as NsPanelHelpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Queries as NsPanelQueries;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
@@ -46,6 +45,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Localization;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use RuntimeException;
 use Symfony\Component\Console;
@@ -119,7 +119,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
 		private readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)

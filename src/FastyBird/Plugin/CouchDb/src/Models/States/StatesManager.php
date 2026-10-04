@@ -17,7 +17,6 @@ namespace FastyBird\Plugin\CouchDb\Models\States;
 
 use BackedEnum;
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\CouchDb\Connections;
@@ -27,6 +26,7 @@ use FastyBird\Plugin\CouchDb\States;
 use Nette;
 use Nette\Utils;
 use PHPOnCouch;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher;
 use Psr\Log;
 use Ramsey\Uuid;
@@ -67,7 +67,7 @@ class StatesManager
 	public function __construct(
 		private readonly Connections\Connection $client,
 		private readonly States\StateFactory $stateFactory,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly string $entity = States\State::class,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),

@@ -16,7 +16,6 @@
 namespace FastyBird\Plugin\RedisDb\Publishers;
 
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange\Publisher as ExchangePublisher;
 use FastyBird\Core\Logging;
@@ -24,6 +23,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Utilities;
 use Nette;
+use Psr\Clock\ClockInterface;
 use Psr\Log;
 
 /**
@@ -43,7 +43,7 @@ final class Publisher implements ExchangePublisher\MessagePublisher
 		private readonly Utilities\IdentifierGenerator $identifier,
 		private readonly string $channel,
 		private readonly Clients\Client $client,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{

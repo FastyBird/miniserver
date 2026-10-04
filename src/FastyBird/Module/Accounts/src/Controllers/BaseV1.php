@@ -21,7 +21,6 @@ use Exception;
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Api\Hydrators;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
@@ -35,6 +34,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use Nette;
 use Nette\Localization;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log;
@@ -62,7 +62,7 @@ abstract class BaseV1
 
 	protected Security\User $user;
 
-	protected \Psr\Clock\ClockInterface $clock;
+	protected ClockInterface $clock;
 
 	protected Localization\Translator $translator;
 
@@ -82,7 +82,7 @@ abstract class BaseV1
 		$this->user = $user;
 	}
 
-	public function injectClock(\Psr\Clock\ClockInterface $clock): void
+	public function injectClock(ClockInterface $clock): void
 	{
 		$this->clock = $clock;
 	}

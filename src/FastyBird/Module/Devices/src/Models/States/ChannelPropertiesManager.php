@@ -16,7 +16,6 @@
 namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -39,6 +38,7 @@ use Nette;
 use Nette\Caching as NetteCaching;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Ramsey\Uuid;
 use Throwable;
@@ -72,7 +72,7 @@ final class ChannelPropertiesManager extends PropertiesManager
 		private readonly Models\States\Channels\Repository $channelPropertyStateRepository,
 		private readonly Models\States\Channels\Manager $channelPropertiesStatesManager,
 		private readonly DevicesCaching\Container $moduleCaching,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly Publisher\MessagePublisher $publisher,
 		Devices\Logger $logger,

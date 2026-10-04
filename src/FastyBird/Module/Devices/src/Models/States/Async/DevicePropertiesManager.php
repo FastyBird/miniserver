@@ -16,7 +16,6 @@
 namespace FastyBird\Module\Devices\Models\States\Async;
 
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher\Async;
@@ -38,6 +37,7 @@ use Nette;
 use Nette\Caching as NetteCaching;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Ramsey\Uuid;
 use React\Promise;
@@ -74,7 +74,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 		private readonly Models\States\Devices\Async\Repository $devicePropertyStateRepository,
 		private readonly Models\States\Devices\Async\Manager $devicePropertiesStatesManager,
 		private readonly DevicesCaching\Container $moduleCaching,
-		private readonly \Psr\Clock\ClockInterface $clock,
+		private readonly ClockInterface $clock,
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly Async\MessagePublisher $publisher,
 		Devices\Logger $logger,
