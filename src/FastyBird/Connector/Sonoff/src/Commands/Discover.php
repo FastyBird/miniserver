@@ -64,7 +64,7 @@ class Discover extends Console\Command\Command
 		private readonly Helpers\Device $deviceHelper,
 		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -115,7 +115,7 @@ class Discover extends Console\Command\Command
 			return Console\Command\Command::FAILURE;
 		}
 
-		$executedTime = $this->clock->getNow();
+		$executedTime = $this->clock->now();
 		assert($executedTime instanceof DateTimeImmutable);
 		$this->executedTime = $executedTime->modify('-5 second');
 

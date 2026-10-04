@@ -73,7 +73,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 	)
 	{
 	}
@@ -378,7 +378,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			return true;
 		}
 
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 		$pending = $state->getPending();
 
 		if (

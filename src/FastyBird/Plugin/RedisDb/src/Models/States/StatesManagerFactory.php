@@ -41,7 +41,7 @@ class StatesManagerFactory
 	public function __construct(
 		private readonly Clients\Client $client,
 		private readonly States\StateFactory $stateFactory,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{

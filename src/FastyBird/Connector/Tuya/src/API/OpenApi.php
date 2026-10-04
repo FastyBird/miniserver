@@ -158,7 +158,7 @@ final class OpenApi
 		private readonly Tuya\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 	)
 	{
 		$this->nonce = Uuid\Uuid::uuid1();
@@ -1147,7 +1147,7 @@ final class OpenApi
 			try {
 				await($refreshTokenResult);
 			} catch (Throwable $ex) {
-				$this->refreshTokenFailed = $this->clock->getNow();
+				$this->refreshTokenFailed = $this->clock->now();
 
 				return Promise\reject(
 					new TuyaExceptions\OpenApiCall(
@@ -1482,7 +1482,7 @@ final class OpenApi
 			return false;
 		}
 
-		if (!$this->tokenInfo->isExpired($this->clock->getNow())) {
+		if (!$this->tokenInfo->isExpired($this->clock->now())) {
 			return true;
 		}
 
@@ -1729,7 +1729,7 @@ final class OpenApi
 		}
 
 		// Sign
-		$timestamp = intval($this->clock->getNow()->format('Uv'));
+		$timestamp = intval($this->clock->now()->format('Uv'));
 
 		$message = $this->accessId . $accessToken . $timestamp . $this->nonce->toString() . $strToSign;
 

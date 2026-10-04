@@ -138,7 +138,7 @@ final class EmailsV1 extends BaseV1
 
 				$createData->offsetSet('account', $account);
 				$createData->offsetSet('verificationHash', $this->securityHash->createKey());
-				$createData->offsetSet('verificationCreated', $this->clock->getNow());
+				$createData->offsetSet('verificationCreated', $this->clock->now());
 
 				// Store item into database
 				$email = $this->emailsManager->create($createData);

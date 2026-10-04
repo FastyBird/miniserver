@@ -7,6 +7,6 @@ use DateTimeInterface;
 interface Clock
 {
 
-	public function getNow(): DateTimeInterface;
+	public function now(): DateTimeInterface;
 
 }

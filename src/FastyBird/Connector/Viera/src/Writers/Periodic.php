@@ -85,7 +85,7 @@ abstract class Periodic implements Writer
 		protected readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -200,7 +200,7 @@ abstract class Periodic implements Writer
 	 */
 	private function writeProperty(VieraDocuments\Devices\Device $device): bool
 	{
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 
 		foreach ($this->properties[$device->getId()->toString()] as $property) {
 			$debounce = array_key_exists($property->getId()->toString(), $this->processedProperties)

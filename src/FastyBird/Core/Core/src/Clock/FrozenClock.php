@@ -15,7 +15,7 @@ use function date_default_timezone_get;
 use function floor;
 use function round;
 
-final class FrozenClock implements Clock
+final class FrozenClock implements \Psr\Clock\ClockInterface
 {
 
 	private DateTimeImmutable $dt;
@@ -46,7 +46,7 @@ final class FrozenClock implements Clock
 	}
 
 	#[Override]
-	public function getNow(): DateTimeInterface
+	public function now(): DateTimeInterface
 	{
 		return clone $this->dt;
 	}

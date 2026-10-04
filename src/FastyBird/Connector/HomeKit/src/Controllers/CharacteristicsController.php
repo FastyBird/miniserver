@@ -65,7 +65,7 @@ final class CharacteristicsController extends BaseController
 		private readonly Queue\Queue $queue,
 		private readonly Protocol\Driver $accessoryDriver,
 		private readonly Clients\Subscriber $subscriber,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 	)
 	{
 	}
@@ -270,7 +270,7 @@ final class CharacteristicsController extends BaseController
 				|| !array_key_exists($pid, $this->preparedWrites[strval($requestParams['REMOTE_ADDR'])])
 				|| $this->preparedWrites[strval(
 					$requestParams['REMOTE_ADDR'],
-				)][$pid] < $this->clock->getNow()->getTimestamp()
+				)][$pid] < $this->clock->now()->getTimestamp()
 			) {
 				$timedWriteError = true;
 			}
@@ -404,7 +404,7 @@ final class CharacteristicsController extends BaseController
 		}
 
 		$this->preparedWrites[$clientAddress][intval($body[Types\Representation::PID->value])]
-			= $this->clock->getNow()->getTimestamp() + (intval(
+			= $this->clock->now()->getTimestamp() + (intval(
 				$body[Types\Representation::TTL->value],
 			) / 1_000);
 

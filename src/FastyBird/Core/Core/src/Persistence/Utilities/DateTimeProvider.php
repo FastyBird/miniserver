@@ -13,20 +13,20 @@ use Override;
 final readonly class DateTimeProvider implements Providers\DateProvider
 {
 
-	public function __construct(private Clock\Clock $clock)
+	public function __construct(private \Psr\Clock\ClockInterface $clock)
 	{
 	}
 
 	#[Override]
 	public function getDate(): DateTimeInterface
 	{
-		return $this->clock->getNow();
+		return $this->clock->now();
 	}
 
 	#[Override]
 	public function getTimestamp(): int
 	{
-		return $this->clock->getNow()->getTimestamp();
+		return $this->clock->now()->getTimestamp();
 	}
 
 }

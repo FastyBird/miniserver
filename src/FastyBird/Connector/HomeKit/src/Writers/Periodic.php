@@ -87,7 +87,7 @@ abstract class Periodic
 		private readonly Protocol\Driver $accessoryDriver,
 		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -216,7 +216,7 @@ abstract class Periodic
 	 */
 	private function writeProperty(HomeKitDocuments\Devices\Device $device): bool
 	{
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 
 		$accessory = $this->accessoryDriver->findAccessory($device->getId());
 

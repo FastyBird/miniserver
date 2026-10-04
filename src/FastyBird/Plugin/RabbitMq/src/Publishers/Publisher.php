@@ -47,7 +47,7 @@ final class Publisher implements ExchangePublisher\MessagePublisher
 		private readonly string $exchangeName,
 		private readonly Channels\Channel $channel,
 		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
@@ -94,7 +94,7 @@ final class Publisher implements ExchangePublisher\MessagePublisher
 			[
 				'sender_id' => $this->identifier->getIdentifier(),
 				'source' => $source->value,
-				'created' => $this->clock->getNow()->format(DateTimeInterface::ATOM),
+				'created' => $this->clock->now()->format(DateTimeInterface::ATOM),
 			],
 			$this->exchangeName,
 			$routingKey,

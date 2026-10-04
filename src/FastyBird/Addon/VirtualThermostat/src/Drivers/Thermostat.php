@@ -116,7 +116,7 @@ class Thermostat implements VirtualDrivers\Driver
 		private readonly VirtualThermostat\Logger $logger,
 		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\States\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 	)
 	{
 		$this->presetMode = VirtualThermostatTypes\Preset::MANUAL;
@@ -406,7 +406,7 @@ class Thermostat implements VirtualDrivers\Driver
 		}
 
 		$this->connected = true;
-		$this->connectedAt = $this->clock->getNow();
+		$this->connectedAt = $this->clock->now();
 
 		return Promise\resolve(true);
 	}
@@ -473,7 +473,7 @@ class Thermostat implements VirtualDrivers\Driver
 			return Promise\reject(new VirtualThermostatExceptions\InvalidState('Thermostat device is not connected'));
 		}
 
-		$this->lastProcessedTime = $this->clock->getNow();
+		$this->lastProcessedTime = $this->clock->now();
 
 		if ($this->hvacMode === null || $this->presetMode === null) {
 			$this->stop('Thermostat mode is not configured');
@@ -923,7 +923,7 @@ class Thermostat implements VirtualDrivers\Driver
 					if (
 						$this->lastProcessedTime instanceof DateTimeInterface
 						&& (
-							$this->clock->getNow()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
+							$this->clock->now()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
 							< self::PROCESSING_DEBOUNCE_DELAY
 						)
 					) {
@@ -949,7 +949,7 @@ class Thermostat implements VirtualDrivers\Driver
 					if (
 						$this->lastProcessedTime instanceof DateTimeInterface
 						&& (
-							$this->clock->getNow()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
+							$this->clock->now()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
 							< self::PROCESSING_DEBOUNCE_DELAY
 						)
 					) {
@@ -982,7 +982,7 @@ class Thermostat implements VirtualDrivers\Driver
 					if (
 						$this->lastProcessedTime instanceof DateTimeInterface
 						&& (
-							$this->clock->getNow()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
+							$this->clock->now()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
 							< self::PROCESSING_DEBOUNCE_DELAY
 						)
 					) {
@@ -1009,7 +1009,7 @@ class Thermostat implements VirtualDrivers\Driver
 						if (
 							$this->lastProcessedTime instanceof DateTimeInterface
 							&& (
-								$this->clock->getNow()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
+								$this->clock->now()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
 								< self::PROCESSING_DEBOUNCE_DELAY
 							)
 						) {
@@ -1043,7 +1043,7 @@ class Thermostat implements VirtualDrivers\Driver
 						if (
 							$this->lastProcessedTime instanceof DateTimeInterface
 							&& (
-								$this->clock->getNow()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
+								$this->clock->now()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
 								< self::PROCESSING_DEBOUNCE_DELAY
 							)
 						) {
@@ -1077,7 +1077,7 @@ class Thermostat implements VirtualDrivers\Driver
 						if (
 							$this->lastProcessedTime instanceof DateTimeInterface
 							&& (
-								$this->clock->getNow()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
+								$this->clock->now()->getTimestamp() - $this->lastProcessedTime->getTimestamp()
 								< self::PROCESSING_DEBOUNCE_DELAY
 							)
 						) {

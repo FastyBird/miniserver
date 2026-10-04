@@ -93,7 +93,7 @@ final class Television implements Client
 		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -268,7 +268,7 @@ final class Television implements Client
 				$client->getLastConnectAttempt() === null
 				|| (
 					// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-					$this->clock->getNow()->getTimestamp() - $client->getLastConnectAttempt()->getTimestamp() >= self::RECONNECT_COOL_DOWN_TIME
+					$this->clock->now()->getTimestamp() - $client->getLastConnectAttempt()->getTimestamp() >= self::RECONNECT_COOL_DOWN_TIME
 				)
 			) {
 				try {
@@ -395,7 +395,7 @@ final class Television implements Client
 				if (
 					$cmdResult instanceof DateTimeInterface
 					&& (
-						$this->clock->getNow()->getTimestamp() - $cmdResult->getTimestamp()
+						$this->clock->now()->getTimestamp() - $cmdResult->getTimestamp()
 						< $this->deviceHelper->getStateReadingDelay($device)
 					)
 				) {
@@ -403,7 +403,7 @@ final class Television implements Client
 				}
 			}
 
-			$this->processedChannelsProperties[$device->getId()->toString()][$property->getId()->toString()] = $this->clock->getNow();
+			$this->processedChannelsProperties[$device->getId()->toString()][$property->getId()->toString()] = $this->clock->now();
 
 			$deviceState = $this->deviceConnectionManager->getState($device);
 
@@ -518,7 +518,7 @@ final class Television implements Client
 			$result
 				->then(function (int|bool $value) use ($device, $property): void {
 					// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-					$this->processedChannelsProperties[$device->getId()->toString()][$property->getId()->toString()] = $this->clock->getNow();
+					$this->processedChannelsProperties[$device->getId()->toString()][$property->getId()->toString()] = $this->clock->now();
 
 					$this->queue->append(
 						$this->messageBuilder->create(

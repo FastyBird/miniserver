@@ -59,7 +59,7 @@ class Event extends Periodic implements Writer, ComponentEventDispatcher\EventSu
 		DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		Clock\Clock $clock,
+		\Psr\Clock\ClockInterface $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)

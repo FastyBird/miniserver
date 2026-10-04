@@ -80,7 +80,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
 		private readonly Helpers\Database $databaseHelper,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -1107,7 +1107,7 @@ class Install extends Console\Command\Command
 			throw new Zigbee2MqttExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
-		$executedTime = $this->clock->getNow();
+		$executedTime = $this->clock->now();
 
 		$symfonyApp = $this->getApplication();
 

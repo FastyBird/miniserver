@@ -62,7 +62,7 @@ abstract class BaseV1
 
 	protected Security\User $user;
 
-	protected Clock\Clock $clock;
+	protected \Psr\Clock\ClockInterface $clock;
 
 	protected Localization\Translator $translator;
 
@@ -82,7 +82,7 @@ abstract class BaseV1
 		$this->user = $user;
 	}
 
-	public function injectClock(Clock\Clock $clock): void
+	public function injectClock(\Psr\Clock\ClockInterface $clock): void
 	{
 		$this->clock = $clock;
 	}

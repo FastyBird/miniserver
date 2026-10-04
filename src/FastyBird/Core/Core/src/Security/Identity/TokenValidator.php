@@ -26,7 +26,7 @@ final readonly class TokenValidator
 	public function __construct(
 		private readonly string $tokenSignature,
 		private readonly string $tokenIssuer,
-		private readonly CoreClock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 	)
 	{
 	}
@@ -43,7 +43,7 @@ final readonly class TokenValidator
 			JWT\Signer\Key\InMemory::plainText($this->tokenSignature),
 		);
 
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 		assert($now instanceof DateTimeImmutable);
 
 		$configuration->setValidationConstraints(

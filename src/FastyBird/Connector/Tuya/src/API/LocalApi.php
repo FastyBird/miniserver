@@ -180,7 +180,7 @@ final class LocalApi
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly Tuya\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -216,7 +216,7 @@ final class LocalApi
 		$this->heartBeatTimer = null;
 		$this->lastHeartbeat = null;
 
-		$this->lastConnectAttempt = $this->clock->getNow();
+		$this->lastConnectAttempt = $this->clock->now();
 		$this->lost = null;
 		$this->disconnected = null;
 
@@ -275,7 +275,7 @@ final class LocalApi
 							}
 
 							if ($message->getCommand() === Types\LocalDeviceCommand::HEART_BEAT) {
-								$this->lastHeartbeat = $this->clock->getNow();
+								$this->lastHeartbeat = $this->clock->now();
 
 								$this->logger->debug(
 									'Device has replied to heartbeat',
@@ -345,7 +345,7 @@ final class LocalApi
 							if (
 							$this->lastHeartbeat !== null
 							&&
-							($this->clock->getNow()->getTimestamp() - $this->lastHeartbeat->getTimestamp())
+							($this->clock->now()->getTimestamp() - $this->lastHeartbeat->getTimestamp())
 							>= self::HEARTBEAT_TIMEOUT
 							) {
 								$this->lost();
@@ -411,7 +411,7 @@ final class LocalApi
 		$this->connecting = false;
 		$this->connected = false;
 
-		$this->disconnected = $this->clock->getNow();
+		$this->disconnected = $this->clock->now();
 
 		if ($this->heartBeatTimer !== null) {
 			$this->eventLoop->cancelTimer($this->heartBeatTimer);
@@ -671,7 +671,7 @@ final class LocalApi
 	{
 		Utils\Arrays::invoke($this->onLost);
 
-		$this->lost = $this->clock->getNow();
+		$this->lost = $this->clock->now();
 
 		$this->disconnect();
 	}
@@ -1380,8 +1380,8 @@ final class LocalApi
 
 		if (array_key_exists('t', $result)) {
 			$result['t'] = $result['t'] === 'int'
-				? $this->clock->getNow()->getTimestamp()
-				: (string) $this->clock->getNow()->getTimestamp();
+				? $this->clock->now()->getTimestamp()
+				: (string) $this->clock->now()->getTimestamp();
 		}
 
 		if ($command === Types\LocalDeviceCommand::CONTROL_NEW) {

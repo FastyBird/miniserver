@@ -42,7 +42,7 @@ final class SecurityHash
 
 	private const SEPARATOR = '##';
 
-	public function __construct(private readonly Clock\Clock $clock)
+	public function __construct(private readonly \Psr\Clock\ClockInterface $clock)
 	{
 	}
 
@@ -51,7 +51,7 @@ final class SecurityHash
 	 */
 	public function createKey(string $interval = '+ 1 hour'): string
 	{
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 		assert($now instanceof DateTimeImmutable);
 
 		$datetime = $now->modify($interval);
@@ -77,7 +77,7 @@ final class SecurityHash
 
 			$datetime = Utils\DateTime::from($timestamp);
 
-			if ($datetime >= $this->clock->getNow()) {
+			if ($datetime >= $this->clock->now()) {
 				return true;
 			}
 		}

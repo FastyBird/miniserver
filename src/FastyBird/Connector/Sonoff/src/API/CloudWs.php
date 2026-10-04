@@ -136,7 +136,7 @@ final class CloudWs
 		private readonly Helpers\MessageBuilder $entityHelper,
 		private readonly Sonoff\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
@@ -152,7 +152,7 @@ final class CloudWs
 		$this->connecting = true;
 		$this->connected = false;
 
-		$this->lastConnectAttempt = $this->clock->getNow();
+		$this->lastConnectAttempt = $this->clock->now();
 		$this->lost = null;
 		$this->disconnected = null;
 
@@ -288,7 +288,7 @@ final class CloudWs
 		$this->connecting = false;
 		$this->connected = false;
 
-		$this->disconnected = $this->clock->getNow();
+		$this->disconnected = $this->clock->now();
 
 		if ($this->pingTimer !== null) {
 			$this->eventLoop->cancelTimer($this->pingTimer);
@@ -335,7 +335,7 @@ final class CloudWs
 		$message->selfApikey = $this->apiKey;
 		$message->deviceid = $id;
 		$message->userAgent = 'app';
-		$message->sequence = strval(intval($this->clock->getNow()->format('Uv')));
+		$message->sequence = strval(intval($this->clock->now()->format('Uv')));
 		$message->params = [];
 
 		$this->sendRequest($message, $message->action, $message->sequence, $deferred);
@@ -378,7 +378,7 @@ final class CloudWs
 		$message->selfApikey = $this->apiKey;
 		$message->deviceid = $id;
 		$message->userAgent = 'app';
-		$message->sequence = strval(intval($this->clock->getNow()->format('Uv')));
+		$message->sequence = strval(intval($this->clock->now()->format('Uv')));
 		$message->params = $params;
 
 		$this->sendRequest($message, $message->action, $message->sequence, $deferred);
@@ -432,7 +432,7 @@ final class CloudWs
 			);
 		}
 
-		$timestamp = $this->clock->getNow()->getTimestamp();
+		$timestamp = $this->clock->now()->getTimestamp();
 
 		$message = new stdClass();
 		$message->action = self::USER_ONLINE_ACTION;
@@ -442,7 +442,7 @@ final class CloudWs
 		$message->nonce = strval(intval($timestamp / 100));
 		$message->ts = $timestamp;
 		$message->userAgent = 'app';
-		$message->sequence = strval(intval($this->clock->getNow()->format('Uv')));
+		$message->sequence = strval(intval($this->clock->now()->format('Uv')));
 		$message->version = 8;
 
 		$this->sendRequest($message, $message->action, $message->sequence, $deferred);
@@ -452,7 +452,7 @@ final class CloudWs
 
 	private function lost(): void
 	{
-		$this->lost = $this->clock->getNow();
+		$this->lost = $this->clock->now();
 
 		Utils\Arrays::invoke($this->onLost);
 

@@ -118,7 +118,7 @@ final class CloudApi
 		private readonly Helpers\MessageBuilder $entityHelper,
 		private readonly Sonoff\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		Types\Region|null $region = null,
 	)
 	{
@@ -138,7 +138,7 @@ final class CloudApi
 		$this->accessToken = $result->getAccessToken();
 		$this->refreshToken = $result->getRefreshToken();
 		$this->user = $result->getUser();
-		$this->tokensAcquired = $this->clock->getNow();
+		$this->tokensAcquired = $this->clock->now();
 
 		$this->region = $result->getRegion();
 	}
@@ -1145,7 +1145,7 @@ final class CloudApi
 
 		if (
 			str_contains(strval($request->getUri()), self::USER_REFRESH_API_ENDPOINT)
-			&& $this->tokensAcquired?->diff($this->clock->getNow())->s >= self::ACCESS_TOKEN_VALID_TIME
+			&& $this->tokensAcquired?->diff($this->clock->now())->s >= self::ACCESS_TOKEN_VALID_TIME
 			&& $this->refreshToken !== null
 		) {
 			try {

@@ -38,14 +38,14 @@ final class ClockTest extends BaseTestCase
 		$clock = new Clock\SystemClock(new DateTimeZone('Europe/Prague'));
 
 		$before = microtime(true);
-		$now = $clock->getNow();
+		$now = $clock->now();
 		$after = microtime(true);
 
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('Europe/Prague', $now->getTimezone()->getName());
 		self::assertGreaterThanOrEqual((int) $before, $now->getTimestamp());
 		self::assertLessThanOrEqual((int) $after + 1, $now->getTimestamp());
-		self::assertNotSame($now, $clock->getNow());
+		self::assertNotSame($now, $clock->now());
 	}
 
 	/**
@@ -53,7 +53,7 @@ final class ClockTest extends BaseTestCase
 	 */
 	public function testSystemClockDefaultsToThePhpTimeZone(): void
 	{
-		$now = (new Clock\SystemClock())->getNow();
+		$now = (new Clock\SystemClock())->now();
 
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame(date_default_timezone_get(), $now->getTimezone()->getName());
@@ -70,8 +70,8 @@ final class ClockTest extends BaseTestCase
 		$frozenAt = new DateTimeImmutable(self::FROZEN_AT);
 		$clock = new Clock\FrozenClock($frozenAt, new DateTimeZone('UTC'));
 
-		$first = $clock->getNow();
-		$second = $clock->getNow();
+		$first = $clock->now();
+		$second = $clock->now();
 
 		self::assertInstanceOf(DateTimeImmutable::class, $first);
 		self::assertSame('2026-10-03T12:34:56.123456+00:00', $first->format('Y-m-d\TH:i:s.uP'));
@@ -91,7 +91,7 @@ final class ClockTest extends BaseTestCase
 		$clock = new Clock\FrozenClock($frozenAt, new DateTimeZone('UTC'));
 
 		$frozenAt->modify('+1 day');
-		$now = $clock->getNow();
+		$now = $clock->now();
 
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('2026-10-03T12:34:56.123456+00:00', $now->format('Y-m-d\TH:i:s.uP'));
@@ -110,14 +110,14 @@ final class ClockTest extends BaseTestCase
 		foreach ([new DateTime(self::FROZEN_AT), new DateTimeImmutable(self::FROZEN_AT)] as $frozenAt) {
 			$clock = new Clock\FrozenClock($frozenAt, new DateTimeZone('UTC'));
 
-			$returned = $clock->getNow();
+			$returned = $clock->now();
 			self::assertInstanceOf(DateTimeImmutable::class, $returned);
 
 			$moved = $returned->modify('+1 day');
 
 			self::assertSame('2026-10-04T12:34:56.123456+00:00', $moved->format('Y-m-d\TH:i:s.uP'));
 			self::assertSame('2026-10-03T12:34:56.123456+00:00', $returned->format('Y-m-d\TH:i:s.uP'));
-			self::assertSame('2026-10-03T12:34:56.123456+00:00', $clock->getNow()->format('Y-m-d\TH:i:s.uP'));
+			self::assertSame('2026-10-03T12:34:56.123456+00:00', $clock->now()->format('Y-m-d\TH:i:s.uP'));
 		}
 	}
 
@@ -130,7 +130,7 @@ final class ClockTest extends BaseTestCase
 	{
 		$clock = new Clock\FrozenClock(1_759_494_896.25, new DateTimeZone('Europe/Prague'));
 
-		$now = $clock->getNow();
+		$now = $clock->now();
 
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame(1_759_494_896, $now->getTimestamp());
@@ -148,7 +148,7 @@ final class ClockTest extends BaseTestCase
 	{
 		$clock = new Clock\FrozenClock(new DateTimeImmutable(self::FROZEN_AT), new DateTimeZone('America/New_York'));
 
-		$now = $clock->getNow();
+		$now = $clock->now();
 
 		self::assertSame('America/New_York', $now->getTimezone()->getName());
 		self::assertSame((new DateTimeImmutable(self::FROZEN_AT))->getTimestamp(), $now->getTimestamp());
@@ -167,16 +167,16 @@ final class ClockTest extends BaseTestCase
 	 */
 	public function testTheContainerAutowiresTheConfiguredClock(): void
 	{
-		$clock = $this->container->getByType(Clock\Clock::class);
+		$clock = $this->container->getByType(\Psr\Clock\ClockInterface::class);
 
 		self::assertInstanceOf(Clock\FrozenClock::class, $clock);
 		self::assertSame(
 			['fbCore.clock.frozen', 'fbCore.clock.system'],
-			$this->container->findByType(Clock\Clock::class),
+			$this->container->findByType(\Psr\Clock\ClockInterface::class),
 		);
 		self::assertInstanceOf(Clock\SystemClock::class, $this->container->getService('fbCore.clock.system'));
 
-		$now = $clock->getNow();
+		$now = $clock->now();
 
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('2020-04-01T12:00:00.000000+00:00', $now->format('Y-m-d\TH:i:s.uP'));

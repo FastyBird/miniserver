@@ -119,7 +119,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
 		private readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -1312,7 +1312,7 @@ class Install extends Console\Command\Command
 			throw new NsPanelExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
-		$executedTime = $this->clock->getNow();
+		$executedTime = $this->clock->now();
 		assert($executedTime instanceof DateTimeImmutable);
 		$executedTime = $executedTime->modify('-5 second');
 

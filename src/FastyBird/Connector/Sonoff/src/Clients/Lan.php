@@ -57,7 +57,7 @@ final class Lan extends ClientProcess implements Client
 	public function __construct(
 		Helpers\Device $deviceHelper,
 		DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		Clock\Clock $clock,
+		\Psr\Clock\ClockInterface $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly Documents\Connectors\Connector $connector,
 		private readonly bool $autoMode,

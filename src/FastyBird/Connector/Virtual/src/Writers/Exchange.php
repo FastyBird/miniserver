@@ -62,7 +62,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 		DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		Clock\Clock $clock,
+		\Psr\Clock\ClockInterface $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly Consumers\Container $consumer,
 	)

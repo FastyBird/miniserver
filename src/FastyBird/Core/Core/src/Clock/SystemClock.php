@@ -9,7 +9,7 @@ use DateTimeZone;
 use Override;
 use function date_default_timezone_get;
 
-class SystemClock implements Clock
+class SystemClock implements \Psr\Clock\ClockInterface
 {
 
 	private DateTimeZone $timeZone;
@@ -23,7 +23,7 @@ class SystemClock implements Clock
 	}
 
 	#[Override]
-	public function getNow(): DateTimeInterface
+	public function now(): DateTimeInterface
 	{
 		return (new DateTimeImmutable('now'))
 			->setTimezone($this->timeZone);

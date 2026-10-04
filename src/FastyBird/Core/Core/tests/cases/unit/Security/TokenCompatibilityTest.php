@@ -54,7 +54,7 @@ final class TokenCompatibilityTest extends BaseTestCase
 	 */
 	public function testATokenTheContainerIssuesIsReadBackByTheContainer(): void
 	{
-		$now = $this->container->getByType(Clock\Clock::class)->getNow();
+		$now = $this->container->getByType(\Psr\Clock\ClockInterface::class)->now();
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 
 		$token = $this->container->getByType(Identity\TokenBuilder::class)
@@ -87,7 +87,7 @@ final class TokenCompatibilityTest extends BaseTestCase
 	 */
 	public function testAnExpiredTokenTheContainerIssuedIsRefused(): void
 	{
-		$now = $this->container->getByType(Clock\Clock::class)->getNow();
+		$now = $this->container->getByType(\Psr\Clock\ClockInterface::class)->now();
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 
 		$token = $this->container->getByType(Identity\TokenBuilder::class)

@@ -101,7 +101,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -538,7 +538,7 @@ class Install extends Console\Command\Command
 	 */
 	private function createDevice(Style\SymfonyStyle $io, VieraEntities\Connectors\Connector $connector): void
 	{
-		$tempIdentifier = 'new-device-' . $this->clock->getNow()->format(DateTimeInterface::ATOM);
+		$tempIdentifier = 'new-device-' . $this->clock->now()->format(DateTimeInterface::ATOM);
 
 		$ipAddress = $this->askDeviceIpAddress($io);
 
@@ -1714,7 +1714,7 @@ class Install extends Console\Command\Command
 			throw new VieraExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
-		$executedTime = $this->clock->getNow();
+		$executedTime = $this->clock->now();
 		assert($executedTime instanceof DateTimeImmutable);
 		$executedTime = $executedTime->modify('-5 second');
 

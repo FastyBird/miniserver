@@ -87,7 +87,7 @@ abstract class Periodic
 		protected readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly \Psr\Clock\ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -202,7 +202,7 @@ abstract class Periodic
 	 */
 	private function writeProperty(ModbusDocuments\Devices\Device $device): bool
 	{
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 
 		if (!array_key_exists($device->getId()->toString(), $this->properties)) {
 			return false;
