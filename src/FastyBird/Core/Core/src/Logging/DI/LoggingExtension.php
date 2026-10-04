@@ -169,6 +169,22 @@ final class LoggingExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		/**
+		 * Monolog's logger takes an optional PSR-20 clock. Core's clock is confined to
+		 * first-party services (#655), so the logger keeps reading the engine's time, as
+		 * before #641
+		 */
+
+		$monologLoggerServiceName = $builder->getByType(Monolog\Logger::class);
+
+		if ($monologLoggerServiceName !== null) {
+			$monologLoggerService = $builder->getDefinition($monologLoggerServiceName);
+
+			if ($monologLoggerService instanceof DI\Definitions\ServiceDefinition) {
+				$monologLoggerService->setArgument('clock', null);
+			}
+		}
+
+		/**
 		 * Rotating file and stdout handlers
 		 */
 

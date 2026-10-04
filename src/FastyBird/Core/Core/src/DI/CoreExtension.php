@@ -216,8 +216,11 @@ final class CoreExtension extends DI\CompilerExtension
 		 * APPLICATION
 		 */
 
+		// ArrayAdapter takes an optional PSR-20 clock. Core's clock is confined to first-party
+		// services (#655), so this keeps reading the engine's time, as before #641
 		$builder->addDefinition($this->prefix('cache.psr6'), new DI\Definitions\ServiceDefinition())
-			->setType(ArrayAdapter::class);
+			->setType(ArrayAdapter::class)
+			->setArgument('clock', null);
 
 		$builder->addDefinition($this->prefix('eventLoop.wrapper'), new DI\Definitions\ServiceDefinition())
 			->setType(EventLoop\Wrapper::class);
