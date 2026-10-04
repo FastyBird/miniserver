@@ -20,7 +20,8 @@
  * plain PHP with no dependency on vendor/.
  *
  * THE MAP (tools/core-moves/NN-<capability>.php) returns an array with four keys, all
- * required, any of them empty:
+ * required, any of them empty -- and, from Epic E5 (#460 §3.2) on, an optional fifth,
+ * 'collapse', after them:
  *
  *   'classes'    => [oldFqcn => newFqcn]  A class, interface, trait or enum of Core. Its file
  *                                         moves with it (PSR-4, from Core's composer.json,
@@ -42,6 +43,39 @@
  *                                         NEON/XML/JSON only; code is rewritten per class.
  *   'files'      => [oldPath => newPath] A repository-relative file move that is not a class
  *                                         move -- the file keeps whatever it declares.
+ *   'collapse'   => [interfaceFqcn => implementationFqcn]
+ *                                         A Core interface with exactly one implementer is
+ *                                         folded into it (#460 §3.1, §3.2). Every reference to
+ *                                         the interface -- code (`instanceof`, types, `::class`,
+ *                                         constants), docblock types (`@param`, `@return`,
+ *                                         `@var`, `@template ... of`, ...), string literals
+ *                                         (`getByType()`/`findByType()` class strings) and
+ *                                         NEON/XML/JSON (`type:`, `implement:`) -- becomes the
+ *                                         implementation, through the same import and alias rules
+ *                                         as a moved class. In the implementation itself:
+ *                                           - the interface leaves its `implements` clause, and
+ *                                             the interfaces the interface extended take its
+ *                                             place (minus any the clause already names, and
+ *                                             minus Traversable beside an Iterator or
+ *                                             IteratorAggregate), so `instanceof` still holds for
+ *                                             every one of them; an emptied clause goes;
+ *                                           - an `@implements Interface<...>` docblock line goes;
+ *                                           - the interface's constants are copied in, verbatim
+ *                                             (a constant whose value names a class other than
+ *                                             self/static is refused), so `Foo::CONSTANT` keeps
+ *                                             resolving;
+ *                                           - `#[Override]` goes from every method the interface
+ *                                             declared that no remaining ancestor declares --
+ *                                             left in place it would be a fatal error.
+ *                                         The interface's file is deleted, and the PHPStan
+ *                                         baseline entries whose `path:` is that file with it.
+ *                                         Refused, before anything is touched: an interface that
+ *                                         is not one, an implementation that does not name it in
+ *                                         its own `implements` clause, and ANY OTHER type -- a
+ *                                         test double, an anonymous class, an interface extending
+ *                                         it -- naming it in `extends`/`implements` (each needs a
+ *                                         hand-fix prerequisite first, as in E3). Making the
+ *                                         implementation `final` is not the tool's call.
  *
  * WHAT IS REWRITTEN
  *
@@ -126,9 +160,13 @@ const FB_MOVE_PHP_ROOTS = ['src/FastyBird/', 'public/', 'bin/', 'tests/', 'migra
 
 const FB_MOVE_CONFIG_EXTENSIONS = ['neon', 'xml', 'json'];
 
-const FB_MOVE_OWN_FILES = ['tools/move-core-symbols.php', 'tools/core-moves/'];
+// tools/api-maps/ holds Epic E5's API manifest and change lists (tools/api-surface.php): the frozen
+// base manifest names every type as it was, and the change lists name old types by design.
+const FB_MOVE_OWN_FILES = ['tools/move-core-symbols.php', 'tools/core-moves/', 'tools/api-maps/'];
 
-const FB_MOVE_REPORT_EXCLUDED = ['docs/superpowers/', 'tools/core-moves/'];
+const FB_MOVE_REPORT_EXCLUDED = ['docs/superpowers/', 'tools/core-moves/', 'tools/api-maps/'];
+
+const FB_MOVE_BASELINES = ['tools/phpstan-baseline.neon', 'tools/phpstan-baseline.tests.neon'];
 
 /**
  * Pseudo-types and reserved words that can never be an imported class, in code or a docblock.
@@ -360,11 +398,12 @@ function fbMoveHasAnyPrefix(string $path, array $prefixes): bool
  *     normalize: list<string>,
  *     namespaces: array<string, string>,
  *     files: array<string, string>,
+ *     collapse: array<string, string>,
  * }
  */
 function fbMoveLoadMaps(array $paths): array
 {
-	$merged = ['classes' => [], 'normalize' => [], 'namespaces' => [], 'files' => []];
+	$merged = ['classes' => [], 'normalize' => [], 'namespaces' => [], 'files' => [], 'collapse' => []];
 
 	foreach ($paths as $path) {
 		if (!is_file($path)) {
@@ -373,11 +412,19 @@ function fbMoveLoadMaps(array $paths): array
 
 		$map = require $path;
 
-		if (!is_array($map) || array_keys($map) !== ['classes', 'normalize', 'namespaces', 'files']) {
-			fbMoveFail(sprintf('map "%s" must return exactly: classes, normalize, namespaces, files', $path));
+		if (
+			!is_array($map)
+			|| (
+				array_keys($map) !== ['classes', 'normalize', 'namespaces', 'files']
+				&& array_keys($map) !== ['classes', 'normalize', 'namespaces', 'files', 'collapse']
+			)
+		) {
+			fbMoveFail(sprintf('map "%s" must return exactly: classes, normalize, namespaces, files[, collapse]', $path));
 		}
 
-		foreach (['classes', 'namespaces', 'files'] as $key) {
+		$map['collapse'] ??= [];
+
+		foreach (['classes', 'namespaces', 'files', 'collapse'] as $key) {
 			if (!is_array($map[$key])) {
 				fbMoveFail(sprintf('map "%s": "%s" must be an array', $path, $key));
 			}
@@ -422,6 +469,21 @@ function fbMoveLoadMaps(array $paths): array
 
 		if (array_intersect($lowerSources, $lowerTargets) !== []) {
 			fbMoveFail(sprintf('a "%s" target is also a source; chains are not supported', $key));
+		}
+	}
+
+	// A collapse is never chained, and never mixed with a move of either of its two types in the
+	// same run: the implementation is rewritten in place, so it must stay where it is.
+	$lowerMoved = array_map(strtolower(...), array_merge(array_keys($merged['classes']), array_values($merged['classes'])));
+	$lowerCollapsed = array_map(strtolower(...), array_keys($merged['collapse']));
+
+	foreach ($merged['collapse'] as $interface => $implementation) {
+		if (
+			in_array(strtolower($interface), $lowerMoved, true)
+			|| in_array(strtolower($implementation), $lowerMoved, true)
+			|| in_array(strtolower($implementation), $lowerCollapsed, true)
+		) {
+			fbMoveFail(sprintf('collapse "%s" => "%s" overlaps a move or another collapse', $interface, $implementation));
 		}
 	}
 
@@ -1159,6 +1221,8 @@ function fbMoveResolve(string $text, string $namespace, array $imports, array $a
  * @param array<string, true> $normalize lowercase namespaces to normalize
  * @param array<string, true> $vacated lowercase namespaces the map empties
  * @param list<array{0: string, 1: string, 2: bool}> $stringMap
+ * @param array{implementation: string, interfaces: array<string, list<string>>, constants: string, dropOverride: list<string>}|null $collapseHere
+ *        when this file declares the implementation an interface collapses into (fbMoveCollapsePlan())
  */
 function fbMoveRewritePhp(
 	string $path,
@@ -1169,6 +1233,7 @@ function fbMoveRewritePhp(
 	array $normalize,
 	array $vacated,
 	array $stringMap,
+	array|null $collapseHere = null,
 ): string
 {
 	$analysis = fbMoveAnalyse($code);
@@ -1299,6 +1364,14 @@ function fbMoveRewritePhp(
 			return ['rel', fbMoveShortOf($targetNamespace) . '\\' . $short, ''];
 		}
 
+		if ($targetNamespace === '') {
+			// a global type (`IteratorAggregate`, an interface a collapsed one extended): this
+			// codebase imports it by its own name
+			$newImports[strtolower($target)] ??= $target;
+
+			return ['new', strtolower($target), ''];
+		}
+
 		if (strcasecmp($targetNamespace, FB_MOVE_CORE_NAMESPACE) === 0) {
 			// $target lives directly under Core's own root namespace (E3.14: a namespace
 			// collapsing into a same-named class, e.g. Constants\Constants -> Constants) --
@@ -1314,6 +1387,137 @@ function fbMoveRewritePhp(
 
 		return ['new', strtolower($targetNamespace), $short];
 	};
+
+	// 'collapse': the edits to the implementation's own file. A reference such an edit deletes
+	// with its text is "dropped": it still counts as a use of its import (so an import only it
+	// used goes), but it gets no binding and no edit of its own.
+	$dropped = []; // ref key => true
+	$clauseItems = []; // ref key => true: an item of the rebuilt `implements` clause
+	$clause = null; // [items, beforeClause]
+	$extraBindings = []; // id => binding of an interface added to the clause
+	$removals = []; // [start, end] deletions
+	$constantInsertion = null; // [offset, text]
+
+	if ($collapseHere !== null) {
+		$implementationType = null;
+
+		foreach (fbMoveOutline($code) as $type) {
+			if (
+				!$type['anonymous']
+				&& strcasecmp(($oldNamespace !== '' ? $oldNamespace . '\\' : '') . $type['name'], $collapseHere['implementation']) === 0
+			) {
+				$implementationType = $type;
+			}
+		}
+
+		if ($implementationType === null) {
+			fbMoveFail(sprintf('%s: does not declare %s', $path, $collapseHere['implementation']));
+		}
+
+		$refByStart = [];
+
+		foreach ($analysis['refs'] as $refKey => $ref) {
+			$refByStart[$ref['start']] = $refKey;
+		}
+
+		$items = [];
+		$present = [];
+		$added = [];
+
+		foreach ($implementationType['implements'] as $item) {
+			$fqcn = fbMoveResolve($item['text'], $oldNamespace, $imports, $aliasIndex)['fqcn'];
+			$refKey = $refByStart[$item['start']] ?? fbMoveFail(sprintf('%s: cannot read its `implements` clause', $path));
+			$parents = $collapseHere['interfaces'][strtolower($fqcn)] ?? null;
+			$clauseItems[$refKey] = true;
+			$items[] = ['ref' => $refKey, 'start' => $item['start'], 'text' => $item['text'], 'collapsed' => $parents !== null];
+
+			if ($parents === null) {
+				$present[strtolower($fqcn)] = true;
+			} else {
+				$dropped[$refKey] = true;
+
+				foreach ($parents as $parent) {
+					$added[strtolower($parent)] ??= $parent;
+				}
+			}
+		}
+
+		$added = array_diff_key($added, $present);
+
+		if (array_intersect_key($present + $added, ['iteratoraggregate' => true, 'iterator' => true]) !== []) {
+			unset($added['traversable']); // implied, and not implementable on its own
+		}
+
+		foreach (array_values($added) as $position => $parent) {
+			$extraBindings['p' . $position] = $express($parent);
+		}
+
+		$clause = ['items' => $items, 'beforeClause' => $implementationType['beforeClause']];
+
+		// `@implements Interface<...>` lines in its docblocks
+		foreach ($analysis['docs'] as $doc) {
+			preg_match_all(
+				'/^[ \t]*\*[ \t]*@(?:phpstan-|psalm-|template-)?implements[ \t]+\\\\?([A-Za-z_][A-Za-z0-9_\\\\]*)[^\n]*\n/m',
+				$doc['text'],
+				$matches,
+				PREG_OFFSET_CAPTURE | PREG_SET_ORDER,
+			);
+
+			$lines = [];
+
+			foreach ($matches as $match) {
+				$fqcn = fbMoveResolve($match[1][0], $oldNamespace, $imports, $aliasIndex)['fqcn'];
+
+				if (isset($collapseHere['interfaces'][strtolower($fqcn)])) {
+					$lines[] = [$doc['start'] + $match[0][1], $doc['start'] + $match[0][1] + strlen($match[0][0])];
+				}
+			}
+
+			if ($lines === []) {
+				continue;
+			}
+
+			$rest = $doc['text'];
+
+			foreach (array_reverse($lines) as [$start, $end]) {
+				$rest = substr_replace($rest, '', $start - $doc['start'], $end - $start);
+			}
+
+			if (trim(str_replace(['/**', '*/', '*'], '', $rest)) === '') {
+				// nothing else was in it: the whole docblock goes, with its line
+				$start = strrpos(substr($code, 0, $doc['start']), "\n");
+				$end = strpos($code, "\n", $doc['start'] + strlen($doc['text']));
+				$lines = [[$start === false ? 0 : $start + 1, $end === false ? strlen($code) : $end + 1]];
+			}
+
+			array_push($removals, ...$lines);
+		}
+
+		foreach ($implementationType['methods'] as $method) {
+			if (in_array(strtolower($method['name']), $collapseHere['dropOverride'], true)) {
+				array_push($removals, ...$method['overrides']);
+			}
+		}
+
+		foreach ($removals as [$start, $end]) {
+			foreach ($analysis['refs'] as $refKey => $ref) {
+				if ($ref['start'] >= $start && $ref['start'] < $end) {
+					$dropped[$refKey] = true;
+				}
+			}
+		}
+
+		if ($collapseHere['constants'] !== '') {
+			$offset = strpos($code, "\n", $implementationType['bodyOffset']);
+			$offset = $offset === false ? strlen($code) : $offset + 1;
+
+			if (($code[$offset] ?? '') === "\n") {
+				$offset++;
+			}
+
+			$constantInsertion = [$offset, $collapseHere['constants'] . "\n"];
+		}
+	}
 
 	$bindings = []; // ref key => binding
 	$origin = []; // ref key => the import it resolved through
@@ -1402,6 +1606,15 @@ function fbMoveRewritePhp(
 	foreach ($analysis['refs'] as $refKey => $ref) {
 		$resolved = fbMoveResolve($ref['text'], $oldNamespace, $imports, $aliasIndex);
 		$lowerFqcn = strtolower($resolved['fqcn']);
+
+		if (isset($dropped[$refKey])) {
+			if ($resolved['import'] >= 0 && $imports[$resolved['import']]['kind'] === 'class') {
+				$before[$resolved['import']]++;
+			}
+
+			continue;
+		}
+
 		$changed = isset($classes[$lowerFqcn]);
 		$target = $classes[$lowerFqcn] ?? $resolved['fqcn'];
 
@@ -1471,7 +1684,7 @@ function fbMoveRewritePhp(
 		$reserved[strtolower(explode('\\', $ref['text'])[0])] = true;
 	}
 
-	foreach ($bindings as $binding) {
+	foreach (array_merge(array_values($bindings), array_values($extraBindings)) as $binding) {
 		if ($binding[0] === 'imp') {
 			$after[(int) $binding[1]]++;
 		}
@@ -1585,6 +1798,13 @@ function fbMoveRewritePhp(
 
 	// Edits: [start, end, replacement].
 	$edits = [];
+	$render = static fn (array $binding): string => match ($binding[0]) {
+		'fq' => '\\' . $binding[1],
+		'rel' => $binding[1],
+		'imp' => $final['e' . $binding[1]]['alias'] . ($binding[2] !== '' ? '\\' . $binding[2] : ''),
+		default => $final['n' . $binding[1]]['alias'] . ($binding[2] !== '' ? '\\' . $binding[2] : ''),
+	};
+	$clauseTexts = []; // ref key => the text a kept `implements` item is rewritten to
 
 	foreach ($bindings as $refKey => $binding) {
 		$ref = $analysis['refs'][$refKey];
@@ -1601,16 +1821,56 @@ function fbMoveRewritePhp(
 			// take the shortcut: $binding[2] is then the class's new short name, not what was typed.
 		}
 
-		$text = match ($binding[0]) {
-			'fq' => '\\' . $binding[1],
-			'rel' => $binding[1],
-			'imp' => $final['e' . $binding[1]]['alias'] . ($binding[2] !== '' ? '\\' . $binding[2] : ''),
-			default => $final['n' . $binding[1]]['alias'] . ($binding[2] !== '' ? '\\' . $binding[2] : ''),
-		};
+		$text = $render($binding);
+
+		if (isset($clauseItems[$refKey])) {
+			$clauseTexts[$refKey] = $text;
+
+			continue;
+		}
 
 		if ($text !== $ref['text']) {
 			$edits[] = [$ref['start'], $ref['start'] + strlen($ref['text']), $text];
 		}
+	}
+
+	if ($clause !== null) {
+		// the collapsed interfaces leave the clause; the interfaces they extended take the place
+		// of the first of them
+		$texts = [];
+		$parentsPlaced = false;
+
+		foreach ($clause['items'] as $item) {
+			if (!$item['collapsed']) {
+				$texts[] = $clauseTexts[$item['ref']] ?? $item['text'];
+
+				continue;
+			}
+
+			if (!$parentsPlaced) {
+				foreach ($extraBindings as $binding) {
+					$texts[] = $render($binding);
+				}
+
+				$parentsPlaced = true;
+			}
+		}
+
+		$first = $clause['items'][0];
+		$last = $clause['items'][count($clause['items']) - 1];
+		$end = $last['start'] + strlen($last['text']);
+
+		$edits[] = $texts === []
+			? [$clause['beforeClause'], $end, '']
+			: [$first['start'], $end, implode(', ', $texts)];
+	}
+
+	foreach ($removals as [$start, $end]) {
+		$edits[] = [$start, $end, ''];
+	}
+
+	if ($constantInsertion !== null) {
+		$edits[] = [$constantInsertion[0], $constantInsertion[0], $constantInsertion[1]];
 	}
 
 	if ($moved) {
@@ -2156,15 +2416,16 @@ function fbMoveVacatedNamespaces(array $classes, array $index): array
 }
 
 /**
- * @param array{classes: array<string, string>, normalize: list<string>, namespaces: array<string, string>, files: array<string, string>} $map
+ * @param array{classes: array<string, string>, normalize: list<string>, namespaces: array<string, string>, files: array<string, string>, collapse: array<string, string>} $map
  * @param array<string, array{0: string, 1: string}> $index
  * @param array<string, string> $oldPaths old path => new path
  * @param list<string> $files
+ * @param list<string> $deleted the interface files a collapse deletes
  */
-function fbMoveReport(string $root, array $map, array $index, array $oldPaths, array $files): int
+function fbMoveReport(string $root, array $map, array $index, array $oldPaths, array $files, array $deleted = []): int
 {
-	$vacated = fbMoveVacatedNamespaces($map['classes'], $index);
-	$names = array_merge(array_keys($map['classes']), $vacated, array_keys($map['namespaces']));
+	$vacated = fbMoveVacatedNamespaces($map['classes'] + $map['collapse'], $index);
+	$names = array_merge(array_keys($map['classes']), array_keys($map['collapse']), $vacated, array_keys($map['namespaces']));
 	$alternatives = [];
 
 	foreach ($names as $name) {
@@ -2173,7 +2434,7 @@ function fbMoveReport(string $root, array $map, array $index, array $oldPaths, a
 		}
 	}
 
-	foreach (array_keys($oldPaths) as $path) {
+	foreach (array_merge(array_keys($oldPaths), $deleted) as $path) {
 		$alternatives[] = preg_quote($path, '/');
 
 		if (str_starts_with($path, FB_MOVE_CORE_PACKAGE)) {
@@ -2211,7 +2472,7 @@ function fbMoveReport(string $root, array $map, array $index, array $oldPaths, a
 	$resolved = [];
 	$illegal = [];
 	$normalize = array_fill_keys(array_map(strtolower(...), $map['normalize']), true);
-	$lowerOld = array_change_key_case(array_flip(array_keys($map['classes'])));
+	$lowerOld = array_change_key_case(array_flip(array_merge(array_keys($map['classes']), array_keys($map['collapse']))));
 	$lowerVacated = array_map(static fn (string $namespace): string => strtolower($namespace), $vacated);
 	$isStale = static function (string $name) use ($lowerOld, $lowerVacated): bool {
 		$lower = strtolower($name);
@@ -2304,9 +2565,9 @@ function fbMoveReport(string $root, array $map, array $index, array $oldPaths, a
 	printf(
 		'Stale-reference report: %d old FQCN(s), %d vacated namespace(s), %d old path(s), %d normalized'
 		. " namespace(s), %d tracked files.\n",
-		count($map['classes']),
+		count($map['classes']) + count($map['collapse']),
 		count($vacated),
-		count($oldPaths),
+		count($oldPaths) + count($deleted),
 		count($normalize),
 		count($files),
 	);
@@ -2343,7 +2604,10 @@ function fbMoveReport(string $root, array $map, array $index, array $oldPaths, a
 /**
  * The map's names as text-rewrite pairs [from, to, is a namespace], forwards or inverted.
  *
- * @param array{classes: array<string, string>, normalize: list<string>, namespaces: array<string, string>, files: array<string, string>} $map
+ * A collapse has no inverse (its target existed before it), so the collapse pairs are only ever
+ * given forwards.
+ *
+ * @param array{classes: array<string, string>, normalize: list<string>, namespaces: array<string, string>, files: array<string, string>, collapse: array<string, string>} $map
  *
  * @return list<array{0: string, 1: string, 2: bool}>
  */
@@ -2354,6 +2618,12 @@ function fbMoveNamePairs(array $map, bool $inverse): array
 	foreach ([[false, $map['classes']], [true, $map['namespaces']]] as [$isNamespace, $names]) {
 		foreach ($names as $old => $new) {
 			$pairs[] = $inverse ? [$new, $old, $isNamespace] : [$old, $new, $isNamespace];
+		}
+	}
+
+	if (!$inverse) {
+		foreach ($map['collapse'] as $old => $new) {
+			$pairs[] = [$old, $new, false];
 		}
 	}
 
@@ -2394,17 +2664,31 @@ function fbMoveBaselineEntries(string $neon): array
 }
 
 /**
- * @param array{classes: array<string, string>, normalize: list<string>, namespaces: array<string, string>, files: array<string, string>} $map
+ * A collapse cannot be inverted (its target existed before it), so for a collapse the entries at
+ * <ref> are mapped FORWARDS instead -- the interface's name becomes the implementation's -- and
+ * compared with the entries now; and an entry of a deleted interface file is an expected loss.
+ *
+ * @param array{classes: array<string, string>, normalize: list<string>, namespaces: array<string, string>, files: array<string, string>, collapse: array<string, string>} $map
  * @param array<string, string> $oldPaths old path => new path
+ * @param list<string> $deleted the interface files a collapse deletes
  */
-function fbMoveVerifyBaselines(string $root, string $ref, array $map, array $oldPaths): int
+function fbMoveVerifyBaselines(string $root, string $ref, array $map, array $oldPaths, array $deleted = []): int
 {
 	$inverse = fbMoveNamePairs($map, true);
+	$forward = array_map(
+		static fn (string $old, string $new): array => [$old, $new, false],
+		array_keys($map['collapse']),
+		array_values($map['collapse']),
+	);
 
 	$status = 0;
 
-	foreach (['tools/phpstan-baseline.neon', 'tools/phpstan-baseline.tests.neon'] as $file) {
-		$before = fbMoveBaselineEntries(fbMoveRun(['git', 'show', $ref . ':' . $file], $root));
+	foreach (FB_MOVE_BASELINES as $file) {
+		$before = fbMoveBaselineEntries(fbMoveDropBaselineEntries(
+			fbMoveRun(['git', 'show', $ref . ':' . $file], $root),
+			$deleted,
+		));
+		$before = array_map(static fn (string $entry): string => fbMoveRewriteConfig($entry, $forward, []), $before);
 		$now = fbMoveBaselineEntries(fbMoveRead($root . '/' . $file));
 		$image = array_map(
 			static fn (string $entry): string => fbMoveRewriteConfig($entry, $inverse, array_flip($oldPaths)),
@@ -2465,6 +2749,734 @@ function fbMoveMultisetDiff(array $a, array $b): array
 }
 
 // ----------------------------------------------------------------------------------------
+// 'collapse' (Epic E5, #460 §3.2)
+
+/**
+ * Every type a PHP file declares, anonymous classes included, with what a collapse reads or
+ * edits: the names in its `extends` and `implements` clauses, its body, its constants (each
+ * with the byte range of its whole lines, leading docblock and comments included), the traits
+ * it uses and its methods with the byte ranges that delete each `#[Override]` group.
+ *
+ * @return list<array{
+ *     kind: string,
+ *     name: string,
+ *     anonymous: bool,
+ *     line: int,
+ *     extends: list<array{start: int, text: string}>,
+ *     implements: list<array{start: int, text: string}>,
+ *     beforeClause: int,
+ *     bodyOpen: int,
+ *     bodyOffset: int,
+ *     traits: list<string>,
+ *     constants: list<array{names: list<string>, start: int, end: int, foreign: bool}>,
+ *     methods: list<array{name: string, overrides: list<array{0: int, 1: int}>, multi: bool}>,
+ * }>
+ */
+function fbMoveOutline(string $code): array
+{
+	$tokens = fbMoveTokens($code);
+	$count = count($tokens);
+	$depth = [];
+	$match = [];
+	$stack = [];
+	$level = 0;
+
+	for ($i = 0; $i < $count; $i++) {
+		$depth[$i] = $level;
+
+		if ($tokens[$i]->text === '{' || $tokens[$i]->is([T_CURLY_OPEN, T_DOLLAR_OPEN_CURLY_BRACES])) {
+			$stack[] = $i;
+			$level++;
+		} elseif ($tokens[$i]->text === '}') {
+			$level--;
+			$open = array_pop($stack);
+
+			if ($open !== null) {
+				$match[$open] = $i;
+			}
+		}
+	}
+
+	$lineStart = static function (int $offset) use ($code): int {
+		$position = strrpos(substr($code, 0, $offset), "\n");
+
+		return $position === false ? 0 : $position + 1;
+	};
+
+	$lineEnd = static function (int $offset) use ($code): int {
+		$position = strpos($code, "\n", $offset);
+
+		return $position === false ? strlen($code) : $position + 1;
+	};
+
+	$types = [];
+
+	for ($i = 0; $i < $count; $i++) {
+		if (!$tokens[$i]->is([T_CLASS, T_INTERFACE, T_TRAIT, T_ENUM])) {
+			continue;
+		}
+
+		$prev = fbMoveSignificant($tokens, $i, -1);
+
+		if ($prev >= 0 && $tokens[$prev]->is(T_DOUBLE_COLON)) {
+			continue; // Foo::class
+		}
+
+		$beforeNew = $prev >= 0 && $tokens[$prev]->is(T_READONLY) ? fbMoveSignificant($tokens, $prev, -1) : $prev;
+		$anonymous = $beforeNew >= 0 && $tokens[$beforeNew]->is(T_NEW);
+		$name = '';
+		$cursor = $i;
+
+		if (!$anonymous) {
+			$next = fbMoveSignificant($tokens, $i, 1);
+
+			if ($next < 0 || !$tokens[$next]->is(T_STRING)) {
+				continue;
+			}
+
+			$name = $tokens[$next]->text;
+			$cursor = $next;
+		}
+
+		$type = [
+			'kind' => match (true) {
+				$tokens[$i]->is(T_INTERFACE) => 'interface',
+				$tokens[$i]->is(T_TRAIT) => 'trait',
+				$tokens[$i]->is(T_ENUM) => 'enum',
+				default => 'class',
+			},
+			'name' => $name,
+			'anonymous' => $anonymous,
+			'line' => $tokens[$i]->line,
+			'extends' => [],
+			'implements' => [],
+			'beforeClause' => -1,
+			'bodyOpen' => -1,
+			'bodyOffset' => -1,
+			'traits' => [],
+			'constants' => [],
+			'methods' => [],
+		];
+
+		$mode = null;
+		$parens = 0;
+
+		for ($j = $cursor + 1; $j < $count; $j++) {
+			$token = $tokens[$j];
+
+			if ($token->text === '(') {
+				$parens++;
+			} elseif ($token->text === ')') {
+				$parens--;
+			} elseif ($parens === 0 && $token->text === '{') {
+				$type['bodyOpen'] = $j;
+				$type['bodyOffset'] = $token->pos;
+
+				break;
+			} elseif ($parens === 0 && $token->is(T_EXTENDS)) {
+				$mode = 'extends';
+
+				if ($type['kind'] === 'interface') {
+					$type['beforeClause'] = $tokens[fbMoveSignificant($tokens, $j, -1)]->pos
+						+ strlen($tokens[fbMoveSignificant($tokens, $j, -1)]->text);
+				}
+			} elseif ($parens === 0 && $token->is(T_IMPLEMENTS)) {
+				$mode = 'implements';
+				$type['beforeClause'] = $tokens[fbMoveSignificant($tokens, $j, -1)]->pos
+					+ strlen($tokens[fbMoveSignificant($tokens, $j, -1)]->text);
+			} elseif ($parens === 0 && $mode !== null && $token->is([T_STRING, T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED, T_NAME_RELATIVE])) {
+				$type[$mode][] = ['start' => $token->pos, 'text' => $token->text];
+			}
+		}
+
+		if ($type['bodyOpen'] < 0 || !isset($match[$type['bodyOpen']])) {
+			continue;
+		}
+
+		$open = $type['bodyOpen'];
+		$close = $match[$open];
+		$memberDepth = $depth[$open] + 1;
+		$memberStart = -1;
+		$pending = [];
+
+		for ($k = $open + 1; $k < $close; $k++) {
+			$token = $tokens[$k];
+
+			if ($depth[$k] !== $memberDepth) {
+				continue;
+			}
+
+			if ($token->is(T_WHITESPACE)) {
+				continue;
+			}
+
+			if ($memberStart < 0) {
+				$memberStart = $token->pos;
+			}
+
+			if ($token->is(T_ATTRIBUTE)) {
+				$brackets = 1;
+
+				for ($end = $k + 1; $end < $close && $brackets > 0; $end++) {
+					if ($tokens[$end]->text === '[') {
+						$brackets++;
+					} elseif ($tokens[$end]->text === ']') {
+						$brackets--;
+					}
+				}
+
+				$groupStart = $token->pos;
+				$groupEnd = $tokens[$end - 1]->pos + 1;
+				$inner = trim(substr($code, $groupStart + 2, $groupEnd - $groupStart - 3));
+				$names = array_map('trim', explode(',', $inner));
+				$override = array_filter(
+					$names,
+					static fn (string $attribute): bool => preg_match('/^\\\\?Override$/i', $attribute) === 1,
+				);
+
+				if ($override !== []) {
+					$start = $lineStart($groupStart);
+					$end2 = $lineEnd($groupEnd);
+					$alone = trim(substr($code, $start, $groupStart - $start)) === ''
+						&& trim(substr($code, $groupEnd, $end2 - $groupEnd)) === '';
+
+					$pending[] = [
+						'range' => $alone ? [$start, $end2] : [$groupStart, $groupEnd],
+						'multi' => count($names) > 1,
+					];
+				}
+
+				$k = $end - 1;
+
+				continue;
+			}
+
+			if ($token->is(T_USE)) {
+				for ($k++; $k < $close && $tokens[$k]->text !== ';' && $tokens[$k]->text !== '{'; $k++) {
+					if ($tokens[$k]->is([T_STRING, T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED])) {
+						$type['traits'][] = $tokens[$k]->text;
+					}
+				}
+
+				if ($tokens[$k]->text === '{' && isset($match[$k])) {
+					$k = $match[$k];
+				}
+
+				$memberStart = -1;
+				$pending = [];
+
+				continue;
+			}
+
+			if ($token->is(T_CONST)) {
+				$names = [];
+				$foreign = false;
+				$end = $k;
+
+				for ($end = $k + 1; $end < $close && $tokens[$end]->text !== ';'; $end++) {
+					$part = $tokens[$end];
+					$after = fbMoveSignificant($tokens, $end, 1);
+
+					if ($part->is(T_STRING) && $after >= 0 && $tokens[$after]->text === '=') {
+						$names[] = $part->text;
+					} elseif ($part->is([T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED, T_NAME_RELATIVE])) {
+						$foreign = true;
+					} elseif (
+						$part->is(T_STRING)
+						&& !in_array(strtolower($part->text), ['self', 'static', 'true', 'false', 'null'], true)
+						&& !in_array(strtolower($part->text), FB_MOVE_BUILTINS, true)
+					) {
+						$foreign = true;
+					}
+				}
+
+				$type['constants'][] = [
+					'names' => $names,
+					'start' => $lineStart($memberStart),
+					'end' => $lineEnd($tokens[$end]->pos),
+					'foreign' => $foreign,
+				];
+
+				$k = $end;
+				$memberStart = -1;
+				$pending = [];
+
+				continue;
+			}
+
+			if ($token->is(T_FUNCTION)) {
+				$next = fbMoveSignificant($tokens, $k, 1);
+
+				if ($next >= 0 && $tokens[$next]->text === '&') {
+					$next = fbMoveSignificant($tokens, $next, 1);
+				}
+
+				$type['methods'][] = [
+					'name' => $next >= 0 ? $tokens[$next]->text : '',
+					'overrides' => array_map(static fn (array $group): array => $group['range'], $pending),
+					'multi' => array_filter($pending, static fn (array $group): bool => $group['multi']) !== [],
+				];
+
+				// the method ends at its body's closing brace, or at `;` when it has none
+				for ($end = $k + 1; $end < $close; $end++) {
+					if ($tokens[$end]->text === ';' && $depth[$end] === $memberDepth) {
+						break;
+					}
+
+					if ($tokens[$end]->text === '{' && $depth[$end] === $memberDepth && isset($match[$end])) {
+						$end = $match[$end];
+
+						break;
+					}
+				}
+
+				$k = $end;
+				$memberStart = -1;
+				$pending = [];
+
+				continue;
+			}
+
+			if ($token->text === '{' && isset($match[$k])) {
+				$k = $match[$k]; // a property's hooks
+
+				continue;
+			}
+
+			if ($token->text === ';') {
+				$memberStart = -1;
+				$pending = [];
+			}
+		}
+
+		$types[] = $type;
+	}
+
+	return $types;
+}
+
+/**
+ * Where Composer would load a type from: its class map, else its PSR-4 roots. Null when vendor/
+ * is not installed or knows nothing of it.
+ */
+function fbMoveVendorFile(string $root, string $fqcn): string|null
+{
+	static $maps = null;
+
+	if ($maps === null) {
+		$classmap = $root . '/vendor/composer/autoload_classmap.php';
+		$psr4 = $root . '/vendor/composer/autoload_psr4.php';
+		$maps = [
+			is_file($classmap) ? (static fn (): mixed => require $classmap)() : [],
+			is_file($psr4) ? (static fn (): mixed => require $psr4)() : [],
+		];
+		$maps = [
+			is_array($maps[0]) ? array_change_key_case($maps[0]) : [],
+			is_array($maps[1]) ? $maps[1] : [],
+		];
+		uksort($maps[1], fbMoveLongestFirst(...));
+	}
+
+	$file = $maps[0][strtolower($fqcn)] ?? null;
+
+	if (is_string($file) && is_file($file)) {
+		return $file;
+	}
+
+	foreach ($maps[1] as $prefix => $directories) {
+		if (!is_string($prefix) || !is_array($directories) || !str_starts_with($fqcn, $prefix)) {
+			continue;
+		}
+
+		foreach ($directories as $directory) {
+			$candidate = $directory . '/' . str_replace('\\', '/', substr($fqcn, strlen($prefix))) . '.php';
+
+			if (is_file($candidate)) {
+				return $candidate;
+			}
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Lowercase names of every method $fqcn declares or inherits -- from its parent class, its
+ * interfaces and its traits, recursively -- or null when some ancestor cannot be read. PHP's own
+ * types are read by reflection; Core's from the tree; anything else from vendor/.
+ *
+ * @param array<string, array{0: string, 1: string}> $index
+ * @param array<string, list<string>|null> $memo
+ *
+ * @return list<string>|null
+ */
+function fbMoveTypeMethods(string $root, string $fqcn, array $index, array &$memo): array|null
+{
+	$fqcn = ltrim($fqcn, '\\');
+	$lower = strtolower($fqcn);
+
+	if (array_key_exists($lower, $memo)) {
+		return $memo[$lower];
+	}
+
+	$memo[$lower] = [];
+
+	if (
+		(class_exists($fqcn, false) || interface_exists($fqcn, false) || trait_exists($fqcn, false))
+		&& (new ReflectionClass($fqcn))->isInternal()
+	) {
+		return $memo[$lower] = array_values(array_map(
+			static fn (ReflectionMethod $method): string => strtolower($method->getName()),
+			(new ReflectionClass($fqcn))->getMethods(),
+		));
+	}
+
+	$file = isset($index[$lower]) ? $root . '/' . $index[$lower][1] : fbMoveVendorFile($root, $fqcn);
+
+	if ($file === null) {
+		return $memo[$lower] = null;
+	}
+
+	$code = fbMoveRead($file);
+	$analysis = fbMoveAnalyse($code);
+	$aliasIndex = fbMoveAliasIndex($analysis['imports']);
+
+	foreach (fbMoveOutline($code) as $type) {
+		$declared = ($analysis['namespace'] !== '' ? $analysis['namespace'] . '\\' : '') . $type['name'];
+
+		if ($type['anonymous'] || strcasecmp($declared, $fqcn) !== 0) {
+			continue;
+		}
+
+		$methods = array_map(static fn (array $method): string => strtolower($method['name']), $type['methods']);
+		$ancestors = array_merge(
+			array_column($type['extends'], 'text'),
+			array_column($type['implements'], 'text'),
+			$type['traits'],
+		);
+
+		foreach ($ancestors as $name) {
+			$inherited = fbMoveTypeMethods(
+				$root,
+				fbMoveResolve($name, $analysis['namespace'], $analysis['imports'], $aliasIndex)['fqcn'],
+				$index,
+				$memo,
+			);
+
+			if ($inherited === null) {
+				return $memo[$lower] = null;
+			}
+
+			$methods = array_merge($methods, $inherited);
+		}
+
+		return $memo[$lower] = array_values(array_unique($methods));
+	}
+
+	return $memo[$lower] = null;
+}
+
+/**
+ * Everything a collapse does to its implementation's file, decided up front, and every
+ * condition it refuses. Keyed by the implementation's file.
+ *
+ * @param array<string, string> $collapse interface FQCN => implementation FQCN
+ * @param array<string, array{0: string, 1: string}> $index
+ * @param list<string> $files
+ *
+ * @return array<string, array{
+ *     implementation: string,
+ *     interfaces: array<string, list<string>>,
+ *     constants: string,
+ *     dropOverride: list<string>,
+ * }>
+ */
+function fbMoveCollapsePlan(string $root, array $collapse, array $index, array $files): array
+{
+	$plan = [];
+	$problems = [];
+	$memo = [];
+	$lowerSources = array_change_key_case(array_flip(array_keys($collapse)));
+	$lowerCollapse = array_change_key_case($collapse);
+
+	$resolveAll = static function (array $names, array $analysis): array {
+		$aliasIndex = fbMoveAliasIndex($analysis['imports']);
+
+		return array_map(
+			static fn (string $name): string => fbMoveResolve($name, $analysis['namespace'], $analysis['imports'], $aliasIndex)['fqcn'],
+			$names,
+		);
+	};
+
+	$findType = static function (string $code, array $analysis, string $fqcn): array|null {
+		foreach (fbMoveOutline($code) as $type) {
+			$declared = ($analysis['namespace'] !== '' ? $analysis['namespace'] . '\\' : '') . $type['name'];
+
+			if (!$type['anonymous'] && strcasecmp($declared, $fqcn) === 0) {
+				return $type;
+			}
+		}
+
+		return null;
+	};
+
+	foreach ($collapse as $interface => $implementation) {
+		$interfaceKnown = $index[strtolower($interface)] ?? null;
+		$implementationKnown = $index[strtolower($implementation)] ?? null;
+
+		if ($interfaceKnown === null || $implementationKnown === null) {
+			$problems[] = sprintf('collapse "%s" => "%s": both must be declared in Core', $interface, $implementation);
+
+			continue;
+		}
+
+		$interfaceCode = fbMoveRead($root . '/' . $interfaceKnown[1]);
+		$interfaceAnalysis = fbMoveAnalyse($interfaceCode);
+		$interfaceType = $findType($interfaceCode, $interfaceAnalysis, $interface);
+
+		if ($interfaceType === null || $interfaceType['kind'] !== 'interface') {
+			$problems[] = sprintf('collapse "%s": it is not an interface', $interface);
+
+			continue;
+		}
+
+		$implementationFile = $implementationKnown[1];
+		$implementationCode = fbMoveRead($root . '/' . $implementationFile);
+		$implementationAnalysis = fbMoveAnalyse($implementationCode);
+		$implementationType = $findType($implementationCode, $implementationAnalysis, $implementation);
+
+		if ($implementationType === null || !in_array($implementationType['kind'], ['class', 'enum'], true)) {
+			$problems[] = sprintf('collapse "%s" => "%s": the target is not a class or enum', $interface, $implementation);
+
+			continue;
+		}
+
+		$implemented = array_map(
+			strtolower(...),
+			$resolveAll(array_column($implementationType['implements'], 'text'), $implementationAnalysis),
+		);
+
+		if (!in_array(strtolower($interface), $implemented, true)) {
+			$problems[] = sprintf(
+				'collapse "%s" => "%s": %s does not name the interface in its own `implements` clause',
+				$interface,
+				$implementation,
+				$implementationFile,
+			);
+
+			continue;
+		}
+
+		$entry = $plan[$implementationFile] ?? [
+			'implementation' => $implementation,
+			'interfaces' => [],
+			'constants' => '',
+			'dropOverride' => [],
+			'type' => $implementationType,
+			'analysis' => $implementationAnalysis,
+			'interfaceMethods' => [],
+		];
+
+		$entry['interfaces'][strtolower($interface)] = $resolveAll(array_column($interfaceType['extends'], 'text'), $interfaceAnalysis);
+
+		// the interface's constants, copied verbatim
+		$implementationConstants = array_map(
+			strtolower(...),
+			array_merge(...array_column($implementationType['constants'], 'names') ?: [[]]),
+		);
+		$blocks = [];
+
+		foreach ($interfaceType['constants'] as $constant) {
+			if ($constant['foreign']) {
+				$problems[] = sprintf(
+					'collapse "%s": constant %s names a class in its declaration; copy it by hand first',
+					$interface,
+					implode(', ', $constant['names']),
+				);
+			}
+
+			foreach ($constant['names'] as $name) {
+				if (in_array(strtolower($name), $implementationConstants, true)) {
+					$problems[] = sprintf('collapse "%s": %s already declares a constant %s', $interface, $implementation, $name);
+				}
+			}
+
+			$blocks[] = $constant;
+		}
+
+		if ($blocks !== []) {
+			$text = '';
+
+			foreach ($blocks as $position => $block) {
+				$between = $position === 0 ? '' : substr($interfaceCode, $blocks[$position - 1]['end'], $block['start'] - $blocks[$position - 1]['end']);
+				$text .= ($position === 0 ? '' : (trim($between) === '' ? $between : "\n"))
+					. substr($interfaceCode, $block['start'], $block['end'] - $block['start']);
+			}
+
+			$entry['constants'] .= ($entry['constants'] !== '' ? "\n" : '') . $text;
+		}
+
+		$entry['interfaceMethods'] = array_merge(
+			$entry['interfaceMethods'],
+			array_map(static fn (array $method): string => strtolower($method['name']), $interfaceType['methods']),
+		);
+
+		$plan[$implementationFile] = $entry;
+	}
+
+	// #[Override] on a method only a collapsed interface declared would be a fatal error
+	foreach ($plan as $file => $entry) {
+		$type = $entry['type'];
+		$analysis = $entry['analysis'];
+		$remaining = array_merge(
+			$resolveAll(array_column($type['extends'], 'text'), $analysis),
+			$resolveAll($type['traits'], $analysis),
+		);
+
+		foreach ($resolveAll(array_column($type['implements'], 'text'), $analysis) as $fqcn) {
+			if (!isset($lowerSources[strtolower($fqcn)])) {
+				$remaining[] = $fqcn;
+			}
+		}
+
+		foreach ($entry['interfaces'] as $parents) {
+			$remaining = array_merge($remaining, $parents);
+		}
+
+		$inherited = [];
+
+		foreach ($remaining as $ancestor) {
+			$methods = fbMoveTypeMethods($root, $ancestor, $index, $memo);
+
+			if ($methods === null) {
+				$problems[] = sprintf(
+					'collapse into "%s": cannot read its ancestor "%s" to decide which #[Override] attributes stay',
+					$entry['implementation'],
+					$ancestor,
+				);
+
+				continue;
+			}
+
+			$inherited = array_merge($inherited, $methods);
+		}
+
+		foreach ($type['methods'] as $method) {
+			$name = strtolower($method['name']);
+
+			if (
+				$method['overrides'] === []
+				|| !in_array($name, $entry['interfaceMethods'], true)
+				|| in_array($name, $inherited, true)
+			) {
+				continue;
+			}
+
+			if ($method['multi']) {
+				$problems[] = sprintf(
+					'%s: %s() carries #[Override] inside a group of several attributes; split it by hand first',
+					$file,
+					$method['name'],
+				);
+			}
+
+			$plan[$file]['dropOverride'][] = $name;
+		}
+
+		unset($plan[$file]['type'], $plan[$file]['analysis'], $plan[$file]['interfaceMethods']);
+	}
+
+	// any other type naming a collapsed interface in `extends`/`implements` would break
+	foreach ($files as $file) {
+		if (!fbMoveInPhpScope($file)) {
+			continue;
+		}
+
+		$code = fbMoveRead($root . '/' . $file);
+		$mentions = false;
+
+		foreach (array_keys($collapse) as $interface) {
+			if (stripos($code, fbMoveShortOf($interface)) !== false) {
+				$mentions = true;
+			}
+		}
+
+		if (!$mentions) {
+			continue;
+		}
+
+		$analysis = fbMoveAnalyse($code);
+
+		foreach (fbMoveOutline($code) as $type) {
+			$declared = ($analysis['namespace'] !== '' ? $analysis['namespace'] . '\\' : '') . $type['name'];
+
+			foreach (['extends', 'implements'] as $clause) {
+				foreach ($resolveAll(array_column($type[$clause], 'text'), $analysis) as $fqcn) {
+					$target = $lowerCollapse[strtolower($fqcn)] ?? null;
+
+					if ($target === null) {
+						continue;
+					}
+
+					if (!$type['anonymous'] && $clause === 'implements' && strcasecmp($declared, $target) === 0) {
+						continue;
+					}
+
+					$problems[] = sprintf(
+						'%s:%d: %s %s %s, which collapses into %s; it needs a hand-fix prerequisite first',
+						$file,
+						$type['line'],
+						$type['anonymous'] ? 'an anonymous class' : $declared,
+						$clause,
+						$fqcn,
+						$target,
+					);
+				}
+			}
+		}
+	}
+
+	if ($problems !== []) {
+		fbMoveFail("the collapse cannot be applied mechanically:\n  " . implode("\n  ", $problems));
+	}
+
+	return $plan;
+}
+
+/**
+ * Drops every entry of a PHPStan baseline whose `path:` is one of $deleted (repository-relative).
+ *
+ * @param list<string> $deleted
+ */
+function fbMoveDropBaselineEntries(string $neon, array $deleted): string
+{
+	if ($deleted === []) {
+		return $neon;
+	}
+
+	$paths = array_map(static fn (string $file): string => '../' . $file, $deleted);
+	$parts = preg_split('/(?=^\t\t-\s*$)/m', $neon);
+
+	if ($parts === false) {
+		fbMoveFail('could not split a PHPStan baseline into entries');
+	}
+
+	$kept = [];
+
+	foreach ($parts as $part) {
+		if (
+			preg_match('/^\t\t-\s*$/m', $part) === 1
+			&& preg_match('/^\t\t\tpath:\s*(\S+)\s*$/m', $part, $match) === 1
+			&& in_array($match[1], $paths, true)
+		) {
+			continue;
+		}
+
+		$kept[] = $part;
+	}
+
+	return implode('', $kept);
+}
 
 $root = dirname(__DIR__);
 $arguments = array_slice($argv, 1);
@@ -2537,12 +3549,42 @@ foreach ($map['files'] as $oldPath => $newPath) {
 $oldPaths = array_map(static fn (array $move): string => $move[0], $moves) + $map['files'];
 ksort($oldPaths, SORT_STRING);
 
+// Every collapse in one state too: no interface deleted yet, or all of them.
+$deleted = []; // the interface files a collapse deletes
+$collapsePending = 0;
+
+foreach ($map['collapse'] as $interface => $implementation) {
+	$interfacePath = fbMoveClassPath($interface, $psr4);
+
+	if (!isset($index[strtolower($implementation)])) {
+		fbMoveFail(sprintf('collapse target "%s" is not declared in Core', $implementation));
+	}
+
+	if (isset($index[strtolower($interface)])) {
+		if ($index[strtolower($interface)][1] !== $interfacePath) {
+			fbMoveFail(sprintf('"%s" is declared in %s, not at its PSR-4 path %s', $interface, $index[strtolower($interface)][1], $interfacePath));
+		}
+
+		$collapsePending++;
+	} elseif (is_file($root . '/' . $interfacePath)) {
+		fbMoveFail(sprintf('%s exists but does not declare %s', $interfacePath, $interface));
+	}
+
+	$deleted[] = $interfacePath;
+}
+
+sort($deleted, SORT_STRING);
+
+if ($collapsePending !== 0 && $collapsePending !== count($map['collapse'])) {
+	fbMoveFail('some interfaces of the collapse map are collapsed already and some are not');
+}
+
 if ($verifyRef !== null) {
-	exit(fbMoveVerifyBaselines($root, $verifyRef, $map, $oldPaths));
+	exit(fbMoveVerifyBaselines($root, $verifyRef, $map, $oldPaths, $deleted));
 }
 
 if ($reportOnly) {
-	exit(fbMoveReport($root, $map, $index, $oldPaths, $files));
+	exit(fbMoveReport($root, $map, $index, $oldPaths, $files, $deleted));
 }
 
 // 1. Pre-flight: compute every rewrite in memory, from the tree as it is. Every condition the
@@ -2553,9 +3595,12 @@ $known = [];
 $normalize = [];
 $moveByFile = []; // the file a moved class is declared in, where it is now => [old FQCN, new FQCN]
 
-foreach ($map['classes'] as $old => $new) {
+foreach ($map['classes'] + $map['collapse'] as $old => $new) {
 	$classes[strtolower($old)] = $new;
 }
+
+$collapsePlan = $collapsePending !== 0 ? fbMoveCollapsePlan($root, $map['collapse'], $index, $files) : [];
+$deleting = $collapsePending !== 0 ? array_fill_keys($deleted, true) : [];
 
 foreach ($index as $lower => $unused) {
 	$known[$lower] = true;
@@ -2569,11 +3614,18 @@ foreach ($moves as $oldPath => [$newPath, $old, $new]) {
 	$moveByFile[isset($pending[$oldPath]) ? $oldPath : $newPath] = [$old, $new];
 }
 
-$vacated = array_fill_keys(array_map(strtolower(...), fbMoveVacatedNamespaces($map['classes'], $index)), true);
+$vacated = array_fill_keys(
+	array_map(strtolower(...), fbMoveVacatedNamespaces($map['classes'] + $map['collapse'], $index)),
+	true,
+);
 $stringPairs = fbMoveNamePairs($map, false);
 $writes = []; // path after the moves => content
 
 foreach ($files as $file) {
+	if (isset($deleting[$file])) {
+		continue;
+	}
+
 	if (fbMoveInPhpScope($file)) {
 		$code = fbMoveRead($root . '/' . $file);
 		$rewritten = fbMoveRewritePhp(
@@ -2585,10 +3637,15 @@ foreach ($files as $file) {
 			$normalize,
 			$vacated,
 			$stringPairs,
+			$collapsePlan[$file] ?? null,
 		);
 	} elseif (fbMoveInConfigScope($file)) {
 		$code = fbMoveRead($root . '/' . $file);
 		$rewritten = fbMoveRewriteConfig($code, $stringPairs, $oldPaths);
+
+		if (in_array($file, FB_MOVE_BASELINES, true)) {
+			$rewritten = fbMoveDropBaselineEntries($rewritten, array_keys($deleting));
+		}
 	} else {
 		continue;
 	}
@@ -2620,14 +3677,30 @@ foreach ($pending as $oldPath => $newPath) {
 	}
 }
 
+foreach (array_keys($deleting) as $file) {
+	fbMoveRun(['git', 'rm', '-q', '--', $file], $root);
+	printf("deleted %s\n", $file);
+
+	for ($emptied = dirname($root . '/' . $file); $emptied !== $root; $emptied = dirname($emptied)) {
+		if (!is_dir($emptied) || scandir($emptied) !== ['.', '..'] || !rmdir($emptied)) {
+			break;
+		}
+	}
+}
+
 foreach ($writes as $file => $content) {
 	fbMoveWrite($root . '/' . $file, $content);
 	printf("rewrote %s\n", $file);
 }
 
-printf("\n%d file(s) moved, %d file(s) rewritten.\n\n", count($pending), count($writes));
+printf(
+	"\n%d file(s) moved, %s%d file(s) rewritten.\n\n",
+	count($pending),
+	$deleting !== [] ? count($deleting) . ' interface file(s) deleted, ' : '',
+	count($writes),
+);
 
 // 3. The report. Applying the map is not a finding, so its verdict does not set the exit code.
-fbMoveReport($root, $map, $index, $oldPaths, fbMoveTrackedFiles($root));
+fbMoveReport($root, $map, $index, $oldPaths, fbMoveTrackedFiles($root), $deleted);
 
 exit(0);
