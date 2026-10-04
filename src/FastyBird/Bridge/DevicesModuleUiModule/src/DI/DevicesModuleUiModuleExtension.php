@@ -25,7 +25,7 @@ use FastyBird\Core\Documents;
 use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Exchange\DI as ExchangeDI;
-use FastyBird\Core\Http\Routing;
+use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use Nette\Bootstrap;

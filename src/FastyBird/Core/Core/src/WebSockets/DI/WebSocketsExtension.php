@@ -4,13 +4,13 @@ namespace FastyBird\Core\WebSockets\DI;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange;
-use FastyBird\Core\Http\Routing;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Clients\Drivers as ClientsDrivers;
 use FastyBird\Core\WebSockets\Commands;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Helpers;
+use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Subscribers;
 use FastyBird\Core\WebSockets\Topics;

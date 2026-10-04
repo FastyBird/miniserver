@@ -20,10 +20,10 @@ use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDoc
 use FastyBird\Bridge\DevicesModuleUiModule\Queries;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exchange\Consumers;
-use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
+use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;

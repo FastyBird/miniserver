@@ -22,10 +22,11 @@ use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Exchange\DI as ExchangeDI;
-use FastyBird\Core\Http\Routing;
+use FastyBird\Core\Http\Routing as HttpRouting;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
 use FastyBird\Core\WebSockets\DI as WebSocketsDI;
+use FastyBird\Core\WebSockets\Routing as WebSocketsRouting;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
@@ -920,7 +921,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 			->addTag(ExchangeDI\ExchangeExtension::CONSUMER_STATE, false);
 
 		if (
-			$builder->findByType(Routing\LinkGenerator::class) !== []
+			$builder->findByType(WebSocketsRouting\LinkGenerator::class) !== []
 			&& $builder->findByType(Topics\Storage::class) !== []
 		) {
 			$builder->addDefinition(
@@ -1020,7 +1021,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 		 * ROUTES
 		 */
 
-		$routerService = $builder->getDefinitionByType(Routing\Router::class);
+		$routerService = $builder->getDefinitionByType(HttpRouting\Router::class);
 
 		if ($routerService instanceof NetteDI\Definitions\ServiceDefinition) {
 			$routerService->addSetup('?->registerRoutes(?)', [
