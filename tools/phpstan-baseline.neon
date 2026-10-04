@@ -4156,18 +4156,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/SourceObject.php
 
 		-
-			message: '#^Interface IteratorAggregate specifies template type TKey of interface Traversable as mixed but it''s already specified as string\.$#'
-			identifier: generics.interfaceConflict
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:get\(\) should return array\<mixed\>\|bool\|FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\|float\|int\|string\|null but returns array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
-
-		-
 			message: '#^Method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:getMany\(\) should return array\<array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\> but returns array\<string, mixed\>\.$#'
 			identifier: return.type
 			count: 1
@@ -4188,12 +4176,6 @@ parameters:
 		-
 			message: '#^Parameter \#2 \$value of method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:set\(\) expects array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null, mixed given\.$#'
 			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
-
-		-
-			message: '#^Return type \(array\<mixed\>\|bool\|FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\|float\|int\|string\|null\) of method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:get\(\) should be covariant with return type \(array\<mixed\>\|bool\|\(FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject&iterable\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\)\|float\|int\|string\|null\) of method FastyBird\\Core\\Api\\Encoding\\Objects\\StandardObject\:\:get\(\)$#'
-			identifier: method.childReturnType
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObject.php
 
