@@ -2,12 +2,15 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets\Controller;
 
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\WebSockets\Controllers;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Wamp;
 use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
+use TypeError;
 
 /**
  * Controller::$payload used to be documented as a SmartObject magic property. Two consumers
@@ -18,17 +21,24 @@ use PHPUnit\Framework\TestCase;
  * accessor returns the same stdClass instance sendPayload() reads from, which is what makes the
  * accessor a safe substitute for the direct (now impossible) property write.
  *
- * Controller::$controllerFactory and $user used to be non-nullable typed properties with no
- * default, and injectPrimary() read $controllerFactory via `!== null` (which throws on an
- * uninitialized typed property, same as a direct read) before ever assigning it, then
- * unconditionally assigned $user -- always null in this deployment, since nette/security is not
- * installed and no Nette\Security\User service exists to autowire -- onto the non-nullable $user
- * property (a TypeError). Every single controller creation hit one or the other, unconditionally:
- * DI's callInjects() calls injectPrimary() immediately after instantiating any controller, so
- * every WAMP SUBSCRIBE/CALL/PUBLISH dispatch crashed before the controller's own action ever ran.
+ * Controller::$controllerFactory used to be a non-nullable typed property with no default, and
+ * injectPrimary() read it via `!== null` (which throws on an uninitialized typed property, same as
+ * a direct read) before ever assigning it. Every single controller creation hit that,
+ * unconditionally: DI's callInjects() calls injectPrimary() immediately after instantiating any
+ * controller, so every WAMP SUBSCRIBE/CALL/PUBLISH dispatch crashed before the controller's own
+ * action ever ran.
+ *
+ * `@User(loggedIn)` on a controller class or action must fail closed with InvalidState (#650,
+ * #652). It used to reach Controller::getUser(), which always threw InvalidState because
+ * nette/security is not installed and no Nette\Security\User service could exist; getUser() is
+ * gone, and checkRequirements() now throws the same exception class itself. Deleting the check
+ * instead would have turned the annotation into a silent fail-open.
  */
 final class ControllerTest extends TestCase
 {
+
+	private const string LOGGED_IN_UNSUPPORTED = '@User(loggedIn) is not supported on WebSockets controllers: a client'
+		. ' is authenticated at the handshake, and its roles are checked through ConnectedClient::getRoles().';
 
 	public function testGetPayloadReturnsSameInstanceSendPayloadReads(): void
 	{
@@ -56,34 +66,80 @@ final class ControllerTest extends TestCase
 		$router = $this->createMock(Wamp\WampRouter::class);
 		$linkGenerator = new Routing\LinkGenerator($router);
 
-		$controller->injectPrimary($controllerFactory, $router, $linkGenerator, null);
+		$controller->injectPrimary($controllerFactory, $router, $linkGenerator);
 
 		self::expectException(InvalidStateException::class);
 
-		$controller->injectPrimary($controllerFactory, $router, $linkGenerator, null);
+		$controller->injectPrimary($controllerFactory, $router, $linkGenerator);
 	}
 
 	/**
-	 * @throws Exceptions\InvalidState
-	 * @throws InvalidStateException
+	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
+	 * @throws TypeError
+	 * @throws WebSocketsExceptions\BadRequest
+	 * @throws WebSocketsExceptions\BadSignal
+	 * @throws WebSocketsExceptions\ForbiddenRequest
 	 */
-	public function testGetUserThrowsInvalidStateWhenNoUserServiceWasInjected(): void
+	public function testUserLoggedInAnnotationOnControllerClassFailsClosed(): void
+	{
+		$controller = new /** @User(loggedIn) */ class extends Controllers\Controller
+		{
+
+			public bool $actionRan = false;
+
+			public function actionDefault(): void
+			{
+				$this->actionRan = true;
+			}
+
+		};
+
+		try {
+			$controller->run(new Controllers\Request('Test:Test'));
+
+			self::fail('A controller class annotated @User(loggedIn) must not run.');
+		} catch (CoreExceptions\InvalidState $ex) {
+			self::assertSame(self::LOGGED_IN_UNSUPPORTED, $ex->getMessage());
+		}
+
+		self::assertFalse($controller->actionRan);
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
+	 * @throws TypeError
+	 * @throws WebSocketsExceptions\BadRequest
+	 * @throws WebSocketsExceptions\BadSignal
+	 * @throws WebSocketsExceptions\ForbiddenRequest
+	 */
+	public function testUserLoggedInAnnotationOnControllerActionFailsClosed(): void
 	{
 		$controller = new class extends Controllers\Controller
 		{
 
+			public bool $actionRan = false;
+
+			/**
+			 * @User(loggedIn)
+			 */
+			public function actionDefault(): void
+			{
+				$this->actionRan = true;
+			}
+
 		};
 
-		$controllerFactory = $this->createMock(Controllers\IControllerFactory::class);
-		$router = $this->createMock(Wamp\WampRouter::class);
-		$linkGenerator = new Routing\LinkGenerator($router);
+		try {
+			$controller->run(new Controllers\Request('Test:Test'));
 
-		$controller->injectPrimary($controllerFactory, $router, $linkGenerator, null);
+			self::fail('A controller action annotated @User(loggedIn) must not run.');
+		} catch (CoreExceptions\InvalidState $ex) {
+			self::assertSame(self::LOGGED_IN_UNSUPPORTED, $ex->getMessage());
+		}
 
-		self::expectException(Exceptions\InvalidState::class);
-		self::expectExceptionMessage('Service User has not been set.');
-
-		$controller->getUser();
+		self::assertFalse($controller->actionRan);
 	}
 
 }

@@ -6,7 +6,6 @@ use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Controllers\Responses;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Handshake;
-use Nette\Security;
 use React\Socket;
 
 /**
@@ -42,10 +41,6 @@ interface ConnectedClient
 	public function close(int|null $code = null): void;
 
 	public function send(Responses\ControllerResponse|Encoding\FrameData|string $response): void;
-
-	public function setUser(Security\User $user): void;
-
-	public function getUser(): Security\User|null;
 
 	/**
 	 * Keeps the identity the client's access token resolved to at its latest check, with the

@@ -9,7 +9,6 @@ use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Wamp;
 use Fig\Http;
 use Nette;
-use Nette\Security;
 use Override;
 use ReflectionClass;
 use ReflectionException;
@@ -76,8 +75,6 @@ abstract class Controller implements RequestController
 
 	private HttpRouting\LinkGenerator|null $linkGenerator = null;
 
-	private Security\User|null $user = null;
-
 	public function __construct()
 	{
 		$this->payload = new stdClass();
@@ -90,7 +87,6 @@ abstract class Controller implements RequestController
 		IControllerFactory|null $controllerFactory = null,
 		Wamp\WampRouter|null $router = null,
 		HttpRouting\LinkGenerator|null $linkGenerator = null,
-		Security\User|null $user = null,
 	): void
 	{
 		// $controllerFactory is a typed property with no default; isset() is the only read that
@@ -107,7 +103,6 @@ abstract class Controller implements RequestController
 		$this->controllerFactory = $controllerFactory;
 		$this->router = $router;
 		$this->linkGenerator = $linkGenerator;
-		$this->user = $user;
 	}
 
 	/**
@@ -173,6 +168,11 @@ abstract class Controller implements RequestController
 	/**
 	 * Checks authorization
 	 *
+	 * `@User(loggedIn)` fails closed: a WebSockets client is authenticated once, at the handshake,
+	 * and a controller checks its roles through ConnectedClient::getRoles() (see authorize()), so
+	 * there is no per-request user to check the annotation against. Every other `@User` value is
+	 * ignored.
+	 *
 	 * @throws WebSocketsExceptions\ForbiddenRequest
 	 * @throws CoreExceptions\InvalidState
 	 */
@@ -180,8 +180,11 @@ abstract class Controller implements RequestController
 	{
 		$user = (array) $this->parseAnnotation($element, 'User');
 
-		if (in_array('loggedIn', $user, true) && !$this->getUser()->isLoggedIn()) {
-			throw new WebSocketsExceptions\ForbiddenRequest();
+		if (in_array('loggedIn', $user, true)) {
+			throw new CoreExceptions\InvalidState(
+				'@User(loggedIn) is not supported on WebSockets controllers: a client is authenticated at'
+				. ' the handshake, and its roles are checked through ConnectedClient::getRoles().',
+			);
 		}
 	}
 
@@ -253,18 +256,6 @@ abstract class Controller implements RequestController
 				Http\Message\StatusCodeInterface::STATUS_NOT_FOUND,
 			);
 		}
-	}
-
-	/**
-	 * @throws CoreExceptions\InvalidState
-	 */
-	public function getUser(): Nette\Security\User
-	{
-		if ($this->user === null) {
-			throw new CoreExceptions\InvalidState('Service User has not been set.');
-		}
-
-		return $this->user;
 	}
 
 	/**

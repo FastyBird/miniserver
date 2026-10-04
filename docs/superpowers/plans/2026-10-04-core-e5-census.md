@@ -216,6 +216,12 @@ maintainer can override it in the review.
     `getUser()`, `Client::$user` and the dead `Storage` branch. That is dead API on a type that
     does not exist; `ControllerTest::testGetUserThrowsInvalidStateWhenNoUserServiceWasInjected`
     would be removed with it.
+  - **Resolved by #650: option D + fail-closed guard.** The default was overridden. E5.3a (#652)
+    deletes the shim and the dead API together: `Controller::$user`, the `injectPrimary()`
+    parameter `$user` and `getUser()`, `ConnectedClient::setUser()`/`getUser()`, `Client::$user`
+    with `setUser()`/`getUser()`, and the `Storage` log key and branch. `checkRequirements()` stays
+    and throws `CoreExceptions\InvalidState` itself for `@User(loggedIn)`, so the annotation still
+    fails closed with the same exception class; every other `@User` value stays a no-op.
 
 ---
 
@@ -372,7 +378,7 @@ the Epic §1.12 list. The measurement adds the transitive and pipeline rows belo
 | 9 | `Security\Latte\Nodes\{IfAllowedNode, NElseAllowedNode, AllowedHrefNode}` | Referenced only by row 8 (and each other) | none | **delete** (transitive) |
 | 10 | `Persistence\Crud\EntityCrudFactory` | **Confirmed dead.** 0 PHP refs and 0 strings. **No container has a service of that type** (`di.py services`). DI registers `Crud\CrudFactory` (`fbCore.persistence.crud`), a different class. | none | **delete** |
 | 11 | `Presenters\DefaultPresenter` | **Refuted: it is live by string.** `CoreExtension.php:412-413` maps `'App' => 'FastyBird\Core\Presenters\*Presenter'`, and `Presenters\AppRouter::createRouter()` routes `/` to presenter `Default`. `BasePresenterTest` uses it. Deleting it would touch the deliberate `GET /` gap (CLAUDE.md trap). | — | **keep** |
-| 12 | `WebSockets/Compat/User.php` (declares `Nette\Security\User` under `if (!class_exists(...))`) | **The file is never loaded.** Core's only autoload rule is PSR-4 `FastyBird\Core\` → `src/`, which can never resolve `Nette\Security\User`, and no classmap or `files` entry names it. **nette/security is not installed either** (not in `composer.lock`; `new ReflectionClass('Nette\Security\User')` throws in the application image). The Epic's reason, "nette/security is installed", is wrong (D19); the conclusion, dead, is right. | none | **delete the file** |
+| 12 | `WebSockets/Compat/User.php` (declares `Nette\Security\User` under `if (!class_exists(...))`) | **The file is never loaded.** Core's only autoload rule is PSR-4 `FastyBird\Core\` → `src/`, which can never resolve `Nette\Security\User`, and no classmap or `files` entry names it. **nette/security is not installed either** (not in `composer.lock`; `new ReflectionClass('Nette\Security\User')` throws in the application image). The Epic's reason, "nette/security is installed", is wrong (D19); the conclusion, dead, is right. | none | **deleted in E5.3a (#650 option D)**, with the API typed against it (X10) |
 | 13 | `Persistence\Types\UTCDateTime` | **Confirmed dead as a type.** 0 PHP refs. The literal `'utcdatetime'` occurs only in its own `UTC_DATETIME` constant. No entity, attribute, XML mapping or migration uses the type: `git grep -i utcdatetime` hits only the class, NEON, and docs/plans. It is live **only as a registration**, in these 6 NEON places: `config/common.neon:160`, `tests/config/dbal-test-connection.neon:40` and the 4 module `config/example.neon` (Accounts:44-45, Devices:43-44, Triggers:53-54, Ui:43-44). | none (a DBAL type map entry, not a service) | **delete the class and the 6 registrations** (X7). `orm:schema-tool:update --dump-sql` must stay empty. |
 | 14 | `Persistence\Entities\IEntityRemoved`, `TEntityRemoved` | 0 refs / 0 users | none | **delete** |
 | 15 | `Phone\Entities\TPhone` | 0 users | none | **delete** |
@@ -681,7 +687,7 @@ outside Core, `getData` 232.
 | 32 | `Controllers\Request` | `params` | `getParameters()` / `setParameters()` | `Application:116`, `RequestTest` | H: `DispatchRequest`, `array $parameters { get; set; }` | 0 identified |
 | 33 | `WebSockets\Entities\Client` | `httpHeadersReceived` | `isHttpHeadersReceived()` / `setHttpHeadersReceived()` | `Server\Wrapper:79,107`, `ClientAuthenticationTest` | H: declared on `ConnectedClient`, so `bool $httpHeadersReceived { get; set; }` | 0 |
 | 34 | `Entities\Client` | `httpBuffer` | `getHttpBuffer()` / `setHttpBuffer()` | `Wrapper:91,99` | H: `ConnectedClient`, `string $httpBuffer { get; set; }` | 0 |
-| 35 | `Entities\Client` | `user` | `getUser()` / `setUser()` | **no caller** | **X**: typed against `Nette\Security\User`, a class that does not exist (D19, X10) | — |
+| 35 | `Entities\Client` | `user` | `getUser()` / `setUser()` | **no caller** | **deleted (E5.3a)**: typed against `Nette\Security\User`, a class that does not exist (D19, X10); removed by #652 (#650 option D) | — |
 | 36 | `WebSockets\Entities\WebSocket` | `established` | `isEstablished()` / `setEstablished()` | `Wrapper:291` | A (needs `IWebSocket` collapsed) | 0 |
 | 37 | `Entities\WebSocket` | `closing` | `isClosing()` / `setClosing()` | `Encoding\RFC6455:274` | A | 0 |
 | 38 | `WebSockets\Handshake\Request` | `protocolVersion` | `getProtocolVersion()` / `setProtocolVersion()` | `Handshake\RequestFactory:335` | A | 0 (the 9 hits outside Core are on other types) |
