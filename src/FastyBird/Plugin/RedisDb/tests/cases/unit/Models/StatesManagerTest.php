@@ -176,7 +176,7 @@ final class StatesManagerTest extends TestCase
 
 		$systemClock = $this->createMock(Clock\SystemClock::class);
 		$systemClock
-			->method('getNow')
+			->method('now')
 			->willReturn(new DateTimeImmutable('2020-04-01T12:00:00+00:00'));
 
 		return new Models\States\StatesManager(

@@ -43,7 +43,7 @@ final class PublisherTest extends TestCase
 		$systemClock = $this->createMock(Clock\SystemClock::class);
 		$systemClock
 			->expects(self::once())
-			->method('getNow')
+			->method('now')
 			->willReturn($now);
 
 		$identifierGenerator = $this->createMock(Utilities\IdentifierGenerator::class);
