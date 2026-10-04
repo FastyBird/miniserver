@@ -9,10 +9,8 @@ use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Clients\Drivers as ClientsDrivers;
 use FastyBird\Core\WebSockets\Commands;
 use FastyBird\Core\WebSockets\Controllers;
-use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Helpers;
-use FastyBird\Core\WebSockets\PushMessages;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Subscribers;
 use FastyBird\Core\WebSockets\Topics;
@@ -227,21 +225,12 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$builder->addDefinition($this->prefix('wamp.application'))
 			->setType(Controllers\WampApplication::class);
 
-		$builder->addDefinition($this->prefix('wamp.serializer'))
-			->setType(Encoding\PushMessageSerializer::class);
-
-		$builder->addDefinition($this->prefix('wamp.pushRegistry'))
-			->setType(PushMessages\ConsumersRegistry::class);
-
 		if ($builder->getByType(Clients\ClientProvider::class) !== null) {
 			$builder->removeDefinition($builder->getByType(Clients\ClientProvider::class));
 		}
 
 		$builder->addDefinition($this->prefix('wamp.clientsFactory'))
 			->setType(Clients\WampClientFactory::class);
-
-		$builder->addDefinition($this->prefix('wamp.subscribers.onServerStart'))
-			->setType(Subscribers\OnServerStartHandler::class);
 	}
 
 	/**
@@ -397,31 +386,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 					'@self', $dispatcher, new PhpGenerator\Literal(Events\AfterIncommingMessageEvent::class),
 				],
 			);
-
-			// WAMP's own event bridge -- WampApplication is unconditionally registered by this
-			// extension (unlike base Application above), so no presence guard is needed here;
-			// preserved from WebSocketsWAMPExtension::beforeCompile().
-			$wampApplication = $builder->getDefinition(
-				$builder->getByType(Controllers\WampApplication::class),
-			);
-			assert($wampApplication instanceof DI\Definitions\ServiceDefinition);
-			$wampApplication->addSetup('?->onPush[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\PushEvent::class),
-			]);
 		}
-
-		$pushRegistry = $builder->getDefinition(
-			$builder->getByType(PushMessages\ConsumersRegistry::class),
-		);
-
-		foreach ($builder->findByType(PushMessages\IConsumer::class) as $consumer) {
-			$pushRegistry->addSetup('?->addConsumer(?)', [$pushRegistry, $consumer]);
-		}
-
-		$wsServerServer = $builder->getDefinitionByType(Server\ServerRuntime::class);
-		$wsServerServer->addSetup('$service->onStart[] = ?', [
-			'@' . $this->prefix('wamp.subscribers.onServerStart'),
-		]);
 
 		// Collected here, not in loadServerProcess(): an exchange registered after fbCore, such
 		// as RedisDb or RabbitMQ in config/local.neon, does not exist yet during
