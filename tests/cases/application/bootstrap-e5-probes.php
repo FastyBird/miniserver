@@ -17,6 +17,9 @@
  *                           controller factory
  *   wamp-links              the WAMP link generator, fetched by type, linking to the modules'
  *                           exchange controllers the way their SocketsBridge consumers do
+ *   sockets-bridges         the Devices and Ui SocketsBridge consumers, by service name, each
+ *                           consuming one exchange document, and the WAMP EVENT frames a client
+ *                           subscribed to each module's exchange topic is sent
  *
  * Run as a child process by the tests beside it; see EntityMappingTest for why the production
  * scope cannot be booted in-process.
@@ -38,15 +41,23 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\DI as WebSocketsDI;
+use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Entities\Topics as EntitiesTopics;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\PushMessages;
 use FastyBird\Core\WebSockets\Server;
+use FastyBird\Core\WebSockets\Topics as WebSocketsTopics;
 use FastyBird\Core\WebSockets\Wamp;
+use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Consumers as UiConsumers;
+use FastyBird\Module\Ui\Documents as UiDocuments;
 use Neomerx\JsonApi\Contracts as JsonApiContracts;
 use Nette\DI as NetteDI;
 use Nette\Http;
@@ -54,6 +65,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Ramsey\Uuid;
 use React\EventLoop;
 use React\Http\Message\ServerRequest;
 use React\Socket;
@@ -390,6 +402,107 @@ $wampLinks = static function () use ($boot): array {
 	return $links;
 };
 
+/**
+ * Each module's SocketsBridge, by service name (they are not autowired), consuming one exchange document it publishes, and
+ * what a client subscribed to each module's exchange topic is sent: the WAMP EVENT frames, decoded
+ * to [topic, message]. The DevicesModuleUiModule bridge is not here: the widget data sources it
+ * looks up are read from the database, which this scope does not have.
+ */
+$socketsBridges = static function () use ($boot): array {
+	$container = $boot();
+	$storage = $container->getByType(WebSocketsTopics\IStorage::class);
+	$loop = EventLoop\Loop::get();
+
+	$topics = [
+		'/' . Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+		'/' . Constants::MODULE_UI_PREFIX . '/v1/exchange',
+	];
+
+	$subscribers = [];
+
+	foreach ($topics as $index => $path) {
+		$pair = stream_socket_pair(STREAM_PF_UNIX, STREAM_SOCK_STREAM, STREAM_IPPROTO_IP);
+		assert(is_array($pair));
+
+		$subscribers[$path] = new class ($index + 1, new Socket\Connection($pair[0], $loop)) extends Entities\Client {
+
+			/** @var array<int, string> */
+			public array $sent = [];
+
+			#[Override]
+			public function send(mixed $response): void
+			{
+				$this->sent[] = is_string($response) ? $response : get_debug_type($response);
+			}
+
+		};
+
+		$topic = new EntitiesTopics\Topic($path);
+		$topic->add($subscribers[$path]);
+
+		$storage->addTopic($path, $topic);
+	}
+
+	$consumers = [
+		'Devices' => [
+			'fbDevicesModule.exchange.consumer.socketsBridge',
+			Sources\Connector::VIRTUAL,
+			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+			new DevicesDocuments\States\Channels\Properties\Property(
+				Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'),
+				Uuid\Uuid::fromString('6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a'),
+				new DevicesDocuments\States\StateValues(21.5, null),
+				new DevicesDocuments\States\StateValues(null, null),
+				false,
+				true,
+			),
+		],
+		'Ui' => [
+			'fbUiModule.exchange.consumer.socketsBridge',
+			Sources\Module::UI,
+			Ui\Constants::MESSAGE_BUS_GROUP_DOCUMENT_REPORTED_ROUTING_KEY,
+			new UiDocuments\Groups\Group(
+				Uuid\Uuid::fromString('89f4a14f-7f78-4216-99b8-584ab9229f1c'),
+				'living-room',
+				'Living room',
+			),
+		],
+	];
+
+	$received = [];
+
+	foreach ($consumers as $name => [$service, $source, $routingKey, $document]) {
+		foreach ($subscribers as $subscriber) {
+			$subscriber->sent = [];
+		}
+
+		$consumer = $container->getService($service);
+		assert($consumer instanceof ExchangeConsumers\Consumer);
+
+		$consumer->consume($source, $routingKey, $document);
+
+		foreach ($subscribers as $path => $subscriber) {
+			$received[$name][$path] = array_map(
+				static function (string $frame): array {
+					$event = json_decode($frame, true, 512, JSON_THROW_ON_ERROR);
+					assert(is_array($event));
+
+					return [
+						'type' => $event[0] ?? null,
+						'topic' => $event[1] ?? null,
+						'message' => is_string($event[2] ?? null)
+							? json_decode($event[2], true, 512, JSON_THROW_ON_ERROR)
+							: null,
+					];
+				},
+				$subscriber->sent,
+			);
+		}
+	}
+
+	return $received;
+};
+
 try {
 	$probe = $argv[1] ?? '';
 
@@ -399,6 +512,7 @@ try {
 		'jsonapi-cold' => $jsonApiCold(),
 		'wamp-module-routes' => $wampModuleRoutes(),
 		'wamp-links' => $wampLinks(),
+		'sockets-bridges' => $socketsBridges(),
 		default => throw new InvalidArgumentException(sprintf('Unknown probe "%s"', $probe)),
 	}]);
 } catch (Throwable $ex) {

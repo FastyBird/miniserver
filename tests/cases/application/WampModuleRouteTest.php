@@ -60,27 +60,22 @@ final class WampModuleRouteTest extends TestCase
 	/**
 	 * The WAMP link generator, fetched from the compiled container by type, asked for the link
 	 * each module's SocketsBridge publishes exchange messages under (census T12-10; E5.5 #637
-	 * moves the class).
+	 * moves the class). Each link is the topic its module's frontend subscribes to. A
+	 * destination with no controller fails the documented way, with InvalidLink.
 	 *
-	 * A KNOWN DEFECT, pinned as it is: RouteList::$cachedRoutes is a typed property with no
-	 * default, and constructUrl() compares it with null before warmupCache() ever assigns it,
-	 * so every link to a routed controller throws -- and SocketsBridge::sendMessage() catches
-	 * it and logs "Data could not be broadcasts to clients" instead of broadcasting. A
-	 * destination with no controller still fails the documented way, with InvalidLink.
+	 * Until #625 this threw for every routed destination: RouteList::$cachedRoutes was a typed
+	 * property with no default, read before warmupCache() ever assigned it.
 	 *
 	 * @throws Error
 	 * @throws JsonException
 	 * @throws RuntimeException
 	 */
-	public function testTheLinkGeneratorCannotBuildAModuleLinkToday(): void
+	public function testTheLinkGeneratorLinksEachModuleExchangeToItsTopic(): void
 	{
-		$uninitialized = 'Error: Typed property FastyBird\Core\WebSockets\Wamp\RouteList::$cachedRoutes must not be'
-			. ' accessed before initialization';
-
 		self::assertSame(
 			[
-				'DevicesModule:Exchange:' => $uninitialized,
-				'UiModule:Exchange:' => $uninitialized,
+				'DevicesModule:Exchange:' => '/devices-module/v1/exchange',
+				'UiModule:Exchange:' => '/ui-module/v1/exchange',
 				'E5Probe:Missing:' => 'FastyBird\Core\Exceptions\InvalidLink: Cannot load controller "E5Probe:Missing",'
 					. ' class "E5ProbeModule\MissingController" was not found.',
 			],
