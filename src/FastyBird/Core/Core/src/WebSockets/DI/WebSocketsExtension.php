@@ -269,7 +269,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		 * WEBSOCKETS -- router assembly, controller injection, event bridges
 		 *
 		 * The Application::class-presence guard below is preserved from WebSocketsExtension
-		 * (added in PR #450, this session's ipub/websockets-wamp absorption) -- spec section 6
+		 * (added in PR #450, when the WAMP library was absorbed into the tree) -- spec section 6
 		 * calls this out by name as logic that must be preserved, not just relocated.
 		 */
 

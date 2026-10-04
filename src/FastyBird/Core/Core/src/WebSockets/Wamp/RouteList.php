@@ -43,7 +43,7 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 			if ($appRequest !== null) {
 				$name = $appRequest->getControllerName();
 
-				if (strncmp($name, 'IPub:', 5)) {
+				if (strncmp($name, 'Core:', 5)) {
 					$appRequest->setControllerName($this->module . $name);
 				}
 

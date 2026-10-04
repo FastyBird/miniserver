@@ -35,7 +35,6 @@ final class ControllerFactory
 	/** @var array<array> of module => splited mask */
 	private array $mapping = [
 		'*' => ['', '*Module\\', '*Controller'],
-		'IPubWebSockets' => ['IPubWebSocketsModule\\', '*\\', '*Controller'],
 	];
 
 	private array $cache = [];

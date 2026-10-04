@@ -183,7 +183,7 @@ final class WampRoute implements WampRouter
 			}
 		} elseif ($metadata instanceof Closure) {
 			$metadata = [
-				self::CONTROLLER_KEY => 'IPub:WebSocket',
+				self::CONTROLLER_KEY => 'Core:WebSocket',
 				'callback' => $metadata,
 			];
 		}

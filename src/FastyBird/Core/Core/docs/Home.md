@@ -450,8 +450,7 @@ decorator:
             @appRoutes::registerRoutes
 ```
 
-For more info how to write routes and controllers please
-visit: [ipub/slim-router](https://github.com/iPublikuj/slim-router/blob/main/docs/index.md) package documentation
+For more info how to write routes and controllers, see the router in `FastyBird\Core\Http\Routing`.
 
 ## Custom middleware
 
@@ -537,8 +536,7 @@ class Routes
 }
 ```
 
-For more info how to write middleware please
-visit: [ipub/slim-router](https://github.com/iPublikuj/slim-router/blob/main/docs/index.md) package documentation
+For more info how to write middleware, see the router in `FastyBird\Core\Http\Routing`.
 
 ## Running server
 
@@ -617,8 +615,7 @@ This plugin is dependent on other extensions, and they have to be registered too
 extensions:
     ...
     contributteConsole: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
-    ipubWebsockets: IPub\WebSockets\DI\WebSocketsExtension
-    ipubWebsocketsWamp: IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension
+    fbCore: FastyBird\Core\DI\CoreExtension
 ```
 
 ## Plugin Configuration

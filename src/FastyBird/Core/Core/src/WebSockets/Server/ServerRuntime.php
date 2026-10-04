@@ -21,7 +21,7 @@ use function sprintf;
 final class ServerRuntime
 {
 
-	public const string VERSION = 'IPub/WebSockets/1.0.0';
+	public const string VERSION = 'FastyBird/WebSockets/1.0.0';
 
 	/** @var array<Closure(self $server): void> */
 	public array $onCreate = [];
