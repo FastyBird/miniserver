@@ -4,7 +4,6 @@ namespace FastyBird\Plugin\RabbitMq\Tests\Cases\Unit\Publishers;
 
 use DateTime;
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Publishers;
@@ -13,6 +12,7 @@ use FastyBird\Plugin\RabbitMq\Utilities;
 use Nette;
 use Nette\Utils;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Psr\Log;
 
 final class PublisherTest extends TestCase
@@ -44,7 +44,7 @@ final class PublisherTest extends TestCase
 			)
 			->willReturn(true);
 
-		$systemClock = $this->createMock(Clock\SystemClock::class);
+		$systemClock = $this->createMock(ClockInterface::class);
 		$systemClock
 			->expects(self::once())
 			->method('now')

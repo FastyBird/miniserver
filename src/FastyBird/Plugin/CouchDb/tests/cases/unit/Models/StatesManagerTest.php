@@ -5,7 +5,6 @@ namespace FastyBird\Plugin\CouchDb\Tests\Cases\Unit\Models;
 use BackedEnum;
 use DateTimeImmutable;
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Exceptions;
@@ -18,6 +17,7 @@ use Orisai\ObjectMapper;
 use PHPOnCouch;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use stdClass;
 use function array_keys;
@@ -276,7 +276,7 @@ final class StatesManagerTest extends TestCase
 
 		$factory = new States\StateFactory($processor);
 
-		$systemClock = $this->createMock(Clock\SystemClock::class);
+		$systemClock = $this->createMock(ClockInterface::class);
 
 		return new Models\States\StatesManager(
 			$couchClient,
