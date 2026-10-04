@@ -19,12 +19,10 @@ use function date_default_timezone_get;
 use function microtime;
 
 /**
- * Characterization of Core's two clocks before Epic E5 swaps in PSR-20 (#460 §3.7, E5.9).
- *
- * What a caller gets from getNow() is the contract PSR-20's now() has to keep: both clocks hand
- * out a DateTimeImmutable -- TokenBuilder and TokenValidator assert exactly that -- in the time
- * zone they were given, and the frozen clock's value cannot be changed from outside, even when
- * it was built from a mutable DateTime.
+ * Characterization of Core's two clocks, written before Epic E5 swapped in PSR-20 (#460 §3.7,
+ * E5.9) and kept as the contract Psr\Clock\ClockInterface::now() has to honour: both clocks hand
+ * out a DateTimeImmutable in the time zone they were given, and the frozen clock's value cannot
+ * be changed from outside, even when it was built from a mutable DateTime.
  */
 final class ClockTest extends BaseTestCase
 {
