@@ -66,7 +66,9 @@ final class ChannelProperty extends UiHydrators\Widgets\DataSources\DataSource
 
 	/**
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydratePropertyRelationship(

@@ -1060,7 +1060,9 @@ abstract class Hydrator
 	 *
 	 * @return  array<mixed>
 	 *
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 */
 	protected function hydrateRelationships(
 		Objects\RelationshipObjectCollection $relationships,
@@ -1183,6 +1185,9 @@ abstract class Hydrator
 	 *
 	 * @param T|null $entity
 	 * @param array<Fields\Field> $entityMapping
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	protected function hydrateHasOne(
 		Fields\Field $field,
@@ -1259,6 +1264,9 @@ abstract class Hydrator
 	 * @param array<Fields\Field> $entityMapping
 	 *
 	 * @return array<int, object>
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	protected function hydrateHasMany(
 		Fields\Field $field,

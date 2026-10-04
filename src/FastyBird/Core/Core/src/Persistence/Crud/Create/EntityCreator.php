@@ -44,6 +44,7 @@ final class EntityCreator extends Crud\CrudManager
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function create(Utils\ArrayHash $values, Entities\CrudEntity|null $entity = null): Entities\CrudEntity
 	{

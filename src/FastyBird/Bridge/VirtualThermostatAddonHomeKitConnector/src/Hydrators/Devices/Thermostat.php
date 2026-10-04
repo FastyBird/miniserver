@@ -65,7 +65,9 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 	 * @param VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat|null $entity
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
@@ -107,7 +109,9 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(

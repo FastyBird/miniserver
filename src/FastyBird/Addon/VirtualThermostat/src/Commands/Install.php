@@ -44,6 +44,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 use Nette\Localization;
 use Nette\Utils;
 use Ramsey\Uuid;
+use ReflectionException;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
@@ -5055,6 +5056,7 @@ class Install extends Console\Command\Command
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	private function createOrUpdateProperty(
 		string $propertyType,

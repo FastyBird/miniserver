@@ -75,7 +75,9 @@ class Viera extends HomeKitHydrators\Devices\Device
 	 * @param VieraConnectorHomeKitConnectorEntities\Devices\Viera|null $entity
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
@@ -117,7 +119,9 @@ class Viera extends HomeKitHydrators\Devices\Device
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(

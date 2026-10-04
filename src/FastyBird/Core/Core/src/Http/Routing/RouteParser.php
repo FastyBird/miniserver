@@ -29,6 +29,7 @@ final class RouteParser
 	 * @param array<mixed> $queryParams Optional query string parameters
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function relativeUrlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{
@@ -107,6 +108,7 @@ final class RouteParser
 	 * @param array<mixed> $queryParams Optional query string parameters
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function urlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{
@@ -128,6 +130,7 @@ final class RouteParser
 	 * @param array<mixed> $queryParams Optional query string parameters
 	 *
 	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function fullUrlFor(UriInterface $uri, string $routeName, array $data = [], array $queryParams = []): string
 	{

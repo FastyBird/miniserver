@@ -36,6 +36,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -82,6 +83,7 @@ final class Properties implements Common\EventSubscriber
 	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws ReflectionException
 	 */
 	public function postPersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{
@@ -145,6 +147,7 @@ final class Properties implements Common\EventSubscriber
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws VieraExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	private function configureDeviceState(VieraEntities\Devices\Device $device): void
 	{

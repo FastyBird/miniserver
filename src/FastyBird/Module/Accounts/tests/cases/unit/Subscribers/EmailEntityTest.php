@@ -15,6 +15,7 @@ use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
+use ReflectionException;
 use RuntimeException;
 
 #[PreserveGlobalState(false)]
@@ -32,6 +33,7 @@ final class EmailEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testChangeDefault(): void
 	{

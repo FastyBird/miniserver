@@ -36,6 +36,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 use TypeError;
 use ValueError;
 use function assert;
@@ -85,6 +86,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws ReflectionException
 	 */
 	public function consume(Queue\Messages\Message $message): bool
 	{
@@ -198,6 +200,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @throws CoreExceptions\Runtime
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws ReflectionException
 	 */
 	private function setDeviceProperties(
 		DevicesEntities\Devices\Device $device,
@@ -280,6 +283,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws FbMqttExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	private function setDeviceExtensions(
 		DevicesEntities\Devices\Device $device,
@@ -338,6 +342,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	private function setDeviceControls(
 		DevicesEntities\Devices\Device $device,
@@ -378,6 +383,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	private function setDeviceChannels(
 		DevicesEntities\Devices\Device $device,

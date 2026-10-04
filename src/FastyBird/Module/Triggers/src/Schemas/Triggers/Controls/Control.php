@@ -16,6 +16,7 @@
 namespace FastyBird\Module\Triggers\Schemas\Triggers\Controls;
 
 use FastyBird\Core\Api\Schemas as ApiSchemas;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers;
@@ -76,6 +77,9 @@ final class Control extends ApiSchemas\JsonApiSchema
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
@@ -113,6 +117,9 @@ final class Control extends ApiSchemas\JsonApiSchema
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function getRelationshipRelatedLink(

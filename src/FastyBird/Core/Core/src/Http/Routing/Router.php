@@ -68,6 +68,9 @@ class Router implements IteratorAggregate
 		$this->basePath = $basePath;
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function getNamedRoute(string $name): Route|null
 	{
 		return $this->routeCollector->getNamedRoute($name);
@@ -98,6 +101,8 @@ class Router implements IteratorAggregate
 	 * @param string $pattern                   The route URI pattern
 	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
+	 * @throws Exceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function get(string $pattern, $callable): Route
@@ -110,6 +115,8 @@ class Router implements IteratorAggregate
 	 *
 	 * @param string $pattern                   The route URI pattern
 	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
@@ -124,6 +131,8 @@ class Router implements IteratorAggregate
 	 * @param string $pattern                   The route URI pattern
 	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
+	 * @throws Exceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function put(string $pattern, $callable): Route
@@ -136,6 +145,8 @@ class Router implements IteratorAggregate
 	 *
 	 * @param string $pattern                   The route URI pattern
 	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
@@ -150,6 +161,8 @@ class Router implements IteratorAggregate
 	 * @param string $pattern                   The route URI pattern
 	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
+	 * @throws Exceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function delete(string $pattern, $callable): Route
@@ -163,6 +176,8 @@ class Router implements IteratorAggregate
 	 * @param string $pattern                   The route URI pattern
 	 * @param callable|string|array<mixed> $callable The route callback routine
 	 *
+	 * @throws Exceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
 	public function options(string $pattern, $callable): Route
@@ -175,6 +190,8 @@ class Router implements IteratorAggregate
 	 *
 	 * @param string $pattern                   The route URI pattern
 	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
@@ -196,6 +213,8 @@ class Router implements IteratorAggregate
 	 * @param array<string> $methods                 Numeric array of HTTP method names
 	 * @param string $pattern                   The route URI pattern
 	 * @param callable|string|array<mixed> $callable The route callback routine
+	 *
+	 * @throws Exceptions\Runtime
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 	 */
@@ -222,6 +241,9 @@ class Router implements IteratorAggregate
 	 * @param string $routeName    Route name
 	 * @param array<mixed> $data        Named argument replacement data
 	 * @param array<mixed> $queryParams Optional query string parameters
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
 	 */
 	public function urlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{

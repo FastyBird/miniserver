@@ -4,6 +4,7 @@ namespace FastyBird\Core\Http\Middleware;
 
 use FastyBird\Core\Http\Events;
 use FastyBird\Core\Http\Routing;
+use InvalidArgumentException;
 use Psr\EventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,6 +22,9 @@ final readonly class Router
 	{
 	}
 
+	/**
+	 * @throws InvalidArgumentException
+	 */
 	public function __invoke(ServerRequestInterface $request): ResponseInterface
 	{
 		$this->dispatcher?->dispatch(new Events\HttpServerRequest($request));

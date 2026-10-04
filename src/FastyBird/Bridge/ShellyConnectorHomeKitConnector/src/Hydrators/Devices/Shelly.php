@@ -99,7 +99,9 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @param ShellyConnectorHomeKitConnectorEntities\Devices\Shelly|null $entity
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateConnectorRelationship(
@@ -141,7 +143,9 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @return array<DevicesEntities\Devices\Device>
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateParentsRelationship(

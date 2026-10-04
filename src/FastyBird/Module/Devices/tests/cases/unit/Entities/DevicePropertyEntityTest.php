@@ -15,6 +15,7 @@ use Nette;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use ReflectionException;
 use RuntimeException;
 use function assert;
 
@@ -33,6 +34,7 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
+	 * @throws ReflectionException
 	 */
 	public function testAddChildProperty(): void
 	{
@@ -73,6 +75,7 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Error
+	 * @throws ReflectionException
 	 */
 	public function testRemoveChildProperty(): void
 	{
@@ -134,6 +137,7 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws ReflectionException
 	 */
 	public function testRemoveParentProperty(): void
 	{

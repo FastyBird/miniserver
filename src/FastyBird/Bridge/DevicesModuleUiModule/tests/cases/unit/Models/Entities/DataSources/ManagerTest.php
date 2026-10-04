@@ -20,6 +20,7 @@ use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
+use ReflectionException;
 use RuntimeException;
 
 #[PreserveGlobalState(false)]
@@ -36,6 +37,7 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws DevicesModuleUiModuleExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testCreate(): void
 	{
@@ -87,6 +89,7 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws DevicesModuleUiModuleExceptions\InvalidArgument
 	 * @throws RuntimeException
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testDelete(): void
 	{

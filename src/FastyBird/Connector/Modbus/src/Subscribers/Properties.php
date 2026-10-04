@@ -33,6 +33,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 use TypeError;
 use ValueError;
 use function intval;
@@ -76,6 +77,7 @@ final class Properties implements Common\EventSubscriber
 	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError
+	 * @throws ReflectionException
 	 */
 	public function postPersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{

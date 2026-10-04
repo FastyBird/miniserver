@@ -38,7 +38,9 @@ final class Container
 	 * @return Hydrator<T>|null
 	 *
 	 * @throws DI\MissingServiceException
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
+	 * @throws Exceptions\Runtime
 	 */
 	public function findHydrator(Encoding\Document $document): Hydrator|null
 	{

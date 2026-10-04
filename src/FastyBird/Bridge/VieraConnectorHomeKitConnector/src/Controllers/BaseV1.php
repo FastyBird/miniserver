@@ -190,6 +190,8 @@ abstract class BaseV1
 
 	/**
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	protected function validateIdentifier(
 		Message\ServerRequestInterface $request,

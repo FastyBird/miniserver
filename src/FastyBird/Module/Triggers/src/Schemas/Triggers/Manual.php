@@ -15,6 +15,7 @@
 
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
@@ -76,6 +77,9 @@ final class Manual extends Trigger
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function getRelationshipRelatedLink(
@@ -103,6 +107,9 @@ final class Manual extends Trigger
 	}
 
 	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\Runtime
+	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function getRelationshipSelfLink(

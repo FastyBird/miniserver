@@ -180,6 +180,9 @@ final class Route implements RequestHandlerInterface
 		return $this->middlewareDispatcher->handle($request);
 	}
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	#[Override]
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{

@@ -106,7 +106,9 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateDisplayRelationship(
@@ -281,6 +283,8 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApiError
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Runtime
 	 */
 	protected function hydrateDataSourcesRelationship(
 		Objects\RelationshipObject $relationship,
@@ -342,7 +346,9 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateTabsRelationship(
@@ -387,7 +393,9 @@ abstract class Widget extends ApiHydrators\Hydrator
 	 * @return array<mixed>|null
 	 *
 	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	protected function hydrateGroupsRelationship(

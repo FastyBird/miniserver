@@ -22,6 +22,7 @@ use Nettrine\ORM\Events;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
+use ReflectionException;
 use RuntimeException;
 use function array_map;
 use function array_slice;
@@ -72,6 +73,7 @@ final class NotificationTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testCreatedSmsNotificationIsStamped(): void
 	{
@@ -119,6 +121,7 @@ final class NotificationTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testUpdatedSmsNotificationIsStamped(): void
 	{

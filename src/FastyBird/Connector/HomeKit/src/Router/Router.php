@@ -16,6 +16,7 @@
 namespace FastyBird\Connector\HomeKit\Router;
 
 use FastyBird\Connector\HomeKit\Controllers;
+use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 
 /**
@@ -29,6 +30,9 @@ use FastyBird\Core\Http\Routing;
 class Router extends Routing\Router
 {
 
+	/**
+	 * @throws Exceptions\Runtime
+	 */
 	public function __construct(
 		Controllers\PairingController $pairingController,
 		Controllers\AccessoriesController $accessoriesController,

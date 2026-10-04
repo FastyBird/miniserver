@@ -22,6 +22,7 @@ use Nettrine\ORM\Events;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
+use ReflectionException;
 use RuntimeException;
 use function array_keys;
 use function array_map;
@@ -68,6 +69,7 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testUpdatedAccountIsStamped(): void
 	{
@@ -104,6 +106,7 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testEmailMadeDefaultIsStamped(): void
 	{
@@ -140,6 +143,7 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testDemotedEmailIsStamped(): void
 	{
@@ -184,6 +188,7 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws PersistenceExceptions\Query
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws ReflectionException
 	 */
 	public function testDemotedEmailChangeSet(): void
 	{
@@ -253,6 +258,7 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws ORM\Exception\ORMException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws ReflectionException
 	 */
 	public function testFlushAfterDemotion(): void
 	{
@@ -296,6 +302,7 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws ReflectionException
 	 */
 	public function testCreatedEmailIsStamped(): void
 	{

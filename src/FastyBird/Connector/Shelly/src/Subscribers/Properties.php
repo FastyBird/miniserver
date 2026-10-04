@@ -32,6 +32,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Nette\Utils;
+use ReflectionException;
 
 /**
  * Doctrine entities events
@@ -68,6 +69,7 @@ final class Properties implements Common\EventSubscriber
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws ShellyExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
+	 * @throws ReflectionException
 	 */
 	public function postPersist(Persistence\Event\LifecycleEventArgs $eventArgs): void
 	{
