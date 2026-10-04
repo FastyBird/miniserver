@@ -7,7 +7,6 @@ use Doctrine\ORM;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Entities;
-use Nette\Utils;
 
 /**
  * Removes an entity from persistence inside its own transaction
@@ -17,12 +16,6 @@ use Nette\Utils;
  */
 final class EntityDeleter extends Crud\CrudManager
 {
-
-	/** @var array<callable(Entities\CrudEntity): void> */
-	public array $beforeAction = [];
-
-	/** @var array<callable(): void> */
-	public array $afterAction = [];
 
 	/**
 	 * @throws Exceptions\InvalidArgument
@@ -38,8 +31,6 @@ final class EntityDeleter extends Crud\CrudManager
 			throw new Exceptions\InvalidArgument('Entity not found.');
 		}
 
-		Utils\Arrays::invoke($this->beforeAction, $entity);
-
 		try {
 			$this->entityManager->getConnection()->beginTransaction();
 
@@ -53,8 +44,6 @@ final class EntityDeleter extends Crud\CrudManager
 		} catch (ORM\Exception\ORMException | DBAL\Exception $ex) {
 			throw new Exceptions\InvalidState('Entity could not be deleted', $ex->getCode(), $ex);
 		}
-
-		Utils\Arrays::invoke($this->afterAction);
 
 		return true;
 	}

@@ -10,7 +10,8 @@ use ReflectionClass;
  * Every value of FastyBird\Core\Constants, pinned (census T5, T12-22).
  *
  * E5.10 (#642) dissolves the class: each constant moves to the type that owns it, or becomes a
- * literal in an enum case, under rules C1 to C5. Values never change. #642 repoints this test at
+ * literal in an enum case, under rules C1 to C4; C5's only constant, TOKEN_URI_NAME, was never
+ * read and #635 deleted it. Values never change. #642 repoints this test at
  * the destinations, constant by constant, without editing a single value below -- so a value that
  * changes on the way is a red test, not a review comment.
  */
@@ -75,7 +76,6 @@ final class ConstantsValuesTest extends TestCase
 			. ')*))){0,1}$/',
 		'PERMISSIONS_DELIMITER' => ':',
 		'ACCESS_TOKEN_COOKIE' => 'token',
-		'TOKEN_URI_NAME' => 'authorization',
 		'TOKEN_HEADER_NAME' => 'authorization',
 		'TOKEN_HEADER_REGEXP' => '/Bearer\\s+(.*)$/i',
 		'TOKEN_CLAIM_USER' => 'user',
@@ -96,9 +96,9 @@ final class ConstantsValuesTest extends TestCase
 		self::assertSame(self::VALUES, (new ReflectionClass(Constants::class))->getConstants());
 	}
 
-	public function testThereAreSixtyFourConstants(): void
+	public function testThereAreSixtyThreeConstants(): void
 	{
-		self::assertCount(64, (new ReflectionClass(Constants::class))->getConstants());
+		self::assertCount(63, (new ReflectionClass(Constants::class))->getConstants());
 	}
 
 }

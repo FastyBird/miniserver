@@ -150,8 +150,6 @@ final class Constants
 	 * SIMPLE AUTH -- Security tokens
 	 */
 
-	public const string TOKEN_URI_NAME = 'authorization';
-
 	public const string TOKEN_HEADER_NAME = 'authorization';
 
 	public const string TOKEN_HEADER_REGEXP = '/Bearer\s+(.*)$/i';

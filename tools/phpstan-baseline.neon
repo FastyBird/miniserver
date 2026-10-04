@@ -3037,18 +3037,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
 
 		-
-			message: '#^Parameter \#1 \$conditions of method Nette\\Caching\\Storage\:\:clean\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Caching/MemoryAdapterStorage.php
-
-		-
-			message: '#^Parameter \#3 \$dependencies of method Nette\\Caching\\Storage\:\:write\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Caching/MemoryAdapterStorage.php
-
-		-
 			message: '#^Method FastyBird\\Core\\WebSockets\\Clients\\Drivers\\InMemory\:\:fetch\(\) should return bool\|FastyBird\\Core\\WebSockets\\Entities\\ConnectedClient but returns mixed\.$#'
 			identifier: return.type
 			count: 1
@@ -3327,12 +3315,6 @@ parameters:
 		-
 			message: '#^Parameter \#4 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
 			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/Controller.php
-
-		-
-			message: '#^Property FastyBird\\Core\\WebSockets\\Controllers\\Controller\:\:\$context is never read, only written\.$#'
-			identifier: property.onlyWritten
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/Controller.php
 
@@ -3633,13 +3615,13 @@ parameters:
 		-
 			message: '#^Cannot call method error\(\) on Psr\\Log\\LoggerInterface\|null\.$#'
 			identifier: method.nonObject
-			count: 2
+			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/WampApplication.php
 
 		-
 			message: '#^Cannot call method info\(\) on Psr\\Log\\LoggerInterface\|null\.$#'
 			identifier: method.nonObject
-			count: 5
+			count: 4
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/WampApplication.php
 
 		-
@@ -3670,15 +3652,6 @@ parameters:
 			message: '''
 				#^Fetching deprecated class constant FORCE_ARRAY of class Nette\\Utils\\Json\:
 				use Json\:\:decode\(\.\.\., forceArrays\: true\)$#
-			'''
-			identifier: classConstant.deprecated
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/WampApplication.php
-
-		-
-			message: '''
-				#^Fetching deprecated class constant GET of interface Nette\\Http\\IRequest\:
-				use IRequest\:\:Get$#
 			'''
 			identifier: classConstant.deprecated
 			count: 1
@@ -3987,7 +3960,7 @@ parameters:
 		-
 			message: '#^Call to an undefined method Nette\\DI\\Definitions\\Definition\:\:addSetup\(\)\.$#'
 			identifier: method.notFound
-			count: 3
+			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
 
 		-
@@ -4065,7 +4038,7 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$name of method Nette\\DI\\ContainerBuilder\:\:getDefinition\(\) expects string, string\|null given\.$#'
 			identifier: argument.type
-			count: 4
+			count: 2
 			path: ../src/FastyBird/Core/Core/src/WebSockets/DI/WebSocketsExtension.php
 
 		-
@@ -4241,12 +4214,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObjectCollection.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Encoding\\PushMessageSerializer\:\:deserialize\(\) should return FastyBird\\Core\\WebSockets\\Entities\\PushMessages\\IMessage but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/PushMessageSerializer.php
 
 		-
 			message: '#^Call to an undefined method FastyBird\\Core\\WebSockets\\Encoding\\IFrame\:\:extractOverflow\(\)\.$#'
@@ -4447,46 +4414,10 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/Validator.php
 
 		-
-			message: '#^Trait FastyBird\\Core\\Persistence\\Entities\\TEntityRemoved is used zero times and is not analysed\.$#'
-			identifier: trait.unused
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/Entities/TEntityRemoved.php
-
-		-
 			message: '#^Parameter \#1 \$timeZones of method FastyBird\\Core\\Phone\\Entities\\Phone\:\:setTimeZones\(\) expects array\<string\>, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Phone/Entities/Phone.php
-
-		-
-			message: '#^Trait FastyBird\\Core\\Phone\\Entities\\TPhone is used zero times and is not analysed\.$#'
-			identifier: trait.unused
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Phone/Entities/TPhone.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Entities\\PushMessages\\IMessage\:\:getData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/PushMessages/IMessage.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Entities\\PushMessages\\Message\:\:__construct\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/PushMessages/Message.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Entities\\PushMessages\\Message\:\:getData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/PushMessages/Message.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Entities\\PushMessages\\Message\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/PushMessages/Message.php
 
 		-
 			message: '#^Cannot cast FastyBird\\Core\\WebSockets\\Controllers\\Responses\\ControllerResponse to string\.$#'
@@ -4681,18 +4612,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Persistence/Helpers/ConstructorAutowiring.php
 
 		-
-			message: '#^Call to an undefined method FastyBird\\Core\\WebSockets\\Helpers\\Formatter\\IFormatter\:\:writeln\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
-
-		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
-			count: 10
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
-
-		-
 			message: '#^Method FastyBird\\Core\\WebSockets\\Helpers\\Console\:\:alert\(\) has parameter \$message with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
@@ -4747,39 +4666,9 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
 
 		-
-			message: '#^Only booleans are allowed in an if condition, FastyBird\\Core\\WebSockets\\Helpers\\Formatter\\IFormatter given\.$#'
-			identifier: if.condNotBoolean
-			count: 10
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
-
-		-
 			message: '#^Parameter \#1 \$message of method FastyBird\\Core\\WebSockets\\Helpers\\Console\:\:writeln\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 9
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
-
-		-
-			message: '#^Parameter \#1 \$message of method FastyBird\\Core\\WebSockets\\Helpers\\Formatter\\IFormatter\:\:caution\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
-
-		-
-			message: '#^Parameter \#1 \$message of method FastyBird\\Core\\WebSockets\\Helpers\\Formatter\\IFormatter\:\:error\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 3
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
-
-		-
-			message: '#^Parameter \#1 \$message of method FastyBird\\Core\\WebSockets\\Helpers\\Formatter\\IFormatter\:\:note\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 4
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
-
-		-
-			message: '#^Parameter \#1 \$message of method FastyBird\\Core\\WebSockets\\Helpers\\Formatter\\IFormatter\:\:warning\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
 
 		-
@@ -5209,102 +5098,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Handshake/WampResponse.php
 
 		-
-			message: '#^Access to deprecated property \$check of class Latte\\Compiler\\Nodes\\Php\\ModifierNode\.$#'
-			identifier: property.deprecated
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/AllowedHrefNode.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/AllowedHrefNode.php
-
-		-
-			message: '#^Cannot access property \$name on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Cannot access property \$parser on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Cannot access property \$position on mixed\.$#'
-			identifier: property.nonObject
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Cannot access property \$stream on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Cannot call method is\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Cannot call method parseArguments\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Cannot use array destructuring on mixed\.$#'
-			identifier: offsetAccess.nonArray
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Parameter \#2 \$position of class Latte\\CompileException constructor expects Latte\\Compiler\\Position\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\IfAllowedNode\:\:\$args \(Latte\\Compiler\\Nodes\\Php\\Expression\\ArrayNode\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\IfAllowedNode\:\:\$else \(Latte\\Compiler\\Nodes\\AreaNode\|null\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\IfAllowedNode\:\:\$elseLine \(Latte\\Compiler\\Position\|null\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\IfAllowedNode\:\:\$then \(Latte\\Compiler\\Nodes\\AreaNode\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/IfAllowedNode.php
-
-		-
-			message: '#^Cannot use array destructuring on mixed\.$#'
-			identifier: offsetAccess.nonArray
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/NElseAllowedNode.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Security\\Latte\\Nodes\\NElseAllowedNode\:\:\$content \(Latte\\Compiler\\Nodes\\AreaNode\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Security/Latte/Nodes/NElseAllowedNode.php
-
-		-
 			message: '#^PHPDoc tag @var with type Doctrine\\ORM\\Mapping\\ClassMetadata\<object\> is not subtype of type Doctrine\\Persistence\\Mapping\\ClassMetadata\<FastyBird\\Core\\Persistence\\Entities\\CrudEntity\>\.$#'
 			identifier: varTag.type
 			count: 1
@@ -5377,54 +5170,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Exchange/Publisher/Async/Container.php
 
 		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\PushMessages\\IPusher\:\:push\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/PushMessages/IPusher.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\PushMessages\\IPusher\:\:push\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/PushMessages/IPusher.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\PushMessages\\IPusher\:\:push\(\) has parameter \$routeParameters with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/PushMessages/IPusher.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\PushMessages\\Pusher\:\:doPush\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/PushMessages/Pusher.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\PushMessages\\Pusher\:\:push\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/PushMessages/Pusher.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\PushMessages\\Pusher\:\:push\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/PushMessages/Pusher.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\PushMessages\\Pusher\:\:push\(\) has parameter \$routeParameters with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/PushMessages/Pusher.php
-
-		-
-			message: '#^Parameter \#2 \$data of class FastyBird\\Core\\WebSockets\\Entities\\PushMessages\\Message constructor expects array, array\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/PushMessages/Pusher.php
-
-		-
 			message: '#^Method FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:fetch\(\) should return array\<mixed\>\|FastyBird\\Core\\Persistence\\Query\\ResultSet\<TEntityClass of object\> but returns mixed\.$#'
 			identifier: return.type
 			count: 1
@@ -5469,12 +5214,6 @@ parameters:
 		-
 			message: '#^Property FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:\$lastQuery with generic class Doctrine\\ORM\\Query does not specify its types\: TKey, TResult$#'
 			identifier: missingType.generics
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
-
-		-
-			message: '#^Property FastyBird\\Core\\Persistence\\Query\\QueryObject\:\:\$onPostFetch type has no signature specified for Closure\.$#'
-			identifier: missingType.callable
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Persistence/Query/QueryObject.php
 
@@ -5699,18 +5438,6 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/Http/Routing/Handlers/RequestHandler.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\Routing\\Handlers\\RequestResponseArgsHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
-			identifier: missingType.callable
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/Routing/Handlers/RequestResponseArgsHandler.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Http\\Routing\\Handlers\\RequestResponseArgsHandler\:\:__invoke\(\) should return Psr\\Http\\Message\\ResponseInterface but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/Routing/Handlers/RequestResponseArgsHandler.php
 
 		-
 			message: '#^Method FastyBird\\Core\\Http\\Routing\\Handlers\\RequestResponseHandler\:\:__invoke\(\) has parameter \$callable with no signature specified for callable\.$#'
@@ -6976,18 +6703,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Security/Subscribers/User.php
 
 		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Subscribers/OnServerStartHandler.php
-
-		-
-			message: '#^Instanceof between FastyBird\\Core\\WebSockets\\PushMessages\\IConsumer and FastyBird\\Core\\WebSockets\\PushMessages\\IConsumer will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Subscribers/OnServerStartHandler.php
-
-		-
 			message: '#^Method FastyBird\\Core\\WebSockets\\Topics\\Drivers\\InMemory\:\:fetch\(\) should return bool\|FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic but returns mixed\.$#'
 			identifier: return.type
 			count: 1
@@ -7064,36 +6779,6 @@ parameters:
 			identifier: argument.type
 			count: 4
 			path: ../src/FastyBird/Core/Core/src/Values/Transformers/EquationTransformer.php
-
-		-
-			message: '#^Cannot call method format\(\) on T of mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
-
-		-
-			message: '#^Cannot call method setTimeZone\(\) on T of mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
-
-		-
-			message: '#^Method FastyBird\\Core\\Persistence\\Types\\UTCDateTime\:\:convertToDatabaseValue\(\) should return string\|null but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
-
-		-
-			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, T of mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
-
-		-
-			message: '#^Parameter \#2 \$datetime of static method DateTime\:\:createFromFormat\(\) expects string, T of mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Persistence/Types/UTCDateTime.php
 
 		-
 			message: '#^Parameter \#1 \$number of static method FastyBird\\Core\\Phone\\Entities\\Phone\:\:fromNumber\(\) expects string, mixed given\.$#'

@@ -6,7 +6,6 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Wamp;
-use Nette\DI\Container;
 use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
 
@@ -57,11 +56,11 @@ final class ControllerTest extends TestCase
 		$router = $this->createMock(Wamp\WampRouter::class);
 		$linkGenerator = new Routing\LinkGenerator($router);
 
-		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
+		$controller->injectPrimary($controllerFactory, $router, $linkGenerator, null);
 
 		self::expectException(InvalidStateException::class);
 
-		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
+		$controller->injectPrimary($controllerFactory, $router, $linkGenerator, null);
 	}
 
 	/**
@@ -79,7 +78,7 @@ final class ControllerTest extends TestCase
 		$router = $this->createMock(Wamp\WampRouter::class);
 		$linkGenerator = new Routing\LinkGenerator($router);
 
-		$controller->injectPrimary(new Container(), $controllerFactory, $router, $linkGenerator, null);
+		$controller->injectPrimary($controllerFactory, $router, $linkGenerator, null);
 
 		self::expectException(Exceptions\InvalidState::class);
 		self::expectExceptionMessage('Service User has not been set.');

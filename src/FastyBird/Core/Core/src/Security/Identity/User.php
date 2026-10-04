@@ -3,11 +3,9 @@
 namespace FastyBird\Core\Security\Identity;
 
 use Casbin\Exceptions as CasbinExceptions;
-use Closure;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
-use Nette\Utils;
 use Ramsey\Uuid;
 use function func_get_args;
 
@@ -16,12 +14,6 @@ use function func_get_args;
  */
 class User
 {
-
-	/** @var array<Closure(User $user): void> */
-	public array $onLoggedIn = [];
-
-	/** @var array<Closure(User $user): void> */
-	public array $onLoggedOut = [];
 
 	public function __construct(
 		protected readonly IUserStorage $storage,
@@ -62,16 +54,10 @@ class User
 		}
 
 		$this->storage->setIdentity($user);
-
-		Utils\Arrays::invoke($this->onLoggedIn, $this);
 	}
 
 	public function logout(): void
 	{
-		if ($this->isLoggedIn()) {
-			Utils\Arrays::invoke($this->onLoggedOut, $this);
-		}
-
 		$this->storage->setIdentity(null);
 	}
 

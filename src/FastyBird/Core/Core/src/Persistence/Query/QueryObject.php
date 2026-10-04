@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Persistence\Query;
 
-use Closure;
 use Doctrine;
 use Doctrine\ORM;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -43,9 +42,6 @@ use function get_class;
  */
 abstract class QueryObject
 {
-
-	/** @var array<Closure> */
-	public array $onPostFetch = [];
 
 	private ORM\Query|null $lastQuery = null;
 

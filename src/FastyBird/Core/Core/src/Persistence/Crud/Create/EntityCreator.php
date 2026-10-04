@@ -27,12 +27,6 @@ use function sprintf;
 final class EntityCreator extends Crud\CrudManager
 {
 
-	/** @var array<callable(Entities\CrudEntity, Utils\ArrayHash): void> */
-	public array $beforeAction = [];
-
-	/** @var array<callable(Entities\CrudEntity, Utils\ArrayHash): void> */
-	public array $afterAction = [];
-
 	/**
 	 * @param class-string<T> $entityName
 	 */
@@ -94,13 +88,9 @@ final class EntityCreator extends Crud\CrudManager
 			throw new CoreExceptions\InvalidArgument('Entity could not be created.');
 		}
 
-		Utils\Arrays::invoke($this->beforeAction, $entity, $values);
-
 		$this->entityMapper->fillEntity($values, $entity, true);
 
 		$this->entityManager->persist($entity);
-
-		Utils\Arrays::invoke($this->afterAction, $entity, $values);
 
 		if ($this->getFlush()) {
 			try {

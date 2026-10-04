@@ -11,27 +11,15 @@ use Psr\Log;
 final class Console implements Log\LoggerInterface
 {
 
-	private Formatter\IFormatter $formatter;
-
-	public function setFormatter(Formatter\IFormatter $formatter): void
-	{
-		$this->formatter = $formatter;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
 	#[Override]
 	public function emergency($message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->caution($message);
+		echo 'CAUTION! ';
 
-		} else {
-			echo 'CAUTION! ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	/**
@@ -40,14 +28,9 @@ final class Console implements Log\LoggerInterface
 	#[Override]
 	public function alert($message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->error($message);
+		echo 'ERROR! ';
 
-		} else {
-			echo 'ERROR! ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	/**
@@ -56,14 +39,9 @@ final class Console implements Log\LoggerInterface
 	#[Override]
 	public function critical($message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->error($message);
+		echo 'ERROR! ';
 
-		} else {
-			echo 'ERROR! ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	/**
@@ -72,14 +50,9 @@ final class Console implements Log\LoggerInterface
 	#[Override]
 	public function error($message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->error($message);
+		echo 'ERROR! ';
 
-		} else {
-			echo 'ERROR! ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	/**
@@ -88,14 +61,9 @@ final class Console implements Log\LoggerInterface
 	#[Override]
 	public function warning($message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->warning($message);
+		echo 'WARNING! ';
 
-		} else {
-			echo 'WARNING! ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	/**
@@ -104,14 +72,9 @@ final class Console implements Log\LoggerInterface
 	#[Override]
 	public function notice($message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->note($message);
+		echo 'NOTICE! ';
 
-		} else {
-			echo 'NOTICE! ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	/**
@@ -120,14 +83,9 @@ final class Console implements Log\LoggerInterface
 	#[Override]
 	public function info($message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->note($message);
+		echo 'INFO: ';
 
-		} else {
-			echo 'INFO: ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	/**
@@ -136,14 +94,9 @@ final class Console implements Log\LoggerInterface
 	#[Override]
 	public function debug($message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->note($message);
+		echo 'DEBUG: ';
 
-		} else {
-			echo 'DEBUG: ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	/**
@@ -152,24 +105,14 @@ final class Console implements Log\LoggerInterface
 	#[Override]
 	public function log($level, $message, array $context = []): void
 	{
-		if ($this->formatter) {
-			$this->formatter->note($message);
+		echo 'LOG: ';
 
-		} else {
-			echo 'LOG: ';
-
-			$this->writeln($message);
-		}
+		$this->writeln($message);
 	}
 
 	private function writeln(string $message): void
 	{
-		if ($this->formatter) {
-			$this->formatter->writeln($message);
-
-		} else {
-			echo $message . "\r\n";
-		}
+		echo $message . "\r\n";
 	}
 
 }
