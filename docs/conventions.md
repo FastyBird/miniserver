@@ -132,6 +132,21 @@ use const DIRECTORY_SEPARATOR;                             // was `as DS`
 use Symfony\Component\Console as ComponentConsole;         // legal: the file declares `Console`
 ```
 
+**The clock is imported as `use Psr\Clock\ClockInterface;`.** Since #641 (Epic E5.9) time comes
+from PSR-20: a consumer types against `Psr\Clock\ClockInterface` and calls `now()`, which returns a
+`DateTimeImmutable`. Core's `Clock\SystemClock` and `Clock\FrozenClock` are its two implementations;
+`FastyBird\Core\Clock\Clock` and `getNow()` no longer exist. Import the interface itself, bare, in
+every file, never the `Psr\Clock` namespace: `Psr\Clock` and `FastyBird\Core\Clock` share their
+last segment, so a namespace import would collide in every file that also constructs one of Core's
+clocks and force both into `PsrClock`/`CoreClock` aliases, while `ClockInterface` collides with
+nothing. The `…Interface` suffix rule below applies to the types this repository declares, not to
+a third-party name it imports.
+
+```php
+use Psr\Clock\ClockInterface;           // the one canonical form
+use FastyBird\Core\Clock;               // only where Clock\SystemClock or Clock\FrozenClock is named
+```
+
 **SPL exceptions may be imported as `PHP<Name>Exception`.** The per-package `Exceptions\`
 directories extend the SPL exceptions under that alias (`class InvalidArgument extends
 PHPInvalidArgumentException implements Exception`, 68 imports across 26 packages), and it is an
