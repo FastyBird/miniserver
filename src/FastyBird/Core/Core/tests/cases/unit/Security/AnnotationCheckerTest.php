@@ -18,8 +18,8 @@ use Throwable;
  * enforced by regex-parsing `@Secured\…` annotations out of docblocks and that nothing in the
  * test suite exercised it before this. `EnforcerFactory` is `final`, so it is built for real
  * against the fixture model/policy this package already ships for exactly this purpose
- * (`resources/model.conf`, `tests/policy.csv`) rather than mocked; only the interface
- * `Identity\IUserStorage` is a test double.
+ * (`resources/model.conf`, `tests/policy.csv`) rather than mocked, and so is
+ * `Identity\UserStorage`; only the identity is a test double.
  */
 final class AnnotationCheckerTest extends TestCase
 {
@@ -41,20 +41,20 @@ final class AnnotationCheckerTest extends TestCase
 	}
 
 	/**
+	 * A guest without an identity, or a user logged in as it: a UserStorage is authenticated
+	 * exactly when it holds an identity.
+	 *
 	 * @throws Throwable
 	 */
-	private function user(bool $loggedIn, string|null $identity = null): Identity\User
+	private function user(string|null $identity = null): Identity\User
 	{
-		$storage = $this->createMock(Identity\UserStorage::class);
-		$storage->method('isAuthenticated')->willReturn($loggedIn);
+		$storage = new Identity\UserStorage();
 
 		if ($identity !== null) {
 			$identityDouble = $this->createMock(Identity\UserIdentity::class);
 			$identityDouble->method('getId')->willReturn(Uuid::fromString($identity));
 
-			$storage->method('getIdentity')->willReturn($identityDouble);
-		} else {
-			$storage->method('getIdentity')->willReturn(null);
+			$storage->setIdentity($identityDouble);
 		}
 
 		return new Identity\User($storage, $this->enforcerFactory());
@@ -68,7 +68,7 @@ final class AnnotationCheckerTest extends TestCase
 	 */
 	public function testGuestIsDeniedByASecuredUserLoggedInAnnotation(): void
 	{
-		$checker = new Access\AnnotationChecker($this->user(loggedIn: false));
+		$checker = new Access\AnnotationChecker($this->user());
 
 		self::assertFalse($checker->isAllowed(new ReflectionClass(FixturesSecurity\GuestIsDenied::class)));
 	}
@@ -81,7 +81,7 @@ final class AnnotationCheckerTest extends TestCase
 	 */
 	public function testUserLackingTheRequiredRoleIsDeniedByASecuredRoleAnnotation(): void
 	{
-		$checker = new Access\AnnotationChecker($this->user(loggedIn: true, identity: self::USER_ROLE_IDENTITY));
+		$checker = new Access\AnnotationChecker($this->user(self::USER_ROLE_IDENTITY));
 
 		self::assertFalse($checker->isAllowed(new ReflectionClass(FixturesSecurity\RoleIsRequired::class)));
 	}
@@ -94,7 +94,7 @@ final class AnnotationCheckerTest extends TestCase
 	 */
 	public function testAnUnannotatedElementIsAlwaysAllowed(): void
 	{
-		$checker = new Access\AnnotationChecker($this->user(loggedIn: false));
+		$checker = new Access\AnnotationChecker($this->user());
 
 		self::assertTrue($checker->isAllowed(new ReflectionClass(FixturesSecurity\Unannotated::class)));
 	}
@@ -106,9 +106,9 @@ final class AnnotationCheckerTest extends TestCase
 	 */
 	public function testCheckAccessEvaluatesTheAnnotationsOfAnExistingMethod(): void
 	{
-		$guest = new Access\AnnotationChecker($this->user(loggedIn: false));
+		$guest = new Access\AnnotationChecker($this->user());
 		$loggedIn = new Access\AnnotationChecker(
-			$this->user(loggedIn: true, identity: self::USER_ROLE_IDENTITY),
+			$this->user(self::USER_ROLE_IDENTITY),
 		);
 
 		self::assertFalse($guest->checkAccess(FixturesSecurity\MethodIsSecured::class, 'read'));
@@ -127,7 +127,7 @@ final class AnnotationCheckerTest extends TestCase
 	public function testCheckAccessToAMissingMethodThrowsInvalidState(): void
 	{
 		$checker = new Access\AnnotationChecker(
-			$this->user(loggedIn: true, identity: self::USER_ROLE_IDENTITY),
+			$this->user(self::USER_ROLE_IDENTITY),
 		);
 
 		$this->expectException(Exceptions\InvalidState::class);
