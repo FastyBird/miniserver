@@ -1,0 +1,44 @@
+{
+    "description": "Tokens minted ONCE by FastyBird\\Core\\Security\\Identity\\TokenBuilder on lcobucci/jwt 4.3.0 with a FrozenClock (census T11.3, #634). They are never re-minted: #643 proves lcobucci/jwt 5 reads tokens a running installation already handed out, and a diff in these files is a security escalation. `exp` is recorded, and compared, to the second: a whole-second `exp` is written as an integer, and lcobucci/jwt 4.3 parses 4738731630 back as 10:20:30.000001 through a float.",
+    "mintedWith": {
+        "lcobucci/jwt": "4.3.0",
+        "lcobucci/clock": "3.3.1",
+        "php": "8.4.26"
+    },
+    "signature": "g3xHbkELpMD9LRqW4WmJkHL7kz2bdNYAQJyEuFVzR3k=",
+    "foreignSignature": "e5-foreign-signature-not-the-application-key",
+    "issuer": "com.fastybird.auth-module",
+    "frozenAt": "2020-03-01T10:20:30.123456+00:00",
+    "claims": {
+        "valid": {
+            "iss": "com.fastybird.auth-module",
+            "jti": "8677c940-72cb-4115-9052-61c25643f8d7",
+            "iat": "2020-03-01T10:20:30.123456+00:00",
+            "exp": "2120-03-01T10:20:30+00:00",
+            "user": "5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34",
+            "roles": [
+                "administrator"
+            ]
+        },
+        "expired": {
+            "iss": "com.fastybird.auth-module",
+            "jti": "8a199925-636f-432e-9451-ccd2ac25a32e",
+            "iat": "2020-03-01T10:20:30.123456+00:00",
+            "exp": "2020-03-01T11:20:30+00:00",
+            "user": "5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34",
+            "roles": [
+                "administrator"
+            ]
+        },
+        "foreign-signature": {
+            "iss": "com.fastybird.auth-module",
+            "jti": "13687b51-4401-4e5f-9083-e41ef2c18d06",
+            "iat": "2020-03-01T10:20:30.123456+00:00",
+            "exp": "2120-03-01T10:20:30+00:00",
+            "user": "5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34",
+            "roles": [
+                "administrator"
+            ]
+        }
+    }
+}

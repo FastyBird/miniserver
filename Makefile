@@ -63,6 +63,17 @@ rectorf: ## Apply the PHPUnit annotation-to-attribute conversion, then fix codin
 	$(PRE_PHP) "vendor/bin/rector" process $(ARGS)
 	$(MAKE) csf
 
+# Epic E5 (#460) runs its repository-wide mechanical rewrites through a committed Rector config
+# per PR, tools/rector/e5-<topic>.php, copied from tools/rector/skeleton.php (which applies no
+# rule). Unlike `make rector`, this applies the config; pass ARGS=--dry-run to preview. Run it in
+# the application image, then `make csf`. RECTOR_CONFIG is required: without it Rector would
+# fall back to the repository-root rector.php, which is the unrelated PHPUnit conversion.
+rector-e5: ## Apply an E5 Rector config: make rector-e5 RECTOR_CONFIG=tools/rector/e5-<topic>.php [ARGS=--dry-run]
+	test -n "$(RECTOR_CONFIG)" || { echo "rector-e5: set RECTOR_CONFIG=tools/rector/<config>.php" >&2; exit 2; }
+	test -f "$(RECTOR_CONFIG)" || { echo "rector-e5: $(RECTOR_CONFIG) does not exist" >&2; exit 2; }
+	mkdir -p var/tools/Rector
+	$(PRE_PHP) "vendor/bin/rector" process --config="$(RECTOR_CONFIG)" --no-progress-bar $(ARGS)
+
 # Dependency-direction gate for the 34 packages under src/FastyBird. This is what replaced
 # the 34 per-package composer manifests, which were measured to be fiction (117 undeclared
 # edges against 149 declared) and unenforceable by construction anyway.
@@ -164,12 +175,12 @@ bash-root:
 
 # UTILITIES
 
-.SILENT: $(shell grep -h -E '^[a-zA-Z_-]+:.*?$$' $(MAKEFILE_LIST) | sort -u | awk 'BEGIN {FS = ":.*?"}; {printf "%s ", $$1}')
+.SILENT: $(shell grep -h -E '^[a-zA-Z0-9_-]+:.*?$$' $(MAKEFILE_LIST) | sort -u | awk 'BEGIN {FS = ":.*?"}; {printf "%s ", $$1}')
 
 LIST_PAD=20
 list:
 	awk 'BEGIN {FS = ":.*##"; printf "Usage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"}'
-	grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort -u | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-$(LIST_PAD)s\033[0m %s\n", $$1, $$2}'
+	grep -h -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort -u | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-$(LIST_PAD)s\033[0m %s\n", $$1, $$2}'
 
 PRE_PHP=XDEBUG_MODE=off
 
