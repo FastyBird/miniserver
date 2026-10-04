@@ -100,6 +100,27 @@ if mode == 'hookgroups':
         for i, x in enumerate(seq, 1):
             print('    %2d. %s' % (i, x))
 
+if mode == 'enablers':
+    # per container: the consumer classes ServerRuntime's onCreate[] setups enable, and whether a
+    # service of that class is registered (Exchange\Consumers\Container::enable() throws
+    # InvalidArgument for a class it holds no consumer of)
+    for cid, f in containers:
+        d = load(f)
+        if not d.get('compiled', True):
+            continue
+        svcs = d['services']
+        types = {s.get('type') for s in svcs.values()}
+        out = []
+        for s in svcs.values():
+            if s.get('type') != 'FastyBird\\Core\\WebSockets\\Server\\ServerRuntime':
+                continue
+            for st in s.get('setup', []):
+                e = st['entity'] if isinstance(st['entity'], str) else ''
+                if 'enable(' in e:
+                    cls = [a for a in st.get('arguments', []) if isinstance(a, str)][0]
+                    out.append('%s %s' % (cls.replace('FastyBird\\', ''), 'registered' if cls in types else 'NOT REGISTERED'))
+        print('== %s: %s' % (cid, '; '.join(out) if out else '(no enabler)'))
+
 if mode == 'reach':
     # reach <regexFrom> <regexTo>: in every container, is there a reference path (constructor
     # arguments, setup arguments and factory, transitively) from a service whose type matches

@@ -69,6 +69,8 @@ exact commands.
 | D18 | §1.5: three locators. "If E5.1's graph analysis shows a cycle, … lazy" | **A real cycle exists for all three** in 32 of the 46 compiled containers, production included. `SchemaContainer` reaches each module schema, then `fbCore.http.routing.router`, then the router's setups (the `JsonApiMiddleware` middleware, and the module route services, then controllers, then `Builder`/`Hydrators\Container`). | The measurement (T7). `lazy` is required, not optional. |
 | D19 | §1.6/§1.12/§3.6: "`Nette\Security\User` … the security identity Devices' and Ui's role enforcement relies on (#543)"; the Compat shim "never declares anything, because nette/security is installed" | **nette/security is not installed** (absent from `composer.lock`; the class does not resolve in the application image), and the Compat shim is never autoloaded (T2 row 12). `Nette\Security\User` is therefore an **undefined class**, named in 4 type positions: `Controllers\Controller::getUser()`, `Entities\Client::$user`, `Entities\ConnectedClient::setUser()`/`getUser()`, and an `instanceof` in `Clients\Storage:78`. Devices' and Ui's `ExchangeV1` enforce roles through `ConnectedClient::getRoles()` against `Constants::ROLE_MANAGER`/`ROLE_ADMINISTRATOR`, and **neither calls `getUser()`** (`git grep`). `ControllerTest`'s own docblock records that no `Nette\Security\User` service exists. | The measurement. §3.6's "`Nette\Security\User` stays" stands, since nothing is replaced, but the reason given is wrong. See escalation **X10**. |
 | D20 | §3.5 and #635: "`Controller::$context` and its **constructor** parameter" | The constructor takes no arguments. `$context` is the first parameter of **`injectPrimary()`**, which `nette.inject` calls with `@container` (compiled setup, T2 row 25). | The code. #635 removes an `injectPrimary()` parameter, and `ControllerTest` calls it positionally. |
+| D21 | §1.14 (the test net's "§14.2 production-image checks: … WAMP subscribe round trip") and §14.2 ("A WAMP subscribe round trip receives an exchange message pushed through `SocketsBridge`") assume the round trip **works today** | **It cannot work today.** `Wamp\RouteList::$cachedRoutes` is declared `private array $cachedRoutes;` (`RouteList.php:24`), typed and never initialised. `constructUrl()` reads it with `$this->cachedRoutes === null` (`RouteList.php:63`) before `warmupCache()` ever assigns it (`:135`). Reading an uninitialised typed property throws `Error`, so every `LinkGenerator::link()` that reaches the router's `constructUrl()` throws. All three `SocketsBridge`s call `link()` inside a `try … catch (Throwable)`: Devices `SocketsBridge.php:114/142`, Ui `:115/143`, DevicesModuleUiModule `:179/207`. So they log and **never broadcast**. Separately, Ui's `SocketsBridge` links to `'DevicesModule:Exchange:'` (`:115`), not to a Ui destination. The DevicesModuleUiModule bridge links to `'UiModule:Exchange:'`. #648's characterization tests established this, and the code confirms it. | The code. This is **not an E5 design decision**, so there is no X item. It is a pre-existing defect, tracked on #625 ([root cause](https://github.com/FastyBird/miniserver/issues/625#issuecomment-5977634701)), which the orchestrator schedules after #648 and **before #637's §14.2 check**. Until it is fixed, the §14.2 WAMP round trip cannot pass on any E5 PR, and an E5 PR must not "fix" it in passing. T7 notes it; T12 row 10 and the X4 note depend on it. |
+| D22 | §1.4: "`FrozenClock` returns `clone` of the value it was constructed with, so it is mutable when it was built from a `DateTime`" | `FrozenClock`'s constructor converts a `DateTime` with `DateTimeImmutable::createFromMutable()` and stores a `DateTimeImmutable $dt` (`Clock/FrozenClock.php`). `getNow()` returns `clone $this->dt`, which is always immutable. #648's T12-21 test pins it. | The code. #641's `FrozenClock` change is a type change only (`now(): DateTimeImmutable`), with no behaviour change. |
 
 Everything else in §1 that T1–T12 touches was re-measured and **agrees**:
 
@@ -146,18 +148,45 @@ maintainer can override it in the review.
       finding F1), so its enabler comes **first**.
     - `Exchange\Consumers\Container::enable()` moves the consumer to the end of its
       `SplObjectStorage`, so the **enable order is the consume order**. It is observable.
+    - **In the same 6 containers the first hook throws today.** The package's own
+      `SocketsBridge` service is **never registered**, but its `onCreate[]` enabler is.
+      `python3 tools/census/e5/di.py var/tools/di-snapshot/e633-base enablers` lists the
+      containers:
+      - `test/Module/Devices` and its 2 overlays;
+      - `test/Module/Ui` and its 1 overlay;
+      - `test/Bridge/DevicesModuleUiModule`, for the bridge's own `SocketsBridge` only (Devices'
+        and Ui's are registered there).
+
+      The cause is the same E4 finding F1. Each module registers its bridge in
+      `loadConfiguration()` only when `findByType(LinkGenerator)` and `findByType(Topics\IStorage)`
+      are non-empty, as at `DevicesModuleUiModuleExtension.php:160-168`. That runs before `fbCore`
+      has registered either. The enabler is added in `beforeCompile()`, unconditionally. It is
+      the first `onCreate` setup in those containers, so `ServerRuntime::create()` throws
+      `Exceptions\InvalidArgument` ("Provided consumer is not registered in container and can
+      not be enabled") on its first hook there. In the other 40 compiled containers, production
+      included, every consumer that is enabled is registered: 19 have enablers and 21 have none.
   - **Default.** The listener priorities in T3 reproduce **production's** order everywhere. The
     test containers' order then changes. The only container where the relative order of two
     enablers changes is `test/Bridge/DevicesModuleUiModule`: today DevicesModuleUiModule,
-    Devices, Ui; afterwards Devices, Ui, DevicesModuleUiModule. #638 declares it.
+    Devices, Ui; afterwards Devices, Ui, DevicesModuleUiModule. #638 declares that change.
+  - **#638 must also declare the 6 containers above.** A module's `ServerCreated` listener
+    that enables an unregistered consumer throws exactly as the `onCreate[]` closure does today.
+    The behaviour is preserved: #634 pins the throw, and #638 does not fix it. Registering the
+    listener only when its `SocketsBridge` is registered would be a behaviour change, which is
+    an escalation, not part of #638.
 - **X5. WAMP closure routes cannot dispatch today** (T9).
   - **Evidence.**
     - `WampRoute` gives a closure route the controller `'IPub:WebSocket'`.
-    - `ControllerFactory` maps that through its `'*'` mask to `IPubModule\WebSocketController`,
-      a class that exists nowhere. So `Application::processMessage()` throws `BadRequest`.
+    - `Application::processMessage()` first calls
+      `ControllerFactory::getControllerClass('IPub:WebSocket')`. That maps the name through its
+      `'*'` mask to `IPubModule\WebSocketController`, a class that exists nowhere. So
+      `getControllerClass()` throws **`Exceptions\InvalidController`** ("Cannot load controller
+      …, class … was not found", `ControllerFactory.php:112-116`).
+    - So the `is_subclass_of(…, RequestController)` check that would throw `BadRequest` is
+      **never reached**. #648's characterization test established this, and the code confirms it.
     - No configuration in the repository defines a closure route.
   - **Default.** T9 renames the strings only. #634's closure-route test pins today's outcome
-    (the `BadRequest`) and labels it as a known defect.
+    (the `InvalidController`) and labels it as a known defect.
   - **Option.** Delete closure-route support in #637.
 - **X6. Typed configuration needs 32 classes, not 11** (T10). The default is the naming rule in
   T10.
@@ -389,9 +418,9 @@ Nothing else changes.
 | `fbCore.webSockets.server.runtime` (`ServerRuntime`) | **production, production:dev, production:sentry** | 1 `onCreate` ← dispatch `CreateEvent` · 2 `onStart` ← dispatch `StartEvent` · 3 `onStop` ← dispatch `StopEvent` · 4 `onStart` ← `OnServerStartHandler` · 5 `onCreate` ← enable Devices `SocketsBridge` · 6 `onCreate` ← enable Ui `SocketsBridge` · 7 `onCreate` ← enable DevicesModuleUiModule `SocketsBridge` |
 | same | 16 (Addon, Automator/DevicesModule, 4 Bridges, 10 Connectors) | 1–4 as above · 5 enable Devices |
 | same | 21 (Core and its 8 overlays, Accounts + 2, Triggers + 1, Automator/DateTime, RedisDbPluginTriggersModule, ApiKey, RabbitMq + 1, RedisDb, RedisDbCache) | 1–4 only |
-| same | `test/Module/Devices` (+2 overlays) | 1 enable Devices · 2–5 = dispatch/dispatch/dispatch/handler |
-| same | `test/Module/Ui` (+1) | 1 enable Ui · 2–5 |
-| same | `test/Bridge/DevicesModuleUiModule` | 1 enable DevicesModuleUiModule · 2–5 · 6 enable Devices · 7 enable Ui |
+| same | `test/Module/Devices` (+2 overlays) | 1 enable Devices · 2–5 = dispatch/dispatch/dispatch/handler. **The Devices `SocketsBridge` is not registered here, so setup 1 throws on `create()`** (X4). |
+| same | `test/Module/Ui` (+1) | 1 enable Ui · 2–5. **The Ui `SocketsBridge` is not registered, so setup 1 throws** (X4). |
+| same | `test/Bridge/DevicesModuleUiModule` | 1 enable DevicesModuleUiModule · 2–5 · 6 enable Devices · 7 enable Ui. **The bridge's own `SocketsBridge` is not registered, so setup 1 throws, and setups 2–7 never run** (X4). |
 | `fbCore.webSockets.server.wrapper` (`Wrapper`), all 46 | | 1 `onClientConnected` ← `ClientConnectEvent` · 2 `onClientDisconnected` ← `ClientDisconnectEvent` · 3 `onClientError` ← `ClientErrorEvent` · 4 `onIncomingMessage` ← `IncommingMessageEvent` · 5 `onAfterIncomingMessage` ← `AfterIncommingMessageEvent` · **6 `onClientConnected` ← `ClientConnected`** · **7 `onIncomingMessage` ← `IncomingMessage`** (D3) |
 | `fbCore.webSockets.wamp.application` (`WampApplication`, found by `getByType(Controllers\Application)`), all 46 | | 1 `onOpen` ← `OpenEvent` · 2 `onClose` ← `CloseEvent` · 3 `onMessage` ← `MessageEvent` · 4 `onError` ← `ErrorEvent` · 5 `onPush` ← `PushEvent` |
 
@@ -708,6 +737,12 @@ either fails):
 `$this->container->getByType(Routing\IRouter::class)` at Accounts:62, Devices:63, Triggers:63 and
 Ui:63. #636 rewrites only the type. Converting them to injection belongs to E7 (#462).
 
+**Related defect, not a locator (D21).** `Wamp\RouteList::$cachedRoutes` is an uninitialised
+typed property read with `=== null`. So `LinkGenerator::link()`, the WebSockets link generator
+the three `SocketsBridge`s inject, throws `Error` for every routed destination. It is tracked on
+#625 and fixed outside E5, before #637's §14.2 check. #637 moves `LinkGenerator` and #639 changes
+no WebSockets injection, so neither must work around it.
+
 ---
 
 ## T8. Clock consumers that mutate a `getNow()` result in place
@@ -741,8 +776,10 @@ catches mutator calls whose result **is** assigned.
     *argument*, which comes from hydration.
 
 **For #641.** The `assert($x instanceof DateTimeImmutable)` lines after `getNow()` become
-redundant once `now(): DateTimeImmutable` is typed. `FrozenClock` today returns `clone` of a
-possibly mutable value; `TokenTest` and `ClientAuthenticationTest` construct it.
+redundant once `now(): DateTimeImmutable` is typed. `FrozenClock` already stores a
+`DateTimeImmutable`, converting a `DateTime` input with `createFromMutable()`, and returns a
+clone of it, so it is immutable today (D22). `TokenTest` and `ClientAuthenticationTest`
+construct it.
 
 ---
 
@@ -762,7 +799,9 @@ values (`git grep` across `src`, `tests`, `*.ts`, `*.vue`).
 | — | `WebSocketsExtension.php:283` comment; `Core/Core/docs/Home.md` | prose | reworded in #637 (X8) |
 | — | `IdentifierGuardTest.php:86-87` (`'ipub'`, `'iPublikuj'`) | the guard's denylist | **must stay** (X8) |
 
-Rows 3 and 4 keep closure-route behaviour unchanged, which today ends in `BadRequest` (X5).
+Rows 3 and 4 keep closure-route behaviour unchanged. Today it ends in `Exceptions\InvalidController`,
+thrown by `ControllerFactory::getControllerClass()` before `processMessage()` reaches its
+`BadRequest` check (X5).
 `'Core:'` is not a module-mapping key and is not on the IdentifierGuard denylist.
 
 ---
@@ -937,9 +976,9 @@ job must:
 | 7 | `IUserStorage` → `UserStorage` (identity storage behind `Identity\User`) | #636 | `AnnotationCheckerTest`, `Accounts AccessTest::testPermissionAnnotation`, `ClientAuthenticationTest` (login/logout through `User`) |
 | 8 | Collapse of the 12 WebSockets interfaces | #637 | `WrapperTest` (4), `ApplicationTest` (4), `ClientAuthenticationTest` (18), `WebSocketsStorageDriversTest` (7), `Devices`/`Ui TaggedServicesTest`, `Devices ExchangeV1Test` (8) |
 | 9 | **The `IControllerFactory` test seam** (`WampApplicationTest`'s anonymous class) | #637 | `WampApplicationTest`. Its double becomes a `ControllerFactory` mock (call-syntax change only). |
-| 10 | `LinkGenerator` moved to `WebSockets\Routing` (DI service name unchanged) | #637 | `ControllerTest`; the module `SocketsBridge`s: **none at unit level — #634 adds it**: `LinkGenerator::link()` for a module WAMP route, resolved from the compiled container by type |
+| 10 | `LinkGenerator` moved to `WebSockets\Routing` (DI service name unchanged) | #637 | `ControllerTest`; the module `SocketsBridge`s: **none at unit level — #634 adds it**: `LinkGenerator::link()` for a module WAMP route, resolved from the compiled container by type. **Today that call throws `Error`** (D21, the uninitialised `RouteList::$cachedRoutes`), so the test pins the throw as a known defect until #625 lands. |
 | 11 | `ServerRuntime::VERSION` value on the wire (4 headers + WAMP welcome) | #637 | **none — #634 adds it**: `X-Powered-By` on the handshake response (`Wrapper::attemptUpgrade`), on a 401 close (`Subscribers\Client::closeSession`), on an `Application::close`, and the welcome message's agent field. It asserts the reference `ServerRuntime::VERSION`, so #637 changes only the constant. |
-| 12 | `ControllerFactory` mapping key, `RouteList` `'IPub:'` prefix, `WampRoute` closure default | #637 | `Devices`/`Ui TaggedServicesTest::testTaggedSocketRoutesReachTheWampRouter` (module route). Closure route: **none — #634 adds it**: a closure route resolves to the reserved controller name, is not module-prefixed, and ends in `BadRequest` (X5). |
+| 12 | `ControllerFactory` mapping key, `RouteList` `'IPub:'` prefix, `WampRoute` closure default | #637 | `Devices`/`Ui TaggedServicesTest::testTaggedSocketRoutesReachTheWampRouter` (module route). Closure route: **none — #634 adds it**: a closure route resolves to the reserved controller name, is not module-prefixed, and ends in `Exceptions\InvalidController` from `ControllerFactory::getControllerClass()`, before `processMessage()`'s `BadRequest` check (X5). |
 | 13 | **Hook order at server create**, including the 3 module `SocketsBridge` enablers and their relative order | #638 | **none — #634 adds it**: build the production container, call `ServerRuntime::create()` with stub sockets, and assert (a) the `CreateEvent`/`ServerCreated` listeners run before the enablers and (b) the `Exchange\Consumers\Container` consumption order is Devices → Ui → DevicesModuleUiModule. Repeat in `test/Bridge/DevicesModuleUiModule`, whose order X4 changes and #638 declares. |
 | 14 | Hook order at server start (`onStart`: dispatch, then `OnServerStartHandler`) | #638 | `ServerTest::testOnStartFiresRegisteredHandlerWithLoopAndServer` (array mechanics only). DI-wired order: **none — #634 adds it** under X1-B; nothing to add under X1-A. |
 | 15 | Each of the 13 WebSockets hooks dispatches the right event with the right payload | #638 | Array mechanics: `ServerTest` (3), `WrapperTest` (4, covering 5 hooks), `ApplicationTest` (4), `WampApplicationTest` (1). **Through the DI bridge to the PSR-14 dispatcher: none — #634 adds it**: one test per hook against the compiled container's dispatcher, asserting the event class and payload. It pins today's double dispatch of `onClientConnected`/`onIncomingMessage` and the dropped `$message` in `IncomingMessage`. |
@@ -960,20 +999,25 @@ job must:
    throwing (today the uninitialised `$formatter` makes it throw `Error`; pin the post-#635
    expectation as a known-defect test, or assert the throw today and flip it in #635).
 2. **T12-10.** `LinkGenerator::link()` for a module WAMP route, resolved from the compiled
-   container by type.
+   container by type. Today it throws `Error` because of D21, so pin the throw as a known defect
+   until #625.
 3. **T12-11.** `X-Powered-By` equals `ServerRuntime::VERSION` on:
    - the handshake response (`Wrapper::attemptUpgrade`);
    - a 401 close (`Subscribers\Client::closeSession`);
    - `Application::close()`;
    - and the WAMP welcome message's agent field equals `ServerRuntime::VERSION`.
 4. **T12-12.** A closure WAMP route: resolves to the reserved controller name, is not
-   module-prefixed by `RouteList`, and ends in `BadRequest` from `Application::processMessage()`
-   (X5).
+   module-prefixed by `RouteList`, and ends in `Exceptions\InvalidController` thrown by
+   `ControllerFactory::getControllerClass()` when `Application::processMessage()` calls it, so
+   the `BadRequest` check is never reached (X5).
 5. **T12-13.** Server create in the compiled production container:
    - `CreateEvent`/`ServerCreated` listeners run before the 3 `SocketsBridge` enablers;
    - the `Exchange\Consumers\Container` consumption order is Devices → Ui →
      DevicesModuleUiModule;
-   - the same in `test/Bridge/DevicesModuleUiModule`, recording today's order there.
+   - the same in `test/Bridge/DevicesModuleUiModule`, recording today's order there. In that
+     container, and in `test/Module/Devices` and `test/Module/Ui` with their overlays,
+     `create()` throws `InvalidArgument` on the first hook, because the enabled
+     `SocketsBridge` is not registered (X4). Pin the throw.
 6. **T12-14.** Server start in the compiled container: the `StartEvent` dispatch runs before
    `OnServerStartHandler` (only under X1-B).
 7. **T12-15.** For each of the 13 WebSockets hooks, through the compiled container's PSR-14
@@ -1075,6 +1119,7 @@ git ls-files '*.latte'                                                     # pri
 # T3 / T4
 tools/census/e5/php.sh tools/census/e5/members.php callbacks               # 22 arrays
 python3 tools/census/e5/di.py var/tools/di-snapshot/e633-base hookgroups   # compiled setup order
+python3 tools/census/e5/di.py var/tools/di-snapshot/e633-base enablers     # enabled consumer registered? (X4)
 tools/census/e5/php.sh tools/census/e5/calls.php /e633/files-php.txt run,stop,create,handlePush
 git grep -n 'WebSockets\\Events'
 # T5
@@ -1113,7 +1158,7 @@ docker run --rm -v "$PWD":/app:ro -w /app -e COMPOSER_HOME=/tmp/ch fb-e2-app:lat
 | `q.py` | ad-hoc query of that index: referencing files or lines per FQCN regex, and subtypes | T1, T2, T5, T7, T10 |
 | `t1.py`, `t1rows.py` | the 50 prefixed types: transitive implementers, files by area, DI lines, NEON/Latte/XML/JSON/YAML lines | T1 |
 | `t2.py` | every unreferenced Core type, plus evidence per candidate | T2 |
-| `di.py` | reads a `tools/di-snapshot.php` recording: `hooks`/`hookgroups` (setup order on the hook services), `wiring` (autowiring candidates), `services`, `reach` (reference paths between services) | T1, T2, T3, T7 |
+| `di.py` | reads a `tools/di-snapshot.php` recording: `hooks`/`hookgroups` (setup order on the hook services), `enablers` (whether each consumer the `onCreate` setups enable is registered), `wiring` (autowiring candidates), `services`, `reach` (reference paths between services) | T1, T2, T3, T7 |
 | `members.php` | Reflection: `callbacks`, `constants`, `accessors` (bodies via `PhpToken::tokenize`) | T3, T5, T6 |
 | `calls.php` | every method call by name, with receiver source, chain and discarded-result flag | T3, T6, T8, T10 |
 | `consts.php` | every `ClassConstFetch` of a class, resolved to FQCN | T5 |
