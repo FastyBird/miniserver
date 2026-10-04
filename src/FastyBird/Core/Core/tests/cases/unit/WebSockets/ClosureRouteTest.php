@@ -56,6 +56,25 @@ final class ClosureRouteTest extends BaseTestCase
 	}
 
 	/**
+	 * The other side of RouteList's `Core:` check: a route naming a controller is a module's,
+	 * and matches with the list's module in front of its name.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
+	 * @throws Nette\OutOfRangeException
+	 */
+	public function testAModuleRouteMatchesWithTheModuleOfItsRouteList(): void
+	{
+		$routes = new Wamp\RouteList('Probe');
+		$routes[] = new Wamp\WampRoute('/e5/module', 'Exchange:');
+
+		$request = $routes->match($this->request('ws://localhost/e5/module'));
+
+		self::assertInstanceOf(Controllers\Request::class, $request);
+		self::assertSame('Probe:Exchange', $request->getControllerName());
+	}
+
+	/**
 	 * @throws DI\MissingServiceException
 	 * @throws Exceptions\InvalidController
 	 * @throws ReflectionException
