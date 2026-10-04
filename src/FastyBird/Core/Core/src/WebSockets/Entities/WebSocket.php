@@ -3,101 +3,88 @@
 namespace FastyBird\Core\WebSockets\Entities;
 
 use FastyBird\Core\WebSockets\Encoding;
-use Override;
+use FastyBird\Core\WebSockets\Encoding\RFC6455;
 use function assert;
 
-final class WebSocket implements IWebSocket
+final class WebSocket
 {
 
-	private Encoding\IMessage|null $message = null;
+	private RFC6455\Message|null $message = null;
 
-	private Encoding\IFrame|null $frame = null;
+	private RFC6455\Frame|null $frame = null;
 
 	public function __construct(
 		private bool $established,
 		private bool $closing,
-		private Encoding\IProtocol $protocol,
+		private Encoding\RFC6455 $protocol,
 	)
 	{
 	}
 
-	#[Override]
 	public function setEstablished(bool $state): void
 	{
 		$this->established = $state;
 	}
 
-	#[Override]
 	public function isEstablished(): bool
 	{
 		return $this->established;
 	}
 
-	#[Override]
 	public function setClosing(bool $state): void
 	{
 		$this->closing = $state;
 	}
 
-	#[Override]
 	public function isClosing(): bool
 	{
 		return $this->closing;
 	}
 
-	#[Override]
-	public function getProtocol(): Encoding\IProtocol
+	public function getProtocol(): Encoding\RFC6455
 	{
 		return $this->protocol;
 	}
 
-	#[Override]
-	public function setMessage(Encoding\IMessage $message): void
+	public function setMessage(RFC6455\Message $message): void
 	{
 		$this->message = $message;
 	}
 
-	#[Override]
-	public function getMessage(): Encoding\IMessage
+	public function getMessage(): RFC6455\Message
 	{
 		assert($this->message !== null);
 
 		return $this->message;
 	}
 
-	#[Override]
 	public function destroyMessage(): void
 	{
 		$this->message = null;
 	}
 
-	#[Override]
 	public function hasMessage(): bool
 	{
 		return $this->message !== null;
 	}
 
-	#[Override]
-	public function setFrame(Encoding\IFrame $frame): void
+	public function setFrame(RFC6455\Frame $frame): void
 	{
 		$this->frame = $frame;
 	}
 
-	#[Override]
-	public function getFrame(): Encoding\IFrame
+	public function getFrame(): RFC6455\Frame
 	{
 		assert($this->frame !== null);
 
 		return $this->frame;
 	}
 
-	#[Override]
 	public function destroyFrame(): void
 	{
 		$this->frame = null;
 	}
 
-	#[Override]
 	public function hasFrame(): bool
 	{
 		return $this->frame !== null;

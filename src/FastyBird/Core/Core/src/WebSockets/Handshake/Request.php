@@ -9,7 +9,7 @@ use function func_num_args;
 /**
  * HTTP request
  */
-final class Request extends Http\Request implements IRequest
+final class Request extends Http\Request implements Http\IRequest
 {
 
 	private float $protocolVersion;
@@ -39,7 +39,6 @@ final class Request extends Http\Request implements IRequest
 		);
 	}
 
-	#[Override]
 	public function setUrl(Http\UrlScript $url): void
 	{
 		$this->url = $url;
@@ -63,13 +62,11 @@ final class Request extends Http\Request implements IRequest
 		return $this->url->getScheme() === 'wss';
 	}
 
-	#[Override]
 	public function setProtocolVersion(float $version): void
 	{
 		$this->protocolVersion = $version;
 	}
 
-	#[Override]
 	public function getProtocolVersion(): float|null
 	{
 		return $this->protocolVersion;

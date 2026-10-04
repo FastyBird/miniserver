@@ -21,7 +21,7 @@ use function substr_replace;
 /**
  * Communication frame
  */
-final class Frame implements Encoding\IFrame
+final class Frame implements Encoding\FrameData
 {
 
 	public const int OP_CONTINUE = 0;
@@ -142,7 +142,9 @@ final class Frame implements Encoding\IFrame
 		return $this->isCoalesced;
 	}
 
-	#[Override]
+	/**
+	 * Add incoming data to the frame from peer
+	 */
 	public function addBuffer(string $buffer): void
 	{
 		$len = strlen($buffer);
@@ -160,9 +162,10 @@ final class Frame implements Encoding\IFrame
 	}
 
 	/**
+	 * Is this the final frame in a fragmented message?
+	 *
 	 * @throws UnderflowException
 	 */
-	#[Override]
 	public function isFinal(): bool
 	{
 		if ($this->firstByte === -1) {
@@ -211,9 +214,10 @@ final class Frame implements Encoding\IFrame
 	}
 
 	/**
+	 * Is the payload masked?
+	 *
 	 * @throws UnderflowException
 	 */
-	#[Override]
 	public function isMasked(): bool
 	{
 		if ($this->secondByte === -1) {
@@ -226,9 +230,10 @@ final class Frame implements Encoding\IFrame
 	}
 
 	/**
+	 * 32-bit string
+	 *
 	 * @throws UnderflowException
 	 */
-	#[Override]
 	public function getMaskingKey(): string
 	{
 		if (!$this->isMasked()) {
@@ -356,7 +361,6 @@ final class Frame implements Encoding\IFrame
 	/**
 	 * @throws UnderflowException
 	 */
-	#[Override]
 	public function getOpCode(): int
 	{
 		if ($this->firstByte === -1) {

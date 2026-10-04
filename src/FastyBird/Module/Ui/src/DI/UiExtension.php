@@ -496,7 +496,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 
 		if (
 			$builder->findByType(Routing\LinkGenerator::class) !== []
-			&& $builder->findByType(Topics\IStorage::class) !== []
+			&& $builder->findByType(Topics\Storage::class) !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.socketsBridge'),
@@ -582,7 +582,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 
 		try {
 			$wsControllerFactoryService = $builder->getDefinitionByType(
-				WebSocketsControllers\IControllerFactory::class,
+				WebSocketsControllers\ControllerFactory::class,
 			);
 			assert($wsControllerFactoryService instanceof NetteDI\Definitions\ServiceDefinition);
 

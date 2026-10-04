@@ -7,7 +7,7 @@ use FastyBird\Core\WebSockets\Entities;
 /**
  * Clients storage driver interface
  */
-interface IDriver
+interface Driver
 {
 
 	public function fetch(int $id): Entities\ConnectedClient|bool;

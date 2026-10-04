@@ -14,7 +14,7 @@ interface WampRouter
 	/**
 	 * Convert incoming message to the request, if not match return null
 	 */
-	public function match(Handshake\IRequest $httpRequest): Controllers\Request|null;
+	public function match(Handshake\Request $httpRequest): Controllers\Request|null;
 
 	/**
 	 * Constructs absolute URL from Request object

@@ -12,7 +12,7 @@ use function count;
 /**
  * Communication message
  */
-final class Message implements Encoding\IMessage, Countable
+final class Message implements Encoding\FrameData, Countable
 {
 
 	private SplDoublyLinkedList $frames;
@@ -42,11 +42,8 @@ final class Message implements Encoding\IMessage, Countable
 
 	/**
 	 * @todo Also, I should perhaps check the type...control frames (ping/pong/close) are not to be considered part of a message
-	 *
-	 * {@inheritDoc}
 	 */
-	#[Override]
-	public function addFrame(Encoding\IFrame $fragment): void
+	public function addFrame(Frame $fragment): void
 	{
 		$this->frames->push($fragment);
 	}
@@ -54,7 +51,6 @@ final class Message implements Encoding\IMessage, Countable
 	/**
 	 * @throws UnderflowException
 	 */
-	#[Override]
 	public function getOpCode(): int
 	{
 		if (count($this->frames) === 0) {

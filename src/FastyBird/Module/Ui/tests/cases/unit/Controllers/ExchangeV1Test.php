@@ -300,11 +300,11 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$controller = $this->getContainer()->getByType(UiControllers\ExchangeV1::class);
 
-		$controllerFactory = $this->createMock(WebSocketsControllers\IControllerFactory::class);
+		$controllerFactory = $this->createMock(WebSocketsControllers\ControllerFactory::class);
 		$controllerFactory->method('getControllerClass')->willReturn(UiControllers\ExchangeV1::class);
 		$controllerFactory->method('createController')->willReturn($controller);
 
-		$topicsStorage = $this->createMock(Topics\IStorage::class);
+		$topicsStorage = $this->createMock(Topics\Storage::class);
 		$topicsStorage->method('hasTopic')->willReturn(true);
 		$topicsStorage->method('getTopic')->willReturn(new Entities\Topics\Topic(self::TOPIC));
 
@@ -312,7 +312,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 			$topicsStorage,
 			Router\SocketRoutes::createRouter(),
 			$controllerFactory,
-			$this->createMock(Clients\IStorage::class),
+			$this->createMock(Clients\Storage::class),
 		);
 
 		$application->handleMessage(

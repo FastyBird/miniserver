@@ -115,7 +115,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		$controllerFactory = $builder->addDefinition($this->prefix('controllers.factory'))
-			->setType(Controllers\IControllerFactory::class)
+			->setType(Controllers\ControllerFactory::class)
 			->setFactory(Controllers\ControllerFactory::class);
 
 		if ($configuration->mapping) {

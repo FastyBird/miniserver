@@ -7,7 +7,6 @@ use FastyBird\Core\WebSockets\DI as WebSocketsDI;
 use Nette;
 use Nette\DI as NetteDI;
 use Nette\Utils;
-use Override;
 use ReflectionClass;
 use ReflectionException;
 use function array_keys;
@@ -30,7 +29,7 @@ use const E_USER_WARNING;
 /**
  * Default controller loader
  */
-final class ControllerFactory implements IControllerFactory
+final class ControllerFactory
 {
 
 	/** @var array<array> of module => splited mask */
@@ -75,12 +74,11 @@ final class ControllerFactory implements IControllerFactory
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates new controller instance
 	 *
 	 * @throws Exceptions\InvalidController
 	 * @throws ReflectionException
 	 */
-	#[Override]
 	public function createController(string $name): RequestController
 	{
 		return call_user_func_array($this->factory, [$this->getControllerClass($name)]);
@@ -94,7 +92,6 @@ final class ControllerFactory implements IControllerFactory
 	 * @throws Exceptions\InvalidController
 	 * @throws ReflectionException
 	 */
-	#[Override]
 	public function getControllerClass(string &$name): string
 	{
 		if (isset($this->cache[$name])) {

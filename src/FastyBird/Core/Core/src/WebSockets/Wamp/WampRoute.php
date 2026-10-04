@@ -197,7 +197,7 @@ final class WampRoute implements WampRouter
 	 * @throws Exceptions\InvalidState
 	 */
 	#[Override]
-	public function match(Handshake\IRequest $httpRequest): Controllers\Request|null
+	public function match(Handshake\Request $httpRequest): Controllers\Request|null
 	{
 		// Combine with precedence: mask (params in URL-path), fixity, query, (post,) defaults
 

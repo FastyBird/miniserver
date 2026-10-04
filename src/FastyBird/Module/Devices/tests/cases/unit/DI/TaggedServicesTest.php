@@ -74,7 +74,7 @@ final class TaggedServicesTest extends Tests\Cases\Unit\BaseTestCase
 
 		$container->addService($serviceNames[0], static fn (): DevicesControllers\ExchangeV1 => $controller);
 
-		$factory = $container->getByType(WebSocketsControllers\IControllerFactory::class);
+		$factory = $container->getByType(WebSocketsControllers\ControllerFactory::class);
 
 		self::assertSame($controller, $factory->createController('DevicesModule:Exchange'));
 	}

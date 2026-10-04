@@ -32,19 +32,19 @@ use function trim;
 final class Wrapper implements ServerWrapper
 {
 
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\IRequest $request): void> */
+	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request): void> */
 	public array $onClientConnected = [];
 
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\IRequest $request): void> */
+	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request): void> */
 	public array $onClientDisconnected = [];
 
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\IRequest $request): void> */
+	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request): void> */
 	public array $onClientError = [];
 
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\IRequest $request, string $message): void> */
+	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request, string $message): void> */
 	public array $onIncomingMessage = [];
 
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\IRequest $request): void> */
+	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request): void> */
 	public array $onAfterIncomingMessage = [];
 
 	/**
@@ -63,7 +63,7 @@ final class Wrapper implements ServerWrapper
 
 	public function __construct(
 		private Controllers\Dispatcher $application,
-		private Clients\IStorage $clientsStorage,
+		private Clients\Storage $clientsStorage,
 	)
 	{
 		$this->protocolsProxy = new Encoding\ProtocolProxy();
@@ -99,7 +99,7 @@ final class Wrapper implements ServerWrapper
 				$client->setHttpBuffer('');
 
 			} catch (OverflowException) {
-				$this->close($client, Handshake\IResponse::S413_REQUEST_ENTITY_TOO_LARGE);
+				$this->close($client, Handshake\WampResponse::S413_REQUEST_ENTITY_TOO_LARGE);
 
 				return;
 			}
@@ -141,7 +141,7 @@ final class Wrapper implements ServerWrapper
 			$this->connectionError($client, $ex);
 
 		} else {
-			$this->close($client, Handshake\IResponse::S500_INTERNAL_SERVER_ERROR);
+			$this->close($client, Handshake\WampResponse::S500_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -149,7 +149,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
-	private function connectionOpen(Entities\ConnectedClient $client, Handshake\IRequest $httpRequest): void
+	private function connectionOpen(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
 	{
 		if (!$this->protocolsProxy->isProtocolEnabled($httpRequest)) {
 			$this->close($client);
@@ -167,7 +167,7 @@ final class Wrapper implements ServerWrapper
 			$this->attemptUpgrade($client);
 
 		} catch (WebSocketsExceptions\ClientNotFound) {
-			$this->close($client, Handshake\IResponse::S500_INTERNAL_SERVER_ERROR);
+			$this->close($client, Handshake\WampResponse::S500_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -187,7 +187,7 @@ final class Wrapper implements ServerWrapper
 			$this->clientsStorage->removeClient($client->getId());
 
 		} catch (WebSocketsExceptions\ClientNotFound) {
-			$this->close($client, Handshake\IResponse::S500_INTERNAL_SERVER_ERROR);
+			$this->close($client, Handshake\WampResponse::S500_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -213,7 +213,7 @@ final class Wrapper implements ServerWrapper
 			$client->getConnection()->end();
 
 		} catch (WebSocketsExceptions\ClientNotFound) {
-			$this->close($client, Handshake\IResponse::S500_INTERNAL_SERVER_ERROR);
+			$this->close($client, Handshake\WampResponse::S500_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -250,7 +250,7 @@ final class Wrapper implements ServerWrapper
 	private function attemptUpgrade(Entities\ConnectedClient $client): mixed
 	{
 		$httpRequest = $client->getRequest();
-		assert($httpRequest instanceof Handshake\IRequest);
+		assert($httpRequest instanceof Handshake\Request);
 
 		$webSocket = $client->getWebSocket();
 
@@ -282,7 +282,7 @@ final class Wrapper implements ServerWrapper
 
 		$client->getConnection()->write((string) $response);
 
-		if ($response->getCode() !== Handshake\IResponse::S101_SWITCHING_PROTOCOLS) {
+		if ($response->getCode() !== Handshake\WampResponse::S101_SWITCHING_PROTOCOLS) {
 			$client->getConnection()->end();
 
 			return null;

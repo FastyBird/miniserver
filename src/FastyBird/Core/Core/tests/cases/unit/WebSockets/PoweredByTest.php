@@ -146,7 +146,7 @@ final class PoweredByTest extends BaseTestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function handshake(): Handshake\IRequest
+	private function handshake(): Handshake\Request
 	{
 		$request = (new Handshake\RequestFactory())->createHttpRequest(
 			"GET / HTTP/1.1\r\n"
@@ -164,7 +164,7 @@ final class PoweredByTest extends BaseTestCase
 
 	private function client(
 		Entities\WebSocket $webSocket,
-		Handshake\IRequest $request,
+		Handshake\Request $request,
 		bool $headersReceived = true,
 	): Entities\ConnectedClient&MockObject
 	{

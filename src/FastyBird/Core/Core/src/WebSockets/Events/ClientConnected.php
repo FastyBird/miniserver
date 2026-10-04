@@ -13,7 +13,7 @@ final readonly class ClientConnected
 
 	public function __construct(
 		private Entities\ConnectedClient $client,
-		private Handshake\IRequest $httpRequest,
+		private Handshake\Request $httpRequest,
 	)
 	{
 	}
@@ -23,7 +23,7 @@ final readonly class ClientConnected
 		return $this->client;
 	}
 
-	public function getHttpRequest(): Handshake\IRequest
+	public function getHttpRequest(): Handshake\Request
 	{
 		return $this->httpRequest;
 	}

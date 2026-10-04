@@ -67,7 +67,7 @@ final class SocketsBridge implements Consumers\Consumer
 		private readonly UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
 		private readonly DevicesModuleUiModule\Logger $logger,
 		private readonly Routing\LinkGenerator $linkGenerator,
-		private readonly Topics\IStorage $topicsStorage,
+		private readonly Topics\Storage $topicsStorage,
 	)
 	{
 	}

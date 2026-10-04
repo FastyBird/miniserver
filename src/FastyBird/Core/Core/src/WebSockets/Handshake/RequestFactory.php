@@ -111,7 +111,7 @@ final class RequestFactory
 	/**
 	 * @throws Throwable
 	 */
-	public function createHttpRequest(string $packet): IRequest|null
+	public function createHttpRequest(string $packet): Request|null
 	{
 		if (strlen($packet) > $this->maxSize) {
 			throw new OverflowException(

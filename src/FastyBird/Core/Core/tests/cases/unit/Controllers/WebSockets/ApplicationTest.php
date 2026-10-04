@@ -23,8 +23,8 @@ final class ApplicationTest extends TestCase
 	private function createApplication(): Controllers\Application
 	{
 		$router = $this->createMock(Wamp\WampRouter::class);
-		$controllerFactory = $this->createMock(Controllers\IControllerFactory::class);
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
+		$controllerFactory = $this->createMock(Controllers\ControllerFactory::class);
+		$clientsStorage = $this->createMock(Clients\Storage::class);
 
 		return new class(
 			$router,
@@ -50,13 +50,13 @@ final class ApplicationTest extends TestCase
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('getId')
 			->willReturn(1);
-		$httpRequest = $this->createMock(Handshake\IRequest::class);
+		$httpRequest = $this->createMock(Handshake\Request::class);
 
 		$received = [];
 		$application->onOpen[] = static function (
 			Controllers\Application $a,
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$received): void {
 			$received = [$a, $c, $r];
 		};
@@ -72,13 +72,13 @@ final class ApplicationTest extends TestCase
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('getId')
 			->willReturn(1);
-		$httpRequest = $this->createMock(Handshake\IRequest::class);
+		$httpRequest = $this->createMock(Handshake\Request::class);
 
 		$received = [];
 		$application->onClose[] = static function (
 			Controllers\Application $a,
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$received): void {
 			$received = [$a, $c, $r];
 		};
@@ -92,13 +92,13 @@ final class ApplicationTest extends TestCase
 	{
 		$application = $this->createApplication();
 		$client = $this->createMock(Entities\ConnectedClient::class);
-		$httpRequest = $this->createMock(Handshake\IRequest::class);
+		$httpRequest = $this->createMock(Handshake\Request::class);
 
 		$received = [];
 		$application->onMessage[] = static function (
 			Controllers\Application $a,
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 			string $m,
 		) use (&$received): void {
 			$received = [$a, $c, $r, $m];
@@ -118,7 +118,7 @@ final class ApplicationTest extends TestCase
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->expects(self::once())
 			->method('close');
-		$httpRequest = $this->createMock(Handshake\IRequest::class);
+		$httpRequest = $this->createMock(Handshake\Request::class);
 		$exception = new class('boom', 0) extends Exception
 		{
 
@@ -128,7 +128,7 @@ final class ApplicationTest extends TestCase
 		$application->onError[] = static function (
 			Controllers\Application $a,
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 			Throwable $e,
 		) use (&$received): void {
 			$received = [$a, $c, $r, $e];

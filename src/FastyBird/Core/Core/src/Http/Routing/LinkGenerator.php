@@ -24,7 +24,7 @@ final class LinkGenerator
 
 	public function __construct(
 		private Wamp\WampRouter $router,
-		private Controllers\IControllerFactory|null $controllerFactory = null,
+		private Controllers\ControllerFactory|null $controllerFactory = null,
 	)
 	{
 	}

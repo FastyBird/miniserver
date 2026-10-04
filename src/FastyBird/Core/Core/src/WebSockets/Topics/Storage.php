@@ -5,6 +5,7 @@ namespace FastyBird\Core\WebSockets\Topics;
 use ArrayIterator;
 use FastyBird\Core\WebSockets\Entities\Topics;
 use FastyBird\Core\WebSockets\Exceptions;
+use IteratorAggregate;
 use Override;
 use Psr\Log;
 use Throwable;
@@ -13,10 +14,10 @@ use function sprintf;
 /**
  * Storage for manage all topics
  */
-final class Storage implements IStorage
+final class Storage implements IteratorAggregate
 {
 
-	private Drivers\IDriver $driver;
+	private Drivers\Driver $driver;
 
 	private int|null $ttl = null;
 
@@ -31,26 +32,21 @@ final class Storage implements IStorage
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
-	#[Override]
-	public function setStorageDriver(Drivers\IDriver $driver): void
+	public function setStorageDriver(Drivers\Driver $driver): void
 	{
 		$this->driver = $driver;
 	}
 
-	#[Override]
-	public static function getStorageId(Topics\ITopic $topic): string
+	public static function getStorageId(Topics\Topic $topic): string
 	{
 		return $topic->getId();
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\Storage
 	 * @throws Exceptions\TopicNotFound
 	 */
-	#[Override]
-	public function getTopic(string $identifier): Topics\ITopic
+	public function getTopic(string $identifier): Topics\Topic
 	{
 		try {
 			$result = $this->driver->fetch($identifier);
@@ -69,12 +65,9 @@ final class Storage implements IStorage
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\Storage
 	 */
-	#[Override]
-	public function addTopic(string $identifier, Topics\ITopic $topic): void
+	public function addTopic(string $identifier, Topics\Topic $topic): void
 	{
 		$context = [
 			'topic' => $identifier,
@@ -95,11 +88,8 @@ final class Storage implements IStorage
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\Storage
 	 */
-	#[Override]
 	public function hasTopic(string $identifier): bool
 	{
 		try {
@@ -113,11 +103,8 @@ final class Storage implements IStorage
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\Storage
 	 */
-	#[Override]
 	public function removeTopic(string $identifier): bool
 	{
 		$this->logger->debug('REMOVE TOPIC ' . $identifier);
@@ -133,7 +120,7 @@ final class Storage implements IStorage
 	}
 
 	/**
-	 * @return array<Topics\ITopic>|ArrayIterator
+	 * @return array<Topics\Topic>|ArrayIterator
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator

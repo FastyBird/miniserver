@@ -227,7 +227,7 @@ final class ClientAuthenticationTest extends TestCase
 	private function client(): Entities\Client
 	{
 		$client = new Entities\Client(1, $this->createMock(Socket\ConnectionInterface::class));
-		$client->setWebSocket(new Entities\WebSocket(true, false, $this->createMock(Encoding\IProtocol::class)));
+		$client->setWebSocket(new Entities\WebSocket(true, false, $this->createMock(Encoding\RFC6455::class)));
 
 		return $client;
 	}
@@ -243,9 +243,9 @@ final class ClientAuthenticationTest extends TestCase
 	 */
 	private function deliverFrame(
 		Subscribers\Client $subscriber,
-		Handshake\IRequest $request,
+		Handshake\Request $request,
 		int $expectedDeliveries,
-	): Entities\IWebSocket
+	): Entities\WebSocket
 	{
 		$protocol = $this->getMockBuilder(Encoding\RFC6455::class)
 			->onlyMethods(['handleMessage'])
@@ -261,11 +261,11 @@ final class ClientAuthenticationTest extends TestCase
 
 		$wrapper = new Server\Wrapper(
 			$this->createMock(Controllers\Dispatcher::class),
-			$this->createMock(Clients\IStorage::class),
+			$this->createMock(Clients\Storage::class),
 		);
 		$wrapper->onIncomingMessage[] = static function (
 			Entities\ConnectedClient $client,
-			Handshake\IRequest $request,
+			Handshake\Request $request,
 		) use ($subscriber): void {
 			$subscriber->incomingMessage(new Events\IncomingMessage($client, $request));
 		};
@@ -280,7 +280,7 @@ final class ClientAuthenticationTest extends TestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function handshake(array $headers): Handshake\IRequest
+	private function handshake(array $headers): Handshake\Request
 	{
 		$packet = "GET / HTTP/1.1\r\n"
 			. "Host: example.test:8888\r\n"

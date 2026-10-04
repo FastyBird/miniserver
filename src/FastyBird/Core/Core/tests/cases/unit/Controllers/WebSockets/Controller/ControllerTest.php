@@ -62,7 +62,7 @@ final class ControllerTest extends TestCase
 
 		};
 
-		$controllerFactory = $this->createMock(Controllers\IControllerFactory::class);
+		$controllerFactory = $this->createMock(Controllers\ControllerFactory::class);
 		$router = $this->createMock(Wamp\WampRouter::class);
 		$linkGenerator = new Routing\LinkGenerator($router);
 

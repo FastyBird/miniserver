@@ -14,7 +14,7 @@ final class ClientErrorEvent extends EventDispatcher\Event
 
 	public function __construct(
 		private Entities\ConnectedClient $client,
-		private Handshake\IRequest $httpRequest,
+		private Handshake\Request $httpRequest,
 	)
 	{
 	}
@@ -24,7 +24,7 @@ final class ClientErrorEvent extends EventDispatcher\Event
 		return $this->client;
 	}
 
-	public function getHttpRequest(): Handshake\IRequest
+	public function getHttpRequest(): Handshake\Request
 	{
 		return $this->httpRequest;
 	}

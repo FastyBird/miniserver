@@ -9,7 +9,7 @@ use function array_values;
 /**
  * Classic memory topic storage driver
  */
-final class InMemory implements IDriver
+final class InMemory implements Driver
 {
 
 	private array $elements;
@@ -20,7 +20,7 @@ final class InMemory implements IDriver
 	}
 
 	#[Override]
-	public function fetch(string $id): Topics\ITopic|bool
+	public function fetch(string $id): Topics\Topic|bool
 	{
 		if (!$this->contains($id)) {
 			return false;

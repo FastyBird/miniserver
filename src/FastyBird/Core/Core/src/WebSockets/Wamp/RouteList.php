@@ -34,7 +34,7 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 	 * Maps HTTP request to a application Request object
 	 */
 	#[Override]
-	public function match(Handshake\IRequest $httpRequest): Controllers\Request|null
+	public function match(Handshake\Request $httpRequest): Controllers\Request|null
 	{
 		foreach ($this as $route) {
 			assert($route instanceof WampRouter);

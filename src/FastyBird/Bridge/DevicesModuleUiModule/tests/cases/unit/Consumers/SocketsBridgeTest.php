@@ -169,7 +169,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 			$container->getByType(UiModels\Configuration\Widgets\DataSources\Repository::class),
 			$this->service('fbDevicesModuleUiModuleBridge.logger', DevicesModuleUiModule\Logger::class),
 			$container->getByType(Routing\LinkGenerator::class),
-			$container->getByType(WebSocketsTopics\IStorage::class),
+			$container->getByType(WebSocketsTopics\Storage::class),
 		);
 
 		$bridge->consume(
@@ -257,7 +257,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 		$topic = new EntitiesTopics\Topic($topicId);
 		$topic->add($client);
 
-		$this->getContainer()->getByType(WebSocketsTopics\IStorage::class)->addTopic($topicId, $topic);
+		$this->getContainer()->getByType(WebSocketsTopics\Storage::class)->addTopic($topicId, $topic);
 
 		return $sent;
 	}

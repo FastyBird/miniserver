@@ -40,7 +40,7 @@ final readonly class SocketsBridge implements Consumers\Consumer
 	public function __construct(
 		private Ui\Logger $logger,
 		private Routing\LinkGenerator $linkGenerator,
-		private Topics\IStorage $topicsStorage,
+		private Topics\Storage $topicsStorage,
 	)
 	{
 	}

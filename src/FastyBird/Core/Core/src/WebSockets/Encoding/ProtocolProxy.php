@@ -16,7 +16,7 @@ final class ProtocolProxy
 	/**
 	 * Storage of enabled protocols
 	 *
-	 * @var array<IProtocol>
+	 * @var array<RFC6455>
 	 */
 	private array $protocols = [];
 
@@ -25,7 +25,7 @@ final class ProtocolProxy
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function getProtocol(Handshake\IRequest $httpRequest): IProtocol
+	public function getProtocol(Handshake\Request $httpRequest): RFC6455
 	{
 		foreach ($this->protocols as $protocol) {
 			if ($protocol->isVersion($httpRequest)) {
@@ -36,7 +36,7 @@ final class ProtocolProxy
 		throw new Exceptions\InvalidArgument('Version not found');
 	}
 
-	public function isProtocolEnabled(Handshake\IRequest $httpRequest): bool
+	public function isProtocolEnabled(Handshake\Request $httpRequest): bool
 	{
 		foreach ($this->protocols as $protocol) {
 			if ($protocol->isVersion($httpRequest)) {
@@ -50,7 +50,7 @@ final class ProtocolProxy
 	/**
 	 * Enable support for a specific version of the WebSocket protocol
 	 */
-	public function enableProtocol(IProtocol $protocol): void
+	public function enableProtocol(RFC6455 $protocol): void
 	{
 		$this->protocols[$protocol->getVersion()] = $protocol;
 	}

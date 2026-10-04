@@ -29,7 +29,7 @@ final class WrapperTest extends TestCase
 	 */
 	public function testOnClientDisconnectedFiresRegisteredHandlerWithClientAndRequest(): void
 	{
-		$requestMock = $this->createMock(Handshake\IRequest::class);
+		$requestMock = $this->createMock(Handshake\Request::class);
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('isHttpHeadersReceived')
@@ -40,7 +40,7 @@ final class WrapperTest extends TestCase
 			->willReturn(1);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
+		$clientsStorage = $this->createMock(Clients\Storage::class);
 		$clientsStorage->expects(self::once())
 			->method('removeClient')
 			->with(1);
@@ -50,7 +50,7 @@ final class WrapperTest extends TestCase
 		$received = [];
 		$wrapper->onClientDisconnected[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$received): void {
 			$received = [$c, $r];
 		};
@@ -66,8 +66,8 @@ final class WrapperTest extends TestCase
 	 */
 	public function testOnClientErrorFiresRegisteredHandlerWithClientAndRequest(): void
 	{
-		$requestMock = $this->createMock(Handshake\IRequest::class);
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$requestMock = $this->createMock(Handshake\Request::class);
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
@@ -79,14 +79,14 @@ final class WrapperTest extends TestCase
 			->willReturn($requestMock);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
+		$clientsStorage = $this->createMock(Clients\Storage::class);
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
 		$received = [];
 		$wrapper->onClientError[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$received): void {
 			$received = [$c, $r];
 		};
@@ -98,8 +98,8 @@ final class WrapperTest extends TestCase
 
 	public function testOnIncomingMessageAndOnAfterIncomingMessageFireWithClientRequestAndMessage(): void
 	{
-		$requestMock = $this->createMock(Handshake\IRequest::class);
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$requestMock = $this->createMock(Handshake\Request::class);
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
@@ -111,14 +111,14 @@ final class WrapperTest extends TestCase
 			->willReturn($requestMock);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
+		$clientsStorage = $this->createMock(Clients\Storage::class);
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
 		$receivedIncoming = [];
 		$wrapper->onIncomingMessage[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 			string $m,
 		) use (&$receivedIncoming): void {
 			$receivedIncoming = [$c, $r, $m];
@@ -127,7 +127,7 @@ final class WrapperTest extends TestCase
 		$receivedAfter = [];
 		$wrapper->onAfterIncomingMessage[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$receivedAfter): void {
 			$receivedAfter = [$c, $r];
 		};
@@ -144,13 +144,13 @@ final class WrapperTest extends TestCase
 	 */
 	public function testOnClientConnectedFiresRegisteredHandlerWithClientAndRequestOnSuccessfulUpgrade(): void
 	{
-		$requestMock = $this->createMock(Handshake\IRequest::class);
+		$requestMock = $this->createMock(Handshake\Request::class);
 		$requestMock->method('getHeader')
 			->willReturn(null);
 
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('doHandshake')
-			->willReturn(new Handshake\WampResponse(Handshake\IResponse::S101_SWITCHING_PROTOCOLS));
+			->willReturn(new Handshake\WampResponse(Handshake\WampResponse::S101_SWITCHING_PROTOCOLS));
 
 		$webSocket = new Entities\WebSocket(false, false, $protocol);
 
@@ -171,14 +171,14 @@ final class WrapperTest extends TestCase
 			->method('handleOpen')
 			->with($client, $requestMock);
 
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
+		$clientsStorage = $this->createMock(Clients\Storage::class);
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
 		$received = [];
 		$wrapper->onClientConnected[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$received): void {
 			$received = [$c, $r];
 		};

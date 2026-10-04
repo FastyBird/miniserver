@@ -51,7 +51,7 @@ final class HandlersTest extends TestCase
 
 		$wrapper = new Server\Wrapper(
 			$this->createMock(Controllers\Dispatcher::class),
-			$this->createMock(Clients\IStorage::class),
+			$this->createMock(Clients\Storage::class),
 		);
 
 		$wsApplication = $this->createMock(Server\ServerWrapper::class);
@@ -97,7 +97,7 @@ final class HandlersTest extends TestCase
 
 		$wrapper = new Server\Wrapper(
 			$this->createMock(Controllers\Dispatcher::class),
-			$this->createMock(Clients\IStorage::class),
+			$this->createMock(Clients\Storage::class),
 		);
 
 		$wsApplication = $this->createMock(Server\ServerWrapper::class);

@@ -26,24 +26,24 @@ use function sprintf;
 abstract class Application implements Dispatcher
 {
 
-	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\IRequest $httpRequest): void> */
+	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\Request $httpRequest): void> */
 	public array $onOpen = [];
 
-	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\IRequest $httpRequest): void> */
+	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\Request $httpRequest): void> */
 	public array $onClose = [];
 
-	/** @var array<Closure(self $application, Entities\ConnectedClient $from, Handshake\IRequest $httpRequest, string $message): void> */
+	/** @var array<Closure(self $application, Entities\ConnectedClient $from, Handshake\Request $httpRequest, string $message): void> */
 	public array $onMessage = [];
 
-	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\IRequest $httpRequest, Throwable $ex): void> */
+	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\Request $httpRequest, Throwable $ex): void> */
 	public array $onError = [];
 
 	protected Log\LoggerInterface|Log\NullLogger|null $logger = null;
 
 	public function __construct(
 		protected Wamp\WampRouter $router,
-		protected IControllerFactory $controllerFactory,
-		protected Clients\IStorage $clientsStorage,
+		protected ControllerFactory $controllerFactory,
+		protected Clients\Storage $clientsStorage,
 		Log\LoggerInterface|null $logger = null,
 	)
 	{
@@ -51,7 +51,7 @@ abstract class Application implements Dispatcher
 	}
 
 	#[Override]
-	public function handleOpen(Entities\ConnectedClient $client, Handshake\IRequest $httpRequest): void
+	public function handleOpen(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
 	{
 		$this->logger->info(sprintf('New connection! (%s)', $client->getId()));
 
@@ -59,7 +59,7 @@ abstract class Application implements Dispatcher
 	}
 
 	#[Override]
-	public function handleClose(Entities\ConnectedClient $client, Handshake\IRequest $httpRequest): void
+	public function handleClose(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
 	{
 		Utils\Arrays::invoke($this->onClose, $this, $client, $httpRequest);
 
@@ -72,7 +72,7 @@ abstract class Application implements Dispatcher
 	 * @throws CoreExceptions\InvalidArgument
 	 */
 	#[Override]
-	public function handleError(Entities\ConnectedClient $client, Handshake\IRequest $httpRequest, Throwable $ex): void
+	public function handleError(Entities\ConnectedClient $client, Handshake\Request $httpRequest, Throwable $ex): void
 	{
 		$this->logger->info(sprintf('An error (%s) has occurred: %s', $ex->getCode(), $ex->getMessage()));
 
@@ -91,7 +91,7 @@ abstract class Application implements Dispatcher
 	#[Override]
 	public function handleMessage(
 		Entities\ConnectedClient $from,
-		Handshake\IRequest $httpRequest,
+		Handshake\Request $httpRequest,
 		string $message,
 	): void
 	{
@@ -103,7 +103,7 @@ abstract class Application implements Dispatcher
 	 * @throws CoreExceptions\InvalidController
 	 */
 	protected function processMessage(
-		Handshake\IRequest $httpRequest,
+		Handshake\Request $httpRequest,
 		array $parameters,
 	): Responses\ControllerResponse|null
 	{

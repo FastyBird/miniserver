@@ -18,7 +18,7 @@ final class HyBi10 extends RFC6455
 	}
 
 	#[Override]
-	public function isVersion(Handshake\IRequest $httpRequest): bool
+	public function isVersion(Handshake\Request $httpRequest): bool
 	{
 		$version = (int) (string) $httpRequest->getHeader('Sec-WebSocket-Version');
 

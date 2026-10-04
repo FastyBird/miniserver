@@ -301,7 +301,7 @@ $wampModuleRoutes = static function () use ($boot): array {
 	$container = $boot();
 	$router = $container->getByType(Wamp\WampRouter::class);
 	assert($router instanceof Wamp\RouteList);
-	$factory = $container->getByType(Controllers\IControllerFactory::class);
+	$factory = $container->getByType(Controllers\ControllerFactory::class);
 	$tagged = $container->findByTag(WebSocketsDI\WebSocketsExtension::CONTROLLER_TAG);
 
 	$masks = [];
@@ -374,7 +374,7 @@ $wampLinks = static function () use ($boot): array {
  */
 $socketsBridges = static function () use ($boot): array {
 	$container = $boot();
-	$storage = $container->getByType(WebSocketsTopics\IStorage::class);
+	$storage = $container->getByType(WebSocketsTopics\Storage::class);
 	$loop = EventLoop\Loop::get();
 
 	$topics = [

@@ -159,7 +159,7 @@ class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 
 		if (
 			$builder->findByType(Routing\LinkGenerator::class) !== []
-			&& $builder->findByType(Topics\IStorage::class) !== []
+			&& $builder->findByType(Topics\Storage::class) !== []
 		) {
 			$builder->addDefinition(
 				$this->prefix('exchange.consumer.stateEntities'),

@@ -142,9 +142,9 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	public function testAnUpgradeDispatchesClientConnectedTwiceThenOpen(): void
 	{
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('doHandshake')
-			->willReturn(new Handshake\WampResponse(Handshake\IResponse::S101_SWITCHING_PROTOCOLS));
+			->willReturn(new Handshake\WampResponse(Handshake\WampResponse::S101_SWITCHING_PROTOCOLS));
 
 		$client = $this->client(new Entities\WebSocket(false, false, $protocol));
 
@@ -183,7 +183,7 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	public function testAMessageDispatchesIncomingTwiceThenApplicationMessageThenAfter(): void
 	{
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('handleMessage')
 			->willReturnCallback(
 				static function (
@@ -239,7 +239,7 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	public function testACloseDispatchesClientDisconnectedThenClose(): void
 	{
-		$client = $this->client(new Entities\WebSocket(true, false, $this->createMock(Encoding\IProtocol::class)));
+		$client = $this->client(new Entities\WebSocket(true, false, $this->createMock(Encoding\RFC6455::class)));
 
 		$this->wrapper()->handleClose($client);
 
@@ -271,7 +271,7 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	public function testAnErrorDispatchesClientErrorThenApplicationError(): void
 	{
-		$client = $this->client(new Entities\WebSocket(true, false, $this->createMock(Encoding\IProtocol::class)));
+		$client = $this->client(new Entities\WebSocket(true, false, $this->createMock(Encoding\RFC6455::class)));
 		$exception = new RuntimeException('e5 probe');
 
 		$this->wrapper()->handleError($client, $exception);
@@ -325,7 +325,7 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	private function client(Entities\WebSocket $webSocket): Entities\ConnectedClient&MockObject
 	{
-		$request = $this->createMock(Handshake\IRequest::class);
+		$request = $this->createMock(Handshake\Request::class);
 		$request->method('getHeader')
 			->willReturn(null);
 
