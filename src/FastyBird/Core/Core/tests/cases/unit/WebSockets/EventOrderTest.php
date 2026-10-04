@@ -5,16 +5,12 @@ namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 use Error;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Tests\Cases\Unit\BaseTestCase;
-use FastyBird\Core\Tests\Fixtures\Dummy\DummyWebSocketsController;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities;
-use FastyBird\Core\WebSockets\Entities\PushMessages;
-use FastyBird\Core\WebSockets\Entities\Topics;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
-use FastyBird\Core\WebSockets\Wamp;
 use Nette\DI;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -31,9 +27,10 @@ use function assert;
 use const PHP_INT_MAX;
 
 /**
- * Characterization of each of the 13 WebSockets hooks as it reaches the event dispatcher today:
+ * Characterization of each of the 12 WebSockets hooks as it reaches the event dispatcher today:
  * which event class or classes it dispatches, in which order, with which payload (#460 §1.3,
- * §3.4; census T3, T4, T12-15).
+ * §3.4; census T3, T4, T12-15). The 13th, WampApplication::$onPush, went with the dead
+ * server-push pipeline in #635 (census X1-A).
  *
  * Every hook is a public callback array that WebSocketsExtension::beforeCompile() bridges onto
  * the dispatcher with an addSetup(); two of them -- onClientConnected and onIncomingMessage --
@@ -63,7 +60,6 @@ final class EventOrderTest extends BaseTestCase
 		Events\IncommingMessageEvent::class,
 		Events\MessageEvent::class,
 		Events\OpenEvent::class,
-		Events\PushEvent::class,
 		Events\StartEvent::class,
 		Events\StopEvent::class,
 		Events\WsServerError::class,
@@ -301,52 +297,6 @@ final class EventOrderTest extends BaseTestCase
 	}
 
 	/**
-	 * A push is dispatched once, after its controller ran, with the message, the provider and
-	 * the topic -- and not at all when no route takes it, because the application logs the
-	 * failure and returns before the push hook.
-	 *
-	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
-	 * @throws Throwable
-	 */
-	public function testAPushIsDispatchedOnlyAfterItsControllerRan(): void
-	{
-		$router = $this->container->getByType(Wamp\WampRouter::class);
-		assert($router instanceof Wamp\RouteList);
-		$router[] = new Wamp\WampRoute('/e5/probe', 'Probe:WebSockets:');
-
-		$controllerFactory = $this->container->getByType(Controllers\IControllerFactory::class);
-		assert($controllerFactory instanceof Controllers\ControllerFactory);
-		$controllerFactory->setMapping([
-			'Probe' => ['FastyBird\Core\Tests\Fixtures\Dummy', '*', 'Dummy*Controller'],
-		]);
-
-		self::assertSame(
-			DummyWebSocketsController::class,
-			$controllerFactory->formatControllerClass('Probe:WebSockets'),
-		);
-
-		$this->application()->handlePush($this->pushMessage('/e5/unrouted'), 'e5-provider');
-
-		self::assertSame([], $this->classes());
-
-		$message = $this->pushMessage('/e5/probe');
-
-		$this->application()->handlePush($message, 'e5-provider');
-
-		self::assertSame([Events\PushEvent::class], $this->classes());
-
-		$push = $this->dispatched[0];
-		assert($push instanceof Events\PushEvent);
-
-		self::assertSame($message, $push->getMessage());
-		self::assertSame('e5-provider', $push->getProvider());
-		self::assertInstanceOf(Topics\Topic::class, $push->getTopic());
-		self::assertSame('/e5/probe', $push->getTopic()->getId());
-	}
-
-	/**
 	 * @return list<string>
 	 */
 	private function classes(): array
@@ -394,17 +344,6 @@ final class EventOrderTest extends BaseTestCase
 			->willReturnCallback(static fn (string $key, mixed $default = null): mixed => $default);
 
 		return $client;
-	}
-
-	private function pushMessage(string $topic): PushMessages\IMessage&MockObject
-	{
-		$message = $this->createMock(PushMessages\IMessage::class);
-		$message->method('getTopic')
-			->willReturn($topic);
-		$message->method('getData')
-			->willReturn(['e5' => 'probe']);
-
-		return $message;
 	}
 
 }

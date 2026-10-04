@@ -70,8 +70,6 @@ abstract class Controller implements RequestController
 
 	private string $name;
 
-	private Nette\DI\Container|null $context = null;
-
 	private IControllerFactory|null $controllerFactory = null;
 
 	private Wamp\WampRouter|null $router = null;
@@ -89,7 +87,6 @@ abstract class Controller implements RequestController
 	 * @throws Nette\InvalidStateException
 	 */
 	public function injectPrimary(
-		Nette\DI\Container|null $context = null,
 		IControllerFactory|null $controllerFactory = null,
 		Wamp\WampRouter|null $router = null,
 		HttpRouting\LinkGenerator|null $linkGenerator = null,
@@ -107,7 +104,6 @@ abstract class Controller implements RequestController
 			);
 		}
 
-		$this->context = $context;
 		$this->controllerFactory = $controllerFactory;
 		$this->router = $router;
 		$this->linkGenerator = $linkGenerator;

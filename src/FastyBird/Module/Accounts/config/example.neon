@@ -41,10 +41,6 @@ nettrineDbal:
 				class: Ramsey\Uuid\Doctrine\UuidBinaryType
 				commented: false
 
-			utcdatetime:
-				class: FastyBird\Core\Persistence\Types\UTCDateTime
-				commented: false
-
 		typesMapping:
 			uuid_binary: binary
 

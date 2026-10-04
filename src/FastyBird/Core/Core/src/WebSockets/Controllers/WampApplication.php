@@ -2,11 +2,9 @@
 
 namespace FastyBird\Core\WebSockets\Controllers;
 
-use Closure;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Entities;
-use FastyBird\Core\WebSockets\Entities\PushMessages;
 use FastyBird\Core\WebSockets\Entities\Topics as EntitiesTopics;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
@@ -35,7 +33,7 @@ use function uniqid;
  * Application which run on server and provide creating controllers
  * with correctly params - convert message => control
  */
-final class WampApplication extends Application implements IWampApplication
+final class WampApplication extends Application
 {
 
 	public const int MSG_WELCOME = 0;
@@ -55,9 +53,6 @@ final class WampApplication extends Application implements IWampApplication
 	public const int MSG_PUBLISH = 7;
 
 	public const int MSG_EVENT = 8;
-
-	/** @var array<Closure(PushMessages\IMessage $message, string $provider, EntitiesTopics\ITopic $topic): void> */
-	public array $onPush = [];
 
 	private SplObjectStorage $subscriptions;
 
@@ -280,59 +275,6 @@ final class WampApplication extends Application implements IWampApplication
 			$this->logger->error(sprintf('An error (%s) has occurred: %s', $ex->getCode(), $ex->getMessage()));
 
 			$client->close(1_007);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @throws WebSocketsExceptions\Terminate
-	 */
-	#[Override]
-	public function handlePush(PushMessages\IMessage $message, string $provider): void
-	{
-		try {
-			$topic = $this->getTopic($message->getTopic());
-
-			$url = new NetteHttp\Url($message->getTopic());
-			$action = $url->getQueryParameter(Controller::ACTION_KEY);
-
-			if ($action === null || $action === Controller::DEFAULT_ACTION) {
-				$url->setQueryParameter(Controller::ACTION_KEY, 'push');
-			}
-
-			$httpRequest = new Handshake\Request(
-				new NetteHttp\UrlScript($url),
-				[],
-				[],
-				[],
-				[],
-				Handshake\IRequest::GET,
-			);
-
-			$this->processMessage($httpRequest, [
-				'topic' => $topic,
-				'data' => $message->getData(),
-				'message' => $message,
-			]);
-
-			$this->logger->info(sprintf('Message was pushed to %s topic', $topic->getId()));
-
-			Utils\Arrays::invoke($this->onPush, $message, $provider, $topic);
-
-		} catch (WebSocketsExceptions\Terminate $ex) {
-			throw $ex;
-		} catch (Throwable $ex) {
-			$context = [
-				'provider' => $provider,
-				'topic' => $message->getTopic(),
-				'data' => $message->getData(),
-			];
-
-			$this->logger->error(
-				sprintf('An error (%s) has occurred: %s', $ex->getCode(), $ex->getMessage()),
-				$context,
-			);
 		}
 	}
 
