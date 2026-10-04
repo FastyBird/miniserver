@@ -69,6 +69,7 @@ final class Router
 			$response = $this->router->handle($request);
 			$response = $response->withHeader('Server', 'FastyBird HomeKit Connector');
 
+			// @phpstan-ignore catch.neverThrown (Routing\Router::handle() declares only InvalidArgumentException, but it runs the matched controller, which throws this)
 		} catch (HomeKitExceptions\HapRequestError $ex) {
 			$this->logger->warning(
 				'Request ended with error',
@@ -89,6 +90,7 @@ final class Router
 			$response = $response->withBody(Http\Stream::fromBodyString(Utils\Json::encode([
 				Types\Representation::STATUS->value => $ex->getError()->value,
 			])));
+			// @phpstan-ignore catch.neverThrown (Routing\Router::handle() declares only InvalidArgumentException, but it runs the matched controller, which throws this)
 		} catch (HttpExceptions\Http $ex) {
 			$this->logger->warning(
 				'Received invalid HTTP request',
