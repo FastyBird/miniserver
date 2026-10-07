@@ -19,19 +19,17 @@ use Contributte\Translation;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Documents\DI as DocumentsDI;
-use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Exchange\DI as ExchangeDI;
 use FastyBird\Core\Http\Routing as HttpRouting;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
 use FastyBird\Core\WebSockets\DI as WebSocketsDI;
 use FastyBird\Core\WebSockets\Routing as WebSocketsRouting;
-use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Caching as UiCaching;
 use FastyBird\Module\Ui\Commands;
-use FastyBird\Module\Ui\Consumers as UiConsumers;
+use FastyBird\Module\Ui\Consumers;
 use FastyBird\Module\Ui\Controllers as UiControllers;
 use FastyBird\Module\Ui\Hydrators;
 use FastyBird\Module\Ui\Middleware;
@@ -283,6 +281,15 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		)
 			->setType(Subscribers\DashboardEntity::class);
 
+		// Enables the SocketsBridge once the WebSocket server is created: after Devices', before
+		// DevicesModuleUiModule's, in production's order (census T3, #658)
+		$builder->addDefinition(
+			$this->prefix('subscribers.enableSocketsBridge'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Subscribers\EnableSocketsBridge::class)
+			->addTag(WebSocketsDI\WebSocketsExtension::SERVER_CREATED_LISTENER_TAG, -20);
+
 		/**
 		 * API CONTROLLERS
 		 */
@@ -503,7 +510,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 				$this->prefix('exchange.consumer.socketsBridge'),
 				new NetteDI\Definitions\ServiceDefinition(),
 			)
-				->setType(UiConsumers\SocketsBridge::class)
+				->setType(Consumers\SocketsBridge::class)
 				->setArguments([
 					'logger' => $logger,
 				])
@@ -593,21 +600,6 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 					[
 						'UiModule' => ['FastyBird\\Module\\Ui\\Controllers', '*', '*V1'],
 					],
-				],
-			);
-
-			$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
-			assert($consumerService instanceof NetteDI\Definitions\ServiceDefinition);
-
-			$wsServerService = $builder->getDefinitionByType(Server\ServerRuntime::class);
-			assert($wsServerService instanceof NetteDI\Definitions\ServiceDefinition);
-
-			$wsServerService->addSetup(
-				'?->onCreate[] = function() {?->enable(?);}',
-				[
-					'@self',
-					$consumerService,
-					UiConsumers\SocketsBridge::class,
 				],
 			);
 
