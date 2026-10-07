@@ -42,6 +42,8 @@ class RedisDbExtension extends DI\CompilerExtension
 
 	public const NAME = 'fbRedisDbPlugin';
 
+	private const string EXCHANGE_CHANNEL_NAME = 'fb_exchange';
+
 	public static function register(
 		Boot\Configurator $config,
 		string $extensionName = self::NAME,

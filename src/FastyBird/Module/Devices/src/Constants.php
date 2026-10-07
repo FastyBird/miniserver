@@ -33,6 +33,8 @@ final class Constants
 	 * MODULE API ROUTING
 	 */
 
+	public const string MODULE_DEVICES_PREFIX = 'devices-module';
+
 	public const ROUTE_NAME_DEVICES = 'devices';
 
 	public const ROUTE_NAME_DEVICE = 'device';
@@ -318,5 +320,16 @@ final class Constants
 			Entities\Channels\Properties\Property::class => self::MESSAGE_BUS_CHANNEL_PROPERTY_DOCUMENT_DELETED_ROUTING_KEY,
 			Entities\Channels\Controls\Control::class => self::MESSAGE_BUS_CHANNEL_CONTROL_DOCUMENT_DELETED_ROUTING_KEY,
 		];
+
+	/**
+	 * VALUE FORMAT
+	 */
+
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_NUMBER_RANGE = '/^(?:(?:(?:i8|u8|i16|u16|i32|u32|f){1}\|)?(?:(?:\-)?(?:\d)*(?:.(?:\d)+)?))?(?:\:(?:(?:(?:i8|u8|i16|u16|i32|u32|f){1}\|)?(?:\d)*(?:.(?:\d)+)?)){1}$/';
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_STRING_ENUM = '/^(?:[a-zA-Z0-9+°](?:[a-zA-Z0-9-?_?:?.+\+\/°])*)(?:,(?:[a-zA-Z0-9+°](?:[a-zA-Z0-9-?_?:?.+\+\/°])*))*(?:,)?$/u';
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_COMBINED_ENUM = '/^(?:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*)(?:\:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*){2}(?:,(?:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*)(?:\:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*){2})*$/u';
 
 }

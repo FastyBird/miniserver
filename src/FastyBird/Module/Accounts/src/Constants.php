@@ -34,6 +34,8 @@ final class Constants
 	 * MODULE API ROUTING
 	 */
 
+	public const string MODULE_ACCOUNTS_PREFIX = 'accounts-module';
+
 	public const ROUTE_NAME_ME = 'me';
 
 	public const ROUTE_NAME_ME_RELATIONSHIP = 'me.relationship';

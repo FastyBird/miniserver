@@ -33,6 +33,8 @@ final class Constants
 	 * MODULE API ROUTING
 	 */
 
+	public const string MODULE_TRIGGERS_PREFIX = 'triggers-module';
+
 	public const ROUTE_NAME_TRIGGERS = 'triggers';
 
 	public const ROUTE_NAME_TRIGGER = 'trigger';

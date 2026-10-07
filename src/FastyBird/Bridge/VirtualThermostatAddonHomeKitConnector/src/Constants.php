@@ -26,6 +26,8 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
 final class Constants
 {
 
+	public const string BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX = 'virtual-thermostat-addon-homekit-connector-bridge';
+
 	public const MODEL = 'Virtual Thermostat Bridge';
 
 	public const MANUFACTURER = 'FastyBird';

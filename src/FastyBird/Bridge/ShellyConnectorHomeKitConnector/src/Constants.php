@@ -26,6 +26,8 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 final class Constants
 {
 
+	public const string BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX = 'shelly-connector-homekit-connector-bridge';
+
 	public const MANUFACTURER = 'FastyBird & Shelly';
 
 	public const MODEL = 'Shelly';

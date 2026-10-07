@@ -33,6 +33,8 @@ final class Constants
 	 * MODULE API ROUTING
 	 */
 
+	public const string MODULE_UI_PREFIX = 'ui-module';
+
 	public const ROUTE_NAME_DASHBOARDS = 'dashboards';
 
 	public const ROUTE_NAME_DASHBOARD = 'dashboard';
