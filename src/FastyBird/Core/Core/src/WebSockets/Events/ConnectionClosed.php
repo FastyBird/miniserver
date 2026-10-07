@@ -8,15 +8,15 @@ use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Connection close event
+ * Dispatched by Controllers\Application::handleClose().
  */
 final class ConnectionClosed extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private Controllers\Dispatcher $application,
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
+		private readonly Controllers\Dispatcher $application,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
 	)
 	{
 	}

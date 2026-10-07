@@ -7,15 +7,17 @@ use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Incomming message event
+ * Dispatched by Server\Wrapper for a message on an established connection, before the protocol
+ * hands it to the application. Subscribers\Client re-authenticates the client on it; a client a
+ * listener closes never reaches the application.
  */
 final class MessageReceived extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
-		private string $message,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
+		private readonly string $message,
 	)
 	{
 	}

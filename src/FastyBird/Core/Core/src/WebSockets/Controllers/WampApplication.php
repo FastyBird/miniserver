@@ -14,6 +14,7 @@ use FastyBird\Core\WebSockets\Wamp;
 use Nette\Http as NetteHttp;
 use Nette\Utils;
 use Override;
+use Psr\EventDispatcher;
 use Psr\Log;
 use SplObjectStorage;
 use Throwable;
@@ -61,10 +62,11 @@ final class WampApplication extends Application
 		Wamp\WampRouter $router,
 		ControllerFactory $controllerFactory,
 		Clients\Storage $clientsStorage,
+		EventDispatcher\EventDispatcherInterface $dispatcher,
 		Log\LoggerInterface|null $logger = null,
 	)
 	{
-		parent::__construct($router, $controllerFactory, $clientsStorage, $logger);
+		parent::__construct($router, $controllerFactory, $clientsStorage, $dispatcher, $logger);
 	}
 
 	/**

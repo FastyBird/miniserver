@@ -4,16 +4,18 @@ namespace FastyBird\Core\WebSockets\Events;
 
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Handshake;
+use Symfony\Contracts\EventDispatcher;
 
 /**
- * WS client connected to server event
+ * Dispatched by Server\Wrapper after a successful upgrade, before the application opens the
+ * connection. Subscribers\Client authenticates the client on it.
  */
-final readonly class ClientConnected
+final class ClientConnected extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
 	)
 	{
 	}

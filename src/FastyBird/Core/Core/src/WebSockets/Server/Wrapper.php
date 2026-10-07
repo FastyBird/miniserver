@@ -2,17 +2,17 @@
 
 namespace FastyBird\Core\WebSockets\Server;
 
-use Closure;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
-use Nette\Utils;
 use OverflowException;
 use Override;
+use Psr\EventDispatcher;
 use Throwable;
 use TypeError;
 use UnderflowException;
@@ -32,21 +32,6 @@ use function trim;
 final class Wrapper implements ServerWrapper
 {
 
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request): void> */
-	public array $onClientConnected = [];
-
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request): void> */
-	public array $onClientDisconnected = [];
-
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request): void> */
-	public array $onClientError = [];
-
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request, string $message): void> */
-	public array $onIncomingMessage = [];
-
-	/** @var array<Closure(Entities\ConnectedClient $client, Handshake\Request $request): void> */
-	public array $onAfterIncomingMessage = [];
-
 	/**
 	 * Flag if we have checked the decorated application for sub-protocols
 	 */
@@ -64,6 +49,7 @@ final class Wrapper implements ServerWrapper
 	public function __construct(
 		private Controllers\Dispatcher $application,
 		private Clients\Storage $clientsStorage,
+		private EventDispatcher\EventDispatcherInterface $dispatcher,
 	)
 	{
 		$this->protocolsProxy = new Encoding\ProtocolProxy();
@@ -181,7 +167,7 @@ final class Wrapper implements ServerWrapper
 	{
 		try {
 			// Call service event
-			Utils\Arrays::invoke($this->onClientDisconnected, $client, $client->getRequest());
+			$this->dispatcher->dispatch(new Events\ClientDisconnected($client, $client->getRequest()));
 
 			// Call application event
 			$this->application->handleClose($client, $client->getRequest());
@@ -204,7 +190,7 @@ final class Wrapper implements ServerWrapper
 
 			if ($webSocket->isEstablished()) {
 				// Call service event
-				Utils\Arrays::invoke($this->onClientError, $client, $client->getRequest());
+				$this->dispatcher->dispatch(new Events\ClientFailed($client, $client->getRequest()));
 
 				// Call application event
 				$this->application->handleError($client, $client->getRequest(), $ex);
@@ -234,7 +220,7 @@ final class Wrapper implements ServerWrapper
 
 		if ($webSocket->isEstablished() === true) {
 			// Call service event
-			Utils\Arrays::invoke($this->onIncomingMessage, $client, $client->getRequest(), $message);
+			$this->dispatcher->dispatch(new Events\MessageReceived($client, $client->getRequest(), $message));
 
 			// A subscriber that rejects the client -- e.g. its access token has expired or was
 			// revoked since the handshake -- closes it, and the message must not reach the
@@ -246,7 +232,7 @@ final class Wrapper implements ServerWrapper
 			$webSocket->getProtocol()->handleMessage($client, $this->application, $message);
 
 			// Call service event
-			Utils\Arrays::invoke($this->onAfterIncomingMessage, $client, $client->getRequest());
+			$this->dispatcher->dispatch(new Events\MessageProcessed($client, $client->getRequest()));
 
 			return;
 		}
@@ -302,7 +288,7 @@ final class Wrapper implements ServerWrapper
 		$webSocket->setEstablished(true);
 
 		// Call service event
-		Utils\Arrays::invoke($this->onClientConnected, $client, $httpRequest);
+		$this->dispatcher->dispatch(new Events\ClientConnected($client, $httpRequest));
 
 		// Call application event
 		return $this->application->handleOpen($client, $httpRequest);

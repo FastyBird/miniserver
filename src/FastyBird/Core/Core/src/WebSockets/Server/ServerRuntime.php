@@ -3,9 +3,10 @@
 namespace FastyBird\Core\WebSockets\Server;
 
 use BadMethodCallException;
-use Closure;
+use FastyBird\Core\WebSockets\Events;
 use InvalidArgumentException;
 use Nette\Utils;
+use Psr\EventDispatcher;
 use Psr\Log;
 use React;
 use React\EventLoop;
@@ -23,21 +24,13 @@ final class ServerRuntime
 
 	public const string VERSION = 'FastyBird/WebSockets/1.0.0';
 
-	/** @var array<Closure(self $server): void> */
-	public array $onCreate = [];
-
-	/** @var array<Closure(EventLoop\LoopInterface $loop, self $server): void> */
-	public array $onStart = [];
-
-	/** @var array<Closure(EventLoop\LoopInterface $loop, self $server): void> */
-	public array $onStop = [];
-
 	private Log\LoggerInterface|Log\NullLogger|null $logger = null;
 
 	public function __construct(
 		private Handlers $handlers,
 		private EventLoop\LoopInterface $loop,
 		private Configuration $configuration,
+		private EventDispatcher\EventDispatcherInterface $dispatcher,
 		Log\LoggerInterface|null $logger = null,
 	)
 	{
@@ -122,12 +115,12 @@ final class ServerRuntime
 			$this->logger->error('Could not establish connection: ' . $ex->getMessage());
 		});
 
-		Utils\Arrays::invoke($this->onCreate, $this);
+		$this->dispatcher->dispatch(new Events\ServerCreated($this));
 	}
 
 	public function run(): void
 	{
-		Utils\Arrays::invoke($this->onStart, $this->loop, $this);
+		$this->dispatcher->dispatch(new Events\ServerStarted($this->loop, $this));
 
 		$this->logger->debug('Starting FastyBird\Core\WebSockets\Server');
 		$this->logger->debug(
@@ -143,7 +136,7 @@ final class ServerRuntime
 
 	public function stop(): void
 	{
-		Utils\Arrays::invoke($this->onStop, $this->loop, $this);
+		$this->dispatcher->dispatch(new Events\ServerStopped($this->loop, $this));
 
 		$this->loop->stop();
 	}

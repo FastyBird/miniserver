@@ -9,21 +9,18 @@ use Symfony\Contracts\EventDispatcher;
 use Throwable;
 
 /**
- * Connection close event
+ * Dispatched by Controllers\Application::handleError(), before it closes the client.
  */
 final class ApplicationFailed extends EventDispatcher\Event
 {
 
-	private Throwable $exception;
-
 	public function __construct(
-		private Controllers\Dispatcher $application,
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
-		Throwable $ex,
+		private readonly Controllers\Dispatcher $application,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
+		private readonly Throwable $ex,
 	)
 	{
-		$this->exception = $ex;
 	}
 
 	public function getApplication(): Controllers\Dispatcher
@@ -43,7 +40,7 @@ final class ApplicationFailed extends EventDispatcher\Event
 
 	public function getException(): Throwable
 	{
-		return $this->exception;
+		return $this->ex;
 	}
 
 }

@@ -6,12 +6,13 @@ use FastyBird\Core\WebSockets\Server;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Server start event
+ * Dispatched by Server\ServerRuntime::create() once both sockets are listening. The modules
+ * enable their SocketsBridge exchange consumers on it.
  */
 final class ServerCreated extends EventDispatcher\Event
 {
 
-	public function __construct(private Server\ServerRuntime $server)
+	public function __construct(private readonly Server\ServerRuntime $server)
 	{
 	}
 

@@ -7,14 +7,15 @@ use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Client disconnected event
+ * Dispatched by Server\Wrapper when an established connection closes, before the application
+ * closes it.
  */
 final class ClientDisconnected extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
 	)
 	{
 	}

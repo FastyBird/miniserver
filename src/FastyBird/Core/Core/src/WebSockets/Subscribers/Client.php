@@ -63,9 +63,11 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	#[Override]
 	public static function getSubscribedEvents(): array
 	{
+		// Below the default priority (census T3): before #638 each of these hooks dispatched a
+		// second event first, so any other listener ran before this one
 		return [
-			Events\ClientConnected::class => 'clientConnected',
-			Events\IncomingMessage::class => 'incomingMessage',
+			Events\ClientConnected::class => ['clientConnected', -10],
+			Events\MessageReceived::class => ['incomingMessage', -10],
 		];
 	}
 
@@ -83,7 +85,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws WebSocketsExceptions\Terminate
 	 */
-	public function incomingMessage(Events\IncomingMessage $event): void
+	public function incomingMessage(Events\MessageReceived $event): void
 	{
 		// Check if ping to DB is possible...
 		if (!$this->database->ping()) {

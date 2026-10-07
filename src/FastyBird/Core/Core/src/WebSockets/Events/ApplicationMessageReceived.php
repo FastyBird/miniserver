@@ -8,16 +8,17 @@ use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Message received event
+ * Dispatched by Controllers\Application::handleMessage(), before the WAMP application
+ * processes the message.
  */
 final class ApplicationMessageReceived extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private Controllers\Dispatcher $application,
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
-		private string $message,
+		private readonly Controllers\Dispatcher $application,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
+		private readonly string $message,
 	)
 	{
 	}

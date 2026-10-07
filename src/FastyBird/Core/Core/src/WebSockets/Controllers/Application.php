@@ -2,16 +2,16 @@
 
 namespace FastyBird\Core\WebSockets\Controllers;
 
-use Closure;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Wamp;
-use Nette\Utils;
 use Override;
+use Psr\EventDispatcher;
 use Psr\Log;
 use ReflectionException;
 use Throwable;
@@ -27,24 +27,13 @@ use function sprintf;
 abstract class Application implements Dispatcher
 {
 
-	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\Request $httpRequest): void> */
-	public array $onOpen = [];
-
-	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\Request $httpRequest): void> */
-	public array $onClose = [];
-
-	/** @var array<Closure(self $application, Entities\ConnectedClient $from, Handshake\Request $httpRequest, string $message): void> */
-	public array $onMessage = [];
-
-	/** @var array<Closure(self $application, Entities\ConnectedClient $client, Handshake\Request $httpRequest, Throwable $ex): void> */
-	public array $onError = [];
-
 	protected Log\LoggerInterface|Log\NullLogger|null $logger = null;
 
 	public function __construct(
 		protected Wamp\WampRouter $router,
 		protected ControllerFactory $controllerFactory,
 		protected Clients\Storage $clientsStorage,
+		private EventDispatcher\EventDispatcherInterface $dispatcher,
 		Log\LoggerInterface|null $logger = null,
 	)
 	{
@@ -56,13 +45,13 @@ abstract class Application implements Dispatcher
 	{
 		$this->logger->info(sprintf('New connection! (%s)', $client->getId()));
 
-		Utils\Arrays::invoke($this->onOpen, $this, $client, $httpRequest);
+		$this->dispatcher->dispatch(new Events\ConnectionOpened($this, $client, $httpRequest));
 	}
 
 	#[Override]
 	public function handleClose(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
 	{
-		Utils\Arrays::invoke($this->onClose, $this, $client, $httpRequest);
+		$this->dispatcher->dispatch(new Events\ConnectionClosed($this, $client, $httpRequest));
 
 		$this->logger->info(sprintf('Connection %s has disconnected', $client->getId()));
 	}
@@ -79,7 +68,7 @@ abstract class Application implements Dispatcher
 
 		$code = $ex->getCode();
 
-		Utils\Arrays::invoke($this->onError, $this, $client, $httpRequest, $ex);
+		$this->dispatcher->dispatch(new Events\ApplicationFailed($this, $client, $httpRequest, $ex));
 
 		if ($code >= 400 && $code < 600) {
 			$this->close($client, $code);
@@ -96,7 +85,7 @@ abstract class Application implements Dispatcher
 		string $message,
 	): void
 	{
-		Utils\Arrays::invoke($this->onMessage, $this, $from, $httpRequest, $message);
+		$this->dispatcher->dispatch(new Events\ApplicationMessageReceived($this, $from, $httpRequest, $message));
 	}
 
 	/**
