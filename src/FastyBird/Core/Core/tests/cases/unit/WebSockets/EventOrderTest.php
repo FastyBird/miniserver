@@ -50,22 +50,22 @@ final class EventOrderTest extends BaseTestCase
 	 * Every event class the WebSockets capability dispatches.
 	 */
 	private const array EVENTS = [
-		Events\AfterIncommingMessageEvent::class,
+		Events\MessageProcessed::class,
 		Events\ClientConnectEvent::class,
 		Events\ClientConnected::class,
-		Events\ClientDisconnectEvent::class,
-		Events\ClientErrorEvent::class,
-		Events\CloseEvent::class,
-		Events\CreateEvent::class,
-		Events\ErrorEvent::class,
+		Events\ClientDisconnected::class,
+		Events\ClientFailed::class,
+		Events\ConnectionClosed::class,
+		Events\ServerCreated::class,
+		Events\ApplicationFailed::class,
 		Events\IncomingMessage::class,
-		Events\IncommingMessageEvent::class,
-		Events\MessageEvent::class,
-		Events\OpenEvent::class,
-		Events\StartEvent::class,
-		Events\StopEvent::class,
-		Events\WsServerError::class,
-		Events\WsServerStartup::class,
+		Events\MessageReceived::class,
+		Events\ApplicationMessageReceived::class,
+		Events\ConnectionOpened::class,
+		Events\ServerStarted::class,
+		Events\ServerStopped::class,
+		Events\ServerFailed::class,
+		Events\ServerLaunched::class,
 	];
 
 	/** @var list<object> */
@@ -119,14 +119,14 @@ final class EventOrderTest extends BaseTestCase
 		$flashSocket->close();
 
 		self::assertSame(
-			[Events\CreateEvent::class, Events\StartEvent::class, Events\StopEvent::class],
+			[Events\ServerCreated::class, Events\ServerStarted::class, Events\ServerStopped::class],
 			$this->classes(),
 		);
 
 		[$create, $start, $stop] = $this->dispatched;
-		assert($create instanceof Events\CreateEvent);
-		assert($start instanceof Events\StartEvent);
-		assert($stop instanceof Events\StopEvent);
+		assert($create instanceof Events\ServerCreated);
+		assert($start instanceof Events\ServerStarted);
+		assert($stop instanceof Events\ServerStopped);
 
 		self::assertSame($server, $create->getServer());
 		self::assertSame($loop, $start->getEventLoop());
@@ -156,7 +156,7 @@ final class EventOrderTest extends BaseTestCase
 			[
 				Events\ClientConnectEvent::class,
 				Events\ClientConnected::class,
-				Events\OpenEvent::class,
+				Events\ConnectionOpened::class,
 			],
 			$this->classes(),
 		);
@@ -164,7 +164,7 @@ final class EventOrderTest extends BaseTestCase
 		[$connect, $connected, $open] = $this->dispatched;
 		assert($connect instanceof Events\ClientConnectEvent);
 		assert($connected instanceof Events\ClientConnected);
-		assert($open instanceof Events\OpenEvent);
+		assert($open instanceof Events\ConnectionOpened);
 
 		self::assertSame($client, $connect->getClient());
 		self::assertSame($client->getRequest(), $connect->getHttpRequest());
@@ -206,19 +206,19 @@ final class EventOrderTest extends BaseTestCase
 
 		self::assertSame(
 			[
-				Events\IncommingMessageEvent::class,
+				Events\MessageReceived::class,
 				Events\IncomingMessage::class,
-				Events\MessageEvent::class,
-				Events\AfterIncommingMessageEvent::class,
+				Events\ApplicationMessageReceived::class,
+				Events\MessageProcessed::class,
 			],
 			$this->classes(),
 		);
 
 		[$incoming, $incomingWithoutMessage, $applicationMessage, $after] = $this->dispatched;
-		assert($incoming instanceof Events\IncommingMessageEvent);
+		assert($incoming instanceof Events\MessageReceived);
 		assert($incomingWithoutMessage instanceof Events\IncomingMessage);
-		assert($applicationMessage instanceof Events\MessageEvent);
-		assert($after instanceof Events\AfterIncommingMessageEvent);
+		assert($applicationMessage instanceof Events\ApplicationMessageReceived);
+		assert($after instanceof Events\MessageProcessed);
 
 		self::assertSame($client, $incoming->getClient());
 		self::assertSame($client->getRequest(), $incoming->getHttpRequest());
@@ -248,15 +248,15 @@ final class EventOrderTest extends BaseTestCase
 
 		self::assertSame(
 			[
-				Events\ClientDisconnectEvent::class,
-				Events\CloseEvent::class,
+				Events\ClientDisconnected::class,
+				Events\ConnectionClosed::class,
 			],
 			$this->classes(),
 		);
 
 		[$disconnect, $close] = $this->dispatched;
-		assert($disconnect instanceof Events\ClientDisconnectEvent);
-		assert($close instanceof Events\CloseEvent);
+		assert($disconnect instanceof Events\ClientDisconnected);
+		assert($close instanceof Events\ConnectionClosed);
 
 		self::assertSame($client, $disconnect->getClient());
 		self::assertSame($client->getRequest(), $disconnect->getHttpRequest());
@@ -281,15 +281,15 @@ final class EventOrderTest extends BaseTestCase
 
 		self::assertSame(
 			[
-				Events\ClientErrorEvent::class,
-				Events\ErrorEvent::class,
+				Events\ClientFailed::class,
+				Events\ApplicationFailed::class,
 			],
 			$this->classes(),
 		);
 
 		[$clientError, $error] = $this->dispatched;
-		assert($clientError instanceof Events\ClientErrorEvent);
-		assert($error instanceof Events\ErrorEvent);
+		assert($clientError instanceof Events\ClientFailed);
+		assert($error instanceof Events\ApplicationFailed);
 
 		self::assertSame($client, $clientError->getClient());
 		self::assertSame($client->getRequest(), $clientError->getHttpRequest());

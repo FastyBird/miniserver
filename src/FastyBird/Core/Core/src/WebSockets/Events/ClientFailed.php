@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Client error event
  */
-final class ClientErrorEvent extends EventDispatcher\Event
+final class ClientFailed extends EventDispatcher\Event
 {
 
 	public function __construct(

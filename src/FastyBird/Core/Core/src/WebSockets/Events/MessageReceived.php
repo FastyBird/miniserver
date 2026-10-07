@@ -7,14 +7,15 @@ use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * After incomming message event
+ * Incomming message event
  */
-final class AfterIncommingMessageEvent extends EventDispatcher\Event
+final class MessageReceived extends EventDispatcher\Event
 {
 
 	public function __construct(
 		private Entities\ConnectedClient $client,
 		private Handshake\Request $httpRequest,
+		private string $message,
 	)
 	{
 	}
@@ -27,6 +28,11 @@ final class AfterIncommingMessageEvent extends EventDispatcher\Event
 	public function getHttpRequest(): Handshake\Request
 	{
 		return $this->httpRequest;
+	}
+
+	public function getMessage(): string
+	{
+		return $this->message;
 	}
 
 }

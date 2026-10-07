@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Server start event
  */
-final class CreateEvent extends EventDispatcher\Event
+final class ServerCreated extends EventDispatcher\Event
 {
 
 	public function __construct(private Server\ServerRuntime $server)

@@ -39,7 +39,7 @@ final class WsServerCommandTest extends BaseTestCase
 
 		$dispatcher = $this->container->getByType(EventDispatcher\EventDispatcherInterface::class);
 
-		foreach ([Events\WsServerStartup::class, Events\CreateEvent::class] as $event) {
+		foreach ([Events\ServerLaunched::class, Events\ServerCreated::class] as $event) {
 			$dispatcher->addListener($event, static function (object $dispatched) use (&$steps): void {
 				$steps[] = 'dispatched ' . $dispatched::class;
 			}, PHP_INT_MAX);
@@ -76,8 +76,8 @@ final class WsServerCommandTest extends BaseTestCase
 		self::assertSame(Commands\WsServer::SUCCESS, $result);
 		self::assertSame(
 			[
-				'dispatched ' . Events\WsServerStartup::class,
-				'dispatched ' . Events\CreateEvent::class,
+				'dispatched ' . Events\ServerLaunched::class,
+				'dispatched ' . Events\ServerCreated::class,
 				'loop run',
 			],
 			$steps,

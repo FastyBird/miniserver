@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * When WS server started
  */
-final class WsServerStartup extends EventDispatcher\Event
+final class ServerLaunched extends EventDispatcher\Event
 {
 
 }

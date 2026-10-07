@@ -62,9 +62,9 @@ final class ServerCreateOrderTest extends BaseTestCase
 		$dispatched = [];
 
 		$this->container->getByType(EventDispatcher\EventDispatcherInterface::class)->addListener(
-			Events\CreateEvent::class,
+			Events\ServerCreated::class,
 			static function () use (&$dispatched): void {
-				$dispatched[] = Events\CreateEvent::class;
+				$dispatched[] = Events\ServerCreated::class;
 			},
 			PHP_INT_MAX,
 		);

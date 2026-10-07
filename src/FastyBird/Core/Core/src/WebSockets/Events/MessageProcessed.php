@@ -2,33 +2,21 @@
 
 namespace FastyBird\Core\WebSockets\Events;
 
-use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
-use Throwable;
 
 /**
- * Connection close event
+ * After incomming message event
  */
-final class ErrorEvent extends EventDispatcher\Event
+final class MessageProcessed extends EventDispatcher\Event
 {
 
-	private Throwable $exception;
-
 	public function __construct(
-		private Controllers\Dispatcher $application,
 		private Entities\ConnectedClient $client,
 		private Handshake\Request $httpRequest,
-		Throwable $ex,
 	)
 	{
-		$this->exception = $ex;
-	}
-
-	public function getApplication(): Controllers\Dispatcher
-	{
-		return $this->application;
 	}
 
 	public function getClient(): Entities\ConnectedClient
@@ -39,11 +27,6 @@ final class ErrorEvent extends EventDispatcher\Event
 	public function getHttpRequest(): Handshake\Request
 	{
 		return $this->httpRequest;
-	}
-
-	public function getException(): Throwable
-	{
-		return $this->exception;
 	}
 
 }

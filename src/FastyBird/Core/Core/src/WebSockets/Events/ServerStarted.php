@@ -7,9 +7,9 @@ use React\EventLoop;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Server stop event
+ * Server start event
  */
-final class StopEvent extends EventDispatcher\Event
+final class ServerStarted extends EventDispatcher\Event
 {
 
 	public function __construct(

@@ -332,31 +332,31 @@ final class WebSocketsExtension extends DI\CompilerExtension
 				assert($application instanceof DI\Definitions\ServiceDefinition);
 
 				$application->addSetup('?->onOpen[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\OpenEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(Events\ConnectionOpened::class),
 				]);
 				$application->addSetup('?->onClose[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\CloseEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(Events\ConnectionClosed::class),
 				]);
 				$application->addSetup('?->onMessage[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 					'@self', $dispatcher, new PhpGenerator\Literal(
-						Events\MessageEvent::class,
+						Events\ApplicationMessageReceived::class,
 					),
 				]);
 				$application->addSetup('?->onError[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\ErrorEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(Events\ApplicationFailed::class),
 				]);
 			}
 
 			$server = $builder->getDefinition($builder->getByType(Server\ServerRuntime::class));
 			assert($server instanceof DI\Definitions\ServiceDefinition);
 			$server->addSetup('?->onCreate[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\CreateEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(Events\ServerCreated::class),
 			]);
 			$server->addSetup('?->onStart[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\StartEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(Events\ServerStarted::class),
 			]);
 			$server->addSetup('?->onStop[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\StopEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(Events\ServerStopped::class),
 			]);
 
 			$serverWrapper = $builder->getDefinition($builder->getByType(Server\Wrapper::class));
@@ -369,21 +369,21 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			$serverWrapper->addSetup(
 				'?->onClientDisconnected[] = function() {?->dispatch(new ?(...func_get_args()));}',
 				[
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\ClientDisconnectEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(Events\ClientDisconnected::class),
 				],
 			);
 			$serverWrapper->addSetup('?->onClientError[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\ClientErrorEvent::class),
+				'@self', $dispatcher, new PhpGenerator\Literal(Events\ClientFailed::class),
 			]);
 			$serverWrapper->addSetup('?->onIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}', [
 				'@self', $dispatcher, new PhpGenerator\Literal(
-					Events\IncommingMessageEvent::class,
+					Events\MessageReceived::class,
 				),
 			]);
 			$serverWrapper->addSetup(
 				'?->onAfterIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}',
 				[
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\AfterIncommingMessageEvent::class),
+					'@self', $dispatcher, new PhpGenerator\Literal(Events\MessageProcessed::class),
 				],
 			);
 		}

@@ -8,7 +8,7 @@ use Throwable;
 /**
  * WS server connection error event
  */
-final class WsServerError extends EventDispatcher\Event
+final class ServerFailed extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Throwable $ex)

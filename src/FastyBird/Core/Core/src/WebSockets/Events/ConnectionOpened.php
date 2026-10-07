@@ -8,9 +8,9 @@ use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Connection close event
+ * Connection open event
  */
-final class CloseEvent extends EventDispatcher\Event
+final class ConnectionOpened extends EventDispatcher\Event
 {
 
 	public function __construct(
