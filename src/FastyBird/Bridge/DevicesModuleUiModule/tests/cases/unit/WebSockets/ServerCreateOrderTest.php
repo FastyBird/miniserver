@@ -25,16 +25,15 @@ use const PHP_INT_MAX;
  * Characterization of server create in THIS package's test container, whose order of SocketsBridge
  * enablers differs from production's (census X4, T3, T12-13).
  *
- * Here the bridge's own extension compiles before fbCore, so ServerRuntime::$onCreate holds the
- * DevicesModuleUiModule enabler FIRST, then the create-event dispatch, then the Devices and Ui
- * enablers. Measured, beyond the census: the bridge's extension also LOADS before fbCore, so when
- * it asks whether the WAMP link generator and topics storage exist, they do not yet, and its
- * SocketsBridge is never registered with the exchange consumer container -- while its enabler
- * still is. So create() throws on its very first hook: nothing is enabled and the create event is
- * never dispatched. Production's order is the dispatch, then Devices, Ui, DevicesModuleUiModule
- * (tests/cases/application/WebSocketsServerLifecycleTest). E5.6 (#638) gives the enablers explicit
- * priorities that reproduce production's order everywhere, which changes THIS outcome, and must
- * declare it.
+ * Here the bridge's own extension LOADS before fbCore, so when it asks whether the WAMP link
+ * generator and topics storage exist, they do not yet, and its SocketsBridge is never registered
+ * with the exchange consumer container -- while its ServerCreated listener still is. Before E5.6
+ * (#638) its enabler was the FIRST onCreate hook here, so create() threw before anything was
+ * enabled or dispatched. Since #638 the three enablers are ServerCreated listeners at the explicit
+ * priorities of census T3 -- Devices -10, Ui -20, DevicesModuleUiModule -30 (#658) -- which
+ * reproduce production's order everywhere (tests/cases/application/WebSocketsServerLifecycleTest).
+ * So here, as X4 declares, the create event is dispatched, Devices and Ui are enabled, and the
+ * bridge's own listener then throws, as its enabler always did.
  */
 final class ServerCreateOrderTest extends BaseTestCase
 {
@@ -57,7 +56,7 @@ final class ServerCreateOrderTest extends BaseTestCase
 	 * @throws DI\MissingServiceException
 	 * @throws Throwable
 	 */
-	public function testCreateFailsOnTheUnregisteredBridgeBeforeAnythingElseRuns(): void
+	public function testCreateEnablesDevicesAndUiThenFailsOnTheUnregisteredBridge(): void
 	{
 		$dispatched = [];
 
@@ -90,8 +89,8 @@ final class ServerCreateOrderTest extends BaseTestCase
 
 		self::assertSame('Provided consumer is not registered in container and can not be enabled', $thrown);
 
-		self::assertSame([], $dispatched);
-		self::assertSame('[Devices, Ui] enabled []', $this->bridges());
+		self::assertSame([Events\ServerCreated::class], $dispatched);
+		self::assertSame('[Devices, Ui] enabled [Devices, Ui]', $this->bridges());
 	}
 
 	/**

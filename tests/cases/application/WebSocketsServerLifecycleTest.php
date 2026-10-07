@@ -11,13 +11,13 @@ use RuntimeException;
  * Characterization, at production scope, of what happens when the WebSocket server is created,
  * started and stopped (#460 §1.3, §3.4).
  *
- * Today the order is fixed by the sequence of addSetup() calls on ServerRuntime: Core's
- * WebSocketsExtension bridges onCreate/onStart/onStop to the event dispatcher; then Devices, Ui
- * and DevicesModuleUiModule -- in config/common.neon's extension order -- each append an
- * onCreate closure that ENABLES their SocketsBridge exchange consumer, which is registered
- * disabled. That is what makes exchange messages reach WAMP clients only once the server
- * exists. E5.6 (#638) turns all of it into PSR-14 listeners whose priorities must reproduce
- * exactly this; changing when a SocketsBridge is enabled is an escalation (#634).
+ * ServerRuntime dispatches ServerCreated, ServerStarted and ServerStopped itself (#638). Devices,
+ * Ui and DevicesModuleUiModule each register a ServerCreated listener through
+ * WebSocketsExtension::SERVER_CREATED_LISTENER_TAG, at -10, -20 and -30 (#658), that ENABLES their
+ * SocketsBridge exchange consumer, which is registered disabled. That is what makes exchange
+ * messages reach WAMP clients only once the server exists. Before #638 the same order came from
+ * the sequence of addSetup() calls on ServerRuntime; changing when a SocketsBridge is enabled is
+ * an escalation (#634).
  *
  * A listener at the highest priority records each event as it is dispatched, together with the
  * bridges enabled at that moment. The bridges are listed in the exchange consumer container's
@@ -40,12 +40,12 @@ final class WebSocketsServerLifecycleTest extends TestCase
 		self::assertSame(
 			[
 				'before create []',
-				'dispatched CreateEvent []',
+				'dispatched ServerCreated []',
 				'after create ' . self::ALL_BRIDGES,
-				'dispatched StartEvent ' . self::ALL_BRIDGES,
+				'dispatched ServerStarted ' . self::ALL_BRIDGES,
 				'loop running',
 				'after run',
-				'dispatched StopEvent ' . self::ALL_BRIDGES,
+				'dispatched ServerStopped ' . self::ALL_BRIDGES,
 				'after stop',
 			],
 			$this->probe('server-lifecycle'),
