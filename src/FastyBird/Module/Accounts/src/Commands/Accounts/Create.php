@@ -18,7 +18,6 @@ namespace FastyBird\Module\Accounts\Commands\Accounts;
 use Doctrine;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Identity;
@@ -180,9 +179,9 @@ class Create extends Console\Command\Command
 		$repeat = true;
 
 		if ($input->hasArgument('role') && in_array($input->getArgument('role'), [
-			\FastyBird\Core\Security\Identity\User::ROLE_USER,
-			\FastyBird\Core\Security\Identity\User::ROLE_MANAGER,
-			\FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR,
+			Identity\User::ROLE_USER,
+			Identity\User::ROLE_MANAGER,
+			Identity\User::ROLE_ADMINISTRATOR,
 		], true)
 		) {
 			$findRoleQuery = new Queries\Entities\FindRoles();
@@ -215,15 +214,15 @@ class Create extends Console\Command\Command
 
 				switch ($roleName) {
 					case 'U':
-						$roleName = \FastyBird\Core\Security\Identity\User::ROLE_USER;
+						$roleName = Identity\User::ROLE_USER;
 
 						break;
 					case 'M':
-						$roleName = \FastyBird\Core\Security\Identity\User::ROLE_MANAGER;
+						$roleName = Identity\User::ROLE_MANAGER;
 
 						break;
 					case 'A':
-						$roleName = \FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR;
+						$roleName = Identity\User::ROLE_ADMINISTRATOR;
 
 						break;
 				}

@@ -3,7 +3,6 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -18,6 +17,7 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
+use FastyBird\Module\Devices;
 use function file_get_contents;
 
 #[PreserveGlobalState(false)]
@@ -70,7 +70,7 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'readOne' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/connector.properties.read.json',
@@ -81,7 +81,7 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			'readOneWrongConnector' => [
 				// Property of the generic connector, requested through the dummy connector
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
@@ -89,14 +89,14 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			'readRelationshipsConnectorWrongConnector' => [
 				// Property of the generic connector, requested through the dummy connector
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366/relationships/connector',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366/relationships/connector',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b23ff',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b23ff',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
@@ -149,7 +149,7 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'create' => [
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/connector.properties.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
@@ -160,7 +160,7 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'otherConnector' => [
 				// Body names the dummy connector, the URL names the generic one
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/connector.properties.create.otherConnector.json',
@@ -217,7 +217,7 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'update' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/connector.properties.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -229,7 +229,7 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			'wrongConnector' => [
 				// Property of the generic connector, updated through the dummy connector
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/connector.properties.update.json'),
 				StatusCodeInterface::STATUS_NOT_FOUND,
@@ -283,7 +283,7 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'delete' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/connector.properties.delete.json',
@@ -294,7 +294,7 @@ final class ConnectorPropertiesV1Test extends Tests\Cases\Unit\DbTestCase
 			'wrongConnector' => [
 				// Property of the generic connector, deleted through the dummy connector
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',

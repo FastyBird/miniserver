@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
@@ -78,11 +77,11 @@ final class FixtureTokenIdentityTest extends DbTestCase
 		self::assertInstanceOf(Entities\Identities\Identity::class, $resolved);
 		self::assertSame(self::IDENTITY, $resolved->getId()->toString());
 		self::assertSame(
-			$token->claims()->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER),
+			$token->claims()->get(Identity\TokenBuilder::CLAIM_USER),
 			$resolved->getAccount()->getId()->toString(),
 		);
 		self::assertSame(
-			$token->claims()->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES),
+			$token->claims()->get(Identity\TokenBuilder::CLAIM_ROLES),
 			$this->getContainer()->getByType(Identity\EnforcerFactory::class)
 				->getEnforcer()
 				->getRolesForUser($resolved->getAccount()->getId()->toString()),

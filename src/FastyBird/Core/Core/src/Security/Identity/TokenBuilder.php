@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Security\Identity;
 
 use DateTimeImmutable;
-use FastyBird\Core\Constants;
 use Lcobucci\JWT;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
@@ -55,8 +54,8 @@ final readonly class TokenBuilder
 			$jwtBuilder->expiresAt($expiration);
 		}
 
-		$jwtBuilder->withClaim(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER, $userId);
-		$jwtBuilder->withClaim(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES, $roles);
+		$jwtBuilder->withClaim(self::CLAIM_USER, $userId);
+		$jwtBuilder->withClaim(self::CLAIM_ROLES, $roles);
 
 		return $jwtBuilder->getToken($configuration->signer(), $configuration->signingKey());
 	}

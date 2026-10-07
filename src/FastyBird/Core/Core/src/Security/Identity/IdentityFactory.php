@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Security\Identity;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use Lcobucci\JWT;
 use Override;
@@ -25,11 +24,11 @@ final class IdentityFactory implements IdentityProvider
 	{
 		$claims = $token->claims();
 
-		return is_string($claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER))
-		&& is_array($claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES))
+		return is_string($claims->get(TokenBuilder::CLAIM_USER))
+		&& is_array($claims->get(TokenBuilder::CLAIM_ROLES))
 			? new PlainIdentity(
-				$claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER),
-				$claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES),
+				$claims->get(TokenBuilder::CLAIM_USER),
+				$claims->get(TokenBuilder::CLAIM_ROLES),
 			)
 			: null;
 	}

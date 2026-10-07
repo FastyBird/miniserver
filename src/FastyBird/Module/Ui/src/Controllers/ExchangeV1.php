@@ -15,7 +15,6 @@
 
 namespace FastyBird\Module\Ui\Controllers;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -35,6 +34,7 @@ use FastyBird\Module\Ui\Types;
 use Nette\Utils;
 use Psr\EventDispatcher;
 use Throwable;
+use FastyBird\Core\Security\Identity;
 use function array_key_exists;
 use function is_array;
 
@@ -54,8 +54,8 @@ final class ExchangeV1 extends Controllers\Controller
 	 * create, update and delete to them.
 	 */
 	private const array WRITE_ROLES = [
-		\FastyBird\Core\Security\Identity\User::ROLE_MANAGER,
-		\FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR,
+		Identity\User::ROLE_MANAGER,
+		Identity\User::ROLE_ADMINISTRATOR,
 	];
 
 	public function __construct(

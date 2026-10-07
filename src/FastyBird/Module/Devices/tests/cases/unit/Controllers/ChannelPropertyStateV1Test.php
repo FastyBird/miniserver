@@ -3,7 +3,6 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -22,6 +21,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
+use FastyBird\Module\Devices;
 
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -111,7 +111,7 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'readDeviceChannel' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
 				true,
@@ -120,7 +120,7 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readChannel' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
 				true,
@@ -132,7 +132,7 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'readNoState' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
 				false,
@@ -141,7 +141,7 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readPropertyOfOtherChannel' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/bbcccf8c-33ab-431b-a795-d7bb38b6b6db/state',
 				'Bearer ' . self::VALID_TOKEN,
 				0,
 				true,
@@ -150,7 +150,7 @@ final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readMissingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/' . self::PROPERTY_ID . '/state',
 				null,
 				0,
 				true,

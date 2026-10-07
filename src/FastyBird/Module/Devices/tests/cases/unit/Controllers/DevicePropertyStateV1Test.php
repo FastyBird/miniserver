@@ -3,7 +3,6 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -22,6 +21,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
+use FastyBird\Module\Devices;
 
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -111,7 +111,7 @@ final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'readDevice' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
 				true,
@@ -120,7 +120,7 @@ final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readConnectorDevice' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
 				true,
@@ -133,7 +133,7 @@ final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			'readWrongConnector' => [
 				// Device of the generic connector, addressed through the dummy connector
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/7a3dd94c-7294-46fd-8c61-1b375c313d4d/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				0,
 				true,
@@ -142,7 +142,7 @@ final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readNoState' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
 				false,
@@ -151,7 +151,7 @@ final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readVariableProperty' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/3ff0029f-7fe3-405e-a3ef-edaad08e2ffa/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/3ff0029f-7fe3-405e-a3ef-edaad08e2ffa/state',
 				'Bearer ' . self::VALID_TOKEN,
 				0,
 				true,
@@ -160,7 +160,7 @@ final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readMissingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/properties/' . self::PROPERTY_ID . '/state',
 				null,
 				0,
 				true,

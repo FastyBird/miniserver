@@ -18,13 +18,13 @@ namespace FastyBird\Module\Devices\Hydrators;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Api\Hydrators;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Values\Types;
 use FastyBird\Module\Devices\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
 use TypeError;
 use ValueError;
+use FastyBird\Module\Devices;
 use function array_map;
 use function boolval;
 use function implode;
@@ -164,8 +164,8 @@ abstract class Property extends Hydrators\Hydrator
 				}, $rawFormat));
 
 				if (
-					preg_match(\FastyBird\Module\Devices\Constants::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
-					|| preg_match(\FastyBird\Module\Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
+					preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
+					|| preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
 				) {
 					return $plainFormat;
 				}
@@ -207,7 +207,7 @@ abstract class Property extends Hydrators\Hydrator
 					return strval($item);
 				}, $rawFormat));
 
-				if (preg_match(\FastyBird\Module\Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
+				if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
 					return $plainFormat;
 				}
 

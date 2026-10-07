@@ -4,7 +4,6 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Cases\Unit\Contr
 
 use Error;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -18,6 +17,8 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector;
+use FastyBird\Module\Devices;
 use function file_get_contents;
 use function is_array;
 use function str_replace;
@@ -72,38 +73,38 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'readAll' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.index.json',
 			],
 			'readAllPaging' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges?page[offset]=1&page[limit]=1',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.index.paging.json',
 			],
 			'readOne' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.read.json',
 			],
 			'readRelationshipsProperties' => [
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/properties',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/properties',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.relationships.properties.json',
 			],
 			'readRelationshipsChannels' => [
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/channels',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/channels',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.relationships.channels.json',
 			],
 			'readRelationshipsChildren' => [
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.relationships.children.json',
@@ -113,71 +114,71 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/unknown',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readRelationshipsUnknownEntity' => [
-				'/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009af/relationships/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009af/relationships/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readAllMissingToken' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneMissingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllEmptyToken' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneEmptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllInvalidToken' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneInvalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readAllExpiredToken' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneExpiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
@@ -315,7 +316,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'create' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
@@ -325,7 +326,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'missingRequired' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.missing.required.json',
@@ -334,49 +335,49 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.create.missing.required.json',
 			],
 			'notUnique' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.notUnique.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.create.notUnique.json',
 			],
 			'invalidType' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.invalid.type.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'missingToken' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'emptyToken' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'expiredToken' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'notAllowed' => [
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -431,7 +432,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'update' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -442,7 +443,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'invalidType' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.invalid.type.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -450,7 +451,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'idMismatch' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.invalid.id.json'),
 				StatusCodeInterface::STATUS_BAD_REQUEST,
@@ -458,7 +459,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'missingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -466,7 +467,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'invalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -474,7 +475,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'emptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -482,7 +483,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'expiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -490,7 +491,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'notAllowed' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -544,7 +545,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'delete' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.delete.json',
@@ -554,42 +555,42 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'unknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'missingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'emptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'expiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'notAllowed' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
+				'/api/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/1d0f40bf-e023-4e62-8bec-7a5d81e40e84',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',

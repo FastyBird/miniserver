@@ -15,7 +15,8 @@
 
 namespace FastyBird\Module\Devices;
 
-use FastyBird\Core\Constants as CoreConstants;
+use FastyBird\Core\Exchange\Publisher;
+
 
 /**
  * Service constants
@@ -148,7 +149,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.module.document';
+	public const ROUTING_PREFIX = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.module.document';
 
 	public const MESSAGE_BUS_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.';
 
@@ -267,17 +268,17 @@ final class Constants
 	public const MESSAGE_BUS_CONNECTOR_CONTROL_DOCUMENT_DELETED_ROUTING_KEY = self::ROUTING_PREFIX . '.deleted.connector.control';
 
 	// ACTIONS
-	public const MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.connector.control';
+	public const MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.connector.control';
 
-	public const MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.connector.property';
+	public const MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.connector.property';
 
-	public const MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.device.control';
+	public const MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.device.control';
 
-	public const MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.device.property';
+	public const MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.device.property';
 
-	public const MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.channel.control';
+	public const MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.channel.control';
 
-	public const MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.channel.property';
+	public const MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.channel.property';
 
 	public const MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING
 		= [

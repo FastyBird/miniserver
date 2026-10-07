@@ -16,7 +16,6 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -31,6 +30,7 @@ use Ramsey\Uuid;
 use Symfony\Component\EventDispatcher;
 use TypeError;
 use ValueError;
+use FastyBird\Core\Values\Utilities;
 
 /**
  * Module documents mapper events
@@ -85,7 +85,7 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 
 		$data = [];
 
-		if ($value !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
+		if ($value !== Utilities\Value::NOT_SET) {
 			$data[DevicesStates\Property::EXPECTED_VALUE_FIELD] = $value;
 		}
 

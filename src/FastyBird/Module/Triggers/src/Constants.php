@@ -15,7 +15,8 @@
 
 namespace FastyBird\Module\Triggers;
 
-use FastyBird\Core\Constants as CoreConstants;
+use FastyBird\Core\Exchange\Publisher;
+
 
 /**
  * Service constants
@@ -66,7 +67,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.module.document';
+	public const ROUTING_PREFIX = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.module.document';
 
 	// TRIGGERS
 	public const MESSAGE_BUS_TRIGGER_DOCUMENT_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.trigger';
@@ -113,7 +114,7 @@ final class Constants
 
 	public const MESSAGE_BUS_CONDITION_DOCUMENT_DELETED_ROUTING_KEY = self::ROUTING_PREFIX . '.deleted.trigger.condition';
 
-	public const MESSAGE_BUS_TRIGGER_CONTROL_ACTION_ROUTING_KEY = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.trigger.control';
+	public const MESSAGE_BUS_TRIGGER_CONTROL_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.trigger.control';
 
 	public const MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING = [
 		Entities\Triggers\Trigger::class => self::MESSAGE_BUS_TRIGGER_DOCUMENT_CREATED_ROUTING_KEY,

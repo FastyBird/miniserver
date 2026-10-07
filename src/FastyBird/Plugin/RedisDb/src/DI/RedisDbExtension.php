@@ -16,7 +16,6 @@
 namespace FastyBird\Plugin\RedisDb\DI;
 
 use FastyBird\Core\Boot;
-use FastyBird\Core\Constants;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Exchange;
@@ -66,7 +65,7 @@ class RedisDbExtension extends DI\CompilerExtension
 				'password' => Schema\Expect::string()->nullable(),
 			]),
 			'exchange' => Schema\Expect::structure([
-				'channel' => Schema\Expect::string()->default(\FastyBird\Plugin\RedisDb\DI\RedisDbExtension::EXCHANGE_CHANNEL_NAME),
+				'channel' => Schema\Expect::string()->default(self::EXCHANGE_CHANNEL_NAME),
 			]),
 		]);
 	}

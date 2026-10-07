@@ -16,7 +16,6 @@
 namespace FastyBird\Plugin\RabbitMq\Channels;
 
 use Bunny;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exchange;
 use FastyBird\Plugin\RabbitMq\Connections;
 use FastyBird\Plugin\RabbitMq\Events;
@@ -97,7 +96,7 @@ final class Factory implements Exchange\Factory
 		$channel->queueBind(
 			$queueName,
 			$this->exchangeName,
-			\FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.#',
+			Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.#',
 		);
 
 		$channel->consume(

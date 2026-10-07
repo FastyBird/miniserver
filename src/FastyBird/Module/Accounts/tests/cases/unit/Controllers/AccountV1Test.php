@@ -4,7 +4,6 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Controllers;
 
 use Doctrine\DBAL;
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
@@ -23,6 +22,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
+use FastyBird\Module\Accounts;
 use function file_get_contents;
 
 #[PreserveGlobalState(false)]
@@ -77,37 +77,37 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'read' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.read.json',
 			],
 			'readUser' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.read.user.json',
 			],
 			'readWithIncluded' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me?include=emails',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me?include=emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.read.included.json',
 			],
 			'readRelationshipsEmails' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.emails.json',
 			],
 			'readRelationshipsIdentities' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_IDENTITIES,
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_IDENTITIES,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.identities.json',
 			],
 			'readRelationshipsRoles' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_ROLES,
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_ROLES,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.roles.json',
@@ -116,55 +116,55 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'readRelationshipsUnknown' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/unknown',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/unknown',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readNoToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readEmptyToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readExpiredToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readInvalidToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readRelationshipsNoToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readRelationshipsEmptyToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readRelationshipsInvalidToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readRelationshipsExpiredToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
@@ -218,7 +218,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'update' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -228,7 +228,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'missingRequired' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.missing.required.json',
@@ -237,7 +237,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.update.missing.required.json',
 			],
 			'invalidType' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.invalid.type.json',
@@ -246,7 +246,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'idMismatch' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::USER_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.invalid.id.json',
@@ -255,28 +255,28 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.identifier.json',
 			],
 			'noToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/account/account.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -304,7 +304,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_PATCH,
-			'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+			'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 			[
 				'authorization' => 'Bearer ' . self::USER_TOKEN,
 			],
@@ -428,7 +428,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$response = $router->handle(new ServerRequest(
 			RequestMethodInterface::METHOD_PATCH,
-			'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+			'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 			[
 				'authorization' => 'Bearer ' . self::USER_TOKEN,
 			],

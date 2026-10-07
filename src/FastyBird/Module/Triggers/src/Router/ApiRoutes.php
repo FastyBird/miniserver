@@ -15,7 +15,6 @@
 
 namespace FastyBird\Module\Triggers\Router;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Triggers;
@@ -55,11 +54,11 @@ class ApiRoutes
 
 	public function registerRoutes(Routing\Router $router): void
 	{
-		$routes = $router->group('/' . \FastyBird\Core\Http\Routing\Router::API_PREFIX, function (
+		$routes = $router->group('/' . Routing\Router::API_PREFIX, function (
 			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
-				$group->group('/' . \FastyBird\Module\Triggers\Constants::MODULE_TRIGGERS_PREFIX, function (
+				$group->group('/' . Triggers\Constants::MODULE_TRIGGERS_PREFIX, function (
 					Routing\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);

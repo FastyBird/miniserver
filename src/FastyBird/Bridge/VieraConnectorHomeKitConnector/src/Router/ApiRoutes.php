@@ -17,7 +17,6 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Router;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Controllers;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
@@ -49,12 +48,12 @@ class ApiRoutes
 
 	public function registerRoutes(Routing\Router $router): void
 	{
-		$routes = $router->group('/' . \FastyBird\Core\Http\Routing\Router::API_PREFIX, function (
+		$routes = $router->group('/' . Routing\Router::API_PREFIX, function (
 			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group(
-					'/' . \FastyBird\Bridge\VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
+					'/' . VieraConnectorHomeKitConnector\Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
 					function (
 						Routing\RouteCollector $group,
 					): void {

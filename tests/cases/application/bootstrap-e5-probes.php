@@ -36,7 +36,6 @@ use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Api\Middleware;
 use FastyBird\Core\Boot;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers;
@@ -319,8 +318,8 @@ $wampModuleRoutes = static function () use ($boot): array {
 	$routes = [];
 
 	foreach ([
-		'/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
-		'/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
+		'/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+		'/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
 	] as $path) {
 		$request = $router->match(new Handshake\Request(new Http\UrlScript('ws://localhost' . $path)));
 
@@ -378,8 +377,8 @@ $socketsBridges = static function () use ($boot): array {
 	$loop = EventLoop\Loop::get();
 
 	$topics = [
-		'/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
-		'/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
+		'/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+		'/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
 	];
 
 	$subscribers = [];

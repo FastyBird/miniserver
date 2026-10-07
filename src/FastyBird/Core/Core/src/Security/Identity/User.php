@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Security\Identity;
 
 use Casbin\Exceptions as CasbinExceptions;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
 use Ramsey\Uuid;
@@ -72,7 +71,7 @@ class User
 	public function isInRole(string $role): bool
 	{
 		return $this->enforcerFactory->getEnforcer()->hasRoleForUser(
-			$this->getId()?->toString() ?? \FastyBird\Core\Security\Identity\User::ANONYMOUS_ID,
+			$this->getId()?->toString() ?? self::ANONYMOUS_ID,
 			$role,
 		);
 	}
@@ -85,11 +84,11 @@ class User
 	public function getRoles(): array
 	{
 		if (!$this->isLoggedIn()) {
-			return [\FastyBird\Core\Security\Identity\User::ROLE_ANONYMOUS];
+			return [self::ROLE_ANONYMOUS];
 		}
 
 		return $this->enforcerFactory->getEnforcer()->getRolesForUser(
-			$this->getId()?->toString() ?? \FastyBird\Core\Security\Identity\User::ANONYMOUS_ID,
+			$this->getId()?->toString() ?? self::ANONYMOUS_ID,
 		);
 	}
 
@@ -104,7 +103,7 @@ class User
 	{
 		try {
 			return $this->enforcerFactory->getEnforcer()->enforce(
-				$this->getId()?->toString() ?? \FastyBird\Core\Security\Identity\User::ANONYMOUS_ID,
+				$this->getId()?->toString() ?? self::ANONYMOUS_ID,
 				...$rules,
 			);
 		} catch (CasbinExceptions\CasbinException) {
