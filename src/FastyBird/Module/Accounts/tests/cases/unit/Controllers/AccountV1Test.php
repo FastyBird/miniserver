@@ -8,6 +8,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Identity;
+use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Schemas;
 use FastyBird\Module\Accounts\Tests;
@@ -22,7 +23,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
-use FastyBird\Module\Accounts;
 use function file_get_contents;
 
 #[PreserveGlobalState(false)]

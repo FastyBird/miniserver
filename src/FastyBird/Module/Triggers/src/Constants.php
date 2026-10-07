@@ -17,7 +17,6 @@ namespace FastyBird\Module\Triggers;
 
 use FastyBird\Core\Exchange\Publisher;
 
-
 /**
  * Service constants
  *

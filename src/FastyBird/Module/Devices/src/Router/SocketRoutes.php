@@ -17,8 +17,8 @@ namespace FastyBird\Module\Devices\Router;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\WebSockets\Wamp;
-use Nette;
 use FastyBird\Module\Devices;
+use Nette;
 
 /**
  * Module sockets routes configuration

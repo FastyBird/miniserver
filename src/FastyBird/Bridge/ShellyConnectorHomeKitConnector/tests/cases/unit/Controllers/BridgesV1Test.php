@@ -3,10 +3,12 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Cases\Unit\Controllers;
 
 use Error;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Devices;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -17,8 +19,6 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
-use FastyBird\Module\Devices;
 use function file_get_contents;
 use function is_array;
 use function str_replace;

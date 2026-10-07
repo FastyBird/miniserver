@@ -2,9 +2,9 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Common;
 
-use PHPUnit\Framework\TestCase;
 use FastyBird\Core\Values\Transformers;
 use FastyBird\Module\Devices;
+use PHPUnit\Framework\TestCase;
 use function preg_match;
 
 final class ConstantsTest extends TestCase

@@ -21,6 +21,7 @@ use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -32,7 +33,6 @@ use Nette\Utils;
 use Throwable;
 use TypeError;
 use ValueError;
-use FastyBird\Core\Values\Utilities;
 use function in_array;
 use function React\Async\await;
 

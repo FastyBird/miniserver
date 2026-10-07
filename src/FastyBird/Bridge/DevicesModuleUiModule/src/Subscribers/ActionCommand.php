@@ -18,6 +18,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -30,7 +31,6 @@ use Ramsey\Uuid;
 use Symfony\Component\EventDispatcher;
 use TypeError;
 use ValueError;
-use FastyBird\Core\Values\Utilities;
 
 /**
  * Module documents mapper events

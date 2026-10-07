@@ -20,7 +20,9 @@ use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Entities\Topics;
@@ -36,8 +38,6 @@ use Nette\Utils;
 use Throwable;
 use TypeError;
 use ValueError;
-use FastyBird\Core\Security\Identity;
-use FastyBird\Core\Values\Utilities;
 use function array_key_exists;
 use function is_array;
 

@@ -18,7 +18,6 @@ namespace FastyBird\Module\Accounts;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Security\Identity;
 
-
 /**
  * Module constants
  *

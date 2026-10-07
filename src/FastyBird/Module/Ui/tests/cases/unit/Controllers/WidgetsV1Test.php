@@ -6,6 +6,7 @@ use Error;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Tests;
@@ -20,7 +21,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
-use FastyBird\Module\Ui;
 use function file_get_contents;
 
 #[PreserveGlobalState(false)]

@@ -17,6 +17,7 @@ namespace FastyBird\Module\Accounts\Middleware;
 
 use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Http;
+use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -26,7 +27,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
-use FastyBird\Module\Accounts;
 use function str_replace;
 use function str_starts_with;
 use function strval;

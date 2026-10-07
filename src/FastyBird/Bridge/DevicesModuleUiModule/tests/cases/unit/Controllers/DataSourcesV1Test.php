@@ -7,6 +7,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Tests;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Ui;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -17,7 +18,6 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
-use FastyBird\Module\Ui;
 use function file_get_contents;
 
 #[PreserveGlobalState(false)]

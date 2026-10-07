@@ -17,7 +17,6 @@ namespace FastyBird\Module\Ui;
 
 use FastyBird\Core\Exchange\Publisher;
 
-
 /**
  * Service constants
  *

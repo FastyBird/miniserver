@@ -6,6 +6,7 @@ use Error;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
@@ -21,7 +22,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
-use FastyBird\Module\Devices;
 
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]

@@ -149,7 +149,10 @@ final class TokenCompatibilityTest extends BaseTestCase
 
 		self::assertInstanceOf(JWT\UnencryptedToken::class, $token);
 		self::assertSame($minted, $token->toString());
-		self::assertSame('5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34', $token->claims()->get(Identity\TokenBuilder::CLAIM_USER));
+		self::assertSame(
+			'5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34',
+			$token->claims()->get(Identity\TokenBuilder::CLAIM_USER),
+		);
 	}
 
 	/**

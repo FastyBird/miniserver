@@ -5,6 +5,7 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Router;
 use Error;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -16,7 +17,6 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
-use FastyBird\Module\Accounts;
 
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
