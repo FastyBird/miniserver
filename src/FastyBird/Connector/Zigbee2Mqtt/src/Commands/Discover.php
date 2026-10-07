@@ -20,13 +20,13 @@ use FastyBird\Connector\Zigbee2Mqtt\Documents;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Localization;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
@@ -63,7 +63,7 @@ class Discover extends Console\Command\Command
 		private readonly Helpers\Devices\SubDevice $subDeviceHelper,
 		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -298,7 +298,7 @@ class Discover extends Console\Command\Command
 
 		$io->info((string) $this->translator->translate('//zigbee2mqtt-connector.cmd.discover.messages.starting'));
 
-		$this->executedTime = $this->clock->getNow();
+		$this->executedTime = $this->clock->now();
 
 		$serviceCmd = $symfonyApp->find(DevicesCommands\Connector::NAME);
 

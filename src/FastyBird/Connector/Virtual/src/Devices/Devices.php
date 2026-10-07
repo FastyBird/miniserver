@@ -23,7 +23,6 @@ use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers;
 use FastyBird\Connector\Virtual\Queries;
 use FastyBird\Connector\Virtual\Queue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -33,6 +32,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
 use TypeError;
@@ -83,7 +83,7 @@ class Devices
 		private readonly Virtual\Logger $logger,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
 		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -211,7 +211,7 @@ class Devices
 					$service->getLastConnectAttempt() === null
 					|| (
 						// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-						$this->clock->getNow()->getTimestamp() - $service->getLastConnectAttempt()->getTimestamp() >= self::RECONNECT_COOL_DOWN_TIME
+						$this->clock->now()->getTimestamp() - $service->getLastConnectAttempt()->getTimestamp() >= self::RECONNECT_COOL_DOWN_TIME
 					)
 				) {
 					$service
@@ -299,14 +299,14 @@ class Devices
 		if (
 			$cmdResult instanceof DateTimeInterface
 			&& (
-				$this->clock->getNow()->getTimestamp() - $cmdResult->getTimestamp()
+				$this->clock->now()->getTimestamp() - $cmdResult->getTimestamp()
 				< $this->deviceHelper->getStateProcessingDelay($device)
 			)
 		) {
 			return false;
 		}
 
-		$this->processedDevicesCommands[$device->getId()->toString()] = $this->clock->getNow();
+		$this->processedDevicesCommands[$device->getId()->toString()] = $this->clock->now();
 
 		$deviceState = $this->deviceConnectionManager->getState($device);
 
@@ -318,7 +318,7 @@ class Devices
 
 		$service->process()
 			->then(function () use ($device): void {
-				$this->processedDevicesCommands[$device->getId()->toString()] = $this->clock->getNow();
+				$this->processedDevicesCommands[$device->getId()->toString()] = $this->clock->now();
 			})
 			->catch(function (Throwable $ex) use ($device, $service): void {
 				$this->processedDevicesCommands[$device->getId()->toString()] = false;

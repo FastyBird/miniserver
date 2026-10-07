@@ -22,7 +22,6 @@ use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Queries;
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
@@ -35,6 +34,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Localization;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
@@ -80,7 +80,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
 		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
 		private readonly Helpers\Database $databaseHelper,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -1107,7 +1107,7 @@ class Install extends Console\Command\Command
 			throw new Zigbee2MqttExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
-		$executedTime = $this->clock->getNow();
+		$executedTime = $this->clock->now();
 
 		$symfonyApp = $this->getApplication();
 

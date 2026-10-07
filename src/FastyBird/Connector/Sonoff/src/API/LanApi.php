@@ -22,7 +22,6 @@ use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -33,6 +32,7 @@ use GuzzleHttp;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use React\Datagram;
 use React\Dns;
@@ -118,7 +118,7 @@ final class LanApi
 		private readonly Services\MulticastFactory $multicastFactory,
 		private readonly Helpers\MessageBuilder $entityHelper,
 		private readonly Sonoff\Logger $logger,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly Schemas\Validator $schemaValidator,
 	)
@@ -315,7 +315,7 @@ final class LanApi
 		$deferred = new Promise\Deferred();
 
 		$payload = new stdClass();
-		$payload->sequence = strval(intval($this->clock->getNow()->format('Uv')));
+		$payload->sequence = strval(intval($this->clock->now()->format('Uv')));
 		$payload->deviceid = $id;
 		$payload->selfApikey = '123';
 		$payload->data = new stdClass();
@@ -422,7 +422,7 @@ final class LanApi
 		}
 
 		$payload = new stdClass();
-		$payload->sequence = strval(intval($this->clock->getNow()->format('Uv')));
+		$payload->sequence = strval(intval($this->clock->now()->format('Uv')));
 		$payload->deviceid = $id;
 		$payload->selfApikey = '123';
 		$payload->data = $params;

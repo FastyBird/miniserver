@@ -15,11 +15,11 @@
 
 namespace FastyBird\Plugin\RedisDb\Models\States\Async;
 
-use FastyBird\Core\Clock;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
 use Nette;
+use Psr\Clock\ClockInterface;
 use Psr\Log;
 use function class_exists;
 use function sprintf;
@@ -41,7 +41,7 @@ class StatesManagerFactory
 	public function __construct(
 		private readonly Clients\Async\Client $client,
 		private readonly States\StateFactory $stateFactory,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{

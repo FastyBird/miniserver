@@ -24,7 +24,6 @@ use FastyBird\Connector\NsPanel\Helpers;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Queries;
 use FastyBird\Connector\NsPanel\Queue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -37,6 +36,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Throwable;
 use TypeError;
@@ -73,7 +73,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 	}
@@ -378,7 +378,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 			return true;
 		}
 
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 		$pending = $state->getPending();
 
 		if (

@@ -4,9 +4,9 @@ namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Helpers;
 
 use DateTimeImmutable;
 use Exception;
-use FastyBird\Core\Clock;
 use FastyBird\Module\Accounts\Helpers;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 
 final class SecurityHashTest extends TestCase
 {
@@ -16,9 +16,9 @@ final class SecurityHashTest extends TestCase
 	 */
 	public function testPassword(): void
 	{
-		$systemClock = $this->createMock(Clock\SystemClock::class);
+		$systemClock = $this->createMock(ClockInterface::class);
 		$systemClock
-			->method('getNow')
+			->method('now')
 			->willReturn(new DateTimeImmutable('2020-04-01T12:00:00+00:00'));
 
 		$hashHelper = new Helpers\SecurityHash($systemClock);
@@ -27,27 +27,27 @@ final class SecurityHashTest extends TestCase
 
 		self::assertTrue($hashHelper->isValid($hash));
 
-		$systemClock = $this->createMock(Clock\SystemClock::class);
+		$systemClock = $this->createMock(ClockInterface::class);
 		$systemClock
-			->method('getNow')
+			->method('now')
 			->willReturn(new DateTimeImmutable('2021-04-01T12:00:00+00:00'));
 
 		$hashHelper = new Helpers\SecurityHash($systemClock);
 
 		self::assertFalse($hashHelper->isValid($hash));
 
-		$systemClock = $this->createMock(Clock\SystemClock::class);
+		$systemClock = $this->createMock(ClockInterface::class);
 		$systemClock
-			->method('getNow')
+			->method('now')
 			->willReturn(new DateTimeImmutable('2020-04-01T12:59:00+00:00'));
 
 		$hashHelper = new Helpers\SecurityHash($systemClock);
 
 		self::assertTrue($hashHelper->isValid($hash));
 
-		$systemClock = $this->createMock(Clock\SystemClock::class);
+		$systemClock = $this->createMock(ClockInterface::class);
 		$systemClock
-			->method('getNow')
+			->method('now')
 			->willReturn(new DateTimeImmutable('2020-04-01T13:01:00+00:00'));
 
 		$hashHelper = new Helpers\SecurityHash($systemClock);

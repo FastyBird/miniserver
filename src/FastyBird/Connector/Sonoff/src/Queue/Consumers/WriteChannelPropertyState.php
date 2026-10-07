@@ -24,7 +24,6 @@ use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries as SonoffQueries;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types as SonoffTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -37,6 +36,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use React\Promise;
 use RuntimeException;
 use Throwable;
@@ -75,7 +75,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 	}
@@ -276,7 +276,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 			return true;
 		}
 
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 		$pending = $state->getPending();
 
 		if (

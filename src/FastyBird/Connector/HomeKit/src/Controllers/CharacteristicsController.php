@@ -23,7 +23,6 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Values\Types\Sources;
@@ -32,6 +31,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use RuntimeException;
@@ -65,7 +65,7 @@ final class CharacteristicsController extends BaseController
 		private readonly Queue\Queue $queue,
 		private readonly Protocol\Driver $accessoryDriver,
 		private readonly Clients\Subscriber $subscriber,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 	}
@@ -270,7 +270,7 @@ final class CharacteristicsController extends BaseController
 				|| !array_key_exists($pid, $this->preparedWrites[strval($requestParams['REMOTE_ADDR'])])
 				|| $this->preparedWrites[strval(
 					$requestParams['REMOTE_ADDR'],
-				)][$pid] < $this->clock->getNow()->getTimestamp()
+				)][$pid] < $this->clock->now()->getTimestamp()
 			) {
 				$timedWriteError = true;
 			}
@@ -404,7 +404,7 @@ final class CharacteristicsController extends BaseController
 		}
 
 		$this->preparedWrites[$clientAddress][intval($body[Types\Representation::PID->value])]
-			= $this->clock->getNow()->getTimestamp() + (intval(
+			= $this->clock->now()->getTimestamp() + (intval(
 				$body[Types\Representation::TTL->value],
 			) / 1_000);
 

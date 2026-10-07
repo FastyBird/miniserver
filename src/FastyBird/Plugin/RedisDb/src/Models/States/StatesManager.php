@@ -17,7 +17,6 @@ namespace FastyBird\Plugin\RedisDb\Models\States;
 
 use BackedEnum;
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
@@ -25,6 +24,7 @@ use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\Log;
 use Ramsey\Uuid;
 use stdClass;
@@ -61,7 +61,7 @@ class StatesManager
 	public function __construct(
 		private readonly Clients\Client $client,
 		private readonly States\StateFactory $stateFactory,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly string $entity = States\State::class,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
@@ -214,7 +214,7 @@ class StatesManager
 					}
 				} else {
 					if ($field === States\State::CREATED_AT_FIELD) {
-						$value = $this->clock->getNow()->format(DateTimeInterface::ATOM);
+						$value = $this->clock->now()->format(DateTimeInterface::ATOM);
 					}
 				}
 
@@ -291,7 +291,7 @@ class StatesManager
 					}
 				} else {
 					if ($field === States\State::UPDATED_AT_FIELD) {
-						$data->{$field} = $this->clock->getNow()->format(
+						$data->{$field} = $this->clock->now()->format(
 							DateTimeInterface::ATOM,
 						);
 					}

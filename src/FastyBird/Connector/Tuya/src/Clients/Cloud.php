@@ -23,7 +23,6 @@ use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Queue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -34,6 +33,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
 use Throwable;
@@ -89,7 +89,7 @@ final class Cloud implements Client
 		private readonly Tuya\Logger $logger,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
 		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
@@ -331,7 +331,7 @@ final class Cloud implements Client
 			$refreshFailedAt = $this->connectionManager->getCloudApiConnection($this->connector)->getRefreshFailed();
 			assert($refreshFailedAt instanceof DateTimeInterface);
 
-			if ($this->clock->getNow()->getTimestamp() - $refreshFailedAt->getTimestamp() < self::REFRESH_SLEEP_DELAY) {
+			if ($this->clock->now()->getTimestamp() - $refreshFailedAt->getTimestamp() < self::REFRESH_SLEEP_DELAY) {
 				return;
 			}
 
@@ -406,7 +406,7 @@ final class Cloud implements Client
 			if (
 				$cmdResult instanceof DateTimeInterface
 				&& (
-					$this->clock->getNow()->getTimestamp() - $cmdResult->getTimestamp()
+					$this->clock->now()->getTimestamp() - $cmdResult->getTimestamp()
 					< $this->deviceHelper->getHeartbeatDelay($device)
 				)
 			) {
@@ -414,7 +414,7 @@ final class Cloud implements Client
 			}
 		}
 
-		$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_HEARTBEAT] = $this->clock->getNow();
+		$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_HEARTBEAT] = $this->clock->now();
 
 		$deviceState = $this->deviceConnectionManager->getState($device);
 
@@ -428,7 +428,7 @@ final class Cloud implements Client
 			->getCloudApiConnection($this->connector)
 			->getDeviceDetail($device->getIdentifier())
 			->then(function (API\Messages\Response\GetDevice $detail) use ($device): void {
-				$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_HEARTBEAT] = $this->clock->getNow();
+				$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_HEARTBEAT] = $this->clock->now();
 
 				$this->queue->append(
 					$this->messageBuilder->create(
@@ -522,7 +522,7 @@ final class Cloud implements Client
 			if (
 				$cmdResult instanceof DateTimeInterface
 				&& (
-					$this->clock->getNow()->getTimestamp() - $cmdResult->getTimestamp()
+					$this->clock->now()->getTimestamp() - $cmdResult->getTimestamp()
 					< $this->deviceHelper->getStateReadingDelay($device)
 				)
 			) {
@@ -530,7 +530,7 @@ final class Cloud implements Client
 			}
 		}
 
-		$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->getNow();
+		$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->now();
 
 		$deviceState = $this->deviceConnectionManager->getState($device);
 
@@ -544,7 +544,7 @@ final class Cloud implements Client
 			->getCloudApiConnection($this->connector)
 			->getDeviceState($device->getIdentifier())
 			->then(function (API\Messages\Response\GetDeviceState $state) use ($device): void {
-				$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->getNow();
+				$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->now();
 
 				$this->queue->append(
 					$this->messageBuilder->create(

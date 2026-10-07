@@ -12,18 +12,17 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Tests\Cases\Unit\BaseTestCase;
 use Nette\DI;
+use Psr\Clock\ClockInterface;
 use ValueError;
 use function abs;
 use function date_default_timezone_get;
 use function microtime;
 
 /**
- * Characterization of Core's two clocks before Epic E5 swaps in PSR-20 (#460 §3.7, E5.9).
- *
- * What a caller gets from getNow() is the contract PSR-20's now() has to keep: both clocks hand
- * out a DateTimeImmutable -- TokenBuilder and TokenValidator assert exactly that -- in the time
- * zone they were given, and the frozen clock's value cannot be changed from outside, even when
- * it was built from a mutable DateTime.
+ * Characterization of Core's two clocks, written before Epic E5 swapped in PSR-20 (#460 §3.7,
+ * E5.9) and kept as the contract Psr\Clock\ClockInterface::now() has to honour: both clocks hand
+ * out a DateTimeImmutable in the time zone they were given, and the frozen clock's value cannot
+ * be changed from outside, even when it was built from a mutable DateTime.
  */
 final class ClockTest extends BaseTestCase
 {
@@ -38,14 +37,15 @@ final class ClockTest extends BaseTestCase
 		$clock = new Clock\SystemClock(new DateTimeZone('Europe/Prague'));
 
 		$before = microtime(true);
-		$now = $clock->getNow();
+		$now = $clock->now();
 		$after = microtime(true);
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('Europe/Prague', $now->getTimezone()->getName());
 		self::assertGreaterThanOrEqual((int) $before, $now->getTimestamp());
 		self::assertLessThanOrEqual((int) $after + 1, $now->getTimestamp());
-		self::assertNotSame($now, $clock->getNow());
+		self::assertNotSame($now, $clock->now());
 	}
 
 	/**
@@ -53,8 +53,9 @@ final class ClockTest extends BaseTestCase
 	 */
 	public function testSystemClockDefaultsToThePhpTimeZone(): void
 	{
-		$now = (new Clock\SystemClock())->getNow();
+		$now = (new Clock\SystemClock())->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame(date_default_timezone_get(), $now->getTimezone()->getName());
 		self::assertLessThan(5.0, abs((float) $now->format('U.u') - microtime(true)));
@@ -70,9 +71,10 @@ final class ClockTest extends BaseTestCase
 		$frozenAt = new DateTimeImmutable(self::FROZEN_AT);
 		$clock = new Clock\FrozenClock($frozenAt, new DateTimeZone('UTC'));
 
-		$first = $clock->getNow();
-		$second = $clock->getNow();
+		$first = $clock->now();
+		$second = $clock->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $first);
 		self::assertSame('2026-10-03T12:34:56.123456+00:00', $first->format('Y-m-d\TH:i:s.uP'));
 		self::assertEquals($first, $second);
@@ -91,8 +93,9 @@ final class ClockTest extends BaseTestCase
 		$clock = new Clock\FrozenClock($frozenAt, new DateTimeZone('UTC'));
 
 		$frozenAt->modify('+1 day');
-		$now = $clock->getNow();
+		$now = $clock->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('2026-10-03T12:34:56.123456+00:00', $now->format('Y-m-d\TH:i:s.uP'));
 	}
@@ -110,14 +113,15 @@ final class ClockTest extends BaseTestCase
 		foreach ([new DateTime(self::FROZEN_AT), new DateTimeImmutable(self::FROZEN_AT)] as $frozenAt) {
 			$clock = new Clock\FrozenClock($frozenAt, new DateTimeZone('UTC'));
 
-			$returned = $clock->getNow();
+			$returned = $clock->now();
+			// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 			self::assertInstanceOf(DateTimeImmutable::class, $returned);
 
 			$moved = $returned->modify('+1 day');
 
 			self::assertSame('2026-10-04T12:34:56.123456+00:00', $moved->format('Y-m-d\TH:i:s.uP'));
 			self::assertSame('2026-10-03T12:34:56.123456+00:00', $returned->format('Y-m-d\TH:i:s.uP'));
-			self::assertSame('2026-10-03T12:34:56.123456+00:00', $clock->getNow()->format('Y-m-d\TH:i:s.uP'));
+			self::assertSame('2026-10-03T12:34:56.123456+00:00', $clock->now()->format('Y-m-d\TH:i:s.uP'));
 		}
 	}
 
@@ -130,8 +134,9 @@ final class ClockTest extends BaseTestCase
 	{
 		$clock = new Clock\FrozenClock(1_759_494_896.25, new DateTimeZone('Europe/Prague'));
 
-		$now = $clock->getNow();
+		$now = $clock->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame(1_759_494_896, $now->getTimestamp());
 		self::assertSame('250000', $now->format('u'));
@@ -148,7 +153,7 @@ final class ClockTest extends BaseTestCase
 	{
 		$clock = new Clock\FrozenClock(new DateTimeImmutable(self::FROZEN_AT), new DateTimeZone('America/New_York'));
 
-		$now = $clock->getNow();
+		$now = $clock->now();
 
 		self::assertSame('America/New_York', $now->getTimezone()->getName());
 		self::assertSame((new DateTimeImmutable(self::FROZEN_AT))->getTimestamp(), $now->getTimestamp());
@@ -167,17 +172,18 @@ final class ClockTest extends BaseTestCase
 	 */
 	public function testTheContainerAutowiresTheConfiguredClock(): void
 	{
-		$clock = $this->container->getByType(Clock\Clock::class);
+		$clock = $this->container->getByType(ClockInterface::class);
 
 		self::assertInstanceOf(Clock\FrozenClock::class, $clock);
 		self::assertSame(
 			['fbCore.clock.frozen', 'fbCore.clock.system'],
-			$this->container->findByType(Clock\Clock::class),
+			$this->container->findByType(ClockInterface::class),
 		);
 		self::assertInstanceOf(Clock\SystemClock::class, $this->container->getService('fbCore.clock.system'));
 
-		$now = $clock->getNow();
+		$now = $clock->now();
 
+		// @phpstan-ignore staticMethod.alreadyNarrowedType (now() declares it since #641; this pins it at run time)
 		self::assertInstanceOf(DateTimeImmutable::class, $now);
 		self::assertSame('2020-04-01T12:00:00.000000+00:00', $now->format('Y-m-d\TH:i:s.uP'));
 		self::assertSame('UTC', $now->getTimezone()->getName());

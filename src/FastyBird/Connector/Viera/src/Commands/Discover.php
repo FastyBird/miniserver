@@ -15,7 +15,6 @@
 
 namespace FastyBird\Connector\Viera\Commands;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
@@ -26,7 +25,6 @@ use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -38,6 +36,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette\Localization;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
@@ -82,7 +81,7 @@ class Discover extends Console\Command\Command
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -136,8 +135,7 @@ class Discover extends Console\Command\Command
 			return Console\Command\Command::FAILURE;
 		}
 
-		$executedTime = $this->clock->getNow();
-		assert($executedTime instanceof DateTimeImmutable);
+		$executedTime = $this->clock->now();
 		$this->executedTime = $executedTime->modify('-5 second');
 
 		$io = new Style\SymfonyStyle($input, $output);

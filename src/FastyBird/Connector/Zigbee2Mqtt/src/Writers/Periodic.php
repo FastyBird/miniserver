@@ -22,7 +22,6 @@ use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Helpers;
 use FastyBird\Connector\Zigbee2Mqtt\Queries as Zigbee2MqttQueries;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -32,6 +31,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette;
+use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
 use function array_key_exists;
@@ -85,7 +85,7 @@ abstract class Periodic
 		protected readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -200,7 +200,7 @@ abstract class Periodic
 	 */
 	private function writeProperty(Zigbee2MqttDocuments\Devices\Device $device): bool
 	{
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 
 		if (!array_key_exists($device->getId()->toString(), $this->properties)) {
 			return false;

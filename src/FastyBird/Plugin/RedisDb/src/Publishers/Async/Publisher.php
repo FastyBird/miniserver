@@ -16,7 +16,6 @@
 namespace FastyBird\Plugin\RedisDb\Publishers\Async;
 
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Logging;
@@ -26,6 +25,7 @@ use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\Utilities;
 use InvalidArgumentException;
 use Nette;
+use Psr\Clock\ClockInterface;
 use Psr\Log;
 use React\Promise;
 use Throwable;
@@ -47,7 +47,7 @@ final class Publisher implements Async\MessagePublisher
 		private readonly Utilities\IdentifierGenerator $identifier,
 		private readonly string $channel,
 		private readonly Clients\Async\Client $client,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
@@ -73,7 +73,7 @@ final class Publisher implements Async\MessagePublisher
 					'sender_id' => $this->identifier->getIdentifier(),
 					'source' => $source->value,
 					'routing_key' => $routingKey,
-					'created' => $this->clock->getNow()->format(DateTimeInterface::ATOM),
+					'created' => $this->clock->now()->format(DateTimeInterface::ATOM),
 					'data' => $entity?->toArray(),
 				]),
 			)

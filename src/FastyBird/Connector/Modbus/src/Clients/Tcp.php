@@ -24,7 +24,6 @@ use FastyBird\Connector\Modbus\Helpers;
 use FastyBird\Connector\Modbus\Queries as ModbusQueries;
 use FastyBird\Connector\Modbus\Queue;
 use FastyBird\Connector\Modbus\Types as ModbusTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -38,6 +37,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
 use Nette;
+use Psr\Clock\ClockInterface;
 use Random\RandomException;
 use React\EventLoop;
 use React\Promise;
@@ -100,7 +100,7 @@ class Tcp implements Client
 		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
 		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -217,7 +217,7 @@ class Tcp implements Client
 						continue;
 					} else {
 						if (
-							$this->clock->getNow()->getTimestamp()
+							$this->clock->now()->getTimestamp()
 							- $this->lostDevices[$device->getId()->toString()]->getTimestamp() < self::LOST_DELAY
 						) {
 							continue;
@@ -385,7 +385,7 @@ class Tcp implements Client
 			return false;
 		}
 
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 
 		$promises = [];
 
@@ -466,7 +466,7 @@ class Tcp implements Client
 
 			$promise->then(
 				function (API\Messages\Response\ReadAnalogInputs|API\Messages\Response\ReadDigitalInputs $response) use ($request, $device): void {
-					$now = $this->clock->getNow();
+					$now = $this->clock->now();
 
 					if ($response instanceof API\Messages\Response\ReadDigitalInputs) {
 						$this->processDigitalRegistersResponse($request, $response, $device);
@@ -499,7 +499,7 @@ class Tcp implements Client
 					}
 				},
 				function (Throwable $ex) use ($request, $device): void {
-					$now = $this->clock->getNow();
+					$now = $this->clock->now();
 
 					if ($ex instanceof ModbusExceptions\ModbusTcp) {
 						foreach ($request->getAddresses() as $requestAddress) {
@@ -639,7 +639,7 @@ class Tcp implements Client
 		ModbusDocuments\Channels\Channel $channel,
 	): Messages\Pointer\ReadAddress|null
 	{
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 
 		$findChannelPropertyQuery = new ModbusQueries\Configuration\FindChannelDynamicProperties();
 		$findChannelPropertyQuery->forChannel($channel);

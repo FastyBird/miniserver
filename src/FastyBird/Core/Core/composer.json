@@ -68,6 +68,7 @@
     "orisai/nette-object-mapper": "^0.3",
     "orisai/object-mapper": "^0.3",
     "phpdocumentor/reflection-docblock": "^5.3",
+    "psr/clock": "^1.0",
     "psr/event-dispatcher": "^1.0",
     "psr/http-factory": "^1.1",
     "psr/http-message": "^1.1",

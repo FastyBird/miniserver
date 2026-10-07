@@ -16,7 +16,6 @@
 namespace FastyBird\Module\Devices\Models\States\Async;
 
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher\Async;
@@ -38,6 +37,7 @@ use Nette;
 use Nette\Caching as NetteCaching;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Ramsey\Uuid;
 use React\Promise;
@@ -74,7 +74,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 		private readonly Models\States\Channels\Async\Repository $channelPropertyStateRepository,
 		private readonly Models\States\Channels\Async\Manager $channelPropertiesStatesManager,
 		private readonly DevicesCaching\Container $moduleCaching,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly Async\MessagePublisher $publisher,
 		Devices\Logger $logger,
@@ -342,7 +342,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 				) : $this->set(
 					$item,
 					Utils\ArrayHash::from([
-						States\Property::PENDING_FIELD => $this->clock->getNow()->format(
+						States\Property::PENDING_FIELD => $this->clock->now()->format(
 							DateTimeInterface::ATOM,
 						),
 					]),
@@ -371,7 +371,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 		) : $this->set(
 			$property,
 			Utils\ArrayHash::from([
-				States\Property::PENDING_FIELD => $this->clock->getNow()->format(DateTimeInterface::ATOM),
+				States\Property::PENDING_FIELD => $this->clock->now()->format(DateTimeInterface::ATOM),
 			]),
 			$source,
 		);

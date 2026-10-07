@@ -2,12 +2,11 @@
 
 namespace FastyBird\Core\Security\Identity;
 
-use DateTimeImmutable;
-use FastyBird\Core\Clock as CoreClock;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Security\Exceptions;
-use Lcobucci\Clock as LcobucciClock;
+use Lcobucci\Clock;
 use Lcobucci\JWT;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Throwable;
 use function assert;
@@ -26,7 +25,7 @@ final readonly class TokenValidator
 	public function __construct(
 		private readonly string $tokenSignature,
 		private readonly string $tokenIssuer,
-		private readonly CoreClock\Clock $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 	}
@@ -43,12 +42,11 @@ final readonly class TokenValidator
 			JWT\Signer\Key\InMemory::plainText($this->tokenSignature),
 		);
 
-		$now = $this->clock->getNow();
-		assert($now instanceof DateTimeImmutable);
+		$now = $this->clock->now();
 
 		$configuration->setValidationConstraints(
 			new JWT\Validation\Constraint\IssuedBy($this->tokenIssuer),
-			new JWT\Validation\Constraint\LooseValidAt(new LcobucciClock\FrozenClock($now)),
+			new JWT\Validation\Constraint\LooseValidAt(new Clock\FrozenClock($now)),
 			new JWT\Validation\Constraint\SignedWith(
 				$configuration->signer(),
 				JWT\Signer\Key\InMemory::plainText($this->tokenSignature),

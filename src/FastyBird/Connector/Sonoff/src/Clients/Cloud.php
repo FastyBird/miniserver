@@ -22,7 +22,6 @@ use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
 use FastyBird\Connector\Sonoff\Queue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -32,6 +31,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher;
 use React\EventLoop;
 use React\Promise;
@@ -55,7 +55,7 @@ final class Cloud extends ClientProcess implements Client
 	public function __construct(
 		Helpers\Device $deviceHelper,
 		DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		Clock\Clock $clock,
+		ClockInterface $clock,
 		EventLoop\LoopInterface $eventLoop,
 		private readonly Documents\Connectors\Connector $connector,
 		private readonly bool $autoMode,

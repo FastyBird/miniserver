@@ -18,7 +18,6 @@ namespace FastyBird\Module\Devices\Commands;
 use BadMethodCallException;
 use DateTimeInterface;
 use Doctrine\DBAL;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
@@ -36,6 +35,7 @@ use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Types;
 use Nette\Localization;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Ramsey\Uuid;
 use React\EventLoop;
@@ -102,7 +102,7 @@ class Connector extends Console\Command\Command
 		private readonly Helpers\Database $database,
 		private readonly ExchangeConsumers\Container $consumer,
 		private readonly EventLoop\LoopInterface $eventLoop,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		private readonly array $exchangeFactories = [],
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
@@ -193,7 +193,7 @@ class Connector extends Console\Command\Command
 				return Console\Command\Command::FAILURE;
 			}
 
-			$this->executedAt = $this->clock->getNow();
+			$this->executedAt = $this->clock->now();
 
 			$this->eventLoop->run();
 
@@ -359,7 +359,7 @@ class Connector extends Console\Command\Command
 				async(function (): void {
 					if ($this->executedAt !== null) {
 						$this->progressBar?->setProgress(
-							$this->clock->getNow()->getTimestamp() - $this->executedAt->getTimestamp(),
+							$this->clock->now()->getTimestamp() - $this->executedAt->getTimestamp(),
 						);
 					} else {
 						$this->progressBar?->advance();

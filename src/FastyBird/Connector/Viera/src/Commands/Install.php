@@ -15,7 +15,6 @@
 
 namespace FastyBird\Connector\Viera\Commands;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL;
 use FastyBird\Connector\Viera;
@@ -25,7 +24,6 @@ use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers as VieraHelpers;
 use FastyBird\Connector\Viera\Queries;
 use FastyBird\Connector\Viera\Types as VieraTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
@@ -40,6 +38,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette\Localization;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use RuntimeException;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
@@ -101,7 +100,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -538,7 +537,7 @@ class Install extends Console\Command\Command
 	 */
 	private function createDevice(Style\SymfonyStyle $io, VieraEntities\Connectors\Connector $connector): void
 	{
-		$tempIdentifier = 'new-device-' . $this->clock->getNow()->format(DateTimeInterface::ATOM);
+		$tempIdentifier = 'new-device-' . $this->clock->now()->format(DateTimeInterface::ATOM);
 
 		$ipAddress = $this->askDeviceIpAddress($io);
 
@@ -1714,8 +1713,7 @@ class Install extends Console\Command\Command
 			throw new VieraExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
-		$executedTime = $this->clock->getNow();
-		assert($executedTime instanceof DateTimeImmutable);
+		$executedTime = $this->clock->now();
 		$executedTime = $executedTime->modify('-5 second');
 
 		$symfonyApp = $this->getApplication();

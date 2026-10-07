@@ -15,14 +15,12 @@
 
 namespace FastyBird\Connector\Tuya\Commands;
 
-use DateTimeImmutable;
 use Doctrine\DBAL;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Entities as TuyaEntities;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Types as TuyaTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
@@ -35,6 +33,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Localization;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
@@ -77,7 +76,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
 		private readonly Helpers\Database $databaseHelper,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -911,8 +910,7 @@ class Install extends Console\Command\Command
 			throw new TuyaExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
-		$executedTime = $this->clock->getNow();
-		assert($executedTime instanceof DateTimeImmutable);
+		$executedTime = $this->clock->now();
 		$executedTime = $executedTime->modify('-5 second');
 
 		$symfonyApp = $this->getApplication();

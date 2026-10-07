@@ -2,9 +2,8 @@
 
 namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit\Publishers;
 
-use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Publishers;
@@ -13,6 +12,7 @@ use FastyBird\Plugin\RedisDb\Utilities;
 use Nette;
 use Nette\Utils;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 
 final class PublisherTest extends TestCase
 {
@@ -22,7 +22,7 @@ final class PublisherTest extends TestCase
 	 */
 	public function testPublish(): void
 	{
-		$now = new DateTime();
+		$now = new DateTimeImmutable();
 
 		$client = $this->createMock(Clients\Client::class);
 		$client
@@ -40,10 +40,10 @@ final class PublisherTest extends TestCase
 			]))
 			->willReturn(true);
 
-		$systemClock = $this->createMock(Clock\SystemClock::class);
+		$systemClock = $this->createMock(ClockInterface::class);
 		$systemClock
 			->expects(self::once())
-			->method('getNow')
+			->method('now')
 			->willReturn($now);
 
 		$identifierGenerator = $this->createMock(Utilities\IdentifierGenerator::class);

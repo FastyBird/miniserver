@@ -23,7 +23,6 @@ use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Connector\Shelly\ValueObjects;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -36,6 +35,7 @@ use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use Ratchet;
@@ -156,7 +156,7 @@ final class Gen2WsApi
 		private readonly string|null $password,
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly Shelly\Logger $logger,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly Schemas\Validator $schemaValidator,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
@@ -177,7 +177,7 @@ final class Gen2WsApi
 
 		$this->session = null;
 
-		$this->lastConnectAttempt = $this->clock->getNow();
+		$this->lastConnectAttempt = $this->clock->now();
 		$this->lost = null;
 		$this->disconnected = null;
 
@@ -353,7 +353,7 @@ final class Gen2WsApi
 		$this->connecting = false;
 		$this->connected = false;
 
-		$this->disconnected = $this->clock->getNow();
+		$this->disconnected = $this->clock->now();
 
 		$this->session = null;
 
@@ -865,7 +865,7 @@ final class Gen2WsApi
 
 	private function lost(): void
 	{
-		$this->lost = $this->clock->getNow();
+		$this->lost = $this->clock->now();
 
 		Utils\Arrays::invoke($this->onLost);
 

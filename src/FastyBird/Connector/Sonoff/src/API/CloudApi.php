@@ -21,7 +21,6 @@ use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -32,6 +31,7 @@ use GuzzleHttp;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use React\Promise;
 use RuntimeException;
@@ -118,7 +118,7 @@ final class CloudApi
 		private readonly Helpers\MessageBuilder $entityHelper,
 		private readonly Sonoff\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		Types\Region|null $region = null,
 	)
 	{
@@ -138,7 +138,7 @@ final class CloudApi
 		$this->accessToken = $result->getAccessToken();
 		$this->refreshToken = $result->getRefreshToken();
 		$this->user = $result->getUser();
-		$this->tokensAcquired = $this->clock->getNow();
+		$this->tokensAcquired = $this->clock->now();
 
 		$this->region = $result->getRegion();
 	}
@@ -1145,7 +1145,7 @@ final class CloudApi
 
 		if (
 			str_contains(strval($request->getUri()), self::USER_REFRESH_API_ENDPOINT)
-			&& $this->tokensAcquired?->diff($this->clock->getNow())->s >= self::ACCESS_TOKEN_VALID_TIME
+			&& $this->tokensAcquired?->diff($this->clock->now())->s >= self::ACCESS_TOKEN_VALID_TIME
 			&& $this->refreshToken !== null
 		) {
 			try {

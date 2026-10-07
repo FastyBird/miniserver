@@ -15,19 +15,18 @@
 
 namespace FastyBird\Connector\Sonoff\Commands;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queries;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Localization;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
@@ -64,7 +63,7 @@ class Discover extends Console\Command\Command
 		private readonly Helpers\Device $deviceHelper,
 		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -115,8 +114,7 @@ class Discover extends Console\Command\Command
 			return Console\Command\Command::FAILURE;
 		}
 
-		$executedTime = $this->clock->getNow();
-		assert($executedTime instanceof DateTimeImmutable);
+		$executedTime = $this->clock->now();
 		$this->executedTime = $executedTime->modify('-5 second');
 
 		$io = new Style\SymfonyStyle($input, $output);

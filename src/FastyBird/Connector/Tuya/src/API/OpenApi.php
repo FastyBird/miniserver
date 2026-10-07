@@ -22,7 +22,6 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -34,6 +33,7 @@ use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use React\Promise;
@@ -158,7 +158,7 @@ final class OpenApi
 		private readonly Tuya\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 		$this->nonce = Uuid\Uuid::uuid1();
@@ -1147,7 +1147,7 @@ final class OpenApi
 			try {
 				await($refreshTokenResult);
 			} catch (Throwable $ex) {
-				$this->refreshTokenFailed = $this->clock->getNow();
+				$this->refreshTokenFailed = $this->clock->now();
 
 				return Promise\reject(
 					new TuyaExceptions\OpenApiCall(
@@ -1482,7 +1482,7 @@ final class OpenApi
 			return false;
 		}
 
-		if (!$this->tokenInfo->isExpired($this->clock->getNow())) {
+		if (!$this->tokenInfo->isExpired($this->clock->now())) {
 			return true;
 		}
 
@@ -1729,7 +1729,7 @@ final class OpenApi
 		}
 
 		// Sign
-		$timestamp = intval($this->clock->getNow()->format('Uv'));
+		$timestamp = intval($this->clock->now()->format('Uv'));
 
 		$message = $this->accessId . $accessToken . $timestamp . $this->nonce->toString() . $strToSign;
 

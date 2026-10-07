@@ -23,7 +23,6 @@ use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Queue;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -32,6 +31,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
 use TypeError;
@@ -87,7 +87,7 @@ abstract class Periodic
 		private readonly Protocol\Driver $accessoryDriver,
 		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -216,7 +216,7 @@ abstract class Periodic
 	 */
 	private function writeProperty(HomeKitDocuments\Devices\Device $device): bool
 	{
-		$now = $this->clock->getNow();
+		$now = $this->clock->now();
 
 		$accessory = $this->accessoryDriver->findAccessory($device->getId());
 

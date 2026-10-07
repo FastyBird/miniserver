@@ -16,7 +16,6 @@
 namespace FastyBird\Connector\NsPanel\Commands;
 
 use Brick\Math;
-use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL;
 use Exception;
@@ -28,7 +27,6 @@ use FastyBird\Connector\NsPanel\Helpers as NsPanelHelpers;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Queries as NsPanelQueries;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers as PersistenceHelpers;
@@ -46,6 +44,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Localization;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use RuntimeException;
 use Symfony\Component\Console;
@@ -119,7 +118,7 @@ class Install extends Console\Command\Command
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
 		private readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly Localization\Translator $translator,
 		string|null $name = null,
 	)
@@ -1312,8 +1311,7 @@ class Install extends Console\Command\Command
 			throw new NsPanelExceptions\InvalidState('Something went wrong, console output is not configured');
 		}
 
-		$executedTime = $this->clock->getNow();
-		assert($executedTime instanceof DateTimeImmutable);
+		$executedTime = $this->clock->now();
 		$executedTime = $executedTime->modify('-5 second');
 
 		$symfonyApp = $this->getApplication();

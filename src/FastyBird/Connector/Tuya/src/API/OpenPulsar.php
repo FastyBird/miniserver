@@ -22,7 +22,6 @@ use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -30,6 +29,7 @@ use FastyBird\Core\Values\Schemas;
 use FastyBird\Core\Values\Types\Sources;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Ratchet;
 use Ratchet\RFC6455;
 use React\EventLoop;
@@ -111,7 +111,7 @@ final class OpenPulsar
 		private readonly Tuya\Logger $logger,
 		private readonly Services\WebSocketClientFactory $webSocketClientFactory,
 		private readonly Schemas\Validator $schemaValidator,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -132,7 +132,7 @@ final class OpenPulsar
 		$this->connecting = true;
 		$this->connected = false;
 
-		$this->lastConnectAttempt = $this->clock->getNow();
+		$this->lastConnectAttempt = $this->clock->now();
 		$this->lost = null;
 		$this->disconnected = null;
 
@@ -234,7 +234,7 @@ final class OpenPulsar
 		$this->connecting = false;
 		$this->connected = false;
 
-		$this->disconnected = $this->clock->getNow();
+		$this->disconnected = $this->clock->now();
 
 		if ($this->pingTimer !== null) {
 			$this->eventLoop->cancelTimer($this->pingTimer);
@@ -270,7 +270,7 @@ final class OpenPulsar
 
 	private function lost(): void
 	{
-		$this->lost = $this->clock->getNow();
+		$this->lost = $this->clock->now();
 
 		Utils\Arrays::invoke($this->onLost);
 

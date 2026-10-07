@@ -22,7 +22,6 @@ use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Services;
 use FastyBird\Connector\Viera\Types;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
@@ -30,6 +29,7 @@ use GuzzleHttp;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use React\Datagram;
 use React\EventLoop;
@@ -138,7 +138,7 @@ final class TelevisionApi
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly Viera\Logger $logger,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 	)
 	{
 		$this->isEncrypted = $this->appId !== null && $this->encryptionKey !== null;
@@ -161,7 +161,7 @@ final class TelevisionApi
 		}
 
 		$this->isConnected = true;
-		$this->connectedAt = $this->clock->getNow();
+		$this->connectedAt = $this->clock->now();
 	}
 
 	/**

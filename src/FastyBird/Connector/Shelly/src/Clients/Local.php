@@ -24,7 +24,6 @@ use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queries;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
-use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -36,6 +35,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
 use RuntimeException;
@@ -98,7 +98,7 @@ final class Local implements Client
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
 		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
 		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly Clock\Clock $clock,
+		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
@@ -357,7 +357,7 @@ final class Local implements Client
 			if (
 				$cmdResult instanceof DateTimeInterface
 				&& (
-					$this->clock->getNow()->getTimestamp() - $cmdResult->getTimestamp()
+					$this->clock->now()->getTimestamp() - $cmdResult->getTimestamp()
 						< $this->deviceHelper->getStateReadingDelay($device)
 				)
 			) {
@@ -365,7 +365,7 @@ final class Local implements Client
 			}
 		}
 
-		$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->getNow();
+		$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->now();
 
 		$deviceState = $this->deviceConnectionManager->getState($device);
 
@@ -382,7 +382,7 @@ final class Local implements Client
 			$deviceStateTime = $this->deviceConnectionManager->getStateTime($device);
 			assert($deviceStateTime instanceof DateTimeInterface);
 
-			if ($this->clock->getNow()->getTimestamp() - $deviceStateTime->getTimestamp() < self::DEVICE_RECONNECT_COOL_DOWN_TIME) {
+			if ($this->clock->now()->getTimestamp() - $deviceStateTime->getTimestamp() < self::DEVICE_RECONNECT_COOL_DOWN_TIME) {
 				return false;
 			}
 		}
@@ -419,7 +419,7 @@ final class Local implements Client
 						$client->getLastConnectAttempt() === null
 						|| (
 							// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-							$this->clock->getNow()->getTimestamp() - $client->getLastConnectAttempt()->getTimestamp() >= self::RECONNECT_COOL_DOWN_TIME
+							$this->clock->now()->getTimestamp() - $client->getLastConnectAttempt()->getTimestamp() >= self::RECONNECT_COOL_DOWN_TIME
 						)
 					) {
 						$client->connect()
@@ -474,7 +474,7 @@ final class Local implements Client
 
 			$client->readStates()
 				->then(function (API\Messages\Response\Gen2\GetDeviceState $response) use ($device): void {
-					$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->getNow();
+					$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->now();
 
 					$this->processGen2DeviceGetState($device, $response);
 				})
@@ -525,7 +525,7 @@ final class Local implements Client
 				$this->deviceHelper->getPassword($device),
 			)
 				->then(function (API\Messages\Response\Gen1\GetDeviceState $response) use ($device): void {
-					$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->getNow();
+					$this->processedDevicesCommands[$device->getId()->toString()][self::CMD_STATE] = $this->clock->now();
 
 					$this->queue->append(
 						$this->messageBuilder->create(
