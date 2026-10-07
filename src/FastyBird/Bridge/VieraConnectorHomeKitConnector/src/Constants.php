@@ -28,6 +28,8 @@ use FastyBird\Connector\Viera\Constants as VieraConstants;
 final class Constants
 {
 
+	public const string BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX = 'viera-connector-homekit-connector-bridge';
+
 	public const MANUFACTURER = 'FastyBird & Panasonic';
 
 	public const MODEL = 'Panasonic TV';

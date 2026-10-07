@@ -9,7 +9,6 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use FastyBird\Core\Clock;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Clients;
@@ -133,7 +132,7 @@ final class ClientAuthenticationTest extends TestCase
 			#[Override]
 			public function create(JWT\UnencryptedToken $token): Identity\UserIdentity|null
 			{
-				$userId = $token->claims()->get(Constants::TOKEN_CLAIM_USER);
+				$userId = $token->claims()->get(Identity\TokenBuilder::CLAIM_USER);
 				assert(is_string($userId));
 
 				return in_array($token->toString(), $this->persistedTokens, true)

@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Middleware;
 
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -70,7 +70,7 @@ final class UrlFormatTest extends Tests\Cases\Unit\DbTestCase
 			$fixture,
 			(string) $response->getBody(),
 			static fn (string $expectation): string => str_replace(
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/',
 				'/api/v1/',
 				$expectation,
 			),

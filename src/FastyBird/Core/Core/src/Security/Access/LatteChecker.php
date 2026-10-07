@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Security\Access;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\Identity;
 use Nette\Utils;
@@ -169,7 +168,7 @@ final readonly class LatteChecker implements Checker
 			assert(is_string($permission));
 
 			// Parse resource & privilege from permission
-			[$resource, $privilege] = explode(Constants::PERMISSIONS_DELIMITER, $permission) + ['', ''];
+			[$resource, $privilege] = explode(Checker::PERMISSIONS_DELIMITER, $permission) + ['', ''];
 
 			// Remove white spaces
 			$resource = Utils\Strings::trim($resource);

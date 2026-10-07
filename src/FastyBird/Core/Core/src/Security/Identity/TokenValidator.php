@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Security\Identity;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Security\Exceptions;
 use Lcobucci\Clock;
 use Lcobucci\JWT;
@@ -63,10 +62,10 @@ final readonly class TokenValidator
 
 			if (
 				$configuration->validator()->validate($jwtToken, ...$constraints)
-				&& $claims->has(Constants::TOKEN_CLAIM_USER)
-				&& $claims->has(Constants::TOKEN_CLAIM_ROLES)
-				&& is_string($claims->get(Constants::TOKEN_CLAIM_USER))
-				&& Uuid\Uuid::isValid($claims->get(Constants::TOKEN_CLAIM_USER))
+				&& $claims->has(TokenBuilder::CLAIM_USER)
+				&& $claims->has(TokenBuilder::CLAIM_ROLES)
+				&& is_string($claims->get(TokenBuilder::CLAIM_USER))
+				&& Uuid\Uuid::isValid($claims->get(TokenBuilder::CLAIM_USER))
 			) {
 				return $jwtToken;
 			}

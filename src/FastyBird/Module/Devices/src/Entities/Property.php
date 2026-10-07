@@ -17,7 +17,6 @@ namespace FastyBird\Module\Devices\Entities;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
@@ -28,6 +27,7 @@ use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
+use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Utils;
@@ -302,7 +302,7 @@ abstract class Property implements Entity,
 					return strval($item);
 				}, $format));
 
-				if (preg_match(Constants::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
+				if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
 					$this->format = $plainFormat;
 
 					return;
@@ -342,8 +342,8 @@ abstract class Property implements Entity,
 				}, $format));
 
 				if (
-					preg_match(Constants::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
-					|| preg_match(Constants::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
+					preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
+					|| preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
 				) {
 					$this->format = $plainFormat;
 
@@ -607,7 +607,7 @@ abstract class Property implements Entity,
 			return Uuid\Uuid::fromString($this->valueTransformer);
 		}
 
-		if (preg_match(Constants::VALUE_EQUATION_TRANSFORMER, $this->valueTransformer) === 1) {
+		if (preg_match(Transformers\EquationTransformer::PATTERN, $this->valueTransformer) === 1) {
 			if (
 				in_array(
 					$this->dataType,
@@ -659,7 +659,7 @@ abstract class Property implements Entity,
 				$this->valueTransformer = $valueTransformer;
 
 			} elseif (
-				preg_match(Constants::VALUE_EQUATION_TRANSFORMER, $valueTransformer) === 1
+				preg_match(Transformers\EquationTransformer::PATTERN, $valueTransformer) === 1
 				&& in_array(
 					$this->dataType,
 					[
@@ -754,7 +754,7 @@ abstract class Property implements Entity,
 				true,
 			)
 		) {
-			if (preg_match(Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
+			if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
 				return new Formats\NumberRange($format);
 			}
 		} elseif (
@@ -769,9 +769,9 @@ abstract class Property implements Entity,
 				true,
 			)
 		) {
-			if (preg_match(Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
+			if (preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
 				return new Formats\CombinedEnum($format);
-			} elseif (preg_match(Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
+			} elseif (preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
 				return new Formats\StringEnum($format);
 			}
 		}

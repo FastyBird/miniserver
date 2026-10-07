@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Security\Identity;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Security\Exceptions;
 use Lcobucci\JWT;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,6 +16,12 @@ use function reset;
 final readonly class TokenReader
 {
 
+	public const string HEADER_NAME = 'authorization';
+
+	public const string HEADER_PATTERN = '/Bearer\s+(.*)$/i';
+
+	public const string COOKIE_NAME = 'token';
+
 	public function __construct(private readonly TokenValidator $tokenValidator)
 	{
 	}
@@ -26,8 +31,8 @@ final readonly class TokenReader
 	 */
 	public function read(ServerRequestInterface $request): JWT\UnencryptedToken|null
 	{
-		$headerJWT = $request->hasHeader(Constants::TOKEN_HEADER_NAME)
-			? $request->getHeader(Constants::TOKEN_HEADER_NAME)
+		$headerJWT = $request->hasHeader(self::HEADER_NAME)
+			? $request->getHeader(self::HEADER_NAME)
 			: null;
 
 		$headerJWT = is_array($headerJWT) ? reset($headerJWT) : $headerJWT;
@@ -45,7 +50,7 @@ final readonly class TokenReader
 	public function readHeader(string $header): JWT\UnencryptedToken|null
 	{
 		if (
-			preg_match(Constants::TOKEN_HEADER_REGEXP, $header, $matches) === 1
+			preg_match(self::HEADER_PATTERN, $header, $matches) === 1
 			&& $matches[1] !== ''
 		) {
 			$token = $this->tokenValidator->validate($matches[1]);

@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Values\Transformers;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Values\Types;
 use MathSolver\Math;
@@ -20,6 +19,9 @@ use function round;
 final class EquationTransformer
 {
 
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string PATTERN = '/^equation:(?:(?:x=)(?<equation_x>(?:(?:[\d.y]?)*(?:[\+\-\^\*\:\/\(\)])*(?:\s)*)*)){1}(?:\|(?:(?:y=)(?<equation_y>(?:(?:[\d.x]?)*(?:[\+\-\^\*\:\/\(\)])*(?:\s)*)*))){0,1}$/';
+
 	private string|null $equationFrom = null;
 
 	private string|null $equationTo = null;
@@ -29,7 +31,7 @@ final class EquationTransformer
 	 */
 	public function __construct(string $equation)
 	{
-		if (preg_match(Constants::VALUE_EQUATION_TRANSFORMER, $equation, $matches) === 1) {
+		if (preg_match(self::PATTERN, $equation, $matches) === 1) {
 			$this->equationFrom = $matches['equation_x'];
 
 			if (array_key_exists('equation_y', $matches)) {

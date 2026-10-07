@@ -15,11 +15,11 @@
 
 namespace FastyBird\Module\Ui\Controllers;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
@@ -54,8 +54,8 @@ final class ExchangeV1 extends Controllers\Controller
 	 * create, update and delete to them.
 	 */
 	private const array WRITE_ROLES = [
-		Constants::ROLE_MANAGER,
-		Constants::ROLE_ADMINISTRATOR,
+		Identity\User::ROLE_MANAGER,
+		Identity\User::ROLE_ADMINISTRATOR,
 	];
 
 	public function __construct(

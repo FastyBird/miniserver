@@ -3,7 +3,6 @@
 namespace FastyBird\Core\WebSockets\Subscribers;
 
 use Doctrine\DBAL;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
@@ -27,6 +26,12 @@ use function is_string;
  */
 final class Client implements EventDispatcher\EventSubscriberInterface
 {
+
+	public const string HEADER_AUTHORIZATION = 'authorization';
+
+	public const string HEADER_WS_KEY = 'x-ws-key';
+
+	public const string HEADER_ORIGIN = 'origin';
 
 	/** @var array<string> */
 	private array $wsKeys;
@@ -109,7 +114,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 		array $allowedOrigins,
 	): bool
 	{
-		$wsKey = $httpRequest->getHeader(Constants::WS_HEADER_WS_KEY);
+		$wsKey = $httpRequest->getHeader(self::HEADER_WS_KEY);
 
 		if (
 			($wsKey === null && $allowedWsKeys !== [])
@@ -126,7 +131,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			return false;
 		}
 
-		$origin = $httpRequest->getHeader(Constants::WS_HEADER_ORIGIN);
+		$origin = $httpRequest->getHeader(self::HEADER_ORIGIN);
 
 		if (
 			($origin === null && $allowedOrigins !== [])
@@ -143,8 +148,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			return false;
 		}
 
-		$headerToken = $httpRequest->getHeader(Constants::WS_HEADER_AUTHORIZATION);
-		$cookieToken = $httpRequest->getCookie(Constants::ACCESS_TOKEN_COOKIE);
+		$headerToken = $httpRequest->getHeader(self::HEADER_AUTHORIZATION);
+		$cookieToken = $httpRequest->getCookie(Identity\TokenReader::COOKIE_NAME);
 
 		if ($headerToken === null && $cookieToken === null) {
 			$this->logger->warning('Client access token is missing', [

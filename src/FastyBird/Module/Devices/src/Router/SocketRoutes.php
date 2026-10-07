@@ -15,9 +15,9 @@
 
 namespace FastyBird\Module\Devices\Router;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\WebSockets\Wamp;
+use FastyBird\Module\Devices;
 use Nette;
 
 /**
@@ -39,7 +39,7 @@ class SocketRoutes
 	{
 		$router = new Wamp\RouteList();
 		$router[] = new Wamp\WampRoute(
-			'/' . Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+			'/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
 			'DevicesModule:Exchange:',
 		);
 

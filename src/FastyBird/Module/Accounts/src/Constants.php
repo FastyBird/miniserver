@@ -15,7 +15,8 @@
 
 namespace FastyBird\Module\Accounts;
 
-use FastyBird\Core\Constants as CoreConstants;
+use FastyBird\Core\Exchange\Publisher;
+use FastyBird\Core\Security\Identity;
 
 /**
  * Module constants
@@ -31,6 +32,8 @@ final class Constants
 	/**
 	 * MODULE API ROUTING
 	 */
+
+	public const string MODULE_ACCOUNTS_PREFIX = 'accounts-module';
 
 	public const ROUTE_NAME_ME = 'me';
 
@@ -83,17 +86,17 @@ final class Constants
 	 */
 
 	public const DEFAULT_ROLES = [
-		CoreConstants::ROLE_USER,
+		Identity\User::ROLE_USER,
 	];
 
 	public const SINGLE_ROLES = [
-		CoreConstants::ROLE_ADMINISTRATOR,
-		CoreConstants::ROLE_USER,
+		Identity\User::ROLE_ADMINISTRATOR,
+		Identity\User::ROLE_USER,
 	];
 
 	public const NOT_ASSIGNABLE_ROLES = [
-		CoreConstants::ROLE_VISITOR,
-		CoreConstants::ROLE_ANONYMOUS,
+		Identity\User::ROLE_VISITOR,
+		Identity\User::ROLE_ANONYMOUS,
 	];
 
 	/**
@@ -108,7 +111,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
+	public const ROUTING_PREFIX = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.module.document';
 
 	// Accounts
 	public const MESSAGE_BUS_ACCOUNT_DOCUMENT_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.account';

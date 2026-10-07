@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Ui;
 
-use FastyBird\Core\Constants as CoreConstants;
+use FastyBird\Core\Exchange\Publisher;
 
 /**
  * Service constants
@@ -31,6 +31,8 @@ final class Constants
 	/**
 	 * MODULE API ROUTING
 	 */
+
+	public const string MODULE_UI_PREFIX = 'ui-module';
 
 	public const ROUTE_NAME_DASHBOARDS = 'dashboards';
 
@@ -70,7 +72,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
+	public const ROUTING_PREFIX = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.module.document';
 
 	// WIDGETS
 	public const MESSAGE_BUS_WIDGET_DOCUMENT_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.widget';
@@ -127,7 +129,7 @@ final class Constants
 	public const MESSAGE_BUS_DASHBOARD_TAB_DOCUMENT_DELETED_ROUTING_KEY = self::ROUTING_PREFIX . '.deleted.dashboard.tab';
 
 	// ACTIONS
-	public const MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.widget.dataSource';
+	public const MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.widget.dataSource';
 
 	public const MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING
 		= [

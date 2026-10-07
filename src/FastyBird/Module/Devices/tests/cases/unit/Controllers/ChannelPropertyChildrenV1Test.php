@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -77,21 +77,21 @@ final class ChannelPropertyChildrenV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'readDeviceChannel' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/channel.property.children.index.json',
 			],
 			'readChannel' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/channel.property.children.index.channel.json',
 			],
 			'readWithoutChildren' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/24c436f4-a2e4-4d2b-b910-1a3ff785b784/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/24c436f4-a2e4-4d2b-b910-1a3ff785b784/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/channel.property.children.index.empty.json',
@@ -102,35 +102,35 @@ final class ChannelPropertyChildrenV1Test extends Tests\Cases\Unit\DbTestCase
 			'readWrongChannel' => [
 				// Property of channel two, requested through channel one of the same device
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009fa/channels/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readUnknownDevice' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readChannelOfOtherDevice' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/bf4cd870-2aac-45f0-a85e-e1cefd2d6d9a/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readUnknownChannel' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/channels/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/channels/28bc0d38-2f7c-4a71-aa74-27b102f8dfc4/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readMissingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
+				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/channels/6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a/properties/28bc0d38-2f7c-4a71-aa74-27b102f8df4c/children',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',

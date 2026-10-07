@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Middleware;
 
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -72,7 +72,7 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'readAllowed' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/roles',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/roles',
 				RequestMethodInterface::METHOD_GET,
 				'',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
@@ -80,7 +80,7 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Middleware/responses/roles.index.json',
 			],
 			'updateForbidden' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/roles/efbfbdef-bfbd-efbf-bd0f-efbfbd5c4f61',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/roles/efbfbdef-bfbd-efbf-bd0f-efbfbd5c4f61',
 				RequestMethodInterface::METHOD_PATCH,
 				__DIR__ . '/../../../fixtures/requests/roles.update.json',
 				'Bearer ' . self::USER_TOKEN,

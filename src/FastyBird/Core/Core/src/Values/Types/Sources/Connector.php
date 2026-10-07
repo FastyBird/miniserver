@@ -2,38 +2,36 @@
 
 namespace FastyBird\Core\Values\Types\Sources;
 
-use FastyBird\Core\Constants;
-
 /**
  * Connectors sources types
  */
 enum Connector: string implements Source
 {
 
-	case NOT_SPECIFIED = Constants::NOT_SPECIFIED_SOURCE;
+	case NOT_SPECIFIED = '*';
 
-	case FB_BUS = Constants::CONNECTOR_FB_BUS_SOURCE;
+	case FB_BUS = 'com.fastybird.fb-bus-connector';
 
-	case FB_MQTT = Constants::CONNECTOR_FB_MQTT_SOURCE;
+	case FB_MQTT = 'com.fastybird.fb-mqtt-connector';
 
-	case SHELLY = Constants::CONNECTOR_SHELLY_SOURCE;
+	case SHELLY = 'com.fastybird.shelly-connector';
 
-	case TUYA = Constants::CONNECTOR_TUYA_SOURCE;
+	case TUYA = 'com.fastybird.tuya-connector';
 
-	case SONOFF = Constants::CONNECTOR_SONOFF_SOURCE;
+	case SONOFF = 'com.fastybird.sonoff-connector';
 
-	case MODBUS = Constants::CONNECTOR_MODBUS_SOURCE;
+	case MODBUS = 'com.fastybird.modbus-connector';
 
-	case HOMEKIT = Constants::CONNECTOR_HOMEKIT_SOURCE;
+	case HOMEKIT = 'com.fastybird.homekit-connector';
 
-	case VIRTUAL = Constants::CONNECTOR_VIRTUAL_SOURCE;
+	case VIRTUAL = 'com.fastybird.virtual-connector';
 
-	case TERMINAL = Constants::CONNECTOR_TERMINAL_SOURCE;
+	case TERMINAL = 'com.fastybird.terminal-connector';
 
-	case VIERA = Constants::CONNECTOR_VIERA_SOURCE;
+	case VIERA = 'com.fastybird.viera-connector';
 
-	case NS_PANEL = Constants::CONNECTOR_NS_PANEL_SOURCE;
+	case NS_PANEL = 'com.fastybird.ns-panel-connector';
 
-	case ZIGBEE2MQTT = Constants::CONNECTOR_ZIGBEE2MQTT_SOURCE;
+	case ZIGBEE2MQTT = 'com.fastybird.zigbee2mqtt-connector';
 
 }

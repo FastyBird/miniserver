@@ -15,7 +15,7 @@
 
 namespace FastyBird\Module\Devices;
 
-use FastyBird\Core\Constants as CoreConstants;
+use FastyBird\Core\Exchange\Publisher;
 
 /**
  * Service constants
@@ -31,6 +31,8 @@ final class Constants
 	/**
 	 * MODULE API ROUTING
 	 */
+
+	public const string MODULE_DEVICES_PREFIX = 'devices-module';
 
 	public const ROUTE_NAME_DEVICES = 'devices';
 
@@ -148,7 +150,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
+	public const ROUTING_PREFIX = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.module.document';
 
 	public const MESSAGE_BUS_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.';
 
@@ -267,17 +269,17 @@ final class Constants
 	public const MESSAGE_BUS_CONNECTOR_CONTROL_DOCUMENT_DELETED_ROUTING_KEY = self::ROUTING_PREFIX . '.deleted.connector.control';
 
 	// ACTIONS
-	public const MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.connector.control';
+	public const MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.connector.control';
 
-	public const MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.connector.property';
+	public const MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.connector.property';
 
-	public const MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.device.control';
+	public const MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.device.control';
 
-	public const MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.device.property';
+	public const MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.device.property';
 
-	public const MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.channel.control';
+	public const MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.channel.control';
 
-	public const MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.action.channel.property';
+	public const MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY = Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.action.channel.property';
 
 	public const MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING
 		= [
@@ -317,5 +319,16 @@ final class Constants
 			Entities\Channels\Properties\Property::class => self::MESSAGE_BUS_CHANNEL_PROPERTY_DOCUMENT_DELETED_ROUTING_KEY,
 			Entities\Channels\Controls\Control::class => self::MESSAGE_BUS_CHANNEL_CONTROL_DOCUMENT_DELETED_ROUTING_KEY,
 		];
+
+	/**
+	 * VALUE FORMAT
+	 */
+
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_NUMBER_RANGE = '/^(?:(?:(?:i8|u8|i16|u16|i32|u32|f){1}\|)?(?:(?:\-)?(?:\d)*(?:.(?:\d)+)?))?(?:\:(?:(?:(?:i8|u8|i16|u16|i32|u32|f){1}\|)?(?:\d)*(?:.(?:\d)+)?)){1}$/';
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_STRING_ENUM = '/^(?:[a-zA-Z0-9+°](?:[a-zA-Z0-9-?_?:?.+\+\/°])*)(?:,(?:[a-zA-Z0-9+°](?:[a-zA-Z0-9-?_?:?.+\+\/°])*))*(?:,)?$/u';
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_COMBINED_ENUM = '/^(?:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*)(?:\:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*){2}(?:,(?:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*)(?:\:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*){2})*$/u';
 
 }

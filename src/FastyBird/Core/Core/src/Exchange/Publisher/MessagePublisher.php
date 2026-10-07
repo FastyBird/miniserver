@@ -11,6 +11,8 @@ use FastyBird\Core\Values\Types\Sources;
 interface MessagePublisher
 {
 
+	public const string ROUTING_KEY_PREFIX = 'fb.exchange';
+
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,

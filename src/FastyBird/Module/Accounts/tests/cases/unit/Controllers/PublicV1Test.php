@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -66,7 +66,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'request' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/public/account.identities.passwordRequest.json',
 				),
@@ -77,7 +77,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'missingRequired' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/public/account.identities.passwordRequest.missing.required.json',
 				),
@@ -85,7 +85,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/public/account.identities.passwordRequest.missing.required.json',
 			],
 			'invalidType' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/public/account.identities.passwordRequest.invalidType.json',
 				),
@@ -93,7 +93,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'unknown' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/public/account.identities.passwordRequest.invalid.json',
 				),
@@ -101,7 +101,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'deleted' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/public/account.identities.passwordRequest.deleted.json',
 				),
@@ -109,7 +109,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'blocked' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/public/account.identities.passwordRequest.blocked.json',
 				),
@@ -117,7 +117,7 @@ final class PublicV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/public/account.identities.passwordRequest.blocked.json',
 			],
 			'notActivated' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
+				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/reset-identity',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/public/account.identities.passwordRequest.notActivated.json',
 				),

@@ -3,10 +3,10 @@
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Controllers;
 
 use Error;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -35,7 +35,7 @@ use function sprintf;
 final class CrossScopeLinksTest extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const string PREFIX = '/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1';
+	private const string PREFIX = '/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1';
 
 	private const string GENERIC_CONNECTOR = '17c59dfa-2edd-438e-8c49-faa4e38e5a5e';
 

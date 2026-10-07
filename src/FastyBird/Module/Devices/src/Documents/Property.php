@@ -16,16 +16,17 @@
 namespace FastyBird\Module\Devices\Documents;
 
 use DateTimeInterface;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Formats;
+use FastyBird\Core\Values\Transformers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
+use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
@@ -289,7 +290,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 			return $this->valueTransformer;
 		}
 
-		if (preg_match(Constants::VALUE_EQUATION_TRANSFORMER, $this->valueTransformer) === 1) {
+		if (preg_match(Transformers\EquationTransformer::PATTERN, $this->valueTransformer) === 1) {
 			if (
 				in_array(
 					$this->dataType,
@@ -398,7 +399,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 				}, $format));
 			}
 
-			if (preg_match(Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
+			if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
 				return new Formats\NumberRange($format);
 			}
 		} elseif (
@@ -429,9 +430,9 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 				}, $format));
 			}
 
-			if (preg_match(Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
+			if (preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
 				return new Formats\CombinedEnum($format);
-			} elseif (preg_match(Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
+			} elseif (preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
 				return new Formats\StringEnum($format);
 			}
 		}

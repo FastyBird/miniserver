@@ -2,7 +2,6 @@
 
 namespace FastyBird\Core\Security\Subscribers;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Presenters\Events;
 use FastyBird\Core\Security\Exceptions;
 use FastyBird\Core\Security\Identity;
@@ -64,7 +63,7 @@ final readonly class Application implements EventDispatcher\EventSubscriberInter
 	{
 		$request = $this->requestFactory->fromGlobals();
 
-		$token = $request->getCookie(Constants::ACCESS_TOKEN_COOKIE);
+		$token = $request->getCookie(Identity\TokenReader::COOKIE_NAME);
 
 		if (is_string($token)) {
 			$token = $this->tokenValidator->validate($token);

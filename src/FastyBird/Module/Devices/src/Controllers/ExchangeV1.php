@@ -15,13 +15,14 @@
 
 namespace FastyBird\Module\Devices\Controllers;
 
-use FastyBird\Core\Constants;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Entities\Topics;
@@ -57,8 +58,8 @@ final class ExchangeV1 extends Controllers\Controller
 	 * ChannelPropertiesV1) is limited to them.
 	 */
 	private const array WRITE_ROLES = [
-		Constants::ROLE_MANAGER,
-		Constants::ROLE_ADMINISTRATOR,
+		Identity\User::ROLE_MANAGER,
+		Identity\User::ROLE_ADMINISTRATOR,
 	];
 
 	public function __construct(
@@ -428,11 +429,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -446,11 +447,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 
@@ -521,11 +522,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -539,11 +540,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 
@@ -614,11 +615,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -632,11 +633,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 

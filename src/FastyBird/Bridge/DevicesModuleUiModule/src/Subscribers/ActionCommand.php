@@ -16,9 +16,9 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
-use FastyBird\Core\Constants;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -85,7 +85,7 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 
 		$data = [];
 
-		if ($value !== Constants::VALUE_NOT_SET) {
+		if ($value !== Utilities\Value::NOT_SET) {
 			$data[DevicesStates\Property::EXPECTED_VALUE_FIELD] = $value;
 		}
 
