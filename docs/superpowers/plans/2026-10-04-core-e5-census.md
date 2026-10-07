@@ -480,10 +480,23 @@ hook, the event with no listener is dispatched first, then the one `Client` hand
 
 - **Core.** `Subscribers\Client` keeps `getSubscribedEvents()`, with
   `[ClientConnected::class => ['clientConnected', -10], MessageReceived::class => ['incomingMessage', -10]]`.
-- **Each module.** A new `EventSubscriberInterface` service in each module subscribes to
-  `ServerCreated` at the priority in row 1 and calls `Exchange\Consumers\Container::enable(<its
-  SocketsBridge>)`. These are the "listener services and tags" in #638's DI declaration;
-  contributte/event-dispatcher collects subscribers by type.
+- **Each module** -- *amended by escalation #658*
+  ([resolution](https://github.com/FastyBird/miniserver/issues/658#issuecomment-6048479996)).
+  - The census proposed a new `EventSubscriberInterface` service in each module, collected by
+    contributte/event-dispatcher by type. contributte is registered only in the 3 production
+    containers. Every package test container has Core's fallback dispatcher, which collects nothing,
+    so the enablers would stop running in the 19 test containers that run them today, and X4's throw
+    would disappear.
+  - Instead, Devices, Ui and DevicesModuleUiModule each register, in `loadConfiguration()` and
+    unconditionally, one `final` invokable listener, `Subscribers\EnableSocketsBridge`, whose
+    `__invoke(ServerCreated)` calls `Exchange\Consumers\Container::enable(<its SocketsBridge>)`.
+    It is tagged `WebSocketsExtension::SERVER_CREATED_LISTENER_TAG`
+    (`fastybird.core.webSockets.serverCreatedListener`), with the priority of row 1 as the tag
+    value, and it does **not** implement `EventSubscriberInterface`.
+  - `WebSocketsExtension::beforeCompile()` adds, for each tagged service, an
+    `addListener(ServerCreated::class, LazyListener(<service>, '__invoke', <container>), <priority>)`
+    setup on the autowired Symfony dispatcher, contributte's in production and Core's fallback
+    elsewhere. These are the "listener services and tags" in #638's DI declaration.
 - **Why the priorities are explicit.** The Symfony dispatcher runs higher priorities first and
   breaks ties by registration order, and registration order is definition order, which differs
   between containers (X4). Only explicit priorities make the order container-independent.
