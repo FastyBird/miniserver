@@ -74,7 +74,7 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_OK,
 			],
 			'readAllInvalid' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards',
 				'Bearer ' . VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 			],

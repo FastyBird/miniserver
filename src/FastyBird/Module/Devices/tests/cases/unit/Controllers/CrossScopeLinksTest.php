@@ -35,7 +35,7 @@ use function sprintf;
 final class CrossScopeLinksTest extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const string PREFIX = '/api/' . Constants::MODULE_DEVICES_PREFIX . '/v1';
+	private const string PREFIX = '/api/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1';
 
 	private const string GENERIC_CONNECTOR = '17c59dfa-2edd-438e-8c49-faa4e38e5a5e';
 

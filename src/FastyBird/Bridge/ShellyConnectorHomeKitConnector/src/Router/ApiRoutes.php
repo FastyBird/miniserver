@@ -49,12 +49,12 @@ class ApiRoutes
 
 	public function registerRoutes(Routing\Router $router): void
 	{
-		$routes = $router->group('/' . Constants::ROUTER_API_PREFIX, function (
+		$routes = $router->group('/' . \FastyBird\Core\Http\Routing\Router::API_PREFIX, function (
 			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
 				$group->group(
-					'/' . Constants::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
+					'/' . \FastyBird\Bridge\ShellyConnectorHomeKitConnector\Constants::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
 					function (
 						Routing\RouteCollector $group,
 					): void {

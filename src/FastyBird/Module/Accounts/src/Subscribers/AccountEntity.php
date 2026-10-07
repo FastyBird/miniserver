@@ -76,11 +76,11 @@ final class AccountEntity implements Common\EventSubscriber
 			if (
 				$object instanceof Entities\Accounts\Account
 				&& $this->enforcerFactory->getEnforcer()->getUsersForRole(
-					Constants::ROLE_ADMINISTRATOR,
+					\FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR,
 				) === []
 				&& !$this->enforcerFactory->getEnforcer()->hasRoleForUser(
 					$object->getId()->toString(),
-					Constants::ROLE_ADMINISTRATOR,
+					\FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR,
 				)
 			) {
 				throw new AccountsExceptions\InvalidState('First account have to be an administrator account');

@@ -187,7 +187,7 @@ final class SessionV1 extends BaseV1
 				'token' => $this->createToken(
 					$this->user->getId() ?? Uuid\Uuid::uuid4(),
 					$this->enforcerFactory->getEnforcer()->getRolesForUser(
-						$this->user->getId()?->toString() ?? Constants::USER_ANONYMOUS,
+						$this->user->getId()?->toString() ?? \FastyBird\Core\Security\Identity\User::ANONYMOUS_ID,
 					),
 					$validTill,
 				),
@@ -323,7 +323,7 @@ final class SessionV1 extends BaseV1
 				'token' => $this->createToken(
 					$this->user->getId() ?? Uuid\Uuid::uuid4(),
 					$this->enforcerFactory->getEnforcer()->getRolesForUser(
-						$this->user->getId()?->toString() ?? Constants::USER_ANONYMOUS,
+						$this->user->getId()?->toString() ?? \FastyBird\Core\Security\Identity\User::ANONYMOUS_ID,
 					),
 					$validTill,
 				),

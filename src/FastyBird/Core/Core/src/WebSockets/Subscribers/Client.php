@@ -109,7 +109,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 		array $allowedOrigins,
 	): bool
 	{
-		$wsKey = $httpRequest->getHeader(Constants::WS_HEADER_WS_KEY);
+		$wsKey = $httpRequest->getHeader(\FastyBird\Core\WebSockets\Subscribers\Client::HEADER_WS_KEY);
 
 		if (
 			($wsKey === null && $allowedWsKeys !== [])
@@ -126,7 +126,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			return false;
 		}
 
-		$origin = $httpRequest->getHeader(Constants::WS_HEADER_ORIGIN);
+		$origin = $httpRequest->getHeader(\FastyBird\Core\WebSockets\Subscribers\Client::HEADER_ORIGIN);
 
 		if (
 			($origin === null && $allowedOrigins !== [])
@@ -143,8 +143,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			return false;
 		}
 
-		$headerToken = $httpRequest->getHeader(Constants::WS_HEADER_AUTHORIZATION);
-		$cookieToken = $httpRequest->getCookie(Constants::ACCESS_TOKEN_COOKIE);
+		$headerToken = $httpRequest->getHeader(\FastyBird\Core\WebSockets\Subscribers\Client::HEADER_AUTHORIZATION);
+		$cookieToken = $httpRequest->getCookie(\FastyBird\Core\Security\Identity\TokenReader::COOKIE_NAME);
 
 		if ($headerToken === null && $cookieToken === null) {
 			$this->logger->warning('Client access token is missing', [

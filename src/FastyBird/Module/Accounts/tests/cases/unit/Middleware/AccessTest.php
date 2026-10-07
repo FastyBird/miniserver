@@ -72,7 +72,7 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'readAllowed' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/roles',
+				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/roles',
 				RequestMethodInterface::METHOD_GET,
 				'',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
@@ -80,7 +80,7 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Middleware/responses/roles.index.json',
 			],
 			'updateForbidden' => [
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/roles/efbfbdef-bfbd-efbf-bd0f-efbfbd5c4f61',
+				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/roles/efbfbdef-bfbd-efbf-bd0f-efbfbd5c4f61',
 				RequestMethodInterface::METHOD_PATCH,
 				__DIR__ . '/../../../fixtures/requests/roles.update.json',
 				'Bearer ' . self::USER_TOKEN,

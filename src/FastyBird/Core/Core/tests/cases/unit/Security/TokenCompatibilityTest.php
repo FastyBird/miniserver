@@ -63,20 +63,20 @@ final class TokenCompatibilityTest extends BaseTestCase
 
 		$read = $this->container->getByType(Identity\TokenReader::class)
 			->read(new ServerRequest('GET', 'http://localhost/api/v1', [
-				Constants::TOKEN_HEADER_NAME => 'Bearer ' . $token->toString(),
+				\FastyBird\Core\Security\Identity\TokenReader::HEADER_NAME => 'Bearer ' . $token->toString(),
 			]));
 
 		self::assertInstanceOf(JWT\UnencryptedToken::class, $read);
 		self::assertSame($token->toString(), $read->toString());
-		self::assertSame(self::USER, $read->claims()->get(Constants::TOKEN_CLAIM_USER));
-		self::assertSame(['administrator', 'user'], $read->claims()->get(Constants::TOKEN_CLAIM_ROLES));
+		self::assertSame(self::USER, $read->claims()->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER));
+		self::assertSame(['administrator', 'user'], $read->claims()->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES));
 		self::assertSame('com.fastybird.auth-module', $read->claims()->get(JWT\Token\RegisteredClaims::ISSUER));
 		self::assertEquals($now, $read->claims()->get(JWT\Token\RegisteredClaims::ISSUED_AT));
 
 		$validated = $this->container->getByType(Identity\TokenValidator::class)->validate($token->toString());
 
 		self::assertInstanceOf(JWT\UnencryptedToken::class, $validated);
-		self::assertSame(self::USER, $validated->claims()->get(Constants::TOKEN_CLAIM_USER));
+		self::assertSame(self::USER, $validated->claims()->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER));
 	}
 
 	/**
@@ -150,7 +150,7 @@ final class TokenCompatibilityTest extends BaseTestCase
 
 		self::assertInstanceOf(JWT\UnencryptedToken::class, $token);
 		self::assertSame($minted, $token->toString());
-		self::assertSame('5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34', $token->claims()->get(Constants::TOKEN_CLAIM_USER));
+		self::assertSame('5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34', $token->claims()->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER));
 	}
 
 	/**
@@ -196,8 +196,8 @@ final class TokenCompatibilityTest extends BaseTestCase
 			'jti' => $claims->get(JWT\Token\RegisteredClaims::ID),
 			'iat' => $issuedAt instanceof DateTimeImmutable ? $issuedAt->format('Y-m-d\TH:i:s.uP') : null,
 			'exp' => $expiresAt instanceof DateTimeImmutable ? $expiresAt->format('Y-m-d\TH:i:sP') : null,
-			'user' => $claims->get(Constants::TOKEN_CLAIM_USER),
-			'roles' => $claims->get(Constants::TOKEN_CLAIM_ROLES),
+			'user' => $claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER),
+			'roles' => $claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES),
 		];
 	}
 

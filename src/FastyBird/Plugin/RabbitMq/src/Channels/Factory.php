@@ -97,7 +97,7 @@ final class Factory implements Exchange\Factory
 		$channel->queueBind(
 			$queueName,
 			$this->exchangeName,
-			Constants::MESSAGE_BUS_PREFIX_KEY . '.#',
+			\FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.#',
 		);
 
 		$channel->consume(

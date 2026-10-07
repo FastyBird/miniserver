@@ -180,9 +180,9 @@ class Create extends Console\Command\Command
 		$repeat = true;
 
 		if ($input->hasArgument('role') && in_array($input->getArgument('role'), [
-			Constants::ROLE_USER,
-			Constants::ROLE_MANAGER,
-			Constants::ROLE_ADMINISTRATOR,
+			\FastyBird\Core\Security\Identity\User::ROLE_USER,
+			\FastyBird\Core\Security\Identity\User::ROLE_MANAGER,
+			\FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR,
 		], true)
 		) {
 			$findRoleQuery = new Queries\Entities\FindRoles();
@@ -215,15 +215,15 @@ class Create extends Console\Command\Command
 
 				switch ($roleName) {
 					case 'U':
-						$roleName = Constants::ROLE_USER;
+						$roleName = \FastyBird\Core\Security\Identity\User::ROLE_USER;
 
 						break;
 					case 'M':
-						$roleName = Constants::ROLE_MANAGER;
+						$roleName = \FastyBird\Core\Security\Identity\User::ROLE_MANAGER;
 
 						break;
 					case 'A':
-						$roleName = Constants::ROLE_ADMINISTRATOR;
+						$roleName = \FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR;
 
 						break;
 				}

@@ -319,8 +319,8 @@ $wampModuleRoutes = static function () use ($boot): array {
 	$routes = [];
 
 	foreach ([
-		'/' . Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
-		'/' . Constants::MODULE_UI_PREFIX . '/v1/exchange',
+		'/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+		'/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
 	] as $path) {
 		$request = $router->match(new Handshake\Request(new Http\UrlScript('ws://localhost' . $path)));
 
@@ -378,8 +378,8 @@ $socketsBridges = static function () use ($boot): array {
 	$loop = EventLoop\Loop::get();
 
 	$topics = [
-		'/' . Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
-		'/' . Constants::MODULE_UI_PREFIX . '/v1/exchange',
+		'/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+		'/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
 	];
 
 	$subscribers = [];

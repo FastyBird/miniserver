@@ -64,14 +64,14 @@ final readonly class UrlFormat implements MiddlewareInterface
 			&& (
 				str_starts_with(
 					$request->getUri()->getPath(),
-					'/' . Constants::ROUTER_API_PREFIX
-					. ($this->usePrefix ? '/' . Constants::MODULE_ACCOUNTS_PREFIX : '')
+					'/' . \FastyBird\Core\Http\Routing\Router::API_PREFIX
+					. ($this->usePrefix ? '/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX : '')
 					. '/v1/session',
 				)
 				|| str_starts_with(
 					$request->getUri()->getPath(),
-					'/' . Constants::ROUTER_API_PREFIX
-					. ($this->usePrefix ? '/' . Constants::MODULE_ACCOUNTS_PREFIX : '')
+					'/' . \FastyBird\Core\Http\Routing\Router::API_PREFIX
+					. ($this->usePrefix ? '/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX : '')
 					. '/v1/me',
 				)
 			)
@@ -104,18 +104,18 @@ final readonly class UrlFormat implements MiddlewareInterface
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/emails',
-				'\/api\/' . Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/emails',
+				'\/api\/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/emails',
+				'\/api\/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/emails',
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/identities',
-				'\/api\/' . Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/identities',
+				'\/api\/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/identities',
+				'\/api\/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/identities',
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/accounts\/' . $this->user->getAccount()->getId()->toString(),
-				'\/api\/' . Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me',
+				'\/api\/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/accounts\/' . $this->user->getAccount()->getId()->toString(),
+				'\/api\/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me',
 				$content,
 			);
 

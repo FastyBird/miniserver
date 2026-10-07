@@ -83,17 +83,17 @@ final class Constants
 	 */
 
 	public const DEFAULT_ROLES = [
-		CoreConstants::ROLE_USER,
+		\FastyBird\Core\Security\Identity\User::ROLE_USER,
 	];
 
 	public const SINGLE_ROLES = [
-		CoreConstants::ROLE_ADMINISTRATOR,
-		CoreConstants::ROLE_USER,
+		\FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR,
+		\FastyBird\Core\Security\Identity\User::ROLE_USER,
 	];
 
 	public const NOT_ASSIGNABLE_ROLES = [
-		CoreConstants::ROLE_VISITOR,
-		CoreConstants::ROLE_ANONYMOUS,
+		\FastyBird\Core\Security\Identity\User::ROLE_VISITOR,
+		\FastyBird\Core\Security\Identity\User::ROLE_ANONYMOUS,
 	];
 
 	/**
@@ -108,7 +108,7 @@ final class Constants
 	 * MODULE MESSAGE BUS
 	 */
 
-	public const ROUTING_PREFIX = CoreConstants::MESSAGE_BUS_PREFIX_KEY . '.module.document';
+	public const ROUTING_PREFIX = \FastyBird\Core\Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.module.document';
 
 	// Accounts
 	public const MESSAGE_BUS_ACCOUNT_DOCUMENT_REPORTED_ROUTING_KEY = self::ROUTING_PREFIX . '.reported.account';

@@ -63,42 +63,42 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'readAll' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/tabs.index.json',
 			],
 			'readAllPaging' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs?page[offset]=1&page[limit]=1',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/tabs.index.paging.json',
 			],
 			'readOne' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/tabs.read.json',
 			],
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsWidgets' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64/relationships/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64/relationships/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/tabs.readRelationships.widgets.json',
 			],
 			'readRelationshipsUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64/relationships/unknown',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
@@ -149,14 +149,14 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'create' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/tabs.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/tabs.create.json',
 			],
 			'missingRequired' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/tabs.create.missing.required.json',
@@ -165,7 +165,7 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/tabs.missing.required.json',
 			],
 			'notUniqueIdentifier' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/tabs.create.notUnique.identifier.json',
@@ -174,7 +174,7 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/attribute.identifier.notUnique.json',
 			],
 			'invalidType' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/tabs.create.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -182,7 +182,7 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'otherDashboard' => [
 				// Body names the first-floor dashboard, the URL names the main one
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/tabs.create.otherDashboard.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -235,7 +235,7 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 		return [
 			'update' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/tabs.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -243,7 +243,7 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'invalidType' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/tabs.update.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -251,7 +251,7 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'idMismatch' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/tabs.update.idMismatch.json'),
 				StatusCodeInterface::STATUS_BAD_REQUEST,
@@ -259,7 +259,7 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'notFound' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/88f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/88f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/tabs.update.notFound.json'),
 				StatusCodeInterface::STATUS_NOT_FOUND,
@@ -311,14 +311,14 @@ final class TabsV1Test extends Tests\Cases\Unit\DbTestCase
 		return [
 			'delete' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/3333dd94-0605-45b5-ac51-c08cfb604e64',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/tabs.delete.json',
 			],
 			'deleteUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/88f4a14f-7f78-4216-99b8-584ab9229f1c',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/tabs/88f4a14f-7f78-4216-99b8-584ab9229f1c',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',

@@ -78,11 +78,11 @@ final class FixtureTokenIdentityTest extends DbTestCase
 		self::assertInstanceOf(Entities\Identities\Identity::class, $resolved);
 		self::assertSame(self::IDENTITY, $resolved->getId()->toString());
 		self::assertSame(
-			$token->claims()->get(Constants::TOKEN_CLAIM_USER),
+			$token->claims()->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER),
 			$resolved->getAccount()->getId()->toString(),
 		);
 		self::assertSame(
-			$token->claims()->get(Constants::TOKEN_CLAIM_ROLES),
+			$token->claims()->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES),
 			$this->getContainer()->getByType(Identity\EnforcerFactory::class)
 				->getEnforcer()
 				->getRolesForUser($resolved->getAccount()->getId()->toString()),

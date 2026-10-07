@@ -64,7 +64,7 @@ final readonly class Application implements EventDispatcher\EventSubscriberInter
 	{
 		$request = $this->requestFactory->fromGlobals();
 
-		$token = $request->getCookie(Constants::ACCESS_TOKEN_COOKIE);
+		$token = $request->getCookie(\FastyBird\Core\Security\Identity\TokenReader::COOKIE_NAME);
 
 		if (is_string($token)) {
 			$token = $this->tokenValidator->validate($token);

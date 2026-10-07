@@ -224,7 +224,7 @@ final readonly class AnnotationChecker implements Checker, CheckRequirements
 			}
 
 			// Parse resource & privilege from permission
-			[$resource, $privilege] = explode(Constants::PERMISSIONS_DELIMITER, $permission) + [null, null];
+			[$resource, $privilege] = explode(\FastyBird\Core\Security\Access\Checker::PERMISSIONS_DELIMITER, $permission) + [null, null];
 
 			// Remove white spaces
 			$resource = $resource !== null ? Utils\Strings::trim($resource) : null;

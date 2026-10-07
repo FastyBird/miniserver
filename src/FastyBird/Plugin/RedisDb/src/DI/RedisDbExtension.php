@@ -66,7 +66,7 @@ class RedisDbExtension extends DI\CompilerExtension
 				'password' => Schema\Expect::string()->nullable(),
 			]),
 			'exchange' => Schema\Expect::structure([
-				'channel' => Schema\Expect::string()->default(Constants::EXCHANGE_CHANNEL_NAME),
+				'channel' => Schema\Expect::string()->default(\FastyBird\Plugin\RedisDb\DI\RedisDbExtension::EXCHANGE_CHANNEL_NAME),
 			]),
 		]);
 	}

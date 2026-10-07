@@ -39,7 +39,7 @@ class SocketRoutes
 	{
 		$router = new Wamp\RouteList();
 		$router[] = new Wamp\WampRoute(
-			'/' . Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+			'/' . \FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
 			'DevicesModule:Exchange:',
 		);
 

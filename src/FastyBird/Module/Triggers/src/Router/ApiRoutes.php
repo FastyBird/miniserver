@@ -55,11 +55,11 @@ class ApiRoutes
 
 	public function registerRoutes(Routing\Router $router): void
 	{
-		$routes = $router->group('/' . Constants::ROUTER_API_PREFIX, function (
+		$routes = $router->group('/' . \FastyBird\Core\Http\Routing\Router::API_PREFIX, function (
 			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
-				$group->group('/' . Constants::MODULE_TRIGGERS_PREFIX, function (
+				$group->group('/' . \FastyBird\Module\Triggers\Constants::MODULE_TRIGGERS_PREFIX, function (
 					Routing\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);

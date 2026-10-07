@@ -66,55 +66,55 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'readAll' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.index.json',
 			],
 			'readAllPaging' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets?page[offset]=1&page[limit]=1',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.index.paging.json',
 			],
 			'readOne' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.read.json',
 			],
 			'readOneWithInclude' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.read.include.json',
 			],
 			'readOneUnknown' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsDisplay' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/display',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/display',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.readRelationships.display.json',
 			],
 			'readRelationshipsDataSources' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/data-sources',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.readRelationships.dataSources.json',
 			],
 			'readRelationshipsGroups' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/groups',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/groups',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.readRelationships.groups.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/unknown',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
@@ -165,14 +165,14 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'create' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.create.json',
 			],
 			'missingRequired' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.missing.required.json',
@@ -182,7 +182,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			// #[Crud(required: true)] on Widget::$display, enforced by the hydrator's CrudReader
 			'missingDisplay' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.missing.display.json',
@@ -191,14 +191,14 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.create.missing.display.json',
 			],
 			'invalidType' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'invalidDisplay' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.invalidDisplay.json',
@@ -252,28 +252,28 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'update' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.json'),
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.update.json',
 			],
 			'invalidType' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'idMismatch' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.idMismatch.json'),
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.identifier.json',
 			],
 			'notFound' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/55553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/55553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.notFound.json'),
 				StatusCodeInterface::STATUS_NOT_FOUND,
@@ -326,7 +326,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_GET,
-			'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/' . $widgetId . '/display',
+			'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/' . $widgetId . '/display',
 			[
 				'authorization' => 'Bearer ' . self::VALID_TOKEN,
 			],
@@ -356,7 +356,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 		return [
 			'createChartGraph' => [
 				RequestMethodInterface::METHOD_POST,
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.chartGraph.json'),
 				StatusCodeInterface::STATUS_CREATED,
 				'6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b01',
@@ -371,7 +371,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Slider takes minimum, maximum and step as required constructor arguments
 			'createSlider' => [
 				RequestMethodInterface::METHOD_POST,
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.slider.json'),
 				StatusCodeInterface::STATUS_CREATED,
 				'6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b03',
@@ -384,7 +384,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'createButton' => [
 				RequestMethodInterface::METHOD_POST,
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.create.button.json'),
 				StatusCodeInterface::STATUS_CREATED,
 				'6d1b4d1c-5a53-4b8e-9a0e-2f7a3c6e1b05',
@@ -394,7 +394,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'updateChartGraph' => [
 				RequestMethodInterface::METHOD_PATCH,
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/widgets.update.display.json'),
 				StatusCodeInterface::STATUS_OK,
 				'15553443-4564-454d-af04-0dfeef08aa96',
@@ -433,7 +433,7 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_POST,
-			'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets',
+			'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets',
 			[
 				'authorization' => 'Bearer ' . self::VALID_TOKEN,
 			],
@@ -511,13 +511,13 @@ final class WidgetsV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'delete' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/widgets.delete.json',
 			],
 			'deleteUnknown' => [
-				'/api/' . Constants::MODULE_UI_PREFIX . '/v1/widgets/11553443-4564-454d-af04-0dfeef08aa96',
+				'/api/' . \FastyBird\Module\Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/11553443-4564-454d-af04-0dfeef08aa96',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',

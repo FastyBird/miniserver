@@ -54,8 +54,8 @@ final class ExchangeV1 extends Controllers\Controller
 	 * create, update and delete to them.
 	 */
 	private const array WRITE_ROLES = [
-		Constants::ROLE_MANAGER,
-		Constants::ROLE_ADMINISTRATOR,
+		\FastyBird\Core\Security\Identity\User::ROLE_MANAGER,
+		\FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR,
 	];
 
 	public function __construct(

@@ -83,7 +83,7 @@ final class CreateAccountTest extends Tests\Cases\Unit\DbTestCase
 			'firstName' => 'Rocky',
 			'email' => 'rocky@balboa.com',
 			'password' => 'someRandomPassword',
-			'role' => Constants::ROLE_USER,
+			'role' => \FastyBird\Core\Security\Identity\User::ROLE_USER,
 		]);
 
 		self::assertSame(0, $result);

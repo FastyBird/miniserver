@@ -70,7 +70,7 @@ final class UrlFormatTest extends Tests\Cases\Unit\DbTestCase
 			$fixture,
 			(string) $response->getBody(),
 			static fn (string $expectation): string => str_replace(
-				'/api/' . Constants::MODULE_ACCOUNTS_PREFIX . '/v1/',
+				'/api/' . \FastyBird\Module\Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/',
 				'/api/v1/',
 				$expectation,
 			),

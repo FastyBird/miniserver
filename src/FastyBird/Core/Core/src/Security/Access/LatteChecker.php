@@ -169,7 +169,7 @@ final readonly class LatteChecker implements Checker
 			assert(is_string($permission));
 
 			// Parse resource & privilege from permission
-			[$resource, $privilege] = explode(Constants::PERMISSIONS_DELIMITER, $permission) + ['', ''];
+			[$resource, $privilege] = explode(\FastyBird\Core\Security\Access\Checker::PERMISSIONS_DELIMITER, $permission) + ['', ''];
 
 			// Remove white spaces
 			$resource = Utils\Strings::trim($resource);

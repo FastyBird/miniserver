@@ -55,8 +55,8 @@ final readonly class TokenBuilder
 			$jwtBuilder->expiresAt($expiration);
 		}
 
-		$jwtBuilder->withClaim(Constants::TOKEN_CLAIM_USER, $userId);
-		$jwtBuilder->withClaim(Constants::TOKEN_CLAIM_ROLES, $roles);
+		$jwtBuilder->withClaim(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER, $userId);
+		$jwtBuilder->withClaim(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES, $roles);
 
 		return $jwtBuilder->getToken($configuration->signer(), $configuration->signingKey());
 	}

@@ -63,10 +63,10 @@ final readonly class TokenValidator
 
 			if (
 				$configuration->validator()->validate($jwtToken, ...$constraints)
-				&& $claims->has(Constants::TOKEN_CLAIM_USER)
-				&& $claims->has(Constants::TOKEN_CLAIM_ROLES)
-				&& is_string($claims->get(Constants::TOKEN_CLAIM_USER))
-				&& Uuid\Uuid::isValid($claims->get(Constants::TOKEN_CLAIM_USER))
+				&& $claims->has(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER)
+				&& $claims->has(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES)
+				&& is_string($claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER))
+				&& Uuid\Uuid::isValid($claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER))
 			) {
 				return $jwtToken;
 			}

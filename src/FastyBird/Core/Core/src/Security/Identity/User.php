@@ -72,7 +72,7 @@ class User
 	public function isInRole(string $role): bool
 	{
 		return $this->enforcerFactory->getEnforcer()->hasRoleForUser(
-			$this->getId()?->toString() ?? Constants::USER_ANONYMOUS,
+			$this->getId()?->toString() ?? \FastyBird\Core\Security\Identity\User::ANONYMOUS_ID,
 			$role,
 		);
 	}
@@ -85,11 +85,11 @@ class User
 	public function getRoles(): array
 	{
 		if (!$this->isLoggedIn()) {
-			return [Constants::ROLE_ANONYMOUS];
+			return [\FastyBird\Core\Security\Identity\User::ROLE_ANONYMOUS];
 		}
 
 		return $this->enforcerFactory->getEnforcer()->getRolesForUser(
-			$this->getId()?->toString() ?? Constants::USER_ANONYMOUS,
+			$this->getId()?->toString() ?? \FastyBird\Core\Security\Identity\User::ANONYMOUS_ID,
 		);
 	}
 
@@ -104,7 +104,7 @@ class User
 	{
 		try {
 			return $this->enforcerFactory->getEnforcer()->enforce(
-				$this->getId()?->toString() ?? Constants::USER_ANONYMOUS,
+				$this->getId()?->toString() ?? \FastyBird\Core\Security\Identity\User::ANONYMOUS_ID,
 				...$rules,
 			);
 		} catch (CasbinExceptions\CasbinException) {

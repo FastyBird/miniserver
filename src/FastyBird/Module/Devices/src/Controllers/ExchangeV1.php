@@ -57,8 +57,8 @@ final class ExchangeV1 extends Controllers\Controller
 	 * ChannelPropertiesV1) is limited to them.
 	 */
 	private const array WRITE_ROLES = [
-		Constants::ROLE_MANAGER,
-		Constants::ROLE_ADMINISTRATOR,
+		\FastyBird\Core\Security\Identity\User::ROLE_MANAGER,
+		\FastyBird\Core\Security\Identity\User::ROLE_ADMINISTRATOR,
 	];
 
 	public function __construct(
@@ -428,11 +428,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -446,11 +446,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 
@@ -521,11 +521,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -539,11 +539,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 
@@ -614,11 +614,11 @@ final class ExchangeV1 extends Controllers\Controller
 			if ($entity->getSet() !== null) {
 				$data = [];
 
-				if ($entity->getSet()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getActualValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
 				}
 
-				if ($entity->getSet()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getSet()->getExpectedValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
 				}
 
@@ -632,11 +632,11 @@ final class ExchangeV1 extends Controllers\Controller
 			} elseif ($entity->getWrite() !== null) {
 				$data = [];
 
-				if ($entity->getWrite()->getActualValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getActualValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
 				}
 
-				if ($entity->getWrite()->getExpectedValue() !== Constants::VALUE_NOT_SET) {
+				if ($entity->getWrite()->getExpectedValue() !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
 				}
 

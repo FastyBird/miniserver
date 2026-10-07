@@ -85,7 +85,7 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 
 		$data = [];
 
-		if ($value !== Constants::VALUE_NOT_SET) {
+		if ($value !== \FastyBird\Core\Values\Utilities\Value::NOT_SET) {
 			$data[DevicesStates\Property::EXPECTED_VALUE_FIELD] = $value;
 		}
 

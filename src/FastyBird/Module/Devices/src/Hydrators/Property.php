@@ -164,8 +164,8 @@ abstract class Property extends Hydrators\Hydrator
 				}, $rawFormat));
 
 				if (
-					preg_match(Constants::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
-					|| preg_match(Constants::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
+					preg_match(\FastyBird\Module\Devices\Constants::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
+					|| preg_match(\FastyBird\Module\Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
 				) {
 					return $plainFormat;
 				}
@@ -207,7 +207,7 @@ abstract class Property extends Hydrators\Hydrator
 					return strval($item);
 				}, $rawFormat));
 
-				if (preg_match(Constants::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
+				if (preg_match(\FastyBird\Module\Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
 					return $plainFormat;
 				}
 

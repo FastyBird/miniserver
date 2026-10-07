@@ -25,11 +25,11 @@ final class IdentityFactory implements IdentityProvider
 	{
 		$claims = $token->claims();
 
-		return is_string($claims->get(Constants::TOKEN_CLAIM_USER))
-		&& is_array($claims->get(Constants::TOKEN_CLAIM_ROLES))
+		return is_string($claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER))
+		&& is_array($claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES))
 			? new PlainIdentity(
-				$claims->get(Constants::TOKEN_CLAIM_USER),
-				$claims->get(Constants::TOKEN_CLAIM_ROLES),
+				$claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_USER),
+				$claims->get(\FastyBird\Core\Security\Identity\TokenBuilder::CLAIM_ROLES),
 			)
 			: null;
 	}
