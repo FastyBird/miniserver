@@ -79,7 +79,8 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.index.json',
 			],
 			'readAllPaging' => [
-				'/api/' . ShellyConnectorHomeKitConnector\Constants::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges?page[offset]=1&page[limit]=1',
+				'/api/' . ShellyConnectorHomeKitConnector\Constants::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX
+					. '/v1/bridges?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.index.paging.json',
