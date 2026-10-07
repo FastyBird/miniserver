@@ -22,6 +22,7 @@ use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Symfony\Component\EventDispatcher;
 use Throwable;
 use function array_key_exists;
 use function is_array;
@@ -565,6 +566,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 			Router\SocketRoutes::createRouter(),
 			$controllerFactory,
 			new Clients\Storage(),
+			new EventDispatcher\EventDispatcher(),
 		);
 
 		$application->handleMessage(

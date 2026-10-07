@@ -7,23 +7,29 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Wamp;
 use Nette\DI;
 use Nette\Http;
 use PHPUnit\Framework\TestCase;
-use Throwable;
+use Symfony\Component\EventDispatcher;
 
 /**
- * Application::$onOpen/$onClose/$onMessage/$onError used to fire only through
- * SmartObject::__call. These guard that Utils\Arrays::invoke() reaches every registered handler
- * with the same arguments the old magic call did.
+ * Application's open, close, message and error hooks used to fire only through
+ * SmartObject::__call, and then through Utils\Arrays::invoke(). Since #638 they are the
+ * ConnectionOpened, ConnectionClosed, ApplicationMessageReceived and ApplicationFailed events;
+ * these guard that a listener of each gets the same arguments the old handlers did.
  */
 final class ApplicationTest extends TestCase
 {
 
+	private EventDispatcher\EventDispatcher $dispatcher;
+
 	private function createApplication(): Controllers\Application
 	{
+		$this->dispatcher = new EventDispatcher\EventDispatcher();
+
 		$router = $this->createMock(Wamp\WampRouter::class);
 		$controllerFactory = new Controllers\ControllerFactory(new DI\Container());
 		$clientsStorage = new Clients\Storage();
@@ -32,6 +38,7 @@ final class ApplicationTest extends TestCase
 			$router,
 			$controllerFactory,
 			$clientsStorage,
+			$this->dispatcher,
 		) extends Controllers\Application
 		{
 
@@ -55,13 +62,12 @@ final class ApplicationTest extends TestCase
 		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$received = [];
-		$application->onOpen[] = static function (
-			Controllers\Application $a,
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-		) use (&$received): void {
-			$received = [$a, $c, $r];
-		};
+		$this->dispatcher->addListener(
+			Events\ConnectionOpened::class,
+			static function (Events\ConnectionOpened $event) use (&$received): void {
+				$received = [$event->getApplication(), $event->getClient(), $event->getHttpRequest()];
+			},
+		);
 
 		$application->handleOpen($client, $httpRequest);
 
@@ -77,13 +83,12 @@ final class ApplicationTest extends TestCase
 		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$received = [];
-		$application->onClose[] = static function (
-			Controllers\Application $a,
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-		) use (&$received): void {
-			$received = [$a, $c, $r];
-		};
+		$this->dispatcher->addListener(
+			Events\ConnectionClosed::class,
+			static function (Events\ConnectionClosed $event) use (&$received): void {
+				$received = [$event->getApplication(), $event->getClient(), $event->getHttpRequest()];
+			},
+		);
 
 		$application->handleClose($client, $httpRequest);
 
@@ -97,14 +102,12 @@ final class ApplicationTest extends TestCase
 		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$received = [];
-		$application->onMessage[] = static function (
-			Controllers\Application $a,
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-			string $m,
-		) use (&$received): void {
-			$received = [$a, $c, $r, $m];
-		};
+		$this->dispatcher->addListener(
+			Events\ApplicationMessageReceived::class,
+			static function (Events\ApplicationMessageReceived $event) use (&$received): void {
+				$received = [$event->getApplication(), $event->getClient(), $event->getHttpRequest(), $event->getMessage()];
+			},
+		);
 
 		$application->handleMessage($client, $httpRequest, 'payload');
 
@@ -127,14 +130,12 @@ final class ApplicationTest extends TestCase
 		};
 
 		$received = [];
-		$application->onError[] = static function (
-			Controllers\Application $a,
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-			Throwable $e,
-		) use (&$received): void {
-			$received = [$a, $c, $r, $e];
-		};
+		$this->dispatcher->addListener(
+			Events\ApplicationFailed::class,
+			static function (Events\ApplicationFailed $event) use (&$received): void {
+				$received = [$event->getApplication(), $event->getClient(), $event->getHttpRequest(), $event->getException()];
+			},
+		);
 
 		$application->handleError($client, $httpRequest, $exception);
 

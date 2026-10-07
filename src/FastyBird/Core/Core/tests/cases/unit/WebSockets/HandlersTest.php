@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log;
 use ReflectionMethod;
 use RuntimeException;
+use Symfony\Component\EventDispatcher;
 use Throwable;
 
 /**
@@ -52,6 +53,7 @@ final class HandlersTest extends TestCase
 		$wrapper = new Server\Wrapper(
 			$this->createMock(Controllers\Dispatcher::class),
 			new Clients\Storage(),
+			new EventDispatcher\EventDispatcher(),
 		);
 
 		$wsApplication = $this->createMock(Server\ServerWrapper::class);
@@ -98,6 +100,7 @@ final class HandlersTest extends TestCase
 		$wrapper = new Server\Wrapper(
 			$this->createMock(Controllers\Dispatcher::class),
 			new Clients\Storage(),
+			new EventDispatcher\EventDispatcher(),
 		);
 
 		$wsApplication = $this->createMock(Server\ServerWrapper::class);

@@ -131,14 +131,12 @@ $serverLifecycle = static function () use ($boot, $short): array {
 
 	foreach ([
 		Events\MessageProcessed::class,
-		Events\ClientConnectEvent::class,
 		Events\ClientConnected::class,
 		Events\ClientDisconnected::class,
 		Events\ClientFailed::class,
 		Events\ConnectionClosed::class,
 		Events\ServerCreated::class,
 		Events\ApplicationFailed::class,
-		Events\IncomingMessage::class,
 		Events\MessageReceived::class,
 		Events\ApplicationMessageReceived::class,
 		Events\ConnectionOpened::class,
