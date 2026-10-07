@@ -8,6 +8,8 @@ namespace FastyBird\Core\Security\Access;
 interface Checker
 {
 
+	public const string PERMISSIONS_DELIMITER = ':';
+
 	public function isAllowed(mixed $element): bool;
 
 }

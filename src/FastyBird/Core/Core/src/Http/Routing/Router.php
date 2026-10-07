@@ -23,6 +23,8 @@ use function strtoupper;
 class Router implements IteratorAggregate
 {
 
+	public const string API_PREFIX = 'api';
+
 	public const string ROUTE = '__route__';
 
 	public const string ROUTING_RESULTS = '__routingResults__';

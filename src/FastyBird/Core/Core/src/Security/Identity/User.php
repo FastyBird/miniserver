@@ -14,6 +14,18 @@ use function func_get_args;
 class User
 {
 
+	public const string ROLE_ANONYMOUS = 'guest';
+
+	public const string ROLE_VISITOR = 'visitor';
+
+	public const string ROLE_USER = 'user';
+
+	public const string ROLE_MANAGER = 'manager';
+
+	public const string ROLE_ADMINISTRATOR = 'administrator';
+
+	public const string ANONYMOUS_ID = 'guest';
+
 	public function __construct(
 		protected readonly UserStorage $storage,
 		protected readonly EnforcerFactory $enforcerFactory,

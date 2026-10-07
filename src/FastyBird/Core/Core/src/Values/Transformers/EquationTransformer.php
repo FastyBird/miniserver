@@ -19,6 +19,9 @@ use function round;
 final class EquationTransformer
 {
 
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string PATTERN = '/^equation:(?:(?:x=)(?<equation_x>(?:(?:[\d.y]?)*(?:[\+\-\^\*\:\/\(\)])*(?:\s)*)*)){1}(?:\|(?:(?:y=)(?<equation_y>(?:(?:[\d.x]?)*(?:[\+\-\^\*\:\/\(\)])*(?:\s)*)*))){0,1}$/';
+
 	private string|null $equationFrom = null;
 
 	private string|null $equationTo = null;

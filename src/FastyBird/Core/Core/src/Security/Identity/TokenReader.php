@@ -16,6 +16,12 @@ use function reset;
 final readonly class TokenReader
 {
 
+	public const string HEADER_NAME = 'authorization';
+
+	public const string HEADER_PATTERN = '/Bearer\s+(.*)$/i';
+
+	public const string COOKIE_NAME = 'token';
+
 	public function __construct(private readonly TokenValidator $tokenValidator)
 	{
 	}

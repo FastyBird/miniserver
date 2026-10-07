@@ -14,6 +14,10 @@ use Throwable;
 final readonly class TokenBuilder
 {
 
+	public const string CLAIM_USER = 'user';
+
+	public const string CLAIM_ROLES = 'roles';
+
 	/**
 	 * @param non-empty-string $tokenSignature
 	 * @param non-empty-string $tokenIssuer

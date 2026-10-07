@@ -27,6 +27,12 @@ use function is_string;
 final class Client implements EventDispatcher\EventSubscriberInterface
 {
 
+	public const string HEADER_AUTHORIZATION = 'authorization';
+
+	public const string HEADER_WS_KEY = 'x-ws-key';
+
+	public const string HEADER_ORIGIN = 'origin';
+
 	/** @var array<string> */
 	private array $wsKeys;
 

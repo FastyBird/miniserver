@@ -36,6 +36,8 @@ use function strval;
 final class Value
 {
 
+	public const string NOT_SET = 'N/A';
+
 	private const string DATE_FORMAT = 'Y-m-d';
 
 	private const string TIME_FORMAT = 'H:i:sP';
