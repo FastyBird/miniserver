@@ -2,26 +2,24 @@
 
 namespace FastyBird\Core\Values\Types\Sources;
 
-use FastyBird\Core\Constants;
-
 /**
  * Bridges sources types
  */
 enum Bridge: string implements Source
 {
 
-	case NOT_SPECIFIED = Constants::NOT_SPECIFIED_SOURCE;
+	case NOT_SPECIFIED = '*';
 
-	case REDISDB_PLUGIN_DEVICES_MODULE = Constants::BRIDGE_REDISDB_PLUGIN_DEVICES_MODULE_SOURCE;
+	case REDISDB_PLUGIN_DEVICES_MODULE = 'com.fastybird.redisdb-plugin-devices-module-bridge';
 
-	case REDISDB_PLUGIN_TRIGGERS_MODULE = Constants::BRIDGE_REDISDB_PLUGIN_TRIGGERS_MODULE_SOURCE;
+	case REDISDB_PLUGIN_TRIGGERS_MODULE = 'com.fastybird.redisdb-plugin-triggers-module-bridge';
 
-	case VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR = Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_SOURCE;
+	case VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR = 'com.fastybird.virtual-thermostat-addon-homekit-connector-bridge';
 
-	case SHELLY_CONNECTOR_HOMEKIT_CONNECTOR = Constants::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_SOURCE;
+	case SHELLY_CONNECTOR_HOMEKIT_CONNECTOR = 'com.fastybird.shelly-connector-homekit-connector-bridge';
 
-	case VIERA_CONNECTOR_HOMEKIT_CONNECTOR = Constants::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_SOURCE;
+	case VIERA_CONNECTOR_HOMEKIT_CONNECTOR = 'com.fastybird.viera-connector-homekit-connector-bridge';
 
-	case DEVICES_MODULE_UI_MODULE = Constants::BRIDGE_DEVICES_MODULE_UI_MODULE_SOURCE;
+	case DEVICES_MODULE_UI_MODULE = 'com.fastybird.devices-module-ui-module-bridge';
 
 }

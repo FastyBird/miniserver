@@ -2,22 +2,20 @@
 
 namespace FastyBird\Core\Values\Types\Sources;
 
-use FastyBird\Core\Constants;
-
 /**
  * Modules sources types
  */
 enum Module: string implements Source
 {
 
-	case NOT_SPECIFIED = Constants::NOT_SPECIFIED_SOURCE;
+	case NOT_SPECIFIED = '*';
 
-	case ACCOUNTS = Constants::MODULE_ACCOUNTS_SOURCE;
+	case ACCOUNTS = 'com.fastybird.accounts-module';
 
-	case DEVICES = Constants::MODULE_DEVICES_SOURCE;
+	case DEVICES = 'com.fastybird.devices-module';
 
-	case TRIGGERS = Constants::MODULE_TRIGGERS_SOURCE;
+	case TRIGGERS = 'com.fastybird.triggers-module';
 
-	case UI = Constants::MODULE_UI_SOURCE;
+	case UI = 'com.fastybird.ui-module';
 
 }

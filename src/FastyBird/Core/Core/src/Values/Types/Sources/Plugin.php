@@ -2,28 +2,26 @@
 
 namespace FastyBird\Core\Values\Types\Sources;
 
-use FastyBird\Core\Constants;
-
 /**
  * Plugins sources types
  */
 enum Plugin: string implements Source
 {
 
-	case NOT_SPECIFIED = Constants::NOT_SPECIFIED_SOURCE;
+	case NOT_SPECIFIED = '*';
 
-	case COUCHDB = Constants::PLUGIN_COUCHDB_SOURCE;
+	case COUCHDB = 'com.fastybird.couchdb-plugin';
 
-	case RABBITMQ = Constants::PLUGIN_RABBITMQ_SOURCE;
+	case RABBITMQ = 'com.fastybird.rabbitmq-plugin';
 
-	case REDISDB = Constants::PLUGIN_REDISDB_SOURCE;
+	case REDISDB = 'com.fastybird.redisdb-plugin';
 
-	case REDISDB_CACHE = Constants::PLUGIN_REDISDB_CACHE_SOURCE;
+	case REDISDB_CACHE = 'com.fastybird.redisdb-cache-plugin';
 
-	case WS_SERVER = Constants::PLUGIN_WS_SERVER_SOURCE;
+	case WS_SERVER = 'com.fastybird.ws-server-plugin';
 
-	case WEB_SERVER = Constants::PLUGIN_WEB_SERVER_SOURCE;
+	case WEB_SERVER = 'com.fastybird.web-server-plugin';
 
-	case API_KEY = Constants::PLUGIN_API_KEY;
+	case API_KEY = 'com.fastybird.api-key-plugin';
 
 }
