@@ -189,10 +189,17 @@ Core is now **capability-first**, following Symfony's component convention.
   capability too; only these 8 genuinely cross-cutting exceptions sit at the shared root;
 - the dissolved runtime namespaces: `Boot\`, `Caching\`, `DI\`, `EventLoop\`, `Presenters\`,
   `UI\`;
-- two root-level classes, `FastyBird\Core\Configuration` and `FastyBird\Core\Constants`,
-  flattened out of their own one-class sub-namespace (a single-class namespace collapses into
-  a root-level class rather than keeping a stuttering `Configuration\Configuration` /
-  `Constants\Constants` shape).
+- one root-level class, `FastyBird\Core\Configuration`, flattened out of its own one-class
+  sub-namespace (a single-class namespace collapses into a root-level class rather than keeping
+  a stuttering `Configuration\Configuration` shape).
+
+There is no root-level `Constants` class any more. E5.10 (#642) dissolved
+`FastyBird\Core\Constants`: a constant lives, typed, on the type that owns its meaning
+(`Http\Routing\Router::API_PREFIX`, `Security\Identity\User::ROLE_ADMINISTRATOR`,
+`Security\Identity\TokenReader::HEADER_NAME`); a value used by one extension only lives in that
+extension (`FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX`); and an extension's
+identity is the literal of its `Values\Types\Sources\*` enum case. Do not add a shared constants
+class back.
 
 ## DI
 
