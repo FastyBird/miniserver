@@ -26,8 +26,9 @@ use const JSON_THROW_ON_ERROR;
  * Characterization of where ServerRuntime::VERSION goes on the wire (census T9 row 1a, T12-11):
  * the X-Powered-By header of the handshake response, of the wrapper's own HTTP close, of the 401
  * a rejected client gets and of the application's close, and the agent field of the WAMP welcome.
- * Every assertion reads the constant, so #637 changing its value edits no assertion here; what
- * it must not change is that each of these places sends it.
+ * Every assertion but one reads the constant, so #637 changing its value edited no assertion
+ * here; what it must not change is that each of these places sends it. The one that does not,
+ * testTheServerVersionOnTheWireIsTheFastyBirdWebSocketsAgent(), pins the value itself.
  */
 final class PoweredByTest extends BaseTestCase
 {
@@ -62,6 +63,34 @@ final class PoweredByTest extends BaseTestCase
 		self::assertSame(Controllers\WampApplication::MSG_WELCOME, $welcome[0]);
 		self::assertSame(1, $welcome[2]);
 		self::assertSame(Server\ServerRuntime::VERSION, $welcome[3]);
+	}
+
+	/**
+	 * The value itself, as census T9 row 1 sets it (#637): FastyBird's own agent string, on the
+	 * handshake response and in the WAMP welcome. The other tests here read the constant, so this
+	 * is the one that pins what the clients actually receive.
+	 *
+	 * @throws DI\MissingServiceException
+	 * @throws Throwable
+	 */
+	public function testTheServerVersionOnTheWireIsTheFastyBirdWebSocketsAgent(): void
+	{
+		$client = $this->client(new Entities\WebSocket(false, false, new Encoding\RFC6455()), $this->handshake());
+
+		$this->container->getByType(Server\Wrapper::class)->handleMessage($client, 'headers already received');
+
+		self::assertStringContainsString(
+			"\r\nX-Powered-By: FastyBird/WebSockets/1.0.0\r\n",
+			implode('', $this->written),
+		);
+
+		self::assertCount(1, $this->sent);
+		self::assertIsString($this->sent[0]);
+
+		$welcome = json_decode($this->sent[0], true, 512, JSON_THROW_ON_ERROR);
+
+		self::assertIsArray($welcome);
+		self::assertSame('FastyBird/WebSockets/1.0.0', $welcome[3]);
 	}
 
 	/**
@@ -146,7 +175,7 @@ final class PoweredByTest extends BaseTestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function handshake(): Handshake\IRequest
+	private function handshake(): Handshake\Request
 	{
 		$request = (new Handshake\RequestFactory())->createHttpRequest(
 			"GET / HTTP/1.1\r\n"
@@ -164,7 +193,7 @@ final class PoweredByTest extends BaseTestCase
 
 	private function client(
 		Entities\WebSocket $webSocket,
-		Handshake\IRequest $request,
+		Handshake\Request $request,
 		bool $headersReceived = true,
 	): Entities\ConnectedClient&MockObject
 	{

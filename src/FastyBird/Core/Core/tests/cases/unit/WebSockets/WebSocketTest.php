@@ -4,6 +4,7 @@ namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
 use Error;
 use FastyBird\Core\WebSockets\Encoding;
+use FastyBird\Core\WebSockets\Encoding\RFC6455;
 use FastyBird\Core\WebSockets\Entities;
 use PHPUnit\Framework\TestCase;
 
@@ -21,19 +22,19 @@ final class WebSocketTest extends TestCase
 
 	public function testHasMessageIsFalseBeforeTheFirstFrameAndTrueOnceSet(): void
 	{
-		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\IProtocol::class));
+		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\RFC6455::class));
 
 		self::assertFalse($webSocket->hasMessage());
 
-		$webSocket->setMessage($this->createMock(Encoding\IMessage::class));
+		$webSocket->setMessage(new RFC6455\Message());
 
 		self::assertTrue($webSocket->hasMessage());
 	}
 
 	public function testDestroyMessageClearsAnAlreadySetMessageWithoutThrowing(): void
 	{
-		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\IProtocol::class));
-		$webSocket->setMessage($this->createMock(Encoding\IMessage::class));
+		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\RFC6455::class));
+		$webSocket->setMessage(new RFC6455\Message());
 
 		$webSocket->destroyMessage();
 
@@ -42,19 +43,19 @@ final class WebSocketTest extends TestCase
 
 	public function testHasFrameIsFalseBeforeTheFirstFrameAndTrueOnceSet(): void
 	{
-		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\IProtocol::class));
+		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\RFC6455::class));
 
 		self::assertFalse($webSocket->hasFrame());
 
-		$webSocket->setFrame($this->createMock(Encoding\IFrame::class));
+		$webSocket->setFrame(new RFC6455\Frame());
 
 		self::assertTrue($webSocket->hasFrame());
 	}
 
 	public function testDestroyFrameClearsAnAlreadySetFrameWithoutThrowing(): void
 	{
-		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\IProtocol::class));
-		$webSocket->setFrame($this->createMock(Encoding\IFrame::class));
+		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\RFC6455::class));
+		$webSocket->setFrame(new RFC6455\Frame());
 
 		$webSocket->destroyFrame();
 
@@ -67,7 +68,7 @@ final class WebSocketTest extends TestCase
 	 */
 	public function testHasMessageNeverThrowsOnAFreshConnection(): void
 	{
-		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\IProtocol::class));
+		$webSocket = new Entities\WebSocket(false, false, $this->createMock(Encoding\RFC6455::class));
 
 		try {
 			$result = $webSocket->hasMessage();

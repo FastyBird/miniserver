@@ -5,6 +5,7 @@ namespace FastyBird\Core\WebSockets\Clients;
 use ArrayIterator;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Exceptions;
+use IteratorAggregate;
 use Override;
 use Psr\Log;
 use Throwable;
@@ -12,11 +13,13 @@ use function sprintf;
 
 /**
  * Storage for manage all connections
+ *
+ * @implements IteratorAggregate<int, Entities\ConnectedClient>
  */
-final class Storage implements IStorage
+final class Storage implements IteratorAggregate
 {
 
-	private Drivers\IDriver $driver;
+	private Drivers\Driver $driver;
 
 	private int|null $ttl = null;
 
@@ -31,19 +34,15 @@ final class Storage implements IStorage
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
-	#[Override]
-	public function setStorageDriver(Drivers\IDriver $driver): void
+	public function setStorageDriver(Drivers\Driver $driver): void
 	{
 		$this->driver = $driver;
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\ClientNotFound
 	 * @throws Exceptions\Storage
 	 */
-	#[Override]
 	public function getClient(int $identifier): Entities\ConnectedClient
 	{
 		try {
@@ -63,11 +62,8 @@ final class Storage implements IStorage
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\Storage
 	 */
-	#[Override]
 	public function addClient(int $identifier, Entities\ConnectedClient $client): void
 	{
 		$this->logger->debug(sprintf('INSERT CLIENT ' . $identifier));
@@ -85,11 +81,8 @@ final class Storage implements IStorage
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\Storage
 	 */
-	#[Override]
 	public function hasClient(int $identifier): bool
 	{
 		try {
@@ -103,11 +96,8 @@ final class Storage implements IStorage
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\Storage
 	 */
-	#[Override]
 	public function removeClient(int $identifier): bool
 	{
 		$this->logger->debug('REMOVE CLIENT ' . $identifier);
@@ -123,11 +113,8 @@ final class Storage implements IStorage
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @throws Exceptions\Storage
 	 */
-	#[Override]
 	public function refreshClient(Entities\ConnectedClient $client): void
 	{
 		if ($this->hasClient($client->getId())) {

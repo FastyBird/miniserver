@@ -12,8 +12,16 @@ use function strlen;
 /**
  * WAMP transport HTTP handshake response formatter
  */
-final class WampResponse implements IResponse
+final class WampResponse
 {
+
+	// HTTP 1.1 response code
+	public const int
+		S101_SWITCHING_PROTOCOLS = 101,
+		S200_OK = 200,
+		S400_BAD_REQUEST = 400,
+		S413_REQUEST_ENTITY_TOO_LARGE = 413,
+		S500_INTERNAL_SERVER_ERROR = 500;
 
 	/** @var int HTTP response code */
 	private int $code = self::S200_OK;
@@ -95,12 +103,11 @@ final class WampResponse implements IResponse
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Sets HTTP response code.
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 */
-	#[Override]
 	public function setCode(int $code, string|null $reason = null): void
 	{
 		if ($code < 100 || $code > 599) {
@@ -115,19 +122,28 @@ final class WampResponse implements IResponse
 		) ? self::$statusTexts[$code] : 'Unknown status'));
 	}
 
-	#[Override]
+	/**
+	 * Returns HTTP response code
+	 */
 	public function getCode(): int
 	{
 		return $this->code;
 	}
 
-	#[Override]
+	/**
+	 * Adds HTTP header
+	 *
+	 * @param string $name  header name
+	 * @param string $value header value
+	 */
 	public function addHeader(string $name, string $value): void
 	{
 		$this->headers[$name] = $value;
 	}
 
-	#[Override]
+	/**
+	 * Returns value of an HTTP header
+	 */
 	public function getHeader(string $header, mixed $default = null): mixed
 	{
 		if (isset($this->headers[$header])) {
@@ -138,21 +154,20 @@ final class WampResponse implements IResponse
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Returns a list of headers to sent
+	 *
+	 * @return array (name => value)
 	 */
-	#[Override]
 	public function getHeaders(): array
 	{
 		return $this->headers;
 	}
 
-	#[Override]
 	public function getReason(): string
 	{
 		return $this->reason;
 	}
 
-	#[Override]
 	public function setBody(string|null $body = null): void
 	{
 		$this->body = $body;

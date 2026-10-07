@@ -3,15 +3,17 @@
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
 use Error;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Tests\Cases\Unit\BaseTestCase;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Events;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use Nette\DI;
+use Nette\Http;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use React\EventLoop;
@@ -72,8 +74,8 @@ final class EventOrderTest extends BaseTestCase
 	/**
 	 * @throws DI\MissingServiceException
 	 * @throws Error
-	 * @throws Exceptions\InvalidArgument
-	 * @throws Exceptions\InvalidState
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
 	 */
 	#[Override]
 	protected function setUp(): void
@@ -142,9 +144,9 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	public function testAnUpgradeDispatchesClientConnectedTwiceThenOpen(): void
 	{
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('doHandshake')
-			->willReturn(new Handshake\WampResponse(Handshake\IResponse::S101_SWITCHING_PROTOCOLS));
+			->willReturn(new Handshake\WampResponse(Handshake\WampResponse::S101_SWITCHING_PROTOCOLS));
 
 		$client = $this->client(new Entities\WebSocket(false, false, $protocol));
 
@@ -183,7 +185,7 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	public function testAMessageDispatchesIncomingTwiceThenApplicationMessageThenAfter(): void
 	{
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('handleMessage')
 			->willReturnCallback(
 				static function (
@@ -234,12 +236,13 @@ final class EventOrderTest extends BaseTestCase
 
 	/**
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
+	 * @throws WebSocketsExceptions\Storage
 	 */
 	public function testACloseDispatchesClientDisconnectedThenClose(): void
 	{
-		$client = $this->client(new Entities\WebSocket(true, false, $this->createMock(Encoding\IProtocol::class)));
+		$client = $this->client(new Entities\WebSocket(true, false, $this->createMock(Encoding\RFC6455::class)));
 
 		$this->wrapper()->handleClose($client);
 
@@ -266,12 +269,12 @@ final class EventOrderTest extends BaseTestCase
 	 * onClientError carries no exception; the application's onError does.
 	 *
 	 * @throws DI\MissingServiceException
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
 	public function testAnErrorDispatchesClientErrorThenApplicationError(): void
 	{
-		$client = $this->client(new Entities\WebSocket(true, false, $this->createMock(Encoding\IProtocol::class)));
+		$client = $this->client(new Entities\WebSocket(true, false, $this->createMock(Encoding\RFC6455::class)));
 		$exception = new RuntimeException('e5 probe');
 
 		$this->wrapper()->handleError($client, $exception);
@@ -325,9 +328,7 @@ final class EventOrderTest extends BaseTestCase
 	 */
 	private function client(Entities\WebSocket $webSocket): Entities\ConnectedClient&MockObject
 	{
-		$request = $this->createMock(Handshake\IRequest::class);
-		$request->method('getHeader')
-			->willReturn(null);
+		$request = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('getId')

@@ -2,13 +2,15 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\WebSockets;
 
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
+use Nette\Http;
 use PHPUnit\Framework\TestCase;
 use React\Socket;
 use RuntimeException;
@@ -24,12 +26,13 @@ final class WrapperTest extends TestCase
 {
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
+	 * @throws WebSocketsExceptions\Storage
 	 */
 	public function testOnClientDisconnectedFiresRegisteredHandlerWithClientAndRequest(): void
 	{
-		$requestMock = $this->createMock(Handshake\IRequest::class);
+		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
 		$client->method('isHttpHeadersReceived')
@@ -40,34 +43,37 @@ final class WrapperTest extends TestCase
 			->willReturn(1);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
-		$clientsStorage->expects(self::once())
-			->method('removeClient')
-			->with(1);
+		$clientsStorage = new Clients\Storage();
+		$clientsStorage->setStorageDriver(new Clients\Drivers\InMemory());
+		$clientsStorage->addClient(1, $client);
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
 		$received = [];
 		$wrapper->onClientDisconnected[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$received): void {
 			$received = [$c, $r];
 		};
 
+		// the storage held the client, and closing removes exactly that one
+		self::assertTrue($clientsStorage->hasClient(1));
+
 		$wrapper->handleClose($client);
 
 		self::assertSame([$client, $requestMock], $received);
+		self::assertFalse($clientsStorage->hasClient(1));
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
 	public function testOnClientErrorFiresRegisteredHandlerWithClientAndRequest(): void
 	{
-		$requestMock = $this->createMock(Handshake\IRequest::class);
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
@@ -79,14 +85,14 @@ final class WrapperTest extends TestCase
 			->willReturn($requestMock);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
+		$clientsStorage = new Clients\Storage();
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
 		$received = [];
 		$wrapper->onClientError[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$received): void {
 			$received = [$c, $r];
 		};
@@ -98,8 +104,8 @@ final class WrapperTest extends TestCase
 
 	public function testOnIncomingMessageAndOnAfterIncomingMessageFireWithClientRequestAndMessage(): void
 	{
-		$requestMock = $this->createMock(Handshake\IRequest::class);
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
@@ -111,14 +117,14 @@ final class WrapperTest extends TestCase
 			->willReturn($requestMock);
 
 		$application = $this->createMock(Controllers\Dispatcher::class);
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
+		$clientsStorage = new Clients\Storage();
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
 		$receivedIncoming = [];
 		$wrapper->onIncomingMessage[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 			string $m,
 		) use (&$receivedIncoming): void {
 			$receivedIncoming = [$c, $r, $m];
@@ -127,7 +133,7 @@ final class WrapperTest extends TestCase
 		$receivedAfter = [];
 		$wrapper->onAfterIncomingMessage[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$receivedAfter): void {
 			$receivedAfter = [$c, $r];
 		};
@@ -139,18 +145,16 @@ final class WrapperTest extends TestCase
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
 	public function testOnClientConnectedFiresRegisteredHandlerWithClientAndRequestOnSuccessfulUpgrade(): void
 	{
-		$requestMock = $this->createMock(Handshake\IRequest::class);
-		$requestMock->method('getHeader')
-			->willReturn(null);
+		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
-		$protocol = $this->createMock(Encoding\IProtocol::class);
+		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('doHandshake')
-			->willReturn(new Handshake\WampResponse(Handshake\IResponse::S101_SWITCHING_PROTOCOLS));
+			->willReturn(new Handshake\WampResponse(Handshake\WampResponse::S101_SWITCHING_PROTOCOLS));
 
 		$webSocket = new Entities\WebSocket(false, false, $protocol);
 
@@ -171,14 +175,14 @@ final class WrapperTest extends TestCase
 			->method('handleOpen')
 			->with($client, $requestMock);
 
-		$clientsStorage = $this->createMock(Clients\IStorage::class);
+		$clientsStorage = new Clients\Storage();
 
 		$wrapper = new Server\Wrapper($application, $clientsStorage);
 
 		$received = [];
 		$wrapper->onClientConnected[] = static function (
 			Entities\ConnectedClient $c,
-			Handshake\IRequest $r,
+			Handshake\Request $r,
 		) use (&$received): void {
 			$received = [$c, $r];
 		};

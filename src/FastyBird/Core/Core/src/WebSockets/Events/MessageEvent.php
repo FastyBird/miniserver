@@ -16,7 +16,7 @@ final class MessageEvent extends EventDispatcher\Event
 	public function __construct(
 		private Controllers\Dispatcher $application,
 		private Entities\ConnectedClient $client,
-		private Handshake\IRequest $httpRequest,
+		private Handshake\Request $httpRequest,
 		private string $message,
 	)
 	{
@@ -32,7 +32,7 @@ final class MessageEvent extends EventDispatcher\Event
 		return $this->client;
 	}
 
-	public function getHttpRequest(): Handshake\IRequest
+	public function getHttpRequest(): Handshake\Request
 	{
 		return $this->httpRequest;
 	}

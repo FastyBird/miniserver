@@ -26,13 +26,13 @@ interface ConnectedClient
 
 	public function getHttpBuffer(): string;
 
-	public function setRequest(Handshake\IRequest $httpRequest): void;
+	public function setRequest(Handshake\Request $httpRequest): void;
 
-	public function getRequest(): Handshake\IRequest;
+	public function getRequest(): Handshake\Request;
 
-	public function setWebSocket(IWebSocket $webSocket): void;
+	public function setWebSocket(WebSocket $webSocket): void;
 
-	public function getWebSocket(): IWebSocket;
+	public function getWebSocket(): WebSocket;
 
 	public function addParameter(string $key, mixed $value): void;
 

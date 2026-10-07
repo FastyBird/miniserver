@@ -3,9 +3,9 @@
 namespace FastyBird\Core\WebSockets\Controllers;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Core\Http\Routing as HttpRouting;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
+use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Wamp;
 use Fig\Http;
 use Nette;
@@ -69,11 +69,11 @@ abstract class Controller implements RequestController
 
 	private string $name;
 
-	private IControllerFactory|null $controllerFactory = null;
+	private ControllerFactory|null $controllerFactory = null;
 
 	private Wamp\WampRouter|null $router = null;
 
-	private HttpRouting\LinkGenerator|null $linkGenerator = null;
+	private Routing\LinkGenerator|null $linkGenerator = null;
 
 	public function __construct()
 	{
@@ -84,9 +84,9 @@ abstract class Controller implements RequestController
 	 * @throws Nette\InvalidStateException
 	 */
 	public function injectPrimary(
-		IControllerFactory|null $controllerFactory = null,
+		ControllerFactory|null $controllerFactory = null,
 		Wamp\WampRouter|null $router = null,
-		HttpRouting\LinkGenerator|null $linkGenerator = null,
+		Routing\LinkGenerator|null $linkGenerator = null,
 	): void
 	{
 		// $controllerFactory is a typed property with no default; isset() is the only read that

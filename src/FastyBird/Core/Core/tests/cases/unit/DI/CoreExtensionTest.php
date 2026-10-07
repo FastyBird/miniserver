@@ -118,7 +118,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 			$container->getService('fbCore.api.builder'),
 		);
 		self::assertInstanceOf(
-			Controllers\IControllerFactory::class,
+			Controllers\ControllerFactory::class,
 			$container->getService('fbCore.webSockets.controllers.factory'),
 		);
 		self::assertNotNull($container->getByType(PhoneServices\PhoneNumberHelper::class, false));

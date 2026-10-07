@@ -3,10 +3,11 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Controllers\WebSockets\Controller;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Core\Http\Routing;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
+use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Wamp;
+use Nette\DI;
 use Nette\InvalidStateException;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
@@ -62,7 +63,7 @@ final class ControllerTest extends TestCase
 
 		};
 
-		$controllerFactory = $this->createMock(Controllers\IControllerFactory::class);
+		$controllerFactory = new Controllers\ControllerFactory(new DI\Container());
 		$router = $this->createMock(Wamp\WampRouter::class);
 		$linkGenerator = new Routing\LinkGenerator($router);
 

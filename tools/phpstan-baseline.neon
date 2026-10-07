@@ -3061,12 +3061,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Drivers/InMemory.php
 
 		-
-			message: '#^Interface FastyBird\\Core\\WebSockets\\Clients\\IStorage extends generic interface IteratorAggregate but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/IStorage.php
-
-		-
 			message: '#^Cannot call method debug\(\) on Psr\\Log\\LoggerInterface\|null\.$#'
 			identifier: method.nonObject
 			count: 4
@@ -3097,7 +3091,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Storage.php
 
 		-
-			message: '#^Parameter \#3 \$lifeTime of method FastyBird\\Core\\WebSockets\\Clients\\Drivers\\IDriver\:\:save\(\) expects int, int\|null given\.$#'
+			message: '#^Parameter \#3 \$lifeTime of method FastyBird\\Core\\WebSockets\\Clients\\Drivers\\Driver\:\:save\(\) expects int, int\|null given\.$#'
 			identifier: argument.type
 			count: 2
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Storage.php
@@ -3640,7 +3634,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/WampApplication.php
 
 		-
-			message: '#^Parameter \#1 \$topic of method FastyBird\\Core\\WebSockets\\Controllers\\WampApplication\:\:cleanTopic\(\) expects FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic, mixed given\.$#'
+			message: '#^Parameter \#1 \$topic of method FastyBird\\Core\\WebSockets\\Controllers\\WampApplication\:\:cleanTopic\(\) expects FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/WampApplication.php
@@ -4174,12 +4168,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Api/Encoding/Objects/StandardObjectCollection.php
 
 		-
-			message: '#^Call to an undefined method FastyBird\\Core\\WebSockets\\Encoding\\IFrame\:\:extractOverflow\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
-
-		-
 			message: '#^Instanceof between int and FastyBird\\Core\\WebSockets\\Encoding\\FrameData will always evaluate to false\.$#'
 			identifier: instanceof.alwaysFalse
 			count: 1
@@ -4210,12 +4198,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
 
 		-
-			message: '#^Parameter \#1 \$string of function strlen expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
-
-		-
 			message: '#^Parameter \#1 \$val of method FastyBird\\Core\\WebSockets\\Encoding\\RFC6455\:\:isValidCloseCode\(\) expects int\|string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -4225,12 +4207,6 @@ parameters:
 			message: '#^Parameter \#1 \.\.\.\$arrays of function array_merge expects array, array\|false given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
-
-		-
-			message: '#^Parameter \#3 \$data of method FastyBird\\Core\\WebSockets\\Encoding\\RFC6455\:\:handleMessage\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 2
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/RFC6455.php
 
 		-
@@ -4396,40 +4372,16 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Client.php
 
 		-
-			message: '#^Parameter \#2 \$payload of method FastyBird\\Core\\WebSockets\\Encoding\\IProtocol\:\:send\(\) expects FastyBird\\Core\\WebSockets\\Encoding\\FrameData\|int\|string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Client.php
-
-		-
 			message: '#^Property FastyBird\\Core\\WebSockets\\Entities\\Client\:\:\$remoteAddress is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Client.php
 
 		-
-			message: '#^Strict comparison using \=\=\= between FastyBird\\Core\\WebSockets\\Entities\\IWebSocket and null will always evaluate to false\.$#'
+			message: '#^Strict comparison using \=\=\= between FastyBird\\Core\\WebSockets\\Entities\\WebSocket and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Client.php
-
-		-
-			message: '#^Interface FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic extends generic interface IteratorAggregate but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/ITopic.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic\:\:broadcast\(\) has parameter \$eligible with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/ITopic.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic\:\:broadcast\(\) has parameter \$exclude with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/ITopic.php
 
 		-
 			message: '#^Cannot cast FastyBird\\Core\\WebSockets\\Controllers\\Responses\\ControllerResponse\|string to string\.$#'
@@ -4468,22 +4420,10 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/Topic.php
 
 		-
-			message: '#^Property FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic\:\:\$subscribers with generic class SplObjectStorage does not specify its types\: TObject, TData$#'
-			identifier: missingType.generics
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/Topic.php
-
-		-
 			message: '#^Result of && is always false\.$#'
 			identifier: booleanAnd.alwaysFalse
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/Topics/Topic.php
-
-		-
-			message: '#^Cannot cast FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic to string\.$#'
-			identifier: cast.string
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Entities/WampClient.php
 
 		-
 			message: '#^Property FastyBird\\Core\\Http\\Exceptions\\HttpMethodNotAllowed\:\:\$code has no type specified\.$#'
@@ -4628,12 +4568,6 @@ parameters:
 			identifier: argument.type
 			count: 9
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Helpers/Console.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Handshake\\IResponse\:\:getHeaders\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Handshake/IResponse.php
 
 		-
 			message: '#^Method FastyBird\\Core\\WebSockets\\Handshake\\Request\:\:__construct\(\) has parameter \$cookies with no value type specified in iterable type array\.$#'
@@ -5413,31 +5347,31 @@ parameters:
 			message: '#^Cannot call method getName\(\) on ReflectionClass\|null\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/Routing/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/WebSockets/Routing/LinkGenerator.php
 
 		-
-			message: '#^Method FastyBird\\Core\\Http\\Routing\\LinkGenerator\:\:link\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			message: '#^Method FastyBird\\Core\\WebSockets\\Routing\\LinkGenerator\:\:link\(\) has parameter \$params with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/Routing/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/WebSockets/Routing/LinkGenerator.php
 
 		-
 			message: '#^Only booleans are allowed in a negated boolean, int\|false given\.$#'
 			identifier: booleanNot.exprNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/Routing/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/WebSockets/Routing/LinkGenerator.php
 
 		-
-			message: '#^Only booleans are allowed in a ternary operator condition, FastyBird\\Core\\WebSockets\\Controllers\\IControllerFactory\|null given\.$#'
+			message: '#^Only booleans are allowed in a ternary operator condition, FastyBird\\Core\\WebSockets\\Controllers\\ControllerFactory\|null given\.$#'
 			identifier: ternary.condNotBoolean
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/Routing/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/WebSockets/Routing/LinkGenerator.php
 
 		-
 			message: '#^Parameter \#1 \$object_or_class of function is_subclass_of expects object\|string, string\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../src/FastyBird/Core/Core/src/Http/Routing/LinkGenerator.php
+			path: ../src/FastyBird/Core/Core/src/WebSockets/Routing/LinkGenerator.php
 
 		-
 			message: '#^Expression on left side of \?\? is not nullable\.$#'
@@ -6268,13 +6202,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Server/Wrapper.php
 
 		-
-			message: '#^Cannot cast FastyBird\\Core\\WebSockets\\Handshake\\IResponse to string\.$#'
-			identifier: cast.string
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Server/Wrapper.php
-
-		-
-			message: '#^Instanceof between FastyBird\\Core\\WebSockets\\Handshake\\IRequest and FastyBird\\Core\\WebSockets\\Handshake\\IRequest will always evaluate to true\.$#'
+			message: '#^Instanceof between FastyBird\\Core\\WebSockets\\Handshake\\Request and FastyBird\\Core\\WebSockets\\Handshake\\Request will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Server/Wrapper.php
@@ -6535,13 +6463,13 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Security/Subscribers/User.php
 
 		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Topics\\Drivers\\InMemory\:\:fetch\(\) should return bool\|FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\WebSockets\\Topics\\Drivers\\InMemory\:\:fetch\(\) should return bool\|FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic but returns mixed\.$#'
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Drivers/InMemory.php
 
 		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Topics\\Drivers\\InMemory\:\:fetchAll\(\) should return array\<FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic\> but returns list\.$#'
+			message: '#^Method FastyBird\\Core\\WebSockets\\Topics\\Drivers\\InMemory\:\:fetchAll\(\) should return array\<FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic\> but returns list\.$#'
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Drivers/InMemory.php
@@ -6559,12 +6487,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Drivers/InMemory.php
 
 		-
-			message: '#^Interface FastyBird\\Core\\WebSockets\\Topics\\IStorage extends generic interface IteratorAggregate but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/IStorage.php
-
-		-
 			message: '#^Cannot call method debug\(\) on Psr\\Log\\LoggerInterface\|null\.$#'
 			identifier: method.nonObject
 			count: 3
@@ -6577,7 +6499,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Storage.php
 
 		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Topics\\Storage\:\:getTopic\(\) should return FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic but returns FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic\|true\.$#'
+			message: '#^Method FastyBird\\Core\\WebSockets\\Topics\\Storage\:\:getTopic\(\) should return FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic but returns FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic\|true\.$#'
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Storage.php
@@ -6589,13 +6511,13 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Storage.php
 
 		-
-			message: '#^PHPDoc tag @return with type array\<FastyBird\\Core\\WebSockets\\Entities\\Topics\\ITopic\>\|ArrayIterator is not subtype of native type ArrayIterator\.$#'
+			message: '#^PHPDoc tag @return with type array\<FastyBird\\Core\\WebSockets\\Entities\\Topics\\Topic\>\|ArrayIterator is not subtype of native type ArrayIterator\.$#'
 			identifier: return.phpDocType
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Storage.php
 
 		-
-			message: '#^Parameter \#3 \$lifeTime of method FastyBird\\Core\\WebSockets\\Topics\\Drivers\\IDriver\:\:save\(\) expects int, int\|null given\.$#'
+			message: '#^Parameter \#3 \$lifeTime of method FastyBird\\Core\\WebSockets\\Topics\\Drivers\\Driver\:\:save\(\) expects int, int\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Storage.php

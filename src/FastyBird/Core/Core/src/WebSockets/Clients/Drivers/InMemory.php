@@ -9,7 +9,7 @@ use function array_values;
 /**
  * Classic memory client storage driver
  */
-final class InMemory implements IDriver
+final class InMemory implements Driver
 {
 
 	private array $elements;

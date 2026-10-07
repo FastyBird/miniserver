@@ -27,9 +27,9 @@ class Client implements ConnectedClient
 
 	private string|null $remoteAddress = null;
 
-	private Handshake\IRequest $httpRequest;
+	private Handshake\Request $httpRequest;
 
-	private IWebSocket $webSocket;
+	private WebSocket $webSocket;
 
 	private Utils\ArrayHash $parameters;
 
@@ -77,25 +77,25 @@ class Client implements ConnectedClient
 	}
 
 	#[Override]
-	public function setRequest(Handshake\IRequest $httpRequest): void
+	public function setRequest(Handshake\Request $httpRequest): void
 	{
 		$this->httpRequest = $httpRequest;
 	}
 
 	#[Override]
-	public function getRequest(): Handshake\IRequest
+	public function getRequest(): Handshake\Request
 	{
 		return clone $this->httpRequest;
 	}
 
 	#[Override]
-	public function setWebSocket(IWebSocket $webSocket): void
+	public function setWebSocket(WebSocket $webSocket): void
 	{
 		$this->webSocket = $webSocket;
 	}
 
 	#[Override]
-	public function getWebSocket(): IWebSocket
+	public function getWebSocket(): WebSocket
 	{
 		if ($this->webSocket === null) {
 			throw new Exceptions\InvalidState('Socket is not defined');

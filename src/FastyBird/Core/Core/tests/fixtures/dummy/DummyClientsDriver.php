@@ -10,7 +10,7 @@ use Override;
  * A clients storage driver that stores nothing and records the identifiers it is asked about,
  * used to see which driver the container wires into the clients storage
  */
-final class DummyClientsDriver implements Drivers\IDriver
+final class DummyClientsDriver implements Drivers\Driver
 {
 
 	/** @var array<int> */

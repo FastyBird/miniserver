@@ -10,14 +10,14 @@ use Override;
  * A topics storage driver that stores nothing and records the identifiers it is asked about,
  * used to see which driver the container wires into the topics storage
  */
-final class DummyTopicsDriver implements Drivers\IDriver
+final class DummyTopicsDriver implements Drivers\Driver
 {
 
 	/** @var array<string> */
 	private array $containsCalls = [];
 
 	#[Override]
-	public function fetch(string $id): Topics\ITopic|bool
+	public function fetch(string $id): Topics\Topic|bool
 	{
 		return false;
 	}

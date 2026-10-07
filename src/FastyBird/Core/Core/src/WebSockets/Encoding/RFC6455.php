@@ -11,7 +11,6 @@ use TypeError;
 use UnderflowException;
 use function array_key_exists;
 use function array_merge;
-use function assert;
 use function base64_encode;
 use function count;
 use function pack;
@@ -27,7 +26,7 @@ use function unpack;
  *
  * @todo           Unicode: return mb_convert_encoding(pack("N",$u), mb_internal_encoding(), 'UCS-4BE');
  */
-class RFC6455 implements IProtocol
+class RFC6455
 {
 
 	/**
@@ -42,7 +41,7 @@ class RFC6455 implements IProtocol
 	 */
 	private array $closeCodes = [];
 
-	private IValidator $validator;
+	private Validator $validator;
 
 	public function __construct()
 	{
@@ -53,14 +52,18 @@ class RFC6455 implements IProtocol
 		$this->validator = new Validator();
 	}
 
-	#[Override]
+	/**
+	 * Although the version has a name associated with it the integer returned is the proper identification
+	 */
 	public function getVersion(): int
 	{
 		return 13;
 	}
 
-	#[Override]
-	public function isVersion(Handshake\IRequest $httpRequest): bool
+	/**
+	 * Given an HTTP header, determine if this version should handle the protocol
+	 */
+	public function isVersion(Handshake\Request $httpRequest): bool
 	{
 		$version = (int) (string) $httpRequest->getHeader('Sec-WebSocket-Version');
 
@@ -68,19 +71,18 @@ class RFC6455 implements IProtocol
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Perform the handshake and return the response headers
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws TypeError
 	 */
-	#[Override]
-	public function doHandshake(Handshake\IRequest $httpRequest): Handshake\IResponse
+	public function doHandshake(Handshake\Request $httpRequest): Handshake\WampResponse
 	{
 		if ($this->verifier->verifyAll($httpRequest) !== true) {
-			return new Handshake\WampResponse(Handshake\IResponse::S400_BAD_REQUEST);
+			return new Handshake\WampResponse(Handshake\WampResponse::S400_BAD_REQUEST);
 		}
 
-		return new Handshake\WampResponse(Handshake\IResponse::S101_SWITCHING_PROTOCOLS, [
+		return new Handshake\WampResponse(Handshake\WampResponse::S101_SWITCHING_PROTOCOLS, [
 			'Upgrade' => 'websocket',
 			'Connection' => 'Upgrade',
 			'Sec-WebSocket-Accept' => $this->sign((string) $httpRequest->getHeader('Sec-WebSocket-Key')),
@@ -90,7 +92,6 @@ class RFC6455 implements IProtocol
 	/**
 	 * @throws UnderflowException
 	 */
-	#[Override]
 	public function handleMessage(
 		Entities\ConnectedClient $client,
 		Controllers\Dispatcher $application,
@@ -114,7 +115,6 @@ class RFC6455 implements IProtocol
 
 		if ($webSocket->getFrame()->isCoalesced()) {
 			$frame = $webSocket->getFrame();
-			assert($frame instanceof RFC6455\Frame);
 
 			if ($frame->getRsv1() !== false ||
 				$frame->getRsv2() !== false ||
@@ -201,7 +201,6 @@ class RFC6455 implements IProtocol
 			$overflow = $webSocket->getFrame()->extractOverflow();
 
 			$message = $webSocket->getMessage();
-			assert($message instanceof RFC6455\Message);
 
 			if ($frame->getOpCode() === RFC6455\Frame::OP_CONTINUE && count($message) === 0) {
 				$this->close($client, RFC6455\Frame::CLOSE_PROTOCOL);
@@ -238,10 +237,6 @@ class RFC6455 implements IProtocol
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	#[Override]
 	public function send(Entities\ConnectedClient $client, $payload): void
 	{
 		if (!$client->getWebSocket()->isClosing()) {
@@ -253,7 +248,6 @@ class RFC6455 implements IProtocol
 		}
 	}
 
-	#[Override]
 	public function close(Entities\ConnectedClient $client, int|null $code = null): void
 	{
 		if ($client->getWebSocket()->isClosing()) {

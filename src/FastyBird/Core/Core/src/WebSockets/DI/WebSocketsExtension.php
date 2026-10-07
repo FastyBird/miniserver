@@ -4,13 +4,13 @@ namespace FastyBird\Core\WebSockets\DI;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange;
-use FastyBird\Core\Http\Routing;
 use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Clients\Drivers as ClientsDrivers;
 use FastyBird\Core\WebSockets\Commands;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Helpers;
+use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Subscribers;
 use FastyBird\Core\WebSockets\Topics;
@@ -45,8 +45,8 @@ use const SORT_STRING;
  * registered with the compiler itself. It runs as fbCore.webSockets and reads its
  * fbCore > webSockets section, so its services are fbCore.webSockets.*.
  *
- * It also registers Http\Routing\LinkGenerator, the WAMP link generator, which still lives in
- * the Http namespace (#460 moves it). Each storage-driver option names a service; its default
+ * It also registers Routing\LinkGenerator, the WAMP link generator (moved here from the Http
+ * namespace by #637). Each storage-driver option names a service; its default
  * is the '@'-form of its memory driver's name. Any other service is wired as a reference, which
  * resolves when the container is completed, so a driver from the services: section, processed
  * after every extension's loadConfiguration(), works too (#565). The WS server command and the
@@ -115,7 +115,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		assert($configuration instanceof stdClass);
 
 		$controllerFactory = $builder->addDefinition($this->prefix('controllers.factory'))
-			->setType(Controllers\IControllerFactory::class)
+			->setType(Controllers\ControllerFactory::class)
 			->setFactory(Controllers\ControllerFactory::class);
 
 		if ($configuration->mapping) {
@@ -269,7 +269,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		 * WEBSOCKETS -- router assembly, controller injection, event bridges
 		 *
 		 * The Application::class-presence guard below is preserved from WebSocketsExtension
-		 * (added in PR #450, this session's ipub/websockets-wamp absorption) -- spec section 6
+		 * (added in PR #450, when the WAMP library was absorbed into the tree) -- spec section 6
 		 * calls this out by name as logic that must be preserved, not just relocated.
 		 */
 

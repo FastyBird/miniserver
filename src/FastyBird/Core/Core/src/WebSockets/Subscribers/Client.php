@@ -104,7 +104,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 */
 	public function checkSecurity(
 		Entities\ConnectedClient $client,
-		Handshake\IRequest $httpRequest,
+		Handshake\Request $httpRequest,
 		array $allowedWsKeys,
 		array $allowedOrigins,
 	): bool

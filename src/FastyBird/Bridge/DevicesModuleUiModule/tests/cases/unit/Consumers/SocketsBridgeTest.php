@@ -9,12 +9,12 @@ use FastyBird\Bridge\DevicesModuleUiModule\Consumers as DevicesModuleUiModuleCon
 use FastyBird\Bridge\DevicesModuleUiModule\Exceptions as DevicesModuleUiModuleExceptions;
 use FastyBird\Bridge\DevicesModuleUiModule\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Entities\Topics as EntitiesTopics;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
+use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Topics as WebSocketsTopics;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
@@ -169,7 +169,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 			$container->getByType(UiModels\Configuration\Widgets\DataSources\Repository::class),
 			$this->service('fbDevicesModuleUiModuleBridge.logger', DevicesModuleUiModule\Logger::class),
 			$container->getByType(Routing\LinkGenerator::class),
-			$container->getByType(WebSocketsTopics\IStorage::class),
+			$container->getByType(WebSocketsTopics\Storage::class),
 		);
 
 		$bridge->consume(
@@ -257,7 +257,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 		$topic = new EntitiesTopics\Topic($topicId);
 		$topic->add($client);
 
-		$this->getContainer()->getByType(WebSocketsTopics\IStorage::class)->addTopic($topicId, $topic);
+		$this->getContainer()->getByType(WebSocketsTopics\Storage::class)->addTopic($topicId, $topic);
 
 		return $sent;
 	}

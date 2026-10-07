@@ -57,10 +57,10 @@ final class WampApplication extends Application
 	private SplObjectStorage $subscriptions;
 
 	public function __construct(
-		private WebSocketsTopics\IStorage $topicsStorage,
+		private WebSocketsTopics\Storage $topicsStorage,
 		Wamp\WampRouter $router,
-		IControllerFactory $controllerFactory,
-		Clients\IStorage $clientsStorage,
+		ControllerFactory $controllerFactory,
+		Clients\Storage $clientsStorage,
 		Log\LoggerInterface|null $logger = null,
 	)
 	{
@@ -73,7 +73,7 @@ final class WampApplication extends Application
 	 * @throws Utils\JsonException
 	 */
 	#[Override]
-	public function handleOpen(Entities\ConnectedClient $client, Handshake\IRequest $httpRequest): void
+	public function handleOpen(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
 	{
 		$client->addParameter('wampSession', str_replace('.', '', uniqid((string) mt_rand(), true)));
 
@@ -90,8 +90,11 @@ final class WampApplication extends Application
 		parent::handleOpen($client, $httpRequest);
 	}
 
+	/**
+	 * @throws WebSocketsExceptions\Storage
+	 */
 	#[Override]
-	public function handleClose(Entities\ConnectedClient $client, Handshake\IRequest $httpRequest): void
+	public function handleClose(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
 	{
 		parent::handleClose($client, $httpRequest);
 
@@ -108,7 +111,7 @@ final class WampApplication extends Application
 	#[Override]
 	public function handleMessage(
 		Entities\ConnectedClient $client,
-		Handshake\IRequest $httpRequest,
+		Handshake\Request $httpRequest,
 		string $message,
 	): void
 	{
@@ -287,7 +290,10 @@ final class WampApplication extends Application
 		return ['wamp'];
 	}
 
-	private function getTopic(string $topic): EntitiesTopics\ITopic
+	/**
+	 * @throws WebSocketsExceptions\Storage
+	 */
+	private function getTopic(string $topic): EntitiesTopics\Topic
 	{
 		if (!$this->topicsStorage->hasTopic($topic)) {
 			$this->topicsStorage->addTopic($topic, new EntitiesTopics\Topic($topic));
@@ -296,7 +302,10 @@ final class WampApplication extends Application
 		return $this->topicsStorage->getTopic($topic);
 	}
 
-	private function cleanTopic(EntitiesTopics\ITopic $topic, Entities\ConnectedClient $client): void
+	/**
+	 * @throws WebSocketsExceptions\Storage
+	 */
+	private function cleanTopic(EntitiesTopics\Topic $topic, Entities\ConnectedClient $client): void
 	{
 		$subscribedTopics = $client->getParameter('subscribedTopics', new SplObjectStorage());
 
@@ -315,10 +324,10 @@ final class WampApplication extends Application
 	}
 
 	private function modifyRequest(
-		Handshake\IRequest $httpRequest,
-		EntitiesTopics\ITopic $topic,
+		Handshake\Request $httpRequest,
+		EntitiesTopics\Topic $topic,
 		string $action,
-	): Handshake\IRequest
+	): Handshake\Request
 	{
 		$url = new NetteHttp\Url((string) $httpRequest->getUrl());
 		$url->setPath(rtrim($url->getPath(), '/') . '/' . ltrim($topic->getId(), '/'));

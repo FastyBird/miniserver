@@ -38,7 +38,6 @@ use FastyBird\Core\Api\Middleware;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Constants;
 use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
-use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\DI as WebSocketsDI;
@@ -46,6 +45,7 @@ use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Entities\Topics as EntitiesTopics;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Handshake;
+use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics as WebSocketsTopics;
 use FastyBird\Core\WebSockets\Wamp;
@@ -301,7 +301,7 @@ $wampModuleRoutes = static function () use ($boot): array {
 	$container = $boot();
 	$router = $container->getByType(Wamp\WampRouter::class);
 	assert($router instanceof Wamp\RouteList);
-	$factory = $container->getByType(Controllers\IControllerFactory::class);
+	$factory = $container->getByType(Controllers\ControllerFactory::class);
 	$tagged = $container->findByTag(WebSocketsDI\WebSocketsExtension::CONTROLLER_TAG);
 
 	$masks = [];
@@ -374,7 +374,7 @@ $wampLinks = static function () use ($boot): array {
  */
 $socketsBridges = static function () use ($boot): array {
 	$container = $boot();
-	$storage = $container->getByType(WebSocketsTopics\IStorage::class);
+	$storage = $container->getByType(WebSocketsTopics\Storage::class);
 	$loop = EventLoop\Loop::get();
 
 	$topics = [

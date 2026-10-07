@@ -183,7 +183,7 @@ final class WampRoute implements WampRouter
 			}
 		} elseif ($metadata instanceof Closure) {
 			$metadata = [
-				self::CONTROLLER_KEY => 'IPub:WebSocket',
+				self::CONTROLLER_KEY => 'Core:WebSocket',
 				'callback' => $metadata,
 			];
 		}
@@ -197,7 +197,7 @@ final class WampRoute implements WampRouter
 	 * @throws Exceptions\InvalidState
 	 */
 	#[Override]
-	public function match(Handshake\IRequest $httpRequest): Controllers\Request|null
+	public function match(Handshake\Request $httpRequest): Controllers\Request|null
 	{
 		// Combine with precedence: mask (params in URL-path), fixity, query, (post,) defaults
 

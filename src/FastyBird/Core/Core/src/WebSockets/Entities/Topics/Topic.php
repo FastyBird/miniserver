@@ -2,15 +2,16 @@
 
 namespace FastyBird\Core\WebSockets\Entities\Topics;
 
+use Countable;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Controllers\Responses;
 use FastyBird\Core\WebSockets\Entities;
+use IteratorAggregate;
 use Nette\Utils;
 use Override;
 use SplObjectStorage;
 use Traversable;
-use function assert;
 use function count;
 use function in_array;
 use function is_string;
@@ -18,8 +19,10 @@ use function sprintf;
 
 /**
  * A topic/channel containing connections that have subscribed to it
+ *
+ * @implements IteratorAggregate<int, Entities\ConnectedClient>
  */
-final class Topic implements ITopic
+final class Topic implements IteratorAggregate, Countable
 {
 
 	/**
@@ -31,6 +34,7 @@ final class Topic implements ITopic
 
 	private string $id;
 
+	/** @var SplObjectStorage<Entities\ConnectedClient, mixed> */
 	private SplObjectStorage $subscribers;
 
 	/**
@@ -42,19 +46,21 @@ final class Topic implements ITopic
 		$this->subscribers = new SplObjectStorage();
 	}
 
-	#[Override]
 	public function getId(): string
 	{
 		return $this->id;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Send a message to all the connections in this topic
+	 *
+	 * @param string|Responses\ControllerResponse $message Payload to publish
+	 * @param array $exclude A list of session IDs the message should be excluded from (blacklist)
+	 * @param array $eligible A list of session Ids the message should be send to (whitelist)
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Utils\JsonException
 	 */
-	#[Override]
 	public function broadcast(
 		Responses\ControllerResponse|string $message,
 		array $exclude = [],
@@ -73,7 +79,6 @@ final class Topic implements ITopic
 		$useEligible = (bool) count($eligible);
 
 		foreach ($this->subscribers as $client) {
-			assert($client instanceof Entities\ConnectedClient);
 			if (in_array($client->getId(), $exclude, true)) {
 				continue;
 			}
@@ -86,19 +91,16 @@ final class Topic implements ITopic
 		}
 	}
 
-	#[Override]
 	public function has(Entities\ConnectedClient $client): bool
 	{
 		return $this->subscribers->offsetExists($client);
 	}
 
-	#[Override]
 	public function add(Entities\ConnectedClient $client): void
 	{
 		$this->subscribers->offsetSet($client);
 	}
 
-	#[Override]
 	public function remove(Entities\ConnectedClient $client): void
 	{
 		if ($this->subscribers->offsetExists($client)) {
@@ -118,19 +120,16 @@ final class Topic implements ITopic
 		return $this->subscribers->count();
 	}
 
-	#[Override]
 	public function enableAutoDelete(): void
 	{
 		$this->autoDelete = true;
 	}
 
-	#[Override]
 	public function disableAutoDelete(): void
 	{
 		$this->autoDelete = false;
 	}
 
-	#[Override]
 	public function isAutoDeleteEnabled(): bool
 	{
 		return $this->autoDelete;

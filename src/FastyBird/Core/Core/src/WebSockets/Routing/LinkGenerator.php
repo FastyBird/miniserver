@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core\Http\Routing;
+namespace FastyBird\Core\WebSockets\Routing;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\WebSockets\Controllers;
@@ -24,7 +24,7 @@ final class LinkGenerator
 
 	public function __construct(
 		private Wamp\WampRouter $router,
-		private Controllers\IControllerFactory|null $controllerFactory = null,
+		private Controllers\ControllerFactory|null $controllerFactory = null,
 	)
 	{
 	}

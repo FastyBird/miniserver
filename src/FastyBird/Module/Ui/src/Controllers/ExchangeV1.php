@@ -69,11 +69,11 @@ final class ExchangeV1 extends Controllers\Controller
 	}
 
 	/**
-	 * @param Topics\ITopic<mixed> $topic
+	 * @param Topics\Topic<mixed> $topic
 	 */
 	public function actionSubscribe(
 		Entities\ConnectedClient $client,
-		Topics\ITopic $topic,
+		Topics\Topic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -116,7 +116,7 @@ final class ExchangeV1 extends Controllers\Controller
 
 	/**
 	 * @param array<string, mixed> $args
-	 * @param Topics\ITopic<mixed> $topic
+	 * @param Topics\Topic<mixed> $topic
 	 *
 	 * @throws UiExceptions\InvalidArgument
 	 * @throws UiExceptions\InvalidState
@@ -130,7 +130,7 @@ final class ExchangeV1 extends Controllers\Controller
 	public function actionCall(
 		array $args,
 		Entities\ConnectedClient $client,
-		Topics\ITopic $topic,
+		Topics\Topic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -190,7 +190,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 */
 	private function handleDataSourceAction(
 		Entities\ConnectedClient $client,
-		Topics\ITopic $topic,
+		Topics\Topic $topic,
 		UiDocuments\Widgets\DataSources\Actions\Action $entity,
 	): void
 	{

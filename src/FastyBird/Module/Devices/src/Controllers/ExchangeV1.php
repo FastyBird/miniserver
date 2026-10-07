@@ -80,11 +80,11 @@ final class ExchangeV1 extends Controllers\Controller
 	}
 
 	/**
-	 * @param Topics\ITopic<mixed> $topic
+	 * @param Topics\Topic<mixed> $topic
 	 */
 	public function actionSubscribe(
 		Entities\ConnectedClient $client,
-		Topics\ITopic $topic,
+		Topics\Topic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -189,7 +189,7 @@ final class ExchangeV1 extends Controllers\Controller
 
 	/**
 	 * @param array<string, mixed> $args
-	 * @param Topics\ITopic<mixed> $topic
+	 * @param Topics\Topic<mixed> $topic
 	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
@@ -207,7 +207,7 @@ final class ExchangeV1 extends Controllers\Controller
 	public function actionCall(
 		array $args,
 		Entities\ConnectedClient $client,
-		Topics\ITopic $topic,
+		Topics\Topic $topic,
 	): void
 	{
 		$this->logger->debug(
@@ -414,7 +414,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 */
 	private function handleConnectorAction(
 		Entities\ConnectedClient $client,
-		Topics\ITopic $topic,
+		Topics\Topic $topic,
 		DevicesDocuments\States\Connectors\Properties\Actions\Action $entity,
 	): void
 	{
@@ -504,7 +504,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 */
 	private function handleDeviceAction(
 		Entities\ConnectedClient $client,
-		Topics\ITopic $topic,
+		Topics\Topic $topic,
 		DevicesDocuments\States\Devices\Properties\Actions\Action $entity,
 	): void
 	{
@@ -597,7 +597,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 */
 	private function handleChannelAction(
 		Entities\ConnectedClient $client,
-		Topics\ITopic $topic,
+		Topics\Topic $topic,
 		DevicesDocuments\States\Channels\Properties\Actions\Action $entity,
 	): void
 	{

@@ -17,15 +17,15 @@ use Throwable;
 
 /**
  * Characterization of a WAMP route whose action is a closure, resolved through RouteList and the
- * container's ControllerFactory (#460 §1.10, §3.11; E5.5 #637 replaces the iPub strings).
+ * container's ControllerFactory (#460 §1.10, §3.11), with census T9's strings since E5.5 (#637).
  *
- * WampRoute turns a closure action into the controller name `IPub:WebSocket` with the closure as
- * its `callback` parameter, and RouteList leaves a name starting with `IPub:` without its
- * module prefix. No controller class answers to that name: ControllerFactory maps it, through
+ * WampRoute turns a closure action into the controller name `Core:WebSocket` with the closure as
+ * its `callback` parameter, and RouteList leaves a name starting with `Core:` without its
+ * module prefix -- every other name gets the list's module. No controller class answers to that name: ControllerFactory maps it, through
  * its catch-all mapping, to a class that does not exist and refuses it. So today a closure
  * route matches but cannot be dispatched -- a KNOWN DEFECT (census X5, T12-12). This pins
- * exactly that, strings included, so the census's replacement values (T9) are the only change
- * E5.5 can make here.
+ * exactly that, strings included: E5.5 replaced the former strings with census T9's values and
+ * changed nothing else.
  *
  * Measured, against census X5: Application::processMessage() does not get as far as its
  * BadRequest. ControllerFactory::getControllerClass() throws InvalidController first, and a WAMP
@@ -39,7 +39,7 @@ final class ClosureRouteTest extends BaseTestCase
 	 * @throws Exceptions\InvalidState
 	 * @throws Nette\OutOfRangeException
 	 */
-	public function testAClosureRouteMatchesAsTheIpubWebSocketControllerWithItsCallback(): void
+	public function testAClosureRouteMatchesAsTheCoreWebSocketControllerWithItsCallback(): void
 	{
 		$callback = static fn (): string => 'e5';
 
@@ -49,10 +49,29 @@ final class ClosureRouteTest extends BaseTestCase
 		$request = $routes->match($this->request('ws://localhost/e5/closure'));
 
 		self::assertInstanceOf(Controllers\Request::class, $request);
-		self::assertSame('IPub:WebSocket', $request->getControllerName());
+		self::assertSame('Core:WebSocket', $request->getControllerName());
 		self::assertSame($callback, $request->getParameters()['callback'] ?? null);
 
 		self::assertNull($routes->match($this->request('ws://localhost/e5/other')));
+	}
+
+	/**
+	 * The other side of RouteList's `Core:` check: a route naming a controller is a module's,
+	 * and matches with the list's module in front of its name.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
+	 * @throws Nette\OutOfRangeException
+	 */
+	public function testAModuleRouteMatchesWithTheModuleOfItsRouteList(): void
+	{
+		$routes = new Wamp\RouteList('Probe');
+		$routes[] = new Wamp\WampRoute('/e5/module', 'Exchange:');
+
+		$request = $routes->match($this->request('ws://localhost/e5/module'));
+
+		self::assertInstanceOf(Controllers\Request::class, $request);
+		self::assertSame('Probe:Exchange', $request->getControllerName());
 	}
 
 	/**
@@ -62,17 +81,17 @@ final class ClosureRouteTest extends BaseTestCase
 	 */
 	public function testTheControllerFactoryHasNoControllerForAClosureRoute(): void
 	{
-		$factory = $this->container->getByType(Controllers\IControllerFactory::class);
+		$factory = $this->container->getService('fbCore.webSockets.controllers.factory');
 
 		self::assertInstanceOf(Controllers\ControllerFactory::class, $factory);
-		self::assertSame('IPubModule\WebSocketController', $factory->formatControllerClass('IPub:WebSocket'));
+		self::assertSame('CoreModule\WebSocketController', $factory->formatControllerClass('Core:WebSocket'));
 
 		$this->expectException(Exceptions\InvalidController::class);
 		$this->expectExceptionMessage(
-			'Cannot load controller "IPub:WebSocket", class "IPubModule\WebSocketController" was not found.',
+			'Cannot load controller "Core:WebSocket", class "CoreModule\WebSocketController" was not found.',
 		);
 
-		$name = 'IPub:WebSocket';
+		$name = 'Core:WebSocket';
 		$factory->getControllerClass($name);
 	}
 
@@ -117,7 +136,7 @@ final class ClosureRouteTest extends BaseTestCase
 				Controllers\WampApplication::MSG_CALL_ERROR,
 				'e5-call',
 				'/e5/closure',
-				'Cannot load controller "IPub:WebSocket", class "IPubModule\WebSocketController" was not found.',
+				'Cannot load controller "Core:WebSocket", class "CoreModule\WebSocketController" was not found.',
 				['code' => 0, 'params' => []],
 			],
 			Utils\Json::decode($sent[0], forceArrays: true),

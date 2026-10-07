@@ -34,7 +34,7 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 	 * Maps HTTP request to a application Request object
 	 */
 	#[Override]
-	public function match(Handshake\IRequest $httpRequest): Controllers\Request|null
+	public function match(Handshake\Request $httpRequest): Controllers\Request|null
 	{
 		foreach ($this as $route) {
 			assert($route instanceof WampRouter);
@@ -43,7 +43,7 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 			if ($appRequest !== null) {
 				$name = $appRequest->getControllerName();
 
-				if (strncmp($name, 'IPub:', 5)) {
+				if (strncmp($name, 'Core:', 5)) {
 					$appRequest->setControllerName($this->module . $name);
 				}
 

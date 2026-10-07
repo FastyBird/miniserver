@@ -7,13 +7,13 @@ use FastyBird\Core\WebSockets\Entities\Topics;
 /**
  * Topics storage driver interface
  */
-interface IDriver
+interface Driver
 {
 
-	public function fetch(string $id): Topics\ITopic|bool;
+	public function fetch(string $id): Topics\Topic|bool;
 
 	/**
-	 * @return array<Topics\ITopic>
+	 * @return array<Topics\Topic>
 	 */
 	public function fetchAll(): array;
 
