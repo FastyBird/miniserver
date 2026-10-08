@@ -11,7 +11,7 @@
 # ============================================================
 # Stage 1: build the frontend
 # ============================================================
-FROM node:24@sha256:6dac556d980b7f0e5498d08f08cee0ca67798b4ad6c23964a9214920e67758d0 AS ui
+FROM node:25@sha256:78839ac448c23517f8eab2e8f7943d9b4f73979eb7f8bed2c73dbf72ff869e7b AS ui
 
 WORKDIR /app
 
@@ -29,7 +29,7 @@ RUN pnpm install --frozen-lockfile \
 # ============================================================
 # Stage 2: install PHP dependencies
 # ============================================================
-FROM composer:2.8@sha256:5248900ab8b5f7f880c2d62180e40960cd87f60149ec9a1abfd62ac72a02577c AS vendor
+FROM composer:2.10@sha256:af98f42dfff7c68ba8d53c2164fd9fde1087b7d449514baa38c418b1f6bc4bac AS vendor
 
 WORKDIR /app
 
