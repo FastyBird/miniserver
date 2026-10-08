@@ -188,10 +188,12 @@ Core is now **capability-first**, following Symfony's component convention.
   a capability, never at the top level. Exceptions and events live inside their owning
   capability too; only these 8 genuinely cross-cutting exceptions sit at the shared root;
 - the dissolved runtime namespaces: `Boot\`, `Caching\`, `DI\`, `EventLoop\`, `Presenters\`,
-  `UI\`;
-- one root-level class, `FastyBird\Core\Configuration`, flattened out of its own one-class
-  sub-namespace (a single-class namespace collapses into a root-level class rather than keeping
-  a stuttering `Configuration\Configuration` shape).
+  `UI\`.
+
+There is no root-level `Configuration` class any more either. E5.8 (#640) split it by owner:
+`Security\Configuration` holds the token and application settings `Presenters\HasAuthorization`
+reads, and `Persistence\TimestampableConfiguration` holds the settings of the timestampable
+driver.
 
 There is no root-level `Constants` class any more. E5.10 (#642) dissolved
 `FastyBird\Core\Constants`: a constant lives, typed, on the type that owns its meaning
@@ -231,8 +233,8 @@ key path of the `fbCore` schema, and every tag constant. Its expected-violations
   composite calls it at the second position. Today there are two:
   `PersistenceExtension::loadTimestampable()` and `WebSocketsExtension::loadServerProcess()`.
 - `CoreExtension` itself keeps only the composition and the root runtime: the event loop, the
-  Nette UI and route list, the presenter mapping, the PSR-6 cache, the event-dispatcher fallback
-  and `Configuration`.
+  Nette UI and route list, the presenter mapping, the PSR-6 cache and the event-dispatcher
+  fallback.
 - A new capability needs:
   - a child extension;
   - an entry in the composite's constructor, `children()`, `getConfigSchema()` (if it has
@@ -247,7 +249,9 @@ key path of the `fbCore` schema, and every tag constant. Its expected-violations
   `fbCore.security.token.builder` or `fbCore.webSockets.server.wrapper`. A child gets this
   prefix from `$this->prefix('<role>')`.
 - The root services use the root forms: `fbCore.eventLoop.<role>`, `fbCore.ui.<role>`,
-  `fbCore.cache.<role>`, `fbCore.eventDispatcher` and `fbCore.configuration`.
+  `fbCore.cache.<role>` and `fbCore.eventDispatcher`. A runtime settings object belongs to the
+  capability that reads it: `fbCore.security.configuration` and
+  `fbCore.persistence.timestampable.configuration` (#640).
 - No segment may be the name of a library Core was assembled from, compared case-insensitively.
   The guard's `DENYLIST` holds those names: `jsonApi`, `simpleAuth`, `wsServer`, `ipub` and the
   rest. `application` may not be the segment directly under `fbCore`. Deeper down it may be,
@@ -264,6 +268,16 @@ key path of the `fbCore` schema, and every tag constant. Its expected-violations
 - Each child declares the schema of its own section in `getConfigSchema()`. The composite builds
   its schema from them and hands each child exactly its subtree. [configuration.md](./configuration.md#core-fbcore)
   documents every key.
+- Each section is read through a typed class, not a `stdClass` (E5.8, #640). The schema casts
+  every `Expect::structure()` with `->castTo()`: the section to
+  `FastyBird\Core\<Capability>\DI\Config`, and each nested structure to
+  `FastyBird\Core\<Capability>\DI\Config\<Path>`, named by its key path below the section in
+  PascalCase (`webSockets > server > secured` is `WebSockets\DI\Config\ServerSecured`;
+  `http > static` is `Http\DI\Config\StaticFiles`, because `static` is reserved). Each class is
+  `final readonly`, with one public promoted property per key, in schema order, typed as the
+  values the schema can hand over. The schema stays the single source of keys, types and
+  defaults; the class declares no defaults. A child reads `$this->getConfig()` after
+  `assert($configuration instanceof Config)`.
 - The denylist applies to every key path, sections and leaves alike. `application` may not be a
   top-level key.
 
