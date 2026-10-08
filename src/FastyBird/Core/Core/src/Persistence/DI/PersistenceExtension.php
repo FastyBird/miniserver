@@ -47,8 +47,8 @@ final class PersistenceExtension extends DI\CompilerExtension
 				'lazyAssociation' => Schema\Expect::bool(false),
 				'autoMapField' => Schema\Expect::bool(true),
 				'dbFieldType' => Schema\Expect::string('datetime_immutable'),
-			]),
-		]);
+			])->castTo(Config\Timestampable::class),
+		])->castTo(Config::class);
 	}
 
 	#[Override]

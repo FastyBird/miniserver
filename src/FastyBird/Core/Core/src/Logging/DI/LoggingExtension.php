@@ -9,7 +9,6 @@ use Nette\DI;
 use Nette\Schema;
 use Override;
 use Sentry;
-use stdClass;
 use Symfony\Bridge\Monolog as BridgeMonolog;
 use function assert;
 use function getenv;
@@ -36,20 +35,20 @@ final class LoggingExtension extends DI\CompilerExtension
 				'enabled' => Schema\Expect::bool(true),
 				'level' => Schema\Expect::int(Monolog\Level::Info),
 				'filename' => Schema\Expect::string('app.log'),
-			]),
+			])->castTo(Config\RotatingFile::class),
 			'stdOut' => Schema\Expect::structure([
 				'enabled' => Schema\Expect::bool(false),
 				'level' => Schema\Expect::int(Monolog\Level::Info),
-			]),
+			])->castTo(Config\StdOut::class),
 			'console' => Schema\Expect::structure([
 				'enabled' => Schema\Expect::bool(false),
 				'level' => Schema\Expect::int(Monolog\Level::Info),
-			]),
+			])->castTo(Config\Console::class),
 			'sentry' => Schema\Expect::structure([
 				'dsn' => Schema\Expect::string()->nullable(),
 				'level' => Schema\Expect::int(Monolog\Level::Warning),
-			]),
-		]);
+			])->castTo(Config\Sentry::class),
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -57,7 +56,7 @@ final class LoggingExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		if ($configuration->rotatingFile->enabled === true) {
 			$builder->addDefinition(
@@ -166,7 +165,7 @@ final class LoggingExtension extends DI\CompilerExtension
 
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		/**
 		 * Monolog's logger takes an optional PSR-20 clock. Core's clock is confined to

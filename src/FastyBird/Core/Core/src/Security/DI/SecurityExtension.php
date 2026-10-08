@@ -20,7 +20,6 @@ use Nette\PhpGenerator;
 use Nette\Schema;
 use Nettrine\ORM;
 use Override;
-use stdClass;
 use Symfony\Contracts\EventDispatcher;
 use function assert;
 use function dirname;
@@ -62,34 +61,34 @@ final class SecurityExtension extends DI\CompilerExtension
 			'token' => Schema\Expect::structure([
 				'issuer' => Schema\Expect::string(),
 				'signature' => Schema\Expect::string(''),
-			]),
+			])->castTo(Config\Token::class),
 			'enable' => Schema\Expect::structure([
 				'middleware' => Schema\Expect::bool(false),
 				'doctrine' => Schema\Expect::structure([
 					'mapping' => Schema\Expect::bool(false),
 					'models' => Schema\Expect::bool(false),
-				]),
+				])->castTo(Config\EnableDoctrine::class),
 				'casbin' => Schema\Expect::structure([
 					'database' => Schema\Expect::bool(false),
-				]),
+				])->castTo(Config\EnableCasbin::class),
 				'nette' => Schema\Expect::structure([
 					'application' => Schema\Expect::bool(false),
-				]),
-			]),
+				])->castTo(Config\EnableNette::class),
+			])->castTo(Config\Enable::class),
 			'application' => Schema\Expect::structure([
 				'signInUrl' => Schema\Expect::string(),
 				'homeUrl' => Schema\Expect::string('/'),
-			]),
+			])->castTo(Config\Application::class),
 			'services' => Schema\Expect::structure([
 				'identity' => Schema\Expect::bool(false),
-			]),
+			])->castTo(Config\Services::class),
 			'casbin' => Schema\Expect::structure([
 				'model' => Schema\Expect::string(
 					dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'model.conf',
 				),
 				'policy' => Schema\Expect::string(),
-			]),
-		]);
+			])->castTo(Config\Casbin::class),
+		])->castTo(Config::class);
 	}
 
 	/**
@@ -100,7 +99,7 @@ final class SecurityExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		if ($configuration->token->signature !== '') {
 			$builder->addDefinition($this->prefix('auth'), new DI\Definitions\ServiceDefinition())
@@ -196,7 +195,7 @@ final class SecurityExtension extends DI\CompilerExtension
 
 			$modelFile = $configuration->casbin->model;
 
-			if (!is_string($modelFile) || !is_file($modelFile)) {
+			if (!is_file($modelFile)) {
 				throw new Exceptions\Logic('Casbin model file is not configured');
 			}
 
@@ -284,7 +283,7 @@ final class SecurityExtension extends DI\CompilerExtension
 
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$userContextServiceName = $builder->getByType(Identity\User::class);
 

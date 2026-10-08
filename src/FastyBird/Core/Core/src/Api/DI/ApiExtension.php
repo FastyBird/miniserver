@@ -10,7 +10,6 @@ use FastyBird\Core\Api\Schemas;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function assert;
 
 /**
@@ -32,8 +31,8 @@ final class ApiExtension extends DI\CompilerExtension
 				'author' => Schema\Expect::anyOf(Schema\Expect::string(), Schema\Expect::array())
 					->default('FastyBird team'),
 				'copyright' => Schema\Expect::string()->default(null)->nullable(),
-			]),
-		]);
+			])->castTo(Config\Meta::class),
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -41,7 +40,7 @@ final class ApiExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$builder->addDefinition($this->prefix('builder'), new DI\Definitions\ServiceDefinition())
 			->setType(Encoding\Builder::class)

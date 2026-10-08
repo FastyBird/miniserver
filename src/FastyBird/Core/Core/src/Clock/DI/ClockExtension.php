@@ -9,7 +9,6 @@ use FastyBird\Core\Exceptions;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function assert;
 use function in_array;
 
@@ -30,7 +29,7 @@ final class ClockExtension extends DI\CompilerExtension
 			'timeZone' => Schema\Expect::string('UTC'),
 			'system' => Schema\Expect::bool(true),
 			'frozen' => Schema\Expect::anyOf(Schema\Expect::float(), Schema\Expect::mixed()),
-		]);
+		])->castTo(Config::class);
 	}
 
 	/**
@@ -42,7 +41,7 @@ final class ClockExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		if (!in_array($configuration->timeZone, DateTimeZone::listIdentifiers(), true)) {
 			throw new Exceptions\InvalidArgument('Timezone have to be valid PHP timezone string');
