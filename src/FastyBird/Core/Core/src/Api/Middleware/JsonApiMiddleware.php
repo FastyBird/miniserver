@@ -10,7 +10,6 @@ use InvalidArgumentException;
 use Neomerx;
 use Neomerx\JsonApi\Contracts;
 use Neomerx\JsonApi\Schema;
-use Nette\DI;
 use Override;
 use Psr\Http\Message;
 use Psr\Http\Server;
@@ -28,9 +27,12 @@ final class JsonApiMiddleware implements Server\MiddlewareInterface
 
 	private Log\LoggerInterface $logger;
 
+	/**
+	 * @param Encoding\SchemaContainer<object> $schemaContainer
+	 */
 	public function __construct(
 		private readonly Message\ResponseFactoryInterface $responseFactory,
-		private readonly DI\Container $container,
+		private readonly Encoding\SchemaContainer $schemaContainer,
 		Log\LoggerInterface|null $logger = null,
 	)
 	{
@@ -121,14 +123,11 @@ final class JsonApiMiddleware implements Server\MiddlewareInterface
 			->withHeader('Content-Type', Contracts\Http\Headers\MediaTypeInterface::JSON_API_MEDIA_TYPE);
 	}
 
-	/**
-	 * @throws DI\MissingServiceException
-	 */
 	private function getEncoder(): Encoding\Encoder
 	{
 		$encoder = new Encoding\Encoder(
 			new Neomerx\JsonApi\Factories\Factory(),
-			$this->container->getByType(Contracts\Schema\SchemaContainerInterface::class),
+			$this->schemaContainer,
 		);
 
 		$encoder->withEncodeOptions(JSON_PRETTY_PRINT);
