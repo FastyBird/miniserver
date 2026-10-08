@@ -25,7 +25,8 @@ use ReflectionException;
  * Read-back of the accessor pairs E5.12 (#644) turns into property hooks or asymmetric
  * visibility, for the classes no other test reads them back on (census T6, T12-25): each value is
  * assigned through today's setter or constructor and read through today's getter. #644 rewrites
- * the call syntax mechanically and must keep every value.
+ * the call syntax mechanically and must keep every value. The rows #644 makes `private(set)` or
+ * `protected(set)` are read back only through what their own class writes (#671, #672).
  */
 final class AccessorReadBackTest extends TestCase
 {
@@ -56,12 +57,6 @@ final class AccessorReadBackTest extends TestCase
 		self::assertSame('', $exception->getTitle());
 		self::assertSame('', $exception->getDescription());
 		self::assertSame($request, $exception->getRequest());
-
-		$exception->setTitle('E5 title');
-		$exception->setDescription('E5 description');
-
-		self::assertSame('E5 title', $exception->getTitle());
-		self::assertSame('E5 description', $exception->getDescription());
 		self::assertSame('e5 message', $exception->getMessage());
 		self::assertSame(418, $exception->getCode());
 	}
@@ -84,25 +79,10 @@ final class AccessorReadBackTest extends TestCase
 		self::assertSame('12', $withExtension->getExtension());
 		self::assertFalse($withExtension->getItalianLeadingZero());
 		self::assertSame(['Europe/Prague'], $withExtension->getTimeZones());
-	}
 
-	/**
-	 * @throws PhoneExceptions\NoValidCountry
-	 * @throws PhoneExceptions\NoValidPhone
-	 */
-	public function testPhoneSettersReadBack(): void
-	{
-		$phone = PhoneEntities\Phone::fromNumber('+420 777 123 456');
+		$leadingZeros = PhoneEntities\Phone::fromNumber('+992 00 500 8965');
 
-		$phone->setExtension('34');
-		$phone->setItalianLeadingZero(true);
-		$phone->setNumberOfLeadingZeros(2);
-		$phone->setTimeZones(['Europe/Prague', 'Europe/Vienna']);
-
-		self::assertSame('34', $phone->getExtension());
-		self::assertTrue($phone->getItalianLeadingZero());
-		self::assertSame(2, $phone->getNumberOfLeadingZeros());
-		self::assertSame(['Europe/Prague', 'Europe/Vienna'], $phone->getTimeZones());
+		self::assertSame(2, $leadingZeros->getNumberOfLeadingZeros());
 	}
 
 	public function testWebSocketsServerConfiguration(): void
@@ -118,12 +98,6 @@ final class AccessorReadBackTest extends TestCase
 
 		self::assertSame(8_888, $configuration->getPort());
 		self::assertSame('127.0.0.1', $configuration->getAddress());
-
-		$configuration->setPort(9_999);
-		$configuration->setAddress('10.0.0.1');
-
-		self::assertSame(9_999, $configuration->getPort());
-		self::assertSame('10.0.0.1', $configuration->getAddress());
 	}
 
 	/**
@@ -153,24 +127,11 @@ final class AccessorReadBackTest extends TestCase
 		$driver = new Driver\AttributeDriver();
 
 		self::assertSame('.php', $driver->getFileExtension());
-
-		$driver->setFileExtension('.inc');
-
-		self::assertSame('.inc', $driver->getFileExtension());
 	}
 
 	public function testMappingDriverChainDefaultDriver(): void
 	{
 		$chain = new Driver\MappingDriverChain();
-
-		self::assertNull($chain->getDefaultDriver());
-
-		$driver = new Driver\AttributeDriver();
-		$chain->setDefaultDriver($driver);
-
-		self::assertSame($driver, $chain->getDefaultDriver());
-
-		$chain->setDefaultDriver(null);
 
 		self::assertNull($chain->getDefaultDriver());
 	}
@@ -191,14 +152,6 @@ final class AccessorReadBackTest extends TestCase
 		$manager = new class (SecurityEntities\Policies\Policy::class, $managerRegistry) extends Crud\CrudManager {
 
 		};
-
-		self::assertTrue($manager->getFlush());
-
-		$manager->setFlush(false);
-
-		self::assertFalse($manager->getFlush());
-
-		$manager->setFlush(true);
 
 		self::assertTrue($manager->getFlush());
 	}
