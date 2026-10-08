@@ -7,14 +7,14 @@ use React\EventLoop;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Server start event
+ * Dispatched by Server\ServerRuntime::stop(), before it stops the loop.
  */
-final class StartEvent extends EventDispatcher\Event
+final class ServerStopped extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private EventLoop\LoopInterface $eventLoop,
-		private Server\ServerRuntime $server,
+		private readonly EventLoop\LoopInterface $eventLoop,
+		private readonly Server\ServerRuntime $server,
 	)
 	{
 	}

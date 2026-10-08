@@ -4,16 +4,17 @@ namespace FastyBird\Core\WebSockets\Events;
 
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Handshake;
+use Symfony\Contracts\EventDispatcher;
 
 /**
- * WS client sent message event
+ * Dispatched by Server\Wrapper after the application has handled a message.
  */
-final readonly class IncomingMessage
+final class MessageProcessed extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
 	)
 	{
 	}

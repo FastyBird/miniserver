@@ -317,6 +317,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 			Router\SocketRoutes::createRouter(),
 			$controllerFactory,
 			new Clients\Storage(),
+			new EventDispatcher\EventDispatcher(),
 		);
 
 		$application->handleMessage(

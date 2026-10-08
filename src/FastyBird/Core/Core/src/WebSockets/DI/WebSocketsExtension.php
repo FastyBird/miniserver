@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\WebSockets\DI;
 
+use Contributte\EventDispatcher as ContributteEventDispatcher;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange;
 use FastyBird\Core\WebSockets\Clients;
@@ -17,7 +18,6 @@ use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Core\WebSockets\Topics\Drivers as TopicsDrivers;
 use FastyBird\Core\WebSockets\Wamp;
 use Nette\DI;
-use Nette\PhpGenerator;
 use Nette\Schema;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -26,8 +26,8 @@ use React;
 use stdClass;
 use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use function assert;
-use function interface_exists;
 use function is_bool;
+use function is_int;
 use function is_string;
 use function krsort;
 use function ksort;
@@ -39,7 +39,7 @@ use const SORT_STRING;
 
 /**
  * WebSockets: the WebSocket server, WAMP routing and controllers, the client and topic storage,
- * the WS server command and its event bridges
+ * the WS server command and its client subscriber
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs as fbCore.webSockets and reads its
@@ -66,6 +66,11 @@ final class WebSocketsExtension extends DI\CompilerExtension
 	// WebSockets\Controllers\ControllerFactory. Both sides use this constant for the same reason as
 	// ROUTES_TAG.
 	public const string CONTROLLER_TAG = 'fastybird.core.webSockets.controller';
+
+	// Tags an invokable listener of Events\ServerCreated from another package; the tag value is its
+	// priority. beforeCompile() attaches each one, lazily, to the autowired Symfony dispatcher, so it
+	// listens in every container, whichever dispatcher that container has (#638, #658).
+	public const string SERVER_CREATED_LISTENER_TAG = 'fastybird.core.webSockets.serverCreatedListener';
 
 	#[Override]
 	public function getConfigSchema(): Schema\Schema
@@ -266,11 +271,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		/**
-		 * WEBSOCKETS -- router assembly, controller injection, event bridges
-		 *
-		 * The Application::class-presence guard below is preserved from WebSocketsExtension
-		 * (added in PR #450, when the WAMP library was absorbed into the tree) -- spec section 6
-		 * calls this out by name as logic that must be preserved, not just relocated.
+		 * WEBSOCKETS -- router assembly and controller injection
 		 */
 
 		$webSocketsRouter = $builder->getDefinition($this->prefix('routing.router'));
@@ -313,81 +314,6 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			$def->addTag('nette.inject')->addTag(self::CONTROLLER_TAG, $def->getType());
 		}
 
-		if (
-			interface_exists('Symfony\Component\EventDispatcher\EventDispatcherInterface')
-			&& $builder->getByType(ComponentEventDispatcher\EventDispatcherInterface::class) !== null
-		) {
-			$dispatcher = $builder->getDefinition(
-				$builder->getByType(ComponentEventDispatcher\EventDispatcherInterface::class),
-			);
-
-			// Preserved guard (PR #450): the base Application service is genuinely optional --
-			// nothing in this extension registers it directly, only whichever extension embeds
-			// the WAMP controller-dispatch framework does. Wiring events onto a service that was
-			// never defined would be a hard MissingServiceException at compile time.
-			$applicationType = $builder->getByType(Controllers\Application::class);
-
-			if ($applicationType !== null) {
-				$application = $builder->getDefinition($applicationType);
-				assert($application instanceof DI\Definitions\ServiceDefinition);
-
-				$application->addSetup('?->onOpen[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\OpenEvent::class),
-				]);
-				$application->addSetup('?->onClose[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\CloseEvent::class),
-				]);
-				$application->addSetup('?->onMessage[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(
-						Events\MessageEvent::class,
-					),
-				]);
-				$application->addSetup('?->onError[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\ErrorEvent::class),
-				]);
-			}
-
-			$server = $builder->getDefinition($builder->getByType(Server\ServerRuntime::class));
-			assert($server instanceof DI\Definitions\ServiceDefinition);
-			$server->addSetup('?->onCreate[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\CreateEvent::class),
-			]);
-			$server->addSetup('?->onStart[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\StartEvent::class),
-			]);
-			$server->addSetup('?->onStop[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\StopEvent::class),
-			]);
-
-			$serverWrapper = $builder->getDefinition($builder->getByType(Server\Wrapper::class));
-			assert($serverWrapper instanceof DI\Definitions\ServiceDefinition);
-			$serverWrapper->addSetup('?->onClientConnected[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(
-					Events\ClientConnectEvent::class,
-				),
-			]);
-			$serverWrapper->addSetup(
-				'?->onClientDisconnected[] = function() {?->dispatch(new ?(...func_get_args()));}',
-				[
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\ClientDisconnectEvent::class),
-				],
-			);
-			$serverWrapper->addSetup('?->onClientError[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(Events\ClientErrorEvent::class),
-			]);
-			$serverWrapper->addSetup('?->onIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}', [
-				'@self', $dispatcher, new PhpGenerator\Literal(
-					Events\IncommingMessageEvent::class,
-				),
-			]);
-			$serverWrapper->addSetup(
-				'?->onAfterIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}',
-				[
-					'@self', $dispatcher, new PhpGenerator\Literal(Events\AfterIncommingMessageEvent::class),
-				],
-			);
-		}
-
 		// Collected here, not in loadServerProcess(): an exchange registered after fbCore, such
 		// as RedisDb or RabbitMQ in config/local.neon, does not exist yet during
 		// loadConfiguration() (#566)
@@ -396,8 +322,10 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		$serverCommand->setArgument('exchangeFactories', $builder->findByType(Exchange\Factory::class));
 
 		/**
-		 * WS SERVER PLUGIN -- events bridge (fails loudly if the event dispatcher is missing,
-		 * preserved from WsServerExtension::beforeCompile())
+		 * EVENTS -- the server, its wrapper and the WAMP application take the PSR-14 dispatcher
+		 * and dispatch their events themselves (#638). Without one they cannot be created, so this
+		 * fails loudly, as the WS server's event bridge did (preserved from
+		 * WsServerExtension::beforeCompile()).
 		 */
 
 		if ($builder->getByType(PsrEventDispatcher\EventDispatcherInterface::class) === null) {
@@ -407,26 +335,43 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			));
 		}
 
-		$wsServerDispatcher = $builder->getDefinition(
-			$builder->getByType(PsrEventDispatcher\EventDispatcherInterface::class),
-		);
-		$socketWrapperServiceName = $builder->getByType(Server\Wrapper::class);
-		assert(is_string($socketWrapperServiceName));
-		$socketWrapperService = $builder->getDefinition($socketWrapperServiceName);
-		assert($socketWrapperService instanceof DI\Definitions\ServiceDefinition);
+		/**
+		 * SERVER CREATED LISTENERS -- each tagged service listens to Events\ServerCreated at the
+		 * priority its tag holds. Contributte's LazyListener resolves the service only when the event
+		 * is dispatched, as contributte does for every subscriber it collects; the consumers
+		 * container a module listener needs itself depends on the dispatcher.
+		 */
 
-		$socketWrapperService->addSetup(
-			'?->onClientConnected[] = function() {?->dispatch(new ?(...func_get_args()));}',
-			[
-				'@self', $wsServerDispatcher, new PhpGenerator\Literal(Events\ClientConnected::class),
-			],
-		);
-		$socketWrapperService->addSetup(
-			'?->onIncomingMessage[] = function() {?->dispatch(new ?(...func_get_args()));}',
-			[
-				'@self', $wsServerDispatcher, new PhpGenerator\Literal(Events\IncomingMessage::class),
-			],
-		);
+		$dispatcherName = $builder->getByType(ComponentEventDispatcher\EventDispatcherInterface::class);
+
+		if ($dispatcherName === null) {
+			throw new Exceptions\Logic(sprintf(
+				'Service of type "%s" is needed. Please register it.',
+				ComponentEventDispatcher\EventDispatcherInterface::class,
+			));
+		}
+
+		$dispatcher = $builder->getDefinition($dispatcherName);
+		assert($dispatcher instanceof DI\Definitions\ServiceDefinition);
+
+		foreach ($builder->findByTag(self::SERVER_CREATED_LISTENER_TAG) as $listenerName => $priority) {
+			if (!is_int($priority)) {
+				throw new Exceptions\Logic(sprintf(
+					'Service "%s" is tagged "%s" without a priority. The tag value must be an integer.',
+					$listenerName,
+					self::SERVER_CREATED_LISTENER_TAG,
+				));
+			}
+
+			$dispatcher->addSetup('addListener', [
+				'eventName' => Events\ServerCreated::class,
+				'listener' => new DI\Definitions\Statement(
+					ContributteEventDispatcher\LazyListener::class,
+					[$listenerName, '__invoke', $builder->getDefinitionByType(DI\Container::class)],
+				),
+				'priority' => $priority,
+			]);
+		}
 	}
 
 	/**

@@ -7,6 +7,7 @@ use FastyBird\Core\WebSockets\Clients;
 use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Encoding;
 use FastyBird\Core\WebSockets\Entities;
+use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
@@ -14,13 +15,15 @@ use Nette\Http;
 use PHPUnit\Framework\TestCase;
 use React\Socket;
 use RuntimeException;
+use Symfony\Component\EventDispatcher;
 use TypeError;
 
 /**
- * Wrapper::$onClientConnected/$onClientDisconnected/$onClientError/$onIncomingMessage/
- * $onAfterIncomingMessage used to fire only through SmartObject::__call. These guard that
- * Utils\Arrays::invoke() reaches every registered handler with the same arguments the old magic
- * call did.
+ * Wrapper's client-connected, client-disconnected, client-error, incoming-message and
+ * after-incoming-message hooks used to fire only through SmartObject::__call, and then through
+ * Utils\Arrays::invoke(). Since #638 they are the ClientConnected, ClientDisconnected,
+ * ClientFailed, MessageReceived and MessageProcessed events; these guard that a listener of each
+ * gets the same arguments the old handlers did.
  */
 final class WrapperTest extends TestCase
 {
@@ -47,15 +50,16 @@ final class WrapperTest extends TestCase
 		$clientsStorage->setStorageDriver(new Clients\Drivers\InMemory());
 		$clientsStorage->addClient(1, $client);
 
-		$wrapper = new Server\Wrapper($application, $clientsStorage);
+		$dispatcher = new EventDispatcher\EventDispatcher();
+		$wrapper = new Server\Wrapper($application, $clientsStorage, $dispatcher);
 
 		$received = [];
-		$wrapper->onClientDisconnected[] = static function (
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-		) use (&$received): void {
-			$received = [$c, $r];
-		};
+		$dispatcher->addListener(
+			Events\ClientDisconnected::class,
+			static function (Events\ClientDisconnected $event) use (&$received): void {
+				$received = [$event->getClient(), $event->getHttpRequest()];
+			},
+		);
 
 		// the storage held the client, and closing removes exactly that one
 		self::assertTrue($clientsStorage->hasClient(1));
@@ -87,15 +91,16 @@ final class WrapperTest extends TestCase
 		$application = $this->createMock(Controllers\Dispatcher::class);
 		$clientsStorage = new Clients\Storage();
 
-		$wrapper = new Server\Wrapper($application, $clientsStorage);
+		$dispatcher = new EventDispatcher\EventDispatcher();
+		$wrapper = new Server\Wrapper($application, $clientsStorage, $dispatcher);
 
 		$received = [];
-		$wrapper->onClientError[] = static function (
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-		) use (&$received): void {
-			$received = [$c, $r];
-		};
+		$dispatcher->addListener(
+			Events\ClientFailed::class,
+			static function (Events\ClientFailed $event) use (&$received): void {
+				$received = [$event->getClient(), $event->getHttpRequest()];
+			},
+		);
 
 		$wrapper->handleError($client, new RuntimeException('boom'));
 
@@ -119,24 +124,24 @@ final class WrapperTest extends TestCase
 		$application = $this->createMock(Controllers\Dispatcher::class);
 		$clientsStorage = new Clients\Storage();
 
-		$wrapper = new Server\Wrapper($application, $clientsStorage);
+		$dispatcher = new EventDispatcher\EventDispatcher();
+		$wrapper = new Server\Wrapper($application, $clientsStorage, $dispatcher);
 
 		$receivedIncoming = [];
-		$wrapper->onIncomingMessage[] = static function (
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-			string $m,
-		) use (&$receivedIncoming): void {
-			$receivedIncoming = [$c, $r, $m];
-		};
+		$dispatcher->addListener(
+			Events\MessageReceived::class,
+			static function (Events\MessageReceived $event) use (&$receivedIncoming): void {
+				$receivedIncoming = [$event->getClient(), $event->getHttpRequest(), $event->getMessage()];
+			},
+		);
 
 		$receivedAfter = [];
-		$wrapper->onAfterIncomingMessage[] = static function (
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-		) use (&$receivedAfter): void {
-			$receivedAfter = [$c, $r];
-		};
+		$dispatcher->addListener(
+			Events\MessageProcessed::class,
+			static function (Events\MessageProcessed $event) use (&$receivedAfter): void {
+				$receivedAfter = [$event->getClient(), $event->getHttpRequest()];
+			},
+		);
 
 		$wrapper->handleMessage($client, 'payload');
 
@@ -177,15 +182,16 @@ final class WrapperTest extends TestCase
 
 		$clientsStorage = new Clients\Storage();
 
-		$wrapper = new Server\Wrapper($application, $clientsStorage);
+		$dispatcher = new EventDispatcher\EventDispatcher();
+		$wrapper = new Server\Wrapper($application, $clientsStorage, $dispatcher);
 
 		$received = [];
-		$wrapper->onClientConnected[] = static function (
-			Entities\ConnectedClient $c,
-			Handshake\Request $r,
-		) use (&$received): void {
-			$received = [$c, $r];
-		};
+		$dispatcher->addListener(
+			Events\ClientConnected::class,
+			static function (Events\ClientConnected $event) use (&$received): void {
+				$received = [$event->getClient(), $event->getHttpRequest()];
+			},
+		);
 
 		$wrapper->handleMessage($client, 'irrelevant, headers already marked received');
 

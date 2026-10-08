@@ -26,6 +26,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use React\Socket;
 use Stringable;
+use Symfony\Component\EventDispatcher;
 use Throwable;
 use function assert;
 use function file_put_contents;
@@ -258,16 +259,14 @@ final class ClientAuthenticationTest extends TestCase
 		$client->setHttpHeadersReceived(true);
 		$client->setWebSocket($webSocket);
 
+		$dispatcher = new EventDispatcher\EventDispatcher();
+		$dispatcher->addListener(Events\MessageReceived::class, [$subscriber, 'incomingMessage']);
+
 		$wrapper = new Server\Wrapper(
 			$this->createMock(Controllers\Dispatcher::class),
 			new Clients\Storage(),
+			$dispatcher,
 		);
-		$wrapper->onIncomingMessage[] = static function (
-			Entities\ConnectedClient $client,
-			Handshake\Request $request,
-		) use ($subscriber): void {
-			$subscriber->incomingMessage(new Events\IncomingMessage($client, $request));
-		};
 
 		$wrapper->handleMessage($client, '[2,"call-1","/devices-module/v1/exchange",{}]');
 
@@ -613,25 +612,28 @@ final class ClientAuthenticationTest extends TestCase
 
 		$client = $this->client();
 
-		$subscriber->incomingMessage(new Events\IncomingMessage(
+		$subscriber->incomingMessage(new Events\MessageReceived(
 			$client,
 			$this->handshake(['Authorization' => 'Bearer ' . $managerToken]),
+			'',
 		));
 
 		self::assertSame(self::USER, self::identityOf($client));
 		self::assertSame(['manager'], $client->getRoles());
 
-		$subscriber->incomingMessage(new Events\IncomingMessage(
+		$subscriber->incomingMessage(new Events\MessageReceived(
 			$client,
 			$this->handshake(['Authorization' => 'Bearer ' . $userToken]),
+			'',
 		));
 
 		self::assertSame(self::OTHER_USER, self::identityOf($client));
 		self::assertSame(['user'], $client->getRoles());
 
-		$subscriber->incomingMessage(new Events\IncomingMessage(
+		$subscriber->incomingMessage(new Events\MessageReceived(
 			$client,
 			$this->handshake(['Authorization' => 'Bearer ' . $expiredToken]),
+			'',
 		));
 
 		self::assertNull($client->getIdentity());

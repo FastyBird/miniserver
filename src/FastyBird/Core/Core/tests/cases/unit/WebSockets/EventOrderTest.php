@@ -18,7 +18,6 @@ use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use React\EventLoop;
 use React\Socket;
-use ReflectionClass;
 use ReflectionProperty;
 use RuntimeException;
 use Symfony\Component\EventDispatcher;
@@ -29,16 +28,17 @@ use function assert;
 use const PHP_INT_MAX;
 
 /**
- * Characterization of each of the 12 WebSockets hooks as it reaches the event dispatcher today:
- * which event class or classes it dispatches, in which order, with which payload (#460 §1.3,
- * §3.4; census T3, T4, T12-15). The 13th, WampApplication::$onPush, went with the dead
- * server-push pipeline in #635 (census X1-A).
+ * Characterization of each of the 12 WebSockets hooks as it reaches the event dispatcher: which
+ * event class it dispatches, in which order, with which payload (#460 §1.3, §3.4; census T3, T4,
+ * T12-15). The 13th, WampApplication::$onPush, went with the dead server-push pipeline in #635
+ * (census X1-A).
  *
- * Every hook is a public callback array that WebSocketsExtension::beforeCompile() bridges onto
+ * Until E5.6 (#638) every hook was a public callback array that WebSocketsExtension bridged onto
  * the dispatcher with an addSetup(); two of them -- onClientConnected and onIncomingMessage --
- * twice, to two different event classes, and the second onIncomingMessage bridge drops the
- * message, because IncomingMessage takes only the client and the request. E5.6 (#638) replaces
- * the arrays with direct PSR-14 dispatch and has to reproduce exactly these sequences. Each hook
+ * twice, to two different event classes, the second of which dropped the message. Since #638
+ * ServerRuntime, Wrapper and Application dispatch census T4's events themselves, one per hook:
+ * each duplicate pair became one class, dispatched once, and nothing else in these sequences
+ * changed (#658). Each hook
  * is driven through the real ServerRuntime, Wrapper and WampApplication services of Core's
  * compiled container, so it is the compiled wiring that is pinned, not a hand-built object
  * graph. A listener at the highest priority records every event the moment it is dispatched.
@@ -50,22 +50,20 @@ final class EventOrderTest extends BaseTestCase
 	 * Every event class the WebSockets capability dispatches.
 	 */
 	private const array EVENTS = [
-		Events\AfterIncommingMessageEvent::class,
-		Events\ClientConnectEvent::class,
+		Events\MessageProcessed::class,
 		Events\ClientConnected::class,
-		Events\ClientDisconnectEvent::class,
-		Events\ClientErrorEvent::class,
-		Events\CloseEvent::class,
-		Events\CreateEvent::class,
-		Events\ErrorEvent::class,
-		Events\IncomingMessage::class,
-		Events\IncommingMessageEvent::class,
-		Events\MessageEvent::class,
-		Events\OpenEvent::class,
-		Events\StartEvent::class,
-		Events\StopEvent::class,
-		Events\WsServerError::class,
-		Events\WsServerStartup::class,
+		Events\ClientDisconnected::class,
+		Events\ClientFailed::class,
+		Events\ConnectionClosed::class,
+		Events\ServerCreated::class,
+		Events\ApplicationFailed::class,
+		Events\MessageReceived::class,
+		Events\ApplicationMessageReceived::class,
+		Events\ConnectionOpened::class,
+		Events\ServerStarted::class,
+		Events\ServerStopped::class,
+		Events\ServerFailed::class,
+		Events\ServerLaunched::class,
 	];
 
 	/** @var list<object> */
@@ -119,14 +117,14 @@ final class EventOrderTest extends BaseTestCase
 		$flashSocket->close();
 
 		self::assertSame(
-			[Events\CreateEvent::class, Events\StartEvent::class, Events\StopEvent::class],
+			[Events\ServerCreated::class, Events\ServerStarted::class, Events\ServerStopped::class],
 			$this->classes(),
 		);
 
 		[$create, $start, $stop] = $this->dispatched;
-		assert($create instanceof Events\CreateEvent);
-		assert($start instanceof Events\StartEvent);
-		assert($stop instanceof Events\StopEvent);
+		assert($create instanceof Events\ServerCreated);
+		assert($start instanceof Events\ServerStarted);
+		assert($stop instanceof Events\ServerStopped);
 
 		self::assertSame($server, $create->getServer());
 		self::assertSame($loop, $start->getEventLoop());
@@ -136,13 +134,12 @@ final class EventOrderTest extends BaseTestCase
 	}
 
 	/**
-	 * A successful upgrade: the wrapper's onClientConnected, twice -- the Core bridge first, then
-	 * the WS server's own -- then the application's onOpen.
+	 * A successful upgrade: the wrapper's ClientConnected, then the application's ConnectionOpened.
 	 *
 	 * @throws DI\MissingServiceException
 	 * @throws Throwable
 	 */
-	public function testAnUpgradeDispatchesClientConnectedTwiceThenOpen(): void
+	public function testAnUpgradeDispatchesClientConnectedThenOpen(): void
 	{
 		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('doHandshake')
@@ -154,20 +151,16 @@ final class EventOrderTest extends BaseTestCase
 
 		self::assertSame(
 			[
-				Events\ClientConnectEvent::class,
 				Events\ClientConnected::class,
-				Events\OpenEvent::class,
+				Events\ConnectionOpened::class,
 			],
 			$this->classes(),
 		);
 
-		[$connect, $connected, $open] = $this->dispatched;
-		assert($connect instanceof Events\ClientConnectEvent);
+		[$connected, $open] = $this->dispatched;
 		assert($connected instanceof Events\ClientConnected);
-		assert($open instanceof Events\OpenEvent);
+		assert($open instanceof Events\ConnectionOpened);
 
-		self::assertSame($client, $connect->getClient());
-		self::assertSame($client->getRequest(), $connect->getHttpRequest());
 		self::assertSame($client, $connected->getClient());
 		self::assertSame($client->getRequest(), $connected->getHttpRequest());
 		self::assertSame($this->application(), $open->getApplication());
@@ -176,14 +169,13 @@ final class EventOrderTest extends BaseTestCase
 	}
 
 	/**
-	 * A message on an established connection: onIncomingMessage twice -- the second event
-	 * without the message, which IncomingMessage has no place for -- then the application's
-	 * onMessage from inside the protocol, then onAfterIncomingMessage.
+	 * A message on an established connection: the wrapper's MessageReceived, then the
+	 * application's ApplicationMessageReceived from inside the protocol, then MessageProcessed.
 	 *
 	 * @throws DI\MissingServiceException
 	 * @throws Throwable
 	 */
-	public function testAMessageDispatchesIncomingTwiceThenApplicationMessageThenAfter(): void
+	public function testAMessageDispatchesIncomingThenApplicationMessageThenAfter(): void
 	{
 		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$protocol->method('handleMessage')
@@ -206,26 +198,21 @@ final class EventOrderTest extends BaseTestCase
 
 		self::assertSame(
 			[
-				Events\IncommingMessageEvent::class,
-				Events\IncomingMessage::class,
-				Events\MessageEvent::class,
-				Events\AfterIncommingMessageEvent::class,
+				Events\MessageReceived::class,
+				Events\ApplicationMessageReceived::class,
+				Events\MessageProcessed::class,
 			],
 			$this->classes(),
 		);
 
-		[$incoming, $incomingWithoutMessage, $applicationMessage, $after] = $this->dispatched;
-		assert($incoming instanceof Events\IncommingMessageEvent);
-		assert($incomingWithoutMessage instanceof Events\IncomingMessage);
-		assert($applicationMessage instanceof Events\MessageEvent);
-		assert($after instanceof Events\AfterIncommingMessageEvent);
+		[$incoming, $applicationMessage, $after] = $this->dispatched;
+		assert($incoming instanceof Events\MessageReceived);
+		assert($applicationMessage instanceof Events\ApplicationMessageReceived);
+		assert($after instanceof Events\MessageProcessed);
 
 		self::assertSame($client, $incoming->getClient());
 		self::assertSame($client->getRequest(), $incoming->getHttpRequest());
 		self::assertSame($message, $incoming->getMessage());
-		self::assertSame($client, $incomingWithoutMessage->getClient());
-		self::assertSame($client->getRequest(), $incomingWithoutMessage->getHttpRequest());
-		self::assertFalse((new ReflectionClass(Events\IncomingMessage::class))->hasMethod('getMessage'));
 		self::assertSame($this->application(), $applicationMessage->getApplication());
 		self::assertSame($client, $applicationMessage->getClient());
 		self::assertSame($client->getRequest(), $applicationMessage->getHttpRequest());
@@ -248,15 +235,15 @@ final class EventOrderTest extends BaseTestCase
 
 		self::assertSame(
 			[
-				Events\ClientDisconnectEvent::class,
-				Events\CloseEvent::class,
+				Events\ClientDisconnected::class,
+				Events\ConnectionClosed::class,
 			],
 			$this->classes(),
 		);
 
 		[$disconnect, $close] = $this->dispatched;
-		assert($disconnect instanceof Events\ClientDisconnectEvent);
-		assert($close instanceof Events\CloseEvent);
+		assert($disconnect instanceof Events\ClientDisconnected);
+		assert($close instanceof Events\ConnectionClosed);
 
 		self::assertSame($client, $disconnect->getClient());
 		self::assertSame($client->getRequest(), $disconnect->getHttpRequest());
@@ -281,15 +268,15 @@ final class EventOrderTest extends BaseTestCase
 
 		self::assertSame(
 			[
-				Events\ClientErrorEvent::class,
-				Events\ErrorEvent::class,
+				Events\ClientFailed::class,
+				Events\ApplicationFailed::class,
 			],
 			$this->classes(),
 		);
 
 		[$clientError, $error] = $this->dispatched;
-		assert($clientError instanceof Events\ClientErrorEvent);
-		assert($error instanceof Events\ErrorEvent);
+		assert($clientError instanceof Events\ClientFailed);
+		assert($error instanceof Events\ApplicationFailed);
 
 		self::assertSame($client, $clientError->getClient());
 		self::assertSame($client->getRequest(), $clientError->getHttpRequest());

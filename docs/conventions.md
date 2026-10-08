@@ -288,6 +288,37 @@ key path of the `fbCore` schema, and every tag constant. Its expected-violations
 | `fastybird.core.exchange.consumerRoutingKey` | `ExchangeExtension::CONSUMER_ROUTING_KEY` | `consumer_routing_key` |
 | `fastybird.core.webSockets.routes` | `WebSocketsExtension::ROUTES_TAG` | `ipub.websockets.routes` |
 | `fastybird.core.webSockets.controller` | `WebSocketsExtension::CONTROLLER_TAG` | `ipub.websockets.controller` |
+| `fastybird.core.webSockets.serverCreatedListener` | `WebSocketsExtension::SERVER_CREATED_LISTENER_TAG` | — (new in #638; the tag value is the listener's priority) |
+
+## Events
+
+Since E5.6 (#638) Core's capabilities announce what happens through PSR-14 events, and only
+through them. These rules are kept by review, not by a gate.
+
+- **Dispatch through PSR-14 only.** A class that announces something takes
+  `Psr\EventDispatcher\EventDispatcherInterface` in its constructor and calls `dispatch()`. No
+  callback arrays: no `public array $onX`, no `Nette\Utils\Arrays::invoke()`, and no DI
+  `addSetup()` that appends a closure to a hook. `Utils\Arrays::invoke` has no call site in Core's
+  `src`.
+- **One event class per moment.** Two classes for the same hook, or one hook dispatching twice,
+  is a duplicate to merge, not a feature.
+- **Names are past tense, with no `Event` suffix**: `ServerCreated`, `ClientConnected`,
+  `MessageReceived`, `Exchange\Events\BeforeMessagePublished`. The class lives in its
+  capability's `Events\` namespace.
+- **Shape.** `final class X extends Symfony\Contracts\EventDispatcher\Event`, the payload as
+  `private readonly` promoted constructor properties with a getter each, in the order the
+  dispatcher passes them. A class extending `Event` cannot be a `readonly class`.
+- **Order is behaviour.** Where the order of listeners matters, give them explicit priorities;
+  registration order differs between containers.
+- **Listeners in other packages.** A subscriber inside a package that loads
+  `contributte/event-dispatcher` (production does) is collected by type, as
+  `EventSubscriberInterface`. A listener of a WebSocket server lifecycle event from another package
+  -- today `WebSockets\Events\ServerCreated` -- is **not** a subscriber: it is a `final` invokable
+  service tagged `WebSocketsExtension::SERVER_CREATED_LISTENER_TAG` with its priority as the tag
+  value, and `WebSocketsExtension` attaches it, lazily, to whichever Symfony dispatcher the
+  container autowires. That works in the package test containers too, which have only Core's
+  fallback dispatcher and no subscriber collection (#658). It must not also implement
+  `EventSubscriberInterface`, or production would register it twice.
 
 ## Docblocks
 

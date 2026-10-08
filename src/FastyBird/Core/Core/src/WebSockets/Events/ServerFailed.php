@@ -6,9 +6,10 @@ use Symfony\Contracts\EventDispatcher;
 use Throwable;
 
 /**
- * WS server connection error event
+ * Dispatched by Commands\WsServer when the server's socket reports an error, before the command
+ * stops the loop.
  */
-final class WsServerError extends EventDispatcher\Event
+final class ServerFailed extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Throwable $ex)

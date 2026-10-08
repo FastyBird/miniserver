@@ -16,17 +16,16 @@
 namespace FastyBird\Bridge\DevicesModuleUiModule\DI;
 
 use FastyBird\Bridge\DevicesModuleUiModule;
-use FastyBird\Bridge\DevicesModuleUiModule\Consumers as DevicesModuleUiModuleConsumers;
+use FastyBird\Bridge\DevicesModuleUiModule\Consumers;
 use FastyBird\Bridge\DevicesModuleUiModule\Hydrators;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Documents\DI as DocumentsDI;
-use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Exchange\DI as ExchangeDI;
+use FastyBird\Core\WebSockets\DI as WebSocketsDI;
 use FastyBird\Core\WebSockets\Routing;
-use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
@@ -109,6 +108,15 @@ class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 		)
 			->setType(Subscribers\ActionCommand::class);
 
+		// Enables the SocketsBridge once the WebSocket server is created: after Devices' and Ui's,
+		// in production's order (census T3, #658)
+		$builder->addDefinition(
+			$this->prefix('subscribers.enableSocketsBridge'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Subscribers\EnableSocketsBridge::class)
+			->addTag(WebSocketsDI\WebSocketsExtension::SERVER_CREATED_LISTENER_TAG, -30);
+
 		/**
 		 * JSON-API SCHEMAS
 		 */
@@ -165,7 +173,7 @@ class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 				$this->prefix('exchange.consumer.stateEntities'),
 				new NetteDI\Definitions\ServiceDefinition(),
 			)
-				->setType(DevicesModuleUiModuleConsumers\SocketsBridge::class)
+				->setType(Consumers\SocketsBridge::class)
 				->setArguments([
 					'logger' => $logger,
 				])
@@ -224,30 +232,6 @@ class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 					]);
 				}
 			}
-		}
-
-		/**
-		 * WEBSOCKETS
-		 */
-
-		try {
-			$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
-			assert($consumerService instanceof NetteDI\Definitions\ServiceDefinition);
-
-			$wsServerService = $builder->getDefinitionByType(Server\ServerRuntime::class);
-			assert($wsServerService instanceof NetteDI\Definitions\ServiceDefinition);
-
-			$wsServerService->addSetup(
-				'?->onCreate[] = function() {?->enable(?);}',
-				[
-					'@self',
-					$consumerService,
-					DevicesModuleUiModuleConsumers\SocketsBridge::class,
-				],
-			);
-
-		} catch (NetteDI\MissingServiceException) {
-			// Extension is not registered
 		}
 	}
 

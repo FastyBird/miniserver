@@ -67,7 +67,7 @@ final class WsServer extends Console\Command\Command
 		);
 
 		try {
-			$this->dispatcher?->dispatch(new Events\WsServerStartup());
+			$this->dispatcher?->dispatch(new Events\ServerLaunched());
 
 			$socketServer = new Socket\SocketServer(
 				$this->configuration->getAddress() . ':' . $this->configuration->getPort(),
@@ -76,7 +76,7 @@ final class WsServer extends Console\Command\Command
 			);
 
 			$socketServer->on('error', function (Throwable $ex): void {
-				$this->dispatcher?->dispatch(new Events\WsServerError($ex));
+				$this->dispatcher?->dispatch(new Events\ServerFailed($ex));
 
 				$this->logger->error(
 					'An error occurred during handling requests. Stopping WS server',

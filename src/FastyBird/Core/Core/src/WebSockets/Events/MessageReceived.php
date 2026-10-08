@@ -2,29 +2,24 @@
 
 namespace FastyBird\Core\WebSockets\Events;
 
-use FastyBird\Core\WebSockets\Controllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Message received event
+ * Dispatched by Server\Wrapper for a message on an established connection, before the protocol
+ * hands it to the application. Subscribers\Client re-authenticates the client on it; a client a
+ * listener closes never reaches the application.
  */
-final class MessageEvent extends EventDispatcher\Event
+final class MessageReceived extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private Controllers\Dispatcher $application,
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
-		private string $message,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
+		private readonly string $message,
 	)
 	{
-	}
-
-	public function getApplication(): Controllers\Dispatcher
-	{
-		return $this->application;
 	}
 
 	public function getClient(): Entities\ConnectedClient

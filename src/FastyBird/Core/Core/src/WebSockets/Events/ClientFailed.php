@@ -7,14 +7,15 @@ use FastyBird\Core\WebSockets\Handshake;
 use Symfony\Contracts\EventDispatcher;
 
 /**
- * Client disconnected event
+ * Dispatched by Server\Wrapper when an established connection fails, before the application
+ * handles the error. It carries no exception; ApplicationFailed does.
  */
-final class ClientDisconnectEvent extends EventDispatcher\Event
+final class ClientFailed extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private Entities\ConnectedClient $client,
-		private Handshake\Request $httpRequest,
+		private readonly Entities\ConnectedClient $client,
+		private readonly Handshake\Request $httpRequest,
 	)
 	{
 	}

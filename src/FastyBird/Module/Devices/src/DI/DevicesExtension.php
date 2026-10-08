@@ -20,20 +20,18 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Exchange;
-use FastyBird\Core\Exchange\Consumers as ExchangeConsumers;
 use FastyBird\Core\Exchange\DI as ExchangeDI;
 use FastyBird\Core\Http\Routing as HttpRouting;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
 use FastyBird\Core\WebSockets\DI as WebSocketsDI;
 use FastyBird\Core\WebSockets\Routing as WebSocketsRouting;
-use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Commands;
 use FastyBird\Module\Devices\Connectors;
-use FastyBird\Module\Devices\Consumers as DevicesConsumers;
+use FastyBird\Module\Devices\Consumers;
 use FastyBird\Module\Devices\Controllers as DevicesControllers;
 use FastyBird\Module\Devices\Hydrators;
 use FastyBird\Module\Devices\Middleware;
@@ -521,6 +519,15 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 		$builder->addDefinition($this->prefix('subscribers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Connector::class);
 
+		// Enables the SocketsBridge once the WebSocket server is created: first of the three
+		// modules' bridges, in production's order (census T3, #658)
+		$builder->addDefinition(
+			$this->prefix('subscribers.enableSocketsBridge'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Subscribers\EnableSocketsBridge::class)
+			->addTag(WebSocketsDI\WebSocketsExtension::SERVER_CREATED_LISTENER_TAG, -10);
+
 		/**
 		 * API CONTROLLERS
 		 */
@@ -904,7 +911,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 			$this->prefix('exchange.consumer.statesActions'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(DevicesConsumers\StatesActions::class)
+			->setType(Consumers\StatesActions::class)
 			->setArguments([
 				'logger' => $logger,
 			])
@@ -914,7 +921,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 			$this->prefix('exchange.consumer.moduleEntities'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(DevicesConsumers\ModuleEntities::class)
+			->setType(Consumers\ModuleEntities::class)
 			->setArguments([
 				'logger' => $logger,
 			])
@@ -928,7 +935,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 				$this->prefix('exchange.consumer.socketsBridge'),
 				new NetteDI\Definitions\ServiceDefinition(),
 			)
-				->setType(DevicesConsumers\SocketsBridge::class)
+				->setType(Consumers\SocketsBridge::class)
 				->setArguments([
 					'logger' => $logger,
 				])
@@ -1091,21 +1098,6 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 					[
 						'DevicesModule' => ['FastyBird\\Module\\Devices\\Controllers', '*', '*V1'],
 					],
-				],
-			);
-
-			$consumerService = $builder->getDefinitionByType(ExchangeConsumers\Container::class);
-			assert($consumerService instanceof NetteDI\Definitions\ServiceDefinition);
-
-			$wsServerService = $builder->getDefinitionByType(Server\ServerRuntime::class);
-			assert($wsServerService instanceof NetteDI\Definitions\ServiceDefinition);
-
-			$wsServerService->addSetup(
-				'?->onCreate[] = function() {?->enable(?);}',
-				[
-					'@self',
-					$consumerService,
-					DevicesConsumers\SocketsBridge::class,
 				],
 			);
 
