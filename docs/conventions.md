@@ -290,6 +290,30 @@ key path of the `fbCore` schema, and every tag constant. Its expected-violations
 | `fastybird.core.webSockets.controller` | `WebSocketsExtension::CONTROLLER_TAG` | `ipub.websockets.controller` |
 | `fastybird.core.webSockets.serverCreatedListener` | `WebSocketsExtension::SERVER_CREATED_LISTENER_TAG` | — (new in #638; the tag value is the listener's priority) |
 
+### The container at runtime
+
+Since E5.7 (#639) Core's services get their dependencies through their constructors. These rules
+are kept by review, not by a gate.
+
+- **No service locators.** Outside `Boot\`, no Core class takes `Nette\DI\Container` to look a
+  service up at runtime (`getByType()`, `getService()`). A lookup hides the dependency from the
+  DI graph and from `tools/di-snapshot.php`.
+- **A cycle is broken with `lazy`, not with a lookup.** When injecting a service would close a
+  dependency cycle, its definition is made lazy (`$definition->lazy = true`). nette/di then
+  returns a PHP 8.4 native lazy ghost, and builds the real service, its setups included, on first
+  use. Today there is one: `fbCore.api.schemas.container`. The JSON:API builder, middleware and
+  hydrators container take it, and every schema it collects reaches the router, which reaches
+  them.
+- **No PSR-11 adapter.** `Nette\DI\Container` does not implement
+  `Psr\Container\ContainerInterface`, and Core does not wrap it in one.
+- **The one exception is `WebSockets\Controllers\ControllerFactory`.** It keeps
+  `Nette\DI\Container`, because it creates WebSocket controllers with `findByTag()`,
+  `createService()`, `createInstance()` and `callInjects()`, and `createInstance()` and
+  `callInjects()` have no PSR-11 equivalent. A PSR-11 type would only hide that dependency.
+- Compile-time use in a DI extension is not runtime use. `WebSocketsExtension::beforeCompile()`
+  hands the container's own definition to each contributte `LazyListener` it generates, so a
+  tagged listener is created only when its event is dispatched (#638).
+
 ## Events
 
 Since E5.6 (#638) Core's capabilities announce what happens through PSR-14 events, and only

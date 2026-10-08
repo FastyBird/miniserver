@@ -28,6 +28,8 @@ use const E_USER_WARNING;
 
 /**
  * Default controller loader
+ *
+ * Keeps Nette\DI\Container on purpose: createInstance() and callInjects() have no PSR-11 equivalent.
  */
 final class ControllerFactory
 {
