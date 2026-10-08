@@ -40,7 +40,7 @@ final class TokenTest extends TestCase
 	 * this bypasses it to exercise the claims-presence checks in TokenValidator::validate()
 	 * in isolation.
 	 *
-	 * @param array<string, mixed> $claims
+	 * @param array<non-empty-string, mixed> $claims
 	 *
 	 * @throws DateMalformedStringException
 	 * @throws JWT\Encoding\CannotEncodeContent

@@ -48,18 +48,21 @@ final readonly class TokenBuilder
 
 		$now = $this->clock->now();
 
-		$jwtBuilder = $configuration->builder();
-
-		$jwtBuilder->issuedBy($this->tokenIssuer);
-		$jwtBuilder->identifiedBy(Uuid\Uuid::uuid4()->toString());
-		$jwtBuilder->issuedAt($now);
+		// The builder is immutable since lcobucci/jwt 5: every call returns a new builder, so
+		// each result is kept. The claims are added in the order they always were, which is
+		// the order they are encoded in.
+		$jwtBuilder = $configuration->builder()
+			->issuedBy($this->tokenIssuer)
+			->identifiedBy(Uuid\Uuid::uuid4()->toString())
+			->issuedAt($now);
 
 		if ($expiration !== null) {
-			$jwtBuilder->expiresAt($expiration);
+			$jwtBuilder = $jwtBuilder->expiresAt($expiration);
 		}
 
-		$jwtBuilder->withClaim(self::CLAIM_USER, $userId);
-		$jwtBuilder->withClaim(self::CLAIM_ROLES, $roles);
+		$jwtBuilder = $jwtBuilder
+			->withClaim(self::CLAIM_USER, $userId)
+			->withClaim(self::CLAIM_ROLES, $roles);
 
 		return $jwtBuilder->getToken($configuration->signer(), $configuration->signingKey());
 	}
