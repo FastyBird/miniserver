@@ -9,7 +9,13 @@ parameters:
     # happens to have. It tracks the runtime deliberately and by hand: bumping it
     # in the same commit as the runtime is what makes a baseline delta
     # attributable to the bump rather than to a runner image that drifted.
-    phpVersion: 80400
+    #
+    # A range, not a single version: the code is analysed as valid on every PHP from
+    # 8.4 (the runtime) to 8.5 (what the `PHP 8.5 (Core)` CI job runs Core's suite on),
+    # so a construct that behaves differently on either one is reported (#643).
+    phpVersion:
+        min: 80400
+        max: 80599
 
     tmpDir: ../var/tools/PHPStan
     resultCachePath: %currentWorkingDirectory%/var/tools/PHPStan/resultCache.tests.php

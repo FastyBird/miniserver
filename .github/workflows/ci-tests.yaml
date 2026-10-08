@@ -219,6 +219,115 @@ jobs:
       - name: "make tests"
         run: "make tests"
 
+  # Core's own test suite on PHP 8.5 (#643, Epic #460 §3.12). The runtime stays 8.4; this job
+  # keeps Core runnable on 8.5 while the dependency ceilings below are still in place.
+  #
+  # NOT a required check yet, on purpose. It becomes one when `composer why-not php 8.5` on
+  # the lock prints nothing -- i.e. once the nine orisai/* packages (docs/deprecations.md,
+  # "orisai/object-mapper") are gone -- and at that point --ignore-platform-req=php+ and the
+  # "exactly these packages" step are deleted with it, so the job runs a plain install.
+  php-85-core:
+    name: "PHP 8.5 (Core)"
+    runs-on: "ubuntu-latest"
+
+    # The same services and connection as `php-tests`: Core's suite has DB-backed tests.
+    services:
+      mariadb:
+        image: "mariadb:10.11"
+        env:
+          MARIADB_ROOT_PASSWORD: "root"
+          MARIADB_DATABASE: "miniserver_test"
+          MARIADB_USER: "miniserver"
+          MARIADB_PASSWORD: "miniserver"
+        ports:
+          - "3306:3306"
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      redis:
+        image: "redis:7"
+        ports:
+          - "6379:6379"
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      FB_APP_PARAMETER__DATABASE_HOST: "127.0.0.1"
+      FB_APP_PARAMETER__DATABASE_PORT: "3306"
+      FB_APP_PARAMETER__DATABASE_USERNAME: "miniserver"
+      FB_APP_PARAMETER__DATABASE_PASSWORD: "miniserver"
+      FB_APP_PARAMETER__DATABASE_DBNAME: "miniserver_test"
+      FB_APP_PARAMETER__REDIS_HOST: "127.0.0.1"
+      FB_APP_PARAMETER__REDIS_PORT: "6379"
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: "ci-test-signature-not-used-in-production"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v7"
+
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.5"
+          extensions: "bcmath, curl, gd, gmp, iconv, intl, mbstring, openssl, pcntl, pdo_mysql, sockets, sodium, sqlite3, zip"
+          tools: "composer:2.8"
+
+      # A positive control: without it, a runner that silently resolved another PHP would
+      # make this job a second copy of `php-tests` that reports itself as 8.5.
+      - name: "The runtime is PHP 8.5"
+        run: |
+          php -v
+          php -r 'exit(PHP_MAJOR_VERSION === 8 && PHP_MINOR_VERSION === 5 ? 0 : 1);'
+
+      # Composer cannot scope --ignore-platform-req to named packages: the flag is global.
+      # The next step is what scopes it in effect (census T11.4).
+      - name: "Composer install"
+        run: "composer install --no-interaction --no-progress --prefer-dist --ignore-platform-req=php+"
+
+      # Fails unless the packages that refuse this PHP are exactly the nine orisai/* ones
+      # recorded in docs/deprecations.md. A tenth package, or one of the nine disappearing,
+      # both fail: the first is a new ceiling nobody recorded, the second means the ignore
+      # above is wider than it needs to be.
+      - name: "Only the recorded packages refuse PHP 8.5"
+        run: |
+          expected="orisai/coding-standard
+          orisai/exceptions
+          orisai/nette-di
+          orisai/nette-object-mapper
+          orisai/object-mapper
+          orisai/object-mapper-contracts
+          orisai/reflection-meta
+          orisai/source-map
+          orisai/utils"
+          expected=$(printf '%s\n' "$expected" | sed 's/^ *//' | sort)
+
+          set +e
+          composer why-not php "$(php -r 'echo PHP_VERSION;')" > why-not.txt
+          status=$?
+          set -e
+          cat why-not.txt
+
+          # 0: nothing refuses this PHP, 1: something does; anything else is composer failing
+          if [ "$status" -gt 1 ]; then
+            exit "$status"
+          fi
+
+          actual=$(awk 'NF { print $1 }' why-not.txt | sort -u)
+
+          if [ "$actual" != "$expected" ]; then
+            echo "The packages that refuse PHP 8.5 are not the recorded ones (docs/deprecations.md):"
+            diff <(printf '%s\n' "$expected") <(printf '%s\n' "$actual") || true
+            exit 1
+          fi
+
+      - name: "make tests (Core)"
+        run: "make tests ARGS=src/FastyBird/Core/Core/tests/cases/"
+
   js-lint:
     name: "JS Lint"
     runs-on: "ubuntu-latest"

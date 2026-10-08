@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Security\Identity;
 
 use FastyBird\Core\Security\Exceptions;
-use Lcobucci\Clock;
 use Lcobucci\JWT;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
@@ -41,16 +40,20 @@ final readonly class TokenValidator
 			JWT\Signer\Key\InMemory::plainText($this->tokenSignature),
 		);
 
-		$now = $this->clock->now();
-
-		$configuration->setValidationConstraints(
+		$configuration = $configuration->withValidationConstraints(
 			new JWT\Validation\Constraint\IssuedBy($this->tokenIssuer),
-			new JWT\Validation\Constraint\LooseValidAt(new Clock\FrozenClock($now)),
+			new JWT\Validation\Constraint\LooseValidAt($this->clock),
 			new JWT\Validation\Constraint\SignedWith(
 				$configuration->signer(),
 				JWT\Signer\Key\InMemory::plainText($this->tokenSignature),
 			),
 		);
+
+		// lcobucci/jwt 5 types the parser's input as non-empty-string. An empty string is refused
+		// exactly as the parser refused it before -- a token without its three parts.
+		if ($token === '') {
+			throw new Exceptions\UnauthorizedAccess('Token is not valid JWToken');
+		}
 
 		try {
 			$jwtToken = $configuration->parser()->parse($token);
