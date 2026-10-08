@@ -4,7 +4,6 @@ namespace FastyBird\Core\Api\Hydrators;
 
 use FastyBird\Core\Api\Encoding;
 use FastyBird\Core\Exceptions;
-use Nette\DI;
 use Psr\Log;
 use SplObjectStorage;
 
@@ -21,11 +20,11 @@ final class Container
 
 	private Log\LoggerInterface $logger;
 
-	/** @var Encoding\SchemaContainer<T>|null */
-	private Encoding\SchemaContainer|null $jsonApiSchemaContainer = null;
-
+	/**
+	 * @param Encoding\SchemaContainer<T> $schemaContainer
+	 */
 	public function __construct(
-		private readonly DI\Container $container,
+		private readonly Encoding\SchemaContainer $schemaContainer,
 		Log\LoggerInterface|null $logger = null,
 	)
 	{
@@ -37,7 +36,6 @@ final class Container
 	/**
 	 * @return Hydrator<T>|null
 	 *
-	 * @throws DI\MissingServiceException
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Runtime
@@ -47,8 +45,7 @@ final class Container
 		$this->hydrators->rewind();
 
 		foreach ($this->hydrators as $hydrator) {
-			$schema = $this->getSchemaContainer()
-				->getSchemaByClassName($hydrator->getEntityName());
+			$schema = $this->schemaContainer->getSchemaByClassName($hydrator->getEntityName());
 
 			if ($schema->getType() === $document->getResource()->getType()) {
 				return $hydrator;
@@ -77,22 +74,6 @@ final class Container
 		if (!$this->hydrators->offsetExists($hydrator)) {
 			$this->hydrators->offsetSet($hydrator);
 		}
-	}
-
-	/**
-	 * @return Encoding\SchemaContainer<T>
-	 *
-	 * @throws DI\MissingServiceException
-	 */
-	private function getSchemaContainer(): Encoding\SchemaContainer
-	{
-		if ($this->jsonApiSchemaContainer !== null) {
-			return $this->jsonApiSchemaContainer;
-		}
-
-		$this->jsonApiSchemaContainer = $this->container->getByType(Encoding\SchemaContainer::class);
-
-		return $this->jsonApiSchemaContainer;
 	}
 
 }

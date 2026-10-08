@@ -6,7 +6,6 @@ use InvalidArgumentException;
 use Neomerx;
 use Neomerx\JsonApi\Contracts;
 use Neomerx\JsonApi\Schema;
-use Nette\DI;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
@@ -43,10 +42,11 @@ final readonly class Builder
 	private const string LINK_PREV = Contracts\Schema\DocumentInterface::KEYWORD_PREV;
 
 	/**
+	 * @param SchemaContainer<object> $schemaContainer
 	 * @param string|array<string> $metaAuthor
 	 */
 	public function __construct(
-		private readonly DI\Container $container,
+		private readonly SchemaContainer $schemaContainer,
 		private readonly string|array $metaAuthor,
 		private readonly string|null $metaCopyright = null,
 	)
@@ -185,14 +185,11 @@ final readonly class Builder
 			->withHeader('Content-Type', Contracts\Http\Headers\MediaTypeInterface::JSON_API_MEDIA_TYPE);
 	}
 
-	/**
-	 * @throws DI\MissingServiceException
-	 */
 	private function getEncoder(): Encoder
 	{
 		$encoder = new Encoder(
 			new Neomerx\JsonApi\Factories\Factory(),
-			$this->container->getByType(Contracts\Schema\SchemaContainerInterface::class),
+			$this->schemaContainer,
 		);
 
 		$encoder->withEncodeOptions(JSON_PRETTY_PRINT);

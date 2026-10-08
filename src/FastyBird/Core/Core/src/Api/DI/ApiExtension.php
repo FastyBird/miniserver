@@ -54,8 +54,17 @@ final class ApiExtension extends DI\CompilerExtension
 		$builder->addDefinition($this->prefix('hydrators.container'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Container::class);
 
-		$builder->addDefinition($this->prefix('schemas.container'), new DI\Definitions\ServiceDefinition())
+		$schemaContainer = $builder->addDefinition(
+			$this->prefix('schemas.container'),
+			new DI\Definitions\ServiceDefinition(),
+		)
 			->setType(Encoding\SchemaContainer::class);
+
+		// The builder, the middleware and the hydrators container take the schema container in
+		// their constructors, while each schema reaches the router and the router reaches them
+		// (the middleware, the module routes' controllers): a cycle. A lazy service is a native
+		// PHP 8.4 lazy ghost, built, setups and all, on its first use, which breaks it (#639)
+		$schemaContainer->lazy = true;
 
 		// Every hydrator takes this reader as an optional constructor argument, so registering it
 		// switches on the #[Crud] required/writable rules for every JSON:API write (#552)
