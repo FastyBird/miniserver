@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Core;
+namespace FastyBird\Core\Security;
 
 use Nette\Application;
 
 /**
- * Application configuration storage.
- * Stores the authentication and entity timestamping settings
+ * The token and application settings of the fbCore > security section, registered by
+ * SecurityExtension as fbCore.security.configuration
  */
 final readonly class Configuration
 {
@@ -19,16 +19,11 @@ final readonly class Configuration
 		private readonly bool $enableDoctrineMapping,
 		private readonly bool $enableDoctrineModels,
 		private readonly bool $enableNetteApplication,
-		public readonly bool $lazyAssociation = false,
-		public readonly bool $autoMapField = false,
-		public readonly string $dbFieldType = 'datetime_immutable',
 		private readonly string|null $applicationSignInUrl = null,
 		private readonly string $applicationHomeUrl = '/',
 	)
 	{
 	}
-
-	// SIMPLE AUTH
 
 	public function getTokenIssuer(): string
 	{
@@ -86,18 +81,6 @@ final readonly class Configuration
 	public function getHomeUrl(array $params = []): string
 	{
 		return $this->linkGenerator->link($this->applicationHomeUrl, $params);
-	}
-
-	// DOCTRINE TIMESTAMPABLE
-
-	public function autoMapField(): bool
-	{
-		return $this->autoMapField === true;
-	}
-
-	public function useLazyAssociation(): bool
-	{
-		return $this->lazyAssociation === true;
 	}
 
 }

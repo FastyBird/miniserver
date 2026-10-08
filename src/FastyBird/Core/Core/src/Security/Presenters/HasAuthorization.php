@@ -2,9 +2,9 @@
 
 namespace FastyBird\Core\Security\Presenters;
 
-use FastyBird\Core\Configuration;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\Access;
+use FastyBird\Core\Security\Configuration;
 use FastyBird\Core\Security\Identity;
 use Nette\Application;
 use ReflectionClass;

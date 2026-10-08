@@ -6,7 +6,6 @@ use DateInvalidTimeZoneException;
 use FastyBird\Core\Api\DI as ApiDI;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Clock\DI as ClockDI;
-use FastyBird\Core\Configuration;
 use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\EventLoop;
 use FastyBird\Core\EventLoop\Subscribers as EventLoopSubscribers;
@@ -43,8 +42,8 @@ use const DIRECTORY_SEPARATOR;
  * The only Core extension registered with the compiler (as fbCore). Every capability is a
  * child extension -- Logging, Persistence, Documents, Exchange, Security, Values, Clock, Api,
  * Phone, WebSockets and Http -- and this class keeps only the composition and the root runtime:
- * the event loop, the Nette UI and route list, the presenter mapping, the PSR-6 array cache, the
- * event-dispatcher fallback and the Configuration service.
+ * the event loop, the Nette UI and route list, the presenter mapping, the PSR-6 array cache and
+ * the event-dispatcher fallback.
  *
  * nette/di cannot register an extension while the container is compiling, so the children
  * are not registered: this class owns them and forwards each lifecycle call to them at the
@@ -52,9 +51,9 @@ use const DIRECTORY_SEPARATOR;
  * order (Epic #459 section 3.1, census docs/superpowers/plans/2026-09-27-core-e4-di-census.md
  * section 5). Each child runs under its capability's name, fbCore.<capability>, so its
  * services are fbCore.<capability>.<role>; the root services are fbCore.eventLoop.*,
- * fbCore.ui.*, fbCore.cache.psr6, fbCore.eventDispatcher and fbCore.configuration (census
- * section 2). Each configured child declares the schema of its own fbCore section, and this
- * class hands it exactly that subtree (census section 3).
+ * fbCore.ui.*, fbCore.cache.psr6 and fbCore.eventDispatcher (census section 2). Each configured
+ * child declares the schema of its own fbCore section, and this class hands it exactly that
+ * subtree (census section 3).
  */
 final class CoreExtension extends NetteDI\CompilerExtension
 {
@@ -279,31 +278,6 @@ final class CoreExtension extends NetteDI\CompilerExtension
 		 */
 
 		$this->clock->loadConfiguration();
-
-		/**
-		 * CONFIGURATION (the security and persistence.timestampable settings, combined -- see
-		 * SecurityExtension's schema for why this is registered unconditionally rather than only
-		 * inside the `$configuration->security->token->signature !== ''` gate: the
-		 * timestampable half of this data must always be available)
-		 */
-
-		$timestampable = $configuration->persistence->timestampable;
-
-		$builder->addDefinition($this->prefix('configuration'))
-			->setType(Configuration::class)
-			->setArguments([
-				'tokenIssuer' => $configuration->security->token->issuer,
-				'tokenSignature' => $configuration->security->token->signature,
-				'enableMiddleware' => $configuration->security->enable->middleware,
-				'enableDoctrineMapping' => $configuration->security->enable->doctrine->mapping,
-				'enableDoctrineModels' => $configuration->security->enable->doctrine->models,
-				'enableNetteApplication' => $configuration->security->enable->nette->application,
-				'applicationSignInUrl' => $configuration->security->application->signInUrl,
-				'applicationHomeUrl' => $configuration->security->application->homeUrl,
-				'lazyAssociation' => $timestampable->lazyAssociation,
-				'autoMapField' => $timestampable->autoMapField,
-				'dbFieldType' => $timestampable->dbFieldType,
-			]);
 
 		/**
 		 * PERSISTENCE, continued -- timestampable and the schema subscriber

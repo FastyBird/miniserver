@@ -6,6 +6,7 @@ use Casbin;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Presenters\Events;
 use FastyBird\Core\Security\Access;
+use FastyBird\Core\Security\Configuration;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Mapping;
 use FastyBird\Core\Security\Middleware;
@@ -34,8 +35,8 @@ use const DIRECTORY_SEPARATOR;
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs as fbCore.security and reads its
  * fbCore > security section, so its services are fbCore.security.*. Nothing is registered
- * unless a token signature is configured. The composite also reads that section, for the root
- * Configuration.
+ * unless a token signature is configured, except fbCore.security.configuration, the
+ * Configuration that Presenters\HasAuthorization reads, which always is.
  *
  * In beforeCompile() it maps FastyBird\Core\Security\Entities on the default entity manager,
  * through MappingHelper::of() on this extension.
@@ -270,6 +271,24 @@ final class SecurityExtension extends DI\CompilerExtension
 					->setType(Subscribers\Application::class);
 			}
 		}
+
+		/**
+		 * Configuration -- registered unconditionally, outside the signature gate, as it was
+		 * before #640 split it out of the composite's root Configuration
+		 */
+
+		$builder->addDefinition($this->prefix('configuration'))
+			->setType(Configuration::class)
+			->setArguments([
+				'tokenIssuer' => $configuration->token->issuer,
+				'tokenSignature' => $configuration->token->signature,
+				'enableMiddleware' => $configuration->enable->middleware,
+				'enableDoctrineMapping' => $configuration->enable->doctrine->mapping,
+				'enableDoctrineModels' => $configuration->enable->doctrine->models,
+				'enableNetteApplication' => $configuration->enable->nette->application,
+				'applicationSignInUrl' => $configuration->application->signInUrl,
+				'applicationHomeUrl' => $configuration->application->homeUrl,
+			]);
 	}
 
 	/**

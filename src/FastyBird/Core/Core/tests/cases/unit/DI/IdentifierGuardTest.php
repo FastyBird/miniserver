@@ -113,7 +113,7 @@ final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public const array ROOT_GROUPS = ['eventLoop', 'ui', 'cache'];
 
-	public const array ROOT_SERVICES = ['fbCore.eventDispatcher', 'fbCore.configuration'];
+	public const array ROOT_SERVICES = ['fbCore.eventDispatcher'];
 
 	/**
 	 * Digits are allowed after the first character (fbCore.cache.psr6)
@@ -179,6 +179,7 @@ final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 		'fbCore.security.doctrine.policiesRepository',
 		'fbCore.security.doctrine.policiesManager',
 		'fbCore.security.nette.application',
+		'fbCore.security.configuration',
 		'fbCore.persistence.helpers.database',
 		'fbCore.persistence.utilities.doctrineDateProvider',
 		'fbCore.values.schemas.validator',
@@ -194,7 +195,7 @@ final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 		'fbCore.persistence.entity.updater',
 		'fbCore.persistence.entity.deleter',
 		'fbCore.persistence.crud',
-		'fbCore.configuration',
+		'fbCore.persistence.timestampable.configuration',
 		'fbCore.persistence.timestampable.driver',
 		'fbCore.persistence.timestampable.subscriber',
 		'fbCore.persistence.migrations.subscriber',
