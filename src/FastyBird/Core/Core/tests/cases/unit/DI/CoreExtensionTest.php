@@ -16,6 +16,7 @@ use FastyBird\Core\Http\Server;
 use FastyBird\Core\Http\Subscribers as HttpSubscribers;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
+use FastyBird\Core\Persistence\TimestampableConfiguration;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
 use FastyBird\Core\Security\Configuration;
@@ -130,13 +131,21 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * assert both halves of the collision survive as distinct services, not one silently
 		 * overwriting the other. SimpleAuth and DoctrineTimestampable used to collide the same
 		 * way over `configuration` -- the 2026-09-21 core cleanup merged those two into one root
-		 * Configuration, and E5.8 (#640) split it again; this asserts the Security half is
-		 * reachable both by type and by its service name.
+		 * Configuration, and E5.8 (#640) split it again into Security\Configuration and
+		 * Persistence\TimestampableConfiguration, each registered by its owning capability, so
+		 * this asserts each is reachable both by type and by its service name.
 		 */
 
 		$securityConfiguration = $container->getService('fbCore.security.configuration');
 		self::assertInstanceOf(Configuration::class, $securityConfiguration);
 		self::assertSame($securityConfiguration, $container->getByType(Configuration::class, false));
+
+		$timestampableConfiguration = $container->getService('fbCore.persistence.timestampable.configuration');
+		self::assertInstanceOf(TimestampableConfiguration::class, $timestampableConfiguration);
+		self::assertSame(
+			$timestampableConfiguration,
+			$container->getByType(TimestampableConfiguration::class, false),
+		);
 
 		self::assertInstanceOf(
 			PhoneSubscribers\PhoneObjectSubscriber::class,
