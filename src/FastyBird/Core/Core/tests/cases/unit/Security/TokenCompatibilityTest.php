@@ -2,7 +2,9 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Security;
 
+use Closure;
 use DateInterval;
+use DateMalformedStringException;
 use DateTimeImmutable;
 use Error;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -12,14 +14,22 @@ use FastyBird\Core\Tests\Cases\Unit\BaseTestCase;
 use JsonException;
 use Lcobucci\JWT;
 use Nette\DI;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Clock\ClockInterface;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use Throwable;
+use function base64_encode;
 use function file_get_contents;
+use function hash_hmac;
 use function is_array;
+use function is_string;
 use function json_decode;
+use function json_encode;
+use function rtrim;
+use function strtr;
 use const JSON_THROW_ON_ERROR;
+use const JSON_UNESCAPED_SLASHES;
 
 /**
  * Tokens issued and validated through the container, and the tokens minted once by today's
@@ -36,6 +46,10 @@ use const JSON_THROW_ON_ERROR;
  * editing for jwt 5, existing sessions break, which is an escalation, not a test update. The
  * Accounts side of the same fixture, resolving valid.jwt to its identity through the persisted
  * token, is Accounts' FixtureTokenIdentityTest.
+ *
+ * The two refusal tests pin where lcobucci/jwt 5 is stricter than 4.3 about input the application
+ * never issues -- an empty signature part, an empty-string claim key -- as accepted by escalation
+ * #667. Both inputs are built here from the fixture key and instant; the fixtures stay untouched.
  */
 final class TokenCompatibilityTest extends BaseTestCase
 {
@@ -182,6 +196,175 @@ final class TokenCompatibilityTest extends BaseTestCase
 			],
 			$refused,
 		);
+	}
+
+	/**
+	 * @return array<string, array{string}>
+	 */
+	public static function emptySignatureAlgorithms(): array
+	{
+		return [
+			'HS256' => ['HS256'],
+			'none' => ['none'],
+		];
+	}
+
+	/**
+	 * T-a (escalation #667, accepted difference 1): a token whose third part is empty is
+	 * structurally broken. lcobucci/jwt 5 refuses it in the parser, so validate() throws where
+	 * 4.3 parsed it and returned null; the bearer-header path throws under both. Either way the
+	 * token is rejected. A future jwt release that parses it again turns this red.
+	 *
+	 * @throws DateMalformedStringException
+	 * @throws DI\MissingServiceException
+	 * @throws Error
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws JsonException
+	 * @throws RuntimeException
+	 */
+	#[DataProvider('emptySignatureAlgorithms')]
+	public function testATokenWithAnEmptySignaturePartIsRefusedByThrowing(string $algorithm): void
+	{
+		$token = self::encode(['typ' => 'JWT', 'alg' => $algorithm])
+			. '.' . self::encode(self::frozenClaims())
+			. '.';
+
+		$validated = self::thrownBy(
+			fn (): JWT\Token|null => $this->container->getByType(Identity\TokenValidator::class)->validate($token),
+		);
+
+		self::assertInstanceOf(SecurityExceptions\UnauthorizedAccess::class, $validated);
+		self::assertSame('Token is not valid JWToken', $validated->getMessage());
+
+		$read = self::thrownBy(
+			fn (): JWT\UnencryptedToken|null => $this->container->getByType(Identity\TokenReader::class)
+				->readHeader('Bearer ' . $token),
+		);
+
+		self::assertInstanceOf(SecurityExceptions\UnauthorizedAccess::class, $read);
+	}
+
+	/**
+	 * T-b (escalation #667, accepted difference 2): a token signed with the application's own key,
+	 * carrying valid claims plus one claim under the empty-string key. lcobucci/jwt 4.3 accepted
+	 * it; 5 refuses it in the parser, so validate() throws. TokenBuilder never emits such a key.
+	 *
+	 * The same claims without the empty key, signed the same way, validate: that is the control
+	 * proving the hand-built signature is the application's, so the refusal is the empty key's.
+	 *
+	 * @throws DateMalformedStringException
+	 * @throws DI\MissingServiceException
+	 * @throws Error
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws JsonException
+	 * @throws RuntimeException
+	 * @throws SecurityExceptions\UnauthorizedAccess
+	 */
+	public function testACorrectlySignedTokenWithAnEmptyStringClaimKeyIsRefusedByThrowing(): void
+	{
+		$validator = $this->container->getByType(Identity\TokenValidator::class);
+		$header = ['typ' => 'JWT', 'alg' => 'HS256'];
+		$claims = self::frozenClaims();
+
+		$control = $validator->validate($this->signed($header, $claims));
+
+		self::assertInstanceOf(JWT\UnencryptedToken::class, $control);
+		self::assertSame(
+			'5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34',
+			$control->claims()->get(Identity\TokenBuilder::CLAIM_USER),
+		);
+
+		$token = $this->signed($header, $claims + ['' => 'e5']);
+
+		$validated = self::thrownBy(static fn (): JWT\Token|null => $validator->validate($token));
+
+		self::assertInstanceOf(SecurityExceptions\UnauthorizedAccess::class, $validated);
+		self::assertSame('Token is not valid JWToken', $validated->getMessage());
+	}
+
+	/**
+	 * The claims valid.jwt was minted with, at the fixture's frozen instant, in the encoding
+	 * TokenBuilder writes them: `iat` with microseconds, a whole-second `exp` as an integer.
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @throws DateMalformedStringException
+	 * @throws JsonException
+	 * @throws RuntimeException
+	 */
+	private static function frozenClaims(): array
+	{
+		$fixture = json_decode(self::read('fixture.json'), true, 512, JSON_THROW_ON_ERROR);
+
+		if (!is_array($fixture) || !is_string($fixture['frozenAt'] ?? null)) {
+			throw new RuntimeException('tests/fixtures/tokens/fixture.json is malformed');
+		}
+
+		$frozenAt = new DateTimeImmutable($fixture['frozenAt']);
+
+		return [
+			'iss' => 'com.fastybird.auth-module',
+			'jti' => '8677c940-72cb-4115-9052-61c25643f8d7',
+			'iat' => (float) $frozenAt->format('U.u'),
+			'exp' => $frozenAt->modify('+100 years')->getTimestamp(),
+			'user' => '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34',
+			'roles' => ['administrator'],
+		];
+	}
+
+	/**
+	 * Signs header and claims with HS256 under the fixture's key -- the test container's key, as
+	 * testTheValidFixtureValidatesToTheClaimsItWasMintedWith asserts -- without lcobucci/jwt, whose
+	 * builder cannot produce the inputs these tests need.
+	 *
+	 * @param array<string, mixed> $header
+	 * @param array<string, mixed> $claims
+	 *
+	 * @throws JsonException
+	 * @throws RuntimeException
+	 */
+	private function signed(array $header, array $claims): string
+	{
+		$key = $this->fixture()['signature'];
+
+		if (!is_string($key)) {
+			throw new RuntimeException('tests/fixtures/tokens/fixture.json is malformed');
+		}
+
+		$payload = self::encode($header) . '.' . self::encode($claims);
+
+		return $payload . '.' . self::base64Url(hash_hmac('sha256', $payload, $key, true));
+	}
+
+	/**
+	 * @param array<string, mixed> $part
+	 *
+	 * @throws JsonException
+	 */
+	private static function encode(array $part): string
+	{
+		return self::base64Url(json_encode($part, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES));
+	}
+
+	private static function base64Url(string $data): string
+	{
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+	}
+
+	/**
+	 * @param Closure(): mixed $call
+	 */
+	private static function thrownBy(Closure $call): Throwable|null
+	{
+		try {
+			$call();
+		} catch (Throwable $ex) {
+			return $ex;
+		}
+
+		return null;
 	}
 
 	/**
